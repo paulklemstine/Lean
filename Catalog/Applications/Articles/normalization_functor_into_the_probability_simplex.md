@@ -1,214 +1,249 @@
-# The Arithmetic of the Infinite Library
+# The Shape of Certainty: How One Simple Division Builds the World of Probability
 
-Jorge Luis Borges imagined a library containing every book that could ever be
-written. Not the books that *have* been written, nor the ones that one day
-*will* be — but every possible book: every novel, every refutation of every
-novel, the true catalogue of the library, the false catalogues, the biography
-you have not yet lived and the one you narrowly avoided. The Library of Babel
-holds them all, shelved in identical hexagonal galleries that recede beyond
-sight.
+Picture a weather forecaster's whiteboard at the end of a long shift. Scattered
+across it are raw "scores" for tomorrow's possibilities — sun, clouds, rain,
+snow — numbers like $7$, $2$, $1$, $0$. They are not probabilities. They don't
+add up to anything in particular. They are just *weights*, gut-feeling tallies of
+how plausible each outcome seems. And yet, with a single, almost embarrassingly
+simple operation, the forecaster can turn that messy list into a clean, honest
+statement of belief: *a $70\%$ chance of sun, $20\%$ clouds, $10\%$ rain, and
+practically no snow.*
 
-Borges was a writer, not an accountant. He left the bookkeeping to us. And it
-turns out that once you write down the rules of his library precisely, the
-infinite mist resolves into something startlingly exact: you can count the
-books, you can compute the chance of stumbling on any particular one, and you
-can say — to the digit — how often the phrase you are searching for is expected
-to appear. This article is about those exact answers.
+That operation is **normalization** — divide every number by the total. It is one
+of the first tricks anyone learns in probability, so familiar that we rarely stop
+to look at it. But underneath this little gesture hides a surprisingly rich and
+beautiful structure. Normalization is not just a formula; it is a *map between
+worlds*, and it obeys laws as elegant as any in geometry. This is the story of
+those laws.
 
-## What, precisely, is a book?
+## The land of all possible beliefs
 
-To do arithmetic we first need a definition. Strip a book down to its essence
-and it is just a sequence of symbols. Fix an **alphabet** of $b$ distinct
-symbols — Borges used twenty-five (twenty-two letters, the comma, the period,
-and the space) — and fix a **length** $L$, the number of symbols a single
-volume holds. Then a *volume* is nothing more than a rule that assigns, to each
-position $1, 2, \dots, L$, one of the $b$ available symbols.
+Every list of probabilities over a fixed set of outcomes lives in a single,
+well-defined place that mathematicians call the **probability simplex**. If there
+are $n$ possible outcomes, a probability assignment is a list of $n$ numbers
+$p_1, p_2, \dots, p_n$, each one nonnegative, and all of them summing to exactly
+one. Formally,
 
-Mathematically, a volume is a function from positions to symbols. The
-**library** is the collection of *all* such functions, with no exceptions, no
-favorites, no gaps. That is the entire model, and everything below follows from
-it.
+$$
+\Delta = \Big\{\, p : \ 0 \le p_i \text{ for every } i, \quad \textstyle\sum_i p_i = 1 \,\Big\}.
+$$
 
-## Result 1: How many books?
+For three outcomes this set is a flat triangle floating in space — its three
+corners are the "certain" beliefs (*definitely outcome 1*, *definitely outcome 2*,
+*definitely outcome 3*), and every point inside is a shade of uncertainty. For
+four outcomes it is a tetrahedron; for more, a higher-dimensional crystal. This
+simplex is the *home of honest belief*. Anything living there is a genuine
+probability distribution. Anything outside is just raw, un-normalized data.
 
-The first question Borges' narrator never quite answers is the simplest: how
-many books are there?
+The whiteboard scores $(7, 2, 1, 0)$ do **not** live in the simplex — they sum to
+$10$, not $1$. They live in the much larger, sprawling region of all nonnegative
+lists, which we'll call the **cone**: every direction of "more sun, less rain" is
+allowed, at any scale. The cone is where data is born. The simplex is where it
+becomes meaning. Normalization is the bridge.
 
-The reasoning is the reasoning of a combination lock. The first position can be
-filled in $b$ ways. For each of those, the second position can independently be
-filled in $b$ ways, giving $b \times b$ possibilities for the first two
-positions. Continue across all $L$ positions and the count multiplies out to
+## Normalization as a homecoming
 
-$$\text{(number of volumes)} = b^{L}.$$
+Here is the bridge, written out:
 
-That is the whole library in a single expression. With Borges' alphabet of $b =
-25$ symbols and his volumes of $L = 1{,}312{,}000$ characters (410 pages, 40
-lines, 80 characters), the count is
+$$
+\mathrm{normalize}(v)_i \;=\; \frac{v_i}{\sum_j v_j}.
+$$
 
-$$25^{1{,}312{,}000},$$
+Take each weight, divide by the grand total. The forecaster's $(7,2,1,0)$ becomes
+$(0.7, 0.2, 0.1, 0)$, which sums to one. We have *landed in the simplex*. The
+first law of normalization is exactly this homecoming:
 
-a number with roughly $1.8$ million digits. It dwarfs the number of atoms in the
-observable universe (a paltry eighty digits) so completely that the comparison
-is not even useful. The library is finite, and yet for every practical purpose
-it is a model of the unimaginable.
+> **Landing law.** If $v$ is a list of nonnegative weights with a positive total,
+> then $\mathrm{normalize}(v)$ is a genuine probability distribution — it lies in
+> the simplex.
 
-The formal statement of this fact carries the name **`card_library`**: the
-library of all volumes of length $L$ over $b$ symbols has exactly $b^L$ members.
+So far, so expected. But the deeper magic begins when you ask what happens if you
+*repeat* the operation, or *rescale* the input, or normalize something that is
+already a probability distribution.
 
-## Result 2: The chance of any one book
+**It is the identity on the simplex.** If you hand normalization a list that
+already sums to one, it gives it right back, untouched:
 
-Now imagine a librarian who reaches blindly into the collection and pulls a
-single volume, each book equally likely. This is the *uniform distribution* on
-the library — the honest assumption that no book is privileged over any other.
-The probability of any particular outcome is, by definition, the number of ways
-that outcome can happen divided by the total number of possibilities.
+> **Retraction law.** If $p$ already lives in the simplex, then
+> $\mathrm{normalize}(p) = p$.
 
-For a single named book — say, the one you are holding — there is exactly one
-way to draw it out of $b^L$ equally likely books. So its probability is
+This is the signature of a *retraction* — a map that gently folds the entire
+sprawling cone down onto the simplex while leaving the simplex itself fixed in
+place, the way a paper fan collapses onto its own outer edge. Honest beliefs are
+already home; normalization doesn't disturb them.
 
-$$\Pr[\text{a specific volume}] = \frac{1}{b^{L}} = b^{-L}.$$
+**It is idempotent.** Once you've normalized, normalizing again changes nothing:
 
-This is the theorem **`prob_singleton`**: every individual volume has
-probability exactly $b^{-L}$. For Borges' numbers that is $25^{-1{,}312{,}000}$
-— a probability so small that if you drew one book per microsecond for the
-entire history of the universe, your chance of ever having seen a chosen book
-remains, for all intents, zero. The library is democratic and merciless in
-equal measure: all books are equally likely, and that equality makes each one
-essentially impossible to find.
+> **Idempotence law.** For *any* weight vector $v$,
+> $\mathrm{normalize}(\mathrm{normalize}(v)) = \mathrm{normalize}(v)$.
 
-## The real question: how often does a phrase appear?
+This follows from the first two laws — the output of normalization lives in the
+simplex, and on the simplex normalization is the identity. There is no "more
+normalized than normalized." One pass suffices, forever.
 
-Counting books is a warm-up. The deep question — the one that makes the library
-feel alive — is about *content*. Somewhere in Babel is a book containing the
-sentence you are about to read. How often, across the shelves, does a given
-phrase occur? If you open a single random volume, how many times should you
-expect to find it?
+**It ignores scale.** Double all the weights, triple them, halve them — the
+resulting probabilities are identical:
 
-To ask this precisely we need to talk about **patterns**. A pattern is a short
-sequence of symbols of some length $k$ — a word, a phrase, a fragment of code.
-We say the pattern **occurs at position $i$** in a volume if the volume's
-symbols, read off starting at position $i$, match the pattern symbol for symbol.
-Formally this is the predicate **`OccursAt`**, and a volume **`Contains`** the
-pattern if it occurs at *some* position. The **`occurrenceCount`** of a pattern
-in a volume is simply the number of starting positions at which it occurs.
+> **Scale-invariance law.** For any nonzero number $c$,
+> $\mathrm{normalize}(c \cdot v) = \mathrm{normalize}(v).$
 
-Here is the elegant part. Fix any valid starting position $i$ — one with enough
-room for the whole pattern, i.e. $i + k \le L$. How many of the $b^L$ volumes
-display the pattern *exactly there*? The pattern pins down the symbols at $k$
-specific positions; the remaining $L - k$ positions are free to be anything.
-Each free position contributes a factor of $b$, so the number of matching
-volumes is
+The forecaster who writes $(7,2,1,0)$ and the one who writes $(70,20,10,0)$ hold
+*exactly the same beliefs*. Normalization sees through scale entirely; it cares
+only about *ratios*, the directions in the cone, not their length. In the
+language of geometry, normalization factors through the **projectivization** of
+the cone — the space of pure directions.
 
-$$b^{\,L-k}.$$
+There is even a subtle bonus hiding in the arithmetic. What should happen if you
+try to normalize the all-zeros list, where the total is $0$ and the division is
+undefined? In ordinary mathematics this is a forbidden move. But by adopting the
+clean convention that *dividing by zero yields zero*, normalization becomes
+**totally defined**: it sends the degenerate zero vector to the zero vector. This
+isn't a cheat — it's a feature. It means the idempotence and naturality laws below
+hold with *no fine print*, no "provided the total is positive" caveat. The single
+genuinely restricted law is the landing law, and for an excellent reason: the
+zero vector can never sum to one, so it can never be a probability distribution.
 
-This counting lemma is **`card_occursAt`**, and it is the engine of everything
-that follows. (Its proof rests on two general bookkeeping lemmas,
-**`card_filter_agree`** and **`card_agree_inj`**, which count functions forced
-to agree with a fixed template on a chosen set of inputs.)
+## Coarsening the world without losing the plot
 
-## The main result: expected occurrences
+Now for the second character in our story. Imagine our forecaster decides the
+distinction between "rain" and "snow" no longer matters for the day's plans — what
+counts is simply "precipitation or not." This is an act of **coarse-graining**:
+several fine-grained outcomes get lumped into one coarser outcome. Mathematically,
+it is described by a function $f$ from the original outcomes to a smaller set of
+new ones, and the weights flow accordingly. The operation is called the
+**pushforward**:
 
-Now we assemble the pieces. A pattern of length $k$ has $L - k + 1$ possible
-starting positions inside a volume of length $L$. At each one, the fraction of
-volumes that match is $b^{L-k}/b^{L} = b^{-k}$. Probabilities of "match here"
-add up across positions — a fact known as *linearity of expectation*, which
-holds whether or not the events overlap — so the **expected number of
-occurrences** of the pattern in a single uniformly random volume is the number
-of positions times the per-position probability:
+$$
+\mathrm{pushforward}(f, v)_k \;=\; \sum_{i \,:\, f(i) = k} v_i.
+$$
 
-$$\boxed{\;\mathbb{E}[\text{occurrences}] = (L - k + 1)\cdot b^{-k}.\;}$$
+In words: the weight of a coarse category $k$ is the sum of the weights of all the
+fine outcomes that map into it. "Precipitation" inherits the combined weight of
+rain plus snow. Statisticians call this taking a *marginal*; physicists call it
+*integrating out* degrees of freedom; everyone agrees it's the natural way to view
+a system at lower resolution.
 
-This is the centerpiece, the theorem **`expected_substring_count`**. It is exact
-— not an approximation, not an asymptotic estimate, but an equality, valid
-whenever the pattern fits ($k \le L$) and the alphabet is nonempty ($b > 0$, so
-that the library actually contains books).
+The pushforward turns out to be a beautifully well-behaved operation — a
+*functor*, in the precise sense that it respects the algebra of composing
+coarsenings:
 
-Read it slowly, because it explains the entire emotional texture of Borges'
-library. The expected count *grows* linearly with the length $L$ of the books —
-longer books, more room, more occurrences. But it *shrinks exponentially* with
-the length $k$ of the phrase — every extra symbol you demand divides your
-expectations by the full alphabet size $b$.
+> **Identity law.** Coarse-graining by the do-nothing map (every outcome maps to
+> itself) leaves the weights unchanged: $\mathrm{pushforward}(\mathrm{id}, v) = v.$
 
-A concrete example. Take a binary library, $b = 2$, with volumes of length
-$L = 10$. How often should the two-symbol pattern "$01$" appear in a random
-volume? Here $k = 2$, so
+> **Composition law.** Coarsening in two stages gives the same result as coarsening
+> once by the combined map:
+> $\mathrm{pushforward}(g \circ f, v) = \mathrm{pushforward}\big(g, \mathrm{pushforward}(f, v)\big).$
 
-$$\mathbb{E} = (10 - 2 + 1)\cdot 2^{-2} = 9 \cdot \tfrac14 = 2.25.$$
+Lump rain and snow into "precipitation," then later lump "precipitation" and
+"clouds" into "not clearly sunny" — you reach the same place as if you'd planned
+the whole grouping from the start. The bookkeeping is consistent at every level of
+zoom.
 
-A random ten-bit book contains the fragment "$01$" $2.25$ times on average. You
-can check this by brute force: list all $2^{10} = 1024$ binary strings of length
-ten, count the "$01$"s in each, average them — and you will get exactly
-$2.25$. The formula and the exhaustive count agree to the last digit. (The
-accompanying demo does precisely this.)
+Crucially, **the pushforward never loses or creates mass**:
 
-Now demand a longer phrase. In Borges' real library — $b = 25$,
-$L = 1{,}312{,}000$ — a specific full sentence of, say, $k = 50$ characters has
-expected count
+> **Mass-preservation law.** The total weight is conserved:
+> $\sum_k \mathrm{pushforward}(f, v)_k = \sum_i v_i.$
 
-$$(1{,}312{,}000 - 50 + 1)\cdot 25^{-50} \approx 1.3 \times 10^{6} \cdot
-10^{-70} \approx 10^{-64}.$$
+Nothing leaks out when you regroup; you're only rearranging the same total into
+fewer bins. And this single fact has a powerful consequence. Because the total is
+preserved and the entries stay nonnegative, **coarse-graining a probability
+distribution yields a probability distribution**:
 
-You would expect to find it once for every $10^{64}$ books you read. The phrase
-*is* in the library — Babel contains everything — but the expectation quantifies
-exactly how lost it is.
+> **Simplex-preservation law.** If $p$ lives in the simplex over the fine outcomes,
+> then $\mathrm{pushforward}(f, p)$ lives in the simplex over the coarse outcomes.
 
-## Result 4: the chance a phrase appears at all
+So the pushforward isn't just a functor on raw weights — it restricts to an
+operation that takes honest beliefs to honest beliefs. It is, in the precise
+technical sense, an **endofunctor of the probability simplex**: a structure-preserving
+self-map of the world of distributions.
 
-The expected count tells you the average over all positions, but a worried
-reader wants a yes-or-no question answered: what is the *probability* that a
-random volume contains the phrase *somewhere*?
+## The square that makes it all click
 
-There is a clean upper bound, and it is the same number we already met. The
-event "the pattern appears somewhere" is the union of the events "the pattern
-appears at position $i$" over all valid $i$. The probability of a union is never
-more than the sum of the individual probabilities — this is the **union bound**,
-one of the most reliable tools in all of probability. Each position contributes
-$b^{-k}$, and there are $L - k + 1$ of them, so
+We now have two natural operations. One, *normalize*, turns raw weights into
+probabilities. The other, *pushforward*, regroups outcomes at coarser resolution.
+The forecaster faces a choice of order. She could:
 
-$$\Pr[\text{volume contains the pattern}] \;\le\; (L - k + 1)\cdot b^{-k}.$$
+- **Normalize first, then coarsen:** turn the raw scores into probabilities, then
+  lump rain and snow together; or
+- **Coarsen first, then normalize:** lump the raw rain and snow weights together,
+  then turn the result into probabilities.
 
-This is the theorem **`prob_contains_substring_bound`**. It is a *bound* rather
-than an equality precisely because a single volume can contain the pattern at
-several overlapping positions, and the union bound deliberately ignores that
-double-counting. When the right-hand side is tiny — as it is for any phrase of
-meaningful length — the bound is essentially tight, and it tells you the chance
-of a hit is negligible. When the right-hand side exceeds $1$, the bound becomes
-vacuous, which is itself informative: it signals the regime (short patterns,
-long books) where the phrase is so common that almost every volume contains it.
+Do these two paths agree? The crowning result of this work says: *always, and with
+no exceptions.*
 
-## Why the bookkeeping matters
+> **Naturality law.** Normalizing and then coarse-graining gives exactly the same
+> distribution as coarse-graining and then normalizing:
+> $$
+> \mathrm{normalize}\big(\mathrm{pushforward}(f, v)\big)
+> \;=\;
+> \mathrm{pushforward}\big(f, \mathrm{normalize}(v)\big).
+> $$
 
-It would be easy to dismiss all this as a curiosity — a way of putting numbers
-on a fantasy. But the model of Babel is, quietly, the model of a great deal of
-the real world.
+This is what mathematicians call a **commuting square** or a **natural
+transformation**, and it is the kind of statement that makes a theory feel
+*inevitable* rather than merely true. It says the two operations don't interfere
+with each other; the order of "make it a probability" and "change resolution"
+simply doesn't matter. Whether you clean your data first or summarize it first,
+you arrive at the identical belief.
 
-Replace "alphabet of $b$ symbols" with "four DNA bases" and a *volume* becomes a
-genome; the expected-occurrence formula is exactly how biologists estimate how
-often a given motif should appear by chance, and therefore which motifs appear
-*more* often than chance and so might mean something. Replace it with "the 256
-possible bytes" and a volume becomes a file; the same formula underlies
-estimates of how often a fixed signature collides at random, a basic
-consideration in data forensics and in the design of hash functions. Replace it
-with "two symbols" and you are doing the combinatorics of bit-strings that sits
-under coding theory and cryptography. The union bound in particular — the engine
-behind Result 4 — is one of the workhorses of theoretical computer science,
-used to prove that rare bad events stay rare.
+Why is this true? The secret is the mass-preservation law. Coarse-graining keeps
+the grand total fixed, so the *denominator* in the normalization — that crucial
+"divide by the total" — is the same number whether you compute it before or after
+regrouping. Once the denominators match, both sides reduce to the same elementary
+fact: dividing a sum by a constant equals summing the divided pieces,
+$\frac{\sum_i g_i}{c} = \sum_i \frac{g_i}{c}$. The whole edifice rests on the
+distributive law of fractions, dressed in the right clothes.
 
-What Borges intuited as vertigo, the mathematics renders as a pair of competing
-exponentials: the library's size $b^L$ explodes, but the rarity $b^{-k}$ of any
-specified content collapses just as fast. Meaning is not absent from Babel; it
-is present in overwhelming abundance. It is simply diluted to homeopathic
-concentration by the sheer volume of nonsense surrounding it. The expected count
-$(L-k+1)\,b^{-k}$ is the precise exchange rate between the two.
+And remarkably, like idempotence, the naturality law needs *no positivity
+caveat*. Thanks to the divide-by-zero-is-zero convention, even the degenerate case
+where all weights vanish makes both sides collapse harmlessly to the zero vector.
+The equation holds universally.
 
-## Coda
+## Why this is more than bookkeeping
 
-Borges ends his story with a melancholy hope: that the library, though
-boundless to any single traveler, is *periodic* — that an immortal walker would
-eventually find the same disordered shelves repeating, and that this repetition,
-"repeated, would be an order: the Order." Our arithmetic offers a humbler
-consolation. The library is not boundless. It is exactly $b^L$ books. Each is
-exactly $b^{-L}$ likely. Each phrase you love appears, on average, exactly
-$(L-k+1)\,b^{-k}$ times. The infinite, looked at squarely, turns out to be
-finite, countable, and — to anyone willing to do the multiplication — entirely
-understood.
+It would be easy to dismiss all of this as the formal repackaging of grade-school
+arithmetic. But the value of identifying these laws is exactly that they reveal
+*grade-school arithmetic to be a small piece of a grand pattern* that recurs
+across mathematics, statistics, physics, and machine learning.
+
+In **machine learning**, every neural-network classifier ends with a
+normalization step: a raw vector of "logits" — un-normalized scores for each
+class — gets turned into a probability distribution. The scale-invariance law is
+why you can rescale a model's outputs without changing its predicted
+probabilities only up to the right transformation; the retraction and idempotence
+laws are why repeated normalization is stable and safe.
+
+In **statistics**, the pushforward is the marginal distribution, the single most
+common operation in all of applied probability. The naturality law is the formal
+reason you can summarize a survey before or after converting counts to
+percentages and get the same answer — a fact every data analyst relies on
+implicitly a hundred times a day.
+
+In **physics**, integrating out microscopic degrees of freedom to obtain a
+coarse-grained description is the heart of statistical mechanics and the
+renormalization group. The mass-preservation and naturality laws are exactly the
+consistency conditions that make such coarse-graining trustworthy: probability is
+conserved, and the normalization "partition function" transforms predictably.
+
+In **category theory**, the punchline is the cleanest of all. The pushforward is a
+*functor* (it respects identities and composition), and normalization is a
+*natural transformation* between functors. This is the language in which modern
+mathematics expresses "this construction works the same way everywhere,
+uniformly, without arbitrary choices." To say normalization is *natural* is to say
+it is not an accident of how we wrote things down — it is woven into the structure
+of probability itself.
+
+## The beauty of the obvious
+
+There is a particular kind of pleasure in taking something everyone thinks they
+understand and showing that it was deeper than it looked. The forecaster's casual
+division, the data analyst's percentages, the neural net's final layer — all of
+them are performing the same homecoming, sending raw data back to the land of
+honest belief. And that homecoming obeys laws: it lands where it should, it leaves
+home untouched, it ignores scale, it commutes with coarsening.
+
+Mathematics is full of cathedrals built from such humble bricks. Normalization is
+one of those bricks. Look closely enough at the act of dividing by a total, and
+you find a retraction onto a simplex, a functor of marginalization, and a natural
+transformation linking them — a small, perfect machine that has been running
+quietly inside every probability calculation you have ever made.

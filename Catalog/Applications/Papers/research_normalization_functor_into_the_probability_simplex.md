@@ -1,385 +1,395 @@
-# Exact Combinatorial and Probabilistic Structure of the Library of Babel
+# The Normalization Map as a Natural Transformation into the Probability Simplex
 
 **Author:** Aristotle
-**Date:** 2026-06-20
-**Domain:** Algebra (combinatorial probability)
+**Date:** 2026-06-21
+**Domain:** Novelty
 
 ## Abstract
 
-We give a complete, exact treatment of the combinatorial and probabilistic
-structure of Borges' *Library of Babel*, modeled as the set of all functions
-from a finite position set to a finite alphabet. Fixing an alphabet of $b$
-symbols and a volume length $L$, the library is the function space
-$\{1,\dots,L\} \to \{1,\dots,b\}$, equipped with the uniform counting
-probability. We prove four principal facts and the counting lemmas that support
-them. First, the library has cardinality exactly $b^L$. Second, under the
-uniform measure every individual volume has probability exactly $b^{-L}$. Third
-— the main theorem — the expected number of occurrences of a fixed pattern of
-length $k \le L$ in a uniformly random volume equals $(L-k+1)\,b^{-k}$ exactly,
-provided $b > 0$. Fourth, the probability that a random volume contains the
-pattern at least once is at most $(L-k+1)\,b^{-k}$, by a union bound. The
-expected-occurrence theorem is driven by a position-fixing count: the number of
-volumes exhibiting a fixed pattern at a fixed admissible position is exactly
-$b^{L-k}$, which we derive from a general lemma on the cardinality of function
-spaces constrained to agree with a template on a designated subdomain. All
-results, including every edge case ($b=0$, $b=1$, $L=0$, $k=0$), are established
-constructively. The development is elementary but the exactness is the point:
-each quantity is an equality (or a sharp inequality), not an asymptotic estimate.
+We give a self-contained categorical account of two elementary but ubiquitous
+operations on finite weight vectors: $\ell^1$-**normalization**, which sends a
+nonnegative weight vector to a probability distribution by dividing by its total
+mass, and **pushforward** (marginalization), which transports a weight vector
+along a map of index sets by summing fibers. Working over a finite index type
+$\iota$ and the standard probability simplex
+$\Delta_\iota = \{\, p:\iota\to\mathbb{R} \mid p_i \ge 0,\ \sum_i p_i = 1 \,\}$,
+we establish the following. (i) Pushforward is a covariant functor on weight
+vectors: it preserves identities and composition, conserves total mass, and
+therefore restricts to an endofunctor of the simplex. (ii) Normalization is an
+idempotent, scale-invariant retraction of the nonnegative cone onto the simplex
+that is the identity on the simplex. (iii) Normalization is a *natural
+transformation* relating the pushforward functor on the cone to the pushforward
+functor on the simplex: normalizing then marginalizing equals marginalizing then
+normalizing. A deliberate design choice — adopting the convention $x/0 = 0$ so
+that normalization is a *total* function — renders idempotence and naturality
+*unconditional*, with positivity of the total mass needed only for simplex
+membership. We give complete proof sketches, a discussion of the role of each
+underlying summation identity, applications to statistics, machine learning, and
+the renormalization-group philosophy of coarse-graining, and a set of precise
+falsifiable conjectures for further development.
+
+---
 
 ## 1. Introduction
 
-Borges' "La biblioteca de Babel" (1941) describes a library containing every
-book of a fixed length over a fixed alphabet. The image is a literary device for
-the vertigo of combinatorial explosion, but the underlying object is a perfectly
-precise mathematical structure: a finite function space under the uniform
-measure. The purpose of this paper is to record its exact combinatorial and
-probabilistic invariants.
+The act of turning a list of nonnegative scores into a probability distribution
+by "dividing by the sum" is one of the most frequently performed computations in
+all of quantitative science. It appears as the final softmax-free normalization
+layer of classifiers, as the conversion of counts to relative frequencies in
+statistics, and as the formation of Gibbs/Boltzmann weights into a probability
+measure in physics. Equally ubiquitous is *marginalization*: collapsing a
+distribution over fine-grained outcomes into one over coarser categories by
+summing the weights that land in each category.
 
-Two competing exponentials govern the library. Its size $b^L$ grows
-exponentially in the volume length; the probability $b^{-k}$ of matching a fixed
-$k$-symbol pattern at a fixed position decays exponentially in the pattern
-length. The interplay of the two is captured cleanly by the expected-occurrence
-formula $(L-k+1)\,b^{-k}$, which we identify as the central quantitative content
-of the model. The formula is the discrete analogue of the renewal-theoretic
-expected count of pattern occurrences in an i.i.d. symbol stream, here proved as
-an exact identity over the finite library rather than as a limiting statement.
+Despite their familiarity, these two operations possess a clean and instructive
+categorical structure that is rarely made explicit. The purpose of this paper is
+to isolate that structure with full rigor and minimal machinery. Our central
+claims are that marginalization is a *functor* and that normalization is a
+*natural transformation* with respect to it. The naturality statement — that the
+order of "make it a probability" and "change resolution" does not matter — is the
+conceptual payoff, and it rests on nothing deeper than mass conservation and the
+distributivity of division over finite sums.
 
-We work entirely within finite combinatorics. The probabilistic statements are
-phrased through a single primitive, the uniform counting ratio, so that the
-probability of an event is literally the fraction of volumes realizing it.
+Throughout, we fix finite index types and work over $\mathbb{R}$. Mathlib's
+`stdSimplex ℝ ι` provides the ambient object. A noteworthy and deliberate
+feature of our development is *totality*: by using the convention $x/0 = 0$, the
+normalization map is defined on *all* weight vectors, including the degenerate
+zero vector, which it sends to itself. This single choice makes the most useful
+laws — idempotence and naturality — hold without any positivity hypothesis.
+
+### 1.1 Notation and standing assumptions
+
+Let $\iota, \kappa, \mu$ be finite types (`Fintype`), with $\kappa$ and $\mu$
+additionally carrying decidable equality (needed so that the indicator
+$[\,f(i)=k\,]$ in the pushforward is computable). A *weight vector* is a function
+$v : \iota \to \mathbb{R}$. We write $\sum_i v_i$ for $\sum_{i \in \iota} v_i$
+(a finite sum over the full finite type). The **probability simplex** is
+
+$$
+\Delta_\iota \;=\; \mathrm{stdSimplex}\,\mathbb{R}\,\iota
+\;=\; \Big\{\, p : \iota \to \mathbb{R} \ \Big|\ (\forall i,\ 0 \le p_i)\ \wedge\ \textstyle\sum_i p_i = 1 \,\Big\}.
+$$
+
+The **nonnegative cone** is $C_\iota = \{\, v : \iota \to \mathbb{R} \mid \forall i,\ 0 \le v_i \,\}$.
+
+---
 
 ## 2. Definitions
 
-Throughout, $b$ (alphabet size) and $L$ (volume length) are natural numbers, and
-$k$ (pattern length) is a natural number with $k \le L$ where indicated.
+**Definition 2.1 (Normalization).**
+The $\ell^1$-normalization of a weight vector $v : \iota \to \mathbb{R}$ is the
+weight vector
 
-**Definition 1 (Volume).** A *volume* of length $L$ over an alphabet of $b$
-symbols is a function $v : \{0,\dots,L-1\} \to \{0,\dots,b-1\}$. We write
-$\mathrm{Volume}(b,L)$ for the type of such functions. (In the formalization,
-positions and symbols are the finite types $\mathrm{Fin}\,L$ and
-$\mathrm{Fin}\,b$.)
+$$
+\mathrm{normalize}(v)_i \;=\; \frac{v_i}{\sum_{j} v_j}.
+$$
 
-**Definition 2 (Library).** The *library* $\mathcal{L}(b,L)$ is the finite set
-of all volumes of length $L$ over $b$ symbols, i.e. the entire function space
-$\mathrm{Volume}(b,L)$.
+By the convention $x/0 = 0$, this is *total*: when $\sum_j v_j = 0$ (in
+particular when $v = 0$), $\mathrm{normalize}(v) = 0$.
 
-**Definition 3 (Uniform counting probability).** For a finite sample space $s$
-and an event $A$, define
-$$\Pr_s(A) \;=\; \frac{\bigl|\{x \in s : x \in A\}\bigr|}{|s|}.$$
-Applied to $s = \mathcal{L}(b,L)$ this is the uniform probability measure on the
-library. (When $|s| = 0$ the ratio is $0$ by convention; meaningful
-probabilistic statements assume $b > 0$ so that $|s| = b^L > 0$.)
+**Definition 2.2 (Pushforward / marginalization).**
+For a map of index types $f : \iota \to \kappa$ and a weight vector
+$v : \iota \to \mathbb{R}$, the pushforward is the weight vector on $\kappa$
 
-**Definition 4 (Reading).** For a volume $v$ and an index $n \in \mathbb{N}$,
-$$\mathrm{readAt}(v,n) \;=\;
-\begin{cases} v(n) & \text{if } n < L,\\ \bot & \text{otherwise,}\end{cases}$$
-valued in $\mathrm{Option}(\mathrm{Fin}\,b)$, returning $\bot$ ("none") out of
-range.
+$$
+\mathrm{pushforward}(f, v)_k \;=\; \sum_{i} \big[\, f(i) = k \,\big]\, v_i
+\;=\; \sum_{i \,:\, f(i)=k} v_i,
+$$
 
-**Definition 5 (Occurrence at a position).** A *pattern* of length $k$ is a
-function $p : \mathrm{Fin}\,k \to \mathrm{Fin}\,b$. The pattern $p$ *occurs at
-position $i \in \mathbb{N}$* in $v$, written $\mathrm{OccursAt}(p,v,i)$, iff
-$$\forall j \in \mathrm{Fin}\,k,\quad \mathrm{readAt}(v,\,i+j) = p(j).$$
-In particular, occurrence requires every probed index $i+j$ to be in range.
+where $[\,P\,]$ denotes the indicator equal to $1$ when $P$ holds and $0$
+otherwise. Equivalently, $\mathrm{pushforward}(f,v)$ is the image measure
+(pushforward measure) of the discrete measure with weights $v$ under $f$.
 
-**Definition 6 (Occurrence count).** The number of starting positions at which
-$p$ occurs in $v$ is
-$$\mathrm{occurrenceCount}(p,v) \;=\;
-\bigl|\{\, i \in \{0,\dots,L-k\} : \mathrm{OccursAt}(p,v,i)\,\}\bigr|,$$
-the count taken over the $L-k+1$ admissible starting positions
-$\{0,\dots,L-k\}$ (the range of length $L-k+1$).
+---
 
-**Definition 7 (Containment).** $v$ *contains* $p$, written
-$\mathrm{Contains}(p,v)$, iff $\exists i,\ \mathrm{OccursAt}(p,v,i)$.
+## 3. Properties of normalization
 
-**Definition 8 (Expected occurrences).** The expected number of occurrences of
-$p$ in a uniformly random volume is
-$$\mathrm{expectedOccurrences}(p,L) \;=\;
-\frac{\sum_{v \in \mathcal{L}(b,L)} \mathrm{occurrenceCount}(p,v)}{|\mathcal{L}(b,L)|}.$$
+We collect the algebraic laws governing $\mathrm{normalize}$. Each is stated as a
+theorem with a proof sketch; the names in parentheses are the corresponding formal
+results.
 
-## 3. Counting the library
+**Lemma 3.1 (Sum after normalization; `normalize_sum`).**
+For every $v$,
+$$
+\sum_i \mathrm{normalize}(v)_i \;=\; \frac{\sum_i v_i}{\sum_j v_j}.
+$$
 
-**Theorem 1 (`card_library`).** For all $b, L \in \mathbb{N}$,
-$$|\mathcal{L}(b,L)| = b^{L}.$$
+*Proof.* Unfold the definition and pull the common denominator $\sum_j v_j$ out of
+the finite sum using distributivity of division over a finite sum
+(`Finset.sum_div`): $\sum_i (v_i / S) = (\sum_i v_i)/S$ with $S = \sum_j v_j$. $\square$
 
-*Proof sketch.* The library is the full function space
-$\mathrm{Fin}\,L \to \mathrm{Fin}\,b$, whose cardinality is
-$(\#\mathrm{Fin}\,b)^{\#\mathrm{Fin}\,L} = b^{L}$ by the standard count of
-functions between finite types: a function is determined by independent choices
-of one of $b$ values at each of $L$ inputs, and the choices multiply. The
-identity is total — it holds for all $b, L \in \mathbb{N}$, including $b = 0$
-(where $0^L$ is $1$ if $L = 0$ and $0$ otherwise) and $L = 0$ (where $b^0 = 1$,
-the single empty volume). $\square$
+**Lemma 3.2 (Nonnegativity; `normalize_nonneg`).**
+If $v_i \ge 0$ for all $i$, then $\mathrm{normalize}(v)_i \ge 0$ for all $i$.
 
-**Theorem 2 (`prob_singleton`).** For all $b, L$ and every volume
-$v \in \mathcal{L}(b,L)$,
-$$\Pr_{\mathcal{L}(b,L)}\bigl(\{v\}\bigr) = b^{-L}.$$
+*Proof.* The numerator $v_i$ is nonnegative by hypothesis and the denominator
+$\sum_j v_j$ is a sum of nonnegative terms, hence nonnegative; a quotient of
+nonnegatives is nonnegative (`div_nonneg`, `Finset.sum_nonneg`). $\square$
 
-*Proof sketch.* The filtered set $\{x \in \mathcal{L} : x \in \{v\}\}$ is the
-singleton $\{v\}$, of cardinality $1$. Dividing by $|\mathcal{L}| = b^L$
-(Theorem 1) gives $1/b^L = b^{-L}$, the equality holding in $\mathbb{R}$ with the
-integer exponent $-L$. The degenerate case $b=0$ has no volumes, so the
-statement is vacuous there. $\square$
+**Theorem 3.3 (Landing in the simplex; `normalize_mem_stdSimplex`).**
+If $v_i \ge 0$ for all $i$ and $0 < \sum_j v_j$, then
+$\mathrm{normalize}(v) \in \Delta_\iota$.
 
-## 4. Counting constrained volumes
+*Proof.* Nonnegativity of each coordinate is Lemma 3.2. For the sum constraint,
+Lemma 3.1 gives $\sum_i \mathrm{normalize}(v)_i = (\sum_i v_i)/(\sum_j v_j) = 1$
+since the total is nonzero (`div_self`). Hence the two simplex conditions hold. $\square$
 
-The main theorem reduces to counting, for each admissible position, how many
-volumes display the pattern there. We isolate the count as two reusable lemmas.
+**Theorem 3.4 (Identity on the simplex / retraction; `normalize_id_of_mem`).**
+If $p \in \Delta_\iota$ then $\mathrm{normalize}(p) = p$.
 
-**Lemma 1 (`card_filter_agree`).** Let $\alpha$ be a finite type with decidable
-equality and $\beta$ a finite type. Let $p$ be a decidable predicate on $\alpha$
-and $g : \alpha \to \beta$ a fixed template. Then
-$$\bigl|\{\, v : \alpha \to \beta \ \mid\ \forall a,\ p(a) \Rightarrow v(a) = g(a)\,\}\bigr|
-\;=\; (\#\beta)^{\,\#\{a : \neg p(a)\}}.$$
+*Proof.* Pointwise, $\mathrm{normalize}(p)_i = p_i / \sum_j p_j = p_i / 1 = p_i$,
+using the simplex sum constraint $\sum_j p_j = 1$ and $x/1 = x$ (`div_one`). $\square$
 
-*Proof sketch.* The constrained set is in bijection with the dependent product
-$\prod_{a \in \alpha} S_a$, where $S_a = \{g(a)\}$ if $p(a)$ and $S_a = \beta$
-otherwise. By the product rule for finite dependent function spaces its
-cardinality is $\prod_a |S_a|$. Each constrained coordinate contributes a factor
-$1$ and each free coordinate a factor $\#\beta$, so the product equals
-$(\#\beta)^{m}$ with $m$ the number of free coordinates, i.e.
-$m = \#\{a : \neg p(a)\}$. Converting the resulting sum-of-ones exponent to a
-cardinality via $\sum_a [\neg p(a)] = \#\{a:\neg p(a)\}$ closes the argument.
-$\square$
+**Theorem 3.5 (Idempotence; `normalize_idem`).**
+For every $v$ (with no hypotheses),
+$\mathrm{normalize}(\mathrm{normalize}(v)) = \mathrm{normalize}(v)$.
 
-**Lemma 2 (`card_agree_inj`).** Let $\varphi : \mathrm{Fin}\,k \to
-\mathrm{Fin}\,L$ be injective and $p : \mathrm{Fin}\,k \to \mathrm{Fin}\,b$ a
-pattern. Then
-$$\bigl|\{\, v \in \mathcal{L}(b,L) \ \mid\ \forall j,\ v(\varphi(j)) = p(j)\,\}\bigr|
-\;=\; b^{\,L-k}.$$
+*Proof.* Split on whether the total $\sum_j v_j$ vanishes. If it does, then
+$\mathrm{normalize}(v) = 0$ (each coordinate is $v_i/0 = 0$), and normalizing the
+zero vector again yields $0$; both sides agree. If the total is nonzero, Lemma 3.1
+gives $\sum_i \mathrm{normalize}(v)_i = (\sum_i v_i)/(\sum_j v_j) = 1$, so the
+inner normalization already lies in the simplex; applying $\mathrm{normalize}$ to a
+vector whose coordinates sum to $1$ divides by $1$ and returns it unchanged. Thus
+both branches give equality, unconditionally. $\square$
 
-*Proof sketch.* Specialize Lemma 1 with $\alpha = \mathrm{Fin}\,L$,
-$\beta = \mathrm{Fin}\,b$, predicate "lies in the image of $\varphi$", and a
-template that on $\varphi(j)$ returns $p(j)$ (well-defined by injectivity of
-$\varphi$) and is arbitrary elsewhere. The constrained positions are exactly the
-$k$ image points $\mathrm{range}(\varphi)$, so the number of free positions is
-$L - \#\mathrm{range}(\varphi) = L - k$, the last equality because $\varphi$ is
-injective. Hence the count is $b^{L-k}$. The boundary case $b = 0$ is handled
-separately: if $k > 0$ no pattern exists (so the statement is vacuously fine),
-and if $k = 0$ both sides equal the appropriate power. $\square$
+**Theorem 3.6 (Scale invariance / projectivity; `normalize_smul`).**
+For every nonzero scalar $c$ and every $v$,
+$\mathrm{normalize}(c \cdot v) = \mathrm{normalize}(v)$.
 
-**Lemma 3 (`card_occursAt`).** For a pattern $p$ of length $k$ and a position
-$i$ with $i + k \le L$,
-$$\bigl|\{\, v \in \mathcal{L}(b,L) \ \mid\ \mathrm{OccursAt}(p,v,i)\,\}\bigr|
-\;=\; b^{\,L-k}.$$
+*Proof.* Pointwise,
+$\mathrm{normalize}(c\cdot v)_i = (c\,v_i) / \sum_j (c\,v_j) = (c\,v_i)/(c\sum_j v_j)$
+by pulling the constant out of the finite sum (`Finset.mul_sum`); the common
+nonzero factor $c$ cancels (`mul_div_mul_left`), leaving
+$v_i / \sum_j v_j = \mathrm{normalize}(v)_i$. $\square$
 
-*Proof sketch.* The admissibility $i+k\le L$ makes the map
-$\varphi(j) = i + j$ a well-defined injection $\mathrm{Fin}\,k \to
-\mathrm{Fin}\,L$ (injective because $j \mapsto i+j$ is). Under this $\varphi$,
-the predicate $\mathrm{OccursAt}(p,v,i)$ — i.e.
-$\mathrm{readAt}(v,i+j) = p(j)$ for all $j$ — is, using $i+j < L$, equivalent to
-$v(\varphi(j)) = p(j)$ for all $j$. Lemma 2 then yields $b^{L-k}$. $\square$
+Theorems 3.4–3.6 jointly express that $\mathrm{normalize}$ is an idempotent
+retraction of the cone onto the simplex that factors through the projectivization
+of the cone (it depends only on the ray $\mathbb{R}_{>0}\cdot v$, not on $v$
+itself).
 
-## 5. The main theorem
+---
 
-**Theorem 4 (`expected_substring_count`, main result).** Let $k \le L$ and
-$b > 0$, and let $p$ be a pattern of length $k$. Then
-$$\mathrm{expectedOccurrences}(p,L) \;=\; (L - k + 1)\cdot b^{-k}.$$
+## 4. Functoriality of pushforward
 
-*Proof sketch.* Compute the numerator
-$N = \sum_{v} \mathrm{occurrenceCount}(p,v)$ first. Expanding the definition and
-exchanging the order of summation (Fubini for finite sums),
-$$N = \sum_{v}\ \sum_{i=0}^{L-k} [\mathrm{OccursAt}(p,v,i)]
-   = \sum_{i=0}^{L-k}\ \sum_{v} [\mathrm{OccursAt}(p,v,i)]
-   = \sum_{i=0}^{L-k} \bigl|\{v : \mathrm{OccursAt}(p,v,i)\}\bigr|.$$
-Each admissible $i \in \{0,\dots,L-k\}$ satisfies $i + k \le L$, so by Lemma 3
-the inner cardinality is $b^{L-k}$, independent of $i$. There are $L-k+1$ terms,
-hence
-$$N = (L-k+1)\,b^{\,L-k}.$$
-Dividing by $|\mathcal{L}(b,L)| = b^L$ (Theorem 1) and using
-$b^{L-k}/b^{L} = b^{-k}$ (valid since $b>0$ and $k \le L$, so $L-k+k=L$) gives
-$$\mathrm{expectedOccurrences}(p,L) = \frac{(L-k+1)\,b^{L-k}}{b^{L}}
-   = (L-k+1)\,b^{-k}. \qquad\square$$
+**Theorem 4.1 (Mass preservation; `pushforward_mass`).**
+For every $f : \iota \to \kappa$ and $v$,
+$$
+\sum_k \mathrm{pushforward}(f, v)_k \;=\; \sum_i v_i.
+$$
 
-This is an exact identity. The hypothesis $b>0$ guarantees a nonempty library
-(so the expectation is defined); the hypothesis $k \le L$ guarantees the pattern
-fits and the position range $\{0,\dots,L-k\}$ has the stated $L-k+1$ elements.
+*Proof.* Expand the definition and exchange the order of the double sum
+(`Finset.sum_comm`):
+$\sum_k \sum_i [\,f(i)=k\,] v_i = \sum_i \sum_k [\,f(i)=k\,] v_i$. For each fixed
+$i$, the inner sum over $k$ has exactly one nonzero term, namely $k = f(i)$,
+contributing $v_i$ (`Finset.sum_ite_eq'`). Summing over $i$ gives $\sum_i v_i$. $\square$
 
-**Interpretation (the indicator decomposition).** Linearity of expectation is
-doing the structural work. Write the occurrence count as a sum of indicator
-random variables
-$$\mathrm{occurrenceCount}(p,\cdot) = \sum_{i=0}^{L-k} X_i,\qquad
-X_i = [\mathrm{OccursAt}(p,\cdot,i)].$$
-Each $X_i$ is a Bernoulli variable whose mean is the per-position match
-probability $\mathbb{E}[X_i] = \Pr[\mathrm{OccursAt}(p,\cdot,i)] = b^{L-k}/b^{L} =
-b^{-k}$ (Lemma 3 and Theorem 1). Crucially, the identity
-$\mathbb{E}[\sum_i X_i] = \sum_i \mathbb{E}[X_i]$ requires no independence: the
-$X_i$ are in fact strongly dependent, because overlapping windows share symbols
-(for a self-overlapping pattern such as $000$, knowing $X_i = 1$ shifts the law
-of $X_{i+1}$). Linearity is indifferent to this dependence, which is exactly why
-the expected count is a clean product while the *distribution* of the count is
-not. The total $(L-k+1)\,b^{-k}$ trades the linear growth in $L$ (more windows)
-against the exponential decay in $k$ (each extra symbol divides the
-per-window probability by $b$). The same dependence is what forces Theorem 5 to
-be an inequality rather than an equality: the union bound
-$\Pr[\bigcup_i \{X_i = 1\}] \le \sum_i \Pr[X_i = 1]$ overcounts precisely the
-joint events $\{X_i = X_j = 1\}$, and equality would hold only if the occurrence
-events were pairwise disjoint — which they are not whenever a pattern can recur.
-This places the result squarely in the first-moment method: the expectation
-pins the average, and the union bound converts it into a tail statement.
+**Theorem 4.2 (Identity law; `pushforward_id`).**
+For every $v$, $\mathrm{pushforward}(\mathrm{id}, v) = v$.
 
-The model is the finite, exact counterpart of a classical limit. For an
-infinite i.i.d.\ stream of symbols, renewal theory gives an asymptotic
-occurrence rate of $b^{-k}$ per position; Theorem 4 is the corresponding
-identity over the finite library, with the boundary correction $L-k+1$ (rather
-than $L$) accounting exactly for the windows that fall off the end of a finite
-volume.
+*Proof.* For each $k$, $\mathrm{pushforward}(\mathrm{id},v)_k = \sum_i [\,i=k\,] v_i = v_k$,
+since the one-hot indicator collapses the sum to the single term $i=k$
+(`Finset.sum_ite_eq'`). $\square$
 
-## 6. Containment probability
+**Theorem 4.3 (Composition law; `pushforward_comp`).**
+For $f : \iota \to \kappa$ and $g : \kappa \to \mu$ and every $v$,
+$$
+\mathrm{pushforward}(g \circ f, v) \;=\; \mathrm{pushforward}\big(g, \mathrm{pushforward}(f, v)\big).
+$$
 
-**Theorem 5 (`prob_contains_substring_bound`).** For $k \le L$ and a pattern $p$
-of length $k$,
-$$\Pr_{\mathcal{L}(b,L)}\bigl(\{\, v : \mathrm{Contains}(p,v)\,\}\bigr)
-   \;\le\; (L - k + 1)\cdot b^{-k}.$$
+*Proof.* Both sides, evaluated at $m \in \mu$, sum $v_i$ over the fiber
+$\{ i \mid g(f(i)) = m \}$. On the right, this fiber is reorganized as a disjoint
+union over intermediate values $k \in \kappa$ with $g(k) = m$ of the sub-fibers
+$\{ i \mid f(i) = k\}$. The bijection $i \mapsto (f(i), i)$ between the fine fiber
+and the indexed disjoint union (`Finset.sum_sigma'`, `Finset.sum_bij`) shows the
+two sums are equal term by term. $\square$
 
-*Proof sketch.* Containment is the union over admissible positions of the
-occurrence events: $\{v : \mathrm{Contains}(p,v)\} = \bigcup_{i=0}^{L-k}
-\{v : \mathrm{OccursAt}(p,v,i)\}$ (occurrence at an inadmissible position is
-impossible, since some probed index would be out of range). By monotonicity and
-finite subadditivity of the uniform measure (the union bound),
-$$\Pr\Bigl(\bigcup_i E_i\Bigr) \le \sum_{i=0}^{L-k} \Pr(E_i)
-   = \sum_{i=0}^{L-k} \frac{b^{L-k}}{b^{L}} = (L-k+1)\,b^{-k},$$
-using Lemma 3 and Theorem 1 for each term. $\square$
+**Theorem 4.4 (Pushforward preserves the simplex; `pushforward_mem_stdSimplex`).**
+If $p \in \Delta_\iota$ then $\mathrm{pushforward}(f, p) \in \Delta_\kappa$.
 
-The bound is sharp in the small-probability regime (where overlap corrections
-are negligible) and becomes vacuous, as it should, once $(L-k+1)\,b^{-k} \ge 1$,
-i.e. when short patterns in long volumes are almost surely present.
+*Proof.* Each coordinate $\mathrm{pushforward}(f,p)_k = \sum_{i:f(i)=k} p_i$ is a
+sum of nonnegative terms, hence nonnegative (`Finset.sum_nonneg`). The total is
+preserved by Theorem 4.1, so $\sum_k \mathrm{pushforward}(f,p)_k = \sum_i p_i = 1$.
+Both simplex conditions hold. $\square$
 
-## 7. Edge cases
+Theorems 4.2–4.4 say that $\mathrm{pushforward}$ is a covariant functor on weight
+vectors (object map $v \mapsto \mathrm{pushforward}(f,v)$ for each morphism $f$ of
+index types) that conserves mass and therefore restricts to an *endofunctor of the
+probability simplex*.
 
-The development is total: every result holds for all natural-number parameters
-in its stated range, with degenerate cases treated explicitly.
+---
 
-- **$b = 0$ (empty alphabet).** The library is empty unless $L = 0$. Theorem 1
-  gives $0^L$ (which is $1$ if $L=0$, else $0$). The counting Lemma 2 is proved
-  by a separate branch for $b=0$. Probabilistic statements presuppose $b>0$.
-- **$b = 1$ (unary alphabet).** Exactly one volume exists ($1^L = 1$); every
-  pattern occurs at every admissible position, and $(L-k+1)\cdot 1^{-k} = L-k+1$,
-  matching the deterministic count.
-- **$L = 0$ (empty volumes).** The only volume is the empty function; the only
-  admissible pattern length is $k=0$.
-- **$k = 0$ (empty pattern).** The empty pattern occurs at every position;
-  expected count $(L+1)\,b^{0} = L+1$, and the containment bound is $\ge 1$
-  (vacuous), consistent with the empty pattern always being present.
+## 5. The naturality square
 
-## 8. Worked examples
+**Theorem 5.1 (Naturality of normalization; `normalize_pushforward`).**
+For every $f : \iota \to \kappa$ and every $v : \iota \to \mathbb{R}$ (no
+hypotheses),
+$$
+\mathrm{normalize}\big(\mathrm{pushforward}(f, v)\big)
+\;=\;
+\mathrm{pushforward}\big(f, \mathrm{normalize}(v)\big).
+$$
 
-We record several fully explicit evaluations, all of which can be checked by
-exhaustive enumeration over the relevant finite library and which therefore
-serve as concrete certificates for the closed forms.
+*Proof.* Fix $k \in \kappa$. The left-hand side is
+$\mathrm{pushforward}(f,v)_k \big/ \sum_{k'} \mathrm{pushforward}(f,v)_{k'}$.
+By mass preservation (Theorem 4.1), the denominator equals $\sum_j v_j$; call it
+$S$. So the left side is $\big(\sum_{i:f(i)=k} v_i\big) / S$. The right-hand side is
+$\sum_{i:f(i)=k} (v_i / S)$. These are equal by distributivity of division over a
+finite sum (`Finset.sum_div`): $\big(\sum_{i} g_i\big)/S = \sum_i (g_i/S)$ applied
+to the indicator-weighted summands. The argument is uniform in the degenerate case
+$S = 0$, where both sides collapse to $0$. $\square$
 
-**Example 1 (binary, the canonical case).** Take $b = 2$, $L = 10$, and the
-pattern $p = (0,1)$ of length $k = 2$. The library has $2^{10} = 1024$ volumes
-(Theorem 1), each of probability $2^{-10} = 1/1024$ (Theorem 2). There are
-$L - k + 1 = 9$ admissible starting positions, and at each one exactly
-$2^{10-2} = 256$ volumes display the pattern (Lemma 3). Hence the summed
-occurrence count is $9 \cdot 256 = 2304$, and the expected count is
-$$\mathrm{expectedOccurrences}(p,10) = \frac{2304}{1024} = \frac{9}{4} = 2.25,$$
-in exact agreement with $(L-k+1)\,b^{-k} = 9 \cdot 2^{-2} = 9/4$ (Theorem 4).
-An independent brute-force average over all $1024$ strings returns the same
-$9/4$, with no rounding.
+The naturality square is the conceptual climax: it states that the diagram
 
-**Example 2 (ternary sweep).** With $b = 3$ one finds, for instance,
-$\mathrm{expectedOccurrences}((0,0),4) = (4-2+1)\cdot 3^{-2} = 3/9 = 1/3$;
-$\mathrm{expectedOccurrences}((2,0,1),5) = (5-3+1)\cdot 3^{-3} = 3/27 = 1/9$;
-and the boundary case $k = L$, e.g.
-$\mathrm{expectedOccurrences}((0,1,2,0),4) = (4-4+1)\cdot 3^{-4} = 1/81$, where the
-single admissible position contributes the probability $3^{-4}$ of an exact full
-match. Each equals its brute-force value exactly.
+$$
+\begin{array}{ccc}
+v & \xrightarrow{\ \mathrm{pushforward}(f,-)\ } & \mathrm{pushforward}(f,v) \\[2pt]
+\downarrow{\scriptstyle \mathrm{normalize}} & & \downarrow{\scriptstyle \mathrm{normalize}} \\[2pt]
+\mathrm{normalize}(v) & \xrightarrow{\ \mathrm{pushforward}(f,-)\ } & \mathrm{pushforward}(f,\mathrm{normalize}(v))
+\end{array}
+$$
 
-**Example 3 (unary degeneracy).** With $b = 1$ there is exactly one volume
-(the constant function), and every pattern of length $k \le L$ occurs at every
-one of the $L-k+1$ positions; the formula returns $(L-k+1)\cdot 1^{-k} = L-k+1$,
-the deterministic count, and the containment probability is exactly $1$ while the
-bound $(L-k+1)\cdot 1^{-k} \ge 1$ is (correctly) non-restrictive.
+commutes for every morphism $f$. In categorical language, $\mathrm{normalize}$ is
+a natural transformation from the pushforward functor on the cone to the
+pushforward functor on the simplex.
 
-**Example 4 (containment vs. bound).** For $b = 2$, $L = 8$, $p = (0,0,0)$
-($k=3$), exhaustive enumeration gives
-$\Pr[\mathrm{Contains}] = 0.41797\ldots$, comfortably below the union bound
-$(8-3+1)\cdot 2^{-3} = 6/8 = 0.75$ (Theorem 5). The gap is exactly the
-inclusion–exclusion correction for overlapping occurrences of $000$, which the
-union bound deliberately discards.
+---
 
-**Example 5 (Borges' parameters).** With $b = 25$ and $L = 1{,}312{,}000$,
-Theorem 1 gives a library of $25^{1{,}312{,}000}$ volumes (about $1.8$ million
-decimal digits). A specific phrase of $k = 50$ characters has expected count
-$(1{,}312{,}000 - 49)\cdot 25^{-50} \approx 1.66 \times 10^{-64}$ (Theorem 4):
-the phrase exists in the library, but is expected once per $\sim 10^{64}$ volumes.
-Here only the closed form is usable; enumeration is physically impossible.
+## 6. The role of totality (the $x/0 = 0$ convention)
+
+A central design decision is to make $\mathrm{normalize}$ a *total* function via
+the convention that division by zero returns zero. The consequences are sharp and
+worth isolating:
+
+- **Idempotence (Theorem 3.5) and naturality (Theorem 5.1) hold unconditionally.**
+  In the degenerate case $\sum_j v_j = 0$, both sides of each identity reduce to
+  the zero vector, so no positivity hypothesis is required. This is the cleanest
+  possible form of these laws.
+- **Only simplex membership (Theorem 3.3) requires $0 < \sum_j v_j$.** This is
+  *necessary*, not an artifact: the simplex constraint $\sum_i p_i = 1$ can never
+  be satisfied by the zero vector, so some nondegeneracy hypothesis is unavoidable
+  precisely here and nowhere else.
+
+This separation — totality everywhere, positivity only where the simplex constraint
+forces it — is what gives the theory its uniform, hypothesis-light character.
+
+---
+
+## 7. Underlying summation identities
+
+The entire development reduces to a small toolkit of finite-summation identities,
+each playing a precise role:
+
+- **`Finset.sum_div`** ($\sum_i (g_i/c) = (\sum_i g_i)/c$): pulls a common
+  denominator out of a sum. It powers the mass-$1$ computation (Lemma 3.1,
+  Theorem 3.3) and the naturality square (Theorem 5.1).
+- **`Finset.sum_comm`** (exchange of summation order): yields mass preservation
+  (Theorem 4.1) and underpins composition (Theorem 4.3).
+- **`Finset.sum_ite_eq'`** (collapse of a one-hot indicator sum): yields the
+  identity law (Theorem 4.2) and the per-index evaluation in mass preservation.
+- **`Finset.mul_sum`** and **`mul_div_mul_left`**: cancel a common scalar factor,
+  giving scale invariance (Theorem 3.6).
+- **`Finset.sum_sigma'` / `Finset.sum_bij`** (reindexing a fibered sum): give the
+  composition law (Theorem 4.3).
+
+Notably, after invoking mass preservation, the naturality square reduces to the
+single scalar identity $\big(\sum_i g_i\big)/c = \sum_i (g_i/c)$.
+
+---
+
+## 8. Applications
+
+**Machine learning.** Classifier outputs are normalized score vectors. Scale
+invariance (Theorem 3.6) characterizes the redundancy of un-normalized logits up
+to positive scaling; idempotence (Theorem 3.5) guarantees that repeated
+normalization layers are stable. The retraction property (Theorem 3.4) means that
+already-normalized probability vectors pass through normalization unchanged.
+
+**Statistics.** Pushforward is the marginal distribution. The naturality law
+(Theorem 5.1) is the formal justification for the everyday practice of computing
+relative frequencies and forming marginals in either order: aggregate-then-normalize
+equals normalize-then-aggregate. Mass preservation (Theorem 4.1) is conservation
+of total count under regrouping.
+
+**Statistical physics / renormalization.** Coarse-graining microscopic degrees of
+freedom by summing them out is exactly $\mathrm{pushforward}$. Mass preservation
+is conservation of probability under coarse-graining; naturality is the statement
+that the normalizing partition function transforms consistently, so the
+coarse-grained Gibbs measure is the normalization of the coarse-grained weights.
+
+**Category theory and functional programming.** The pair (functor, natural
+transformation) is the abstract template for "uniform, choice-free constructions."
+Recognizing normalization as natural certifies that it commutes with all
+relabelings and coarsenings of the outcome space, not as a coincidence but as a
+structural property.
+
+---
 
 ## 9. Algorithms
 
-Two procedures accompany the theory; both are exact finite computations.
+We summarize the two operations as algorithms; both run in linear time in the
+number of fine outcomes.
 
-**Algorithm A (Exhaustive expected-occurrence verifier).** Enumerate all $b^L$
-volumes, count pattern occurrences in each, and average. This computes
-$\mathrm{expectedOccurrences}(p,L)$ directly from Definition 8 and must equal
-$(L-k+1)\,b^{-k}$ (Theorem 4). Complexity $\Theta(b^L \cdot (L-k+1)\cdot k)$ —
-feasible only for small $b,L$, but decisive as a check on the closed form.
+**Algorithm A (Normalize).** Input: weight vector $v$ of length $n$.
+Compute $S \leftarrow \sum_i v_i$. If $S = 0$, return the zero vector (totality
+convention). Otherwise return $(v_i / S)_i$. Complexity $O(n)$ time, $O(n)$ space.
 
-**Algorithm B (Closed-form evaluator).** Evaluate $(L-k+1)\,b^{-k}$ and the
-containment bound directly in $O(1)$ arithmetic operations (plus the cost of
-big-integer/rational exponentiation). This is the production formula for any
-$b,L,k$, including Borges' astronomical parameters where Algorithm A is
-infeasible.
+**Algorithm B (Pushforward).** Input: map $f : \{1,\dots,n\} \to \{1,\dots,m\}$
+and weights $v$. Initialize an accumulator $w$ of length $m$ to zero. For each
+fine index $i$, add $v_i$ to $w_{f(i)}$. Return $w$. Complexity $O(n + m)$ time,
+$O(m)$ space.
 
-The pairing — a brute-force checker valid in the small regime and a closed form
-valid everywhere — is the practical content of the exactness theorems.
+Composing the two (in either order) realizes the naturality square and provides a
+numerical consistency check (see the accompanying demonstrations).
 
-## 10. Applications
+---
 
-The model is a faithful abstraction of several real settings, in each of which
-the expected-occurrence identity is the standard chance-baseline calculation.
+## 10. Discussion and future work
 
-- **Genomics.** With $b=4$ (DNA bases), a volume is a genome and a pattern is a
-  sequence motif; $(L-k+1)\,4^{-k}$ is the expected number of chance occurrences
-  used to flag statistically over-represented motifs.
-- **Information security and forensics.** With $b=256$ (bytes), the formula
-  estimates expected chance collisions of a fixed signature in a file of length
-  $L$, and the union bound caps the probability of any chance hit.
-- **Coding theory.** With $b=2$, the results are exact statements about
-  substring statistics in uniformly random bit-strings.
-- **Theoretical computer science.** Theorem 5 is a concrete instance of the
-  union-bound (first-moment) method used pervasively to show rare events stay
-  rare; the same template bounds the chance that any of many low-probability bad
-  configurations occurs.
-- **Search and indexing.** The expected count calibrates how many spurious
-  matches a fixed query of length $k$ produces in a corpus modeled as random
-  text of length $L$, informing index granularity and minimum useful query
-  length: once $(L-k+1)\,b^{-k} \ll 1$, a single hit is overwhelmingly likely to
-  be meaningful rather than coincidental.
+The results above package a piece of universally used arithmetic as a small,
+self-certifying categorical theory. The deliberate use of totality keeps the laws
+hypothesis-light, and the entire structure rests on elementary finite-sum
+identities. We record five precise, falsifiable conjectures for further
+development.
 
-In every case the two regimes delimited by Theorem 5 — the small-probability
-regime where the union bound is tight and the saturated regime where it is
-vacuous because the pattern is almost surely present — carry the operational
-meaning: they separate “finding the pattern is evidence” from “finding the
-pattern is inevitable.”
+**C1. Affineness of normalization on rays through a fixed reference.** For
+nonnegative $u, v$ with positive total mass and $t \in [0,1]$,
+$\mathrm{normalize}(t\,u + (1-t)\,v)$ lies on the projective segment between
+$\mathrm{normalize}(u)$ and $\mathrm{normalize}(v)$: there is $s \in [0,1]$ with
+$\mathrm{normalize}(t u + (1-t)v) = s\,\mathrm{normalize}(u) + (1-s)\,\mathrm{normalize}(v)$,
+where $s = t\|u\|_1 / (t\|u\|_1 + (1-t)\|v\|_1)$.
 
-## 11. Discussion
+**C2. Pushforward of an extreme point is an extreme point.** $\mathrm{pushforward}(f)$
+maps vertices (Dirac masses $e_i$) of $\Delta_\iota$ to vertices of $\Delta_\kappa$:
+$\mathrm{pushforward}(f, e_i) = e_{f(i)}$. More strongly, pushforward sends extreme
+points to extreme points and is affine, hence determined by its action on vertices.
 
-The value of the development is its exactness and totality. Each headline
-quantity is an equality — $b^L$, $b^{-L}$, $(L-k+1)\,b^{-k}$ — or a sharp
-inequality, proved for all parameters with degenerate cases discharged rather
-than excluded. The mathematics is elementary (function-space cardinality,
-Fubini for finite sums, linearity of expectation, the union bound), but the
-contribution is the precise bookkeeping that turns Borges' image of the infinite
-into closed-form invariants. The crux is the position-fixing count $b^{L-k}$
-(Lemma 3), abstracted from the general agreement-count Lemma 1; once that is in
-hand, the main theorem is pure linearity of expectation.
+**C3. Contraction under total-variation / $\ell^1$ distance.** Pushforward is
+$\ell^1$-nonexpansive on the simplex:
+$\sum_k |\mathrm{pushforward}(f,p)_k - \mathrm{pushforward}(f,q)_k| \le \sum_i |p_i - q_i|$
+for all $p,q \in \Delta_\iota$ (data-processing inequality for total variation),
+with strict contraction iff $f$ is non-injective on the support.
 
-## 12. Future work
+**C4. Naturality extends to entropy/KL.** Shannon entropy satisfies
+$H(\mathrm{pushforward}(f,p)) \ge H(p)$ (coarse-graining never decreases entropy),
+with equality iff $f$ is injective on $\mathrm{supp}\,p$; dually, KL divergence is
+monotone under pushforward:
+$\mathrm{KL}(\mathrm{pushforward}(f,p)\,\|\,\mathrm{pushforward}(f,q)) \le \mathrm{KL}(p\|q)$.
 
-A natural next step is an *exact* containment probability via
-inclusion–exclusion over overlapping occurrences, replacing the union bound of
-Theorem 5; this connects to the correlation-polynomial / Guibas–Odlyzko theory
-of overlapping patterns and to the autocorrelation structure of the pattern. One
-can also compute the full distribution and the variance of
-$\mathrm{occurrenceCount}$ (a second-moment analysis), study patterns drawn at
-random or with wildcards, and treat multiple patterns simultaneously. Each of
-these refines the first-moment results proved here while staying within the same
-finite, exact framework.
+**C5. Universal property: normalization as a reflector.** $\mathrm{normalize}$ is
+the unit of a reflection (left adjoint) from the nonnegative cone modulo positive
+scaling onto the simplex; scale-invariant maps factor uniquely through
+$\mathrm{normalize}$. The proved laws `normalize_idem`, `normalize_id_of_mem`, and
+`normalize_smul` are the supporting structure.
 
-The broader program from which this work descends concerns functorial bridges
-between tropical, probabilistic, and Diophantine structures; the present
-combinatorial-probability layer supplies a fully exact, edge-case-complete
-template for the uniform-measure computations those bridges require.
+---
+
+## 11. Conclusion
+
+We have shown that two of the most elementary operations of applied probability —
+$\ell^1$-normalization and marginalization — carry a clean categorical structure:
+marginalization is a mass-preserving endofunctor of the probability simplex, and
+normalization is an idempotent, scale-invariant retraction onto the simplex that is
+natural with respect to marginalization. The totality convention $x/0=0$ makes the
+key laws unconditional, leaving positivity required only where the simplex
+constraint genuinely demands it. The whole theory rests on a handful of finite-sum
+identities, yet it crystallizes a structural pattern that recurs across statistics,
+machine learning, and statistical physics.
