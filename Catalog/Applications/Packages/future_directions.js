@@ -1670,20 +1670,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniform Spectral Gap for Thin Subgroups at Arbitrary Critical Exponent"
   },
   {
-    "consumed_by_exp_id": "dafb1f8b",
-    "description": "For every natural number k, the directed binary structure consisting of the strict order relation of any finite poset of width at most k has twin-width at most 2*k+1. Equivalently, every finite poset whose largest antichain has size at most k admits a contraction sequence in which every intermediate part has at most 2*k+1 red out-/in-neighborhood types induced by the strict order relation.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2077",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18934v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T08:02:38.169523+00:00",
-    "title": "Linear twin-width bound for finite posets of bounded width"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For the preferential attachment random multigraph with edge steps and parameter p \u2208 (0,1), started from any fixed finite connected multigraph with positive total degree, the clique number has the same logarithmic growth exponent as in the one-loop initial condition: for every \u03b5 > 0, the probability that |log(\u03c9(G_t))/log(t) - (1-p)/(2-p)| > \u03b5 tends to 0 as t tends to infinity.",
     "domains": [
@@ -4043,6 +4029,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Chromatic Polynomial Theory\n\nDerived from the cycle that produced `Catalog/Algebra/ChromaticPolynomial.lean` and\n`Catalog/Algebra/GraphColoringBounds.lean`.  Each conjecture is bold, falsifiable, and\ngrounded in the verified results of this cycle.\n\n## 1. `chromaticFn` agrees with an honest integer polynomial in `q`\n\n**Conjecture.** For every finite simple graph `G` there is a polynomial\n`\u03c7_G \u2208 \u2124[X]` of degree `|V|` with `\u03c7_G(q) = chromaticFn G q` for all `q : \u2115`, whose\nleading coefficient is `1` and whose coefficients alternate in sign.\n\n*The key insight is...* deletion\u2013contraction (`deletion_contraction`, already proved)\ngives a recurrence `\u03c7_{G-e} = \u03c7_G + \u03c7_{G/e}` that, combined with the two anchored\nevaluations `P(\u22a5) = q\u207f` and `P(K\u2099) = q^{(n)}` (both proved), pins the counting\nfunction to a unique monic integer polynomial by induction on the number of edges.\n\n*Why now?* The counting function and the recurrence are now formal and sorry-free, so\nthe only remaining step is to package the induction into `Polynomial \u2124` and prove the\nevaluation map is injective on this degree range \u2014 purely algebraic, no new graph theory.\n\n## 2. Chromatic polynomials have no roots in `(\u2212\u221e, 0) \u222a (0, 1) \u222a (1, 32/27)`\n\n**Conjecture (real-rootedness gap).** Encoding `\u03c7_G` as in Direction 1, `\u03c7_G(t) \u2260 0`\nfor every real `t \u2208 (1, 32/27)`, with `32/27` the smallest possible such bound.\n\n*The key insight is...* the deletion\u2013contraction recurrence forces sign patterns on the\nreal line; the bound `32/27` is the known threshold and should follow from a careful\ninductive sign analysis seeded by the complete-graph base case.\n\n*Why now?* With `deletion_contraction` formalized, the inductive engine needed for\nroot-location arguments is available; the conjecture is a sharp, testable numeric claim.\n\n## 3. The greedy bound is tight **iff** a complete or odd-cycle component is present\n\n**Conjecture (formal Brooks).** For a connected finite graph `G` with `\u0394(G) \u2265 3`,\n`\u03c7(G) = \u0394(G) + 1` if and only if `G` is a complete graph; for `\u0394(G) = 2` the equality\nholds iff `G` is an odd cycle.  Equivalently `\u03c7(G) \u2264 \u0394(G)` outside these families.\n\n*The key insight is...* this cycle proved both halves of the boundary \u2014 the universal\nupper bound `\u03c7 \u2264 \u0394 + 1` (`colorable_maxDegree_add_one`) and the *tightness witnesses*\n`K\u2099\u208a\u2081` and odd cycles \u2014 so Brooks' theorem is exactly the statement that these witnesses\nare the *only* tight cases.\n\n*Why now?* The hard universal direction (greedy coloring) is already formal; what remains\nis the structural converse, which can be attacked component-by-component using the proved\nsandwich as scaffolding.\n\n## 4. Four-color theorem \u21d4 `\u03c7(G) \u2264 4` for all planar `G`, via `chromaticFn`\n\n**Conjecture.** A finite graph is planar-4-colorable iff `chromaticFn G 4 > 0`, and the\nfour-color theorem is equivalent to `\u2200 planar G, chromaticFn G 4 > 0`.\n\n*The key insight is...* `chromaticFn_pos_iff` already reduces \"`q`-colorable\" to\n\"`chromaticFn G q > 0`\", so the entire 4CT can be restated as a positivity statement\nabout the chromatic polynomial at `q = 4`, decoupling coloring from the polynomial.\n\n*Why now?* The positivity bridge is proved and sorry-free; the remaining content is a\nformal definition of planarity, after which the equivalence is immediate from the bridge.\n\n## 5. T-positivity of the chromatic polynomial for claw-free graphs\n\n**Conjecture.** Written in the falling-factorial (\"tree-like\") basis `{q^{(k)}}`, the\nchromatic polynomial of a claw-free graph has nonnegative coefficients.\n\n*The key insight is...* the complete-graph evaluation `P(K\u2099) = q^{(n)}` (proved) shows the\nfalling-factorial basis is the natural one for chromatic data, and deletion\u2013contraction\nacts triangularly on this basis, so claw-freeness should preserve nonnegativity inductively.\n\n*Why now?* Both the basis anchor and the recurrence are formal; expressing the change of\nbasis as proved `Nat`/`\u2124` identities makes the positivity claim a concrete, checkable target.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2182",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "37109497",
+    "status": "available",
+    "timestamp": "2026-06-21T13:28:16.740114+00:00",
+    "title": "Derived from the cycle that produced `Catalog/Algebra/ChromaticPolynomial.lean` "
   },
   {
     "consumed_by_exp_id": "",

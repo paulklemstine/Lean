@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "37109497",
     "filename": "graph_coloring_chromatic_polynomial_theory.json",
     "pkg_num": 222,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6924620000000001,
     "title": "Graph Coloring: The Deletion\u2013Contraction Recurrence and the Chromatic Polynomial"
   },
   {
@@ -6774,8 +6774,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "graph_coloring_chromatic_polynomial_theory",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6924620000000001,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Graph Coloring: The Deletion\u2013Contraction Recurrence and the Chromatic Polynomial"
     }
