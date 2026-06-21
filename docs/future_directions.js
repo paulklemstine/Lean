@@ -536,7 +536,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "aa9dc0d5",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -545,7 +545,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -940,6 +940,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432668+00:00",
     "title": "Knot Invariants: Jones Polynomial Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "seed_352",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432688+00:00",
+    "title": "Ramsey Theory: Bounds and Constructions"
   },
   {
     "consumed_by_exp_id": "",
@@ -1450,7 +1464,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "6c747cdd",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1460,7 +1474,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -2426,7 +2440,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equidistribution of Galois orbits of CM points on products of non\u2011isomorphic Shimura curves without auxiliary splitting conditions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53ef2527",
     "description": "For all n \u2265 0, the number of (4,0)-colored Frobenius partitions of weight n equals twice the sum of Lin-Liu minimal excludants over all 4-partitions of n, i.e., \u03c8_{4,0}(n) = 2\u03c3_{mex,4}(n). This conjecture extends the proven identities \u03c8_{2,0}(n) = 2\u03c3_{mex,2}(n) and \u03c8_{2,1}(n) = 2\u03c3_{mex,2}(n) - E_2(n) to the four-colored case.",
     "domains": [
       "Pythagorean",
@@ -2436,7 +2450,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19696v1",
-    "status": "failed",
+    "status": "in_progress",
     "timestamp": "2026-06-20T10:27:31.374184+00:00",
     "title": "Generalized two-colored Frobenius identities to four-colored case"
   },
@@ -3169,6 +3183,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer r \u2265 2 there exists a constant C > 0 (e.g. C = 1/8) such that for all sufficiently large n there exists an n\u2011vertex r\u2011graph H in which each (r+1)-set of vertices spans either 0 or 2 edges and |E(H)| \u2265 C / r^3 * binom(n, r).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2187",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-21T19:25:18.499235+00:00",
+    "title": "Conjecture on asymptotic density of r\u2011graphs with 0 or 2 edges per (r+1)-set"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves Frankl, Kiselev, and Kupavskii's conjecture that for any intersecting family \\(\\mathcal{F}\\subseteq\\binom{[n]}{k}\\) with \\(n\\ge 60k^{3/2}\\) and \\(k\\ge 50\\), the size of the symmetric difference family satisfies \\(|\\mathcal{SD}(\\mathcal{F})|\\le\\sum_{\\ell=0}^{k-1}\\binom{n-1}{2\\ell}\\), with equality only for a specific class of stars. The proof relies on a concentration inequality and structural arguments on intersecting families.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2187",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20043v1",
+    "status": "available",
+    "timestamp": "2026-06-21T19:25:57.384356+00:00",
+    "title": "Improved bound on symmetric differences of intersecting families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3699,7 +3742,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from this cycle's findings (`Core.lean`, `Halting.lean`,"
   },
   {
-    "consumed_by_exp_id": "34ce1554",
+    "consumed_by_exp_id": "",
     "description": "# FUTURE DIRECTIONS \u2014 Gravity from Information: Spacetime as a Quantum Error-Correcting Code\n\nThis research cycle built a fully verified, manifold-free combinatorial core of\nthe holographic principle in `Catalog/Geometry/HolographicCode/`:\n\n* `AreaEntropy.lean` \u2014 the discrete Ryu\u2013Takayanagi **area functional**\n  `cut w A = \u2211_{u\u2208A, v\u2209A} w u v`, with purity (`cut_compl`), subadditivity,\n  **strong subadditivity** (`cut_submodular`), and Araki\u2013Lieb (`cut_arakiLieb`).\n* `Monogamy.lean` \u2014 the key finding `cut_tripartite_eq`: the bare boundary cut\n  has **identically vanishing tripartite information** (`I\u2083 \u2261 0`), so it\n  saturates Monogamy of Mutual Information (`cut_monogamy`).\n* `MutualInformation.lean` \u2014 the information dictionary: `mutualInfo` and\n  `condMutualInfo` defined from geometry, with nonnegativity = subadditivity /\n  strong subadditivity (`mutualInfo_nonneg`, `condMutualInfo_nonneg`).\n\nThe single sharpest discovery is that **the fixed boundary cut is too rigid**:\nit makes `I\u2083 = 0` exactly, whereas genuine holographic states have `I\u2083 < 0`.\nThe quantum-information content of geometry therefore lives in the *minimization*\nover bulk surfaces \u2014 the entanglement-wedge / min-cut prescription. The\nconjectures below are organized around closing that gap.\n\n---\n\n## Conjecture 1 (Strict Monogamy needs the min-cut). \n\nDefine the **min-cut RT entropy** on a weighted graph with a distinguished\nboundary `\u2202 \u2286 V`:\n`minCut w A = \u2a05 { cut w X | X \u2286 V, X \u2229 \u2202 = A }` (surfaces homologous to `A`).\nThen `minCut` still satisfies subadditivity and strong subadditivity, **and** its\ntripartite information is genuinely nonpositive:\n`minCut(A)+minCut(B)+minCut(C) \u2212 minCut(A\u222aB) \u2212 minCut(B\u222aC) \u2212 minCut(A\u222aC) + minCut(A\u222aB\u222aC) \u2264 0`,\nwith *strict* inequality for some graph (a witness already exists on the\n\"triangle of bulk legs\" graph). **Testable:** the strictness is exactly the\nphenomenon absent from our `cut_tripartite_eq`.\n\n## Conjecture 2 (Full holographic entropy cone). \n\nFor `minCut` of Conjecture 1, *all* facet inequalities of the known holographic\nentropy cone hold \u2014 in particular the 5-party HHM/cyclic inequalities that are\nstrictly stronger than MMI. Conversely, the *bare* `cut` satisfies every\ninequality that is a consequence of submodularity **and saturates exactly those\nthat are linear combinations of `I\u2083 = 0`-type identities**. Goal: classify which\nfacets the fixed cut saturates versus which require minimization.\n\n## Conjecture 3 (Complementary recovery / QEC duality). \n\nModel a holographic code by a bulk vertex set and a boundary `\u2202`, with a bulk\n\"operator\" localized at a vertex `p`. Define `A` *recovers* `p` iff `p` lies on\nthe `A`-side of every minimum cut `minCut w A`. Conjecture: for a pure global\nstate (symmetric `w`), **exactly one** of `A`, `A\u1d9c` recovers `p`\n(complementary recovery), and the set of recovering regions is an up-set closed\nunder the min-cut \"entanglement wedge.\" This is the discrete Knill\u2013Laflamme /\noperator-algebra QEC statement, and should follow from submodular uncrossing of\nminimum cuts.\n\n## Conjecture 4 (Discrete area law \u21d2 continuum RT). \n\nFor a sequence of graphs `G_n` discretizing a Riemannian surface with edge\nweights `w_n` approximating the metric, the rescaled cut entropies\n`(1/n) \u00b7 cut w_n A_n` **\u0393-converge** to the geometric area\n`\u222b_{\u2202A} ds` of the minimal surface bounding `A`. This would derive the continuum\nRyu\u2013Takayanagi area law as a scaling limit of the verified combinatorial\ninequalities, with the entropy inequalities passing to the limit by lower\nsemicontinuity.\n\n## Conjecture 5 (Cut distance and the Singleton bound). \n\nThe functional `dist(A,B) = cut w (A \u25b3 B)` (symmetric difference) is a\npseudometric on regions, and for a code defined by the min-cut, the code\n**distance** `d` (minimum weight of an undetectable boundary perturbation) and\nthe number `k` of protected bulk degrees of freedom obey a discrete\n**quantum-Singleton-type bound** `k \u2264 |\u2202| \u2212 2(d \u2212 1)` expressible purely via\n`minCut`. Saturation should characterize \"perfect-tensor\" / maximally\nholographic graphs (the HaPPY pentagon tiling).\n",
     "domains": [
       "Geometry",
@@ -3709,7 +3752,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ed805c6d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-17T01:40:31.338348+00:00",
     "title": "Fully verified, manifold-free combinatorial core of"
   },
@@ -4105,36 +4148,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese directions build on the counterexample in\n`Catalog/Logic/MaximalFitnessCounterexample.lean`, which shows that extension\nmonotonicity and well-founded rank descent alone cannot imply primitivity.\n\n## 1. Parsimony-corrected fitness theorems\n\nFormalize the \"repaired\" theorem under an anti-monotone (parsimony) fitness\nhypothesis `ProperSub S T \u2192 fitness T \u2264 fitness S`, and prove that under it every\nmaximal-fitness terminal theory *is* primitive and rank-minimal. The key insight\nis that the original claim fails not because rank descent is too weak but because\nfitness and the sub-theory order were allowed to align in the *wrong*\ndirection, so flipping that single inequality restores the conclusion. Why now?\nBecause the present counterexample isolates exactly which hypothesis is missing,\nwe can state the corrected theorem with confidence instead of guessing, and reuse\nthe very same two-theory landscape as the first regression test.\n\n## 2. General order-theoretic abstraction\n\nReplace the concrete `ToyTheory` by an arbitrary preorder of theories equipped\nwith an abstract `fitness : T \u2192 \u211a` (or into any linear order) and study, in full\ngenerality, the interplay between fitness-optimality and order-minimality. The\nkey insight is that \"maximal fitness \u21d2 primitive\" is really a statement about a\n*Galois-style compatibility* between a valuation and an order, so it should be\nproved once abstractly and then instantiated, rather than re-derived per model.\nWhy now? Mathlib already provides robust `Order`, `WellFoundedLT`, and\n`MonotoneOn` infrastructure, so the abstract framing is cheap to build today and\nimmediately subsumes both the broken claim and its parsimony-corrected fix.\n\n## 3. Search/optimization dynamics over theory landscapes\n\nModel the `Mutation` relation as a discrete dynamical system and characterize its\nfixed points (terminal theories) and basins of attraction on larger finite\nlandscapes. The key insight is that terminality is a purely *local* property\n(no improving neighbor) whereas primitivity is *global* (a minimum of the whole\norder), and conflating local optima with global structure is the precise error\nthe counterexample exposes. Why now? Lightweight enumeration via\n`DecidableEq`/`Fintype` lets us machine-check these dynamics on small models\nimmediately, giving fast empirical feedback before committing to general proofs.\n\n## 4. Quantitative separation and trade-off bounds\n\nQuantify *how far* a maximal-fitness theory can be from primitive \u2014 e.g. bound\nthe rank gap or the length of the `ProperSub` chain below an optimum as a\nfunction of how strongly fitness increases along extensions. The key insight is\nthat the counterexample is the rank-`1` tip of an entire family of separations,\nso the qualitative failure can be sharpened into a quantitative trade-off\ninequality. Why now? With the base case formalized and its arithmetic over `\u211a`\nalready discharged, the inductive generalization to chains of length `n` is a\nnatural and tractable next step.\n\n## 5. Mechanized hypothesis-minimization audits\n\nDevelop a reusable tactic/workflow that, given a proposed \"structural \u21d2\nproperty\" theorem, automatically searches small finite models for counterexamples\nand reports the minimal hypothesis needed to recover truth. The key insight is\nthat the manual analysis performed here \u2014 strip the claim to its assumptions,\nbuild the smallest refuting model, then identify the one missing inequality \u2014 is\na repeatable pattern that can be partially automated. Why now? The combination of\nfinite `decide`-based model checking and the subagent-driven proving pipeline\nmakes such automated audits feasible for the first time, turning ad-hoc\ncounterexample hunting into a systematic verification step.\n",
-    "domains": [
-      "Logic",
-      "Pythagorean"
-    ],
-    "id": "fd_2187",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3e68faef",
-    "status": "available",
-    "timestamp": "2026-06-21T17:51:39.310834+00:00",
-    "title": "These directions build on the counterexample in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Twin-width of bounded-width posets\n\nThis cycle established the **static** linear neighbourhood-type bound\n(`nbhdTypeCount_le`: `\u2264 2k+1` red neighbourhood types per element under a\n`k`-chain cover) and the pigeonhole link `antichain_card_le_chains` (a `k`-chain\ncover forces width `\u2264 k`). The threshold monotonicity `posType_mono` is the\nreusable engine. The conjectures below extend these findings.\n\n## C1. Dynamic twin-width bound via the chain-interval contraction\n**Conjecture.** For a finite poset covered by `k` chains there is a *contraction\nsequence* (merging two parts at a time, each intermediate partition consisting of\norder-intervals of the chains) along which the red degree of every part stays\n`\u2264 2k+1`; hence twin-width `\u2264 2k+1`.\n**The key insight is** that `posType_mono` makes every part's red interactions\nwith any other chain a *monotone* boundary phenomenon, so merging intervals\nbottom-up never lets more than two red boundaries per chain coexist at a part.\n**Why now?** The static `2k+1` bound (`nbhdTypeCount_le`) is already formalized;\nonly the bookkeeping of a concrete merge order on `List`-encoded chains remains,\nwhich is a finite-induction task well suited to the present infrastructure.\n\n## C2. Full Dilworth as the hypothesis-discharger\n**Conjecture.** Every finite poset of width `\u2264 k` admits a labelling\n`chainIdx : \u03b1 \u2192 Fin k` with comparable label classes (the deep direction of\nDilworth), so the hypotheses of `nbhdTypeCount_le` follow from \"width \u2264 k\" alone.\n**The key insight is** that `antichain_card_le_chains` is the trivial converse, so\nthe missing content is exactly K\u0151nig/augmenting-path matching on the\nincomparability bipartite graph.\n**Why now?** `IsAntichain`/`IsChain` are already wired in; a Hall/K\u0151nig lemma in\nMathlib could be lifted to close the gap and make the twin-width statement depend\nonly on the antichain-width hypothesis.\n\n## C3. Lower bound: posets of width `k` with twin-width `\u03a9(k)`\n**Conjecture.** There is a family of width-`k` posets whose strict-order digraph\nhas twin-width `\u2265 c\u00b7k` for an absolute `c > 0`, so the linear dependence on `k`\nis unavoidable.\n**The key insight is** that `k` \"interleaved\" chains force every contraction to\nkeep `\u0398(k)` simultaneously-mixed boundaries, the dynamic shadow of the tight\n`changeCount = 2` example in `ComputationalEvidence.md`.\n**Why now?** The tightness witness for the per-chain `\u2264 2` bound is already\nisolated; promoting it to a global lower bound is the natural adversarial sequel.\n\n## C4. From posets to comparability/incomparability graphs\n**Conjecture.** The undirected incomparability graph of a width-`k` poset has\nbounded twin-width (function of `k` only), matching the directed bound up to a\nconstant.\n**The key insight is** that `incomp_ord_convex` shows the incomparable region of\neach chain relative to any vertex is a single interval, so the same monotone\nboundary count controls the undirected red degree.\n**Why now?** `incomp_ord_convex` is proved; reusing it for the symmetric relation\nneeds only replacing `posType`'s three-valued code by a two-valued one.\n\n## C5. Stability of the bound under bounded-height products\n**Conjecture.** If `P` has width `k` and `Q` is a chain (width `1`), then `P \u00d7 Q`\nhas width `\u2264 k` chains' worth of structure and neighbourhood-type count\n`\u2264 2k+1`, i.e. the bound is preserved by multiplying with a chain.\n**The key insight is** that a product with a chain refines each chain of `P` into\nfinitely many chains while preserving per-element monotonicity of `posType`.\n**Why now?** The `List`-based `chains` model makes such a refinement an explicit\n`List.flatMap`, directly testable against `nbhdTypeCount_le`.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2188",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "dafb1f8b",
-    "status": "available",
-    "timestamp": "2026-06-21T18:36:04.344470+00:00",
-    "title": "**static** linear neighbourhood-type bound"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4148,7 +4161,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "1d465e25",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -4158,7 +4171,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -4577,6 +4590,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0508",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.125386+00:00",
+    "title": "EML Universal Approximation: Density of EML Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
     "domains": [
       "EML",
@@ -4936,7 +4964,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "ddfbd83f",
+    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -4946,7 +4974,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
