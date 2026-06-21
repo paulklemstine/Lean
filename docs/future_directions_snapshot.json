@@ -63,25 +63,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 50d5b31e (Q=0.844), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove the exact infinite family of two‑parameter arrow values R(2,t)=t and R(t,2)=t in Lean's Arrow formalism. Specifically, for every natural number t≥1: (1) show Arrows t 2 t holds by giving a direct combinatorial argument that any red‑blue edge‑coloring of a set of size t yields either a red K2 o",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_50d5b31e_3fb13917",
-    "lineage_refs": [],
-    "priority_score": 0.9443199999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "50d5b31e",
-    "status": "available",
-    "timestamp": "2026-06-21T22:45:31.959703+00:00",
-    "title": "Deepening: Ramsey Theory: Bounds and Constructions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -4634,7 +4615,7 @@
     "catalog_references": [
       "arXiv:math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abf71497",
     "description": "Prove that for any finite graph Gamma, if there exists a positive integer s such that for every potential s-clique characterized by average degree k and average common neighbor count lambda, the generalized clique adjacency polynomial CA_Gamma(x, s, k, lambda) is strictly negative for some integer x, then the clique number of Gamma is strictly less than s.",
     "domain_bridges": [
       "Graph Theory",
@@ -4650,7 +4631,7 @@
     "proof_strategy": "The proof requires a formalization of the graph-theoretic properties of cliques (average degree and common neighbors) and the evaluation of the cubic polynomial CA_Gamma. The strategy involves showing that the existence of a clique of size s implies the existence of a root or non-negative value for the polynomial for specific integer values, contradicting the hypothesis via a proof by contradiction.",
     "research_mode": "team",
     "source_exp_id": "2606.19820v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-21T07:26:03.602943+00:00",
     "title": "Formalization of the Generalized Clique Adjacency Polynomial Bound"
   },
@@ -4811,6 +4792,33 @@
     "status": "available",
     "timestamp": "2026-06-21T12:44:18.852761+00:00",
     "title": "Explicit constructions for Ramanujan-type congruences"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Guo2023",
+      "Yuan2008",
+      "Kudla2004"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The arithmetic intersection number of the generating series of divisors on a unitary Shimura variety equals the logarithmic derivative at s=1 of the Hecke L-function attached to the CM extension.",
+    "domain_bridges": [
+      "modular forms",
+      "L-functions",
+      "Shimura varieties"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2175",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show equality by comparing automorphic forms and using the exceptional correspondence of Shimura curves",
+    "research_mode": "team",
+    "source_exp_id": "2606.18579v1",
+    "status": "available",
+    "timestamp": "2026-06-21T13:32:47.080161+00:00",
+    "title": "Modular Height Formula for Unitary Shimura Varieties"
   },
   {
     "ambition_level": "extension",
@@ -5391,6 +5399,58 @@
     "title": "Finite approximate Ramsey degrees characterize metrizable universal minimal flows"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "[Arxiv:1604.07485]"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Explores the existence and construction of Ziegler pairs using intersection lattices and motivates explicit examples with controlled geometric invariants.",
+    "domain_bridges": [
+      "algebraic geometry",
+      "computational algebra",
+      "combinatorial geometry"
+    ],
+    "domains": [
+      "Geometry",
+      "Cryptography"
+    ],
+    "id": "fd_2197",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive existence with convergence analysis",
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-21T22:46:29.073126+00:00",
+    "title": "On Ziegler pairs of line arrangements: from non-existence to abundance"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Chao et al. on cyclotomic polynomials for dice relabeling",
+      "Gallian-Rusin results on prime-product dice sizes"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any two distinct perfect squares a² and b², there exists at least one pair of square-sided dice with a² and b² sides whose sum frequency distribution matches that of two standard dice of the same sizes.",
+    "domain_bridges": [
+      "generating functions",
+      "cyclotomic polynomial factorizations",
+      "combinatorial enumeration"
+    ],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2198",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze cyclotomic polynomial decompositions of generating functions for square-sided dice and demonstrate constructive existence via factorization properties",
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-21T22:47:13.355437+00:00",
+    "title": "Existence of Square-Sided Dice Pairs Replicating Standard Dice Sum Frequencies"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -5489,7 +5549,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f810a812",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -5502,7 +5562,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -6645,46 +6705,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese build on the finite Erdős–Rényi model in\n`Catalog/Combinatorics/ErdosRenyi/Model.lean` (namespace `ErdosRenyi`).\n\n## 1. Subgraph-count expectations and the second moment\n\nGeneralize `expect_edge_count` to the expected number of copies of a fixed graph\n`H` (triangles, paths, spanning trees), and add the variance via a second-moment\ncomputation over pairs of potential copies. The key insight is that\n`prob_contains` already gives the probability that a *specific* set of edges is\npresent as `p^{#H}`, so the expected count is a single finite sum of `p^{#H}` over\nall embeddings, and the variance is a double sum controlled by how embeddings\noverlap. Why now? The containment and first-moment lemmas are already proved and\nsit on an audited, acyclic dependency graph, so the only new ingredient is finite\nbookkeeping over embeddings — no new probabilistic foundations are required.\n\n## 2. First/second-moment threshold theorems\n\nState and prove finite, quantitative threshold results: for a monotone property\n(e.g. \"contains a triangle\", \"has no isolated vertex\"), bound the probability of\nthe property below and above using the first-moment method (union bound) and the\nsecond-moment method (Chebyshev). The key insight is that all of these reduce to\ncomparing the expectation and variance of a count to its square, both of which are\nfinite sums of the `p^{#H}` atoms supplied by `prob_contains`. Why now? With the\nbinomial law and containment probabilities in hand, a threshold theorem becomes an\ninequality between explicit polynomials in `p`, which is exactly the kind of goal\nthat finite algebraic reasoning handles well.\n\n## 3. Connectivity and the isolated-vertex barrier\n\nFormalize the classical fact that the disappearance of isolated vertices is the\nobstruction to connectivity near `p ≈ (log n)/n`, starting with the expected\nnumber of isolated vertices `n · (1 - p)^{n-1}`. The key insight is that an\nisolated vertex is the event \"none of the `n - 1` potential edges at that vertex\nis present\", which is again a containment-style computation — a product of\nper-edge `(1 - p)` factors — directly expressible through the same weight model.\nWhy now? The model already represents each vertex's incident potential edges as an\nexplicit `Finset`, so the isolated-vertex indicator and its expectation can be\nwritten down immediately and fed into the moment machinery of Direction 2.\n\n## 4. Coupling and monotonicity in p\n\nDevelop a finite coupling/monotonicity theory: show that for `p ≤ q` the weight of\nany monotone (upward-closed) family of graphs is nondecreasing in the parameter.\nThe key insight is that the per-edge product structure of `weight` lets a `G(n,p)`\ngraph be coupled to a `G(n,q)` graph edge-by-edge, so monotonicity follows from a\nfinite, edge-local comparison rather than any analytic argument. Why now? The\nweight is already defined as an explicit product over potential edges, making the\nedgewise coupling a direct finite induction that needs none of the asymptotic\ntools usually invoked for stochastic domination.\n\n## 5. From counting weights to a genuine probability measure\n\nPackage `weight` as an honest finitely-supported probability mass function (a\n`PMF` or normalized measure on `graphs n`), with `weight_sum_eq_one` as the\nnormalization certificate, and connect it to Mathlib's probability library.\nThe key insight is that normalization is already proved for *every* real `p`, so the\nbridge to a measure-theoretic object is purely structural and introduces no new\nmathematical content. Why now? Establishing this interface early lets later\nthreshold and concentration results be stated in Mathlib's standard probabilistic\nvocabulary while still being backed by the finite, sorry-free identities proved\nhere.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2197",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6c747cdd",
-    "status": "available",
-    "timestamp": "2026-06-21T22:13:12.284871+00:00",
-    "title": "These build on the finite Erdős–Rényi model in"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from this cycle's findings (`RamseySmallNumbers.lean`,\n`RamseyExactFamilies.lean`, `RamseyProbabilisticLowerBound.lean`). Each conjecture\nis falsifiable in the same `Arrows`/`SimpleGraph` (or `Finset (Edge n)`) framework.\n\n## 1. The matching probabilistic/Paley lower bound `R(4,4) = 18`\n\n**Conjecture.** `¬ Arrows 17 4 4`: the Paley graph on `GF(17)` (`i ~ j ⟺ i-j` is\na nonzero quadratic residue mod 17) has no red `K₄` and no blue `K₄`, so\n`R(4,4) > 17`; combined with `arrows_four_four` this gives `R(4,4) = 18` exactly.\n\n*The key insight is* that the Paley graph is self-complementary and strongly\nregular `srg(17,8,3,4)`, so the red and blue clique structure coincide and the\n`K₄`-freeness is a single finite check — but on `Fin 17` it is far too large for\nkernel `decide`, so it needs the algebraic `srg` parameters (counting common\nneighbours) rather than brute force.\n\n*Why now?* This cycle already supplies the upper bound `arrows_four_four : Arrows\n18 4 4` and the `Arrows`/complement machinery; only the lower-bound construction\nis missing, and the strongly-regular-graph route makes it tractable without\nenumerating `2^{17}` subsets.\n\n## 2. Even-even parity improvement of Erdős–Szekeres, in general\n\n**Conjecture.** If `Arrows m (s+1) (t+2)` holds with the *smallest* such `m` even,\nand likewise the smallest `n` with `Arrows n (s+2) (t+1)` is even, then\n`Arrows (m + n - 1) (s+2) (t+2)` — a uniform `-1` over the binomial step whenever\nboth predecessors are even.\n\n*The key insight is* that the `27 = 9·3` odd-degree-sum contradiction proved here\nfor `R(3,4) ≤ 9` is not special: a regular \"every vertex has the extremal split\"\nconfiguration always contradicts the handshake lemma when the vertex count times\nthe forced degree is odd.\n\n*Why now?* `reddeg_sum_even` (the handshake parity lemma) and the degree-bound\nlemmas `red_nbhd_card_le` / `blue_nbhd_card_le` are already isolated and reusable;\ngeneralising their numeric `3,5,8` to symbolic `s,t` is the remaining step.\n\n## 3. The off-diagonal probabilistic bound `R(3,t) = Ω(t^{2}/\\log t)`\n\n**Conjecture.** A weighted/deletion variant of `exists_good_colouring` gives\n`¬ Arrows n 3 t` whenever `C(n,2)·p + C(n,t)·(1-p)^{C(t,2)} < 1` is achievable for\nsome `p`, yielding a super-polynomial separation between `R(3,t)` and the binomial\nbound `C(t+1,2)`.\n\n*The key insight is* that the union bound used here (`card_biUnion_le` over all\n`s`-cliques, each monochromatic with weight `2^{1-C(s,2)}`) becomes the two-term\nLovász/deletion bound once edges are coloured with a biased coin `p ≠ 1/2`.\n\n*Why now?* The exact finite counting backbone (`card_supersets`,\n`card_disjoints`, `card_coloring_space`) is in place; replacing the uniform count\n`2^{...}` by a binomial weight `p^{k}(1-p)^{m-k}` is a localized change.\n\n## 4. Hales–Jewett for alphabet size 2 (the combinatorial-line skeleton)\n\n**Conjecture.** For every `r` there is `N = HJ(2, r)` such that any `r`-colouring of\n`{0,1}^N` contains a monochromatic combinatorial line; the `r=2` case is provable\nby a Shelah-style \"line-free implies cube-shrinking\" induction in Lean.\n\n*The key insight is* that a combinatorial line over the binary alphabet is exactly\na nonempty \"wildcard set\" `S ⊆ [N]` together with a base point, so a line is a\npair `(S, x)` and Hales–Jewett becomes a pigeonhole over `2^N` colourings of the\n`Finset` lattice — structurally close to the `Finset (Edge n)` counting used here.\n\n*Why now?* The probabilistic file shows the team can manage `Finset`-of-`Finset`\ncounting and union bounds cleanly; the binary Hales–Jewett base case is the\nsmallest genuinely \"density/line\" statement reachable with that toolkit.\n\n## 5. Self-complementary witnesses force `R(s,s) ≡ 2 (mod 4)`-type constraints\n\n**Conjecture.** If a self-complementary graph on `n` vertices witnesses\n`¬ Arrows n s s`, then `n ≡ 0` or `1 (mod 4)` (the order of any\nself-complementary graph), giving congruence obstructions to extremal Ramsey\ncolourings (e.g. explaining why the extremal `R(3,3)` witness has `5 ≡ 1`\nvertices and the `R(4,4)` witness has `17 ≡ 1`).\n\n*The key insight is* that a self-complementary witness has `C(n,2)` edges split\nevenly, so `4 ∣ n(n-1)`, a divisibility fact that is immediate from the existence\nof a red/blue colour-swapping automorphism (`arrows_symm` at the graph level).\n\n*Why now?* `arrows_symm` already formalises the colour swap; promoting it from a\nstatement about the `Arrows` predicate to an explicit graph isomorphism is a short\nstep that unlocks the counting congruence.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2199",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "50d5b31e",
-    "status": "available",
-    "timestamp": "2026-06-21T22:44:19.055849+00:00",
-    "title": "Derived from this cycle's findings (`RamseySmallNumbers.lean`,"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -6703,22 +6723,22 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For every analytic one-parameter family of finite-range, translation-invariant 1D quantum spin Hamiltonians H(t) with a unique ground state away from finitely many critical parameters, the persistence barcode of the local observable algebra filtered by the ground-state GNS covariance metric has unbounded bottleneck derivative as system size L -> infinity if and only if the thermodynamic spectral gap closes at t. Test: Compute these noncommutative persistence barcodes for exactly solvable chains and DMRG-accessible models; confirmation requires barcode singularities precisely at known gap-closing transitions, while any gapped family with a diverging barcode derivative or any gap-closing family with uniformly Lipschitz barcodes refutes it. Impact: Provides a topological, representation-theoretic diagnostic for quantum criticality that may classify phase transitions without order parameters.",
+    "consumed_by_exp_id": "a747a0a8",
+    "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
     "domain_bridges": [],
     "domains": [
-      "Physics",
+      "Novelty",
       "Computation"
     ],
-    "id": "fd_2198",
+    "id": "fd_2119",
     "lineage_refs": [],
-    "priority_score": 0.7157272727272728,
+    "priority_score": 0.7158260869565218,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-21T22:14:45.942055+00:00",
-    "title": "Quantum Phase Transitions as Singularities of Noncommutative Persistence"
+    "status": "in_progress",
+    "timestamp": "2026-06-19T17:11:08.928185+00:00",
+    "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "ambition_level": "extension",
@@ -7432,25 +7452,6 @@
     "status": "failed",
     "timestamp": "2026-06-03T22:10:08.377996+00:00",
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle 6c747cdd (Q=0.469) proved 127 theorems in Combinatorics but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the Erdős–Rényi random graph threshold for connectivity: prove in Lean that for the G(n, p) model with p = (log n + c)/n, the probability that the graph is connected converges to e^{-e^{-c}}",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "sorry_fill_6c747cdd_9be8df72",
-    "lineage_refs": [],
-    "priority_score": 0.5189979318754185,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6c747cdd",
-    "status": "available",
-    "timestamp": "2026-06-21T22:16:40.030481+00:00",
-    "title": "Close Proofs: Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
   {
     "ambition_level": "extension",
