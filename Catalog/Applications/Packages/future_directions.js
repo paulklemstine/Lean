@@ -4119,6 +4119,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese directions build on the counterexample in\n`Catalog/Logic/MaximalFitnessCounterexample.lean`, which shows that extension\nmonotonicity and well-founded rank descent alone cannot imply primitivity.\n\n## 1. Parsimony-corrected fitness theorems\n\nFormalize the \"repaired\" theorem under an anti-monotone (parsimony) fitness\nhypothesis `ProperSub S T \u2192 fitness T \u2264 fitness S`, and prove that under it every\nmaximal-fitness terminal theory *is* primitive and rank-minimal. The key insight\nis that the original claim fails not because rank descent is too weak but because\nfitness and the sub-theory order were allowed to align in the *wrong*\ndirection, so flipping that single inequality restores the conclusion. Why now?\nBecause the present counterexample isolates exactly which hypothesis is missing,\nwe can state the corrected theorem with confidence instead of guessing, and reuse\nthe very same two-theory landscape as the first regression test.\n\n## 2. General order-theoretic abstraction\n\nReplace the concrete `ToyTheory` by an arbitrary preorder of theories equipped\nwith an abstract `fitness : T \u2192 \u211a` (or into any linear order) and study, in full\ngenerality, the interplay between fitness-optimality and order-minimality. The\nkey insight is that \"maximal fitness \u21d2 primitive\" is really a statement about a\n*Galois-style compatibility* between a valuation and an order, so it should be\nproved once abstractly and then instantiated, rather than re-derived per model.\nWhy now? Mathlib already provides robust `Order`, `WellFoundedLT`, and\n`MonotoneOn` infrastructure, so the abstract framing is cheap to build today and\nimmediately subsumes both the broken claim and its parsimony-corrected fix.\n\n## 3. Search/optimization dynamics over theory landscapes\n\nModel the `Mutation` relation as a discrete dynamical system and characterize its\nfixed points (terminal theories) and basins of attraction on larger finite\nlandscapes. The key insight is that terminality is a purely *local* property\n(no improving neighbor) whereas primitivity is *global* (a minimum of the whole\norder), and conflating local optima with global structure is the precise error\nthe counterexample exposes. Why now? Lightweight enumeration via\n`DecidableEq`/`Fintype` lets us machine-check these dynamics on small models\nimmediately, giving fast empirical feedback before committing to general proofs.\n\n## 4. Quantitative separation and trade-off bounds\n\nQuantify *how far* a maximal-fitness theory can be from primitive \u2014 e.g. bound\nthe rank gap or the length of the `ProperSub` chain below an optimum as a\nfunction of how strongly fitness increases along extensions. The key insight is\nthat the counterexample is the rank-`1` tip of an entire family of separations,\nso the qualitative failure can be sharpened into a quantitative trade-off\ninequality. Why now? With the base case formalized and its arithmetic over `\u211a`\nalready discharged, the inductive generalization to chains of length `n` is a\nnatural and tractable next step.\n\n## 5. Mechanized hypothesis-minimization audits\n\nDevelop a reusable tactic/workflow that, given a proposed \"structural \u21d2\nproperty\" theorem, automatically searches small finite models for counterexamples\nand reports the minimal hypothesis needed to recover truth. The key insight is\nthat the manual analysis performed here \u2014 strip the claim to its assumptions,\nbuild the smallest refuting model, then identify the one missing inequality \u2014 is\na repeatable pattern that can be partially automated. Why now? The combination of\nfinite `decide`-based model checking and the subagent-driven proving pipeline\nmakes such automated audits feasible for the first time, turning ad-hoc\ncounterexample hunting into a systematic verification step.\n",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_2187",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3e68faef",
+    "status": "available",
+    "timestamp": "2026-06-21T17:51:39.310834+00:00",
+    "title": "These directions build on the counterexample in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4558,21 +4573,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
-  },
-  {
-    "consumed_by_exp_id": "5ef4c190",
-    "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0508",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:47.125386+00:00",
-    "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
     "consumed_by_exp_id": "",

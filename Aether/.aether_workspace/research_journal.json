@@ -506,16 +506,6 @@
       "cycle_id": "743f44e8",
       "domain": "Cryptography",
       "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
-      "quality_score": 0.48472759868421056,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-06-15T17:00:41",
-      "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
-    },
-    {
-      "cycle_id": "743f44e8",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
       "quality_score": 0.4888015145005371,
       "sorry_count": 0,
       "theorem_count": 73,
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-21T17:11:37",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+    },
+    {
+      "cycle_id": "3e68faef",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThese directions build on the counterexample in\n`Catalog/Logic/MaximalFitnessCounterexample.lean`, which shows that extension\nmonotonicity and well-founded rank descent alone cann",
+      "quality_score": 0.52278,
+      "sorry_count": 0,
+      "theorem_count": 129,
+      "timestamp": "2026-06-21T17:52:08",
+      "title": "Derived from the Phase A cycle that produced `Fitness.lean`,"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.85612
     }
   ],
-  "last_updated": "2026-06-21T17:11:37",
+  "last_updated": "2026-06-21T17:52:08",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "c8fdbde8",
-        "quality": 0.4348039483870968,
-        "theorems": 10,
-        "title": "That the Fibonacci **rank of apparition** `z(p) = fibEntry p`"
-      },
-      {
         "cycle_id": "03edad6d",
         "quality": 0.5057485714285714,
         "theorems": 28,
@@ -3513,6 +3507,12 @@
         "quality": 0.85612,
         "theorems": 5,
         "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+      },
+      {
+        "cycle_id": "3e68faef",
+        "quality": 0.52278,
+        "theorems": 129,
+        "title": "Derived from the Phase A cycle that produced `Fitness.lean`,"
       }
     ],
     "MachineLearning": [
