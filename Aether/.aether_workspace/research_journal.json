@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "635e706c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Functorial Species → Tropical Valuation Profiles\n\nFollow-up conjectures arising from `Catalog/Bridges/SpeciesTropicalValuationProfiles.lean`,\nwhich established that the species (",
-      "quality_score": 0.5350663702359346,
-      "sorry_count": 0,
-      "theorem_count": 59,
-      "timestamp": "2026-06-15T12:27:40",
-      "title": "Functorial species-to-tropical valuation profiles via exponential generating functions"
-    },
-    {
       "cycle_id": "049cc9b2",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n\nThese directions extend the `ordEGF` bridge in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` from a single order-only invariant toward\nricher tropical and valuation-theoretic se",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-21T00:36:49",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "2683755a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Bounded tree-independence in `K_{1,d}`-free graphs\n\nDerived from this cycle's findings (`Basic.lean`, `StarFree.lean`,\n`Cluster.lean`), which closed the `d = 2` slice of the Dall",
+      "quality_score": 0.5860000000000001,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-21T00:40:07",
+      "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71035
     }
   ],
-  "last_updated": "2026-06-21T00:36:49",
+  "last_updated": "2026-06-21T00:40:07",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3511,12 +3511,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "5971ea29",
-        "quality": 0.5840000000000001,
-        "theorems": 7,
-        "title": "This document collects bold, falsifiable conjectures arising from the deepening "
-      },
-      {
         "cycle_id": "841c1580",
         "quality": 0.4354,
         "theorems": 8,
@@ -3569,6 +3563,12 @@
         "quality": 0.5450164281345566,
         "theorems": 469,
         "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
+      },
+      {
+        "cycle_id": "2683755a",
+        "quality": 0.5860000000000001,
+        "theorems": 14,
+        "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
       }
     ],
     "Novelty": [
