@@ -4800,7 +4800,7 @@
       "Yuan2008",
       "Kudla2004"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e89ca61",
     "description": "The arithmetic intersection number of the generating series of divisors on a unitary Shimura variety equals the logarithmic derivative at s=1 of the Hecke L-function attached to the CM extension.",
     "domain_bridges": [
       "modular forms",
@@ -4816,7 +4816,7 @@
     "proof_strategy": "Show equality by comparing automorphic forms and using the exceptional correspondence of Shimura curves",
     "research_mode": "team",
     "source_exp_id": "2606.18579v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-21T13:32:47.080161+00:00",
     "title": "Modular Height Formula for Unitary Shimura Varieties"
   },
@@ -5497,7 +5497,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f810a812",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -5510,7 +5510,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -6653,6 +6653,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese build on the finite Erdős–Rényi model in\n`Catalog/Combinatorics/ErdosRenyi/Model.lean` (namespace `ErdosRenyi`).\n\n## 1. Subgraph-count expectations and the second moment\n\nGeneralize `expect_edge_count` to the expected number of copies of a fixed graph\n`H` (triangles, paths, spanning trees), and add the variance via a second-moment\ncomputation over pairs of potential copies. The key insight is that\n`prob_contains` already gives the probability that a *specific* set of edges is\npresent as `p^{#H}`, so the expected count is a single finite sum of `p^{#H}` over\nall embeddings, and the variance is a double sum controlled by how embeddings\noverlap. Why now? The containment and first-moment lemmas are already proved and\nsit on an audited, acyclic dependency graph, so the only new ingredient is finite\nbookkeeping over embeddings — no new probabilistic foundations are required.\n\n## 2. First/second-moment threshold theorems\n\nState and prove finite, quantitative threshold results: for a monotone property\n(e.g. \"contains a triangle\", \"has no isolated vertex\"), bound the probability of\nthe property below and above using the first-moment method (union bound) and the\nsecond-moment method (Chebyshev). The key insight is that all of these reduce to\ncomparing the expectation and variance of a count to its square, both of which are\nfinite sums of the `p^{#H}` atoms supplied by `prob_contains`. Why now? With the\nbinomial law and containment probabilities in hand, a threshold theorem becomes an\ninequality between explicit polynomials in `p`, which is exactly the kind of goal\nthat finite algebraic reasoning handles well.\n\n## 3. Connectivity and the isolated-vertex barrier\n\nFormalize the classical fact that the disappearance of isolated vertices is the\nobstruction to connectivity near `p ≈ (log n)/n`, starting with the expected\nnumber of isolated vertices `n · (1 - p)^{n-1}`. The key insight is that an\nisolated vertex is the event \"none of the `n - 1` potential edges at that vertex\nis present\", which is again a containment-style computation — a product of\nper-edge `(1 - p)` factors — directly expressible through the same weight model.\nWhy now? The model already represents each vertex's incident potential edges as an\nexplicit `Finset`, so the isolated-vertex indicator and its expectation can be\nwritten down immediately and fed into the moment machinery of Direction 2.\n\n## 4. Coupling and monotonicity in p\n\nDevelop a finite coupling/monotonicity theory: show that for `p ≤ q` the weight of\nany monotone (upward-closed) family of graphs is nondecreasing in the parameter.\nThe key insight is that the per-edge product structure of `weight` lets a `G(n,p)`\ngraph be coupled to a `G(n,q)` graph edge-by-edge, so monotonicity follows from a\nfinite, edge-local comparison rather than any analytic argument. Why now? The\nweight is already defined as an explicit product over potential edges, making the\nedgewise coupling a direct finite induction that needs none of the asymptotic\ntools usually invoked for stochastic domination.\n\n## 5. From counting weights to a genuine probability measure\n\nPackage `weight` as an honest finitely-supported probability mass function (a\n`PMF` or normalized measure on `graphs n`), with `weight_sum_eq_one` as the\nnormalization certificate, and connect it to Mathlib's probability library.\nThe key insight is that normalization is already proved for *every* real `p`, so the\nbridge to a measure-theoretic object is purely structural and introduces no new\nmathematical content. Why now? Establishing this interface early lets later\nthreshold and concentration results be stated in Mathlib's standard probabilistic\nvocabulary while still being backed by the finite, sorry-free identities proved\nhere.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2197",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6c747cdd",
+    "status": "available",
+    "timestamp": "2026-06-21T22:13:12.284871+00:00",
+    "title": "These build on the finite Erdős–Rényi model in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -6671,22 +6691,22 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a747a0a8",
-    "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every analytic one-parameter family of finite-range, translation-invariant 1D quantum spin Hamiltonians H(t) with a unique ground state away from finitely many critical parameters, the persistence barcode of the local observable algebra filtered by the ground-state GNS covariance metric has unbounded bottleneck derivative as system size L -> infinity if and only if the thermodynamic spectral gap closes at t. Test: Compute these noncommutative persistence barcodes for exactly solvable chains and DMRG-accessible models; confirmation requires barcode singularities precisely at known gap-closing transitions, while any gapped family with a diverging barcode derivative or any gap-closing family with uniformly Lipschitz barcodes refutes it. Impact: Provides a topological, representation-theoretic diagnostic for quantum criticality that may classify phase transitions without order parameters.",
     "domain_bridges": [],
     "domains": [
-      "Novelty",
+      "Physics",
       "Computation"
     ],
-    "id": "fd_2119",
+    "id": "fd_2198",
     "lineage_refs": [],
-    "priority_score": 0.7158260869565218,
+    "priority_score": 0.7157272727272728,
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T17:11:08.928185+00:00",
-    "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+    "status": "available",
+    "timestamp": "2026-06-21T22:14:45.942055+00:00",
+    "title": "Quantum Phase Transitions as Singularities of Noncommutative Persistence"
   },
   {
     "ambition_level": "extension",
@@ -7400,6 +7420,25 @@
     "status": "failed",
     "timestamp": "2026-06-03T22:10:08.377996+00:00",
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 6c747cdd (Q=0.469) proved 127 theorems in Combinatorics but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the Erdős–Rényi random graph threshold for connectivity: prove in Lean that for the G(n, p) model with p = (log n + c)/n, the probability that the graph is connected converges to e^{-e^{-c}}",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "sorry_fill_6c747cdd_9be8df72",
+    "lineage_refs": [],
+    "priority_score": 0.5189979318754185,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6c747cdd",
+    "status": "available",
+    "timestamp": "2026-06-21T22:16:40.030481+00:00",
+    "title": "Close Proofs: Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
   {
     "ambition_level": "extension",

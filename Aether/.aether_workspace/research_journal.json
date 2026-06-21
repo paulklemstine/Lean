@@ -506,16 +506,6 @@
       "cycle_id": "afb009d7",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Zeckendorf / additive Fibonacci structure\n\nThis cycle formalized **Zeckendorf's theorem** from scratch against Mathlib\n(`Core.lean`, `Existence.lean`, `Uniqueness.lean`): every `",
-      "quality_score": 0.4646015145005371,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-06-15T20:00:16",
-      "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
-    },
-    {
-      "cycle_id": "afb009d7",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Zeckendorf / additive Fibonacci structure\n\nThis cycle formalized **Zeckendorf's theorem** from scratch against Mathlib\n(`Core.lean`, `Existence.lean`, `Uniqueness.lean`): every `",
       "quality_score": 0.34719999999999995,
       "sorry_count": 0,
       "theorem_count": 0,
@@ -2501,6 +2491,16 @@
       "theorem_count": 100,
       "timestamp": "2026-06-21T21:45:53",
       "title": "*normalization functor into the probability simplex*"
+    },
+    {
+      "cycle_id": "6c747cdd",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nThese build on the finite Erdős–Rényi model in\n`Catalog/Combinatorics/ErdosRenyi/Model.lean` (namespace `ErdosRenyi`).\n\n## 1. Subgraph-count expectations and the second moment\n\nGe",
+      "quality_score": 0.4689979318754185,
+      "sorry_count": 2,
+      "theorem_count": 127,
+      "timestamp": "2026-06-21T22:16:39",
+      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.79908
     }
   ],
-  "last_updated": "2026-06-21T21:45:53",
+  "last_updated": "2026-06-21T22:16:39",
   "open_questions": [
-    {
-      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
-      "cycle_id": "88475cc5",
-      "domain": "Bridges",
-      "sorry_count": 2,
-      "timestamp": "2026-06-15T06:30:20"
-    },
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
       "cycle_id": "a64f762c",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-06-20T11:10:43"
+    },
+    {
+      "context": "sorry; sorry",
+      "cycle_id": "6c747cdd",
+      "domain": "Combinatorics",
+      "sorry_count": 2,
+      "timestamp": "2026-06-21T22:16:39"
     }
   ],
   "research_threads": {
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "bea64f19",
-        "quality": 0.5005650793650793,
-        "theorems": 189,
-        "title": "Close Proofs: `Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes th"
-      },
-      {
         "cycle_id": "cb2c4d8f",
         "quality": 0.7260899999999999,
         "theorems": 16,
@@ -3265,6 +3259,12 @@
         "quality": 0.5537937826789618,
         "theorems": 96,
         "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
+      },
+      {
+        "cycle_id": "6c747cdd",
+        "quality": 0.4689979318754185,
+        "theorems": 127,
+        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
       }
     ],
     "Computation": [

@@ -37455,7 +37455,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Guo2023",
         "Yuan2008",
@@ -37463,7 +37463,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0e89ca61",
       "depth_estimate": 3,
       "description": "The arithmetic intersection number of the generating series of divisors on a unitary Shimura variety equals the logarithmic derivative at s=1 of the Hecke L-function attached to the CM extension.",
       "domain_bridges": [
@@ -37476,7 +37476,7 @@
         "Pythagorean"
       ],
       "id": "fd_2175",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-21T22:21:26.417778+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_height (X : ShimuraVariety) : (X.arithmetic_intersection_number) = (X.hecke_l_function.log_derivative_at_one)",
       "lineage_refs": [],
@@ -37489,7 +37489,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18579v1",
       "source_path": "http://arxiv.org/abs/2606.18579v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-21T13:32:47.080161+00:00",
       "title": "Modular Height Formula for Unitary Shimura Varieties"
@@ -42939,11 +42939,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f810a812",
       "depth_estimate": 3,
       "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
       "domain_bridges": [],
@@ -42953,7 +42953,7 @@
         "NumberTheory"
       ],
       "id": "seed_335",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-21T22:21:30.192977+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42966,7 +42966,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432611+00:00",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
@@ -49540,6 +49540,41 @@
       "thread_id": "",
       "timestamp": "2026-06-12T23:57:04.578879+00:00",
       "title": "Close Proofs: The companion file `ScalingLaws.lean` proves, from first principles, t"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Cycle 6c747cdd (Q=0.469) proved 127 theorems in Combinatorics but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the Erdős–Rényi random graph threshold for connectivity: prove in Lean that for the G(n, p) model with p = (log n + c)/n, the probability that the graph is connected converges to e^{-e^{-c}}",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Combinatorics"
+      ],
+      "id": "sorry_fill_6c747cdd_9be8df72",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.5189979318754185,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "6c747cdd",
+      "source_path": "Random Graphs: Erdős-Rényi Threshold Phenomena",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T22:16:40.030481+00:00",
+      "title": "Close Proofs: Random Graphs: Erdős-Rényi Threshold Phenomena"
     },
     {
       "ambition_level": "extension",
@@ -97997,6 +98032,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
