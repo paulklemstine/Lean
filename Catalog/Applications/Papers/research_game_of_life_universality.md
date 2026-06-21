@@ -1,245 +1,312 @@
-# Formalized Universality Theory for Cellular Automata: Light Cones, Simulation Composition, and Spaceship Speed Bounds
+# Union-Closed Families as Positive-Correlation Systems
+
+**Author:** Aristotle
+**Date:** 2026-06-21
+**Domain:** Novelty (combinatorics / discrete statistical mechanics)
 
 ## Abstract
 
-We present a rigorous formalization in Lean 4 of the structural foundations of cellular automata universality theory, with Conway's Game of Life as the primary example. Our main contributions are:
+We develop a self-contained theory linking *union-closed set families* to the
+positive-correlation phenomena of discrete statistical mechanics. Working over
+a finite ground set $\alpha$, we treat a finite family $F$ of subsets as a
+uniform probability space of configurations and study three observables: the
+per-site *member count* $\mathrm{mc}(a)$, the *joint count* $\mathrm{jc}(a,b)$,
+and the *union count* $\mathrm{uc}(a,b)$. We establish: (1) a double-counting
+identity equating total occupancy with total configuration size; (2) a
+majority-from-average principle producing a frequently-occurring element under
+an averaged size hypothesis — a verified instance of the Frankl direction; (3) a
+bridge theorem showing every upper-set family is union-closed; (4) the
+two-point inclusion–exclusion identity; (5) the construction of the union
+closure as a closure operator (extensive and union-closed) together with
+monotonicity of total occupancy under closure; and (6) the FKG base case:
+nonnegative correlation of coordinate indicators on the full powerset. Each
+result is interpreted in the language of lattice gases — marginal occupancies,
+two-point correlation functions, order parameters, coarse-graining, and
+entropy. All statements correspond to fully formal, machine-checked theorems.
 
-1. **Light Cone Theorem**: A complete proof that the Game of Life satisfies finite speed of propagation — the state at any cell after *t* steps depends only on cells within Chebyshev distance *t*.
-
-2. **Spaceship Speed Bound**: The first mechanically verified proof that spaceships with nonempty finite support cannot exceed speed 1 (one cell per step), resolving a folklore result that had not previously been formally verified.
-
-3. **Simulation Composition Algebra**: A framework for composing CA simulations with multiplicative time overhead, including associativity, identity elements, and multi-step correctness.
-
-4. **Periodic Orbit Theory**: Generalized results on iterate modular reduction, minimal period divisibility, and finite orbit bounds via the pigeonhole principle.
-
-5. **Universality Closure**: A proof that universality is preserved under simulation — if a universal CA can be simulated by another CA, the simulator is also universal.
-
-All proofs are mechanically verified in Lean 4 with Mathlib, using no sorry statements and no non-standard axioms.
+---
 
 ## 1. Introduction
 
-Conway's Game of Life [Conway, 1970; Gardner, 1970] is a two-dimensional cellular automaton defined on the integer lattice ℤ² with binary states (alive/dead). Despite its simple rule — a cell's next state depends only on the number of alive cells in its Moore neighborhood — the Game of Life exhibits remarkably rich behavior, including Turing completeness [Rendell, 2011].
+Union-closed families sit at a crossroads. Combinatorially, they are families
+$F$ of finite sets closed under pairwise union; the celebrated **Frankl
+conjecture** (1979) asserts that any such family containing a nonempty set has
+an element belonging to at least half its members. Order-theoretically, they
+generalize *filters* (upper sets) in a Boolean lattice. Probabilistically — the
+viewpoint we press here — a finite family is a uniform measure on
+configurations of a discrete spin/particle system, and union-closure is a
+monotone constraint encouraging aggregation.
 
-The Turing completeness of the Game of Life has been demonstrated through increasingly sophisticated constructions. Rendell built a universal Turing machine simulator using glider-based logic gates. Paul Rendell's construction uses approximately 1000 × 1000 cells. More recent work by Adam Goucher has shown that even simpler constructions suffice.
+Our aim is to make this last reading rigorous and to isolate the elementary
+facts on which any correlation theory of such systems must rest. The results
+are individually simple; their value is the **dictionary** they assemble
+between combinatorics and statistical mechanics:
 
-However, the mathematical foundations underlying these constructions — the light cone theorem, simulation composition laws, and speed bounds — have remained informal. In this work, we formalize these foundational results in Lean 4, establishing a rigorous framework for reasoning about cellular automata universality.
+| Combinatorics | Statistical mechanics |
+|---|---|
+| $\mathrm{mc}(a)/|F|$ | marginal occupancy of site $a$ |
+| $\mathrm{jc}(a,b)/|F|$ | two-point correlation function |
+| $\sum_{s\in F}|s|$ | total particle number over all configurations |
+| union closure $\overline{F}$ | coarse-graining / closure dynamics |
+| frequent element | nonzero order parameter |
+| powerset correlation | finite FKG base case |
 
-### 1.1 Relationship to Prior Catalog Results
+### 1.1 Notation
 
-Our work builds on and extends several prior formalized results:
+Throughout, $\alpha$ is a type with decidable equality; where stated it is also
+finite, with $|\alpha| = \mathrm{card}\,\alpha$. Subsets of $\alpha$ are finite
+sets, and a *family* is a finite set $F$ of such subsets. We write $|s|$ for the
+cardinality of $s$, $|F|$ for the number of members of $F$, and $2^\alpha$ for
+the family of all subsets of $\alpha$, with $|2^\alpha| = 2^{|\alpha|}$.
 
-- **`turing_simulation_width_bound`** (Tropical/TropicalDeepResearch.lean): Established width bounds for Turing machine simulation. Our simulation composition theorem generalizes this to arbitrary CA-to-CA simulations.
-
-- **`berggren_orbit_turing_complete`** (Pythagorean/BerggrenCA.lean): Proved Turing completeness of a cellular automaton on Berggren orbit lattices. Our framework provides the abstract simulation algebra that such results instantiate.
-
-- **`berggren_universality_via_locality_and_growth`** (Pythagorean/EmergentComputation.lean): Factored universality through locality and growth bounds. Our light cone and spaceship speed theorems provide analogous results for the standard Game of Life.
-
-- **`simulation_complexity_inverse_gap`** (Algebra/Core.lean): Established complexity bounds for simulation. Our three-level overhead theorem extends this to arbitrary composition chains.
+---
 
 ## 2. Definitions
 
-### 2.1 Game of Life
+**Definition 1 (Union-closed family).** A family $F$ is *union-closed* if
+$$\forall\, s,t \in F,\quad s \cup t \in F.$$
+This models a configuration space closed under binary joins — a monotone
+lattice gas.
 
-**Definition 2.1** (Board). A *board* is a function `b : ℤ × ℤ → Bool`.
+**Definition 2 (Upper-set family).** A family $F$ is an *upper-set family*
+(upset) if
+$$\forall\, s,t,\quad s \in F \wedge s \subseteq t \;\Rightarrow\; t \in F.$$
+For finite $\alpha$ this is an order filter in the Boolean lattice $2^\alpha$.
 
-**Definition 2.2** (Moore Neighborhood). The *Moore neighborhood* of cell `p` is the set of 8 cells adjacent to `p` (including diagonals but excluding `p` itself).
+**Definition 3 (Member count).** For $a \in \alpha$,
+$$\mathrm{mc}(a) := \#\{\, s \in F : a \in s \,\}.$$
+It equals $|F|$ times the marginal occupancy probability of site $a$ under the
+uniform measure on $F$.
 
-**Definition 2.3** (Step Function). The Game of Life step function is:
-```
-step(b)(p) = 
-  if b(p) then (n = 2 ∨ n = 3)
-  else (n = 3)
-```
-where `n` is the number of alive neighbors of `p` in `b`.
+**Definition 4 (Joint count).** For $a,b \in \alpha$,
+$$\mathrm{jc}(a,b) := \#\{\, s \in F : a \in s \wedge b \in s \,\},$$
+equal to $|F|$ times the two-point correlation function.
 
-**Definition 2.4** (Evolution). `evolve(t, b) = step^t(b)`.
+**Definition 5 (Union count).** For $a,b \in \alpha$,
+$$\mathrm{uc}(a,b) := \#\{\, s \in F : a \in s \vee b \in s \,\}.$$
 
-### 2.2 Chebyshev Distance
+**Definition 6 (Union closure).** For finite $\alpha$, the *union closure* of
+$F$ is
+$$\overline{F} := \Big\{\, s : \exists\, G \subseteq F,\ G \ne \varnothing,\
+\textstyle\bigvee_{g \in G} g = s \,\Big\},$$
+the family of all sets obtainable as the supremum (union) of a nonempty
+sub-collection of $F$. This is the coarse-graining operator.
 
-**Definition 2.5** (Chebyshev Distance). `chebyshevDist(p, q) = max(|p₁ - q₁|, |p₂ - q₂|)`.
+---
 
-### 2.3 Cellular Automaton Simulation
+## 3. Main results
 
-**Definition 2.6** (Cellular Automaton). A *cellular automaton* `(S, d, step, q)` consists of a state space `S`, dimension `d`, global step function, and quiescent state.
+### 3.1 The conservation law
 
-**Definition 2.7** (Simulation). A *simulation* of CA₂ by CA₁ is a triple `(encode, T, commute)` where:
-- `encode` maps CA₂ configurations to CA₁ configurations
-- `T` is the time overhead
-- `commute`: `step₁^T ∘ encode = encode ∘ step₂`
+**Theorem 1 (Double-counting identity).** For any finite ground set $\alpha$
+and family $F$,
+$$\sum_{a \in \alpha} \mathrm{mc}(a) \;=\; \sum_{s \in F} |s|.$$
 
-This "encoding commutation" model is standard in the intrinsic universality literature [Ollinger, 2008].
+*Proof sketch.* Expand each $\mathrm{mc}(a)$ as a sum of indicators
+$\mathrm{mc}(a) = \sum_{s \in F} \mathbf{1}[a \in s]$ (this is the
+`card_filter` rewriting). The double sum
+$\sum_{a}\sum_{s\in F}\mathbf{1}[a\in s]$ is symmetric in its two indices; swap
+the order of summation (Fubini for finite sums). The inner sum
+$\sum_{a}\mathbf{1}[a\in s]$ counts the elements of $s$, i.e. equals $|s|$. ∎
 
-## 3. Main Results
+*Interpretation.* Dividing by $|F|$: the sum over sites of marginal occupancies
+equals the mean configuration size. This is the conservation law of the system,
+relating local densities to a global extensive quantity.
 
-### 3.1 Light Cone Theorem
+### 3.2 Order parameter from averaged density
 
-**Theorem 3.1** (Step Locality). *If boards b₁ and b₂ agree on the Chebyshev ball of radius 1 around p, then `step(b₁)(p) = step(b₂)(p)`.*
+**Theorem 2 (Majority from average).** Let $\alpha$ be finite and nonempty and
+$F$ nonempty. If
+$$2\sum_{s \in F} |s| \;\ge\; |F|\cdot|\alpha|,$$
+then there exists $a \in \alpha$ with $2\,\mathrm{mc}(a) \ge |F|$.
 
-*Proof.* The step function depends only on `b(p)` and `aliveNeighborCount(b, p)`. The latter filters the Moore neighborhood, which is contained in the Chebyshev ball of radius 1. □
+*Proof sketch.* Contrapositive. Assume $2\,\mathrm{mc}(a) < |F|$ for every
+$a \in \alpha$. Since $\alpha$ is nonempty, summing this strict inequality over
+all $a$ (using that a sum of strictly smaller nonneg terms over a nonempty index
+set is strictly smaller) gives
+$$2\sum_{a}\mathrm{mc}(a) < |\alpha|\cdot|F|.$$
+By Theorem 1 the left side is $2\sum_{s\in F}|s|$, yielding
+$2\sum_{s\in F}|s| < |F|\cdot|\alpha|$, the negation of the hypothesis. ∎
 
-**Theorem 3.2** (Light Cone / Finite Speed of Propagation). *If boards b₁ and b₂ agree on the Chebyshev ball of radius t around p, then `evolve(t, b₁)(p) = evolve(t, b₂)(p)`.*
+*Interpretation.* A global averaged-density condition forces a *local*
+concentration — a frequent element, the combinatorial analogue of a nonzero
+order parameter. This is exactly the conclusion of **Frankl's conjecture**,
+here proved under the extra hypothesis that configurations are large on
+average. Note Theorem 2 requires no union-closure; it is a clean pigeonhole
+consequence of Theorem 1.
 
-*Proof.* By induction on t. The base case is trivial. For the inductive step, we show that `step(b₁)` and `step(b₂)` agree on the ball of radius t around p, using Step Locality and the observation that the ball of radius 1 around any point q in the ball of radius t around p is contained in the ball of radius t+1 around p. □
+### 3.3 Bridge: filters are merge-closed
 
-### 3.2 Spaceship Speed Bound
+**Theorem 3 (Every upset is union-closed).** If $F$ is an upper-set family,
+then $F$ is union-closed.
 
-**Theorem 3.3** (Spaceship Speed Bound). *Let b be a board with nonempty finite support, and suppose b is a spaceship with period p and displacement v. Then `max(|v₁|, |v₂|) ≤ p`.*
+*Proof sketch.* Take $s,t \in F$. Then $s \subseteq s \cup t$. Apply Definition
+2 to $s \in F$ and the inclusion $s \subseteq s \cup t$ to conclude
+$s \cup t \in F$. ∎
 
-*Proof sketch.* The proof proceeds by establishing four extremal constraints. For each coordinate direction, we identify the extremal alive cell (e.g., the cell with maximum x-coordinate in the support). The spaceship property implies that the translated extremal cell must be alive after p steps. By the light cone theorem (via `empty_outside_light_cone`), this requires some alive cell within Chebyshev distance p of the translated extremal cell. But if the displacement exceeds p, this cell would have a larger coordinate than the extremal cell — contradiction.
+*Interpretation.* Monotone (increasing) events, the natural observables of a
+lattice gas, all live inside the union-closed world; results about union-closed
+families therefore apply to them. This is the hinge between order theory and the
+algebra of $\cup$.
 
-The proof handles all four directions (±x, ±y) simultaneously by extracting max/min elements from the finite support using `Finset.exists_max_image` and `Finset.exists_min_image`. □
+### 3.4 Two-point inclusion–exclusion
 
-**Remark.** The nonempty support hypothesis is necessary. The empty board vacuously satisfies the spaceship definition for any displacement, since `translate(v, emptyBoard) = emptyBoard = evolve(p, emptyBoard)` for all v and p.
+**Theorem 4 (Inclusion–exclusion).** For any $a,b \in \alpha$, as integers,
+$$\mathrm{uc}(a,b) \;=\; \mathrm{mc}(a) + \mathrm{mc}(b) - \mathrm{jc}(a,b).$$
 
-### 3.3 Translation Invariance
+*Proof sketch.* The event $\{a \in s \vee b \in s\}$ is the union of
+$\{a\in s\}$ and $\{b \in s\}$ as predicates; the event $\{a\in s \wedge b \in
+s\}$ is their intersection. By the cardinality identity
+$|X \cup Y| + |X \cap Y| = |X| + |Y|$ applied to the corresponding filtered
+subfamilies, $\mathrm{uc}(a,b) + \mathrm{jc}(a,b) = \mathrm{mc}(a) +
+\mathrm{mc}(b)$; rearranging over $\mathbb{Z}$ gives the claim. ∎
 
-**Theorem 3.4** (Translation Invariance). *For any vector v and board b, `step(translate(v, b)) = translate(v, step(b))`.*
+*Interpretation.* Dividing by $|F|$ recovers $P(a\cup b) = P(a)+P(b)-P(a\cap
+b)$ for the random-configuration distribution; it certifies that
+$\mathrm{jc}$ is the genuine two-point overlap.
 
-*Proof.* The key insight is that the Moore neighbors of `p` in the translated board correspond exactly to the translations of the Moore neighbors of `p - v` in the original board. The alive neighbor count is therefore preserved under translation. □
+### 3.5 Union closure as a closure operator
 
-**Corollary 3.5.** *Translation invariance extends to arbitrary evolution: `evolve(t, translate(v, b)) = translate(v, evolve(t, b))`.*
+**Lemma 5 (Extensiveness).** $F \subseteq \overline{F}$.
 
-### 3.4 Simulation Composition
+*Proof sketch.* Each $s \in F$ equals the supremum of the singleton
+sub-collection $\{s\} \subseteq F$, which is nonempty; hence $s \in \overline{F}$
+by Definition 6. ∎
 
-**Theorem 3.6** (Multi-Step Simulation). *If sim is a simulation of CA₂ by CA₁ with time overhead T, then `step₁^{T·n}(encode(cfg)) = encode(step₂^n(cfg))` for all n.*
+**Lemma 6 (Closure is union-closed).** $\overline{F}$ is a union-closed family.
 
-*Proof.* By induction on n, using the encoding commutation property and the additive structure of iterate. □
+*Proof sketch.* Let $s = \bigvee_{g\in G_1} g$ and $t = \bigvee_{g\in G_2} g$
+with nonempty $G_1, G_2 \subseteq F$. Then
+$s \cup t = \bigvee_{g \in G_1 \cup G_2} g$ (sup distributes over union of index
+sets), and $G_1 \cup G_2 \subseteq F$ is nonempty, so $s \cup t \in
+\overline{F}$. ∎
 
-**Theorem 3.7** (Simulation Composition). *If sim₁₂ simulates CA₂ by CA₁ with overhead T₁, and sim₂₃ simulates CA₃ by CA₂ with overhead T₂, then there exists a simulation of CA₃ by CA₁ with overhead T₁ · T₂.*
+Together, Lemmas 5 and 6 show $\overline{F}$ is the least union-closed family
+containing $F$: extensive, union-closed, and (being generated by sups of
+subfamilies) idempotent.
 
-*Proof.* The composed simulation uses `encode = encode₁₂ ∘ encode₂₃`. The commutation property follows from the multi-step theorem. □
+**Theorem 7 (Monotonicity of total occupancy under closure).**
+$$\sum_{s \in F} |s| \;\le\; \sum_{s \in \overline{F}} |s|.$$
 
-**Theorem 3.8** (Associativity). *Simulation composition is associative: the overhead of `(s₁ ∘ s₂) ∘ s₃` equals that of `s₁ ∘ (s₂ ∘ s₃)`, both being `T₁ · T₂ · T₃`.*
+*Proof sketch.* By Lemma 5, $F \subseteq \overline{F}$. Cardinalities are
+nonnegative, so summing the nonnegative quantity $|s|$ over the larger index set
+$\overline{F}$ dominates the sum over $F$ (monotonicity of sums of nonnegative
+terms under set inclusion). ∎
 
-### 3.5 Periodic Orbit Structure
+*Interpretation.* Total particle number, summed over all configurations, cannot
+decrease under coarse-graining — a discrete analogue of entropy monotonicity
+under closure dynamics, an arrow of time for the merging process.
 
-**Theorem 3.9** (Period Closure). *If f^p(x) = x (with p > 0), then f^{kp}(x) = x for all k > 0.*
+### 3.6 The FKG base case
 
-**Theorem 3.10** (Iterate Modular Reduction). *If f^p(x) = x, then f^t(x) = f^{t mod p}(x) for all t.*
+**Theorem 8 (Nonnegative correlation on the full powerset).** Let $\alpha$ be
+finite. For any $a,b \in \alpha$, on $F = 2^\alpha$,
+$$|2^\alpha|\cdot \mathrm{jc}(a,b) \;\ge\; \mathrm{mc}(a)\cdot \mathrm{mc}(b).$$
 
-**Theorem 3.11** (Minimal Period Divisibility). *If p is the minimal period and f^q(x) = x, then p | q.*
+*Proof sketch.* The key counting lemma is: for any fixed set $s$,
+$$\#\{\, t \subseteq \alpha : s \subseteq t \,\} = 2^{|\alpha| - |s|},$$
+proved by the bijection $t \mapsto t \setminus s$ between supersets of $s$ and
+subsets of $\alpha \setminus s$. Two cases:
 
-**Theorem 3.12** (Finite Orbit Bound). *For f : α → α with |α| = n finite, the orbit of any x contains a collision within n steps: ∃ t₁ < t₂ ≤ n, f^{t₁}(x) = f^{t₂}(x).*
+- **$a = b$.** Then $\mathrm{jc}(a,a) = \mathrm{mc}(a)$ and the claim reduces to
+  $|2^\alpha|\cdot\mathrm{mc}(a) \ge \mathrm{mc}(a)^2$, i.e. $\mathrm{mc}(a) \le
+  |2^\alpha|$, which holds since the filtered subfamily is a subfamily of
+  $2^\alpha$. (Self-correlation is strict whenever $0 < \mathrm{mc}(a) <
+  |2^\alpha|$.)
+- **$a \ne b$.** The counting lemma with $s = \{a\}$, $s=\{b\}$, $s=\{a,b\}$
+  gives $\mathrm{mc}(a) = \mathrm{mc}(b) = 2^{|\alpha|-1}$ and
+  $\mathrm{jc}(a,b) = 2^{|\alpha|-2}$. Then $|2^\alpha|\cdot\mathrm{jc}(a,b) =
+  2^{|\alpha|}\cdot 2^{|\alpha|-2} = 2^{2|\alpha|-2} =
+  \mathrm{mc}(a)\cdot\mathrm{mc}(b)$ — equality. ∎
 
-### 3.6 Universality Theory
+*Interpretation.* Rescaling, $P(a\cap b) \ge P(a)P(b)$: coordinate indicators
+are positively correlated, with equality (independence) for distinct sites and
+strict positivity for coincident sites. This is the base case of the
+**Fortuin–Kasteleyn–Ginibre (FKG) inequality**, the cornerstone of correlation
+inequalities in statistical mechanics and percolation.
 
-**Theorem 3.13** (Universality Closure). *If CA₁ is universal and CA₂ can simulate CA₁, then CA₂ is universal.*
+---
 
-**Theorem 3.14** (Reversible CA Inverse). *A bijective CA step function has a two-sided inverse.*
+## 4. Algorithms
 
-## 4. PEGB Analysis
+The theory is constructive; the following procedures compute every observable
+and verify each theorem on concrete inputs.
 
-### 4.1 Light Cone Theorem (P-E-G-B)
+### 4.1 Observable evaluation
 
-- **Proof**: Complete Lean 4 proof by induction on t, using step locality and ball containment.
-- **Example**: A single alive cell at the origin. After 5 steps, only cells within Chebyshev distance 5 can be alive — a 11×11 square.
-- **Generalization**: The light cone theorem holds for *any* CA with bounded neighborhood radius r, giving `evolve(t, b₁)(p) = evolve(t, b₂)(p)` when the boards agree on the ball of radius r·t.
-- **Boundary**: The bound is tight — the Game of Life actually achieves speed-1 propagation via diagonal gliders (speed c/4 in taxicab distance, but c in Chebyshev distance).
+Given $F$ (a list of subsets of a ground set) and elements $a,b$, compute
+$\mathrm{mc}, \mathrm{jc}, \mathrm{uc}$ by a single linear scan over the
+members of $F$ (cost $O(|F|\cdot|\alpha|)$). Theorems 1 and 4 are then checked by
+direct arithmetic.
 
-### 4.2 Spaceship Speed Bound (P-E-G-B)
+### 4.2 Union-closure construction
 
-- **Proof**: Complete Lean 4 proof using extremal cell arguments and the light cone.
-- **Example**: The standard glider has period 4 and displacement (1,1), so max(1,1) = 1 ≤ 4. The LWSS has period 4 and displacement (2,0), so max(2,0) = 2 ≤ 4.
-- **Generalization**: For a CA with neighborhood radius r, the speed bound becomes max(|v₁|, |v₂|) ≤ r·p.
-- **Boundary**: The bound is sharp in the limit — "speed-1 ships" achieving max(|v|) = p exist (e.g., the photon in Life-like rules). However, in standard Life, the fastest known spaceship travels at c/2.
+To build $\overline{F}$: maintain a worklist of discovered sets initialized to
+$F$; repeatedly form pairwise unions of discovered sets and add any new ones;
+stop at a fixed point. Because the universe of subsets is finite
+($2^{|\alpha|}$), this terminates, and the result is the least union-closed
+superfamily (Lemmas 5–6). Total occupancy before and after demonstrates
+Theorem 7.
 
-### 4.3 Simulation Composition (P-E-G-B)
+### 4.3 Frankl-direction certificate
 
-- **Proof**: Complete Lean 4 proof showing compositions form a monoid with multiplicative overhead.
-- **Example**: If the Game of Life simulates Rule 110 with overhead 1000, and Rule 110 simulates a Turing machine with overhead 500, then GoL simulates the TM with overhead 500,000.
-- **Generalization**: The simulation category can be enriched with space overhead, giving a two-parameter monoid (time × space).
-- **Boundary**: The composition theorem doesn't address whether the composed simulation preserves finite support, which would require additional hypotheses on the encoding.
+Given $F$, test the averaged hypothesis $2\sum_{s}|s| \ge |F|\cdot|\alpha|$. If
+it holds, Theorem 2 guarantees, and a single pass returns, a witness $a$ with
+$2\,\mathrm{mc}(a) \ge |F|$.
 
-### 4.4 Periodic Orbit Theory (P-E-G-B)
+---
 
-- **Proof**: Complete Lean 4 proofs for period closure, modular reduction, and divisibility.
-- **Example**: The blinker in GoL has minimal period 2. It returns at steps 2, 4, 6, ... but never at odd steps.
-- **Generalization**: These theorems hold for arbitrary endomorphisms of any type, not just cellular automata — they capture the pure orbit structure of discrete dynamical systems.
-- **Boundary**: For continuous dynamical systems, the divisibility result fails (irrational rotations have dense orbits without exact return).
+## 5. Applications
 
-## 5. Algorithms
+1. **Discrete FKG / correlation inequalities.** Theorem 8 is the seed for
+   proving positive association of monotone events on product spaces; Theorem 3
+   identifies the monotone events as a subclass of union-closed families.
+2. **Frankl's conjecture.** Theorem 2 settles the conjecture's conclusion in the
+   "dense" regime and clarifies that the obstruction lies entirely in
+   low-average-density families.
+3. **Lattice-gas modeling.** The dictionary of §1 lets one import combinatorial
+   identities (Theorems 1, 4) as exact sum rules for occupancy and correlation
+   functions of monotone constrained systems.
+4. **Coarse-graining dynamics.** Theorem 7 quantifies an irreversible,
+   mass-non-decreasing closure step, useful in renormalization-style arguments
+   on finite configuration spaces.
 
-### 5.1 Game of Life Simulation
-
-```python
-def step(board: set[tuple[int,int]]) -> set[tuple[int,int]]:
-    neighbors = Counter()
-    for (x, y) in board:
-        for dx in [-1, 0, 1]:
-            for dy in [-1, 0, 1]:
-                if dx or dy:
-                    neighbors[(x+dx, y+dy)] += 1
-    return {p for p, n in neighbors.items()
-            if n == 3 or (n == 2 and p in board)}
-```
-
-### 5.2 Spaceship Detection
-
-```python
-def detect_spaceship(board, max_period=100):
-    current = board
-    for t in range(1, max_period+1):
-        current = step(current)
-        for dx in range(-t, t+1):
-            for dy in range(-t, t+1):
-                if (dx, dy) != (0, 0):
-                    translated = {(x-dx, y-dy) for (x,y) in current}
-                    if translated == board:
-                        return t, (dx, dy)
-    return None
-```
+---
 
 ## 6. Discussion
 
-### 6.1 Significance
+The collection of results is deliberately elementary, but their organization
+exposes a coherent statistical-mechanical reading of union-closed families. The
+two genuinely structural inputs are the closure operator (Lemmas 5–6, Theorem 7)
+and the powerset correlation (Theorem 8); the remaining identities (Theorems 1,
+4) are exact sum rules, and Theorems 2–3 are the order-parameter and
+order-theoretic bridges. A notable feature is how little is needed for the
+"emergent popular element": Theorem 2 is pure pigeonhole over Theorem 1.
 
-The formalization provides the first mechanically verified treatment of several foundational results in cellular automata theory. While these results are "well-known" in the informal literature, their formal verification reveals subtleties (e.g., the necessity of the nonempty support hypothesis for the spaceship speed bound) that are often glossed over.
+---
 
-### 6.2 Comparison with Prior Work
+## 7. Future work
 
-The closest prior formal work is the Berggren CA universality proof in the project catalog, which establishes Turing completeness of a CA on Pythagorean orbit lattices. Our contribution is orthogonal: we provide the abstract simulation framework and structural theorems that such results instantiate.
+- **Beyond the base case.** Extend Theorem 8 from the full powerset to general
+  union-closed families with a product-like measure, targeting a finite FKG
+  inequality for monotone events identified by Theorem 3.
+- **Closing the Frankl gap.** Replace the averaged hypothesis of Theorem 2 by a
+  structural one, aiming at the full conjecture; the entropy method's recent
+  $\approx 0.38$ bound suggests an information-theoretic refinement of the
+  double-counting identity.
+- **Quantitative closure.** Sharpen Theorem 7 to a *strict* gain $\sum_{\overline
+  F}|s| - \sum_F |s|$ bounded below in terms of how far $F$ is from
+  union-closed, an entropy-production estimate for the coarse-graining step.
 
-### 6.3 Limitations
+---
 
-Our formalization does not include:
-- The concrete gadget constructions (glider guns, eaters, reflectors) needed for a full Turing completeness proof of GoL specifically
-- Space overhead bounds for simulations
-- The Garden of Eden theorem (surjective CA ⟹ pre-injective on finite patterns)
+## 8. Conclusion
 
-These remain important directions for future work.
-
-## 7. Future Work
-
-1. **Concrete GoL gadgets**: Formalize specific glider collision outcomes to build verified logic gates.
-2. **Space overhead**: Extend the simulation framework with spatial scaling factors.
-3. **Garden of Eden**: Formalize the Curtis-Hedlund-Lyndon theorem and its consequences.
-4. **Intrinsic universality**: Prove that certain CA are intrinsically universal (can simulate any CA with bounded overhead).
-5. **Undecidability**: Formalize the undecidability of the halting problem for GoL (consequence of Turing completeness).
-
-## References
-
-1. Conway, J.H. (1970). The Game of Life. *Scientific American*, 223(4).
-2. Gardner, M. (1970). Mathematical Games. *Scientific American*, 223(4), 120-123.
-3. Rendell, P. (2011). A Universal Turing Machine in Conway's Game of Life. *AUTOMATA 2011*, LNCS 6714.
-4. Ollinger, N. (2008). Universalities in cellular automata. *Handbook of Natural Computing*, Springer.
-5. Berlekamp, E., Conway, J.H., Guy, R. (2001). *Winning Ways for Your Mathematical Plays*, Vol. 4.
-6. Hedlund, G.A. (1969). Endomorphisms and automorphisms of the shift dynamical system. *Math. Systems Theory*, 3, 320-375.
-
-## Appendix: Theorem Summary
-
-| Theorem | File | Key Insight |
-|---------|------|-------------|
-| step_local | Defs.lean | GoL depends only on radius-1 neighborhood |
-| light_cone | Defs.lean | Finite speed of propagation |
-| multi_step | Defs.lean | Simulation iterates correctly |
-| simulation_compose | Defs.lean | Simulations compose with multiplicative overhead |
-| step_translate_commute | Universality.lean | GoL is translation-invariant |
-| periodic_orbit | Universality.lean | Periodic orbits reduce modularly |
-| period_divides_return | Universality.lean | Minimal period divides all return times |
-| spaceship_speed_bound | Universality.lean | Spaceships can't exceed speed 1 |
-| three_level_overhead | Universality.lean | Three-level composition is associative |
-| minimal_period_divides | Bridges.lean | Generalized to arbitrary endomorphisms |
-| simulation_algebra_associative | Bridges.lean | Overhead multiplication is associative |
-| universal_closed_under_simulation | Bridges.lean | Universality transfers through simulation |
-| finite_orbit_bound | Bridges.lean | Finite systems must cycle (pigeonhole) |
-| reversible_has_inverse | Bridges.lean | Bijective CAs have inverses |
+We have assembled, with full formal backing, a compact theory presenting
+union-closed families as positive-correlation systems: a conservation law
+(Theorem 1), an order-parameter principle (Theorem 2), an order-theoretic
+bridge (Theorem 3), the two-point inclusion–exclusion law (Theorem 4), a closure
+operator with occupancy monotonicity (Lemmas 5–6, Theorem 7), and the FKG base
+case (Theorem 8). The dictionary between combinatorics and discrete statistical
+mechanics that emerges is, we believe, a fruitful lens on one of the most
+stubborn open problems in extremal set theory.
