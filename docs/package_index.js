@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "constructive_mathematics_bishops_analysis.json",
     "pkg_num": 221,
     "quality": "substantial",
-    "quality_score": 0.86456,
+    "quality_score": 0.8085600000000002,
     "title": "Constructive Analysis: A Non-Circular Approximate Intermediate Value Theorem with Explicit Modulus"
   },
   {
@@ -6744,7 +6744,7 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "constructive_mathematics_bishops_analysis",
       "primary_domain": "Bridges",
-      "priority_score": 0.86456,
+      "priority_score": 0.8085600000000002,
       "quality": "substantial",
       "shape": "icosahedron",
       "title": "Constructive Analysis: A Non-Circular Approximate Intermediate Value Theorem with Explicit Modulus"

@@ -2532,7 +2532,7 @@
       "depth_estimate": 3,
       "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Computation"
@@ -10631,7 +10631,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Logic",
         "Computation"
@@ -12675,11 +12675,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fe4ab5a6",
       "depth_estimate": 3,
       "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
       "domain_bridges": [],
@@ -12689,7 +12689,7 @@
         "Computation"
       ],
       "id": "fd_0465",
-      "last_attempt_time": "2026-06-10T09:34:39.571619+00:00",
+      "last_attempt_time": "2026-06-21T10:43:59.765017+00:00",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -12702,7 +12702,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:30.568365+00:00",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
@@ -32325,7 +32325,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Spectral Gap of Sudoku\n\nThese conjectures extend the formalization in `Catalog/Novelty/SudokuSpectralGap.lean`,\nwhich establishes (general order `n`): the Sudoku graph is `(3n²−2n−1)`-regular, its\nadjacency spectrum is confined to `[−d, d]` with the all-ones Perron eigenvector at the\ntop, its chromatic number is exactly `n²`, and the partial-grid completion functor is\nantitone with a sharp SAT (nonempty)→UNSAT (empty) dichotomy.\n\nEach item below is stated to be **falsifiable** and **formalizable** in Lean.\n\n## C1. Exact second eigenvalue and the spectral gap formula\n**Conjecture.** The Sudoku graph of order `n` is a graph with exactly four distinct\nadjacency eigenvalues, and its second-largest eigenvalue is `λ₂ = 2n − 1`, giving a\nspectral gap `d − λ₂ = 3n² − 4n = n(3n−4)`. Equivalently, the gap grows quadratically in\n`n` so the normalized gap `(d − λ₂)/d → 1`.\n*Test:* compute the spectrum for `n = 2, 3, 4` by `decide`/`native_decide` on the\nadjacency matrix and check the count of distinct eigenvalues and the value of `λ₂`.\n\n## C2. The Sudoku graph is strongly regular iff `n = ... `\n**Conjecture.** The order-`n` Sudoku graph is **not** strongly regular for any `n ≥ 2`\n(unlike its building blocks: rows/columns/boxes individually give complete graphs).\nPrecisely, the number of common neighbours of two adjacent cells is *not* constant across\nall adjacent pairs. *Test:* exhibit two adjacent pairs (same-box vs. same-row-different-box)\nwith different common-neighbour counts; formalize as a `∃`-counterexample to\n`G.IsSRGWith ...`.\n\n## C3. Phase-transition threshold for unique completion\n**Conjecture.** There is a sharp clue-count threshold `m(n)` such that a uniformly random\nclue set of size `< m(n)` almost never has a unique completion while one of size `> m(n)`\nalmost always does; and `m(n) = Θ(n²)`. As a first formal milestone (deterministic):\n*any* clue set whose support meets every row, column, and box still need not pin the\nsolution, but a clue set equal to a full solution minus one cell always has a unique\ncompletion. *Test:* prove the deterministic milestone via `completions_antitone` plus the\nlocal cancellation already used in `sudokuColor_valid`.\n\n## C4. Hoffman bound is tight ⇒ a fractional-relaxation rigidity\n**Conjecture.** Hoffman's lower bound `χ ≥ 1 − λ_max/λ_min` is *tight* for the Sudoku\ngraph, i.e. `1 − d/λ_min = n²`, forcing `λ_min = −d/(n²−1)`. Combined with `C1` this\nover-determines the spectrum and should pin all four eigenvalues. *Test:* once `λ_min` is\nformalized, verify `1 − d/λ_min = n²` symbolically and cross-check against the spectra of\n`C1`.\n\n## C5. Tensor/Kronecker structure of the Sudoku operator\n**Conjecture.** The Sudoku adjacency operator decomposes as a sum of Kronecker products of\nall-ones and identity blocks: `A = (J⊗I + I⊗J + J⊗J)_{rows,cols,boxes} − 3·(I⊗I) − ...`\nover the `Fin n × Fin n × Fin n × Fin n` factorization, so its eigenvalues are explicit\ninteger combinations of `{n, 0}` eigenvalues of `J` and `I`. This would make `C1` and `C4`\ncorollaries of a single tensor-eigenvalue lemma. *Test:* formalize `A` as such a Kronecker\ncombination on `Cell n` and prove the eigenvalues factor accordingly; the all-ones\neigenvalue `d = 3n²−2n−1` should drop out as the `(n,n,n)` corner, matching\n`sudoku_top_eigenvalue`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -35053,7 +35053,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Novelty",
         "Computation"
@@ -37325,6 +37325,47 @@
       "title": "Cyclic Points and Terminal Closers in Multiset Permutations Satisfy a Linear Equivalence"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "EPS91",
+        "carmichael10"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Prove an upper bound for the logarithmic ratio of the count of numbers up to x with Carmichael's lambda function λ(n) bounded by y, and establish its asymptotic sharpness under the assumption that the density of primes n ≤ x with λ(n) ≤ y equals the density of powersmooth integers in [2, y]",
+      "domain_bridges": [
+        "Erdős-Pomerance-Schmutz work",
+        "Hypothesis U"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2172",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem lambda_bounds (x y epsilon : ℝ) (h : ε > 0) [y ≥ exp((log_2 x)^(1+ε))] [y ≤ x / exp((log_2 x)^(1+ε))] : (real.part (log (L x y / x))) ≤ real.part (log_lambda_bound x y)^(-1 + o(1))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Apply analytic number theory methods using the density of powersmooth integers and multiplicative group exponents, leveraging Dirichlet series and Tauberian theorems to relate the lambda function distribution to the primesmooth hypothesis",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19132v1",
+      "source_path": "http://arxiv.org/abs/2606.19132v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T10:43:31.527336+00:00",
+      "title": "Upper Bound and Asymptotic Sharpness of Lambda Function Counts Under the Plausibility Hypothesis on Powersmooth Primes"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -37347,7 +37388,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2172",
+      "id": "fd_2173",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem square_sided_dice_exist (a b : ℕ) (ha : a > 0) (hb : b > 0) (hneq : a ≠ b) :\n  ∃ (P Q : polynomial ℕ),\n    (∀ i, coeff P i ≥ 0) ∧ (∀ i, coeff Q i ≥ 0) ∧\n    polynomial.eval 1 P = a ^ 2 ∧ polynomial.eval 1 Q = b ^ 2 ∧\n    P * Q = (∑ i in finset.range 6, polynomial.X ^ (i+1)) ^ 2 :=\n  sorry",
@@ -37393,7 +37434,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2173",
+      "id": "fd_2174",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen Set\n\n/-- The projective order of 2 modulo `p` is the least positive `m` with `2^m = ±1`. -/\ndef ProjectiveOrderTwoIs (p m : ℕ) : Prop :=\n  IsLeast {n : ℕ | 0 < n ∧ (((2 : ZMod p) ^ n = 1) ∨ ((2 : ZMod p) ^ n = -1))} m\n\n/-- Conjecture: infinitely many prime odd bases have maximal four-digit Kaprekar terminal cycle length. -/\ntheorem infinitely_many_extremal_prime_kaprekar_bases :\n    Set.Infinite {p : ℕ | Nat.Prime p ∧ 5 < p ∧ ∃ m : ℕ,\n      ProjectiveOrderTwoIs p m ∧ m = (p - 1) / 2} := by\n  sorry",
@@ -37436,7 +37477,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2174",
+      "id": "fd_2175",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem arboreal_maximality_twisted_carlitz (q : ℕ) [Fact (Odd q)] (c : $\\mathbb{F}_q(t)$) : \n  ∀ n : ℕ, Isomorphism (GaloisGroup (Iterate (f_c c) n)) (IteratedWreathProduct (CyclicGroup (q-1)) n)",
@@ -37478,7 +37519,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2175",
+      "id": "fd_2176",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem twisted_first_moment_improved_error {T : ℝ} (δ : ℝ) (h : TestFunction) (m₁ m₂ : ℕ) (ε : ℝ) (hε : 0 < ε) :\n  (∑ π in B_{T,δ,μ̃} , (⋆ A_π(m₁,m₂) * L(1/2, π, sym²) * h(μ_π)) / CN(π))\n    = (ζ(3/2) / (192 * π^5)) * (if □ m₁ ∧ □ m₂ then 1 else 0) * vol_spec(h) / ((m₁^2 * m₂)^(1/4))\n      + O (T ^ (2 + ε)) := by\n  sorry",
@@ -37527,7 +37568,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2176",
+      "id": "fd_2177",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_sharp_spectral_bound :\n  ∃ (k : Nat) (eta : Nat) (G : SimpleGraph V) [Connected G] [NegComplete G],\n  (eta = 0 ∨ eta = 1) →\n  let τ := toughness G;\n  let ρ := spectral_radius G;\n  let q := signless_laplacian_spectral_radius G;\n  let n := (V.size : Nat);\n  if τ = 1 / (k - eta) ∧∧ ρ = (k - eta) * (n - 1) / n ∧∧ q = (k - eta) * (n - 1) / n then\n    ≊ (t : kTree G), t.IsSpanning\n  else\n    True :=\n  by\n    -- Placeholder for the proof/construction.\n    sorry.",
@@ -37551,36 +37592,42 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "https://arxiv.org/abs/2504.01234",
+        "https://arxiv.org/abs/2410.15678"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "depth_estimate": 3,
-      "description": "# Future Directions\n\nThe following are freeform research directions extending the constructive\napproximate IVT in `Analysis/ConstructiveApproxIVT.lean`. Each is a starting point\nrather than a finished plan.\n\n## 1. A fully computable approximate-root finder with verified complexity\n\nThe current development exhibits the approximate root as one of `N + 1` grid\nsamples and packages the search as membership in `Finset.range (N + 1)`, but it\nstops short of a `#eval`-able function returning the index, because real-number\ncomparison is undecidable. A natural next step is to parametrise the search by a\ndecidable sign oracle (e.g. a rational/dyadic approximation of `f` with a known\nerror bound) and produce an executable `findApproxRoot` together with a proof that\nits output satisfies `|f x| ≤ ε`, plus a `O(N)` step count. The key insight is\nthat the approximate IVT never needs the *exact* sign of `f` at a grid point, only\na comparison accurate to within `ε`, so a certified inexact comparator is enough to\ndrive the entire finite search. Why now? Mathlib's interval-arithmetic and\n`norm_num`/`Decidable` infrastructure has matured to the point where certified\ninexact comparators on concrete functions are routine, making an extracted,\nbenchmarkable root finder realistic rather than aspirational.\n\n## 2. Logarithmic-depth bisection refinement of the linear grid search\n\nThe uniform grid gives a linear-in-`N` search; a bisection variant that repeatedly\nhalves the bracketing interval would give an `O(log N)` approximate root for the\nsame accuracy, while still avoiding any exact-zero claim. The key insight is that\nthe finite sign-change lemma already isolates a *single* adjacent pair that\nstraddles zero, so the same minimisation argument applied recursively on halves\nturns the one-shot grid into a constructive bisection with an explicit\ncontraction rate. Why now? With the non-circular sign-change core already\nformalised and verified, the recursion only needs a termination measure and a\nmesh-halving lemma, both of which are standard `Nat`-recursion patterns that the\ncurrent lemma set directly supports.\n\n## 3. Multidimensional and vector-valued generalisations (Poincaré–Miranda)\n\nThe Poincaré–Miranda theorem is the `n`-dimensional analogue of the IVT for maps\nof a box into `ℝⁿ` with sign conditions on opposite faces; an approximate,\nconstructive version on a product grid would be a substantial generalisation of\nthis file. The key insight is that the one-dimensional finite sign-change mechanism\nis really a discrete-degree/parity argument, and the higher-dimensional case can be\nreduced to a finite combinatorial lemma on a triangulated grid (a Sperner-style\nlabelling) that, like `finite_sign_change`, contains no analytic content. Why now?\nConstructive and computational fixed-point methods (Sperner labellings, simplicial\napproximation) are increasingly being formalised, and the strict separation of\n\"finite combinatorics\" from \"modulus of continuity\" demonstrated here is exactly\nthe structure needed to port the argument to dimension `n`.\n\n## 4. Quantitative error bounds and modulus-to-rate dictionaries\n\nRight now the user supplies `δ` and any `N` with `(b − a)/N ≤ δ`; one could instead\nprove a sharp two-sided dictionary translating a *named* modulus (Lipschitz,\nHölder, or a general modulus function `ω`) into the smallest `N` guaranteeing\n`|f x| ≤ ε`, with matching lower bounds showing the grid cannot do better. The key\ninsight is that the accuracy of the returned approximate root is governed *solely*\nby the adjacent-oscillation bound `(b − a)/N ≤ δ`, so every continuity class\ncollapses to a single inequality relating mesh, modulus, and target accuracy. Why\nnow? Mathlib now has robust APIs for Lipschitz and Hölder continuity and for\nmoduli of continuity, so the dictionary can be stated and proved against existing\nabstractions instead of reinventing them.\n\n## 5. Reverse mathematics: calibrating the strength of the approximate IVT\n\nIt would be illuminating to place the approximate IVT precisely within the\nreverse-mathematics / constructive hierarchy — for instance, identifying exactly\nwhich fragment (and which omniscience principle, if any) is needed to upgrade the\napproximate root to an exact zero, and confirming formally that the approximate\nversion itself needs none. The key insight is that the development already isolates\nthe only potentially non-constructive step (the least-witness search in\n`finite_sign_change`, which is in fact decidable and choice-free in spirit), so the\nfile is a ready-made test case for tracking exactly where classical principles do\nor do not enter. Why now? Formal reverse mathematics inside Lean is an active and\ngrowing area, and having a clean, axiom-audited approximate IVT (depending only on\n`propext`, `Classical.choice`, `Quot.sound`) provides a concrete artifact whose\nlogical strength can be measured rather than merely discussed.\n",
-      "domain_bridges": [],
+      "description": "Convergence of the generating function for the two-centered black hole index in $\\mathbb{Z}_N$ CHL models is proven for $N=2,3$ by analyzing the analytic structure of the fundamental chamber $\\CR_N$ and modular transformation properties of the matrix coefficients in the generating function decomposition. The proof leverages pole cancellation in the imaginary $\\tau_2$-plane via black hole bound state metamorphosis.",
+      "domain_bridges": [
+        "Black hole-bound state metamorphosis in CHL models → Generating function manipulation",
+        "Siegel modular forms → Convergence of sums over lattice points"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Logic",
-        "Algebra"
+        "Algebra",
+        "Logic"
       ],
-      "id": "fd_2177",
+      "id": "fd_2178",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Modular analysis of the $\\tau_2$-plane via the fundamental chamber $\\CR_N$, demonstrating pole cancellations among CF1-CF4 terms through residue matching and modular transformation properties.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "2fe3f01b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2fe3f01b_retry3",
+      "source_exp_id": "2606.19479v1",
+      "source_path": "http://arxiv.org/abs/2606.19479v1",
       "status": "available",
-      "thread_id": "th_babf7182",
-      "timestamp": "2026-06-21T10:39:34.076069+00:00",
-      "title": "The following are freeform research directions extending the constructive"
+      "thread_id": "",
+      "timestamp": "2026-06-21T10:43:56.955206+00:00",
+      "title": "Convergence of Generating Function for Two-Centered Black Hole Index in CHL Models"
     },
     {
       "ambition_level": "extension",
@@ -37791,41 +37838,6 @@
       "thread_id": "",
       "timestamp": "2026-06-13T10:52:59.511741+00:00",
       "title": "Deepening: Proof-Complexity Holography: Geometric Duals of Formal Derivations"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "Building on cycle 2fe3f01b (Q=0.865), which proved 62 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Narrow the task to a self-contained Lean formalization of a non-circular, finite-grid approximate IVT. First prove a purely finite sign-change lemma for a real sequence u : ℕ → ℝ using a least index with u k ≥ 0. Then prove a discrete approximate IVT: if u 0 ≤ 0, 0 ≤ u N, and every adjacent jump is ",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Novelty"
-      ],
-      "id": "push_2fe3f01b_4268a219",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.95,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2fe3f01b",
-      "source_path": "Constructive Mathematics: Bishop's Analysis",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T10:40:09.933285+00:00",
-      "title": "Deepening: Constructive Mathematics: Bishop's Analysis"
     },
     {
       "ambition_level": "extension",

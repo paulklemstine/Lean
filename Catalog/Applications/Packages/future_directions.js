@@ -34,20 +34,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 2fe3f01b (Q=0.865), which proved 62 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Narrow the task to a self-contained Lean formalization of a non-circular, finite-grid approximate IVT. First prove a purely finite sign-change lemma for a real sequence u : \u2115 \u2192 \u211d using a least index with u k \u2265 0. Then prove a discrete approximate IVT: if u 0 \u2264 0, 0 \u2264 u N, and every adjacent jump is ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_2fe3f01b_4268a219",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "2fe3f01b",
-    "status": "available",
-    "timestamp": "2026-06-21T10:40:09.933285+00:00",
-    "title": "Deepening: Constructive Mathematics: Bishop's Analysis"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -2978,12 +2964,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove an upper bound for the logarithmic ratio of the count of numbers up to x with Carmichael's lambda function \u03bb(n) bounded by y, and establish its asymptotic sharpness under the assumption that the density of primes n \u2264 x with \u03bb(n) \u2264 y equals the density of powersmooth integers in [2, y]",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2172",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19132v1",
+    "status": "available",
+    "timestamp": "2026-06-21T10:43:31.527336+00:00",
+    "title": "Upper Bound and Asymptotic Sharpness of Lambda Function Counts Under the Plausibility Hypothesis on Powersmooth Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2172",
+    "id": "fd_2173",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2998,7 +2998,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2173",
+    "id": "fd_2174",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -3013,7 +3013,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2174",
+    "id": "fd_2175",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20046v1",
@@ -3028,7 +3028,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2175",
+    "id": "fd_2176",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19959v1",
@@ -3043,13 +3043,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2176",
+    "id": "fd_2177",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20297v1",
     "status": "available",
     "timestamp": "2026-06-21T06:32:14.667244+00:00",
     "title": "Sharp spectral bound for spanning k\u2011trees in \u03c4\u2011tough graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Convergence of the generating function for the two-centered black hole index in $\\mathbb{Z}_N$ CHL models is proven for $N=2,3$ by analyzing the analytic structure of the fundamental chamber $\\CR_N$ and modular transformation properties of the matrix coefficients in the generating function decomposition. The proof leverages pole cancellation in the imaginary $\\tau_2$-plane via black hole bound state metamorphosis.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2178",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19479v1",
+    "status": "available",
+    "timestamp": "2026-06-21T10:43:56.955206+00:00",
+    "title": "Convergence of Generating Function for Two-Centered Black Hole Index in CHL Models"
   },
   {
     "consumed_by_exp_id": "",
@@ -3989,21 +4004,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe following are freeform research directions extending the constructive\napproximate IVT in `Analysis/ConstructiveApproxIVT.lean`. Each is a starting point\nrather than a finished plan.\n\n## 1. A fully computable approximate-root finder with verified complexity\n\nThe current development exhibits the approximate root as one of `N + 1` grid\nsamples and packages the search as membership in `Finset.range (N + 1)`, but it\nstops short of a `#eval`-able function returning the index, because real-number\ncomparison is undecidable. A natural next step is to parametrise the search by a\ndecidable sign oracle (e.g. a rational/dyadic approximation of `f` with a known\nerror bound) and produce an executable `findApproxRoot` together with a proof that\nits output satisfies `|f x| \u2264 \u03b5`, plus a `O(N)` step count. The key insight is\nthat the approximate IVT never needs the *exact* sign of `f` at a grid point, only\na comparison accurate to within `\u03b5`, so a certified inexact comparator is enough to\ndrive the entire finite search. Why now? Mathlib's interval-arithmetic and\n`norm_num`/`Decidable` infrastructure has matured to the point where certified\ninexact comparators on concrete functions are routine, making an extracted,\nbenchmarkable root finder realistic rather than aspirational.\n\n## 2. Logarithmic-depth bisection refinement of the linear grid search\n\nThe uniform grid gives a linear-in-`N` search; a bisection variant that repeatedly\nhalves the bracketing interval would give an `O(log N)` approximate root for the\nsame accuracy, while still avoiding any exact-zero claim. The key insight is that\nthe finite sign-change lemma already isolates a *single* adjacent pair that\nstraddles zero, so the same minimisation argument applied recursively on halves\nturns the one-shot grid into a constructive bisection with an explicit\ncontraction rate. Why now? With the non-circular sign-change core already\nformalised and verified, the recursion only needs a termination measure and a\nmesh-halving lemma, both of which are standard `Nat`-recursion patterns that the\ncurrent lemma set directly supports.\n\n## 3. Multidimensional and vector-valued generalisations (Poincar\u00e9\u2013Miranda)\n\nThe Poincar\u00e9\u2013Miranda theorem is the `n`-dimensional analogue of the IVT for maps\nof a box into `\u211d\u207f` with sign conditions on opposite faces; an approximate,\nconstructive version on a product grid would be a substantial generalisation of\nthis file. The key insight is that the one-dimensional finite sign-change mechanism\nis really a discrete-degree/parity argument, and the higher-dimensional case can be\nreduced to a finite combinatorial lemma on a triangulated grid (a Sperner-style\nlabelling) that, like `finite_sign_change`, contains no analytic content. Why now?\nConstructive and computational fixed-point methods (Sperner labellings, simplicial\napproximation) are increasingly being formalised, and the strict separation of\n\"finite combinatorics\" from \"modulus of continuity\" demonstrated here is exactly\nthe structure needed to port the argument to dimension `n`.\n\n## 4. Quantitative error bounds and modulus-to-rate dictionaries\n\nRight now the user supplies `\u03b4` and any `N` with `(b \u2212 a)/N \u2264 \u03b4`; one could instead\nprove a sharp two-sided dictionary translating a *named* modulus (Lipschitz,\nH\u00f6lder, or a general modulus function `\u03c9`) into the smallest `N` guaranteeing\n`|f x| \u2264 \u03b5`, with matching lower bounds showing the grid cannot do better. The key\ninsight is that the accuracy of the returned approximate root is governed *solely*\nby the adjacent-oscillation bound `(b \u2212 a)/N \u2264 \u03b4`, so every continuity class\ncollapses to a single inequality relating mesh, modulus, and target accuracy. Why\nnow? Mathlib now has robust APIs for Lipschitz and H\u00f6lder continuity and for\nmoduli of continuity, so the dictionary can be stated and proved against existing\nabstractions instead of reinventing them.\n\n## 5. Reverse mathematics: calibrating the strength of the approximate IVT\n\nIt would be illuminating to place the approximate IVT precisely within the\nreverse-mathematics / constructive hierarchy \u2014 for instance, identifying exactly\nwhich fragment (and which omniscience principle, if any) is needed to upgrade the\napproximate root to an exact zero, and confirming formally that the approximate\nversion itself needs none. The key insight is that the development already isolates\nthe only potentially non-constructive step (the least-witness search in\n`finite_sign_change`, which is in fact decidable and choice-free in spirit), so the\nfile is a ready-made test case for tracking exactly where classical principles do\nor do not enter. Why now? Formal reverse mathematics inside Lean is an active and\ngrowing area, and having a clean, axiom-audited approximate IVT (depending only on\n`propext`, `Classical.choice`, `Quot.sound`) provides a concrete artifact whose\nlogical strength can be measured rather than merely discussed.\n",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_2177",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2fe3f01b",
-    "status": "available",
-    "timestamp": "2026-06-21T10:39:34.076069+00:00",
-    "title": "The following are freeform research directions extending the constructive"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4820,7 +4820,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fe4ab5a6",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -4830,7 +4830,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
