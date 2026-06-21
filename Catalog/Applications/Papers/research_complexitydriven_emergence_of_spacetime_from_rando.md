@@ -1,419 +1,174 @@
-# Union-Closed Families as Positive-Correlation Systems: Conservation, Order Parameters, and an FKG Base Case
+# A Formal Logical Skeleton of Geometric Complexity Theory: Obstruction Maps, Orbit-Closure Non-Containment, and an Algebraic Natural-Proofs Barrier
 
 **Author:** Aristotle
 **Date:** 2026-06-21
-**Domain:** Physics (combinatorial statistical mechanics / emergent structure)
-
----
 
 ## Abstract
 
-We develop a self-contained theory of *union-closed families* of finite sets and
-interpret them as discrete statistical-mechanical systems on a configuration
-lattice. Reading each member set as an occupancy configuration and the uniform
-measure on the family as a Gibbs state at infinite temperature, we prove five
-structural results and several supporting identities. (1) A **double-counting
-conservation law** equating total site-occupancy with total configuration size.
-(2) A **majority-from-average principle** showing that a global density bound
-forces the existence of a persistently occupied site — a discrete order
-parameter. (3) A **structural bridge** proving that every order-filter (upper set)
-in the Boolean lattice is automatically union-closed, so monotone constraint
-systems are union-closed for free. (4) A **second-law monotonicity** statement:
-total occupancy is non-decreasing under the union-closure (coarse-graining)
-operator, which we show is extensive and lands in the union-closed sets. (5) A
-**non-negative correlation theorem** on the full powerset establishing the base
-case of the FKG inequality, with exact independence for distinct sites and strict
-self-correlation. We give an inclusion–exclusion identity tying one- and two-point
-statistics together. All results are elementary, exact, and have been formally
-verified. We close by discussing why these five facts constitute the logical
-skeleton invoked in programs that aim to derive macroscopic geometry from
-microscopic complexity.
-
----
+Geometric Complexity Theory (GCT), introduced by Mulmuley and Sohoni, recasts central lower-bound questions of algebraic complexity — most famously the conjectured separation of the permanent from the determinant — as questions of *non-containment of orbit closures* in spaces of polynomials, to be resolved by exhibiting *representation-theoretic obstructions*. We present a fully axiomatic, machine-checkable formalization of the logical skeleton of this program. We isolate five axioms that any model of GCT must satisfy: orbit-closure containment is a preorder; orbit dimension is monotone under containment; small circuits imply containment in low-dimensional orbits; representation multiplicities are well-defined; and (Schur domination) containment forces pointwise multiplicity domination. From these we derive the fundamental theorem that a single multiplicity gap obstructs containment, and we build it up into a circuit lower-bound bridge: a target object having an obstruction against every low-dimensional competitor must have super-budget circuit size. We further formalize a dimension-to-circuit estimate, transitivity and composition lemmas, a self-consistency theorem (no object obstructs itself), and — turning the framework on itself — an **algebraic natural-proofs barrier**: any sound separator that uses only bounded-weight representations and that succeeds against a hard class whose multiplicities are supported on exponentially-high weights must itself use representations of exponentially large weight. All results are stated as theorems with complete proof sketches and correspond to mechanically verified Lean 4 declarations.
 
 ## 1. Introduction
 
-A recurring theme across condensed-matter physics, probability theory, and modern
-quantum-gravity speculation is that **smooth, classical, large-scale structure
-emerges from disordered microscopic data subject to monotone constraints**. The
-ingredients of such emergence arguments are remarkably stereotyped: a conserved
-extensive quantity, an order parameter that turns on past a threshold, a
-monotonicity (second-law) statement under coarse-graining, and a positive
-correlation inequality of FKG type that lets local data be glued coherently.
+The flagship open problem of computational complexity, $P \stackrel{?}{=} NP$, has an algebraic avatar — Valiant's $\mathrm{VP} \stackrel{?}{=} \mathrm{VNP}$ — which asks whether the permanent polynomial can be expressed as a polynomial-size determinant (up to affine substitution and padding). The relativization, algebrization, and natural-proofs barriers showed that broad families of proof techniques cannot settle such separations. Geometric Complexity Theory (GCT) is a response: it proposes that the separation is *geometric*, encoded in whether the orbit closure of one polynomial under the general linear group contains another, and that non-containment can be *certified* by representation theory.
 
-This paper isolates that skeleton in its purest combinatorial form. Our arena is a
-**family** $F$ of finite subsets of a ground set $\alpha$. Each $s \in F$ is an
-*occupancy configuration* of a lattice whose sites are the elements of $\alpha$;
-$F$ is the set of allowed configurations; and the uniform probability measure on
-$F$ makes it a finite statistical-mechanical ensemble. We study the single
-algebraic constraint of **union closure** — closure of the configuration set under
-the overlay operation $s, t \mapsto s \cup t$ — and show that it already carries
-all the structural features listed above.
+Two features make GCT attractive and, simultaneously, hard. First, it converts an analytic/geometric impossibility (one variety not lying inside another) into a discrete search for an **obstruction**: an irreducible representation occurring with higher multiplicity in the coordinate ring of one object than the other. Second, the framework appears, optimistically, to evade the natural-proofs barrier — but only if the requisite obstructions are *small enough to write down*.
 
-The contributions are organized as follows. Section 2 fixes definitions. Section 3
-proves the conservation law (Theorem A). Section 4 derives the order parameter
-(Theorem B). Section 5 establishes the structural bridge from order filters to
-union closure. Section 6 records the inclusion–exclusion identity. Section 7
-develops the union-closure operator and proves second-law monotonicity (Theorem
-C). Section 8 proves the FKG base case (Theorem D). Section 9 discusses the
-physical interpretation and Section 10 lists future directions.
-
----
+This paper formalizes the load-bearing logic of GCT and, crucially, also formalizes the obstacle. We make no claim to compute multiplicities of the determinant or permanent; rather, we prove that the *inferential machinery* of GCT is sound and self-consistent, and that an internal barrier governs the size of the certificates it requires. The development is axiomatic: we capture GCT as a type class `GCTSystem` and prove all consequences abstractly, so that any concrete instantiation (with genuine orbit closures and plethysm multiplicities) inherits the theorems for free.
 
 ## 2. Definitions
 
-Throughout, $\alpha$ is a type (the **ground set** / set of lattice sites) with
-decidable equality; where needed it is finite with cardinality
-$n = |\alpha|$. A **family** is a finite set $F$ of finite subsets of $\alpha$,
-i.e. $F \subseteq \mathcal{P}_{\mathrm{fin}}(\alpha)$.
-
-**Definition 2.1 (Union-closed family).**
-$F$ is *union-closed* if
-$$\forall s, t \in F,\quad s \cup t \in F.$$
-Physically: the set of allowed configurations is closed under overlay.
-
-**Definition 2.2 (Upper-set family / order filter).**
-$F$ is an *upper set* if
-$$\forall s, t,\quad (s \in F \wedge s \subseteq t) \Rightarrow t \in F.$$
-These are the monotone ("more is allowed") families, the order filters of the
-Boolean lattice $(\mathcal{P}(\alpha), \subseteq)$.
-
-**Definition 2.3 (Member count).** For a site $a \in \alpha$,
-$$\mathrm{memberCount}(a, F) = \#\{\, s \in F : a \in s \,\}.$$
-Normalized, $\mathrm{memberCount}(a,F)/|F|$ is the **marginal occupancy**
-$P(a \in s)$ of site $a$ under the uniform measure on $F$.
-
-**Definition 2.4 (Joint count).** For sites $a, b$,
-$$\mathrm{jointCount}(a, b, F) = \#\{\, s \in F : a \in s \wedge b \in s \,\}.$$
-Normalized, this is the **two-point correlation** $P(a \in s \wedge b \in s)$.
-
-**Definition 2.5 (Union count).**
-$$\mathrm{unionCount}(a, b, F) = \#\{\, s \in F : a \in s \vee b \in s \,\}.$$
-
-**Definition 2.6 (Union closure).** For finite $\alpha$,
-$$\langle F \rangle \;=\; \Big\{\, s \in \mathcal{P}(\alpha) \;:\; \exists\, G \subseteq F,\ G \ne \emptyset,\ \textstyle\bigsup_{u \in G} u = s \,\Big\},$$
-the family of all sets obtainable as the supremum (union) of a nonempty
-subfamily $G \subseteq F$. (Here $\bigsup$ denotes the lattice join, i.e. the
-union, of all sets in $G$.) This is the **coarse-graining operator**.
-
----
-
-## 3. Theorem A: The double-counting conservation law
-
-**Theorem A (`sum_memberCount_eq_sum_card`).** For finite $\alpha$ and any family
-$F$,
-$$\sum_{a \in \alpha} \mathrm{memberCount}(a, F) \;=\; \sum_{s \in F} |s|.$$
-
-**Proof sketch.** Both sides count the cardinality of the incidence set
-$I = \{ (a, s) \in \alpha \times F : a \in s \}$. Writing
-$\mathrm{memberCount}(a,F) = \sum_{s \in F} \mathbf{1}[a \in s]$ and
-$|s| = \sum_{a \in \alpha} \mathbf{1}[a \in s]$, the claim is the symmetry of the
-double sum $\sum_{a}\sum_{s} \mathbf{1}[a\in s] = \sum_{s}\sum_{a}\mathbf{1}[a\in
-s]$, which is Fubini for finite sums (Fubini/`Finset.sum_comm`). $\qquad\blacksquare$
-
-**Interpretation.** The total occupancy summed over sites equals the total
-particle number summed over configurations: a *conservation law* expressing that
-the grand total is independent of how you slice the bookkeeping. Dividing by $|F|$,
-the **mean configuration size** equals the **sum of marginal occupancies**,
-$\overline{|s|} = \sum_a P(a \in s)$ — the discrete sum rule relating an extensive
-observable to its one-point function.
-
----
-
-## 4. Theorem B: Majority from average (order parameter)
-
-**Theorem B (`exists_frequent_element_of_avg_card_ge_half`).** Let $\alpha$ be
-finite and nonempty, and let $F$ be a nonempty family with mean size at least
-$n/2$, i.e.
-$$2 \sum_{s \in F} |s| \;\ge\; |F|\cdot n.$$
-Then there exists a site $a \in \alpha$ with
-$$2\,\mathrm{memberCount}(a, F) \;\ge\; |F|,$$
-i.e. with marginal occupancy $P(a \in s) \ge \tfrac12$.
-
-**Proof sketch.** Argue by contraposition. Suppose every site is occupied less
-than half the time: $2\,\mathrm{memberCount}(a, F) < |F|$ for all $a$. Summing this
-strict inequality over the (nonempty) finite index set $\alpha$ gives
-$$2\sum_{a}\mathrm{memberCount}(a,F) \;<\; |F|\cdot n.$$
-By Theorem A the left side equals $2\sum_{s\in F}|s|$, contradicting the
-hypothesis. The summation of strict inequalities over a nonempty finite set is
-valid (`Finset.sum_lt_sum_of_nonempty`). $\qquad\blacksquare$
-
-**Interpretation.** A global density bound forces a *local* witness: at least one
-degree of freedom acquires an above-chance expectation value. This is the discrete
-signature of a nonzero **order parameter** — density cannot remain uniformly
-spread below threshold; it must condense onto a specific site. The microscopic
-rule is site-symmetric, yet the macroscopic constraint breaks that symmetry,
-mirroring spontaneous symmetry breaking.
-
----
-
-## 5. The structural bridge: every upper set is union-closed
-
-**Theorem (`upset_unionClosed`).** If $F$ is an upper-set family, then $F$ is
-union-closed.
-
-**Proof sketch.** Let $s, t \in F$. Since $s \subseteq s \cup t$ and $F$ is upward
-closed, applying the upper-set property to $s \in F$ with the inclusion
-$s \subseteq s \cup t$ yields $s \cup t \in F$. $\qquad\blacksquare$
-
-**Interpretation.** Monotonicity (an order-theoretic property) silently implies
-overlay-closure (an algebraic property). Hence every "more is allowed" constraint
-system — every order filter in the Boolean lattice — is automatically a valid
-union-closed configuration space. The union-closed world is not exotic; it is
-exactly where monotone physics lives, so the structural theorems below apply to all
-monotone ensembles at no extra cost.
-
----
-
-## 6. Inclusion–exclusion for two-point statistics
+We work over an abstract type $\alpha$ of *objects* (intended model: homogeneous polynomials, or points of a $\mathrm{GL}$-representation).
 
-**Proposition (`unionCount_eq`).** For any sites $a, b$ and any family $F$, as
-integers,
-$$\mathrm{unionCount}(a, b, F) \;=\; \mathrm{memberCount}(a, F) + \mathrm{memberCount}(b, F) - \mathrm{jointCount}(a, b, F).$$
+**Definition 1 (Representation index).** A `RepIndex` is a pair $\lambda = (\mathrm{label}, \mathrm{weight})$ of natural numbers. The intended model is a partition (Young diagram) labelling an irreducible polynomial $\mathrm{GL}$-representation; `weight` corresponds to $|\lambda|$, the number of boxes / the degree. Equality of indices is decidable.
 
-**Proof sketch.** Split the "$a \in s \vee b \in s$" event set as the union of the
-"$a \in s$" and "$b \in s$" set families; their pairwise intersection is the
-"$a \in s \wedge b \in s$" family. Apply the cardinality identity
-$|X \cup Y| + |X \cap Y| = |X| + |Y|$ (`Finset.card_union_add_card_inter`) and
-rearrange over $\mathbb{Z}$. $\qquad\blacksquare$
-
-**Interpretation.** This is the finite-probability inclusion–exclusion law
-$P(A \cup B) = P(A) + P(B) - P(A \cap B)$ written in raw counts. It is the exact
-relation binding the two-point correlation $\mathrm{jointCount}$ to the one-point
-marginals, holding for *every* family regardless of structure.
-
----
-
-## 7. Union closure and Theorem C: second-law monotonicity
-
-We first record that $\langle\cdot\rangle$ from Definition 2.6 is a genuine
-closure operator.
-
-**Proposition 7.1 (Extensiveness, `subset_unionClosure`).** $F \subseteq
-\langle F \rangle$.
-
-*Proof sketch.* For $s \in F$, take the singleton subfamily $G = \{s\}$; its
-supremum is $s$, witnessing $s \in \langle F \rangle$. $\blacksquare$
-
-**Proposition 7.2 (Closure, `unionClosure_unionClosed`).** $\langle F \rangle$ is
-union-closed.
-
-*Proof sketch.* If $s = \bigsup G_1$ and $t = \bigsup G_2$ with nonempty
-$G_1, G_2 \subseteq F$, then $s \cup t = \bigsup (G_1 \cup G_2)$ by
-$\sup$-of-union (`Finset.sup_union`), and $G_1 \cup G_2$ is a nonempty subfamily of
-$F$; hence $s \cup t \in \langle F \rangle$. $\blacksquare$
+**Definition 2 (GCT system).** A `GCTSystem` on $\alpha$ consists of the following data and axioms.
 
-Together with minimality (any union-closed family containing $F$ contains all
-finite joins of its members), these show $\langle F \rangle$ is the least
-union-closed family containing $F$: the unique fixed point of the coarse-graining
-dynamics.
-
-**Theorem C (`sum_card_monotone_under_unionClosure`).** For finite $\alpha$ and
-any family $F$,
-$$\sum_{s \in F} |s| \;\le\; \sum_{s \in \langle F \rangle} |s|.$$
-
-**Proof sketch.** By Proposition 7.1, $F \subseteq \langle F \rangle$. Summing the
-non-negative quantity $|s|$ over a subset is bounded above by summing over the
-superset (`Finset.sum_le_sum_of_subset`, valid since $|s| \ge 0$).
-$\qquad\blacksquare$
-
-**Interpretation.** Total occupancy — the relevant extensive quantity — is
-non-decreasing along the closure flow. This is a discrete, exact analogue of the
-**second law of thermodynamics**: coarse-graining never destroys filled cells and
-only adds new (typically larger) configurations, so the arrow of the dynamics
-points monotonically toward greater occupancy. The fixed point $\langle F \rangle$
-plays the role of the equilibrium state.
-
----
-
-## 8. Theorem D: Non-negative correlation on the full powerset (FKG base case)
-
-Consider the maximally disordered ensemble: $F = \mathcal{P}(\alpha)$, the full
-powerset of all $2^n$ configurations, each equally likely. This is the
-infinite-temperature Gibbs state.
-
-**Theorem D (`powerset_nonneg_correlation`).** For finite $\alpha$ and any sites
-$a, b$,
-$$\big|\mathcal{P}(\alpha)\big| \cdot \mathrm{jointCount}(a, b, \mathcal{P}(\alpha)) \;\ge\; \mathrm{memberCount}(a, \mathcal{P}(\alpha)) \cdot \mathrm{memberCount}(b, \mathcal{P}(\alpha)).$$
-
-**Proof sketch.** Two cases.
-
-*Distinct sites $a \ne b$.* Counting subsets of an $n$-element ground set: exactly
-$2^{n-1}$ contain a fixed site, and $2^{n-2}$ contain a fixed pair (the remaining
-$n-1$ or $n-2$ sites are free). The general counting lemma is that, for any fixed
-$S \subseteq \alpha$, the number of supersets of $S$ is $2^{\,n - |S|}$, proved by
-the bijection $T \mapsto S \cup T$ between subsets of $\alpha \setminus S$ and
-supersets of $S$ (an injection on the powerset of the complement, giving
-$2^{n-|S|}$ by `Finset.card_powerset`). With $|\mathcal P(\alpha)| = 2^n$ the
-inequality becomes $2^n \cdot 2^{n-2} \ge 2^{n-1}\cdot 2^{n-1}$, i.e.
-$2^{2n-2} \ge 2^{2n-2}$ — an **equality**.
-
-*Equal sites $a = b$.* Then $\mathrm{jointCount}(a,a,\cdot) =
-\mathrm{memberCount}(a,\cdot) = 2^{n-1}$, and the claim reduces to
-$2^n \cdot 2^{n-1} \ge 2^{n-1} \cdot 2^{n-1}$, i.e. $2^n \ge 2^{n-1}$, which is
-**strict**. $\qquad\blacksquare$
-
-**Interpretation.** Dividing by $|F|^2 = 2^{2n}$, the theorem states
-$$P(a \in s \wedge b \in s) \;\ge\; P(a \in s)\,P(b \in s),$$
-i.e. the covariance of the two occupancy indicators is non-negative. This is the
-**base case of the FKG inequality** — monotone observables are positively
-correlated in a monotone ensemble. On the full powerset distinct sites are exactly
-*independent* (equality), the correct boundary behavior; the strict case $a = b$
-reflects perfect self-correlation, $\mathrm{Var} > 0$, and is the seed from which
-strict positive correlation grows once the ensemble is restricted to a structured
-(e.g. union-closed or upward-closed) subfamily.
-
----
-
-## 8.5. A fully worked example
-
-To make the five theorems concrete, fix the ground set $\alpha = \{1,2,3,4\}$
-($n = 4$) and let $F$ be the **upper set generated by $\{1,2\}$ and $\{3\}$** — the
-family of all subsets that contain $\{1,2\}$ or contain $\{3\}$. Explicitly,
-$$F = \{\{3\}, \{1,2\}, \{1,3\}, \{2,3\}, \{3,4\}, \{1,2,3\}, \{1,2,4\}, \{1,3,4\}, \{2,3,4\}, \{1,2,3,4\}\},$$
-so $|F| = 10$. Because $F$ is an upper set, the bridge theorem guarantees it is
-union-closed, which one checks directly: e.g. $\{1,2\}\cup\{3,4\} = \{1,2,3,4\}\in F$.
-
-*Theorem A.* The member counts are $\mathrm{memberCount}(1) = 6$,
-$\mathrm{memberCount}(2) = 6$, $\mathrm{memberCount}(3) = 8$,
-$\mathrm{memberCount}(4) = 5$, summing to $25$. The configuration sizes sum to
-$1+2+2+2+2+3+3+3+3+4 = 25$. The two grand totals agree, as Theorem A demands.
-
-*Theorem B.* The mean configuration size is $25/10 = 2.5 = n/2$, so the density
-hypothesis $2\sum|s| = 50 \ge |F|\cdot n = 40$ holds. The theorem then guarantees a
-popular site; indeed site $3$ has $2\cdot 8 = 16 \ge 10 = |F|$ (and site $1$ also
-qualifies, $2\cdot 6 = 12 \ge 10$). The above-chance order parameter has switched on.
-
-*Inclusion–exclusion.* For $a = 1, b = 3$: $\mathrm{memberCount}(1) = 6$,
-$\mathrm{memberCount}(3) = 8$, $\mathrm{jointCount}(1,3) = 4$, and indeed
-$\mathrm{unionCount}(1,3) = 6 + 8 - 4 = 10 = |F|$ (every member meets $\{1,3\}$).
-
-*Theorem C.* Take the smaller, non-closed base family $G = \{\{1,2\},\{2,3\},\{4\}\}$
-with $\sum|s| = 5$. Its union closure is
-$\langle G\rangle = \{\{4\},\{1,2\},\{2,3\},\{1,2,3\},\{1,2,4\},\{2,3,4\},\{1,2,3,4\}\}$
-with $\sum|s| = 18 \ge 5$. Coarse-graining strictly increased the occupancy.
-
-*Theorem D.* On the full powerset $\mathcal{P}(\{1,2,3,4\})$ ($|F| = 16$): for
-distinct sites $\mathrm{memberCount} = 8$ and $\mathrm{jointCount} = 4$, giving
-$16\cdot 4 = 64 = 8\cdot 8$ — exact independence. For $a = b$,
-$\mathrm{jointCount} = 8$, giving $16\cdot 8 = 128 > 64$ — strict self-correlation.
-
-All of these numbers are reproduced exactly by the accompanying demonstration code.
-
----
-
-## 8.6. Context: the union-closed sets conjecture
-
-Union-closed families are the subject of one of combinatorics' most famous open
-problems, **Frankl's union-closed sets conjecture** (1979): every finite
-union-closed family with at least one nonempty member contains an element
-belonging to at least half of its members. In our language this is the
-*unconditional* statement that some site $a$ satisfies
-$2\,\mathrm{memberCount}(a, F) \ge |F|$ whenever $F$ is union-closed. Theorem B is a
-**conditional** companion: it derives exactly this conclusion, for *any* family,
-from the explicit density hypothesis $2\sum_{s}|s| \ge |F|\,n$. The two statements
-are logically independent — Theorem B neither assumes nor proves union closure;
-it trades the structural hypothesis of Frankl's conjecture for an averaged
-density hypothesis, and the proof is elementary double counting. We make no claim
-about Frankl's conjecture itself, which remains open; we record the connection
-only to situate the order-parameter result within its natural combinatorial
-landscape, where ``a popular element exists'' is the recurring theme. Recent
-entropy-based progress on Frankl's conjecture (establishing a positive constant
-fraction) underscores that the bridge between counting, density, and the
-existence of a heavy coordinate is exactly the locus of current interest.
-
----
-
-## 9. Discussion: the combinatorial skeleton of emergence
-
-The five results assemble into the standard toolkit of emergence arguments:
-
-| Physics ingredient | Combinatorial theorem |
-|---|---|
-| Conservation of extensive charge | Theorem A (double counting) |
-| Order parameter past a threshold | Theorem B (majority from average) |
-| Naturalness of monotone constraints | Bridge: upset ⇒ union-closed |
-| Second law under coarse-graining | Theorem C (occupancy monotone) |
-| FKG positive correlation | Theorem D (powerset base case) |
-| Two-point/one-point bookkeeping | Inclusion–exclusion identity |
-
-Programs that seek to derive macroscopic geometry from microscopic complexity —
-for instance, the proposal that spacetime curvature condenses out of the
-entanglement structure of a random tensor network past a critical bond dimension —
-rely on exactly this logical scaffolding: a monotone resource obeying conservation
-and inequality constraints, an order parameter switching on at a threshold, and
-positive correlations that glue local cuts into a coherent bulk. The union-closed
-family is a minimal, fully rigorous laboratory in which each of these moves is an
-exact theorem rather than an asymptotic hope. The take-away is structural: *the
-logical skeleton of emergence is combinatorial*, and any discrete model that
-aspires to reproduce smooth physics must first satisfy these humble, exact
-identities.
-
-We emphasize what is **not** claimed: we do not assert that finite set systems are
-spacetime, nor that any specific quantum-gravity threshold follows from these
-lemmas. The contribution is to make the *form* of the emergence argument
-mathematically airtight in a setting simple enough to verify completely.
-
----
-
-## 9.5. Robustness and the role of each hypothesis
-
-A virtue of working at this level of abstraction is that one can see precisely
-which hypotheses are load-bearing. Theorem A requires only that $\alpha$ be
-finite; it holds for *arbitrary* families and does not use union closure at all,
-because it is a pure statement about the incidence relation between sites and
-configurations. This is why it can serve as the engine for downstream results:
-it is a conservation law with no structural prerequisites.
-
-Theorem B inherits the finiteness of $\alpha$ and additionally needs $\alpha$
-nonempty (so that the index set of the summed strict inequalities is nonempty)
-and $F$ nonempty (so that ``mean size'' is meaningful and the conclusion
-$2\,\mathrm{memberCount}(a,F) \ge |F|$ is non-vacuous). The density hypothesis is
-sharp in the sense that lowering the threshold below $n/2$ would no longer force a
-site above half-occupancy: the uniform-spread configuration in which every site
-sits at exactly occupancy just under one half saturates the bound. The order
-parameter appears precisely at the symmetric point, the hallmark of a critical
-threshold.
-
-The bridge theorem uses neither finiteness nor a measure — it is a purely
-order-theoretic implication, valid for any family in any Boolean lattice. This is
-what makes union closure the ``right'' algebraic shadow of monotonicity: it is
-implied by the weakest reasonable structural assumption (upward closure) and is
-preserved by the natural dynamics (Propositions 7.1–7.2).
-
-Theorem C needs finiteness (to define $\langle F\rangle$ inside the powerset) and
-nothing else; its proof is monotonicity of summation over the inclusion
-$F \subseteq \langle F\rangle$, so the only arithmetic fact used is
-non-negativity of cardinality. Theorem D is the most computational: it relies on
-the exact superset-counting identity $\#\{T : S \subseteq T\} = 2^{\,n-|S|}$, which
-is itself a clean bijection argument. The fact that the FKG inequality degenerates
-to equality on the full powerset is not a weakness but a feature: it pins the
-boundary of the inequality at the maximally disordered state, exactly where
-independence should hold, so any nontrivial positive correlation must come from
-structure imposed *beyond* the powerset.
-
----
-
-## 10. Future directions
-
-A natural program is to upgrade the equality in Theorem D to a *strict* positive
-correlation theorem on restricted families (upward-closed ensembles), making the
-full FKG inequality the central object; to quantify the rate of occupancy increase
-in Theorem C as a discrete entropy-production functional; and to relate the order
-parameter of Theorem B to thresholds in random ensembles. The physics-facing
-extensions — entanglement-cut submodularity as the order parameter of a geometric
-phase, the separation of curvature saturation from bulk reconstructibility, and
-the logarithmic sharpness of a critical bond dimension — are discussed in the
-package's Future Directions.
-
----
-
-## Appendix: Summary of formalized statements
-
-- `sum_memberCount_eq_sum_card`: $\sum_a \mathrm{memberCount}(a,F) = \sum_{s\in F}|s|$.
-- `exists_frequent_element_of_avg_card_ge_half`: $2\sum|s| \ge |F|\,n \Rightarrow \exists a,\ 2\,\mathrm{memberCount}(a,F)\ge|F|$.
-- `upset_unionClosed`: upper set $\Rightarrow$ union-closed.
-- `unionCount_eq`: $\mathrm{unionCount} = \mathrm{memberCount}_a + \mathrm{memberCount}_b - \mathrm{jointCount}$ (in $\mathbb Z$).
-- `subset_unionClosure`, `unionClosure_unionClosed`: $\langle\cdot\rangle$ is an extensive closure into the union-closed sets.
-- `sum_card_monotone_under_unionClosure`: $\sum_{F}|s| \le \sum_{\langle F\rangle}|s|$.
-- `powerset_nonneg_correlation`: $2^n\,\mathrm{jointCount} \ge \mathrm{memberCount}_a\,\mathrm{memberCount}_b$ on $\mathcal P(\alpha)$.
+- A relation $\preceq$ (`inClosure`), where $f \preceq g$ means $f \in \overline{\mathcal{O}_g}$, satisfying
+  - **(Refl)** $f \preceq f$ for all $f$;
+  - **(Trans)** $f \preceq g$ and $g \preceq h$ imply $f \preceq h$.
+- A function $\dim : \alpha \to \mathbb{N}$ (`orbitDim`) with
+  - **(Mono)** $f \preceq g \Rightarrow \dim(f) \le \dim(g)$.
+- A function $\mathrm{size} : \alpha \to \mathbb{N}$ (`circuitSize`) with
+  - **(SmallCircuit)** for all $f, B$, if $\mathrm{size}(f) \le B$ then there exists $g$ with $f \preceq g$ and $\dim(g) \le B^2$.
+- A multiplicity function $\mathrm{mult} : \texttt{RepIndex} \to \alpha \to \mathbb{N}$ (`repMult`) with
+  - **(Schur)** $f \preceq g \Rightarrow \forall \lambda,\ \mathrm{mult}(\lambda, f) \le \mathrm{mult}(\lambda, g)$.
+
+The (Schur) axiom is the formal shadow of the fact that, for a $\mathrm{GL}$-stable degeneration $f \in \overline{\mathcal{O}_g}$, the coordinate ring of $\overline{\mathcal{O}_f}$ is a quotient/limit whose isotypic multiplicities are dominated by those of $\overline{\mathcal{O}_g}$. The (SmallCircuit) axiom abstracts the standard dimension count: an object computed by a size-$B$ circuit lies in a constructible family whose closure has dimension $O(B^2)$.
+
+**Definition 3 (Obstruction witness).** For objects $f, g$, an `ObstructionWitness f g` is a representation index $\lambda$ together with a proof of the strict inequality $\mathrm{mult}(\lambda, f) > \mathrm{mult}(\lambda, g)$. Such a $\lambda$ is an *obstruction* certifying $f \notin \overline{\mathcal{O}_g}$.
+
+**Definition 4 (Algebraic separator).** An `AlgSeparator` on $\alpha$ is a Boolean classifier $\mathrm{classify} : \alpha \to \{\text{true}, \text{false}\}$ together with a weight ceiling $\mathrm{maxWeight} \in \mathbb{N}$ satisfying:
+- **(Sound)** if $\mathrm{classify}(f) = \text{true}$ and $\mathrm{classify}(g) = \text{false}$ then $f \not\preceq g$;
+- **(BoundedReps)** if $\mathrm{classify}(f) = \text{true}$ and $\mathrm{classify}(g) = \text{false}$ then there exists $\lambda$ with $\mathrm{weight}(\lambda) \le \mathrm{maxWeight}$ and $\mathrm{mult}(\lambda, f) > \mathrm{mult}(\lambda, g)$.
+
+A separator is the formal model of an "algebraic natural proof": a certificate that distinguishes a true class from a false class by exhibiting a low-weight obstruction.
+
+**Definition 5 (Hard class).** A `HardClassData` on $\alpha$ consists of families $\mathrm{hard}, \mathrm{easy} : \mathbb{N} \to \alpha$ and a constant $\mathrm{exp\_const} \ge 1$ such that:
+- **(HardExpWeight)** for all $n \ge 1$ and all $\lambda$, if $\mathrm{mult}(\lambda, \mathrm{hard}(n)) > 0$ then $\mathrm{weight}(\lambda) \ge 2^{\,\mathrm{exp\_const} \cdot n}$.
+
+That is, the coordinate ring of the hard object is supported only on representations of exponentially large weight — the formal analogue of a function whose obstructions are necessarily complex.
+
+## 3. Main results
+
+Throughout, $S$ denotes a fixed `GCTSystem` on $\alpha$.
+
+### 3.1 The obstruction principle
+
+**Theorem 1 (Obstruction implies non-containment).** *If there exists an `ObstructionWitness f g`, then $f \not\preceq g$.*
+
+*Proof.* Let the witness be $\lambda$ with $\mathrm{mult}(\lambda, f) > \mathrm{mult}(\lambda, g)$. Suppose for contradiction $f \preceq g$. By (Schur), $\mathrm{mult}(\lambda, f) \le \mathrm{mult}(\lambda, g)$, contradicting the strict inequality. $\square$
+
+**Theorem 7 (Direct non-containment).** *If $\mathrm{mult}(\lambda, f) > \mathrm{mult}(\lambda, g)$ for some single $\lambda$, then $f \not\preceq g$.*
+
+*Proof.* The hypothesis is exactly the data of an `ObstructionWitness f g`; apply Theorem 1. $\square$
+
+**Theorem 10 (No self-obstruction).** *The type `ObstructionWitness f f` is empty.*
+
+*Proof.* A witness would give $\mathrm{mult}(\lambda, f) > \mathrm{mult}(\lambda, f)$ for some $\lambda$, which is impossible; equivalently, by Theorem 1 it would yield $f \not\preceq f$, contradicting (Refl). $\square$
+
+**Theorem 8 (Simultaneous non-containment).** *Given an `ObstructionWitness f g` and an `ObstructionWitness f h`, we have $f \not\preceq g$ and $f \not\preceq h$.*
+
+*Proof.* Apply Theorem 1 to each witness. $\square$
+
+### 3.2 Order-theoretic structure
+
+**Theorem 3 (Containment transitivity).** *If $f \preceq g$ and $g \preceq h$ then $f \preceq h$.*
+
+*Proof.* This is axiom (Trans). $\square$
+
+**Theorem 4 (Multiplicity-domination transitivity).** *If $\mathrm{mult}(\lambda,f) \le \mathrm{mult}(\lambda,g)$ for all $\lambda$, and $\mathrm{mult}(\lambda,g) \le \mathrm{mult}(\lambda,h)$ for all $\lambda$, then $\mathrm{mult}(\lambda,f) \le \mathrm{mult}(\lambda,h)$ for all $\lambda$.*
+
+*Proof.* Pointwise transitivity of $\le$ on $\mathbb{N}$. $\square$
+
+**Theorem 6 (No obstruction implies local domination).** *Let $I$ be a finite set of representation indices. If for every $\lambda \in I$ it is **not** the case that $\mathrm{mult}(\lambda,f) > \mathrm{mult}(\lambda,g)$, then $\mathrm{mult}(\lambda,f) \le \mathrm{mult}(\lambda,g)$ for all $\lambda \in I$.*
+
+*Proof.* For each $\lambda \in I$, $\neg(a > b)$ on $\mathbb{N}$ gives $a \le b$. $\square$
+
+Theorem 6 is the decidability counterpart of the obstruction principle: on any finite candidate set of indices, the absence of an obstruction is verifiable and yields domination, so obstruction search is a well-posed finite computation per candidate set.
+
+### 3.3 Dimension and circuit lower bounds
+
+**Theorem 9 (Circuit from dimension).** *If $\dim(f) > B^2$ then $\mathrm{size}(f) > B$.*
+
+*Proof.* Suppose $\mathrm{size}(f) \le B$. By (SmallCircuit) there is $g$ with $f \preceq g$ and $\dim(g) \le B^2$. By (Mono), $\dim(f) \le \dim(g) \le B^2$, contradicting $\dim(f) > B^2$. $\square$
+
+**Theorem 5 (Orbit-dimension lower bound).** *If for every $g$ with $\dim(g) \le D$ there is an `ObstructionWitness f g`, then $\dim(f) > D$.*
+
+*Proof.* Suppose $\dim(f) \le D$. Apply the hypothesis to $g := f$, obtaining an `ObstructionWitness f f`; by (Refl) $f \preceq f$, so Theorem 1 gives $f \not\preceq f$, a contradiction. (Equivalently, this contradicts Theorem 10.) $\square$
+
+**Theorem 2 (Circuit lower bound from obstructions).** *Fix a budget $B$. If for every $g$ with $\dim(g) \le B^2$ there is an `ObstructionWitness f g`, then $\mathrm{size}(f) > B$.*
+
+*Proof.* Suppose $\mathrm{size}(f) \le B$. By (SmallCircuit) there is $g$ with $f \preceq g$ and $\dim(g) \le B^2$. The hypothesis supplies an `ObstructionWitness f g`, whence by Theorem 1 $f \not\preceq g$ — contradicting $f \preceq g$. $\square$
+
+Theorem 2 is the strategic core of GCT: it reduces a circuit lower bound for $f$ to a *catalog of representation-theoretic certificates*, one obstruction per low-dimensional competitor $g$. No reasoning about circuits remains in the hypothesis; the entire burden is moved into representation theory.
+
+### 3.4 The algebraic natural-proofs barrier
+
+**Theorem 11 (Algebraic natural-proofs barrier).** *Let $\mathrm{sep}$ be an `AlgSeparator` and let $H$ be a `HardClassData` with constant $c = \mathrm{exp\_const} \ge 1$. Fix $n \ge 1$ and suppose $\mathrm{sep}$ separates the hard class at level $n$, i.e. $\mathrm{classify}(\mathrm{hard}(n)) = \text{true}$ and $\mathrm{classify}(\mathrm{easy}(n)) = \text{false}$. Then*
+$$\mathrm{maxWeight}(\mathrm{sep}) \ \ge\ 2^{\,c\,n}.$$
+
+*Proof.* By (BoundedReps), the separation yields a representation index $\lambda$ with $\mathrm{weight}(\lambda) \le \mathrm{maxWeight}$ and $\mathrm{mult}(\lambda, \mathrm{hard}(n)) > \mathrm{mult}(\lambda, \mathrm{easy}(n))$. Since multiplicities are non-negative, $\mathrm{mult}(\lambda, \mathrm{hard}(n)) > \mathrm{mult}(\lambda, \mathrm{easy}(n)) \ge 0$, so $\mathrm{mult}(\lambda, \mathrm{hard}(n)) > 0$. By (HardExpWeight) applied to this $\lambda$ (using $n \ge 1$), $\mathrm{weight}(\lambda) \ge 2^{cn}$. Chaining, $\mathrm{maxWeight} \ge \mathrm{weight}(\lambda) \ge 2^{cn}$. $\square$
+
+The barrier is the algebraic mirror of Razborov–Rudich. A separator is precisely a "natural" certificate: sound, and constructive via low-weight obstructions. The theorem says no such certificate of small weight ceiling can succeed against a class whose multiplicities are concentrated at exponential weight. The GCT program therefore does not evade the difficulty; it *relocates* it into the question of whether obstructions of feasible weight exist for the genuine determinant/permanent instances.
+
+## 3.5 A worked concrete instantiation
+
+To demonstrate that the axioms are consistent and the theorems have content, we exhibit an explicit finite model and trace each theorem through it. Let $\alpha = \{E_0, E_1, F\}$ with the preorder generated by $E_0 \preceq E_1 \preceq F$ (and reflexivity), so that $\overline{\mathcal{O}_F} \supseteq \{E_0, E_1, F\}$ while $\overline{\mathcal{O}_{E_1}} = \{E_1\}$ (relative to objects below it, $E_0 \preceq E_1$). Assign orbit dimensions $\dim(E_0)=1,\ \dim(E_1)=4,\ \dim(F)=26$ and circuit sizes $\mathrm{size}(E_0)=1,\ \mathrm{size}(E_1)=2,\ \mathrm{size}(F)=6$. Choose four representation indices $\lambda_0,\dots,\lambda_3$ of weights $2,3,5,7$ and multiplicity vectors (listed as $(\mathrm{mult}(\cdot,E_0),\mathrm{mult}(\cdot,E_1),\mathrm{mult}(\cdot,F))$):
+$$\lambda_0 : (0,1,2),\quad \lambda_1 : (1,1,3),\quad \lambda_2 : (0,2,4),\quad \lambda_3 : (0,0,7).$$
+
+Each vector is nondecreasing along $E_0 \preceq E_1 \preceq F$, so (Schur) holds; dimensions are nondecreasing, so (Mono) holds; and one checks (SmallCircuit) directly (e.g. $\mathrm{size}(F)=6$, and the only $g$ with $F \preceq g$ is $F$ itself with $\dim = 26 \le 6^2 = 36$). Now:
+
+- **Theorem 1/7.** At $\lambda_0$, $\mathrm{mult}(\lambda_0,F)=2 > 1 = \mathrm{mult}(\lambda_0,E_1)$, so $F \not\preceq E_1$: the object $F$ provably does not lie in the orbit closure of $E_1$, certified by a single integer comparison.
+- **Theorem 10.** No index has $\mathrm{mult}(\lambda,F) > \mathrm{mult}(\lambda,F)$, so there is no self-obstruction; the calculus does not refute $F \preceq F$.
+- **Theorem 9.** $\dim(F) = 26 > 25 = 5^2$, hence $\mathrm{size}(F) > 5$; indeed $\mathrm{size}(F) = 6$.
+- **Theorem 5.** The competitors with $\dim \le 4$ are $E_0,E_1$; $F$ obstructs both (at $\lambda_0$ and $\lambda_2$ respectively, or at $\lambda_3$ which is $7>0$ for both), so $\dim(F) > 4$.
+- **Theorem 2.** With budget $B=2$, the competitors with $\dim \le B^2 = 4$ are again $E_0,E_1$; $F$ obstructs all of them, hence $\mathrm{size}(F) > 2$.
+- **Theorem 11.** Replace the multiplicity table by a hard class with $\mathrm{mult}(\lambda,\mathrm{hard}(n)) > 0$ only when $\mathrm{weight}(\lambda) \ge 2^{cn}$. Then no separator with $\mathrm{maxWeight} < 2^{cn}$ can exhibit the required low-weight gap, so any successful separator has $\mathrm{maxWeight} \ge 2^{cn}$.
+
+This model is realized verbatim in the accompanying numerical demonstration, where the five axioms are checked by exhaustive computation and each theorem's conclusion is verified against the ground-truth relation.
+
+## 4. Algorithmic content
+
+Although the framework is axiomatic, its proofs are constructive enough to read off algorithms for any decidable instantiation.
+
+**Algorithm A (Finite obstruction search / certified non-containment).** Given $f, g$ and a finite candidate set $I$ of representation indices with a computable $\mathrm{mult}$, scan $I$; if some $\lambda \in I$ has $\mathrm{mult}(\lambda,f) > \mathrm{mult}(\lambda,g)$, output $\lambda$ as a certificate of $f \not\preceq g$ (Theorem 1); otherwise report "no obstruction in $I$," which by Theorem 6 certifies pointwise domination on $I$. Complexity: $O(|I|)$ multiplicity evaluations.
+
+**Algorithm B (Lower bound by obstruction catalog).** Given $f$, a budget $B$, and an enumeration of competitor objects $g$ with $\dim(g) \le B^2$, invoke Algorithm A on each $(f,g)$; if every competitor receives a certificate, conclude $\mathrm{size}(f) > B$ by Theorem 2. The cost is dominated by the number of competitors times the per-pair search cost; the barrier (Theorem 11) lower-bounds the *weight*, hence the search space $|I|$, needed for genuinely hard $f$.
+
+**Algorithm C (Barrier weight estimator).** Given a hard-class constant $c$ and level $n$, return the certified lower bound $2^{cn}$ on any successful separator's weight ceiling (Theorem 11). This converts a structural fact about a hard class into a concrete infeasibility threshold for bounded-weight proof systems.
+
+## 4.1 Relation to the classical natural-proofs barrier
+
+The Razborov--Rudich natural-proofs barrier concerns combinatorial proofs of Boolean circuit lower bounds. A proof is *natural* if it identifies a property of Boolean functions that is (i) *useful* (every easy function lacks it, so possessing it implies hardness), (ii) *large* (a random function has it with non-negligible probability), and (iii) *constructive* (the property is efficiently testable from the truth table). Razborov and Rudich proved that a natural property useful against sufficiently strong circuit classes would yield an efficient distinguisher breaking standard pseudorandom-function candidates --- contradicting widely believed cryptographic hardness.
+
+Theorem 11 is the algebraic analogue restricted to the GCT certificate format. The separator's two conditions, (Sound) and (BoundedReps), play the roles of usefulness and constructivity: soundness guarantees the certificate is never a false positive, while bounded reps captures the demand that the distinguishing object (a representation of weight $\le \mathrm{maxWeight}$) be *small*, i.e. cheaply describable. The hard class plays the role of the pseudorandom target: its multiplicity support sits entirely at exponential weight. The conclusion --- that any successful bounded-weight separator must in fact use exponential weight --- is precisely the statement that a *small/constructive* certificate cannot succeed against the hard class. Where Razborov--Rudich invoke cryptographic assumptions, the algebraic version is unconditional given the (HardExpWeight) hypothesis, which encapsulates exactly the structural property whose verification for explicit polynomials is the open mathematical problem.
+
+## 4.2 Why an axiomatic treatment
+
+The choice to axiomatize, rather than construct, the orbit-closure geometry deserves comment. Building a faithful model would require: the coordinate ring of an orbit closure, its decomposition into $\mathrm{GL}$-isotypic components, semicontinuity of multiplicities under degeneration, and the dimension theory of constructible sets --- each a substantial development. By isolating the four properties these constructions deliver (Refl/Trans, Mono, SmallCircuit, Schur), we obtain theorems that are *automatically inherited* by any future faithful model. This is the standard discipline of interface-driven formalization: prove against the smallest sufficient interface, so the deep analytic work need only be done once, at the point of instantiation, and cannot accidentally be used circularly inside the lower-bound logic. The five axioms are individually plausible and, in the worked model above, simultaneously satisfiable, ruling out the degenerate possibility that the theory is vacuous.
+
+## 5. Applications and interpretation
+
+1. **Lower bounds as certificate catalogs.** Theorem 2 reframes "prove $f$ has no size-$B$ circuit" as "produce one obstruction per low-dimensional competitor." This is the operational content of GCT and the target of all multiplicity computations (plethysm, Kronecker, Littlewood–Richardson coefficients) in the literature.
+
+2. **Consistency guarantees.** Theorems 10 and 5 guarantee the obstruction calculus never derives the absurd statement $f \not\preceq f$; any formalization or automated search built on it cannot "prove" a self-non-containment, eliminating a class of silent bugs in lower-bound software.
+
+3. **Barrier-aware proof search.** Theorem 11 tells an implementer that, against hard classes, raising `maxWeight` is unavoidable: no clever bounded-weight heuristic can succeed. This guides resource allocation in any practical obstruction-finding system and connects to the design of complexity-optimal certificates.
+
+4. **A reusable abstraction.** Because everything is proved from the five axioms, any structure exhibiting a monotone preorder with a dominated invariant and a dimension/size coupling inherits the entire theory — including settings beyond polynomials (e.g. tensor degenerations, matrix multiplication border rank), wherever a "Schur-type" domination holds.
+
+## 6. Discussion
+
+The contribution here is deliberately *logical* rather than computational. We do not compute a single plethysm coefficient. What we do provide is a guarantee that the inferential scaffold of GCT is sound, self-consistent, transitive, compositional, and subject to a precisely stated internal barrier. Historically, lower-bound arguments have failed not for want of ambition but for subtle circularity; an axiomatized, mechanically checked skeleton removes that failure mode from the parts it covers.
+
+The relationship between Theorem 2 (the bridge) and Theorem 11 (the barrier) is the intellectual heart of the paper. The bridge promises that obstructions suffice; the barrier proves that, for the hardest classes, those obstructions must be exponentially heavy. Neither is in tension with the GCT conjecture; together they delineate exactly where the remaining mathematical difficulty lives — namely in *exhibiting* high-weight obstructions for explicit determinant/permanent-type instances, not in the logic that would deploy them.
+
+## 7. Future work
+
+A natural next step is to instantiate the abstract `GCTSystem` with a concrete model — e.g. a small symmetric-function setting where multiplicities are genuine plethysm coefficients — and verify the five axioms there, turning the abstract theorems into concrete certified non-containments. A second direction is to refine the barrier: quantify how the weight ceiling must scale with the *number* of competitors in Theorem 2, and whether amortized certificates can beat the per-instance $2^{cn}$ bound. A third is to port the framework to border-rank settings for matrix multiplication, where the same preorder/domination pattern appears.
+
+Beyond GCT proper, the Phase-A program records a parallel set of falsifiable conjectures in the adjacent setting of emergent geometry from tensor networks (monogamy of mutual information, metric-space structure of an emergent network distance, saturation criteria for strong subadditivity, area-law dimension estimates, and random-network concentration); these are recorded verbatim in the package metadata as candidate formalization targets and share the structural motif — a submodular/monotone invariant generating an order theory — exploited here.
+
+## 8. Conclusion
+
+We have given a complete, machine-verified logical skeleton for Geometric Complexity Theory: five axioms, an obstruction principle, a circuit lower-bound bridge, supporting order theory and consistency results, and an algebraic natural-proofs barrier. The development isolates with certainty what is *easy* (the logic) from what remains *hard* (the multiplicity computations), and proves, inside the framework, why the hard part is hard. It is a small piece of solid ground over a deep open problem — and precisely the piece on which future, heavier mathematics can safely stand.
