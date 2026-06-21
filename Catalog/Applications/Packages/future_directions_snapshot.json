@@ -5341,6 +5341,35 @@
     "title": "Asymptotic density of pairs with fixed f-value"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Pestov book (2006)",
+      "Kechris‑Pestov‑Todorcevic (2005)",
+      "Irwin‑Solecki (1995)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any pseudo-solenoid F, the closed group Homeo(F) is not extremely amenable, hence its universal minimal flow is non-metrizable.",
+    "domain_bridges": [
+      "topological dynamics",
+      "extreme amenability",
+      "projective Fraïssé theory",
+      "homeomorphism groups of continua"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2195",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the dense embedding of Aut(𝔽) into Homeo(F) together with Veech’s theorem on non‑metrizability of universal minimal flows for non‑locally compact groups, and show that the approximate Ramsey property fails, implying non‑extreme amenability.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-21T21:50:17.241381+00:00",
+    "title": "Non-extreme amenability of Homeomorphism Groups of Pseudo-Solenoids"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",

@@ -3298,6 +3298,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for any pseudo-solenoid F, the closed group Homeo(F) is not extremely amenable, hence its universal minimal flow is non-metrizable.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2195",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-21T21:50:17.241381+00:00",
+    "title": "Non-extreme amenability of Homeomorphism Groups of Pseudo-Solenoids"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
