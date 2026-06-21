@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "561a2484",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Combinatorial species → tropical valuation profiles\n\nThis cycle established the **coefficientwise valuation bridge** in\n`Catalog/Tropical/SpeciesValuationProfile.lean`: the `p`-ad",
-      "quality_score": 0.49560000000000004,
-      "sorry_count": 2,
-      "theorem_count": 17,
-      "timestamp": "2026-06-15T15:03:08",
-      "title": "Close Proofs: Combinatorial species to tropical valuation profiles via coefficientwi"
-    },
-    {
       "cycle_id": "aba81cd6",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA cor",
@@ -2501,6 +2491,16 @@
       "theorem_count": 96,
       "timestamp": "2026-06-21T07:21:54",
       "title": "Lattice Cryptography: LWE Hardness"
+    },
+    {
+      "cycle_id": "863d07b7",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Navier–Stokes: 2D Regularity & Partial 3D Results\n\nDerived from this cycle's verified results in `Physics/NavierStokes/`:\n`EnergyInequality.lean` (energy balance, exponential dec",
+      "quality_score": 0.50324,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-21T08:51:21",
+      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71035
     }
   ],
-  "last_updated": "2026-06-21T07:21:54",
+  "last_updated": "2026-06-21T08:51:21",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "c8a4744f",
-        "quality": 0.55601,
-        "theorems": 8,
-        "title": "The file `Catalog/Geometry/BoltzmannBridge.lean` establishes a rigorous spine fo"
-      },
-      {
         "cycle_id": "dd767b4e",
         "quality": 0.6964,
         "theorems": 16,
@@ -3079,6 +3073,12 @@
         "quality": 0.5579941436464089,
         "theorems": 339,
         "title": "Topological Generalization Bounds for Deep Learning"
+      },
+      {
+        "cycle_id": "863d07b7",
+        "quality": 0.50324,
+        "theorems": 13,
+        "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
       }
     ],
     "Applications": [
