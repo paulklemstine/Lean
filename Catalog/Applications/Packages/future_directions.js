@@ -536,7 +536,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "971b371e",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -545,7 +545,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -2849,6 +2849,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let X be the universal pseudo-solenoid. Let F be the projective Fraisse limit of the natural projective Fraisse category associated to X (as constructed in the paper), and let R be the equivalence relation on F such that F/R is homeomorphic to X. Let Phi: Aut(F) -> Homeo(X) be the induced map. We conjecture that the image of Phi is dense in Homeo(X) with respect to the uniform topology.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2162",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-21T01:41:43.242317+00:00",
+    "title": "Density of the automorphism group of the projective Fraisse limit in the homeomorphism group of the universal pseudo-solenoid"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3798,7 +3813,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "0dfaccbd",
+    "consumed_by_exp_id": "43fe3cd5",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",

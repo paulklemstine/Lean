@@ -715,7 +715,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "971b371e",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -727,7 +727,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -4511,6 +4511,29 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Let X be the universal pseudo-solenoid. Let F be the projective Fraisse limit of the natural projective Fraisse category associated to X (as constructed in the paper), and let R be the equivalence relation on F such that F/R is homeomorphic to X. Let Phi: Aut(F) -> Homeo(X) be the induced map. We conjecture that the image of Phi is dense in Homeo(X) with respect to the uniform topology.",
+    "domain_bridges": [
+      "Dynamical Systems",
+      "Combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2162",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that for any homeomorphism h of X and any epsilon>0, there exists an automorphism of F that induces a homeomorphism within epsilon of h. This can be done by approximating h by a map that preserves the equivalence classes of the projective Fraisse limit and then lifting to an automorphism of F using the homogeneity and approximation properties of the Fraisse limit.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-21T01:41:43.242317+00:00",
+    "title": "Density of the automorphism group of the projective Fraisse limit in the homeomorphism group of the universal pseudo-solenoid"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domain_bridges": [],
     "domains": [
@@ -5780,7 +5803,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0dfaccbd",
+    "consumed_by_exp_id": "43fe3cd5",
     "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
     "domain_bridges": [],
     "domains": [

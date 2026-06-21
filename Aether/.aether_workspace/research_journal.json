@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "049cc9b2",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nThese directions extend the `ordEGF` bridge in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` from a single order-only invariant toward\nricher tropical and valuation-theoretic se",
-      "quality_score": 0.5716955102040817,
-      "sorry_count": 1,
-      "theorem_count": 49,
-      "timestamp": "2026-06-15T12:27:58",
-      "title": "Functorial bridge from combinatorial species generating functions to tropical valuation profiles"
-    },
-    {
       "cycle_id": "406af8f7",
       "domain": "Shared",
       "key_insight": "# Future Directions — Discrete Hodge Program\n\nThis cycle delivered, under `Catalog/Shared/DiscreteHodgeDecomposition.lean`, a\nself-contained Mathlib foundation for the **discrete Hodge decomposition**",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-21T00:40:07",
       "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
+    },
+    {
+      "cycle_id": "f370d5ee",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nBuilding on the collision-probability core in\n`Catalog/Cryptography/LeftoverHashCollisionCore.lean`, here are several research\ndirections that extend the formalization toward the",
+      "quality_score": 0.4935106666666667,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-06-21T01:27:46",
+      "title": "Consciousness as Integrated Information"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71035
     }
   ],
-  "last_updated": "2026-06-21T00:40:07",
+  "last_updated": "2026-06-21T01:27:46",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3573,12 +3573,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2710f166",
-        "quality": 0.5415909090909091,
-        "theorems": 36,
-        "title": "Renormalization of Proofs: Phase Transitions in Automated Theorem Search"
-      },
-      {
         "cycle_id": "5ddac85b",
         "quality": 0.38904000000000005,
         "theorems": 11,
@@ -3631,6 +3625,12 @@
         "quality": 0.543562,
         "theorems": 469,
         "title": "The Library of Babel: Combinatorics of the Universal Library"
+      },
+      {
+        "cycle_id": "f370d5ee",
+        "quality": 0.4935106666666667,
+        "theorems": 22,
+        "title": "Consciousness as Integrated Information"
       }
     ],
     "NumberTheory": [
