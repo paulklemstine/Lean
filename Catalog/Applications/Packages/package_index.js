@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ddfbd83f",
     "filename": "quantum_thermodynamics_landauers_principle_at_the_.json",
     "pkg_num": 227,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.526909,
     "title": "Landauer's kT ln 2 Bound as a Second-Law Inequality from the Jarzynski Equality"
   },
   {
@@ -6919,8 +6919,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "quantum_thermodynamics_landauers_principle_at_the_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.526909,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Landauer's kT ln 2 Bound as a Second-Law Inequality from the Jarzynski Equality"
     }

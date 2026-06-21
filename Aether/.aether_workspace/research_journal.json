@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8a8b0554",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Primitive Divisors of Strong Divisibility Sequences\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCertificate.lean`, which\nabstracts the Fibonacci-only Carmichael",
-      "quality_score": 0.5226563916796378,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-06-15T17:05:40",
-      "title": "This cycle delivered `Catalog/Logic/FibonacciPrimitiveDivisorBounded.lean`, a"
-    },
-    {
       "cycle_id": "561a2484",
       "domain": "Cryptography",
       "key_insight": "# Future Directions: Combinatorial species → tropical valuation profiles\n\nThis cycle established the **coefficientwise valuation bridge** in\n`Catalog/Tropical/SpeciesValuationProfile.lean`: the `p`-ad",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-21T20:11:55",
       "title": "EML Universal Approximation: Density of EML Functions"
+    },
+    {
+      "cycle_id": "ddfbd83f",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Quantum Thermodynamics / Landauer at the Nanoscale\n\nDerived from this cycle's findings (`Physics.LandauerSecondLaw`,\n`Physics.LandauerThermodynamicLimit`, building on `Logic.Jarz",
+      "quality_score": 0.526909,
+      "sorry_count": 0,
+      "theorem_count": 55,
+      "timestamp": "2026-06-21T20:13:46",
+      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.85612
     }
   ],
-  "last_updated": "2026-06-21T20:11:55",
+  "last_updated": "2026-06-21T20:13:46",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ead94fbc",
-        "quality": 0.45100000000000007,
-        "theorems": 93,
-        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-      },
-      {
         "cycle_id": "bf1e3b75",
         "quality": 0.49552432432432436,
         "theorems": 93,
@@ -3141,6 +3135,12 @@
         "quality": 0.37703299999999995,
         "theorems": 5,
         "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      },
+      {
+        "cycle_id": "ddfbd83f",
+        "quality": 0.526909,
+        "theorems": 55,
+        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
       }
     ],
     "Bridges": [
