@@ -536,7 +536,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e771a15d",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -545,7 +545,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -1315,7 +1315,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convex Geometry: Brunn-Minkowski Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37109497",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domains": [
       "Combinatorics",
@@ -1325,7 +1325,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -2907,12 +2907,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that for any finite graph Gamma, if there exists a positive integer s such that for every potential s-clique characterized by average degree k and average common neighbor count lambda, the generalized clique adjacency polynomial CA_Gamma(x, s, k, lambda) is strictly negative for some integer x, then the clique number of Gamma is strictly less than s.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2168",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19820v1",
+    "status": "available",
+    "timestamp": "2026-06-21T07:26:03.602943+00:00",
+    "title": "Formalization of the Generalized Clique Adjacency Polynomial Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2168",
+    "id": "fd_2169",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2927,7 +2941,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2169",
+    "id": "fd_2170",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -2942,7 +2956,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2170",
+    "id": "fd_2171",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20046v1",
@@ -2957,7 +2971,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2171",
+    "id": "fd_2172",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19959v1",
@@ -2972,7 +2986,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2172",
+    "id": "fd_2173",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20297v1",
@@ -3050,6 +3064,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:11.463002+00:00",
     "title": "Sendov's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
+    "domains": [
+      "Analysis",
+      "NumberTheory"
+    ],
+    "id": "seed_335",
+    "priority_score": 0.8,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432611+00:00",
+    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
     "consumed_by_exp_id": "",
@@ -3903,51 +3932,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nDerived from this cycle's verified Lean results in `RTMinCut.lean`,\n`PageTransition.lean`, and `QECCBridge.lean`. Each direction is a bold, falsifiable\nconjecture with a concrete formalization target.\n\nThe cycle established three load-bearing facts: (i) graph-cut entanglement entropy\nobeys purity, subadditivity, and nonnegative mutual information from a single\ninclusion\u2013exclusion identity `\u2202A + \u2202B = \u2202(A\u222aB) + 2\u00b7cross(A,B)`; (ii) the\nquantum-extremal-surface entropy `min(a\u2081 logD + s\u2081, a\u2082 logD + s\u2082)` has a sharp,\nnon-vacuous transition at `D_c = exp((s\u2081\u2212s\u2082)/(a\u2082\u2212a\u2081)) > 1` with a kink (growth-rate\njump `a\u2082 \u2192 a\u2081`); (iii) detectable code charges commute and coarse-grained constraints\nstay central, building on `Computation.EastinKnill`.\n\n---\n\n## Conjecture 1 \u2014 Strong subadditivity from the cut identity (monogamy of holographic MI)\n\nFor a tensor network and three pairwise-disjoint regions `A, B, C`,\n`S(A\u222aB) + S(B\u222aC) \u2265 S(B) + S(A\u222aB\u222aC)` and the tripartite information\n`I\u2083 = I(A:B) + I(A:C) \u2212 I(A:B\u222aC) \u2264 0` (holographic monogamy).\n\n**The key insight is** that the *exact* defect in `boundary_union_add` is `2\u00b7cross(A,B)`,\nso all higher entropy inequalities should reduce to nonnegativity of sums of cross-bond\ncounts \u2014 pure `Finset` combinatorics, with no measure theory.\n\n**Why now?** We already have the binary identity and `mutualInformation_eq` in closed\nform; SSA and monogamy are the immediate next composition, and monogamy `I\u2083 \u2264 0` is the\nsharpest known signature distinguishing *geometric* (holographic) states from generic\nquantum states \u2014 a direct, formalizable test of \"emergent geometry\".\n\n## Conjecture 2 \u2014 Spectral dimension jumps at `D_c` (fractal vs smooth phase)\n\nDefine the spectral/growth dimension of the network as the exponent\n`d_s(D) = d log S / d log(log D)` of the entanglement profile. Then `d_s` is\ndiscontinuous exactly at `D_c`: it equals the larger-area exponent below `D_c`\n(\"fractal\" phase) and the minimal-area exponent above (\"smooth\" phase).\n\n**The key insight is** that `bond_dimension_phase_transition` already pins the two phases\nto distinct affine branches with growth rates `a\u2082 > a\u2081`; the spectral dimension is just a\nlogarithmic rescaling of that growth rate, so the kink we proved *forces* a dimension\njump.\n\n**Why now?** The kink (order parameter `orderParam_pos_above`) is formalized and\nnon-vacuous (`one_lt_criticalBond`); promoting \"growth rate\" to \"spectral dimension\"\nis the minimal step that connects our theorem to the mission's stated curvature proxy.\n\n## Conjecture 3 \u2014 Curvature boundedness \u21d4 above-threshold area law\n\nIn the multi-surface generalization `S(D) = min_k (a_k logD + s_k)`, define a discrete\nRicci proxy as the second difference of `S` across neighbouring regions. Conjecture: the\nproxy is uniformly bounded by a universal constant *iff* `D` exceeds the global crossover\n`D_c = max_{k\u2260\u2113} exp((s_k \u2212 s_\u2113)/(a_\u2113 \u2212 a_k))`, with the minimal area `a_min` setting the\nbound.\n\n**The key insight is** that concavity (`qesProfile_concaveOn`) means `S` is a concave\npiecewise-linear envelope; its curvature concentrates entirely at finitely many kinks, so\nboundedness of the proxy is equivalent to the dominant surface being the minimal-area one\n\u2014 i.e. being in the smooth phase.\n\n**Why now?** Concavity of the two-branch profile is proved; the `min`-of-many-affine\nenvelope is a clean inductive extension, and it is exactly the object whose curvature the\nconjecture wants to bound by a \"universal constant\".\n\n## Conjecture 4 \u2014 Emergent gauge group is abelian below a code threshold\n\nFor a holographic code whose logical algebra is generated by detectable local terms, the\nemergent boundary symmetry is abelian; universality (a non-central logical gate) requires\nat least one *non-detectable* (threshold-crossing) term.\n\n**The key insight is** that `detectable_charges_commute` shows detectable charges multiply\nas scalars `(ab)\u2022P`, and `coarse_constraint_central` shows their sums stay central \u2014 so\nnon-commutativity (hence computational universality) can only enter through detectability\n*failure*, the algebraic analogue of crossing `D_c`.\n\n**Why now?** The commutation and centrality lemmas are proved on top of the catalog's\nEastin\u2013Knill kernel; the boundary theorem `logical_noncentral_without_detection` already\nin the catalog supplies the converse witness, so the full \"abelian \u21d4 below threshold\"\ndichotomy is within one cycle's reach.\n\n## Conjecture 5 \u2014 `D_c` scaling law `D_c(N) = exp(\u0398(N^{(d\u22121)/d}))`\n\nFor a random network on `N` vertices arranged on a `d`-dimensional lattice with bulk and\nboundary surfaces scaling as volume `~N` and area `~N^{(d\u22121)/d}`, the critical bond\ndimension satisfies `log D_c(N) = (s_bulk \u2212 s_area)/(a_area \u2212 a_bulk) = \u0398(N^{1/d})`,\ngiving a reproducible threshold `D_c(N)` as in the mission statement.\n\n**The key insight is** that our closed form `criticalLog = (s\u2081\u2212s\u2082)/(a\u2082\u2212a\u2081)` turns the\nthreshold into an explicit ratio of extensive (`s ~ N`) over area-law (`a ~ N^{(d\u22121)/d}`)\nquantities, so the `N`-scaling of `D_c` is *derived*, not measured.\n\n**Why now?** With `criticalBond` and `one_lt_criticalBond` formalized, plugging in\nlattice scaling exponents is a direct specialization; it converts the experimental\n\"reproducible threshold `D_c(N)`\" into a provable asymptotic law.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2173",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "43fe3cd5",
-    "status": "available",
-    "timestamp": "2026-06-21T07:05:14.212007+00:00",
-    "title": "Derived from this cycle's verified Lean results in `RTMinCut.lean`,"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Densities of fixed partial Latin patterns in random Latin squares\n\nDerived from this cycle's findings (`LatinPatternProbability.lean`), where we proved:\n\n* `prob_single_cell` / `prob_single_cell_mul`: a one-cell pattern has probability\n  *exactly* `1/n`, so `Pr \u00b7 n = 1` for all `n`.\n* `prob_rowfiber` / `prob_rowfiber_mul`: any single-row pattern of size `k` has\n  probability *exactly* `1/(n)_k` (`Nat.descFactorial n k`).\n* `singleRow_pattern_density`: `n^k/(n)_k \u2192 1`.\n* `rowpattern_prob_mul_tendsto`: hence `Pr \u00b7 n^k \u2192 1` for single-row patterns \u2014\n  the mission conjecture for an infinite family.\n\nThe cycle's structural insight: the **symbol-alphabet action** `Perm(Fin n)` on\nLatin squares is transitive on each \"single-line\" set of admissible patterns, which\nforces an exact count, but it cannot move two cells in distinct rows *and* columns\nindependently, which is precisely where exactness breaks for 2-dimensional patterns.\n\n## Conjecture 1 (single-column and single-symbol patterns are also exact)\nFor a pattern confined to one column (resp. one symbol class) of size `k`, the\nprobability is exactly `1/(n)_k`.\n- The key insight is that conjugacy of Latin squares (swapping the roles of the row,\n  column and symbol coordinates) carries the proven single-*row* result to single-\n  column and single-symbol patterns verbatim, so the exact `1/(n)_k` law is a\n  coordinate symmetry, not a row-specific accident.\n- Why now? `IsLatin` is already symmetric in rows and columns, and the\n  `permSymbols`/`perm_of_embeddings` machinery transfers directly; only the\n  partition map needs re-indexing, so this is a short extension of the present file.\n\n## Conjecture 2 (intercalate density is asymptotically `n\u207b\u00b2` but NOT exact)\nThe `2\u00d72` intercalate pattern `{(0,0,0),(0,1,1),(1,0,1),(1,1,0)}` (k = 4 entries,\nbut only 2 free rows/columns) satisfies `Pr \u00b7 n\u00b2 \u2192 1/4`, i.e. it is `\u0398(n\u207b\u00b2)` with a\nconstant `\u2260 1`, contradicting a naive `n\u207b\u1d4f` reading and matching the known mean\nnumber of intercalates `\u223c n\u00b2/4`.\n- The key insight is that an intercalate is determined by 2 rows, 2 columns and 2\n  symbols with two independent binary choices, so its `k = 4` \"entries\" collapse to\n  2 degrees of freedom, replacing `n\u207b\u2074` by `n\u207b\u00b2` and introducing the factor `1/4`.\n- Why now? The exact single-line counts of this cycle isolate exactly which\n  degrees of freedom the alphabet action can and cannot remove, making the\n  intercalate the smallest honest test of the general conjecture.\n\n## Conjecture 3 (general pattern exponent = number of \"independent\" cells)\nFor an arbitrary fixed partial Latin pattern `P`, `Pr[L \u2287 P] = \u0398(n^{-e(P)})` where\n`e(P)` is the number of entries minus the rank deficiency of its row/column/symbol\nincidence (so `e(P) = k` exactly when `P` is \"spread out\", e.g. a partial transversal).\n- The key insight is that the true exponent counts *independent* constraints, and a\n  single line (or partial transversal) has all `k` constraints independent, which is\n  why those families hit the clean `n\u207b\u1d4f` with constant `1`.\n- Why now? We have a proven exact baseline (`1/(n)_k`) for the independent case, so\n  the residual `\u0398(1)` constant for dependent patterns can be isolated and studied\n  pattern-by-pattern.\n\n## Conjecture 4 (partial transversals attain the constant `1`)\nA partial transversal pattern of size `k` (all `k` rows distinct, all `k` columns\ndistinct, all `k` symbols distinct) satisfies `Pr \u00b7 n^k \u2192 1`.\n- The key insight is that a partial transversal has full incidence rank, so a\n  combined row/column/symbol permutation can map any one to any other, restoring the\n  transitive group action that produced exactness in the single-row case.\n- Why now? It is the natural maximal generalization of `prob_rowfiber` for which the\n  group-action proof template of this cycle should still close, only with the action\n  of `Perm(rows) \u00d7 Perm(cols) \u00d7 Perm(symbols)` instead of `Perm(symbols)` alone.\n\n## Conjecture 5 (lower-order term is the falling-factorial defect)\nFor single-line patterns, `Pr \u00b7 n^k = \u220f_{i<k}(1 - i/n) = 1 - \\binom{k}{2}/n + O(n^{-2})`,\nso the rate of convergence to `1` is exactly `\u0398(k\u00b2/n)`.\n- The key insight is that the exact closed form `1/(n)_k` already contains the full\n  asymptotic expansion, so the convergence rate is not estimated but computed.\n- Why now? `singleRow_pattern_density` proves the limit; reusing the same induction\n  with one extra term yields the `\u0398(k\u00b2/n)` rate as a quantitative refinement.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2174",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "42f0bfda",
-    "status": "available",
-    "timestamp": "2026-06-21T07:11:57.291601+00:00",
-    "title": "Derived from this cycle's findings (`LatinPatternProbability.lean`), where we pr"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 LWE Hardness, Dual-Regev, Ring-LWE\n\nDerived from the verified results in `DualRegev.lean`, `RingLWE.lean`, and\n`RegevReduction.lean` (all main theorems carry 0 sorries and depend only on\nthe standard axioms `propext`, `Classical.choice`, `Quot.sound`).\n\n## What this cycle established (basis for the conjectures)\n\n- The Dual-Regev and Ring-LWE decryption maps differ *only* by replacing\n  matrix-vector adjoint cancellation (`mulVec_dotProduct_adjoint`) with\n  ring-multiplication cancellation (`ringLWE_decrypt_identity`); both leave\n  the **same residual shape** `\u03bc\u00b7k + small-noise`.\n- Uniformity preservation under rerandomization is, in both settings, a\n  single statement about a bijection: `ZMod.affine_bijective` (field case)\n  is the degree-1 instance of `ringLWE_sum_affine_eq` (unit case).\n- Regev's worst-case reduction loses only a *linear* advantage factor over\n  a *logarithmic* number of rounds (`hybrid_telescope` + `iterations_exist`).\n\n---\n\n## Conjecture 1 \u2014 Unified residual functor\n\n**Claim.** There is a single `R`-module-level lemma, parameterized by an\nadjoint bilinear pairing `\u27e8\u00b7,\u00b7\u27e9`, that yields both `dualRegev_decrypt_identity`\nand `ringLWE_decrypt_identity` as specializations (pairing = `dotProduct`\nresp. ring multiplication via the regular representation).\n\n*The key insight is...* both decryption identities are instances of the\nadjoint relation `\u27e8T x, y\u27e9 = \u27e8x, T\u1d40 y\u27e9` for a self-paired linear operator,\nso the cancellation is functorial in the pairing rather than tied to\nmatrices or rings.\n\n*Why now?* We have both concrete identities proved (`mulVec_dotProduct_adjoint`\nand the `ring`-based ring identity), so the common generalization can be\nstated and checked against two existing witnesses.\n\n---\n\n## Conjecture 2 \u2014 Non-field rings break naive search-to-decision\n\n**Claim.** Over `ZMod q` with `q` composite, the rerandomization sum\nidentity `\u2211 x f(a\u00b7x+b) = \u2211 x f x` *fails* for some non-unit `a \u2260 0`; the\nunit hypothesis in `ringLWE_sum_affine_eq` is necessary, not an artifact.\n\n*The key insight is...* `a\u00b7x` ranges only over the ideal `(a)`, not all of\n`ZMod q`, when `a` is a zero divisor, so the uniform distribution is not\npreserved and the hybrid step is invalid.\n\n*Why now?* `ringLWE_sum_affine_eq` is proved exactly under the unit\nhypothesis; a concrete counterexample at `q = 6, a = 2` would pin the\nboundary and is a finite `decide`-checkable claim.\n\n---\n\n## Conjecture 3 \u2014 Tight noise budget across all three schemes\n\n**Claim.** A single inequality `B_total < q/4` with\n`B_total = X1 + m\u00b7E\u00b7X` (matrix LWE) and\n`B_total = \u2016e\u2016\u2016r\u2016 + \u2016e1\u2016 + \u2016s\u2016\u2016e0\u2016` (ring LWE) is both necessary and\nsufficient for one-bit decryption correctness, and is tight: there exist\nerror vectors meeting the bound with equality that still decrypt, and\narbitrarily small overshoots that fail.\n\n*The key insight is...* the residual noise enters decryption purely\nadditively (Sections 1\u20132 of both files), so correctness is governed by a\n*single* scalar threshold independent of the algebraic carrier.\n\n*Why now?* `dualRegev_noise_bound` and `ringLWE_noise_norm_bound` already\ngive the upper halves; the matching lower/tightness witnesses are the only\nmissing pieces.\n\n---\n\n## Conjecture 4 \u2014 Logarithmic-depth reduction is optimal\n\n**Claim.** The `O(log(r\u2080/target))` round count of `iterations_exist` is\nasymptotically optimal: any worst-case-to-average reduction that halves the\nradius per round needs `\u03a9(log(r\u2080/target))` rounds, and the linear advantage\nloss `n\u00b7\u03b5` of `hybrid_telescope` cannot be improved to sub-linear without\namplification.\n\n*The key insight is...* geometric decay forces logarithmic depth, and the\ntelescoping triangle inequality is tight when per-round advantages align in\nsign.\n\n*Why now?* Both halves (`iterative_radius`, `hybrid_telescope`) are formal;\nthe matching lower bounds are concrete real-analysis inequalities of the\nsame shape already in hand.\n\n---\n\n## Conjecture 5 \u2014 Module-LWE interpolation\n\n**Claim.** Defining Module-LWE over `R\u1d4f` for a finite commutative ring `R`,\nthe decryption identity and uniformity lemma interpolate continuously\nbetween matrix-LWE (`R = ZMod q`, `k = n`) and Ring-LWE (`k = 1`), with the\nadjoint pairing `\u27e8\u00b7,\u00b7\u27e9 : R\u1d4f \u00d7 R\u1d4f \u2192 R` reusing both\n`mulVec_dotProduct_adjoint` and `ringLWE_unit_mul_bijective`.\n\n*The key insight is...* Module-LWE is literally \"matrix LWE whose entries\nare ring elements\", so the two proofs of this cycle compose directly under a\nsingle `Matrix (Fin k) (Fin k) R` development.\n\n*Why now?* The matrix adjoint identity is already proved over an arbitrary\n`CommRing R` (not just a field), so instantiating it at a cyclotomic `R`\nrequires no new algebra \u2014 only the module packaging.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2175",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "51640204",
-    "status": "available",
-    "timestamp": "2026-06-21T07:21:01.226393+00:00",
-    "title": "Derived from the verified results in `DualRegev.lean`, `RingLWE.lean`, and"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3961,7 +3945,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7a09318",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3971,7 +3955,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
