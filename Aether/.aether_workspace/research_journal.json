@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "44a1e17f",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Lax Monoidal Functors from the Generating-Function Algebra\n\nThis cycle established (in `Computation/GeneratingFunctionLaxMonoidal.lean`) that:\n\n- the **ordinary generating functi",
-      "quality_score": 0.3397905777777779,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-15T14:36:58",
-      "title": "**lax monoidal functor** from the generating-function a"
-    },
-    {
       "cycle_id": "6ec4b34b",
       "domain": "Logic",
       "key_insight": "# Future Directions — Intersection Form Classification Pipeline via Self-Dual Code Direct Sum\n\nThis cycle established the **direct-sum functoriality** shared by integer\nintersection forms and binary s",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-21T07:06:12",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+    },
+    {
+      "cycle_id": "42f0bfda",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Densities of fixed partial Latin patterns in random Latin squares\n\nDerived from this cycle's findings (`LatinPatternProbability.lean`), where we proved:\n\n* `prob_single_cell` / `",
+      "quality_score": 0.5537937826789618,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-06-21T07:14:09",
+      "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71035
     }
   ],
-  "last_updated": "2026-06-21T07:06:12",
+  "last_updated": "2026-06-21T07:14:09",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "36dba103",
-        "quality": 0.7248000000000001,
-        "theorems": 175,
-        "title": "Close Proofs: The Boltzmann Bridge arc has, over several cycles, reduced the ent"
-      },
-      {
         "cycle_id": "bea64f19",
         "quality": 0.5005650793650793,
         "theorems": 189,
@@ -3265,6 +3259,12 @@
         "quality": 0.3106280036849378,
         "theorems": 121,
         "title": "Perfect Numbers: Structure of Even Perfects"
+      },
+      {
+        "cycle_id": "42f0bfda",
+        "quality": 0.5537937826789618,
+        "theorems": 96,
+        "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
       }
     ],
     "Computation": [

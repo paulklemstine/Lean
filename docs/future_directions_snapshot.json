@@ -2344,37 +2344,6 @@
     "title": "Initial-condition universality of the clique-number exponent in preferential attachment with edge steps"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Mathlib.Data.Fin.Basic",
-      "Mathlib.Data.Fintype.Basic",
-      "Mathlib.Data.Finset.Basic",
-      "Mathlib.Analysis.Asymptotics.Asymptotics",
-      "Mathlib.Topology.Algebra.Order.Field",
-      "Mathlib.Probability.ProbabilityMassFunction.Basic"
-    ],
-    "consumed_by_exp_id": "42f0bfda",
-    "description": "Let P be any fixed finite partial Latin square pattern with k entries, encoded as a finite set of triples (row, column, symbol) of natural numbers satisfying the partial Latin condition: no two distinct entries agree in both row and column, row and symbol, or column and symbol. For each n large enough to contain all coordinates of P, view P as a partial Latin square of order n. Conjecture: if L is chosen uniformly from all Latin squares of order n, then Pr[L contains P] * n^k tends to 1 as n tends to infinity.",
-    "domain_bridges": [
-      "Finite combinatorics: Latin squares as functions Fin n -> Fin n -> Fin n satisfying row and column bijectivity",
-      "Probability: uniform probability over a finite type of Latin squares",
-      "Asymptotic analysis: convergence of real-valued sequences indexed by n"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2079",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "A plausible route is to combine the universal lower and upper bounds from the paper with sharper asymptotic enumeration of Latin squares with prescribed entries. One would first prove switching estimates showing that conditioning on any fixed compatible set of k entries changes the count of completions by a multiplicative factor asymptotic to n^{-k}. The key technical step is to show that interactions among the finitely many prescribed entries contribute only 1 + o(1), because all row, column, and symbol conflicts are excluded by the partial Latin condition and k is fixed while n grows.",
-    "research_mode": "team",
-    "source_exp_id": "2606.18174v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T14:02:50.731479+00:00",
-    "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Erdos-Ginzburg-Ziv theorem",
@@ -4882,26 +4851,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d14bdeaa",
-    "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
-    "domain_bridges": [],
-    "domains": [
-      "Analysis",
-      "NumberTheory"
-    ],
-    "id": "seed_335",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432611+00:00",
-    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize Frankl's conjecture and prove it for families of size ≤ 50 (Bošnjak-Marković). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domain_bridges": [],
@@ -6033,6 +5982,46 @@
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nDerived from this cycle's verified Lean results in `RTMinCut.lean`,\n`PageTransition.lean`, and `QECCBridge.lean`. Each direction is a bold, falsifiable\nconjecture with a concrete formalization target.\n\nThe cycle established three load-bearing facts: (i) graph-cut entanglement entropy\nobeys purity, subadditivity, and nonnegative mutual information from a single\ninclusion–exclusion identity `∂A + ∂B = ∂(A∪B) + 2·cross(A,B)`; (ii) the\nquantum-extremal-surface entropy `min(a₁ logD + s₁, a₂ logD + s₂)` has a sharp,\nnon-vacuous transition at `D_c = exp((s₁−s₂)/(a₂−a₁)) > 1` with a kink (growth-rate\njump `a₂ → a₁`); (iii) detectable code charges commute and coarse-grained constraints\nstay central, building on `Computation.EastinKnill`.\n\n---\n\n## Conjecture 1 — Strong subadditivity from the cut identity (monogamy of holographic MI)\n\nFor a tensor network and three pairwise-disjoint regions `A, B, C`,\n`S(A∪B) + S(B∪C) ≥ S(B) + S(A∪B∪C)` and the tripartite information\n`I₃ = I(A:B) + I(A:C) − I(A:B∪C) ≤ 0` (holographic monogamy).\n\n**The key insight is** that the *exact* defect in `boundary_union_add` is `2·cross(A,B)`,\nso all higher entropy inequalities should reduce to nonnegativity of sums of cross-bond\ncounts — pure `Finset` combinatorics, with no measure theory.\n\n**Why now?** We already have the binary identity and `mutualInformation_eq` in closed\nform; SSA and monogamy are the immediate next composition, and monogamy `I₃ ≤ 0` is the\nsharpest known signature distinguishing *geometric* (holographic) states from generic\nquantum states — a direct, formalizable test of \"emergent geometry\".\n\n## Conjecture 2 — Spectral dimension jumps at `D_c` (fractal vs smooth phase)\n\nDefine the spectral/growth dimension of the network as the exponent\n`d_s(D) = d log S / d log(log D)` of the entanglement profile. Then `d_s` is\ndiscontinuous exactly at `D_c`: it equals the larger-area exponent below `D_c`\n(\"fractal\" phase) and the minimal-area exponent above (\"smooth\" phase).\n\n**The key insight is** that `bond_dimension_phase_transition` already pins the two phases\nto distinct affine branches with growth rates `a₂ > a₁`; the spectral dimension is just a\nlogarithmic rescaling of that growth rate, so the kink we proved *forces* a dimension\njump.\n\n**Why now?** The kink (order parameter `orderParam_pos_above`) is formalized and\nnon-vacuous (`one_lt_criticalBond`); promoting \"growth rate\" to \"spectral dimension\"\nis the minimal step that connects our theorem to the mission's stated curvature proxy.\n\n## Conjecture 3 — Curvature boundedness ⇔ above-threshold area law\n\nIn the multi-surface generalization `S(D) = min_k (a_k logD + s_k)`, define a discrete\nRicci proxy as the second difference of `S` across neighbouring regions. Conjecture: the\nproxy is uniformly bounded by a universal constant *iff* `D` exceeds the global crossover\n`D_c = max_{k≠ℓ} exp((s_k − s_ℓ)/(a_ℓ − a_k))`, with the minimal area `a_min` setting the\nbound.\n\n**The key insight is** that concavity (`qesProfile_concaveOn`) means `S` is a concave\npiecewise-linear envelope; its curvature concentrates entirely at finitely many kinks, so\nboundedness of the proxy is equivalent to the dominant surface being the minimal-area one\n— i.e. being in the smooth phase.\n\n**Why now?** Concavity of the two-branch profile is proved; the `min`-of-many-affine\nenvelope is a clean inductive extension, and it is exactly the object whose curvature the\nconjecture wants to bound by a \"universal constant\".\n\n## Conjecture 4 — Emergent gauge group is abelian below a code threshold\n\nFor a holographic code whose logical algebra is generated by detectable local terms, the\nemergent boundary symmetry is abelian; universality (a non-central logical gate) requires\nat least one *non-detectable* (threshold-crossing) term.\n\n**The key insight is** that `detectable_charges_commute` shows detectable charges multiply\nas scalars `(ab)•P`, and `coarse_constraint_central` shows their sums stay central — so\nnon-commutativity (hence computational universality) can only enter through detectability\n*failure*, the algebraic analogue of crossing `D_c`.\n\n**Why now?** The commutation and centrality lemmas are proved on top of the catalog's\nEastin–Knill kernel; the boundary theorem `logical_noncentral_without_detection` already\nin the catalog supplies the converse witness, so the full \"abelian ⇔ below threshold\"\ndichotomy is within one cycle's reach.\n\n## Conjecture 5 — `D_c` scaling law `D_c(N) = exp(Θ(N^{(d−1)/d}))`\n\nFor a random network on `N` vertices arranged on a `d`-dimensional lattice with bulk and\nboundary surfaces scaling as volume `~N` and area `~N^{(d−1)/d}`, the critical bond\ndimension satisfies `log D_c(N) = (s_bulk − s_area)/(a_area − a_bulk) = Θ(N^{1/d})`,\ngiving a reproducible threshold `D_c(N)` as in the mission statement.\n\n**The key insight is** that our closed form `criticalLog = (s₁−s₂)/(a₂−a₁)` turns the\nthreshold into an explicit ratio of extensive (`s ~ N`) over area-law (`a ~ N^{(d−1)/d}`)\nquantities, so the `N`-scaling of `D_c` is *derived*, not measured.\n\n**Why now?** With `criticalBond` and `one_lt_criticalBond` formalized, plugging in\nlattice scaling exponents is a direct specialization; it converts the experimental\n\"reproducible threshold `D_c(N)`\" into a provable asymptotic law.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2173",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "43fe3cd5",
+    "status": "available",
+    "timestamp": "2026-06-21T07:05:14.212007+00:00",
+    "title": "Derived from this cycle's verified Lean results in `RTMinCut.lean`,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Densities of fixed partial Latin patterns in random Latin squares\n\nDerived from this cycle's findings (`LatinPatternProbability.lean`), where we proved:\n\n* `prob_single_cell` / `prob_single_cell_mul`: a one-cell pattern has probability\n  *exactly* `1/n`, so `Pr · n = 1` for all `n`.\n* `prob_rowfiber` / `prob_rowfiber_mul`: any single-row pattern of size `k` has\n  probability *exactly* `1/(n)_k` (`Nat.descFactorial n k`).\n* `singleRow_pattern_density`: `n^k/(n)_k → 1`.\n* `rowpattern_prob_mul_tendsto`: hence `Pr · n^k → 1` for single-row patterns —\n  the mission conjecture for an infinite family.\n\nThe cycle's structural insight: the **symbol-alphabet action** `Perm(Fin n)` on\nLatin squares is transitive on each \"single-line\" set of admissible patterns, which\nforces an exact count, but it cannot move two cells in distinct rows *and* columns\nindependently, which is precisely where exactness breaks for 2-dimensional patterns.\n\n## Conjecture 1 (single-column and single-symbol patterns are also exact)\nFor a pattern confined to one column (resp. one symbol class) of size `k`, the\nprobability is exactly `1/(n)_k`.\n- The key insight is that conjugacy of Latin squares (swapping the roles of the row,\n  column and symbol coordinates) carries the proven single-*row* result to single-\n  column and single-symbol patterns verbatim, so the exact `1/(n)_k` law is a\n  coordinate symmetry, not a row-specific accident.\n- Why now? `IsLatin` is already symmetric in rows and columns, and the\n  `permSymbols`/`perm_of_embeddings` machinery transfers directly; only the\n  partition map needs re-indexing, so this is a short extension of the present file.\n\n## Conjecture 2 (intercalate density is asymptotically `n⁻²` but NOT exact)\nThe `2×2` intercalate pattern `{(0,0,0),(0,1,1),(1,0,1),(1,1,0)}` (k = 4 entries,\nbut only 2 free rows/columns) satisfies `Pr · n² → 1/4`, i.e. it is `Θ(n⁻²)` with a\nconstant `≠ 1`, contradicting a naive `n⁻ᵏ` reading and matching the known mean\nnumber of intercalates `∼ n²/4`.\n- The key insight is that an intercalate is determined by 2 rows, 2 columns and 2\n  symbols with two independent binary choices, so its `k = 4` \"entries\" collapse to\n  2 degrees of freedom, replacing `n⁻⁴` by `n⁻²` and introducing the factor `1/4`.\n- Why now? The exact single-line counts of this cycle isolate exactly which\n  degrees of freedom the alphabet action can and cannot remove, making the\n  intercalate the smallest honest test of the general conjecture.\n\n## Conjecture 3 (general pattern exponent = number of \"independent\" cells)\nFor an arbitrary fixed partial Latin pattern `P`, `Pr[L ⊇ P] = Θ(n^{-e(P)})` where\n`e(P)` is the number of entries minus the rank deficiency of its row/column/symbol\nincidence (so `e(P) = k` exactly when `P` is \"spread out\", e.g. a partial transversal).\n- The key insight is that the true exponent counts *independent* constraints, and a\n  single line (or partial transversal) has all `k` constraints independent, which is\n  why those families hit the clean `n⁻ᵏ` with constant `1`.\n- Why now? We have a proven exact baseline (`1/(n)_k`) for the independent case, so\n  the residual `Θ(1)` constant for dependent patterns can be isolated and studied\n  pattern-by-pattern.\n\n## Conjecture 4 (partial transversals attain the constant `1`)\nA partial transversal pattern of size `k` (all `k` rows distinct, all `k` columns\ndistinct, all `k` symbols distinct) satisfies `Pr · n^k → 1`.\n- The key insight is that a partial transversal has full incidence rank, so a\n  combined row/column/symbol permutation can map any one to any other, restoring the\n  transitive group action that produced exactness in the single-row case.\n- Why now? It is the natural maximal generalization of `prob_rowfiber` for which the\n  group-action proof template of this cycle should still close, only with the action\n  of `Perm(rows) × Perm(cols) × Perm(symbols)` instead of `Perm(symbols)` alone.\n\n## Conjecture 5 (lower-order term is the falling-factorial defect)\nFor single-line patterns, `Pr · n^k = ∏_{i<k}(1 - i/n) = 1 - \\binom{k}{2}/n + O(n^{-2})`,\nso the rate of convergence to `1` is exactly `Θ(k²/n)`.\n- The key insight is that the exact closed form `1/(n)_k` already contains the full\n  asymptotic expansion, so the convergence rate is not estimated but computed.\n- Why now? `singleRow_pattern_density` proves the limit; reusing the same induction\n  with one extra term yields the `Θ(k²/n)` rate as a quantitative refinement.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2174",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "42f0bfda",
+    "status": "available",
+    "timestamp": "2026-06-21T07:11:57.291601+00:00",
+    "title": "Derived from this cycle's findings (`LatinPatternProbability.lean`), where we pr"
   },
   {
     "ambition_level": "extension",

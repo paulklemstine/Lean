@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "42f0bfda",
     "filename": "fixed_partial_latin_patterns_occur_with_asymptotic.json",
     "pkg_num": 219,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5537937826789618,
     "title": "Fixed Single-Line Latin Patterns Occur With Probability Exactly 1/(n)_k"
   },
   {
@@ -6686,8 +6686,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "fixed_partial_latin_patterns_occur_with_asymptotic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5537937826789618,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Fixed Single-Line Latin Patterns Occur With Probability Exactly 1/(n)_k"
     }
