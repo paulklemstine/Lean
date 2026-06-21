@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fe4ab5a6",
     "filename": "quantum_thermodynamics_landauers_principle_at_the_.json",
     "pkg_num": 224,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.85612,
     "title": "Landauer's Principle from the Deterministic Data-Processing Inequality"
   },
   {
@@ -6832,8 +6832,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "quantum_thermodynamics_landauers_principle_at_the_",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.85612,
+      "quality": "substantial",
       "shape": "star_of_david",
       "title": "Landauer's Principle from the Deterministic Data-Processing Inequality"
     }

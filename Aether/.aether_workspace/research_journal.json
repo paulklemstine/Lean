@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "636bb98c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Boltzmann Bridge VII: the Interleaving Distance is a *Metric*\n\n## Synthesis\n\n`Applications/BoltzmannBridge/InterleavingClosure.lean` discharges **Future\nDirection 1** of Boltzman",
-      "quality_score": 0.7054400000000001,
-      "sorry_count": 14,
-      "theorem_count": 233,
-      "timestamp": "2026-06-14T12:45:06",
-      "title": "Close Proofs: `Applications/BoltzmannBridge/InterleavingQuotient.lean` discharges **"
-    },
-    {
       "cycle_id": "6fec53b5",
       "domain": "Novelty",
       "key_insight": "# Future Directions — A Unified Primitive-Divisor Engine, Sixth Cycle\n\n## Synthesis\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCriterion.lean`, a **self-contained,\n`sorry`-free** fi",
@@ -499,19 +489,19 @@
       "theorem_count": 90,
       "timestamp": "2026-06-21T14:57:39",
       "title": "Derived from the verified Lean results in"
+    },
+    {
+      "cycle_id": "fe4ab5a6",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThese are freeform research directions extending the finite Jarzynski–Landauer\nformalization in [`JarzynskiLandauer.lean`](./JarzynskiLandauer.lean).\n\n## From identity to inequali",
+      "quality_score": 0.85612,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-21T16:50:55",
+      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a4d16ba9",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Species Generating Functions ↔ Probability Laws\n\nDerived from this cycle's findings in `Probability/SpeciesBoltzmannBridge.lean` and\n`Probability/SpeciesGeometricBridge.lean`, wh",
-      "quality_score": 0.44327589652348276,
-      "sorry_count": 2,
-      "theorem_count": 319,
-      "timestamp": "2026-06-15T16:53:53",
-      "title": "Close Proofs: Functorial bridge from combinatorial species generating functions to t"
-    },
     {
       "cycle_id": "743f44e8",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-21T16:36:29",
       "title": "Consciousness as Integrated Information"
+    },
+    {
+      "cycle_id": "fe4ab5a6",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThese are freeform research directions extending the finite Jarzynski–Landauer\nformalization in [`JarzynskiLandauer.lean`](./JarzynskiLandauer.lean).\n\n## From identity to inequali",
+      "quality_score": 0.85612,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-21T16:50:55",
+      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fbd73212",
-      "domain": "Applications",
-      "name": "EMLOnlyRepresentable_sum",
-      "quality": 0.7150400000000001
-    },
-    {
-      "cycle_id": "fbd73212",
-      "domain": "Applications",
-      "name": "EMLOnlyRepresentable_prod",
-      "quality": 0.7150400000000001
-    },
-    {
-      "cycle_id": "fbd73212",
-      "domain": "Applications",
-      "name": "EMLOnlyRepresentable_mvPolynomial",
-      "quality": 0.7150400000000001
-    },
     {
       "cycle_id": "1f4bbef7",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "in",
       "quality": 0.8904000000000001
+    },
+    {
+      "cycle_id": "fe4ab5a6",
+      "domain": "Logic",
+      "name": "uses",
+      "quality": 0.85612
+    },
+    {
+      "cycle_id": "fe4ab5a6",
+      "domain": "Logic",
+      "name": "recurrence_unique",
+      "quality": 0.85612
+    },
+    {
+      "cycle_id": "fe4ab5a6",
+      "domain": "Logic",
+      "name": "eq_claimSeq",
+      "quality": 0.85612
     }
   ],
-  "last_updated": "2026-06-21T16:36:29",
+  "last_updated": "2026-06-21T16:50:55",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "6ec4b34b",
-        "quality": 0.5346971830985916,
-        "theorems": 82,
-        "title": "Close Proofs: Intersection Form Classification Pipeline via Self-Dual Code Direc"
-      },
-      {
         "cycle_id": "c8fdbde8",
         "quality": 0.4348039483870968,
         "theorems": 10,
@@ -3513,6 +3507,12 @@
         "quality": 0.8904000000000001,
         "theorems": 90,
         "title": "Derived from the verified Lean results in"
+      },
+      {
+        "cycle_id": "fe4ab5a6",
+        "quality": 0.85612,
+        "theorems": 5,
+        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
       }
     ],
     "MachineLearning": [
