@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "aba81cd6",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA cor",
-      "quality_score": 0.4824,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-15T15:04:13",
-      "title": "Close Proofs: This cycle added two fully-verified files (0 sorries) extending"
-    },
-    {
       "cycle_id": "cd281b27",
       "domain": "Tropical",
       "key_insight": "# Future Directions — Tropical Polynomials (Convexity Foundation)\n\nThis cycle delivered a self-contained Mathlib foundation for **general-degree tropical\n(max-plus) polynomials** in `Catalog/Tropical/",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-21T08:51:21",
       "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
+    },
+    {
+      "cycle_id": "93e2fea4",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThese build on the compactness bridge in `Catalog/Speculative/RamseyExtremeAmenability.lean`\n(`approx_fixed_point_property_implies_extreme_amenability` and\n`ramsey_certificate_imp",
+      "quality_score": 0.45196000000000003,
+      "sorry_count": 0,
+      "theorem_count": 2,
+      "timestamp": "2026-06-21T09:05:25",
+      "title": "Ramsey Theory in Projective Fraïssé Limits Implies Extreme Amenability of Homeomorphism Groups of Co"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71035
     }
   ],
-  "last_updated": "2026-06-21T08:51:21",
+  "last_updated": "2026-06-21T09:05:25",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "c2929b61",
-        "quality": 0.5083935828877005,
-        "theorems": 0,
-        "title": "Retrocausal Mathematics: Where Effects Precede Causes"
-      },
-      {
         "cycle_id": "667542f0",
         "quality": 0.5307999999999999,
         "theorems": 9,
@@ -3389,6 +3383,12 @@
         "quality": 0.5379381188118812,
         "theorems": 103,
         "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
+      },
+      {
+        "cycle_id": "93e2fea4",
+        "quality": 0.45196000000000003,
+        "theorems": 2,
+        "title": "Ramsey Theory in Projective Fraïssé Limits Implies Extreme Amenability of Homeom"
       }
     ],
     "Geometry": [

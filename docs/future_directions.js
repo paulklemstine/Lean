@@ -1698,21 +1698,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Initial-condition universality of the clique-number exponent in preferential attachment with edge steps"
   },
   {
-    "consumed_by_exp_id": "42f0bfda",
-    "description": "Let P be any fixed finite partial Latin square pattern with k entries, encoded as a finite set of triples (row, column, symbol) of natural numbers satisfying the partial Latin condition: no two distinct entries agree in both row and column, row and symbol, or column and symbol. For each n large enough to contain all coordinates of P, view P as a partial Latin square of order n. Conjecture: if L is chosen uniformly from all Latin squares of order n, then Pr[L contains P] * n^k tends to 1 as n tends to infinity.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2079",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18174v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T14:02:50.731479+00:00",
-    "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every odd prime p, every sequence of 2p+1 integers none divisible by p contains a subsequence of exactly p terms whose sum is divisible by p but not divisible by p^2. Equivalently, the prime case of the paper's constant satisfies s_1(p) <= 2p+1; combined with the known lower bound this gives s_1(p)=t_1(p)=2p+1 for odd primes.",
     "domains": [
@@ -1798,20 +1783,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T16:05:12.158903+00:00",
     "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
-  },
-  {
-    "consumed_by_exp_id": "3e812933",
-    "description": "Conjecture: Every finite block graph has a vertex set S which is simultaneously a 2-packing and an isolating set. Equivalently, the closed neighborhoods of distinct vertices of S are pairwise disjoint, and every edge of the graph has at least one endpoint in the closed neighborhood of S.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2086",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18172v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T21:08:20.524395+00:00",
-    "title": "Packing isolating sets exist in finite block graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -2879,21 +2850,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2163",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
-    "status": "available",
-    "timestamp": "2026-06-21T03:16:50.834545+00:00",
-    "title": "Existence of square\u2011sided dice pairs preserving the sum distribution of two standard dice"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
     "domains": [
       "Pythagorean"
@@ -2905,21 +2861,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-21T04:03:23.688866+00:00",
     "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m \u2261 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2164",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20439v1",
-    "status": "available",
-    "timestamp": "2026-06-21T04:04:13.711725+00:00",
-    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
   },
   {
     "consumed_by_exp_id": "",
@@ -2937,21 +2878,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2165",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20046v1",
-    "status": "available",
-    "timestamp": "2026-06-21T04:57:12.884506+00:00",
-    "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For sufficiently large n relative to k, if two families A, B \u2286 ([n] choose k) are cross-intersecting and each has diversity at least C(n-u-1, n-k-1) for some integer u with 1 \u2264 u \u2264 k-1, then up to isomorphism A and B are contained in the union of a star centered at 1 and the family of k-sets that contain 1 and intersect [2, u+1]; equivalently, they are subsets of the Hilton\u2013Milner type construction for cross-intersecting pairs.",
     "domains": [
       "Algebra"
@@ -2963,21 +2889,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-21T05:40:58.522103+00:00",
     "title": "Extremal Structure of Large Cross-Intersecting Families via Diversity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that in Theorem 1.1 of the paper the error term O(\u2016\u03bc\u0303\u2016^{3\u2011\u03ba}) can be replaced by O(\u2016\u03bc\u0303\u2016^{2+\u03b5}) for every \u03b5>0 (i.e. one can save a full power of \u2016\u03bc\u0303\u2016 beyond the square\u2011root barrier). This would imply, via the approximate functional equation, a bound of shape T^{2+\u03b5} for the twisted first moment in the spectral aspect, matching the expected square\u2011root cancellation predicted by the random matrix model for a unitary ensemble.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2166",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19959v1",
-    "status": "available",
-    "timestamp": "2026-06-21T05:41:52.181180+00:00",
-    "title": "Improved power\u2011saving error bound for the twisted first moment of GL\u2083 symmetric square L\u2011functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2993,21 +2904,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-21T06:31:33.346299+00:00",
     "title": "All-measurable induced F-count forcing for graphons"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "We conjecture that the bounds \\((k-\\eta)\\cdot (n-1)/n\\) on both the adjacency spectral radius \\(\\rho(G)\\) and the signless Laplacian spectral radius \\(q(G)\\) appearing in the sufficient conditions for the existence of a spanning \\(k\\)-tree in a \\(\\frac1{k-\\eta}\\)-tough graph are best possible. Precisely, for every integer \\(k\\ge 3\\) and \\(\\eta\\in\\{0,1\\}\\) there exist arbitrarily large orders \\(n\\) and connected non\u2011complete graphs \\(G\\) on \\(n\\) vertices such that\n\n* \\(\\tau(G)=\\frac1{k-\\eta}\\);\n* \\(\\rho(G)=q(G)=(k-\\eta)\\cdot (n-1)/n\\);\n* \\(G\\) does **not** contain a spanning \\(k\\)-tree.\n\nThus the conjectured inequality cannot be improved.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2167",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20297v1",
-    "status": "available",
-    "timestamp": "2026-06-21T06:32:14.667244+00:00",
-    "title": "Sharp spectral bound for spanning k\u2011trees in \u03c4\u2011tough graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3037,6 +2933,95 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-21T08:09:41.464643+00:00",
     "title": "Equidistribution of CM Points on a Product of Non\u2011isomorphic Shimura Curves under Splitting Conditions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any oriented matroid of rank r, the e\u2011embracing exchange distance between any two e\u2011embracing bases is at most 2\u00b7r^{log2(r)+3}.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2170",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19573v1",
+    "status": "available",
+    "timestamp": "2026-06-21T09:11:56.958054+00:00",
+    "title": "Upper bound on e\u2011embracing distance between bases of oriented matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2171",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-21T03:16:50.834545+00:00",
+    "title": "Existence of square\u2011sided dice pairs preserving the sum distribution of two standard dice"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m \u2261 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2172",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:04:13.711725+00:00",
+    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2173",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:57:12.884506+00:00",
+    "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that in Theorem 1.1 of the paper the error term O(\u2016\u03bc\u0303\u2016^{3\u2011\u03ba}) can be replaced by O(\u2016\u03bc\u0303\u2016^{2+\u03b5}) for every \u03b5>0 (i.e. one can save a full power of \u2016\u03bc\u0303\u2016 beyond the square\u2011root barrier). This would imply, via the approximate functional equation, a bound of shape T^{2+\u03b5} for the twisted first moment in the spectral aspect, matching the expected square\u2011root cancellation predicted by the random matrix model for a unitary ensemble.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2174",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19959v1",
+    "status": "available",
+    "timestamp": "2026-06-21T05:41:52.181180+00:00",
+    "title": "Improved power\u2011saving error bound for the twisted first moment of GL\u2083 symmetric square L\u2011functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the bounds \\((k-\\eta)\\cdot (n-1)/n\\) on both the adjacency spectral radius \\(\\rho(G)\\) and the signless Laplacian spectral radius \\(q(G)\\) appearing in the sufficient conditions for the existence of a spanning \\(k\\)-tree in a \\(\\frac1{k-\\eta}\\)-tough graph are best possible. Precisely, for every integer \\(k\\ge 3\\) and \\(\\eta\\in\\{0,1\\}\\) there exist arbitrarily large orders \\(n\\) and connected non\u2011complete graphs \\(G\\) on \\(n\\) vertices such that\n\n* \\(\\tau(G)=\\frac1{k-\\eta}\\);\n* \\(\\rho(G)=q(G)=(k-\\eta)\\cdot (n-1)/n\\);\n* \\(G\\) does **not** contain a spanning \\(k\\)-tree.\n\nThus the conjectured inequality cannot be improved.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2175",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20297v1",
+    "status": "available",
+    "timestamp": "2026-06-21T06:32:14.667244+00:00",
+    "title": "Sharp spectral bound for spanning k\u2011trees in \u03c4\u2011tough graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3480,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "These build directly on `BehavioralEquivalence.lean` and stay within precise, pr"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b8df0deb",
     "description": "# Future Directions \u2014 The Periodic Table of Finite Groups\n\nDerived from the verified Lean results in\n`Catalog/Novelty/PeriodicTableOfGroups.lean` and\n`Catalog/Novelty/GroupIsotopes.lean`.\n\nThis cycle formalized the \"chemistry meets algebra\" analogy by pinning down a single\nconserved chemical charge \u2014 **solvability** \u2014 and proving its conservation laws\n(`chemistry_isInvariant`, `nobleGas_commutator_trivial`), its sharp failure on the\nsimple-group block (`transitionMetal_dichotomy`), the halogen reactivity law\n(`halogen_cayley`), and the order-120 prediction (`order120_transitionMetal`).\nOn the isotope side we proved valence is `1` for transition metals\n(`simpleGroup_valence_one`) and that prime-order species have no genuine isotopes\n(`isotope_collapse`).\n\nThe central *negative* discovery \u2014 that a finite group's order is **determined** by its\ncomposition factors, so the chemical notion of \"isotope\" (same factors, different mass) is\nvacuous \u2014 drives the conjectures below.\n\n---\n\n## Conjecture 1 \u2014 The composition-factor mass law (the \"no isotopes\" theorem)\n\n**Statement.** For every finite group `G` with composition series of factors\n`S\u2081, \u2026, S\u2096`, `Nat.card G = \u220f\u1d62 Nat.card S\u1d62`. Consequently any two finite groups with the\nsame multiset of composition factors have equal order.\n\n**The key insight is...** that the chemistry analogy breaks at exactly one place \u2014 atomic\nmass \u2014 and the break is a theorem, not an accident: in groups, \"atomic number\" (order) is a\n*function* of the composition formula, whereas in atoms `Z` and mass are independent. This\nupgrades the partial result `isotope_collapse` (prime-order case) to the full block.\n\n**Why now?** Mathlib has the abstract `JordanHolder` lattice machinery but no group-level\ncomposition-series cardinality lemma; `transitionMetal_dichotomy` already shows the\nprime-order shadow is fully formalizable, so the multiplicativity of order over factors is\nthe next reachable rung.\n\n---\n\n## Conjecture 2 \u2014 Valence stratifies the table\n\n**Statement.** Define `valence G = ({N | MinimalNormalSubgroup N}).ncard`. Then a finite\ngroup is *characteristically simple* (a direct power of a simple group) iff it has a unique\nminimal normal subgroup that is also its socle; and nilpotent groups satisfy\n`valence G = #{p : p \u2223 |G|}` (one minimal normal subgroup per prime, from the central\nSylow structure).\n\n**The key insight is...** that `simpleGroup_valence_one` is the first cell of a *column*:\nvalence counts the irreducible \"bonding sites\" (minimal normal subgroups), and for the\nnilpotent (\"noble-gas-like\") block this count is forced to equal the number of distinct\nprime divisors via centrality of Sylow subgroups.\n\n**Why now?** We already have the `MinimalNormalSubgroup` predicate and the simple-group\ncomputation; the nilpotent case only needs Mathlib's existing Sylow-center theory, making\nthe column-valence law immediately testable.\n\n---\n\n## Conjecture 3 \u2014 Solvability is the *unique* nontrivial monotone chemical charge\n\n**Statement.** Any group property `P` that is (i) an isomorphism invariant, (ii) closed\nunder subgroups, quotients, and finite products, and (iii) false on some finite group, must\nbe implied by non-solvability: `\u00acIsSolvable G \u2192 \u00acP G`. Equivalently, solvability is the\nfinest such \"downward-and-upward closed\" charge below the line `True`.\n\n**The key insight is...** that `chemistry_isInvariant` plus the Mathlib closure instances\n(`subgroup_solvable_of_solvable`, `solvable_quotient_of_solvable`, `solvable_prod`) make\nsolvability a *formation-class* charge; the conjecture says no strictly stronger\nformation-class charge separates finite groups, so solvability really is the periodic\ntable's fundamental conserved quantity.\n\n**Why now?** Every closure law the conjecture quantifies over is already an instance in\nMathlib's `Solvable.lean`, so the statement is a finite-combinatorial extremality claim over\nknown building blocks rather than new analysis.\n\n---\n\n## Conjecture 4 \u2014 The transition-metal threshold is exactly atomic number 60\n\n**Statement.** Every group of order `< 60` is solvable, and `A\u2085` (order 60) is the lightest\nnon-solvable group; hence the first \"transition metal\" sits at atomic number 60, and the\norder-120 species `S\u2085` is its lightest non-solvable *compound* (already verified in\n`order120_transitionMetal`).\n\n**The key insight is...** that `transitionMetal_dichotomy` says non-solvability requires a\nnonabelian simple composition factor, and the smallest nonabelian simple group has order 60;\nso the periodic table has a literal *metallicity threshold* with `A\u2085` as its hydrogen.\n\n**Why now?** `Equiv.Perm.fin_5_not_solvable` (used in `order120_transitionMetal`) gives the\nupper witness for free; the remaining content \u2014 solvability of all groups of order `< 60` \u2014\nis a finite Sylow/Burnside `p\u1d43q\u1d47` argument whose ingredients (`IsPGroup.isSolvable`,\nBurnside) are present or near-present in Mathlib.\n\n---\n\n## Conjecture 5 \u2014 Reactivity = generation is quantitative (sharp Cayley degree)\n\n**Statement.** Refine `halogen_cayley`: the minimal `n` with `G \u21aa S\u2099` (the \"reactivity\ndegree\" `\u03bc(G)`) satisfies `\u03bc(G) \u2264 |G|` with equality iff `G` is cyclic of prime power order\nor one of finitely many exceptions; in general `\u03bc(G)` is the minimal sum of prime-power\nindices of a covering family of core-free subgroups.\n\n**The key insight is...** that the halogen embedding into `S_{|G|}` is almost never optimal \u2014\n\"reactivity\" is graded by the *minimal faithful permutation degree*, turning the qualitative\nCayley reaction into a measurable valence-like spectrum across the table.\n\n**Why now?** `halogen_cayley` already produces the canonical (regular) embedding; the\nmachinery for cosets and core-free subgroups exists in Mathlib, so optimizing the degree is\na concrete next experiment rather than a foundational build.\n",
     "domains": [
       "Algebra",
@@ -3490,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "fb007c35",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T22:35:58.741131+00:00",
     "title": "Derived from the verified Lean results in"
   },
@@ -3989,7 +3974,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "0dfaccbd",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3999,7 +3984,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -4034,7 +4019,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "11f0f366",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -4044,7 +4029,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -4732,21 +4717,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
   {
-    "consumed_by_exp_id": "7a341625",
-    "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
-    "domains": [
-      "Computation",
-      "Speculative"
-    ],
-    "id": "fd_0483",
-    "priority_score": 0.3699999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.254223+00:00",
-    "title": "Game of Life Universality"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
     "domains": [
@@ -4865,21 +4835,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
-  },
-  {
-    "consumed_by_exp_id": "ddafecee",
-    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
-    "domains": [
-      "Speculative",
-      "Logic"
-    ],
-    "id": "fd_0482",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.177474+00:00",
-    "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
   {
     "consumed_by_exp_id": "",
