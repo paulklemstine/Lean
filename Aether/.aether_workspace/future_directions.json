@@ -13278,7 +13278,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.177474+00:00",
       "title": "Alien Mathematics: Non-Standard Arithmetic"
@@ -13314,7 +13314,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.254223+00:00",
       "title": "Game of Life Universality"
@@ -33235,7 +33235,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.Order.RelClasses",
         "Mathlib.Order.Antichain",
@@ -33244,7 +33244,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "dafb1f8b",
       "depth_estimate": 3,
       "description": "For every natural number k, the directed binary structure consisting of the strict order relation of any finite poset of width at most k has twin-width at most 2*k+1. Equivalently, every finite poset whose largest antichain has size at most k admits a contraction sequence in which every intermediate part has at most 2*k+1 red out-/in-neighborhood types induced by the strict order relation.",
       "domain_bridges": [
@@ -33257,7 +33257,7 @@
         "Bridges"
       ],
       "id": "fd_2077",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-21T12:44:45.301814+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Order.RelClasses\nimport Mathlib.Data.Fintype.Basic\n\nuniverse u\n\n/-- Placeholder for the width of a finite poset: the maximum cardinality of an antichain. -/\nconstant Poset.width : Type u → [PartialOrder α] → Nat\n\n/-- Placeholder for the twin-width of a finite binary relation. -/\nconstant Rel.twinWidth {α : Type u} [Fintype α] : (α → α → Prop) → Nat\n\n/-- The strict order relation of a poset, viewed as a directed graph relation. -/\ndef strictOrderRel (α : Type u) [PartialOrder α] : α → α → Prop := fun x y => x < y\n\n/-- Conjecture: finite posets of width at most `k` have twin-width at most `2*k+1`. -/\nconjecture bounded_width_poset_twinWidth_linear\n    (α : Type u) [Fintype α] [PartialOrder α] (k : Nat) :\n    Poset.width α ≤ k →\n    Rel.twinWidth (strictOrderRel α) ≤ 2 * k + 1",
       "lineage_refs": [],
@@ -33270,7 +33270,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18934v1",
       "source_path": "http://arxiv.org/abs/2606.18934v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T08:02:38.169523+00:00",
       "title": "Linear twin-width bound for finite posets of bounded width"
@@ -33361,7 +33361,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18174v1",
       "source_path": "http://arxiv.org/abs/2606.18174v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-18T14:02:50.731479+00:00",
       "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
@@ -33681,7 +33681,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18172v1",
       "source_path": "http://arxiv.org/abs/2606.18172v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-18T21:08:20.524395+00:00",
       "title": "Packing isolating sets exist in finite block graphs"
@@ -35049,7 +35049,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "0dfaccbd",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
       "domain_bridges": [],
@@ -35072,7 +35072,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-19T17:11:08.928185+00:00",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
@@ -36979,48 +36979,6 @@
       "title": "Equality of minimal free resolutions for Ziegler pairs of line arrangements of degree ≥12"
     },
     {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "OEIS:A001227",
-        "MathComp/NumberTheory/Cyclotomic"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6‑sided dice can be factored as a product of two polynomials with non‑negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum‑frequency distribution as two ordinary dice.",
-      "domain_bridges": [
-        "Algebraic Combinatorics",
-        "Formalized Mathematics"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Computation"
-      ],
-      "id": "fd_2163",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem square_sided_dice_exist (a b : ℕ) (ha : a > 0) (hb : b > 0) (hneq : a ≠ b) :\n  ∃ (P Q : polynomial ℕ),\n    (∀ i, coeff P i ≥ 0) ∧ (∀ i, coeff Q i ≥ 0) ∧\n    polynomial.eval 1 P = a ^ 2 ∧ polynomial.eval 1 Q = b ^ 2 ∧\n    P * Q = (∑ i in finset.range 6, polynomial.X ^ (i+1)) ^ 2 :=\n  sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Translate the problem to a factorisation of the frequency polynomial F(x)= (x+...+x^6)^2 = x^2 (x^6-1)^2/(x-1)^2. Use the factorisation of cyclotomic polynomials Φ_d(x) to express F as a product of irreducibles. Show that for any distinct squares a^2,b^2 there is a selection of these cyclotomic factors (with possible repetitions) whose product yields a polynomial P_a with P_a(1)=a^2 and non‑negative coefficients, and whose complementary factor P_b satisfies P_b(1)=b^2. The existence part reduces to solving a linear Diophantine system given by the degrees and constant terms of the chosen Φ_d. One can then employ the theory of integer cones (Hilbert bases) to prove the system always has a solution when a≠b, yielding the desired dice. Formalisation in Lean proceeds by: (1) defining generating functions of dice, (2) proving the cyclotomic factorisation of (∑_{i=1}^6 x^i)^2, (3) constructing the cone of admissible exponent vectors, (4) showing the cone contains a point with prescribed sum‑o",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20311v1",
-      "source_path": "http://arxiv.org/abs/2606.20311v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T03:16:50.834545+00:00",
-      "title": "Existence of square‑sided dice pairs preserving the sum distribution of two standard dice"
-    },
-    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -37072,52 +37030,6 @@
       "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
     },
     {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Mathlib.Data.ZMod.Basic",
-        "Mathlib.Data.Nat.Prime.Basic",
-        "Mathlib.GroupTheory.OrderOfElement",
-        "Mathlib.Order.SetNotation",
-        "Kaprekar four-digit odd-base projective-doubling classification"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m ≡ 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
-      "domain_bridges": [
-        "Kaprekar digit dynamics to multiplication by 2 on projective residue classes",
-        "terminal cycle length to projective multiplicative order modulo p",
-        "extremal cycle length to Artin-type primitive root phenomena"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "id": "fd_2164",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "import Mathlib\n\nopen Set\n\n/-- The projective order of 2 modulo `p` is the least positive `m` with `2^m = ±1`. -/\ndef ProjectiveOrderTwoIs (p m : ℕ) : Prop :=\n  IsLeast {n : ℕ | 0 < n ∧ (((2 : ZMod p) ^ n = 1) ∨ ((2 : ZMod p) ^ n = -1))} m\n\n/-- Conjecture: infinitely many prime odd bases have maximal four-digit Kaprekar terminal cycle length. -/\ntheorem infinitely_many_extremal_prime_kaprekar_bases :\n    Set.Infinite {p : ℕ | Nat.Prime p ∧ 5 < p ∧ ∃ m : ℕ,\n      ProjectiveOrderTwoIs p m ∧ m = (p - 1) / 2} := by\n  sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "First formalize the paper's equivalence: for prime p > 5, the longest terminal four-digit Kaprekar cycle in base p has length (p - 1) / 2 iff the least m > 0 with 2^m = ±1 in ZMod p is (p - 1) / 2. Then prove that infinitely many primes satisfy this modular condition. A sufficient route is Artin's primitive root conjecture for 2, since if 2 is a primitive root modulo p then the projective order of 2 is exactly (p - 1) / 2. Conditional proofs could be obtained from Hooley's GRH-dependent theorem; an unconditional Lean proof would require major analytic number theory beyond current mathlib.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20439v1",
-      "source_path": "http://arxiv.org/abs/2606.20439v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T04:04:13.711725+00:00",
-      "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
-    },
-    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -37156,49 +37068,6 @@
       "thread_id": "",
       "timestamp": "2026-06-21T04:56:49.438109+00:00",
       "title": "Bounded tree-independence number for K_{1,d}-free graphs excluding a planar induced minor"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "arXiv:math.NT",
-        "Drinfeld modules",
-        "Arboreal Galois Representations"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
-      "domain_bridges": [
-        "Function Field Arithmetic $\\to$ Group Theory (Wreath Products)",
-        "Galois Theory $\to$ Dynamical Systems"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Pythagorean"
-      ],
-      "id": "fd_2165",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem arboreal_maximality_twisted_carlitz (q : ℕ) [Fact (Odd q)] (c : $\\mathbb{F}_q(t)$) : \n  ∀ n : ℕ, Isomorphism (GaloisGroup (Iterate (f_c c) n)) (IteratedWreathProduct (CyclicGroup (q-1)) n)",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Formalize the construction of the twisted Carlitz module $\\rho_t^c$ and its $t$-torsion. Use the recursive structure of the iterated wreath product $\\text{Aut}(T_n) \\cong \text{Aut}(T_{n-1}) \\wr S_d$. Implement a criterion for surjectivity based on the existence of primitive prime divisors in the critical orbit of $f_c(x)$ in characteristic $p$, ensuring that the extensions at each level $n$ are linearly disjoint from the previous levels.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20046v1",
-      "source_path": "http://arxiv.org/abs/2606.20046v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T04:57:12.884506+00:00",
-      "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
     },
     {
       "ambition_level": "extension",
@@ -37247,48 +37116,6 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
-        "math.NT"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "Conjecture that in Theorem 1.1 of the paper the error term O(‖μ̃‖^{3‑κ}) can be replaced by O(‖μ̃‖^{2+ε}) for every ε>0 (i.e. one can save a full power of ‖μ̃‖ beyond the square‑root barrier). This would imply, via the approximate functional equation, a bound of shape T^{2+ε} for the twisted first moment in the spectral aspect, matching the expected square‑root cancellation predicted by the random matrix model for a unitary ensemble.",
-      "domain_bridges": [
-        "representation theory",
-        "spectral theory of automorphic forms",
-        "analytic number theory"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Computation"
-      ],
-      "id": "fd_2166",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem twisted_first_moment_improved_error {T : ℝ} (δ : ℝ) (h : TestFunction) (m₁ m₂ : ℕ) (ε : ℝ) (hε : 0 < ε) :\n  (∑ π in B_{T,δ,μ̃} , (⋆ A_π(m₁,m₂) * L(1/2, π, sym²) * h(μ_π)) / CN(π))\n    = (ζ(3/2) / (192 * π^5)) * (if □ m₁ ∧ □ m₂ then 1 else 0) * vol_spec(h) / ((m₁^2 * m₂)^(1/4))\n      + O (T ^ (2 + ε)) := by\n  sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "The conjecture would follow from establishing substantially stronger bounds for the archimedean integral transforms in the GL₃ Kuznetsov formula. One needs to exploit additional cancellation in the higher‑rank Kloosterman sums S(m₁,m₂;c) via Deligne’s bound adapted to the GL₃ setting, and to apply stationary phase / Mellin‑Barnes techniques to the Bessel‑type kernels appearing in the Kuznetsov trace formula. Combining these with a refined asymmetric approximate functional equation that isolates the diagonal contribution would yield the desired power saving of one full exponent.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.19959v1",
-      "source_path": "http://arxiv.org/abs/2606.19959v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T05:41:52.181180+00:00",
-      "title": "Improved power‑saving error bound for the twisted first moment of GL₃ symmetric square L‑functions"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
         "math.CO",
         "math.FA",
         "math.PR",
@@ -37328,55 +37155,6 @@
       "thread_id": "",
       "timestamp": "2026-06-21T06:31:33.346299+00:00",
       "title": "All-measurable induced F-count forcing for graphons"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Liu, Fan, Shu (a34)",
-        "Jia, Lu (a24)",
-        "Win (a2)",
-        "Chvátal (a25)",
-        "Bauer, Broersma, Veldman (a20)",
-        "Ning, Ge (a31)",
-        "Liu, Shiu, Xue (a14)"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "We conjecture that the bounds \\((k-\\eta)\\cdot (n-1)/n\\) on both the adjacency spectral radius \\(\\rho(G)\\) and the signless Laplacian spectral radius \\(q(G)\\) appearing in the sufficient conditions for the existence of a spanning \\(k\\)-tree in a \\(\\frac1{k-\\eta}\\)-tough graph are best possible. Precisely, for every integer \\(k\\ge 3\\) and \\(\\eta\\in\\{0,1\\}\\) there exist arbitrarily large orders \\(n\\) and connected non‑complete graphs \\(G\\) on \\(n\\) vertices such that\n\n* \\(\\tau(G)=\\frac1{k-\\eta}\\);\n* \\(\\rho(G)=q(G)=(k-\\eta)\\cdot (n-1)/n\\);\n* \\(G\\) does **not** contain a spanning \\(k\\)-tree.\n\nThus the conjectured inequality cannot be improved.",
-      "domain_bridges": [
-        "toughness",
-        "adjacency spectral radius",
-        "signless Laplacian spectral radius",
-        "spanning k‑tree"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "id": "fd_2167",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem conjecture_sharp_spectral_bound :\n  ∃ (k : Nat) (eta : Nat) (G : SimpleGraph V) [Connected G] [NegComplete G],\n  (eta = 0 ∨ eta = 1) →\n  let τ := toughness G;\n  let ρ := spectral_radius G;\n  let q := signless_laplacian_spectral_radius G;\n  let n := (V.size : Nat);\n  if τ = 1 / (k - eta) ∧∧ ρ = (k - eta) * (n - 1) / n ∧∧ q = (k - eta) * (n - 1) / n then\n    ≊ (t : kTree G), t.IsSpanning\n  else\n    True :=\n  by\n    -- Placeholder for the proof/construction.\n    sorry.",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "1. Construct extremal families of graphs (e.g., joins of a complete graph with a carefully chosen path or threshold graphs) that achieve equality in the toughness condition.\n2. Compute their adjacency and signless Laplacian spectra exactly, confirming \\(\\rho(G)=q(G)=(k-\\eta)(n-1)/n\\).\n3. Show that any spanning \\(k\\)-tree would force a vertex of degree exceeding \\(k\\) due to the structural constraints imposed by the toughness and spectral equalities, yielding a contradiction.\n4. Verify the construction for small parameters computationally and prove the general construction by induction on \\(n\\).\n5. The existence of such counterexamples demonstrates that the conjectured bounds are sharp.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20297v1",
-      "source_path": "http://arxiv.org/abs/2606.20297v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T06:32:14.667244+00:00",
-      "title": "Sharp spectral bound for spanning k‑trees in τ‑tough graphs"
     },
     {
       "ambition_level": "extension",
@@ -37593,48 +37371,6 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
-        "https://arxiv.org/abs/2504.01234",
-        "https://arxiv.org/abs/2410.15678"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "Convergence of the generating function for the two-centered black hole index in $\\mathbb{Z}_N$ CHL models is proven for $N=2,3$ by analyzing the analytic structure of the fundamental chamber $\\CR_N$ and modular transformation properties of the matrix coefficients in the generating function decomposition. The proof leverages pole cancellation in the imaginary $\\tau_2$-plane via black hole bound state metamorphosis.",
-      "domain_bridges": [
-        "Black hole-bound state metamorphosis in CHL models → Generating function manipulation",
-        "Siegel modular forms → Convergence of sums over lattice points"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Logic"
-      ],
-      "id": "fd_2172",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Modular analysis of the $\\tau_2$-plane via the fundamental chamber $\\CR_N$, demonstrating pole cancellations among CF1-CF4 terms through residue matching and modular transformation properties.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.19479v1",
-      "source_path": "http://arxiv.org/abs/2606.19479v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T10:43:56.955206+00:00",
-      "title": "Convergence of Generating Function for Two-Centered Black Hole Index in CHL Models"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
         "Djoković-Winkler Θ-classes of partial cubes",
         "Peripheral halfspaces U(θ,W)=W",
         "Daisy cubes as induced subgraphs on Boolean-lattice down-sets",
@@ -37673,6 +37409,353 @@
       "thread_id": "",
       "timestamp": "2026-06-21T12:06:22.775094+00:00",
       "title": "Cartesian products reflect and preserve daisy cubes"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "zbMATH02051572",
+        "zbMATH02001026"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "This paper presents a uniform method to generate Ramanujan-type congruences for sequences arising from combinatorial and modular constructions, aiming to transform theoretical results into concrete, verifiable expressions.",
+      "domain_bridges": [
+        "ArXiv preprints",
+        "mathematical logic & number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2174",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Modular form weight estimation via operator methods",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Constructive transformation through Rankin-Cohen bracket and modular form weight identification",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19008v1",
+      "source_path": "http://arxiv.org/abs/2606.19008v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T12:44:18.852761+00:00",
+      "title": "Explicit constructions for Ramanujan-type congruences"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "OEIS:A001227",
+        "MathComp/NumberTheory/Cyclotomic"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6‑sided dice can be factored as a product of two polynomials with non‑negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum‑frequency distribution as two ordinary dice.",
+      "domain_bridges": [
+        "Algebraic Combinatorics",
+        "Formalized Mathematics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Computation"
+      ],
+      "id": "fd_2175",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem square_sided_dice_exist (a b : ℕ) (ha : a > 0) (hb : b > 0) (hneq : a ≠ b) :\n  ∃ (P Q : polynomial ℕ),\n    (∀ i, coeff P i ≥ 0) ∧ (∀ i, coeff Q i ≥ 0) ∧\n    polynomial.eval 1 P = a ^ 2 ∧ polynomial.eval 1 Q = b ^ 2 ∧\n    P * Q = (∑ i in finset.range 6, polynomial.X ^ (i+1)) ^ 2 :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Translate the problem to a factorisation of the frequency polynomial F(x)= (x+...+x^6)^2 = x^2 (x^6-1)^2/(x-1)^2. Use the factorisation of cyclotomic polynomials Φ_d(x) to express F as a product of irreducibles. Show that for any distinct squares a^2,b^2 there is a selection of these cyclotomic factors (with possible repetitions) whose product yields a polynomial P_a with P_a(1)=a^2 and non‑negative coefficients, and whose complementary factor P_b satisfies P_b(1)=b^2. The existence part reduces to solving a linear Diophantine system given by the degrees and constant terms of the chosen Φ_d. One can then employ the theory of integer cones (Hilbert bases) to prove the system always has a solution when a≠b, yielding the desired dice. Formalisation in Lean proceeds by: (1) defining generating functions of dice, (2) proving the cyclotomic factorisation of (∑_{i=1}^6 x^i)^2, (3) constructing the cone of admissible exponent vectors, (4) showing the cone contains a point with prescribed sum‑o",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20311v1",
+      "source_path": "http://arxiv.org/abs/2606.20311v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T03:16:50.834545+00:00",
+      "title": "Existence of square‑sided dice pairs preserving the sum distribution of two standard dice"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Mathlib.Data.ZMod.Basic",
+        "Mathlib.Data.Nat.Prime.Basic",
+        "Mathlib.GroupTheory.OrderOfElement",
+        "Mathlib.Order.SetNotation",
+        "Kaprekar four-digit odd-base projective-doubling classification"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m ≡ 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
+      "domain_bridges": [
+        "Kaprekar digit dynamics to multiplication by 2 on projective residue classes",
+        "terminal cycle length to projective multiplicative order modulo p",
+        "extremal cycle length to Artin-type primitive root phenomena"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2176",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nopen Set\n\n/-- The projective order of 2 modulo `p` is the least positive `m` with `2^m = ±1`. -/\ndef ProjectiveOrderTwoIs (p m : ℕ) : Prop :=\n  IsLeast {n : ℕ | 0 < n ∧ (((2 : ZMod p) ^ n = 1) ∨ ((2 : ZMod p) ^ n = -1))} m\n\n/-- Conjecture: infinitely many prime odd bases have maximal four-digit Kaprekar terminal cycle length. -/\ntheorem infinitely_many_extremal_prime_kaprekar_bases :\n    Set.Infinite {p : ℕ | Nat.Prime p ∧ 5 < p ∧ ∃ m : ℕ,\n      ProjectiveOrderTwoIs p m ∧ m = (p - 1) / 2} := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize the paper's equivalence: for prime p > 5, the longest terminal four-digit Kaprekar cycle in base p has length (p - 1) / 2 iff the least m > 0 with 2^m = ±1 in ZMod p is (p - 1) / 2. Then prove that infinitely many primes satisfy this modular condition. A sufficient route is Artin's primitive root conjecture for 2, since if 2 is a primitive root modulo p then the projective order of 2 is exactly (p - 1) / 2. Conditional proofs could be obtained from Hooley's GRH-dependent theorem; an unconditional Lean proof would require major analytic number theory beyond current mathlib.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20439v1",
+      "source_path": "http://arxiv.org/abs/2606.20439v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T04:04:13.711725+00:00",
+      "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:math.NT",
+        "Drinfeld modules",
+        "Arboreal Galois Representations"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
+      "domain_bridges": [
+        "Function Field Arithmetic $\\to$ Group Theory (Wreath Products)",
+        "Galois Theory $\to$ Dynamical Systems"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2177",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem arboreal_maximality_twisted_carlitz (q : ℕ) [Fact (Odd q)] (c : $\\mathbb{F}_q(t)$) : \n  ∀ n : ℕ, Isomorphism (GaloisGroup (Iterate (f_c c) n)) (IteratedWreathProduct (CyclicGroup (q-1)) n)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the construction of the twisted Carlitz module $\\rho_t^c$ and its $t$-torsion. Use the recursive structure of the iterated wreath product $\\text{Aut}(T_n) \\cong \text{Aut}(T_{n-1}) \\wr S_d$. Implement a criterion for surjectivity based on the existence of primitive prime divisors in the critical orbit of $f_c(x)$ in characteristic $p$, ensuring that the extensions at each level $n$ are linearly disjoint from the previous levels.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20046v1",
+      "source_path": "http://arxiv.org/abs/2606.20046v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T04:57:12.884506+00:00",
+      "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture that in Theorem 1.1 of the paper the error term O(‖μ̃‖^{3‑κ}) can be replaced by O(‖μ̃‖^{2+ε}) for every ε>0 (i.e. one can save a full power of ‖μ̃‖ beyond the square‑root barrier). This would imply, via the approximate functional equation, a bound of shape T^{2+ε} for the twisted first moment in the spectral aspect, matching the expected square‑root cancellation predicted by the random matrix model for a unitary ensemble.",
+      "domain_bridges": [
+        "representation theory",
+        "spectral theory of automorphic forms",
+        "analytic number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Computation"
+      ],
+      "id": "fd_2178",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem twisted_first_moment_improved_error {T : ℝ} (δ : ℝ) (h : TestFunction) (m₁ m₂ : ℕ) (ε : ℝ) (hε : 0 < ε) :\n  (∑ π in B_{T,δ,μ̃} , (⋆ A_π(m₁,m₂) * L(1/2, π, sym²) * h(μ_π)) / CN(π))\n    = (ζ(3/2) / (192 * π^5)) * (if □ m₁ ∧ □ m₂ then 1 else 0) * vol_spec(h) / ((m₁^2 * m₂)^(1/4))\n      + O (T ^ (2 + ε)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "The conjecture would follow from establishing substantially stronger bounds for the archimedean integral transforms in the GL₃ Kuznetsov formula. One needs to exploit additional cancellation in the higher‑rank Kloosterman sums S(m₁,m₂;c) via Deligne’s bound adapted to the GL₃ setting, and to apply stationary phase / Mellin‑Barnes techniques to the Bessel‑type kernels appearing in the Kuznetsov trace formula. Combining these with a refined asymmetric approximate functional equation that isolates the diagonal contribution would yield the desired power saving of one full exponent.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19959v1",
+      "source_path": "http://arxiv.org/abs/2606.19959v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T05:41:52.181180+00:00",
+      "title": "Improved power‑saving error bound for the twisted first moment of GL₃ symmetric square L‑functions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Liu, Fan, Shu (a34)",
+        "Jia, Lu (a24)",
+        "Win (a2)",
+        "Chvátal (a25)",
+        "Bauer, Broersma, Veldman (a20)",
+        "Ning, Ge (a31)",
+        "Liu, Shiu, Xue (a14)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "We conjecture that the bounds \\((k-\\eta)\\cdot (n-1)/n\\) on both the adjacency spectral radius \\(\\rho(G)\\) and the signless Laplacian spectral radius \\(q(G)\\) appearing in the sufficient conditions for the existence of a spanning \\(k\\)-tree in a \\(\\frac1{k-\\eta}\\)-tough graph are best possible. Precisely, for every integer \\(k\\ge 3\\) and \\(\\eta\\in\\{0,1\\}\\) there exist arbitrarily large orders \\(n\\) and connected non‑complete graphs \\(G\\) on \\(n\\) vertices such that\n\n* \\(\\tau(G)=\\frac1{k-\\eta}\\);\n* \\(\\rho(G)=q(G)=(k-\\eta)\\cdot (n-1)/n\\);\n* \\(G\\) does **not** contain a spanning \\(k\\)-tree.\n\nThus the conjectured inequality cannot be improved.",
+      "domain_bridges": [
+        "toughness",
+        "adjacency spectral radius",
+        "signless Laplacian spectral radius",
+        "spanning k‑tree"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2179",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem conjecture_sharp_spectral_bound :\n  ∃ (k : Nat) (eta : Nat) (G : SimpleGraph V) [Connected G] [NegComplete G],\n  (eta = 0 ∨ eta = 1) →\n  let τ := toughness G;\n  let ρ := spectral_radius G;\n  let q := signless_laplacian_spectral_radius G;\n  let n := (V.size : Nat);\n  if τ = 1 / (k - eta) ∧∧ ρ = (k - eta) * (n - 1) / n ∧∧ q = (k - eta) * (n - 1) / n then\n    ≊ (t : kTree G), t.IsSpanning\n  else\n    True :=\n  by\n    -- Placeholder for the proof/construction.\n    sorry.",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "1. Construct extremal families of graphs (e.g., joins of a complete graph with a carefully chosen path or threshold graphs) that achieve equality in the toughness condition.\n2. Compute their adjacency and signless Laplacian spectra exactly, confirming \\(\\rho(G)=q(G)=(k-\\eta)(n-1)/n\\).\n3. Show that any spanning \\(k\\)-tree would force a vertex of degree exceeding \\(k\\) due to the structural constraints imposed by the toughness and spectral equalities, yielding a contradiction.\n4. Verify the construction for small parameters computationally and prove the general construction by induction on \\(n\\).\n5. The existence of such counterexamples demonstrates that the conjectured bounds are sharp.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20297v1",
+      "source_path": "http://arxiv.org/abs/2606.20297v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T06:32:14.667244+00:00",
+      "title": "Sharp spectral bound for spanning k‑trees in τ‑tough graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "https://arxiv.org/abs/2504.01234",
+        "https://arxiv.org/abs/2410.15678"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Convergence of the generating function for the two-centered black hole index in $\\mathbb{Z}_N$ CHL models is proven for $N=2,3$ by analyzing the analytic structure of the fundamental chamber $\\CR_N$ and modular transformation properties of the matrix coefficients in the generating function decomposition. The proof leverages pole cancellation in the imaginary $\\tau_2$-plane via black hole bound state metamorphosis.",
+      "domain_bridges": [
+        "Black hole-bound state metamorphosis in CHL models → Generating function manipulation",
+        "Siegel modular forms → Convergence of sums over lattice points"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Logic"
+      ],
+      "id": "fd_2180",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Modular analysis of the $\\tau_2$-plane via the fundamental chamber $\\CR_N$, demonstrating pole cancellations among CF1-CF4 terms through residue matching and modular transformation properties.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19479v1",
+      "source_path": "http://arxiv.org/abs/2606.19479v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T10:43:56.955206+00:00",
+      "title": "Convergence of Generating Function for Two-Centered Black Hole Index in CHL Models"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "random permutations",
+        "canonical cycle decomposition"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Formalize the coupling between the 'q-game' (where a deterministic player removes q elements and a random player removes a uniform number of elements) and the cycle decomposition of a random permutation. Specifically, prove that the random player's winning probability is equal to the probability that the first cycle of length $\\le q$ encountered in canonical cycle order is a fixed point (length 1).",
+      "domain_bridges": [
+        "probability",
+        "discrete mathematics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "id": "fd_2181",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem q_game_winning_prob (n : ℕ) (q : ℕ) (hq : q > 0) :\n  Prob (random_player_wins n q) = Prob (first_cycle_le_q_is_fixed_point n q)\n  -- Where Prob is defined over the space of uniformly random permutations of Fin n",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Implement the canonical cycle decomposition as a sequence of random variables. Define the game state as the number of remaining elements $m$. Use induction on $n$ to show that the transition probabilities of the game match the probabilities of encountering cycles of specific lengths in the permutation. Define a stopping time $\\tau$ as the index of the first cycle with length $L \\le q$. Prove that the event 'Random player wins' is equivalent to the event $L_{\\tau} = 1$.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.18956v1",
+      "source_path": "http://arxiv.org/abs/2606.18956v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T12:44:39.270281+00:00",
+      "title": "Equivalence of the q-Game Winning Probability and First Short Cycle Fixed-Point Probability"
     },
     {
       "ambition_level": "extension",
@@ -97191,6 +97274,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"
