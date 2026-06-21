@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5ef4c190",
     "filename": "eml_universal_approximation_density_of_eml_functio.json",
     "pkg_num": 227,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.512,
     "title": "EML Universal Approximation: Single-Generator Density and Explicit Shallow Softplus Rates"
   },
   {
@@ -6919,8 +6919,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "eml_universal_approximation_density_of_eml_functio",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.512,
+      "quality": "partial",
       "shape": "cube",
       "title": "EML Universal Approximation: Single-Generator Density and Explicit Shallow Softplus Rates"
     }

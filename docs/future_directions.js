@@ -2440,7 +2440,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equidistribution of Galois orbits of CM points on products of non\u2011isomorphic Shimura curves without auxiliary splitting conditions"
   },
   {
-    "consumed_by_exp_id": "53ef2527",
+    "consumed_by_exp_id": "",
     "description": "For all n \u2265 0, the number of (4,0)-colored Frobenius partitions of weight n equals twice the sum of Lin-Liu minimal excludants over all 4-partitions of n, i.e., \u03c8_{4,0}(n) = 2\u03c3_{mex,4}(n). This conjecture extends the proven identities \u03c8_{2,0}(n) = 2\u03c3_{mex,2}(n) and \u03c8_{2,1}(n) = 2\u03c3_{mex,2}(n) - E_2(n) to the four-colored case.",
     "domains": [
       "Pythagorean",
@@ -2450,7 +2450,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19696v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-20T10:27:31.374184+00:00",
     "title": "Generalized two-colored Frobenius identities to four-colored case"
   },
@@ -3202,7 +3202,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2187",
+    "id": "fd_2188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20043v1",
@@ -4145,6 +4145,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Universal Approximation & Shallow Rates\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle\n(`EML/SoftplusRate.lean`, `EML/ShallowDensity.lean`, building on\n`EML/StoneWeierstrassApprox.lean`).\n\n## Conjecture 1 \u2014 Sharp depth-vs-rate law for softplus towers\nA depth-`d` EML tower built by iterating the softplus unit (each layer steepness\n`\u03b2\u1d62`) approximates the `d`-fold ReLU composition with uniform error exactly\n`\u03a3\u1d62 L\u1d62 \u00b7 log2/\u03b2\u1d62`, where `L\u1d62` is the product of downstream Lipschitz constants \u2014\nand the leading constant `log 2` cannot be reduced at any layer.\n- **The key insight is** that the per-layer gap is *uniform in the input* and\n  attained at the kink `x=0`, so layerwise worst cases telescope additively\n  through the Lipschitz constants rather than compounding multiplicatively.\n- **Why now?** This cycle proved the single-layer sharp constant\n  (`abs_softplus_sub_relu_le`, sharp at `x=0`) and the catalog already has the\n  telescoping machinery (`EML.DeepComposition.deep_approx_sum`); composing the\n  two is the immediate next step.\n\n## Conjecture 2 \u2014 Width\u2013accuracy tradeoff for Lipschitz targets\nEvery `L`-Lipschitz `f : [0,1] \u2192 \u211d` is approximated to uniform error `\u03b5` by a\nshallow softplus (EML) network of width `N = \u2308L/\u03b5\u2309` and steepness\n`\u03b2 = \u0398(N \u00b7 log 2 / \u03b5)`, giving total error `\u2264 2\u03b5` with an explicit constant.\n- **The key insight is** that CPWL interpolation on a uniform `N`-grid gives\n  error `L/N` using `N` ReLU units, and `shallow_approx` converts each ReLU into\n  an EML softplus unit at the additive cost `(\u03a3|c\u1d62|)\u00b7log2/\u03b2`, so balancing the\n  two error sources fixes both `N` and `\u03b2`.\n- **Why now?** `shallow_approx` and `shallow_eml_uniform_approx` already give the\n  ReLU\u2192EML conversion with explicit constants; only the CPWL-interpolation error\n  bound remains to be formalized.\n\n## Conjecture 3 \u2014 Single-generator density is generic, parity is the only obstruction\nFor a continuous `g : [0,1] \u2192 \u211d`, the subalgebra `adjoin \u211d {g}` is dense in\n`C([0,1],\u211d)` **iff** `g` is injective; for non-injective `g`, the closure is\nexactly the algebra of functions constant on the level sets of `g`.\n- **The key insight is** that `eml_single_generator_separatesPoints` shows\n  injectivity \u21d2 density, and the converse should follow because any two points in\n  a common level set of `g` can never be separated by polynomials in `g`.\n- **Why now?** This cycle established the forward direction\n  (`eml_single_generator_dense`) and the catalog's\n  `factorsThrough_eq_top_of_injective` supplies the level-set/pullback language\n  needed for the converse.\n\n## Conjecture 4 \u2014 Exponential-class spectral approximation rate\nApproximating analytic `f` on `[0,1]` by `span{1, e^x, \u2026, e^{kx}}` achieves\ngeometric error decay `O(\u03c1^{-k})` for some `\u03c1 > 1` depending on the width of the\nanalyticity strip of `f`, strictly faster than the algebraic `O(k^{-s})` rate of\npolynomial approximation for `C\u02e2` targets.\n- **The key insight is** that `{e^{jx}}` is a Chebyshev/M\u00fcntz-type system whose\n  exponential nodes cluster the approximation power where analytic functions are\n  smooth, so the EML basis inherits spectral (geometric) convergence.\n- **Why now?** `exp_subalgebra_dense_on_Icc` proves qualitative density of exactly\n  this class, and the numerical evidence in `ComputationalEvidence.md` already\n  shows order-of-magnitude residual drops per added `exp`-power.\n\n## Conjecture 5 \u2014 No shallow EML network beats O(1/\u03b2) in sup norm at a kink\nAny finite shallow EML network that is `C\u00b9` (which `exp`/`log` compositions are)\ncannot approximate a function with a true corner to uniform error `o(1/\u03b2)` where\n`\u03b2` is the maximal internal steepness; the `log 2` lower bound from a single unit\nis the fundamental smoothing barrier.\n- **The key insight is** that smoothness forces a minimum \"rounding\" of any kink,\n  and this cycle showed that rounding is at least `log2/\u03b2` for the softplus unit\n  and sharp there.\n- **Why now?** The sharpness half of `abs_softplus_sub_relu_le` (equality at\n  `x=0`) is exactly the seed of a matching lower bound; turning it into a network\n  impossibility result is the natural adversarial follow-up.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_2189",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5ef4c190",
+    "status": "available",
+    "timestamp": "2026-06-21T20:11:36.817069+00:00",
+    "title": "Derived from the Stage-3 analysis and Stage-4 critique of this research cycle"
   },
   {
     "consumed_by_exp_id": "",

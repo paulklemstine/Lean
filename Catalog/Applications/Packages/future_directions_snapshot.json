@@ -3746,7 +3746,7 @@
       "Andrews GFP",
       "Lin-Liu mex"
     ],
-    "consumed_by_exp_id": "53ef2527",
+    "consumed_by_exp_id": "",
     "description": "For all n ≥ 0, the number of (4,0)-colored Frobenius partitions of weight n equals twice the sum of Lin-Liu minimal excludants over all 4-partitions of n, i.e., ψ_{4,0}(n) = 2σ_{mex,4}(n). This conjecture extends the proven identities ψ_{2,0}(n) = 2σ_{mex,2}(n) and ψ_{2,1}(n) = 2σ_{mex,2}(n) - E_2(n) to the four-colored case.",
     "domain_bridges": [
       "Frobenius partitions to multipartite partitions",
@@ -3763,7 +3763,7 @@
     "proof_strategy": "Establish a sign-reversing involution on (4,0)-colored Frobenius partitions that pairs each partition with a weight contribution of twice its minimal excludant value. The involution would cancel all but the mex-related contributions, generalizing the Andrews/Göllnitz-type bijections used in the two-colored case.",
     "research_mode": "team",
     "source_exp_id": "2606.19696v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-20T10:27:31.374184+00:00",
     "title": "Generalized two-colored Frobenius identities to four-colored case"
   },
@@ -5178,7 +5178,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2187",
+    "id": "fd_2188",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply a concentration inequality to control the distribution of set sizes within intersecting families, combine with shifting/compression to reduce the structure to stars, and enumerate symmetric differences via combinatorial counting.",
@@ -6438,6 +6438,26 @@
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — EML Universal Approximation & Shallow Rates\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle\n(`EML/SoftplusRate.lean`, `EML/ShallowDensity.lean`, building on\n`EML/StoneWeierstrassApprox.lean`).\n\n## Conjecture 1 — Sharp depth-vs-rate law for softplus towers\nA depth-`d` EML tower built by iterating the softplus unit (each layer steepness\n`βᵢ`) approximates the `d`-fold ReLU composition with uniform error exactly\n`Σᵢ Lᵢ · log2/βᵢ`, where `Lᵢ` is the product of downstream Lipschitz constants —\nand the leading constant `log 2` cannot be reduced at any layer.\n- **The key insight is** that the per-layer gap is *uniform in the input* and\n  attained at the kink `x=0`, so layerwise worst cases telescope additively\n  through the Lipschitz constants rather than compounding multiplicatively.\n- **Why now?** This cycle proved the single-layer sharp constant\n  (`abs_softplus_sub_relu_le`, sharp at `x=0`) and the catalog already has the\n  telescoping machinery (`EML.DeepComposition.deep_approx_sum`); composing the\n  two is the immediate next step.\n\n## Conjecture 2 — Width–accuracy tradeoff for Lipschitz targets\nEvery `L`-Lipschitz `f : [0,1] → ℝ` is approximated to uniform error `ε` by a\nshallow softplus (EML) network of width `N = ⌈L/ε⌉` and steepness\n`β = Θ(N · log 2 / ε)`, giving total error `≤ 2ε` with an explicit constant.\n- **The key insight is** that CPWL interpolation on a uniform `N`-grid gives\n  error `L/N` using `N` ReLU units, and `shallow_approx` converts each ReLU into\n  an EML softplus unit at the additive cost `(Σ|cᵢ|)·log2/β`, so balancing the\n  two error sources fixes both `N` and `β`.\n- **Why now?** `shallow_approx` and `shallow_eml_uniform_approx` already give the\n  ReLU→EML conversion with explicit constants; only the CPWL-interpolation error\n  bound remains to be formalized.\n\n## Conjecture 3 — Single-generator density is generic, parity is the only obstruction\nFor a continuous `g : [0,1] → ℝ`, the subalgebra `adjoin ℝ {g}` is dense in\n`C([0,1],ℝ)` **iff** `g` is injective; for non-injective `g`, the closure is\nexactly the algebra of functions constant on the level sets of `g`.\n- **The key insight is** that `eml_single_generator_separatesPoints` shows\n  injectivity ⇒ density, and the converse should follow because any two points in\n  a common level set of `g` can never be separated by polynomials in `g`.\n- **Why now?** This cycle established the forward direction\n  (`eml_single_generator_dense`) and the catalog's\n  `factorsThrough_eq_top_of_injective` supplies the level-set/pullback language\n  needed for the converse.\n\n## Conjecture 4 — Exponential-class spectral approximation rate\nApproximating analytic `f` on `[0,1]` by `span{1, e^x, …, e^{kx}}` achieves\ngeometric error decay `O(ρ^{-k})` for some `ρ > 1` depending on the width of the\nanalyticity strip of `f`, strictly faster than the algebraic `O(k^{-s})` rate of\npolynomial approximation for `Cˢ` targets.\n- **The key insight is** that `{e^{jx}}` is a Chebyshev/Müntz-type system whose\n  exponential nodes cluster the approximation power where analytic functions are\n  smooth, so the EML basis inherits spectral (geometric) convergence.\n- **Why now?** `exp_subalgebra_dense_on_Icc` proves qualitative density of exactly\n  this class, and the numerical evidence in `ComputationalEvidence.md` already\n  shows order-of-magnitude residual drops per added `exp`-power.\n\n## Conjecture 5 — No shallow EML network beats O(1/β) in sup norm at a kink\nAny finite shallow EML network that is `C¹` (which `exp`/`log` compositions are)\ncannot approximate a function with a true corner to uniform error `o(1/β)` where\n`β` is the maximal internal steepness; the `log 2` lower bound from a single unit\nis the fundamental smoothing barrier.\n- **The key insight is** that smoothness forces a minimum \"rounding\" of any kink,\n  and this cycle showed that rounding is at least `log2/β` for the softplus unit\n  and sharp there.\n- **Why now?** The sharpness half of `abs_softplus_sub_relu_le` (equality at\n  `x=0`) is exactly the seed of a matching lower bound; turning it into a network\n  impossibility result is the natural adversarial follow-up.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_2189",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5ef4c190",
+    "status": "available",
+    "timestamp": "2026-06-21T20:11:36.817069+00:00",
+    "title": "Derived from the Stage-3 analysis and Stage-4 critique of this research cycle"
   },
   {
     "ambition_level": "extension",

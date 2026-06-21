@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "aba81cd6",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA cor",
-      "quality_score": 0.47985712714776635,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-06-15T17:04:59",
-      "title": "Close Proofs: This cycle added two fully-verified files (0 sorries) extending"
-    },
-    {
       "cycle_id": "8a8b0554",
       "domain": "Applications",
       "key_insight": "# Future Directions — Primitive Divisors of Strong Divisibility Sequences\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCertificate.lean`, which\nabstracts the Fibonacci-only Carmichael",
@@ -2501,6 +2491,16 @@
       "theorem_count": 120,
       "timestamp": "2026-06-21T18:36:56",
       "title": "Linear twin-width bound for finite posets of bounded width"
+    },
+    {
+      "cycle_id": "5ef4c190",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — EML Universal Approximation & Shallow Rates\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle\n(`EML/SoftplusRate.lean`, `EML/ShallowDensity.lean`, bu",
+      "quality_score": 0.512,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-21T20:11:55",
+      "title": "EML Universal Approximation: Density of EML Functions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.85612
     }
   ],
-  "last_updated": "2026-06-21T18:36:56",
+  "last_updated": "2026-06-21T20:11:55",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "b312114f",
-        "quality": 0.33112290909090913,
-        "theorems": 8,
-        "title": "Derived from the research cycle that produced"
-      },
-      {
         "cycle_id": "fba6400c",
         "quality": 0.64064,
         "theorems": 15,
@@ -3327,6 +3321,12 @@
         "quality": 0.37623999999999996,
         "theorems": 10,
         "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      },
+      {
+        "cycle_id": "5ef4c190",
+        "quality": 0.512,
+        "theorems": 13,
+        "title": "EML Universal Approximation: Density of EML Functions"
       }
     ],
     "Cryptography": [
