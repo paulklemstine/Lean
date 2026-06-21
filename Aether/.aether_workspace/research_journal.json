@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "743f44e8",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
-      "quality_score": 0.5333042553191489,
-      "sorry_count": 0,
-      "theorem_count": 136,
-      "timestamp": "2026-06-15T16:10:15",
-      "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
-    },
-    {
       "cycle_id": "a4d16ba9",
       "domain": "Probability",
       "key_insight": "# Future Directions — Species Generating Functions ↔ Probability Laws\n\nDerived from this cycle's findings in `Probability/SpeciesBoltzmannBridge.lean` and\n`Probability/SpeciesGeometricBridge.lean`, wh",
@@ -2501,6 +2491,16 @@
       "theorem_count": 90,
       "timestamp": "2026-06-21T14:57:39",
       "title": "Derived from the verified Lean results in"
+    },
+    {
+      "cycle_id": "a0d2774b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThese are freeform research directions extending the verified finite optimization\ncore of Integrated Information Theory in\n`Catalog/Novelty/FiniteIntegratedInformation.lean`.\n\n##",
+      "quality_score": 0.42573236521739133,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-21T16:36:29",
+      "title": "Consciousness as Integrated Information"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8904000000000001
     }
   ],
-  "last_updated": "2026-06-21T14:57:39",
+  "last_updated": "2026-06-21T16:36:29",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "00fd88ec",
-        "quality": 0.5112,
-        "theorems": 176,
-        "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
-      },
-      {
         "cycle_id": "c4b2f906",
         "quality": 0.5545492752326414,
         "theorems": 33,
@@ -3637,6 +3631,12 @@
         "quality": 0.86456,
         "theorems": 62,
         "title": "Constructive Mathematics: Bishop's Analysis"
+      },
+      {
+        "cycle_id": "a0d2774b",
+        "quality": 0.42573236521739133,
+        "theorems": 13,
+        "title": "Consciousness as Integrated Information"
       }
     ],
     "NumberTheory": [
