@@ -33235,7 +33235,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Mathlib.Order.RelClasses",
         "Mathlib.Order.Antichain",
@@ -33244,7 +33244,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "dafb1f8b",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "For every natural number k, the directed binary structure consisting of the strict order relation of any finite poset of width at most k has twin-width at most 2*k+1. Equivalently, every finite poset whose largest antichain has size at most k admits a contraction sequence in which every intermediate part has at most 2*k+1 red out-/in-neighborhood types induced by the strict order relation.",
       "domain_bridges": [
@@ -33257,11 +33257,11 @@
         "Bridges"
       ],
       "id": "fd_2077",
-      "last_attempt_time": "2026-06-21T12:44:45.301814+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Order.RelClasses\nimport Mathlib.Data.Fintype.Basic\n\nuniverse u\n\n/-- Placeholder for the width of a finite poset: the maximum cardinality of an antichain. -/\nconstant Poset.width : Type u → [PartialOrder α] → Nat\n\n/-- Placeholder for the twin-width of a finite binary relation. -/\nconstant Rel.twinWidth {α : Type u} [Fintype α] : (α → α → Prop) → Nat\n\n/-- The strict order relation of a poset, viewed as a directed graph relation. -/\ndef strictOrderRel (α : Type u) [PartialOrder α] : α → α → Prop := fun x y => x < y\n\n/-- Conjecture: finite posets of width at most `k` have twin-width at most `2*k+1`. -/\nconjecture bounded_width_poset_twinWidth_linear\n    (α : Type u) [Fintype α] [PartialOrder α] (k : Nat) :\n    Poset.width α ≤ k →\n    Rel.twinWidth (strictOrderRel α) ≤ 2 * k + 1",
       "lineage_refs": [],
-      "outcome_quality": 0.6924620000000001,
+      "outcome_quality": 0.0,
       "priority_score": 0.8,
       "proof_strategy": "Use Dilworth's theorem to partition the finite poset into at most k chains. Construct a contraction sequence by repeatedly merging adjacent intervals inside the chains. At every stage, each contracted block is an interval in one chain. For any other chain, transitivity of the partial order implies that the set of blocks comparable to a fixed interval changes only at two boundary positions, so each block has at most two red-neighbor contributions per chain, plus a bounded contribution from its own chain. This should yield a uniform red-degree bound of 2*k+1. The Lean formalization would first define twin-width for finite binary relations via contraction trees/partitions, then formalize the interval-chain invariant and the red-degree estimate.",
       "prune_reason": "",
@@ -33270,7 +33270,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18934v1",
       "source_path": "http://arxiv.org/abs/2606.18934v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T08:02:38.169523+00:00",
       "title": "Linear twin-width bound for finite posets of bounded width"
@@ -33821,7 +33821,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Balogh–Lemons–Palmer 2021",
         "Halfpap–Lemons–Palmer 2025",
@@ -33832,7 +33832,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0333b115",
       "depth_estimate": 3,
       "description": "Conjecture that for every integer k ≥ 3 and every rational ε > 0 there exist two k‑uniform hypergraphs F₁, F₂ such that the positive codegree Turán density γ⁺(F₁, F₂) is positive but satisfies γ⁺(F₁, F₂) < ε·min{γ⁺(F₁), γ⁺(F₂)}.",
       "domain_bridges": [
@@ -33845,7 +33845,7 @@
         "Pythagorean"
       ],
       "id": "fd_2090",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-21T13:32:54.157586+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_arbitrarily_small_positive_codegree {k : ℕ} (hk : 3 ≤ k) (ε : ℚ) (hε : 0 < ε) : ∃ (F1 F2 : Hypergraph k), 0 < γ⁺ F1 F2 ∧ γ⁺ F1 F2 < ε * min (γ⁺ F1) (γ⁺ F2) := by sorry",
       "lineage_refs": [],
@@ -33858,7 +33858,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.20494v1",
       "source_path": "http://arxiv.org/abs/2606.20494v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-19T06:17:42.153700+00:00",
       "title": "Arbitrarily small positive codegree Turán density for pairs of k-graphs"
@@ -37457,6 +37457,49 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Guo2023",
+        "Yuan2008",
+        "Kudla2004"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "The arithmetic intersection number of the generating series of divisors on a unitary Shimura variety equals the logarithmic derivative at s=1 of the Hecke L-function attached to the CM extension.",
+      "domain_bridges": [
+        "modular forms",
+        "L-functions",
+        "Shimura varieties"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2175",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem modular_height (X : ShimuraVariety) : (X.arithmetic_intersection_number) = (X.hecke_l_function.log_derivative_at_one)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Show equality by comparing automorphic forms and using the exceptional correspondence of Shimura curves",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.18579v1",
+      "source_path": "http://arxiv.org/abs/2606.18579v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T13:32:47.080161+00:00",
+      "title": "Modular Height Formula for Unitary Shimura Varieties"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "OEIS:A001227",
         "MathComp/NumberTheory/Cyclotomic"
       ],
@@ -37474,7 +37517,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2175",
+      "id": "fd_2176",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem square_sided_dice_exist (a b : ℕ) (ha : a > 0) (hb : b > 0) (hneq : a ≠ b) :\n  ∃ (P Q : polynomial ℕ),\n    (∀ i, coeff P i ≥ 0) ∧ (∀ i, coeff Q i ≥ 0) ∧\n    polynomial.eval 1 P = a ^ 2 ∧ polynomial.eval 1 Q = b ^ 2 ∧\n    P * Q = (∑ i in finset.range 6, polynomial.X ^ (i+1)) ^ 2 :=\n  sorry",
@@ -37520,7 +37563,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2176",
+      "id": "fd_2177",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen Set\n\n/-- The projective order of 2 modulo `p` is the least positive `m` with `2^m = ±1`. -/\ndef ProjectiveOrderTwoIs (p m : ℕ) : Prop :=\n  IsLeast {n : ℕ | 0 < n ∧ (((2 : ZMod p) ^ n = 1) ∨ ((2 : ZMod p) ^ n = -1))} m\n\n/-- Conjecture: infinitely many prime odd bases have maximal four-digit Kaprekar terminal cycle length. -/\ntheorem infinitely_many_extremal_prime_kaprekar_bases :\n    Set.Infinite {p : ℕ | Nat.Prime p ∧ 5 < p ∧ ∃ m : ℕ,\n      ProjectiveOrderTwoIs p m ∧ m = (p - 1) / 2} := by\n  sorry",
@@ -37563,7 +37606,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2177",
+      "id": "fd_2178",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem arboreal_maximality_twisted_carlitz (q : ℕ) [Fact (Odd q)] (c : $\\mathbb{F}_q(t)$) : \n  ∀ n : ℕ, Isomorphism (GaloisGroup (Iterate (f_c c) n)) (IteratedWreathProduct (CyclicGroup (q-1)) n)",
@@ -37605,7 +37648,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2178",
+      "id": "fd_2179",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem twisted_first_moment_improved_error {T : ℝ} (δ : ℝ) (h : TestFunction) (m₁ m₂ : ℕ) (ε : ℝ) (hε : 0 < ε) :\n  (∑ π in B_{T,δ,μ̃} , (⋆ A_π(m₁,m₂) * L(1/2, π, sym²) * h(μ_π)) / CN(π))\n    = (ζ(3/2) / (192 * π^5)) * (if □ m₁ ∧ □ m₂ then 1 else 0) * vol_spec(h) / ((m₁^2 * m₂)^(1/4))\n      + O (T ^ (2 + ε)) := by\n  sorry",
@@ -37654,7 +37697,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2179",
+      "id": "fd_2180",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_sharp_spectral_bound :\n  ∃ (k : Nat) (eta : Nat) (G : SimpleGraph V) [Connected G] [NegComplete G],\n  (eta = 0 ∨ eta = 1) →\n  let τ := toughness G;\n  let ρ := spectral_radius G;\n  let q := signless_laplacian_spectral_radius G;\n  let n := (V.size : Nat);\n  if τ = 1 / (k - eta) ∧∧ ρ = (k - eta) * (n - 1) / n ∧∧ q = (k - eta) * (n - 1) / n then\n    ≊ (t : kTree G), t.IsSpanning\n  else\n    True :=\n  by\n    -- Placeholder for the proof/construction.\n    sorry.",
@@ -37696,7 +37739,7 @@
         "Algebra",
         "Logic"
       ],
-      "id": "fd_2180",
+      "id": "fd_2181",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
@@ -37738,7 +37781,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2181",
+      "id": "fd_2182",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem q_game_winning_prob (n : ℕ) (q : ℕ) (hq : q > 0) :\n  Prob (random_player_wins n q) = Prob (first_cycle_le_q_is_fixed_point n q)\n  -- Where Prob is defined over the space of uniformly random permutations of Fin n",
@@ -37756,42 +37799,6 @@
       "thread_id": "",
       "timestamp": "2026-06-21T12:44:39.270281+00:00",
       "title": "Equivalence of the q-Game Winning Probability and First Short Cycle Fixed-Point Probability"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "# Future Directions — Chromatic Polynomial Theory\n\nDerived from the cycle that produced `Catalog/Algebra/ChromaticPolynomial.lean` and\n`Catalog/Algebra/GraphColoringBounds.lean`.  Each conjecture is bold, falsifiable, and\ngrounded in the verified results of this cycle.\n\n## 1. `chromaticFn` agrees with an honest integer polynomial in `q`\n\n**Conjecture.** For every finite simple graph `G` there is a polynomial\n`χ_G ∈ ℤ[X]` of degree `|V|` with `χ_G(q) = chromaticFn G q` for all `q : ℕ`, whose\nleading coefficient is `1` and whose coefficients alternate in sign.\n\n*The key insight is...* deletion–contraction (`deletion_contraction`, already proved)\ngives a recurrence `χ_{G-e} = χ_G + χ_{G/e}` that, combined with the two anchored\nevaluations `P(⊥) = qⁿ` and `P(Kₙ) = q^{(n)}` (both proved), pins the counting\nfunction to a unique monic integer polynomial by induction on the number of edges.\n\n*Why now?* The counting function and the recurrence are now formal and sorry-free, so\nthe only remaining step is to package the induction into `Polynomial ℤ` and prove the\nevaluation map is injective on this degree range — purely algebraic, no new graph theory.\n\n## 2. Chromatic polynomials have no roots in `(−∞, 0) ∪ (0, 1) ∪ (1, 32/27)`\n\n**Conjecture (real-rootedness gap).** Encoding `χ_G` as in Direction 1, `χ_G(t) ≠ 0`\nfor every real `t ∈ (1, 32/27)`, with `32/27` the smallest possible such bound.\n\n*The key insight is...* the deletion–contraction recurrence forces sign patterns on the\nreal line; the bound `32/27` is the known threshold and should follow from a careful\ninductive sign analysis seeded by the complete-graph base case.\n\n*Why now?* With `deletion_contraction` formalized, the inductive engine needed for\nroot-location arguments is available; the conjecture is a sharp, testable numeric claim.\n\n## 3. The greedy bound is tight **iff** a complete or odd-cycle component is present\n\n**Conjecture (formal Brooks).** For a connected finite graph `G` with `Δ(G) ≥ 3`,\n`χ(G) = Δ(G) + 1` if and only if `G` is a complete graph; for `Δ(G) = 2` the equality\nholds iff `G` is an odd cycle.  Equivalently `χ(G) ≤ Δ(G)` outside these families.\n\n*The key insight is...* this cycle proved both halves of the boundary — the universal\nupper bound `χ ≤ Δ + 1` (`colorable_maxDegree_add_one`) and the *tightness witnesses*\n`Kₙ₊₁` and odd cycles — so Brooks' theorem is exactly the statement that these witnesses\nare the *only* tight cases.\n\n*Why now?* The hard universal direction (greedy coloring) is already formal; what remains\nis the structural converse, which can be attacked component-by-component using the proved\nsandwich as scaffolding.\n\n## 4. Four-color theorem ⇔ `χ(G) ≤ 4` for all planar `G`, via `chromaticFn`\n\n**Conjecture.** A finite graph is planar-4-colorable iff `chromaticFn G 4 > 0`, and the\nfour-color theorem is equivalent to `∀ planar G, chromaticFn G 4 > 0`.\n\n*The key insight is...* `chromaticFn_pos_iff` already reduces \"`q`-colorable\" to\n\"`chromaticFn G q > 0`\", so the entire 4CT can be restated as a positivity statement\nabout the chromatic polynomial at `q = 4`, decoupling coloring from the polynomial.\n\n*Why now?* The positivity bridge is proved and sorry-free; the remaining content is a\nformal definition of planarity, after which the equivalence is immediate from the bridge.\n\n## 5. T-positivity of the chromatic polynomial for claw-free graphs\n\n**Conjecture.** Written in the falling-factorial (\"tree-like\") basis `{q^{(k)}}`, the\nchromatic polynomial of a claw-free graph has nonnegative coefficients.\n\n*The key insight is...* the complete-graph evaluation `P(Kₙ) = q^{(n)}` (proved) shows the\nfalling-factorial basis is the natural one for chromatic data, and deletion–contraction\nacts triangularly on this basis, so claw-freeness should preserve nonnegativity inductively.\n\n*Why now?* Both the basis anchor and the recurrence are formal; expressing the change of\nbasis as proved `Nat`/`ℤ` identities makes the positivity claim a concrete, checkable target.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Pythagorean"
-      ],
-      "id": "fd_2182",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "37109497",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/37109497_retry3",
-      "status": "available",
-      "thread_id": "th_a5abd65a",
-      "timestamp": "2026-06-21T13:28:16.740114+00:00",
-      "title": "Derived from the cycle that produced `Catalog/Algebra/ChromaticPolynomial.lean` "
     },
     {
       "ambition_level": "extension",
@@ -97193,7 +97200,7 @@
   "recent_domain_counts": {
     "Algebra": 302,
     "Applications": 117,
-    "Bridges": 58,
+    "Bridges": 57,
     "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
@@ -97258,11 +97265,11 @@
     "matrix": 83,
     "mature": 28,
     "metric": 132,
-    "natural": 197,
+    "natural": 196,
     "normally": 2,
     "novelty": 139,
     "now?**": 143,
-    "number": 178,
+    "number": 177,
     "o(1/log": 2,
     "original": 353,
     "parameter": 57,
@@ -97293,7 +97300,7 @@
     "stable": 38,
     "statistically": 10,
     "statistics": 26,
-    "structure": 227,
+    "structure": 226,
     "structures": 48,
     "systems": 72,
     "theorem": 396,

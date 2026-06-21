@@ -2290,6 +2290,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.Order.RelClasses",
+      "Mathlib.Order.Antichain",
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Data.Fintype.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every natural number k, the directed binary structure consisting of the strict order relation of any finite poset of width at most k has twin-width at most 2*k+1. Equivalently, every finite poset whose largest antichain has size at most k admits a contraction sequence in which every intermediate part has at most 2*k+1 red out-/in-neighborhood types induced by the strict order relation.",
+    "domain_bridges": [
+      "bounded-width posets ↔ oriented graphs with bounded independence number",
+      "Dilworth chain decompositions ↔ twin-width contraction sequences",
+      "finite model theory monadic dependence ↔ structural graph parameters"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2077",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Dilworth's theorem to partition the finite poset into at most k chains. Construct a contraction sequence by repeatedly merging adjacent intervals inside the chains. At every stage, each contracted block is an interval in one chain. For any other chain, transitivity of the partial order implies that the set of blocks comparable to a fixed interval changes only at two boundary positions, so each block has at most two red-neighbor contributions per chain, plus a bounded contribution from its own chain. This should yield a uniform red-degree bound of 2*k+1. The Lean formalization would first define twin-width for finite binary relations via contraction trees/partitions, then formalize the interval-chain invariant and the red-degree estimate.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18934v1",
+    "status": "available",
+    "timestamp": "2026-06-18T08:02:38.169523+00:00",
+    "title": "Linear twin-width bound for finite posets of bounded width"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Mathlib/Combinatorics/SimpleGraph/Clique",
       "Mathlib/Combinatorics/SimpleGraph/Basic",
       "Mathlib/MeasureTheory/Measure/ProbabilityMeasure",
@@ -2588,7 +2616,7 @@
       "Gao–Pikhurko–Rong–Sun 2026",
       "Lin–Sun–Wang–Zhou 2026"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0333b115",
     "description": "Conjecture that for every integer k ≥ 3 and every rational ε > 0 there exist two k‑uniform hypergraphs F₁, F₂ such that the positive codegree Turán density γ⁺(F₁, F₂) is positive but satisfies γ⁺(F₁, F₂) < ε·min{γ⁺(F₁), γ⁺(F₂)}.",
     "domain_bridges": [
       "probabilistic methods",
@@ -2604,7 +2632,7 @@
     "proof_strategy": "Construct families probabilistically using entropy compression to make the pairwise positive codegree arbitrarily small while keeping individual densities bounded away from zero.",
     "research_mode": "team",
     "source_exp_id": "2606.20494v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T06:17:42.153700+00:00",
     "title": "Arbitrarily small positive codegree Turán density for pairs of k-graphs"
   },
@@ -4768,6 +4796,33 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Guo2023",
+      "Yuan2008",
+      "Kudla2004"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The arithmetic intersection number of the generating series of divisors on a unitary Shimura variety equals the logarithmic derivative at s=1 of the Hecke L-function attached to the CM extension.",
+    "domain_bridges": [
+      "modular forms",
+      "L-functions",
+      "Shimura varieties"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2175",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show equality by comparing automorphic forms and using the exceptional correspondence of Shimura curves",
+    "research_mode": "team",
+    "source_exp_id": "2606.18579v1",
+    "status": "available",
+    "timestamp": "2026-06-21T13:32:47.080161+00:00",
+    "title": "Modular Height Formula for Unitary Shimura Varieties"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "OEIS:A001227",
       "MathComp/NumberTheory/Cyclotomic"
     ],
@@ -4781,7 +4836,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2175",
+    "id": "fd_2176",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Translate the problem to a factorisation of the frequency polynomial F(x)= (x+...+x^6)^2 = x^2 (x^6-1)^2/(x-1)^2. Use the factorisation of cyclotomic polynomials Φ_d(x) to express F as a product of irreducibles. Show that for any distinct squares a^2,b^2 there is a selection of these cyclotomic factors (with possible repetitions) whose product yields a polynomial P_a with P_a(1)=a^2 and non‑negative coefficients, and whose complementary factor P_b satisfies P_b(1)=b^2. The existence part reduces to solving a linear Diophantine system given by the degrees and constant terms of the chosen Φ_d. One can then employ the theory of integer cones (Hilbert bases) to prove the system always has a solution when a≠b, yielding the desired dice. Formalisation in Lean proceeds by: (1) defining generating functions of dice, (2) proving the cyclotomic factorisation of (∑_{i=1}^6 x^i)^2, (3) constructing the cone of admissible exponent vectors, (4) showing the cone contains a point with prescribed sum‑o",
@@ -4811,7 +4866,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2176",
+    "id": "fd_2177",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the paper's equivalence: for prime p > 5, the longest terminal four-digit Kaprekar cycle in base p has length (p - 1) / 2 iff the least m > 0 with 2^m = ±1 in ZMod p is (p - 1) / 2. Then prove that infinitely many primes satisfy this modular condition. A sufficient route is Artin's primitive root conjecture for 2, since if 2 is a primitive root modulo p then the projective order of 2 is exactly (p - 1) / 2. Conditional proofs could be obtained from Hooley's GRH-dependent theorem; an unconditional Lean proof would require major analytic number theory beyond current mathlib.",
@@ -4838,7 +4893,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2177",
+    "id": "fd_2178",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the construction of the twisted Carlitz module $\\rho_t^c$ and its $t$-torsion. Use the recursive structure of the iterated wreath product $\\text{Aut}(T_n) \\cong \text{Aut}(T_{n-1}) \\wr S_d$. Implement a criterion for surjectivity based on the existence of primitive prime divisors in the critical orbit of $f_c(x)$ in characteristic $p$, ensuring that the extensions at each level $n$ are linearly disjoint from the previous levels.",
@@ -4864,7 +4919,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2178",
+    "id": "fd_2179",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjecture would follow from establishing substantially stronger bounds for the archimedean integral transforms in the GL₃ Kuznetsov formula. One needs to exploit additional cancellation in the higher‑rank Kloosterman sums S(m₁,m₂;c) via Deligne’s bound adapted to the GL₃ setting, and to apply stationary phase / Mellin‑Barnes techniques to the Bessel‑type kernels appearing in the Kuznetsov trace formula. Combining these with a refined asymmetric approximate functional equation that isolates the diagonal contribution would yield the desired power saving of one full exponent.",
@@ -4897,7 +4952,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2179",
+    "id": "fd_2180",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Construct extremal families of graphs (e.g., joins of a complete graph with a carefully chosen path or threshold graphs) that achieve equality in the toughness condition.\n2. Compute their adjacency and signless Laplacian spectra exactly, confirming \\(\\rho(G)=q(G)=(k-\\eta)(n-1)/n\\).\n3. Show that any spanning \\(k\\)-tree would force a vertex of degree exceeding \\(k\\) due to the structural constraints imposed by the toughness and spectral equalities, yielding a contradiction.\n4. Verify the construction for small parameters computationally and prove the general construction by induction on \\(n\\).\n5. The existence of such counterexamples demonstrates that the conjectured bounds are sharp.",
@@ -4923,7 +4978,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2180",
+    "id": "fd_2181",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Modular analysis of the $\\tau_2$-plane via the fundamental chamber $\\CR_N$, demonstrating pole cancellations among CF1-CF4 terms through residue matching and modular transformation properties.",
@@ -4949,7 +5004,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2181",
+    "id": "fd_2182",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Implement the canonical cycle decomposition as a sequence of random variables. Define the game state as the number of remaining elements $m$. Use induction on $n$ to show that the transition probabilities of the game match the probabilities of encountering cycles of specific lengths in the permutation. Define a stopping time $\\tau$ as the index of the first cycle with length $L \\le q$. Prove that the event 'Random player wins' is equivalent to the event $L_{\\tau} = 1$.",
@@ -6209,26 +6264,6 @@
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Chromatic Polynomial Theory\n\nDerived from the cycle that produced `Catalog/Algebra/ChromaticPolynomial.lean` and\n`Catalog/Algebra/GraphColoringBounds.lean`.  Each conjecture is bold, falsifiable, and\ngrounded in the verified results of this cycle.\n\n## 1. `chromaticFn` agrees with an honest integer polynomial in `q`\n\n**Conjecture.** For every finite simple graph `G` there is a polynomial\n`χ_G ∈ ℤ[X]` of degree `|V|` with `χ_G(q) = chromaticFn G q` for all `q : ℕ`, whose\nleading coefficient is `1` and whose coefficients alternate in sign.\n\n*The key insight is...* deletion–contraction (`deletion_contraction`, already proved)\ngives a recurrence `χ_{G-e} = χ_G + χ_{G/e}` that, combined with the two anchored\nevaluations `P(⊥) = qⁿ` and `P(Kₙ) = q^{(n)}` (both proved), pins the counting\nfunction to a unique monic integer polynomial by induction on the number of edges.\n\n*Why now?* The counting function and the recurrence are now formal and sorry-free, so\nthe only remaining step is to package the induction into `Polynomial ℤ` and prove the\nevaluation map is injective on this degree range — purely algebraic, no new graph theory.\n\n## 2. Chromatic polynomials have no roots in `(−∞, 0) ∪ (0, 1) ∪ (1, 32/27)`\n\n**Conjecture (real-rootedness gap).** Encoding `χ_G` as in Direction 1, `χ_G(t) ≠ 0`\nfor every real `t ∈ (1, 32/27)`, with `32/27` the smallest possible such bound.\n\n*The key insight is...* the deletion–contraction recurrence forces sign patterns on the\nreal line; the bound `32/27` is the known threshold and should follow from a careful\ninductive sign analysis seeded by the complete-graph base case.\n\n*Why now?* With `deletion_contraction` formalized, the inductive engine needed for\nroot-location arguments is available; the conjecture is a sharp, testable numeric claim.\n\n## 3. The greedy bound is tight **iff** a complete or odd-cycle component is present\n\n**Conjecture (formal Brooks).** For a connected finite graph `G` with `Δ(G) ≥ 3`,\n`χ(G) = Δ(G) + 1` if and only if `G` is a complete graph; for `Δ(G) = 2` the equality\nholds iff `G` is an odd cycle.  Equivalently `χ(G) ≤ Δ(G)` outside these families.\n\n*The key insight is...* this cycle proved both halves of the boundary — the universal\nupper bound `χ ≤ Δ + 1` (`colorable_maxDegree_add_one`) and the *tightness witnesses*\n`Kₙ₊₁` and odd cycles — so Brooks' theorem is exactly the statement that these witnesses\nare the *only* tight cases.\n\n*Why now?* The hard universal direction (greedy coloring) is already formal; what remains\nis the structural converse, which can be attacked component-by-component using the proved\nsandwich as scaffolding.\n\n## 4. Four-color theorem ⇔ `χ(G) ≤ 4` for all planar `G`, via `chromaticFn`\n\n**Conjecture.** A finite graph is planar-4-colorable iff `chromaticFn G 4 > 0`, and the\nfour-color theorem is equivalent to `∀ planar G, chromaticFn G 4 > 0`.\n\n*The key insight is...* `chromaticFn_pos_iff` already reduces \"`q`-colorable\" to\n\"`chromaticFn G q > 0`\", so the entire 4CT can be restated as a positivity statement\nabout the chromatic polynomial at `q = 4`, decoupling coloring from the polynomial.\n\n*Why now?* The positivity bridge is proved and sorry-free; the remaining content is a\nformal definition of planarity, after which the equivalence is immediate from the bridge.\n\n## 5. T-positivity of the chromatic polynomial for claw-free graphs\n\n**Conjecture.** Written in the falling-factorial (\"tree-like\") basis `{q^{(k)}}`, the\nchromatic polynomial of a claw-free graph has nonnegative coefficients.\n\n*The key insight is...* the complete-graph evaluation `P(Kₙ) = q^{(n)}` (proved) shows the\nfalling-factorial basis is the natural one for chromatic data, and deletion–contraction\nacts triangularly on this basis, so claw-freeness should preserve nonnegativity inductively.\n\n*Why now?* Both the basis anchor and the recurrence are formal; expressing the change of\nbasis as proved `Nat`/`ℤ` identities makes the positivity claim a concrete, checkable target.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2182",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "37109497",
-    "status": "available",
-    "timestamp": "2026-06-21T13:28:16.740114+00:00",
-    "title": "Derived from the cycle that produced `Catalog/Algebra/ChromaticPolynomial.lean` "
   },
   {
     "ambition_level": "extension",
