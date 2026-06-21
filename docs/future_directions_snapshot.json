@@ -715,7 +715,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa9dc0d5",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -727,7 +727,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -3727,7 +3727,7 @@
       "Andrews GFP",
       "Lin-Liu mex"
     ],
-    "consumed_by_exp_id": "53ef2527",
+    "consumed_by_exp_id": "",
     "description": "For all n ≥ 0, the number of (4,0)-colored Frobenius partitions of weight n equals twice the sum of Lin-Liu minimal excludants over all 4-partitions of n, i.e., ψ_{4,0}(n) = 2σ_{mex,4}(n). This conjecture extends the proven identities ψ_{2,0}(n) = 2σ_{mex,2}(n) and ψ_{2,1}(n) = 2σ_{mex,2}(n) - E_2(n) to the four-colored case.",
     "domain_bridges": [
       "Frobenius partitions to multipartite partitions",
@@ -3744,7 +3744,7 @@
     "proof_strategy": "Establish a sign-reversing involution on (4,0)-colored Frobenius partitions that pairs each partition with a weight contribution of twice its minimal excludant value. The involution would cancel all but the mex-related contributions, generalizing the Andrews/Göllnitz-type bijections used in the two-colored case.",
     "research_mode": "team",
     "source_exp_id": "2606.19696v1",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-20T10:27:31.374184+00:00",
     "title": "Generalized two-colored Frobenius identities to four-colored case"
   },
@@ -7476,7 +7476,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddfbd83f",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domain_bridges": [],
     "domains": [
@@ -7489,7 +7489,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
