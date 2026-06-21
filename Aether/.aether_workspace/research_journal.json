@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "561a2484",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions: Combinatorial species → tropical valuation profiles\n\nThis cycle established the **coefficientwise valuation bridge** in\n`Catalog/Tropical/SpeciesValuationProfile.lean`: the `p`-ad",
-      "quality_score": 0.4694702117647058,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-15T19:56:10",
-      "title": "Close Proofs: Combinatorial species to tropical valuation profiles via coefficientwi"
-    },
-    {
       "cycle_id": "aba81cd6",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA cor",
@@ -2501,6 +2491,16 @@
       "theorem_count": 55,
       "timestamp": "2026-06-21T20:13:46",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+    },
+    {
+      "cycle_id": "ddfbd83f",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Quantum Thermodynamics / Landauer at the Nanoscale\n\nDerived from this cycle's findings (`Physics.LandauerSecondLaw`,\n`Physics.LandauerThermodynamicLimit`, building on `Logic.Jarz",
+      "quality_score": 0.63352,
+      "sorry_count": 0,
+      "theorem_count": 247,
+      "timestamp": "2026-06-21T20:32:09",
+      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.85612
     }
   ],
-  "last_updated": "2026-06-21T20:13:46",
+  "last_updated": "2026-06-21T20:32:09",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bf1e3b75",
-        "quality": 0.49552432432432436,
-        "theorems": 93,
-        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-      },
-      {
         "cycle_id": "972d4c89",
         "quality": 0.8524,
         "theorems": 103,
@@ -3140,6 +3134,12 @@
         "cycle_id": "ddfbd83f",
         "quality": 0.526909,
         "theorems": 55,
+        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+      },
+      {
+        "cycle_id": "ddfbd83f",
+        "quality": 0.63352,
+        "theorems": 247,
         "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
       }
     ],

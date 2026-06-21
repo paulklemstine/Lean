@@ -581,7 +581,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2cd102e0",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -592,7 +592,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -778,7 +778,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Universal Approximation: Quantitative Bounds"
   },
   {
-    "consumed_by_exp_id": "1cb884c9",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domains": [
       "Tropical",
@@ -789,7 +789,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -1167,7 +1167,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "PAC-Bayes Generalization Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db43dea1",
     "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cram\u00e9r-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
     "domains": [
       "Geometry",
@@ -1178,7 +1178,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432802+00:00",
     "title": "Information Geometry: Fisher Metric on Statistical Models"
   },
@@ -3197,27 +3197,12 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any positive integer d and any planar graph H, the class of all K_{1,d}-free graphs without H as an induced minor has bounded tree-independence number. This conjecture generalizes the main result of Dallard et al. [2024], which proves it for outerstring graphs, to all planar graphs H.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2188",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20256v1",
-    "status": "available",
-    "timestamp": "2026-06-21T20:17:03.261509+00:00",
-    "title": "Dallard's Conjecture for Planar Graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "The paper proves Frankl, Kiselev, and Kupavskii's conjecture that for any intersecting family \\(\\mathcal{F}\\subseteq\\binom{[n]}{k}\\) with \\(n\\ge 60k^{3/2}\\) and \\(k\\ge 50\\), the size of the symmetric difference family satisfies \\(|\\mathcal{SD}(\\mathcal{F})|\\le\\sum_{\\ell=0}^{k-1}\\binom{n-1}{2\\ell}\\), with equality only for a specific class of stars. The proof relies on a concentration inequality and structural arguments on intersecting families.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2189",
+    "id": "fd_2188",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20043v1",
@@ -3227,20 +3212,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "This work extends the stability results of the Erd\u0151s\u2013Ko\u2013Rado theorem to the setting of cross-intersecting families, characterizing extremal families via diversity constraints and providing a shift-based tool for construction.",
+    "description": "This conjecture extends the result of the paper, which proved that the universal pseudo-solenoid's homeomorphism group has a non-metrizable universal minimal flow. Here, we conjecture that the same holds for the dyadic solenoid, another type of solenoid. This would generalize the findings to a broader class of continua and highlight the universality of such dynamical properties among solenoidal structures.",
     "domains": [
+      "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2190",
+    "id": "fd_2189",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.20085v1",
+    "source_exp_id": "2606.20407v1",
     "status": "available",
-    "timestamp": "2026-06-21T20:17:16.324331+00:00",
-    "title": "Structural theorem for large cross-intersecting families"
+    "timestamp": "2026-06-21T20:34:54.143296+00:00",
+    "title": "The homeomorphism group of the dyadic solenoid has a non-metrizable universal minimal flow"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08c04a11",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3250,7 +3236,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:58.210984+00:00",
     "title": "Perfect Cuboid (Euler Brick)"
   },
@@ -3311,7 +3297,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f83a4d55",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -3321,7 +3307,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -3471,7 +3457,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the Phase A cycle that produced"
   },
   {
-    "consumed_by_exp_id": "d6c114ef",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Functorial Tropical\u2013Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max \u2264 lse2 \u2264 max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv\u00b2 lse2 = bernVar \u2218 softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) \u21a6 ((a/c)\u00b2, (b/c)\u00b2)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p\u2212q)\u00b2 + 4\u00b7Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem \u2026 := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log \u2211\u2c7c exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n\u2202\u00b2/\u2202w\u1d62\u2202w\u2c7c lse w = (if i = j then softmax w i \u00b7 (1 - softmax w i)\n                    else - softmax w i \u00b7 softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p \u2208 (0,1)` there exist `a,b,c > 0` with `a\u00b2 + b\u00b2 = c\u00b2`, `(a/c)\u00b2 = p`. Concretely\n`a = \u221ap\u00b7c`, `b = \u221a(1\u2212p)\u00b7c`. Moreover the induced standard deviation satisfies\n`\u03c3 = |ab|/c\u00b2 = \u221a(p(1\u2212p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c\u00b2` of the right triangle**.\n**Test.** Prove surjectivity of `p \u21a6` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-\u03c3 proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h \u00b7 log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h \u21a6 lseT h a b` is monotone non-decreasing, `lseT h a b \u2192 max a b`\nas `h \u2192 0\u207a`, and the *Gibbs entropy gap* `lseT h a b \u2212 max a b \u2208 [0, h\u00b7log 2]`.\n**Test.** Prove the sandwich `max a b \u2264 lseT h a b \u2264 max a b + h\u00b7log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the \u03c7\u00b2 / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)\u00b2`, the polarization leg `p \u2212 q` equals\nthe (signed) \u03c7\u00b2-type discrepancy from the uniform law `(\u00bd,\u00bd)`:\n`(p \u2212 \u00bd)\u00b2 + (q \u2212 \u00bd)\u00b2 = \u00bd\u00b7(p \u2212 q)\u00b2 = \u00bd\u00b7(1 \u2212 4\u00b7Var)`. Hence **maximal Bernoulli\nvariance \u21d4 minimal \u03c7\u00b2-distance to uniform \u21d4 the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,\u221a2)`.\n**Test.** Prove the \u03c7\u00b2 identity and that `Var` is maximized exactly when\n`(a/c)\u00b2 = (b/c)\u00b2`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based R\u00e9nyi/Tsallis entropy and show the leg `p\u2212q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `\u211d`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`\u211d\u02e3`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log\u2218(\u00b7)\u00b2 : (Pythagorean triples / dilation) \u27f9\n(log-coordinates / shift)` making the triangle\n`softmax \u2218 (log \u2218 sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction \u211d` and `MulAction \u211d\u02e3`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
     "domains": [
       "Tropical",
@@ -3481,7 +3467,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3b102b1d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T13:27:48.242946+00:00",
     "title": "*normalization functor into the probability simplex*"
   },
