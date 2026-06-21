@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8a8b0554",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Primitive Divisors of Strong Divisibility Sequences\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCertificate.lean`, which\nabstracts the Fibonacci-only Carmichael",
-      "quality_score": 0.49925585666293404,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-06-15T19:58:06",
-      "title": "This cycle delivered `Catalog/Logic/FibonacciPrimitiveDivisorBounded.lean`, a"
-    },
-    {
       "cycle_id": "afb009d7",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Zeckendorf / additive Fibonacci structure\n\nThis cycle formalized **Zeckendorf's theorem** from scratch against Mathlib\n(`Core.lean`, `Existence.lean`, `Uniqueness.lean`): every `",
@@ -2501,6 +2491,16 @@
       "theorem_count": 87,
       "timestamp": "2026-06-21T21:43:39",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+    },
+    {
+      "cycle_id": "d6c114ef",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Normalization Functor into the Probability Simplex\n\nThis cycle established, in `NormalizationSimplexFunctor.lean`, that marginalization\n(`pushforward`) is a functor preserving to",
+      "quality_score": 0.6766,
+      "sorry_count": 0,
+      "theorem_count": 100,
+      "timestamp": "2026-06-21T21:45:53",
+      "title": "*normalization functor into the probability simplex*"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.79908
     }
   ],
-  "last_updated": "2026-06-21T21:43:39",
+  "last_updated": "2026-06-21T21:45:53",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "c4b2f906",
-        "quality": 0.5545492752326414,
-        "theorems": 33,
-        "title": "Necessary threshold for cubic generalized Turán growth against K_{3,t}"
-      },
-      {
         "cycle_id": "6b3462b3",
         "quality": 0.5003999261633124,
         "theorems": 2,
@@ -3637,6 +3631,12 @@
         "quality": 0.42573236521739133,
         "theorems": 13,
         "title": "Consciousness as Integrated Information"
+      },
+      {
+        "cycle_id": "d6c114ef",
+        "quality": 0.6766,
+        "theorems": 100,
+        "title": "*normalization functor into the probability simplex*"
       }
     ],
     "NumberTheory": [

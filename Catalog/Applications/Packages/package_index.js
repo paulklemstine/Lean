@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d6c114ef",
     "filename": "normalization_functor_into_the_probability_simplex.json",
     "pkg_num": 228,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6766,
     "title": "The Normalization Map as a Natural Transformation into the Probability Simplex"
   },
   {
@@ -6948,8 +6948,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "normalization_functor_into_the_probability_simplex",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6766,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Normalization Map as a Natural Transformation into the Probability Simplex"
     }

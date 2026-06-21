@@ -4235,6 +4235,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Normalization Functor into the Probability Simplex\n\nThis cycle established, in `NormalizationSimplexFunctor.lean`, that marginalization\n(`pushforward`) is a functor preserving total mass and the simplex, and that\n`\u2113\u00b9`-normalization (`normalize`) is an idempotent, scale-invariant retraction onto\n`stdSimplex \u211d \u03b9` that is *natural* with respect to pushforward. The following\nconjectures are precise, falsifiable, and build directly on these results.\n\n## C1. Affineness of normalization on rays through a fixed reference\n**Conjecture.** For nonnegative `u, v` with positive total mass and `t \u2208 [0,1]`,\n`normalize (t \u2022 u + (1-t) \u2022 v)` lies on the *projective* segment determined by\n`normalize u` and `normalize v`; explicitly there is `s \u2208 [0,1]` (depending on the\nmasses) with `normalize (t\u2022u+(1-t)\u2022v) = s \u2022 normalize u + (1-s) \u2022 normalize v`, where\n`s = t\u00b7\u2016u\u2016\u2081 / (t\u00b7\u2016u\u2016\u2081 + (1-t)\u00b7\u2016v\u2016\u2081)`. Testable as a closed-form scalar identity.\n\n## C2. Pushforward of an extreme point is an extreme point\n**Conjecture.** `pushforward f` maps vertices (Dirac masses `Pi.single i 1`) of\n`stdSimplex \u211d \u03b9` to vertices of `stdSimplex \u211d \u03ba`: `pushforward f (Pi.single i 1) =\nPi.single (f i) 1`. More strongly, `pushforward f` sends extreme points to extreme\npoints and is affine, so it is determined by its action on vertices. Falsifiable by\nexhibiting `f` and an extreme point with non-extreme image.\n\n## C3. Contraction property under total-variation / `\u2113\u00b9` distance\n**Conjecture.** Pushforward is `\u2113\u00b9`-nonexpansive on the simplex:\n`\u2211 k, |pushforward f p k - pushforward f q k| \u2264 \u2211 i, |p i - q i|` for all\n`p, q \u2208 stdSimplex \u211d \u03b9`. (Data-processing inequality for total variation.) A bolder\nform: strict contraction iff `f` is non-injective on the support.\n\n## C4. Naturality extends to the entropy/KL functional\n**Conjecture.** Shannon entropy `H` satisfies `H (pushforward f p) \u2265 H p` (coarse-graining\nnever decreases entropy), with equality iff `f` is injective on `supp p`. Dually,\nKL-divergence is monotone under pushforward: `KL(pushforward f p \u2016 pushforward f q) \u2264\nKL(p \u2016 q)`. These would upgrade the natural transformation to a *lax/oplax* statement\nfor the entropy functional.\n\n## C5. Universal property: normalization as a reflector\n**Conjecture.** `normalize` is the unit of a reflection (left adjoint) from the\nnonnegative cone (modulo positive scaling) onto the simplex: for every simplex point `p`\nand cone point `v` with positive mass, scale-invariant maps `v \u21a6 p` factor uniquely\nthrough `normalize v`. Formalizable as an `IsLeftAdjoint`/universal-arrow statement once\nthe cone and simplex are packaged as categories, with `normalize_idem`,\n`normalize_id_of_mem`, and `normalize_smul` as the supporting laws already proved here.\n",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2194",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d6c114ef",
+    "status": "available",
+    "timestamp": "2026-06-21T21:45:12.567251+00:00",
+    "title": "This cycle established, in `NormalizationSimplexFunctor.lean`, that marginalizat"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
