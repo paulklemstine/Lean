@@ -3801,6 +3801,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Alien Mathematics: Non-Standard (Lunar/Chain) Arithmetic\n\nThis cycle established the foundation: the **min\u2013max chain semiring** `Chain \u03b1`\n(`ChainSemiring.lean`), **lunar arithmetic as polynomials over it** (`LunarArithmetic.lean`),\nand its **order/functorial structure** (`ChainStructure.lean`). Below are concrete, falsifiable\nconjectures for follow-up cycles.\n\n## C1. Lunar primes have a lattice-theoretic characterization\nA lunar number `p` (in `Lunar = Polynomial (Chain (Fin 10))`) is **lunar-prime** if its only\nfactorizations `p = a * b` are trivial (one factor a unit, i.e. an associate of `1 = C \u22a4`).\n**Conjecture.** `p` is lunar-prime iff its coefficient sequence is \"join-irreducible at the\ntop\": the leading digit is `9` and no nontrivial max\u2013min convolution reproduces it. Concretely,\ncharacterize the units of `Lunar` (conjecture: exactly `C \u22a4 = C 9`, since `Polynomial.X` is a\nnon-unit and `min`-multiplication cannot raise a digit). *Testable*: enumerate factorizations of\n2-digit lunar numbers and compare against OEIS **A087097** (lunar primes).\n\n## C2. Unique factorization fails, but a canonical \"join-normal form\" exists\n**Conjecture.** `Lunar` is **not** a UFD (multiplicative idempotency of digits creates many\nfactorizations), yet every lunar number has a canonical representative under the dominance-\nelimination / canonicalization operator already proved in\n`Tropical/IdempotentSemiring/Defs.lean` (`canon`). Formalize `canon` acting on lunar\ncoefficient lists and prove it computes a unique normal form invariant under lunar `+`.\n\n## C3. The base-change functor `Chain.map` has a left/right adjoint (Galois connection)\n`ChainStructure.lean` gives `Chain.map` for monotone `\u22a5/\u22a4`-fixing maps. **Conjecture.** For a\nmonotone map of chains `f : \u03b1 \u2192 \u03b2`, the induced `Chain.map f` participates in a Galois connection\nwith the \"rounding\" map induced by the residuated structure of the bounded distributive lattice\n(`a \u2293 x \u2264 b \u2194 x \u2264 a \u21e8 b`). This would make chain arithmetic a **quantale**. *Testable*: verify\nthe adjunction inequalities on `Fin n` exhaustively by `decide`.\n\n## C4. Freshman's dream for lunar polynomials is *exactly* additive\nIn an additively idempotent semiring, `(p + q)^2 = p^2 + p*q + q^2` but cross terms need not\nvanish. **Conjecture.** For lunar polynomials, `(p + q)^n = \u2211_{k} p^k * q^{n-k}` collapses: the\nbinomial expansion is *carry-free* and `(p+q)^n = p^n + q^n` holds **iff** `p` and `q` have\ndisjoint digit supports. Prove the iff; the forward direction is the lunar analogue of the\nFrobenius/\"freshman's dream\" and the converse is a genuine obstruction.\n\n## C5. De Morgan duality is the only nontrivial chain anti-automorphism\n`ChainStructure.lean` shows complement `d \u21a6 \u22a4 - d` is a `+`/`*` anti-isomorphism.\n**Conjecture.** Every semiring anti-automorphism of `Chain (Fin n)` equals this De Morgan\ncomplement, and every semiring automorphism is the identity. Equivalently, `Aut(Chain (Fin n))`\nis trivial and the full (anti-)automorphism group is `\u2124/2`. *Testable*: brute-force the monotone\nbijections of `Fin n` fixing/swapping `\u22a5,\u22a4` by `decide` for small `n`.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2164",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ddafecee",
+    "status": "available",
+    "timestamp": "2026-06-21T03:14:46.831285+00:00",
+    "title": "Foundation: the **min\u2013max chain semiring** `Chain \u03b1`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4690,21 +4705,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
-  },
-  {
-    "consumed_by_exp_id": "ddafecee",
-    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
-    "domains": [
-      "Speculative",
-      "Logic"
-    ],
-    "id": "fd_0482",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.177474+00:00",
-    "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
   {
     "consumed_by_exp_id": "",

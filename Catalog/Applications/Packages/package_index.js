@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ddafecee",
     "filename": "alien_mathematics_non_standard_arithmetic.json",
     "pkg_num": 218,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.68521,
     "title": "Alien Arithmetic: The Finite Chain Semiring"
   },
   {
@@ -6657,8 +6657,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "alien_mathematics_non_standard_arithmetic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.68521,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Alien Arithmetic: The Finite Chain Semiring"
     }
