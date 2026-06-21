@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9812538e",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Rank of Apparition as a Lattice Morphism\n\n## Synthesis\n\nThe catalog's rank-of-apparition thread (`RankOfApparition.lean`,\n`UnifiedRankOfApparition.lean`) had distilled the \"L",
-      "quality_score": 0.74728,
-      "sorry_count": 2,
-      "theorem_count": 0,
-      "timestamp": "2026-06-14T11:02:59",
-      "title": "Close Proofs: This cycle closed a concrete gap between two halves of the catalog tha"
-    },
-    {
       "cycle_id": "8e266d30",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Interleaving Metric Quotient (Boltzmann Bridge VI)\n\n## Synthesis\n\n`Applications/BoltzmannBridge/InterleavingQuotient.lean` discharges **Future\nDirection 1** of Boltzmann Brid",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-21T00:36:49",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "2fe3f01b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThe following are freeform research directions extending the constructive\napproximate IVT in `Analysis/ConstructiveApproxIVT.lean`. Each is a starting point\nrather than a finished",
+      "quality_score": 0.86456,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-06-21T10:40:09",
+      "title": "Constructive Mathematics: Bishop's Analysis"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "cd281b27",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Tropical Polynomials (Convexity Foundation)\n\nThis cycle delivered a self-contained Mathlib foundation for **general-degree tropical\n(max-plus) polynomials** in `Catalog/Tropical/",
-      "quality_score": 0.5016680172195493,
-      "sorry_count": 2,
-      "theorem_count": 134,
-      "timestamp": "2026-06-15T15:22:59",
-      "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the discr"
-    },
     {
       "cycle_id": "cd281b27",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 2,
       "timestamp": "2026-06-21T09:05:25",
       "title": "Ramsey Theory in Projective Fraïssé Limits Implies Extreme Amenability of Homeomorphism Groups of Co"
+    },
+    {
+      "cycle_id": "2fe3f01b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThe following are freeform research directions extending the constructive\napproximate IVT in `Analysis/ConstructiveApproxIVT.lean`. Each is a starting point\nrather than a finished",
+      "quality_score": 0.86456,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-06-21T10:40:09",
+      "title": "Constructive Mathematics: Bishop's Analysis"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6ce4a7be",
-      "domain": "Bridges",
-      "name": "ConnAt",
-      "quality": 0.76292
-    },
-    {
-      "cycle_id": "6ce4a7be",
-      "domain": "Bridges",
-      "name": "ConnAt",
-      "quality": 0.76292
-    },
-    {
-      "cycle_id": "c38e2bf9",
-      "domain": "Applications",
-      "name": "twe_le_of_mem",
-      "quality": 0.7101600000000001
-    },
     {
       "cycle_id": "e42393e4",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "catalog_complete",
       "quality": 0.71035
+    },
+    {
+      "cycle_id": "2fe3f01b",
+      "domain": "Novelty",
+      "name": "This",
+      "quality": 0.86456
+    },
+    {
+      "cycle_id": "2fe3f01b",
+      "domain": "Novelty",
+      "name": "about",
+      "quality": 0.86456
+    },
+    {
+      "cycle_id": "2fe3f01b",
+      "domain": "Novelty",
+      "name": "grid_zero",
+      "quality": 0.86456
     }
   ],
-  "last_updated": "2026-06-21T09:05:25",
+  "last_updated": "2026-06-21T10:40:09",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "db367995",
-        "quality": 0.42152284276729557,
-        "theorems": 10,
-        "title": "Invariant Subspace Problem"
-      },
-      {
         "cycle_id": "00fd88ec",
         "quality": 0.5112,
         "theorems": 176,
@@ -3637,6 +3631,12 @@
         "quality": 0.5548463972823172,
         "theorems": 43,
         "title": "Game of Life Universality"
+      },
+      {
+        "cycle_id": "2fe3f01b",
+        "quality": 0.86456,
+        "theorems": 62,
+        "title": "Constructive Mathematics: Bishop's Analysis"
       }
     ],
     "NumberTheory": [
