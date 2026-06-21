@@ -1,10 +1,12 @@
-# Constructive Analysis in Lean 4: Computable Reals, Certified Bisection, and Effective Completeness
+# A Constructive, Non-Circular Approximate Intermediate Value Theorem with Explicit Modulus
+
+**Author:** Aristotle
+**Date:** 2026-06-21
+**Domain:** Novelty (Constructive Mathematics / Bishop-style Analysis)
 
 ## Abstract
 
-We develop a framework for Bishop-style constructive analysis in Lean 4, coexisting with the classical real analysis infrastructure of Mathlib. Our contributions include: (1) a formal definition of computable reals as rational Cauchy sequences with explicit moduli, together with verified arithmetic operations; (2) a constructive intermediate value theorem producing certified approximant intervals via bisection, with quantitative error bounds at every precision level; (3) an effective completeness theorem showing that the computable reals are closed under effective Cauchy limits via a diagonal construction; and (4) comparison theorems precisely delineating where classical existence is stronger than constructive existence. All theorems are fully machine-verified with zero sorry statements. We additionally develop a theory of modulus-continuous functions capturing quantitative uniform continuity, prove compositionality of error propagation, and provide Python implementations of all algorithms. The framework establishes a bridge between proof theory, computable analysis, and certified numerical methods.
-
-**Keywords:** constructive analysis, Bishop mathematics, computable reals, effective Cauchy completion, certified root finding, modulus of continuity, intermediate value theorem, exact real arithmetic, verified numerics
+The classical Intermediate Value Theorem (IVT) asserts that a continuous function changing sign on an interval has a root, but its standard proofs are non-constructive: they rely on the completeness of the reals (via a least-upper-bound) or on the topological connectedness of intervals, and they yield a root that may be uncomputable. Following the constructive program of Errett Bishop, we develop an **approximate** IVT that, given a tolerance $\varepsilon > 0$ and an explicit modulus of continuity for the function, locates a point $x$ in the interval with $|f(x)| \le \varepsilon$. The development is organized strictly bottom-up and is deliberately **non-circular**: it does not invoke the classical IVT, connectedness, preconnectedness, or any root-existence theorem. The analytic content is reduced to a single finite, order-theoretic lemma — `finite_sign_change` — which states that a finite list of reals running from non-positive to non-negative either hits zero or exhibits an adjacent sign change. From this we derive a discrete approximate IVT (`discrete_approx_ivt`), then an oriented modulus-based theorem on a uniform grid (`approx_ivt_of_modulus_nonpos_nonneg`), and finally a symmetric version handling either sign orientation (`approx_ivt_of_modulus`). We describe the grid construction, prove the supporting mesh estimates, present the algorithm and its complexity, discuss applications to certified numerical root-finding, and outline generalizations to bisection refinement and the multidimensional Poincaré–Miranda setting. All results have been formalized and machine-checked.
 
 ---
 
@@ -12,278 +14,207 @@ We develop a framework for Bishop-style constructive analysis in Lean 4, coexist
 
 ### 1.1 Motivation
 
-The classical theory of real analysis, as formalized in libraries such as Mathlib, provides powerful tools for reasoning about continuous functions, limits, and completeness. However, classical existence theorems—established via the law of excluded middle or proof by contradiction—are computationally opaque: they assert that objects exist without providing algorithms to construct them.
+The Intermediate Value Theorem is among the first deep results a student of analysis meets:
 
-Bishop's constructive analysis [1] offers an alternative: every existence proof must come with an explicit witness. This philosophy transforms theorems into algorithm schemas: the intermediate value theorem becomes a root-finding procedure, completeness becomes a convergence algorithm, and continuity becomes a quantitative error bound.
+> **(Classical IVT.)** If $f : [a,b] \to \mathbb{R}$ is continuous and $f(a) \le 0 \le f(b)$, then there exists $c \in [a,b]$ with $f(c) = 0$.
 
-Our work formalizes Bishop's approach in Lean 4, leveraging Mathlib's existing infrastructure while adding a computational layer that reveals what algorithmic content classical theorems actually contain.
+Despite its intuitive obviousness, the theorem is not constructively valid in its classical form. The obstruction is fundamental: equality and order on the real numbers are **not decidable**. Determining whether a real number is exactly zero, as opposed to extremely small but nonzero, would require examining infinitely much information. As a consequence, one can construct continuous functions whose unique sign-change point is not computable by any algorithm; the classical existence claim then has no algorithmic content.
 
-### 1.2 Contributions
+Bishop's constructive analysis resolves this not by abandoning the theorem but by **reformulating the conclusion** into something an algorithm can deliver. Rather than demanding an exact root, we demand an *approximate* one:
 
-1. **ComputableReal**: A Bishop-style real number type with verified arithmetic (addition, negation) and embedding into Mathlib's ℝ.
-2. **ModulusContinuousOn**: A structure for uniform continuity with explicit moduli, generalizing classical continuity with quantitative error bounds.
-3. **Constructive IVT**: A certified bisection algorithm producing sign-change intervals of width $(b-a)/2^n$ for any precision $n$.
-4. **Effective Completeness**: A diagonal construction showing computable reals are closed under effective Cauchy limits.
-5. **Comparison Theorems**: Formal proofs that constructive existence implies classical existence, with precise identification of the computational gap.
-6. **Error Propagation**: Compositionality theorems for modulus-continuous functions, formalizing how precision requirements flow through computation chains.
+> **(Approximate IVT, informal.)** For every tolerance $\varepsilon > 0$ there exists $x \in [a,b]$ with $|f(x)| \le \varepsilon$.
 
-### 1.3 Related Work
+This conclusion is constructively provable, and its proof is an explicit terminating search, *provided* continuity is supplied in a quantitative form — a **modulus of continuity** — rather than the classical $\varepsilon$–$\delta$ form with a non-computable $\delta$.
 
-**Constructive analysis in type theory.** Bridges and Richman [2] provide a comprehensive treatment. The CoRN library [3] in Coq formalizes constructive real analysis extensively, including algebraic operations and completeness. Our work differs in targeting Lean 4 and emphasizing interoperability with classical Mathlib.
+### 1.2 Contribution
 
-**Computable analysis.** Weihrauch [4] develops the Type-2 Theory of Effectivity. Our ComputableReal corresponds to the notion of computable real in the Cauchy representation $\rho_C$.
+We present a fully formalized, bottom-up development of the approximate IVT with the following distinguishing features:
 
-**Proof mining.** Kohlenbach [5] systematically extracts quantitative bounds from classical proofs. Our modulus-continuous framework provides a natural target for such extractions.
+1. **Explicit modulus.** Continuity enters only through a pointwise uniform modulus hypothesis: there is a step size $\delta$ such that inputs within $\delta$ have outputs within $\varepsilon$.
+2. **Non-circularity.** The proof uses neither the classical IVT, nor `IsPreconnected`, nor interval connectedness, nor any least-upper-bound or supremum argument. This is a design constraint, not an accident: it guarantees the result is genuinely a *from-scratch* constructive theorem rather than a repackaging of a classical one.
+3. **Strict separation of concerns.** The combinatorial skeleton (a finite sign change) is isolated in a lemma about sequences `ℕ → ℝ` that mentions no continuity whatsoever. The analytic content (the modulus, the grid, the metric estimates) is layered on top.
+4. **An explicit, finite, terminating algorithm** with linear step count in the number of subdivisions $N$, where $N$ is determined directly from the modulus and the requested tolerance.
 
-**Verified numerics.** Interval arithmetic libraries (MPFI, Arb) provide certified bounds for numerical computations. Our framework provides the theoretical foundation: every certified bound is backed by a formal proof.
+The remainder of this paper states all definitions and results inline, gives proof sketches, presents the extracted algorithm and its complexity, and discusses applications and extensions.
 
 ---
 
-## 2. Definitions and Notation
+## 2. Preliminaries and the Grid Construction
 
-### 2.1 ComputableReal
+Throughout, $a, b, \delta, \varepsilon \in \mathbb{R}$ and $N, i \in \mathbb{N}$. We work on a closed interval $[a,b]$ with $a \le b$.
 
-**Definition 2.1.** A *computable real* is a triple $(s, m, p)$ where:
-- $s : \mathbb{N} \to \mathbb{Q}$ is an approximation sequence,
-- $m : \mathbb{N} \to \mathbb{N}$ is a monotone Cauchy modulus,
-- $p$ is a proof that $\forall n\, i\, j,\; m(n) \leq i \to m(n) \leq j \to |s(i) - s(j)| \leq 2^{-n}$.
+### 2.1 The uniform grid
 
-```lean
-structure ComputableReal where
-  seq : ℕ → ℚ
-  mod : ℕ → ℕ
-  mono_mod : Monotone mod
-  cauchy' : ∀ n i j, mod n ≤ i → mod n ≤ j → |seq i - seq j| ≤ (1 : ℚ) / 2 ^ n
-```
+**Definition 2.1 (Grid).** The *uniform grid* on $[a,b]$ with $N$ subdivisions assigns to index $i$ the node
+$$
+\operatorname{grid}(a,b,N,i) \;=\; a + \frac{i\,(b - a)}{N}.
+$$
+These are the $N+1$ equally spaced points $x_0, \dots, x_N$ partitioning $[a,b]$.
 
-The *canonical approximant* at precision $n$ is $s(m(n))$, which we call `approxAt n`.
+The construction satisfies four elementary but essential properties.
 
-**Theorem 2.2 (Coherence).** For $m \leq n$, the canonical approximants satisfy $|\text{approxAt}(m) - \text{approxAt}(n)| \leq 2^{-m}$.
+**Lemma 2.2 (Endpoints).**
+$$\operatorname{grid}(a,b,N,0) = a, \qquad \operatorname{grid}(a,b,N,N) = b \quad (N > 0).$$
+*Proof sketch.* For $i = 0$ the added term vanishes. For $i = N$, $\frac{N(b-a)}{N} = b - a$ after cancelling $N \ne 0$, and $a + (b-a) = b$. ∎
 
-### 2.2 ModulusContinuousOn
+**Lemma 2.3 (Membership).** If $a \le b$, $0 < N$, and $i \le N$, then $\operatorname{grid}(a,b,N,i) \in [a,b]$.
+*Proof sketch.* Since $0 \le i \le N$ we have $0 \le \frac{i(b-a)}{N} \le b - a$ (using $b - a \ge 0$ and $i/N \le 1$). Adding $a$ places the node in $[a,b]$. ∎
 
-**Definition 2.3.** A function $f : \mathbb{R} \to \mathbb{R}$ is *modulus-continuous* on $[a,b]$ with modulus $\mu : \mathbb{N} \to \mathbb{N}$ if $\mu$ is monotone and:
+**Lemma 2.4 (Mesh / consecutive spacing).** If $a \le b$, $0 < N$, and the mesh satisfies $\frac{b-a}{N} \le \delta$, then for every $i$,
+$$\bigl|\operatorname{grid}(a,b,N,i+1) - \operatorname{grid}(a,b,N,i)\bigr| \;\le\; \delta.$$
+*Proof sketch.* The difference of consecutive nodes is exactly $\frac{b-a}{N} \ge 0$, so its absolute value equals $\frac{b-a}{N}$, which is bounded by $\delta$ by hypothesis. ∎
 
-$$\forall x, y \in [a,b],\; |x - y| \leq 2^{-\mu(n)} \implies |f(x) - f(y)| \leq 2^{-n}.$$
-
-```lean
-structure ModulusContinuousOn (f : ℝ → ℝ) (a b : ℝ) where
-  μ : ℕ → ℕ
-  mono_μ : Monotone μ
-  spec : ∀ {x y : ℝ} {n : ℕ},
-    x ∈ Icc a b → y ∈ Icc a b →
-    |x - y| ≤ (1 : ℝ) / 2 ^ (μ n) → |f x - f y| ≤ (1 : ℝ) / 2 ^ n
-```
-
-### 2.3 SignedBisectionState
-
-**Definition 2.4.** A *signed bisection state* for $f$ is a pair $(l, r)$ with $l \leq r$, $f(l) \leq 0$, and $f(r) \geq 0$.
-
-### 2.4 EffectiveCauchySequence
-
-**Definition 2.5.** An *effective Cauchy sequence* of computable reals is a sequence $(s_n)$ of computable reals together with a monotone modulus $M : \mathbb{N} \to \mathbb{N}$ such that for $i, j \geq M(n)$:
-
-$$|s_i.\text{approxAt}(n+2) - s_j.\text{approxAt}(n+2)| \leq 2^{-n}.$$
+Lemmas 2.2–2.4 are the only facts about the grid the main theorem needs: the endpoints align with $a$ and $b$, all nodes lie in the interval, and consecutive nodes are within the modulus step $\delta$.
 
 ---
 
-## 3. Main Results
+## 3. The Combinatorial Core
 
-### 3.1 Certified Bisection
+The genuinely indispensable idea is a purely finite statement about sequences of reals — no continuity, no metric, no limits.
 
-**Theorem 3.1 (Bisection Step).** *Given $f(l) \leq 0 \leq f(r)$ with $l \leq r$, there exist $l', r'$ with:*
-- *$l \leq l' \leq r' \leq r$,*
-- *$r' - l' = (r - l)/2$,*
-- *$f(l') \leq 0 \leq f(r')$.*
+### 3.1 Finite sign change
 
-*Proof.* Let $m = (l+r)/2$. By the law of excluded middle, either $f(m) \leq 0$ or $f(m) > 0$. In the first case, take $(l', r') = (m, r)$; in the second, take $(l', r') = (l, m)$. In both cases, the width halves and the sign-change invariant is preserved. □
+**Theorem 3.1 (`finite_sign_change`).** Let $u : \mathbb{N} \to \mathbb{R}$ and $N \in \mathbb{N}$ with $u_0 \le 0$ and $u_N \ge 0$. Then
+$$
+\bigl(\exists\, i \le N,\; u_i = 0\bigr) \quad\lor\quad \bigl(\exists\, i < N,\; u_i \le 0 \;\land\; 0 \le u_{i+1}\bigr).
+$$
+That is, either some node is exactly zero, or there is an adjacent pair across which the sign changes from non-positive to non-negative.
 
-**Theorem 3.2 (Iterated Bisection).** *Given $f(a) \leq 0 \leq f(b)$ with $a \leq b$, for every $n \in \mathbb{N}$, there exist $l, r$ with:*
-- *$a \leq l \leq r \leq b$,*
-- *$r - l = (b-a)/2^n$,*
-- *$f(l) \leq 0 \leq f(r)$.*
+*Proof sketch.* Argue by contradiction: assume neither disjunct holds. Then (a) no node equals zero, and (b) no adjacent pair $(u_i, u_{i+1})$ has $u_i \le 0 \le u_{i+1}$. We prove by induction on $i$ that $u_i < 0$ for all $i \le N$. Base case: $u_0 \le 0$ and $u_0 \ne 0$ (by (a)), hence $u_0 < 0$. Inductive step: if $u_i < 0$ for $i < N$, then $u_{i+1} \ge 0$ would yield $u_i \le 0 \le u_{i+1}$, contradicting (b); so $u_{i+1} < 0$. Taking $i = N$ gives $u_N < 0$, contradicting $u_N \ge 0$. Hence one of the disjuncts holds. ∎
 
-*Proof.* By induction on $n$, applying Theorem 3.1 at each step. □
+The proof uses only induction over $\mathbb{N}$ and trichotomy/linear order on $\mathbb{R}$ at finitely many tested points; this is precisely the decidable, finite skeleton of the IVT.
 
-### 3.2 Constructive Intermediate Value Theorem
+### 3.2 The discrete approximate IVT
 
-**Theorem 3.3 (Constructive IVT — Sign Change Form).** *Let $f$ be any function with $f(a) \leq 0 \leq f(b)$ and $a \leq b$. For every $n$, there exist $l, r \in [a, b]$ with $r - l = (b-a)/2^n$ and $f(l) \leq 0 \leq f(r)$.*
+**Theorem 3.2 (`discrete_approx_ivt`).** Let $u : \mathbb{N} \to \mathbb{R}$, $N \in \mathbb{N}$, and $\varepsilon \ge 0$. Suppose $u_0 \le 0$, $u_N \ge 0$, and consecutive steps are controlled,
+$$\forall\, i < N,\quad |u_{i+1} - u_i| \le \varepsilon.$$
+Then there exists $i \le N$ with $|u_i| \le \varepsilon$.
 
-This is the pure bisection result, requiring no continuity assumption.
+*Proof sketch.* Apply Theorem 3.1. In the first case, some $u_i = 0$, so $|u_i| = 0 \le \varepsilon$. In the second case, there is $i < N$ with $u_i \le 0 \le u_{i+1}$. From $u_{i+1} \ge 0$ and $|u_{i+1} - u_i| \le \varepsilon$ with $u_i \le 0$, we get $0 \le u_{i+1} = (u_{i+1} - u_i) + u_i \le (u_{i+1} - u_i) \le \varepsilon$ (since $u_i \le 0$). Hence $|u_{i+1}| \le \varepsilon$, and $i + 1 \le N$. ∎
 
-**Theorem 3.4 (Constructive IVT — Residual Form).** *Let $f$ be modulus-continuous on $[a,b]$ with $f(a) \leq 0 \leq f(b)$. For every $n$, there exist $l, r \in [a,b]$ with $r - l \leq (b-a)/2^n$ and $x \in [l, r]$ with $|f(x)| \leq 2^{-n}$.*
-
-*Proof sketch.* Apply iterated bisection (Theorem 3.2) to obtain a sign-change interval of width $(b-a)/2^n$. Since $f$ is continuous on $[l, r]$ (derived from the modulus), the classical IVT on this sub-interval yields a point $c$ with $f(c) = 0$, giving $|f(c)| = 0 \leq 2^{-n}$. □
-
-### 3.3 Comparison Theorem
-
-**Theorem 3.5 (Constructive Implies Classical IVT).** *If $f$ is continuous on $[a,b]$ with $f(a) \leq 0 \leq f(b)$, then $\exists x \in [a,b],\, f(x) = 0$.*
-
-This follows from the constructive IVT by taking the limit of the approximant sequence. In our formalization, we derive it directly from the sign-change intervals using the classical IVT from Mathlib, demonstrating that the constructive framework strictly refines the classical result.
-
-### 3.4 Effective Completeness
-
-**Theorem 3.6 (Diagonal Approximation is Cauchy).** *The diagonal approximation scheme $d(n) = s_{M(n+2)}.\text{approxAt}(n+2)$ satisfies $|d(i) - d(j)| \leq 3 \cdot 2^{-n}$ for $i, j \geq n$.*
-
-*Proof.* By the triangle inequality:
-$$|d(i) - d(j)| \leq |d(i) - s_{M(n+2)}.\text{approxAt}(n+2)| + |s_{M(i+2)}.\text{approxAt}(n+2) - s_{M(j+2)}.\text{approxAt}(n+2)| + |s_{M(j+2)}.\text{approxAt}(n+2) - d(j)|$$
-
-The first and third terms are bounded by $2^{-(n+2)}$ via the coherence of canonical approximants (Theorem 2.2). The middle term is bounded by $2^{-n}$ via the effective Cauchy condition. The total is at most $2^{-(n+2)} + 2^{-n} + 2^{-(n+2)} \leq 3 \cdot 2^{-n}$. □
-
-**Theorem 3.7 (Effective Completeness).** *Every effective Cauchy sequence of computable reals has a computable real limit. Specifically, there exists $x : \text{ComputableReal}$ such that for all $n$ and $k \geq M(n)$:*
-
-$$|s_k.\text{approxAt}(n+2) - x.\text{approxAt}(n+2)| \leq 2 \cdot 2^{-n}.$$
-
-### 3.5 Error Propagation
-
-**Theorem 3.8 (Error Propagation).** *If $f$ is modulus-continuous on $[a,b]$ with modulus $\mu$, and $|x - y| \leq 2^{-\mu(n)}$ for $x, y \in [a,b]$, then $|f(x) - f(y)| \leq 2^{-n}$.*
-
-**Theorem 3.9 (Compositionality).** *If $f$ is modulus-continuous with modulus $\mu_f$ and $g$ is modulus-continuous with modulus $\mu_g$, and $f$ maps $[a,b]$ into the domain of $g$, then $g \circ f$ satisfies the modulus bound with composed modulus $\mu_f \circ \mu_g$.*
-
-### 3.6 ComputableReal Arithmetic
-
-**Theorem 3.10.** *The computable reals are closed under addition and negation, with explicit moduli:*
-- *$\text{add}(x, y).\text{mod}(n) = \max(x.\text{mod}(n+1), y.\text{mod}(n+1))$*
-- *$\text{neg}(x).\text{mod} = x.\text{mod}$*
-
-**Theorem 3.11.** *The value embedding is a homomorphism:*
-- *$\text{value}(\text{add}(x, y)) = \text{value}(x) + \text{value}(y)$*
-- *$\text{value}(\text{neg}(x)) = -\text{value}(x)$*
-- *$\text{value}(\text{ofRat}(q)) = q$*
+This theorem already *is* the approximate IVT for sequences. Everything that follows transfers it to continuous functions via the grid.
 
 ---
 
-## 4. Algorithms
+## 4. The Modulus-Based Approximate IVT
 
-### 4.1 Certified Bisection Algorithm
+### 4.1 The oriented theorem
 
-```
-Algorithm: CertifiedBisection(f, a, b, n)
-Input: f with f(a) ≤ 0 ≤ f(b), precision n
-Output: (l, r) with r - l = (b-a)/2^n, f(l) ≤ 0 ≤ f(r)
+**Theorem 4.1 (`approx_ivt_of_modulus_nonpos_nonneg`).** Let $f : \mathbb{R} \to \mathbb{R}$, $a \le b$, $\varepsilon \ge 0$, $\delta > 0$, and $N > 0$, with mesh bound
+$$\frac{b - a}{N} \le \delta,$$
+endpoint signs
+$$f(a) \le 0 \le f(b),$$
+and an explicit modulus of continuity on $[a,b]$:
+$$
+\forall\, x, y \in [a,b],\quad |y - x| \le \delta \;\Longrightarrow\; |f(y) - f(x)| \le \varepsilon.
+$$
+Then there exists $x \in [a,b]$ with $|f(x)| \le \varepsilon$.
 
-l ← a; r ← b
-for i = 1 to n:
-    m ← (l + r) / 2
-    if f(m) ≤ 0:
-        l ← m
-    else:
-        r ← m
-return (l, r)
-```
+*Proof sketch.* Define the grid sample sequence $u_i := f(\operatorname{grid}(a,b,N,i))$. We verify the hypotheses of Theorem 3.2:
 
-**Complexity:** $O(n)$ function evaluations. Space $O(1)$.
+- $u_0 = f(\operatorname{grid}(a,b,N,0)) = f(a) \le 0$ by Lemma 2.2 and the left sign hypothesis.
+- $u_N = f(\operatorname{grid}(a,b,N,N)) = f(b) \ge 0$ by Lemma 2.2 (using $N > 0$) and the right sign hypothesis.
+- For $i < N$, both $\operatorname{grid}(a,b,N,i)$ and $\operatorname{grid}(a,b,N,i+1)$ lie in $[a,b]$ (Lemma 2.3), and their distance is $\le \delta$ (Lemma 2.4). The modulus hypothesis then gives $|u_{i+1} - u_i| \le \varepsilon$.
 
-**Convergence rate:** The interval width decreases geometrically: $w_n = (b-a) \cdot 2^{-n}$.
+By Theorem 3.2 there is $i \le N$ with $|u_i| \le \varepsilon$. Setting $x := \operatorname{grid}(a,b,N,i)$, Lemma 2.3 gives $x \in [a,b]$ and $|f(x)| = |u_i| \le \varepsilon$. ∎
 
-### 4.2 Diagonal Completion Algorithm
+**Remark 4.2 (On the hypothesis $\delta > 0$).** The strict positivity $\delta > 0$ is part of the requested interface but is not actually used by the oriented proof; the mesh bound $\frac{b-a}{N} \le \delta$ together with the modulus hypothesis suffices. It is retained only to match the conventional statement of a modulus of continuity, where the step is positive.
 
-```
-Algorithm: EffectiveLimit(s, M)
-Input: Effective Cauchy sequence (s, M) of computable reals
-Output: ComputableReal x approximating the limit
+### 4.2 The symmetric theorem
 
-x.seq(n) ← s[M(n+2)].approxAt(n+2)
-x.mod(n) ← n + 2
-return x
-```
+**Theorem 4.3 (`approx_ivt_of_modulus`).** Under the same hypotheses as Theorem 4.1 except that the sign condition is replaced by either orientation,
+$$
+\bigl(f(a) \le 0 \,\land\, 0 \le f(b)\bigr) \;\lor\; \bigl(0 \le f(a) \,\land\, f(b) \le 0\bigr),
+$$
+there exists $x \in [a,b]$ with $|f(x)| \le \varepsilon$.
 
-**Complexity:** Per evaluation at precision $n$: one lookup in the sequence at index $M(n+2)$, then one evaluation of a ComputableReal at precision $n+2$.
+*Proof sketch.* If the first orientation holds, apply Theorem 4.1 directly. If the second holds, apply Theorem 4.1 to $g := -f$. The endpoint signs become $g(a) = -f(a) \le 0 \le -f(b) = g(b)$, and $g$ inherits the modulus property because $|g(y) - g(x)| = |{-}(f(y) - f(x))| = |f(y) - f(x)|$. The conclusion $|g(x)| \le \varepsilon$ is identical to $|f(x)| \le \varepsilon$. ∎
 
-### 4.3 Error Propagation Through Chains
-
-```
-Algorithm: ChainPrecision(μ₁, μ₂, ..., μₖ, n)
-Input: Moduli μ₁, ..., μₖ for a composition chain, target precision n
-Output: Required input precision
-
-p ← n
-for i = k down to 1:
-    p ← μᵢ(p)
-return p
-```
-
-**Complexity:** $O(k)$ modulus evaluations.
+This is the most general statement: it requires only that the two endpoint values straddle zero in *some* order, which is the honest constructive analogue of "$f$ changes sign on $[a,b]$."
 
 ---
 
-## 5. Computational Experiments
+## 5. The Algorithm
 
-### 5.1 Bisection Convergence
+The proof of Theorem 4.1 is constructive and yields the following procedure.
 
-We test certified bisection on $f(x) = x^2 - 2$ on $[0, 2]$. After $n$ steps:
+### 5.1 Grid search for an approximate crossing
 
-| $n$ | Interval Width | $\|f(\text{mid})\|$ | Bits of accuracy |
-|-----|---------------|---------------------|-----------------|
-| 10  | $1.95 \times 10^{-3}$ | $2.34 \times 10^{-3}$ | ~9 |
-| 20  | $1.91 \times 10^{-6}$ | $1.62 \times 10^{-6}$ | ~19 |
-| 30  | $1.86 \times 10^{-9}$ | $1.58 \times 10^{-9}$ | ~29 |
-| 40  | $1.82 \times 10^{-12}$ | $3.55 \times 10^{-12}$ | ~38 |
+**Input:** interval $[a,b]$ with $a \le b$; tolerance $\varepsilon > 0$; modulus step $\delta > 0$ valid for $f$ on $[a,b]$ at tolerance $\varepsilon$; endpoint values with $f(a) \le 0 \le f(b)$ (or the reversed orientation).
 
-The interval width decreases exactly as $2 \cdot 2^{-n}$, confirming the theoretical bound.
+**Steps:**
 
-### 5.2 Effective Completion
+1. Choose $N := \lceil (b-a)/\delta \rceil$ (any $N$ with $(b-a)/N \le \delta$ works), and ensure $N \ge 1$.
+2. Form the $N+1$ grid nodes $x_i = a + \frac{i(b-a)}{N}$.
+3. Evaluate (or comparably approximate) $f$ at the nodes. Find the first index $i$ with $u_i \le 0 \le u_{i+1}$ (or an exact zero $u_i = 0$).
+4. Return that boundary node (the non-negative member of the straddling pair, or the exact zero).
 
-We approximate $e$ via partial sums $s_n = \sum_{k=0}^{n} 1/k!$ as computable reals. The diagonal construction produces approximations converging to $e$ with explicit error bounds $3 \cdot 2^{-n}$. See `demo.py` for the full convergence table.
+**Output:** a node $x \in [a,b]$ with the certified guarantee $|f(x)| \le \varepsilon$.
 
-### 5.3 Oracle Complexity Conjecture
+### 5.2 Complexity
 
-We test the conjecture that bisection uses at most $\mu(n+1) + n + C$ oracle calls for a universal constant $C$. For all tested functions (polynomials, trigonometric, exponential), the conjecture holds with $C = 2$. See `demo.py` for details.
+The search inspects at most $N + 1$ grid points and performs $O(N)$ comparisons, with
+$$N = \Bigl\lceil \frac{b-a}{\delta} \Bigr\rceil.$$
+The cost is therefore linear in the ratio of the interval length to the modulus step. Because $\delta$ is determined by the function's steadiness at the requested tolerance $\varepsilon$, the entire cost is an explicit, finite function of $(a, b, \varepsilon, \delta)$. There is no hidden unbounded search and no appeal to an uncomputable object.
 
----
+### 5.3 On decidability of the comparisons
 
-## 6. Discussion
-
-### 6.1 Classical vs. Constructive: What's Lost and Gained
-
-The comparison theorem (Theorem 3.5) shows that constructive existence implies classical existence. The converse fails: classical existence proofs via contradiction produce witnesses that are in general non-computable. Our framework makes this gap precise: the "missing data" is always a modulus or convergence rate.
-
-### 6.2 Cross-Domain Connections
-
-**Logic and proof theory.** The modulus of continuity is analogous to an oracle in computability theory. A modulus-continuous function is one whose behavior can be predicted from finite input data—mirroring the structure of oracle completeness results in logic. The resource (input precision) that must be provided to achieve a conclusion (output precision) parallels the finite information required for bounded truth predicates.
-
-**Verified scientific computing.** Every theorem in our framework has a direct computational interpretation. The certified bisection algorithm is a validated numerical method with built-in correctness certificates. The error propagation theorems provide the mathematical foundation for interval arithmetic libraries.
-
-**Physics and measurement theory.** A computable real is formally a *measurement protocol*: a procedure that, given a precision budget, returns a certified approximation. The modulus of continuity captures the sensitivity of a physical observable to perturbations of the input state—a quantitative form of stability analysis.
-
-### 6.3 Limitations
-
-1. Our ComputableReal type uses `Classical.choice` in the `value` embedding, making this specific construction not fully constructive. The algebraic operations (add, neg) are constructive.
-2. We do not formalize multiplication of computable reals, which requires bounded-ness witnesses.
-3. The constructive IVT uses the classical IVT from Mathlib on sub-intervals to produce the residual bound, rather than a purely constructive argument.
+In exact real arithmetic, the comparison $u_i \le 0 \le u_{i+1}$ is not decidable. However, the algorithm never needs the *exact* sign of $f$ at a node — only a comparison accurate to within $\varepsilon$. A certified inexact comparator (e.g. a rational/dyadic approximation of $f$ with a known error bound below $\varepsilon$) is sufficient to drive the finite search, which is why the procedure is implementable in practice (see §7 and §8).
 
 ---
 
-## 7. Future Work
+## 6. Discussion: Why Non-Circularity Matters
 
-1. **Computable multiplication and division** with explicit bound-tracking.
-2. **Constructive IVT without classical IVT**: use the modulus directly to bound the residual from the sign-change condition.
-3. **Computable metric spaces**: generalize the framework beyond ℝ.
-4. **Certified ODE solvers**: use modulus-continuous right-hand sides to produce step-by-step error certificates.
-5. **Connection to iRRAM/Arb**: extract executable code from the Lean formalization.
+The classical IVT is typically proved in one of two ways: (i) via the **least-upper-bound** principle, taking $c = \sup\{x : f(x) \le 0\}$ and showing $f(c) = 0$; or (ii) via **connectedness**, observing that the continuous image of a connected interval is connected, hence an interval, hence contains $0$. Both proofs are short and elegant, and both are non-constructive: the supremum in (i) need not be computable, and the connectedness argument in (ii) is a pure existence statement that exhibits no point.
+
+The development here deliberately avoids both routes. It uses:
+- no `intermediate_value_Icc` or any classical IVT lemma;
+- no `IsPreconnected`, no interval connectedness;
+- no least-upper-bound, supremum, or completeness argument;
+- no root-existence theorem of any kind.
+
+The *only* nontrivial existence step is the finite sign-change lemma (Theorem 3.1), whose proof is a finite induction over tested order relations. This makes the construction genuinely foundational: it could serve as the *definition* of the constructive content of the IVT, rather than as a corollary of the classical theorem. The strict layering — finite combinatorics, then grid metrics, then the modulus — also makes each ingredient independently reusable.
+
+A second benefit is conceptual transparency. Classical proofs hide *where* the crossing comes from inside an abstract supremum. The grid proof shows exactly where: at the unique adjacent pair, isolated by Theorem 3.1, where the sampled sequence turns over. One can literally carry out the search by hand.
 
 ---
 
-## 8. Conclusion
+## 7. Applications
 
-We have formalized a substantial fragment of Bishop-style constructive analysis in Lean 4, producing 13 formally verified theorems with zero sorry statements. The key innovation is the coexistence of constructive and classical reasoning: our structures carry explicit computational content (moduli, witnesses, approximation sequences) while interfacing seamlessly with Mathlib's classical analysis. This establishes a foundation for proof-relevant numerical analysis, where every existence theorem doubles as a certified algorithm.
+**Certified numerical root-finding.** Every practical root-finder (bisection, regula falsi, Newton with bracketing) returns a point where $|f(x)|$ is small, not a provably exact root. Theorem 4.3 is the rigorous specification such routines meet: given a modulus and a tolerance, output a certified near-root. The theorem's guarantee is exactly the postcondition a verified numerical library would advertise.
+
+**Approximate equation solving.** To solve $f(x) = t$ approximately, apply the theorem to $g(x) = f(x) - t$; the modulus of $g$ equals that of $f$. This yields certified approximate solutions to transcendental and algebraic equations alike, with an explicit accuracy contract.
+
+**Teaching constructive analysis.** Because the proof separates a transparent finite lemma from the analytic packaging, it is a clean pedagogical illustration of how Bishop-style mathematics replaces non-constructive existence with explicit search, and of the precise role played by the modulus of continuity.
 
 ---
 
-## References
+## 8. Future Directions
 
-[1] E. Bishop, *Foundations of Constructive Analysis*, McGraw-Hill, 1967.
+**A fully computable approximate-root finder with verified complexity.** The present development exhibits the approximate root as one of $N+1$ grid samples but stops short of an executable function returning the index, because exact real comparison is undecidable. Parametrizing the search by a *decidable sign oracle* — a rational/dyadic approximation of $f$ with a known error bound — would yield an extracted `findApproxRoot` together with a proof that its output satisfies $|f(x)| \le \varepsilon$ and an $O(N)$ step count. The key insight is that the approximate IVT never needs the exact sign of $f$ at a grid point, only a comparison accurate to within $\varepsilon$, so a certified inexact comparator suffices to drive the entire finite search.
 
-[2] D. Bridges and F. Richman, *Varieties of Constructive Mathematics*, Cambridge University Press, 1987.
+**Logarithmic-depth bisection refinement.** The uniform grid gives a search linear in $N$. A bisection variant that repeatedly halves the bracketing interval would give an $O(\log N)$ approximate root at the same accuracy, while still avoiding any exact-zero claim. The finite sign-change lemma already isolates a single straddling adjacent pair; applying the same minimization recursively on halves turns the one-shot grid into a constructive bisection with an explicit contraction rate. The recursion needs only a termination measure and a mesh-halving lemma — standard `Nat`-recursion patterns supported by the current lemma set.
 
-[3] L. Cruz-Filipe, H. Geuvers, and F. Wiedijk, "C-CoRN, the Constructive Coq Repository at Nijmegen," *Mathematical Knowledge Management*, Springer, 2004.
+**Multidimensional generalization (Poincaré–Miranda).** The Poincaré–Miranda theorem is the $n$-dimensional analogue of the IVT for maps of a box into $\mathbb{R}^n$ with sign conditions on opposite faces. An approximate, constructive version on a product grid would substantially generalize this work. The one-dimensional finite sign-change mechanism is essentially a discrete-degree/parity argument; the higher-dimensional case reduces to a finite combinatorial lemma on a triangulated grid (a Sperner-style labeling) that, like `finite_sign_change`, carries no analytic content. The same strict separation between finite combinatorics and modulus of continuity demonstrated here points directly to the multidimensional statement.
 
-[4] K. Weihrauch, *Computable Analysis: An Introduction*, Springer, 2000.
+---
 
-[5] U. Kohlenbach, *Applied Proof Theory: Proof Interpretations and Their Use in Mathematics*, Springer, 2008.
+## 9. Conclusion
 
-[6] The Mathlib Community, "Mathlib: A unified library of mathematics formalized in Lean," 2024.
+We have given a constructive, non-circular, machine-checked approximate intermediate value theorem with an explicit modulus of continuity. The argument reduces all analytic existence to a single finite order lemma (`finite_sign_change`), lifts it to sequences (`discrete_approx_ivt`), and transfers it to continuous functions via a uniform grid with elementary mesh estimates, yielding both an oriented theorem (`approx_ivt_of_modulus_nonpos_nonneg`) and a symmetric one (`approx_ivt_of_modulus`). The result is an explicit terminating algorithm of linear cost whose accuracy is contracted in advance by the requested tolerance. This realizes, in miniature, Bishop's program: a classical theorem rebuilt so that its existence claim is backed by a construction one can actually run.
 
-[7] E. Bishop and D. Bridges, *Constructive Analysis*, Springer, 1985.
+---
 
-[8] A. Bauer, "First Steps in Synthetic Computability Theory," *ENTCS*, 155, 2006.
+## Appendix A: Summary of Formal Results
+
+| Name | Statement (informal) |
+|---|---|
+| `grid` | Definition of the $i$-th uniform node $a + i(b-a)/N$. |
+| `grid_zero` | $\operatorname{grid}(a,b,N,0) = a$. |
+| `grid_last` | $\operatorname{grid}(a,b,N,N) = b$ for $N > 0$. |
+| `grid_mem_Icc` | Every node with $i \le N$ lies in $[a,b]$. |
+| `grid_succ_dist_le` | Consecutive nodes are within $\delta$ when $(b-a)/N \le \delta$. |
+| `finite_sign_change` | A finite list from non-positive to non-negative hits zero or changes sign across an adjacent pair. |
+| `discrete_approx_ivt` | A bounded-step sequence from non-positive to non-negative has an entry of size $\le \varepsilon$. |
+| `approx_ivt_of_modulus_nonpos_nonneg` | Oriented approximate IVT via modulus and uniform grid. |
+| `approx_ivt_of_modulus` | Symmetric approximate IVT for either sign orientation. |

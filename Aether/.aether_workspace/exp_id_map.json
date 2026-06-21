@@ -405,5 +405,6 @@
   "ddafecee": "alien_mathematics_non_standard_arithmetic.json",
   "7a341625": "game_of_life_universality.json",
   "42f0bfda": "fixed_partial_latin_patterns_occur_with_asymptotic.json",
-  "51640204": "lattice_cryptography_lwe_hardness.json"
+  "51640204": "lattice_cryptography_lwe_hardness.json",
+  "2fe3f01b": "constructive_mathematics_bishops_analysis.json"
 }
