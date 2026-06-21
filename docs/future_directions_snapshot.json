@@ -5381,7 +5381,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e68faef",
     "description": "# Future Directions — Mathematics as an Evolving Ecosystem\n\nDerived from the Phase A cycle that produced `Fitness.lean`,\n`CompetitiveExclusion.lean`, and `Evolution.lean`.  Each direction is a bold,\nfalsifiable conjecture about the fitness model\n`f(T) = connections(T) · proofDensity(T) / axiomCount(T)`.\n\n---\n\n## 1. Selection pressure toward *primitive* (irreducible) theories\n\n**Conjecture.** Under any fitness-improving evolution, the long-run population is\ndominated by theories that are not Rankin–Selberg-type products of smaller\ntheories; composite theories are an evolutionary dead end.\n\nThe key insight is that `selberg_product_fitness_subadditive` shows the conductor\n(axiomatic cost) *multiplies* under composition while the degree (connection\ncount) only *adds*, so `f(S₁ × S₂) ≤ f(S₁) + f(S₂)` with strict loss whenever both\nfactors are non-trivial — composition can never create fitness, only dilute it.\n\nWhy now? We already have the Selberg census `product` operation formalized and the\nsubadditivity inequality proved, so the next step (defining a primitivity\npredicate and proving products are strictly sub-apex) is directly within reach\nrather than speculative.\n\n---\n\n## 2. A carrying capacity for foundational theories\n\n**Conjecture.** For any finite niche space `N`, every ecosystem at equilibrium has\nat most `card N` theories, and this bound is *tight*: there exist equilibria\nrealizing exactly `card N` distinct foundational theories.\n\nThe key insight is that `niche_packing` already proves the upper bound\n`card E ≤ card N` from injectivity alone; tightness would follow from exhibiting a\nsection of the niche map, turning the inequality into an exact carrying-capacity\nlaw for mathematics' foundational layer.\n\nWhy now? The pigeonhole half is done and axiom-checked; only the constructive\n(surjective-section) half remains, which is a finite combinatorial construction.\n\n---\n\n## 3. A phase transition in the value of new axioms\n\n**Conjecture.** Along a family of extensions `T ⊆ T₊` that add `a` axioms and gain\n`c` connections at proof density `d`, fitness increases **iff**\n`c·d·axioms(T) > connections(T)·proofDensity(T)·(axioms(T)+a)` — there is a sharp\nthreshold separating \"fertile\" axioms (large cardinals) from \"sterile\" ones.\n\nThe key insight is that `fitness_lt_iff_cross` is an *exact* characterization\n(an iff, not a one-sided bound), so the boundary case is a genuine equality\nhyperplane, and `zfc_lc_strictly_fitter` is one verified point strictly on the\nfertile side.\n\nWhy now? The cross-multiplication criterion is proven and reusable, so quantifying\nthe threshold for concrete extension families (ZFC + CH, ZFC + PD, ZFC + I0) is a\nmatter of plugging in trait estimates rather than new theory.\n\n---\n\n## 4. Open-endedness: no bounded \"final theory\"\n\n**Conjecture.** There is no theory of maximal fitness; equivalently, every\nfitness-improving lineage is cofinal in fitness, so mathematics has no\nfitness-saturating \"theory of everything\".\n\nThe key insight is that `evolution_escapes_finite` proves a fitness-improving\ntrajectory cannot be confined to any finite ecosystem, because the trajectory is\ninjective (`evolution_injective`) and ℕ does not inject into a finite set —\nunbounded ascent is forced, not assumed.\n\nWhy now? The injectivity and finite-escape theorems are already axiom-clean;\nupgrading \"escapes every finite set\" to \"fitness → ∞\" only needs an\nArchimedean/cofinality argument over ℚ, which Mathlib supports directly.\n\n---\n\n## 5. Foundational monism under niche injectivity\n\n**Conjecture.** If the foundational ecosystem ever reaches a state where all\nfitnesses are distinct, then it has a unique apex theory, and that apex is a global\nattractor of fitness-improving dynamics.\n\nThe key insight is that `fitness_max_unique` already gives uniqueness of the\nfitness-maximizer under `Set.InjOn fitness`; combining it with the monotone,\nacyclic trajectory of `evolution_strictMono` suggests the apex is not merely unique\nbut dynamically selected.\n\nWhy now? Both ingredients — apex uniqueness and strictly monotone evolution — are\nproved in this cycle, so the attractor claim is the natural synthesis to test\nnext, e.g. by formalizing convergence of trajectories that stay within a finite\nequilibrium.\n",
     "domain_bridges": [],
     "domains": [
@@ -5394,7 +5394,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "eef6f30f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T18:05:28.852660+00:00",
     "title": "Derived from the Phase A cycle that produced `Fitness.lean`,"
   },
@@ -6240,7 +6240,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "22ed9246",
     "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
     "domain_bridges": [],
     "domains": [
@@ -6253,7 +6253,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -7353,7 +7353,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a0d2774b",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domain_bridges": [],
     "domains": [
@@ -7366,7 +7366,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },
