@@ -120,7 +120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "863d07b7",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -130,7 +130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -2865,18 +2865,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2164",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:03:23.688866+00:00",
+    "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2164",
+    "id": "fd_2165",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
     "status": "available",
     "timestamp": "2026-06-21T03:16:50.834545+00:00",
     "title": "Existence of square\u2011sided dice pairs preserving the sum distribution of two standard dice"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m \u2261 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2166",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:04:13.711725+00:00",
+    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
   },
   {
     "consumed_by_exp_id": "",
@@ -3816,21 +3845,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Game of Life Universality\n\nThis cycle formalised a self-contained theory of 2D Boolean cellular automata on\nthe infinite grid `\u2124 \u00d7 \u2124` (`Basic.lean`), instantiated Conway's Game of Life and\nproved its two defining CA properties (locality `CA.step_locality`,\nshift-equivariance `CA.step_shift`), verified the canonical dynamical patterns\n(`empty_fixed`, `block_still_life`, `blinker_HtoV/VtoH`, `blinker_period_two`,\n`blinker_not_fixed` in `Patterns.lean`), and built a simulation/time-overhead\ncalculus with a **linear overhead bound** (`Sim.iterate`), **multiplicative\ncomposition of overheads** (`Sim.comp`), and **periodic-orbit transfer**\n(`Sim.period_transfer`) in `Simulation.lean`.\n\nThe following conjectures are derived directly from these findings.\n\n## 1. Glider existence and translational orbits\n\n**Conjecture.** There is a configuration `g : Config` and a nonzero vector\n`v : Cell` with `gol.step^[4] g = CA.shift v g` (a period-4 translating pattern).\n\nThe key insight is that `CA.step_shift` already proves Game of Life commutes with\ntranslation, so a translating orbit is exactly a *fixed point of `step^[k]` modulo\na shift* \u2014 turning glider existence into a single equivariant equation rather than\nan open-ended search.\n**Why now?** The shift-equivariance lemma and the finite-window proof technique\nused for the blinker transfer verbatim to the 5-cell glider; only the window size\ngrows, so the existing `interval_cases`/`decide` pipeline should close it.\n\n## 2. Overhead is sharp under composition\n\n**Conjecture.** The multiplicative overhead in `Sim.comp` cannot be improved in\ngeneral: there exist CAs `A, B, C` and simulations with overheads `k\u2081, k\u2082` such\nthat no simulation of `C` by `A` has overhead `< k\u2081 \u00b7 k\u2082`.\n\nThe key insight is that `Sim.iterate` makes the *total* simulated cost a linear\nfunction of step count, so a lower bound on composite overhead reduces to a\ncounting/injectivity argument on reachable encoded states.\n**Why now?** The overhead calculus is already proved as an upper bound; the dual\nlower-bound question is precisely the missing half and is stated in the same\nvocabulary (`Sim.overhead`).\n\n## 3. Still lifes form an exponentially large independent family\n\n**Conjecture.** For each `n`, there are at least `2^n` distinct fixed points of\n`gol.step` supported on an `O(n)`-wide region (well-separated blocks), and the map\nfrom bit-strings to configurations is injective.\n\nThe key insight is that `block_still_life` plus the *locality* lemma\n`CA.step_locality` means well-separated still lifes do not interact, so fixed-point\nstatus is closed under disjoint union \u2014 converting one still life into an\nexponential family for free.\n**Why now?** Both ingredients (a proved still life, and a locality theorem that\nmakes \"non-interaction\" rigorous) are in hand, so the induction on the number of\nblocks is the only remaining step.\n\n## 4. From overhead calculus to a Turing embedding\n\n**Conjecture.** There is a CA `T` whose dynamics encode a universal Turing machine\nand a simulation `Sim gol T` with polynomial overhead; consequently Game of Life is\nTuring complete with polynomial-time simulation slowdown.\n\nThe key insight is that `Sim` already isolates the *only* obligation a universality\nproof must discharge \u2014 a single per-step commutation square `comm` \u2014 with all the\nmulti-step and compositional bookkeeping (`iterate`, `comp`) handled abstractly.\n**Why now?** The hard combinatorial work (gliders/gates as still lifes and\noscillators) is reduced by directions 1 and 3 to pattern lemmas of exactly the form\nalready automated here, and the complexity bound is delivered automatically by\n`Sim.iterate`.\n\n## 5. Reversibility obstruction\n\n**Conjecture.** `gol.step` is not injective on finite-support configurations (Life\nhas \"Garden of Eden\" / merging behaviour), so no `Sim gol gol` with `enc` a\nbijection and overhead 1 other than the trivial identity exists.\n\nThe key insight is that `empty_fixed` and `block_still_life` already exhibit two\ndistinct configurations (`empty` and a lone cell that dies) collapsing toward the\nsame successor, which is the seed of a non-injectivity witness.\n**Why now?** The `step` function is fully defined and its values are computable on\nany finite window, so a concrete two-configuration merge can be exhibited and\nproved with the same `decide`-on-a-window method already validated.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2165",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7a341625",
-    "status": "available",
-    "timestamp": "2026-06-21T03:57:27.596762+00:00",
-    "title": "This cycle formalised a self-contained theory of 2D Boolean cellular automata on"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4542,7 +4556,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "ab651d5d",
+    "consumed_by_exp_id": "",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
@@ -4552,7 +4566,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
