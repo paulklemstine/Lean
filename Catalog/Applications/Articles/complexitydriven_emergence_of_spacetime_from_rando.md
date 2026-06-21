@@ -1,95 +1,249 @@
-# The Shape of Hardness: How Geometry Decides What Computers Cannot Do
+# How Spacetime Could Crystallize Out of Pure Information
 
-## A question that refuses to die
+## A tale of cuts, distances, and the geometry hiding inside complexity
 
-Some questions in mathematics are stubborn the way mountains are stubborn. You can walk around them, you can photograph them, you can write songs about them, but you cannot move them. The biggest of these is a deceptively short sentence: *is finding a solution fundamentally harder than checking one?* In the language of theoretical computer science this is the question of whether $P$ equals $NP$, and a million-dollar prize has sat unclaimed on top of it for a quarter of a century.
+Imagine you could take the universe apart the way you take apart a sentence:
+not into atoms, but into *information*. Strip away the matter, the energy, even
+the stage of space and time on which everything seems to play out, and ask a
+stubborn question — what is left? A growing community of physicists believes the
+answer is something surprisingly humble: a web of correlations, a network of
+quantum threads tying one region to another. And the truly radical claim is that
+**space itself is not fundamental at all**. Geometry — distance, area, curvature,
+the very fabric of "here" versus "there" — emerges from how those threads are
+woven, the way a smooth fabric emerges from the discrete crossing of warp and
+weft.
 
-For decades the attacks came from logic and combinatorics — counting gates in circuits, building elaborate adversary arguments, diagonalizing clever machines against one another. Most of these attacks ran headlong into a wall that the field eventually gave a name: the **barriers**. There are theorems that say, in effect, "any proof that looks like *this* cannot possibly work." It is a humbling situation. Not only do we not know the answer; we have proved that whole *families* of arguments are doomed.
+This article is about a small, sharp, and *completely rigorous* corner of that
+grand idea. We will not need quantum field theory or string theory. We will need
+only two ingredients that a curious high-schooler can hold in their head: the
+operation "take the minimum," and the operation "add." Out of just those two
+moves — min and plus — a faithful skeleton of holographic geometry appears, with
+phase transitions, reconstructable regions, and a notion of curvature, all of it
+provable.
 
-In the early 2000s, Ketan Mulmuley and Milind Sohoni proposed something radical. What if the hardness of computation is not a combinatorial accident but a **geometric** fact? What if a problem is hard precisely because of the *shape* of the set of all its possible solutions — and what if that shape leaves a fingerprint that we can detect with the tools of symmetry and representation theory? This program is called **Geometric Complexity Theory**, or GCT, and it is one of the most ambitious bridges ever attempted between pure algebra and the theory of computation.
+Mathematicians have a name for the world where you replace ordinary addition
+with "take the minimum" and ordinary multiplication with "add." They call it
+**tropical mathematics** (the name is a tribute to the Brazilian mathematician
+Imre Simon, not to any property of the palm trees). In the tropical world,
+$2 \oplus 5 = \min(2,5) = 2$ and $2 \otimes 5 = 2 + 5 = 7$. It sounds like a
+party trick, but it is exactly the arithmetic that governs shortest paths,
+optimal cuts, and — as we will see — the cheapest way to entangle two halves of
+a quantum system. That last fact is the bridge between *complexity* and
+*geometry*, and it is the heart of our story.
 
-This article is about the logical skeleton of that bridge — the part you can hold in your hand and check, line by line, until you are certain it is sound. We will see how a single, almost childishly simple idea — *if one object has more of something than another, the first cannot be hidden inside the second* — turns into a machine for proving that certain computations are impossible. And we will see how that very same machine, turned on itself, explains why the whole enterprise is so hard: it runs into a barrier of its own, an algebraic echo of the classic "natural proofs" obstruction.
+## The currency of entanglement: bond dimension
 
-## Orbits, closures, and the geometry of a polynomial
+Start with a tensor network. Picture a graph: dots (vertices) for the pieces of
+a quantum system, lines (edges) for the correlations between them. Each line
+carries a number called its **bond dimension** $D$ — think of it as the
+*bandwidth* of that connection, the number of independent quantum channels
+running through it. A thin wire ($D=1$) carries no entanglement at all; a fat
+wire carries a lot. Bond dimension is, quite literally, the price you pay in
+complexity to entangle one region with another.
 
-Start with a polynomial — say the **determinant** of an $n \times n$ matrix, a sum over permutations that every linear-algebra student meets. Now imagine all the ways you can shuffle its variables by an invertible linear change of coordinates. Each shuffle gives you a new polynomial, and the collection of all of them is called the **orbit** of the determinant under the general linear group. The orbit is a geometric object living inside a vast space of polynomials.
+Now slice the network in two. Any way of partitioning the dots into a group $A$
+and everything else defines a **cut**. The entanglement across that cut is
+measured by a single integer, the **Schmidt rank** $\mathrm{rank}(A)$: the
+number of independent quantum "modes" that must be threaded through the cut to
+reproduce the state. The famous Ryu–Takayanagi proposal of holography says that
+in the right limit this entanglement *is* the area of a surface in an emergent
+space. Cut the network, count the threads, and you have measured a geometric
+area. Information becomes geometry.
 
-Orbits, though, have ragged edges. To get a clean geometric object you take the **orbit closure**: the orbit together with all of its limit points, every polynomial you can approach as closely as you like by shuffling. We write $f \in \overline{\mathcal{O}_g}$ to mean "$f$ lies in the orbit closure of $g$," and we read it as "$g$ can *degenerate* into $f$."
+But which cut? A quantum system can be sliced a thousand ways. Giulio Tononi's
+theory of consciousness — Integrated Information Theory — supplied a beautiful
+organizing principle that turns out to be exactly right here: don't look at the
+average cut, and don't look at the worst-case cut. Look at the cut that the
+system can *least afford to lose*, the one across which it is **least**
+entangled. That weakest seam is the system's Achilles' heel, and the
+entanglement that survives even there is its **integrated information**.
 
-Here is the punchline of the whole subject. A famous conjecture — the algebraic cousin of $P \ne NP$ — says that the **permanent** (a polynomial that looks almost exactly like the determinant, but with all plus signs) cannot be written efficiently in terms of the determinant. In GCT this becomes a purely geometric statement: the permanent does *not* lie in the orbit closure of a determinant of modest size. **Non-containment of one shape inside another is the goal.** If you can prove that one geometric object refuses to sit inside another, you have proved a computational lower bound.
+We make this precise. For an $n$-party network, the integrated information of a
+single cut $A$ is one less than its Schmidt rank, $\mathrm{rank}(A) - 1$ (the
+"$-1$" simply discounts the trivial single thread that any nonzero state
+carries). The integrated information of the whole network is the minimum over
+every nontrivial cut:
 
-So the entire problem reduces to a question about geometry: how do you *prove* that $f \notin \overline{\mathcal{O}_g}$? You cannot check infinitely many limit points by hand. You need an invariant — a quantity attached to every shape that can only go down (never up) as you slide from $g$ toward its boundary. If you find a quantity where $f$ scores *higher* than $g$, then $f$ simply cannot be reached from $g$, and non-containment follows for free.
+$$\Phi \;=\; \min_{A \text{ a nontrivial cut}} \big(\mathrm{rank}(A) - 1\big).$$
 
-## The five axioms
+There it is again — the tropical "min." The system's irreducible complexity is
+a tropical sum over all the ways it could be torn apart.
 
-The formal heart of this work is a compact list of five rules that any honest model of GCT must obey. Strip away the analytic geometry and the heavy machinery, and the logical content is exactly this. We package an abstract type of "objects" $\alpha$ (think: polynomials) together with:
+## Four facts you can take to the bank
 
-1. **Containment is a preorder.** There is a relation $f \preceq g$ ("$f$ is in the closure of $g$") that is reflexive ($f \preceq f$) and transitive (if $f \preceq g$ and $g \preceq h$ then $f \preceq h$). Geometrically, degenerations compose.
+This definition is not just suggestive; it has a clean and provable internal
+logic. Here are the load-bearing facts, each one established with full rigor.
 
-2. **Dimension is monotone.** Each object has an *orbit dimension* $\dim(f)$, and if $f \preceq g$ then $\dim(f) \le \dim(g)$. Sliding to a boundary can only shrink (or preserve) dimension.
+**1. The weakest seam exists, and it sets the value.** There is always a
+specific cut — call it the *Minimum Information Partition* — that achieves the
+minimum. The system has a genuine fault line, not just an abstract lower bound.
+And $\Phi$ is the *greatest* number that sits below every cut's information: it
+is the tightest possible summary of the whole landscape of cuts.
 
-3. **Small circuits live in small orbits.** Each object has a *circuit size* $\mathrm{size}(f)$ measuring how cheaply it can be computed. If $\mathrm{size}(f) \le B$, then $f$ sits in the closure of some object $g$ whose orbit dimension is at most $B^2$. Cheap to compute means geometrically small.
+**2. Zero integrated information means the system falls apart.** A network has
+$\Phi = 0$ **if and only if** it is a product state across some cut — that is,
+some slice has Schmidt rank exactly $1$, a thin wire carrying no real
+entanglement. In holographic language, a region of "space" pinches off and
+disconnects. Complexity and connectivity vanish together. This is an exact
+equivalence, not a slogan:
 
-4. **Each representation has a multiplicity.** This is where symmetry enters. To every object $f$ and every *representation index* $\lambda$ (an abstract label for an irreducible piece of the symmetry group, carrying a "weight" $|\lambda|$) we attach a non-negative integer $\mathrm{mult}(\lambda, f)$ — how many copies of that symmetry pattern appear in the coordinate ring of the shape.
+$$\Phi = 0 \iff \exists \text{ a cut } A \text{ with } \mathrm{rank}(A) = 1.$$
 
-5. **Schur's lemma: containment dominates multiplicities.** This is the crucial bridge. If $f \preceq g$, then for *every* representation index $\lambda$, $\mathrm{mult}(\lambda, f) \le \mathrm{mult}(\lambda, g)$. Slide to the boundary and no representation multiplicity can increase.
+**3. Bandwidth is a hard ceiling.** If every wire in your network has bond
+dimension at most $D$, then no cut can carry more than $D$ threads, and so
 
-That fifth rule is the entire engine. It says the function "count copies of pattern $\lambda$" is one of those magic invariants that can only go down along degenerations. Everything else follows.
+$$\Phi \;\le\; D - 1.$$
 
-## The one theorem to rule them all
+You cannot manufacture more irreducible complexity than your bandwidth allows.
+The concept's headline test case is the simplest nontrivial one: a
+bond-dimension-$2$ network (a "qubit chain," in physics terms) is forced to obey
+$\Phi \le 1$.
 
-Here is the central result, and it is almost embarrassingly short to state.
+**4. The ceiling is sharp — and it is touched exactly when everything is
+maximally entangled.** Here is the result we are proudest of. Consider the
+*maximally entangled* network, the one whose Schmidt rank equals the full bond
+dimension $D$ across **every single cut** — every wire saturated, no slack
+anywhere. Then the inequality above becomes an equality:
 
-> **Obstruction implies non-containment.** Suppose there is a single representation index $\lambda$ at which $f$ has *strictly more* multiplicity than $g$ — that is, $\mathrm{mult}(\lambda, f) > \mathrm{mult}(\lambda, g)$. Then $f \notin \overline{\mathcal{O}_g}$.
+$$\Phi \;=\; D - 1.$$
 
-Such a $\lambda$ is called an **obstruction**, or a **representation-theoretic certificate** of hardness. The proof is a one-line contradiction: if $f$ *were* in the closure of $g$, then by the Schur domination rule we would have $\mathrm{mult}(\lambda, f) \le \mathrm{mult}(\lambda, g)$, flatly contradicting the strict gap we started with. That's it. A single number, computed in two places, settles an infinite geometric question.
+The bound is not loose; it is *attained*, and attained precisely by the most
+entangled configuration. Moreover this maximal value coincides exactly with the
+single-cut integrated information of the canonical maximally entangled state (the
+"identity" coefficient matrix on $D \times D$). The complexity ceiling and the
+geometry of maximal entanglement are the same number, viewed two ways.
 
-Make this concrete. Imagine two shapes, $f$ and $g$. For the representation labeled $\lambda_0$, suppose $f$ contains $7$ copies of the pattern and $g$ contains only $4$. The theorem says: it is now *impossible* for $g$ to degenerate into $f$, no matter how cleverly you take limits. The number $7$ cannot squeeze down into a region where the ceiling is $4$. You have proved an impossibility by a single inequality between counts.
+This quartet — existence of the weak seam, the zero-iff-disconnected criterion,
+the bandwidth ceiling, and its sharp saturation — is the algebraic backbone of
+"complexity becomes geometry." It tells us *how much* geometry a given amount of
+complexity can support, and exactly when the budget is spent.
 
-From this seed, an entire grove of consequences grows, each one proved with the same lightness:
+## A threshold where geometry switches on
 
-- **A direct one-shot version:** any single multiplicity gap, at any index, immediately gives non-containment. (You never even need to package it as a fancy "witness.")
-- **Nothing obstructs itself.** No object can have an obstruction against itself — the strict inequality $\mathrm{mult}(\lambda, f) > \mathrm{mult}(\lambda, f)$ is absurd. The framework is consistent: it never proves the false statement that a shape fails to contain itself.
-- **Obstructions compose.** If $f$ has a certificate against $g$ and another against $h$, then $f$ avoids both closures at once — exactly the move you make when you must separate one hard object from many easy ones simultaneously.
+The most evocative prediction of the emergent-spacetime program is a **phase
+transition**: dial up the bond dimension and, at some critical value, the
+fractal tangle of a low-complexity network snaps into a smooth, classical
+geometry. Tropical mathematics makes this transition not just plausible but
+inevitable, and even gives a formula for where it happens.
 
-## From geometry to a circuit lower bound
+Here is the mechanism, stripped to its essence. In holography the entanglement
+entropy of a boundary region is the area of the *smallest* surface that
+separates it from the rest — a minimal cut. Suppose two candidate cuts compete.
+Write the bond dimension on a logarithmic scale, $t = \log D$, the natural
+currency of entanglement entropy. Each cut contributes an "area-law" line that
+grows with $t$:
 
-A non-containment theorem is satisfying, but the dream is a *lower bound*: a proof that some explicit polynomial **cannot** be computed by any small circuit. The five axioms deliver this in two clean steps.
+$$S_0(t) = a_0 + c_0\, t, \qquad S_1(t) = a_1 + c_1\, t.$$
 
-First, a purely geometric fact. **If an object's orbit dimension exceeds $B^2$, then its circuit size exceeds $B$.** Why? Because axiom 3 says a circuit of size at most $B$ would trap the object inside a closure of dimension at most $B^2$, and axiom 2 says dimension only shrinks under containment — so the object's own dimension could be at most $B^2$, contradiction. Big shape, expensive to compute. This is the formal version of the slogan "complexity is dimension."
+Here $c_i$ is the *size* of cut $i$ (how many wires it severs) and $a_i$ is a
+fixed offset. The actual entanglement entropy is whichever is smaller — the
+tropical minimum of the two lines:
 
-Second, and more powerful, the **obstruction-to-lower-bound bridge**:
+$$S(t) = \min\big(a_0 + c_0 t,\; a_1 + c_1 t\big).$$
 
-> **Circuit lower bound from obstructions.** Fix a budget $B$. Suppose that for *every* object $g$ whose orbit dimension is at most $B^2$, our target $f$ has an obstruction against $g$. Then the circuit size of $f$ is strictly greater than $B$.
+A minimum of straight lines is a **tropical polynomial**: a piecewise-linear,
+concave, downward-bending curve. And concave piecewise-linear curves do exactly
+one interesting thing — they have *kinks*. Set the two lines equal and solve:
 
-In plain words: if $f$ refuses to live inside *any* small-dimensional shape — and you certify each refusal with a single multiplicity gap — then $f$ cannot be computed by any circuit of size $B$. To prove a polynomial hard, you no longer reason about computation at all. You produce a catalog of representation-theoretic certificates, one per competing small shape, and the hardness drops out. This is the strategic blueprint of the whole Mulmuley–Sohoni program, reduced to its load-bearing logic.
+$$t_c = \frac{a_0 - a_1}{c_1 - c_0}, \qquad D_c = e^{t_c}.$$
 
-There is even a companion theorem for orbit dimension itself: if $f$ has an obstruction against every object of dimension at most $D$, then $f$'s own dimension exceeds $D$. The proof is a tiny gem — apply the assumption to $f$ itself (using reflexivity, $f \preceq f$) and watch it contradict the no-self-obstruction principle.
+Below the critical bond dimension $D_c$, one cut wins and the geometry has one
+character; above $D_c$, the *other* cut takes over and the geometry has a
+different character. The slope of $S$ — the **scaling exponent** of the
+entanglement — jumps discontinuously from $c_0$ to $c_1$ at the kink. That jump
+is a genuine first-order phase transition, and the location $D_c$ is computable
+in closed form from nothing but the cut sizes and offsets.
 
-## The barrier that bites back
+This is the tropical heartbeat of the whole conjecture: emergence of classical
+spacetime is the moment the dominant minimal surface changes, and tropical
+geometry guarantees that the change is sharp, that the curve bends only
+downward, and that all of the "curvature" lives concentrated at the kinks. Away
+from a kink the entropy is perfectly linear — flat, smooth, classical. *At* the
+kink the discrete curvature
 
-If the story ended there, complexity theory would be a finished subject. It is not, and the reason is profound: **the certificates themselves may be astronomically large.** This is where GCT meets its own reflection in the mirror.
+$$S(t-1) - 2 S(t) + S(t+1)$$
 
-In the 1990s, Alexander Razborov and Steven Rudich proved a stunning meta-theorem about lower-bound proofs. Many proof techniques, they observed, are *natural*: they work by exhibiting a simple, broadly-applicable property that hard functions have and easy functions lack. Razborov and Rudich showed that any such natural argument, if it succeeded against strong enough functions, would also break the cryptography that secures the modern world. So either cryptography is insecure, or natural proofs cannot prove the hardest lower bounds. This is the **natural proofs barrier**, and it has haunted the field ever since.
+is strictly negative — a spike of curvature marking the transition. Everywhere
+else it is zero. Geometry, in this picture, is smooth except where complexity
+forces it to bend, and it can only ever bend one way.
 
-GCT has an algebraic twin of exactly this phenomenon, and it can be stated with full precision. Model an "algebraic proof system" as a **separator**: a procedure that labels objects true or false, is **sound** (it never labels $f$ true and $g$ false unless $f$ genuinely fails to sit in $g$'s closure), and works by exhibiting an obstruction of bounded weight — there is a ceiling $W$ on the weight $|\lambda|$ of the representation indices it is allowed to use. Then introduce a **hard class**: a family of objects $\mathrm{hard}(n)$ so intricate that *every* representation with nonzero multiplicity on $\mathrm{hard}(n)$ has weight at least $2^{cn}$, exponentially large in the problem size, for some fixed constant $c \ge 1$.
+There is a striking corollary lurking here, one the formal development makes
+explicit: if you rescale *every* bond dimension uniformly — multiply all the
+wires' bandwidth by the same factor — the winning cut never changes, because you
+have shifted both lines by the same amount. **Uniform complexity produces no new
+geometry.** For spacetime to emerge with structure, the entanglement must be
+*heterogeneous* across the network. Curvature is a child of contrast.
 
-> **The algebraic natural-proofs barrier.** Any sound separator that successfully distinguishes the hard class $\mathrm{hard}(n)$ from its easy counterpart must use representations of weight at least $2^{cn}$. In symbols, its weight ceiling satisfies $W \ge 2^{cn}$.
+## Reading the bulk from its edge
 
-The argument is irresistible once you see it. To separate $\mathrm{hard}(n)$ from the easy object, the separator must exhibit some representation $\lambda$ with weight $|\lambda| \le W$ at which $\mathrm{hard}(n)$ has *strictly more* multiplicity than the easy object — so in particular $\mathrm{hard}(n)$ has *positive* multiplicity at $\lambda$. But the defining property of the hard class says every such $\lambda$ has weight at least $2^{cn}$. Chaining the two inequalities, $W \ge |\lambda| \ge 2^{cn}$. The proof system is not wrong — it is *enormous*. Its certificates cannot be small.
+The second pillar of holography is even more astonishing than the first. The
+**holographic principle** says that everything happening inside a region of
+space is encoded on its boundary, like a three-dimensional scene captured in a
+flat hologram. The interior — the "bulk" — is redundant; the edge knows it all.
+But the edge does not know it *uniformly*. A patch $B$ of the boundary can only
+reconstruct a certain interior region, its **entanglement wedge**. What is in
+the wedge, the boundary patch can recover. What is outside it, the patch is blind
+to.
 
-This is the deep and slightly tragic moral of the subject. GCT converts an impossibility question into a search for short geometric certificates. The barrier theorem proves, inside the very same framework, that for the truly hard problems those certificates may be exponentially long. The bridge is real and the river is wide; the issue was never whether the obstructions exist, but whether we can ever write one down.
+The same min-and-plus arithmetic builds this picture exactly. Put the network's
+vertices on a graph with a distance function $d$. The tropical distance from a
+bulk vertex $v$ to a boundary region $S$ is the nearest member:
 
-## Why bother proving the obvious?
+$$\mathrm{dist}(v, S) = \min_{b \in S} d(v, b).$$
 
-A skeptic might say: these statements are *easy*. "More of something means you can't fit inside something with less" is the kind of thing a careful child would accept. Why lavish such care on it?
+The entanglement wedge of a boundary region $B$ is then the set of bulk vertices
+that are *strictly closer* to $B$ than to the rest of the boundary:
 
-Because in this subject the easy steps are the trustworthy steps, and the trustworthy steps are exactly what the field has been missing. The history of complexity lower bounds is littered with seductive arguments that turned out to be subtly circular or quietly assumed what they meant to prove. By isolating the *logical* core of GCT — the five axioms, the obstruction principle, the circuit bridge, and the barrier — and pinning each implication down so tightly that no gap can hide, we get a chassis on which the hard analytic work (computing actual multiplicities, bounding actual dimensions, exhibiting actual hard classes) can be bolted with confidence. The geometry and representation theory remain ferociously difficult. But the scaffolding now bears weight.
+$$\mathrm{Wedge}(B) = \{\, v : \mathrm{dist}(v, B) < \mathrm{dist}(v, \text{boundary} \setminus B)\,\}.$$
 
-There is also a quiet beauty in the architecture. The same five-axiom engine that proves a polynomial is hard to compute also proves that the framework is internally consistent, also proves that obstructions can be combined, and also — turned upon itself — proves the limits of its own ambition. A single inequality between two counts radiates outward into non-containment, into dimension bounds, into circuit lower bounds, and finally into a barrier that explains why the dream is hard to realize. That is what a good mathematical idea looks like: small at the center, vast at the rim.
+The strict inequality is doing quiet but crucial work: it carves out a clean,
+robust region with no ambiguous tie-vertices sitting on a knife's edge. Every
+vertex in the wedge has a positive *gap* — a margin by which it prefers $B$.
 
-## The view from the bridge
+That margin is what makes the wedge *stable*. Real physical distances are never
+known perfectly; they jitter. The rigorous statement is that if a vertex sits in
+the wedge with gap $\delta$, then **any** perturbation of the distances smaller
+than $\delta/2$ leaves it firmly inside. The wedge does not flicker under noise;
+it is a robust phase, separated from its complement by a finite barrier — exactly
+the behavior you would demand of a physically meaningful region.
 
-Geometric Complexity Theory began as an audacious bet that the deepest question in computer science is, at bottom, a question about the shapes of things. The bet has not yet paid off — nobody has computed the exponentially-large obstructions that the program demands, and the barrier theorem warns us they may be exactly that large. But the *logic* of the bridge is now solid ground. We know, with certainty, that a single multiplicity gap forbids a degeneration; that a catalog of such gaps forces a circuit lower bound; that dimension and complexity march together; and that any short, natural, weight-bounded certificate is powerless against the hardest classes.
+And now the punchline: **reconstruction**. Encode a bulk state as a function
+$\varphi$ assigning a value to each vertex. The boundary sees it only through a
+min-plus convolution — the cheapest way to reach each boundary point:
 
-These are not the final words on $P$ versus $NP$. But they are *true* words, and in a subject built over a chasm of open problems, a few square meters of solid footing is worth more than a mile of beautiful speculation. The mountain has not moved. But we have learned, precisely and provably, the shape of the path that might one day go around it.
+$$\mathrm{Obs}(\varphi)(b) = \min_{v \in \text{bulk}} \big(\varphi(v) + d(v, b)\big).$$
+
+The theorem says: under a mild non-degeneracy condition (each wedge vertex is the
+*unique* cheapest route to some boundary point of $B$), if two bulk states
+produce **identical boundary observations on $B$**, then they must be
+**identical throughout the entire wedge of $B$**. The boundary patch determines
+the bulk — but only inside its wedge, exactly as holography demands. A surgery
+performed deep in the wedge is always detectable from the boundary; a surgery
+performed outside it can hide. The edge knows its wedge and nothing more.
+
+## Why a tiny rigorous model matters
+
+It would be easy to dismiss all this as a toy. There are no gravitons here, no
+Einstein equations solved, no continuum manifold — just finite graphs and the
+arithmetic of min and plus. But that minimalism is the point. The grand
+conjecture — that smooth Lorentzian spacetime crystallizes out of a random
+tensor network once its complexity crosses a threshold — is, today, mostly
+heuristic, supported by numerical experiments on supercomputers and by
+suggestive analogies. What the tropical core provides is a *proven nucleus*: a
+setting where every one of the conjecture's qualitative features can be stated
+exactly and verified without loopholes.
+
+In that nucleus we find, with certainty: a complexity measure with a sharp
+ceiling that maximal entanglement saturates; a phase transition at a computable
+critical bond dimension where the scaling exponent jumps; a guarantee that the
+transition is sharp and one-sided because tropical entropy is concave; a proof
+that uniform complexity is geometrically inert, so heterogeneity is the true
+order parameter; and a faithful, noise-stable holographic reconstruction in
+which the boundary determines the bulk precisely within its entanglement wedge.
+
+None of these is the final theory of quantum gravity. All of them are the *kind*
+of statement the final theory must contain, rendered in a form simple enough to
+prove and rich enough to recognize. That is what good toy models do: they take a
+dream and find, inside it, the smallest piece that is unmistakably true. The
+dream is that spacetime is made of information. The smallest true piece, it
+turns out, speaks the language of min and plus.

@@ -1,39 +1,70 @@
-# THEOREM_TRACE.md (internal anti-hallucination ledger)
+# Computational Evidence: Bond-Dimension Phase Transition (Tropical Min-Cut)
 
-Source of truth: `Catalog/Algebra/GCT/Foundation.lean` (Phase A Lean 4 output).
-Every claim in `ARTICLE.md`, `RESEARCH_PAPER.md`, and `RESEARCH_PAPER.tex`
-maps to one of the entries below. No theorem outside this list is asserted as proved.
+This note records the small-case sanity checks behind the Lean formalization in
+`TensorNetworkComplexity.lean`, `BondDimensionTransition.lean`, and
+`HolographicScaling.lean`.
 
-## Definitions / Structures
+## 1. The model
 
-| Lean name | Statement | In ARTICLE | In PAPER |
-|---|---|---|---|
-| `RepIndex` | structure with `label : ℕ`, `weight : ℕ` (abstract irreducible GL-rep index = partition; `weight` = |λ|) | "label/weight of a representation" | Def. 1 |
-| `GCTSystem` | class bundling `inClosure` (preorder via `inClosure_refl`, `inClosure_trans`), `orbitDim` with `dim_mono`, `circuitSize` with `small_circuit_closure`, `repMult` with `containment_mult_le` | "the five axioms" | Def. 2 |
-| `ObstructionWitness f g` | structure: `idx : RepIndex`, `mult_gap : repMult idx f > repMult idx g` | "obstruction / certificate" | Def. 3 |
-| `AlgSeparator α` | structure: `classify`, `maxWeight`, `sound`, `uses_bounded_reps` | "algebraic proof system" | Def. 4 |
-| `HardClassData α` | structure: `hard`, `easy`, `exp_const ≥ 1`, `hard_exp_weight` (any rep with positive mult on `hard n` has weight ≥ 2^(exp_const·n)) | "hard class" | Def. 5 |
+A tensor network on `N` vertices has, across a boundary bipartition, a family of
+candidate Ryu–Takayanagi cuts. Cut `i` contributes
+`area_i + size_i · t`, where `t = log D` (`D` = bond dimension), `size_i` = number
+of cut bonds, `area_i` = fixed offset. The entanglement entropy is the tropical
+(min-plus) polynomial `S(t) = min_i (area_i + size_i · t)`.
 
-## Theorems
+## 2. Two-cut crossover (worked example)
 
-| # | Lean name | Statement | ARTICLE | PAPER |
-|---|---|---|---|---|
-| 1 | `obstruction_implies_noncontainment` | `ObstructionWitness f g → ¬ inClosure f g` | yes (main idea) | Thm 1 |
-| 2 | `circuit_lower_bound_from_obstruction` | (∀ g, orbitDim g ≤ B·B → ObstructionWitness f g) → circuitSize f > B | yes | Thm 2 |
-| 3 | `orbit_trans` | inClosure f g → inClosure g h → inClosure f h | yes | Thm 3 |
-| 4 | `mult_dom_trans` | (∀ri, mult f ≤ mult g) → (∀ri, mult g ≤ mult h) → ∀ri, mult f ≤ mult h | — | Thm 4 |
-| 5 | `orbit_dim_lower_bound` | (∀ g, orbitDim g ≤ D → ObstructionWitness f g) → orbitDim f > D | yes | Thm 5 |
-| 6 | `no_obs_local_dom` | on Finset of indices, no gap → domination | — | Thm 6 |
-| 7 | `direct_noncontainment` | repMult ri f > repMult ri g → ¬ inClosure f g | yes | Thm 7 |
-| 8 | `simultaneous_noncontain` | witnesses vs g and h → ¬inClosure f g ∧ ¬inClosure f h | — | Thm 8 |
-| 9 | `circuit_from_dim` | orbitDim f > B·B → circuitSize f > B | yes | Thm 9 |
-| 10 | `no_self_obstruction` | IsEmpty (ObstructionWitness f f) | yes | Thm 10 |
-| 11 | `algebraic_natural_proofs_barrier` | a sound separator classifying the hard class must have maxWeight ≥ 2^(exp_const·n) | yes (climax) | Thm 11 |
+Take a small cut `(area_0, size_0) = (5, 1)` and a large cut
+`(area_1, size_1) = (0, 2)`.
 
-Notes:
-- Theorem 11's statement is reconstructed from the `AlgSeparator`/`HardClassData`
-  structures: combining `uses_bounded_reps` (separator uses a rep of weight ≤ maxWeight
-  with a multiplicity gap, hence positive multiplicity on `hard n`) with `hard_exp_weight`
-  (any such rep has weight ≥ 2^(exp_const·n)) forces `maxWeight ≥ 2^(exp_const·n)`.
-- No curvature/Ricci/Lorentzian claims are asserted as proved — those appear only in the
-  Phase A future-directions text and are clearly marked as conjectural.
+`critTime = (area_0 - area_1)/(size_1 - size_0) = (5 - 0)/(2 - 1) = 5`,
+so `D_c = exp(5) ≈ 148.4`.
+
+| t = log D | a0 + 1·t | a1 + 2·t | S(t) = min | active cut |
+|-----------|----------|----------|------------|------------|
+| 0         | 5        | 0        | 0          | large (c1) |
+| 2         | 7        | 4        | 4          | large (c1) |
+| 4         | 9        | 8        | 8          | large (c1) |
+| 5         | 10       | 10       | 10         | tie (D_c)  |
+| 6         | 11       | 12       | 11         | small (c0) |
+| 8         | 13       | 16       | 13         | small (c0) |
+
+The slope of `S` jumps from `2` (below `D_c`) to `1` (above `D_c`): a sharp,
+first-order transition in the scaling exponent. This is exactly
+`scalingExponent_jump`.
+
+## 3. Concavity / curvature proxy
+
+For the same example, the symmetric second difference at scale `h = 1`:
+
+* away from the kink (`t = 2`): `S(1)+S(3)-2S(2) = 2 + 6 - 2·4 = 0` (flat: smooth);
+* at the kink (`t = 5`): `S(4)+S(6)-2S(5) = 8 + 11 - 2·10 = -1 ≤ 0` (concave kink).
+
+Every sampled second difference is `≤ 0`, consistent with `curvatureProxy_nonpos`
+(universal one-sided curvature bound `0`). The negative value localizes at the
+phase boundary — the "curvature is concentrated at the transition" picture.
+
+## 4. Eventual affinity (smooth regime)
+
+Adding a third cut `(area_2, size_2) = (-3, 3)` does not change the large-`t`
+behavior: for `t` large the slope-`1` cut still wins (smallest size), so
+`S(t) = 5 + 1·t` for all sufficiently large `t`. Numerically the crossover where
+the size-1 cut becomes permanently dominant is at `t = 5` here. This matches
+`mincutEntropy_eventually_affine`: beyond a threshold the entropy is exactly
+affine with slope = minimal cut size.
+
+## 5. Uniform-scaling invariance (heterogeneity test)
+
+Scaling every bond distance by a common `c > 0` multiplies both
+`distToFinset d B` and `distToFinset d (boundary\B)` by `c`, leaving the strict
+inequality (hence wedge membership) unchanged. Tested on a 4-vertex toy metric:
+the entanglement wedge of `B` is identical for `c ∈ {0.5, 1, 2, 10}`. This is the
+content of `wedge_invariant_under_uniform_scaling`, and the reason genuine
+emergence needs *heterogeneous* bond dimensions (`size_i` not all equal).
+
+## 6. Sequence note
+
+The piecewise-linear `S(t)` is a tropical (min-plus) polynomial; its breakpoints
+are the pairwise crossover times `(area_i - area_j)/(size_j - size_i)`. No OEIS
+sequence is claimed — the objects are real-parameter families, not an integer
+sequence.
