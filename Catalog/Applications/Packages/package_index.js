@@ -4,16 +4,6 @@
 
 window.PACKAGE_INDEX = [
   {
-    "date": "2026-06-21T11:28:35Z",
-    "domain": "Physics",
-    "exp_id": "d7a09318",
-    "filename": "complexitydriven_emergence_of_spacetime_from_rando.json",
-    "pkg_num": 222,
-    "quality": "partial",
-    "quality_score": 0.468854,
-    "title": "Union-Closed Families as Positive-Correlation Systems"
-  },
-  {
     "date": "2026-06-21T11:24:10Z",
     "domain": "Cryptography",
     "exp_id": "11f0f366",
@@ -2788,14 +2778,6 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [],
     "title": "Combinatorial Species EGFs as a Tropical Valuation Profile Bridge"
   },
-  "complexitydriven_emergence_of_spacetime_from_rando.json": {
-    "domain": "Physics",
-    "exp_id": "d7a09318",
-    "source_exp_ids": [
-      "pi_brainstorm"
-    ],
-    "title": "Union-Closed Families as Positive-Correlation Systems"
-  },
   "constructive_mathematics_bishops_analysis.json": {
     "domain": "Novelty",
     "exp_id": "2fe3f01b",
@@ -3057,6 +3039,7 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "7a341625",
     "source_exp_ids": [
+      "pi_brainstorm",
       "seed"
     ],
     "title": "Union-Closed Families as Positive-Correlation Systems"
@@ -6773,8 +6756,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "complexitydriven_emergence_of_spacetime_from_rando",
       "primary_domain": "Physics",
-      "priority_score": 0.468854,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "diamond",
       "title": "Union-Closed Families as Positive-Correlation Systems"
     }
