@@ -1,33 +1,48 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# THEOREM TRACE — Landauer's Principle as a Second-Law Inequality
 
-Source of truth: `Catalog/Computation/LandauerLowerBound.lean`
-(namespace `LandauerLowerBound`). The "Phase A output" pasted into the Phase B
-prompt referenced unrelated packages (mock theta functions, semiconjugacy orbit
-arithmetic); those are NOT the math for this concept and are deliberately ignored.
-The Landauer concept's proven content is the file above.
+Internal anti-hallucination ledger. Every theorem/definition below is taken
+verbatim from the Phase A Lean output. Prose in `ARTICLE.md` and
+`RESEARCH_PAPER.md` may only state these results.
 
-Background definitions imported from `Computation.ReversibleTropicalThermodynamics`
-(used but not redefined in the target file), inferred from usage:
+## Source file: `Catalog/Physics/LandauerSecondLaw.lean` (namespace `LandauerSecondLaw`)
 
-- `IsDistribution p` := `(∀ y, 0 ≤ p y) ∧ (∑ y, p y = 1)`  — accessed via `.1`, `.2`.
-- `shannonEntropy p` := `-∑ x, p x * Real.log (p x)`  — confirmed by `unfold shannonEntropy`
-  in `shannonEntropy_pushforward_eq` and `shannonEntropy_pushforward_le`.
-
-| Lean name | Statement | ARTICLE.md | RESEARCH_PAPER.md |
+| Lean name | Mathematical statement | In ARTICLE | In PAPER |
 |---|---|---|---|
-| `pushforwardFun` (def) | `(f∗p)(y) = ∑_{x : f x = y} p x` | "fiber sum" / push-forward | Def 2 |
-| `pushforwardFun_apply_ge` | `p x ≤ (f∗p)(f x)` for `p ≥ 0` | "a fiber contains at least its own grain" | Lemma 1 |
-| `pushforwardFun_nonneg` | `0 ≤ (f∗p) y` for `p ≥ 0` | (implicit) | Lemma (mass) |
-| `pushforwardFun_total` | `∑ y (f∗p) y = ∑ x p x` | "no probability is lost" | Lemma 2 |
-| `pushforwardFun_isDistribution` | `IsDistribution p → IsDistribution (f∗p)` | "output is still a distribution" | Prop 3 |
-| `shannonEntropy_pushforward_eq` | `H(f∗p) = -∑ x p x log((f∗p)(f x))` | reindexing step | Lemma 4 (reindexing) |
-| `shannonEntropy_pushforward_le` | `H(f∗p) ≤ H(p)` for `p ≥ 0` | **main theorem** (data processing) | **Theorem 5** |
-| `shannonEntropy_pushforward_of_injective` | `Injective f → H(f∗p) = H(p)` | reversible = free | **Theorem 6** |
-| `landauer_lower_bound` | `0 ≤ kT(H(p) − H(f∗p))`, `k,T ≥ 0` | **Landauer bound** | **Theorem 7** |
-| `landauer_lower_bound_zero_of_injective` | `Injective f → kT(H(p) − H(f∗p)) = 0` | reversible dissipates nothing | **Theorem 8** |
+| `expect_add_one_le_expect_exp` | For PMF `p`, observable `g`: `1 + E_p[g] ≤ E_p[exp g]` | yes (plain language) | yes (Lemma 1) |
+| `expect_centered_zero` | `E_p[ -α(W - E_p[W]) ] = 0` | yes | yes (Lemma 2) |
+| `work_fluctuation_ge_one` | `1 ≤ E_p[ exp(-α(W - E_p[W])) ]` | yes | yes (Lemma 3) |
+| `work_correction_nonneg` | `0 ≤ log E_p[ exp(-α(W - E_p[W])) ]` | yes | yes (Cor. 4) |
+| `jarzynski_second_law` | For `α>0`, Jarzynski cond.: `ΔF ≤ E_p[W]` | yes (main thm) | yes (Thm 5) |
+| `landauer_kT_bound` | `k,T>0`, Jarzynski at `α=(kT)⁻¹`, `ΔF=kT log 2`: `kT log 2 ≤ E_p[W]` | yes (main thm) | yes (Thm 6) |
+| `landauer_cost_eq_entropy_loss` | `kT log 2 = kT (H(uniform) − H(erased))` | yes | yes (Thm 7) |
+| `logical_to_thermodynamic_irreversibility` | erasure non-injective ⇒ `0 < E_p[W]` (positive dissipation) | yes | yes (Thm 8) |
 
-Derived application (NOT a separate Lean theorem, presented as a worked instance of
-Theorem 5/7): uniform erasure of `n` bits collapses `2^n` equiprobable states to one
-point, dropping entropy by `n log 2`, giving work `n·kT·log 2`; the one-bit case is
-`kT log 2`. This is the extremal collapse-to-a-point case of the DPI, explicitly the
-framing of the file's docstring.
+## Source file: `Catalog/Logic/JarzynskiLandauer.lean` (namespace `JarzynskiLandauer`)
+
+| Lean name | Mathematical statement |
+|---|---|
+| `expect` (def) | `expect p f = ∑_ω p ω · f ω` |
+| `IsPMF` (def) | `(∀ω, 0 ≤ p ω) ∧ ∑_ω p ω = 1` |
+| `JarzynskiCondition` (def) | `E_p[exp(-αW)] = exp(-α ΔF)` |
+| `shannonEntropy` (def) | `∑_ω negMulLog(p ω)` (conv. `0 log 0 = 0`) |
+| `uniformBool` (def) | `fun _ => 1/2` |
+| `erasedBool` (def) | `fun b => if b then 0 else 1` |
+| `erasure` (def) | `fun _ => false` |
+| `entropy_uniformBool` | `H(uniformBool) = log 2` |
+| `entropy_erasedBool` | `H(erasedBool) = 0` |
+| `erasure_not_injective` | `¬ Injective erasure` |
+| `entropy_loss` | `H(uniformBool) − H(erasedBool) = log 2` |
+| `jarzynski_correction` | `E[W] = ΔF + α⁻¹ log E[exp(-α(W-E[W]))]` |
+| `landauer_identity` | specialization with `ΔF = (H_u - H_e)/α` |
+
+## Source file: `Catalog/Computation/LandauerLowerBound.lean` (namespace `LandauerLowerBound`)
+
+| Lean name | Mathematical statement |
+|---|---|
+| `pushforwardFun` (def) | `f∗p (y) = ∑_{x: f x = y} p x` |
+| `pushforwardFun_apply_ge` | `p x ≤ f∗p (f x)` |
+| `pushforwardFun_isDistribution` | `f∗p` is a distribution |
+| `shannonEntropy_pushforward_le` | `H(f∗p) ≤ H(p)` (data-processing) |
+| `shannonEntropy_pushforward_of_injective` | injective `f` ⇒ `H(f∗p) = H(p)` |
+| `landauer_lower_bound` | `0 ≤ kT(H(p) − H(f∗p))` for `k,T ≥ 0` |
+| `landauer_lower_bound_zero_of_injective` | injective ⇒ cost `= 0` |
