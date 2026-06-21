@@ -1037,7 +1037,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1cb884c9",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1051,7 +1051,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -3746,7 +3746,7 @@
       "Andrews GFP",
       "Lin-Liu mex"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53ef2527",
     "description": "For all n ≥ 0, the number of (4,0)-colored Frobenius partitions of weight n equals twice the sum of Lin-Liu minimal excludants over all 4-partitions of n, i.e., ψ_{4,0}(n) = 2σ_{mex,4}(n). This conjecture extends the proven identities ψ_{2,0}(n) = 2σ_{mex,2}(n) and ψ_{2,1}(n) = 2σ_{mex,2}(n) - E_2(n) to the four-colored case.",
     "domain_bridges": [
       "Frobenius partitions to multipartite partitions",
@@ -3763,7 +3763,7 @@
     "proof_strategy": "Establish a sign-reversing involution on (4,0)-colored Frobenius partitions that pairs each partition with a weight contribution of twice its minimal excludant value. The involution would cancel all but the mex-related contributions, generalizing the Andrews/Göllnitz-type bijections used in the two-colored case.",
     "research_mode": "team",
     "source_exp_id": "2606.19696v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T10:27:31.374184+00:00",
     "title": "Generalized two-colored Frobenius identities to four-colored case"
   },
@@ -5159,6 +5159,38 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "E61",
+      "M69",
+      "F21",
+      "F23",
+      "FKK21",
+      "FW23"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves Frankl, Kiselev, and Kupavskii's conjecture that for any intersecting family \\(\\mathcal{F}\\subseteq\\binom{[n]}{k}\\) with \\(n\\ge 60k^{3/2}\\) and \\(k\\ge 50\\), the size of the symmetric difference family satisfies \\(|\\mathcal{SD}(\\mathcal{F})|\\le\\sum_{\\ell=0}^{k-1}\\binom{n-1}{2\\ell}\\), with equality only for a specific class of stars. The proof relies on a concentration inequality and structural arguments on intersecting families.",
+    "domain_bridges": [
+      "extremal set theory",
+      "probabilistic method",
+      "concentration inequalities",
+      "shifting/compression techniques"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2187",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply a concentration inequality to control the distribution of set sizes within intersecting families, combine with shifting/compression to reduce the structure to stars, and enumerate symmetric differences via combinatorial counting.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20043v1",
+    "status": "available",
+    "timestamp": "2026-06-21T19:25:57.384356+00:00",
+    "title": "Improved bound on symmetric differences of intersecting families"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Dallard et al. (2024)",
       "Hajebi and Spirkl (2026)"
     ],
@@ -5184,38 +5216,6 @@
     "title": "Dallard's Conjecture for Planar Graphs"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "E61",
-      "M69",
-      "F21",
-      "F23",
-      "FKK21",
-      "FW23"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "The paper proves Frankl, Kiselev, and Kupavskii's conjecture that for any intersecting family \\(\\mathcal{F}\\subseteq\\binom{[n]}{k}\\) with \\(n\\ge 60k^{3/2}\\) and \\(k\\ge 50\\), the size of the symmetric difference family satisfies \\(|\\mathcal{SD}(\\mathcal{F})|\\le\\sum_{\\ell=0}^{k-1}\\binom{n-1}{2\\ell}\\), with equality only for a specific class of stars. The proof relies on a concentration inequality and structural arguments on intersecting families.",
-    "domain_bridges": [
-      "extremal set theory",
-      "probabilistic method",
-      "concentration inequalities",
-      "shifting/compression techniques"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2189",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Apply a concentration inequality to control the distribution of set sizes within intersecting families, combine with shifting/compression to reduce the structure to stars, and enumerate symmetric differences via combinatorial counting.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20043v1",
-    "status": "available",
-    "timestamp": "2026-06-21T19:25:57.384356+00:00",
-    "title": "Improved bound on symmetric differences of intersecting families"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "EKR1961",
@@ -5230,7 +5230,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2190",
+    "id": "fd_2188",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive combinatorial argument with diversity-optimized families and a new shift operation.",
@@ -5239,6 +5239,57 @@
     "status": "available",
     "timestamp": "2026-06-21T20:17:16.324331+00:00",
     "title": "Structural theorem for large cross-intersecting families"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that in the setting of Theorem 1.1 of the paper, for any ε>0 there exists δ0>0 such that the asymptotic formula holds with error term O(‖μ̃‖^{3-ε}) instead of O(‖μ̃‖^{3-κ}) for some fixed κ>0. This would imply that the exponent in the error term can be taken arbitrarily close to 3.",
+    "domain_bridges": [
+      "Analytic number theory",
+      "Automorphic forms",
+      "Random matrix theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2189",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Refine the bounds for the archimedean integral transforms in the GL3 Kuznetsov formula by exploiting oscillatory cancellation and applying recent subconvexity bounds for GL3 Whittaker functions, aiming to save an additional power of the spectral parameter.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19959v1",
+    "status": "available",
+    "timestamp": "2026-06-21T20:59:52.078096+00:00",
+    "title": "Improved power-saving error term for twisted first moment of symmetric square L-functions on GL(3)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Janson and Sós (2013)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A graph sequence is quasi-random relative to a subgraph count function f if and only if the associated symmetric function in L²([0,1]^m) decomposes into irreducible subspaces under measure-preserving transformations in a way that satisfies specific orthogonality conditions with respect to the subgraph count's moment structure.",
+    "domain_bridges": [
+      "graph limits",
+      "random graph thresholds",
+      "unitary representation theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2189",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Exploit the decomposition of symmetric functions into irreducible subspaces to establish necessary and sufficient conditions for quasi-randomness, contrasting with exceptions that violate these conditions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20186v1",
+    "status": "available",
+    "timestamp": "2026-06-21T21:00:20.197296+00:00",
+    "title": "Quasi-randomness via Symmetric Function Decomposition"
   },
   {
     "ambition_level": "extension",
@@ -5554,7 +5605,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d6c114ef",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions — Functorial Tropical–Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max ≤ lse2 ≤ max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv² lse2 = bernVar ∘ softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) ↦ ((a/c)², (b/c)²)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p−q)² + 4·Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem … := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log ∑ⱼ exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n∂²/∂wᵢ∂wⱼ lse w = (if i = j then softmax w i · (1 - softmax w i)\n                    else - softmax w i · softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p ∈ (0,1)` there exist `a,b,c > 0` with `a² + b² = c²`, `(a/c)² = p`. Concretely\n`a = √p·c`, `b = √(1−p)·c`. Moreover the induced standard deviation satisfies\n`σ = |ab|/c² = √(p(1−p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c²` of the right triangle**.\n**Test.** Prove surjectivity of `p ↦` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-σ proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h · log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h ↦ lseT h a b` is monotone non-decreasing, `lseT h a b → max a b`\nas `h → 0⁺`, and the *Gibbs entropy gap* `lseT h a b − max a b ∈ [0, h·log 2]`.\n**Test.** Prove the sandwich `max a b ≤ lseT h a b ≤ max a b + h·log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the χ² / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)²`, the polarization leg `p − q` equals\nthe (signed) χ²-type discrepancy from the uniform law `(½,½)`:\n`(p − ½)² + (q − ½)² = ½·(p − q)² = ½·(1 − 4·Var)`. Hence **maximal Bernoulli\nvariance ⇔ minimal χ²-distance to uniform ⇔ the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,√2)`.\n**Test.** Prove the χ² identity and that `Var` is maximized exactly when\n`(a/c)² = (b/c)²`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based Rényi/Tsallis entropy and show the leg `p−q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `ℝ`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`ℝˣ`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log∘(·)² : (Pythagorean triples / dilation) ⟹\n(log-coordinates / shift)` making the triangle\n`softmax ∘ (log ∘ sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction ℝ` and `MulAction ℝˣ`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
     "domain_bridges": [],
     "domains": [
@@ -5567,7 +5618,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3b102b1d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T13:27:48.242946+00:00",
     "title": "*normalization functor into the probability simplex*"
   },
