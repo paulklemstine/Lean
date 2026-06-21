@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "50d5b31e",
     "filename": "ramsey_theory_bounds_and_constructions.json",
     "pkg_num": 228,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.84432,
     "title": "Ramsey Theory: Bounds and Constructions"
   },
   {
@@ -6948,8 +6948,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "ramsey_theory_bounds_and_constructions",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.84432,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Ramsey Theory: Bounds and Constructions"
     }

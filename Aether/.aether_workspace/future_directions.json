@@ -2532,7 +2532,7 @@
       "depth_estimate": 3,
       "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.04999999999999999,
       "domains": [
         "Novelty",
         "Computation"
@@ -10631,7 +10631,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Logic",
         "Computation"
@@ -32325,7 +32325,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Spectral Gap of Sudoku\n\nThese conjectures extend the formalization in `Catalog/Novelty/SudokuSpectralGap.lean`,\nwhich establishes (general order `n`): the Sudoku graph is `(3n²−2n−1)`-regular, its\nadjacency spectrum is confined to `[−d, d]` with the all-ones Perron eigenvector at the\ntop, its chromatic number is exactly `n²`, and the partial-grid completion functor is\nantitone with a sharp SAT (nonempty)→UNSAT (empty) dichotomy.\n\nEach item below is stated to be **falsifiable** and **formalizable** in Lean.\n\n## C1. Exact second eigenvalue and the spectral gap formula\n**Conjecture.** The Sudoku graph of order `n` is a graph with exactly four distinct\nadjacency eigenvalues, and its second-largest eigenvalue is `λ₂ = 2n − 1`, giving a\nspectral gap `d − λ₂ = 3n² − 4n = n(3n−4)`. Equivalently, the gap grows quadratically in\n`n` so the normalized gap `(d − λ₂)/d → 1`.\n*Test:* compute the spectrum for `n = 2, 3, 4` by `decide`/`native_decide` on the\nadjacency matrix and check the count of distinct eigenvalues and the value of `λ₂`.\n\n## C2. The Sudoku graph is strongly regular iff `n = ... `\n**Conjecture.** The order-`n` Sudoku graph is **not** strongly regular for any `n ≥ 2`\n(unlike its building blocks: rows/columns/boxes individually give complete graphs).\nPrecisely, the number of common neighbours of two adjacent cells is *not* constant across\nall adjacent pairs. *Test:* exhibit two adjacent pairs (same-box vs. same-row-different-box)\nwith different common-neighbour counts; formalize as a `∃`-counterexample to\n`G.IsSRGWith ...`.\n\n## C3. Phase-transition threshold for unique completion\n**Conjecture.** There is a sharp clue-count threshold `m(n)` such that a uniformly random\nclue set of size `< m(n)` almost never has a unique completion while one of size `> m(n)`\nalmost always does; and `m(n) = Θ(n²)`. As a first formal milestone (deterministic):\n*any* clue set whose support meets every row, column, and box still need not pin the\nsolution, but a clue set equal to a full solution minus one cell always has a unique\ncompletion. *Test:* prove the deterministic milestone via `completions_antitone` plus the\nlocal cancellation already used in `sudokuColor_valid`.\n\n## C4. Hoffman bound is tight ⇒ a fractional-relaxation rigidity\n**Conjecture.** Hoffman's lower bound `χ ≥ 1 − λ_max/λ_min` is *tight* for the Sudoku\ngraph, i.e. `1 − d/λ_min = n²`, forcing `λ_min = −d/(n²−1)`. Combined with `C1` this\nover-determines the spectrum and should pin all four eigenvalues. *Test:* once `λ_min` is\nformalized, verify `1 − d/λ_min = n²` symbolically and cross-check against the spectra of\n`C1`.\n\n## C5. Tensor/Kronecker structure of the Sudoku operator\n**Conjecture.** The Sudoku adjacency operator decomposes as a sum of Kronecker products of\nall-ones and identity blocks: `A = (J⊗I + I⊗J + J⊗J)_{rows,cols,boxes} − 3·(I⊗I) − ...`\nover the `Fin n × Fin n × Fin n × Fin n` factorization, so its eigenvalues are explicit\ninteger combinations of `{n, 0}` eigenvalues of `J` and `I`. This would make `C1` and `C4`\ncorollaries of a single tensor-eigenvalue lemma. *Test:* formalize `A` as such a Kronecker\ncombination on `Cell n` and prove the eigenvalues factor accordingly; the all-ones\neigenvalue `d = 3n²−2n−1` should drop out as the `(n,n,n)` corner, matching\n`sudoku_top_eigenvalue`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -38865,6 +38865,41 @@
       "thread_id": "",
       "timestamp": "2026-06-16T03:36:42.186330+00:00",
       "title": "Deepening: `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Building on cycle 50d5b31e (Q=0.844), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove the exact infinite family of two‑parameter arrow values R(2,t)=t and R(t,2)=t in Lean's Arrow formalism. Specifically, for every natural number t≥1: (1) show Arrows t 2 t holds by giving a direct combinatorial argument that any red‑blue edge‑coloring of a set of size t yields either a red K2 o",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Novelty"
+      ],
+      "id": "push_50d5b31e_3fb13917",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.9443199999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "50d5b31e",
+      "source_path": "Ramsey Theory: Bounds and Constructions",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T22:45:31.959703+00:00",
+      "title": "Deepening: Ramsey Theory: Bounds and Constructions"
     },
     {
       "ambition_level": "extension",

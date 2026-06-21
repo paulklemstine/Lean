@@ -49,6 +49,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 50d5b31e (Q=0.844), which proved 14 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove the exact infinite family of two\u2011parameter arrow values R(2,t)=t and R(t,2)=t in Lean's Arrow formalism. Specifically, for every natural number t\u22651: (1) show Arrows t 2 t holds by giving a direct combinatorial argument that any red\u2011blue edge\u2011coloring of a set of size t yields either a red K2 o",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_50d5b31e_3fb13917",
+    "priority_score": 0.9443199999999999,
+    "research_mode": "team",
+    "source_exp_id": "50d5b31e",
+    "status": "available",
+    "timestamp": "2026-06-21T22:45:31.959703+00:00",
+    "title": "Deepening: Ramsey Theory: Bounds and Constructions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -3005,20 +3019,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit constructions for Ramanujan-type congruences"
   },
   {
-    "consumed_by_exp_id": "0e89ca61",
-    "description": "The arithmetic intersection number of the generating series of divisors on a unitary Shimura variety equals the logarithmic derivative at s=1 of the Hecke L-function attached to the CM extension.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2175",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18579v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-21T13:32:47.080161+00:00",
-    "title": "Modular Height Formula for Unitary Shimura Varieties"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that the largest value of $\\max\\{a,b\\}\\) among all non\u2011negative integer triples $(a,b,x)$ satisfying \\(1\\le |x^{2}-2^{a}3^{b}|<3\\max\\{a,b\\}\\) is exactly $2200$, i.e. no solutions exist with \\(\\max\\{a,b\\}>2200\\).",
     "domains": [
@@ -4276,6 +4276,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-21T22:13:12.284871+00:00",
     "title": "These build on the finite Erd\u0151s\u2013R\u00e9nyi model in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Ramsey Theory: Bounds and Constructions\n\nDerived from this cycle's findings (`RamseySmallNumbers.lean`,\n`RamseyExactFamilies.lean`, `RamseyProbabilisticLowerBound.lean`). Each conjecture\nis falsifiable in the same `Arrows`/`SimpleGraph` (or `Finset (Edge n)`) framework.\n\n## 1. The matching probabilistic/Paley lower bound `R(4,4) = 18`\n\n**Conjecture.** `\u00ac Arrows 17 4 4`: the Paley graph on `GF(17)` (`i ~ j \u27fa i-j` is\na nonzero quadratic residue mod 17) has no red `K\u2084` and no blue `K\u2084`, so\n`R(4,4) > 17`; combined with `arrows_four_four` this gives `R(4,4) = 18` exactly.\n\n*The key insight is* that the Paley graph is self-complementary and strongly\nregular `srg(17,8,3,4)`, so the red and blue clique structure coincide and the\n`K\u2084`-freeness is a single finite check \u2014 but on `Fin 17` it is far too large for\nkernel `decide`, so it needs the algebraic `srg` parameters (counting common\nneighbours) rather than brute force.\n\n*Why now?* This cycle already supplies the upper bound `arrows_four_four : Arrows\n18 4 4` and the `Arrows`/complement machinery; only the lower-bound construction\nis missing, and the strongly-regular-graph route makes it tractable without\nenumerating `2^{17}` subsets.\n\n## 2. Even-even parity improvement of Erd\u0151s\u2013Szekeres, in general\n\n**Conjecture.** If `Arrows m (s+1) (t+2)` holds with the *smallest* such `m` even,\nand likewise the smallest `n` with `Arrows n (s+2) (t+1)` is even, then\n`Arrows (m + n - 1) (s+2) (t+2)` \u2014 a uniform `-1` over the binomial step whenever\nboth predecessors are even.\n\n*The key insight is* that the `27 = 9\u00b73` odd-degree-sum contradiction proved here\nfor `R(3,4) \u2264 9` is not special: a regular \"every vertex has the extremal split\"\nconfiguration always contradicts the handshake lemma when the vertex count times\nthe forced degree is odd.\n\n*Why now?* `reddeg_sum_even` (the handshake parity lemma) and the degree-bound\nlemmas `red_nbhd_card_le` / `blue_nbhd_card_le` are already isolated and reusable;\ngeneralising their numeric `3,5,8` to symbolic `s,t` is the remaining step.\n\n## 3. The off-diagonal probabilistic bound `R(3,t) = \u03a9(t^{2}/\\log t)`\n\n**Conjecture.** A weighted/deletion variant of `exists_good_colouring` gives\n`\u00ac Arrows n 3 t` whenever `C(n,2)\u00b7p + C(n,t)\u00b7(1-p)^{C(t,2)} < 1` is achievable for\nsome `p`, yielding a super-polynomial separation between `R(3,t)` and the binomial\nbound `C(t+1,2)`.\n\n*The key insight is* that the union bound used here (`card_biUnion_le` over all\n`s`-cliques, each monochromatic with weight `2^{1-C(s,2)}`) becomes the two-term\nLov\u00e1sz/deletion bound once edges are coloured with a biased coin `p \u2260 1/2`.\n\n*Why now?* The exact finite counting backbone (`card_supersets`,\n`card_disjoints`, `card_coloring_space`) is in place; replacing the uniform count\n`2^{...}` by a binomial weight `p^{k}(1-p)^{m-k}` is a localized change.\n\n## 4. Hales\u2013Jewett for alphabet size 2 (the combinatorial-line skeleton)\n\n**Conjecture.** For every `r` there is `N = HJ(2, r)` such that any `r`-colouring of\n`{0,1}^N` contains a monochromatic combinatorial line; the `r=2` case is provable\nby a Shelah-style \"line-free implies cube-shrinking\" induction in Lean.\n\n*The key insight is* that a combinatorial line over the binary alphabet is exactly\na nonempty \"wildcard set\" `S \u2286 [N]` together with a base point, so a line is a\npair `(S, x)` and Hales\u2013Jewett becomes a pigeonhole over `2^N` colourings of the\n`Finset` lattice \u2014 structurally close to the `Finset (Edge n)` counting used here.\n\n*Why now?* The probabilistic file shows the team can manage `Finset`-of-`Finset`\ncounting and union bounds cleanly; the binary Hales\u2013Jewett base case is the\nsmallest genuinely \"density/line\" statement reachable with that toolkit.\n\n## 5. Self-complementary witnesses force `R(s,s) \u2261 2 (mod 4)`-type constraints\n\n**Conjecture.** If a self-complementary graph on `n` vertices witnesses\n`\u00ac Arrows n s s`, then `n \u2261 0` or `1 (mod 4)` (the order of any\nself-complementary graph), giving congruence obstructions to extremal Ramsey\ncolourings (e.g. explaining why the extremal `R(3,3)` witness has `5 \u2261 1`\nvertices and the `R(4,4)` witness has `17 \u2261 1`).\n\n*The key insight is* that a self-complementary witness has `C(n,2)` edges split\nevenly, so `4 \u2223 n(n-1)`, a divisibility fact that is immediate from the existence\nof a red/blue colour-swapping automorphism (`arrows_symm` at the graph level).\n\n*Why now?* `arrows_symm` already formalises the colour swap; promoting it from a\nstatement about the `Arrows` predicate to an explicit graph isomorphism is a short\nstep that unlocks the counting congruence.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2199",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "50d5b31e",
+    "status": "available",
+    "timestamp": "2026-06-21T22:44:19.055849+00:00",
+    "title": "Derived from this cycle's findings (`RamseySmallNumbers.lean`,"
   },
   {
     "consumed_by_exp_id": "",
