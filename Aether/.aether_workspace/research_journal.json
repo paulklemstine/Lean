@@ -506,16 +506,6 @@
       "cycle_id": "743f44e8",
       "domain": "Cryptography",
       "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
-      "quality_score": 0.4895859232492592,
-      "sorry_count": 0,
-      "theorem_count": 95,
-      "timestamp": "2026-06-15T16:59:42",
-      "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
-    },
-    {
-      "cycle_id": "743f44e8",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
       "quality_score": 0.48472759868421056,
       "sorry_count": 0,
       "theorem_count": 75,
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-21T16:50:55",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+    },
+    {
+      "cycle_id": "22ed9246",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## 1. Certified dequantization of tropical polynomials (SELECTED THIS CYCLE)\nBuild a machine-checked pipeline that maps a tropical polynomial and a target\naccuracy `ε` to its cano",
+      "quality_score": 0.37703299999999995,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-21T17:11:37",
+      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.85612
     }
   ],
-  "last_updated": "2026-06-21T16:50:55",
+  "last_updated": "2026-06-21T17:11:37",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3b2adc6d",
-        "quality": 0.4494149295774648,
-        "theorems": 78,
-        "title": "Birch and Swinnerton-Dyer Conjecture"
-      },
-      {
         "cycle_id": "ead94fbc",
         "quality": 0.45100000000000007,
         "theorems": 93,
@@ -3141,6 +3135,12 @@
         "quality": 0.71035,
         "theorems": 14,
         "title": "The Library of Babel: Combinatorics of the Universal Library"
+      },
+      {
+        "cycle_id": "22ed9246",
+        "quality": 0.37703299999999995,
+        "theorems": 5,
+        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
       }
     ],
     "Bridges": [

@@ -43,25 +43,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle fe4ab5a6 (Q=0.856), which proved 5 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Rigorous proof of finite-size Landauer bound via independent derivation without circular reasoning",
-    "domain_bridges": [],
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_fe4ab5a6_f8f7ca5d",
-    "lineage_refs": [],
-    "priority_score": 0.95,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "fe4ab5a6",
-    "status": "available",
-    "timestamp": "2026-06-21T16:50:55.855360+00:00",
-    "title": "Deepening: Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domain_bridges": [],
     "domains": [
@@ -1972,7 +1953,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c747cdd",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1985,7 +1966,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -5118,6 +5099,37 @@
     "title": "Very ampleness is preserved under join for lattice polytopes with the integer decomposition property"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Pestov, V. (2006). *Topological Dynamics and Group Actions*.",
+      "Kechris, A., Pestov, V., & Todorcevic, S. (2010). *Fraïssé Limits and Ramsey Theory*.",
+      "Irwin, S., & Solecki, P. (1995). *Projective Fraïssé categories*.",
+      "Veech, W. (1975). *A construction of a non‑metrizable universal minimal flow*.",
+      "Ellis, R. (1969). *Commutative topological group theory*."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that whenever a projective Fraïssé limit 𝔽 of finite structures has the approximate Ramsey property, the dense subgroup G ≤ Homeo(F) induced by Aut(𝔽) admits a universal minimal flow that is metrizable.",
+    "domain_bridges": [
+      "projective Fraïssé limits",
+      "extreme amenability",
+      "universal minimal flows",
+      "Ramsey theory in topology"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2186",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish a correspondence between the combinatorial approximate Ramsey property of the projective Fraïssé limit and the topological dynamics of the dense automorphism group, adapting known characterizations of extreme amenability for non‑archimedean groups to dense subgroups of Homeo(F) and showing that such amenability forces the universal minimal flow to be metrizable.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-21T17:12:45.489982+00:00",
+    "title": "Metrizability of the universal minimal flow for homeomorphism groups of continua via the approximate Ramsey property"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -5831,7 +5843,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "34ce1554",
     "description": "# FUTURE DIRECTIONS — Gravity from Information: Spacetime as a Quantum Error-Correcting Code\n\nThis research cycle built a fully verified, manifold-free combinatorial core of\nthe holographic principle in `Catalog/Geometry/HolographicCode/`:\n\n* `AreaEntropy.lean` — the discrete Ryu–Takayanagi **area functional**\n  `cut w A = ∑_{u∈A, v∉A} w u v`, with purity (`cut_compl`), subadditivity,\n  **strong subadditivity** (`cut_submodular`), and Araki–Lieb (`cut_arakiLieb`).\n* `Monogamy.lean` — the key finding `cut_tripartite_eq`: the bare boundary cut\n  has **identically vanishing tripartite information** (`I₃ ≡ 0`), so it\n  saturates Monogamy of Mutual Information (`cut_monogamy`).\n* `MutualInformation.lean` — the information dictionary: `mutualInfo` and\n  `condMutualInfo` defined from geometry, with nonnegativity = subadditivity /\n  strong subadditivity (`mutualInfo_nonneg`, `condMutualInfo_nonneg`).\n\nThe single sharpest discovery is that **the fixed boundary cut is too rigid**:\nit makes `I₃ = 0` exactly, whereas genuine holographic states have `I₃ < 0`.\nThe quantum-information content of geometry therefore lives in the *minimization*\nover bulk surfaces — the entanglement-wedge / min-cut prescription. The\nconjectures below are organized around closing that gap.\n\n---\n\n## Conjecture 1 (Strict Monogamy needs the min-cut). \n\nDefine the **min-cut RT entropy** on a weighted graph with a distinguished\nboundary `∂ ⊆ V`:\n`minCut w A = ⨅ { cut w X | X ⊆ V, X ∩ ∂ = A }` (surfaces homologous to `A`).\nThen `minCut` still satisfies subadditivity and strong subadditivity, **and** its\ntripartite information is genuinely nonpositive:\n`minCut(A)+minCut(B)+minCut(C) − minCut(A∪B) − minCut(B∪C) − minCut(A∪C) + minCut(A∪B∪C) ≤ 0`,\nwith *strict* inequality for some graph (a witness already exists on the\n\"triangle of bulk legs\" graph). **Testable:** the strictness is exactly the\nphenomenon absent from our `cut_tripartite_eq`.\n\n## Conjecture 2 (Full holographic entropy cone). \n\nFor `minCut` of Conjecture 1, *all* facet inequalities of the known holographic\nentropy cone hold — in particular the 5-party HHM/cyclic inequalities that are\nstrictly stronger than MMI. Conversely, the *bare* `cut` satisfies every\ninequality that is a consequence of submodularity **and saturates exactly those\nthat are linear combinations of `I₃ = 0`-type identities**. Goal: classify which\nfacets the fixed cut saturates versus which require minimization.\n\n## Conjecture 3 (Complementary recovery / QEC duality). \n\nModel a holographic code by a bulk vertex set and a boundary `∂`, with a bulk\n\"operator\" localized at a vertex `p`. Define `A` *recovers* `p` iff `p` lies on\nthe `A`-side of every minimum cut `minCut w A`. Conjecture: for a pure global\nstate (symmetric `w`), **exactly one** of `A`, `Aᶜ` recovers `p`\n(complementary recovery), and the set of recovering regions is an up-set closed\nunder the min-cut \"entanglement wedge.\" This is the discrete Knill–Laflamme /\noperator-algebra QEC statement, and should follow from submodular uncrossing of\nminimum cuts.\n\n## Conjecture 4 (Discrete area law ⇒ continuum RT). \n\nFor a sequence of graphs `G_n` discretizing a Riemannian surface with edge\nweights `w_n` approximating the metric, the rescaled cut entropies\n`(1/n) · cut w_n A_n` **Γ-converge** to the geometric area\n`∫_{∂A} ds` of the minimal surface bounding `A`. This would derive the continuum\nRyu–Takayanagi area law as a scaling limit of the verified combinatorial\ninequalities, with the entropy inequalities passing to the limit by lower\nsemicontinuity.\n\n## Conjecture 5 (Cut distance and the Singleton bound). \n\nThe functional `dist(A,B) = cut w (A △ B)` (symmetric difference) is a\npseudometric on regions, and for a code defined by the min-cut, the code\n**distance** `d` (minimum weight of an undetectable boundary perturbation) and\nthe number `k` of protected bulk degrees of freedom obey a discrete\n**quantum-Singleton-type bound** `k ≤ |∂| − 2(d − 1)` expressible purely via\n`minCut`. Saturation should characterize \"perfect-tensor\" / maximally\nholographic graphs (the HaPPY pentagon tiling).\n",
     "domain_bridges": [],
     "domains": [
@@ -5844,7 +5856,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ed805c6d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T01:40:31.338348+00:00",
     "title": "Fully verified, manifold-free combinatorial core of"
   },
@@ -6172,6 +6184,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — The L-Function Oracle (Probability)\n\nDerived from this cycle's verified Lean results:\n\n- `Probability/SatoTateMeasure.lean` — the Sato–Tate law is a probability measure\n  (`satoTate_total_mass = 1`) with verified `cos`-moments `(mean 0, second moment 1/4)`.\n- `Probability/FactoringOracle.lean` — a single-split oracle factors `n` in `≤ log₂ n`\n  calls (`SplitOracle.factor_bounded`), the burden concentrated in one `reduce` step.\n- `Probability/SelbergOracle.lean` — degree/conductor conservation along functoriality\n  towers (`nfold_degree`, `nfold_conductor`) plus an oracle⇒decidability collapse, built on\n  the catalog file `Shared.SelbergClassCensus`.\n\nThe central methodological lesson: the grandiose \"oracle implies RH/BSD/Langlands\" claims\nare, once formalised, either *tautological* (the oracle is asserted to output the answer) or\n*conditional on an explicit reduction*. The genuinely load-bearing mathematics is elsewhere —\nin the moments of the target measure, in the `log`-depth of the factoring recursion, and in\nthe conservation laws of the invariants. The conjectures below target that real content.\n\n---\n\n## Conjecture 1 — All Sato–Tate moments are the Catalan/central-binomial sequence\n\n**Statement.** For every `k`, the `2k`-th `cos`-moment under `μ_ST = (2/π) sin²θ dθ` equals\n`Catalan k / 4^k`, i.e. `∫₀^π cos^{2k}θ · (2/π) sin²θ dθ = C_k / 4^k` where\n`C_k = (2k choose k)/(k+1)`; all odd moments vanish.\n\n**The key insight is** that the Sato–Tate measure is exactly the spectral measure of the\n`SU(2)` Haar trace, so its even moments count noncrossing pairings — the Catalan numbers —\nwhich makes the whole moment sequence a *single closed-form arithmetic object* rather than a\nlist of unrelated integrals. This cycle verified the `k = 0, 1` cases (mass `1`, second\nmoment `1/4 = C_1/4`); the conjecture is the uniform generalisation.\n\n**Why now?** We already have the integral machinery (`integral_sin_pow`,\n`integral_sin_pow_mul_cos_pow_odd`) working end-to-end in Lean on this exact density, so the\ninductive recurrence `M_{k} ↦ M_{k+1}` is within reach with the tools just exercised.\n\n---\n\n## Conjecture 2 — The factoring reduction is depth-optimal, not just depth-bounded\n\n**Statement.** The `≤ log₂ n` bound in `SplitOracle.factor_bounded` is tight in the worst\ncase and tight on average: for `n = 2^m` every split oracle needs exactly `m` calls, and the\n*expected* number of calls over uniformly random `n ≤ N` is `Θ(log log N)` (Erdős–Kac shape:\nthe number of prime factors `Ω(n)` concentrates at `log log n`).\n\n**The key insight is** that the recursion tree of `factor_bounded` is precisely a binary tree\nwhose leaves are the prime factors *with multiplicity*, so the call count is `Ω(n) − 1`; the\ndeterministic bound is `log₂ n` but the *typical* value is governed by the Erdős–Kac law, a\ngenuinely probabilistic statement about the cost of the L-function oracle.\n\n**Why now?** The leaf-counting identity is already implicit in the verified proof\n(`length = Ω(n)`), so the deterministic optimality is a short additional lemma, and it sets up\nthe bridge to the catalog's number-theory files (`Applications/Fibonacci*`, Carmichael\nmaterial) where `Ω` of structured integers is studied.\n\n---\n\n## Conjecture 3 — Functoriality towers force a degree/conductor uncertainty bound\n\n**Statement.** For any `SelbergDatum S` with `S.degree ≥ 1` and `S.conductor ≥ 2`, the\n`n`-fold tower satisfies `(nfoldProduct S n).degree · log₂((nfoldProduct S n).conductor)`\ngrows like `n² · d · log₂ q`; equivalently the \"analytic complexity\"\n`degree × log-conductor` is *super-additive* along towers, never sub-additive.\n\n**The key insight is** that `nfold_degree` (linear) and `nfold_conductor` (exponential)\ncombine multiplicatively, so the analytic conductor — the quantity controlling the length of\nthe approximate functional equation, hence the true cost of evaluating the L-function —\n*explodes quadratically* along a tower. An O(1) oracle would have to be uniform across this\nexplosion, which is exactly why a literal oracle is implausible.\n\n**Why now?** Both growth laws are already proved in `SelbergOracle.lean`; multiplying them is\na one-step corollary, and it converts the vague \"oracles are too powerful\" intuition into a\nconcrete, falsifiable growth inequality on catalog `SelbergDatum`.\n\n---\n\n## Conjecture 4 — Oracle collapse is provably non-vacuous only with a length-bounded encoding\n\n**Statement.** The decidability collapse `reduction_collapses` upgrades to a *complexity*\nstatement iff the encoding `f : X → SelbergDatum` has polynomially bounded conductor: if\n`f x` has conductor `≤ poly(|x|)`, then `L` is decidable in time polynomial in the oracle\ncost; without such a bound the collapse is logically true but computationally empty.\n\n**The key insight is** that the only smuggled cost in \"reduce to one L-query\" is the *size of\nthe datum you hand the oracle*, measured by its conductor — Conjecture 3 shows this size can\nblow up, so the honest collapse theorem must carry a conductor budget as a hypothesis.\n\n**Why now?** `reduction_collapses` and `selberg_oracle_decidable` are already in place as the\nunconditional (decidability-only) skeleton; adding a conductor-budget field to the encoding is\na natural refinement that makes the \"polynomial hierarchy collapse\" claim precise and testable.\n\n---\n\n## Conjecture 5 — A second-moment certificate distinguishes CM from non-CM curves\n\n**Statement.** Define the empirical second `cos`-moment of the first `N` Frobenius angles of\nan elliptic curve `E/ℚ`. For non-CM curves it converges to `1/4` (the Sato–Tate value proved\nhere); for CM curves it converges to `1/2`. Hence a single converging moment statistic, output\nby the oracle, certifies the CM/non-CM dichotomy.\n\n**The key insight is** that the verified value `1/4` is the *fingerprint* of the full `SU(2)`\nSato–Tate measure, whereas the CM case is governed by a `U(1)` measure with second moment\n`1/2`; the gap `1/4 vs 1/2` is a clean, decidable separating observable rather than a full\nequidistribution statement.\n\n**Why now?** `satoTate_second_moment_cos = 1/4` is verified; the companion `U(1)` computation\n`∫₀^π cos²θ · (1/π) dθ = 1/2` is an even simpler interval integral, so the separating\ncertificate is one short lemma away and turns the abstract Sato–Tate dichotomy into a finite\nstatistical test.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2056",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "46951c2e",
+    "status": "available",
+    "timestamp": "2026-06-17T13:36:58.586987+00:00",
+    "title": "Derived from this cycle's verified Lean results:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "# Future Directions — CSS Codes as Cohomology\n\nThis cycle established the dictionary **CSS code = homology of an `F₂`-chain\ncomplex** (`Core.lean`), *refuted* the hypercube conjecture for the 1-skeleton\ncycle code (`CubeCode.lean`), and anchored the refutation with a fully explicit\n`[[4,1]]` code on `C₄ = Q₂` (`RingCode.lean`). The surviving topological\ninvariant is the cyclomatic number `β₁(Q_n) = (n−2)·2^{n-1} + 1`, which equals\n`1` **only** at `n = 2`. The directions below grow out of exactly those findings.\n\n---\n\n## Conjecture 1 — The cube becomes a `[[·,1,·]]` code only after filling 2-cells\n\nFor the *cubical* complex `Q_n` (vertices, edges **and** square 2-faces), the\nhomological code has `k = dim H₁(Q_n; F₂) = 0` for `n ≥ 2` (the cube is simply\nconnected), so to recover a single logical qubit one must quotient/identify\nfaces into a closed surface. Concretely: there is a surface `Σ` obtained from\n`Q_n`'s 2-skeleton with `dim H₁(Σ; F₂) = 1` and code distance equal to the\ngirth `4`, **not** `2^{n/2}`.\n\n- **The key insight is** that the mission's \"1 qubit\" claim silently assumes a\n  *surface* (2-complex) where 2-cells kill all but one homology class, while the\n  literal `Z₁/B₁` cycle code on the 1-skeleton has `B₁ = 0` and therefore\n  over-encodes by the full cyclomatic number `(n−2)2^{n-1}+1`.\n- **Why now?** `CubeCode.numLogical_graphCode` already isolates the `d₂ = 0`\n  (no-2-cell) case; adding a nonzero `d₂` for the square faces is a direct,\n  mechanical extension of the same `Core` dimension formula, so the surface vs.\n  graph dichotomy is immediately testable in the existing framework.\n\n## Conjecture 2 — Homological distance is governed by Hamming weight, and the cube saturates only the trivial Singleton bound\n\nDefine the code distance `d` as the minimum `hammingWeight` (already imported\nfrom the catalog's `vecSupport`) over nonzero homology representatives. Then for\nthe `C₄` code `d = 4`, and every cube 1-skeleton code has `d = girth = 4`,\ngiving `k + d = β₁ + 4`, which violates the quantum Singleton bound\n`k + 2d ≤ n + 2` for large `n` — i.e. the 1-skeleton codes are **bad** codes,\nthe opposite of the conjecture's \"achieves the Singleton bound\" claim.\n\n- **The key insight is** that distance is a *minimum-weight* invariant of the\n  cohomology class, so the catalog's `vecSupport_card_pos_of_ne_zero` is the\n  exact primitive needed, and the constant girth `4` forces asymptotically\n  vanishing relative distance `d/n → 0`.\n- **Why now?** `RingCode.ker_boundary` shows the homology class explicitly as a\n  single weight-4 vector; computing `hammingWeight` of a kernel basis is already\n  `decide`-feasible at small `n`, so the Singleton-violation can be certified\n  before any general theory is built.\n\n## Conjecture 3 — `β₁(Q_n) = 1 ⇔ n = 2` is the only finite-qubit cube; tori are the right family\n\nReplacing `Q_n` by the discrete torus `(C_m)^{×2}` (product of two `m`-cycles)\nas a 2-complex yields `dim H₁ = 2` (the toric code) with distance `m`, the\ngenuine `[[2m², 2, m]]` family. Conjecture: among all \"graph-cube-like\" 1-complexes,\n`β₁ = 1` characterizes `C₄` uniquely, and the *only* way to keep `k` bounded\nwhile growing `n` is to add 2-cells (move to a surface).\n\n- **The key insight is** that `cube_one_qubit_iff` pins `k = 1` to `n = 2` for\n  the cube, so bounded-`k` code families must come from *surfaces of fixed\n  genus*, not from growing graphs — exactly the toric-code construction.\n- **Why now?** The closed form `cyclomatic_closed_form` makes the `k`-growth\n  exact, so contrasting it against the constant `k = 2` of a torus 2-complex is a\n  clean, fully arithmetic comparison reusing the present `cyclomatic` machinery.\n\n## Conjecture 4 — Euler characteristic is the universal qubit budget\n\nFor any bounded `F₂`-chain complex `0 → Cₖ → ⋯ → C₀ → 0`, the alternating sum of\nhomology dimensions equals the alternating sum of chain dimensions\n(`∑ (−1)ⁱ dim Hᵢ = ∑ (−1)ⁱ dim Cᵢ = χ`). Hence the *total* logical-qubit budget\nacross all degrees of a chain-complex code is the topological Euler\ncharacteristic, a single integer invariant.\n\n- **The key insight is** that `Core.finrank_homology` already expresses one\n  homology dimension as a difference of ranks; iterating rank–nullity up the\n  complex telescopes into `χ`, so \"qubits = Euler characteristic\" is a\n  rank–nullity identity, not new analysis.\n- **Why now?** `Core` proves the single-spot case with `finrank_quotient_add_finrank`;\n  the multi-degree version is the same lemma applied inductively, well within the\n  subagent's reach.\n\n## Conjecture 5 — Every classical `[n,k]` `F₂` code is the degree-0 homology of a length-1 complex, making CSS ↔ classical functorial\n\nFor a parity-check map `H : F₂ⁿ → F₂^r`, the length-1 complex `F₂ⁿ →H F₂^r` has\n`H₀ = coker H` and `H₁ = ker H = ` the classical code, with `dim H₁ = n − rank H`.\nConjecture: the assignment `(C₁, C₂) ↦ (chain complex)` and back is an\nequivalence of categories between CSS codes and bounded `F₂`-chain complexes up\nto chain homotopy.\n\n- **The key insight is** that `numLogical_eq_css` is precisely the object-level\n  half of this equivalence (`k = n − rank H_Z − rank H_X`); promoting it to a\n  functor only requires tracking chain maps, which Mathlib's `HomologicalComplex`\n  already supports.\n- **Why now?** With the dimension dictionary proved and the cube/`C₄` examples in\n  hand, the remaining work is purely categorical bookkeeping on top of existing\n  `Core` definitions — no new hard analytic input is needed.\n",
     "domain_bridges": [],
     "domains": [
@@ -6227,6 +6259,26 @@
     "status": "available",
     "timestamp": "2026-06-17T16:03:35.875808+00:00",
     "title": "These conjectures are distilled from the v16a research cycle in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology\n\nThis cycle produced `Catalog/Logic/JigsawPuzzles.lean`, a self-contained, fully\nverified (0 `sorry`) theory of edge-matching jigsaw puzzles connected to the\nexisting complexity framework in `Catalog/Logic/PvsNPFoundations.lean`. It\ncovers: the ℤ/4 rotational symmetry of a piece (`rotate_order_four`,\n`rotate_bijective`), the discrete Euler/handshake identity for the board\n(`board_handshake`), the local matching constraint with monochromatic solvability\n(`monochromatic_solvable`), brute-force decidability over finite palettes\n(`solvable_decidable`), abstract NP membership of the solvability language\n(`puzzle_inNP`), NP closure under reductions / union / intersection\n(`inNP_of_reducible`, `inNP_union`, `inNP_inter`), and the hardness bridge\n(`inNP_of_hard`).\n\nThe following conjectures are precise, falsifiable targets for follow-up cycles.\n\n## Conjecture 1 (Karp reduction: 3-Partition ↪ edge matching)\nFormalize a many-one reduction `ManyOneReducible PARTITION_LANG (SolvableLang Color m n)`\nfor an explicitly constructed color alphabet and gadget pieces, where\n`PARTITION_LANG` is a Lean-formalized NP-hard partition/packing language. Combined\nwith the existing `puzzle_inNP` and the `inNP_of_hard` bridge, this would yield a\nmachine-checked statement that edge matching is NP-complete relative to that base\nlanguage. Testable milestone: prove the reduction's forward direction\n(`x ∈ PARTITION → Solvable`) via an explicit placement.\n\n## Conjecture 2 (1D puzzles are tractable — Eulerian path characterization)\nA single-row board (`m = 1`) is solvable **iff** the multiset of available pieces\nadmits an Eulerian-trail ordering of the \"color transition\" multigraph whose\nvertices are colors and whose edges are pieces `(west, east)`. Formalize this\nequivalence and conclude that 1-row solvability is decidable in polynomial time,\nin sharp contrast to the 2D case. The catalog identity `interiorAdj_single_row`\n(`= n - 1`) is the combinatorial seed: a row is a path with `n-1` constraints.\n\n## Conjecture 3 (Topological lower bound on color count)\nIf an `m × n` board with `m, n ≥ 2` has a **unique** valid placement up to the\ntrivial symmetry, then the number of distinct edge colors used is at least\n`interiorAdj m n / 2 + 1`. Intuition: uniqueness forces interior edges to be\n\"keyed\" distinctly enough to break the grid graph's automorphisms. A first\nformal step is to bound, for a fixed valid placement, the number of *alternative*\nplacements by the number of repeated interior colors.\n\n## Conjecture 4 (Certificate-complexity / counting hierarchy)\nDefine `#Solutions C m n` as the cardinality of `{P : Placement C m n // Valid P}`\n(finite by `solvable_decidable`). Conjecture: the map `(m, n) ↦ #Solutions` over a\nfixed `k`-color palette satisfies a transfer-matrix recurrence in `n` of order\nbounded by `k^k` (a \"puzzle transfer matrix\"). Formalizing the transfer matrix and\nproving the recurrence would place the counting version `#EDGE-MATCH` in `#P` and\ngive exact generating functions for fixed-height strips.\n\n## Conjecture 5 (Rotation-quotient and the dihedral upgrade)\nThe current model fixes orientations. Extend `rotate` (the ℤ/4 action,\n`rotate_order_four`) to the full dihedral action `D₄` by adding reflections, and\nconjecture that allowing free rotation of pieces strictly enlarges the solvable\nlanguage but preserves NP membership: `InNP (SolvableUpToRotation C m n) (Placement C m n × (Fin m → Fin n → ZMod 4))`.\nThe added `ZMod 4` component is the per-cell rotation certificate; proving the\nverifier remains decidable upgrades `puzzle_inNP` to the oriented-piece setting.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2060",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cb56480f",
+    "status": "available",
+    "timestamp": "2026-06-17T16:38:09.039251+00:00",
+    "title": "`Catalog/Logic/JigsawPuzzles.lean`, a self-contained, fully"
   },
   {
     "ambition_level": "extension",
@@ -6332,46 +6384,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese are freeform research directions extending the verified finite optimization\ncore of Integrated Information Theory in\n`Catalog/Novelty/FiniteIntegratedInformation.lean`.\n\n## 1. From abstract defect to a genuine information measure\n\nReplace the abstract `defect : Partition → ℕ` with a real information loss\ncomputed from a finite state distribution and a cause–effect repertoire, then\nre-derive `phi`, the MIP realization, and the zero-defect characterization as\ncorollaries of the present abstract theorems.\n\nThe key insight is that the optimization theorems proved here are *parametric* in\nthe defect functional, so a faithful information measure can be plugged in without\ntouching the min/max reasoning — only the instantiation of `defect` changes.\n\n**Why now?** Mathlib now has mature finite probability, `ENNReal`, and\ninformation-theory-adjacent infrastructure (entropy, KL-style divergences), so a\nconcrete `defect` can be defined and shown to land in an ordered codomain where\nminima over finite admissible sets are still attained.\n\n## 2. Real-valued and continuous `Φ`\n\nLift `phi` from `ℕ` to `ℝ≥0` or `ENNReal`, keeping the minimum attained via\nfiniteness, and study continuity/stability of `Φ` as the underlying mechanism is\nperturbed.\n\nThe key insight is that finiteness of `admissible` makes the minimum a `Finset`\ninfimum even in a dense codomain, so attainment survives the move from `ℕ` to a\ncontinuous order while perturbation bounds become Lipschitz estimates on a finite\nmin.\n\n**Why now?** Order-theoretic `Finset.inf'`/`sup'` lemmas are uniform across\n`LinearOrder`s in current Mathlib, so the present proofs port to `ℝ≥0`/`ENNReal`\nwith minimal change, letting us focus on the genuinely new continuity content.\n\n## 3. A category of mechanisms with `Φ` as a monotone functor\n\nDevelop `MechanismMorphism` into a category (identities, composition) and upgrade\n`phi_le_of_morphism` to a lax-functoriality statement: `Φ` is monotone along\nmorphisms, with composition behaving well.\n\nThe key insight is that defect-nonincreasing, admissibility-preserving maps form\na composable structure under which `Φ` can only decrease, turning the single\nmonotonicity lemma into a functor from a mechanism category to `(ℕ, ≤)ᵒᵖ`.\n\n**Why now?** Mathlib's category-theory library makes defining a thin/ordered\ntarget category and a monotone functor routine, so the structural payoff is\nreachable immediately on top of the existing morphism definition.\n\n## 4. Verified algorithms for the minimum-information partition\n\nConnect the MIP value to graph cuts and submodular minimization, and produce a\nverified algorithm computing `phi` efficiently for mechanisms whose `defect`\narises from a (sub)modular set function.\n\nThe key insight is that for submodular defect functionals the minimum-information\npartition is a min-cut, so decades of combinatorial-optimization theory transfer\nthe abstract `Finset.inf'` into a polynomial-time, verifiably-correct computation.\n\n**Why now?** `decide`/`native_decide` and Mathlib's growing combinatorics and\norder-theory APIs make it feasible to specify and verify cut-based minimization,\nand verified algorithm development in Lean has become a practical activity.\n\n## 5. Sharpening exclusion: uniqueness, ties, and genericity\n\nStrengthen `exists_complex_realizing_max_phi` to characterize when the maximizing\ncomplex is unique, classify the structure of ties, and identify genericity\nconditions guaranteeing a unique maximally integrated complex.\n\nThe key insight is that exclusion is not merely existence of a maximizer but a\nselection principle, so the mathematically and philosophically interesting content\nlives precisely in the tie set and the conditions that collapse it to a point.\n\n**Why now?** With existence already verified, Mathlib's `Finset.argmax`-style and\norder-extremum lemmas provide exactly the tools to analyze uniqueness and tie\nstructure as a clean next layer rather than a from-scratch effort.\n```\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2186",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a0d2774b",
-    "status": "available",
-    "timestamp": "2026-06-21T16:31:06.238755+00:00",
-    "title": "These are freeform research directions extending the verified finite optimizatio"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese are freeform research directions extending the finite Jarzynski–Landauer\nformalization in [`JarzynskiLandauer.lean`](./JarzynskiLandauer.lean).\n\n## From identity to inequality: a formal finite second law\n\nThe present work proves the exact correction identity, but the physically iconic statement\nis the inequality `E_p[W] ≥ ΔF`, and specifically `E_p[W] ≥ log 2 / β` for one-bit\nerasure. The key insight is that the correction term `β⁻¹ · log E_p[exp(-β(W - E_p[W]))]`\nis nonnegative because the convexity of the exponential forces\n`log E[e^Y] ≥ E[Y] = 0` for the centered work `Y = W - E_p[W]`, so the entire identity\ncollapses into a one-line Jensen bound once that lemma is available in finite form. A\nformal finite Jensen inequality for `Real.exp` against a PMF, combined with the linearity\nof `expect`, would turn our identity into a verified second law of computation. Why now?\nBecause Mathlib's convexity API (`inner_le_nnorm`, `ConvexOn.smul_le_sum`,\n`StrictConvexOn Real.exp`) has matured to the point where the finite Jensen step is within\nimmediate reach, making the inequality a short, high-value addition rather than a research\nprogram.\n\n## Cumulant expansion of the correction term\n\nThe correction is the logarithm of a moment-generating function, which is by definition a\ncumulant generating function evaluated at `-β`. The key insight is that\n`log E_p[exp(-β(W - E_p[W]))] = ½ β² Var_p(W) - ⅙ β³ κ₃ + …`, so the leading finite-size\ncorrection to the Landauer cost is exactly `½ kT β² Var_p(W) = ½ β Var_p(W)`, a clean,\ninterpretable quantity controlled by the work variance. Formalizing the truncated cumulant\nexpansion with explicit Lagrange-remainder error bounds would give rigorous, quantitative\ncontrol over how far a finite erasure process sits above the ideal Landauer bound. Why now?\nBecause the analytic-remainder and Taylor infrastructure in Mathlib (`taylorWithin`,\n`Real.exp` bounds) is strong enough to certify the second-order term with an honest error\nestimate, converting a heuristic physics expansion into a theorem.\n\n## Multi-bit and general-alphabet erasure\n\nOur erasure analysis lives on `Bool` and a single collapsing map, but real devices erase\nregisters of many bits over arbitrary finite alphabets. The key insight is that entropy is\nadditive over independent registers and that any many-to-one erasure map's information loss\nequals the entropy of the induced partition of the source distribution, so the `log 2`\nconstant generalizes to `log |fibers|` summed appropriately. Building a Lean framework that\nrelates `¬ Function.Injective f` to a quantitative entropy drop `H(p) - H(f_* p) > 0` for\narbitrary finite `f` would unify the combinatorial and thermodynamic sides of erasure in\none reusable lemma. Why now? Because Mathlib already has pushforward measures, `Finset`\npartitions, and the entropy lemmas we exercised here, so the general statement is an\nassembly problem rather than a foundational one.\n\n## Deriving the Jarzynski condition from a dynamical model\n\nWe assume the Jarzynski equality `E_p[exp(-β W)] = exp(-β ΔF)` as input; a deeper result\nderives it from microscopic reversibility of a driven Markov process. The key insight is\nthat detailed balance along a finite protocol makes the path-weighted exponential work a\ntelescoping ratio of Boltzmann factors, whose expectation collapses to `exp(-β ΔF)` by\nnormalization of the final equilibrium distribution. Formalizing a finite-state, finite-\ntime driven Markov chain and proving the fluctuation theorem from its transition kernels\nwould let `JarzynskiCondition` become a *derived* lemma, closing the gap between assumption\nand first principles. Why now? Because Mathlib's developing stochastic-matrix and\nfinite-Markov-chain tooling makes a fully discrete, fully verifiable derivation tractable\nwithout the measure-theoretic overhead of continuous-time dynamics.\n\n## Reversible computation and the Bennett trade-off\n\nLandauer's bound is the thermodynamic shadow of logical irreversibility, and Bennett showed\nthat computations restructured to be logically reversible can in principle dissipate\narbitrarily little. The key insight is that our non-injectivity witness for `eraseBool` is\nthe precise formal hinge on which dissipation hangs: an injective (reversible) update incurs\nzero forced entropy loss, so the `log 2` cost is attached to exactly the maps our\n`eraseBool_not_injective` lemma identifies. Formalizing a small reversible-computing model\nand proving that injective gates admit a zero-correction Jarzynski identity would give a\nmachine-checked statement of the reversibility–dissipation trade-off. Why now? Because the\ncatalog already contains reversible-sorting and Landauer-bound developments to interface\nwith, so a unified, cross-referenced Lean account of reversible computation and its energetics\nis finally a concrete, near-term target.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2188",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "fe4ab5a6",
-    "status": "available",
-    "timestamp": "2026-06-21T16:48:27.921768+00:00",
-    "title": "These are freeform research directions extending the finite Jarzynski–Landauer"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -6390,7 +6402,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d465e25",
     "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
     "domain_bridges": [],
     "domains": [
@@ -6403,7 +6415,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -6624,26 +6636,6 @@
     "status": "available",
     "timestamp": "2026-06-18T01:05:26.622694+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: Neural population coding accuracy and robustness correlate with higher sheaf cohomology groups over time-varying hypergraphs representing neural connectivity, where local coefficient sheaves encode neuron firing patterns. Specifically, non-trivial H¹ and H² cohomology classes predict information integration capacity, and targeted lesions that reduce cohomology dimension cause predictable degradation in decoding accuracy. Test: (1) Record from multi-electrode arrays during cognitive tasks, (2) Construct dynamic hypergraphs of neural interactions, (3) Compute sheaf cohomology signatures, (4) Correlate with decoding performance and lesion effects. Impact: Enables principled mathematical framework for neural computation, predicts optimal network architectures for AI, and provides biomarkers for cognitive dysfunction.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_2187",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-21T16:34:46.617303+00:00",
-    "title": "Neural Population Coding as Sheaf Cohomology over Time-Varying Hypergraphs"
   },
   {
     "ambition_level": "extension",
@@ -6983,7 +6975,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5ef4c190",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domain_bridges": [],
     "domains": [
@@ -6996,7 +6988,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
