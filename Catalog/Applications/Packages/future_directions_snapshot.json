@@ -3830,7 +3830,7 @@
       "Lean4 Mathlib: combinatorics/simple_graph",
       "Lean4 Mathlib: order/median"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bd61b22",
     "description": "For any graph G, any two minimal median decompositions of G (i.e., median decompositions whose underlying median graph has the smallest possible number of vertices) are isomorphic via a graph isomorphism that respects the decomposition bags. This formalises the \"uniquely minimal\" claim in the paper and provides a concrete, falsifiable statement that can be encoded in Lean.",
     "domain_bridges": [
       "order theory (median algebras)",
@@ -3846,7 +3846,7 @@
     "proof_strategy": "Define a median decomposition as a structure (M, bag) where M is a median graph and bag : V(M) → set V(G) satisfying the usual covering, edge‑separation, and connectedness conditions. Show existence of a minimal decomposition by taking a decomposition with minimal |V(M)| (using well‑foundedness of nat). Prove that if D₁ and D₂ are minimal then there exists a bijection f : V(M₁) ≃ V(M₂) such that for every v ∈ V(M₁), bag₁ v = bag₂ (f v). The proof proceeds by: (1) constructing the Sageev dual median graph Σ(G, Σ) from the given separation system Σ of G; (2) showing any minimal median decomposition is isomorphic to the canonical Sageev construction (the \"uniquely minimal\" theorem in the paper); (3) using the universal property of the Sageev construction to build the required isomorphism. Lean implementation will reuse existing definitions of simple graphs, median graphs, and will formalise the universal property as a morphism of median graphs preserving bags.",
     "research_mode": "team",
     "source_exp_id": "2606.19473v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T12:54:39.746194+00:00",
     "title": "Uniqueness of Minimal Median Decompositions for Graphs"
   },
@@ -4615,7 +4615,7 @@
     "catalog_references": [
       "arXiv:math.CO"
     ],
-    "consumed_by_exp_id": "abf71497",
+    "consumed_by_exp_id": "",
     "description": "Prove that for any finite graph Gamma, if there exists a positive integer s such that for every potential s-clique characterized by average degree k and average common neighbor count lambda, the generalized clique adjacency polynomial CA_Gamma(x, s, k, lambda) is strictly negative for some integer x, then the clique number of Gamma is strictly less than s.",
     "domain_bridges": [
       "Graph Theory",
@@ -4631,7 +4631,7 @@
     "proof_strategy": "The proof requires a formalization of the graph-theoretic properties of cliques (average degree and common neighbors) and the evaluation of the cubic polynomial CA_Gamma. The strategy involves showing that the existence of a clique of size s implies the existence of a root or non-negative value for the polynomial for specific integer values, contradicting the hypothesis via a proof by contradiction.",
     "research_mode": "team",
     "source_exp_id": "2606.19820v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-21T07:26:03.602943+00:00",
     "title": "Formalization of the Generalized Clique Adjacency Polynomial Bound"
   },
@@ -5427,6 +5427,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Frankl & F\"uredi, 1984",
+      "de Caen, 1983",
+      "Gunderson & Semeraro, 2017",
+      "Ellis et al., 2024"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the Turán density $\\pi(H^r_3)$ of the unique $(r+1)$-vertex $r$-graph with exactly two edges (the $(3,2)$-daisy) satisfies $\\pi(H^r_3) = \\Theta(r^{-3})$; i.e., there exist absolute constants $c_1,c_2>0$ such that for every $r\\ge2$, $c_1/r^3 \\le \\pi(H^r_3) \\le c_2/r^3$. This would tighten the best known general lower bound $\\Omega(r^{-3})$ (from the construction in the paper) and the general upper bound $O(1/r)$ from de Caen to a matching polynomial rate.",
+    "domain_bridges": [
+      "hypergraph Turán densities",
+      "flag algebras",
+      "spectral methods in extremal combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2198",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Develop a stability analysis for near‑extremal $r$-graphs using flag algebras (or the recent “daisy” machinery) to show that any family with density $>C/r^3$ would force a forbidden $(r+1)$-configuration, yielding an $O(1/r^3)$ upper bound. One would first treat small $r$ by computer search, then prove a density increment / energy increment argument that improves de‟Caen’s double‑counting bound.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-21T23:35:54.844336+00:00",
+    "title": "Polynomial upper bound for the maximum density of $r$-graphs with every $(r+1)$-set spanning $0$ or $2$ edges"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Chao et al. on cyclotomic polynomials for dice relabeling",
       "Gallian-Rusin results on prime-product dice sizes"
     ],
@@ -5440,7 +5468,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2198",
+    "id": "fd_2199",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze cyclotomic polynomial decompositions of generating functions for square-sided dice and demonstrate constructive existence via factorization properties",
@@ -5449,6 +5477,31 @@
     "status": "available",
     "timestamp": "2026-06-21T22:47:13.355437+00:00",
     "title": "Existence of Square-Sided Dice Pairs Replicating Standard Dice Sum Frequencies"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "0608.0001"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 3, there exist k-uniform hypergraphs F1 and F2 such that the positive codegree Turán density of the pair {F1,F2} is strictly positive, strictly less than each individual density, and equals exactly half of the minimum of the two individual densities.",
+    "domain_bridges": [
+      "Extremal combinatorics",
+      "Hypergraph Turán theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2200",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct F1 and F2 as specific small hypergraphs (e.g., a single edge and a pair of edges sharing (k-1) vertices) and use known exact values for their positive codegree densities; then apply a product construction to show the pair density is half the minimum.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-21T23:36:20.259851+00:00",
+    "title": "Strong non-principality with exact ratio for positive codegree Turán density"
   },
   {
     "ambition_level": "extension",
@@ -6700,26 +6753,6 @@
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Complexity-Driven Emergence of Spacetime (Tropical Core)\n\nDerived from this cycle's findings in `TensorNetworkComplexity.lean`,\n`BondDimensionTransition.lean`, and `HolographicScaling.lean`.\n\nThis cycle established, with 0 sorries: (i) the tropical min-cut entanglement\nentropy is monotone, concave, and has a `≤ 0` discrete curvature proxy; (ii) it\nis eventually affine with slope = minimal cut size; (iii) for two competing cuts\nthere is a single sharp critical bond dimension `D_c = exp((a0-a1)/(c1-c0))` with\na first-order jump in the scaling exponent; (iv) uniform bond rescaling leaves the\nentanglement wedge invariant, so emergence requires heterogeneity.\n\n---\n\n## Conjecture 1 — Multi-cut cascade and total curvature accounting\n\nFor `n` cuts the entropy `S(t) = min_i (a_i + c_i t)` has at most `n − 1`\ntransition points, and the *total* negative curvature\n`∑_t curvatureProxy(t, h)` summed over breakpoints equals the total spread of\nslopes `c_max − c_min` (independent of the areas `a_i`).\n\n**The key insight is...** that concavity makes `S` a tropical polynomial whose\nbreakpoints carry all the curvature, and the curvature budget is a topological\ninvariant (difference of extreme cut sizes), not a metric one.\n\n**Why now?** We already proved the two-cut crossover and the one-sided curvature\nbound; the cascade is the natural `n`-fold generalization, and the eventual-affine\ntheorem pins down the `c_min` endpoint of the slope spectrum.\n\n---\n\n## Conjecture 2 — Heterogeneity threshold for wedge transitions\n\nA wedge (causal-structure) transition under varying bond dimension occurs **iff**\nthe bond-dimension assignment is non-uniform with variance exceeding an explicit\nthreshold determined by the second-smallest min-cut gap. Uniform assignments\nnever transition.\n\n**The key insight is...** that `wedge_invariant_under_uniform_scaling` rules out\nuniform scaling entirely, so the order parameter for emergence is the *variance*\nof `log D` across edges, not its mean.\n\n**Why now?** We have a proof that uniform scaling is geometrically inert; the next\nstep is to quantify exactly how much heterogeneity is needed, which the min-cut\ngap structure already exposes.\n\n---\n\n## Conjecture 3 — Smoothness ⇔ unique large-`D` minimal surface\n\nThe emergent geometry is \"smooth\" (single scaling exponent, zero curvature proxy\nfor all large `t`) **iff** the minimal-size cut is unique. A tie among\nminimal-size cuts produces a residual area-law degeneracy that obstructs a single\nlinear law on any half-line.\n\n**The key insight is...** that `mincutEntropy_eventually_affine` selects one\nminimal-area representative among minimal-size cuts; uniqueness of the minimizer\nis exactly what makes the large-`D` law unambiguous.\n\n**Why now?** The eventual-affinity theorem is proved; the uniqueness refinement\nturns its existential `i0` into an iff characterization of smoothness.\n\n---\n\n## Conjecture 4 — Lorentzian signature from sign of the curvature proxy\n\nAssigning a tropical \"time\" direction along the gradient of `S` and a \"space\"\ndirection along level sets, the nonpositive curvature proxy forces a fixed\ncausal signature: the emergent metric proxy is everywhere of Lorentzian type\naway from breakpoints, with signature change forbidden by concavity.\n\n**The key insight is...** that concavity (`curvatureProxy_nonpos`) is a one-sided\nbound, and a one-sided bound is precisely what distinguishes a fixed Lorentzian\nsignature from a fluctuating (fractal) one.\n\n**Why now?** We have the universal `≤ 0` curvature bound in hand; lifting it to a\nsignature statement only needs a tropical gradient/level-set construction over the\nsame `mincutEntropy`.\n\n---\n\n## Conjecture 5 — Critical bond dimension scaling `D_c(N)`\n\nFor random tensor networks on `N` vertices with i.i.d. random cut offsets, the\ntwo-cut critical bond dimension `D_c` concentrates as `N → ∞`, with\n`log D_c(N) = Θ(area-gap / size-gap)` and fluctuations of order `N^{-1/2}`.\n\n**The key insight is...** that `D_c = exp((a0-a1)/(c1-c0))` is an explicit smooth\nfunction of the (random) offsets and (integer) sizes, so its large-`N` law follows\nfrom concentration of the offset gap.\n\n**Why now?** The exact closed form for `D_c` is proved for two cuts; plugging in a\nprobability model is the immediate, testable next step bridging to the original\nrandom-tensor-network conjecture.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Computation"
-    ],
-    "id": "fd_2199",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a747a0a8",
-    "status": "available",
-    "timestamp": "2026-06-21T23:33:09.584655+00:00",
-    "title": "Derived from this cycle's findings in `TensorNetworkComplexity.lean`,"
   },
   {
     "ambition_level": "extension",

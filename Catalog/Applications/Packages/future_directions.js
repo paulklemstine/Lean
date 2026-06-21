@@ -2484,7 +2484,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Necessary threshold for cubic generalized Tur\u00e1n growth against K_{3,t}"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bd61b22",
     "description": "For any graph G, any two minimal median decompositions of G (i.e., median decompositions whose underlying median graph has the smallest possible number of vertices) are isomorphic via a graph isomorphism that respects the decomposition bags. This formalises the \"uniquely minimal\" claim in the paper and provides a concrete, falsifiable statement that can be encoded in Lean.",
     "domains": [
       "Bridges"
@@ -2493,7 +2493,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19473v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T12:54:39.746194+00:00",
     "title": "Uniqueness of Minimal Median Decompositions for Graphs"
   },
@@ -2906,7 +2906,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "All-measurable induced F-count forcing for graphons"
   },
   {
-    "consumed_by_exp_id": "abf71497",
+    "consumed_by_exp_id": "",
     "description": "Prove that for any finite graph Gamma, if there exists a positive integer s such that for every potential s-clique characterized by average degree k and average common neighbor count lambda, the generalized clique adjacency polynomial CA_Gamma(x, s, k, lambda) is strictly negative for some integer x, then the clique number of Gamma is strictly less than s.",
     "domains": [
       "Bridges"
@@ -2915,7 +2915,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19820v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-21T07:26:03.602943+00:00",
     "title": "Formalization of the Generalized Clique Adjacency Polynomial Bound"
   },
@@ -3343,17 +3343,45 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that the Tur\u00e1n density $\\pi(H^r_3)$ of the unique $(r+1)$-vertex $r$-graph with exactly two edges (the $(3,2)$-daisy) satisfies $\\pi(H^r_3) = \\Theta(r^{-3})$; i.e., there exist absolute constants $c_1,c_2>0$ such that for every $r\\ge2$, $c_1/r^3 \\le \\pi(H^r_3) \\le c_2/r^3$. This would tighten the best known general lower bound $\\Omega(r^{-3})$ (from the construction in the paper) and the general upper bound $O(1/r)$ from de\u202fCaen to a matching polynomial rate.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2198",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-21T23:35:54.844336+00:00",
+    "title": "Polynomial upper bound for the maximum density of $r$-graphs with every $(r+1)$-set spanning $0$ or $2$ edges"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any two distinct perfect squares a\u00b2 and b\u00b2, there exists at least one pair of square-sided dice with a\u00b2 and b\u00b2 sides whose sum frequency distribution matches that of two standard dice of the same sizes.",
     "domains": [
       "Computation"
     ],
-    "id": "fd_2198",
+    "id": "fd_2199",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
     "status": "available",
     "timestamp": "2026-06-21T22:47:13.355437+00:00",
     "title": "Existence of Square-Sided Dice Pairs Replicating Standard Dice Sum Frequencies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 3, there exist k-uniform hypergraphs F1 and F2 such that the positive codegree Tur\u00e1n density of the pair {F1,F2} is strictly positive, strictly less than each individual density, and equals exactly half of the minimum of the two individual densities.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2200",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-21T23:36:20.259851+00:00",
+    "title": "Strong non-principality with exact ratio for positive codegree Tur\u00e1n density"
   },
   {
     "consumed_by_exp_id": "",
@@ -4290,21 +4318,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Complexity-Driven Emergence of Spacetime (Tropical Core)\n\nDerived from this cycle's findings in `TensorNetworkComplexity.lean`,\n`BondDimensionTransition.lean`, and `HolographicScaling.lean`.\n\nThis cycle established, with 0 sorries: (i) the tropical min-cut entanglement\nentropy is monotone, concave, and has a `\u2264 0` discrete curvature proxy; (ii) it\nis eventually affine with slope = minimal cut size; (iii) for two competing cuts\nthere is a single sharp critical bond dimension `D_c = exp((a0-a1)/(c1-c0))` with\na first-order jump in the scaling exponent; (iv) uniform bond rescaling leaves the\nentanglement wedge invariant, so emergence requires heterogeneity.\n\n---\n\n## Conjecture 1 \u2014 Multi-cut cascade and total curvature accounting\n\nFor `n` cuts the entropy `S(t) = min_i (a_i + c_i t)` has at most `n \u2212 1`\ntransition points, and the *total* negative curvature\n`\u2211_t curvatureProxy(t, h)` summed over breakpoints equals the total spread of\nslopes `c_max \u2212 c_min` (independent of the areas `a_i`).\n\n**The key insight is...** that concavity makes `S` a tropical polynomial whose\nbreakpoints carry all the curvature, and the curvature budget is a topological\ninvariant (difference of extreme cut sizes), not a metric one.\n\n**Why now?** We already proved the two-cut crossover and the one-sided curvature\nbound; the cascade is the natural `n`-fold generalization, and the eventual-affine\ntheorem pins down the `c_min` endpoint of the slope spectrum.\n\n---\n\n## Conjecture 2 \u2014 Heterogeneity threshold for wedge transitions\n\nA wedge (causal-structure) transition under varying bond dimension occurs **iff**\nthe bond-dimension assignment is non-uniform with variance exceeding an explicit\nthreshold determined by the second-smallest min-cut gap. Uniform assignments\nnever transition.\n\n**The key insight is...** that `wedge_invariant_under_uniform_scaling` rules out\nuniform scaling entirely, so the order parameter for emergence is the *variance*\nof `log D` across edges, not its mean.\n\n**Why now?** We have a proof that uniform scaling is geometrically inert; the next\nstep is to quantify exactly how much heterogeneity is needed, which the min-cut\ngap structure already exposes.\n\n---\n\n## Conjecture 3 \u2014 Smoothness \u21d4 unique large-`D` minimal surface\n\nThe emergent geometry is \"smooth\" (single scaling exponent, zero curvature proxy\nfor all large `t`) **iff** the minimal-size cut is unique. A tie among\nminimal-size cuts produces a residual area-law degeneracy that obstructs a single\nlinear law on any half-line.\n\n**The key insight is...** that `mincutEntropy_eventually_affine` selects one\nminimal-area representative among minimal-size cuts; uniqueness of the minimizer\nis exactly what makes the large-`D` law unambiguous.\n\n**Why now?** The eventual-affinity theorem is proved; the uniqueness refinement\nturns its existential `i0` into an iff characterization of smoothness.\n\n---\n\n## Conjecture 4 \u2014 Lorentzian signature from sign of the curvature proxy\n\nAssigning a tropical \"time\" direction along the gradient of `S` and a \"space\"\ndirection along level sets, the nonpositive curvature proxy forces a fixed\ncausal signature: the emergent metric proxy is everywhere of Lorentzian type\naway from breakpoints, with signature change forbidden by concavity.\n\n**The key insight is...** that concavity (`curvatureProxy_nonpos`) is a one-sided\nbound, and a one-sided bound is precisely what distinguishes a fixed Lorentzian\nsignature from a fluctuating (fractal) one.\n\n**Why now?** We have the universal `\u2264 0` curvature bound in hand; lifting it to a\nsignature statement only needs a tropical gradient/level-set construction over the\nsame `mincutEntropy`.\n\n---\n\n## Conjecture 5 \u2014 Critical bond dimension scaling `D_c(N)`\n\nFor random tensor networks on `N` vertices with i.i.d. random cut offsets, the\ntwo-cut critical bond dimension `D_c` concentrates as `N \u2192 \u221e`, with\n`log D_c(N) = \u0398(area-gap / size-gap)` and fluctuations of order `N^{-1/2}`.\n\n**The key insight is...** that `D_c = exp((a0-a1)/(c1-c0))` is an explicit smooth\nfunction of the (random) offsets and (integer) sizes, so its large-`N` law follows\nfrom concentration of the offset gap.\n\n**Why now?** The exact closed form for `D_c` is proved for two cuts; plugging in a\nprobability model is the immediate, testable next step bridging to the original\nrandom-tensor-network conjecture.\n",
-    "domains": [
-      "Geometry",
-      "Computation"
-    ],
-    "id": "fd_2199",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "a747a0a8",
-    "status": "available",
-    "timestamp": "2026-06-21T23:33:09.584655+00:00",
-    "title": "Derived from this cycle's findings in `TensorNetworkComplexity.lean`,"
   },
   {
     "consumed_by_exp_id": "",
