@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a4d16ba9",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Species Generating Functions ↔ Probability Laws\n\nDerived from this cycle's findings in `Probability/SpeciesBoltzmannBridge.lean` and\n`Probability/SpeciesGeometricBridge.lean`, wh",
-      "quality_score": 0.52770625,
-      "sorry_count": 0,
-      "theorem_count": 125,
-      "timestamp": "2026-06-15T15:50:06",
-      "title": "Close Proofs: Functorial bridge from combinatorial species generating functions to t"
-    },
-    {
       "cycle_id": "cd281b27",
       "domain": "Tropical",
       "key_insight": "# Future Directions — Tropical Polynomials (Convexity Foundation)\n\nThis cycle delivered a self-contained Mathlib foundation for **general-degree tropical\n(max-plus) polynomials** in `Catalog/Tropical/",
@@ -2501,6 +2491,16 @@
       "theorem_count": 130,
       "timestamp": "2026-06-21T11:16:42",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+    },
+    {
+      "cycle_id": "11f0f366",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Collision Resistance from Hard Problems\n\nDerived from the cycle that produced `Cryptography.MerkleDamgard` (equal-length\nMerkle–Damgård collision extraction + pigeonhole inevitab",
+      "quality_score": 0.5660000000000001,
+      "sorry_count": 0,
+      "theorem_count": 136,
+      "timestamp": "2026-06-21T11:25:35",
+      "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.86456
     }
   ],
-  "last_updated": "2026-06-21T11:16:42",
+  "last_updated": "2026-06-21T11:25:35",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "79875292",
-        "quality": 0.452064972972973,
-        "theorems": 19,
-        "title": "Follow-up conjectures arising from `Catalog/Bridges/SpeciesTropicalValuationProf"
-      },
-      {
         "cycle_id": "e72864d5",
         "quality": 0.35638045714285715,
         "theorems": 16,
@@ -3699,6 +3693,12 @@
         "quality": 0.4596814054054055,
         "theorems": 6,
         "title": "Semiprime cyclotomic transfer for square-sided dice"
+      },
+      {
+        "cycle_id": "11f0f366",
+        "quality": 0.5660000000000001,
+        "theorems": 136,
+        "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
       }
     ],
     "Physics": [

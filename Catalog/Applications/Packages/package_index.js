@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "11f0f366",
     "filename": "cryptographic_hash_functions_collision_resistance_.json",
     "pkg_num": 222,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5660000000000001,
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
@@ -6773,8 +6773,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "cryptographic_hash_functions_collision_resistance_",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5660000000000001,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
     }

@@ -4004,6 +4004,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Euler\u2013Mascheroni constant `\u03b3`\n\nDerived from the Stage-3/Stage-4 findings of this cycle (files\n`EulerMascheroniApproximation.lean`, `EulerMascheroniSeries.lean`).\n\n## Conjecture 1 \u2014 Quadratic interval width via the second-order log bound\n**Statement.** The enclosure width admits the two-sided refinement\n`1/(n+1) \u2264 log((n+1)/n) \u2264 1/n`, hence `1/(n+1) \u2264 (H_n \u2212 log n) \u2212 \u03b3` as well, pinning the\nerror between consecutive reciprocals.\n*The key insight is...* that `log(1 + 1/n)` is squeezed by `1/(n+1)` and `1/n` from the\ntwo tangent/secant bounds `x/(1+x) \u2264 log(1+x) \u2264 x`, upgrading `enclosure_width` from an\ninequality to a sharp double inequality.\n*Why now?* `enclosure_width` already isolates the width as exactly `log((n+1)/n)`, so only the\nelementary lower bound `x/(1+x) \u2264 log(1+x)` (available in Mathlib) is missing.\n\n## Conjecture 2 \u2014 Midpoint acceleration `H_n \u2212 log(n + 1/2)` halves the error\n**Statement.** `|H_n \u2212 log(n + 1/2) \u2212 \u03b3| = O(1/n\u00b2)`, an order-of-magnitude improvement over\nthe `O(1/n)` rate proved for `H_n \u2212 log n`.\n*The key insight is...* that centering the logarithm at the midpoint `n + 1/2` cancels the\nlinear term of `log((n+1)/n)`, leaving a quadratic remainder.\n*Why now?* We have both truncations `H_n \u2212 log n` and `H_n \u2212 log(n+1)` formalized with explicit\nerrors; their average is exactly the midpoint correction, so the cancellation is one Taylor step away.\n\n## Conjecture 3 \u2014 Term asymptotics of the telescoping series\n**Statement.** The series term satisfies `1/(2(k+1)\u00b2) \u2264 term k \u2264 1/(2k\u00b2)` for all `k`, so the\ntail `\u03a3_{k\u2265N} term k` is `\u0398(1/N)`, giving an explicit truncation error for `tendsto_series`.\n*The key insight is...* that `term k = 1/(k+1) \u2212 log(1 + 1/(k+1))` equals `1/(2(k+1)\u00b2) \u2212 O(1/k\u00b3)`\nby the log expansion, and `term_pos` already secures positivity.\n*Why now?* `term_pos` is proved; the same `log x < x \u2212 1` machinery, applied to the quadratic\nremainder `log(1+x) > x \u2212 x\u00b2/2`, yields the matching lower bound.\n\n## Conjecture 4 \u2014 Stieltjes generalization `\u03b3\u2080 = \u03b3`\n**Statement.** Defining `\u03b3_m = lim (\u03a3_{k\u2264n} (log k)^m / k \u2212 (log n)^{m+1}/(m+1))`, the case\n`m = 0` reproduces `Real.eulerMascheroniConstant`, and the same monotone-sandwich proof skeleton\ngives convergence for every `m`.\n*The key insight is...* that the Stieltjes constants share the *exact* telescoping/sandwich\nstructure used here, with `(log k)^m / k` replacing `1/k` and an integral comparison replacing `log n`.\n*Why now?* The convergence engine (`eulerMascheroniSeq` increasing, `eulerMascheroniSeq'`\ndecreasing, gap \u2192 0) is fully formal; abstracting it over the weight `(log k)^m` is a direct\nstructural generalization rather than new analysis.\n\n## Conjecture 5 \u2014 No rational falls in the proven enclosure for large `n` cheaply\n**Statement.** For each `n \u2265 1` the open interval `(H_n \u2212 log(n+1), H_n \u2212 log n)` of width\n`< 1/n` contains `\u03b3`; intersecting these nested intervals gives a constructive irrationality\n*criterion*: `\u03b3` is irrational iff no rational lies in `\u22c2_n (H_n \u2212 log(n+1), H_n \u2212 log n)`.\n*The key insight is...* that the proven nested-interval enclosure already realizes `\u03b3` as the\nunique point of an explicit shrinking-interval intersection, the standard scaffold for\nirrationality arguments.\n*Why now?* `lt_gamma_and_gamma_lt` plus `enclosure_width` give nested intervals with width \u2192 0;\nformalizing \"intersection is a single point\" is a short step that frames the open irrationality\nproblem in fully constructive Lean terms.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_2179",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d14bdeaa",
+    "status": "available",
+    "timestamp": "2026-06-21T11:15:49.280224+00:00",
+    "title": "Derived from the Stage-3/Stage-4 findings of this cycle (files"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Collision Resistance from Hard Problems\n\nDerived from the cycle that produced `Cryptography.MerkleDamgard` (equal-length\nMerkle\u2013Damg\u00e5rd collision extraction + pigeonhole inevitability) and\n`Cryptography.HashFromHardness` (algebraic hardness \u21d2 hash collision via the\nmultiplicative compression function).\n\n## 1. Length-strengthened MD removes the equal-length hypothesis\n**Conjecture.** Define MD-strengthening `pad m = m ++ [encodeLength m.length]`\nwith an injective length encoder. Then `mdHash f iv (pad m\u2081) = mdHash f iv (pad m\u2082)`\nwith `m\u2081 \u2260 m\u2082` (arbitrary, possibly different lengths) yields a compression\ncollision of `f` \u2014 *no* equal-length assumption needed.\n*The key insight is...* that the appended length block forces the final\ncompression to compare encoded lengths, converting a cross-length IV/free-start\ncollision into a genuine last-block compression collision.\n*Why now?* Our `md_collision_extract` already isolates the last-block case\nanalysis; padding is a thin, fully-formalizable wrapper over the existing proof,\nand `ComputationalEvidence.md` pins the exact boundary the padding repairs.\n\n## 2. Prefix-free domains are equivalent to length-padding for CR preservation\n**Conjecture.** For the iterated hash restricted to a prefix-free set of\nmessages, collision resistance is preserved *without* padding, and the prefix-\nfree condition is the minimal combinatorial hypothesis that makes the\nunequal-length recursion terminate in a compression collision.\n*The key insight is...* that the only failure mode in the unequal-length case is\none message being a processed prefix of the other; prefix-freeness deletes\nexactly that case.\n*Why now?* The counterexample in `ComputationalEvidence.md` ([6] vs [2,3]) is a\nprefix-style collision, so a prefix-free guard is the natural next lemma to test\nagainst the same machinery.\n\n## 3. The multiplicative hash's collision-finding is exactly integer factoring\n**Conjecture.** Finding a collision of `mulCompress` on `b`-bit blocks is\npolynomial-time equivalent to factoring a `2b`-bit integer; hence the\nmultiplicative MD hash is collision resistant iff factoring is hard.\n*The key insight is...* `productCollision_to_compression` already shows a\nnon-unique factorization *is* a compression collision; the converse reduction\n(collision \u21d2 nontrivial factor) is the missing half and completes the\nequivalence.\n*Why now?* We have the forward map formalized and a concrete catalog witness\n(`6\u00b735 = 10\u00b721`); the reduction can be stated and tested on small composites\nimmediately.\n\n## 4. Pigeonhole gap quantifies unavoidable collision density\n**Conjecture.** For `f : State \u00d7 Block \u2192 State` with `|Block| = k`, the number\nof colliding input pairs is at least `|State| \u00b7 (k choose 2) / |State|`-style\nbound; i.e. compression by factor `k` forces a quantitatively dense collision\nset, not merely one collision.\n*The key insight is...* `compression_collision_of_card` only extracts one\ncollision, but the same counting (fibers of size \u2265 2 by averaging) yields a\nlower bound on total collisions.\n*Why now?* The single-collision pigeonhole is already proved; upgrading\n`Fintype.exists_ne_map_eq_of_card_lt` to a fiber-counting argument is a direct,\nself-contained extension.\n\n## 5. Davies\u2013Meyer turns a block cipher into a collision-extractable compressor\n**Conjecture.** For a family `E : Key \u2192 State \u2192 State` of bijections, the\nDavies\u2013Meyer compressor `f s b = E b s + s` (in an abelian group `State`)\nsatisfies the same equal-length MD extraction theorem, and any of its collisions\nyields a structured relation on `E` (a \"fixed-point\"/\"free-start\" relation).\n*The key insight is...* MD extraction is agnostic to how `f` is built, so it\napplies verbatim to Davies\u2013Meyer; the new content is that the extracted\ncompression collision is an algebraic equation in the cipher.\n*Why now?* `md_collision_extract` is stated for an arbitrary `f`, so the\nDavies\u2013Meyer instantiation is plug-and-play, and the cipher-relation corollary\nis the only genuinely new lemma to formalize.\n",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2180",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "11f0f366",
+    "status": "available",
+    "timestamp": "2026-06-21T11:24:18.841278+00:00",
+    "title": "Derived from the cycle that produced `Cryptography.MerkleDamgard` (equal-length"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4818,21 +4848,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
-  },
-  {
-    "consumed_by_exp_id": "fe4ab5a6",
-    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0465",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:30.568365+00:00",
-    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
   {
     "consumed_by_exp_id": "",
