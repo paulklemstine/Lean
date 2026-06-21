@@ -5371,6 +5371,35 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Universal minimal flows of homeomorphism groups of continua, arXiv",
+      "Kechris–Pestov–Todorcevic, Fraïssé limits, Ramsey theory, and topological dynamics of automorphism groups",
+      "Pestov, Dynamics of Infinite-Dimensional Groups: The Ramsey-Dvoretzky-Milman Phenomenon",
+      "Irwin–Solecki, Projective Fraïssé limits and the pseudo-arc"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let C be a projective Fraïssé category of finite graphs/enriched finite graphs satisfying the hypotheses of the paper, with projective Fraïssé limit L, compact equivalence relation R, quotient continuum X=L/R, and G the closure in Homeo(X) of the image of Aut(L). Define the approximate Ramsey degree d_C(A) of an object A to be the least d such that for every B≥A and every finite coloring of Hom(B,A), there is C≥B such that every finite coloring of Hom(C,A) has some morphism π:C→B for which the pullback coloring on Hom(B,A) uses at most d colors. Conjecture: the universal minimal flow M(G) is metrizable if and only if d_C(A)<∞ for every object A of C. The paper's approximate Ramsey property is exactly the special case d_C(A)=1 for all A, corresponding to extreme amenability.",
+    "domain_bridges": [
+      "Projective Fraïssé limits ↔ continua and dense homeomorphism subgroups",
+      "Approximate Ramsey degrees ↔ metrizability of universal minimal flows",
+      "Finite coloring problems on morphism sets ↔ compact metrizable G-flows"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2196",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize HasApproxRamseyDegree C A d and prove that d=1 recovers the paper's approximate Ramsey property. For the forward direction, use a compatible metric on a metrizable universal minimal flow and finite open covers to extract uniform finite bounds for the relevant coloring problems. For the reverse direction, construct a compact metrizable projective-limit flow from coherent finite-coloring witnesses, prove minimality and universality by amalgamation and the finite-degree hypothesis, and transfer the result from Aut(L) to G using density of the image.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-21T21:54:54.436749+00:00",
+    "title": "Finite approximate Ramsey degrees characterize metrizable universal minimal flows"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",

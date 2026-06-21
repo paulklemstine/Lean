@@ -3313,6 +3313,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let C be a projective Fra\u00efss\u00e9 category of finite graphs/enriched finite graphs satisfying the hypotheses of the paper, with projective Fra\u00efss\u00e9 limit L, compact equivalence relation R, quotient continuum X=L/R, and G the closure in Homeo(X) of the image of Aut(L). Define the approximate Ramsey degree d_C(A) of an object A to be the least d such that for every B\u2265A and every finite coloring of Hom(B,A), there is C\u2265B such that every finite coloring of Hom(C,A) has some morphism \u03c0:C\u2192B for which the pullback coloring on Hom(B,A) uses at most d colors. Conjecture: the universal minimal flow M(G) is metrizable if and only if d_C(A)<\u221e for every object A of C. The paper's approximate Ramsey property is exactly the special case d_C(A)=1 for all A, corresponding to extreme amenability.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2196",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-21T21:54:54.436749+00:00",
+    "title": "Finite approximate Ramsey degrees characterize metrizable universal minimal flows"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
