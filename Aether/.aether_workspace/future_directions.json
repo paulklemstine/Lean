@@ -37778,7 +37778,11 @@
         "Black hole-bound state metamorphosis in CHL models → Generating function manipulation",
         "Siegel modular forms → Convergence of sums over lattice points"
       ],
+<<<<<<< Updated upstream
       "domain_quality_penalty": 0.1,
+=======
+      "domain_quality_penalty": 0.0,
+>>>>>>> Stashed changes
       "domains": [
         "Algebra",
         "Logic"
@@ -37890,6 +37894,7 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
+<<<<<<< Updated upstream
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -37901,25 +37906,64 @@
       "domains": [
         "Algebra",
         "Logic"
+=======
+      "catalog_references": [
+        "KPT05: Kechris-Pestov-Todorcevic 2005",
+        "Irwin-Solecki: Projective Fraisse limits",
+        "BTG: Bartoszewicz-Glasner-Megrelishvili 2009 on extreme amenability of Homeo(pseudo-arc)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "We conjecture that the projective Fraisse category whose objects are finite trees (viewed as graphs) embedded in the pseudo-arc, with morphisms being embeddings preserving the tree structure, satisfies the approximate Ramsey property. By the main theorem of the paper, this would imply that the homeomorphism group of the pseudo-arc is extremely amenable, providing a new combinatorial proof of this known fact.",
+      "domain_bridges": [
+        "Topological Dynamics",
+        "Ramsey Theory",
+        "Fraïssé Theory",
+        "Continuum Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+>>>>>>> Stashed changes
       ],
       "id": "fd_2185",
       "last_attempt_time": "",
       "last_reviewed_at": "",
+<<<<<<< Updated upstream
       "lean_theorem_stub": "",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "priority_score": 0.75,
       "proof_strategy": "",
+=======
+      "lean_theorem_stub": "theorem pseudo_arc_projective_fraisse_approx_ramsey : ApproximateRamseyProperty (PseudoArcFraisseCategory) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a canonical approximation of the pseudo-arc by finite trees via its characterization as an inverse limit of arcs with bonding maps of degree 2. Use a density argument to show that any finite coloring of embeddings of a given finite tree into larger trees yields a monochromatic approximate copy, leveraging the homogeneous and chainable nature of the pseudo-arc. The proof would adapt the probabilistic method used in the KPT correspondence to the projective setting, verifying the approximate Ramsey property via a lifting property of the Fraisse limit.",
+>>>>>>> Stashed changes
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
+<<<<<<< Updated upstream
       "source_exp_id": "b8df0deb",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/b8df0deb_retry3",
       "status": "available",
       "thread_id": "th_ac7f7639",
       "timestamp": "2026-06-21T14:56:23.937072+00:00",
       "title": "These directions build on the non-circular index telescope in"
+=======
+      "source_exp_id": "2606.20407v1",
+      "source_path": "http://arxiv.org/abs/2606.20407v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T14:58:48.560751+00:00",
+      "title": "Approximate Ramsey property for the projective Fraisse category of finite trees approximating the pseudo-arc"
+>>>>>>> Stashed changes
     },
     {
       "ambition_level": "extension",
@@ -42200,11 +42244,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "dcd2c2b7",
       "depth_estimate": 3,
       "description": "Formalize the classical zero-free region of the Riemann zeta function: ζ(s) ≠ 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2π) log(T/(2πe)). Formalize the connection between zero-free regions and prime counting error bounds.",
       "domain_bridges": [],
@@ -42214,7 +42258,7 @@
         "Analysis"
       ],
       "id": "seed_329",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-21T14:58:52.988440+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42227,7 +42271,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432599+00:00",
       "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"

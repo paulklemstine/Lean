@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Natural Proofs Barrier: Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dcd2c2b7",
     "description": "Formalize the classical zero-free region of the Riemann zeta function: \u03b6(s) \u2260 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2\u03c0) log(T/(2\u03c0e)). Formalize the connection between zero-free regions and prime counting error bounds.",
     "domains": [
       "NumberTheory",
@@ -101,7 +101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432599+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
   },
@@ -3164,6 +3164,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-21T14:18:53.959993+00:00",
     "title": "Very ampleness is preserved under join for lattice polytopes with the integer decomposition property"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the projective Fraisse category whose objects are finite trees (viewed as graphs) embedded in the pseudo-arc, with morphisms being embeddings preserving the tree structure, satisfies the approximate Ramsey property. By the main theorem of the paper, this would imply that the homeomorphism group of the pseudo-arc is extremely amenable, providing a new combinatorial proof of this known fact.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2185",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-21T14:58:48.560751+00:00",
+    "title": "Approximate Ramsey property for the projective Fraisse category of finite trees approximating the pseudo-arc"
   },
   {
     "consumed_by_exp_id": "",

@@ -120,7 +120,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dcd2c2b7",
     "description": "Formalize the classical zero-free region of the Riemann zeta function: ζ(s) ≠ 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2π) log(T/(2πe)). Formalize the connection between zero-free regions and prime counting error bounds.",
     "domain_bridges": [],
     "domains": [
@@ -133,7 +133,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432599+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
   },
@@ -5085,6 +5085,35 @@
     "status": "available",
     "timestamp": "2026-06-21T14:18:53.959993+00:00",
     "title": "Very ampleness is preserved under join for lattice polytopes with the integer decomposition property"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "KPT05: Kechris-Pestov-Todorcevic 2005",
+      "Irwin-Solecki: Projective Fraisse limits",
+      "BTG: Bartoszewicz-Glasner-Megrelishvili 2009 on extreme amenability of Homeo(pseudo-arc)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the projective Fraisse category whose objects are finite trees (viewed as graphs) embedded in the pseudo-arc, with morphisms being embeddings preserving the tree structure, satisfies the approximate Ramsey property. By the main theorem of the paper, this would imply that the homeomorphism group of the pseudo-arc is extremely amenable, providing a new combinatorial proof of this known fact.",
+    "domain_bridges": [
+      "Topological Dynamics",
+      "Ramsey Theory",
+      "Fraïssé Theory",
+      "Continuum Theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2185",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a canonical approximation of the pseudo-arc by finite trees via its characterization as an inverse limit of arcs with bonding maps of degree 2. Use a density argument to show that any finite coloring of embeddings of a given finite tree into larger trees yields a monochromatic approximate copy, leveraging the homogeneous and chainable nature of the pseudo-arc. The proof would adapt the probabilistic method used in the KPT correspondence to the projective setting, verifying the approximate Ramsey property via a lifting property of the Fraisse limit.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-21T14:58:48.560751+00:00",
+    "title": "Approximate Ramsey property for the projective Fraisse category of finite trees approximating the pseudo-arc"
   },
   {
     "ambition_level": "extension",

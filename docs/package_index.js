@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "derived_from_the_verified_lean_results_in.json",
     "pkg_num": 223,
     "quality": "substantial",
-    "quality_score": 0.8904000000000001,
+    "quality_score": 0.84144,
     "title": "The Subgroup-Index Telescope: Group Order as a Product of Composition Factors"
   },
   {
@@ -6803,7 +6803,7 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "derived_from_the_verified_lean_results_in",
       "primary_domain": "Algebra",
-      "priority_score": 0.8904000000000001,
+      "priority_score": 0.84144,
       "quality": "substantial",
       "shape": "tetrahedron",
       "title": "The Subgroup-Index Telescope: Group Order as a Product of Composition Factors"
