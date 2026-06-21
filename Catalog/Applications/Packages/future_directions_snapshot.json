@@ -2344,6 +2344,37 @@
     "title": "Initial-condition universality of the clique-number exponent in preferential attachment with edge steps"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Data.Fin.Basic",
+      "Mathlib.Data.Fintype.Basic",
+      "Mathlib.Data.Finset.Basic",
+      "Mathlib.Analysis.Asymptotics.Asymptotics",
+      "Mathlib.Topology.Algebra.Order.Field",
+      "Mathlib.Probability.ProbabilityMassFunction.Basic"
+    ],
+    "consumed_by_exp_id": "42f0bfda",
+    "description": "Let P be any fixed finite partial Latin square pattern with k entries, encoded as a finite set of triples (row, column, symbol) of natural numbers satisfying the partial Latin condition: no two distinct entries agree in both row and column, row and symbol, or column and symbol. For each n large enough to contain all coordinates of P, view P as a partial Latin square of order n. Conjecture: if L is chosen uniformly from all Latin squares of order n, then Pr[L contains P] * n^k tends to 1 as n tends to infinity.",
+    "domain_bridges": [
+      "Finite combinatorics: Latin squares as functions Fin n -> Fin n -> Fin n satisfying row and column bijectivity",
+      "Probability: uniform probability over a finite type of Latin squares",
+      "Asymptotic analysis: convergence of real-valued sequences indexed by n"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2079",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "A plausible route is to combine the universal lower and upper bounds from the paper with sharper asymptotic enumeration of Latin squares with prescribed entries. One would first prove switching estimates showing that conditioning on any fixed compatible set of k entries changes the count of completions by a multiplicative factor asymptotic to n^{-k}. The key technical step is to show that interactions among the finitely many prescribed entries contribute only 1 + o(1), because all row, column, and symbol conflicts are excluded by the partial Latin condition and k is fixed while n grows.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18174v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-18T14:02:50.731479+00:00",
+    "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Erdos-Ginzburg-Ziv theorem",
@@ -2522,6 +2553,34 @@
     "status": "available",
     "timestamp": "2026-06-18T16:05:12.158903+00:00",
     "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Connectivity",
+      "Mathlib.Data.Set.Finite",
+      "Mathlib.Data.Finset.Basic"
+    ],
+    "consumed_by_exp_id": "3e812933",
+    "description": "Conjecture: Every finite block graph has a vertex set S which is simultaneously a 2-packing and an isolating set. Equivalently, the closed neighborhoods of distinct vertices of S are pairwise disjoint, and every edge of the graph has at least one endpoint in the closed neighborhood of S.",
+    "domain_bridges": [
+      "Extends the paper's theorem that every tree has a packing isolating set from tree block-cut structure to clique-block structure.",
+      "Uses the block-cut tree representation of block graphs to transfer inductive arguments from trees to graphs whose blocks are cliques.",
+      "Relates 2-packings, isolating sets, and distance-2 domination through closed-neighborhood edge coverage."
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2086",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Induct on the number of blocks in the block-cut tree of the finite block graph. For a leaf block B attached at a cut vertex c, analyze whether c is already controlled by the inductive packing isolating set in the reduced block graph G - (B \\ {c}). If not, add a suitable non-cut vertex of B, or c itself when B is the only block, preserving pairwise disjointness of closed neighborhoods. Since B is a clique, covering one appropriate vertex's closed neighborhood covers all edges internal to B, and the leaf-block condition prevents unwanted interactions with previously chosen packing vertices.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18172v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-18T21:08:20.524395+00:00",
+    "title": "Packing isolating sets exist in finite block graphs"
   },
   {
     "ambition_level": "extension",
@@ -4497,6 +4556,32 @@
     "title": "Equality of minimal free resolutions for Ziegler pairs of line arrangements of degree ≥12"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "OEIS:A001227",
+      "MathComp/NumberTheory/Cyclotomic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6‑sided dice can be factored as a product of two polynomials with non‑negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum‑frequency distribution as two ordinary dice.",
+    "domain_bridges": [
+      "Algebraic Combinatorics",
+      "Formalized Mathematics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2163",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Translate the problem to a factorisation of the frequency polynomial F(x)= (x+...+x^6)^2 = x^2 (x^6-1)^2/(x-1)^2. Use the factorisation of cyclotomic polynomials Φ_d(x) to express F as a product of irreducibles. Show that for any distinct squares a^2,b^2 there is a selection of these cyclotomic factors (with possible repetitions) whose product yields a polynomial P_a with P_a(1)=a^2 and non‑negative coefficients, and whose complementary factor P_b satisfies P_b(1)=b^2. The existence part reduces to solving a linear Diophantine system given by the degrees and constant terms of the chosen Φ_d. One can then employ the theory of integer cones (Hilbert bases) to prove the system always has a solution when a≠b, yielding the desired dice. Formalisation in Lean proceeds by: (1) defining generating functions of dice, (2) proving the cyclotomic factorisation of (∑_{i=1}^6 x^i)^2, (3) constructing the cone of admissible exponent vectors, (4) showing the cone contains a point with prescribed sum‑o",
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-21T03:16:50.834545+00:00",
+    "title": "Existence of square‑sided dice pairs preserving the sum distribution of two standard dice"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Tree-cut decomposition",
@@ -4532,6 +4617,36 @@
     "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Mathlib.Data.ZMod.Basic",
+      "Mathlib.Data.Nat.Prime.Basic",
+      "Mathlib.GroupTheory.OrderOfElement",
+      "Mathlib.Order.SetNotation",
+      "Kaprekar four-digit odd-base projective-doubling classification"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m ≡ 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
+    "domain_bridges": [
+      "Kaprekar digit dynamics to multiplication by 2 on projective residue classes",
+      "terminal cycle length to projective multiplicative order modulo p",
+      "extremal cycle length to Artin-type primitive root phenomena"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2164",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the paper's equivalence: for prime p > 5, the longest terminal four-digit Kaprekar cycle in base p has length (p - 1) / 2 iff the least m > 0 with 2^m = ±1 in ZMod p is (p - 1) / 2. Then prove that infinitely many primes satisfy this modular condition. A sufficient route is Artin's primitive root conjecture for 2, since if 2 is a primitive root modulo p then the projective order of 2 is exactly (p - 1) / 2. Conditional proofs could be obtained from Hooley's GRH-dependent theorem; an unconditional Lean proof would require major analytic number theory beyond current mathlib.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:04:13.711725+00:00",
+    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO"
@@ -4558,6 +4673,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:math.NT",
+      "Drinfeld modules",
+      "Arboreal Galois Representations"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
+    "domain_bridges": [
+      "Function Field Arithmetic $\\to$ Group Theory (Wreath Products)",
+      "Galois Theory $\to$ Dynamical Systems"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2165",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the construction of the twisted Carlitz module $\\rho_t^c$ and its $t$-torsion. Use the recursive structure of the iterated wreath product $\\text{Aut}(T_n) \\cong \text{Aut}(T_{n-1}) \\wr S_d$. Implement a criterion for surjectivity based on the existence of primitive prime divisors in the critical orbit of $f_c(x)$ in characteristic $p$, ensuring that the extensions at each level $n$ are linearly disjoint from the previous levels.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:57:12.884506+00:00",
+    "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "05D05",
       "05D05"
     ],
@@ -4579,6 +4721,32 @@
     "status": "available",
     "timestamp": "2026-06-21T05:40:58.522103+00:00",
     "title": "Extremal Structure of Large Cross-Intersecting Families via Diversity"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that in Theorem 1.1 of the paper the error term O(‖μ̃‖^{3‑κ}) can be replaced by O(‖μ̃‖^{2+ε}) for every ε>0 (i.e. one can save a full power of ‖μ̃‖ beyond the square‑root barrier). This would imply, via the approximate functional equation, a bound of shape T^{2+ε} for the twisted first moment in the spectral aspect, matching the expected square‑root cancellation predicted by the random matrix model for a unitary ensemble.",
+    "domain_bridges": [
+      "representation theory",
+      "spectral theory of automorphic forms",
+      "analytic number theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2166",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture would follow from establishing substantially stronger bounds for the archimedean integral transforms in the GL₃ Kuznetsov formula. One needs to exploit additional cancellation in the higher‑rank Kloosterman sums S(m₁,m₂;c) via Deligne’s bound adapted to the GL₃ setting, and to apply stationary phase / Mellin‑Barnes techniques to the Bessel‑type kernels appearing in the Kuznetsov trace formula. Combining these with a refined asymmetric approximate functional equation that isolates the diagonal contribution would yield the desired power saving of one full exponent.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19959v1",
+    "status": "available",
+    "timestamp": "2026-06-21T05:41:52.181180+00:00",
+    "title": "Improved power‑saving error bound for the twisted first moment of GL₃ symmetric square L‑functions"
   },
   {
     "ambition_level": "grand_challenge",
@@ -4609,6 +4777,39 @@
     "status": "available",
     "timestamp": "2026-06-21T06:31:33.346299+00:00",
     "title": "All-measurable induced F-count forcing for graphons"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Liu, Fan, Shu (a34)",
+      "Jia, Lu (a24)",
+      "Win (a2)",
+      "Chvátal (a25)",
+      "Bauer, Broersma, Veldman (a20)",
+      "Ning, Ge (a31)",
+      "Liu, Shiu, Xue (a14)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the bounds \\((k-\\eta)\\cdot (n-1)/n\\) on both the adjacency spectral radius \\(\\rho(G)\\) and the signless Laplacian spectral radius \\(q(G)\\) appearing in the sufficient conditions for the existence of a spanning \\(k\\)-tree in a \\(\\frac1{k-\\eta}\\)-tough graph are best possible. Precisely, for every integer \\(k\\ge 3\\) and \\(\\eta\\in\\{0,1\\}\\) there exist arbitrarily large orders \\(n\\) and connected non‑complete graphs \\(G\\) on \\(n\\) vertices such that\n\n* \\(\\tau(G)=\\frac1{k-\\eta}\\);\n* \\(\\rho(G)=q(G)=(k-\\eta)\\cdot (n-1)/n\\);\n* \\(G\\) does **not** contain a spanning \\(k\\)-tree.\n\nThus the conjectured inequality cannot be improved.",
+    "domain_bridges": [
+      "toughness",
+      "adjacency spectral radius",
+      "signless Laplacian spectral radius",
+      "spanning k‑tree"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2167",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Construct extremal families of graphs (e.g., joins of a complete graph with a carefully chosen path or threshold graphs) that achieve equality in the toughness condition.\n2. Compute their adjacency and signless Laplacian spectra exactly, confirming \\(\\rho(G)=q(G)=(k-\\eta)(n-1)/n\\).\n3. Show that any spanning \\(k\\)-tree would force a vertex of degree exceeding \\(k\\) due to the structural constraints imposed by the toughness and spectral equalities, yielding a contradiction.\n4. Verify the construction for small parameters computationally and prove the general construction by induction on \\(n\\).\n5. The existence of such counterexamples demonstrates that the conjectured bounds are sharp.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20297v1",
+    "status": "available",
+    "timestamp": "2026-06-21T06:32:14.667244+00:00",
+    "title": "Sharp spectral bound for spanning k‑trees in τ‑tough graphs"
   },
   {
     "ambition_level": "extension",
@@ -4740,148 +4941,6 @@
     "title": "Upper Bound and Asymptotic Sharpness of Lambda Function Counts Under the Plausibility Hypothesis on Powersmooth Primes"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "OEIS:A001227",
-      "MathComp/NumberTheory/Cyclotomic"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6‑sided dice can be factored as a product of two polynomials with non‑negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum‑frequency distribution as two ordinary dice.",
-    "domain_bridges": [
-      "Algebraic Combinatorics",
-      "Formalized Mathematics"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2173",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Translate the problem to a factorisation of the frequency polynomial F(x)= (x+...+x^6)^2 = x^2 (x^6-1)^2/(x-1)^2. Use the factorisation of cyclotomic polynomials Φ_d(x) to express F as a product of irreducibles. Show that for any distinct squares a^2,b^2 there is a selection of these cyclotomic factors (with possible repetitions) whose product yields a polynomial P_a with P_a(1)=a^2 and non‑negative coefficients, and whose complementary factor P_b satisfies P_b(1)=b^2. The existence part reduces to solving a linear Diophantine system given by the degrees and constant terms of the chosen Φ_d. One can then employ the theory of integer cones (Hilbert bases) to prove the system always has a solution when a≠b, yielding the desired dice. Formalisation in Lean proceeds by: (1) defining generating functions of dice, (2) proving the cyclotomic factorisation of (∑_{i=1}^6 x^i)^2, (3) constructing the cone of admissible exponent vectors, (4) showing the cone contains a point with prescribed sum‑o",
-    "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
-    "status": "available",
-    "timestamp": "2026-06-21T03:16:50.834545+00:00",
-    "title": "Existence of square‑sided dice pairs preserving the sum distribution of two standard dice"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Mathlib.Data.ZMod.Basic",
-      "Mathlib.Data.Nat.Prime.Basic",
-      "Mathlib.GroupTheory.OrderOfElement",
-      "Mathlib.Order.SetNotation",
-      "Kaprekar four-digit odd-base projective-doubling classification"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m ≡ 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
-    "domain_bridges": [
-      "Kaprekar digit dynamics to multiplication by 2 on projective residue classes",
-      "terminal cycle length to projective multiplicative order modulo p",
-      "extremal cycle length to Artin-type primitive root phenomena"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2174",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "First formalize the paper's equivalence: for prime p > 5, the longest terminal four-digit Kaprekar cycle in base p has length (p - 1) / 2 iff the least m > 0 with 2^m = ±1 in ZMod p is (p - 1) / 2. Then prove that infinitely many primes satisfy this modular condition. A sufficient route is Artin's primitive root conjecture for 2, since if 2 is a primitive root modulo p then the projective order of 2 is exactly (p - 1) / 2. Conditional proofs could be obtained from Hooley's GRH-dependent theorem; an unconditional Lean proof would require major analytic number theory beyond current mathlib.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20439v1",
-    "status": "available",
-    "timestamp": "2026-06-21T04:04:13.711725+00:00",
-    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "arXiv:math.NT",
-      "Drinfeld modules",
-      "Arboreal Galois Representations"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
-    "domain_bridges": [
-      "Function Field Arithmetic $\\to$ Group Theory (Wreath Products)",
-      "Galois Theory $\to$ Dynamical Systems"
-    ],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2175",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize the construction of the twisted Carlitz module $\\rho_t^c$ and its $t$-torsion. Use the recursive structure of the iterated wreath product $\\text{Aut}(T_n) \\cong \text{Aut}(T_{n-1}) \\wr S_d$. Implement a criterion for surjectivity based on the existence of primitive prime divisors in the critical orbit of $f_c(x)$ in characteristic $p$, ensuring that the extensions at each level $n$ are linearly disjoint from the previous levels.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20046v1",
-    "status": "available",
-    "timestamp": "2026-06-21T04:57:12.884506+00:00",
-    "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.NT"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Conjecture that in Theorem 1.1 of the paper the error term O(‖μ̃‖^{3‑κ}) can be replaced by O(‖μ̃‖^{2+ε}) for every ε>0 (i.e. one can save a full power of ‖μ̃‖ beyond the square‑root barrier). This would imply, via the approximate functional equation, a bound of shape T^{2+ε} for the twisted first moment in the spectral aspect, matching the expected square‑root cancellation predicted by the random matrix model for a unitary ensemble.",
-    "domain_bridges": [
-      "representation theory",
-      "spectral theory of automorphic forms",
-      "analytic number theory"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2176",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The conjecture would follow from establishing substantially stronger bounds for the archimedean integral transforms in the GL₃ Kuznetsov formula. One needs to exploit additional cancellation in the higher‑rank Kloosterman sums S(m₁,m₂;c) via Deligne’s bound adapted to the GL₃ setting, and to apply stationary phase / Mellin‑Barnes techniques to the Bessel‑type kernels appearing in the Kuznetsov trace formula. Combining these with a refined asymmetric approximate functional equation that isolates the diagonal contribution would yield the desired power saving of one full exponent.",
-    "research_mode": "team",
-    "source_exp_id": "2606.19959v1",
-    "status": "available",
-    "timestamp": "2026-06-21T05:41:52.181180+00:00",
-    "title": "Improved power‑saving error bound for the twisted first moment of GL₃ symmetric square L‑functions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Liu, Fan, Shu (a34)",
-      "Jia, Lu (a24)",
-      "Win (a2)",
-      "Chvátal (a25)",
-      "Bauer, Broersma, Veldman (a20)",
-      "Ning, Ge (a31)",
-      "Liu, Shiu, Xue (a14)"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "We conjecture that the bounds \\((k-\\eta)\\cdot (n-1)/n\\) on both the adjacency spectral radius \\(\\rho(G)\\) and the signless Laplacian spectral radius \\(q(G)\\) appearing in the sufficient conditions for the existence of a spanning \\(k\\)-tree in a \\(\\frac1{k-\\eta}\\)-tough graph are best possible. Precisely, for every integer \\(k\\ge 3\\) and \\(\\eta\\in\\{0,1\\}\\) there exist arbitrarily large orders \\(n\\) and connected non‑complete graphs \\(G\\) on \\(n\\) vertices such that\n\n* \\(\\tau(G)=\\frac1{k-\\eta}\\);\n* \\(\\rho(G)=q(G)=(k-\\eta)\\cdot (n-1)/n\\);\n* \\(G\\) does **not** contain a spanning \\(k\\)-tree.\n\nThus the conjectured inequality cannot be improved.",
-    "domain_bridges": [
-      "toughness",
-      "adjacency spectral radius",
-      "signless Laplacian spectral radius",
-      "spanning k‑tree"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2177",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "1. Construct extremal families of graphs (e.g., joins of a complete graph with a carefully chosen path or threshold graphs) that achieve equality in the toughness condition.\n2. Compute their adjacency and signless Laplacian spectra exactly, confirming \\(\\rho(G)=q(G)=(k-\\eta)(n-1)/n\\).\n3. Show that any spanning \\(k\\)-tree would force a vertex of degree exceeding \\(k\\) due to the structural constraints imposed by the toughness and spectral equalities, yielding a contradiction.\n4. Verify the construction for small parameters computationally and prove the general construction by induction on \\(n\\).\n5. The existence of such counterexamples demonstrates that the conjectured bounds are sharp.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20297v1",
-    "status": "available",
-    "timestamp": "2026-06-21T06:32:14.667244+00:00",
-    "title": "Sharp spectral bound for spanning k‑trees in τ‑tough graphs"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "https://arxiv.org/abs/2504.01234",
@@ -4897,7 +4956,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2178",
+    "id": "fd_2172",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Modular analysis of the $\\tau_2$-plane via the fundamental chamber $\\CR_N$, demonstrating pole cancellations among CF1-CF4 terms through residue matching and modular transformation properties.",
@@ -4906,6 +4965,35 @@
     "status": "available",
     "timestamp": "2026-06-21T10:43:56.955206+00:00",
     "title": "Convergence of Generating Function for Two-Centered Black Hole Index in CHL Models"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Djoković-Winkler Θ-classes of partial cubes",
+      "Peripheral halfspaces U(θ,W)=W",
+      "Daisy cubes as induced subgraphs on Boolean-lattice down-sets",
+      "Cartesian product of graphs",
+      "Finite simple graphs in Lean/mathlib"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: If G and H are finite nonempty partial cubes, then their Cartesian graph product G □ H is a daisy cube if and only if both G and H are daisy cubes. Equivalently, under the paper's characterization, every Θ-class of G □ H is peripheral exactly when every Θ-class of each factor is peripheral.",
+    "domain_bridges": [
+      "Partial-cube Θ-coordinate embeddings translate Cartesian products into coordinate block sums.",
+      "Boolean down-sets are closed under direct product: if D⊆{0,1}^m and E⊆{0,1}^n are down-sets, then D×E⊆{0,1}^{m+n} is a down-set.",
+      "Peripheral Θ-classes in a product are exactly lifted peripheral Θ-classes from the factors."
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2173",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show first that every Θ-class of G □ H is either a lift of a Θ-class of G or a lift of a Θ-class of H. For a lifted class θ_G × V(H), its two halfspaces are W_G^0 × V(H) and W_G^1 × V(H), and its boundary sets are U(θ_G,W_G^0) × V(H) and U(θ_G,W_G^1) × V(H). Hence the lifted class is peripheral iff θ_G is peripheral; similarly for H. Applying the paper's theorem that a finite partial cube is a daisy cube iff all Θ-classes are peripheral gives the result. Alternatively, using down-set models, if G=Q_m[D] and H=Q_n[E] with D,E down-sets, then G □ H is Q_{m+n}[D×E], again a down-set.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19032v1",
+    "status": "available",
+    "timestamp": "2026-06-21T12:06:22.775094+00:00",
+    "title": "Cartesian products reflect and preserve daisy cubes"
   },
   {
     "ambition_level": "extension",
@@ -5381,7 +5469,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3e68faef",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions — Mathematics as an Evolving Ecosystem\n\nDerived from the Phase A cycle that produced `Fitness.lean`,\n`CompetitiveExclusion.lean`, and `Evolution.lean`.  Each direction is a bold,\nfalsifiable conjecture about the fitness model\n`f(T) = connections(T) · proofDensity(T) / axiomCount(T)`.\n\n---\n\n## 1. Selection pressure toward *primitive* (irreducible) theories\n\n**Conjecture.** Under any fitness-improving evolution, the long-run population is\ndominated by theories that are not Rankin–Selberg-type products of smaller\ntheories; composite theories are an evolutionary dead end.\n\nThe key insight is that `selberg_product_fitness_subadditive` shows the conductor\n(axiomatic cost) *multiplies* under composition while the degree (connection\ncount) only *adds*, so `f(S₁ × S₂) ≤ f(S₁) + f(S₂)` with strict loss whenever both\nfactors are non-trivial — composition can never create fitness, only dilute it.\n\nWhy now? We already have the Selberg census `product` operation formalized and the\nsubadditivity inequality proved, so the next step (defining a primitivity\npredicate and proving products are strictly sub-apex) is directly within reach\nrather than speculative.\n\n---\n\n## 2. A carrying capacity for foundational theories\n\n**Conjecture.** For any finite niche space `N`, every ecosystem at equilibrium has\nat most `card N` theories, and this bound is *tight*: there exist equilibria\nrealizing exactly `card N` distinct foundational theories.\n\nThe key insight is that `niche_packing` already proves the upper bound\n`card E ≤ card N` from injectivity alone; tightness would follow from exhibiting a\nsection of the niche map, turning the inequality into an exact carrying-capacity\nlaw for mathematics' foundational layer.\n\nWhy now? The pigeonhole half is done and axiom-checked; only the constructive\n(surjective-section) half remains, which is a finite combinatorial construction.\n\n---\n\n## 3. A phase transition in the value of new axioms\n\n**Conjecture.** Along a family of extensions `T ⊆ T₊` that add `a` axioms and gain\n`c` connections at proof density `d`, fitness increases **iff**\n`c·d·axioms(T) > connections(T)·proofDensity(T)·(axioms(T)+a)` — there is a sharp\nthreshold separating \"fertile\" axioms (large cardinals) from \"sterile\" ones.\n\nThe key insight is that `fitness_lt_iff_cross` is an *exact* characterization\n(an iff, not a one-sided bound), so the boundary case is a genuine equality\nhyperplane, and `zfc_lc_strictly_fitter` is one verified point strictly on the\nfertile side.\n\nWhy now? The cross-multiplication criterion is proven and reusable, so quantifying\nthe threshold for concrete extension families (ZFC + CH, ZFC + PD, ZFC + I0) is a\nmatter of plugging in trait estimates rather than new theory.\n\n---\n\n## 4. Open-endedness: no bounded \"final theory\"\n\n**Conjecture.** There is no theory of maximal fitness; equivalently, every\nfitness-improving lineage is cofinal in fitness, so mathematics has no\nfitness-saturating \"theory of everything\".\n\nThe key insight is that `evolution_escapes_finite` proves a fitness-improving\ntrajectory cannot be confined to any finite ecosystem, because the trajectory is\ninjective (`evolution_injective`) and ℕ does not inject into a finite set —\nunbounded ascent is forced, not assumed.\n\nWhy now? The injectivity and finite-escape theorems are already axiom-clean;\nupgrading \"escapes every finite set\" to \"fitness → ∞\" only needs an\nArchimedean/cofinality argument over ℚ, which Mathlib supports directly.\n\n---\n\n## 5. Foundational monism under niche injectivity\n\n**Conjecture.** If the foundational ecosystem ever reaches a state where all\nfitnesses are distinct, then it has a unique apex theory, and that apex is a global\nattractor of fitness-improving dynamics.\n\nThe key insight is that `fitness_max_unique` already gives uniqueness of the\nfitness-maximizer under `Set.InjOn fitness`; combining it with the monotone,\nacyclic trajectory of `evolution_strictMono` suggests the apex is not merely unique\nbut dynamically selected.\n\nWhy now? Both ingredients — apex uniqueness and strictly monotone evolution — are\nproved in this cycle, so the attractor claim is the natural synthesis to test\nnext, e.g. by formalizing convergence of trajectories that stay within a finite\nequilibrium.\n",
     "domain_bridges": [],
     "domains": [
@@ -5394,7 +5482,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "eef6f30f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T18:05:28.852660+00:00",
     "title": "Derived from the Phase A cycle that produced `Fitness.lean`,"
   },
@@ -6162,66 +6250,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Euler–Mascheroni constant `γ`\n\nDerived from the Stage-3/Stage-4 findings of this cycle (files\n`EulerMascheroniApproximation.lean`, `EulerMascheroniSeries.lean`).\n\n## Conjecture 1 — Quadratic interval width via the second-order log bound\n**Statement.** The enclosure width admits the two-sided refinement\n`1/(n+1) ≤ log((n+1)/n) ≤ 1/n`, hence `1/(n+1) ≤ (H_n − log n) − γ` as well, pinning the\nerror between consecutive reciprocals.\n*The key insight is...* that `log(1 + 1/n)` is squeezed by `1/(n+1)` and `1/n` from the\ntwo tangent/secant bounds `x/(1+x) ≤ log(1+x) ≤ x`, upgrading `enclosure_width` from an\ninequality to a sharp double inequality.\n*Why now?* `enclosure_width` already isolates the width as exactly `log((n+1)/n)`, so only the\nelementary lower bound `x/(1+x) ≤ log(1+x)` (available in Mathlib) is missing.\n\n## Conjecture 2 — Midpoint acceleration `H_n − log(n + 1/2)` halves the error\n**Statement.** `|H_n − log(n + 1/2) − γ| = O(1/n²)`, an order-of-magnitude improvement over\nthe `O(1/n)` rate proved for `H_n − log n`.\n*The key insight is...* that centering the logarithm at the midpoint `n + 1/2` cancels the\nlinear term of `log((n+1)/n)`, leaving a quadratic remainder.\n*Why now?* We have both truncations `H_n − log n` and `H_n − log(n+1)` formalized with explicit\nerrors; their average is exactly the midpoint correction, so the cancellation is one Taylor step away.\n\n## Conjecture 3 — Term asymptotics of the telescoping series\n**Statement.** The series term satisfies `1/(2(k+1)²) ≤ term k ≤ 1/(2k²)` for all `k`, so the\ntail `Σ_{k≥N} term k` is `Θ(1/N)`, giving an explicit truncation error for `tendsto_series`.\n*The key insight is...* that `term k = 1/(k+1) − log(1 + 1/(k+1))` equals `1/(2(k+1)²) − O(1/k³)`\nby the log expansion, and `term_pos` already secures positivity.\n*Why now?* `term_pos` is proved; the same `log x < x − 1` machinery, applied to the quadratic\nremainder `log(1+x) > x − x²/2`, yields the matching lower bound.\n\n## Conjecture 4 — Stieltjes generalization `γ₀ = γ`\n**Statement.** Defining `γ_m = lim (Σ_{k≤n} (log k)^m / k − (log n)^{m+1}/(m+1))`, the case\n`m = 0` reproduces `Real.eulerMascheroniConstant`, and the same monotone-sandwich proof skeleton\ngives convergence for every `m`.\n*The key insight is...* that the Stieltjes constants share the *exact* telescoping/sandwich\nstructure used here, with `(log k)^m / k` replacing `1/k` and an integral comparison replacing `log n`.\n*Why now?* The convergence engine (`eulerMascheroniSeq` increasing, `eulerMascheroniSeq'`\ndecreasing, gap → 0) is fully formal; abstracting it over the weight `(log k)^m` is a direct\nstructural generalization rather than new analysis.\n\n## Conjecture 5 — No rational falls in the proven enclosure for large `n` cheaply\n**Statement.** For each `n ≥ 1` the open interval `(H_n − log(n+1), H_n − log n)` of width\n`< 1/n` contains `γ`; intersecting these nested intervals gives a constructive irrationality\n*criterion*: `γ` is irrational iff no rational lies in `⋂_n (H_n − log(n+1), H_n − log n)`.\n*The key insight is...* that the proven nested-interval enclosure already realizes `γ` as the\nunique point of an explicit shrinking-interval intersection, the standard scaffold for\nirrationality arguments.\n*Why now?* `lt_gamma_and_gamma_lt` plus `enclosure_width` give nested intervals with width → 0;\nformalizing \"intersection is a single point\" is a short step that frames the open irrationality\nproblem in fully constructive Lean terms.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_2179",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d14bdeaa",
-    "status": "available",
-    "timestamp": "2026-06-21T11:15:49.280224+00:00",
-    "title": "Derived from the Stage-3/Stage-4 findings of this cycle (files"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Collision Resistance from Hard Problems\n\nDerived from the cycle that produced `Cryptography.MerkleDamgard` (equal-length\nMerkle–Damgård collision extraction + pigeonhole inevitability) and\n`Cryptography.HashFromHardness` (algebraic hardness ⇒ hash collision via the\nmultiplicative compression function).\n\n## 1. Length-strengthened MD removes the equal-length hypothesis\n**Conjecture.** Define MD-strengthening `pad m = m ++ [encodeLength m.length]`\nwith an injective length encoder. Then `mdHash f iv (pad m₁) = mdHash f iv (pad m₂)`\nwith `m₁ ≠ m₂` (arbitrary, possibly different lengths) yields a compression\ncollision of `f` — *no* equal-length assumption needed.\n*The key insight is...* that the appended length block forces the final\ncompression to compare encoded lengths, converting a cross-length IV/free-start\ncollision into a genuine last-block compression collision.\n*Why now?* Our `md_collision_extract` already isolates the last-block case\nanalysis; padding is a thin, fully-formalizable wrapper over the existing proof,\nand `ComputationalEvidence.md` pins the exact boundary the padding repairs.\n\n## 2. Prefix-free domains are equivalent to length-padding for CR preservation\n**Conjecture.** For the iterated hash restricted to a prefix-free set of\nmessages, collision resistance is preserved *without* padding, and the prefix-\nfree condition is the minimal combinatorial hypothesis that makes the\nunequal-length recursion terminate in a compression collision.\n*The key insight is...* that the only failure mode in the unequal-length case is\none message being a processed prefix of the other; prefix-freeness deletes\nexactly that case.\n*Why now?* The counterexample in `ComputationalEvidence.md` ([6] vs [2,3]) is a\nprefix-style collision, so a prefix-free guard is the natural next lemma to test\nagainst the same machinery.\n\n## 3. The multiplicative hash's collision-finding is exactly integer factoring\n**Conjecture.** Finding a collision of `mulCompress` on `b`-bit blocks is\npolynomial-time equivalent to factoring a `2b`-bit integer; hence the\nmultiplicative MD hash is collision resistant iff factoring is hard.\n*The key insight is...* `productCollision_to_compression` already shows a\nnon-unique factorization *is* a compression collision; the converse reduction\n(collision ⇒ nontrivial factor) is the missing half and completes the\nequivalence.\n*Why now?* We have the forward map formalized and a concrete catalog witness\n(`6·35 = 10·21`); the reduction can be stated and tested on small composites\nimmediately.\n\n## 4. Pigeonhole gap quantifies unavoidable collision density\n**Conjecture.** For `f : State × Block → State` with `|Block| = k`, the number\nof colliding input pairs is at least `|State| · (k choose 2) / |State|`-style\nbound; i.e. compression by factor `k` forces a quantitatively dense collision\nset, not merely one collision.\n*The key insight is...* `compression_collision_of_card` only extracts one\ncollision, but the same counting (fibers of size ≥ 2 by averaging) yields a\nlower bound on total collisions.\n*Why now?* The single-collision pigeonhole is already proved; upgrading\n`Fintype.exists_ne_map_eq_of_card_lt` to a fiber-counting argument is a direct,\nself-contained extension.\n\n## 5. Davies–Meyer turns a block cipher into a collision-extractable compressor\n**Conjecture.** For a family `E : Key → State → State` of bijections, the\nDavies–Meyer compressor `f s b = E b s + s` (in an abelian group `State`)\nsatisfies the same equal-length MD extraction theorem, and any of its collisions\nyields a structured relation on `E` (a \"fixed-point\"/\"free-start\" relation).\n*The key insight is...* MD extraction is agnostic to how `f` is built, so it\napplies verbatim to Davies–Meyer; the new content is that the extracted\ncompression collision is an algebraic equation in the cipher.\n*Why now?* `md_collision_extract` is stated for an arbitrary `f`, so the\nDavies–Meyer instantiation is plug-and-play, and the cipher-relation corollary\nis the only genuinely new lemma to formalize.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Cryptography"
-    ],
-    "id": "fd_2180",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "11f0f366",
-    "status": "available",
-    "timestamp": "2026-06-21T11:24:18.841278+00:00",
-    "title": "Derived from the cycle that produced `Cryptography.MerkleDamgard` (equal-length"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nDerived from this cycle's findings (the bond-dimension threshold\n`TensorNetworkBondTransition`, the universal curvature bound and reconstruction\nthreshold `HolographicCurvatureBound`, and the submodularity ⇒ holographic\nentropy inequalities `HolographicEntropyInequalities`).\n\n---\n\n## FD1 — Submodularity is the exact order parameter of the geometric phase\n\n**Conjecture.** A family of tensor networks lies in the smooth (geometric) phase\n*iff* its min-cut entropy profile is submodular in the large-`N` limit; the\nfractal phase is precisely the set of networks whose cut profiles violate strong\nsubadditivity by a non-vanishing fraction.\n\n*The key insight is...* that in `entropy_strong_subadditivity` SSA is **literally**\nthe submodular axiom scaled by `log₂ D`, so \"consistent with a classical bulk\"\nand \"submodular cut function\" are the same statement — the geometric/fractal\ndichotomy is an inequality, not an analytic limit.\n\n*Why now?* We now have a `sorry`-free structural proof that submodular cuts force\nall holographic entropy inequalities; the next step (measuring the SSA-violation\nfraction of random rank-`k` networks) is directly testable on existing\nclusters and needs no new analytic machinery.\n\n---\n\n## FD2 — Curvature saturation and bulk reconstructibility are independent transitions\n\n**Conjecture.** For every stabilizer-code family there exist two *distinct*\ncritical scales: a curvature scale (where `k·d²/n` stabilizes to a universal\nconstant) and a reconstruction scale (where the correction radius `t` becomes\npositive). The toric family has curvature scale `0` and reconstruction scale `3`;\ngeneric families have both nonzero and unequal.\n\n*The key insight is...* that `toric_curvature_universal` (defect `≡ 0` for all\n`L`) holds *below* the smooth-geometry threshold `L ≥ 3` of `smooth_geometry_iff`,\nproving a code can satisfy the Einstein-like curvature bound yet still fail to\nreconstruct a bulk.\n\n*Why now?* The mission conflated \"smooth manifold\" with \"bounded curvature\"; this\ncycle separated them formally, so quantum-gravity model selection should test the\ntwo proxies independently rather than as one threshold `D_c`.\n\n---\n\n## FD3 — The critical bond dimension is logarithmically sharp, not algebraically sharp\n\n**Conjecture.** For a region with `b` cut bonds and entropy budget `S`, the\ncritical bond dimension obeys `D_c(b, S) = 2^{⌈S/b⌉}` exactly, and the transition\nwidth (the plateau length of `Nat.log 2`) grows geometrically — so the observed\n\"phase transition\" in simulations is a logarithmic step, easily mistaken for a\nsmooth crossover at finite `N`.\n\n*The key insight is...* that `geometric_iff_ge_critical` makes the admissible set\na half-line determined entirely by the monotone-but-flat `Nat.log 2 D`, and\n`toric_logical_critical_bond` pins `D_c(1,2) = 4 = 2^2` on the nose.\n\n*Why now?* Cluster studies report ambiguous thresholds; the closed form\n`D_c = 2^{⌈S/b⌉}` predicts the exact step locations and their widening, giving a\nfalsifiable fit target for the next simulation run.\n\n---\n\n## FD4 — Coarse-graining preserves the geometric phase iff it preserves submodularity\n\n**Conjecture.** A renormalization / coarse-graining map sends geometric networks\nto geometric networks *iff* it preserves submodularity of the cut profile;\nany RG step that breaks submodularity drives the bulk into the fractal phase\nregardless of bond dimension.\n\n*The key insight is...* that the holographic inequalities in this cycle are a\nrepresentation-independent shadow of submodularity (they survive composition with\n`bondEntropy` and any monotone rescaling), so the phase is an invariant of the\ncut matroid, not of the microscopic tensors.\n\n*Why now?* Tensor-network RG (MERA, TNR) is mature; testing submodularity\npreservation step-by-step is a concrete, cheap diagnostic that this cycle's\ntheorems now justify.\n\n---\n\n## FD5 — A universal curvature constant pins the BPT-saturating code family\n\n**Conjecture.** Among 2D stabilizer codes, the scale-invariant ratio `k·d²/n = 1`\ncharacterizes the holographic (BPT-saturating) family up to local equivalence;\nany deviation `k·d²/n < 1` forces a strictly sub-extensive logical capacity.\n\n*The key insight is...* that `toric_curvature_universal` shows the toric family\nsaturates `k·d² = n` at *every* scale, making the ratio a candidate universal\n\"Ricci constant\" rather than an asymptotic accident.\n\n*Why now?* With the defect formalized as an exact `ℕ` invariant, classifying all\nfamilies with vanishing defect is a finite, decidable search at each `n` — a\ntractable formal-methods target that bridges code design and emergent geometry.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2181",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d7a09318",
-    "status": "available",
-    "timestamp": "2026-06-21T11:28:42.039094+00:00",
-    "title": "Derived from this cycle's findings (the bond-dimension threshold"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -6240,7 +6268,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "22ed9246",
+    "consumed_by_exp_id": "0dfaccbd",
     "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
     "domain_bridges": [],
     "domains": [
@@ -7233,6 +7261,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "7a341625",
+    "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Speculative"
+    ],
+    "id": "fd_0483",
+    "lineage_refs": [],
+    "priority_score": 0.3699999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:45.254223+00:00",
+    "title": "Game of Life Universality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
     "domain_bridges": [],
@@ -7314,6 +7362,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0465",
+    "lineage_refs": [],
+    "priority_score": 0.24999999999999992,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.568365+00:00",
+    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domain_bridges": [],
     "domains": [
@@ -7353,7 +7421,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a0d2774b",
+    "consumed_by_exp_id": "",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domain_bridges": [],
     "domains": [
@@ -7366,9 +7434,29 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "ddafecee",
+    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
+    "domain_bridges": [],
+    "domains": [
+      "Speculative",
+      "Logic"
+    ],
+    "id": "fd_0482",
+    "lineage_refs": [],
+    "priority_score": 0.24999999999999992,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:45.177474+00:00",
+    "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
   {
     "ambition_level": "extension",
