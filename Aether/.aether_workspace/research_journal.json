@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c11e0165",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — Fibonacci Primitive Divisors / Carmichael's Theorem\n\nThis cycle delivered `Catalog/Logic/FibonacciPrimitiveDivisorBounded.lean`, a\nself-contained, `sorry`-free verification of Ca",
-      "quality_score": 0.63873,
-      "sorry_count": 1,
-      "theorem_count": 12,
-      "timestamp": "2026-06-15T13:42:19",
-      "title": "These directions extend the `ordEGF` bridge in"
-    },
-    {
       "cycle_id": "a72aaf71",
       "domain": "Applications",
       "key_insight": "# Future Directions — Self-dual codes ↔ smooth 4-manifold intersection forms\n\nThis cycle added `SelfDualCardinality.lean`, isolating the *evenness-free* structural\ninvariant of a binary self-dual code",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-06-21T04:40:47",
       "title": "Bridge: Galois Connections Between Order Theory and Topology"
+    },
+    {
+      "cycle_id": "971b371e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions\n\nFree-form research directions emerging from the Lean 4 development in\n`Catalog/NumberTheory/PerfectNumbers.lean` (Euclid–Euler theorem, the abundancy-index\ntoolkit, the three-prim",
+      "quality_score": 0.3106280036849378,
+      "sorry_count": 0,
+      "theorem_count": 121,
+      "timestamp": "2026-06-21T06:23:15",
+      "title": "Perfect Numbers: Structure of Even Perfects"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71035
     }
   ],
-  "last_updated": "2026-06-21T04:40:47",
+  "last_updated": "2026-06-21T06:23:15",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3259,6 +3259,12 @@
         "quality": 0.8183600000000001,
         "theorems": 3,
         "title": "Close Proofs: These conjectures continue the research cycle begun in"
+      },
+      {
+        "cycle_id": "971b371e",
+        "quality": 0.3106280036849378,
+        "theorems": 121,
+        "title": "Perfect Numbers: Structure of Even Perfects"
       }
     ],
     "Computation": [
