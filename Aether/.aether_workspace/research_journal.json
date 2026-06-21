@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6ec4b34b",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Intersection Form Classification Pipeline via Self-Dual Code Direct Sum\n\nThis cycle established the **direct-sum functoriality** shared by integer\nintersection forms and binary s",
-      "quality_score": 0.5346971830985916,
-      "sorry_count": 0,
-      "theorem_count": 82,
-      "timestamp": "2026-06-15T14:37:37",
-      "title": "Close Proofs: Intersection Form Classification Pipeline via Self-Dual Code Direct Su"
-    },
-    {
       "cycle_id": "561a2484",
       "domain": "Cryptography",
       "key_insight": "# Future Directions: Combinatorial species → tropical valuation profiles\n\nThis cycle established the **coefficientwise valuation bridge** in\n`Catalog/Tropical/SpeciesValuationProfile.lean`: the `p`-ad",
@@ -2501,6 +2491,16 @@
       "theorem_count": 96,
       "timestamp": "2026-06-21T07:14:09",
       "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
+    },
+    {
+      "cycle_id": "51640204",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — LWE Hardness, Dual-Regev, Ring-LWE\n\nDerived from the verified results in `DualRegev.lean`, `RingLWE.lean`, and\n`RegevReduction.lean` (all main theorems carry 0 sorries and depend",
+      "quality_score": 0.6127985535714285,
+      "sorry_count": 0,
+      "theorem_count": 96,
+      "timestamp": "2026-06-21T07:21:54",
+      "title": "Lattice Cryptography: LWE Hardness"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71035
     }
   ],
-  "last_updated": "2026-06-21T07:14:09",
+  "last_updated": "2026-06-21T07:21:54",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "faff02b9",
-        "quality": 0.42727189683908756,
-        "theorems": 463,
-        "title": "This cycle tested one structural hypothesis behind *self-referential type theory"
-      },
-      {
         "cycle_id": "9b788018",
         "quality": 0.7838083582089553,
         "theorems": 134,
@@ -3885,6 +3879,12 @@
         "quality": 0.46081729863543053,
         "theorems": 33,
         "title": "Two boundary facts of the prime crossword in"
+      },
+      {
+        "cycle_id": "51640204",
+        "quality": 0.6127985535714285,
+        "theorems": 96,
+        "title": "Lattice Cryptography: LWE Hardness"
       }
     ],
     "Shared": [

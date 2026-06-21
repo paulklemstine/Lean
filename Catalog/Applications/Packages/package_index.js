@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "51640204",
     "filename": "lattice_cryptography_lwe_hardness.json",
     "pkg_num": 220,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6127985535714285,
     "title": "Lattice Cryptography: Learning With Errors (LWE) Hardness"
   },
   {
@@ -6715,8 +6715,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "lattice_cryptography_lwe_hardness",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6127985535714285,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "Lattice Cryptography: Learning With Errors (LWE) Hardness"
     }
