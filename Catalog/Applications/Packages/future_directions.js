@@ -1479,7 +1479,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
   {
-    "consumed_by_exp_id": "2fe3f01b",
+    "consumed_by_exp_id": "",
     "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
     "domains": [
       "Logic",
@@ -1489,7 +1489,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432759+00:00",
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
@@ -1798,6 +1798,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T16:05:12.158903+00:00",
     "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "3e812933",
+    "description": "Conjecture: Every finite block graph has a vertex set S which is simultaneously a 2-packing and an isolating set. Equivalently, the closed neighborhoods of distinct vertices of S are pairwise disjoint, and every edge of the graph has at least one endpoint in the closed neighborhood of S.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2086",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18172v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-18T21:08:20.524395+00:00",
+    "title": "Packing isolating sets exist in finite block graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -2352,7 +2366,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Approximate Ramsey Property for the Pseudo-Arc's Projective Fraisse Category"
   },
   {
-    "consumed_by_exp_id": "93e2fea4",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the approximate Ramsey property of a projective Fra\u00efss\u00e9 category implies that the dense image of its automorphism group in a homeomorphism group of a continuum is extremely amenable. This establishes a formal link between combinatorial Ramsey-theoretic properties and topological amenability in the study of homeomorphism groups of continua.",
     "domains": [
       "Algebra",
@@ -2362,7 +2376,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-20T02:28:25.339989+00:00",
     "title": "Ramsey Theory in Projective Fra\u00efss\u00e9 Limits Implies Extreme Amenability of Homeomorphism Groups of Continua"
   },
@@ -2865,6 +2879,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2163",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-21T03:16:50.834545+00:00",
+    "title": "Existence of square\u2011sided dice pairs preserving the sum distribution of two standard dice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
     "domains": [
       "Pythagorean"
@@ -2876,6 +2905,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-21T04:03:23.688866+00:00",
     "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m \u2261 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2164",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:04:13.711725+00:00",
+    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
   },
   {
     "consumed_by_exp_id": "",
@@ -2893,7 +2937,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
+    "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2165",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:57:12.884506+00:00",
+    "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For sufficiently large n relative to k, if two families A, B \u2286 ([n] choose k) are cross-intersecting and each has diversity at least C(n-u-1, n-k-1) for some integer u with 1 \u2264 u \u2264 k-1, then up to isomorphism A and B are contained in the union of a star centered at 1 and the family of k-sets that contain 1 and intersect [2, u+1]; equivalently, they are subsets of the Hilton\u2013Milner type construction for cross-intersecting pairs.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2166",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-21T05:40:58.522103+00:00",
+    "title": "Extremal Structure of Large Cross-Intersecting Families via Diversity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that in Theorem 1.1 of the paper the error term O(\u2016\u03bc\u0303\u2016^{3\u2011\u03ba}) can be replaced by O(\u2016\u03bc\u0303\u2016^{2+\u03b5}) for every \u03b5>0 (i.e. one can save a full power of \u2016\u03bc\u0303\u2016 beyond the square\u2011root barrier). This would imply, via the approximate functional equation, a bound of shape T^{2+\u03b5} for the twisted first moment in the spectral aspect, matching the expected square\u2011root cancellation predicted by the random matrix model for a unitary ensemble.",
     "domains": [
       "Pythagorean",
       "Computation"
@@ -2901,40 +2974,10 @@ window.FUTURE_DIRECTIONS = [
     "id": "fd_2166",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
+    "source_exp_id": "2606.19959v1",
     "status": "available",
-    "timestamp": "2026-06-21T03:16:50.834545+00:00",
-    "title": "Existence of square\u2011sided dice pairs preserving the sum distribution of two standard dice"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m \u2261 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2167",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20439v1",
-    "status": "available",
-    "timestamp": "2026-06-21T04:04:13.711725+00:00",
-    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2168",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20046v1",
-    "status": "available",
-    "timestamp": "2026-06-21T04:57:12.884506+00:00",
-    "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
+    "timestamp": "2026-06-21T05:41:52.181180+00:00",
+    "title": "Improved power\u2011saving error bound for the twisted first moment of GL\u2083 symmetric square L\u2011functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3887,7 +3930,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0dfaccbd",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3897,7 +3940,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -4630,6 +4673,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
   {
+    "consumed_by_exp_id": "7a341625",
+    "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
+    "domains": [
+      "Computation",
+      "Speculative"
+    ],
+    "id": "fd_0483",
+    "priority_score": 0.3699999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:45.254223+00:00",
+    "title": "Game of Life Universality"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
     "domains": [
@@ -4748,6 +4806,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
+  },
+  {
+    "consumed_by_exp_id": "ddafecee",
+    "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
+    "domains": [
+      "Speculative",
+      "Logic"
+    ],
+    "id": "fd_0482",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:45.177474+00:00",
+    "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
   {
     "consumed_by_exp_id": "",

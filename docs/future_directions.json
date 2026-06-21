@@ -13278,7 +13278,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.177474+00:00",
       "title": "Alien Mathematics: Non-Standard Arithmetic"
@@ -13314,7 +13314,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.254223+00:00",
       "title": "Game of Life Universality"
@@ -33681,7 +33681,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18172v1",
       "source_path": "http://arxiv.org/abs/2606.18172v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T21:08:20.524395+00:00",
       "title": "Packing isolating sets exist in finite block graphs"
@@ -35049,7 +35049,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0dfaccbd",
       "depth_estimate": 3,
       "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
       "domain_bridges": [],
@@ -35072,7 +35072,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-19T17:11:08.928185+00:00",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
@@ -35471,7 +35471,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "pestov_book",
         "irwin_solecki",
@@ -35479,7 +35479,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "93e2fea4",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "We conjecture that the approximate Ramsey property of a projective Fraïssé category implies that the dense image of its automorphism group in a homeomorphism group of a continuum is extremely amenable. This establishes a formal link between combinatorial Ramsey-theoretic properties and topological amenability in the study of homeomorphism groups of continua.",
       "domain_bridges": [
@@ -35494,7 +35494,7 @@
         "Geometry"
       ],
       "id": "fd_2129",
-      "last_attempt_time": "2026-06-21T04:57:22.567667+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ramsey_approximate_iff_extremely_amenable (G : Type) [t0 : topological_group G] [t1 : nonarchimedean_group G] : extreme_amenable G <-> approximate_ramsey_property (Aut limF) (Homeo F) := ...",
       "lineage_refs": [],
@@ -35507,7 +35507,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.20407v1",
       "source_path": "http://arxiv.org/abs/2606.20407v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-20T02:28:25.339989+00:00",
       "title": "Ramsey Theory in Projective Fraïssé Limits Implies Extreme Amenability of Homeomorphism Groups of Continua"
@@ -36979,6 +36979,48 @@
       "title": "Equality of minimal free resolutions for Ziegler pairs of line arrangements of degree ≥12"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "OEIS:A001227",
+        "MathComp/NumberTheory/Cyclotomic"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6‑sided dice can be factored as a product of two polynomials with non‑negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum‑frequency distribution as two ordinary dice.",
+      "domain_bridges": [
+        "Algebraic Combinatorics",
+        "Formalized Mathematics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Computation"
+      ],
+      "id": "fd_2163",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem square_sided_dice_exist (a b : ℕ) (ha : a > 0) (hb : b > 0) (hneq : a ≠ b) :\n  ∃ (P Q : polynomial ℕ),\n    (∀ i, coeff P i ≥ 0) ∧ (∀ i, coeff Q i ≥ 0) ∧\n    polynomial.eval 1 P = a ^ 2 ∧ polynomial.eval 1 Q = b ^ 2 ∧\n    P * Q = (∑ i in finset.range 6, polynomial.X ^ (i+1)) ^ 2 :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Translate the problem to a factorisation of the frequency polynomial F(x)= (x+...+x^6)^2 = x^2 (x^6-1)^2/(x-1)^2. Use the factorisation of cyclotomic polynomials Φ_d(x) to express F as a product of irreducibles. Show that for any distinct squares a^2,b^2 there is a selection of these cyclotomic factors (with possible repetitions) whose product yields a polynomial P_a with P_a(1)=a^2 and non‑negative coefficients, and whose complementary factor P_b satisfies P_b(1)=b^2. The existence part reduces to solving a linear Diophantine system given by the degrees and constant terms of the chosen Φ_d. One can then employ the theory of integer cones (Hilbert bases) to prove the system always has a solution when a≠b, yielding the desired dice. Formalisation in Lean proceeds by: (1) defining generating functions of dice, (2) proving the cyclotomic factorisation of (∑_{i=1}^6 x^i)^2, (3) constructing the cone of admissible exponent vectors, (4) showing the cone contains a point with prescribed sum‑o",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20311v1",
+      "source_path": "http://arxiv.org/abs/2606.20311v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T03:16:50.834545+00:00",
+      "title": "Existence of square‑sided dice pairs preserving the sum distribution of two standard dice"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -37030,6 +37072,52 @@
       "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Mathlib.Data.ZMod.Basic",
+        "Mathlib.Data.Nat.Prime.Basic",
+        "Mathlib.GroupTheory.OrderOfElement",
+        "Mathlib.Order.SetNotation",
+        "Kaprekar four-digit odd-base projective-doubling classification"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m ≡ 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
+      "domain_bridges": [
+        "Kaprekar digit dynamics to multiplication by 2 on projective residue classes",
+        "terminal cycle length to projective multiplicative order modulo p",
+        "extremal cycle length to Artin-type primitive root phenomena"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2164",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nopen Set\n\n/-- The projective order of 2 modulo `p` is the least positive `m` with `2^m = ±1`. -/\ndef ProjectiveOrderTwoIs (p m : ℕ) : Prop :=\n  IsLeast {n : ℕ | 0 < n ∧ (((2 : ZMod p) ^ n = 1) ∨ ((2 : ZMod p) ^ n = -1))} m\n\n/-- Conjecture: infinitely many prime odd bases have maximal four-digit Kaprekar terminal cycle length. -/\ntheorem infinitely_many_extremal_prime_kaprekar_bases :\n    Set.Infinite {p : ℕ | Nat.Prime p ∧ 5 < p ∧ ∃ m : ℕ,\n      ProjectiveOrderTwoIs p m ∧ m = (p - 1) / 2} := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize the paper's equivalence: for prime p > 5, the longest terminal four-digit Kaprekar cycle in base p has length (p - 1) / 2 iff the least m > 0 with 2^m = ±1 in ZMod p is (p - 1) / 2. Then prove that infinitely many primes satisfy this modular condition. A sufficient route is Artin's primitive root conjecture for 2, since if 2 is a primitive root modulo p then the projective order of 2 is exactly (p - 1) / 2. Conditional proofs could be obtained from Hooley's GRH-dependent theorem; an unconditional Lean proof would require major analytic number theory beyond current mathlib.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20439v1",
+      "source_path": "http://arxiv.org/abs/2606.20439v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T04:04:13.711725+00:00",
+      "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -37070,94 +37158,6 @@
       "title": "Bounded tree-independence number for K_{1,d}-free graphs excluding a planar induced minor"
     },
     {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "OEIS:A001227",
-        "MathComp/NumberTheory/Cyclotomic"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6‑sided dice can be factored as a product of two polynomials with non‑negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum‑frequency distribution as two ordinary dice.",
-      "domain_bridges": [
-        "Algebraic Combinatorics",
-        "Formalized Mathematics"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Computation"
-      ],
-      "id": "fd_2166",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem square_sided_dice_exist (a b : ℕ) (ha : a > 0) (hb : b > 0) (hneq : a ≠ b) :\n  ∃ (P Q : polynomial ℕ),\n    (∀ i, coeff P i ≥ 0) ∧ (∀ i, coeff Q i ≥ 0) ∧\n    polynomial.eval 1 P = a ^ 2 ∧ polynomial.eval 1 Q = b ^ 2 ∧\n    P * Q = (∑ i in finset.range 6, polynomial.X ^ (i+1)) ^ 2 :=\n  sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Translate the problem to a factorisation of the frequency polynomial F(x)= (x+...+x^6)^2 = x^2 (x^6-1)^2/(x-1)^2. Use the factorisation of cyclotomic polynomials Φ_d(x) to express F as a product of irreducibles. Show that for any distinct squares a^2,b^2 there is a selection of these cyclotomic factors (with possible repetitions) whose product yields a polynomial P_a with P_a(1)=a^2 and non‑negative coefficients, and whose complementary factor P_b satisfies P_b(1)=b^2. The existence part reduces to solving a linear Diophantine system given by the degrees and constant terms of the chosen Φ_d. One can then employ the theory of integer cones (Hilbert bases) to prove the system always has a solution when a≠b, yielding the desired dice. Formalisation in Lean proceeds by: (1) defining generating functions of dice, (2) proving the cyclotomic factorisation of (∑_{i=1}^6 x^i)^2, (3) constructing the cone of admissible exponent vectors, (4) showing the cone contains a point with prescribed sum‑o",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20311v1",
-      "source_path": "http://arxiv.org/abs/2606.20311v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T03:16:50.834545+00:00",
-      "title": "Existence of square‑sided dice pairs preserving the sum distribution of two standard dice"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Mathlib.Data.ZMod.Basic",
-        "Mathlib.Data.Nat.Prime.Basic",
-        "Mathlib.GroupTheory.OrderOfElement",
-        "Mathlib.Order.SetNotation",
-        "Kaprekar four-digit odd-base projective-doubling classification"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m ≡ 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
-      "domain_bridges": [
-        "Kaprekar digit dynamics to multiplication by 2 on projective residue classes",
-        "terminal cycle length to projective multiplicative order modulo p",
-        "extremal cycle length to Artin-type primitive root phenomena"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "id": "fd_2167",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "import Mathlib\n\nopen Set\n\n/-- The projective order of 2 modulo `p` is the least positive `m` with `2^m = ±1`. -/\ndef ProjectiveOrderTwoIs (p m : ℕ) : Prop :=\n  IsLeast {n : ℕ | 0 < n ∧ (((2 : ZMod p) ^ n = 1) ∨ ((2 : ZMod p) ^ n = -1))} m\n\n/-- Conjecture: infinitely many prime odd bases have maximal four-digit Kaprekar terminal cycle length. -/\ntheorem infinitely_many_extremal_prime_kaprekar_bases :\n    Set.Infinite {p : ℕ | Nat.Prime p ∧ 5 < p ∧ ∃ m : ℕ,\n      ProjectiveOrderTwoIs p m ∧ m = (p - 1) / 2} := by\n  sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "First formalize the paper's equivalence: for prime p > 5, the longest terminal four-digit Kaprekar cycle in base p has length (p - 1) / 2 iff the least m > 0 with 2^m = ±1 in ZMod p is (p - 1) / 2. Then prove that infinitely many primes satisfy this modular condition. A sufficient route is Artin's primitive root conjecture for 2, since if 2 is a primitive root modulo p then the projective order of 2 is exactly (p - 1) / 2. Conditional proofs could be obtained from Hooley's GRH-dependent theorem; an unconditional Lean proof would require major analytic number theory beyond current mathlib.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20439v1",
-      "source_path": "http://arxiv.org/abs/2606.20439v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T04:04:13.711725+00:00",
-      "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
-    },
-    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -37181,7 +37181,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2168",
+      "id": "fd_2165",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem arboreal_maximality_twisted_carlitz (q : ℕ) [Fact (Odd q)] (c : $\\mathbb{F}_q(t)$) : \n  ∀ n : ℕ, Isomorphism (GaloisGroup (Iterate (f_c c) n)) (IteratedWreathProduct (CyclicGroup (q-1)) n)",
@@ -37199,6 +37199,89 @@
       "thread_id": "",
       "timestamp": "2026-06-21T04:57:12.884506+00:00",
       "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "05D05",
+        "05D05"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For sufficiently large n relative to k, if two families A, B ⊆ ([n] choose k) are cross-intersecting and each has diversity at least C(n-u-1, n-k-1) for some integer u with 1 ≤ u ≤ k-1, then up to isomorphism A and B are contained in the union of a star centered at 1 and the family of k-sets that contain 1 and intersect [2, u+1]; equivalently, they are subsets of the Hilton–Milner type construction for cross-intersecting pairs.",
+      "domain_bridges": [
+        "algebraic_shifting",
+        "probabilistic_method"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2166",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cross_intersecting_structure {n k u : ℕ} (hnk : n > 2 * k) (hu : 1 ≤ u ∧ u ≤ k - 1) (A B : Finset (Finset ℕ)) (hA : A ⊆ Choose n k) (hB : B ⊆ Choose n k) (hcross : ∀ (a : Finset ℕ), a ∈ A → ∀ (b : Finset ℕ), b ∈ B → (a ∩ b).Nonempty) (hdivA : A.card - maxDegree A ≥ Nat.choose (n - u - 1) (n - k - 1)) (hdivB : B.card - maxDegree B ≥ Nat.choose (n - u - 1) (n - k - 1)) : ∃ (x : ℕ), x < n ∧ (∀ (s : Finset ℕ), s ∈ A → x ∈ s ∨ (∃ (t : Finset ℕ), t ⊆ Finset.Icc 1 (u + 1) ∧ t.Nonempty ∧ s = insert x t)) ∧ (∀ (s : Finset ℕ), s ∈ B → x ∈ s ∨ (∃ (t : Finset ℕ), t ⊆ Finset.Icc 1 (u + 1) ∧ t.Nonempty ∧ s = insert x t)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Apply the S_{U,V}^{Q}-shift to compress the families while preserving cross-intersection and not decreasing diversity; iteratively obtain left-compressed families; then use a double counting argument on the diversity to bound the number of sets avoiding the most frequent element, leading to a structural description.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20085v1",
+      "source_path": "http://arxiv.org/abs/2606.20085v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T05:40:58.522103+00:00",
+      "title": "Extremal Structure of Large Cross-Intersecting Families via Diversity"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture that in Theorem 1.1 of the paper the error term O(‖μ̃‖^{3‑κ}) can be replaced by O(‖μ̃‖^{2+ε}) for every ε>0 (i.e. one can save a full power of ‖μ̃‖ beyond the square‑root barrier). This would imply, via the approximate functional equation, a bound of shape T^{2+ε} for the twisted first moment in the spectral aspect, matching the expected square‑root cancellation predicted by the random matrix model for a unitary ensemble.",
+      "domain_bridges": [
+        "representation theory",
+        "spectral theory of automorphic forms",
+        "analytic number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Computation"
+      ],
+      "id": "fd_2166",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem twisted_first_moment_improved_error {T : ℝ} (δ : ℝ) (h : TestFunction) (m₁ m₂ : ℕ) (ε : ℝ) (hε : 0 < ε) :\n  (∑ π in B_{T,δ,μ̃} , (⋆ A_π(m₁,m₂) * L(1/2, π, sym²) * h(μ_π)) / CN(π))\n    = (ζ(3/2) / (192 * π^5)) * (if □ m₁ ∧ □ m₂ then 1 else 0) * vol_spec(h) / ((m₁^2 * m₂)^(1/4))\n      + O (T ^ (2 + ε)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "The conjecture would follow from establishing substantially stronger bounds for the archimedean integral transforms in the GL₃ Kuznetsov formula. One needs to exploit additional cancellation in the higher‑rank Kloosterman sums S(m₁,m₂;c) via Deligne’s bound adapted to the GL₃ setting, and to apply stationary phase / Mellin‑Barnes techniques to the Bessel‑type kernels appearing in the Kuznetsov trace formula. Combining these with a refined asymmetric approximate functional equation that isolates the diagonal contribution would yield the desired power saving of one full exponent.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19959v1",
+      "source_path": "http://arxiv.org/abs/2606.19959v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T05:41:52.181180+00:00",
+      "title": "Improved power‑saving error bound for the twisted first moment of GL₃ symmetric square L‑functions"
     },
     {
       "ambition_level": "extension",
@@ -42521,11 +42604,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "2fe3f01b",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
       "domain_bridges": [],
@@ -42535,7 +42618,7 @@
         "Analysis"
       ],
       "id": "seed_359",
-      "last_attempt_time": "2026-06-21T04:57:18.012958+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42548,7 +42631,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432759+00:00",
       "title": "Constructive Mathematics: Bishop's Analysis"
@@ -96717,7 +96800,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge"
