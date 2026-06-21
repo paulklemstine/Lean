@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3e812933",
     "filename": "packing_isolating_sets_exist_in_finite_block_graph.json",
     "pkg_num": 217,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6599999999999999,
     "title": "Packing-Isolating Sets in Block Graphs"
   },
   {
@@ -6628,8 +6628,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "packing_isolating_sets_exist_in_finite_block_graph",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6599999999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Packing-Isolating Sets in Block Graphs"
     }

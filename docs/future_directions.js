@@ -1800,20 +1800,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
   },
   {
-    "consumed_by_exp_id": "3e812933",
-    "description": "Conjecture: Every finite block graph has a vertex set S which is simultaneously a 2-packing and an isolating set. Equivalently, the closed neighborhoods of distinct vertices of S are pairwise disjoint, and every edge of the graph has at least one endpoint in the closed neighborhood of S.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2086",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18172v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T21:08:20.524395+00:00",
-    "title": "Packing isolating sets exist in finite block graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For a positive integer n and a subgroup H of the automorphism group of the cyclic group C_n, the orbit Schur ring S(C_n,H) has an almost commutative Terwilliger algebra if and only if H is trivial, or n is a prime power and H is the full automorphism group, or n = p^a for an odd prime p and H has order p^(a-1). Equivalently, for non-prime-power n, only the trivial orbit Schur ring has this property.",
     "domains": [
@@ -3797,6 +3783,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Packing-Isolating Sets in Block Graphs\n\nDerived from this cycle's findings: the periodic construction for paths, the\ndomination shortcut for complete graphs, and the `C\u2085` necessity boundary.\n\n## Conjecture 1 \u2014 Full block-graph conjecture via block-cut induction\n**Statement.** Every finite block graph admits a packing-isolating set.\n**The key insight is** that a block graph is a tree of cliques: peeling a *leaf block*\n(a clique meeting the rest of the graph in a single cut vertex) reduces to a smaller\nblock graph, and the periodic/backward-witness phenomenon proven for paths is exactly\nthe bookkeeping needed to decide whether the cut vertex must be \"spent\" on the recursion.\n**Why now?** We have verified the two extremal block-graph families (paths and cliques)\nand a clean `nbhdSet` API with monotonicity lemmas; the only missing ingredient is a\nLean formalization of the block-cut tree, which the verified base cases make worthwhile.\n\n## Conjecture 2 \u2014 Sharp lower bound: packing-isolation number of `P_n`\n**Statement.** The minimum size of a packing-isolating set of `P_n` equals `\u2308n/3\u2309`\nfor all `n \u2265 2`, attained by the residue set `{i \u2261 1 mod 3}`.\n**The key insight is** that the 2-packing constraint forces gaps `\u2265 3`, giving the\n`\u2308n/3\u2309` lower bound, while the isolating constraint forbids gaps `> 3`, so the period-3\npattern is simultaneously extremal for both constraints.\n**Why now?** The exact period-3 set is already formalized; bounding its cardinality and\nproving optimality is a self-contained counting argument over `Fin n`.\n\n## Conjecture 3 \u2014 Diameter-2 obstruction is the only small obstruction\n**Statement.** A graph with no packing-isolating set must contain an induced odd hole\nor an induced subgraph of diameter `\u2264 2` with no dominating vertex; `C\u2085` is the unique\nminimal such graph.\n**The key insight is** that the `C\u2085` failure decomposes into \"diameter 2 kills large\n2-packings\" and \"no vertex dominates kills small isolating sets\"; any obstruction must\ncombine both pressures.\n**Why now?** The `decide`-verified `C\u2085` boundary plus the positive `C\u2084`/`C\u2086` checks give\nthe exact data to formulate and test this dichotomy on a `Fin n` graph census.\n\n## Conjecture 4 \u2014 Closure under clique-amalgamation\n**Statement.** If block graphs `G\u2081, G\u2082` each admit a packing-isolating set, then any\ngraph obtained by identifying a single vertex of `G\u2081` with a single vertex of `G\u2082`\n(a block-graph amalgam) also admits one.\n**The key insight is** that packing-isolating sets compose across a cut vertex: choosing\nthe cut vertex in at most one side preserves both disjointness and edge coverage.\n**Why now?** The monotonicity lemmas `IsTwoPacking.subset` and `IsIsolating.superset`\nalready isolate the two halves of the composition argument, so the amalgam step is the\nnatural next lemma and a direct stepping stone to Conjecture 1.\n\n## Conjecture 5 \u2014 Probabilistic threshold in random block graphs\n**Statement.** In a uniformly random block graph on `n` vertices, the minimum\npacking-isolating set has size concentrated around `c\u00b7n` for an explicit constant\n`c \u2208 (0, 1/3]`.\n**The key insight is** that the deterministic period-3 extremal density `1/3` for paths\nshould relax in random block graphs where larger cliques absorb many edges per chosen\nvertex, pushing the constant strictly below `1/3`.\n**Why now?** With the deterministic path optimum (`Conjecture 2`) as the `c = 1/3`\nanchor and the clique case as the `c \u2192 0` anchor, the random model interpolates between\ntwo endpoints we have already pinned down formally.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2163",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3e812933",
+    "status": "available",
+    "timestamp": "2026-06-21T02:26:35.239351+00:00",
+    "title": "Derived from this cycle's findings: the periodic construction for paths, the"
   },
   {
     "consumed_by_exp_id": "",

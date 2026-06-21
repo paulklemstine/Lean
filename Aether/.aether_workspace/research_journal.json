@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "406af8f7",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Discrete Hodge Program\n\nThis cycle delivered, under `Catalog/Shared/DiscreteHodgeDecomposition.lean`, a\nself-contained Mathlib foundation for the **discrete Hodge decomposition**",
-      "quality_score": 0.5313228571428571,
-      "sorry_count": 2,
-      "theorem_count": 14,
-      "timestamp": "2026-06-15T12:28:59",
-      "title": "This cycle delivered a self-contained Mathlib foundation for the discrete Hodge"
-    },
-    {
       "cycle_id": "2d95135b",
       "domain": "Applications",
       "key_insight": "# Future Directions — Combinatorial Species → Tropical Valuation Profiles\n\nThis cycle established the first concrete *Applications → Tropical* bridge: reading the\n`p`-adic valuation of the integer EGF",
@@ -2501,6 +2491,16 @@
       "theorem_count": 22,
       "timestamp": "2026-06-21T01:27:46",
       "title": "Consciousness as Integrated Information"
+    },
+    {
+      "cycle_id": "3e812933",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Packing-Isolating Sets in Block Graphs\n\nDerived from this cycle's findings: the periodic construction for paths, the\ndomination shortcut for complete graphs, and the `C₅` necessi",
+      "quality_score": 0.6599999999999999,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-06-21T02:28:51",
+      "title": "Packing isolating sets exist in finite block graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71035
     }
   ],
-  "last_updated": "2026-06-21T01:27:46",
+  "last_updated": "2026-06-21T02:28:51",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3760,12 +3760,6 @@
     "Probability": [
       {
         "cycle_id": "a4d16ba9",
-        "quality": 0.52770625,
-        "theorems": 125,
-        "title": "Close Proofs: Functorial bridge from combinatorial species generating functions "
-      },
-      {
-        "cycle_id": "a4d16ba9",
         "quality": 0.5293251256281408,
         "theorems": 158,
         "title": "Close Proofs: Functorial bridge from combinatorial species generating functions "
@@ -3817,6 +3811,12 @@
         "quality": 0.69352,
         "theorems": 17,
         "title": "Formalizing Graph Linear Notation in Lean 4"
+      },
+      {
+        "cycle_id": "3e812933",
+        "quality": 0.6599999999999999,
+        "theorems": 19,
+        "title": "Packing isolating sets exist in finite block graphs"
       }
     ],
     "Pythagorean": [

@@ -2557,34 +2557,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Mathlib.Combinatorics.SimpleGraph.Basic",
-      "Mathlib.Combinatorics.SimpleGraph.Connectivity",
-      "Mathlib.Data.Set.Finite",
-      "Mathlib.Data.Finset.Basic"
-    ],
-    "consumed_by_exp_id": "3e812933",
-    "description": "Conjecture: Every finite block graph has a vertex set S which is simultaneously a 2-packing and an isolating set. Equivalently, the closed neighborhoods of distinct vertices of S are pairwise disjoint, and every edge of the graph has at least one endpoint in the closed neighborhood of S.",
-    "domain_bridges": [
-      "Extends the paper's theorem that every tree has a packing isolating set from tree block-cut structure to clique-block structure.",
-      "Uses the block-cut tree representation of block graphs to transfer inductive arguments from trees to graphs whose blocks are cliques.",
-      "Relates 2-packings, isolating sets, and distance-2 domination through closed-neighborhood edge coverage."
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2086",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Induct on the number of blocks in the block-cut tree of the finite block graph. For a leaf block B attached at a cut vertex c, analyze whether c is already controlled by the inductive packing isolating set in the reduced block graph G - (B \\ {c}). If not, add a suitable non-cut vertex of B, or c itself when B is the only block, preserving pairwise disjointness of closed neighborhoods. Since B is a clique, covering one appropriate vertex's closed neighborhood covers all edges internal to B, and the leaf-block condition prevents unwanted interactions with previously chosen packing vertices.",
-    "research_mode": "team",
-    "source_exp_id": "2606.18172v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T21:08:20.524395+00:00",
-    "title": "Packing isolating sets exist in finite block graphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Mathlib.Data.ZMod.Basic",
       "Mathlib.GroupTheory.Subgroup.Basic",
       "Mathlib.GroupTheory.SpecificGroups.Cyclic",
@@ -5780,6 +5752,26 @@
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Packing-Isolating Sets in Block Graphs\n\nDerived from this cycle's findings: the periodic construction for paths, the\ndomination shortcut for complete graphs, and the `C₅` necessity boundary.\n\n## Conjecture 1 — Full block-graph conjecture via block-cut induction\n**Statement.** Every finite block graph admits a packing-isolating set.\n**The key insight is** that a block graph is a tree of cliques: peeling a *leaf block*\n(a clique meeting the rest of the graph in a single cut vertex) reduces to a smaller\nblock graph, and the periodic/backward-witness phenomenon proven for paths is exactly\nthe bookkeeping needed to decide whether the cut vertex must be \"spent\" on the recursion.\n**Why now?** We have verified the two extremal block-graph families (paths and cliques)\nand a clean `nbhdSet` API with monotonicity lemmas; the only missing ingredient is a\nLean formalization of the block-cut tree, which the verified base cases make worthwhile.\n\n## Conjecture 2 — Sharp lower bound: packing-isolation number of `P_n`\n**Statement.** The minimum size of a packing-isolating set of `P_n` equals `⌈n/3⌉`\nfor all `n ≥ 2`, attained by the residue set `{i ≡ 1 mod 3}`.\n**The key insight is** that the 2-packing constraint forces gaps `≥ 3`, giving the\n`⌈n/3⌉` lower bound, while the isolating constraint forbids gaps `> 3`, so the period-3\npattern is simultaneously extremal for both constraints.\n**Why now?** The exact period-3 set is already formalized; bounding its cardinality and\nproving optimality is a self-contained counting argument over `Fin n`.\n\n## Conjecture 3 — Diameter-2 obstruction is the only small obstruction\n**Statement.** A graph with no packing-isolating set must contain an induced odd hole\nor an induced subgraph of diameter `≤ 2` with no dominating vertex; `C₅` is the unique\nminimal such graph.\n**The key insight is** that the `C₅` failure decomposes into \"diameter 2 kills large\n2-packings\" and \"no vertex dominates kills small isolating sets\"; any obstruction must\ncombine both pressures.\n**Why now?** The `decide`-verified `C₅` boundary plus the positive `C₄`/`C₆` checks give\nthe exact data to formulate and test this dichotomy on a `Fin n` graph census.\n\n## Conjecture 4 — Closure under clique-amalgamation\n**Statement.** If block graphs `G₁, G₂` each admit a packing-isolating set, then any\ngraph obtained by identifying a single vertex of `G₁` with a single vertex of `G₂`\n(a block-graph amalgam) also admits one.\n**The key insight is** that packing-isolating sets compose across a cut vertex: choosing\nthe cut vertex in at most one side preserves both disjointness and edge coverage.\n**Why now?** The monotonicity lemmas `IsTwoPacking.subset` and `IsIsolating.superset`\nalready isolate the two halves of the composition argument, so the amalgam step is the\nnatural next lemma and a direct stepping stone to Conjecture 1.\n\n## Conjecture 5 — Probabilistic threshold in random block graphs\n**Statement.** In a uniformly random block graph on `n` vertices, the minimum\npacking-isolating set has size concentrated around `c·n` for an explicit constant\n`c ∈ (0, 1/3]`.\n**The key insight is** that the deterministic period-3 extremal density `1/3` for paths\nshould relax in random block graphs where larger cliques absorb many edges per chosen\nvertex, pushing the constant strictly below `1/3`.\n**Why now?** With the deterministic path optimum (`Conjecture 2`) as the `c = 1/3`\nanchor and the clique case as the `c → 0` anchor, the random model interpolates between\ntwo endpoints we have already pinned down formally.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2163",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "3e812933",
+    "status": "available",
+    "timestamp": "2026-06-21T02:26:35.239351+00:00",
+    "title": "Derived from this cycle's findings: the periodic construction for paths, the"
   },
   {
     "ambition_level": "extension",
