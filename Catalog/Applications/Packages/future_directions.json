@@ -11243,7 +11243,7 @@
       "depth_estimate": 3,
       "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Geometry",
         "Algebra"
@@ -11279,7 +11279,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that persistent homology — the backbone of topological data analysis — provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Physics",
         "Geometry"
@@ -11495,7 +11495,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Physics",
         "Geometry"
@@ -11891,7 +11891,7 @@
       "depth_estimate": 3,
       "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Geometry"
@@ -12719,7 +12719,7 @@
       "depth_estimate": 3,
       "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.5,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Physics",
         "Geometry"
@@ -12863,7 +12863,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Tropical",
         "Geometry"
@@ -14626,7 +14626,7 @@
       "depth_estimate": 3,
       "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6000000000000001,
+      "domain_quality_penalty": -0.7000000000000001,
       "domains": [
         "Bridges",
         "Geometry"
@@ -14914,7 +14914,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.7000000000000001,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Tropical"
@@ -15418,7 +15418,7 @@
       "depth_estimate": 3,
       "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Tropical",
         "Algebra"
@@ -31533,7 +31533,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Time-Travel Consistency as a Fixed-Point Theorem\n\nDerived from the research cycle formalized in\n`Catalog/Computation/NovikovConsistency.lean` and\n`Catalog/Computation/NovikovPolynomial.lean`, where Novikov's self-consistency\nprinciple is realized as the Banach fixed point of a causal *round-trip* map\n`T : X → X` (a self-consistent history is exactly a fixed point `T x = x`), with the\ntopological existence half reusing the catalog's\n`brouwer_fixedPoint_Icc_general`.\n\nThe cycle established a sharp **existence/uniqueness gap**: existence of a\nself-consistent history is *topological* (it holds for any continuous self-map of an\ninterval, and even pins an interior, irrational golden-ratio history for `x ↦ 1 - x²`),\nwhereas *uniqueness* is *metric* and fails the moment the loop stops contracting\n(`x ↦ x²` carries two consistent histories `0` and `1`). The directions below push on\nexactly that gap.\n\n## 1. Quantitative paradox index from the spectral gap `1 - K`\n\n**Conjecture.** Define the *paradox index* of a guessed history `x` as\n`P(x) = dist x (T x)` (its one-step inconsistency). Then for a contracting causal map\nthe realized history is within `P(x)/(1-K)` of consistency, and this bound is *tight*\nfor affine maps: `dist x x* = P(x)/(1+a)` when `a < 0`.\n\n*The key insight is...* that `novikov_error_bound` already turns \"how paradoxical is\nthis guess?\" into a single scalar controlled by the spectral gap `1 - K`, so the gap\nitself is a measurable, falsifiable physical observable rather than a metaphor.\n\n*Why now?* `novikov_error_bound` and `affine_contracting` are proved; the tightness\nclaim is a finite affine computation (`field_simp`/`nlinarith`) that the current file\nis one lemma away from.\n\n## 2. Bifurcation of consistent histories at the contraction boundary `K = 1`\n\n**Conjecture.** Parameterize causal maps by gain `r` (e.g. logistic `r·x·(1-x)`). The\nnumber of self-consistent histories in `[0,1]` is `1` for `r ≤ 1` and `≥ 2` for\n`r > 1`, with the new branch born exactly at the loss of contraction (`K → 1`).\n\n*The key insight is...* that `logistic_carrying_capacity_consistent` exhibits the\nsecond (nonzero) history `1 - 1/r` appearing precisely as `r` crosses `1`, mirroring a\ntranscritical bifurcation — uniqueness is destroyed at the same threshold where\ncontraction is lost.\n\n*Why now?* The two logistic histories (`0` and `1 - 1/r`) are already formalized; what\nremains is to prove there are *exactly* these for `r ∈ (1,3]`, a real-root-counting\nargument within reach of `polyrith`/`nlinarith`.\n\n## 3. Multidimensional Novikov: consistent field histories on `ℝⁿ`\n\n**Conjecture.** For a causal map `T : ℝⁿ → ℝⁿ` that is `K`-Lipschitz with `K < 1` in\nthe Euclidean metric (e.g. an affine map `x ↦ A x + b` with `‖A‖ < 1`), there is a\nunique self-consistent field history, given by `(I - A)⁻¹ b`.\n\n*The key insight is...* that the abstract `novikov_unique_consistent` is already stated\nover an arbitrary complete metric space, so the entire content is the spectral\ncriterion `‖A‖ < 1 ⟹ ContractingWith ‖A‖ (A·+b)` — a matrix-norm lemma, not new\nfixed-point theory.\n\n*Why now?* `novikov_unique_consistent` is domain-agnostic and proved; Mathlib's\noperator-norm API (`ContinuousLinearMap.opNorm`) makes the `ℝⁿ` instantiation a\nself-contained next step.\n\n## 4. Necessity is generic: most degree-≥2 causal maps break uniqueness\n\n**Conjecture.** A real polynomial causal map of degree `d ≥ 2` whose leading\ncoefficient is positive has at least two real fixed points (hence is never a\ncontraction on all of `ℝ`) for an open, dense set of coefficient vectors.\n\n*The key insight is...* that `square_no_contraction` is not an isolated pathology: the\nfixed-point equation `p(x) = x` is itself a degree-`d` polynomial, so generically it\nhas multiple real roots, making the failure of Novikov uniqueness the *typical* case\nfor nonlinear causal maps.\n\n*Why now?* `square_no_contraction` gives the d=2 witness and the proof template\n(two fixed points ⇒ no contraction, via `fixedPoint_unique'`); generalizing needs only\na root-existence count for `p(x) - x`.\n\n## 5. Approximate Novikov: ε-consistent histories always exist on compacta\n\n**Conjecture.** Even when no exact contraction holds, every continuous causal map on a\ncompact state space admits, for each `ε > 0`, an *ε-self-consistent* history with\n`dist (T x) x ≤ ε`; and if the space is additionally convex these upgrade to an exact\nconsistent history.\n\n*The key insight is...* that the catalog already contains the compactness upgrade\nprinciple (`exists_fixedPoint_of_approx_fixedPoint_compactness`), so approximate\nself-consistency — the physically realistic notion under measurement error — is the\nright weakening that survives the loss of contraction.\n\n*Why now?* `novikov_exists_interval` connects this file to the catalog's fixed-point\ncore; wiring in the compactness-upgrade lemma extends Novikov existence from intervals\nto arbitrary compact convex history spaces with no new heavy machinery.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -31569,7 +31569,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Unstoppable Self-Maps (Geometry)\n\nFollow-up conjectures for the theme *\"Self-modifying code that cannot be stopped\"*,\nbased on `Geometry/Unstoppable.lean` (the **drift criterion** for aperiodicity and\nits finite-state converse). Each is stated to be directly formalizable and\nfalsifiable in Lean 4 / Mathlib.\n\n## Conjecture 1 — Drift criterion is complete on the line\n**Statement.** Let `f : ℝ → ℝ` be continuous and monotone. Then `f` is\n`Unstoppable` (no periodic points) **iff** it admits a continuous drift coordinate,\nequivalently iff `f x ≠ x` for all `x` and `f x - x` has constant sign. More\nsharply: a fixed-point-free continuous `f : ℝ → ℝ` is unstoppable, and conversely\nany continuous self-map of `ℝ` with a fixed point halts there.\n**Test.** Formalize `Unstoppable f ↔ ∀ x, f x ≠ x` for continuous `f : ℝ → ℝ`\nusing the intermediate value theorem on `f^[n] x - x`.\n**Falsifier.** A continuous fixed-point-free `f : ℝ → ℝ` with a genuine periodic\norbit (would refute; conjecture predicts none exist).\n\n## Conjecture 2 — Quantitative escape rate from drift\n**Statement.** If `φ (f x) = φ x + c` with `c > 0` and `φ` is `K`-Lipschitz for a\nmetric `d`, then `d (f^[n] x, x) ≥ (|c|/K) · n`; hence the orbit is a\n*quasi-isometric* embedding of `ℕ` and escapes every bounded set in finite time.\n**Test.** Prove `dist (f^[n] x) x ≥ (c / K) * n` from `phi_iterate` and the\nLipschitz bound `|φ a - φ b| ≤ K · dist a b`.\n**Falsifier.** A drifting `f` with Lipschitz `φ` whose orbit stays bounded.\n\n## Conjecture 3 — Group-theoretic dichotomy for affine maps\n**Statement.** An invertible affine map `f x = A x + b` of a finite-dimensional\nreal inner-product space is `Unstoppable` **iff** `b` is not in the range of\n`A - I` (i.e. the affine fixed-point equation `(A - I) x = -b` has no solution).\nWhen `A = I` this recovers `translate_unstoppable`; when `A` is a rotation with\n`1 ∉ spectrum A`, the map always has a fixed point and halts.\n**Test.** Formalize `Unstoppable f ↔ (-b) ∉ Set.range (A - 1)` for `f x = A x + b`.\n**Falsifier.** An affine map with `(A-I)` surjective yet unstoppable, or with a\nfixed point yet unstoppable.\n\n## Conjecture 4 — Subexponential orbit growth forces a periodic point\n**Statement.** (Compactness/recurrence converse.) If `X` is a compact metric\nspace and `f : X → X` is continuous, then `f` is **not** `Unstoppable`: every\ncontinuous self-map of a nonempty compact metric space has a recurrent — in the\ntopological sense, almost-periodic — orbit, and on finite-dimensional compacta a\ngenuine periodic point in many cases. Minimal testable core: a continuous self-map\nof `[0,1]` (or `S¹` with rational rotation number) always halts.\n**Test.** Prove `¬ Unstoppable f` for continuous `f : Set.Icc (0:ℝ) 1 → ...`\nvia Brouwer fixed point, strengthening `not_unstoppable_of_finite` from finite to\ncompact.\n**Falsifier.** A continuous fixed-point/periodic-point-free self-map of a compact\ninterval (Brouwer forbids it).\n\n## Conjecture 5 — Cocycle drift and unstoppable group actions\n**Statement.** A free action is the group-level analogue of unstoppability. If a\ngroup `G` acts on `X` and admits a nonzero homomorphism-twisted cocycle\n`φ : X → ℝ` with `φ (g • x) = φ x + χ(g)` for a nontrivial character `χ`, then\nevery `g` with `χ(g) ≠ 0` acts without periodic points. Conjecture: for\n`G = ℤ` this is *equivalent* to the drift criterion, and the set of unstoppable\ngenerators is exactly `{g : χ(g) ≠ 0}`.\n**Test.** Generalize `unstoppable_of_drift` to a `χ`-twisted cocycle and recover\n`unstoppable_iterate_of_drift` as the `χ(g) = c` special case.\n**Falsifier.** A cocycle action with `χ(g) ≠ 0` admitting a periodic point.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -31605,7 +31605,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Topology of Argumentation: Why Debates Have Holes\n\nThis cycle established a formal core for abstract argumentation frameworks (AFs) in\n`Catalog/Novelty/ArgumentationTopology.lean`:\n\n- the **lattice / fixed-point backbone** (`charF_mono`, `grounded`, `grounded_fixed`,\n  `grounded_least`) — the canonical \"skeleton\" of a debate via Knaster–Tarski;\n- the **Dung hierarchy** `stable ⟹ complete ⟹ admissible` (`stable_admissible`,\n  `stable_complete`, `admissible_empty`);\n- the two fundamental **holes** — the odd cycle `cyc3` and the self-loop `loop1` — versus\n  the resolvable even cycle `cyc2`, with a `Finset ↔ Set` bridge (`hole_cyc3`,\n  `hole_loop1`, `resolvable_cyc2`, `hole_cyc3_set`);\n- the structural insight that **holes require asymmetry**: every finite *symmetric,\n  irreflexive* debate is resolvable (`symmetric_irreflexive_resolvable`).\n\nThe following conjectures are bold, precise, and testable in subsequent cycles.\n\n## C1 — The Parity Theorem for directed cycles\nFor the directed `n`-cycle `cyc n : Fin n → Fin n → Prop := fun i j => j = i + 1`,\na stable extension exists **iff `n` is even** (`n ≥ 2`):\n```\ntheorem cyc_resolvable_iff_even (n : ℕ) (hn : 2 ≤ n) :\n    Resolvable (cyc n) ↔ Even n\n```\nWe verified `n = 2` (resolvable) and `n = 3` (hole). The conjecture promotes \"the odd hole\"\nfrom an example to a theorem: parity of a directed cycle is *the* topological invariant\ngoverning resolvability. Likely proof: stable extensions of `cyc n` are exactly the\nalternating independent sets, which exist iff `n` is even.\n\n## C2 — Grounded extension is always complete (and conflict-free)\nThe least fixed point `grounded r` should itself be a genuine extension:\n```\ntheorem grounded_complete (r : A → A → Prop) : Complete r (grounded r)\ntheorem grounded_conflictFree (r : A → A → Prop) : ConflictFree r (grounded r)\n```\nThis would show every debate has a canonical (possibly empty) \"forced core\" that is a real\nposition, even when no stable extension exists — i.e. the skeleton survives even in holed\ndebates. The expected proof uses `OrderHom.lfp` induction (`lfp_induction`) with\nconflict-freeness as the invariant; the subtlety is that conflict-freeness is not\nobviously preserved by `charF`, so an auxiliary invariant (admissibility of the iterates)\nis likely needed.\n\n## C3 — Euler-characteristic / Betti obstruction (the homological hole count)\nMake the topology literal. Associate to a finite AF `r` the directed graph and a chain\ncomplex whose first Betti number `b₁` counts independent directed cycles. Conjecture: a\nfinite AF with `b₁ = 0` (a \"forest of attacks\") is always resolvable, and more strongly the\n*number of distinct holes* (maximal sub-debates with no stable extension) is bounded by a\nfunction of `b₁`:\n```\ndef b1 (r : Fin n → Fin n → Prop) : ℕ := ...   -- cycle rank of the attack digraph\ntheorem acyclic_resolvable (r : Fin n → Fin n → Prop) [DecidableRel r]\n    (h : b1 r = 0) : Resolvable r\n```\nThis is the sharpest sense of \"why debates have holes\": holes are detected by first\nhomology of the attack complex. A natural first milestone: prove that an attack relation\nthat is a strict partial order (well-founded, acyclic) always has a stable extension equal\nto its grounded extension.\n\n## C4 — Stability gap = obstruction class\nDefine the *stability gap* of a debate as the minimal number of arguments that must be\ndeleted to make it resolvable. Conjecture: for symmetric+irreflexive AFs the gap is `0`\n(C-confirmed direction), and for a directed `n`-cycle the gap is exactly `1` when `n` is\nodd. More generally the gap equals the minimum number of vertices meeting every \"odd\nattack cycle\", an argumentation analogue of the odd-cycle transversal / `χ`-boundedness\nphenomenon.\n\n## C5 — Continuity / sheaf gluing of local debates\nTreat a large debate as glued from overlapping sub-debates (a cover). Conjecture: if every\nmember of a cover is resolvable and the resolutions agree on overlaps (a *cocycle*\ncondition), then the global debate is resolvable; the obstruction to gluing lives in an\n`H¹` of the nerve of the cover. This would turn \"debates have holes\" into a genuine\nsheaf-cohomological statement and connect the Novelty catalog to the persistent-homology\nand sheaf entries in the Tropical catalog.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Logic",
         "Geometry"
@@ -31713,7 +31713,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — Gravity from Information: Spacetime as a Quantum Error-Correcting Code\n\nThis research cycle built a fully verified, manifold-free combinatorial core of\nthe holographic principle in `Catalog/Geometry/HolographicCode/`:\n\n* `AreaEntropy.lean` — the discrete Ryu–Takayanagi **area functional**\n  `cut w A = ∑_{u∈A, v∉A} w u v`, with purity (`cut_compl`), subadditivity,\n  **strong subadditivity** (`cut_submodular`), and Araki–Lieb (`cut_arakiLieb`).\n* `Monogamy.lean` — the key finding `cut_tripartite_eq`: the bare boundary cut\n  has **identically vanishing tripartite information** (`I₃ ≡ 0`), so it\n  saturates Monogamy of Mutual Information (`cut_monogamy`).\n* `MutualInformation.lean` — the information dictionary: `mutualInfo` and\n  `condMutualInfo` defined from geometry, with nonnegativity = subadditivity /\n  strong subadditivity (`mutualInfo_nonneg`, `condMutualInfo_nonneg`).\n\nThe single sharpest discovery is that **the fixed boundary cut is too rigid**:\nit makes `I₃ = 0` exactly, whereas genuine holographic states have `I₃ < 0`.\nThe quantum-information content of geometry therefore lives in the *minimization*\nover bulk surfaces — the entanglement-wedge / min-cut prescription. The\nconjectures below are organized around closing that gap.\n\n---\n\n## Conjecture 1 (Strict Monogamy needs the min-cut). \n\nDefine the **min-cut RT entropy** on a weighted graph with a distinguished\nboundary `∂ ⊆ V`:\n`minCut w A = ⨅ { cut w X | X ⊆ V, X ∩ ∂ = A }` (surfaces homologous to `A`).\nThen `minCut` still satisfies subadditivity and strong subadditivity, **and** its\ntripartite information is genuinely nonpositive:\n`minCut(A)+minCut(B)+minCut(C) − minCut(A∪B) − minCut(B∪C) − minCut(A∪C) + minCut(A∪B∪C) ≤ 0`,\nwith *strict* inequality for some graph (a witness already exists on the\n\"triangle of bulk legs\" graph). **Testable:** the strictness is exactly the\nphenomenon absent from our `cut_tripartite_eq`.\n\n## Conjecture 2 (Full holographic entropy cone). \n\nFor `minCut` of Conjecture 1, *all* facet inequalities of the known holographic\nentropy cone hold — in particular the 5-party HHM/cyclic inequalities that are\nstrictly stronger than MMI. Conversely, the *bare* `cut` satisfies every\ninequality that is a consequence of submodularity **and saturates exactly those\nthat are linear combinations of `I₃ = 0`-type identities**. Goal: classify which\nfacets the fixed cut saturates versus which require minimization.\n\n## Conjecture 3 (Complementary recovery / QEC duality). \n\nModel a holographic code by a bulk vertex set and a boundary `∂`, with a bulk\n\"operator\" localized at a vertex `p`. Define `A` *recovers* `p` iff `p` lies on\nthe `A`-side of every minimum cut `minCut w A`. Conjecture: for a pure global\nstate (symmetric `w`), **exactly one** of `A`, `Aᶜ` recovers `p`\n(complementary recovery), and the set of recovering regions is an up-set closed\nunder the min-cut \"entanglement wedge.\" This is the discrete Knill–Laflamme /\noperator-algebra QEC statement, and should follow from submodular uncrossing of\nminimum cuts.\n\n## Conjecture 4 (Discrete area law ⇒ continuum RT). \n\nFor a sequence of graphs `G_n` discretizing a Riemannian surface with edge\nweights `w_n` approximating the metric, the rescaled cut entropies\n`(1/n) · cut w_n A_n` **Γ-converge** to the geometric area\n`∫_{∂A} ds` of the minimal surface bounding `A`. This would derive the continuum\nRyu–Takayanagi area law as a scaling limit of the verified combinatorial\ninequalities, with the entropy inequalities passing to the limit by lower\nsemicontinuity.\n\n## Conjecture 5 (Cut distance and the Singleton bound). \n\nThe functional `dist(A,B) = cut w (A △ B)` (symmetric difference) is a\npseudometric on regions, and for a code defined by the min-cut, the code\n**distance** `d` (minimum weight of an undetectable boundary perturbation) and\nthe number `k` of protected bulk degrees of freedom obey a discrete\n**quantum-Singleton-type bound** `k ≤ |∂| − 2(d − 1)` expressible purely via\n`minCut`. Saturation should characterize \"perfect-tensor\" / maximally\nholographic graphs (the HaPPY pentagon tiling).\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Geometry",
         "Algebra"
@@ -31785,7 +31785,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — Tropical Persistent Topology\n\nResearch cycle: *Topological Data Analysis of Theorem Networks* (Domain: Tropical).\nFoundation laid in `Catalog/Tropical/Persistence/SublevelFiltration.lean`:\ntropical polynomials are convex, their sublevel filtrations have a single-bar\ndegree-0 persistence, and the tropical semiring operations `⊕ = max`, `⊗ = +`\nact on value functions and on the filtration in a controlled way.\n\nBelow are bold, **testable** conjectures for follow-up cycles. Each is stated so\nthat it can be formalized as a Lean theorem (or refuted by a Lean\ncounterexample).\n\n## C1 — Degree-`k` persistence collapse (k ≥ 1)\n**Conjecture.** For every tropical polynomial `p : TropPoly n` and every threshold\n`c`, the sublevel set `sublevel p c` is contractible whenever it is nonempty;\nhence *all* reduced persistent homology vanishes and the full persistence diagram\nis the single H₀ bar already established.\n*Test.* Strengthen `convex_sublevel` to `Contractible`/`StarConvex` (a convex set\nin `ℝⁿ` is contractible). Formalize via `Convex.contractibleSpace` or by\nexhibiting a star-center. Falsifiable: produce a `p`, `c` with disconnected or\nholey sublevel set (impossible if convexity is unconditional — so the conjecture\npredicts no such example exists).\n\n## C2 — Tropical hypersurfaces are the true carriers of topology\n**Conjecture.** Replace the *sublevel* set by the **tropical hypersurface**\n(the non-differentiability locus `V(p) = { x | the max in p.toFun x is attained\n≥ twice }`). Then the filtration of `ℝⁿ \\ V(p)` by connected components is\ngoverned by `card p.ι`: the number of top-dimensional regions equals the number\nof monomials that are \"essential\" (achieve the max somewhere), and this count is\n*sub-additive* under `⊕` and *multiplicative-with-defect* under `⊗`.\n*Test.* Define `essential p = { i | ∃ x, p.toFun x = monomial (coeff i) (slope i) x }`\nand prove `essential (tropAdd p q) ⊆ image essential p ∪ image essential q`.\n\n## C3 — Persistence stability for tropical polynomials  *(pointwise core: PROVED)*\n**Status.** The pointwise, dimension-free part is established as `toFun_stable`\nin `SublevelFiltration.lean`: `|p.toFun x − (p.recoeff a').toFun x| ≤\n⨆ᵢ |coeffᵢ − a'ᵢ|`, uniformly in `x`, with the generic `sup'`-Lipschitz lemma\n`abs_sup'_sub_sup'_le`.\n**Remaining conjecture.** Lift this to *barcode* stability: the degree-0 birth\nvalue `b(p)` (see C4) is `1`-Lipschitz in the coefficients, and more generally the\nbottleneck distance of persistence diagrams is bounded by the sup-distance of\ncoefficients.\n*Test.* Combine `toFun_stable` with the existence of a minimizer (C4) to bound\n`|b(p) − b(q)|`. Falsifiable by any coefficient perturbation producing a\nbirth-value jump exceeding the perturbation.\n\n## C4 — Newton-polytope ↔ persistence dictionary\n**Conjecture.** The birth value `b(p) = inf { c | sublevel p c ≠ ∅ }` of the\nsingle H₀ bar equals the value of the tropical polynomial at the *tropical\nminimum*, and is determined entirely by the lower hull of the lifted Newton\npolytope `{ (slope i, coeff i) }`. In particular `b(tropMul p q) = b(p) + b(q)`\nand `b(tropAdd p q) = min (b(p)) (b(q))` whenever the relevant infima are\nattained (e.g. all slopes nonzero / coercive case).\n*Test.* Introduce a coercivity hypothesis guaranteeing attainment, prove\nexistence of a global minimizer (`IsCompact` sublevel sets), then the additive\nand min laws for `b` follow from `toFun_tropMul` and `toFun_tropAdd`.\n\n## C5 — Theorem-network functoriality (the meta-TDA layer)\n**Conjecture.** Assigning to each tropical polynomial its persistence barcode is\n*functorial* over the tropical semiring: there is a barcode-valued semiring\nhomomorphism sending `⊕` to barcode-min and `⊗` to barcode-sum, extending the\ncatalog's `TropicalSemiringHom`. Formally, the assignment\n`p ↦ b(p) ∈ (ℝ, min, +)` is a semiring homomorphism into the tropical semiring\nitself — i.e. tropical persistence is a *self-map of the tropical line*.\n*Test.* Once C4 supplies `b`, prove `b` is a `min`-`+` homomorphism, closing the\nloop with `Tropical/NeuralNetworks/TropicalSemiringHom.lean`. Falsifiable if any\n`p, q` violate `b(p ⊕ q) = min (b p) (b q)`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Geometry",
         "Algebra"
@@ -31965,7 +31965,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Non-Well-Founded Proofs in Geometry\n\nResearch theme: **\"Non-Well-Founded Proofs: Proofs That Reference Themselves\"**, domain **Geometry**.\n\nAcross two cycles we established the thesis that *self-reference / non-well-foundedness =\nself-similarity*, realized by two formal engines — **coinductive data** (`Stream'`, `corec`)\nand **contraction fixed points** (`x* = f x*`) — and unified the geometric series, the affine\nattractor, and the (golden / metallic) continued fractions as one phenomenon: *a quantity\nthat is the unique solution of its own equation*. All results live, fully verified, in\n`SelfSimilar.lean`.\n\n**Status of earlier conjectures (now closed):**\n- **C3 (bisimulation rigidity)** — PROVED (`selfSimilar_unique`): the self-similarity law\n  `map (· * r) s = s.tail` with fixed head characterizes `geomStream a r` uniquely.\n- **C4 (metallic ratios)** — PROVED (`metallicRatio_sq`, `metallicRatio_selfReferential`,\n  `metallicGnomon_selfSimilar`, `metallicRatio_one`): the golden lemmas generalize to the\n  whole family `φ_m = (m + √(m²+4))/2`.\n- **C5 (similarity dimension)** — core PROVED (`simDim_spec`, `simDim_pos`): `D = log k/log(1/r)`\n  solves `k·r^D = 1` and is positive; *monotonicity remains open* (see D3 below).\n\nThe following are the bold, falsifiable conjectures for subsequent cycles.\n\n## Conjecture D1 — IFS attractor in ℝⁿ via Banach (multidimensional self-reference)\nFor an affine contraction `f x = A x + b` on `EuclideanSpace ℝ (Fin n)` with operator norm\n`‖A‖ < 1`, there is a **unique** self-referential point `x* = f x*`, every orbit\n`f^[k] x₀ → x*`, and `‖f^[k] x₀ - x*‖ ≤ ‖A‖^k · ‖x₀ - x*‖`.\n*Test:* lift `affine_fixed`, `affine_fixed_unique`, `affine_iterate_error`,\n`affine_tendsto_fix` from `ℝ` to `ℝⁿ`, ideally through Mathlib's `ContractingWith`/`edist`\nAPI. Falsified if no `ℝⁿ` statement closes under just `‖A‖ < 1`.\n\n## Conjecture D2 — Coinductive geometric trees and self-similar measure\nDefine an infinite binary **coinductive tree** whose node at depth `d` carries scale `r^d`.\nConjecture: the depth-`d` level holds `2^d` copies of scale `r^d`, and the total-measure\nrecursion `M = 1 + 2 r · M` has the self-referential closed form `M = 1/(1 - 2r)` for\n`2r < 1` — the tree analogue of `geometricSum_selfReferential`. *Test:* build the tree with\n`corec`, prove the level identity by induction and the measure equation by the fixed-point\nuniqueness pattern of `geometricSum_unique`.\n\n## Conjecture D3 — Monotonicity of the similarity dimension\nThe similarity dimension `simDim k r = log k / log(1/r)` is strictly increasing in `k`\n(for `0 < r < 1`) and strictly increasing in `r` on `(0,1)` (for `k ≥ 2`). Moreover it is the\n*unique* real solving `k·r^D = 1`. *Test:* prove both monotonicities and uniqueness of the\nexponent; falsified if either monotonicity reverses on any admissible `(k, r)`.\n\n## Conjecture D4 — Mixed-ratio IFS and the Moran equation\nFor a finite list of ratios `r₁,…,r_k ∈ (0,1)`, the similarity dimension is the unique `D`\nsolving the **self-referential Moran equation** `∑ᵢ rᵢ^D = 1`. Conjecture: the left side is\ncontinuous and strictly decreasing in `D`, equals `k > 1` at `D = 0` and `→ 0` as `D → ∞`, so\na unique root exists, and it reduces to `simDim` when all `rᵢ = r`. *Test:* prove existence,\nuniqueness, and the uniform-ratio reduction via the intermediate value theorem + strict\nantitonicity.\n\n## Conjecture D5 — Banach contraction on the space of compact sets (Hutchinson attractor)\nThe IFS operator `F(K) = ⋃ᵢ fᵢ(K)` on the complete metric space of nonempty compact subsets\nof `ℝⁿ` under the **Hausdorff metric** is a contraction when each `fᵢ` is, hence has a unique\nself-referential compact set `K* = F(K*)` — the genuine fractal attractor, the set-level\n`x* = f x*`. *Test:* assemble the Hausdorff-metric completeness + contraction estimate and\ninvoke Banach; falsified if the operator fails to contract under `maxᵢ Lip(fᵢ) < 1`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -32397,7 +32397,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — Phantom Topologies (Combinatorics)\n\nCycle-1/2 results live in `Catalog/Speculative/PhantomTopologies.lean`, where we proved that\non a finite carrier the topology is a *phantom* of its specialization preorder:\n\n- `topology_eq_of_specializes_iff` — a topology is determined by the bare `⤳` relation;\n- `specPreorder_bijective` — `topology ↦ specialization preorder` is a **bijection**\n  `TopologicalSpace α ≃ Preorder α` (the classical \"finite spaces = preorders\");\n- `continuous_iff_specializes` — continuity *is* specialization-monotonicity (morphisms are\n  phantoms too);\n- `phantom_asymmetry` — the realized preorders are genuinely directional.\n\nThe conjectures below are bold, falsifiable next steps. Each comes with a concrete Lean target.\n\n---\n\n## C1. T0 rigidity: phantoms collapse exactly onto partial orders\n**Conjecture.** The observation map `specPreorder` restricts to a bijection between the\n`T0` topologies on a finite `α` and the **partial orders** on `α`.\n**Why plausible.** `specializationOrder` already upgrades the preorder to a partial order under\n`T0Space`; antisymmetry is exactly the `T0` (Kolmogorov) condition.\n**Lean target.**\n```\ntheorem specPreorder_T0_bijective [Finite α] :\n    Function.Bijective\n      (fun (t : {t : TopologicalSpace α // @T0Space α t}) => (specialization partial order))\n```\nA corollary would be a *counting* statement: `#{T0 topologies on Fin n} = #{partial orders on Fin n}`\n(OEIS A001035), complementing the full count A000798.\n\n## C2. Homeomorphism is an order-isomorphism of phantoms\n**Conjecture.** For finite spaces, `Homeomorph α β` is in natural bijection with order-isomorphisms\nof their specialization preorders: `(α ≃ₜ β) ≃ (Specialization α ≃o Specialization β)`.\n**Why plausible.** `continuous_iff_specializes` gives the arrow-level dictionary; a homeomorphism is\na continuous bijection with continuous inverse, i.e. a monotone bijection with monotone inverse.\n**Lean target.** Build the explicit `Equiv` and prove both round-trips; specialize to deduce that\ntwo finite spaces are homeomorphic iff their preorders are order-isomorphic.\n\n## C3. Connectivity is a phantom (combinatorial connectivity)\n**Conjecture.** A finite space is topologically connected **iff** its specialization preorder is\nconnected as a graph under the comparability relation `x ≤ y ∨ y ≤ x` (zigzag-connected).\n**Why plausible.** In an Alexandrov space the minimal open set of `x` is its up-set; topological\ncomponents match equivalence classes of the reflexive–symmetric–transitive closure of `≤`.\n**Lean target.**\n```\ntheorem connected_iff_preorder_connected [Finite α] [TopologicalSpace α] :\n    ConnectedSpace α ↔ (∀ x y : α, Relation.ReflTransGen (fun a b => a ⤳ b ∨ b ⤳ a) x y)\n```\n\n## C4. McCord/Möbius bridge: Euler characteristic = Möbius number\n**Conjecture.** For a finite `T0` space `X` with specialization poset `P`, the reduced Euler\ncharacteristic of the order complex `Δ(P)` equals the Möbius number `μ(P̂)` of `P` with adjoined\n`⊥`/`⊤` — a strict identity between a topological invariant and a purely combinatorial one.\n**Why plausible.** This is the finite-space shadow of McCord's weak-homotopy equivalence\n`|Δ(P)| ≃ X`; the alternating face count of `Δ(P)` is the order-complex Euler characteristic, which\nPhilip Hall's theorem identifies with a Möbius value.\n**Lean target.** Define `orderComplex P` (chains of `P`), its Euler characteristic, and prove the\nidentity for the partial order produced by `specializationOrder`.\n\n## C5. Asymptotic dominance of asymmetric phantoms\n**Conjecture.** The fraction of topologies on `Fin n` that are `T0` (genuinely asymmetric phantoms,\ncf. `phantom_asymmetry`) tends to `1` as `n → ∞`; equivalently `A000798(n) / A001035(n) → 1`.\n**Why plausible.** A random preorder is asymptotically almost surely a partial order, since the\nnumber of nontrivial inseparability classes is negligible for large `n`.\n**Lean target.** A clean intermediate, fully finitary milestone: prove the *exact* small-case\ncounts agree with the phantom bijection, e.g. that there are exactly `4` topologies and `4`\npreorders on a 2-element type, and exactly `3` of them are `T0`, by transporting the count along\n`specPreorder_bijective`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -32469,7 +32469,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — CSS Codes as Cohomology\n\nThis cycle established the dictionary **CSS code = homology of an `F₂`-chain\ncomplex** (`Core.lean`), *refuted* the hypercube conjecture for the 1-skeleton\ncycle code (`CubeCode.lean`), and anchored the refutation with a fully explicit\n`[[4,1]]` code on `C₄ = Q₂` (`RingCode.lean`). The surviving topological\ninvariant is the cyclomatic number `β₁(Q_n) = (n−2)·2^{n-1} + 1`, which equals\n`1` **only** at `n = 2`. The directions below grow out of exactly those findings.\n\n---\n\n## Conjecture 1 — The cube becomes a `[[·,1,·]]` code only after filling 2-cells\n\nFor the *cubical* complex `Q_n` (vertices, edges **and** square 2-faces), the\nhomological code has `k = dim H₁(Q_n; F₂) = 0` for `n ≥ 2` (the cube is simply\nconnected), so to recover a single logical qubit one must quotient/identify\nfaces into a closed surface. Concretely: there is a surface `Σ` obtained from\n`Q_n`'s 2-skeleton with `dim H₁(Σ; F₂) = 1` and code distance equal to the\ngirth `4`, **not** `2^{n/2}`.\n\n- **The key insight is** that the mission's \"1 qubit\" claim silently assumes a\n  *surface* (2-complex) where 2-cells kill all but one homology class, while the\n  literal `Z₁/B₁` cycle code on the 1-skeleton has `B₁ = 0` and therefore\n  over-encodes by the full cyclomatic number `(n−2)2^{n-1}+1`.\n- **Why now?** `CubeCode.numLogical_graphCode` already isolates the `d₂ = 0`\n  (no-2-cell) case; adding a nonzero `d₂` for the square faces is a direct,\n  mechanical extension of the same `Core` dimension formula, so the surface vs.\n  graph dichotomy is immediately testable in the existing framework.\n\n## Conjecture 2 — Homological distance is governed by Hamming weight, and the cube saturates only the trivial Singleton bound\n\nDefine the code distance `d` as the minimum `hammingWeight` (already imported\nfrom the catalog's `vecSupport`) over nonzero homology representatives. Then for\nthe `C₄` code `d = 4`, and every cube 1-skeleton code has `d = girth = 4`,\ngiving `k + d = β₁ + 4`, which violates the quantum Singleton bound\n`k + 2d ≤ n + 2` for large `n` — i.e. the 1-skeleton codes are **bad** codes,\nthe opposite of the conjecture's \"achieves the Singleton bound\" claim.\n\n- **The key insight is** that distance is a *minimum-weight* invariant of the\n  cohomology class, so the catalog's `vecSupport_card_pos_of_ne_zero` is the\n  exact primitive needed, and the constant girth `4` forces asymptotically\n  vanishing relative distance `d/n → 0`.\n- **Why now?** `RingCode.ker_boundary` shows the homology class explicitly as a\n  single weight-4 vector; computing `hammingWeight` of a kernel basis is already\n  `decide`-feasible at small `n`, so the Singleton-violation can be certified\n  before any general theory is built.\n\n## Conjecture 3 — `β₁(Q_n) = 1 ⇔ n = 2` is the only finite-qubit cube; tori are the right family\n\nReplacing `Q_n` by the discrete torus `(C_m)^{×2}` (product of two `m`-cycles)\nas a 2-complex yields `dim H₁ = 2` (the toric code) with distance `m`, the\ngenuine `[[2m², 2, m]]` family. Conjecture: among all \"graph-cube-like\" 1-complexes,\n`β₁ = 1` characterizes `C₄` uniquely, and the *only* way to keep `k` bounded\nwhile growing `n` is to add 2-cells (move to a surface).\n\n- **The key insight is** that `cube_one_qubit_iff` pins `k = 1` to `n = 2` for\n  the cube, so bounded-`k` code families must come from *surfaces of fixed\n  genus*, not from growing graphs — exactly the toric-code construction.\n- **Why now?** The closed form `cyclomatic_closed_form` makes the `k`-growth\n  exact, so contrasting it against the constant `k = 2` of a torus 2-complex is a\n  clean, fully arithmetic comparison reusing the present `cyclomatic` machinery.\n\n## Conjecture 4 — Euler characteristic is the universal qubit budget\n\nFor any bounded `F₂`-chain complex `0 → Cₖ → ⋯ → C₀ → 0`, the alternating sum of\nhomology dimensions equals the alternating sum of chain dimensions\n(`∑ (−1)ⁱ dim Hᵢ = ∑ (−1)ⁱ dim Cᵢ = χ`). Hence the *total* logical-qubit budget\nacross all degrees of a chain-complex code is the topological Euler\ncharacteristic, a single integer invariant.\n\n- **The key insight is** that `Core.finrank_homology` already expresses one\n  homology dimension as a difference of ranks; iterating rank–nullity up the\n  complex telescopes into `χ`, so \"qubits = Euler characteristic\" is a\n  rank–nullity identity, not new analysis.\n- **Why now?** `Core` proves the single-spot case with `finrank_quotient_add_finrank`;\n  the multi-degree version is the same lemma applied inductively, well within the\n  subagent's reach.\n\n## Conjecture 5 — Every classical `[n,k]` `F₂` code is the degree-0 homology of a length-1 complex, making CSS ↔ classical functorial\n\nFor a parity-check map `H : F₂ⁿ → F₂^r`, the length-1 complex `F₂ⁿ →H F₂^r` has\n`H₀ = coker H` and `H₁ = ker H = ` the classical code, with `dim H₁ = n − rank H`.\nConjecture: the assignment `(C₁, C₂) ↦ (chain complex)` and back is an\nequivalence of categories between CSS codes and bounded `F₂`-chain complexes up\nto chain homotopy.\n\n- **The key insight is** that `numLogical_eq_css` is precisely the object-level\n  half of this equivalence (`k = n − rank H_Z − rank H_X`); promoting it to a\n  functor only requires tracking chain maps, which Mathlib's `HomologicalComplex`\n  already supports.\n- **Why now?** With the dimension dictionary proved and the cube/`C₄` examples in\n  hand, the remaining work is purely categorical bookkeeping on top of existing\n  `Core` definitions — no new hard analytic input is needed.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -33118,7 +33118,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Geometry"
       ],
@@ -33207,7 +33207,7 @@
         "Affine sieve",
         "Representation theory of semisimple Lie groups"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -33572,7 +33572,7 @@
         "field trace pairing ↔ adjoint linear maps",
         "factorizations R + R* = F* ∘ aF ↔ radicals of quadratic forms controlling Artin-Schreier point counts"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -33929,7 +33929,7 @@
         "Generating functions of lattice-point enumerators",
         "Formal polynomial identities over Q in Lean 4"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -34012,7 +34012,7 @@
         "extremal graph theory",
         "finite geometry"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -34848,7 +34848,7 @@
         "polytope skeletons to Cayley-type graphs on symmetric groups",
         "clique-face obstructions to quadratic generation of toric ideals"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -34934,7 +34934,7 @@
         "combinatorial set theory",
         "group dynamics"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -35045,11 +35045,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 3,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a747a0a8",
       "depth_estimate": 3,
       "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
       "domain_bridges": [],
@@ -35059,7 +35059,7 @@
         "Computation"
       ],
       "id": "fd_2119",
-      "last_attempt_time": "2026-06-20T23:04:30.164770+00:00",
+      "last_attempt_time": "2026-06-21T21:48:46.601852+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35072,7 +35072,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-19T17:11:08.928185+00:00",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
@@ -35488,7 +35488,7 @@
         "Group theory",
         "Ramsey theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -35574,7 +35574,7 @@
         "Commutative Algebra",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -36746,7 +36746,7 @@
         "Burnside/Pólya symmetry enumeration to unlabelled counting",
         "local large deviation estimates to coefficient asymptotics"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -38107,6 +38107,48 @@
       "title": "Improved power-saving error term for twisted first moment of symmetric square L-functions on GL(3)"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO: Coherent configurations",
+        "math.CO: Strongly regular graphs",
+        "math.CO: Association schemes"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture: For every prime power q, there exist infinitely many co‑edge‑regular graphs with exactly four distinct eigenvalues, smallest eigenvalue −2q−1, and coherent rank exactly q+4 (i.e., the lower bound q+4 from the paper is sharp).",
+      "domain_bridges": [
+        "Distance‑regular graphs",
+        "Finite geometry (affine/projective planes)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2190",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem coherent_rank_coedge_regular_four_eigenvalue {q : ℕ} (hpq : Fact (Nat.PrimePower q)) :\n  ∃ (G : SimpleGraph ℕ), CoEdgeRegular G ∧ NumDistinctEigenvalues G = 4 ∧ SmallestEigenvalue G = (-(2*q+1 : ℤ)) ∧ CoherentRank G = q + 4 := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Leverage the known constructions from affine or projective planes of order q. Compute the intersection numbers for adjacent vertex pairs to show that the number of distinct common‑neighbour counts equals q+2. Then argue that the coherent algebra is generated by the adjacency matrix and these q+2 matrices, yielding coherent rank q+4. Verify that no additional relations arise, so the rank is exactly q+4.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19981v1",
+      "source_path": "http://arxiv.org/abs/2606.19981v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T21:47:40.164587+00:00",
+      "title": "Sharp coherent rank bound for co-edge-regular four‑eigenvalue graphs"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -38135,7 +38177,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2190",
+      "id": "fd_2191",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sd_bound {n k : ℕ} (hk : k ≥ 50) (hn : n ≥ 60 * k ^ (3 / 2 : ℕ)) (F : Finset (Finset ℕ)) (hF : IntersectingFamily F k) : (F.symdiff_powerset_card_le (∑ i in Finset.range k, Nat.choose (n - 1) (2 * i))) := by sorry",
@@ -38176,7 +38218,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2191",
+      "id": "fd_2192",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem-formulation with explicit bounds on diversity and intersecting degrees.",
@@ -38218,7 +38260,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2192",
+      "id": "fd_2193",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem quasi_random_iff_irreducible_decomp : ∀f : subgraph_counts → ℝ, quasi_random(f) ↔ ∃irreducible_decomp(f) where irreducible_decomp requires f's symmetric function decomposition to satisfy orthogonality constraints under GG-actions.",
@@ -38242,72 +38284,39 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nBuilt on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries) that the\ngraph-cut functional of a weighted tensor network is submodular, and derives from it: the\nemergent min-cut entropy's subadditivity (SA) and strong subadditivity (SSA), the\npurity/complementarity relation `S(Sᶜ)=S(S)`, an emergent **pseudometric** `netDist`\n(triangle inequality on bulk regions), complexity bounds, and complexity-driven monotonicity.\n\nThe following conjectures are precise and falsifiable; each is a candidate Lean target.\n\n## C1 — Monogamy of Mutual Information (MMI), the holographic signature\nFor nonnegative symmetric bond weights and pairwise-disjoint boundary regions,\nthe min-cut entropy satisfies\n`S(A∪B) + S(A∪C) + S(B∪C) ≥ S(A) + S(B) + S(C) + S(A∪B∪C)`,\nequivalently `I(A:B∪C) ≥ I(A:B) + I(A:C)`. MMI holds for graph min-cuts (Hayden–Headrick–\nMaloney) but **fails** for generic quantum states — proving it would formally certify that the\nemergent geometry is genuinely holographic, not merely quantum. Strategy: combine the three\noptimal anchored regions and apply `cut_submodular` twice; the obstruction is finding the\ncorrect region recombination (the per-bond inequality is NOT termwise).\n\n## C2 — `netDist` is a genuine `PseudoMetricSpace` instance\nUpgrade `netDist` to a Mathlib `PseudoMetricSpace (Finset V)` (or a true metric on the\nquotient by `bdry = 0`), then prove the emergent space embeds isometrically into\n`(ℝ^E, ℓ¹)` via the bond-crossing map. Conjecture: the metric is **ℓ¹-rigid** — every\nfinite ℓ¹ metric arises as some `netDist`, characterizing emergent geometries exactly.\n\n## C3 — Saturation of SSA ⇔ a quantum Markov / gluing condition\nConjecture: `condMutualInfo w boundary A B C = 0` holds **iff** there exist optimal anchored\nregions with `WAB ⊆ WBC` (nested minimal surfaces). This is the discrete analogue of the\n\"entanglement wedge nesting / Markov state\" structure and would give a combinatorial\ncriterion for when the emergent geometry factorizes across `B`.\n\n## C4 — Strict complexity-driven growth and a dimension estimate\n`entropy_mono_weight` shows entropy is monotone in bond weight. Conjecture a **strict** and\nquantitative form: if `w' = w + ε·𝟙_{e}` for a bond `e` on the minimal surface of `A`, then\n`S'(A) = S(A) + ε`, and the number of bonds on the minimal surface (the \"area\") grows like\n`Θ(n^{(d−1)/d})` for networks built on a `d`-dimensional lattice — an emergent-dimension\ndetector from entropy scaling (the area law).\n\n## C5 — Random-network concentration (the \"random\" in random tensor networks)\nFor i.i.d. random bond weights, conjecture that `netDist` and `entropy` **concentrate**: with\nhigh probability the emergent distance between fixed boundary regions is within `o(1)` of its\nmean, so a deterministic emergent geometry appears in the large-network limit. Formal target:\na McDiarmid/bounded-differences inequality for `netDist` as a function of the independent bond\nweights (each weight changes `netDist` by at most its own value, giving the Lipschitz bound).\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
-      "domains": [
-        "Computation",
-        "Algebra"
+      "catalog_references": [
+        "TT2025"
       ],
-      "id": "fd_2193",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "1d465e25",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1d465e25_retry3",
-      "status": "available",
-      "thread_id": "th_f915a2f6",
-      "timestamp": "2026-06-21T21:40:26.133207+00:00",
-      "title": "Built on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "depth_estimate": 3,
-      "description": "# Future Directions — Normalization Functor into the Probability Simplex\n\nThis cycle established, in `NormalizationSimplexFunctor.lean`, that marginalization\n(`pushforward`) is a functor preserving total mass and the simplex, and that\n`ℓ¹`-normalization (`normalize`) is an idempotent, scale-invariant retraction onto\n`stdSimplex ℝ ι` that is *natural* with respect to pushforward. The following\nconjectures are precise, falsifiable, and build directly on these results.\n\n## C1. Affineness of normalization on rays through a fixed reference\n**Conjecture.** For nonnegative `u, v` with positive total mass and `t ∈ [0,1]`,\n`normalize (t • u + (1-t) • v)` lies on the *projective* segment determined by\n`normalize u` and `normalize v`; explicitly there is `s ∈ [0,1]` (depending on the\nmasses) with `normalize (t•u+(1-t)•v) = s • normalize u + (1-s) • normalize v`, where\n`s = t·‖u‖₁ / (t·‖u‖₁ + (1-t)·‖v‖₁)`. Testable as a closed-form scalar identity.\n\n## C2. Pushforward of an extreme point is an extreme point\n**Conjecture.** `pushforward f` maps vertices (Dirac masses `Pi.single i 1`) of\n`stdSimplex ℝ ι` to vertices of `stdSimplex ℝ κ`: `pushforward f (Pi.single i 1) =\nPi.single (f i) 1`. More strongly, `pushforward f` sends extreme points to extreme\npoints and is affine, so it is determined by its action on vertices. Falsifiable by\nexhibiting `f` and an extreme point with non-extreme image.\n\n## C3. Contraction property under total-variation / `ℓ¹` distance\n**Conjecture.** Pushforward is `ℓ¹`-nonexpansive on the simplex:\n`∑ k, |pushforward f p k - pushforward f q k| ≤ ∑ i, |p i - q i|` for all\n`p, q ∈ stdSimplex ℝ ι`. (Data-processing inequality for total variation.) A bolder\nform: strict contraction iff `f` is non-injective on the support.\n\n## C4. Naturality extends to the entropy/KL functional\n**Conjecture.** Shannon entropy `H` satisfies `H (pushforward f p) ≥ H p` (coarse-graining\nnever decreases entropy), with equality iff `f` is injective on `supp p`. Dually,\nKL-divergence is monotone under pushforward: `KL(pushforward f p ‖ pushforward f q) ≤\nKL(p ‖ q)`. These would upgrade the natural transformation to a *lax/oplax* statement\nfor the entropy functional.\n\n## C5. Universal property: normalization as a reflector\n**Conjecture.** `normalize` is the unit of a reflection (left adjoint) from the\nnonnegative cone (modulo positive scaling) onto the simplex: for every simplex point `p`\nand cone point `v` with positive mass, scale-invariant maps `v ↦ p` factor uniquely\nthrough `normalize v`. Formalizable as an `IsLeftAdjoint`/universal-arrow statement once\nthe cone and simplex are packaged as categories, with `normalize_idem`,\n`normalize_id_of_mem`, and `normalize_smul` as the supporting laws already proved here.\n",
-      "domain_bridges": [],
+      "description": "Conjecture that for each fixed positive integer m, the set {(a,b) in N^2 : f(a,b)=m} has a natural density equal to C_m = (C / m^3) * product_{p|m} (1 - p^2/(p^3 + p^2 - 1)), where C = product_{p} (1 - 1/(p^2(p+1))) approx 0.881513.",
+      "domain_bridges": [
+        "analytic_number_theory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Geometry",
         "Pythagorean"
       ],
       "id": "fd_2194",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem density_f_eq_m (m : ℕ) : ∃ (C : ℝ), (∀ ε > 0, ∃ X₀, ∀ x ≥ X₀, |((Finset.Icc 1 x).card * (Finset.Icc 1 x).card - #{p : ℕ × ℕ | p.1 ≤ x ∧ p.2 ≤ x ∧ f p.1 p.2 = m}) / (x : ℝ)^2 - C| < ε) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Prove the conjecture by evaluating the Dirichlet series sum_{a,b} 1_{f(a,b)=m} n^{-s}, showing it factors into an Euler product, and extracting the main term via a Delange-type Tauberian theorem; compare with the known constant C.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "d6c114ef",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d6c114ef",
+      "source_exp_id": "2606.20057v1",
+      "source_path": "http://arxiv.org/abs/2606.20057v1",
       "status": "available",
-      "thread_id": "th_36761e5a",
-      "timestamp": "2026-06-21T21:45:12.567251+00:00",
-      "title": "This cycle established, in `NormalizationSimplexFunctor.lean`, that marginalizat"
+      "thread_id": "",
+      "timestamp": "2026-06-21T21:48:41.117376+00:00",
+      "title": "Asymptotic density of pairs with fixed f-value"
     },
     {
       "ambition_level": "extension",
@@ -38448,41 +38457,6 @@
       "thread_id": "",
       "timestamp": "2026-06-12T22:47:17.444987+00:00",
       "title": "Deepening: Predicative-ordinal-analysis fragment"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "Building on cycle 1d465e25 (Q=0.799), which proved 87 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Refine the proof that Hausdorff dimension is preserved under iteration of bi-Lipschitz maps by replacing simpa-tactics with explicit foundational lemmas. Specifically, prove that for a metric space (X, d), a set S ⊆ X, and a map f : X → X that is L-Lipschitz on S and L'-anti-Lipschitz on X with f(S)",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Geometry"
-      ],
-      "id": "push_1d465e25_9d20efd5",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.89908,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "1d465e25",
-      "source_path": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T21:43:39.471404+00:00",
-      "title": "Deepening: Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
     },
     {
       "ambition_level": "extension",
@@ -39968,7 +39942,7 @@
       "depth_estimate": 3,
       "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erdős–Szekeres theorem and improve known bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Geometry",
         "Algebra"
@@ -40004,7 +39978,7 @@
       "depth_estimate": 3,
       "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Geometry"
@@ -40672,7 +40646,7 @@
       "depth_estimate": 3,
       "description": "Prove that if a polynomial map F: Cⁿ → Cⁿ has constant non-zero Jacobian determinant, then F is invertible. Formalize the reduction to degree 3 and connect to the Dixmier conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Geometry"
@@ -40814,7 +40788,7 @@
       "depth_estimate": 3,
       "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Logic",
         "Geometry"
@@ -41737,7 +41711,7 @@
       "depth_estimate": 3,
       "description": "Prove that every convex body K in Rⁿ of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Geometry",
         "Algebra"
@@ -41808,7 +41782,7 @@
       "depth_estimate": 3,
       "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, Künneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Geometry",
         "Algebra"
@@ -41844,7 +41818,7 @@
       "depth_estimate": 3,
       "description": "Prove Hironaka's resolution of singularities theorem for varieties in characteristic p > 0. Formalize known results for dimensions ≤ 3.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Geometry",
         "Algebra"
@@ -41880,7 +41854,7 @@
       "depth_estimate": 3,
       "description": "Prove that higher signatures are homotopy invariants for all finitely presented groups. Formalize the assembly map in topological K-theory and connections to Baum-Connes.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.19999999999999998,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Geometry"
       ],
@@ -41915,7 +41889,7 @@
       "depth_estimate": 3,
       "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Geometry"
@@ -42345,7 +42319,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a Kähler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Geometry",
         "Algebra"
@@ -42989,7 +42963,7 @@
       "depth_estimate": 3,
       "description": "Prove the Jacobian conjecture for polynomial maps of degree 2 in all dimensions. Formalize the reduction to degree 3 (Drużkowski's theorem). Construct explicit counterexample candidates and verify they fail. Prove the conjecture implies the Dixmier conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry"
@@ -43025,7 +42999,7 @@
       "depth_estimate": 3,
       "description": "Formalize quaternion algebras and their classification over number fields. Prove the isomorphism between unit quaternions and SO(3). Construct the Cayley-Dickson construction and prove properties of octonions. Apply to gimbal lock avoidance in 3D rotation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry",
@@ -43163,11 +43137,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "12bdf767",
       "depth_estimate": 3,
       "description": "Formalize three fundamental fixed point theorems in Lean 4. Prove Brouwer via Sperner's lemma, Banach via the contraction mapping iteration, and Schauder via Brouwer + compactness. Apply to existence proofs for ODEs and integral equations.",
       "domain_bridges": [],
@@ -43177,7 +43151,7 @@
         "Topology"
       ],
       "id": "seed_345",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-21T21:48:50.871619+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43190,7 +43164,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432654+00:00",
       "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
@@ -43243,7 +43217,7 @@
       "depth_estimate": 3,
       "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension ≥ 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Geometry",
         "Analysis"
@@ -43315,7 +43289,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Euler characteristic for CW complexes. Prove the Gauss-Bonnet theorem for compact surfaces: ∫ K dA = 2πχ(M). Prove the Poincaré-Hopf index theorem. Apply to classify surfaces by genus.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Geometry",
         "Topology"
@@ -43387,7 +43361,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} ≥ vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Geometry",
         "Analysis"
@@ -44039,7 +44013,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "MachineLearning",
         "Analysis",
@@ -44224,7 +44198,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Tropical",
         "Computation",
@@ -44335,7 +44309,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cramér-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Geometry",
         "Probability",

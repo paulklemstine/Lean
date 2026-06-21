@@ -331,20 +331,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 1d465e25 (Q=0.799), which proved 87 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Refine the proof that Hausdorff dimension is preserved under iteration of bi-Lipschitz maps by replacing simpa-tactics with explicit foundational lemmas. Specifically, prove that for a metric space (X, d), a set S \u2286 X, and a map f : X \u2192 X that is L-Lipschitz on S and L'-anti-Lipschitz on X with f(S)",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "push_1d465e25_9d20efd5",
-    "priority_score": 0.89908,
-    "research_mode": "team",
-    "source_exp_id": "1d465e25",
-    "status": "available",
-    "timestamp": "2026-06-21T21:43:39.471404+00:00",
-    "title": "Deepening: Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Building on cycle d6329d46 (Q=0.792), which proved 22 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that a binary linear code carries a genuinely new tropical v",
     "domains": [
       "Shared"
@@ -926,7 +912,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Representation Theory: Character Tables of S_n"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12bdf767",
     "description": "Formalize three fundamental fixed point theorems in Lean 4. Prove Brouwer via Sperner's lemma, Banach via the contraction mapping iteration, and Schauder via Brouwer + compactness. Apply to existence proofs for ODEs and integral equations.",
     "domains": [
       "Analysis",
@@ -936,7 +922,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432654+00:00",
     "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
   },
@@ -3240,12 +3226,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For every prime power q, there exist infinitely many co\u2011edge\u2011regular graphs with exactly four distinct eigenvalues, smallest eigenvalue \u22122q\u22121, and coherent rank exactly q+4 (i.e., the lower bound q+4 from the paper is sharp).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2190",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19981v1",
+    "status": "available",
+    "timestamp": "2026-06-21T21:47:40.164587+00:00",
+    "title": "Sharp coherent rank bound for co-edge-regular four\u2011eigenvalue graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The paper proves Frankl, Kiselev, and Kupavskii's conjecture that for any intersecting family \\(\\mathcal{F}\\subseteq\\binom{[n]}{k}\\) with \\(n\\ge 60k^{3/2}\\) and \\(k\\ge 50\\), the size of the symmetric difference family satisfies \\(|\\mathcal{SD}(\\mathcal{F})|\\le\\sum_{\\ell=0}^{k-1}\\binom{n-1}{2\\ell}\\), with equality only for a specific class of stars. The proof relies on a concentration inequality and structural arguments on intersecting families.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2190",
+    "id": "fd_2191",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20043v1",
@@ -3259,7 +3259,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2191",
+    "id": "fd_2192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -3274,13 +3274,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2192",
+    "id": "fd_2193",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20186v1",
     "status": "available",
     "timestamp": "2026-06-21T21:00:20.197296+00:00",
     "title": "Quasi-randomness via Symmetric Function Decomposition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for each fixed positive integer m, the set {(a,b) in N^2 : f(a,b)=m} has a natural density equal to C_m = (C / m^3) * product_{p|m} (1 - p^2/(p^3 + p^2 - 1)), where C = product_{p} (1 - 1/(p^2(p+1))) approx 0.881513.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2194",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20057v1",
+    "status": "available",
+    "timestamp": "2026-06-21T21:48:41.117376+00:00",
+    "title": "Asymptotic density of pairs with fixed f-value"
   },
   {
     "consumed_by_exp_id": "",
@@ -4220,36 +4234,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nBuilt on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries) that the\ngraph-cut functional of a weighted tensor network is submodular, and derives from it: the\nemergent min-cut entropy's subadditivity (SA) and strong subadditivity (SSA), the\npurity/complementarity relation `S(S\u1d9c)=S(S)`, an emergent **pseudometric** `netDist`\n(triangle inequality on bulk regions), complexity bounds, and complexity-driven monotonicity.\n\nThe following conjectures are precise and falsifiable; each is a candidate Lean target.\n\n## C1 \u2014 Monogamy of Mutual Information (MMI), the holographic signature\nFor nonnegative symmetric bond weights and pairwise-disjoint boundary regions,\nthe min-cut entropy satisfies\n`S(A\u222aB) + S(A\u222aC) + S(B\u222aC) \u2265 S(A) + S(B) + S(C) + S(A\u222aB\u222aC)`,\nequivalently `I(A:B\u222aC) \u2265 I(A:B) + I(A:C)`. MMI holds for graph min-cuts (Hayden\u2013Headrick\u2013\nMaloney) but **fails** for generic quantum states \u2014 proving it would formally certify that the\nemergent geometry is genuinely holographic, not merely quantum. Strategy: combine the three\noptimal anchored regions and apply `cut_submodular` twice; the obstruction is finding the\ncorrect region recombination (the per-bond inequality is NOT termwise).\n\n## C2 \u2014 `netDist` is a genuine `PseudoMetricSpace` instance\nUpgrade `netDist` to a Mathlib `PseudoMetricSpace (Finset V)` (or a true metric on the\nquotient by `bdry = 0`), then prove the emergent space embeds isometrically into\n`(\u211d^E, \u2113\u00b9)` via the bond-crossing map. Conjecture: the metric is **\u2113\u00b9-rigid** \u2014 every\nfinite \u2113\u00b9 metric arises as some `netDist`, characterizing emergent geometries exactly.\n\n## C3 \u2014 Saturation of SSA \u21d4 a quantum Markov / gluing condition\nConjecture: `condMutualInfo w boundary A B C = 0` holds **iff** there exist optimal anchored\nregions with `WAB \u2286 WBC` (nested minimal surfaces). This is the discrete analogue of the\n\"entanglement wedge nesting / Markov state\" structure and would give a combinatorial\ncriterion for when the emergent geometry factorizes across `B`.\n\n## C4 \u2014 Strict complexity-driven growth and a dimension estimate\n`entropy_mono_weight` shows entropy is monotone in bond weight. Conjecture a **strict** and\nquantitative form: if `w' = w + \u03b5\u00b7\ud835\udfd9_{e}` for a bond `e` on the minimal surface of `A`, then\n`S'(A) = S(A) + \u03b5`, and the number of bonds on the minimal surface (the \"area\") grows like\n`\u0398(n^{(d\u22121)/d})` for networks built on a `d`-dimensional lattice \u2014 an emergent-dimension\ndetector from entropy scaling (the area law).\n\n## C5 \u2014 Random-network concentration (the \"random\" in random tensor networks)\nFor i.i.d. random bond weights, conjecture that `netDist` and `entropy` **concentrate**: with\nhigh probability the emergent distance between fixed boundary regions is within `o(1)` of its\nmean, so a deterministic emergent geometry appears in the large-network limit. Formal target:\na McDiarmid/bounded-differences inequality for `netDist` as a function of the independent bond\nweights (each weight changes `netDist` by at most its own value, giving the Lipschitz bound).\n",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_2193",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "1d465e25",
-    "status": "available",
-    "timestamp": "2026-06-21T21:40:26.133207+00:00",
-    "title": "Built on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Normalization Functor into the Probability Simplex\n\nThis cycle established, in `NormalizationSimplexFunctor.lean`, that marginalization\n(`pushforward`) is a functor preserving total mass and the simplex, and that\n`\u2113\u00b9`-normalization (`normalize`) is an idempotent, scale-invariant retraction onto\n`stdSimplex \u211d \u03b9` that is *natural* with respect to pushforward. The following\nconjectures are precise, falsifiable, and build directly on these results.\n\n## C1. Affineness of normalization on rays through a fixed reference\n**Conjecture.** For nonnegative `u, v` with positive total mass and `t \u2208 [0,1]`,\n`normalize (t \u2022 u + (1-t) \u2022 v)` lies on the *projective* segment determined by\n`normalize u` and `normalize v`; explicitly there is `s \u2208 [0,1]` (depending on the\nmasses) with `normalize (t\u2022u+(1-t)\u2022v) = s \u2022 normalize u + (1-s) \u2022 normalize v`, where\n`s = t\u00b7\u2016u\u2016\u2081 / (t\u00b7\u2016u\u2016\u2081 + (1-t)\u00b7\u2016v\u2016\u2081)`. Testable as a closed-form scalar identity.\n\n## C2. Pushforward of an extreme point is an extreme point\n**Conjecture.** `pushforward f` maps vertices (Dirac masses `Pi.single i 1`) of\n`stdSimplex \u211d \u03b9` to vertices of `stdSimplex \u211d \u03ba`: `pushforward f (Pi.single i 1) =\nPi.single (f i) 1`. More strongly, `pushforward f` sends extreme points to extreme\npoints and is affine, so it is determined by its action on vertices. Falsifiable by\nexhibiting `f` and an extreme point with non-extreme image.\n\n## C3. Contraction property under total-variation / `\u2113\u00b9` distance\n**Conjecture.** Pushforward is `\u2113\u00b9`-nonexpansive on the simplex:\n`\u2211 k, |pushforward f p k - pushforward f q k| \u2264 \u2211 i, |p i - q i|` for all\n`p, q \u2208 stdSimplex \u211d \u03b9`. (Data-processing inequality for total variation.) A bolder\nform: strict contraction iff `f` is non-injective on the support.\n\n## C4. Naturality extends to the entropy/KL functional\n**Conjecture.** Shannon entropy `H` satisfies `H (pushforward f p) \u2265 H p` (coarse-graining\nnever decreases entropy), with equality iff `f` is injective on `supp p`. Dually,\nKL-divergence is monotone under pushforward: `KL(pushforward f p \u2016 pushforward f q) \u2264\nKL(p \u2016 q)`. These would upgrade the natural transformation to a *lax/oplax* statement\nfor the entropy functional.\n\n## C5. Universal property: normalization as a reflector\n**Conjecture.** `normalize` is the unit of a reflection (left adjoint) from the\nnonnegative cone (modulo positive scaling) onto the simplex: for every simplex point `p`\nand cone point `v` with positive mass, scale-invariant maps `v \u21a6 p` factor uniquely\nthrough `normalize v`. Formalizable as an `IsLeftAdjoint`/universal-arrow statement once\nthe cone and simplex are packaged as categories, with `normalize_idem`,\n`normalize_id_of_mem`, and `normalize_smul` as the supporting laws already proved here.\n",
-    "domains": [
-      "Geometry",
-      "Pythagorean"
-    ],
-    "id": "fd_2194",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d6c114ef",
-    "status": "available",
-    "timestamp": "2026-06-21T21:45:12.567251+00:00",
-    "title": "This cycle established, in `NormalizationSimplexFunctor.lean`, that marginalizat"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4263,7 +4247,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a747a0a8",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -4273,7 +4257,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
