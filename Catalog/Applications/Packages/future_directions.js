@@ -778,7 +778,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Universal Approximation: Quantitative Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1cb884c9",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domains": [
       "Tropical",
@@ -789,7 +789,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -3197,7 +3197,7 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The paper proves Frankl, Kiselev, and Kupavskii's conjecture that for any intersecting family \\(\\mathcal{F}\\subseteq\\binom{[n]}{k}\\) with \\(n\\ge 60k^{3/2}\\) and \\(k\\ge 50\\), the size of the symmetric difference family satisfies \\(|\\mathcal{SD}(\\mathcal{F})|\\le\\sum_{\\ell=0}^{k-1}\\binom{n-1}{2\\ell}\\), with equality only for a specific class of stars. The proof relies on a concentration inequality and structural arguments on intersecting families.",
+    "description": "For any positive integer d and any planar graph H, the class of all K_{1,d}-free graphs without H as an induced minor has bounded tree-independence number. This conjecture generalizes the main result of Dallard et al. [2024], which proves it for outerstring graphs, to all planar graphs H.",
     "domains": [
       "Pythagorean",
       "Algebra"
@@ -3205,10 +3205,39 @@ window.FUTURE_DIRECTIONS = [
     "id": "fd_2188",
     "priority_score": 0.8,
     "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-21T20:17:03.261509+00:00",
+    "title": "Dallard's Conjecture for Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves Frankl, Kiselev, and Kupavskii's conjecture that for any intersecting family \\(\\mathcal{F}\\subseteq\\binom{[n]}{k}\\) with \\(n\\ge 60k^{3/2}\\) and \\(k\\ge 50\\), the size of the symmetric difference family satisfies \\(|\\mathcal{SD}(\\mathcal{F})|\\le\\sum_{\\ell=0}^{k-1}\\binom{n-1}{2\\ell}\\), with equality only for a specific class of stars. The proof relies on a concentration inequality and structural arguments on intersecting families.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2189",
+    "priority_score": 0.8,
+    "research_mode": "team",
     "source_exp_id": "2606.20043v1",
     "status": "available",
     "timestamp": "2026-06-21T19:25:57.384356+00:00",
     "title": "Improved bound on symmetric differences of intersecting families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This work extends the stability results of the Erd\u0151s\u2013Ko\u2013Rado theorem to the setting of cross-intersecting families, characterizing extremal families via diversity constraints and providing a shift-based tool for construction.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2190",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-21T20:17:16.324331+00:00",
+    "title": "Structural theorem for large cross-intersecting families"
   },
   {
     "consumed_by_exp_id": "",
@@ -3442,7 +3471,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the Phase A cycle that produced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6c114ef",
     "description": "# Future Directions \u2014 Functorial Tropical\u2013Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max \u2264 lse2 \u2264 max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv\u00b2 lse2 = bernVar \u2218 softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) \u21a6 ((a/c)\u00b2, (b/c)\u00b2)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p\u2212q)\u00b2 + 4\u00b7Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem \u2026 := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log \u2211\u2c7c exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n\u2202\u00b2/\u2202w\u1d62\u2202w\u2c7c lse w = (if i = j then softmax w i \u00b7 (1 - softmax w i)\n                    else - softmax w i \u00b7 softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p \u2208 (0,1)` there exist `a,b,c > 0` with `a\u00b2 + b\u00b2 = c\u00b2`, `(a/c)\u00b2 = p`. Concretely\n`a = \u221ap\u00b7c`, `b = \u221a(1\u2212p)\u00b7c`. Moreover the induced standard deviation satisfies\n`\u03c3 = |ab|/c\u00b2 = \u221a(p(1\u2212p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c\u00b2` of the right triangle**.\n**Test.** Prove surjectivity of `p \u21a6` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-\u03c3 proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h \u00b7 log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h \u21a6 lseT h a b` is monotone non-decreasing, `lseT h a b \u2192 max a b`\nas `h \u2192 0\u207a`, and the *Gibbs entropy gap* `lseT h a b \u2212 max a b \u2208 [0, h\u00b7log 2]`.\n**Test.** Prove the sandwich `max a b \u2264 lseT h a b \u2264 max a b + h\u00b7log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the \u03c7\u00b2 / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)\u00b2`, the polarization leg `p \u2212 q` equals\nthe (signed) \u03c7\u00b2-type discrepancy from the uniform law `(\u00bd,\u00bd)`:\n`(p \u2212 \u00bd)\u00b2 + (q \u2212 \u00bd)\u00b2 = \u00bd\u00b7(p \u2212 q)\u00b2 = \u00bd\u00b7(1 \u2212 4\u00b7Var)`. Hence **maximal Bernoulli\nvariance \u21d4 minimal \u03c7\u00b2-distance to uniform \u21d4 the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,\u221a2)`.\n**Test.** Prove the \u03c7\u00b2 identity and that `Var` is maximized exactly when\n`(a/c)\u00b2 = (b/c)\u00b2`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based R\u00e9nyi/Tsallis entropy and show the leg `p\u2212q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `\u211d`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`\u211d\u02e3`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log\u2218(\u00b7)\u00b2 : (Pythagorean triples / dilation) \u27f9\n(log-coordinates / shift)` making the triangle\n`softmax \u2218 (log \u2218 sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction \u211d` and `MulAction \u211d\u02e3`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
     "domains": [
       "Tropical",
@@ -3452,7 +3481,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3b102b1d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T13:27:48.242946+00:00",
     "title": "*normalization functor into the probability simplex*"
   },
@@ -4145,36 +4174,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 EML Universal Approximation & Shallow Rates\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle\n(`EML/SoftplusRate.lean`, `EML/ShallowDensity.lean`, building on\n`EML/StoneWeierstrassApprox.lean`).\n\n## Conjecture 1 \u2014 Sharp depth-vs-rate law for softplus towers\nA depth-`d` EML tower built by iterating the softplus unit (each layer steepness\n`\u03b2\u1d62`) approximates the `d`-fold ReLU composition with uniform error exactly\n`\u03a3\u1d62 L\u1d62 \u00b7 log2/\u03b2\u1d62`, where `L\u1d62` is the product of downstream Lipschitz constants \u2014\nand the leading constant `log 2` cannot be reduced at any layer.\n- **The key insight is** that the per-layer gap is *uniform in the input* and\n  attained at the kink `x=0`, so layerwise worst cases telescope additively\n  through the Lipschitz constants rather than compounding multiplicatively.\n- **Why now?** This cycle proved the single-layer sharp constant\n  (`abs_softplus_sub_relu_le`, sharp at `x=0`) and the catalog already has the\n  telescoping machinery (`EML.DeepComposition.deep_approx_sum`); composing the\n  two is the immediate next step.\n\n## Conjecture 2 \u2014 Width\u2013accuracy tradeoff for Lipschitz targets\nEvery `L`-Lipschitz `f : [0,1] \u2192 \u211d` is approximated to uniform error `\u03b5` by a\nshallow softplus (EML) network of width `N = \u2308L/\u03b5\u2309` and steepness\n`\u03b2 = \u0398(N \u00b7 log 2 / \u03b5)`, giving total error `\u2264 2\u03b5` with an explicit constant.\n- **The key insight is** that CPWL interpolation on a uniform `N`-grid gives\n  error `L/N` using `N` ReLU units, and `shallow_approx` converts each ReLU into\n  an EML softplus unit at the additive cost `(\u03a3|c\u1d62|)\u00b7log2/\u03b2`, so balancing the\n  two error sources fixes both `N` and `\u03b2`.\n- **Why now?** `shallow_approx` and `shallow_eml_uniform_approx` already give the\n  ReLU\u2192EML conversion with explicit constants; only the CPWL-interpolation error\n  bound remains to be formalized.\n\n## Conjecture 3 \u2014 Single-generator density is generic, parity is the only obstruction\nFor a continuous `g : [0,1] \u2192 \u211d`, the subalgebra `adjoin \u211d {g}` is dense in\n`C([0,1],\u211d)` **iff** `g` is injective; for non-injective `g`, the closure is\nexactly the algebra of functions constant on the level sets of `g`.\n- **The key insight is** that `eml_single_generator_separatesPoints` shows\n  injectivity \u21d2 density, and the converse should follow because any two points in\n  a common level set of `g` can never be separated by polynomials in `g`.\n- **Why now?** This cycle established the forward direction\n  (`eml_single_generator_dense`) and the catalog's\n  `factorsThrough_eq_top_of_injective` supplies the level-set/pullback language\n  needed for the converse.\n\n## Conjecture 4 \u2014 Exponential-class spectral approximation rate\nApproximating analytic `f` on `[0,1]` by `span{1, e^x, \u2026, e^{kx}}` achieves\ngeometric error decay `O(\u03c1^{-k})` for some `\u03c1 > 1` depending on the width of the\nanalyticity strip of `f`, strictly faster than the algebraic `O(k^{-s})` rate of\npolynomial approximation for `C\u02e2` targets.\n- **The key insight is** that `{e^{jx}}` is a Chebyshev/M\u00fcntz-type system whose\n  exponential nodes cluster the approximation power where analytic functions are\n  smooth, so the EML basis inherits spectral (geometric) convergence.\n- **Why now?** `exp_subalgebra_dense_on_Icc` proves qualitative density of exactly\n  this class, and the numerical evidence in `ComputationalEvidence.md` already\n  shows order-of-magnitude residual drops per added `exp`-power.\n\n## Conjecture 5 \u2014 No shallow EML network beats O(1/\u03b2) in sup norm at a kink\nAny finite shallow EML network that is `C\u00b9` (which `exp`/`log` compositions are)\ncannot approximate a function with a true corner to uniform error `o(1/\u03b2)` where\n`\u03b2` is the maximal internal steepness; the `log 2` lower bound from a single unit\nis the fundamental smoothing barrier.\n- **The key insight is** that smoothness forces a minimum \"rounding\" of any kink,\n  and this cycle showed that rounding is at least `log2/\u03b2` for the softplus unit\n  and sharp there.\n- **Why now?** The sharpness half of `abs_softplus_sub_relu_le` (equality at\n  `x=0`) is exactly the seed of a matching lower bound; turning it into a network\n  impossibility result is the natural adversarial follow-up.\n",
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_2189",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5ef4c190",
-    "status": "available",
-    "timestamp": "2026-06-21T20:11:36.817069+00:00",
-    "title": "Derived from the Stage-3 analysis and Stage-4 critique of this research cycle"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Quantum Thermodynamics / Landauer at the Nanoscale\n\nDerived from this cycle's findings (`Physics.LandauerSecondLaw`,\n`Physics.LandauerThermodynamicLimit`, building on `Logic.JarzynskiLandauer` and\n`Computation.LandauerLowerBound`). Each conjecture is bold, falsifiable, and stated\nso a future cycle can attack it directly in Lean 4.\n\n## FD1. Tightness / saturation theorem: `E[W] = \u0394F \u2194 zero work fluctuations`\n**Conjecture.** For `\u03b1 > 0` and a Jarzynski process, the Landauer bound is saturated\n(`E[W] = \u0394F`) **iff** the work `W` is `p`-almost-surely constant on the support of `p`.\n**The key insight is** that the only place the proof loses tightness is the pointwise\ngap `exp x - (1 + x)`, which is `0` exactly at `x = 0`; so equality in\n`work_fluctuation_ge_one` forces every centred fluctuation to vanish.\n**Why now?** We already isolated the bound as a sum of nonnegative terms\n`p \u03c9 \u00b7 (exp(g \u03c9) \u2212 1 \u2212 g \u03c9)`; the equality case is the standard \"sum of nonnegatives is\nzero\" lemma applied termwise, well within reach of the current toolchain.\n\n## FD2. Second-order (Gaussian) finite-size correction `E[W] = \u0394F + (\u03b1/2)\u00b7Var(W) + O(\u03b1\u00b2)`\n**Conjecture.** In the near-equilibrium regime the Jarzynski correction admits the\nexpansion `\u03b1\u207b\u00b9 log E[exp(\u2212\u03b1(W\u2212E[W]))] = (\u03b1/2)\u00b7Var_p(W) + o(\u03b1)`, giving the leading\nfinite-size Landauer surcharge `\u2248 (\u03b1/2)\u00b7Var(W)` above `kT log 2`.\n**The key insight is** that the cumulant generating function of a mean-zero variable has\nvanishing first cumulant and second cumulant equal to the variance, so the `log E[exp]`\nterm is variance-dominated at small inverse temperature.\n**Why now?** We have `expect`, `IsPMF`, and the exact identity in place; the missing\npiece is a finite Taylor bound on `exp`, for which Mathlib's `Real.exp` analytic API\n(e.g. `Real.add_one_le_exp` upgraded to a quadratic two-sided bound) suffices.\n\n## FD3. Quantum (von Neumann) Landauer bound via Holevo\n**Conjecture.** Replacing Shannon entropy by von Neumann entropy\n(`Physics.QuantumInfo.VonNeumannEntropy`), erasing a qubit dissipates at least\n`kT log 2`, with the data-processing inequality for the Holevo quantity\n(`Physics.HolevoCapacity`) replacing the classical pushforward bound of\n`Computation.LandauerLowerBound`.\n**The key insight is** that classical `H(f\u2217p) \u2264 H(p)` is the diagonal restriction of\nquantum monotonicity of relative entropy; the Holevo bound `\u03c7 \u2264 log dim` is the same\ninequality the catalog already proves for ensembles.\n**Why now?** The catalog now contains both the classical Landauer DPI *and* the Holevo\ncapacity bound; bridging them is a concrete cross-domain unification, not new analysis.\n\n## FD4. Strict-positivity dichotomy: non-injectivity \u21d4 positive minimal dissipation\n**Conjecture.** For a deterministic map `f : \u03b1 \u2192 \u03b2` and full-support `p`, the minimal\nLandauer cost `kT\u00b7(H(p) \u2212 H(f\u2217p))` is `> 0` **iff** `f` is not injective on the support.\n**The key insight is** that the entropy gap is a sum of terms `p x\u00b7log(f\u2217p(fx)/p x) \u2265 0`\nthat is strictly positive exactly when some fiber is non-trivial, i.e. when two inputs\ncollapse \u2014 logical irreversibility is *equivalent* to thermodynamic irreversibility.\n**Why now?** `Computation.LandauerLowerBound` already gives the `\u2265 0` inequality and the\ninjective equality case; only the strict converse remains, a `by_contra` + single\nnon-trivial fiber argument.\n\n## FD5. Erasure-cost superadditivity under correlated registers\n**Conjecture.** For two (possibly correlated) registers `X, Y`, the joint erasure cost is\nat least `kT\u00b7H(X,Y)` and at most the sum of marginal costs, with the gap equal to\n`kT\u00b7I(X;Y)` (mutual information) \u2014 correlations *reduce* total erasure cost.\n**The key insight is** that `H(X,Y) = H(X) + H(Y) \u2212 I(X;Y)`, so the Landauer ledger\ninherits the subadditivity of Shannon entropy exactly.\n**Why now?** The uniform/product-entropy machinery (`entropy_uniform_pow_two`) is the\nindependent special case `I = 0`; the general bound needs only Mathlib's finite\nsubadditivity of entropy, a natural next lemma to formalize.\n",
-    "domains": [
-      "Physics",
-      "Bridges"
-    ],
-    "id": "fd_2190",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ddfbd83f",
-    "status": "available",
-    "timestamp": "2026-06-21T20:13:22.962891+00:00",
-    "title": "Derived from this cycle's findings (`Physics.LandauerSecondLaw`,"
   },
   {
     "consumed_by_exp_id": "",
