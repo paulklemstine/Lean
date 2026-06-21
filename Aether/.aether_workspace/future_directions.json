@@ -45298,7 +45298,7 @@
       "depth_estimate": 3,
       "description": "Cycle 2ec4044e (Q=0.553) proved 7 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Restrict the project to a single self-contained formalization file that completes the finite counting toolkit for binary codes as `Finset (Fin n → ZMod 2)` and stops before any ambitious convolution t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],

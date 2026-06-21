@@ -2131,20 +2131,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality of Embracing Exchange Distance and Polyhedral Graph Distance"
   },
   {
-    "consumed_by_exp_id": "5ab82683",
-    "description": "For a tree graph \u0393, the Fitting ideal I_\u0393 is a complete intersection ideal in the polynomial ring k[x_1,...,x_n].",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2110",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19006v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T09:43:51.444927+00:00",
-    "title": "Complete intersectionproperty of Fitting ideals for tree graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every positive integer q and natural number n, let P(n,q) denote the probability that the Random player wins the q-game. We conjecture that P(n,q) satisfies the recurrence relation: P(n,q) = 1/n + (1/n) * \u03a3_{k=q+1}^n P(n\u2212k, q), with base case P(0,q) = 0. This recurrence captures the probabilistic structure of the game coupled to random permutations' cycle decompositions.",
     "domains": [
@@ -3678,6 +3664,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-20T23:51:15.696780+00:00",
     "title": "These directions extend the verified Euler-activation core in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Library of Babel: Catalogs & Incompressibility\n\nDerived from this cycle's verified results\n(`BabelDiagonalCatalog.lean`, `BabelDeBruijnCatalog.lean`,\n`BabelIncompressibility.lean`). Each conjecture is bold, falsifiable, and stated\nso a future cycle can attempt a Lean proof or a concrete counterexample.\n\n---\n\n## FD-1. Polynomial-time *constructive* distributed catalog.\n**Conjecture.** Whenever the threshold `2^(b^L) \u2264 b^(L\u00b7N)` of\n`distributed_catalog_iff` holds, an explicit injective encoding\n`Finset (Volume b L) \u21aa (Fin N \u2192 Volume b L)` can be produced by an algorithm\nwhose running time is polynomial in the *output size* `N\u00b7L\u00b7log b` (not in `b^L`).\n\n*The key insight is...* that the existence proof currently routes through\n`Embedding.nonempty_iff_card_le`, which is non-constructive; but a *bit-packing*\nencoder (write the characteristic bitvector of a sub-collection across the `N\u00b7L`\nsymbol slots base-`b`) is explicit and local, so the same cardinality inequality\nshould be witnessed by a uniformly computable map.\n\n*Why now?* We have proved the exact threshold; the only missing piece is replacing\nthe abstract embedding with a verified `def`, which Lean's `Nat`-digit API\n(`Nat.digits`, `Nat.ofDigits`) now makes tractable.\n\n---\n\n## FD-2. de Bruijn catalogs are *optimal and essentially unique up to symmetry*.\n**Conjecture.** For every `k, n` a single catalog volume of length `k^n` over `k`\nsymbols cataloging all `k^n` length-`n` addresses exists (a `B(k,n)` de Bruijn\nword), and no shorter volume can; moreover the number of such catalogs is\n`(k!)^{k^{n-1}} / k^n`.\n\n*The key insight is...* that cataloging-by-windows is an Eulerian circuit on the\nde Bruijn graph (complete digraph with loops), so existence is Euler's theorem and\nthe count is the BEST-theorem (de Bruijn\u2013van Aardenne-Ehrenfest\u2013Smith\u2013Tutte).\n\n*Why now?* `BabelDeBruijnCatalog.lean` proves the `k=4, n=2` witness via a\nbijection; generalizing needs an Eulerian-circuit existence lemma \u2014 a clean,\nhigh-value addition currently absent from Mathlib.\n\n---\n\n## FD-3. Strict-majority incompressibility with an explicit fraction.\n**Conjecture.** For `b \u2265 2` the number of length-`L` volumes admitting *no*\nshorter code is exactly `b^L \u2212 \u2211_{i<L} b^i`, and this is at least\n`b^L \u00b7 (1 \u2212 1/(b\u22121))` for `b \u2265 3`; hence as `b \u2192 \u221e` almost every volume is\nincompressible.\n\n*The key insight is...* that `geom_sum_lt` already gives `\u2211_{i<L} b^i \u2264 (b^L\u22121)/(b\u22121)`,\nso the incompressible count is squeezed between `b^L \u2212 (b^L\u22121)/(b\u22121)` and `b^L`,\nturning a pigeonhole existence statement into a density statement.\n\n*Why now?* The strict counting bound is formalized; upgrading from \"\u2203 one\nincompressible volume\" to \"a measured majority\" is a finite-sum estimate the\nsubagent handles well.\n\n---\n\n## FD-4. Catalog-of-catalogs hierarchy collapses by one Cantor step.\n**Conjecture.** Iterating \"catalog the sub-collections\" `Set^k (Volume)` requires\nstorage that is a `k`-fold iterated exponential of `b^L`; consequently the number\nof volumes needed to catalog level `k+1` is super-exponentially larger than for\nlevel `k`, and *no finite library of fixed-length volumes* is closed under taking\nits own complete sub-collection catalog.\n\n*The key insight is...* `no_single_complete_catalog` is the base case of a Cantor\ntower `card X < card (Set X)`, and each level multiplies the required distributed\nsize by the previous level's cardinality.\n\n*Why now?* The base diagonal step is proved; the inductive tower is a direct\n`Nat`-iteration over `Fintype.card_finset` that reuses the existing lemmas.\n\n---\n\n## FD-5. Incompressibility \u21d2 unconditional search lower bound (P-vs-NP adjacent).\n**Conjecture.** Any algorithm that, given a length-`L` volume, certifies \"this\nvolume is the incompressible witness\" must in the worst case read `\u03a9(L)` symbols;\nmore boldly, the incompressibility method formalized here yields an unconditional\n`\u03a9(n)` lower bound for a concrete decision problem over the library alphabet.\n\n*The key insight is...* incompressible objects cannot be recognized by a\ndescription shorter than themselves (that is the content of\n`no_injective_compressor`), so any sub-linear certifier would itself be a short\ndescription \u2014 a contradiction.\n\n*Why now?* `no_lossless_compressor` gives the counting core of the\nincompressibility method in Lean for the first time in this catalog; phrasing a\nquery-complexity adversary on top is the natural next experiment and a genuine\n(if small) brick in the complexity-lower-bound / P-vs-NP program.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_2161",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "97399ed6",
+    "status": "available",
+    "timestamp": "2026-06-21T00:35:57.693233+00:00",
+    "title": "Derived from this cycle's verified results"
   },
   {
     "consumed_by_exp_id": "",

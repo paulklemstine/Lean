@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "97399ed6",
     "filename": "the_library_of_babel_combinatorics_of_the_universa.json",
     "pkg_num": 215,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.71035,
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
@@ -6570,8 +6570,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_library_of_babel_combinatorics_of_the_universa",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.71035,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
