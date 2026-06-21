@@ -229,11 +229,11 @@ def main():
             # Save merged canonical
             canonical_path.write_text(json.dumps(merged_data, indent=2, sort_keys=True), encoding="utf-8")
             total_modified += 1
-            # Delete duplicates
+            # Delete duplicates - DISABLED per user request
             for p in to_delete:
-                p.unlink()
-                total_deleted += 1
-                print(f"  Deleted: {p.name}")
+                # p.unlink()
+                # total_deleted += 1
+                print(f"  [Disabled] Would have deleted: {p.name}")
         else:
             print(f"  [Dry-Run] Would write merged data to {canonical_path.name}")
             for p in to_delete:

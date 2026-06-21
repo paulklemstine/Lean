@@ -1351,7 +1351,7 @@ def rebuild_commit_push() -> bool:
     try:
         docs_dir.mkdir(parents=True, exist_ok=True)
         result = subprocess.run(
-            ["rsync", "-a", "--delete", "--info=NAME", str(PACKAGES_DIR) + "/", str(docs_dir) + "/"],
+            ["rsync", "-a", "--info=NAME", str(PACKAGES_DIR) + "/", str(docs_dir) + "/"],
             capture_output=True, text=True, timeout=60
         )
         if result.returncode != 0:
