@@ -1,191 +1,208 @@
-# Six Friends, One Guarantee: The Hidden Order Inside Every Crowd
+# Six Friends, a Pentagon, and the Unavoidable Pattern
 
-## A party trick that never fails
+## A party trick that became a theorem
 
-Invite six people to a party. Look at every pair among them and ask a single
-question: do these two already know each other, or are they strangers? Color the
-link between every pair of guests **red** if they are acquaintances and **blue**
-if they are strangers. You now have a tangle of fifteen colored links crisscrossing
-the room.
+Invite six people to a party. Any two of them either already know each other or
+they don't — there is no in-between. Now make the following claim, which sounds
+far too strong to be true:
 
-Here is a claim that sounds far too strong to be true: no matter who you invited,
-no matter how the friendships happen to fall, somewhere in that room there are
-**three people who are all mutual acquaintances, or three people who are all mutual
-strangers**. A monochromatic triangle is unavoidable. You cannot design a guest
-list to dodge it.
+> Among any six people, there are always three who all know each other, **or**
+> three who are all mutual strangers.
 
-Try it with five people and you *can* dodge it. With six, you never can. That sharp
-jump from "possible to avoid" to "impossible to avoid" is the smallest visible
-crack of one of the most beautiful ideas in modern mathematics: **complete disorder
-is impossible**. This is Ramsey theory, and this article is about a fully verified,
-machine-checked account of its first landmark facts — including the exact statement
-that six is the magic number, and a clean, general bound that controls how the magic
-number grows as we ask for larger and larger monochromatic groups.
+You cannot escape this. You can arrange the acquaintances however you like —
+make it lopsided, make it sparse, make it weird — and somewhere inside the group
+of six a perfectly uniform trio will always appear. With five people you *can*
+slip free; with six you never can. That single jump, from "sometimes avoidable"
+to "always unavoidable", is the smallest nontrivial fact in a field called
+**Ramsey theory**, and it captures the whole spirit of the subject:
 
-## Turning a party into a graph
+> **Complete disorder is impossible.** Make any structure big enough and
+> pockets of order are forced to appear, whether you want them or not.
 
-To reason carefully, mathematicians replace the party with a **complete graph**. Put
-a dot (a *vertex*) for each guest, and draw a line (an *edge*) between every pair of
-dots. A two-coloring paints each edge red or blue. A set of vertices where *all*
-internal edges share the same color is called a **monochromatic clique**: a red
-clique is a group of mutual acquaintances, a blue clique a group of mutual strangers.
+This article is about turning that slogan into exact, fully proved mathematics.
+We will pin down the precise tipping point for the party problem — it is exactly
+six — meet a beautifully stubborn five-person configuration shaped like a
+pentagon that shows five is not enough, and then climb to a general counting
+bound that controls *every* such problem at once.
 
-The central object of the whole theory is a relation that combinatorialists write
-compactly as
-$$ n \to (s, t). $$
-Read it aloud as: "$n$ arrows $(s,t)$." It means that *every* red/blue coloring of a
-complete graph on at least $n$ vertices is forced to contain a red clique of size $s$
-**or** a blue clique of size $t$. There is no escape coloring.
+## Drawing the problem
 
-In the verified development, this is captured by a predicate `Arrows n s t`. Crucially,
-it is stated not just for one fixed graph but for *any* vertex set $W$ with at least
-$n$ vertices: for every coloring $G$ (the red edges) of $W$, there is either a red
-$s$-clique inside $W$ or a blue $t$-clique inside $W$ (a blue clique being a clique in
-the complement coloring $G^{c}$). Phrasing it over arbitrary vertex sets bakes in a
-small but vital fact for free: if the guarantee holds at threshold $n$, it still holds
-for any larger crowd $n' \ge n$. More people can only make a forced pattern *more*
-forced, never less. This monotonicity — `Arrows.mono` in the formal text — is the
-quiet backbone of everything that follows.
+The clean way to think about the party is with dots and lines. Draw one dot for
+each person. For every pair of people draw a line between their dots, and colour
+that line **red** if the two know each other and **blue** if they are strangers.
+A party of $n$ people becomes a complete network on $n$ dots in which every line
+wears one of two colours.
 
-## The number that started it all
+Now the claim translates perfectly. "Three mutual acquaintances" is a red
+triangle: three dots with all three connecting lines red. "Three mutual
+strangers" is a blue triangle. The party theorem says: **colour the ten lines
+among six dots any way you like, and you will always create a red triangle or a
+blue triangle.**
 
-Define the **Ramsey number** $R(s,t)$ to be the smallest crowd size $n$ for which the
-guarantee $n \to (s,t)$ holds. By definition it is the exact tipping point: at
-$R(s,t)$ guests a monochromatic red-$s$ or blue-$t$ group is unavoidable, and at one
-fewer guest you can still arrange the colors to avoid both.
+Mathematicians write this kind of guarantee with an arrow. The statement
+$$ n \to (s, t) $$
+means: *however you two-colour the network on $n$ dots, you are forced to create
+either a red clique of size $s$ — a group of $s$ dots all joined in red — or a
+blue clique of size $t$.* (A "clique" is just a fully connected group; a triangle
+is a clique of size $3$.) The party theorem is exactly
+$$ 6 \to (3, 3). $$
 
-The party puzzle is the assertion
-$$ R(3,3) = 6, $$
-and proving it cleanly requires two completely different kinds of argument, like
-proving a high jump record requires both clearing the bar once and showing nobody
-ever cleared it higher.
+The smallest $n$ that works is called the **Ramsey number** $R(s, t)$. So the
+party problem is the assertion that $R(3,3) = 6$: six is enough, and — as we will
+see — five is not.
 
-## Why six always works
+## Why six is enough
 
-The "six is enough" half is a small marvel of pigeonhole reasoning. Pick any one
-guest — call her Alice. Alice has five links to the other five people, each red or
-blue. Five links in two colors: by the pigeonhole principle at least three of them
-share a color. Say three are red, connecting Alice to Bob, Carol, and Dave.
+Here is the argument, and it is short enough to do at the party.
 
-Now look only at the triangle Bob–Carol–Dave. If *any* edge among them is red — say
-Bob–Carol — then Alice, Bob, Carol form a red triangle and we are done. If *none* of
-their three edges is red, then Bob, Carol, Dave form a blue triangle and we are done.
-Either way a monochromatic triangle appears. (If the three same-colored links from
-Alice were blue instead of red, swap the words and the identical argument works.)
+Pick any one person; call her Alice. Alice has five relationships with the other
+five guests, each red or blue. Five things in two colour-boxes means one box
+holds at least three of them. Say at least three of Alice's lines are red, going
+to guests $X$, $Y$, $Z$ (the blue case is identical with the colours swapped).
 
-This little case split is exactly the shape of the general engine that drives the
-whole theory, which we meet next.
+Now look only at the trio $X, Y, Z$.
 
-## The recursion that tames every Ramsey number
+- If *any* line among them is red — say $X$–$Y$ — then Alice, $X$ and $Y$ form a
+  red triangle, because Alice–$X$ and Alice–$Y$ are red and now $X$–$Y$ is too.
+- If *no* line among them is red, then all three lines $X$–$Y$, $Y$–$Z$, $X$–$Z$
+  are blue, and $X, Y, Z$ form a blue triangle.
 
-The genius of Frank Ramsey's successors Paul Erdős and George Szekeres was to see the
-Alice argument as a *recursion*. Suppose you already know two facts about smaller
-problems:
-$$ m \to (s, t+1) \qquad \text{and} \qquad n \to (s+1, t). $$
-Then they proved the combined guarantee
-$$ (m + n) \to (s+1, t+1). $$
-
-The proof is the Alice argument grown up. Take any coloring of a crowd of at least
-$m+n$ people and single out one vertex $v$. Split everyone else into the people joined
-to $v$ by a **red** edge (call them $R$) and those joined by a **blue** edge (call them
-$B$). Together $R$ and $B$ account for all the remaining $m+n-1$ vertices, so by
-pigeonhole either $|R| \ge m$ or $|B| \ge n$.
-
-Suppose $|R| \ge m$. Apply the first guarantee $m \to (s, t+1)$ inside $R$. It hands us
-either a blue $(t+1)$-clique — which already lives in the full graph, so we are finished
-— or a red $s$-clique. But every vertex in $R$ is joined to $v$ in red, so gluing $v$
-onto that red $s$-clique produces a red $(s+1)$-clique. The case $|B| \ge n$ is the
-mirror image, building a blue $(t+1)$-clique by attaching $v$. This is the formally
-verified lemma `arrows_step`, and it is the heart of the machine.
-
-To kick the recursion off you need the simplest possible facts, the base cases. A
-single person is, all by themselves, a "group of mutual acquaintances of size one" and
-also a "group of mutual strangers of size one." Formally, one vertex is both a red
-$1$-clique and a blue $1$-clique, giving
-$$ 1 \to (1, t) \quad\text{and}\quad 1 \to (s, 1) $$
-for all $s$ and $t$ — the lemmas `arrows_one_red` and `arrows_one_blue`.
-
-## A clean formula for the worst case
-
-Feed the base cases into the recursion and turn the crank. The crowd sizes you need
-add up exactly the way binomial coefficients do — through **Pascal's rule**
-$\binom{s+t}{s} = \binom{s+t-1}{s-1} + \binom{s+t-1}{s}$, the same rule that builds
-Pascal's triangle one row from the row above. The payoff is a single, gorgeous,
-fully verified bound:
-$$ \binom{s+t}{s} \to (s+1,\, t+1), \qquad \text{equivalently} \qquad R(s+1, t+1) \le \binom{s+t}{s}. $$
-
-In its more familiar shifted form this is the celebrated **Erdős–Szekeres bound**
-$$ R(s, t) \le \binom{s+t-2}{s-1}. $$
-
-This one inequality controls *every* Ramsey number at once. Want six mutual friends or
-six mutual strangers? The bound tells you a finite party size always suffices, and
-hands you an explicit ceiling. In the verified text this is the theorem
-`arrows_recursion`, restated as `arrows_binomial_bound`.
-
-It also instantly resolves the easy half of the party puzzle. Plug in $s = t = 2$:
-$$ R(3,3) \le \binom{4}{2} = 6. $$
-Six guests always force a monochromatic triangle — the theorem `arrows_three_three`,
-which is literally this special case of the general bound. The hand-tailored "Alice
-has five edges" argument and the industrial recursion give the same number, and the
-machine confirms both.
+Either way a monochromatic triangle appears. Six is enough. In our formal
+development this is the theorem `arrows_three_three`, stating exactly
+$6 \to (3,3)$.
 
 ## Why five is not enough: the pentagon
 
-A bound only tells half the story. To pin $R(3,3)$ to *exactly* six, we must show five
-guests can still escape — that there is a coloring of the complete graph on five
-vertices with no red triangle and no blue triangle. The witness is one of the most
-elegant objects in combinatorics: the **pentagon**.
+To prove that six is the *true* threshold, we must exhibit a five-person party
+with **no** monochromatic triangle. The witness is one of the most elegant small
+objects in combinatorics: the **pentagon**.
 
-Arrange five vertices in a circle, labeled $0,1,2,3,4$. Color an edge **red** exactly
-when its endpoints are neighbors around the cycle — $0\!-\!1$, $1\!-\!2$, $2\!-\!3$,
-$3\!-\!4$, $4\!-\!0$. These five red edges form a perfect five-pointed ring, the cycle
-$C_5$ (the formal definition `pentagon`). The remaining five edges — the ones joining
-vertices two steps apart, like $0\!-\!2$ — are **blue**, and they trace out a five-pointed
-star. Remarkably, that star is *itself* another pentagon.
+Seat five people at a round table. Make each person know only their two
+immediate neighbours (those edges are red); every other pair are strangers
+(blue). The red edges form a five-pointed cycle — a pentagon. Now check:
 
-Now hunt for a monochromatic triangle. A red triangle would need three pairwise-adjacent
-points on a five-cycle, but a cycle of length five contains no triangle at all — pick any
-three of its vertices and at least one pair is not adjacent. So there is no red triangle.
-By the perfect symmetry between the cycle and its star-shaped complement, there is no
-blue triangle either. Both facts are checked exhaustively and certified: the theorems
-`pentagon_no_triangle` and `pentagon_compl_no_triangle`. Together they prove
-`not_arrows_five_three_three`: the guarantee $5 \to (3,3)$ is **false**, so $R(3,3) > 5$.
+- **No red triangle.** A red triangle would need three people who are pairwise
+  neighbours around the table, but a five-cycle has no such trio; its edges only
+  ever connect adjacent seats.
+- **No blue triangle.** The blue edges connect each person to the two people who
+  are *not* their neighbours. Remarkably, those blue edges also form a single
+  five-cycle (the "pentagram" you get by connecting every other vertex), so by
+  the same reasoning there is no blue triangle either.
 
-Squeeze the two halves together — $R(3,3) \le 6$ from the bound and $R(3,3) > 5$ from
-the pentagon — and the tipping point is nailed down with no wiggle room:
-$$ R(3,3) = 6. $$
+The pentagon is *self-complementary*: swap red and blue and you get back a
+pentagon. This perfect symmetry is exactly why it dodges both colours at once. In
+the formal development the two checks are `pentagon_no_triangle` and
+`pentagon_compl_no_triangle`, and together they give `not_arrows_five_three_three`:
+the statement that $5 \not\to (3,3)$.
 
-## How big do these numbers get?
+Combining the two halves yields the headline result, named `ramsey_three_three`:
+$$ R(3,3) = 6, \qquad\text{i.e.}\qquad 6 \to (3,3) \ \text{ but }\ 5 \not\to (3,3). $$
 
-Once you accept that the magic number always exists, the natural question is how fast it
-grows. Here the story turns humbling. The Erdős–Szekeres bound shows $R(s,s)$ grows at
-most like roughly $4^s$. Erdős later showed, by a now-legendary probabilistic argument,
-that it grows at least like roughly $2^{s/2}$: a random coloring almost never contains a
-large monochromatic clique. So $R(s,s)$ lives somewhere between $2^{s/2}$ and $4^s$ — and
-closing that exponential gap has resisted the world's best mathematicians for ninety
-years. Only a handful of exact values are known at all. Beyond $R(3,3)=6$ come
-$R(3,4)=9$, $R(4,4)=18$, and then a wall: $R(5,5)$ is unknown to this day, pinned only
-between 43 and 48. Erdős's famous quip captures the difficulty — if aliens demanded the
-value of $R(5,5)$ or they would destroy Earth, we should marshal all our computers to
-find it; but if they asked for $R(6,6)$, we had better prepare for war.
+A clean, two-sided, exactly determined fact: six always works, five sometimes
+fails.
 
-What is verified here is the bedrock on which all of that rests: the recursion, the
-binomial ceiling that bounds every Ramsey number, and the exact, two-sided determination
-of the very first one. Each step — the monotonicity, the inductive gluing of a vertex
-onto a smaller clique, the Pascal-rule bookkeeping, and the exhaustive pentagon check —
-is a theorem with a complete, machine-checked proof.
+## The simplest infinite family: $R(2, t) = t$
 
-## Order out of chaos
+Triangles are the size-$3$ case. What if a "red clique" only needs size $2$ — a
+single red edge? Then the question becomes: how many dots force *either one red
+edge somewhere, or a fully blue clique of size $t$*?
 
-The lesson of Ramsey theory reaches far beyond parties. The same forced-pattern
-phenomenon explains why large datasets always contain coincidences, why any long enough
-sequence of stock movements hides a monotone run, why sufficiently large networks must
-contain tightly knit communities, and why "random-looking" structures still obey rigid
-laws at scale. The deep moral, in the words the field is built on, is that **total
-randomness is impossible**: make any structure big enough and pristine order crystallizes
-inside it whether you want it to or not.
+The answer is exactly $t$, an entire infinite family of exact Ramsey numbers we
+can prove in one stroke:
+$$ R(2, t) = t. $$
 
-That a humble party of six should be the first visible sign of so sweeping a principle is
-exactly the kind of surprise that makes mathematics worth doing — and being able to check
-every line of the argument by machine makes the surprise something we can trust
-completely.
+The reasoning is almost a tautology once you see it.
+
+- **$t$ dots are enough** (`arrows_two_t`, the statement $t \to (2,t)$). Take any
+  colouring of $t$ dots. Either there is at least one red line somewhere — and a
+  single red line *is* a red clique of size $2$, so we are done — or there is no
+  red line at all, meaning **every** line is blue. In that case the whole set of
+  $t$ dots is one giant blue clique of size $t$. Either way we win.
+- **$t-1$ dots are not enough** (`not_arrows_pred_two_t`, the statement
+  $t-1 \not\to (2,t)$). Colour every line among $t-1$ dots blue. There is no red
+  edge (so no red $2$-clique), and there are only $t-1$ dots, too few to host a
+  blue clique of size $t$. The all-blue colouring escapes.
+
+Packaged together these give `ramsey_two_t`: $R(2,t) = t$ for every $t \ge 1$.
+It is the base of the whole tower of Ramsey numbers.
+
+## One bound to rule them all: Erdős and Szekeres
+
+Computing individual Ramsey numbers by hand gets brutal fast. (To this day no
+one knows the exact value of $R(5,5)$; even $R(4,4)$ took serious work.) What
+saves the subject from despair is a single general inequality, discovered by Paul
+Erdős and George Szekeres in 1935, that bounds *every* Ramsey number at once
+using nothing more than binomial coefficients — the same $\binom{n}{k}$ that
+count card hands and Pascal's triangle entries.
+
+The bound says:
+$$ R(s+1,\, t+1) \ \le\ \binom{s+t}{s}. $$
+In arrow form this is our theorem `arrows_recursion` (restated as
+`arrows_binomial_bound`):
+$$ \binom{s+t}{s} \to (s+1,\, t+1). $$
+
+The engine behind it is a recursion of striking simplicity, captured by the
+theorem `arrows_step`:
+$$ \text{if } m \to (s,\, t+1) \ \text{ and } \ n \to (s+1,\, t), \quad\text{then}\quad m + n \to (s+1,\, t+1). $$
+
+Why does *adding* the two thresholds work? Repeat the Alice trick. In a party of
+$m + n$ people, pick a vertex $v$ and split everyone else into the red neighbours
+$R$ (joined to $v$ in red) and the blue neighbours $B$. Since
+$|R| + |B| = m + n - 1$, we must have $|R| \ge m$ or $|B| \ge n$.
+
+- If $|R| \ge m$, then because $m \to (s, t+1)$ the red group already contains a
+  blue $(t+1)$-clique (done immediately) or a red $s$-clique — and that red
+  $s$-clique, every member of which is joined to $v$ in red, grows by adding $v$
+  into a red $(s+1)$-clique.
+- If $|B| \ge n$, the mirror-image argument with $n \to (s+1, t)$ produces either
+  a red $(s+1)$-clique or a blue $t$-clique extended by $v$ to a blue
+  $(t+1)$-clique.
+
+That is the entire idea. Feed this recursion the trivial base facts that a single
+dot is by itself both a red and a blue clique of size $1$ (`arrows_one_red`,
+`arrows_one_blue`, i.e. $1 \to (1, b)$ and $1 \to (a, 1)$), and the thresholds
+add up exactly along Pascal's triangle:
+$$ \binom{s+t}{s} = \binom{s-1+t}{s-1} + \binom{s+t-1}{s}. $$
+The binomial coefficient is literally Pascal's rule bookkeeping the recursion.
+
+As an immediate corollary, plug in $s = t = 2$: since $\binom{4}{2} = 6$, the
+general bound instantly re-derives $6 \to (3,3)$ — the party theorem falls out as
+one special case of the master inequality.
+
+## A hidden symmetry
+
+There is one more elegant fact worth stating, because it cuts the work in half.
+Red and blue play perfectly interchangeable roles. If $n$ dots force a red
+$s$-clique or a blue $t$-clique, then the very same $n$ dots force a red
+$t$-clique or a blue $s$-clique — just relabel the colours. Formally this is
+`Arrows.symm`:
+$$ n \to (s, t) \quad\Longrightarrow\quad n \to (t, s), \qquad\text{hence}\qquad R(s,t) = R(t,s). $$
+The proof is a one-liner: apply the hypothesis to the colour-swapped network
+(the complement graph) and swap the colours back. This is why people only ever
+tabulate Ramsey numbers with $s \le t$; the rest of the table is a mirror.
+
+## Where the trail leads next
+
+The results above — $R(3,3) = 6$, the infinite family $R(2,t) = t$, the
+Erdős–Szekeres binomial bound, the recursion, and the colour symmetry — are the
+solid, fully verified foundation. They also point straight at the frontier.
+
+- **Nailing $R(4,4) = 18$ exactly.** The binomial bound already gives the upper
+  half. The missing piece is a clever $17$-dot colouring with no monochromatic
+  clique of size $4$ — the famous **Paley graph** on the $17$ numbers modulo
+  $17$, where two numbers are joined exactly when their difference is a perfect
+  square mod $17$. Like the pentagon, it is self-complementary, and its rigid
+  algebraic regularity (every pair of adjacent points shares exactly the right
+  number of common neighbours) replaces hopeless brute-force search.
+- **The probabilistic method.** Erdős's revolutionary idea: colour the network at
+  random and show that the *expected* number of monochromatic cliques can be made
+  less than one, proving a good colouring must exist without ever constructing
+  it. This gives the best known *lower* bounds on Ramsey numbers.
+- **Hales–Jewett.** A vast generalization that trades graphs for high-dimensional
+  grids, guaranteeing unavoidable "combinatorial lines" and underwriting much of
+  modern Ramsey theory.
+
+But the heart of the story is already complete and exact. Disorder, past a
+certain size, is simply not an available option. Six friends cannot all be
+strangers and acquaintances in a perfectly patternless way — and now we know,
+down to the last edge of a stubborn little pentagon, precisely why.
