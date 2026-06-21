@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1d465e25",
     "filename": "complexitydriven_emergence_of_spacetime_from_rando.json",
     "pkg_num": 228,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.79908,
     "title": "The Shape of Hardness: A Formal Logical Skeleton of Geometric Complexity Theory"
   },
   {
@@ -6948,8 +6948,8 @@ window.PACKAGE_GRAPH = {
       "hue": 101,
       "id": "complexitydriven_emergence_of_spacetime_from_rando",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.79908,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "The Shape of Hardness: A Formal Logical Skeleton of Geometric Complexity Theory"
     }

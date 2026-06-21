@@ -2205,6 +2205,79 @@ class PiAgentClient:
             in the Lab Notes, how a specific signal influenced your target or proof strategy.
         """)
 
+    def _build_v20_depth_requirements(self) -> str:
+        """v20: Quality over Quantity. Strict theorem limits but demanding higher complexity and O() bounds."""
+        return textwrap.dedent("""\
+            ## v20 Research Core Methodology — Quality over Quantity
+
+            You are the Principal Investigator leading a mathematical research team. 
+            This engine is configured for **Quality over Quantity**.
+
+            ### Strict Constraints
+            1. Prove NO MORE than 3 main theorems. 
+            2. Each theorem must require significant mathematical insight, non-trivial auxiliary lemmas, and advanced tactics (e.g. `induction`, `ring_nf`, custom `simp` lemmas). 
+            3. Do not prove obvious or generic facts just to increase the theorem count.
+            4. Include detailed Big-O or complexity bounds in the mathematical framing when applicable.
+            5. Ensure 0 sorries across all outputs.
+
+            ### Deliverables
+            Focus heavily on the "Lab Notes" block. Provide deep analysis of the mathematical boundaries of your theorems. Include a FUTURE_DIRECTIONS.md with exactly 3 high-impact, testable conjectures.
+        """)
+
+    def _build_v21_depth_requirements(self) -> str:
+        """v21: Proof Sketch & Incremental Validation."""
+        return textwrap.dedent("""\
+            ## v21 Research Core Methodology — Proof Sketch & Incremental Validation
+
+            You are the Principal Investigator leading a mathematical research team. 
+            This engine is configured for **Incremental Proof Building**.
+
+            ### Methodology
+            1. **Detailed Proof Sketch**: Before writing any Lean code, write a comprehensive, rigorous mathematical proof sketch in the Lab Notes. Break the problem into exact, small lemmas.
+            2. **Incremental Validation**: Formalize each small lemma one by one. Do not jump to the main theorem until all dependencies are fully proved.
+            3. **Guardrails**: If a lemma fails, back up to the proof sketch, revise the mathematics, and try a different approach. Do not leave `sorry` in the final code; if the main theorem cannot be reached, package the successful lemmas as the final output.
+
+            ### Deliverables
+            A deeply commented Lean file where the ratio of mathematical explanation to Lean code is high. FUTURE_DIRECTIONS.md should focus on the exact lemmas that proved too difficult to formalize.
+        """)
+
+    def _build_v22_depth_requirements(self) -> str:
+        """v22: Novelty Push."""
+        return textwrap.dedent("""\
+            ## v22 Research Core Methodology — Novelty Push
+
+            You are the Principal Investigator leading a mathematical research team. 
+            This engine is configured for **Extreme Novelty**.
+
+            ### Methodology
+            1. **New Definitions**: You are explicitly rewarded for introducing completely new, mathematically sound definitions that bridge two disparate domains.
+            2. **Axiomatic Connections**: Define new structures that combine properties from the attached catalog references. 
+            3. **Surprise Factor**: Aim for results that are highly unexpected. Push the boundary of what is currently formalized.
+
+            ### Deliverables
+            Lean 4 code that defines at least one major new structure or definition, accompanied by theorems proving its basic properties and relating it to existing catalog concepts.
+        """)
+
+    def _build_v23_depth_requirements(self) -> str:
+        """v23: V17 Sub-agent Team."""
+        return textwrap.dedent("""\
+            ## v23 Research Core Methodology — Multi-Agent Scientific Method Team
+
+            You are Aristotle, but you must act as a **team of sub-agents** working collaboratively.
+            
+            ### Team Structure
+            - **Sub-Agent 1 (Hypothesizer)**: Generates bold, falsifiable conjectures.
+            - **Sub-Agent 2 (Experimenter)**: Attempts the formalization and proof in Lean 4.
+            - **Sub-Agent 3 (Analyst)**: Reviews the proofs, extracts structural patterns, and compares notes with the Hypothesizer.
+            - **Sub-Agent 4 (Critic)**: Actively tries to find counterexamples or trivialities in the work.
+
+            ### Interaction Loop
+            The sub-agents MUST iterate the scientific method explicitly in the Lab Notes. They must compare notes, debate the findings, and expand the frontier. Do not output the final Lean file until the sub-agents have reached a consensus that the mathematics is world-class.
+
+            ### Deliverables
+            The Lab Notes must read like a transcript of these sub-agents debating and refining the proofs. Provide compiling Lean 4 files with 0 sorries, and a FUTURE_DIRECTIONS.md with the team's consensus next steps.
+        """)
+
 
     def _build_phase_a_v19_prompt(
         self,
@@ -2495,6 +2568,14 @@ class PiAgentClient:
             depth_requirements = self._build_v17_depth_requirements()
         elif prompt_version == "v18":
             depth_requirements = self._build_v18_depth_requirements(concept)
+        elif prompt_version == "v20":
+            depth_requirements = self._build_v20_depth_requirements()
+        elif prompt_version == "v21":
+            depth_requirements = self._build_v21_depth_requirements()
+        elif prompt_version == "v22":
+            depth_requirements = self._build_v22_depth_requirements()
+        elif prompt_version == "v23":
+            depth_requirements = self._build_v23_depth_requirements()
         else:
             depth_requirements = self._build_v16_depth_requirements()
 
@@ -2607,7 +2688,7 @@ class PiAgentClient:
                 f"{prompt_version} prompt is no longer supported — use v8 through v19 family. "
                 "v19 (Speculative Scientific-Method) is the default."
             )
-        if prompt_version in ("v16", "v16a", "v16b", "v17", "v18"):
+        if prompt_version in ("v16", "v16a", "v16b", "v17", "v18", "v20", "v21", "v22", "v23"):
             return self._build_phase_a_v16_prompt(
                 concept=concept,
                 catalog_references=catalog_references,

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6fec53b5",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — A Unified Primitive-Divisor Engine, Sixth Cycle\n\n## Synthesis\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCriterion.lean`, a **self-contained,\n`sorry`-free** fi",
-      "quality_score": 0.77481,
-      "sorry_count": 2,
-      "theorem_count": 16,
-      "timestamp": "2026-06-14T13:20:03",
-      "title": "This cycle delivered `FibCarmichaelStructure.lean`, a **self-contained, `sorry`-"
-    },
-    {
       "cycle_id": "6c2e238b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Fibonacci Rank of Apparition, Structure Cycle\n\n## Synthesis\n\nThis cycle delivered `Catalog/Novelty/FibCarmichaelStructure.lean`, a self-contained,\n`sorry`-free deepening of the e",
@@ -499,19 +489,19 @@
       "theorem_count": 5,
       "timestamp": "2026-06-21T16:50:55",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+    },
+    {
+      "cycle_id": "1d465e25",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nBuilt on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries) that the\ngraph-cut functio",
+      "quality_score": 0.79908,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-06-21T21:43:39",
+      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "aba81cd6",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA cor",
-      "quality_score": 0.55584,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-06-15T19:56:38",
-      "title": "Close Proofs: This cycle added two fully-verified files (0 sorries) extending"
-    },
     {
       "cycle_id": "8a8b0554",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 247,
       "timestamp": "2026-06-21T20:32:09",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+    },
+    {
+      "cycle_id": "1d465e25",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nBuilt on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries) that the\ngraph-cut functio",
+      "quality_score": 0.79908,
+      "sorry_count": 0,
+      "theorem_count": 87,
+      "timestamp": "2026-06-21T21:43:39",
+      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1f4bbef7",
-      "domain": "MachineLearning",
-      "name": "run_nil",
-      "quality": 0.712
-    },
-    {
-      "cycle_id": "1f4bbef7",
-      "domain": "MachineLearning",
-      "name": "run_concat",
-      "quality": 0.712
-    },
-    {
-      "cycle_id": "1f4bbef7",
-      "domain": "MachineLearning",
-      "name": "eval_def",
-      "quality": 0.712
-    },
     {
       "cycle_id": "c9ad0581",
       "domain": "MachineLearning",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "eq_claimSeq",
       "quality": 0.85612
+    },
+    {
+      "cycle_id": "1d465e25",
+      "domain": "Geometry",
+      "name": "of",
+      "quality": 0.79908
+    },
+    {
+      "cycle_id": "1d465e25",
+      "domain": "Geometry",
+      "name": "obstruction_implies_noncontainment",
+      "quality": 0.79908
+    },
+    {
+      "cycle_id": "1d465e25",
+      "domain": "Geometry",
+      "name": "circuit_lower_bound_from_obstruction",
+      "quality": 0.79908
     }
   ],
-  "last_updated": "2026-06-21T20:32:09",
+  "last_updated": "2026-06-21T21:43:39",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "ce2d79fb",
-        "quality": 0.46699999999999997,
-        "theorems": 4,
-        "title": "These directions continue the Vietoris–Rips ↔ tropical valuation program now"
-      },
-      {
         "cycle_id": "b4a517d3",
         "quality": 0.42858307692307696,
         "theorems": 25,
@@ -3451,6 +3445,12 @@
         "quality": 0.397447,
         "theorems": 120,
         "title": "Linear twin-width bound for finite posets of bounded width"
+      },
+      {
+        "cycle_id": "1d465e25",
+        "quality": 0.79908,
+        "theorems": 87,
+        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
       }
     ],
     "Logic": [

@@ -331,6 +331,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 1d465e25 (Q=0.799), which proved 87 theorems in Geometry. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Refine the proof that Hausdorff dimension is preserved under iteration of bi-Lipschitz maps by replacing simpa-tactics with explicit foundational lemmas. Specifically, prove that for a metric space (X, d), a set S \u2286 X, and a map f : X \u2192 X that is L-Lipschitz on S and L'-anti-Lipschitz on X with f(S)",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "push_1d465e25_9d20efd5",
+    "priority_score": 0.89908,
+    "research_mode": "team",
+    "source_exp_id": "1d465e25",
+    "status": "available",
+    "timestamp": "2026-06-21T21:43:39.471404+00:00",
+    "title": "Deepening: Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d6329d46 (Q=0.792), which proved 22 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that a binary linear code carries a genuinely new tropical v",
     "domains": [
       "Shared"
@@ -2440,7 +2454,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equidistribution of Galois orbits of CM points on products of non\u2011isomorphic Shimura curves without auxiliary splitting conditions"
   },
   {
-    "consumed_by_exp_id": "53ef2527",
+    "consumed_by_exp_id": "",
     "description": "For all n \u2265 0, the number of (4,0)-colored Frobenius partitions of weight n equals twice the sum of Lin-Liu minimal excludants over all 4-partitions of n, i.e., \u03c8_{4,0}(n) = 2\u03c3_{mex,4}(n). This conjecture extends the proven identities \u03c8_{2,0}(n) = 2\u03c3_{mex,2}(n) and \u03c8_{2,1}(n) = 2\u03c3_{mex,2}(n) - E_2(n) to the four-colored case.",
     "domains": [
       "Pythagorean",
@@ -2450,7 +2464,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19696v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-20T10:27:31.374184+00:00",
     "title": "Generalized two-colored Frobenius identities to four-colored case"
   },
@@ -3197,21 +3211,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The paper proves Frankl, Kiselev, and Kupavskii's conjecture that for any intersecting family \\(\\mathcal{F}\\subseteq\\binom{[n]}{k}\\) with \\(n\\ge 60k^{3/2}\\) and \\(k\\ge 50\\), the size of the symmetric difference family satisfies \\(|\\mathcal{SD}(\\mathcal{F})|\\le\\sum_{\\ell=0}^{k-1}\\binom{n-1}{2\\ell}\\), with equality only for a specific class of stars. The proof relies on a concentration inequality and structural arguments on intersecting families.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2187",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20043v1",
-    "status": "available",
-    "timestamp": "2026-06-21T19:25:57.384356+00:00",
-    "title": "Improved bound on symmetric differences of intersecting families"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For any positive integer d and any planar graph H, the class of all K_{1,d}-free graphs without H as an induced minor has bounded tree-independence number. This conjecture generalizes the main result of Dallard et al. [2024], which proves it for outerstring graphs, to all planar graphs H.",
     "domains": [
       "Pythagorean",
@@ -3224,20 +3223,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-21T20:17:03.261509+00:00",
     "title": "Dallard's Conjecture for Planar Graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "This work extends the stability results of the Erd\u0151s\u2013Ko\u2013Rado theorem to the setting of cross-intersecting families, characterizing extremal families via diversity constraints and providing a shift-based tool for construction.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2188",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20085v1",
-    "status": "available",
-    "timestamp": "2026-06-21T20:17:16.324331+00:00",
-    "title": "Structural theorem for large cross-intersecting families"
   },
   {
     "consumed_by_exp_id": "",
@@ -3255,12 +3240,41 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves Frankl, Kiselev, and Kupavskii's conjecture that for any intersecting family \\(\\mathcal{F}\\subseteq\\binom{[n]}{k}\\) with \\(n\\ge 60k^{3/2}\\) and \\(k\\ge 50\\), the size of the symmetric difference family satisfies \\(|\\mathcal{SD}(\\mathcal{F})|\\le\\sum_{\\ell=0}^{k-1}\\binom{n-1}{2\\ell}\\), with equality only for a specific class of stars. The proof relies on a concentration inequality and structural arguments on intersecting families.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2190",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20043v1",
+    "status": "available",
+    "timestamp": "2026-06-21T19:25:57.384356+00:00",
+    "title": "Improved bound on symmetric differences of intersecting families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This work extends the stability results of the Erd\u0151s\u2013Ko\u2013Rado theorem to the setting of cross-intersecting families, characterizing extremal families via diversity constraints and providing a shift-based tool for construction.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2191",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-21T20:17:16.324331+00:00",
+    "title": "Structural theorem for large cross-intersecting families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "A graph sequence is quasi-random relative to a subgraph count function f if and only if the associated symmetric function in L\u00b2([0,1]^m) decomposes into irreducible subspaces under measure-preserving transformations in a way that satisfies specific orthogonality conditions with respect to the subgraph count's moment structure.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2189",
+    "id": "fd_2192",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20186v1",
@@ -4203,6 +4217,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nBuilt on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries) that the\ngraph-cut functional of a weighted tensor network is submodular, and derives from it: the\nemergent min-cut entropy's subadditivity (SA) and strong subadditivity (SSA), the\npurity/complementarity relation `S(S\u1d9c)=S(S)`, an emergent **pseudometric** `netDist`\n(triangle inequality on bulk regions), complexity bounds, and complexity-driven monotonicity.\n\nThe following conjectures are precise and falsifiable; each is a candidate Lean target.\n\n## C1 \u2014 Monogamy of Mutual Information (MMI), the holographic signature\nFor nonnegative symmetric bond weights and pairwise-disjoint boundary regions,\nthe min-cut entropy satisfies\n`S(A\u222aB) + S(A\u222aC) + S(B\u222aC) \u2265 S(A) + S(B) + S(C) + S(A\u222aB\u222aC)`,\nequivalently `I(A:B\u222aC) \u2265 I(A:B) + I(A:C)`. MMI holds for graph min-cuts (Hayden\u2013Headrick\u2013\nMaloney) but **fails** for generic quantum states \u2014 proving it would formally certify that the\nemergent geometry is genuinely holographic, not merely quantum. Strategy: combine the three\noptimal anchored regions and apply `cut_submodular` twice; the obstruction is finding the\ncorrect region recombination (the per-bond inequality is NOT termwise).\n\n## C2 \u2014 `netDist` is a genuine `PseudoMetricSpace` instance\nUpgrade `netDist` to a Mathlib `PseudoMetricSpace (Finset V)` (or a true metric on the\nquotient by `bdry = 0`), then prove the emergent space embeds isometrically into\n`(\u211d^E, \u2113\u00b9)` via the bond-crossing map. Conjecture: the metric is **\u2113\u00b9-rigid** \u2014 every\nfinite \u2113\u00b9 metric arises as some `netDist`, characterizing emergent geometries exactly.\n\n## C3 \u2014 Saturation of SSA \u21d4 a quantum Markov / gluing condition\nConjecture: `condMutualInfo w boundary A B C = 0` holds **iff** there exist optimal anchored\nregions with `WAB \u2286 WBC` (nested minimal surfaces). This is the discrete analogue of the\n\"entanglement wedge nesting / Markov state\" structure and would give a combinatorial\ncriterion for when the emergent geometry factorizes across `B`.\n\n## C4 \u2014 Strict complexity-driven growth and a dimension estimate\n`entropy_mono_weight` shows entropy is monotone in bond weight. Conjecture a **strict** and\nquantitative form: if `w' = w + \u03b5\u00b7\ud835\udfd9_{e}` for a bond `e` on the minimal surface of `A`, then\n`S'(A) = S(A) + \u03b5`, and the number of bonds on the minimal surface (the \"area\") grows like\n`\u0398(n^{(d\u22121)/d})` for networks built on a `d`-dimensional lattice \u2014 an emergent-dimension\ndetector from entropy scaling (the area law).\n\n## C5 \u2014 Random-network concentration (the \"random\" in random tensor networks)\nFor i.i.d. random bond weights, conjecture that `netDist` and `entropy` **concentrate**: with\nhigh probability the emergent distance between fixed boundary regions is within `o(1)` of its\nmean, so a deterministic emergent geometry appears in the large-network limit. Formal target:\na McDiarmid/bounded-differences inequality for `netDist` as a function of the independent bond\nweights (each weight changes `netDist` by at most its own value, giving the Lipschitz bound).\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_2193",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1d465e25",
+    "status": "available",
+    "timestamp": "2026-06-21T21:40:26.133207+00:00",
+    "title": "Built on `Catalog/Geometry/TensorNetworkSpacetime.lean`, which proves (0 sorries"
   },
   {
     "consumed_by_exp_id": "",
