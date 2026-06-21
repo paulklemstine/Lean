@@ -159,7 +159,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "863d07b7",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domain_bridges": [],
     "domains": [
@@ -172,7 +172,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -1973,7 +1973,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2fe3f01b",
     "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
     "domain_bridges": [],
     "domains": [
@@ -1986,7 +1986,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432759+00:00",
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
@@ -3583,7 +3583,7 @@
       "irwin_solecki",
       "kpt"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "93e2fea4",
     "description": "We conjecture that the approximate Ramsey property of a projective Fraïssé category implies that the dense image of its automorphism group in a homeomorphism group of a continuum is extremely amenable. This establishes a formal link between combinatorial Ramsey-theoretic properties and topological amenability in the study of homeomorphism groups of continua.",
     "domain_bridges": [
       "Combinatorial model theory",
@@ -3601,7 +3601,7 @@
     "proof_strategy": "We will proceed by embedding the combinatorial structure of the Fraïssé limit into a topological dynamics framework, translating Ramsey-theoretic conditions into constraints on the amenability of the group action. This will involve leveraging existing characterizations of extreme amenability in non-archimedean Polish groups and extending them to the topological group of homeomorphisms of a continuum, using the projective Fraïssé structure to induce a suitable Ramsey-like property.",
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T02:28:25.339989+00:00",
     "title": "Ramsey Theory in Projective Fraïssé Limits Implies Extreme Amenability of Homeomorphism Groups of Continua"
   },
@@ -4563,6 +4563,30 @@
     "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every positive integer d and every planar graph H, there exists a constant B(d,H) such that the tree-independence number of any K_{1,d}-free graph that does not contain H as an induced minor is at most B(d,H).",
+    "domain_bridges": [
+      "algorithmic graph theory",
+      "parameterized complexity"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2165",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the Hajebi–Spirkl characterization of bounded tree-independence number via forbidden induced subgraphs. Show that the class of K_{1,d}-free graphs with no induced minor H necessarily contains a member of each of the three required families (a complete bipartite graph, a graph from S, and the line graph of a graph from S). Consequently the class has bounded tree-independence number, and a bound can be extracted from the proof.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:56:49.438109+00:00",
+    "title": "Bounded tree-independence number for K_{1,d}-free graphs excluding a planar induced minor"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "OEIS:A001227",
@@ -4578,7 +4602,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2165",
+    "id": "fd_2166",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Translate the problem to a factorisation of the frequency polynomial F(x)= (x+...+x^6)^2 = x^2 (x^6-1)^2/(x-1)^2. Use the factorisation of cyclotomic polynomials Φ_d(x) to express F as a product of irreducibles. Show that for any distinct squares a^2,b^2 there is a selection of these cyclotomic factors (with possible repetitions) whose product yields a polynomial P_a with P_a(1)=a^2 and non‑negative coefficients, and whose complementary factor P_b satisfies P_b(1)=b^2. The existence part reduces to solving a linear Diophantine system given by the degrees and constant terms of the chosen Φ_d. One can then employ the theory of integer cones (Hilbert bases) to prove the system always has a solution when a≠b, yielding the desired dice. Formalisation in Lean proceeds by: (1) defining generating functions of dice, (2) proving the cyclotomic factorisation of (∑_{i=1}^6 x^i)^2, (3) constructing the cone of admissible exponent vectors, (4) showing the cone contains a point with prescribed sum‑o",
@@ -4608,7 +4632,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2166",
+    "id": "fd_2167",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the paper's equivalence: for prime p > 5, the longest terminal four-digit Kaprekar cycle in base p has length (p - 1) / 2 iff the least m > 0 with 2^m = ±1 in ZMod p is (p - 1) / 2. Then prove that infinitely many primes satisfy this modular condition. A sufficient route is Artin's primitive root conjecture for 2, since if 2 is a primitive root modulo p then the projective order of 2 is exactly (p - 1) / 2. Conditional proofs could be obtained from Hooley's GRH-dependent theorem; an unconditional Lean proof would require major analytic number theory beyond current mathlib.",
@@ -4617,6 +4641,33 @@
     "status": "available",
     "timestamp": "2026-06-21T04:04:13.711725+00:00",
     "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:math.NT",
+      "Drinfeld modules",
+      "Arboreal Galois Representations"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
+    "domain_bridges": [
+      "Function Field Arithmetic $\\to$ Group Theory (Wreath Products)",
+      "Galois Theory $\to$ Dynamical Systems"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2168",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the construction of the twisted Carlitz module $\\rho_t^c$ and its $t$-torsion. Use the recursive structure of the iterated wreath product $\\text{Aut}(T_n) \\cong \text{Aut}(T_{n-1}) \\wr S_d$. Implement a criterion for surjectivity based on the existence of primitive prime divisors in the critical orbit of $f_c(x)$ in characteristic $p$, ensuring that the extensions at each level $n$ are linearly disjoint from the previous levels.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:57:12.884506+00:00",
+    "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
   },
   {
     "ambition_level": "extension",

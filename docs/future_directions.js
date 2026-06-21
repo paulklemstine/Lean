@@ -120,7 +120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "863d07b7",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -130,7 +130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -1479,7 +1479,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2fe3f01b",
     "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
     "domains": [
       "Logic",
@@ -1489,7 +1489,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432759+00:00",
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
@@ -2352,7 +2352,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Approximate Ramsey Property for the Pseudo-Arc's Projective Fraisse Category"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "93e2fea4",
     "description": "We conjecture that the approximate Ramsey property of a projective Fra\u00efss\u00e9 category implies that the dense image of its automorphism group in a homeomorphism group of a continuum is extremely amenable. This establishes a formal link between combinatorial Ramsey-theoretic properties and topological amenability in the study of homeomorphism groups of continua.",
     "domains": [
       "Algebra",
@@ -2362,7 +2362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T02:28:25.339989+00:00",
     "title": "Ramsey Theory in Projective Fra\u00efss\u00e9 Limits Implies Extreme Amenability of Homeomorphism Groups of Continua"
   },
@@ -2879,12 +2879,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For every positive integer d and every planar graph H, there exists a constant B(d,H) such that the tree-independence number of any K_{1,d}-free graph that does not contain H as an induced minor is at most B(d,H).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2165",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:56:49.438109+00:00",
+    "title": "Bounded tree-independence number for K_{1,d}-free graphs excluding a planar induced minor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2165",
+    "id": "fd_2166",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2899,13 +2913,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2166",
+    "id": "fd_2167",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
     "status": "available",
     "timestamp": "2026-06-21T04:04:13.711725+00:00",
     "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a given odd prime power $q=p^e$, let $K = \\mathbb{F}_q(t)$. For a specific choice of $c \\in K^*$, the arboreal Galois group $G_n = \\Gal(\\text{Spl}_K(f_c^{\\circ n})/K)$ for the polynomial $f_c(x) = cx^{q-1} + t$ is isomorphic to the $n$-fold iterated wreath product of the cyclic group $C_{q-1}$ (the automorphism group of the $(q-1)$-ary tree $T_n$) for all $n \\geq 1$.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2168",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-21T04:57:12.884506+00:00",
+    "title": "Maximality of Arboreal Galois Representations for Twisted Carlitz Polynomials"
   },
   {
     "consumed_by_exp_id": "",
