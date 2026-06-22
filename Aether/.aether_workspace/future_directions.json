@@ -14906,11 +14906,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "693eed6d",
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
@@ -14920,7 +14920,7 @@
         "Tropical"
       ],
       "id": "fd_0536",
-      "last_attempt_time": "2026-06-11T02:50:37.950338+00:00",
+      "last_attempt_time": "2026-06-22T00:01:25.381147+00:00",
       "last_reviewed_at": "2026-06-10T07:43:01.457761+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14933,7 +14933,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:06.637226+00:00",
       "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
@@ -35909,7 +35909,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO/2305.01234",
         "Lean4 Mathlib: combinatorics/simple_graph",
@@ -35917,7 +35917,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "5bd61b22",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "For any graph G, any two minimal median decompositions of G (i.e., median decompositions whose underlying median graph has the smallest possible number of vertices) are isomorphic via a graph isomorphism that respects the decomposition bags. This formalises the \"uniquely minimal\" claim in the paper and provides a concrete, falsifiable statement that can be encoded in Lean.",
       "domain_bridges": [
@@ -35930,11 +35930,11 @@
         "Bridges"
       ],
       "id": "fd_2139",
-      "last_attempt_time": "2026-06-21T23:36:31.118773+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimal_median_decomposition_unique {G : SimpleGraph V} {Σ₁ Σ₂ : median_decomposition G} (h₁ : Σ₁.is_minimal) (h₂ : Σ₂.is_minimal) : ∃! (φ : Σ₁.M ≃ₓ Σ₂.M), ∀ v, Σ₁.bag v = Σ₂.bag (φ v) :=\n  sorry",
       "lineage_refs": [],
-      "outcome_quality": 0.3714852771428572,
+      "outcome_quality": 0.0,
       "priority_score": 0.8,
       "proof_strategy": "Define a median decomposition as a structure (M, bag) where M is a median graph and bag : V(M) → set V(G) satisfying the usual covering, edge‑separation, and connectedness conditions. Show existence of a minimal decomposition by taking a decomposition with minimal |V(M)| (using well‑foundedness of nat). Prove that if D₁ and D₂ are minimal then there exists a bijection f : V(M₁) ≃ V(M₂) such that for every v ∈ V(M₁), bag₁ v = bag₂ (f v). The proof proceeds by: (1) constructing the Sageev dual median graph Σ(G, Σ) from the given separation system Σ of G; (2) showing any minimal median decomposition is isomorphic to the canonical Sageev construction (the \"uniquely minimal\" theorem in the paper); (3) using the universal property of the Sageev construction to build the required isomorphism. Lean implementation will reuse existing definitions of simple graphs, median graphs, and will formalise the universal property as a morphism of median graphs preserving bags.",
       "prune_reason": "",
@@ -35943,7 +35943,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.19473v1",
       "source_path": "http://arxiv.org/abs/2606.19473v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-20T12:54:39.746194+00:00",
       "title": "Uniqueness of Minimal Median Decompositions for Graphs"
@@ -38500,6 +38500,50 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Frankl--Kiselev--Kupavskii conjecture on symmetric differences of intersecting families",
+        "Erdos--Ko--Rado theorem for intersecting uniform families",
+        "mathlib: Finset, Finset.card, Nat.choose, Finset.product, Finset.image"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For all natural numbers n and k with n > 10k, every intersecting k-uniform family F of subsets of [n] has at most sum_{l=0}^{k-1} binom(n-1,2l) distinct pairwise symmetric differences. Equivalently, among all intersecting subfamilies of binom([n],k), the full star maximizes the cardinality of {A △ B : A,B in F}. This is falsifiable by a finite counterexample consisting of explicit n,k and a finite family F.",
+      "domain_bridges": [
+        "Kneser graph independent sets: intersecting k-uniform families are independent sets in KG(n,k)",
+        "Johnson scheme: symmetric differences correspond to even Johnson distances",
+        "isoperimetric and shadow inequalities on the Boolean lattice",
+        "hypergeometric concentration inequalities for random k-subsets"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2199",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Finset.Basic\nimport Mathlib.Data.Nat.Choose.Sum\nimport Mathlib.Algebra.BigOperators.Basic\n\nopen Finset\nopen scoped BigOperators\n\nnamespace SymmetricDifferenceConjecture\n\nvariable {n k : ℕ}\n\ndef symmDiffFinset {α : Type} [DecidableEq α] (A B : Finset α) : Finset α :=\n  (A \\ B) ∪ (B \\ A)\n\ndef IsKUniform (k : ℕ) (F : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, A.card = k\n\ndef IsIntersecting (F : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, ∀ B ∈ F, (A ∩ B).Nonempty\n\ndef symmDiffFamily (F : Finset (Finset (Fin n))) : Finset (Finset (Fin n)) :=\n  (F.product F).image (fun p => symmDiffFinset p.1 p.2)\n\n/-- Frankl--Kiselev--Kupavskii conjecture: for `n > 10k`, a full star maximizes\n    the number of distinct symmetric differences of an intersecting `k`-uniform family. -/\ntheorem fkk_symmetric_difference_bound\n    (hlarge : 10 * k < n)\n    (F : Finset (Finset (Fin n)))\n    (huniform : IsKUniform (n := n) k F)\n    (hintersecting : IsIntersecting F) :\n    (symmDiffFamily F)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the problem as a finite extremal statement over Fin n. A plausible route is to combine shifting/compression to reduce to stable intersecting families, use an EKR-type stability theorem to separate near-star and far-from-star cases, and then count possible symmetric differences by Johnson-distance layers. The near-star case should be controlled by showing missing star structure cannot create more even layers than the full star; the far-from-star case should be bounded via concentration for intersections of random members, translating small intersection tails into a strict deficit in attainable symmetric differences.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20043v1",
+      "source_path": "http://arxiv.org/abs/2606.20043v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T00:00:44.155816+00:00",
+      "title": "Frankl--Kiselev--Kupavskii symmetric-difference bound for n > 10k"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Chao et al. on cyclotomic polynomials for dice relabeling",
         "Gallian-Rusin results on prime-product dice sizes"
       ],
@@ -38517,7 +38561,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2199",
+      "id": "fd_2200",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀a, b ∈ ℕ (a ≠ b ∧ a², b² > 0), ∃DicePair (size₁ = a², size₂ = b²) ∧ sumFrequency(DicePair) = sumFrequency(StandardDicePair(a², b²))",
@@ -38558,7 +38602,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2200",
+      "id": "fd_2201",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strong_non_principality_exact_ratio (k : ℕ) (hk : k ≥ 3) : ∃ (F1 F2 : Hypergraph k), 0 < γ⁺ (F1,F2) ∧ γ⁺ (F1,F2) < min (γ⁺ F1) (γ⁺ F2) ∧ γ⁺ (F1,F2) = (1/2 : ℝ) * min (γ⁺ F1) (γ⁺ F2) := by sorry",
@@ -38582,36 +38626,43 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "Tree-independence number as introduced by Yolov and by Dallard--Milanič--Štorgel",
+        "Hajebi--Spirkl characterization of finitely defined hereditary classes with bounded tree-independence number",
+        "Results on K_{2,d}-free graphs with no holes of length at least 5 from the cited paper"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "depth_estimate": 3,
-      "description": "# Future Directions — Modular Height Formula for Unitary Shimura Varieties\n\nThis cycle established, in the region of absolute convergence `Re s > 1`, a fully-proved toy model\nof the Kudla-program identity \"arithmetic intersection number of the generating series of special\ndivisors = logarithmic derivative of the CM Hecke L-function\":\n\n* `dedekind_divisor_series` : `L(divisorCoeff χ) = ζ·L(χ)` (generating series side);\n* `modularHeight_logDeriv` / `modularHeight_eq_neg_logDeriv_divisorSeries` :\n  `L(cmVonMangoldt χ) = -ζ'/ζ - L'(χ)/L(χ) = -d/ds log L(divisorCoeff χ)` (height side);\n* `cmVonMangoldt_prime` : local height `(1 + χ p)·log p = #{primes above p}·log p`;\n* `cmDedekindDatum_not_primitive` : `ζ·L(χ)` is a reducible degree-2 element of the Selberg class.\n\nThe findings below are the bold, falsifiable conjectures distilled from Stage-3 analysis (what is\n\"true but hard\" vs \"needs a different definition\") and Stage-4 critique (the honest `s = 1`\nboundary gap).\n\n---\n\n## Conjecture 1 (Boundary specialization / the genuine height). \nFor a CM (imaginary quadratic) character `χ`, the regularized value at `s = 1` of\n`L(cmVonMangoldt χ) s + (s-1)^{-1}` exists and equals the global arithmetic height\n`ĥ(Z(·))` of the special divisors, up to an explicit Archimedean term.\n\n*The key insight is* that the only obstruction between our proven convergent-range identity and the\ntrue Kudla–Yuan–Zhang height formula is analytic continuation of `-d/ds log(ζ·L(χ))` across the\npole at `s = 1`, so the height is captured by a *single* regularized Laurent coefficient rather\nthan by a new geometric input.\n\n*Why now?* Mathlib already has `riemannZeta` continuation, the simple pole at `s = 1`, and Dirichlet\nL-function nonvanishing/continuation; the `LSeries` derivative API (`LSeries_hasDerivAt`,\n`LSeries_deriv`) used here extends verbatim, making the Laurent-expansion bookkeeping a tractable\nnext formal step rather than a research-level gap.\n\n## Conjecture 2 (Quantitative split density from the height). \nThe Cesàro average `N^{-1} ∑_{n ≤ N} cmVonMangoldt χ (n)` tends to `1` as `N → ∞` for every\nnon-principal CM character `χ`, and this is *equivalent* to `L(1, χ) ≠ 0`.\n\n*The key insight is* that the height density `(1 + χ n)Λ n` packages the prime-counting of the CM\nfield, so its mean value is a von-Mangoldt-style PNT statement for `K`, and its positivity is\nexactly the non-vanishing that controls the leading term of the height.\n\n*Why now?* Mathlib has the non-vanishing `L(1, χ) ≠ 0` and a Wiener–Ikehara-type framework in\nprogress; pairing them with the proven `cmVonMangoldt_eq_add` reduces the conjecture to a clean\nTauberian step on an object we can already manipulate formally.\n\n## Conjecture 3 (Functoriality of the height under products of CM fields). \nFor two CM characters `χ₁, χ₂` of coprime conductors, the height density of the compositum is\nadditive on the L-series log-derivative side:\n`L(cmVonMangoldt (χ₁ χ₂))` differs from `L(cmVonMangoldt χ₁) + L(cmVonMangoldt χ₂)` by an explicit\ncorrection supported on the common ramification, and the corresponding Selberg datum is the\n`SelbergDatum.product` of the two Dedekind data.\n\n*The key insight is* that the modularity/Euler-product structure (`divisorCoeff_prime_pow`) makes\nthe generating series multiplicative, so heights of CM towers should compose through\n`SelbergDatum.product`, whose degree/conductor additivity we already proved\n(`cmDedekindDatum_degree`, `cmDedekindDatum_conductor`).\n\n*Why now?* The Selberg-class bookkeeping is already formalized in the catalog\n(`Shared.SelbergClassCensus`) and linked here; testing additivity needs only the twist of the\nexisting convolution identities, not new analytic machinery.\n\n## Conjecture 4 (Unitary rank ≥ 2: matrix-coefficient generating series). \nReplacing the rank-1 divisor sum by the rank-`r` Siegel–Eisenstein coefficient\n`∑_{d ∣ n} χ(d) d^{r-1}` yields a generating series whose log-derivative L-series equals a\n*shifted* CM height `-ζ'(s-r+1)/ζ(s-r+1) - L'(s-r+1, χ)/L(s-r+1, χ)`.\n\n*The key insight is* that higher unitary rank only shifts the spectral parameter by `r-1`, so the\nentire Part-II/IV argument transports under `s ↦ s - (r-1)` with `n^{r-1}`-weighted divisor sums,\npredicting the Eisenstein weight from the rank.\n\n*Why now?* The weighted divisor sums `σ_{r-1}` and their L-series (`ζ(s)ζ(s-r+1)`-type products)\nare already in Mathlib's `LSeries` toolbox; the shift is a substitution our proofs already respect.\n\n## Conjecture 5 (Self-duality forces inert-prime cancellation). \nFor a real (quadratic, hence self-dual) CM character `χ`, the height density vanishes at every\ninert prime power, and conversely vanishing of `cmVonMangoldt χ (p^k)` for all `k ≥ 1` at a single\nprime `p` with `χ(p) = -1` forces `χ` to be quadratic.\n\n*The key insight is* that `(1 + χ(p))` is the local Euler factor's order of vanishing, so inert\ncancellation is a *rigidity* signature of self-duality detectable from finitely many coefficients.\n\n*Why now?* `divisorCoeff_prime_pow` already gives the exact geometric local factor, so the\nconjecture is a finite local computation away from a full proof, and quadratic characters are fully\navailable in Mathlib (`ZMod.χ₄`, Kronecker symbols).\n",
-      "domain_bridges": [],
+      "description": "For every integer d ≥ 2, every finite simple graph G with no induced subgraph isomorphic to K_{2,d} and with no induced cycle of length at least 5 has tree-independence number at most 2d − 2. Equivalently, G admits a tree decomposition in which each bag induces a subgraph with independence number at most 2d − 2. This is a falsifiable strengthening of boundedness results for K_{2,d}-free graphs additionally forbidding long holes, replacing an unspecified or larger bound by an explicit linear bound.",
+      "domain_bridges": [
+        "tree decompositions ↔ induced independence number of bags",
+        "forbidden induced complete bipartite graphs ↔ local common-neighborhood constraints",
+        "long-hole-free graph structure ↔ chordal-like decompositions"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Pythagorean",
-        "Algebra"
+        "Bridges"
       ],
-      "id": "fd_2201",
+      "id": "fd_2202",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\n\nopen SimpleGraph\n\nuniverse u\n\n/-- Placeholder predicates for a finite graph formalization. -/\nnamespace SimpleGraph\n\nvariable {V : Type u} [Fintype V] [DecidableEq V]\n\nconstant IsInducedKmnFree : SimpleGraph V → Nat → Nat → Prop\nconstant HasInducedCycleLengthAtLeast : SimpleGraph V → Nat → Prop\nconstant treeIndependenceNumber : SimpleGraph V → Nat\n\n/-- Conjecture: every induced-K_{2,d}-free graph with no induced cycle of length at least 5\nhas tree-independence number at most `2*d - 2`. -/\ntheorem conjecture_treeIndependence_K2d_free_long_hole_free\n    (G : SimpleGraph V) [DecidableRel G.Adj]\n    (d : Nat) (hd : 2 ≤ d)\n    (hK : G.IsInducedKmnFree 2 d)\n    (hHole : ¬ G.HasInducedCycleLengthAtLeast 5) :\n    G.treeIndependenceNumber ≤ 2 * d - 2 := by\n  sorry\n\nend SimpleGraph",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Try to construct a clique-separator or minimal-separator decomposition for graphs with no induced cycles of length at least 5. Use induced-K_{2,d}-freeness to show that every separator bag can be enlarged so that any independent set inside the bag has size at most 2d−2: two nonadjacent vertices in a controlled separator should have fewer than d mutually independent witnesses on the opposite side, otherwise they induce K_{2,d}. Then combine the local separator bags recursively into a tree decomposition and verify that the maximum bag-independence is bounded by 2d−2.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "0e89ca61",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/0e89ca61_retry1",
+      "source_exp_id": "2606.20256v1",
+      "source_path": "http://arxiv.org/abs/2606.20256v1",
       "status": "available",
-      "thread_id": "th_729bc2f8",
-      "timestamp": "2026-06-21T23:55:22.113354+00:00",
-      "title": "This cycle established, in the region of absolute convergence `Re s > 1`, a full"
+      "thread_id": "",
+      "timestamp": "2026-06-22T00:01:14.488967+00:00",
+      "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
     },
     {
       "ambition_level": "extension",
@@ -98013,7 +98064,7 @@
   "recent_domain_counts": {
     "Algebra": 302,
     "Applications": 117,
-    "Bridges": 58,
+    "Bridges": 57,
     "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
@@ -98069,7 +98120,7 @@
     "functions": 99,
     "future": 526,
     "giving": 120,
-    "graphs": 48,
+    "graphs": 47,
     "impact": 85,
     "important": 309,
     "insight": 305,
@@ -98082,7 +98133,7 @@
     "normally": 2,
     "novelty": 139,
     "now?**": 143,
-    "number": 178,
+    "number": 177,
     "o(1/log": 2,
     "original": 353,
     "parameter": 57,
@@ -98092,7 +98143,7 @@
     "proof-theoretic": 36,
     "proofs": 390,
     "proved": 573,
-    "provides": 87,
+    "provides": 86,
     "pythagorean": 21,
     "q=0.423": 11,
     "q=0.426": 16,
@@ -98130,7 +98181,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

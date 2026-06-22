@@ -794,7 +794,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "693eed6d",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -804,7 +804,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -2484,7 +2484,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Necessary threshold for cubic generalized Tur\u00e1n growth against K_{3,t}"
   },
   {
-    "consumed_by_exp_id": "5bd61b22",
+    "consumed_by_exp_id": "",
     "description": "For any graph G, any two minimal median decompositions of G (i.e., median decompositions whose underlying median graph has the smallest possible number of vertices) are isomorphic via a graph isomorphism that respects the decomposition bags. This formalises the \"uniquely minimal\" claim in the paper and provides a concrete, falsifiable statement that can be encoded in Lean.",
     "domains": [
       "Bridges"
@@ -2493,7 +2493,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19473v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-20T12:54:39.746194+00:00",
     "title": "Uniqueness of Minimal Median Decompositions for Graphs"
   },
@@ -3357,11 +3357,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all natural numbers n and k with n > 10k, every intersecting k-uniform family F of subsets of [n] has at most sum_{l=0}^{k-1} binom(n-1,2l) distinct pairwise symmetric differences. Equivalently, among all intersecting subfamilies of binom([n],k), the full star maximizes the cardinality of {A \u25b3 B : A,B in F}. This is falsifiable by a finite counterexample consisting of explicit n,k and a finite family F.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2199",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20043v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:00:44.155816+00:00",
+    "title": "Frankl--Kiselev--Kupavskii symmetric-difference bound for n > 10k"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any two distinct perfect squares a\u00b2 and b\u00b2, there exists at least one pair of square-sided dice with a\u00b2 and b\u00b2 sides whose sum frequency distribution matches that of two standard dice of the same sizes.",
     "domains": [
       "Computation"
     ],
-    "id": "fd_2199",
+    "id": "fd_2200",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -3375,13 +3389,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2200",
+    "id": "fd_2201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20494v1",
     "status": "available",
     "timestamp": "2026-06-21T23:36:20.259851+00:00",
     "title": "Strong non-principality with exact ratio for positive codegree Tur\u00e1n density"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer d \u2265 2, every finite simple graph G with no induced subgraph isomorphic to K_{2,d} and with no induced cycle of length at least 5 has tree-independence number at most 2d \u2212 2. Equivalently, G admits a tree decomposition in which each bag induces a subgraph with independence number at most 2d \u2212 2. This is a falsifiable strengthening of boundedness results for K_{2,d}-free graphs additionally forbidding long holes, replacing an unspecified or larger bound by an explicit linear bound.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2202",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:01:14.488967+00:00",
+    "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
   },
   {
     "consumed_by_exp_id": "",

@@ -1058,7 +1058,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "693eed6d",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domain_bridges": [],
     "domains": [
@@ -1071,7 +1071,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -3830,7 +3830,7 @@
       "Lean4 Mathlib: combinatorics/simple_graph",
       "Lean4 Mathlib: order/median"
     ],
-    "consumed_by_exp_id": "5bd61b22",
+    "consumed_by_exp_id": "",
     "description": "For any graph G, any two minimal median decompositions of G (i.e., median decompositions whose underlying median graph has the smallest possible number of vertices) are isomorphic via a graph isomorphism that respects the decomposition bags. This formalises the \"uniquely minimal\" claim in the paper and provides a concrete, falsifiable statement that can be encoded in Lean.",
     "domain_bridges": [
       "order theory (median algebras)",
@@ -3846,7 +3846,7 @@
     "proof_strategy": "Define a median decomposition as a structure (M, bag) where M is a median graph and bag : V(M) → set V(G) satisfying the usual covering, edge‑separation, and connectedness conditions. Show existence of a minimal decomposition by taking a decomposition with minimal |V(M)| (using well‑foundedness of nat). Prove that if D₁ and D₂ are minimal then there exists a bijection f : V(M₁) ≃ V(M₂) such that for every v ∈ V(M₁), bag₁ v = bag₂ (f v). The proof proceeds by: (1) constructing the Sageev dual median graph Σ(G, Σ) from the given separation system Σ of G; (2) showing any minimal median decomposition is isomorphic to the canonical Sageev construction (the \"uniquely minimal\" theorem in the paper); (3) using the universal property of the Sageev construction to build the required isomorphism. Lean implementation will reuse existing definitions of simple graphs, median graphs, and will formalise the universal property as a morphism of median graphs preserving bags.",
     "research_mode": "team",
     "source_exp_id": "2606.19473v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-20T12:54:39.746194+00:00",
     "title": "Uniqueness of Minimal Median Decompositions for Graphs"
   },
@@ -5455,6 +5455,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Frankl--Kiselev--Kupavskii conjecture on symmetric differences of intersecting families",
+      "Erdos--Ko--Rado theorem for intersecting uniform families",
+      "mathlib: Finset, Finset.card, Nat.choose, Finset.product, Finset.image"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all natural numbers n and k with n > 10k, every intersecting k-uniform family F of subsets of [n] has at most sum_{l=0}^{k-1} binom(n-1,2l) distinct pairwise symmetric differences. Equivalently, among all intersecting subfamilies of binom([n],k), the full star maximizes the cardinality of {A △ B : A,B in F}. This is falsifiable by a finite counterexample consisting of explicit n,k and a finite family F.",
+    "domain_bridges": [
+      "Kneser graph independent sets: intersecting k-uniform families are independent sets in KG(n,k)",
+      "Johnson scheme: symmetric differences correspond to even Johnson distances",
+      "isoperimetric and shadow inequalities on the Boolean lattice",
+      "hypergeometric concentration inequalities for random k-subsets"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2199",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the problem as a finite extremal statement over Fin n. A plausible route is to combine shifting/compression to reduce to stable intersecting families, use an EKR-type stability theorem to separate near-star and far-from-star cases, and then count possible symmetric differences by Johnson-distance layers. The near-star case should be controlled by showing missing star structure cannot create more even layers than the full star; the far-from-star case should be bounded via concentration for intersections of random members, translating small intersection tails into a strict deficit in attainable symmetric differences.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20043v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:00:44.155816+00:00",
+    "title": "Frankl--Kiselev--Kupavskii symmetric-difference bound for n > 10k"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Chao et al. on cyclotomic polynomials for dice relabeling",
       "Gallian-Rusin results on prime-product dice sizes"
     ],
@@ -5468,7 +5496,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2199",
+    "id": "fd_2200",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze cyclotomic polynomial decompositions of generating functions for square-sided dice and demonstrate constructive existence via factorization properties",
@@ -5493,7 +5521,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2200",
+    "id": "fd_2201",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct F1 and F2 as specific small hypergraphs (e.g., a single edge and a pair of edges sharing (k-1) vertices) and use known exact values for their positive codegree densities; then apply a product construction to show the pair density is half the minimum.",
@@ -5502,6 +5530,33 @@
     "status": "available",
     "timestamp": "2026-06-21T23:36:20.259851+00:00",
     "title": "Strong non-principality with exact ratio for positive codegree Turán density"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Tree-independence number as introduced by Yolov and by Dallard--Milanič--Štorgel",
+      "Hajebi--Spirkl characterization of finitely defined hereditary classes with bounded tree-independence number",
+      "Results on K_{2,d}-free graphs with no holes of length at least 5 from the cited paper"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer d ≥ 2, every finite simple graph G with no induced subgraph isomorphic to K_{2,d} and with no induced cycle of length at least 5 has tree-independence number at most 2d − 2. Equivalently, G admits a tree decomposition in which each bag induces a subgraph with independence number at most 2d − 2. This is a falsifiable strengthening of boundedness results for K_{2,d}-free graphs additionally forbidding long holes, replacing an unspecified or larger bound by an explicit linear bound.",
+    "domain_bridges": [
+      "tree decompositions ↔ induced independence number of bags",
+      "forbidden induced complete bipartite graphs ↔ local common-neighborhood constraints",
+      "long-hole-free graph structure ↔ chordal-like decompositions"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2202",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Try to construct a clique-separator or minimal-separator decomposition for graphs with no induced cycles of length at least 5. Use induced-K_{2,d}-freeness to show that every separator bag can be enlarged so that any independent set inside the bag has size at most 2d−2: two nonadjacent vertices in a controlled separator should have fewer than d mutually independent witnesses on the opposite side, otherwise they induce K_{2,d}. Then combine the local separator bags recursively into a tree decomposition and verify that the maximum bag-independence is bounded by 2d−2.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:01:14.488967+00:00",
+    "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
   },
   {
     "ambition_level": "extension",
