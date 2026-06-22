@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c8fdbde8",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Pisano period as a lattice morphism, and the entry-point cofactor\n\nThis cycle (files `Catalog/Logic/FibPisanoLattice.lean` and\n`Catalog/Logic/FibPisanoEntryCofactor.lean`) proved",
-      "quality_score": 0.4348039483870968,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-16T07:31:09",
-      "title": "That the Fibonacci **rank of apparition** `z(p) = fibEntry p`"
-    },
-    {
       "cycle_id": "e42393e4",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Weight-Threshold Profiles & the Codes → Tropical Valuation Functor\n\nThese conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`, which builds the\nfunctor `FinLinCodes",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-22T17:05:47",
       "title": "Langlands Program: Functoriality"
+    },
+    {
+      "cycle_id": "8892ab13",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Approximate Ramsey degrees and metrizable universal minimal flows\n\nDerived from this cycle's findings on the finite combinatorial skeleton of the\napproximate Ramsey degree (`Core",
+      "quality_score": 0.43946266666666667,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-22T17:13:25",
+      "title": "Finite approximate Ramsey degrees characterize metrizable universal minimal flows"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T17:05:47",
+  "last_updated": "2026-06-22T17:13:25",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "a4d16ba9",
-        "quality": 0.44327589652348276,
-        "theorems": 319,
-        "title": "Close Proofs: Functorial bridge from combinatorial species generating functions "
-      },
-      {
         "cycle_id": "3fd7a316",
         "quality": 0.8053600000000001,
         "theorems": 25,
@@ -3823,6 +3817,12 @@
         "quality": 0.5515805555555555,
         "theorems": 227,
         "title": "Uniqueness of Minimal Median Decompositions for Graphs"
+      },
+      {
+        "cycle_id": "8892ab13",
+        "quality": 0.43946266666666667,
+        "theorems": 3,
+        "title": "Finite approximate Ramsey degrees characterize metrizable universal minimal flow"
       }
     ],
     "Pythagorean": [
