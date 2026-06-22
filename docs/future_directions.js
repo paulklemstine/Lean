@@ -2745,6 +2745,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Solution Count Confinement"
   },
   {
+    "consumed_by_exp_id": "48b7f4af",
+    "description": "Let a_n be the number of isomorphism classes of finite simple connected planar 3-regular graphs with n vertices. The conjecture is that a_{2m+1}=0 for every m, and that there exist real constants C>0 and gamma>1 such that a_{2m} / (C (2m)^(-7/2) gamma^(2m)) tends to 1 as m tends to infinity. This isolates the main enumerative shape of the paper in a Lean-formalizable form without committing to the paper-specific numerical values of C and gamma.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2158",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.17992v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-20T23:04:12.150157+00:00",
+    "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "This conjecture asserts that if a continuum admits a projective Fraisse category whose automorphism group has a certain density condition, then its homeomorphism group behaves in a way tied to the exceptional amenability of its closed subgroups, formalizable within Lean 4 via exact properties of group flows.",
     "domains": [
@@ -3917,13 +3932,42 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2240",
+    "id": "fd_2239",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
     "status": "available",
     "timestamp": "2026-06-22T12:24:38.162264+00:00",
     "title": "Projective Fra\u00efss\u00e9 Metrization Conjecture for Universal Minimal Flows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every \u03b5 > 0, there exist N \u2208 \u2115 and \u03b4 > 0 such that for all n \u2265 N, every K_5-free graph on n vertices with independence number at most \u03b4n can be made bipartite by removing at most (1/18 + \u03b5) \u00b7 n\u00b2 edges. This formalizes the main result of the paper: the optimal constant for the bipartite deletion number of K_5-free graphs with sublinear independence number is exactly 1/18.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2240",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20397v1",
+    "status": "available",
+    "timestamp": "2026-06-22T12:48:24.070591+00:00",
+    "title": "Bipartite deletion number for K_5-free graphs with sublinear independence number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every prime power q and every rank r \u2265 1, there exists n\u2080 such that for all n \u2265 n\u2080, at least half of all q-matroids on \ud835\udd3d_q^n of rank r are sparse-paving. This is the q-analogue of the long-standing conjecture in classical matroid theory that most matroids are sparse-paving, and directly addresses the asymptotic growth questions identified in the paper's gap analysis between lower and upper bounds.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2240",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-22T12:48:52.361402+00:00",
+    "title": "Most q-Matroids Are Sparse-Paving"
   },
   {
     "consumed_by_exp_id": "",
@@ -6318,7 +6362,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diaspora Polis Ontology: Concept Lattices for Simulated Minds"
   },
   {
-    "consumed_by_exp_id": "59799085",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
       "Computation",
@@ -6328,7 +6372,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.62,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -6407,7 +6451,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropicalized binary weight enumerator profile from Smooth Poincar\u00e9 cod"
   },
   {
-    "consumed_by_exp_id": "0e282766",
+    "consumed_by_exp_id": "",
     "description": "Formalize Wolfram's four-class taxonomy of cellular automaton behavior (uniform/periodic/chaotic/complex) and investigate the computability of classifying a given CA's asymptotic behavior, relating class-4 to universal computation. (Wolfram)",
     "domains": [
       "Computation",
@@ -6417,7 +6461,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:09.132500+00:00",
     "title": "Wolfram CA Four-Class Classification and its Computability"
   },

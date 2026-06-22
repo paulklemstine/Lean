@@ -4320,6 +4320,37 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Connectivity",
+      "Mathlib.Data.Fintype.Card",
+      "Mathlib.Topology.Algebra.Order",
+      "Mathlib.Analysis.SpecialFunctions.Pow.Real"
+    ],
+    "consumed_by_exp_id": "48b7f4af",
+    "description": "Let a_n be the number of isomorphism classes of finite simple connected planar 3-regular graphs with n vertices. The conjecture is that a_{2m+1}=0 for every m, and that there exist real constants C>0 and gamma>1 such that a_{2m} / (C (2m)^(-7/2) gamma^(2m)) tends to 1 as m tends to infinity. This isolates the main enumerative shape of the paper in a Lean-formalizable form without committing to the paper-specific numerical values of C and gamma.",
+    "domain_bridges": [
+      "graph isomorphism quotients to finite cardinal enumeration",
+      "planar graph decomposition to analytic combinatorics",
+      "Burnside/Pólya symmetry enumeration to unlabelled counting",
+      "local large deviation estimates to coefficient asymptotics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2158",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define a_n as the cardinality of the quotient of finite simple connected planar cubic graphs on n vertices by graph isomorphism. The parity assertion follows from the handshaking lemma. For the asymptotic part, formalize the network and 3-connected decompositions used for cubic planar graphs, prove the relevant functional equations for the ordinary generating functions, establish their dominant square-root/singularity schema with computable error bounds, and then apply a formalized transfer theorem giving coefficient asymptotics with exponent -7/2. The final Lean proof would combine the coefficient theorem with the quotient-cardinality interpretation of the ordinary generating function.",
+    "research_mode": "team",
+    "source_exp_id": "2606.17992v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-20T23:04:12.150157+00:00",
+    "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "pestov_book",
       "irwin_solecki"
     ],
@@ -6528,7 +6559,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2240",
+    "id": "fd_2239",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The forward direction mirrors the KPT metrization strategy: assuming M(G) is metrizable, construct a precompact expansion F' of F by encoding the metrizable flow structure into the combinatorial data of the projective Fraïssé category, then verify the approximate Ramsey property via an ultrahomogeneity argument on the expanded limit. The reverse direction follows the pattern of this paper: given F' with the approximate Ramsey property, use the main theorem to conclude extreme amenability of an expanded group, then apply the precompactness condition to show the original group G has a metrizable universal minimal flow obtained as a quotient of the expanded group's singleton flow.",
@@ -6537,6 +6568,60 @@
     "status": "available",
     "timestamp": "2026-06-22T12:24:38.162264+00:00",
     "title": "Projective Fraïssé Metrization Conjecture for Universal Minimal Flows"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO/Ramsey-Turán",
+      "math.CO/bipartite_cuts",
+      "math.CO/flag_algebras"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every ε > 0, there exist N ∈ ℕ and δ > 0 such that for all n ≥ N, every K_5-free graph on n vertices with independence number at most δn can be made bipartite by removing at most (1/18 + ε) · n² edges. This formalizes the main result of the paper: the optimal constant for the bipartite deletion number of K_5-free graphs with sublinear independence number is exactly 1/18.",
+    "domain_bridges": [
+      "asymptotic_combinatorics_to_finite_graphs",
+      "weighted_Turán_theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2240",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The formalization should proceed in three stages: (1) formalize the basic framework of bipartite deletion numbers D₂(n, H) and independence number constraints; (2) formalize the flag algebra computational component, which requires certifying semidefinite programs (this is the hardest part—likely requiring a verified certificate checker or external computation trusted via IO); (3) combine the stability analysis (structural characterization of near-extremal graphs) with the flag algebra bounds to establish that no K_5-free graph with sublinear independence number requires deleting more than n²(1/18 + o(1)) edges to become bipartite. The lower bound construction (balanced blow-up of a specific weighted graph) should be formalized separately to establish tightness.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20397v1",
+    "status": "available",
+    "timestamp": "2026-06-22T12:48:24.070591+00:00",
+    "title": "Bipartite deletion number for K_5-free graphs with sublinear independence number"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "05B35",
+      "94B05"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every prime power q and every rank r ≥ 1, there exists n₀ such that for all n ≥ n₀, at least half of all q-matroids on 𝔽_q^n of rank r are sparse-paving. This is the q-analogue of the long-standing conjecture in classical matroid theory that most matroids are sparse-paving, and directly addresses the asymptotic growth questions identified in the paper's gap analysis between lower and upper bounds.",
+    "domain_bridges": [
+      "Finite geometry → Matroid theory",
+      "Coding theory (constant-dimension codes) → q-Matroid enumeration",
+      "Classical matroid asymptotics → q-analogue asymptotics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2240",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the entropy-based counting framework developed in the paper to show non-sparse-paving q-matroids are exponentially fewer than sparse-paving ones. Key steps: (1) formalize that a q-matroid is sparse-paving iff every r-dimensional subspace is either a basis or a circuit; (2) use the contraction-closure property of the class of non-sparse-paving q-matroids to apply the entropy method; (3) establish that the dependent hyperplane structure of non-sparse-paving q-matroids reduces their count below 2^{(1-o(1))·[n choose r]_q / (q^r - 1)}, which is the lower bound for sparse-paving q-matroids from constant-dimension code constructions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-22T12:48:52.361402+00:00",
+    "title": "Most q-Matroids Are Sparse-Paving"
   },
   {
     "ambition_level": "grand_challenge",
@@ -9738,7 +9823,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "59799085",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [
@@ -9751,7 +9836,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -9857,7 +9942,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0e282766",
+    "consumed_by_exp_id": "",
     "description": "Formalize Wolfram's four-class taxonomy of cellular automaton behavior (uniform/periodic/chaotic/complex) and investigate the computability of classifying a given CA's asymptotic behavior, relating class-4 to universal computation. (Wolfram)",
     "domain_bridges": [],
     "domains": [
@@ -9870,7 +9955,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:09.132500+00:00",
     "title": "Wolfram CA Four-Class Classification and its Computability"
   },
