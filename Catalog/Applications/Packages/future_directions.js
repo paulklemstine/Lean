@@ -4378,6 +4378,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every graph admits a linked, componental, rooted tree-cut decomposition of finite adhesion that displays all undominated edge-ends. This is the main theorem (Theorem 1) of the paper, which simultaneously generalizes Thomas's linked tree-decomposition theorem to edge-connectivity and to infinite graphs. The result unifies two prior threads: linked tree-decompositions into finite parts for infinite graphs (Albrechtsen, Jacobs, Knappe, Pitz) and linked tree-cut decompositions for finite graphs (Giannopoulou, Kwon, Raymond, Thilikos). Key corollaries include the Bruhn-Stein characterization of Eulerian locally finite graphs and Thomassen's theorem on boundary-linked finite partitions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2274",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:07:03.208178+00:00",
+    "title": "Existence of Linked Componental Tree-Cut Decompositions Displaying Undominated Edge-Ends"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In any odd base B > 3, the maximum length of a terminal cycle of the four-digit Kaprekar map equals (B-1)/2 if and only if B is a prime p > 5 and the least positive integer m satisfying 2^m \u2261 \u00b11 (mod p) is exactly m = (p-1)/2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2275",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:07:34.018187+00:00",
+    "title": "Kaprekar Maximum Cycle Length Equivalence"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize Conway's surreal numbers as a universally embedding ordered field containing the reals and the ordinals, with recursive definitions of arithmetic (+, x, order), the birthday construction, and the embedding of dyadic rationals. (Conway, On Numbers and Games 1976)",
     "domains": [
       "Algebra",
@@ -7020,7 +7048,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Oppermann's Conjecture: Primes Around n^2"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03341375",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -7029,7 +7057,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },

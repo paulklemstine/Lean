@@ -7390,6 +7390,65 @@
   },
   {
     "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "05C63",
+      "05C75",
+      "tree-cut decompositions",
+      "edge-connectivity",
+      "ends of graphs",
+      "Robertson-Seymour theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every graph admits a linked, componental, rooted tree-cut decomposition of finite adhesion that displays all undominated edge-ends. This is the main theorem (Theorem 1) of the paper, which simultaneously generalizes Thomas's linked tree-decomposition theorem to edge-connectivity and to infinite graphs. The result unifies two prior threads: linked tree-decompositions into finite parts for infinite graphs (Albrechtsen, Jacobs, Knappe, Pitz) and linked tree-cut decompositions for finite graphs (Giannopoulou, Kwon, Raymond, Thilikos). Key corollaries include the Bruhn-Stein characterization of Eulerian locally finite graphs and Thomassen's theorem on boundary-linked finite partitions.",
+    "domain_bridges": [
+      "graph theory ↔ topology (ends as Freudenthal compactification)",
+      "finite combinatorics ↔ infinite combinatorics (transfinite methods)",
+      "edge-connectivity ↔ vertex-connectivity (analogy between tree-cut and tree-decompositions)"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2274",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The formalization would proceed in three major phases: (1) Develop the theory of edge-ends and undominated edge-ends for multigraphs in Lean, including the end-filtration correspondence and the natural map φ from edge-ends to the tree boundary; (2) Formalize tree-cut decompositions for infinite graphs with the key properties—finite adhesion, componental, linked, and displaying—along with the adhesion set machinery; (3) Construct the decomposition via a careful extension of the finite-case approach of Giannopoulou et al., using Zorn's lemma or transfinite recursion to handle infinite graphs, ensuring undominated edge-ends are displayed by maintaining the componental property throughout the construction. A stepping-stone would be to first formalize the finite-graph case (every finite connected multigraph admits a linked, componental tree-cut decomposition), which avoids the need for end theory.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:07:03.208178+00:00",
+    "title": "Existence of Linked Componental Tree-Cut Decompositions Displaying Undominated Edge-Ends"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "math.CO",
+      "OEIS_A099009"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "In any odd base B > 3, the maximum length of a terminal cycle of the four-digit Kaprekar map equals (B-1)/2 if and only if B is a prime p > 5 and the least positive integer m satisfying 2^m ≡ ±1 (mod p) is exactly m = (p-1)/2.",
+    "domain_bridges": [
+      "Kaprekar dynamics",
+      "multiplicative order",
+      "projective linear groups",
+      "modular arithmetic"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2275",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the four-digit Kaprekar map and its terminal cycles. Prove the conjugacy to projective doubling on the triangular region T_B. Derive the cycle lengths from the orbits of projective doubling, and characterize the maximum length condition using the order of 2 modulo B.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:07:34.018187+00:00",
+    "title": "Kaprekar Maximum Cycle Length Equivalence"
+  },
+  {
+    "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize Conway's surreal numbers as a universally embedding ordered field containing the reals and the ordinals, with recursive definitions of arithmetic (+, x, order), the birthday construction, and the embedding of dyadic rationals. (Conway, On Numbers and Games 1976)",
@@ -10924,7 +10983,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03341375",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -10936,7 +10995,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
