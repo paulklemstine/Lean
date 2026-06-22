@@ -1076,7 +1076,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "e880e838",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1086,7 +1086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1916,7 +1916,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterizationof Daisy Cubes via Peripheral Theta-Classes and Forbidden pc-Minors"
   },
   {
-    "consumed_by_exp_id": "4dca8a63",
+    "consumed_by_exp_id": "",
     "description": "The coefficients of the constructed modular form truncate to zero modulo any prime \u2113.",
     "domains": [
       "Pythagorean"
@@ -1925,7 +1925,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19008v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T10:11:48.398941+00:00",
     "title": "Triviality of Modular Form Coefficients"
   },
@@ -3618,18 +3618,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any odd prime power $q$ and nonzero constant $c \\in \\mathbb{F}_q^\\times$, the polynomial $f_c(x) = cx^{q-1} + t$ is arboreally maximal over $\\mathbb{F}_q(t)$ (i.e., its $n$-th iterated Galois group is isomorphic to the $n$-fold iterated wreath product of $C_{q-1}$ for all $n \\ge 1$) if and only if the Galois representation of the twisted Carlitz module $\\rho_t^c(x) = tx + cx^q$ is surjective at the finite place $(t)$.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2218",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:30:08.001075+00:00",
+    "title": "Local-Global Arboreal-Adelic Equivalence for Twisted Carlitz Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p\u00b2 sides and one die with q\u00b2 sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2218",
+    "id": "fd_2219",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
     "status": "available",
     "timestamp": "2026-06-22T05:19:14.551818+00:00",
     "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let n > 2k \u2265 2 be positive integers. If F, G \u2286 ([n] choose k) are cross-intersecting families (every F \u2208 F intersects every G \u2208 G), and neither F nor G is a star (i.e., \u2204x with x \u2208 \u22c2F, and \u2204y with y \u2208 \u22c2G), then |F| \u00b7 |G| \u2264 (C(n-1,k-1) - C(n-k-1,k-1) + 1)\u00b2. Equality holds if and only if (F, G) is isomorphic to (HM_{n,k}, HM_{n,k}), where HM_{n,k} = {[2,k+1]} \u222a {H \u2208 C([n],k) : 1 \u2208 H \u2227 H \u2229 [2,k+1] \u2260 \u2205} is the Hilton-Milner family.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2220",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:30:44.481020+00:00",
+    "title": "Product Hilton-Milner Bound for Cross-Intersecting Families"
   },
   {
     "consumed_by_exp_id": "",
@@ -3908,7 +3937,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the research cycle that produced:"
   },
   {
-    "consumed_by_exp_id": "3a2ec677",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Integrated Information via Tensor Networks\n\nThis research cycle established the dictionary\n\n> **IIT min-cut \u03a6  \u2261  tensor-network min-cut entanglement capacity**\n> (under `weight = log(bond dimension)`),\n\nand proved two structural laws of the cut functional: **submodularity**\n(`crossInfo_submodular`) and **superadditivity under superposition**\n(`phi_superadditive`). The conjectures below are the falsifiable targets for the\nnext cycles, ordered roughly by ambition.\n\n## C1. Holographic Strong Subadditivity (min lifts submodularity)\n\nCycle 1 proved the *cut function* `S \u21a6 crossInfo S` is submodular. Define the\n**holographic entropy** of a region `A \u2286 Fin n` as the minimum cut separating\n`A` from `A\u1d9c`, `S\u2095\u2092\u2097(A) = min { crossInfo S : A \u2286 S, S nontrivial }`.\n\n> **Conjecture C1.** `A \u21a6 S\u2095\u2092\u2097(A)` is itself submodular; equivalently, for\n> disjoint regions `A,B,C`:\n> `S\u2095\u2092\u2097(A\u222aB) + S\u2095\u2092\u2097(B\u222aC) \u2265 S\u2095\u2092\u2097(A\u222aB\u222aC) + S\u2095\u2092\u2097(B)`.\n\nThis is the discrete Ryu\u2013Takayanagi strong-subadditivity statement. Test: prove\nthe cut-and-paste inequality `crossInfo(S\u2229T) + crossInfo(S\u222aT) \u2264 crossInfo S +\ncrossInfo T` (already have it) and combine with optimality of the minimizing\ncuts. Falsifiable by a small explicit weighted graph if it fails.\n\n## C2. Max-flow / min-cut tightness (area-law saturation)\n\nWe proved the one-sided bound `entanglementCapacity \u2264 logCut S` for every cut.\n\n> **Conjecture C2.** For every symmetric tensor network there is an explicit\n> \"flow\" certificate whose value equals `entanglementCapacity`, so the min-cut\n> bound is *tight*: `entanglementCapacity = max over admissible flows`.\n\nThis is a weighted directed max-flow=min-cut theorem specialized to the IIT cut\nfunctional. Test: formalize an admissible-flow structure and prove weak duality\n(`flow \u2264 phi`) then strong duality on `Fin n`.\n\n## C3. Coarse-graining monotonicity (RG step)\n\n> **Conjecture C3.** Contracting an internal edge (merging two nodes `i,j` and\n> summing their weights) does not increase \u03a6: `\u03a6(C / {i\u223cj}) \u2264 \u03a6(C)`.\n\nIf true, \u03a6 is an RG-monotone \u2014 a \"c-theorem\" for integrated information. Test:\ndefine node-merge on `CausalSystem`, relate its bipartitions to the original's,\nand bound the cut functional. Falsifiable: search small systems for a merge that\nraises \u03a6.\n\n## C4. Spectral lower bound (Fiedler/Cheeger for \u03a6)\n\n> **Conjecture C4.** For the symmetrized system `symmetrize C` there is a\n> Cheeger-type bound `\u03a6 \u2265 c \u00b7 \u03bb\u2082(L_C) \u00b7 (min part size)` where `\u03bb\u2082` is the\n> algebraic connectivity of the weighted graph Laplacian `L_C`.\n\nThis would connect IIT directly to spectral graph theory and give a *computable*\ncertificate of high integration from an eigenvalue. Test: prove the easy\ndirection (\u03a6 controls a conductance) first, then the spectral inequality.\n\n## C5. Exact superadditivity gap\n\nCycle 2 proved `\u03a6(C\u2081 \u2295 C\u2082) \u2265 \u03a6(C\u2081) + \u03a6(C\u2082)` and showed equality fails in\ngeneral.\n\n> **Conjecture C5.** Equality `\u03a6(C\u2081 \u2295 C\u2082) = \u03a6(C\u2081) + \u03a6(C\u2082)` holds **iff** `C\u2081`\n> and `C\u2082` admit a common minimizing bipartition.\n\nTest: the `\u2190` direction is immediate from `crossInfo_add`; the `\u2192` direction\nneeds that the superposed minimizer simultaneously minimizes both summands.\nFalsifiable by exhibiting a common-minimizer pair with strict inequality.\n",
     "domains": [
       "Algebra",
@@ -3918,7 +3947,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ecc79db8",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T15:41:35.937351+00:00",
     "title": "Dictionary"
   },
@@ -4717,7 +4746,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization of Reasoning: Phase Transitions in Theorem-Proving Complexity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d0b9aaa",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -4726,7 +4755,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T01:05:26.622326+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "90c4ce9a",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — Functorial Tropical Ultrametric from Pythagorean Lorentz Triples\n\nThis cycle produced `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorries, only\nstandard axioms). It b",
-      "quality_score": 0.49903022994652413,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-16T01:39:59",
-      "title": "Functorial tropical ultrametric from Pythagorean Lorentz triples"
-    },
-    {
       "cycle_id": "999c0f6b",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Valuation-Depth → Tropical Functor\n\nDerived from the verified results in\n`Catalog/Bridges/ValuationDepthTropicalFunctor.lean` (foundations) and\n`Catalog/Bridges/ValuationDepthFol",
@@ -2501,6 +2491,16 @@
       "theorem_count": 234,
       "timestamp": "2026-06-22T06:15:37",
       "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
+    },
+    {
+      "cycle_id": "d168a656",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Degree-normalized linked tree-cut decompositions\n\nDerived from this cycle's findings in `AdhesionSequence.lean` and\n`DegreeNormalization.lean`.  The cycle isolated the combinator",
+      "quality_score": 0.5556197063805759,
+      "sorry_count": 0,
+      "theorem_count": 311,
+      "timestamp": "2026-06-22T07:28:23",
+      "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T06:15:37",
+  "last_updated": "2026-06-22T07:28:23",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "972d4c89",
-        "quality": 0.8524,
-        "theorems": 103,
-        "title": "Ramsey Theory: Bounds and Constructions"
-      },
-      {
         "cycle_id": "722e1f4a",
         "quality": 0.654,
         "theorems": 22,
@@ -3141,6 +3135,12 @@
         "quality": 0.63352,
         "theorems": 247,
         "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+      },
+      {
+        "cycle_id": "d168a656",
+        "quality": 0.5556197063805759,
+        "theorems": 311,
+        "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
       }
     ],
     "Bridges": [

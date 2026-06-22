@@ -398,7 +398,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3a3db57",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -411,7 +411,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -1435,7 +1435,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e880e838",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domain_bridges": [],
     "domains": [
@@ -1448,7 +1448,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -2781,7 +2781,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": "arXiv:quantummechanics/talk1786",
-    "consumed_by_exp_id": "4dca8a63",
+    "consumed_by_exp_id": "",
     "description": "The coefficients of the constructed modular form truncate to zero modulo any prime ℓ.",
     "domain_bridges": "Modular Forms and Cohomology",
     "domains": [
@@ -2793,7 +2793,7 @@
     "proof_strategy": "Verification via direct computation modulo ℓ",
     "research_mode": "team",
     "source_exp_id": "2606.19008v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T10:11:48.398941+00:00",
     "title": "Triviality of Modular Form Coefficients"
   },
@@ -3451,7 +3451,7 @@
       "Gunderson and Semeraro (2017) – explicit 4‑graph construction matching upper bound",
       "Baber and Talbot (2011) – flag algebra upper bound for K_4^- (r=3)"
     ],
-    "consumed_by_exp_id": "b27cec0f",
+    "consumed_by_exp_id": "",
     "description": "For every integer r≥2 there exists a constant C>0 such that for all sufficiently large n the maximum number of edges in an n‑vertex r‑uniform hypergraph in which each (r+1)-set spans exactly 0 or 2 edges is at least C·n^r / r³, and no such hypergraph can have more than C'·n^r / r² edges. Equivalently, the Turán density π(H^r_3)=Θ(1/r³).",
     "domain_bridges": [
       "Extremal hypergraph theory",
@@ -3467,7 +3467,7 @@
     "proof_strategy": "Use a probabilistic construction placing n points uniformly on the unit sphere S^{r-2} and declaring an r‑set an edge iff its convex hull contains the origin; analyze the probability that a random (r+1)-set spans 0 or 2 edges, then apply entropy compression or hypergraph container methods to show any such hypergraph cannot exceed O(n^r / r²) edges, yielding the Θ(1/r³) density conjecture.",
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T21:56:09.924073+00:00",
     "title": "Conjecture: Turán density of the 3‑edge r‑graph is Θ(1/r³)"
   },
@@ -5959,6 +5959,34 @@
     "title": "Quadratic density conjecture for Frankl-Füredi 0-or-2 hypergraphs"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "Arboreal_Galois_Theory",
+      "Drinfeld_Modules"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any odd prime power $q$ and nonzero constant $c \\in \\mathbb{F}_q^\\times$, the polynomial $f_c(x) = cx^{q-1} + t$ is arboreally maximal over $\\mathbb{F}_q(t)$ (i.e., its $n$-th iterated Galois group is isomorphic to the $n$-fold iterated wreath product of $C_{q-1}$ for all $n \\ge 1$) if and only if the Galois representation of the twisted Carlitz module $\\rho_t^c(x) = tx + cx^q$ is surjective at the finite place $(t)$.",
+    "domain_bridges": [
+      "Arboreal Galois Representations",
+      "Drinfeld Module Adelic Representations",
+      "Function Field Arithmetic"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2218",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove the contrapositive of the missing implication by demonstrating that any obstruction to arboreal maximality at level $n$ forces a corresponding drop in the size of the local Galois image at $(t)$, using the structural connection between the $t$-power torsion tower of $\\rho_t^c$ and the iterated splitting fields of $f_c$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:30:08.001075+00:00",
+    "title": "Local-Global Arboreal-Adelic Equivalence for Twisted Carlitz Polynomials"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Chao, Gabel, Larson, and Nasr (dice relabeling via cyclotomic polynomials)",
@@ -5976,7 +6004,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2218",
+    "id": "fd_2219",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the factorization of the frequency polynomial F(x) = (∑_{i=1}^m x^i)² = x²((x^m-1)/(x-1))² using cyclotomic decomposition. Show that any valid factorization into two polynomials P₁(x) and P₂(x) where P₁(1) = p² and P₂(1) = q² requires m to have a specific square-free factorization structure. Use properties of cyclotomic polynomials Φ_d(x) and their evaluations at x=1 to establish necessary divisibility conditions that cannot be satisfied when m is not a perfect square.",
@@ -5985,6 +6013,35 @@
     "status": "available",
     "timestamp": "2026-06-22T05:19:14.551818+00:00",
     "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Erdős-Ko-Rado",
+      "Hilton-Milner",
+      "cross-intersecting_families",
+      "diversity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let n > 2k ≥ 2 be positive integers. If F, G ⊆ ([n] choose k) are cross-intersecting families (every F ∈ F intersects every G ∈ G), and neither F nor G is a star (i.e., ∄x with x ∈ ⋂F, and ∄y with y ∈ ⋂G), then |F| · |G| ≤ (C(n-1,k-1) - C(n-k-1,k-1) + 1)². Equality holds if and only if (F, G) is isomorphic to (HM_{n,k}, HM_{n,k}), where HM_{n,k} = {[2,k+1]} ∪ {H ∈ C([n],k) : 1 ∈ H ∧ H ∩ [2,k+1] ≠ ∅} is the Hilton-Milner family.",
+    "domain_bridges": [
+      "finite_set_theory",
+      "combinatorial_optimization",
+      "linear_algebra_methods"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2220",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the S_{U,V}^Q-shift method introduced in the paper to reduce to shifted families, then apply diversity-based structural decomposition. The key steps are: (1) Show the S_{U,V}^Q-shift does not decrease |F|·|G| for cross-intersecting pairs, (2) Analyze the diversity structure of extremal pairs using the cross-intersecting analogue of Kupavskii's theorem established in the paper, (3) Show that if both families have positive diversity, the product is bounded by |HM_{n,k}|², (4) Verify uniqueness of the extremal configuration via stability arguments.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:30:44.481020+00:00",
+    "title": "Product Hilton-Milner Bound for Cross-Intersecting Families"
   },
   {
     "ambition_level": "extension",
@@ -6360,7 +6417,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3a2ec677",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions — Integrated Information via Tensor Networks\n\nThis research cycle established the dictionary\n\n> **IIT min-cut Φ  ≡  tensor-network min-cut entanglement capacity**\n> (under `weight = log(bond dimension)`),\n\nand proved two structural laws of the cut functional: **submodularity**\n(`crossInfo_submodular`) and **superadditivity under superposition**\n(`phi_superadditive`). The conjectures below are the falsifiable targets for the\nnext cycles, ordered roughly by ambition.\n\n## C1. Holographic Strong Subadditivity (min lifts submodularity)\n\nCycle 1 proved the *cut function* `S ↦ crossInfo S` is submodular. Define the\n**holographic entropy** of a region `A ⊆ Fin n` as the minimum cut separating\n`A` from `Aᶜ`, `Sₕₒₗ(A) = min { crossInfo S : A ⊆ S, S nontrivial }`.\n\n> **Conjecture C1.** `A ↦ Sₕₒₗ(A)` is itself submodular; equivalently, for\n> disjoint regions `A,B,C`:\n> `Sₕₒₗ(A∪B) + Sₕₒₗ(B∪C) ≥ Sₕₒₗ(A∪B∪C) + Sₕₒₗ(B)`.\n\nThis is the discrete Ryu–Takayanagi strong-subadditivity statement. Test: prove\nthe cut-and-paste inequality `crossInfo(S∩T) + crossInfo(S∪T) ≤ crossInfo S +\ncrossInfo T` (already have it) and combine with optimality of the minimizing\ncuts. Falsifiable by a small explicit weighted graph if it fails.\n\n## C2. Max-flow / min-cut tightness (area-law saturation)\n\nWe proved the one-sided bound `entanglementCapacity ≤ logCut S` for every cut.\n\n> **Conjecture C2.** For every symmetric tensor network there is an explicit\n> \"flow\" certificate whose value equals `entanglementCapacity`, so the min-cut\n> bound is *tight*: `entanglementCapacity = max over admissible flows`.\n\nThis is a weighted directed max-flow=min-cut theorem specialized to the IIT cut\nfunctional. Test: formalize an admissible-flow structure and prove weak duality\n(`flow ≤ phi`) then strong duality on `Fin n`.\n\n## C3. Coarse-graining monotonicity (RG step)\n\n> **Conjecture C3.** Contracting an internal edge (merging two nodes `i,j` and\n> summing their weights) does not increase Φ: `Φ(C / {i∼j}) ≤ Φ(C)`.\n\nIf true, Φ is an RG-monotone — a \"c-theorem\" for integrated information. Test:\ndefine node-merge on `CausalSystem`, relate its bipartitions to the original's,\nand bound the cut functional. Falsifiable: search small systems for a merge that\nraises Φ.\n\n## C4. Spectral lower bound (Fiedler/Cheeger for Φ)\n\n> **Conjecture C4.** For the symmetrized system `symmetrize C` there is a\n> Cheeger-type bound `Φ ≥ c · λ₂(L_C) · (min part size)` where `λ₂` is the\n> algebraic connectivity of the weighted graph Laplacian `L_C`.\n\nThis would connect IIT directly to spectral graph theory and give a *computable*\ncertificate of high integration from an eigenvalue. Test: prove the easy\ndirection (Φ controls a conductance) first, then the spectral inequality.\n\n## C5. Exact superadditivity gap\n\nCycle 2 proved `Φ(C₁ ⊕ C₂) ≥ Φ(C₁) + Φ(C₂)` and showed equality fails in\ngeneral.\n\n> **Conjecture C5.** Equality `Φ(C₁ ⊕ C₂) = Φ(C₁) + Φ(C₂)` holds **iff** `C₁`\n> and `C₂` admit a common minimizing bipartition.\n\nTest: the `←` direction is immediate from `crossInfo_add`; the `→` direction\nneeds that the superposed minimizer simultaneously minimizes both summands.\nFalsifiable by exhibiting a common-minimizer pair with strict inequality.\n",
     "domain_bridges": [],
     "domains": [
@@ -6373,7 +6430,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "ecc79db8",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T15:41:35.937351+00:00",
     "title": "Dictionary"
   },
@@ -7439,7 +7496,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d0b9aaa",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -7451,7 +7508,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T01:05:26.622326+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
