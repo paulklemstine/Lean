@@ -1076,7 +1076,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e880e838",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1086,7 +1086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1916,7 +1916,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterizationof Daisy Cubes via Peripheral Theta-Classes and Forbidden pc-Minors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4dca8a63",
     "description": "The coefficients of the constructed modular form truncate to zero modulo any prime \u2113.",
     "domains": [
       "Pythagorean"
@@ -1925,7 +1925,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19008v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T10:11:48.398941+00:00",
     "title": "Triviality of Modular Form Coefficients"
   },
@@ -3603,12 +3603,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The maximum asymptotic density of an n-vertex r-graph in which every (r+1)-set spans exactly 0 or 2 edges is \u0398(r^{-2}) as r \u2192 \u221e. Specifically, there exists an absolute constant c > 0 such that for every r \u2265 2 and all sufficiently large n, there exists an r-graph on n vertices where every (r+1)-set spans 0 or 2 edges, with at least c/r\u00b2 \u00b7 C(n,r) edges. This would improve the \u03a9(r^{-3}) construction in the paper and match the conjectured optimal order, complementing the trivial O(r^{-1}) upper bound from de Caen's double-counting argument.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2217",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-22T06:17:03.308183+00:00",
+    "title": "Quadratic density conjecture for Frankl-F\u00fcredi 0-or-2 hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p\u00b2 sides and one die with q\u00b2 sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2217",
+    "id": "fd_2218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -3893,7 +3908,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the research cycle that produced:"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3a2ec677",
     "description": "# Future Directions \u2014 Integrated Information via Tensor Networks\n\nThis research cycle established the dictionary\n\n> **IIT min-cut \u03a6  \u2261  tensor-network min-cut entanglement capacity**\n> (under `weight = log(bond dimension)`),\n\nand proved two structural laws of the cut functional: **submodularity**\n(`crossInfo_submodular`) and **superadditivity under superposition**\n(`phi_superadditive`). The conjectures below are the falsifiable targets for the\nnext cycles, ordered roughly by ambition.\n\n## C1. Holographic Strong Subadditivity (min lifts submodularity)\n\nCycle 1 proved the *cut function* `S \u21a6 crossInfo S` is submodular. Define the\n**holographic entropy** of a region `A \u2286 Fin n` as the minimum cut separating\n`A` from `A\u1d9c`, `S\u2095\u2092\u2097(A) = min { crossInfo S : A \u2286 S, S nontrivial }`.\n\n> **Conjecture C1.** `A \u21a6 S\u2095\u2092\u2097(A)` is itself submodular; equivalently, for\n> disjoint regions `A,B,C`:\n> `S\u2095\u2092\u2097(A\u222aB) + S\u2095\u2092\u2097(B\u222aC) \u2265 S\u2095\u2092\u2097(A\u222aB\u222aC) + S\u2095\u2092\u2097(B)`.\n\nThis is the discrete Ryu\u2013Takayanagi strong-subadditivity statement. Test: prove\nthe cut-and-paste inequality `crossInfo(S\u2229T) + crossInfo(S\u222aT) \u2264 crossInfo S +\ncrossInfo T` (already have it) and combine with optimality of the minimizing\ncuts. Falsifiable by a small explicit weighted graph if it fails.\n\n## C2. Max-flow / min-cut tightness (area-law saturation)\n\nWe proved the one-sided bound `entanglementCapacity \u2264 logCut S` for every cut.\n\n> **Conjecture C2.** For every symmetric tensor network there is an explicit\n> \"flow\" certificate whose value equals `entanglementCapacity`, so the min-cut\n> bound is *tight*: `entanglementCapacity = max over admissible flows`.\n\nThis is a weighted directed max-flow=min-cut theorem specialized to the IIT cut\nfunctional. Test: formalize an admissible-flow structure and prove weak duality\n(`flow \u2264 phi`) then strong duality on `Fin n`.\n\n## C3. Coarse-graining monotonicity (RG step)\n\n> **Conjecture C3.** Contracting an internal edge (merging two nodes `i,j` and\n> summing their weights) does not increase \u03a6: `\u03a6(C / {i\u223cj}) \u2264 \u03a6(C)`.\n\nIf true, \u03a6 is an RG-monotone \u2014 a \"c-theorem\" for integrated information. Test:\ndefine node-merge on `CausalSystem`, relate its bipartitions to the original's,\nand bound the cut functional. Falsifiable: search small systems for a merge that\nraises \u03a6.\n\n## C4. Spectral lower bound (Fiedler/Cheeger for \u03a6)\n\n> **Conjecture C4.** For the symmetrized system `symmetrize C` there is a\n> Cheeger-type bound `\u03a6 \u2265 c \u00b7 \u03bb\u2082(L_C) \u00b7 (min part size)` where `\u03bb\u2082` is the\n> algebraic connectivity of the weighted graph Laplacian `L_C`.\n\nThis would connect IIT directly to spectral graph theory and give a *computable*\ncertificate of high integration from an eigenvalue. Test: prove the easy\ndirection (\u03a6 controls a conductance) first, then the spectral inequality.\n\n## C5. Exact superadditivity gap\n\nCycle 2 proved `\u03a6(C\u2081 \u2295 C\u2082) \u2265 \u03a6(C\u2081) + \u03a6(C\u2082)` and showed equality fails in\ngeneral.\n\n> **Conjecture C5.** Equality `\u03a6(C\u2081 \u2295 C\u2082) = \u03a6(C\u2081) + \u03a6(C\u2082)` holds **iff** `C\u2081`\n> and `C\u2082` admit a common minimizing bipartition.\n\nTest: the `\u2190` direction is immediate from `crossInfo_add`; the `\u2192` direction\nneeds that the superposed minimizer simultaneously minimizes both summands.\nFalsifiable by exhibiting a common-minimizer pair with strict inequality.\n",
     "domains": [
       "Algebra",
@@ -3903,7 +3918,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ecc79db8",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T15:41:35.937351+00:00",
     "title": "Dictionary"
   },
@@ -4539,33 +4554,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Weighted K5-free max-cut with triangle-discounted edges\n\nDerived from the Stage 3 / Stage 4 findings of this research cycle. This cycle proved an\nunconditional **factor-3** upper bound (`kFiveFree_exists_monoWeight_le`: every `K\u2085`-free graph has\na bipartition with discounted monochromatic weight `\u2264 3n\u00b2/16`) and a **sharp endpoint** certificate\n(`K4_optimum_eq_extremal`: the optimum equals `n\u00b2/16` exactly on `K\u2084`). The analysis localized the\nremaining factor-3 gap precisely to the loss incurred by ignoring the triangle discount in the\naveraging step.\n\n---\n\n## Conjecture 1 \u2014 The discount closes the gap on dense graphs\n\n**Statement.** For every `K\u2085`-free graph `G` whose edge count is at least `(1\u2212\u03b5)\u00b73n\u00b2/8` (within\n`\u03b5` of Tur\u00e1n-extremal), there is a bipartition with discounted monochromatic weight `\u2264 n\u00b2/16 + o(n\u00b2)`.\n\nThe key insight is that near-extremal `K\u2085`-free graphs are *triangle-saturated*: a Tur\u00e1n-type\nstability argument forces all but `o(n\u00b2)` edges into triangles, so the total *discounted* weight\ncollapses from `3n\u00b2/8` to `(3/16 + o(1))n\u00b2`, and halving via the same averaging argument already\nbeats `n\u00b2/16`. **Why now?** We already have the averaging machinery (`exists_monoWeight_le_half`)\nand the Tur\u00e1n cap (`card_edgeFinset_le_real`) formalized; the only missing ingredient is a\nquantitative \"few non-triangle edges\" lemma, which is a self-contained edge-counting statement.\n\n## Conjecture 2 \u2014 Triangle-free K5-free graphs satisfy the bound with weight 1\n\n**Statement.** For every triangle-free graph `G` on `n` vertices (a special `K\u2085`-free case where\n*all* weights equal `1`), there is a bipartition with monochromatic weight `\u2264 n\u00b2/16`.\n\nThe key insight is that triangle-free graphs are exactly the regime where the discount is inert, so\nthe conjecture reduces to a pure max-cut statement: triangle-free graphs have a cut covering a\n`1/2 + \u03a9(1/\u221an)` fraction of edges, and combined with Mantel's `#edges \u2264 n\u00b2/4` this should yield\n`monoWeight \u2264 n\u00b2/16`. **Why now?** This isolates the *hardest* regime of the full conjecture (no\ndiscount help) into a clean, self-contained problem that Mathlib's Mantel theorem\n(`SimpleGraph.CliqueFree.card_edgeFinset_le` with `r = 2`) already supports.\n\n## Conjecture 3 \u2014 A weighted local-switching optimum beats averaging\n\n**Statement.** For every graph with our edge weights, a bipartition `c` that is *locally optimal*\n(no single vertex move decreases `monoWeight`) satisfies, for `K\u2085`-free `G`, the bound\n`monoWeight(G, c) \u2264 n\u00b2/8`, strictly better than the averaging value `3n\u00b2/16` whenever `G` has a\npositive density of triangles.\n\nThe key insight is that local optimality gives a *vertex-wise* guarantee \u2014 each vertex has at most\nhalf its incident weight monochromatic \u2014 which averaging cannot see; summing these local guarantees\nexploits the discount edge-by-edge. **Why now?** Local optimality is finite and constructive\n(every finite graph has a `monoWeight`-minimal colouring), so the existence side needs no new\nanalysis, only a Finset double-count over darts that mirrors `totalW_le_card_edgeFinset`.\n\n## Conjecture 4 \u2014 Sharpness extends to every balanced complete 4-partite graph\n\n**Statement.** For every `m \u2265 1`, the balanced complete 4-partite graph `K_{m,m,m,m}` on `n = 4m`\nvertices has optimum discounted monochromatic weight exactly `n\u00b2/16 = m\u00b2`.\n\nThe key insight is that every edge of `K_{m,m,m,m}` lies in a triangle (uniform weight `1/2`), so\nthe objective becomes `(1/2)\u00b7(monochromatic edge count)`, and a balanced-partition counting argument\ngeneralizes the `K\u2084` computation `K4_dirMono_eq` from `m = 1` to all `m`. **Why now?** The `m = 1`\ncase is fully formalized (`K4_optimum_eq_extremal`); the generalization is a parameterized version\nof the same `Finset` count, replacing `decide` with an explicit `m`-indexed cardinality lemma.\n\n## Conjecture 5 \u2014 Removing the discount forces the constant up to 1/8\n\n**Statement.** If every edge is given weight `1` (no triangle discount), then the sharp constant for\n`K\u2085`-free graphs is `1/8`, not `1/16`: every `K\u2085`-free graph has a bipartition with monochromatic\nedge count `\u2264 n\u00b2/8`, and `K_{m,m,m,m}` attains it.\n\nThe key insight is that the discount is *exactly* a factor-2 saving on the extremal graph \u2014 its\n`3n\u00b2/8` edges contribute `n\u00b2/8` undiscounted but `n\u00b2/16` discounted \u2014 so quantifying the discount's\neffect pins both constants simultaneously. **Why now?** The undiscounted bound `n\u00b2/8` is precisely\nthe averaging value `(3n\u00b2/8)/2` we already prove as an intermediate step, so the upper half is done;\nonly the matching lower bound on `K_{m,m,m,m}` (Conjecture 4 without the `1/2`) remains.\n",
+    "description": "# Future Directions \u2014 Category Theory as a Universal Language (Bridge cycle)\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. Each conjecture is bold, falsifiable, and Lean-checkable.\n\n## FD-1. The regular subobjects of a topos form a Boolean algebra.\n\n**Conjecture.** For every `Order.Frame \u03b1`, the fixed points of the double-negation\nnucleus (`{a | ToposDoubleNegationLattice.IsRegular a}`) carry a\n`BooleanAlgebra` structure whose meet is `\u2293`, whose top/bottom are `\u22a4`/`\u22a5`, and\nwhose complement is `a\u1d9c`, with join given by `a \u2294' b := (a\u1d9c \u2293 b\u1d9c)\u1d9c`.\n\nThe key insight is... that meet-preservation (`dneg_inf`) plus idempotence make\n`dneg` a *nucleus*, and the sheafification `a \u21a6 a\u1d9c\u1d9c` collapses intuitionistic\nlogic to classical logic exactly on its fixed points \u2014 Booleanness is forced, not\nassumed.\n\nWhy now? We already proved closure under `\u2293` (`isRegular_inf`) and the bounds\n(`isRegular_bot/top`); only the (de Morgan) join and complement laws remain, all\nexpressible with the same `compl`/`himp` API verified in this cycle.\n\n## FD-2. The Yoneda iso-corollary upgrades to an equivalence of groupoids.\n\n**Conjecture.** The map `X \u21a6 yoneda.obj X` induces an equivalence between the core\ngroupoid of `C` and the full subcategory of representable presheaves, and\n`iso_iff_representable_iso` is its object-level shadow.\n\nThe key insight is... that full faithfulness (the single fact powering\n`isoPreimage` and `endEquiv`) is exactly the data of an equivalence onto the\nessential image, so the `Nonempty (\u00b7 \u2245 \u00b7)` biconditional is the \u03c0\u2080 of a deeper\ncategorical equivalence.\n\nWhy now? `Yoneda.fullyFaithful` is in scope and `endEquiv_comp`/`endEquiv_one`\nalready show the hom-level functoriality; the essential-image construction is the\nonly missing ingredient.\n\n## FD-3. `dneg` is the unique non-trivial Lawvere\u2013Tierney topology on a chain.\n\n**Conjecture.** On a totally ordered frame (a chain) `\u03b1`, every nucleus\n`j : \u03b1 \u2192 \u03b1` (monotone, extensive, idempotent, meet-preserving) other than the\nidentity equals the double-negation nucleus `dneg` collapsed onto `{\u22a5, \u22a4}`; i.e.\nchains admit only the trivial and the double-negation topologies.\n\nThe key insight is... that on a chain `a\u1d9c` is `\u22a4` for `a = \u22a5` and `\u22a5` otherwise,\nso `dneg` is the indicator of \"`> \u22a5`\", and any idempotent extensive monotone\nself-map respecting `\u2293` is pinned by its values at the two bounds proved regular\nhere (`dneg_bot`, `dneg_top`).\n\nWhy now? The nucleus axioms are all formalized in this file; the chain case is a\nfinite/order-induction argument (`omega`/`rcases` on comparisons) well within\nreach.\n\n## FD-4. Knaster\u2013Tarski computes sheafification of any nucleus, not just `dneg`.\n\n**Conjecture.** For an arbitrary nucleus `j` on a frame, the least fixed point\n`sInf (KnasterTarskiBridge.preFixed j)` above an element `a`, i.e.\n`sInf {x | a \u2264 x \u2227 j x \u2264 x}`, equals `j a`, exhibiting sheafification as the\nKnaster\u2013Tarski least-fixed-point closure relative to `a`.\n\nThe key insight is... that a nucleus is precisely a meet-preserving closure\noperator, so its image is the set of fixed points, and the catalog's\n`knaster_tarski` already delivers those fixed points constructively \u2014 we proved\nthe `a = \u22a5` and `a = \u22a4` extremes (`lfp_dneg_eq_bot`, `gfp_dneg_eq_top`).\n\nWhy now? The bridge between `dneg` and `KnasterTarskiBridge` is already wired\n(`dneg_knaster_tarski`); generalizing from `dneg` to an abstract nucleus reuses\nthe identical fixed-point lemmas.\n\n## FD-5. The frame of opens detects regularity geometrically.\n\n**Conjecture.** For `Opens X`, `IsRegular U \u2194 U = interior (closure U)`, and the\nregular opens are exactly the complemented elements of the Heyting algebra\n`Opens X`; hence `X` is extremally disconnected iff every open is regular.\n\nThe key insight is... that `U\u1d9c\u1d9c` in `Opens X` is interior-of-closure, so\n`dneg`-fixed points are the classical *regular open sets*, linking the abstract\nnucleus to a checkable point-set condition.\n\nWhy now? `opens_dneg_inf` and `opens_isRegular_*` already specialize the nucleus\nto `Opens X`; identifying `dneg` with interior\u2218closure is a single Mathlib lemma\naway and turns regularity into a topological invariant.\n",
     "domains": [
       "Algebra",
-      "Pythagorean"
+      "Logic"
     ],
-    "id": "fd_2218",
+    "id": "fd_2120",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "eafa171c",
+    "source_exp_id": "5d803a6e",
     "status": "available",
-    "timestamp": "2026-06-22T06:01:06.988712+00:00",
-    "title": "Derived from the Stage 3 / Stage 4 findings of this research cycle. This cycle p"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Median Decompositions and Their Uniqueness\n\nDerived from this cycle's findings (`Core.lean`: distributive-lattice median and its\nuniqueness; `GraphMedian.lean`: the hypercube as a median graph with a unique median\nand triangle-freeness). Each conjecture is stated to be falsifiable in Lean.\n\n## FD1 (bold). Uniqueness \u21d4 distributivity, made exact\n\n**Conjecture.** A finite lattice `L` has the property \"for all `a,b,c`, the\nintersection of the three intervals `[a\u2293b,a\u2294b] \u2229 [b\u2293c,b\u2294c] \u2229 [c\u2293a,c\u2294a]` is a\nsingleton\" **if and only if** `L` is distributive.\n\nThe key insight is... that the squeeze proof of `medL_unique` used *only* the identity\n`medL_eq_infForm`, which is itself equivalent to distributivity \u2014 so the converse\nshould be recoverable by exhibiting a non-singleton interval intersection from any\n`M\u2083` or `N\u2085` sublattice (Birkhoff's criterion).\n\nWhy now? We already have the `\u2192` direction (`medL_unique`) and the dual-form identity\nisolated; the missing `\u2190` direction is a finite-witness construction that the\ncounterexample-hunting workflow is well suited to, and Mathlib now carries enough\nlattice theory (`M\u2083`, `N\u2085`, Birkhoff) to attempt it directly.\n\n## FD2 (bold). The hypercube graph metric equals the Hamming metric\n\n**Conjecture.** For finite `\u03b9`, `(cubeGraph \u03b9).dist a b = hammingDist a b`, and\nconsequently `(cubeGraph \u03b9)` is connected with diameter `Fintype.card \u03b9`.\n\nThe key insight is... that a geodesic can be built explicitly by flipping the\ndiffering coordinates one at a time, each flip being a `cubeGraph` edge, so the graph\ndistance is bounded above by `hammingDist`; the matching lower bound is the\nparity/coordinate-counting argument already used in `hamming_between_iff`.\n\nWhy now? `hamming_between_iff` and `cubeGraph_adj` give both halves of the bridge in\nembryonic form; promoting `CubeBetween` to an actual `SimpleGraph.Walk` would upgrade\nall of `GraphMedian.lean` from Hamming-geodesic language to genuine graph-distance\nlanguage, matching the catalog reference `combinatorics/simple_graph` even more tightly.\n\n## FD3 (grand challenge). Global uniqueness of minimal median decompositions\n\n**Conjecture.** Any two median decompositions of a finite graph `G` whose underlying\nmedian graph has the minimum possible number of vertices are isomorphic via a graph\nisomorphism preserving the decomposition bags.\n\nThe key insight is... that the global statement should reduce to the *local* certificate\nproved here: the bag a vertex sees is determined by its system of pairwise medians, and\n`medL_unique` forces the median structure, so a minimal decomposition is rigid once the\n\u0398-class (Djokovi\u0107\u2013Winkler) partition is fixed.\n\nWhy now? The local uniqueness (`medL_unique`, `cube_existsUnique_median`) is the first\nbrick; the next tractable brick is formalizing \u0398-classes as an equivalence relation on\nedges and proving their count is an isomorphism invariant \u2014 a self-contained\ncombinatorial target that does not need the full retraction theory.\n\n## FD4. Median-graph vertices are exactly the fixed points of a majority closure\n\n**Conjecture.** A subset `S \u2286 Bool\u207f` is the vertex set of an (isometric) median\nsubgraph iff `S` is closed under the coordinatewise majority `cubeMed`, and the minimal\nsuch `S` containing a given seed set is unique.\n\nThe key insight is... that `cubeMed_between` shows the majority never leaves the\ncoordinate intervals of its inputs, so the majority-closure of a set is contained in its\n\"interval hull\", giving a canonical (hence unique) minimal median-closed set.\n\nWhy now? `cubeMed` and `cubeMed_between` already give a total, computable closure\noperator on `Bool\u207f`; closure-operator uniqueness theorems are standard in Mathlib's\norder library, so the minimal-closed-set uniqueness is within immediate reach.\n\n## FD5. Triangle-freeness sharpens to bipartiteness for all hypercubes\n\n**Conjecture.** `(cubeGraph \u03b9)` is bipartite (2-colorable) for every finite `\u03b9`, with\nthe parity-of-popcount coloring, and is `K_{2,3}`-free.\n\nThe key insight is... that the parity function `popcount mod 2` already underlies\n`cubeGraph_cliqueFree_three`; promoting it to a `SimpleGraph.Coloring (Fin 2)` proves\nbipartiteness, from which odd-cycle-freeness (and hence the median property's bipartite\nprerequisite) follows uniformly.\n\nWhy now? We proved the `n = 3` clique-free instance via parity; the same parity map is a\nready-made 2-coloring, so bipartiteness is a short generalization that connects this work\nto Mathlib's `SimpleGraph.Coloring` API.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2220",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5bd61b22",
-    "status": "available",
-    "timestamp": "2026-06-22T06:08:35.441301+00:00",
-    "title": "Derived from this cycle's findings (`Core.lean`: distributive-lattice median and"
+    "timestamp": "2026-06-19T17:15:33.749896+00:00",
+    "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
   },
   {
     "consumed_by_exp_id": "",
@@ -4580,21 +4580,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For every analytic one-parameter family of finite-range, translation-invariant 1D quantum spin Hamiltonians H(t) with a unique ground state away from finitely many critical parameters, the persistence barcode of the local observable algebra filtered by the ground-state GNS covariance metric has unbounded bottleneck derivative as system size L -> infinity if and only if the thermodynamic spectral gap closes at t. Test: Compute these noncommutative persistence barcodes for exactly solvable chains and DMRG-accessible models; confirmation requires barcode singularities precisely at known gap-closing transitions, while any gapped family with a diverging barcode derivative or any gap-closing family with uniformly Lipschitz barcodes refutes it. Impact: Provides a topological, representation-theoretic diagnostic for quantum criticality that may classify phase transitions without order parameters.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_2219",
-    "priority_score": 0.7157272727272728,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-22T06:02:05.507236+00:00",
-    "title": "Quantum Phase Transitions as Singularities of Noncommutative Persistence"
   },
   {
     "consumed_by_exp_id": "",
