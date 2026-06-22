@@ -354,7 +354,7 @@ class CatalogScorer:
         )
 
         try:
-            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
+            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120)
             response = raw.strip().upper()
             return response.startswith("YES")
         except Exception:

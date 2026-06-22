@@ -399,7 +399,7 @@ class PiAgentClient:
                     pass
         self.ollama_cloud_model: str = _ocr.get("model", "gpt-oss:120b-cloud")
         self.ollama_cloud_base_url: str = _ocr.get("base_url", "https://ollama.com").rstrip("/")
-        self.ollama_cloud_timeout: int = int(_ocr.get("timeout", 300))
+        self.ollama_cloud_timeout: int = int(_ocr.get("timeout", 600))
 
         # OpenRouter fallback configuration
         _or = openrouter or {}

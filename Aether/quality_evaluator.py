@@ -703,7 +703,7 @@ class QualityEvaluator:
             user_prompt += f"RESEARCH REPORT (first 1000 chars):\n{report_text[:1000]}"
 
         try:
-            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
+            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120)
             data = self.pi_agent._parse_json_response(raw)
             if data:
                 imp = float(data.get("importance", 0.5))
@@ -916,7 +916,7 @@ class QualityEvaluator:
         )
 
         try:
-            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
+            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120)
             data = self.pi_agent._parse_json_response(raw)
             if data:
                 # Build a QualityScore from the critic's assessment
@@ -965,7 +965,7 @@ class QualityEvaluator:
         )
 
         try:
-            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
+            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120)
             data = self.pi_agent._parse_json_response(raw)
             if data:
                 qs = QualityScore(

@@ -160,7 +160,7 @@ class InsightExtractor:
         user_prompt = f"Classify these newly proved theorems:\n\n{theorem_text}"
 
         try:
-            raw = self.pi_agent._call_ollama(system=system_prompt, user=user_prompt, timeout=60)
+            raw = self.pi_agent._call_ollama(system=system_prompt, user=user_prompt, timeout=120)
             parsed = self.pi_agent._parse_json_response(raw)
             if parsed and isinstance(parsed, dict):
                 return parsed
@@ -272,7 +272,7 @@ class InsightExtractor:
             user_prompt += f"\n\nExisting Catalog theorems for comparison:\n{existing_context}"
 
         try:
-            raw = self.pi_agent._call_ollama(system=system_prompt, user=user_prompt, timeout=60)
+            raw = self.pi_agent._call_ollama(system=system_prompt, user=user_prompt, timeout=120)
             parsed = self.pi_agent._parse_json_response(raw)
             if parsed and isinstance(parsed, dict):
                 score = parsed.get("novelty_score", 0.5)
