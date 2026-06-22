@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "12bdf767",
     "filename": "fixed_point_theorems_brouwer_banach_schauder.json",
     "pkg_num": 326,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5597778115501519,
     "title": "Fixed Point Theorems via Discrete Parity: Sperner, Brouwer, Banach, and the Shadow of Schauder"
   },
   {
@@ -3354,6 +3354,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Applications",
     "exp_id": "f8049429",
     "source_exp_ids": [
+      "2ca83739",
+      "f18d283e",
       "seed"
     ],
     "title": "Certified Robustness for Instant-Runoff Classifiers via Tropical Gap Certificates"
@@ -3699,6 +3701,7 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges",
     "exp_id": "15a7bd19",
     "source_exp_ids": [
+      "007b54b3",
       "15e5810c"
     ],
     "title": "Fractal Dimension of Proof Search"
@@ -4248,7 +4251,9 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Geometry",
     "exp_id": "b676b19c",
     "source_exp_ids": [
-      "7007fa32"
+      "7007fa32",
+      "c47fbb21",
+      "cc78e8bc"
     ],
     "title": "Composition Calculus for Set-Local Distortion of Hausdorff Dimension"
   },
@@ -4410,7 +4415,9 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges",
     "exp_id": "17e8812c",
     "source_exp_ids": [
-      "2d7514a5"
+      "2d7514a5",
+      "pi_brainstorm",
+      "seed"
     ],
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
   },
@@ -4467,7 +4474,9 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges",
     "exp_id": "00126c0b",
     "source_exp_ids": [
-      "0a026f10"
+      "0a026f10",
+      "15a7bd19",
+      "51a047ff"
     ],
     "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
   },
@@ -4636,6 +4645,7 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges",
     "exp_id": "ee624f37",
     "source_exp_ids": [
+      "1f2f8815",
       "seed"
     ],
     "title": "Closure-Gauge Realization Duality via Idempotent Holonomy"
@@ -4873,6 +4883,7 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "646015c5",
     "source_exp_ids": [
+      "646015c5",
       "seed"
     ],
     "title": "Quantum Topological Phase Computation: The Fibonacci Anyon Model"
@@ -4881,7 +4892,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "7007fa32",
     "source_exp_ids": [
-      "9ff1d7e2"
+      "9ff1d7e2",
+      "cd56fc3f"
     ],
     "title": "Set-Local Distortion of Hausdorff Dimension"
   },
@@ -5165,7 +5177,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges",
     "exp_id": "664852e6",
     "source_exp_ids": [
-      "0e08543f"
+      "0e08543f",
+      "1aaaec8c"
     ],
     "title": "Entropy-Bounded Computation: A Bridge from Landauer's Principle to Complexity"
   },
@@ -5793,6 +5806,7 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges",
     "exp_id": "4471cf7c",
     "source_exp_ids": [
+      "4471cf7c",
       "seed"
     ],
     "title": "Topological Quantum Computing: Braiding Universality"
@@ -10026,8 +10040,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "fixed_point_theorems_brouwer_banach_schauder",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5597778115501519,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Fixed Point Theorems via Discrete Parity: Sperner, Brouwer, Banach, and the Shadow of Schauder"
     }
