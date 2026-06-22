@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-22T19:50:04.134398+00:00",
+  "last_updated": "2026-06-22T21:21:12.729699+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -215,6 +215,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-22T19:50:03.911263+00:00",
       "title": "Wolfram CA Four-Class Classification and its Computability"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2165,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Tropical",
+      "duration_seconds": 1078.5881383419037,
+      "end_time": 1782162874.4065342,
+      "files_integrated": 7,
+      "job_id": "9537a45c",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16a",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16a",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7765,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7308,
+        "novelty": 0.95,
+        "proof_depth": 0.6368,
+        "usefulness": 0.8184
+      },
+      "quality_score": 0.7829999999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782161795.8183959,
+      "strategy_count": 0,
+      "theorem_count": 21,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 2,
+      "theorem_novelty_new": 19,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-22T21:21:12.524965+00:00",
+      "title": "Idempotent Probability: Large Deviations"
     }
   ]
 }

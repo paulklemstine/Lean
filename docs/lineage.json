@@ -1,5 +1,15 @@
 {
-  "nodes": [],
+  "nodes": [
+    {
+      "id": "idempotent_probability_large_deviations",
+      "title": "Idempotent Probability: Large Deviations and the Sharp Cramer Duality Gap",
+      "domain": "Tropical",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-06-22T21:20:57Z",
+      "hue": 100
+    }
+  ],
   "edges": [],
   "domain_bridges": []
 }

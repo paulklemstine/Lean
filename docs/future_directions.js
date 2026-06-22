@@ -1076,7 +1076,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Continued Fractions and Diophantine Approximation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "112edb5a",
     "description": "Prove the invariant subspace theorem for compact operators on Hilbert spaces (Aronszajn-Smith). Formalize Lomonosov's theorem: operators commuting with a nonzero compact operator have invariant subspaces. Explore the Enflo-Read counterexample structure.",
     "domains": [
       "Analysis",
@@ -1086,7 +1086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432648+00:00",
     "title": "Invariant Subspace Problem: Special Cases"
   },
@@ -4262,12 +4262,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For cross-intersecting families A \u2286 C([n],a) and B \u2286 C([n],b) with n > a+b, if the diversity \u03b3(A) = |A| - \u0394(A) satisfies \u03b3(A) \u2265 C(n-u-1, a-1) for some integer u \u2265 0, then there exists an element x* \u2208 [n] achieving the maximum degree in A such that every set A \u2208 A not containing x* admits a (u+1)-element subset S \u2286 A that intersects every member of B. This extends the Frankl\u2013Kupavskii\u2013Zakharov diversity stability theorem from intersecting to cross-intersecting families, which is the central result of the paper.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2266",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-22T21:23:41.865712+00:00",
+    "title": "Cross-intersecting diversity structural stability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every continuum F arising as a quotient of a projective Fra\u00efss\u00e9 limit \ud835\udd3d with Aut(\ud835\udd3d) dense in Homeo(F), the universal minimal flow M(Homeo(F)) is either a singleton (i.e., Homeo(F) is extremely amenable) or is non-metrizable. This would generalize the pseudo-solenoid result and establish that no intermediate case exists where the universal minimal flow is metrizable but non-trivial.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2266",
+    "id": "fd_2267",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
@@ -4281,7 +4295,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2267",
+    "id": "fd_2268",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -4296,7 +4310,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2268",
+    "id": "fd_2269",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -4310,7 +4324,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2269",
+    "id": "fd_2270",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20494v1",
@@ -4324,7 +4338,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2270",
+    "id": "fd_2271",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",

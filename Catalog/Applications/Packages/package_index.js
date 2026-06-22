@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9537a45c",
     "filename": "idempotent_probability_large_deviations.json",
     "pkg_num": 1,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7829999999999999,
     "title": "Idempotent Probability: Large Deviations and the Sharp Cramer Duality Gap"
   }
 ];
@@ -38,8 +38,8 @@ window.PACKAGE_GRAPH = {
       "hue": 100,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7829999999999999,
+      "quality": "substantial",
       "shape": "star",
       "title": "Idempotent Probability: Large Deviations and the Sharp Cramer Duality Gap"
     }

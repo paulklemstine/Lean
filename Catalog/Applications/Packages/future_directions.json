@@ -44738,6 +44738,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "Erdős-Ko-Rado",
+        "Hilton-Milner",
+        "cross-intersecting",
+        "diversity"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For cross-intersecting families A ⊆ C([n],a) and B ⊆ C([n],b) with n > a+b, if the diversity γ(A) = |A| - Δ(A) satisfies γ(A) ≥ C(n-u-1, a-1) for some integer u ≥ 0, then there exists an element x* ∈ [n] achieving the maximum degree in A such that every set A ∈ A not containing x* admits a (u+1)-element subset S ⊆ A that intersects every member of B. This extends the Frankl–Kupavskii–Zakharov diversity stability theorem from intersecting to cross-intersecting families, which is the central result of the paper.",
+      "domain_bridges": [
+        "set_theory",
+        "finite_combinatorics",
+        "order_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2266",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cross_intersecting_diversity_structure\n    {n a b u : ℕ} (hn : n > a + b) (hu : n ≥ u + a)\n    (𝒜 : Finset (Finset (Fin n))) (ℬ : Finset (Finset (Fin n)))\n    (h𝒜 : ∀ A ∈ 𝒜, A.card = a) (hℬ : ∀ B ∈ ℬ, B.card = b)\n    (h_cross : ∀ A ∈ 𝒜, ∀ B ∈ ℬ, (A ∩ B).Nonempty)\n    (h_div : 𝒜.card - (Finset.card 𝒜).maxDegree ≥ Nat.choose (n - u - 1) (a - 1)) :\n    ∃ x : Fin n, ∀ A ∈ 𝒜, x ∉ A →\n      ∃ S ⊆ A, S.card = u + 1 ∧ ∀ B ∈ ℬ, (S ∩ B).Nonempty := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the S_{U,V}^Q-shift operation and prove it preserves cross-intersection and family size. Then establish the cross-intersecting analogue of the Kupavskii structural theorem by induction on shifting, mirroring the paper's approach: (1) define the shift and prove its key invariants, (2) prove the base cases for compressed families, (3) show that iterated shifting converges to a compressed cross-intersecting pair satisfying the diversity structural property, (4) lift back to the original families via shift-invariance.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20085v1",
+      "source_path": "http://arxiv.org/abs/2606.20085v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T21:23:41.865712+00:00",
+      "title": "Cross-intersecting diversity structural stability"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.LO",
         "math.DS",
         "math.CO"
@@ -44759,7 +44807,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2266",
+      "id": "fd_2267",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem umf_dichotomy_projective_fraisse_limit (F : Type*) [CompactSpace F] [ConnectedSpace F] [MetrizableSpace F] (𝔽 : Type*) [CompactSpace 𝔽] [TotallyDisconnectedSpace 𝔽] (q : 𝔽 → F) (h_q : QuotientMap q) (h_dense : Dense (aut_group_image q)) : IsSingleton (UMF (Homeo F)) ∨ ¬MetrizableSpace (UMF (Homeo F))",
@@ -44802,7 +44850,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2267",
+      "id": "fd_2268",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_square_sided_pair : ¬ ∃ (P₁ P₂ : ℕ[X]), (∀ i, (P₁).eval 1 = 6) ∧ (∀ i, (P₂).eval 1 = 6) ∧ (P₁ * P₂) = (∑ i in Finset.Icc 1 6, X ^ i) ^ 2 ∧ (P₁).natDegree = 4 ∧ (P₂).natDegree = 9",
@@ -44849,7 +44897,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2268",
+      "id": "fd_2269",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem kaprekar_preperiod_sharp (B : Nat) (hB : Odd B) (hB_gt_3 : B > 3) :\n    ∃ (s : Fin 4 → Fin B), ¬Kaprekar.isConstant s ∧\n      Kaprekar.iterate B s 3 ∈ Kaprekar.triangularRegion B ∧\n      ∀ (k : Fin 3), Kaprekar.iterate B s k.val ∉ Kaprekar.triangularRegion B :=\n  by\n    sorry",
@@ -44897,7 +44945,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2269",
+      "id": "fd_2270",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def PosCodegreeTuránDensity (k : ℕ) (F : Finset (Finset (Finset ℕ))) : ℝ := sorry\n\ndef IsKUniform (H : Finset (Finset ℕ)) (k : ℕ) : Prop := ∀ e ∈ H, e.card = k\n\ntheorem strong_non_principality_arbitrary_size (k s : ℕ) (hk : 3 ≤ k) (hs : 2 ≤ s) :\n    ∃ F : Fin s → Finset (Finset ℕ),\n      (∀ i : Fin s, IsKUniform (F i) k) ∧\n      0 < PosCodegreeTuránDensity k (Finset.image F Finset.univ) ∧\n      PosCodegreeTuránDensity k (Finset.image F Finset.univ) < \n        Finset.min' (Finset.image (fun i => PosCodegreeTuránDensity k {F i}) Finset.univ) sorry := by\n  sorry",
@@ -44943,7 +44991,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2270",
+      "id": "fd_2271",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bounded_tree_alpha_Pk_Kdd_free (k d : ℕ) : ∃ (c : ℕ), ∀ (V : Type*) [Fintype V] (G : SimpleGraph V), ¬HasInducedSubgraph G (pathGraph k) → ¬HasInducedSubgraph G (completeBipartiteGraph d d) → tree_independence_number G ≤ c := by sorry",
@@ -52135,11 +52183,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "112edb5a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -52151,7 +52199,7 @@
         "Algebra"
       ],
       "id": "seed_343",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-22T21:23:51.447214+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -52165,7 +52213,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432648+00:00",
       "title": "Invariant Subspace Problem: Special Cases"

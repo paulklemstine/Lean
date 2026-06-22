@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a7e4a8d3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Rank-of-Apparition Engine, Seventh Cycle\n\n## Synthesis\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCriterion.lean`, a self-contained,\n`sorry`-free upper flo",
-      "quality_score": 0.7199621052631578,
-      "sorry_count": 2,
-      "theorem_count": 19,
-      "timestamp": "2026-06-14T15:03:40",
-      "title": "Close Proofs: This cycle delivered `Catalog/Applications/StrongDivPrimitiveCriterion"
-    },
-    {
       "cycle_id": "0914fa07",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Boltzmann Bridge IX: The Persistence Functor and the Representation Theorem\n\n## Synthesis\n\n`Catalog/Applications/BoltzmannBridge/InterleavingFunctor.lean` (Bridge IX)\ndischarges",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-21T22:45:31",
       "title": "Ramsey Theory: Bounds and Constructions"
+    },
+    {
+      "cycle_id": "9537a45c",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from the findings of this research cycle (`LargeDeviations.lean`,\n`DualityGap.lean`). Each conjecture is bold, falsifiable, and",
+      "quality_score": 0.7829999999999999,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-06-22T21:21:10",
+      "title": "Idempotent Probability: Large Deviations"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5971ea29",
-      "domain": "MachineLearning",
-      "key_insight": "# FUTURE DIRECTIONS — Valuation-Depth → Tropical Functor (Cycle 3)\n\nThis document records the bold, falsifiable conjectures arising from the third deepening\ncycle, which **resolved** four of the previ",
-      "quality_score": 0.5840000000000001,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-16T08:07:33",
-      "title": "This document collects bold, falsifiable conjectures arising from the deepening "
-    },
     {
       "cycle_id": "841c1580",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-06-22T19:50:02",
       "title": "Wolfram CA Four-Class Classification and its Computability"
+    },
+    {
+      "cycle_id": "9537a45c",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nDerived from the findings of this research cycle (`LargeDeviations.lean`,\n`DualityGap.lean`). Each conjecture is bold, falsifiable, and",
+      "quality_score": 0.7829999999999999,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-06-22T21:21:10",
+      "title": "Idempotent Probability: Large Deviations"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "be5e0ab8",
-      "domain": "Computation",
-      "name": "comm_of_eq",
-      "quality": 0.8895200000000001
-    },
-    {
-      "cycle_id": "be5e0ab8",
-      "domain": "Computation",
-      "name": "braid_relator_of_eq",
-      "quality": 0.8895200000000001
-    },
-    {
-      "cycle_id": "e88eb144",
-      "domain": "Combinatorics",
-      "name": "with",
-      "quality": 0.7144
-    },
     {
       "cycle_id": "e88eb144",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "not_arrows_two_succ",
       "quality": 0.84432
+    },
+    {
+      "cycle_id": "9537a45c",
+      "domain": "Tropical",
+      "name": "says",
+      "quality": 0.7829999999999999
+    },
+    {
+      "cycle_id": "9537a45c",
+      "domain": "Tropical",
+      "name": "in",
+      "quality": 0.7829999999999999
+    },
+    {
+      "cycle_id": "9537a45c",
+      "domain": "Tropical",
+      "name": "in",
+      "quality": 0.7829999999999999
     }
   ],
-  "last_updated": "2026-06-22T19:50:02",
+  "last_updated": "2026-06-22T21:21:10",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "0d42792c",
-        "quality": 0.5761099999999999,
-        "theorems": 6,
-        "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
-      },
-      {
         "cycle_id": "24a3af22",
         "quality": 0.606,
         "theorems": 30,
@@ -4009,6 +4003,12 @@
         "quality": 0.60792,
         "theorems": 45,
         "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      },
+      {
+        "cycle_id": "9537a45c",
+        "quality": 0.7829999999999999,
+        "theorems": 21,
+        "title": "Idempotent Probability: Large Deviations"
       }
     ]
   }
