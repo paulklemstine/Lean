@@ -1756,20 +1756,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Image of the reversed subspace polynomial is the trace-orthogonal complement"
   },
   {
-    "consumed_by_exp_id": "39103244",
-    "description": "For every integer k \u2265 2 and every real \u03b5 with 0 < \u03b5 < 1, there is a threshold d0 such that every finite k-uniform uncrowded hypergraph H on n vertices with average degree at most d \u2265 d0 has an independent set of size at least (1 - \u03b5) n ((log d) / ((k - 1)d))^(1/(k - 1)). This extends the paper's maximum-degree theorem to the average-degree setting and is falsified by any sequence of uncrowded k-uniform hypergraphs of average degree d tending to infinity whose independence number falls below this asymptotic constant.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2085",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18048v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T16:05:12.158903+00:00",
-    "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For a positive integer n and a subgroup H of the automorphism group of the cyclic group C_n, the orbit Schur ring S(C_n,H) has an almost commutative Terwilliger algebra if and only if H is trivial, or n is a prime power and H is the full automorphism group, or n = p^a for an odd prime p and H has order p^(a-1). Equivalently, for non-prime-power n, only the trivial orbit Schur ring has this property.",
     "domains": [
@@ -5368,6 +5354,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Average-degree shattering for uncrowded hypergraphs\n\nThis cycle established the *deterministic core* of the average-degree independence\ntheory for `k`-uniform hypergraphs:\n\n- handshake identity `\u2211_v deg v = k\u00b7|E|` (`sum_degree_eq_kuniform`),\n- the deletion/transversal independence bound `\u03b1(H) \u2265 n \u2212 |E|` and its\n  average-degree form `\u03b1(H) \u2265 n\u00b7(1 \u2212 d/k)` (`exists_independent_avgDegree`),\n- the linear edge bound `|E|\u00b7C(k,2) \u2264 C(n,2)` and the average-degree upper bound\n  `d \u2264 (n\u22121)/(k\u22121)` for uncrowded hypergraphs (`avgDegree_le_of_uncrowded`).\n\nThe deep `log d / d^{1/(k\u22121)}` regime remains open at the formal level. The\nfollowing conjectures are falsifiable extensions derived from the patterns above.\n\n## Conjecture 1 \u2014 Average-degree AKPSS with the log factor (grand challenge)\n\nFor every `k \u2265 2` and `0 < \u03b5 < 1` there is `d\u2080` such that every uncrowded\n`k`-uniform hypergraph on `n` vertices with average degree `d \u2265 d\u2080` has an\nindependent set of size `\u2265 (1\u2212\u03b5)\u00b7n\u00b7(log d / ((k\u22121)d))^{1/(k\u22121)}`.\n\nThe key insight is that the average-degree hypothesis can be reduced to the\nmaximum-degree theorem by a *degree-pruning + weighting* argument: delete the few\nhigh-degree vertices (they carry a vanishing fraction of the edge mass because\nthe linear edge bound `d \u2264 (n\u22121)/(k\u22121)` caps the total), leaving an almost-regular\nsub-hypergraph to which the semi-random/nibble method applies.\n\nWhy now? The deterministic core (this cycle) already gives the matching *upper*\nbound `d \u2264 (n\u22121)/(k\u22121)` that controls the high-degree tail, so the only missing\ningredient is a formal R\u00f6dl-nibble lemma \u2014 a self-contained, reusable target.\n\n## Conjecture 2 \u2014 Tightness of the linear edge bound forces design structure\n\nIf an uncrowded `k`-uniform hypergraph attains `|E|\u00b7C(k,2) = C(n,2)`, then every\npair of vertices lies in exactly one edge, i.e. `H` is a Steiner `2-(n,k,1)`\nsystem.\n\nThe key insight is that equality in the pair double-counting forces the edge\npair-sets to *partition* the C(n,2) vertex pairs, which is precisely the defining\nincidence property of a Steiner system.\n\nWhy now? Our proof of `card_le_of_uncrowded` already exhibits the injection of\nedge-pairs into vertex-pairs; equality analysis of that exact injection is the\ndirect next step and needs no new machinery.\n\n## Conjecture 3 \u2014 Deletion bound is asymptotically optimal without uncrowdedness\n\nFor each `k`, there is a sequence of `k`-uniform (not necessarily uncrowded)\nhypergraphs with average degree `d \u2192 \u221e` whose independence number is\n`\u0398(n\u00b7d^{\u22121/(k\u22121)})`, with no `log d` factor; hence uncrowdedness is *necessary*\nfor the AKPSS improvement.\n\nThe key insight is that random `k`-uniform hypergraphs concentrate edges on\nshared pairs, destroying the \"spread\" that the nibble exploits, so the plain\ndeletion bound `n\u00b7(1 \u2212 d/k)` (and its `d^{\u22121/(k\u22121)}` optimization) is best\npossible there.\n\nWhy now? The deletion bound is already formalized here; pairing it with an\nexplicit random/algebraic construction turns \"the log factor needs uncrowdedness\"\nfrom folklore into a verified separation.\n\n## Conjecture 4 \u2014 Weighted (fractional) average-degree bound\n\nAssign nonnegative weights `w_v` to vertices; then there is an independent set\n`S` with `\u2211_{v\u2208S} w_v \u2265 (\u2211_v w_v)\u00b7(1 \u2212 d_w/k)`, where `d_w` is the\nweight-averaged degree.\n\nThe key insight is that the transversal-complement construction is *weight\noblivious*: replacing counting by weighted counting in the handshake identity and\nthe deletion step carries the whole argument through verbatim.\n\nWhy now? The current `exists_independent_card_ge` is the unweighted instance;\ngeneralizing its handshake and `Finset.card_biUnion` steps to weighted sums is a\nmechanical, high-value upgrade that unlocks LP-duality style applications.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2252",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "39103244",
+    "status": "available",
+    "timestamp": "2026-06-22T15:05:52.348773+00:00",
+    "title": "*deterministic core* of the average-degree independen"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize Conway's combinatorial game algebra (games as surreal numbers, nim-values, the Sprague-Grundy theorem that every impartial game is a nim-heap), and solve classic games (Hackenbush, Blue-Red-Green). (Conway, Berlekamp, Guy, Winning Ways)",
     "domains": [
       "Computation",
@@ -6583,7 +6584,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropicalized binary weight enumerator profile from Smooth Poincar\u00e9 cod"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "862d1e75",
     "description": "Formalize Wolfram's four-class taxonomy of cellular automaton behavior (uniform/periodic/chaotic/complex) and investigate the computability of classifying a given CA's asymptotic behavior, relating class-4 to universal computation. (Wolfram)",
     "domains": [
       "Computation",
@@ -6593,7 +6594,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:09.132500+00:00",
     "title": "Wolfram CA Four-Class Classification and its Computability"
   },

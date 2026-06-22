@@ -2476,36 +2476,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Mathlib.Data.Finset.Card",
-      "Mathlib.Data.Fintype.Basic",
-      "Mathlib.Algebra.BigOperators.Fin",
-      "Mathlib.Analysis.SpecialFunctions.Log.Basic",
-      "Mathlib.Analysis.SpecialFunctions.Pow.Real"
-    ],
-    "consumed_by_exp_id": "39103244",
-    "description": "For every integer k ≥ 2 and every real ε with 0 < ε < 1, there is a threshold d0 such that every finite k-uniform uncrowded hypergraph H on n vertices with average degree at most d ≥ d0 has an independent set of size at least (1 - ε) n ((log d) / ((k - 1)d))^(1/(k - 1)). This extends the paper's maximum-degree theorem to the average-degree setting and is falsified by any sequence of uncrowded k-uniform hypergraphs of average degree d tending to infinity whose independence number falls below this asymptotic constant.",
-    "domain_bridges": [
-      "uncrowded hypergraph independence bounds ↔ asymptotic real inequalities",
-      "finite set systems ↔ Lean 4 Finset/Fintype formalization",
-      "random greedy/nibble methods ↔ deterministic existence theorem statement",
-      "shattering threshold constants from CSPs ↔ extremal combinatorics"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2085",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize finite k-uniform hypergraphs as finite set systems with predicates for independence, degree, average degree, and uncrowdedness. Prove or import the paper's maximum-degree shattering-threshold theorem. The main new combinatorial step would be an average-degree reduction preserving the leading constant: decompose or sparsify H into a large induced uncrowded subhypergraph whose effective maximum degree is asymptotically d while accounting for vertices removed into an independent reservoir. Then apply the maximum-degree theorem to the bounded-degree core and combine with the reservoir. In Lean, the conjecture itself only requires finite definitions plus Real.log and Real.rpow; the probabilistic proof can later be formalized through finite probability spaces or replaced by a certified deterministic existence argument.",
-    "research_mode": "team",
-    "source_exp_id": "2606.18048v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T16:05:12.158903+00:00",
-    "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Mathlib.Data.ZMod.Basic",
       "Mathlib.GroupTheory.Subgroup.Basic",
       "Mathlib.GroupTheory.SpecificGroups.Cyclic",
@@ -8568,6 +8538,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Average-degree shattering for uncrowded hypergraphs\n\nThis cycle established the *deterministic core* of the average-degree independence\ntheory for `k`-uniform hypergraphs:\n\n- handshake identity `∑_v deg v = k·|E|` (`sum_degree_eq_kuniform`),\n- the deletion/transversal independence bound `α(H) ≥ n − |E|` and its\n  average-degree form `α(H) ≥ n·(1 − d/k)` (`exists_independent_avgDegree`),\n- the linear edge bound `|E|·C(k,2) ≤ C(n,2)` and the average-degree upper bound\n  `d ≤ (n−1)/(k−1)` for uncrowded hypergraphs (`avgDegree_le_of_uncrowded`).\n\nThe deep `log d / d^{1/(k−1)}` regime remains open at the formal level. The\nfollowing conjectures are falsifiable extensions derived from the patterns above.\n\n## Conjecture 1 — Average-degree AKPSS with the log factor (grand challenge)\n\nFor every `k ≥ 2` and `0 < ε < 1` there is `d₀` such that every uncrowded\n`k`-uniform hypergraph on `n` vertices with average degree `d ≥ d₀` has an\nindependent set of size `≥ (1−ε)·n·(log d / ((k−1)d))^{1/(k−1)}`.\n\nThe key insight is that the average-degree hypothesis can be reduced to the\nmaximum-degree theorem by a *degree-pruning + weighting* argument: delete the few\nhigh-degree vertices (they carry a vanishing fraction of the edge mass because\nthe linear edge bound `d ≤ (n−1)/(k−1)` caps the total), leaving an almost-regular\nsub-hypergraph to which the semi-random/nibble method applies.\n\nWhy now? The deterministic core (this cycle) already gives the matching *upper*\nbound `d ≤ (n−1)/(k−1)` that controls the high-degree tail, so the only missing\ningredient is a formal Rödl-nibble lemma — a self-contained, reusable target.\n\n## Conjecture 2 — Tightness of the linear edge bound forces design structure\n\nIf an uncrowded `k`-uniform hypergraph attains `|E|·C(k,2) = C(n,2)`, then every\npair of vertices lies in exactly one edge, i.e. `H` is a Steiner `2-(n,k,1)`\nsystem.\n\nThe key insight is that equality in the pair double-counting forces the edge\npair-sets to *partition* the C(n,2) vertex pairs, which is precisely the defining\nincidence property of a Steiner system.\n\nWhy now? Our proof of `card_le_of_uncrowded` already exhibits the injection of\nedge-pairs into vertex-pairs; equality analysis of that exact injection is the\ndirect next step and needs no new machinery.\n\n## Conjecture 3 — Deletion bound is asymptotically optimal without uncrowdedness\n\nFor each `k`, there is a sequence of `k`-uniform (not necessarily uncrowded)\nhypergraphs with average degree `d → ∞` whose independence number is\n`Θ(n·d^{−1/(k−1)})`, with no `log d` factor; hence uncrowdedness is *necessary*\nfor the AKPSS improvement.\n\nThe key insight is that random `k`-uniform hypergraphs concentrate edges on\nshared pairs, destroying the \"spread\" that the nibble exploits, so the plain\ndeletion bound `n·(1 − d/k)` (and its `d^{−1/(k−1)}` optimization) is best\npossible there.\n\nWhy now? The deletion bound is already formalized here; pairing it with an\nexplicit random/algebraic construction turns \"the log factor needs uncrowdedness\"\nfrom folklore into a verified separation.\n\n## Conjecture 4 — Weighted (fractional) average-degree bound\n\nAssign nonnegative weights `w_v` to vertices; then there is an independent set\n`S` with `∑_{v∈S} w_v ≥ (∑_v w_v)·(1 − d_w/k)`, where `d_w` is the\nweight-averaged degree.\n\nThe key insight is that the transversal-complement construction is *weight\noblivious*: replacing counting by weighted counting in the handshake identity and\nthe deletion step carries the whole argument through verbatim.\n\nWhy now? The current `exists_independent_card_ge` is the unweighted instance;\ngeneralizing its handshake and `Finset.card_biUnion` steps to weighted sums is a\nmechanical, high-value upgrade that unlocks LP-duality style applications.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2252",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "39103244",
+    "status": "available",
+    "timestamp": "2026-06-22T15:05:52.348773+00:00",
+    "title": "*deterministic core* of the average-degree independen"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize Conway's combinatorial game algebra (games as surreal numbers, nim-values, the Sprague-Grundy theorem that every impartial game is a nim-heap), and solve classic games (Hackenbush, Blue-Red-Green). (Conway, Berlekamp, Guy, Winning Ways)",
     "domain_bridges": [],
     "domains": [
@@ -10193,7 +10183,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "862d1e75",
     "description": "Formalize Wolfram's four-class taxonomy of cellular automaton behavior (uniform/periodic/chaotic/complex) and investigate the computability of classifying a given CA's asymptotic behavior, relating class-4 to universal computation. (Wolfram)",
     "domain_bridges": [],
     "domains": [
@@ -10206,7 +10196,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:09.132500+00:00",
     "title": "Wolfram CA Four-Class Classification and its Computability"
   },

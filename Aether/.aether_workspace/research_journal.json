@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e9b0b276",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Berggren Lattice Orbit Classification\n\nThis cycle established the **modular orbit classification** of the Berggren tree of\nprimitive Pythagorean triples (file `Catalog/Cryptograp",
-      "quality_score": 0.5321925795053004,
-      "sorry_count": 1,
-      "theorem_count": 166,
-      "timestamp": "2026-06-16T06:43:15",
-      "title": "Berggren Lattice Orbit Classification for Post-Quantum Key Exchange"
-    },
-    {
       "cycle_id": "c38e2bf9",
       "domain": "Applications",
       "key_insight": "# Future Directions: Tropical weight enumerator profiles for binary linear codes\n\nThis cycle introduced `TropicalWeightEnumerator.lean`, the **min-plus tropicalization**\nof the classical Hamming weigh",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-06-22T12:40:16",
       "title": "Langlands Program: Functoriality"
+    },
+    {
+      "cycle_id": "39103244",
+      "domain": "Geometry",
+      "key_insight": "# FUTURE DIRECTIONS — Average-degree shattering for uncrowded hypergraphs\n\nThis cycle established the *deterministic core* of the average-degree independence\ntheory for `k`-uniform hypergraphs:\n\n- han",
+      "quality_score": 0.3928874,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-22T15:05:59",
+      "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T12:40:16",
+  "last_updated": "2026-06-22T15:05:59",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "1873f003",
-        "quality": 0.4749530303030304,
-        "theorems": 10,
-        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-      },
-      {
         "cycle_id": "78c9ab60",
         "quality": 0.5606952380952381,
         "theorems": 10,
@@ -3451,6 +3445,12 @@
         "quality": 0.4390899069767442,
         "theorems": 8,
         "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
+      },
+      {
+        "cycle_id": "39103244",
+        "quality": 0.3928874,
+        "theorems": 5,
+        "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
       }
     ],
     "Logic": [
