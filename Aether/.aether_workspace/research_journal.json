@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c38e2bf9",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Tropical weight enumerator profiles for binary linear codes\n\nThis cycle introduced `TropicalWeightEnumerator.lean`, the **min-plus tropicalization**\nof the classical Hamming weigh",
-      "quality_score": 0.7101600000000001,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-16T07:28:43",
-      "title": "Tropical weight enumerator profiles for binary linear codes via Smooth Poincaré primitives"
-    },
-    {
       "cycle_id": "c8fdbde8",
       "domain": "Logic",
       "key_insight": "# Future Directions — Pisano period as a lattice morphism, and the entry-point cofactor\n\nThis cycle (files `Catalog/Logic/FibPisanoLattice.lean` and\n`Catalog/Logic/FibPisanoEntryCofactor.lean`) proved",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-22T15:05:59",
       "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
+    },
+    {
+      "cycle_id": "16bb5867",
+      "domain": "Computation",
+      "key_insight": "# FUTURE DIRECTIONS — Langlands Functoriality (GL₂ ⤳ GL₃ and beyond)\n\nDerived from this cycle's findings on the unramified symmetric-square /\nsymmetric-power transfer (`SymmetricSquareGL2to3.lean`,\n`S",
+      "quality_score": 0.44580200000000003,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-22T17:05:47",
+      "title": "Langlands Program: Functoriality"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T15:05:59",
+  "last_updated": "2026-06-22T17:05:47",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "14986cd2",
-        "quality": 0.36975260000000004,
-        "theorems": 9,
-        "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
-      },
-      {
         "cycle_id": "11262eec",
         "quality": 0.5355679086538463,
         "theorems": 36,
@@ -3326,6 +3320,12 @@
         "cycle_id": "16bb5867",
         "quality": 0.62616,
         "theorems": 12,
+        "title": "Langlands Program: Functoriality"
+      },
+      {
+        "cycle_id": "16bb5867",
+        "quality": 0.44580200000000003,
+        "theorems": 6,
         "title": "Langlands Program: Functoriality"
       }
     ],
