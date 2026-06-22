@@ -235,7 +235,7 @@ class KnowledgeExtractor:
         self.failed_count = 0
         self.inflight_path = self.workspace / "inflight_jobs.json"
         self.max_retries = self.config.get("autoresearch", {}).get("max_retries", 2)
-        self.phase_b_min_score = self.config.get("phase_b", {}).get("min_score", 0.7)
+        self.phase_b_min_score = self.config.get("phase_b", {}).get("min_score", 0.6)
 
         
         self._load_inflight()
