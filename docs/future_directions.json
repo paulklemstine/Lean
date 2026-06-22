@@ -14906,11 +14906,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "693eed6d",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
@@ -14920,7 +14920,7 @@
         "Tropical"
       ],
       "id": "fd_0536",
-      "last_attempt_time": "2026-06-22T00:01:25.381147+00:00",
+      "last_attempt_time": "2026-06-11T02:50:37.950338+00:00",
       "last_reviewed_at": "2026-06-10T07:43:01.457761+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14933,7 +14933,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:06.637226+00:00",
       "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
@@ -38544,6 +38544,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.NT",
+        "arboreal Galois representations",
+        "Drinfeld modules",
+        "iterative wreath products",
+        "Odoni's conjecture"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For every odd prime power q = p^e and every constant c in F_q^*, the polynomial f_c(x) = c*x^(q-1) + t in F_q(t)[x] has maximal arboreal Galois representation over F_q(t): for all n ≥ 1, the Galois group of the splitting field of f_c^{∘n} over F_q(t) is isomorphic to the n-fold iterated wreath product C_{q-1} ≀ C_{q-1} ≀ ⋯ ≀ C_{q-1} of the cyclic group of order q−1 with itself (with respect to the regular action). This extends the paper's result establishing maximality for two explicit families to all constant twists.",
+      "domain_bridges": [
+        "Galois theory of iterated extensions",
+        "finite group theory (wreath products)",
+        "Drinfeld module torsion",
+        "Hilbert irreducibility over global function fields"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2200",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem arboreal_maximality_constant_twist (p : ℕ) [hp : Fact (Nat.Prime p)] (e : ℕ) (he : e ≥ 1) (c : (F_(p^e))ˣ) (n : ℕ) (hn : n ≥ 1) : let q := p ^ e; let d := q - 1; let K := RatFunc (F_(q)); let f : Polynomial K := Polynomial.C (c.val : K) * Polynomial.X ^ d + Polynomial.C (Polynomial.X : Polynomial (F_(q))) ; let G_n := arboreal_galois_group f n : Isomorphic G_n (iterated_wreath_product (ZMod d) n) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Induction on the level n, using the structure of the twisted Carlitz module torsion towers. The base case n=1 follows from the Kummer-theoretic analysis of x^(q-1) = -t/c over F_q(t). For the inductive step, one must show that each new level introduces the full cyclic wreath product extension by proving that the specialized polynomial f_c(x) - β has Galois group C_{q-1} over F_q(t)(β) for each (n-1)-th level root β, and that these extensions are sufficiently independent. The key tool is controlling ramification at the place (t) and at infinite places via the Drinfeld module structure, combined with a function-field analogue of Hilbert irreducibility to handle specialization.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20046v1",
+      "source_path": "http://arxiv.org/abs/2606.20046v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T00:23:49.286162+00:00",
+      "title": "Universal Arboreal Maximality for Constant Twists of Carlitz Polynomials"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Chao et al. on cyclotomic polynomials for dice relabeling",
         "Gallian-Rusin results on prime-product dice sizes"
       ],
@@ -38561,7 +38608,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2200",
+      "id": "fd_2201",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀a, b ∈ ℕ (a ≠ b ∧ a², b² > 0), ∃DicePair (size₁ = a², size₂ = b²) ∧ sumFrequency(DicePair) = sumFrequency(StandardDicePair(a², b²))",
@@ -38602,7 +38649,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2201",
+      "id": "fd_2202",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strong_non_principality_exact_ratio (k : ℕ) (hk : k ≥ 3) : ∃ (F1 F2 : Hypergraph k), 0 < γ⁺ (F1,F2) ∧ γ⁺ (F1,F2) < min (γ⁺ F1) (γ⁺ F2) ∧ γ⁺ (F1,F2) = (1/2 : ℝ) * min (γ⁺ F1) (γ⁺ F2) := by sorry",
@@ -38645,7 +38692,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2202",
+      "id": "fd_2203",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\n\nopen SimpleGraph\n\nuniverse u\n\n/-- Placeholder predicates for a finite graph formalization. -/\nnamespace SimpleGraph\n\nvariable {V : Type u} [Fintype V] [DecidableEq V]\n\nconstant IsInducedKmnFree : SimpleGraph V → Nat → Nat → Prop\nconstant HasInducedCycleLengthAtLeast : SimpleGraph V → Nat → Prop\nconstant treeIndependenceNumber : SimpleGraph V → Nat\n\n/-- Conjecture: every induced-K_{2,d}-free graph with no induced cycle of length at least 5\nhas tree-independence number at most `2*d - 2`. -/\ntheorem conjecture_treeIndependence_K2d_free_long_hole_free\n    (G : SimpleGraph V) [DecidableRel G.Adj]\n    (d : Nat) (hd : 2 ≤ d)\n    (hK : G.IsInducedKmnFree 2 d)\n    (hHole : ¬ G.HasInducedCycleLengthAtLeast 5) :\n    G.treeIndependenceNumber ≤ 2 * d - 2 := by\n  sorry\n\nend SimpleGraph",
@@ -38663,6 +38710,52 @@
       "thread_id": "",
       "timestamp": "2026-06-22T00:01:14.488967+00:00",
       "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "EKR_theorem",
+        "Hilton_Milner",
+        "cross_intersecting_families",
+        "shifting_methods"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For integers n > 2k ≥ 2 and cross-intersecting families 𝒜, ℬ ⊆ ([n] choose k) with diversity γ(𝒜) ≥ C(n-k-1, k-1) and γ(ℬ) ≥ C(n-k-1, k-1), there exists an element x ∈ [n] such that both 𝒜 and ℬ are contained in the full star {F ∈ ([n] choose k) : x ∈ F}. This extends the Frankl–Kupavskii–Zakharov diversity stability theorem from intersecting to cross-intersecting families, and would provide a unified structural characterization implying cross-intersecting analogues of Hilton–Milner and Han–Kohayakawa as corollaries.",
+      "domain_bridges": [
+        "combinatorial_optimization",
+        "set_theory",
+        "linear_algebra_over_GF2"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2204",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cross_intersecting_diversity_stability {n k : ℕ} (hk : 2 ≤ k) (hn : n > 2 * k) (A B : Finset (Finset (Fin n))) (hA : ∀ F ∈ A, F.card = k) (hB : ∀ G ∈ B, G.card = k) (hCross : ∀ F ∈ A, ∀ G ∈ B, (F ∩ G).Nonempty) (hDivA : (A.card - max_degree A) ≥ Nat.choose (n - k - 1) (k - 1)) (hDivB : (B.card - max_degree B) ≥ Nat.choose (n - k - 1) (k - 1)) : ∃ x : Fin n, (∀ F ∈ A, x ∈ F) ∧ (∀ G ∈ B, x ∈ G) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the S_{U,V}^Q-shift operation in Lean and prove it preserves cross-intersection (the key lemma from the paper). Then establish that iterated shifting drives any cross-intersecting pair toward a canonical form. The diversity lower bounds constrain how far the pair can deviate from a common star, yielding the structural conclusion via a double-counting argument on the diversity terms.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20085v1",
+      "source_path": "http://arxiv.org/abs/2606.20085v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T00:24:18.725072+00:00",
+      "title": "Cross-Intersecting Diversity Stability Conjecture"
     },
     {
       "ambition_level": "extension",
@@ -44462,11 +44555,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e2815d63",
       "depth_estimate": 3,
       "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
       "domain_bridges": [],
@@ -44477,7 +44570,7 @@
         "Computation"
       ],
       "id": "seed_372",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-22T00:24:27.917401+00:00",
       "last_reviewed_at": "2026-06-19T17:10:36.362918+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44490,7 +44583,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432794+00:00",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"

@@ -1058,7 +1058,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "693eed6d",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domain_bridges": [],
     "domains": [
@@ -1071,7 +1071,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -1316,7 +1316,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e2815d63",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -1330,7 +1330,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -5483,6 +5483,37 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.NT",
+      "arboreal Galois representations",
+      "Drinfeld modules",
+      "iterative wreath products",
+      "Odoni's conjecture"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime power q = p^e and every constant c in F_q^*, the polynomial f_c(x) = c*x^(q-1) + t in F_q(t)[x] has maximal arboreal Galois representation over F_q(t): for all n ≥ 1, the Galois group of the splitting field of f_c^{∘n} over F_q(t) is isomorphic to the n-fold iterated wreath product C_{q-1} ≀ C_{q-1} ≀ ⋯ ≀ C_{q-1} of the cyclic group of order q−1 with itself (with respect to the regular action). This extends the paper's result establishing maximality for two explicit families to all constant twists.",
+    "domain_bridges": [
+      "Galois theory of iterated extensions",
+      "finite group theory (wreath products)",
+      "Drinfeld module torsion",
+      "Hilbert irreducibility over global function fields"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2200",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Induction on the level n, using the structure of the twisted Carlitz module torsion towers. The base case n=1 follows from the Kummer-theoretic analysis of x^(q-1) = -t/c over F_q(t). For the inductive step, one must show that each new level introduces the full cyclic wreath product extension by proving that the specialized polynomial f_c(x) - β has Galois group C_{q-1} over F_q(t)(β) for each (n-1)-th level root β, and that these extensions are sufficiently independent. The key tool is controlling ramification at the place (t) and at infinite places via the Drinfeld module structure, combined with a function-field analogue of Hilbert irreducibility to handle specialization.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:23:49.286162+00:00",
+    "title": "Universal Arboreal Maximality for Constant Twists of Carlitz Polynomials"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Chao et al. on cyclotomic polynomials for dice relabeling",
       "Gallian-Rusin results on prime-product dice sizes"
     ],
@@ -5496,7 +5527,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2200",
+    "id": "fd_2201",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze cyclotomic polynomial decompositions of generating functions for square-sided dice and demonstrate constructive existence via factorization properties",
@@ -5521,7 +5552,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2201",
+    "id": "fd_2202",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct F1 and F2 as specific small hypergraphs (e.g., a single edge and a pair of edges sharing (k-1) vertices) and use known exact values for their positive codegree densities; then apply a product construction to show the pair density is half the minimum.",
@@ -5548,7 +5579,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2202",
+    "id": "fd_2203",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Try to construct a clique-separator or minimal-separator decomposition for graphs with no induced cycles of length at least 5. Use induced-K_{2,d}-freeness to show that every separator bag can be enlarged so that any independent set inside the bag has size at most 2d−2: two nonadjacent vertices in a controlled separator should have fewer than d mutually independent witnesses on the opposite side, otherwise they induce K_{2,d}. Then combine the local separator bags recursively into a tree decomposition and verify that the maximum bag-independence is bounded by 2d−2.",
@@ -5557,6 +5588,36 @@
     "status": "available",
     "timestamp": "2026-06-22T00:01:14.488967+00:00",
     "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "EKR_theorem",
+      "Hilton_Milner",
+      "cross_intersecting_families",
+      "shifting_methods"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For integers n > 2k ≥ 2 and cross-intersecting families 𝒜, ℬ ⊆ ([n] choose k) with diversity γ(𝒜) ≥ C(n-k-1, k-1) and γ(ℬ) ≥ C(n-k-1, k-1), there exists an element x ∈ [n] such that both 𝒜 and ℬ are contained in the full star {F ∈ ([n] choose k) : x ∈ F}. This extends the Frankl–Kupavskii–Zakharov diversity stability theorem from intersecting to cross-intersecting families, and would provide a unified structural characterization implying cross-intersecting analogues of Hilton–Milner and Han–Kohayakawa as corollaries.",
+    "domain_bridges": [
+      "combinatorial_optimization",
+      "set_theory",
+      "linear_algebra_over_GF2"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2204",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the S_{U,V}^Q-shift operation in Lean and prove it preserves cross-intersection (the key lemma from the paper). Then establish that iterated shifting drives any cross-intersecting pair toward a canonical form. The diversity lower bounds constrain how far the pair can deviate from a common star, yielding the structural conclusion via a double-counting argument on the diversity terms.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:24:18.725072+00:00",
+    "title": "Cross-Intersecting Diversity Stability Conjecture"
   },
   {
     "ambition_level": "extension",

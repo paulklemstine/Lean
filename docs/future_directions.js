@@ -794,7 +794,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "693eed6d",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -804,7 +804,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e2815d63",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -998,7 +998,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -3371,11 +3371,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every odd prime power q = p^e and every constant c in F_q^*, the polynomial f_c(x) = c*x^(q-1) + t in F_q(t)[x] has maximal arboreal Galois representation over F_q(t): for all n \u2265 1, the Galois group of the splitting field of f_c^{\u2218n} over F_q(t) is isomorphic to the n-fold iterated wreath product C_{q-1} \u2240 C_{q-1} \u2240 \u22ef \u2240 C_{q-1} of the cyclic group of order q\u22121 with itself (with respect to the regular action). This extends the paper's result establishing maximality for two explicit families to all constant twists.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2200",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:23:49.286162+00:00",
+    "title": "Universal Arboreal Maximality for Constant Twists of Carlitz Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any two distinct perfect squares a\u00b2 and b\u00b2, there exists at least one pair of square-sided dice with a\u00b2 and b\u00b2 sides whose sum frequency distribution matches that of two standard dice of the same sizes.",
     "domains": [
       "Computation"
     ],
-    "id": "fd_2200",
+    "id": "fd_2201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -3389,7 +3404,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2201",
+    "id": "fd_2202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20494v1",
@@ -3403,13 +3418,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2202",
+    "id": "fd_2203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
     "status": "available",
     "timestamp": "2026-06-22T00:01:14.488967+00:00",
     "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For integers n > 2k \u2265 2 and cross-intersecting families \ud835\udc9c, \u212c \u2286 ([n] choose k) with diversity \u03b3(\ud835\udc9c) \u2265 C(n-k-1, k-1) and \u03b3(\u212c) \u2265 C(n-k-1, k-1), there exists an element x \u2208 [n] such that both \ud835\udc9c and \u212c are contained in the full star {F \u2208 ([n] choose k) : x \u2208 F}. This extends the Frankl\u2013Kupavskii\u2013Zakharov diversity stability theorem from intersecting to cross-intersecting families, and would provide a unified structural characterization implying cross-intersecting analogues of Hilton\u2013Milner and Han\u2013Kohayakawa as corollaries.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2204",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:24:18.725072+00:00",
+    "title": "Cross-Intersecting Diversity Stability Conjecture"
   },
   {
     "consumed_by_exp_id": "",

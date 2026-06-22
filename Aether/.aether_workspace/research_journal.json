@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "79875292",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — Tropical p-adic Valuation Profile of Fibonacci Numbers\n\nCycle output: `Catalog/Speculative/AutoResearch/FibonacciValuationProfile.lean`\n(self-contained, 0 sorries, axioms ⊆ {prop",
-      "quality_score": 0.452064972972973,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-06-15T20:39:37",
-      "title": "Follow-up conjectures arising from `Catalog/Bridges/SpeciesTropicalValuationProf"
-    },
-    {
       "cycle_id": "e5fe284a",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Korselt's Criterion & the Multiplicative-Order Bridge\n\nDerived from the research cycle that produced\n`Catalog/Shared/KorseltCriterion.lean` (the full Korselt **iff** and its\narbi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-21T23:56:35",
       "title": "Modular Height Formula for Unitary Shimura Varieties"
+    },
+    {
+      "cycle_id": "aa9dc0d5",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nThe following are concrete next steps that build on the divisor-sum framework and\nEuclid construction formalized in `EuclidConstruction.lean`.\n\n## 1. The Euler converse (completin",
+      "quality_score": 0.46458109090909094,
+      "sorry_count": 0,
+      "theorem_count": 67,
+      "timestamp": "2026-06-22T00:22:02",
+      "title": "Perfect Numbers: Structure of Even Perfects"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-21T23:56:35",
+  "last_updated": "2026-06-22T00:22:02",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "e72864d5",
-        "quality": 0.35638045714285715,
-        "theorems": 16,
-        "title": "These conjectures extend the results formalized in"
-      },
-      {
         "cycle_id": "6f9401e1",
         "quality": 0.72651,
         "theorems": 17,
@@ -3699,6 +3693,12 @@
         "quality": 0.5660000000000001,
         "theorems": 136,
         "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
+      },
+      {
+        "cycle_id": "aa9dc0d5",
+        "quality": 0.46458109090909094,
+        "theorems": 67,
+        "title": "Perfect Numbers: Structure of Even Perfects"
       }
     ],
     "Physics": [
