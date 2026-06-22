@@ -299,7 +299,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Baum-Connes Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3a3db57",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domains": [
       "NumberTheory",
@@ -309,7 +309,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -2279,7 +2279,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
   },
   {
-    "consumed_by_exp_id": "b27cec0f",
+    "consumed_by_exp_id": "",
     "description": "For every integer r\u22652 there exists a constant C>0 such that for all sufficiently large n the maximum number of edges in an n\u2011vertex r\u2011uniform hypergraph in which each (r+1)-set spans exactly 0 or 2 edges is at least C\u00b7n^r / r\u00b3, and no such hypergraph can have more than C'\u00b7n^r / r\u00b2 edges. Equivalently, the Tur\u00e1n density \u03c0(H^r_3)=\u0398(1/r\u00b3).",
     "domains": [
       "Pythagorean"
@@ -2288,7 +2288,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T21:56:09.924073+00:00",
     "title": "Conjecture: Tur\u00e1n density of the 3\u2011edge r\u2011graph is \u0398(1/r\u00b3)"
   },

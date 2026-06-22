@@ -398,7 +398,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3a3db57",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -411,7 +411,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -3451,7 +3451,7 @@
       "Gunderson and Semeraro (2017) – explicit 4‑graph construction matching upper bound",
       "Baber and Talbot (2011) – flag algebra upper bound for K_4^- (r=3)"
     ],
-    "consumed_by_exp_id": "b27cec0f",
+    "consumed_by_exp_id": "",
     "description": "For every integer r≥2 there exists a constant C>0 such that for all sufficiently large n the maximum number of edges in an n‑vertex r‑uniform hypergraph in which each (r+1)-set spans exactly 0 or 2 edges is at least C·n^r / r³, and no such hypergraph can have more than C'·n^r / r² edges. Equivalently, the Turán density π(H^r_3)=Θ(1/r³).",
     "domain_bridges": [
       "Extremal hypergraph theory",
@@ -3467,7 +3467,7 @@
     "proof_strategy": "Use a probabilistic construction placing n points uniformly on the unit sphere S^{r-2} and declaring an r‑set an edge iff its convex hull contains the origin; analyze the probability that a random (r+1)-set spans 0 or 2 edges, then apply entropy compression or hypergraph container methods to show any such hypergraph cannot exceed O(n^r / r²) edges, yielding the Θ(1/r³) density conjecture.",
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T21:56:09.924073+00:00",
     "title": "Conjecture: Turán density of the 3‑edge r‑graph is Θ(1/r³)"
   },
