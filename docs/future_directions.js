@@ -1481,6 +1481,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the P vs NP problem (Clay Millennium): prove or refute that every language decidable in nondeterministic polynomial time is decidable in deterministic polynomial time, with the NP-completeness of SAT as the canonical witness. (Cook-Levin; Clay 2000)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Cook-Levin-Clay_01",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:28.508273+00:00",
+    "title": "P vs NP (Millennium): Are Verifiable Problems Always Solvable?"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domains": [
       "Computation",
@@ -2730,21 +2745,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Solution Count Confinement"
   },
   {
-    "consumed_by_exp_id": "48b7f4af",
-    "description": "Let a_n be the number of isomorphism classes of finite simple connected planar 3-regular graphs with n vertices. The conjecture is that a_{2m+1}=0 for every m, and that there exist real constants C>0 and gamma>1 such that a_{2m} / (C (2m)^(-7/2) gamma^(2m)) tends to 1 as m tends to infinity. This isolates the main enumerative shape of the paper in a Lean-formalizable form without committing to the paper-specific numerical values of C and gamma.",
-    "domains": [
-      "Pythagorean",
-      "Geometry"
-    ],
-    "id": "fd_2158",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.17992v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-20T23:04:12.150157+00:00",
-    "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "This conjecture asserts that if a continuum admits a projective Fraisse category whose automorphism group has a certain density condition, then its homeomorphism group behaves in a way tied to the exceptional amenability of its closed subgroups, formalizable within Lean 4 via exact properties of group flows.",
     "domains": [
@@ -3888,13 +3888,57 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2237",
+    "id": "fd_2238",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
     "status": "available",
     "timestamp": "2026-06-22T11:38:10.736231+00:00",
     "title": "Metrizability Dichotomy for Universal Minimal Flows of Homeomorphism Groups of Projective Fra\u00efss\u00e9 Continua"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A convex polytope P has the clique-face property if every clique of its 1-skeleton is the vertex set of a face of P. The paper verifies that every simple polytope has the clique-face property, meaning any clique of vertices in a simple polytope forms a simplex face.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2239",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20430v1",
+    "status": "available",
+    "timestamp": "2026-06-22T12:24:15.292489+00:00",
+    "title": "Clique-face property of simple polytopes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let F be a projective Fra\u00efss\u00e9 category with limit \ud835\udd3d whose quotient by the inherited equivalence relation yields a continuum F, and let G be a closed subgroup of Homeo(F) with Aut(\ud835\udd3d) dense in G. Then the universal minimal flow M(G) is metrizable if and only if there exists a precompact expansion F' of F (in the sense of an enriched projective Fra\u00efss\u00e9 category whose forgetful functor back to F is precompact) such that F' has the approximate Ramsey property and the automorphism group of the limit of F' is dense in G. This is the projective Fra\u00efss\u00e9 analog of the Kechris\u2013Pestov\u2013Todorcevic metrization theorem for universal minimal flows.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2240",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T12:24:38.162264+00:00",
+    "title": "Projective Fra\u00efss\u00e9 Metrization Conjecture for Universal Minimal Flows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Conway's surreal numbers as a universally embedding ordered field containing the reals and the ordinals, with recursive definitions of arithmetic (+, x, order), the birthday construction, and the embedding of dyadic rationals. (Conway, On Numbers and Games 1976)",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "moonshot_Conway_14",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:10.207759+00:00",
+    "title": "Conway Surreal Numbers: The Universal Ordered Field"
   },
   {
     "consumed_by_exp_id": "",
@@ -3999,6 +4043,66 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the Generalized Riemann Hypothesis: all non-trivial zeros of every Dirichlet L-function (and Dedekind zeta functions) have real part 1/2. Derive its consequences (primality in P, deterministic Miller, class-number bounds). (Riemann 1859, generalized)",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "unsolved_GRH_20",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:36.126051+00:00",
+    "title": "Generalized Riemann Hypothesis (GRH)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a mathematically consistent framework for quantum gravity: reconcile general relativity (a classical Lorentzian geometric theory) with quantum field theory, e.g., via loop/LQG discreteness, AdS/CFT holographic correspondence, or string-theory compactifications. (open)",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "unsolved_Quantum-Gravity_43",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:42.426165+00:00",
+    "title": "Mathematical Framework of Quantum Gravity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the smooth 4D Poincare conjecture: every smooth compact 4-manifold homotopy-equivalent to S^4 is diffeomorphic to S^4. Distinguish from the topological case (Freedman, true) and study exotic 4-sphere candidates. (Freedman 1982; smooth case open)",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "unsolved_Smooth-4D-Poincare_35",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:40.162895+00:00",
+    "title": "Smooth 4-Dimensional Poincare Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Valiant's algebraic complexity classes VP and VNP, prove the permanent is VNP-complete, and attack the conjecture that the permanent requires super-polynomial-size algebraic circuits (VP != VNP), the algebraic analogue of P != NP. (Valiant 1979)",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "unsolved_Valiant_05",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:29.576734+00:00",
+    "title": "Permanent vs Determinant: VP != VNP (Valiant)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "Algebra"
@@ -4024,6 +4128,66 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:10.274474+00:00",
     "title": "Graceful Tree Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Asimov's psychohistory as a law-of-large-numbers theorem for large agent populations: under suitable aggregation, macroscopic population trajectories become predictable with variance shrinking in population size, analogous to the kinetic theory of gases. (Asimov, Foundation 1951)",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "moonshot_Asimov_33",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:17.904329+00:00",
+    "title": "Asimov Psychohistory: Statistical Mechanics of Large Populations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the BSS model of computation over the reals: define P_R and NP_R, and prove NP_R-completeness of deciding whether a system of real polynomials of degree 4 has a real root (the BSS analog of SAT). (Blum-Shub-Smale 1989)",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "moonshot_Blum-Shub-Smale_04",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:07.542592+00:00",
+    "title": "Blum-Shub-Smale Real Computation: P_R, NP_R, and 4th-Degree Roots"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Egan's Dust Theory from Permutation City: the thesis that consciousness is an abstract computable pattern whose scattered information states, embedded anywhere in spacetime, suffice for continuous subjective experience \u2014 a substrate-independence theorem for computational patterns. (Egan, Permutation City 1994)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "moonshot_Egan_19",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:11.521650+00:00",
+    "title": "Egan Dust Theory: Consciousness as Substrate-Independent Pattern"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Hamkins-Lewis infinite-time Turing machines (ITTMs): computation through transfinite ordinal stages with limit-rules, prove ITTMs decide all hyperarithmetic sets and solve the classical halting problem, and characterize the decidable sets (semi-decidable / decidable) of ITTM theory. (Hamkins & Lewis 1998)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "moonshot_Hamkins-Lewis_01",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:06.748493+00:00",
+    "title": "Infinite-Time Turing Machines: Transfinite Computability"
   },
   {
     "consumed_by_exp_id": "",
@@ -4055,6 +4219,66 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize Hilbert's 12th problem: generalize the Kronecker-Weber theorem (every abelian extension of Q is in a cyclotomic field) to explicit generators of abelian extensions of arbitrary number fields (complex multiplication for imaginary quadratic; open for real/quadratic+). (Hilbert 1900)",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "unsolved_Hilbert-12_39",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:41.289875+00:00",
+    "title": "Hilbert 12th: Explicit Class Field Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the inverse Galois problem: every finite group occurs as the Galois group of a Galois extension of Q. Prove it for solvable groups (Shafarevich) and attack non-solvable families (e.g., sporadic groups, M23). (Dedekind/Hilbert 1892)",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "unsolved_Inverse-Galois_12",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:31.393042+00:00",
+    "title": "Inverse Galois Problem: Every Finite Group over Q"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Kakeya conjecture: any subset of R^n containing a unit segment in every direction has Hausdorff (and Minkowski) dimension n. Prove the partial Dvir finite-field analogue and the known n >= 5 results. (Besicovitch 1919; Dvir 2008)",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "unsolved_Kakeya_34",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:39.877617+00:00",
+    "title": "Kakeya Conjecture: Dimension of Direction-Containing Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Schanuel's conjecture: for Q-linearly independent z_1,...,z_n, the transcendence degree of Q(z_i, e^{z_i}) over Q is at least n. Derive its consequences (Lindemann-Weierstrass, Gelfond-Schneider, e and pi algebraic independence). (Schanuel 1966)",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "unsolved_Schanuel_22",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:36.697703+00:00",
+    "title": "Schanuel's Conjecture: Transcendence Degree of Exponential Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
     "domains": [
       "Algebra"
@@ -4066,6 +4290,125 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the consciousness-upload thought experiment (Black Mirror 'White Christmas'): Parfit's psychological-continuity criterion for personal identity across substrate transfer, the copy-divergence problem (two replicas diverge post-copy), and identity-persistence under state forks. (Black Mirror 2014, Parfit)",
+    "domains": [
+      "Logic",
+      "MachineLearning"
+    ],
+    "id": "moonshot_Black Mirror_40",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:19.878420+00:00",
+    "title": "Black Mirror 'Cookie' Upload: Parfit Psychological Continuity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Conway-Kochen Free Will Theorem: from the SPIN, TWIN, and FIN axioms of quantum mechanics, prove that if an experimenter is free to choose measurement settings, then particles possess free will (non-deterministic response). (Conway-Kochen 2006)",
+    "domains": [
+      "Physics",
+      "Logic"
+    ],
+    "id": "moonshot_Conway-Kochen_17",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:10.997937+00:00",
+    "title": "Conway-Kochen Free Will Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Cubitt et al. result that the spectral-gap problem for translation-invariant local quantum many-body Hamiltonians is algorithmically undecidable in the thermodynamic limit, by reducing the halting problem to gap-vs-gapless via aperiodic tiling encodings. (Cubitt-Perez-Garcia-Wolfson 2015)",
+    "domains": [
+      "Physics",
+      "Logic"
+    ],
+    "id": "unsolved_Cubitt-Spectral-Gap_42",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:42.149490+00:00",
+    "title": "Spectral Gap Undecidability (Cubitt-Perez-Garcia-Wolfson)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Hilbert's 16th problem (second part): bound the number and relative positions of limit cycles of a planar polynomial vector field of degree d (Hilbert number H(d)). Establish the known quadratic bound and attack the general bound. (Hilbert 1900)",
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "unsolved_Hilbert-16_40",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:41.574716+00:00",
+    "title": "Hilbert 16th: Limit Cycles of Polynomial Vector Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the matrix multiplication exponent omega (inf over exponents achieving O(n^omega) multiplication); verify the current bound omega < 2.371339 and attempt the moonshot omega = 2 via laser/_group-theoretic methods. (Le Gall-Urrutia, Alman-Williams 2024)",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "unsolved_LeGall-Williams_04",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:29.315020+00:00",
+    "title": "Matrix Multiplication Exponent omega: Prove omega = 2?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Mulmuley's Geometric Complexity Theory program: represent determinant and permanent orbit closures via representation theory of GL_n, and construct explicit representation-theoretic 'obstructions' proving VP != VNP. (Mulmuley 2001)",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "unsolved_Mulmuley_06",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:29.830238+00:00",
+    "title": "Geometric Complexity Theory: Obstructions Separating VP and VNP"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Schinzel's Hypothesis H: any finite set of irreducible integer polynomials with no fixed prime divisor simultaneously take prime values for infinitely many n (the twin-prime and Sophie-Germain conjectures are special cases). (Schinzel 1958)",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "unsolved_Schinzel_17",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:32.740882+00:00",
+    "title": "Schinzel's Hypothesis H: Simultaneous Prime Values"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Woodin's Ultimate-L program: an inner model compatible with large cardinals that would decide the Continuum Hypothesis, and the hierarchy of large cardinal axioms (measurable, Woodin, supercompact) gaugeing consistency strength. (Woodin)",
+    "domains": [
+      "Logic"
+    ],
+    "id": "unsolved_Woodin-Ultimate-L_45",
+    "priority_score": 0.76,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:42.995748+00:00",
+    "title": "Woodin's Ultimate-L and Large Cardinal Axioms"
   },
   {
     "consumed_by_exp_id": "",
@@ -4849,6 +5192,156 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize Conway's combinatorial game algebra (games as surreal numbers, nim-values, the Sprague-Grundy theorem that every impartial game is a nim-heap), and solve classic games (Hackenbush, Blue-Red-Green). (Conway, Berlekamp, Guy, Winning Ways)",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "moonshot_Conway_15",
+    "priority_score": 0.74,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:10.470983+00:00",
+    "title": "Combinatorial Game Theory: Surreal Games and Sprague-Grundy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize and compare hypercomputational models \u2014 accelerating (Zeno) Turing machines, infinite-time Turing machines, and Putnam-Gold trial-and-error predicates \u2014 proving strict containment relations and identifying which physical 'axioms' each requires. (Putnam, Gold, Hamkins-Lewis)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "moonshot_Putnam-Gold_09",
+    "priority_score": 0.74,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:08.871224+00:00",
+    "title": "Hypercomputation Taxonomy: Zeno, Infinite-Time, and Trial-and-Error"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Khot's Unique Games Conjecture: it is NP-hard to distinguish whether a unique-game constraint graph is (1-eps)-satisfiable or eps-satisfiable, and derive its consequences for tight hardness-of-approximation of MAX-CUT, vertex cover, etc. (Khot 2002)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Khot_02",
+    "priority_score": 0.74,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:28.791103+00:00",
+    "title": "Unique Games Conjecture (Khot)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Asimov's Three Laws in deontic logic: priority ordering (human safety > obedience > self-preservation), conflict-resolution under simultaneous applicability, and prove the impossibility of a fully consistent enforcer (the Laws are mutually inconsistent in adversarial cases). (Asimov)",
+    "domains": [
+      "Logic",
+      "MachineLearning"
+    ],
+    "id": "moonshot_Asimov_34",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:18.184813+00:00",
+    "title": "Three Laws of Robotics as Deontic Logic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize BQP and QMA, the Bernstein-Vazirani algorithm, and the first oracle separation between BQP and BPP, establishing that quantum polynomial time is genuinely stronger than classical probabilistic polynomial time relative to an oracle. (Bernstein-Vazirani 1997)",
+    "domains": [
+      "Computation",
+      "Cryptography"
+    ],
+    "id": "moonshot_Bernstein-Vazirani_06",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:08.068367+00:00",
+    "title": "Quantum Complexity: BQP, QMA, and BQP-vs-BPP Oracle Separation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Kolmogorov/algorithmic information complexity: incompressibility, the incompleteness-via-incompressibility theorem (Chaitin), and the uncomputability of K(x), with the coding theorem linking K to probability. (Chaitin, Kolmogorov, Solomonoff)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "moonshot_Chaitin_51",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:22.699024+00:00",
+    "title": "Kolmogorov Complexity and Incompressibility"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Hofstadter's 'strange loops': self-referential sentences, Quine programs, and the Tarski theorem that truth in a sufficiently rich formal system is undefinable within it, showing how meaning arises from meaningless symbols via recursive isomorphism. (Hofstadter, GEB 1979)",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "moonshot_Hofstadter_11",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:09.398917+00:00",
+    "title": "Strange Loops and Tarski Undefinability of Truth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the causal paradox of prediction (PKD's Minority Report): define a prediction operator P on agent actions and prove the existence of self-fulfilling and self-defeating fixed points (a==P(a) and a!=P(a)), relating it to diagonalization and the halting problem. (PKD 1956)",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "moonshot_PKD_35",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:18.464855+00:00",
+    "title": "Minority Report Precognition Paradox: Fixed Points of Prediction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Inspired by Rucker's White Light, formalize Cantor's transfinite cardinal arithmetic, the aleph/beth hierarchy, the independence of the Continuum Hypothesis (Godel/Cohen), and cardinal-exponentiation laws. (Rucker, White Light 1980)",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "moonshot_Rucker_21",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:12.067960+00:00",
+    "title": "Transfinite Cardinal Arithmetic and the Continuum Hypothesis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize computable analysis (Type-2 theory of effectivity): computable real numbers and functions via domain-theoretic/representation theory, proving which real functions are computable and the undecidability of equality on the reals. (Weihrauch, Pour-El-Richards)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "moonshot_Weihrauch_49",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:22.191948+00:00",
+    "title": "Computable Analysis: Computability Over Topological Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4860,6 +5353,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the independence of the Continuum Hypothesis from ZFC: Godel's constructible-L (CH true, 1940) and Cohen forcing (CH false, 1963). Develop the Boolean-valued / forcing machinery in Lean. (Godel 1940; Cohen 1963)",
+    "domains": [
+      "Logic"
+    ],
+    "id": "unsolved_Godel-Cohen_46",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:43.277250+00:00",
+    "title": "Continuum Hypothesis Independence via Forcing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Williams's breakthrough that NEXP is not contained in ACC0 (polynomial-size, constant-depth circuits with MOD_m gates), and extend the algorithmic-lower-bound technique to richer classes (TC0, depth-2 threshold). (Williams 2011)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Williams_09",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:30.613628+00:00",
+    "title": "ACC0 Circuit Lower Bounds: NEXP Not in ACC0"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize indistinguishability obfuscation (iO): a PPT machine transforming circuits so that functionally-equivalent circuits produce indistinguishable outputs. Establish the known constructions (Jain-Lin-Sahai 2020-2022 from LWE/weaker assumptions) and reduction-based security. (Barak et al.; JLS 2020)",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "unsolved_iO_47",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:43.546132+00:00",
+    "title": "Indistinguishability Obfuscation (iO): Existence and Security"
   },
   {
     "consumed_by_exp_id": "",
@@ -5026,6 +5563,169 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the regular 4-polytopes (5-cell, tesseract, 16-cell, 24-cell, 120-cell, 600-Cell), their symmetry groups, Euler-characteristic analogues, and projection algorithms rendering 4D structure into 3D/2D (Abbott/Rucker dimensional analogy). (Abbott, Rucker)",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "moonshot_Abbott-Rucker_22",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:12.334409+00:00",
+    "title": "Four-Dimensional Polytopes: Tesseract, 24-Cell, 120-Cell, 600-Cell"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize oracle Turing machines, relativized complexity classes P^A vs NP^A, and the Baker-Gill-Solovay construction of oracles making P=NP and P!=NP, establishing relativization as a proof barrier. (Baker-Gill-Solovay 1975)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "moonshot_Baker-Gill-Solovay_08",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:08.604669+00:00",
+    "title": "Oracle Turing Machines and the Relativization Barrier"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize reversible Turing machines (bijective transitions) and prove Bennett's theorem that every TM is simulated by a reversible TM with polynomial time / linear space overhead, plus the Landauer thermodynamic bound on erasure. (Bennett 1973)",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "moonshot_Bennett_02",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:07.021466+00:00",
+    "title": "Bennett Reversible Computing: Any TM Simulates a Reversible TM"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the persistence-of-identity question under selective memory erasure (Black Mirror): define identity as a stream of psychologically-connected states and prove bounds on how much memory can be removed while preserving identity (the psychological-continuity threshold). (Black Mirror)",
+    "domains": [
+      "Logic",
+      "MachineLearning"
+    ],
+    "id": "moonshot_Black Mirror_41",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:20.136195+00:00",
+    "title": "Memory Erasure and Persistence of Personal Identity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Conway's Game of Life as Turing-complete by constructing the Rendell-Parks Turing machine inside Life (glider-based logic gates, memory, signal routing), and prove glider synthesis can realize arbitrary cyclic tag systems. (Conway/Gardner 1970, Rendell)",
+    "domains": [
+      "Computation"
+    ],
+    "id": "moonshot_Conway-Gardner_16",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:10.730881+00:00",
+    "title": "Game of Life Universal Computation: Rendell-Parks Turing Machine"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Egan's notion of 'implementation' equivalence: when two physical/causal substrates realize the same computational state-transitions, they implement the same computation \u2014 proving an equivalence theorem for pattern-identity across disjoint causal patches. (Egan)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "moonshot_Egan_24",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:12.861524+00:00",
+    "title": "Permutation City Implementation Equivalence Across Causal Patches"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the thermodynamics of computation: Landauer's principle (kT ln 2 per bit erased), the Szilard engine / Maxwell's demon exorcism, and the equivalence of logical irreversibility to heat dissipation. (Landauer, Szilard)",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "moonshot_Landauer_48",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:21.930216+00:00",
+    "title": "Landauer Limit and Thermodynamics of Erasure"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Rado's Busy Beaver function Sigma(n) and prove it grows faster than every total computable function, that the n-state halting problem is undecidable, and verify small-n values (Sigma(1..4)) by exhaustive machine analysis. (Rado 1962)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "moonshot_Rado_07",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:08.341101+00:00",
+    "title": "Busy Beaver: Noncomputable Growth Dominating All Computable Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Wehrmacht Enigma rotor-stepping machine and the Rejewski/Turing bombe attack: the cycle structure exploited, the plugboard's effect on the keyspace, and a complexity bound on the cryptanalytic search. (Stephenson, Cryptonomicon)",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "moonshot_Stephenson_38",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:19.312011+00:00",
+    "title": "Enigma Rotor Machine and the Bombe"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Kuramoto model of coupled phase oscillators, the order parameter, and the critical coupling strength at which spontaneous synchronization emerges, proving the mean-field bifurcation. (Strogatz, Sync 2003)",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "moonshot_Strogatz_27",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:13.685546+00:00",
+    "title": "Kuramoto Model: Coupled-Oscillator Synchronization Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Watts-Strogatz small-world model: the rewiring construction, the scaling of characteristic path length L(p) and clustering C(p), and the regime where both short paths and high clustering hold. (Watts-Strogatz 1998)",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "moonshot_Strogatz_28",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:13.963022+00:00",
+    "title": "Watts-Strogatz Small-World Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domains": [
       "Algebra"
@@ -5037,6 +5737,540 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Hadwiger-Nelson problem: the chromatic number of the unit-distance graph of the plane satisfies 5 <= chi <= 7 (de Grey proved chi >= 5 in 2018). Close the gap by improving the lower or upper bound. (Nelson 1950; de Grey 2018)",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "unsolved_Hadwiger-Nelson_29",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:38.472578+00:00",
+    "title": "Hadwiger-Nelson: Chromatic Number of the Plane"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Impagliazzo-Paturi ETH (3-SAT requires 2^{o(n)} time is impossible) and SETH (k-SAT complexity approaches 2^n as k grows), and derive fine-grained lower bounds for parameterized and polynomial-time problems. (Impagliazzo-Paturi 2001)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Impagliazzo-Paturi_03",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:29.058673+00:00",
+    "title": "Exponential / Strong Exponential Time Hypotheses (ETH/SETH)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Impagliazzo-Wigderson theorem that E requires exponential-size circuits implies BPP = P, and attack the conjecture that all polynomial-time randomized algorithms can be fully derandomized. (Impagliazzo-Wigderson 1997)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Impagliazzo-Wigderson_08",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:30.364265+00:00",
+    "title": "BPP = P: Derandomization via Circuit Lower Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Natural Proofs barrier: under the existence of strong pseudorandom function families, any 'natural' combinatorial circuit-lower-bound proof technique cannot establish super-polynomial lower bounds, explaining the stagnation of P vs NP approaches. (Razborov-Rudich 1997)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Razborov-Rudich_07",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:30.092826+00:00",
+    "title": "Natural Proofs Barrier (Razborov-Rudich)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Regev's reduction: solving decision-LWE with polynomial modulus (average case) is as hard as solving worst-case gap-SVP/SIVP on lattices (quantumly), founding post-quantum cryptography. (Regev 2005)",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "unsolved_Regev-LWE_48",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:43.814623+00:00",
+    "title": "LWE Worst-Case-to-Average-Case Hardness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Shelah's result that the Whitehead problem (is every Whitehead group free?) is independent of ZFC: true under V=L, false under MA + not-CH. Develop the group-theoretic and forcing machinery. (Shelah 1974)",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "unsolved_Shelah-Whitehead_44",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:42.710724+00:00",
+    "title": "Whitehead Problem: Undecidability in ZFC (Shelah)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize an ethical framework for simulated minds (Black Mirror): a utility/patienthood criterion for digital replicas, proving conditions under which a simulated mind warrants moral consideration proportional to a biological one (functionalist isomorphism). (Black Mirror)",
+    "domains": [
+      "Logic",
+      "MachineLearning"
+    ],
+    "id": "moonshot_Black Mirror_42",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:20.387591+00:00",
+    "title": "Digital Suffering and Moral Patienthood of Replicas"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Cook's proof that elementary cellular automaton Rule 110 is Turing-complete: encode cyclic tag systems into glider collisions in the Rule 110 spacetime, yielding universal computation from a 1D two-state local rule. (Cook 2004)",
+    "domains": [
+      "Computation"
+    ],
+    "id": "moonshot_Cook-Wolfram_03",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:07.282659+00:00",
+    "title": "Rule 110 Turing-Completeness via Cyclic Tag Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Maxwell's-demon / Szilard-engine cycle: the entropy cost of measurement and erasure exactly balances the work extractable, proving the consistency of the second law with information-theoretic demonyms. (Szilard 1929)",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "moonshot_Szilard_52",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:22.955177+00:00",
+    "title": "Maxwell's Demon and the Szilard Information-Thermodynamics Link"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Turing's reaction-diffusion model of morphogenesis: the conditions for diffusion-driven instability, pattern-formation as a computation, and the stability of the resulting spatial patterns. (Turing 1952)",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "moonshot_Turing_47",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:21.670971+00:00",
+    "title": "Turing Patterns: Reaction-Diffusion Morphogenesis as Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Kaplansky zero-divisor conjecture: the group ring K[G] of a torsion-free group G over a field K has no non-trivial zero divisors (the unit conjecture was disproved by Gardam 2021; zero-divisor and idempotent remain open). (Kaplansky 1940; Gardam 2021)",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "unsolved_Kaplansky_24",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:37.278316+00:00",
+    "title": "Kaplansky Zero-Divisor Conjecture for Group Rings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Lindelof hypothesis: zeta(1/2 + it) = O(t^eps) for every eps > 0, the weakest consequence of RH on the critical line, and the current best exponent bounds (Bourgain 2017). (Lindelof 1908)",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "unsolved_Lindelof_21",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:36.412482+00:00",
+    "title": "Lindelof Hypothesis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the determination of the Ramsey number R(5,5): currently 43 <= R(5,5) <= 48. Improve the lower bound (constructive) or upper bound (flag-algebra/computational) to pin down the exact value. (Ramsey 1930)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Ramsey_30",
+    "priority_score": 0.68,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:38.758916+00:00",
+    "title": "Exact Ramsey Number R(5,5)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Bennett's logical depth: the computational running time of the shortest program that generates an object, distinguishing deep (organized) from shallow/random objects, and its invariance theorem. (Bennett)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "moonshot_Bennett_50",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:22.444849+00:00",
+    "title": "Bennett Logical Depth: A Complexity Measure of Organization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a global reputation/rating system (Black Mirror 'Nosedive') as a coupled dynamical system, proving conditions for social-welfare attractors vs. polarization/starvation attractors, and the instability of score-weighted access regimes. (Black Mirror)",
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "id": "moonshot_Black Mirror_44",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:20.894195+00:00",
+    "title": "Black Mirror 'Nosedive': Reputation Systems as Dynamical Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the stability of Lorentzian spacetime metrics under small perturbations (Egan's Schild's Ladder), proving conditions under which the causal structure is preserved and the geodesic completeness survives perturbation. (Egan)",
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "moonshot_Egan_25",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:13.128979+00:00",
+    "title": "Schild's Ladder: Stability of Lorentzian Metrics Under Perturbation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize feedback loops in predictive policing (Minority Report / Black Mirror): a predictor that conditions future data on its own past output, proving run-away amplification (self-fulfilling) and the bias-accumulation fixed point. (PKD / Black Mirror)",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "moonshot_PKD-BlackMirror_45",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:21.157380+00:00",
+    "title": "Predictive-Policing Feedback Loops and Algorithmic Self-Fulfilling Prophecies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Hausdorff dimension, self-similar fractals via iterated function systems (Mandelbrot/Julia sets, Sierpinski, Koch), and the Moran equation for the dimension of self-similar sets. (Pickover)",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "moonshot_Pickover_30",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:14.514476+00:00",
+    "title": "Hausdorff Dimension and Iterated Function System Fractals"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Smullyan's knight-and-knave puzzle universes as a pedagogical encoding of provability predicates, showing how the island puzzles escalate to proofs of Godel's first incompleteness theorem and Tarski undefinability. (Smullyan)",
+    "domains": [
+      "Logic"
+    ],
+    "id": "moonshot_Smullyan_12",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:09.686509+00:00",
+    "title": "Smullyan Knight-and-Knave Islands as a Route to Godel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Shannon's information-theoretic security: perfect secrecy (H(M)=H(M|C)), the one-time pad optimality, and the impossibility of perfect secrecy when the key is shorter than the message. (Stephenson, Cryptonomicon)",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "moonshot_Stephenson-Shannon_39",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:19.602404+00:00",
+    "title": "Information-Theoretic Perfect Secrecy and Shannon Limits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Schneier's Solitaire (Pontifex) card cipher from Cryptonomicon: the keystream generation algorithm, its cycle structure on a deck-permutation state space, and analysis of bias / output-rate properties. (Stephenson, Cryptonomicon 1999)",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "moonshot_Stephenson_37",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:19.029876+00:00",
+    "title": "Pontifex/Solitaire Card Cipher (Cryptonomicon)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Lorenz system's strange attractor: prove positive Lyapunov exponents imply sensitive dependence on initial conditions, boundedness of trajectories, and the fractal (non-integer) dimension of the attractor. (Strogatz)",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "moonshot_Strogatz-Pickover_31",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:14.807508+00:00",
+    "title": "Lorenz Attractor, Lyapunov Exponents, and Sensitive Dependence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Mirollo-Strogatz model of pulse-coupled oscillators (firefly-type emergence): prove that for sufficiently strong coupling an all-to-all network synchronizes almost always, and characterize the absorbing states. (Mirollo-Strogatz 1990)",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "moonshot_Strogatz_29",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:14.238020+00:00",
+    "title": "Mirollo-Strogatz Pulse-Coupled Oscillators and Sync"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Bunyakovsky conjecture: an irreducible integer polynomial with positive leading coefficient and no fixed prime divisor takes infinitely many prime values (the degree-1 case is Dirichlet's theorem; degree 2+ is open, e.g., n^2+1). (Bunyakovsky 1857)",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "unsolved_Bunyakovsky_16",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:32.470002+00:00",
+    "title": "Bunyakovsky Conjecture: Prime Values of Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Frankl's union-closed sets conjecture: any non-trivial union-closed family of finite sets has an element present in at least half the sets. Prove the recent (2022-2023) approximate breakthroughs (Poonen, Sawin) and attack the full conjecture. (Frankl 1979)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Frankl_27",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:37.908301+00:00",
+    "title": "Frankl's Union-Closed Sets Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Hilbert's 11th problem: classify quadratic forms over number fields up to equivalence and solve the representation problem (which numbers are represented), building on Hasse-Minkowski. (Hilbert 1900)",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "unsolved_Hilbert-11_41",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:41.866038+00:00",
+    "title": "Hilbert 11th: Quadratic Forms over Number Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Keating-Snaith conjecture: the 2k-th moment of zeta on the critical line is asymptotic to a constant (determined by random unitary matrix moments) times (log T)^{k^2}, linking number theory to random matrix theory. (Keating-Snaith 2000)",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "unsolved_Keating-Snaith_49",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:44.072221+00:00",
+    "title": "Keating-Snaith Moments of Zeta and Random Matrix Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the reconstruction conjecture: every graph on >= 3 vertices is determined up to isomorphism by its multiset of vertex-deleted subgraphs (cards). Prove for known classes and attack the general case. (Kelly-Ulam 1941)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Kelly-Ulam_31",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:39.035033+00:00",
+    "title": "Graph Reconstruction Conjecture (Kelly-Ulam)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the log-rank conjecture: the deterministic communication complexity of any boolean function is polylogarithmic in the rank of its communication matrix (specifically O(log^2 rank)), connecting communication complexity to matrix rank. (Lovasz-Saks)",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "unsolved_Lovasz-Saks_10",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:30.871354+00:00",
+    "title": "Log-Rank Conjecture (Lovasz-Saks)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Toeplitz inscribed square conjecture: every simple closed plane curve contains four points forming the vertices of a square. Prove for piecewise-analytic / symmetric curves and attack the general case. (Toeplitz 1911)",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "unsolved_Toeplitz_33",
+    "priority_score": 0.66,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:39.587473+00:00",
+    "title": "Inscribed Square Problem (Toeplitz)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Abbott's dimensional analogy: derive n-dimensional geometry by induction from 2D/3D, proving hypersphere intersection geometry, n-ball volume recurrences, and the generalization of Platonic solids. (Abbott, Flatland 1884)",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "moonshot_Abbott_23",
+    "priority_score": 0.64,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:12.599285+00:00",
+    "title": "Flatland Dimensional Analogy: Inductive n-Dimensional Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize 'simulacra' (Baudrillard/PKD): a copy-of-copy chain with fidelity decay, proving conditions under which a copy becomes indistinguishable from an original (and the asymptotic loss of any 'original' referent). (PKD, The Simulacra 1964)",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "moonshot_PKD_36",
+    "priority_score": 0.64,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:18.754976+00:00",
+    "title": "PKD Simulacra: Copies Without Originals and Fidelity Decay"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Paun's membrane computing / P-systems: hierarchical cell-like membranes with evolution rules, and characterize the computational power (P-systems with symport/antiport reach Turing-universality; active membranes solve NP problems in polynomial steps). (Paun)",
+    "domains": [
+      "Computation",
+      "Novelty"
+    ],
+    "id": "moonshot_Paun_46",
+    "priority_score": 0.64,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:21.420515+00:00",
+    "title": "Membrane Computing (P-Systems) and Their Computational Power"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Cramer's conjecture: the gap between consecutive primes p_{n+1} - p_n is O((log p_n)^2), and the random-model heuristic predicting it, contrasting with the proven Baker-Harman-Pintz O(p^0.525) bound. (Cramer 1936)",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "unsolved_Cramer_14",
+    "priority_score": 0.64,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:31.928110+00:00",
+    "title": "Cramer's Conjecture on Prime Gaps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Erdos-Rado sunflower conjecture (families of k-sets > c^k contain a sunflower) and the recent Alon-Spencer/Kelner improved bounds, relating it to the monotone-circuit lower-bound program. (Erdos-Rado 1960; recent improvements)",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "unsolved_Erdos-Rado_11",
+    "priority_score": 0.64,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:31.129399+00:00",
+    "title": "Sunflower Conjecture and Improved Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Kaplansky idempotent conjecture: the only idempotents in K[G] for torsion-free G are 0 and 1, and connect it to the Baum-Connes conjecture (which implies it for many groups). (Kaplansky 1940)",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "unsolved_Kaplansky_25",
+    "priority_score": 0.64,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:37.556670+00:00",
+    "title": "Kaplansky Idempotent Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -5055,6 +6289,111 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize a complexity model of DNA computing and Adleman's construction solving a 7-vertex Hamiltonian Path instance via massively-parallel DNA hybridization/ligation, analyzing the parallelism vs. serial-time tradeoff. (Adleman 1994)",
+    "domains": [
+      "Computation",
+      "Applications"
+    ],
+    "id": "moonshot_Adleman_05",
+    "priority_score": 0.62,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:07.811236+00:00",
+    "title": "Adleman DNA Computing: Hamiltonian Path by Hybridization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Egan's 'polis' architecture as a multi-agent ontology: concept lattices (Formal Concept Analysis) for simulated minds, snapshot/merge semantics, and consistency of shared linguistic conventions across agents. (Egan, Diaspora 1997)",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "moonshot_Egan_26",
+    "priority_score": 0.62,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:13.410308+00:00",
+    "title": "Diaspora Polis Ontology: Concept Lattices for Simulated Minds"
+  },
+  {
+    "consumed_by_exp_id": "59799085",
+    "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
+    "domains": [
+      "Computation",
+      "Novelty"
+    ],
+    "id": "moonshot_Rucker_20",
+    "priority_score": 0.62,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-22T11:50:11.785769+00:00",
+    "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Twilight Zone thought experiment of reality-as-desire-satisfaction: model 'wishes' as a constraint-satisfaction/fixpoint problem over world-states, proving which classes of desire-systems admit a satisfying world and which are NP-hard or inconsistent. (Twilight Zone)",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "moonshot_Twilight Zone_43",
+    "priority_score": 0.62,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:20.641056+00:00",
+    "title": "Twilight Zone 'It's a Good Life': Omnipotence as Constraint Satisfaction"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the open part of the Erdos-Szekeres happy ending problem: the minimum number of points in general position guaranteeing a convex n-gon is conjectured to be 1 + 2^{n-2}; proven for small n, open in general. (Erdos-Szekeres 1935)",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "unsolved_Erdos-Szekeres_32",
+    "priority_score": 0.62,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:39.309510+00:00",
+    "title": "Happy Ending Problem: Exact Erdos-Szekeres Formula"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Legendre's conjecture: for every positive integer n, there is at least one prime between n^2 and (n+1)^2. Verify for large ranges and derive it from stronger prime-gap hypotheses. (Legendre 1912, stated)",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "unsolved_Legendre_13",
+    "priority_score": 0.62,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:31.657181+00:00",
+    "title": "Legendre's Conjecture: Primes Between Consecutive Squares"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the perfect cuboid problem: does a rectangular cuboid exist with integer edges, face diagonals, and space diagonal all integers? Verify non-existence up to huge bounds and prove no solutions under parametric constraints. (Euler 1719)",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "unsolved_Perfect-Cuboid_37",
+    "priority_score": 0.62,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:40.719748+00:00",
+    "title": "Perfect Cuboid Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 2ec4044e (Q=0.553) proved 7 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Restrict the project to a single self-contained formalization file that completes the finite counting toolkit for binary codes as `Finset (Fin n \u2192 ZMod 2)` and stops before any ambitious convolution t",
     "domains": [
       "Applications"
@@ -5066,6 +6405,183 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T11:25:17.680039+00:00",
     "title": "Close Proofs: Tropicalized binary weight enumerator profile from Smooth Poincar\u00e9 cod"
+  },
+  {
+    "consumed_by_exp_id": "0e282766",
+    "description": "Formalize Wolfram's four-class taxonomy of cellular automaton behavior (uniform/periodic/chaotic/complex) and investigate the computability of classifying a given CA's asymptotic behavior, relating class-4 to universal computation. (Wolfram)",
+    "domains": [
+      "Computation",
+      "Novelty"
+    ],
+    "id": "moonshot_Wolfram_10",
+    "priority_score": 0.6,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-22T11:50:09.132500+00:00",
+    "title": "Wolfram CA Four-Class Classification and its Computability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Casas-Alvero conjecture: a monic degree-d polynomial over a char-0 field that shares a root with each of its first d-1 derivatives must be (X - alpha)^d. Verify for small d and attack the general case. (Casas-Alvero 2001)",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "unsolved_Casas-Alvero_23",
+    "priority_score": 0.6,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:36.995369+00:00",
+    "title": "Casas-Alvero Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Grimm's conjecture: for any run of k consecutive composite integers, there exist k distinct primes such that each composite is divisible by a distinct one of them. Verify for huge ranges and prove weakened forms. (Grimm 1969)",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "unsolved_Grimm_18",
+    "priority_score": 0.6,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:33.011075+00:00",
+    "title": "Grimm's Conjecture on Consecutive Composites"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Lehmer's totient problem: is there any composite n with phi(n) | (n-1)? Prove that any such n is odd, square-free, and > 10^30 (the verified lower bound), and attack the conjecture that none exist. (Lehmer 1932)",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "unsolved_Lehmer_15",
+    "priority_score": 0.6,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:32.206536+00:00",
+    "title": "Lehmer's Totient Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Lonely Runner conjecture: for k runners with distinct constant speeds on a unit track, each runner is at some time at distance >= 1/k from every other. Prove for small k and relate to chromatic-number/view-obstruction bounds. (Wills 1967 / Cusick)",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "unsolved_Lonely-Runner_28",
+    "priority_score": 0.6,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:38.185956+00:00",
+    "title": "Lonely Runner Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the moving sofa problem: the maximum area of a 2D shape that can be maneuvered through a unit-width L-shaped corridor (current best lower bound Gerver's sofa ~2.219, upper bound ~2.37). Improve the bounds. (Mosers 1966)",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "unsolved_Moving-Sofa_36",
+    "priority_score": 0.6,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:40.441318+00:00",
+    "title": "Moving Sofa Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the combinatorics of hexaflexagons: the face-count sequences, the Tuckerman traversal generating procedure, and the pat structures, enumerating distinct flexagons of order n. (Gardner 1956)",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "moonshot_Gardner_13",
+    "priority_score": 0.58,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:09.945337+00:00",
+    "title": "Hexaflexagon Combinatorial Topology and the Tuckerman Traverse"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Gardner-style recreational enumeration: fixed/free polyomino counting by area, the transfer-matrix method for exact enumeration, and the generation/counting of normal magic squares of order n. (Gardner)",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "moonshot_Gardner_18",
+    "priority_score": 0.58,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:11.257061+00:00",
+    "title": "Polyomino and Magic-Square Enumeration"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
+    "domains": [
+      "Geometry",
+      "Novelty"
+    ],
+    "id": "moonshot_Pickover_32",
+    "priority_score": 0.58,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T11:50:17.617665+00:00",
+    "title": "Pickover Clifford Attractor Family"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Erdos-Straus conjecture: for every n >= 2, 4/n = 1/x + 1/y + 1/z has a positive-integer solution. Verify for huge ranges and prove for congruence classes, attacking the general case. (Erdos-Straus 1948)",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "unsolved_Erdos-Straus_50",
+    "priority_score": 0.58,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:44.349066+00:00",
+    "title": "Erdos-Straus Diophantine Equation 4/n = 1/x + 1/y + 1/z"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the 3x3 magic square of squares problem: does a 3x3 magic square exist whose nine entries are distinct perfect squares? Search computationally and prove non-existence under modular constraints. (Euler 1770)",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "unsolved_Euler-Magic-Square_38",
+    "priority_score": 0.58,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:41.002734+00:00",
+    "title": "Magic Square of Squares (Euler)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Oppermann's conjecture: for n > 1, there is at least one prime in (n^2 - n, n^2) and one in (n^2, n^2 + n). Relate it to Legendre and to the prime-counting function bounds. (Oppermann 1882)",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "unsolved_Oppermann_19",
+    "priority_score": 0.58,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T12:06:35.861194+00:00",
+    "title": "Oppermann's Conjecture: Primes Around n^2"
   },
   {
     "consumed_by_exp_id": "",
