@@ -1083,6 +1083,30 @@ class FutureDirectionsManager:
         self._record_selection_category(consumed_category)
         self._save()
 
+    def reconcile_in_progress(self, active_direction_keys: Set[str]) -> int:
+        """Reconcile direction statuses so in_progress reflects the true state of
+        active inflight jobs at tick end. For every direction consumed by an active
+        job (keyed by job_id, or job.retry_of for retries), force status=in_progress.
+
+        Fixes three gaps: (1) 'preparing' jobs whose direction wasn't yet marked
+        in_progress, (2) retry jobs whose direction was left completed/failed by the
+        original attempt (keyed by retry_of), (3) sync lag between inflight_jobs.json
+        and future_directions.json. Stale in_progress with no active job is handled
+        separately by recover_stale_directions at tick start.
+
+        active_direction_keys = {job.retry_of or job.job_id for each active inflight job}.
+        Returns the number of directions flipped to in_progress.
+        """
+        reconciled = 0
+        for d in self._directions:
+            if d.consumed_by_exp_id and d.consumed_by_exp_id in active_direction_keys:
+                if d.status != "in_progress":
+                    d.status = "in_progress"
+                    reconciled += 1
+        if reconciled:
+            self._save()
+        return reconciled
+
     def get_source_exp_ids_for(self, exp_id: str) -> list:
         """Return source_exp_ids of all directions consumed by this exp_id.
 

@@ -1269,6 +1269,22 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         # because it would consume more directions while Aristotle is full.
         extractor._save_inflight()
 
+    # Reconcile in_progress directions to match active inflight jobs (true state at tick end).
+    # Fixes preparing/retry/sync gaps: every direction consumed by an active job (keyed
+    # by job_id, or retry_of for retries) is forced to in_progress. Stale in_progress
+    # with no active job is cleared by recover_stale_directions at tick start.
+    try:
+        _active_keys = set()
+        for _j in extractor.inflight.values():
+            if hasattr(_j, "status") and _j.status in ("preparing", "dispatched", "retry_queued"):
+                _active_keys.add(getattr(_j, "retry_of", None) or _j.job_id)
+        from research_memory import FutureDirectionsManager as _FD
+        _n_reconciled = _FD(extractor.workspace).reconcile_in_progress(_active_keys)
+        if _n_reconciled:
+            print(f"[Tick] Reconciled {_n_reconciled} direction(s) to in_progress to match active inflight jobs")
+    except Exception as _e:
+        print(f"[Tick] in_progress reconcile failed: {_e}")
+
     # Summary
     remaining = extractor._count_inflight_dispatched()
     queued_remaining = len([j for j in extractor.inflight.values() if j.status == "retry_queued"])
