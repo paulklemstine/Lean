@@ -35072,7 +35072,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-19T17:11:08.928185+00:00",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
@@ -35160,7 +35160,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Mathlib.Combinatorics.SimpleGraph.Basic",
         "Mathlib.Combinatorics.SimpleGraph.Clique",
@@ -35169,7 +35169,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "eafa171c",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "For every finite K5-free simple graph G on n vertices, assign weight 1/2 to every edge contained in a triangle and weight 1 to every other edge. Then G has a bipartition whose monochromatic edge-weight is at most n^2/16. Equivalently, deleting edges of total such weight at most n^2/16 always makes G bipartite. The balanced complete 4-partite graph shows that the constant 1/16 would be best possible.",
       "domain_bridges": [
@@ -35183,7 +35183,7 @@
         "Algebra"
       ],
       "id": "fd_2122",
-      "last_attempt_time": "2026-06-22T00:51:42.380536+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Finset.Basic\nimport Mathlib.Data.Real.Basic\n\nopen scoped BigOperators\n\nnamespace RamseyTuran\n\ndef EdgeInTriangle {n : ℕ} (G : SimpleGraph (Fin n)) (u v : Fin n) : Prop :=\n  G.Adj u v ∧ ∃ w : Fin n, w ≠ u ∧ w ≠ v ∧ G.Adj u w ∧ G.Adj v w\n\ndef triWeight {n : ℕ} (G : SimpleGraph (Fin n)) (u v : Fin n) : ℝ :=\n  if EdgeInTriangle G u v then (1 / 2 : ℝ) else 1\n\ndef KFree (r n : ℕ) (G : SimpleGraph (Fin n)) : Prop :=\n  ¬ ∃ S : Finset (Fin n),\n    S.card = r ∧\n      ∀ ⦃u⦄, u ∈ S → ∀ ⦃v⦄, v ∈ S → u ≠ v → G.Adj u v\n\ndef deletedWeight {n : ℕ} (G : SimpleGraph (Fin n)) (c : Fin n → Bool) : ℝ :=\n  ∑ x in Finset.univ.product Finset.univ,\n    if x.1 < x.2 ∧ G.Adj x.1 x.2 ∧ c x.1 = c x.2\n    then triWeight G x.1 x.2\n    else 0\n\naxiom weighted_K5_triangle_cut :\n  ∀ (n : ℕ) (G : SimpleGraph (Fin n)),\n    KFree 5 n G →\n      ∃ c : Fin n → Bool,\n        deletedWeight G c ≤ ((n : ℝ) ^ 2) / 16\n\nend RamseyTuran",
       "lineage_refs": [],
@@ -35196,7 +35196,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.20397v1",
       "source_path": "http://arxiv.org/abs/2606.20397v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-19T20:03:57.336500+00:00",
       "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
@@ -38456,6 +38456,48 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Chao et al. on cyclotomic polynomials for dice relabeling",
+        "Gallian-Rusin results on prime-product dice sizes"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For any two distinct perfect squares a² and b², there exists at least one pair of square-sided dice with a² and b² sides whose sum frequency distribution matches that of two standard dice of the same sizes.",
+      "domain_bridges": [
+        "generating functions",
+        "cyclotomic polynomial factorizations",
+        "combinatorial enumeration"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "id": "fd_2197",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "∀a, b ∈ ℕ (a ≠ b ∧ a², b² > 0), ∃DicePair (size₁ = a², size₂ = b²) ∧ sumFrequency(DicePair) = sumFrequency(StandardDicePair(a², b²))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze cyclotomic polynomial decompositions of generating functions for square-sided dice and demonstrate constructive existence via factorization properties",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20311v1",
+      "source_path": "http://arxiv.org/abs/2606.20311v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T22:47:13.355437+00:00",
+      "title": "Existence of Square-Sided Dice Pairs Replicating Standard Dice Sum Frequencies"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Frankl & F\"uredi, 1984",
         "de Caen, 1983",
         "Gunderson & Semeraro, 2017",
@@ -38493,6 +38535,47 @@
       "thread_id": "",
       "timestamp": "2026-06-21T23:35:54.844336+00:00",
       "title": "Polynomial upper bound for the maximum density of $r$-graphs with every $(r+1)$-set spanning $0$ or $2$ edges"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "0608.0001"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For every integer k ≥ 3, there exist k-uniform hypergraphs F1 and F2 such that the positive codegree Turán density of the pair {F1,F2} is strictly positive, strictly less than each individual density, and equals exactly half of the minimum of the two individual densities.",
+      "domain_bridges": [
+        "Extremal combinatorics",
+        "Hypergraph Turán theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2198",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem strong_non_principality_exact_ratio (k : ℕ) (hk : k ≥ 3) : ∃ (F1 F2 : Hypergraph k), 0 < γ⁺ (F1,F2) ∧ γ⁺ (F1,F2) < min (γ⁺ F1) (γ⁺ F2) ∧ γ⁺ (F1,F2) = (1/2 : ℝ) * min (γ⁺ F1) (γ⁺ F2) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Construct F1 and F2 as specific small hypergraphs (e.g., a single edge and a pair of edges sharing (k-1) vertices) and use known exact values for their positive codegree densities; then apply a product construction to show the pair density is half the minimum.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20494v1",
+      "source_path": "http://arxiv.org/abs/2606.20494v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-21T23:36:20.259851+00:00",
+      "title": "Strong non-principality with exact ratio for positive codegree Turán density"
     },
     {
       "ambition_level": "grand_challenge",
@@ -38537,6 +38620,49 @@
       "thread_id": "",
       "timestamp": "2026-06-22T00:00:44.155816+00:00",
       "title": "Frankl--Kiselev--Kupavskii symmetric-difference bound for n > 10k"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Tree-independence number as introduced by Yolov and by Dallard--Milanič--Štorgel",
+        "Hajebi--Spirkl characterization of finitely defined hereditary classes with bounded tree-independence number",
+        "Results on K_{2,d}-free graphs with no holes of length at least 5 from the cited paper"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For every integer d ≥ 2, every finite simple graph G with no induced subgraph isomorphic to K_{2,d} and with no induced cycle of length at least 5 has tree-independence number at most 2d − 2. Equivalently, G admits a tree decomposition in which each bag induces a subgraph with independence number at most 2d − 2. This is a falsifiable strengthening of boundedness results for K_{2,d}-free graphs additionally forbidding long holes, replacing an unspecified or larger bound by an explicit linear bound.",
+      "domain_bridges": [
+        "tree decompositions ↔ induced independence number of bags",
+        "forbidden induced complete bipartite graphs ↔ local common-neighborhood constraints",
+        "long-hole-free graph structure ↔ chordal-like decompositions"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2199",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\n\nopen SimpleGraph\n\nuniverse u\n\n/-- Placeholder predicates for a finite graph formalization. -/\nnamespace SimpleGraph\n\nvariable {V : Type u} [Fintype V] [DecidableEq V]\n\nconstant IsInducedKmnFree : SimpleGraph V → Nat → Nat → Prop\nconstant HasInducedCycleLengthAtLeast : SimpleGraph V → Nat → Prop\nconstant treeIndependenceNumber : SimpleGraph V → Nat\n\n/-- Conjecture: every induced-K_{2,d}-free graph with no induced cycle of length at least 5\nhas tree-independence number at most `2*d - 2`. -/\ntheorem conjecture_treeIndependence_K2d_free_long_hole_free\n    (G : SimpleGraph V) [DecidableRel G.Adj]\n    (d : Nat) (hd : 2 ≤ d)\n    (hK : G.IsInducedKmnFree 2 d)\n    (hHole : ¬ G.HasInducedCycleLengthAtLeast 5) :\n    G.treeIndependenceNumber ≤ 2 * d - 2 := by\n  sorry\n\nend SimpleGraph",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Try to construct a clique-separator or minimal-separator decomposition for graphs with no induced cycles of length at least 5. Use induced-K_{2,d}-freeness to show that every separator bag can be enlarged so that any independent set inside the bag has size at most 2d−2: two nonadjacent vertices in a controlled separator should have fewer than d mutually independent witnesses on the opposite side, otherwise they induce K_{2,d}. Then combine the local separator bags recursively into a tree decomposition and verify that the maximum bag-independence is bounded by 2d−2.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20256v1",
+      "source_path": "http://arxiv.org/abs/2606.20256v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T00:01:14.488967+00:00",
+      "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
     },
     {
       "ambition_level": "grand_challenge",
@@ -38586,6 +38712,52 @@
       "title": "Universal Arboreal Maximality for Constant Twists of Carlitz Polynomials"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "EKR_theorem",
+        "Hilton_Milner",
+        "cross_intersecting_families",
+        "shifting_methods"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For integers n > 2k ≥ 2 and cross-intersecting families 𝒜, ℬ ⊆ ([n] choose k) with diversity γ(𝒜) ≥ C(n-k-1, k-1) and γ(ℬ) ≥ C(n-k-1, k-1), there exists an element x ∈ [n] such that both 𝒜 and ℬ are contained in the full star {F ∈ ([n] choose k) : x ∈ F}. This extends the Frankl–Kupavskii–Zakharov diversity stability theorem from intersecting to cross-intersecting families, and would provide a unified structural characterization implying cross-intersecting analogues of Hilton–Milner and Han–Kohayakawa as corollaries.",
+      "domain_bridges": [
+        "combinatorial_optimization",
+        "set_theory",
+        "linear_algebra_over_GF2"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2200",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cross_intersecting_diversity_stability {n k : ℕ} (hk : 2 ≤ k) (hn : n > 2 * k) (A B : Finset (Finset (Fin n))) (hA : ∀ F ∈ A, F.card = k) (hB : ∀ G ∈ B, G.card = k) (hCross : ∀ F ∈ A, ∀ G ∈ B, (F ∩ G).Nonempty) (hDivA : (A.card - max_degree A) ≥ Nat.choose (n - k - 1) (k - 1)) (hDivB : (B.card - max_degree B) ≥ Nat.choose (n - k - 1) (k - 1)) : ∃ x : Fin n, (∀ F ∈ A, x ∈ F) ∧ (∀ G ∈ B, x ∈ G) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the S_{U,V}^Q-shift operation in Lean and prove it preserves cross-intersection (the key lemma from the paper). Then establish that iterated shifting drives any cross-intersecting pair toward a canonical form. The diversity lower bounds constrain how far the pair can deviate from a common star, yielding the structural conclusion via a double-counting argument on the diversity terms.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20085v1",
+      "source_path": "http://arxiv.org/abs/2606.20085v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T00:24:18.725072+00:00",
+      "title": "Cross-Intersecting Diversity Stability Conjecture"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -38631,178 +38803,6 @@
       "title": "Second Moment Asymptotic for Symmetric Square L-functions on GL₃"
     },
     {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Chao et al. on cyclotomic polynomials for dice relabeling",
-        "Gallian-Rusin results on prime-product dice sizes"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "For any two distinct perfect squares a² and b², there exists at least one pair of square-sided dice with a² and b² sides whose sum frequency distribution matches that of two standard dice of the same sizes.",
-      "domain_bridges": [
-        "generating functions",
-        "cyclotomic polynomial factorizations",
-        "combinatorial enumeration"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Computation"
-      ],
-      "id": "fd_2202",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "∀a, b ∈ ℕ (a ≠ b ∧ a², b² > 0), ∃DicePair (size₁ = a², size₂ = b²) ∧ sumFrequency(DicePair) = sumFrequency(StandardDicePair(a², b²))",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Analyze cyclotomic polynomial decompositions of generating functions for square-sided dice and demonstrate constructive existence via factorization properties",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20311v1",
-      "source_path": "http://arxiv.org/abs/2606.20311v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T22:47:13.355437+00:00",
-      "title": "Existence of Square-Sided Dice Pairs Replicating Standard Dice Sum Frequencies"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "math.CO",
-        "0608.0001"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "For every integer k ≥ 3, there exist k-uniform hypergraphs F1 and F2 such that the positive codegree Turán density of the pair {F1,F2} is strictly positive, strictly less than each individual density, and equals exactly half of the minimum of the two individual densities.",
-      "domain_bridges": [
-        "Extremal combinatorics",
-        "Hypergraph Turán theory"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Bridges"
-      ],
-      "id": "fd_2203",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem strong_non_principality_exact_ratio (k : ℕ) (hk : k ≥ 3) : ∃ (F1 F2 : Hypergraph k), 0 < γ⁺ (F1,F2) ∧ γ⁺ (F1,F2) < min (γ⁺ F1) (γ⁺ F2) ∧ γ⁺ (F1,F2) = (1/2 : ℝ) * min (γ⁺ F1) (γ⁺ F2) := by sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Construct F1 and F2 as specific small hypergraphs (e.g., a single edge and a pair of edges sharing (k-1) vertices) and use known exact values for their positive codegree densities; then apply a product construction to show the pair density is half the minimum.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20494v1",
-      "source_path": "http://arxiv.org/abs/2606.20494v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-21T23:36:20.259851+00:00",
-      "title": "Strong non-principality with exact ratio for positive codegree Turán density"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Tree-independence number as introduced by Yolov and by Dallard--Milanič--Štorgel",
-        "Hajebi--Spirkl characterization of finitely defined hereditary classes with bounded tree-independence number",
-        "Results on K_{2,d}-free graphs with no holes of length at least 5 from the cited paper"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "For every integer d ≥ 2, every finite simple graph G with no induced subgraph isomorphic to K_{2,d} and with no induced cycle of length at least 5 has tree-independence number at most 2d − 2. Equivalently, G admits a tree decomposition in which each bag induces a subgraph with independence number at most 2d − 2. This is a falsifiable strengthening of boundedness results for K_{2,d}-free graphs additionally forbidding long holes, replacing an unspecified or larger bound by an explicit linear bound.",
-      "domain_bridges": [
-        "tree decompositions ↔ induced independence number of bags",
-        "forbidden induced complete bipartite graphs ↔ local common-neighborhood constraints",
-        "long-hole-free graph structure ↔ chordal-like decompositions"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Bridges"
-      ],
-      "id": "fd_2204",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\n\nopen SimpleGraph\n\nuniverse u\n\n/-- Placeholder predicates for a finite graph formalization. -/\nnamespace SimpleGraph\n\nvariable {V : Type u} [Fintype V] [DecidableEq V]\n\nconstant IsInducedKmnFree : SimpleGraph V → Nat → Nat → Prop\nconstant HasInducedCycleLengthAtLeast : SimpleGraph V → Nat → Prop\nconstant treeIndependenceNumber : SimpleGraph V → Nat\n\n/-- Conjecture: every induced-K_{2,d}-free graph with no induced cycle of length at least 5\nhas tree-independence number at most `2*d - 2`. -/\ntheorem conjecture_treeIndependence_K2d_free_long_hole_free\n    (G : SimpleGraph V) [DecidableRel G.Adj]\n    (d : Nat) (hd : 2 ≤ d)\n    (hK : G.IsInducedKmnFree 2 d)\n    (hHole : ¬ G.HasInducedCycleLengthAtLeast 5) :\n    G.treeIndependenceNumber ≤ 2 * d - 2 := by\n  sorry\n\nend SimpleGraph",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Try to construct a clique-separator or minimal-separator decomposition for graphs with no induced cycles of length at least 5. Use induced-K_{2,d}-freeness to show that every separator bag can be enlarged so that any independent set inside the bag has size at most 2d−2: two nonadjacent vertices in a controlled separator should have fewer than d mutually independent witnesses on the opposite side, otherwise they induce K_{2,d}. Then combine the local separator bags recursively into a tree decomposition and verify that the maximum bag-independence is bounded by 2d−2.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20256v1",
-      "source_path": "http://arxiv.org/abs/2606.20256v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-22T00:01:14.488967+00:00",
-      "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "math.CO",
-        "EKR_theorem",
-        "Hilton_Milner",
-        "cross_intersecting_families",
-        "shifting_methods"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "For integers n > 2k ≥ 2 and cross-intersecting families 𝒜, ℬ ⊆ ([n] choose k) with diversity γ(𝒜) ≥ C(n-k-1, k-1) and γ(ℬ) ≥ C(n-k-1, k-1), there exists an element x ∈ [n] such that both 𝒜 and ℬ are contained in the full star {F ∈ ([n] choose k) : x ∈ F}. This extends the Frankl–Kupavskii–Zakharov diversity stability theorem from intersecting to cross-intersecting families, and would provide a unified structural characterization implying cross-intersecting analogues of Hilton–Milner and Han–Kohayakawa as corollaries.",
-      "domain_bridges": [
-        "combinatorial_optimization",
-        "set_theory",
-        "linear_algebra_over_GF2"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "id": "fd_2205",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem cross_intersecting_diversity_stability {n k : ℕ} (hk : 2 ≤ k) (hn : n > 2 * k) (A B : Finset (Finset (Fin n))) (hA : ∀ F ∈ A, F.card = k) (hB : ∀ G ∈ B, G.card = k) (hCross : ∀ F ∈ A, ∀ G ∈ B, (F ∩ G).Nonempty) (hDivA : (A.card - max_degree A) ≥ Nat.choose (n - k - 1) (k - 1)) (hDivB : (B.card - max_degree B) ≥ Nat.choose (n - k - 1) (k - 1)) : ∃ x : Fin n, (∀ F ∈ A, x ∈ F) ∧ (∀ G ∈ B, x ∈ G) := by sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Formalize the S_{U,V}^Q-shift operation in Lean and prove it preserves cross-intersection (the key lemma from the paper). Then establish that iterated shifting drives any cross-intersecting pair toward a canonical form. The diversity lower bounds constrain how far the pair can deviate from a common star, yielding the structural conclusion via a double-counting argument on the diversity terms.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20085v1",
-      "source_path": "http://arxiv.org/abs/2606.20085v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-22T00:24:18.725072+00:00",
-      "title": "Cross-Intersecting Diversity Stability Conjecture"
-    },
-    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -38830,7 +38830,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2206",
+      "id": "fd_2201",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem irreducible_decomposition_unique (m : ℕ) (hm : 1 ≤ m) :\n  ∀ (W : Submodule ℂ (L2_sym m)) (hW_irred : IsIrreducible Γ_action W) (hW_inv : IsInvariant Γ_action W),\n    ∃! k : Fin (m + 1), W ≤ V_mk m k :=\n  by\n    sorry",
@@ -38848,6 +38848,86 @@
       "thread_id": "",
       "timestamp": "2026-06-22T00:51:24.912485+00:00",
       "title": "Uniqueness of the Irreducible Decomposition of Symmetric L² under Measure-Preserving Actions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "The paper establishes that for every prime power $q \\ge 2$, there exist infinitely many co-edge-regular graphs with exactly four distinct eigenvalues, smallest eigenvalue $-2q-1$, and coherent rank at least $q+4$. We conjecture that these constructed graphs achieve coherent rank exactly $q+4$, which is equivalent to the number of common neighbours of adjacent vertex pairs taking exactly $q+2$ distinct values. This implies the existence of such graphs with exact coherent rank $q+4$.",
+      "domain_bridges": [
+        "Finite Geometry",
+        "Linear Algebra"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2202",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Nat.Prime.Basic\n\n-- Assuming definitions for SimpleGraph, coEdgeRegular, distinctEigenvalues, coherentRank, smallestEigenvalue\n\nvariable {q : ℕ}\n\ntheorem exists_co_edge_regular_graph_exact_rank (hq : q ≥ 2) (h_prime_power : IsPrimePower q) :\n    ∃ (V : Type*) [Fintype V] (G : SimpleGraph V),\n      coEdgeRegular G ∧\n      distinctEigenvalues G = 4 ∧\n      smallestEigenvalue G = -(2 * q + 1) ∧\n      coherentRank G = q + 4 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the intersection numbers of the constructed graphs (derived from affine or projective planes). Show that the number of distinct values for the common neighbours of adjacent pairs is exactly $q+2$, which bounds the coherent rank from above by $q+4$, matching the lower bound established in the paper.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19981v1",
+      "source_path": "http://arxiv.org/abs/2606.19981v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T01:13:01.910250+00:00",
+      "title": "Exact Coherent Rank of Co-edge-regular Graphs with Four Eigenvalues"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For positive integers a and b, the arithmetic function f(a,b) = gcd(ab, a+b)/gcd(a,b) investigated in the paper can be expressed purely in terms of the greatest common divisor without division, specifically f(a,b) = gcd(gcd(a,b), a/gcd(a,b) + b/gcd(a,b)). This implies that gcd(a * b, a + b) is always divisible by gcd(a, b), and the quotient is exactly gcd(gcd(a,b), a/gcd(a,b) + b/gcd(a,b)).",
+      "domain_bridges": [
+        "elementary_number_theory",
+        "gcd_properties"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2202",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem gcd_ab_a_b_factorization (a b : Nat) :\n  Nat.gcd (a * b) (a + b) = (Nat.gcd a b) * Nat.gcd (Nat.gcd a b) (a / (Nat.gcd a b) + b / (Nat.gcd a b)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Let g = gcd(a, b), a = g*x, b = g*y with gcd(x, y) = 1. Then gcd(a*b, a+b) = gcd(g^2*x*y, g*(x+y)) = g * gcd(g*x*y, x+y). Since gcd(x, y) = 1, we have gcd(x*y, x+y) = 1. Thus gcd(g*x*y, x+y) = gcd(g, x+y) * gcd(x*y, x+y) = gcd(g, x+y). Therefore, gcd(a*b, a+b) = g * gcd(g, x+y), which completes the proof.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20057v1",
+      "source_path": "http://arxiv.org/abs/2606.20057v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T01:16:13.873849+00:00",
+      "title": "Simplified Expression for the Arithmetic Function f(a,b)"
     },
     {
       "ambition_level": "extension",
@@ -42412,11 +42492,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "dafe288e",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
       "domain_bridges": [],
@@ -42426,7 +42506,7 @@
         "Geometry"
       ],
       "id": "seed_224",
-      "last_attempt_time": "2026-06-22T00:51:34.575686+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-16T10:48:49.752102+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42439,7 +42519,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:12.343420+00:00",
       "title": "Baum-Connes Conjecture"
@@ -98366,7 +98446,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

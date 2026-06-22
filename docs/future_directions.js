@@ -284,7 +284,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture Formalization"
   },
   {
-    "consumed_by_exp_id": "dafe288e",
+    "consumed_by_exp_id": "",
     "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
     "domains": [
       "Algebra",
@@ -294,7 +294,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:12.343420+00:00",
     "title": "Baum-Connes Conjecture"
   },
@@ -2235,7 +2235,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Approximate Ramsey Property for Finite Linear Orders Implies Extreme Amenability"
   },
   {
-    "consumed_by_exp_id": "eafa171c",
+    "consumed_by_exp_id": "",
     "description": "For every finite K5-free simple graph G on n vertices, assign weight 1/2 to every edge contained in a triangle and weight 1 to every other edge. Then G has a bipartition whose monochromatic edge-weight is at most n^2/16. Equivalently, deleting edges of total such weight at most n^2/16 always makes G bipartite. The balanced complete 4-partite graph shows that the constant 1/16 would be best possible.",
     "domains": [
       "Pythagorean",
@@ -2245,7 +2245,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20397v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T20:03:57.336500+00:00",
     "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
   },
@@ -3343,6 +3343,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any two distinct perfect squares a\u00b2 and b\u00b2, there exists at least one pair of square-sided dice with a\u00b2 and b\u00b2 sides whose sum frequency distribution matches that of two standard dice of the same sizes.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2197",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-21T22:47:13.355437+00:00",
+    "title": "Existence of Square-Sided Dice Pairs Replicating Standard Dice Sum Frequencies"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that the Tur\u00e1n density $\\pi(H^r_3)$ of the unique $(r+1)$-vertex $r$-graph with exactly two edges (the $(3,2)$-daisy) satisfies $\\pi(H^r_3) = \\Theta(r^{-3})$; i.e., there exist absolute constants $c_1,c_2>0$ such that for every $r\\ge2$, $c_1/r^3 \\le \\pi(H^r_3) \\le c_2/r^3$. This would tighten the best known general lower bound $\\Omega(r^{-3})$ (from the construction in the paper) and the general upper bound $O(1/r)$ from de\u202fCaen to a matching polynomial rate.",
     "domains": [
       "Pythagorean"
@@ -3357,6 +3371,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 3, there exist k-uniform hypergraphs F1 and F2 such that the positive codegree Tur\u00e1n density of the pair {F1,F2} is strictly positive, strictly less than each individual density, and equals exactly half of the minimum of the two individual densities.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2198",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-21T23:36:20.259851+00:00",
+    "title": "Strong non-principality with exact ratio for positive codegree Tur\u00e1n density"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For all natural numbers n and k with n > 10k, every intersecting k-uniform family F of subsets of [n] has at most sum_{l=0}^{k-1} binom(n-1,2l) distinct pairwise symmetric differences. Equivalently, among all intersecting subfamilies of binom([n],k), the full star maximizes the cardinality of {A \u25b3 B : A,B in F}. This is falsifiable by a finite counterexample consisting of explicit n,k and a finite family F.",
     "domains": [
       "Algebra"
@@ -3368,6 +3396,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-22T00:00:44.155816+00:00",
     "title": "Frankl--Kiselev--Kupavskii symmetric-difference bound for n > 10k"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer d \u2265 2, every finite simple graph G with no induced subgraph isomorphic to K_{2,d} and with no induced cycle of length at least 5 has tree-independence number at most 2d \u2212 2. Equivalently, G admits a tree decomposition in which each bag induces a subgraph with independence number at most 2d \u2212 2. This is a falsifiable strengthening of boundedness results for K_{2,d}-free graphs additionally forbidding long holes, replacing an unspecified or larger bound by an explicit linear bound.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2199",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:01:14.488967+00:00",
+    "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3386,6 +3428,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For integers n > 2k \u2265 2 and cross-intersecting families \ud835\udc9c, \u212c \u2286 ([n] choose k) with diversity \u03b3(\ud835\udc9c) \u2265 C(n-k-1, k-1) and \u03b3(\u212c) \u2265 C(n-k-1, k-1), there exists an element x \u2208 [n] such that both \ud835\udc9c and \u212c are contained in the full star {F \u2208 ([n] choose k) : x \u2208 F}. This extends the Frankl\u2013Kupavskii\u2013Zakharov diversity stability theorem from intersecting to cross-intersecting families, and would provide a unified structural characterization implying cross-intersecting analogues of Hilton\u2013Milner and Han\u2013Kohayakawa as corollaries.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2200",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:24:18.725072+00:00",
+    "title": "Cross-Intersecting Diversity Stability Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For the spectral family of level-one cuspidal automorphic representations \u03c0 of PGL\u2083 with Langlands parameter \u03bc\u03c0 in a T^\u03b4-ball around a generic \u03bc\u0303, the second moment of central symmetric square L-values admits an asymptotic formula with power-saving error term: \u2211_{\u03c0\u2208B} |L(1/2,\u03c0,sym\u00b2)|\u00b2 \u00b7 h(\u03bc\u03c0)/N(\u03c0) = C \u00b7 vol_spec(h) + O(\u2016\u03bc\u0303\u2016^{3\u2212\u03ba}) for explicit C > 0 and \u03ba > 0. This extends the authors' first moment result and is the key input needed for subconvexity bounds for these L-functions.",
     "domains": [
       "Algebra",
@@ -3401,75 +3458,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any two distinct perfect squares a\u00b2 and b\u00b2, there exists at least one pair of square-sided dice with a\u00b2 and b\u00b2 sides whose sum frequency distribution matches that of two standard dice of the same sizes.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_2202",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
-    "status": "available",
-    "timestamp": "2026-06-21T22:47:13.355437+00:00",
-    "title": "Existence of Square-Sided Dice Pairs Replicating Standard Dice Sum Frequencies"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "For every integer k \u2265 3, there exist k-uniform hypergraphs F1 and F2 such that the positive codegree Tur\u00e1n density of the pair {F1,F2} is strictly positive, strictly less than each individual density, and equals exactly half of the minimum of the two individual densities.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2203",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20494v1",
-    "status": "available",
-    "timestamp": "2026-06-21T23:36:20.259851+00:00",
-    "title": "Strong non-principality with exact ratio for positive codegree Tur\u00e1n density"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "For every integer d \u2265 2, every finite simple graph G with no induced subgraph isomorphic to K_{2,d} and with no induced cycle of length at least 5 has tree-independence number at most 2d \u2212 2. Equivalently, G admits a tree decomposition in which each bag induces a subgraph with independence number at most 2d \u2212 2. This is a falsifiable strengthening of boundedness results for K_{2,d}-free graphs additionally forbidding long holes, replacing an unspecified or larger bound by an explicit linear bound.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2204",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20256v1",
-    "status": "available",
-    "timestamp": "2026-06-22T00:01:14.488967+00:00",
-    "title": "Linear tree-independence bound for long-hole-free induced-K_{2,d}-free graphs"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "For integers n > 2k \u2265 2 and cross-intersecting families \ud835\udc9c, \u212c \u2286 ([n] choose k) with diversity \u03b3(\ud835\udc9c) \u2265 C(n-k-1, k-1) and \u03b3(\u212c) \u2265 C(n-k-1, k-1), there exists an element x \u2208 [n] such that both \ud835\udc9c and \u212c are contained in the full star {F \u2208 ([n] choose k) : x \u2208 F}. This extends the Frankl\u2013Kupavskii\u2013Zakharov diversity stability theorem from intersecting to cross-intersecting families, and would provide a unified structural characterization implying cross-intersecting analogues of Hilton\u2013Milner and Han\u2013Kohayakawa as corollaries.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2205",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20085v1",
-    "status": "available",
-    "timestamp": "2026-06-22T00:24:18.725072+00:00",
-    "title": "Cross-Intersecting Diversity Stability Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "The paper introduces a decomposition of the Hilbert space L\u00b2_sym([0,1]^m) of symmetric square-integrable functions on the m-dimensional unit cube into irreducible invariant subspaces V_{m,k} (k-th order interaction subspaces, analogous to the ANOVA decomposition) under the natural unitary action of the group \u0393 of measure-preserving bijections of [0,1]. The conjecture asserts that this decomposition is unique: the unitary representation of \u0393 on L\u00b2_sym([0,1]^m) is multiplicity-free, meaning each irreducible component appears with multiplicity at most one. Equivalently, if W \u2286 L\u00b2_sym([0,1]^m) is any closed subspace invariant and irreducible under the action of \u0393, then W is contained in exactly one V_{m,k}. This would imply that the ANOVA-type decomposition is the only possible irreducible decomposition, strengthening the structural result in the paper and providing a representation-theoretic explanation for why certain subgraph count properties characterize quasi-randomness while others do not.",
     "domains": [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2206",
+    "id": "fd_2201",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20186v1",
     "status": "available",
     "timestamp": "2026-06-22T00:51:24.912485+00:00",
     "title": "Uniqueness of the Irreducible Decomposition of Symmetric L\u00b2 under Measure-Preserving Actions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes that for every prime power $q \\ge 2$, there exist infinitely many co-edge-regular graphs with exactly four distinct eigenvalues, smallest eigenvalue $-2q-1$, and coherent rank at least $q+4$. We conjecture that these constructed graphs achieve coherent rank exactly $q+4$, which is equivalent to the number of common neighbours of adjacent vertex pairs taking exactly $q+2$ distinct values. This implies the existence of such graphs with exact coherent rank $q+4$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2202",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19981v1",
+    "status": "available",
+    "timestamp": "2026-06-22T01:13:01.910250+00:00",
+    "title": "Exact Coherent Rank of Co-edge-regular Graphs with Four Eigenvalues"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For positive integers a and b, the arithmetic function f(a,b) = gcd(ab, a+b)/gcd(a,b) investigated in the paper can be expressed purely in terms of the greatest common divisor without division, specifically f(a,b) = gcd(gcd(a,b), a/gcd(a,b) + b/gcd(a,b)). This implies that gcd(a * b, a + b) is always divisible by gcd(a, b), and the quotient is exactly gcd(gcd(a,b), a/gcd(a,b) + b/gcd(a,b)).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2202",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20057v1",
+    "status": "available",
+    "timestamp": "2026-06-22T01:16:13.873849+00:00",
+    "title": "Simplified Expression for the Arithmetic Function f(a,b)"
   },
   {
     "consumed_by_exp_id": "",
@@ -4420,6 +4448,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "a747a0a8",
+    "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_2119",
+    "priority_score": 0.7158260869565218,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-19T17:11:08.928185+00:00",
+    "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",
