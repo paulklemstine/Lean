@@ -4326,7 +4326,7 @@
       "Mathlib.Topology.Algebra.Order",
       "Mathlib.Analysis.SpecialFunctions.Pow.Real"
     ],
-    "consumed_by_exp_id": "48b7f4af",
+    "consumed_by_exp_id": "",
     "description": "Let a_n be the number of isomorphism classes of finite simple connected planar 3-regular graphs with n vertices. The conjecture is that a_{2m+1}=0 for every m, and that there exist real constants C>0 and gamma>1 such that a_{2m} / (C (2m)^(-7/2) gamma^(2m)) tends to 1 as m tends to infinity. This isolates the main enumerative shape of the paper in a Lean-formalizable form without committing to the paper-specific numerical values of C and gamma.",
     "domain_bridges": [
       "graph isomorphism quotients to finite cardinal enumeration",
@@ -4344,7 +4344,7 @@
     "proof_strategy": "Define a_n as the cardinality of the quotient of finite simple connected planar cubic graphs on n vertices by graph isomorphism. The parity assertion follows from the handshaking lemma. For the asymptotic part, formalize the network and 3-connected decompositions used for cubic planar graphs, prove the relevant functional equations for the ordinary generating functions, establish their dominant square-root/singularity schema with computable error bounds, and then apply a formalized transfer theorem giving coefficient asymptotics with exponent -7/2. The final Lean proof would combine the coefficient theorem with the quotient-cardinality interpretation of the ordinary generating function.",
     "research_mode": "team",
     "source_exp_id": "2606.17992v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-20T23:04:12.150157+00:00",
     "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
   },
@@ -6544,34 +6544,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "math.LO",
-      "math.CO",
-      "math.DS"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Let F be a projective Fraïssé category with limit 𝔽 whose quotient by the inherited equivalence relation yields a continuum F, and let G be a closed subgroup of Homeo(F) with Aut(𝔽) dense in G. Then the universal minimal flow M(G) is metrizable if and only if there exists a precompact expansion F' of F (in the sense of an enriched projective Fraïssé category whose forgetful functor back to F is precompact) such that F' has the approximate Ramsey property and the automorphism group of the limit of F' is dense in G. This is the projective Fraïssé analog of the Kechris–Pestov–Todorcevic metrization theorem for universal minimal flows.",
-    "domain_bridges": [
-      "structural_ramsey_theory",
-      "topological_dynamics",
-      "category_theory"
-    ],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2239",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "The forward direction mirrors the KPT metrization strategy: assuming M(G) is metrizable, construct a precompact expansion F' of F by encoding the metrizable flow structure into the combinatorial data of the projective Fraïssé category, then verify the approximate Ramsey property via an ultrahomogeneity argument on the expanded limit. The reverse direction follows the pattern of this paper: given F' with the approximate Ramsey property, use the main theorem to conclude extreme amenability of an expanded group, then apply the precompactness condition to show the original group G has a metrizable universal minimal flow obtained as a quotient of the expanded group's singleton flow.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20407v1",
-    "status": "available",
-    "timestamp": "2026-06-22T12:24:38.162264+00:00",
-    "title": "Projective Fraïssé Metrization Conjecture for Universal Minimal Flows"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "math.CO/Ramsey-Turán",
       "math.CO/bipartite_cuts",
       "math.CO/flag_algebras"
@@ -6598,6 +6570,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.LO",
+      "math.CO",
+      "math.DS"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let F be a projective Fraïssé category with limit 𝔽 whose quotient by the inherited equivalence relation yields a continuum F, and let G be a closed subgroup of Homeo(F) with Aut(𝔽) dense in G. Then the universal minimal flow M(G) is metrizable if and only if there exists a precompact expansion F' of F (in the sense of an enriched projective Fraïssé category whose forgetful functor back to F is precompact) such that F' has the approximate Ramsey property and the automorphism group of the limit of F' is dense in G. This is the projective Fraïssé analog of the Kechris–Pestov–Todorcevic metrization theorem for universal minimal flows.",
+    "domain_bridges": [
+      "structural_ramsey_theory",
+      "topological_dynamics",
+      "category_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2241",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The forward direction mirrors the KPT metrization strategy: assuming M(G) is metrizable, construct a precompact expansion F' of F by encoding the metrizable flow structure into the combinatorial data of the projective Fraïssé category, then verify the approximate Ramsey property via an ultrahomogeneity argument on the expanded limit. The reverse direction follows the pattern of this paper: given F' with the approximate Ramsey property, use the main theorem to conclude extreme amenability of an expanded group, then apply the precompactness condition to show the original group G has a metrizable universal minimal flow obtained as a quotient of the expanded group's singleton flow.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T12:24:38.162264+00:00",
+    "title": "Projective Fraïssé Metrization Conjecture for Universal Minimal Flows"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.CO",
       "05B35",
       "94B05"
@@ -6613,7 +6613,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2240",
+    "id": "fd_2242",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the entropy-based counting framework developed in the paper to show non-sparse-paving q-matroids are exponentially fewer than sparse-paving ones. Key steps: (1) formalize that a q-matroid is sparse-paving iff every r-dimensional subspace is either a basis or a circuit; (2) use the contraction-closure property of the class of non-sparse-paving q-matroids to apply the entropy method; (3) establish that the dependent hyperplane structure of non-sparse-paving q-matroids reduces their count below 2^{(1-o(1))·[n choose r]_q / (q^r - 1)}, which is the lower bound for sparse-paving q-matroids from constant-dimension code constructions.",
@@ -6622,6 +6622,63 @@
     "status": "available",
     "timestamp": "2026-06-22T12:48:52.361402+00:00",
     "title": "Most q-Matroids Are Sparse-Paving"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO/toric_ideals",
+      "math.CO/matroid_polytopes",
+      "math.AC/quadratic_binomial_ideals"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every matroid M on a finite ground set E with base set B, the toric ideal I_{P_M} of the matroid base polytope P_M is generated by quadratic binomials. Since the paper proves that matroid base polytopes satisfy the clique-face property, and for edge polytopes and cut polytopes the clique-face property is equivalent to quadratic toric ideal generation, this conjecture asserts that the equivalence extends: matroid base polytopes, which have the clique-face property, also have quadratically generated toric ideals.",
+    "domain_bridges": [
+      "toric_ideal_generation ↔ matroid_base_exchange",
+      "clique_face_property ↔ quadratic_monomial_divisibility"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2243",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the clique-face property of matroid base polytopes (already established in the paper) combined with condition (E)-type characterizations. Show that every binomial in I_{P_M} of degree ≥ 3 is reducible modulo quadratic binomials arising from basis exchanges (symmetric exchanges of single elements between bases B1, B2), using the facial structure guaranteed by the clique-face property to construct degree-2 reductions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20430v1",
+    "status": "available",
+    "timestamp": "2026-06-22T12:56:05.663722+00:00",
+    "title": "Quadratic Generation of Toric Ideals of Matroid Base Polytopes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.LO",
+      "math.CO",
+      "math.DS"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let $\\mathcal{F}$ be a projective Fraïssé category with projective Fraïssé limit $\\mathbb{F}$ and continuum $F = \\mathbb{F}/R^\\mathbb{F}$, such that $\\text{Aut}(\\mathbb{F})$ is dense in a closed subgroup $G \\le \\text{Homeo}(F)$. We conjecture that the universal minimal flow of $G$ is metrizable if and only if there exists an expansion of $\\mathcal{F}$ by a linear order that has the approximate Ramsey property.",
+    "domain_bridges": [
+      "Extreme Amenability",
+      "Projective Fraïssé Limits",
+      "Approximate Ramsey Property",
+      "Universal Minimal Flows",
+      "Ordered Fraïssé Classes"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2243",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Generalize the Kechris-Pestov-Todorcevic correspondence for non-archimedean Polish groups to projective Fraïssé categories. Construct a metrizable universal minimal flow as the completion of the orbit space of the limit of the ordered expansion, and conversely, show that a metrizable universal minimal flow induces a well-behaved linear order expansion satisfying the approximate Ramsey property.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T12:56:32.795752+00:00",
+    "title": "Metrizable Universal Minimal Flows and the Ordered Approximate Ramsey Property for Projective Fraïssé Categories"
   },
   {
     "ambition_level": "grand_challenge",
