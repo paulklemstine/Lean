@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-22T17:17:34.649405+00:00",
+  "last_updated": "2026-06-22T19:29:45.297978+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -129,6 +129,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-22T17:17:34.435216+00:00",
       "title": "Finite approximate Ramsey degrees characterize metrizable universal minimal flows"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3425,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Algebra",
+      "duration_seconds": 1251.8521401882172,
+      "end_time": 1782156274.2399344,
+      "files_integrated": 3,
+      "job_id": "805dbd7c",
+      "outcome_quality": 0.32121642086956526,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19b",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.62,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "composite": 0.5435,
+        "cross_domain": 0.7,
+        "grade": "substantial",
+        "importance": 0.4114,
+        "novelty": 0.89,
+        "proof_depth": 0.2063,
+        "usefulness": 0.4531
+      },
+      "quality_score": 0.32121642086956526,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782155022.3877943,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-22T19:29:44.987154+00:00",
+      "title": "Membrane Computing (P-Systems) and Their Computational Power"
     }
   ]
 }

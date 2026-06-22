@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e42393e4",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Weight-Threshold Profiles & the Codes → Tropical Valuation Functor\n\nThese conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`, which builds the\nfunctor `FinLinCodes",
-      "quality_score": 0.79224,
-      "sorry_count": 4,
-      "theorem_count": 42,
-      "timestamp": "2026-06-16T08:06:33",
-      "title": "Functor from finite linear codes to tropical valuation objects via weight-threshold profiles"
-    },
-    {
       "cycle_id": "a0671e28",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS\n\nFollow-up conjectures arising from\n`Catalog/Applications/EGFTropicalValuation.lean`\n(\"Exponential generating functions induce a tropical valuation profile via\ncoefficient-support",
@@ -2501,6 +2491,16 @@
       "theorem_count": 3,
       "timestamp": "2026-06-22T17:13:25",
       "title": "Finite approximate Ramsey degrees characterize metrizable universal minimal flows"
+    },
+    {
+      "cycle_id": "805dbd7c",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions\n\nThese build on the formalized multiset model in\n`Catalog/Computation/MembraneComputing.lean`.\n\n## 1. General growth-rate classification of object rules\n\nGeneralize the dichotomy \"",
+      "quality_score": 0.32121642086956526,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-22T19:29:42",
+      "title": "Membrane Computing (P-Systems) and Their Computational Power"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T17:13:25",
+  "last_updated": "2026-06-22T19:29:42",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "a3760248",
-        "quality": 0.35307452173913045,
-        "theorems": 11,
-        "title": "Proof-Complexity Phase Transition in Lean-Definable Rewriting Dynamics"
-      },
-      {
         "cycle_id": "999c0f6b",
         "quality": 0.7756000000000001,
         "theorems": 17,
@@ -3079,6 +3073,12 @@
         "quality": 0.69248,
         "theorems": 14,
         "title": "Quantum Key Distribution: BB84 Security Proof"
+      },
+      {
+        "cycle_id": "805dbd7c",
+        "quality": 0.32121642086956526,
+        "theorems": 9,
+        "title": "Membrane Computing (P-Systems) and Their Computational Power"
       }
     ],
     "Applications": [
