@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d9dd0490",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Fibonacci rank of apparition & Pisano period\n\nThis cycle proved that the Fibonacci **rank of apparition** `z(p) = fibEntry p` is a full\nlattice homomorphism of `(ℕ, ∣)` (`fibEntr",
-      "quality_score": 0.6056199999999999,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-16T04:13:35",
-      "title": "Derived from this cycle's findings in `Core.lean` and `Functoriality.lean`, whic"
-    },
-    {
       "cycle_id": "b3f0c15e",
       "domain": "Physics",
       "key_insight": "# Future Directions — Monodromy Compression Principle for Neural PDE Solvers\n\nThis research cycle established the **Monodromy Compression Principle** in\n`Catalog/Physics/MonodromyCompression.lean`: th",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-22T11:08:19",
       "title": "Quantum Key Distribution: BB84 Security Proof"
+    },
+    {
+      "cycle_id": "3d0b9aaa",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Orderly Friedman numbers\n\nThis cycle formalized a faithful expression-tree model of orderly (\"nice\")\nFriedman numbers over the `{+, -, *, ^, neg}` fragment, proved 13 of the firs",
+      "quality_score": 0.49636883468834697,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-06-22T11:22:27",
+      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T11:08:19",
+  "last_updated": "2026-06-22T11:22:27",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "722e1f4a",
-        "quality": 0.654,
-        "theorems": 22,
-        "title": "The Library of Babel: Combinatorics of the Universal Library"
-      },
-      {
         "cycle_id": "977d0362",
         "quality": 0.5126619770114944,
         "theorems": 17,
@@ -3141,6 +3135,12 @@
         "quality": 0.5556197063805759,
         "theorems": 311,
         "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+      },
+      {
+        "cycle_id": "3d0b9aaa",
+        "quality": 0.49636883468834697,
+        "theorems": 18,
+        "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers)"
       }
     ],
     "Bridges": [
