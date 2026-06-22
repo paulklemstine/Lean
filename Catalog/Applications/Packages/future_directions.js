@@ -2834,7 +2834,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality of minimal free resolutions for Ziegler pairs of line arrangements of degree \u226512"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d168a656",
     "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
     "domains": [
       "Pythagorean"
@@ -2843,7 +2843,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20452v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-21T04:03:23.688866+00:00",
     "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
   },
@@ -3498,6 +3498,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-22T01:28:37.697397+00:00",
     "title": "Metrizable Universal Minimal Flows via Approximate Ramsey Expansions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Kechris-Pestov-Todorcevic correspondence establishes that for a Fraiss\u00e9 class K with Fraiss\u00e9 limit F, Aut(F) is extremely amenable iff K has the Ramsey property, and the universal minimal flow M(Aut(F)) is metrizable iff some precompact expansion of K has the Ramsey property. The present paper extends the first equivalence to projective Fraiss\u00e9 categories via the approximate Ramsey property. This conjecture extends the second equivalence: for a projective Fraiss\u00e9 category F with limit \ud835\udd3d and G the closure of Aut(\ud835\udd3d) in Homeo(\ud835\udd3d/R^\ud835\udd3d), the universal minimal flow M(G) is metrizable if and only if there exists an approximate precompact expansion of F satisfying the approximate Ramsey property.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2210",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T01:57:21.454061+00:00",
+    "title": "Approximate Ramsey Property for Precompact Expansions Characterizes Metrizable Universal Minimal Flows"
   },
   {
     "consumed_by_exp_id": "",
@@ -4437,21 +4452,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Fixed Point Theorems (Sperner / Brouwer / Banach)\n\nDerived from this cycle's findings in `SpernerBrouwerBridge.lean` and\n`BanachContractionFixedPoint.lean`.\n\n## Conjecture 1 \u2014 Two-dimensional Sperner parity over a triangulated triangle\nFormalize the planar Sperner lemma: any proper 3-colouring of the vertices of a\ntriangulation of a triangle (boundary-admissible) contains an **odd** number of\nfully tricoloured cells, hence at least one.\n- **The key insight is** that the 1D parity recurrence `changes_succ` generalizes\n  to a *boundary-counting* (discrete Stokes) identity: the number of tricoloured\n  cells equals, mod 2, the number of bichromatic boundary edges, which the 1D\n  result already shows is odd.\n- **Why now?** The 1D engine (`sperner_parity`, telescoping parity) is proved and\n  reusable as the boundary base case; only the cell/edge incidence bookkeeping is\n  new, and Mathlib's `Finset` filtering API (used in `changes`) scales to it.\n\n## Conjecture 2 \u2014 Brouwer in dimension 2 via the planar Sperner lemma\nFrom Conjecture 1, derive: every continuous self-map of the closed 2-simplex has\na fixed point.\n- **The key insight is** that a fixed-point-free map yields a consistent\n  \"direction\" 3-colouring with no tricoloured cell, contradicting the parity\n  count \u2014 the exact 1D template (`brouwer_one_dim` from `sperner_exists_change`)\n  lifted one dimension.\n- **Why now?** Mathlib lacks Brouwer entirely (only `IsAntichain.sperner`, an\n  unrelated theorem), so a Sperner-route proof would be the first; the 1D bridge\n  here shows the reduction is mechanizable.\n\n## Conjecture 3 \u2014 Schauder for affine compact operators in finite dimensions\nProve a Schauder-type fixed point theorem for continuous self-maps of a compact\nconvex subset of `\u211d\u207f`, as the finite-dimensional shadow of the infinite case.\n- **The key insight is** that on a compact convex `K \u2286 \u211d\u207f`, Schauder collapses to\n  Brouwer after retraction onto `K`; the affine `mem_Icc` localization proved here\n  (`affine_fixedPoint_mem_Icc`) is the `n = 1` instance of this retraction step.\n- **Why now?** Once Conjecture 2 supplies Brouwer on a simplex, the convex-compact\n  version follows by Mathlib's existing convexity/retraction lemmas, with no new\n  analysis.\n\n## Conjecture 4 \u2014 Quantitative Banach: explicit a-posteriori error for Picard\nFor any contraction with ratio `K < 1`, the iterate error obeys\n`dist (f^[n] x\u2080) x* \u2264 K\u207f/(1-K) \u00b7 dist x\u2080 (f x\u2080)`, and for the affine map this is\n*sharp* (equality up to the geometric sum).\n- **The key insight is** that the affine orbit `x\u2099 = a\u207f(x\u2080 - x*) + x*` is\n  explicit, so the abstract bound `ContractingWith.apriori_*` becomes an exact\n  geometric identity \u2014 turning an inequality into an equality witness.\n- **Why now?** `affine_iterate_tendsto` already identifies the limit `b/(1-a)`;\n  the closed form `x\u2099 = a\u207f(x\u2080 - x*) + x*` is one induction away and would give a\n  rare *tight* constant for the contraction mapping bound.\n\n## Conjecture 5 \u2014 Discrete Brouwer fails but a parity defect is conserved\nThere is no exact discrete Brouwer with steps `|f(i+1)-f(i)| \u2264 1` (the swap\n`0\u21941` is a counterexample), yet the signed crossing number of `i \u21a6 f i - i` is a\nconserved `\u00b11` invariant determined only by the endpoints.\n- **The key insight is** that the *failure* of naive discretization is itself\n  governed by the same parity (`sperner_parity`) that drives the continuous\n  theorem: the obstruction is a winding/crossing invariant, not noise.\n- **Why now?** The counterexample is already verified (Lab Notes / evidence file);\n  formalizing the conserved crossing number reuses `changes` verbatim with `Int`\n  signs instead of `Bool`.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2210",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "12bdf767",
-    "status": "available",
-    "timestamp": "2026-06-22T01:52:25.526032+00:00",
-    "title": "Derived from this cycle's findings in `SpernerBrouwerBridge.lean` and"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4463,21 +4463,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For every analytic one-parameter family of finite-range, translation-invariant 1D quantum spin Hamiltonians H(t) with a unique ground state away from finitely many critical parameters, the persistence barcode of the local observable algebra filtered by the ground-state GNS covariance metric has unbounded bottleneck derivative as system size L -> infinity if and only if the thermodynamic spectral gap closes at t. Test: Compute these noncommutative persistence barcodes for exactly solvable chains and DMRG-accessible models; confirmation requires barcode singularities precisely at known gap-closing transitions, while any gapped family with a diverging barcode derivative or any gap-closing family with uniformly Lipschitz barcodes refutes it. Impact: Provides a topological, representation-theoretic diagnostic for quantum criticality that may classify phase transitions without order parameters.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_2211",
-    "priority_score": 0.7157272727272728,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-22T01:54:13.426926+00:00",
-    "title": "Quantum Phase Transitions as Singularities of Noncommutative Persistence"
   },
   {
     "consumed_by_exp_id": "",
