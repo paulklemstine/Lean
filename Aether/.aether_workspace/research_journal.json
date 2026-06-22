@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b3f0c15e",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Monodromy Compression Principle for Neural PDE Solvers\n\nThis research cycle established the **Monodromy Compression Principle** in\n`Catalog/Physics/MonodromyCompression.lean`: th",
-      "quality_score": 0.5072000000000001,
-      "sorry_count": 0,
-      "theorem_count": 24,
-      "timestamp": "2026-06-16T04:48:32",
-      "title": "Monodromy Compression Principle for Neural PDE Solvers"
-    },
-    {
       "cycle_id": "29017e68",
       "domain": "Physics",
       "key_insight": "# FUTURE_DIRECTIONS — Rips Filtrations ↔ Tropical Valuation Objects\n\nCycle output. This cycle formalized, in Lean 4 (0 sorries, only the standard\n`propext`/`Classical.choice`/`Quot.sound` axioms), the",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-06-22T11:22:27",
       "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
+    },
+    {
+      "cycle_id": "9a580942",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Elliptic Curve Arithmetic\n\nDerived from this cycle's findings in `HasseBound.lean` (the analytic Hasse\nbridge `hasse_sq_iff` plus seven verified curves) and `GroupLaw.lean` (the",
+      "quality_score": 0.6555200000000001,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-22T12:16:10",
+      "title": "Elliptic Curve Arithmetic: Group Law Formalization"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T11:22:27",
+  "last_updated": "2026-06-22T12:16:10",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "fba6400c",
-        "quality": 0.64064,
-        "theorems": 15,
-        "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
-      },
-      {
         "cycle_id": "e49c5ee1",
         "quality": 0.48378234883720933,
         "theorems": 20,
@@ -3327,6 +3321,12 @@
         "quality": 0.512,
         "theorems": 13,
         "title": "EML Universal Approximation: Density of EML Functions"
+      },
+      {
+        "cycle_id": "9a580942",
+        "quality": 0.6555200000000001,
+        "theorems": 9,
+        "title": "Elliptic Curve Arithmetic: Group Law Formalization"
       }
     ],
     "Cryptography": [
