@@ -29,6 +29,14 @@ class CatalogPruner:
         self.workspace = Path(workspace)
         self.state_file = self.workspace / "prune_state.json"
         self.analyzer = CatalogAnalyzer(self.catalog_root)
+        # Research protection: when False (default), the pruner NEVER deletes real
+        # research files via LLM curation/dedup/individual review — only true junk
+        # (empty stubs, sorry-dense junk, SalvagedBest.lean) is auto-removed. Existing
+        # research packages can never be deleted or removed. Set
+        # AETHER_CATALOG_CURATE_DELETE=1 to re-enable curated removal.
+        self.curate_delete_enabled = os.environ.get(
+            "AETHER_CATALOG_CURATE_DELETE", "false"
+        ).lower() in ("1", "true", "yes", "on")
 
     def get_prune_candidates(self) -> List[Dict[str, Any]]:
         """Scan catalog for prune candidates, including Speculative, but excluding FINAL/lake."""
@@ -588,7 +596,32 @@ class CatalogPruner:
             self.rebuild_final_main()
             self.cleanup_empty_dirs()
             return {"removed": auto_removed, "kept": [], "next_group_idx": 0}
-            
+
+        # ── Research protection ──
+        # When curate_delete_enabled is False (default), NEVER remove real research
+        # files. Skip LLM curation / dedup / individual review entirely (also saves
+        # Pi-Agent budget). Only the auto-junk removal above and the maintenance
+        # below run, so existing research packages can never be deleted or removed.
+        if not self.curate_delete_enabled and retained_candidates:
+            print(f"[Prune] Research-protection ON — LLM curation/dedup/individual review "
+                  f"skipped; {len(auto_removed)} junk auto-removed, "
+                  f"{len(retained_candidates)} research file(s) preserved")
+            symlinks_removed = 0
+            dirs_cleaned = 0
+            if not dry_run:
+                symlinks_removed = self.clean_broken_symlinks()
+                self.rebuild_final_main()
+                dirs_cleaned = self.cleanup_empty_dirs()
+            print(f"[Prune] Complete. Removed {len(auto_removed)} files ({len(auto_removed)} auto, "
+                  f"0 LLM, {symlinks_removed} broken symlinks) — research protected")
+            return {
+                "removed": auto_removed,
+                "kept": [c["path"] for c in retained_candidates],
+                "broken_symlinks_removed": symlinks_removed,
+                "dirs_cleaned": dirs_cleaned,
+                "next_group_idx": 0,
+            }
+
         # 2. Group by semantic similarity and sort
         groups = self.group_by_similarity(retained_candidates)
         groups = self.sort_groups_deterministically(groups)
