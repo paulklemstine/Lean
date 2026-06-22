@@ -5948,7 +5948,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2216",
+    "id": "fd_2217",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the factorization of the frequency polynomial F(x) = (∑_{i=1}^m x^i)² = x²((x^m-1)/(x-1))² using cyclotomic decomposition. Show that any valid factorization into two polynomials P₁(x) and P₂(x) where P₁(1) = p² and P₂(1) = q² requires m to have a specific square-free factorization structure. Use properties of cyclotomic polynomials Φ_d(x) and their evaluations at x=1 to establish necessary divisibility conditions that cannot be satisfied when m is not a perfect square.",
@@ -5957,6 +5957,35 @@
     "status": "available",
     "timestamp": "2026-06-22T05:19:14.551818+00:00",
     "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Kechris-Pestov-Todorcevic (Fraïssé classes and Ramsey properties)",
+      "Irwin-Solecki (Projective Fraïssé limits)",
+      "Bartošová-Kwiatkowska (Lelek fan as projective Fraïssé limit)",
+      "Kwiatkowska (Pseudo-arc projective Fraïssé limit and extreme amenability)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The homeomorphism group of the Lelek fan (with the compact-open topology) is extremely amenable: every continuous action of Homeo(LelekFan) on a compact Hausdorff space has a fixed point. Equivalently, the projective Fraïssé category of finite Lelek fan pre-structures has the approximate Ramsey property as defined in the paper. This extends the paper's framework—connecting approximate Ramsey properties of projective Fraïssé categories to extreme amenability of homeomorphism groups—beyond the pseudo-arc and pseudo-solenoid to the Lelek fan, a fundamental continuum in topology.",
+    "domain_bridges": [
+      "Structural Ramsey theory → topological dynamics",
+      "Projective Fraïssé categories → continuum theory",
+      "Approximate Ramsey property → extreme amenability"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2218",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1) Formalize the Lelek fan as the quotient of the projective Fraïssé limit of finite Lelek fan pre-structures (finite structures with a distinguished apex and height function). 2) Establish the approximate Ramsey property for this category: for every pair of finite structures A, B and every ε > 0, find a finite structure C such that every 2-coloring of Hom(A, C) has an ε-monochromatic set of the form g ∘ Hom(A, B) ∘ f. 3) Apply the paper's main theorem (ARP ⟺ extreme amenability) to conclude. The key combinatorial challenge is step 2, which likely requires developing approximate Ramsey theory for the specific finite structures involved, analogous to how Nešetřil-Rödl Ramsey theory was used for the pseudo-arc case.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:46:32.209684+00:00",
+    "title": "Extreme Amenability of the Lelek Fan Homeomorphism Group"
   },
   {
     "ambition_level": "extension",

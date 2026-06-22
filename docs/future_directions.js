@@ -3608,13 +3608,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2216",
+    "id": "fd_2217",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
     "status": "available",
     "timestamp": "2026-06-22T05:19:14.551818+00:00",
     "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The homeomorphism group of the Lelek fan (with the compact-open topology) is extremely amenable: every continuous action of Homeo(LelekFan) on a compact Hausdorff space has a fixed point. Equivalently, the projective Fra\u00efss\u00e9 category of finite Lelek fan pre-structures has the approximate Ramsey property as defined in the paper. This extends the paper's framework\u2014connecting approximate Ramsey properties of projective Fra\u00efss\u00e9 categories to extreme amenability of homeomorphism groups\u2014beyond the pseudo-arc and pseudo-solenoid to the Lelek fan, a fundamental continuum in topology.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2218",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:46:32.209684+00:00",
+    "title": "Extreme Amenability of the Lelek Fan Homeomorphism Group"
   },
   {
     "consumed_by_exp_id": "",
