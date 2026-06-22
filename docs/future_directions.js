@@ -4103,12 +4103,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every multigraph admits a linked, componental, rooted tree-cut decomposition of finite adhesion that displays all undominated edge-ends. This is the main theorem (Theorem 1.1) of the paper, asserting the existence of a well-behaved edge-connectivity decomposition that faithfully reflects the structure of undominated edge-ends of infinite graphs. The decomposition simultaneously ensures linkedness (Menger-type edge-connectivity between adhesion sets), componentality (connected parts), and a bijective correspondence between undominated edge-ends and ends of the decomposition tree.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2255",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-22T18:16:34.752241+00:00",
+    "title": "Linked tree-cut decompositions displaying undominated edge-ends"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For a projective Fra\u00efss\u00e9 category $\\mathcal{F}$ with limit $\\mathbb{F}$, quotient continuum $F = \\mathbb{F}/R^\\mathbb{F}$, and a closed subgroup $G \\le \\operatorname{Homeo}(F)$ in which the image of $\\operatorname{Aut}(\\mathbb{F})$ is dense, $G$ is extremely amenable if and only if $\\mathcal{F}$ has the approximate Ramsey property.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2255",
+    "id": "fd_2256",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
@@ -4122,13 +4136,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2256",
+    "id": "fd_2257",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
     "status": "available",
     "timestamp": "2026-06-22T17:59:20.259941+00:00",
     "title": "Existence of Square-Sided Sicherman-Type Pairs for All Perfect Square Die Sizes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every odd base B > 3, the four-digit Kaprekar map has a unique nonconstant terminal cycle (i.e., a unique fixed point, as in the classical base-10 case where 6174 is the sole attractor) if and only if B\u22121 is a power of 2. This extends the paper's projective-doubling conjugacy by predicting that the orbit structure of multiplication-by-2 on P\u00b9(Z/(B\u22121)Z) collapses to a single fixed point exactly when (B\u22121) is a power of 2, connecting Kaprekar dynamics to the multiplicative structure of (Z/nZ)\u00d7.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2258",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-22T18:17:37.265404+00:00",
+    "title": "Unique Kaprekar fixed point iff base-minus-one is a power of two"
   },
   {
     "consumed_by_exp_id": "",

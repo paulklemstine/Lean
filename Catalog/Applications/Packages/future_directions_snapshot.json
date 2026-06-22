@@ -6872,6 +6872,36 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "tree-cut decompositions",
+      "edge-ends of graphs",
+      "undominated ends",
+      "graph minors",
+      "Menger's theorem for edge-connectivity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every multigraph admits a linked, componental, rooted tree-cut decomposition of finite adhesion that displays all undominated edge-ends. This is the main theorem (Theorem 1.1) of the paper, asserting the existence of a well-behaved edge-connectivity decomposition that faithfully reflects the structure of undominated edge-ends of infinite graphs. The decomposition simultaneously ensures linkedness (Menger-type edge-connectivity between adhesion sets), componentality (connected parts), and a bijective correspondence between undominated edge-ends and ends of the decomposition tree.",
+    "domain_bridges": [
+      "Topology of ends (end compactifications of locally finite graphs)",
+      "Order theory (rooted tree-orders)",
+      "Combinatorial optimization (edge-disjoint paths, Menger-type results)",
+      "Set theory (transfinite construction, Zorn's lemma)"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2255",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the prerequisite infrastructure: multigraphs allowing parallel edges, edge-ends as equivalence classes of one-way infinite edge-sequences, undominated edge-ends, rooted tree-cut decompositions with adhesion sets, the natural map from edge-ends to the tree boundary, and the notions of linkedness, componentality, and displaying. The proof then proceeds by constructing the decomposition, likely via a maximal-separator argument or transfinite induction, and verifying linkedness using edge-connectivity (Menger-type) results. The key technical bridge is showing that the separability properties of undominated edge-ends combine with edge-connectivity to yield the linked property along tree-paths.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-22T18:16:34.752241+00:00",
+    "title": "Linked tree-cut decompositions displaying undominated edge-ends"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.LO",
       "math.CO",
       "math.DS"
@@ -6887,7 +6917,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2255",
+    "id": "fd_2256",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize projective Fraïssé categories and their limits, define the approximate Ramsey property for morphisms, define extreme amenability for topological groups, and adapt the Kechris-Pestov-Todorcevic proof strategy to the projective setting by demonstrating that the universal minimal flow of the group is trivial precisely when the category satisfies the approximate Ramsey property.",
@@ -6915,7 +6945,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2256",
+    "id": "fd_2257",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the cyclotomic polynomial factorization of the frequency polynomial F(x) = x²·((x^{k²} − 1)/(x − 1))². The factorization of F into irreducible cyclotomic components admits nontrivial rearrangements. Show that for each k ≥ 2, the divisor structure of k² always permits at least one regrouping of these cyclotomic factors into two polynomials P, Q with non-negative integer coefficients, where P(1) and Q(1) are distinct perfect squares. The key step leverages that k² has multiple distinct divisor pairs, and the cyclotomic factors of (x^{k²} − 1)/(x − 1) can be partitioned along these divisor boundaries to produce valid die-generating polynomials with square numbers of sides.",
@@ -6924,6 +6954,33 @@
     "status": "available",
     "timestamp": "2026-06-22T17:59:20.259941+00:00",
     "title": "Existence of Square-Sided Sicherman-Type Pairs for All Perfect Square Die Sizes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.NT",
+      "math.CO",
+      "OEIS A099009"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every odd base B > 3, the four-digit Kaprekar map has a unique nonconstant terminal cycle (i.e., a unique fixed point, as in the classical base-10 case where 6174 is the sole attractor) if and only if B−1 is a power of 2. This extends the paper's projective-doubling conjugacy by predicting that the orbit structure of multiplication-by-2 on P¹(Z/(B−1)Z) collapses to a single fixed point exactly when (B−1) is a power of 2, connecting Kaprekar dynamics to the multiplicative structure of (Z/nZ)×.",
+    "domain_bridges": [
+      "dynamical_systems",
+      "finite_projective_geometry",
+      "multiplicative_group_structure"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2258",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the paper's result that the Kaprekar map on T_B is conjugate to projective doubling {[r],[s]} ↦ {[2r],[2s]} on P¹(Z/(B−1)Z). The number of terminal cycles equals the number of cycles of this projective doubling map. Analyze the orbit structure of multiplication by 2 on P¹(Z/nZ) via CRT decomposition: when n = 2^k, the group (Z/2^kZ)× and the {±1}-quotient force all orbits to collapse to a single fixed point. When n has an odd prime factor p, the action on P¹(Z/p^aZ) produces multiple orbits by properties of ord_p(2). The forward direction uses the specific structure of (Z/2^kZ)× ≅ Z/2 × Z/2^{k−2}; the backward direction uses that for odd prime p | (B−1), ord_p(2) > 1 produces distinct orbits under doubling.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-22T18:17:37.265404+00:00",
+    "title": "Unique Kaprekar fixed point iff base-minus-one is a power of two"
   },
   {
     "ambition_level": "grand_challenge",
