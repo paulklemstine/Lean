@@ -77,21 +77,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Natural Proofs Barrier: Formalization"
   },
   {
-    "consumed_by_exp_id": "930ff410",
-    "description": "Formalize the classical zero-free region of the Riemann zeta function: \u03b6(s) \u2260 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2\u03c0) log(T/(2\u03c0e)). Formalize the connection between zero-free regions and prime counting error bounds.",
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "seed_329",
-    "priority_score": 0.94,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432599+00:00",
-    "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
     "domains": [
@@ -2279,7 +2264,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
   },
   {
-    "consumed_by_exp_id": "b27cec0f",
+    "consumed_by_exp_id": "",
     "description": "For every integer r\u22652 there exists a constant C>0 such that for all sufficiently large n the maximum number of edges in an n\u2011vertex r\u2011uniform hypergraph in which each (r+1)-set spans exactly 0 or 2 edges is at least C\u00b7n^r / r\u00b3, and no such hypergraph can have more than C'\u00b7n^r / r\u00b2 edges. Equivalently, the Tur\u00e1n density \u03c0(H^r_3)=\u0398(1/r\u00b3).",
     "domains": [
       "Pythagorean"
@@ -2288,7 +2273,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T21:56:09.924073+00:00",
     "title": "Conjecture: Tur\u00e1n density of the 3\u2011edge r\u2011graph is \u0398(1/r\u00b3)"
   },
@@ -2745,7 +2730,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Solution Count Confinement"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "48b7f4af",
     "description": "Let a_n be the number of isomorphism classes of finite simple connected planar 3-regular graphs with n vertices. The conjecture is that a_{2m+1}=0 for every m, and that there exist real constants C>0 and gamma>1 such that a_{2m} / (C (2m)^(-7/2) gamma^(2m)) tends to 1 as m tends to infinity. This isolates the main enumerative shape of the paper in a Lean-formalizable form without committing to the paper-specific numerical values of C and gamma.",
     "domains": [
       "Pythagorean",
@@ -2755,7 +2740,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.17992v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T23:04:12.150157+00:00",
     "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
   },
@@ -3603,21 +3588,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p\u00b2 sides and one die with q\u00b2 sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2216",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
-    "status": "available",
-    "timestamp": "2026-06-22T05:19:14.551818+00:00",
-    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "The maximum asymptotic density of an n-vertex r-graph in which every (r+1)-set spans exactly 0 or 2 edges is \u0398(r^{-2}) as r \u2192 \u221e. Specifically, there exists an absolute constant c > 0 such that for every r \u2265 2 and all sufficiently large n, there exists an r-graph on n vertices where every (r+1)-set spans 0 or 2 edges, with at least c/r\u00b2 \u00b7 C(n,r) edges. This would improve the \u03a9(r^{-3}) construction in the paper and match the conjectured optimal order, complementing the trivial O(r^{-1}) upper bound from de Caen's double-counting argument.",
     "domains": [
       "Pythagorean",
@@ -3648,20 +3618,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Let n > 2k \u2265 2 be positive integers. If F, G \u2286 ([n] choose k) are cross-intersecting families (every F \u2208 F intersects every G \u2208 G), and neither F nor G is a star (i.e., \u2204x with x \u2208 \u22c2F, and \u2204y with y \u2208 \u22c2G), then |F| \u00b7 |G| \u2264 (C(n-1,k-1) - C(n-k-1,k-1) + 1)\u00b2. Equality holds if and only if (F, G) is isomorphic to (HM_{n,k}, HM_{n,k}), where HM_{n,k} = {[2,k+1]} \u222a {H \u2208 C([n],k) : 1 \u2208 H \u2227 H \u2229 [2,k+1] \u2260 \u2205} is the Hilton-Milner family.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2218",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20085v1",
-    "status": "available",
-    "timestamp": "2026-06-22T07:30:44.481020+00:00",
-    "title": "Product Hilton-Milner Bound for Cross-Intersecting Families"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For the spectral family of level-one cuspidal automorphic representations on PGL(3) with Langlands parameters in generic position of size T, the second moment of central symmetric square L-values satisfies the asymptotic formula: the spectral average of |L(1/2, \u03c0, sym\u00b2)|\u00b2 equals C\u2082 \u00b7 vol_spec(h) \u00b7 log(\u2016\u03bc\u0303\u2016)(1 + o(1)) as \u2016\u03bc\u0303\u2016 \u2192 \u221e, where C\u2082 is an explicit positive constant and vol_spec(h) is the spectral volume. This extends the paper's first moment result and is consistent with the random matrix model prediction for a unitary ensemble of degree-6 L-functions, where the logarithmic factor arises from the diagonal contribution of the Rankin-Selberg L-function pole at s=1.",
     "domains": [
       "Algebra",
@@ -3674,20 +3630,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-22T07:58:43.167662+00:00",
     "title": "Second Moment Asymptotic for Symmetric Square L-functions on GL(3)"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Let K be a field of characteristic p > 0, let f(x) \u2208 K[x] be a monic irreducible polynomial with separable presentation f(x) = f^sep(x^{p^n}), and let L = K[x]/(f(x)). If m_f denotes the numerical field invariant defined via the coefficients of f (as in Definition 1 of the referenced paper), then the degree of L over the compositum L^{pi} \u00b7 L^{sep} is given by [L : L^{pi} \u00b7 L^{sep}] = p^{n - m_f}. In particular, L = L^{pi} \u00b7 L^{sep} if and only if m_f = n.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2219",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19962v1",
-    "status": "available",
-    "timestamp": "2026-06-22T07:59:13.569422+00:00",
-    "title": "Degree Formula for the Compositum of Maximal Purely Inseparable and Separable Subfields"
   },
   {
     "consumed_by_exp_id": "",
@@ -3706,17 +3648,89 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every graph on at least 3 vertices with toughness at least 9/4 contains a Hamilton cycle. This is the optimal form of Chv\u00e1tal's toughness conjecture, as Bauer, Broersma, and Veldman demonstrated that 9/4 is the best possible threshold by constructing (9/4 - \u03b5)-tough non-Hamiltonian graphs for arbitrary \u03b5 > 0.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2221",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20297v1",
+    "status": "available",
+    "timestamp": "2026-06-22T09:08:39.436313+00:00",
+    "title": "Chv\u00e1tal's 9/4-Toughness Implies Hamiltonicity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p\u00b2 sides and one die with q\u00b2 sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2222",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:19:14.551818+00:00",
+    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let n > 2k \u2265 2 be positive integers. If F, G \u2286 ([n] choose k) are cross-intersecting families (every F \u2208 F intersects every G \u2208 G), and neither F nor G is a star (i.e., \u2204x with x \u2208 \u22c2F, and \u2204y with y \u2208 \u22c2G), then |F| \u00b7 |G| \u2264 (C(n-1,k-1) - C(n-k-1,k-1) + 1)\u00b2. Equality holds if and only if (F, G) is isomorphic to (HM_{n,k}, HM_{n,k}), where HM_{n,k} = {[2,k+1]} \u222a {H \u2208 C([n],k) : 1 \u2208 H \u2227 H \u2229 [2,k+1] \u2260 \u2205} is the Hilton-Milner family.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2223",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:30:44.481020+00:00",
+    "title": "Product Hilton-Milner Bound for Cross-Intersecting Families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let K be a field of characteristic p > 0, let f(x) \u2208 K[x] be a monic irreducible polynomial with separable presentation f(x) = f^sep(x^{p^n}), and let L = K[x]/(f(x)). If m_f denotes the numerical field invariant defined via the coefficients of f (as in Definition 1 of the referenced paper), then the degree of L over the compositum L^{pi} \u00b7 L^{sep} is given by [L : L^{pi} \u00b7 L^{sep}] = p^{n - m_f}. In particular, L = L^{pi} \u00b7 L^{sep} if and only if m_f = n.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2224",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19962v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:59:13.569422+00:00",
+    "title": "Degree Formula for the Compositum of Maximal Purely Inseparable and Separable Subfields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every integer q \u2265 2, there exist infinitely many co-edge-regular graphs with exactly four distinct eigenvalues, smallest eigenvalue -2q-1, and coherent rank at least q+4. This extends the paper's main theorem by removing the requirement that q admits an affine or projective plane of order q.",
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2220",
+    "id": "fd_2225",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19981v1",
     "status": "available",
     "timestamp": "2026-06-22T08:32:20.428552+00:00",
     "title": "Co-edge-regular graphs with four eigenvalues and high coherent rank for all orders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The natural density of ordered pairs of positive integers (a, b) such that gcd(ab, a+b) = gcd(a,b) is equal to the quadratic class number constant C = \u220f_p (1 - 1/(p^2(p+1))). More generally, for any fixed positive integer m, the density of pairs (a,b) such that gcd(ab,a+b) = m * gcd(a,b) is C_m = (C / m^3) \u220f_{p|m} (1 - p^2/(p^3+p^2-1)).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2226",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20057v1",
+    "status": "available",
+    "timestamp": "2026-06-22T09:10:01.845262+00:00",
+    "title": "Asymptotic Density of Pairs with Coprime-like Condition"
   },
   {
     "consumed_by_exp_id": "",

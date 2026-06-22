@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "930ff410",
     "filename": "riemann_zeta_zero_free_regions_and_density_estimat.json",
     "pkg_num": 328,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5530301941466242,
     "title": "Prime Congruence Spectra: A Zariski Geometry for Semirings, Proofs, and Tropical Algebra"
   },
   {
@@ -10123,8 +10123,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "riemann_zeta_zero_free_regions_and_density_estimat",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5530301941466242,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Prime Congruence Spectra: A Zariski Geometry for Semirings, Proofs, and Tropical Algebra"
     }

@@ -101,26 +101,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "930ff410",
-    "description": "Formalize the classical zero-free region of the Riemann zeta function: ζ(s) ≠ 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2π) log(T/(2πe)). Formalize the connection between zero-free regions and prime counting error bounds.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Analysis"
-    ],
-    "id": "seed_329",
-    "lineage_refs": [],
-    "priority_score": 0.94,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432599+00:00",
-    "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
     "domain_bridges": [],
@@ -3451,7 +3431,7 @@
       "Gunderson and Semeraro (2017) – explicit 4‑graph construction matching upper bound",
       "Baber and Talbot (2011) – flag algebra upper bound for K_4^- (r=3)"
     ],
-    "consumed_by_exp_id": "b27cec0f",
+    "consumed_by_exp_id": "",
     "description": "For every integer r≥2 there exists a constant C>0 such that for all sufficiently large n the maximum number of edges in an n‑vertex r‑uniform hypergraph in which each (r+1)-set spans exactly 0 or 2 edges is at least C·n^r / r³, and no such hypergraph can have more than C'·n^r / r² edges. Equivalently, the Turán density π(H^r_3)=Θ(1/r³).",
     "domain_bridges": [
       "Extremal hypergraph theory",
@@ -3467,7 +3447,7 @@
     "proof_strategy": "Use a probabilistic construction placing n points uniformly on the unit sphere S^{r-2} and declaring an r‑set an edge iff its convex hull contains the origin; analyze the probability that a random (r+1)-set spans 0 or 2 edges, then apply entropy compression or hypergraph container methods to show any such hypergraph cannot exceed O(n^r / r²) edges, yielding the Θ(1/r³) density conjecture.",
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T21:56:09.924073+00:00",
     "title": "Conjecture: Turán density of the 3‑edge r‑graph is Θ(1/r³)"
   },
@@ -4326,7 +4306,7 @@
       "Mathlib.Topology.Algebra.Order",
       "Mathlib.Analysis.SpecialFunctions.Pow.Real"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "48b7f4af",
     "description": "Let a_n be the number of isomorphism classes of finite simple connected planar 3-regular graphs with n vertices. The conjecture is that a_{2m+1}=0 for every m, and that there exist real constants C>0 and gamma>1 such that a_{2m} / (C (2m)^(-7/2) gamma^(2m)) tends to 1 as m tends to infinity. This isolates the main enumerative shape of the paper in a Lean-formalizable form without committing to the paper-specific numerical values of C and gamma.",
     "domain_bridges": [
       "graph isomorphism quotients to finite cardinal enumeration",
@@ -4344,7 +4324,7 @@
     "proof_strategy": "Define a_n as the cardinality of the quotient of finite simple connected planar cubic graphs on n vertices by graph isomorphism. The parity assertion follows from the handshaking lemma. For the asymptotic part, formalize the network and 3-connected decompositions used for cubic planar graphs, prove the relevant functional equations for the ordinary generating functions, establish their dominant square-root/singularity schema with computable error bounds, and then apply a formalized transfer theorem giving coefficient asymptotics with exponent -7/2. The final Lean proof would combine the coefficient theorem with the quotient-cardinality interpretation of the ordinary generating function.",
     "research_mode": "team",
     "source_exp_id": "2606.17992v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T23:04:12.150157+00:00",
     "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
   },
@@ -5933,34 +5913,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "Chao, Gabel, Larson, and Nasr (dice relabeling via cyclotomic polynomials)",
-      "Gallian and Rusin (existence of nonstandard dice solutions)",
-      "Sicherman dice (unique 6-sided dice solution)"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p² sides and one die with q² sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
-    "domain_bridges": [
-      "generating functions",
-      "cyclotomic polynomials",
-      "algebraic combinatorics"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2216",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the factorization of the frequency polynomial F(x) = (∑_{i=1}^m x^i)² = x²((x^m-1)/(x-1))² using cyclotomic decomposition. Show that any valid factorization into two polynomials P₁(x) and P₂(x) where P₁(1) = p² and P₂(1) = q² requires m to have a specific square-free factorization structure. Use properties of cyclotomic polynomials Φ_d(x) and their evaluations at x=1 to establish necessary divisibility conditions that cannot be satisfied when m is not a perfect square.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
-    "status": "available",
-    "timestamp": "2026-06-22T05:19:14.551818+00:00",
-    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "math.CO",
       "Frankl-Furedi-1984",
       "de-Caen-1983"
@@ -6017,35 +5969,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "math.CO",
-      "Erdős-Ko-Rado",
-      "Hilton-Milner",
-      "cross-intersecting_families",
-      "diversity"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Let n > 2k ≥ 2 be positive integers. If F, G ⊆ ([n] choose k) are cross-intersecting families (every F ∈ F intersects every G ∈ G), and neither F nor G is a star (i.e., ∄x with x ∈ ⋂F, and ∄y with y ∈ ⋂G), then |F| · |G| ≤ (C(n-1,k-1) - C(n-k-1,k-1) + 1)². Equality holds if and only if (F, G) is isomorphic to (HM_{n,k}, HM_{n,k}), where HM_{n,k} = {[2,k+1]} ∪ {H ∈ C([n],k) : 1 ∈ H ∧ H ∩ [2,k+1] ≠ ∅} is the Hilton-Milner family.",
-    "domain_bridges": [
-      "finite_set_theory",
-      "combinatorial_optimization",
-      "linear_algebra_methods"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2218",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the S_{U,V}^Q-shift method introduced in the paper to reduce to shifted families, then apply diversity-based structural decomposition. The key steps are: (1) Show the S_{U,V}^Q-shift does not decrease |F|·|G| for cross-intersecting pairs, (2) Analyze the diversity structure of extremal pairs using the cross-intersecting analogue of Kupavskii's theorem established in the paper, (3) Show that if both families have positive diversity, the product is bounded by |HM_{n,k}|², (4) Verify uniqueness of the extremal configuration via stability arguments.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20085v1",
-    "status": "available",
-    "timestamp": "2026-06-22T07:30:44.481020+00:00",
-    "title": "Product Hilton-Milner Bound for Cross-Intersecting Families"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "11F66",
       "11F72",
       "11M41"
@@ -6070,35 +5993,6 @@
     "status": "available",
     "timestamp": "2026-06-22T07:58:43.167662+00:00",
     "title": "Second Moment Asymptotic for Symmetric Square L-functions on GL(3)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.RA",
-      "math.NT",
-      "12F05",
-      "12F10",
-      "12F15"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Let K be a field of characteristic p > 0, let f(x) ∈ K[x] be a monic irreducible polynomial with separable presentation f(x) = f^sep(x^{p^n}), and let L = K[x]/(f(x)). If m_f denotes the numerical field invariant defined via the coefficients of f (as in Definition 1 of the referenced paper), then the degree of L over the compositum L^{pi} · L^{sep} is given by [L : L^{pi} · L^{sep}] = p^{n - m_f}. In particular, L = L^{pi} · L^{sep} if and only if m_f = n.",
-    "domain_bridges": [
-      "algebra.field_theory",
-      "algebra.polynomial",
-      "algebra.separable"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2219",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "First formalize the numerical invariant m_f in terms of the coefficients of f(x) = Σ λ_i x^{ip^n} in its separable presentation. Then establish that L^{pi} = K(θ^{p^{m_f}}) where θ is the class of x in L, and compute the tower of degrees [L : L^{sep}] = p^n, [L^{pi} : K] = p^{m_f}, [L^{pi}L^{sep} : L^{sep}] = p^{m_f}, yielding [L : L^{pi}L^{sep}] = p^n / p^{m_f} = p^{n - m_f}. The equivalence L = L^{pi} · L^{sep} ↔ m_f = n follows immediately since the degree equals 1 iff n = m_f.",
-    "research_mode": "team",
-    "source_exp_id": "2606.19962v1",
-    "status": "available",
-    "timestamp": "2026-06-22T07:59:13.569422+00:00",
-    "title": "Degree Formula for the Compositum of Maximal Purely Inseparable and Separable Subfields"
   },
   {
     "ambition_level": "grand_challenge",
@@ -6130,6 +6024,119 @@
     "title": "Isotypic Decomposition Determines Quasi-Random Characterizations"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "chvatal_toughness_conjecture",
+      "hamilton_cycle",
+      "toughness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every graph on at least 3 vertices with toughness at least 9/4 contains a Hamilton cycle. This is the optimal form of Chvátal's toughness conjecture, as Bauer, Broersma, and Veldman demonstrated that 9/4 is the best possible threshold by constructing (9/4 - ε)-tough non-Hamiltonian graphs for arbitrary ε > 0.",
+    "domain_bridges": [
+      "spectral_graph_theory",
+      "extremal_graph_theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2221",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Assume for contradiction there exists a non-Hamiltonian 9/4-tough graph. Analyze the structural properties of vertex cuts and their resulting components in a maximal counterexample, leveraging spectral bounds or longest path/cycle arguments to constrain the graph's topology, ultimately deriving a contradiction to the 9/4-toughness condition.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20297v1",
+    "status": "available",
+    "timestamp": "2026-06-22T09:08:39.436313+00:00",
+    "title": "Chvátal's 9/4-Toughness Implies Hamiltonicity"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Chao, Gabel, Larson, and Nasr (dice relabeling via cyclotomic polynomials)",
+      "Gallian and Rusin (existence of nonstandard dice solutions)",
+      "Sicherman dice (unique 6-sided dice solution)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p² sides and one die with q² sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
+    "domain_bridges": [
+      "generating functions",
+      "cyclotomic polynomials",
+      "algebraic combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2222",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the factorization of the frequency polynomial F(x) = (∑_{i=1}^m x^i)² = x²((x^m-1)/(x-1))² using cyclotomic decomposition. Show that any valid factorization into two polynomials P₁(x) and P₂(x) where P₁(1) = p² and P₂(1) = q² requires m to have a specific square-free factorization structure. Use properties of cyclotomic polynomials Φ_d(x) and their evaluations at x=1 to establish necessary divisibility conditions that cannot be satisfied when m is not a perfect square.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:19:14.551818+00:00",
+    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Erdős-Ko-Rado",
+      "Hilton-Milner",
+      "cross-intersecting_families",
+      "diversity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let n > 2k ≥ 2 be positive integers. If F, G ⊆ ([n] choose k) are cross-intersecting families (every F ∈ F intersects every G ∈ G), and neither F nor G is a star (i.e., ∄x with x ∈ ⋂F, and ∄y with y ∈ ⋂G), then |F| · |G| ≤ (C(n-1,k-1) - C(n-k-1,k-1) + 1)². Equality holds if and only if (F, G) is isomorphic to (HM_{n,k}, HM_{n,k}), where HM_{n,k} = {[2,k+1]} ∪ {H ∈ C([n],k) : 1 ∈ H ∧ H ∩ [2,k+1] ≠ ∅} is the Hilton-Milner family.",
+    "domain_bridges": [
+      "finite_set_theory",
+      "combinatorial_optimization",
+      "linear_algebra_methods"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2223",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the S_{U,V}^Q-shift method introduced in the paper to reduce to shifted families, then apply diversity-based structural decomposition. The key steps are: (1) Show the S_{U,V}^Q-shift does not decrease |F|·|G| for cross-intersecting pairs, (2) Analyze the diversity structure of extremal pairs using the cross-intersecting analogue of Kupavskii's theorem established in the paper, (3) Show that if both families have positive diversity, the product is bounded by |HM_{n,k}|², (4) Verify uniqueness of the extremal configuration via stability arguments.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:30:44.481020+00:00",
+    "title": "Product Hilton-Milner Bound for Cross-Intersecting Families"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.RA",
+      "math.NT",
+      "12F05",
+      "12F10",
+      "12F15"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let K be a field of characteristic p > 0, let f(x) ∈ K[x] be a monic irreducible polynomial with separable presentation f(x) = f^sep(x^{p^n}), and let L = K[x]/(f(x)). If m_f denotes the numerical field invariant defined via the coefficients of f (as in Definition 1 of the referenced paper), then the degree of L over the compositum L^{pi} · L^{sep} is given by [L : L^{pi} · L^{sep}] = p^{n - m_f}. In particular, L = L^{pi} · L^{sep} if and only if m_f = n.",
+    "domain_bridges": [
+      "algebra.field_theory",
+      "algebra.polynomial",
+      "algebra.separable"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2224",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the numerical invariant m_f in terms of the coefficients of f(x) = Σ λ_i x^{ip^n} in its separable presentation. Then establish that L^{pi} = K(θ^{p^{m_f}}) where θ is the class of x in L, and compute the tower of degrees [L : L^{sep}] = p^n, [L^{pi} : K] = p^{m_f}, [L^{pi}L^{sep} : L^{sep}] = p^{m_f}, yielding [L : L^{pi}L^{sep}] = p^n / p^{m_f} = p^{n - m_f}. The equivalence L = L^{pi} · L^{sep} ↔ m_f = n follows immediately since the degree equals 1 iff n = m_f.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19962v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:59:13.569422+00:00",
+    "title": "Degree Formula for the Compositum of Maximal Purely Inseparable and Separable Subfields"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Co-edge-regular graphs with four eigenvalues and unbounded coherent rank"
@@ -6145,7 +6152,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2220",
+    "id": "fd_2225",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Modify the construction to bypass the requirement of finite planes of order q, possibly by using partial geometries, pseudo-geometric structures, or direct matrix constructions that satisfy the required spectral and regularity properties without relying on affine/projective planes.",
@@ -6154,6 +6161,31 @@
     "status": "available",
     "timestamp": "2026-06-22T08:32:20.428552+00:00",
     "title": "Co-edge-regular graphs with four eigenvalues and high coherent rank for all orders"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The natural density of ordered pairs of positive integers (a, b) such that gcd(ab, a+b) = gcd(a,b) is equal to the quadratic class number constant C = ∏_p (1 - 1/(p^2(p+1))). More generally, for any fixed positive integer m, the density of pairs (a,b) such that gcd(ab,a+b) = m * gcd(a,b) is C_m = (C / m^3) ∏_{p|m} (1 - p^2/(p^3+p^2-1)).",
+    "domain_bridges": [
+      "Measure Theory",
+      "Probability Theory",
+      "Algebraic Number Theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2226",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the simplification of the arithmetic function f(a,b) = gcd(ab, a+b)/gcd(a,b) to gcd(gcd(a,b), (a+b)/gcd(a,b)). Then establish the Dirichlet series and Euler product for the characteristic function of f(a,b)=m. Finally, apply Tauberian theorems to derive the asymptotic density from the Euler product.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20057v1",
+    "status": "available",
+    "timestamp": "2026-06-22T09:10:01.845262+00:00",
+    "title": "Asymptotic Density of Pairs with Coprime-like Condition"
   },
   {
     "ambition_level": "extension",

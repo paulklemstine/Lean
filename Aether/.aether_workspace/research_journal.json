@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "999c0f6b",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Valuation-Depth → Tropical Functor\n\nDerived from the verified results in\n`Catalog/Bridges/ValuationDepthTropicalFunctor.lean` (foundations) and\n`Catalog/Bridges/ValuationDepthFol",
-      "quality_score": 0.7756000000000001,
-      "sorry_count": 1,
-      "theorem_count": 17,
-      "timestamp": "2026-06-16T01:42:32",
-      "title": "Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFuncto"
-    },
-    {
       "cycle_id": "e72864d5",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Fibonacci ranks of apparition & primitive prime divisors\n\nThis cycle established a fully-formalized rank-of-apparition toolkit\n(`Catalog/Speculative/AutoResearch/FibonacciPrimiti",
@@ -2501,6 +2491,16 @@
       "theorem_count": 311,
       "timestamp": "2026-06-22T07:28:23",
       "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+    },
+    {
+      "cycle_id": "930ff410",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — Zeta Zero-Free Regions & Density (v19d)\n\nDerived from this cycle's findings (the 3-4-1 engine, the RvM main term, and the\nde la Vallée Poussin balance). Each conjecture is bold,",
+      "quality_score": 0.5530301941466242,
+      "sorry_count": 0,
+      "theorem_count": 132,
+      "timestamp": "2026-06-22T09:05:18",
+      "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T07:28:23",
+  "last_updated": "2026-06-22T09:05:18",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "6f9401e1",
-        "quality": 0.72651,
-        "theorems": 17,
-        "title": "Deepening: Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTro"
-      },
-      {
         "cycle_id": "343c2db7",
         "quality": 0.5248201970443349,
         "theorems": 4,
@@ -3699,6 +3693,12 @@
         "quality": 0.46458109090909094,
         "theorems": 67,
         "title": "Perfect Numbers: Structure of Even Perfects"
+      },
+      {
+        "cycle_id": "930ff410",
+        "quality": 0.5530301941466242,
+        "theorems": 132,
+        "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
       }
     ],
     "Physics": [
