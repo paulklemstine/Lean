@@ -462,7 +462,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
   {
-    "consumed_by_exp_id": "9a580942",
+    "consumed_by_exp_id": "",
     "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| \u2264 2\u221ap.",
     "domains": [
       "Cryptography",
@@ -473,7 +473,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432792+00:00",
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
@@ -3799,13 +3799,42 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2231",
+    "id": "fd_2230",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20348v1",
     "status": "available",
     "timestamp": "2026-06-22T10:30:17.261845+00:00",
     "title": "Asymptotic Dominance of Sparse-Paving q-Matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any line arrangement of fewer than 9 lines in the projective plane, the intersection lattice determines the exponent data (degree sequence of minimal Jacobian syzygy generators). Equivalently, there are no Ziegler pairs of line arrangements of degree d < 9. This captures the main theoretical result of the paper, establishing that lattice-isomorphic arrangements of at most 8 lines have isomorphic modules of Jacobian syzygies AR(f) and hence identical graded Betti numbers in the minimal free resolution of the Milnor algebra M(f).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2231",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-22T10:49:00.491768+00:00",
+    "title": "Intersection Lattice Determinacy for Small Line Arrangements"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every composite integer m \u2265 4 that admits a factorization m = ab with 1 < a < b, there exists a pair of dice with a\u00b2 and b\u00b2 sides respectively, each labeled with positive integers, whose sum frequency distribution is identical to that of two standard m-sided dice. Equivalently, the polynomial x\u00b2((x^m \u2212 1)/(x \u2212 1))\u00b2 can be factored into two polynomials P\u2081 and P\u2082 with non-negative integer coefficients such that P\u2081(1) = a\u00b2 and P\u2082(1) = b\u00b2.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2231",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T10:49:39.895663+00:00",
+    "title": "Existence of Square-Sided (2,m)-Solutions for Composite m"
   },
   {
     "consumed_by_exp_id": "",
@@ -4978,7 +5007,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
   {
-    "consumed_by_exp_id": "16bb5867",
+    "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -4987,7 +5016,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },

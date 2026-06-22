@@ -616,7 +616,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9a580942",
+    "consumed_by_exp_id": "",
     "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| ≤ 2√p.",
     "domain_bridges": [],
     "domains": [
@@ -630,7 +630,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432792+00:00",
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
@@ -6316,7 +6316,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2231",
+    "id": "fd_2230",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish that sparse-paving q-matroids dominate by: (1) showing the number of circuit-hyperplane families (independent sets in the q-Kneser graph on r-dimensional subspaces sharing (r-1)-dimensional subspaces) is 2^{(1+o(1))GaussianBinomial(n,r,q)}, via a q-analogue of the Lovász local lemma or probabilistic method; (2) tightening the entropy-based upper bound from the paper to match this growth rate by refining the contraction-closure argument to show that any q-matroid class closed under contraction has logarithmic count O(GaussianBinomial(n,r,q)).",
@@ -6325,6 +6325,60 @@
     "status": "available",
     "timestamp": "2026-06-22T10:30:17.261845+00:00",
     "title": "Asymptotic Dominance of Sparse-Paving q-Matroids"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AG",
+      "math.AC",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any line arrangement of fewer than 9 lines in the projective plane, the intersection lattice determines the exponent data (degree sequence of minimal Jacobian syzygy generators). Equivalently, there are no Ziegler pairs of line arrangements of degree d < 9. This captures the main theoretical result of the paper, establishing that lattice-isomorphic arrangements of at most 8 lines have isomorphic modules of Jacobian syzygies AR(f) and hence identical graded Betti numbers in the minimal free resolution of the Milnor algebra M(f).",
+    "domain_bridges": [
+      "combinatorics of hyperplane arrangements",
+      "commutative algebra of graded modules",
+      "homological algebra of minimal free resolutions"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2231",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize intersection lattices of line arrangements as finite atomistic lattices, define the Jacobian syzygy module AR(f) and its graded structure over the polynomial ring S = ℂ[x,y,z], then proceed by case analysis on d = 2,...,8 using the combinatorial constraints on multiplicities n_k imposed by the lattice to show that the Hilbert function of M(f) and the degree sequence of AR(f) are uniquely recovered from L(A).",
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-22T10:49:00.491768+00:00",
+    "title": "Intersection Lattice Determinacy for Small Line Arrangements"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every composite integer m ≥ 4 that admits a factorization m = ab with 1 < a < b, there exists a pair of dice with a² and b² sides respectively, each labeled with positive integers, whose sum frequency distribution is identical to that of two standard m-sided dice. Equivalently, the polynomial x²((x^m − 1)/(x − 1))² can be factored into two polynomials P₁ and P₂ with non-negative integer coefficients such that P₁(1) = a² and P₂(1) = b².",
+    "domain_bridges": [
+      "cyclotomic_polynomials",
+      "generating_functions",
+      "polynomial_factorization"
+    ],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2231",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the cyclotomic factorization of (x^m − 1)/(x − 1) into irreducible cyclotomic polynomials Φ_d(x) for d | m. Distribute these factors (along with the mandatory x factors) between P₁ and P₂ so that P₁(1) = a² and P₂(1) = b², then verify the resulting polynomials have non-negative integer coefficients. The key difficulty is showing that for each valid (a,b) with ab = m, at least one distribution of cyclotomic factors yields non-negative coefficients.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T10:49:39.895663+00:00",
+    "title": "Existence of Square-Sided (2,m)-Solutions for Composite m"
   },
   {
     "ambition_level": "extension",
@@ -7894,7 +7948,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "16bb5867",
+    "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -7906,7 +7960,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
