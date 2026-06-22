@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-22T21:59:42.763519+00:00",
+  "last_updated": "2026-06-22T23:35:19.572590+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -301,6 +301,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-22T21:59:42.496591+00:00",
       "title": "Projective Fra\u00efss\u00e9 Metrization Conjecture for Universal Minimal Flows"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3966,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Bridges",
+      "duration_seconds": 1262.0727274417877,
+      "end_time": 1782170637.5618515,
+      "files_integrated": 2,
+      "job_id": "2731a7eb",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "composite": 0.5416,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.3285,
+        "novelty": 0.77,
+        "proof_depth": 0.1393,
+        "usefulness": 0.5197
+      },
+      "quality_score": 0.3034976,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782169375.489124,
+      "strategy_count": 0,
+      "theorem_count": 3,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 3,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-22T23:35:19.335681+00:00",
+      "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
     }
   ]
 }

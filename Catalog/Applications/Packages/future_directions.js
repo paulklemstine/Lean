@@ -4392,17 +4392,45 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer r \u2265 2 and n \u2265 4r\u00b2, there exists an n-vertex r-uniform hypergraph H with at least (1/(32r\u00b3)) * (n choose r) edges, such that every (r+1)-set of vertices spans exactly 0 or 2 edges of H. This formalizes Theorem 1 of the paper, improving the dependence on r from exponential to polynomial.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2275",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:35:50.151622+00:00",
+    "title": "Existence of r-graphs with density \u03a9(r\u207b\u00b3) where every (r+1)-set spans 0 or 2 edges"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In any odd base B > 3, the maximum length of a terminal cycle of the four-digit Kaprekar map equals (B-1)/2 if and only if B is a prime p > 5 and the least positive integer m satisfying 2^m \u2261 \u00b11 (mod p) is exactly m = (p-1)/2.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2275",
+    "id": "fd_2276",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
     "status": "available",
     "timestamp": "2026-06-22T23:07:34.018187+00:00",
     "title": "Kaprekar Maximum Cycle Length Equivalence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer $k \\ge 3$, there exists a finite family $\\mathcal{F}$ of $k$-uniform hypergraphs such that the positive codegree Tur\u00e1n density $\\gamma^+(\\mathcal{F})$ is an irrational number.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2277",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:37:23.936981+00:00",
+    "title": "Existence of Irrational Positive Codegree Tur\u00e1n Densities"
   },
   {
     "consumed_by_exp_id": "",
@@ -5490,7 +5518,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "These conjectures extend the formalization in `Catalog/Novelty/SudokuSpectralGap"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87dc6a45",
     "description": "# FUTURE DIRECTIONS \u2014 Phantom Topologies (Combinatorics)\n\nCycle-1/2 results live in `Catalog/Speculative/PhantomTopologies.lean`, where we proved that\non a finite carrier the topology is a *phantom* of its specialization preorder:\n\n- `topology_eq_of_specializes_iff` \u2014 a topology is determined by the bare `\u2933` relation;\n- `specPreorder_bijective` \u2014 `topology \u21a6 specialization preorder` is a **bijection**\n  `TopologicalSpace \u03b1 \u2243 Preorder \u03b1` (the classical \"finite spaces = preorders\");\n- `continuous_iff_specializes` \u2014 continuity *is* specialization-monotonicity (morphisms are\n  phantoms too);\n- `phantom_asymmetry` \u2014 the realized preorders are genuinely directional.\n\nThe conjectures below are bold, falsifiable next steps. Each comes with a concrete Lean target.\n\n---\n\n## C1. T0 rigidity: phantoms collapse exactly onto partial orders\n**Conjecture.** The observation map `specPreorder` restricts to a bijection between the\n`T0` topologies on a finite `\u03b1` and the **partial orders** on `\u03b1`.\n**Why plausible.** `specializationOrder` already upgrades the preorder to a partial order under\n`T0Space`; antisymmetry is exactly the `T0` (Kolmogorov) condition.\n**Lean target.**\n```\ntheorem specPreorder_T0_bijective [Finite \u03b1] :\n    Function.Bijective\n      (fun (t : {t : TopologicalSpace \u03b1 // @T0Space \u03b1 t}) => (specialization partial order))\n```\nA corollary would be a *counting* statement: `#{T0 topologies on Fin n} = #{partial orders on Fin n}`\n(OEIS A001035), complementing the full count A000798.\n\n## C2. Homeomorphism is an order-isomorphism of phantoms\n**Conjecture.** For finite spaces, `Homeomorph \u03b1 \u03b2` is in natural bijection with order-isomorphisms\nof their specialization preorders: `(\u03b1 \u2243\u209c \u03b2) \u2243 (Specialization \u03b1 \u2243o Specialization \u03b2)`.\n**Why plausible.** `continuous_iff_specializes` gives the arrow-level dictionary; a homeomorphism is\na continuous bijection with continuous inverse, i.e. a monotone bijection with monotone inverse.\n**Lean target.** Build the explicit `Equiv` and prove both round-trips; specialize to deduce that\ntwo finite spaces are homeomorphic iff their preorders are order-isomorphic.\n\n## C3. Connectivity is a phantom (combinatorial connectivity)\n**Conjecture.** A finite space is topologically connected **iff** its specialization preorder is\nconnected as a graph under the comparability relation `x \u2264 y \u2228 y \u2264 x` (zigzag-connected).\n**Why plausible.** In an Alexandrov space the minimal open set of `x` is its up-set; topological\ncomponents match equivalence classes of the reflexive\u2013symmetric\u2013transitive closure of `\u2264`.\n**Lean target.**\n```\ntheorem connected_iff_preorder_connected [Finite \u03b1] [TopologicalSpace \u03b1] :\n    ConnectedSpace \u03b1 \u2194 (\u2200 x y : \u03b1, Relation.ReflTransGen (fun a b => a \u2933 b \u2228 b \u2933 a) x y)\n```\n\n## C4. McCord/M\u00f6bius bridge: Euler characteristic = M\u00f6bius number\n**Conjecture.** For a finite `T0` space `X` with specialization poset `P`, the reduced Euler\ncharacteristic of the order complex `\u0394(P)` equals the M\u00f6bius number `\u03bc(P\u0302)` of `P` with adjoined\n`\u22a5`/`\u22a4` \u2014 a strict identity between a topological invariant and a purely combinatorial one.\n**Why plausible.** This is the finite-space shadow of McCord's weak-homotopy equivalence\n`|\u0394(P)| \u2243 X`; the alternating face count of `\u0394(P)` is the order-complex Euler characteristic, which\nPhilip Hall's theorem identifies with a M\u00f6bius value.\n**Lean target.** Define `orderComplex P` (chains of `P`), its Euler characteristic, and prove the\nidentity for the partial order produced by `specializationOrder`.\n\n## C5. Asymptotic dominance of asymmetric phantoms\n**Conjecture.** The fraction of topologies on `Fin n` that are `T0` (genuinely asymmetric phantoms,\ncf. `phantom_asymmetry`) tends to `1` as `n \u2192 \u221e`; equivalently `A000798(n) / A001035(n) \u2192 1`.\n**Why plausible.** A random preorder is asymptotically almost surely a partial order, since the\nnumber of nontrivial inseparability classes is negligible for large `n`.\n**Lean target.** A clean intermediate, fully finitary milestone: prove the *exact* small-case\ncounts agree with the phantom bijection, e.g. that there are exactly `4` topologies and `4`\npreorders on a 2-element type, and exactly `3` of them are `T0`, by transporting the count along\n`specPreorder_bijective`.\n",
     "domains": [
       "Algebra",
@@ -5500,7 +5528,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5884df3d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T13:03:52.809560+00:00",
     "title": "Cycle-1/2 results live in `Catalog/Speculative/PhantomTopologies.lean`, where we"
   },
@@ -6989,7 +7017,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polyomino and Magic-Square Enumeration"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "68612a70",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domains": [
       "Geometry",
@@ -6999,7 +7027,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.58,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },

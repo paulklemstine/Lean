@@ -35089,11 +35089,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "87dc6a45",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35105,7 +35105,7 @@
         "Geometry"
       ],
       "id": "fd_2055",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-22T23:37:33.427688+00:00",
       "last_reviewed_at": "2026-06-19T17:10:29.768093+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35119,7 +35119,7 @@
       "research_mode": "team",
       "source_exp_id": "5884df3d",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/5884df3d_retry3",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-17T13:03:52.809560+00:00",
       "title": "Cycle-1/2 results live in `Catalog/Speculative/PhantomTopologies.lean`, where we"
@@ -45157,6 +45157,50 @@
       "title": "Existence of Linked Componental Tree-Cut Decompositions Displaying Undominated Edge-Ends"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "frankl1984exact"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integer r ≥ 2 and n ≥ 4r², there exists an n-vertex r-uniform hypergraph H with at least (1/(32r³)) * (n choose r) edges, such that every (r+1)-set of vertices spans exactly 0 or 2 edges of H. This formalizes Theorem 1 of the paper, improving the dependence on r from exponential to polynomial.",
+      "domain_bridges": [
+        "Hypergraph Theory",
+        "Extremal Combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2275",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exists_dense_r_graph_0_or_2 (r n : ℕ) (V : Type*) [Fintype V] (hr : 2 ≤ r) (hn : 4 * r^2 ≤ n) (hV : Fintype.card V = n) : ∃ (H : Finset (Finset V)), (∀ e ∈ H, e.card = r) ∧ (32 * r^3 * H.card ≥ n.choose r) ∧ (∀ s : Finset V, s.card = r + 1 → (H.filter (fun e => e ⊆ s)).card ∈ ({0, 2} : Finset ℕ)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the specific hypergraph construction provided in the paper, verify the uniformity and edge cardinality bound using algebraic manipulation of binomial coefficients, and prove the (r+1)-set spanning condition by checking the construction's geometric or combinatorial properties.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20367v1",
+      "source_path": "http://arxiv.org/abs/2606.20367v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T23:35:50.151622+00:00",
+      "title": "Existence of r-graphs with density Ω(r⁻³) where every (r+1)-set spans 0 or 2 edges"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -45183,7 +45227,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2275",
+      "id": "fd_2276",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem kaprekar_max_cycle_length_iff (B : ℕ) (hB : Odd B ∧ B > 3) :\n  max_cycle_length (kaprekar_4_digit_map B) = (B - 1) / 2 ↔\n    Nat.Prime B ∧ B > 5 ∧\n    IsLeast (fun m => 0 < m ∧ ((2^m : ZMod B) = 1 ∨ (2^m : ZMod B) = -1)) ((B - 1) / 2) :=\nby sorry",
@@ -45202,6 +45246,49 @@
       "thread_id": "",
       "timestamp": "2026-06-22T23:07:34.018187+00:00",
       "title": "Kaprekar Maximum Cycle Length Equivalence"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer $k \\ge 3$, there exists a finite family $\\mathcal{F}$ of $k$-uniform hypergraphs such that the positive codegree Turán density $\\gamma^+(\\mathcal{F})$ is an irrational number.",
+      "domain_bridges": [
+        "Number Theory",
+        "Real Analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2277",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Real.Irrational\nimport Mathlib.Data.Finset.Basic\n\nvariable (k : ℕ) (hk : 3 ≤ k)\n\nstructure KUniformHypergraph where\n  vertices : Finset ℕ\n  edges : Finset (Finset ℕ)\n  hcard : ∀ e ∈ edges, Finset.card e = k\n\nnoncomputable def positiveCodegreeTuránDensity (F : Finset KUniformHypergraph) : ℝ := 0\n\ntheorem exists_irrational_positive_codegree_density (hk : 3 ≤ k) :\n    ∃ F : Finset (KUniformHypergraph), Irrational (positiveCodegreeTuránDensity k F) :=\n  by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the explicit hypergraph constructions or flag algebra methods used by Pikhurko (for standard Turán density) and Gao et al. (for codegree density) to establish the existence of an irrational positive codegree Turán density, carefully analyzing the extremal configurations under the minimum positive codegree condition.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20494v1",
+      "source_path": "http://arxiv.org/abs/2606.20494v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T23:37:23.936981+00:00",
+      "title": "Existence of Irrational Positive Codegree Turán Densities"
     },
     {
       "ambition_level": "extension",
@@ -46530,11 +46617,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "68612a70",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46546,7 +46633,7 @@
         "Novelty"
       ],
       "id": "moonshot_Pickover_32",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-22T23:37:29.056031+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46560,7 +46647,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Pickover)",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:17.617665+00:00",
       "title": "Pickover Clifford Attractor Family"
@@ -61283,7 +61370,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -61298,7 +61385,7 @@
         "Combinatorics"
       ],
       "id": "sorry_fill_a0dd96a5_00b573d8",
-      "last_attempt_time": "2026-06-22T23:07:37.135178+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
