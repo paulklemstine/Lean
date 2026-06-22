@@ -32991,13 +32991,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Universal probability bounds for partial Latin squares"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9ba0d905",
       "depth_estimate": 3,
       "description": "For any partial Latin square P of order n with k entries occupying at most n/4 rows and n/4 columns, the probability that a uniformly random Latin square of order n contains P is bounded between (c₁/n)^k and (c₂/n)^k for some absolute constants c₁, c₂ > 0. This is a specific instance of the paper's main theorem (Theorem 1.1) with α=1/4 and β=1/4, which satisfies the condition 2α+β < 1.",
       "domain_bridges": [
@@ -33009,7 +33009,7 @@
         "Computation"
       ],
       "id": "fd_2071",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-22T03:17:16.997848+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem prob_bounds_partial_latin_sq_quarter :\n    ∃ (c₁ c₂ : ℝ) (h₁ : 0 < c₁) (h₂ : 0 < c₂),\n    ∀ (n : ℕ) (hn : 4 ≤ n) (P : PartialLatinSquare n) (k : ℕ) (hP : P.card = k)\n      (hR : P.numRows ≤ n / 4) (hC : P.numCols ≤ n / 4),\n      (c₁ / (n : ℝ))^k ≤ (randomLatinSquare n).prob (fun L => P ⊆ L) ∧\n      (randomLatinSquare n).prob (fun L => P ⊆ L) ≤ (c₂ / (n : ℝ))^k := by\n  sorry",
       "lineage_refs": [],
@@ -33022,7 +33022,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18174v1",
       "source_path": "http://arxiv.org/abs/2606.18174v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-17T23:49:01.691458+00:00",
       "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
@@ -39086,7 +39086,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2211",
+      "id": "fd_2212",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unique_square_sided_solution (a b : ℕ) (h_a : 2 ≤ a) (h_b : a < b) :\n    ∃! (D₁ D₂ : Multiset ℕ),\n      D₁.card = a^2 ∧ D₂.card = b^2 ∧\n      ∀ s, (sum_freq D₁ D₂ s) = (sum_freq (standard_dice (a*b)) (standard_dice (a*b)) s) :=\n  by\n    sorry",
@@ -43951,7 +43951,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432654+00:00",
       "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
@@ -98622,6 +98622,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

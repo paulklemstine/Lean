@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "892391de",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Functorial Tropical Valuation from Rips Edge-Count Filtrations\n\nThese conjectures extend the results formalized in\n`Bridges/RipsEdgeCountTropical.lean`, which bridges the Rips gra",
-      "quality_score": 0.497252,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-06-16T00:24:52",
-      "title": "Functorial tropical valuation object from Rips graph edge-count filtrations"
-    },
-    {
       "cycle_id": "a87fe3e9",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Tropical Valuation Profiles from p-adic Valuation Depth\n\nDerived from the two research cycles in\n`Bridges/PadicProfileTropical.lean` and `Bridges/PadicProfileTropicalInvariant.le",
@@ -2501,6 +2491,16 @@
       "theorem_count": 74,
       "timestamp": "2026-06-22T01:55:37",
       "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
+    },
+    {
+      "cycle_id": "693eed6d",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Tropical Geometry as a Limit of Classical AG\n\nDerived from this cycle's findings in\n`Catalog/Bridges/TropicalDequantizationLimit.lean` and\n`Catalog/Tropical/TropicalFundamentalTh",
+      "quality_score": 0.4390899069767442,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-22T03:12:34",
+      "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T01:55:37",
+  "last_updated": "2026-06-22T03:12:34",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "ed805c6d",
-        "quality": 0.4728086269230769,
-        "theorems": 13,
-        "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
-      },
-      {
         "cycle_id": "1873f003",
         "quality": 0.4749530303030304,
         "theorems": 10,
@@ -3451,6 +3445,12 @@
         "quality": 0.5018846575342466,
         "theorems": 143,
         "title": "Fully verified, manifold-free combinatorial core of"
+      },
+      {
+        "cycle_id": "693eed6d",
+        "quality": 0.4390899069767442,
+        "theorems": 8,
+        "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
       }
     ],
     "Logic": [

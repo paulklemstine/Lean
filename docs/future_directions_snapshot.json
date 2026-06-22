@@ -1216,26 +1216,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "12bdf767",
-    "description": "Formalize three fundamental fixed point theorems in Lean 4. Prove Brouwer via Sperner's lemma, Banach via the contraction mapping iteration, and Schauder via Brouwer + compactness. Apply to existence proofs for ODEs and integral equations.",
-    "domain_bridges": [],
-    "domains": [
-      "Analysis",
-      "Topology"
-    ],
-    "id": "seed_345",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432654+00:00",
-    "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the Jones polynomial via the Kauffman bracket. Prove invariance under Reidemeister moves. Compute Jones polynomials for the trefoil, figure-eight, and torus knots. Prove that the Jones polynomial detects the unknot for alternating knots.",
     "domain_bridges": [],
@@ -2182,7 +2162,7 @@
     "catalog_references": [
       "Universal probability bounds for partial Latin squares"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ba0d905",
     "description": "For any partial Latin square P of order n with k entries occupying at most n/4 rows and n/4 columns, the probability that a uniformly random Latin square of order n contains P is bounded between (c₁/n)^k and (c₂/n)^k for some absolute constants c₁, c₂ > 0. This is a specific instance of the paper's main theorem (Theorem 1.1) with α=1/4 and β=1/4, which satisfies the condition 2α+β < 1.",
     "domain_bridges": [
       "math.PR",
@@ -2197,7 +2177,7 @@
     "proof_strategy": "Define partial Latin squares and the uniform probability space of random Latin squares in Lean 4. Fix α = 1/4 and β = 1/4 in Theorem 1.1, which satisfies the required condition 2α + β < 1. Extract the absolute constants δ(1/4, 1/4) and Δ(1/4, 1/4) from the existential statement, and verify the bounds hold for all n ≥ 4.",
     "research_mode": "team",
     "source_exp_id": "2606.18174v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T23:49:01.691458+00:00",
     "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
   },
@@ -5829,7 +5809,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2211",
+    "id": "fd_2212",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the cyclotomic polynomial factorization framework from the paper: the frequency polynomial F(x) = x²((x^m-1)/(x-1))² factors uniquely into cyclotomic polynomials. A (2,m)-solution with dice of sizes a² and b² (where m=ab) corresponds to a partition of the cyclotomic factors of F into two groups P₁, P₂ with P₁(1)=a² and P₂(1)=b² and non-negative integer coefficients. Prove existence by constructing the canonical factorization (reassigning cyclotomic factors Φ_d with d|m but d∤a to P₂, and d|a to P₁), and prove uniqueness by showing the cyclotomic factor assignment is forced by the degree and evaluation-at-1 constraints.",

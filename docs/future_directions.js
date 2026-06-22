@@ -912,21 +912,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Representation Theory: Character Tables of S_n"
   },
   {
-    "consumed_by_exp_id": "12bdf767",
-    "description": "Formalize three fundamental fixed point theorems in Lean 4. Prove Brouwer via Sperner's lemma, Banach via the contraction mapping iteration, and Schauder via Brouwer + compactness. Apply to existence proofs for ODEs and integral equations.",
-    "domains": [
-      "Analysis",
-      "Topology"
-    ],
-    "id": "seed_345",
-    "priority_score": 0.85,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432654+00:00",
-    "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the Jones polynomial via the Kauffman bracket. Prove invariance under Reidemeister moves. Compute Jones polynomials for the trefoil, figure-eight, and torus knots. Prove that the Jones polynomial detects the unknot for alternating knots.",
     "domains": [
@@ -1612,7 +1597,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Formula for Zero-Sum Invariant s_1(n)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ba0d905",
     "description": "For any partial Latin square P of order n with k entries occupying at most n/4 rows and n/4 columns, the probability that a uniformly random Latin square of order n contains P is bounded between (c\u2081/n)^k and (c\u2082/n)^k for some absolute constants c\u2081, c\u2082 > 0. This is a specific instance of the paper's main theorem (Theorem 1.1) with \u03b1=1/4 and \u03b2=1/4, which satisfies the condition 2\u03b1+\u03b2 < 1.",
     "domains": [
       "Computation"
@@ -1621,7 +1606,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18174v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T23:49:01.691458+00:00",
     "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
   },
@@ -3550,7 +3535,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2211",
+    "id": "fd_2212",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
