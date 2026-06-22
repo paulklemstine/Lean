@@ -77,7 +77,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Natural Proofs Barrier: Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "930ff410",
     "description": "Formalize the classical zero-free region of the Riemann zeta function: \u03b6(s) \u2260 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2\u03c0) log(T/(2\u03c0e)). Formalize the connection between zero-free regions and prime counting error bounds.",
     "domains": [
       "NumberTheory",
@@ -87,7 +87,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432599+00:00",
     "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
   },
@@ -1598,6 +1598,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any partial Latin square P of order n with k entries occupying at most n/4 rows and n/4 columns, the probability that a uniformly random Latin square of order n contains P is bounded between (c\u2081/n)^k and (c\u2082/n)^k for some absolute constants c\u2081, c\u2082 > 0. This is a specific instance of the paper's main theorem (Theorem 1.1) with \u03b1=1/4 and \u03b2=1/4, which satisfies the condition 2\u03b1+\u03b2 < 1.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2071",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18174v1",
+    "status": "available",
+    "timestamp": "2026-06-17T23:49:01.691458+00:00",
+    "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The paper establishes an average-degree lower bound on the independence number of uncrowded uniform hypergraphs (those without Berge 2, 3, or 4-cycles). Since Verstraete and Wilson previously extended the maximum-degree bound from uncrowded to locally sparse hypergraphs (those without Berge 2 or 3-cycles), this conjecture proposes that the average-degree bound similarly extends to the broader class of locally sparse uniform hypergraphs.",
     "domains": [
       "Pythagorean"
@@ -2265,7 +2279,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b27cec0f",
     "description": "For every integer r\u22652 there exists a constant C>0 such that for all sufficiently large n the maximum number of edges in an n\u2011vertex r\u2011uniform hypergraph in which each (r+1)-set spans exactly 0 or 2 edges is at least C\u00b7n^r / r\u00b3, and no such hypergraph can have more than C'\u00b7n^r / r\u00b2 edges. Equivalently, the Tur\u00e1n density \u03c0(H^r_3)=\u0398(1/r\u00b3).",
     "domains": [
       "Pythagorean"
@@ -2274,7 +2288,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T21:56:09.924073+00:00",
     "title": "Conjecture: Tur\u00e1n density of the 3\u2011edge r\u2011graph is \u0398(1/r\u00b3)"
   },
@@ -3517,17 +3531,45 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The maximum asymptotic density of an n-vertex r-graph in which every (r+1)-set spans 0 or 2 edges is \u0398(1/r). Specifically, there exists a constant c > 0 such that for all r \u2265 2 and sufficiently large n, there is an n-vertex r-graph with this property having at least (c/r) * C(n, r) edges. This would significantly improve the \u03a9(r^(-3)) lower bound established in the paper and match the known O(1/r) upper bound by de Caen, as well as the exact asymptotic densities for r=2 (1/2) and r=4 (1/4).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2212",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-22T03:55:07.252389+00:00",
+    "title": "Linear Density Conjecture for 0-or-2 Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every pair of integers 2 \u2264 a < b, there exists a unique pair of dice (D\u2081, D\u2082) such that D\u2081 has a\u00b2 sides, D\u2082 has b\u00b2 sides, and the sum frequencies of (D\u2081, D\u2082) equal those of two standard (ab)-sided dice. This extends the paper's study of square-sided dice pairs to a complete existence-and-uniqueness characterization, generalizing the classical Sicherman uniqueness result (where a = b = \u221a6 is impossible, and the unique non-standard (2,6)-solution has dice of sizes 6 and 6).",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2212",
+    "id": "fd_2213",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
     "status": "available",
     "timestamp": "2026-06-22T02:48:24.262140+00:00",
     "title": "Unique Existence of Square-Sided (2,ab)-Solutions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer $k \\ge 2$ and any finite family $\\mathcal{F}$ of $k$-graphs, the positive codegree Tur\u00e1n density $\\gamma^+(\\mathcal{F})$ is a rational number. This extends the recent breakthrough resolving the rationality of standard codegree Tur\u00e1n densities $\\gamma(\\mathcal{F})$ to the positive codegree setting, which restricts the minimum codegree to only those $(k-1)$-sets that lie in at least one edge.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2214",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-22T03:55:47.897268+00:00",
+    "title": "Rationality of Positive Codegree Tur\u00e1n Densities"
   },
   {
     "consumed_by_exp_id": "",
@@ -4467,51 +4509,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Euler\u2013Mascheroni Constant \u03b3\n\nDerived from this cycle's findings (explicit `1/n` approximation, the positive-term\ntelescoping series, and the integer-linear-form irrationality criterion).\n\n## 1. Sharpen the approximation rate to `1/(2n)` and prove the second-order term\n\n**Conjecture.** For all `n \u2265 1`, `0 < (H_n \u2212 log n \u2212 \u03b3) < 1/(2n)`, and more precisely\n`(H_n \u2212 log n \u2212 \u03b3) \u2212 1/(2n) \u2192 0` faster than `1/n`.\n\nThe key insight is that the telescoping gap `log((n+1)/n) = 1/n \u2212 1/(2n\u00b2) + ...`\nalready exposes the `\u22121/(2n)` correction, so the crude `log x < x \u2212 1` bound used for\nthe `1/n` estimate can be replaced by the two-sided `x \u2212 1 \u2212 (x\u22121)\u00b2/2 < log x < x \u2212 1`\nto capture the next order.\n\n**Why now?** The current file already isolates the gap as a single logarithm; only a\nquadratic refinement of `Real.log_lt_sub_one_of_pos` is needed, which Mathlib supports\nvia Taylor estimates for `log`.\n\n## 2. A converse criterion: every irrational admits vanishing integer linear forms\n\n**Conjecture.** For every irrational `x`, there exist integer sequences `a\u2099, b\u2099` with\n`b\u2099 > 0`, `b\u2099 x \u2212 a\u2099 \u2260 0`, and `|b\u2099 x \u2212 a\u2099| \u2192 0` (in fact `< 1/b\u2099`).\n\nThe key insight is that Dirichlet's pigeonhole theorem produces, for each `Q`, a\ndenominator `b \u2264 Q` with `|bx \u2212 a| < 1/Q`; iterating gives the sequence, making our\n`irrational_of_int_linear_forms` an exact characterization rather than a one-way test.\n\n**Why now?** Mathlib has the Dirichlet simultaneous-approximation machinery\n(`AddCircle`, `Real.exists_...`); pairing it with the criterion proved here closes the\nbiconditional and turns \"irrationality approaches\" into a single iff-lemma.\n\n## 3. Vacca-type alternating accelerations of \u03b3\n\n**Conjecture.** `\u03b3 = \u03a3_{k\u22651} (\u22121)^k \u230alog\u2082 k\u230b / k` (Vacca's series) and the related\nbinary-digit accelerations converge to the same limit as our telescoping series, and\ntheir partial sums admit explicit error bounds analogous to `abs_harmonic_sub_log_sub_gamma_lt`.\n\nThe key insight is that grouping the positive-term telescoping series by powers of two\nreproduces Vacca's alternating series, so the already-proven `hasSum_gammaSeries` can be\nre-summed by a bijection of `\u2115` rather than re-derived from scratch.\n\n**Why now?** `hasSum_gammaSeries` gives unconditional summability, and Mathlib's\n`HasSum` reindexing lemmas (`Equiv`, `Function.Injective.hasSum_iff`) make regrouping a\nformal manipulation rather than an analytic re-proof.\n\n## 4. Stieltjes constants \u03b3\u2080 = \u03b3 and a uniform definition\n\n**Conjecture.** Defining `\u03b3_m := lim_{n} ( \u03a3_{k=1}^n (log k)^m / k \u2212 (log n)^{m+1}/(m+1) )`,\nthe case `m = 0` equals `eulerMascheroniConstant`, and each `\u03b3_m` satisfies a two-sided\nmonotone-sequence sandwich generalizing `eulerMascheroniSeq` / `eulerMascheroniSeq'`.\n\nThe key insight is that the same `log x \u2264 x \u2212 1` convexity argument that makes the\n`m = 0` auxiliary sequences monotone applies verbatim to the weighted partial sums for\ngeneral `m`, giving a uniform existence proof for all Stieltjes constants.\n\n**Why now?** The monotone-sandwich template is already formalized for `m = 0` in\nMathlib; generalizing the weight to `(log k)^m` is a parametric extension that would put\nthe entire Stieltjes family on the same footing.\n\n## 5. An effective irrationality-measure obstruction for \u03b3\n\n**Conjecture.** If \u03b3 were rational with denominator `Q`, then `|H_n \u2212 log n \u2212 \u03b3| \u2265 1/(Q\u00b7n!)`\nfails for large `n`, yielding a contradiction; equivalently, any rational `p/Q` is\nseparated from \u03b3 by at least the explicit gap implied by `abs_harmonic_sub_log_sub_gamma_lt`.\n\nThe key insight is that combining the *upper* bound `< 1/n` proved here with a putative\n*lower* bound from rationality (the `1/Q` denominator gap used in\n`irrational_of_int_linear_forms`) pinpoints exactly which growth rate of approximations\nwould settle the open irrationality question.\n\n**Why now?** Both halves \u2014 the explicit upper bound and the denominator lower bound \u2014\nare now formalized in this cycle; the only missing piece is an arithmetic sequence of\napproximants whose denominators grow slower than the error shrinks.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2213",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f810a812",
-    "status": "available",
-    "timestamp": "2026-06-22T03:38:38.310396+00:00",
-    "title": "Derived from this cycle's findings (explicit `1/n` approximation, the positive-t"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nFreeform research directions extending the shallow softplus \u2192 ReLU rate in\n`EML/SoftplusRate.lean`. Each is stated with its central insight and a timeliness\njustification.\n\n## 1. Sobolev / derivative-level approximation rates\n\nExtend the pointwise sandwich from values to derivatives: `softplus`'s derivative is\nthe logistic sigmoid `\u03c3(\u03b2 x)`, which approximates the Heaviside step that is the a.e.\nderivative of `relu`. Prove explicit `W^{1,p}` and `L^\u221e`-of-derivative bounds for\n`softplusNet` versus `reluNet`.\n\nThe key insight is that softplus is not merely a value-level surrogate for ReLU but a\n*smoothing of its entire jet*, so a single steepness parameter `\u03b2` controls error\nsimultaneously in the function and all its (a.e.) derivatives.\n\n**Why now?** Gradient-based training only sees derivatives, and Mathlib now has mature\n`deriv`, `HasDerivAt`, and logistic-function APIs, making a verified derivative-level\nrate immediately reachable from the existing value-level proof.\n\n## 2. Depth-`L` EML composition error propagation\n\nQuantify how the depth-2 per-unit error compounds through `L` stacked EML layers,\nderiving whether the total error grows additively, multiplicatively, or with explicit\nLipschitz amplification, and identifying steepness schedules `\u03b2\u2081,\u2026,\u03b2_L` that keep the\nend-to-end error below `\u03b5`.\n\nThe key insight is that each EML layer is globally Lipschitz with an explicitly\ncomputable constant, so layerwise errors propagate through a controllable product of\nLipschitz factors rather than blowing up uncontrollably.\n\n**Why now?** Deep over smooth surrogates are central to modern practice, and the clean\nacyclic lemma structure here (pointwise \u27f6 network) is exactly the modular base case a\ncompositional induction over depth requires.\n\n## 3. Tightness, lower bounds, and optimal constants\n\nEstablish matching lower bounds showing `(\u2211 |c i|) log 2 / \u03b2` cannot be improved in\ngeneral, characterize configurations of `z` and `c` that attain it, and determine when\ncorrelations among hidden units permit a strictly smaller constant.\n\nThe key insight is that the worst case is fully localized at the kink `x = 0`, where\n`softplus \u03b2 0 - relu 0 = log 2 / \u03b2` exactly, so optimality reduces to a finite,\nexplicit extremal analysis rather than a global variational problem.\n\n**Why now?** The upper bound is already formalized with the sharp pointwise constant\n`log 2`, so a companion lower-bound theorem would complete a rare *two-sided*\nmachine-checked approximation rate for a practical activation.\n\n## 4. Quantitative EML Stone\u2013Weierstrass density\n\nCombine the explicit shallow constants here with an EML-algebra density argument to\nupgrade qualitative EML density into a *quantitative* theorem with explicit\nwidth/steepness trade-offs for a target accuracy on a compact set.\n\nThe key insight is that density and rate are complementary halves of one statement:\nabstract density supplies the network topology while the softplus rate supplies the\nper-unit budget, and multiplying the two yields a constructive accuracy guarantee.\n\n**Why now?** The companion file `Catalog/MachineLearning/EML/StoneWeierstrassApprox.lean`\nalready provides the non-quantitative density side, so the missing ingredient is\nprecisely the explicit rate this development supplies.\n\n## 5. Alternative piecewise-linear activations and their EML surrogates\n\nDevelop the analogous explicit `O(1/\u03b2)` uniform surrogates for leaky ReLU, hard-tanh,\nhard-sigmoid, and general piecewise-linear units, identifying the EML primitive that\nplays softplus' role for each and cataloguing their sharp constants.\n\nThe key insight is that every bounded-pieces piecewise-linear activation is a finite\ncombination of shifted ReLUs, so the softplus surrogate transfers verbatim and the only\nnew content is bookkeeping of breakpoints and signs.\n\n**Why now?** Hardware-efficient quantized networks increasingly favor these clipped\nactivations, and the linear-combination lemma `shallow_softplus_rate` already handles\narbitrary finite sums, so the extension is largely a reduction to the proven case.\n",
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_2214",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "dafe288e",
-    "status": "available",
-    "timestamp": "2026-06-22T03:43:36.007057+00:00",
-    "title": "Freeform research directions extending the shallow softplus \u2192 ReLU rate in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Schnorr / \u03a3-Protocols\n\nBuilding on `Catalog/Cryptography/SchnorrProtocol.lean` (abstract-group completeness,\nspecial soundness, group-level witness extraction, and perfect HVZK) and its sibling\n`Catalog/Cryptography/AffineSigmaExtraction.lean` (raw-exponent affine extraction), we\npropose the following bold, testable conjectures for follow-up cycles.\n\n## C1. Fiat\u2013Shamir collapses interaction without losing extraction\n**Conjecture.** Model the non-interactive Schnorr signature by fixing the challenge as an\nabstract oracle value `c = H(g, pk, a)` (a free function `H`). Then completeness and the\n*two-transcript* special-soundness/extraction theorems carry over verbatim: from two\naccepting `(a, H\u2081, z\u2081)`, `(a, H\u2082, z\u2082)` with `H\u2081 \u2262 H\u2082 (mod q)` the same field formula\n`(z\u2081 - z\u2082)(H\u2081 - H\u2082)\u207b\u00b9` extracts the witness. **Test:** parameterize `Verify` over an\narbitrary challenge function and re-derive `schnorr_extract` with no new hypotheses beyond\nchallenge distinctness.\n\n## C2. n-special-soundness for the general linear \u03a3-protocol\n**Conjecture.** For a witness vector `x : (ZMod q)^k` and public key `pk = g ^ (\u27e8m, x\u27e9)`\nwith public coefficient vector `m`, `k+1` accepting transcripts with an invertible\nchallenge Vandermonde matrix uniquely determine `x`. **Test:** generalize\n`schnorr_special_soundness` from scalar `c` to a `Fin (k+1)` family of challenges and prove\nextraction reduces to invertibility of a Vandermonde matrix over `ZMod q`, connecting to\nthe matrix extraction already in `AffineSigmaExtraction.lean`.\n\n## C3. AND/OR composition preserves the \u03a3-properties\n**Conjecture.** The parallel AND-composition of two Schnorr instances\n(`pk = (pk\u2081, pk\u2082)`, challenge shared) and the CDS OR-composition (challenge split\n`c = c\u2081 + c\u2082`) each yield a \u03a3-protocol: completeness and special soundness compose, and\nHVZK simulators combine. **Test:** define `Verify\u2082` as the conjunction/disjunction of two\n`Verify`s and prove the composed completeness, extraction, and `sim_accepts`. The OR case\nshould crucially use `schnorr_response_bijective` to argue the simulated challenge split is\nuniform.\n\n## C4. Soundness error equals the inverse field size\n**Conjecture.** A prover not knowing the witness can answer at most one challenge per\ncommitment; hence the cheating success probability over a uniform challenge in `ZMod q` is\nexactly `1/q`. **Test:** formalize \"for fixed `a`, at most one `c` admits an accepting `z`\nunless the prover knows `x`\" as a counting statement and bound the accepting set's\ncardinality by `1`, giving probability `1/q = (Fintype.card (ZMod q))\u207b\u00b9`. This turns the\nqualitative extractor into a quantitative knowledge-error bound.\n\n## C5. Extraction \u21d4 challenge-gap invertibility (sharp characterization)\n**Conjecture.** Witness extraction from two transcripts succeeds **iff** `c\u2081 - c\u2082` is a\nunit in `ZMod q`. The forward direction is `schnorr_extract`; the converse is an\nobstruction theorem: if `c\u2081 \u2261 c\u2082` (or, over composite-order `g`, `c\u2081 - c\u2082` shares a factor\nwith the order), accepting transcripts exist that do **not** pin down `x`. **Test:**\nconstruct, over `Multiplicative (ZMod n)` with composite `n`, two accepting transcripts with\n`c\u2081 - c\u2082` a zero divisor and two distinct compatible witnesses \u2014 mirroring\n`no_unique_extract_of_noninj` from `AffineSigmaExtraction.lean`.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2215",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e2815d63",
-    "status": "available",
-    "timestamp": "2026-06-22T03:50:51.412946+00:00",
-    "title": "Building on `Catalog/Cryptography/SchnorrProtocol.lean` (abstract-group complete"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5163,7 +5160,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Triple Group Structure"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "032896b2",
     "description": "Classify all Pythagorean triples in the Gaussian integers Z[i]. Prove that every primitive triple can be parametrized as (a+bi, c+di, e+fi) where the norm of each entry satisfies the Pythagorean relation. Connect to the arithmetic of quaternionic integers.",
     "domains": [
       "Pythagorean",
@@ -5173,7 +5170,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.416939+00:00",
     "title": "Pythagorean Triples in Gaussian Integers"
   },
