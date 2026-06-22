@@ -44598,6 +44598,52 @@
       "title": "Minimality of Degree 10 for MDR-HF Ziegler Pairs"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "GIANNOPOULOU20211",
+        "THOMAS199067"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every finite multigraph admits a linked, componental, rooted tree-cut decomposition. This serves as the finite graph base case and direct analogue of the main theorem (Theorem 1.1) from the paper, which focuses on infinite graphs. The componental property ensures that each part of the decomposition induces a connected subgraph, and the linked property guarantees that the adhesion sets reflect the edge-connectivity of the underlying graph, extending the finite linked tree-cut decomposition results of Giannopoulou et al.",
+      "domain_bridges": [
+        "Math.Combinatorics.SimpleGraph",
+        "Math.Data.Tree",
+        "Math.Data.Finset"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2263",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Tree.Basic\n\nvariable {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V)\n\n-- Stub for the existence of a linked componental tree-cut decomposition\n-- for a finite connected simple graph. (The paper's theorem applies to multigraphs).\ntheorem exists_linked_componental_tree_cut_decomposition \n    (h_conn : G.Connected) :\n    ∃ (n : ℕ) (T : SimpleGraph (Fin n)) (h_tree : IsTree T) \n      (bags : Fin n → Finset V) (root : Fin n),\n      IsTreeCutDecomposition G T bags ∧\n      IsComponental G bags ∧\n      IsLinked G T bags\n:= by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize finite multigraphs, tree-cut decompositions, adhesion sets, and the linked and componental properties. The proof would follow the finite combinatorial structure of Giannopoulou et al., using Menger's theorem to establish the linked property and an induction argument on the number of vertices to enforce the componental property.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20452v1",
+      "source_path": "http://arxiv.org/abs/2606.20452v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T20:18:12.999334+00:00",
+      "title": "Existence of Linked Componental Tree-Cut Decompositions for Finite Graphs"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -44624,7 +44670,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2263",
+      "id": "fd_2264",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem umf_dichotomy_projective_fraisse_limit (F : Type*) [CompactSpace F] [ConnectedSpace F] [MetrizableSpace F] (𝔽 : Type*) [CompactSpace 𝔽] [TotallyDisconnectedSpace 𝔽] (q : 𝔽 → F) (h_q : QuotientMap q) (h_dense : Dense (aut_group_image q)) : IsSingleton (UMF (Homeo F)) ∨ ¬MetrizableSpace (UMF (Homeo F))",
@@ -44667,7 +44713,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2264",
+      "id": "fd_2265",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_square_sided_pair : ¬ ∃ (P₁ P₂ : ℕ[X]), (∀ i, (P₁).eval 1 = 6) ∧ (∀ i, (P₂).eval 1 = 6) ∧ (P₁ * P₂) = (∑ i in Finset.Icc 1 6, X ^ i) ^ 2 ∧ (P₁).natDegree = 4 ∧ (P₂).natDegree = 9",
@@ -44686,6 +44732,53 @@
       "thread_id": "",
       "timestamp": "2026-06-22T19:54:15.986699+00:00",
       "title": "Non‑existence of square‑sided dice pairs for the 2‑dice standard sum problem"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "OEIS:A099009",
+        "math.NT:Kaprekar_dynamics",
+        "math.CO:digit_manipulation_maps"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that for every odd base B > 3, every nonconstant four-digit string reaches the triangular region T_B in at most 3 iterations of the Kaprekar map. This conjecture asserts that the bound of 3 is sharp: for every odd base B > 3, there exists a nonconstant four-digit string whose orbit requires exactly 3 iterations to enter T_B. This would complete the characterization of the pre-periodic behavior by showing no uniform improvement on the bound of 3 is possible across all odd bases.",
+      "domain_bridges": [
+        "math.NT:multiplicative_order",
+        "math.CO:discrete_dynamical_systems",
+        "math.RT:projective_maps_over_rings"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2266",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem kaprekar_preperiod_sharp (B : Nat) (hB : Odd B) (hB_gt_3 : B > 3) :\n    ∃ (s : Fin 4 → Fin B), ¬Kaprekar.isConstant s ∧\n      Kaprekar.iterate B s 3 ∈ Kaprekar.triangularRegion B ∧\n      ∀ (k : Fin 3), Kaprekar.iterate B s k.val ∉ Kaprekar.triangularRegion B :=\n  by\n    sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct, for each odd base B > 3, an explicit nonconstant four-digit string whose orbit under the Kaprekar map stays outside T_B for exactly 3 iterations. This requires a detailed analysis of the pre-periodic region (the complement of T_B in the space of sorted four-digit strings) and how the Kaprekar map acts on it. The projective doubling conjugacy on T_B may help characterize which pairs {r, s} lie outside T_B and how many iterations they need to reach T_B. A likely approach is to identify a family of strings parameterized by B (e.g., strings of the form (B-1, k, 0, 0) for suitable k) that systematically require 3 iterations.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20439v1",
+      "source_path": "http://arxiv.org/abs/2606.20439v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T20:20:14.218648+00:00",
+      "title": "Sharpness of the Kaprekar Pre-period Bound in Odd Bases"
     },
     {
       "ambition_level": "extension",
@@ -48772,11 +48865,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "2731a7eb",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48787,7 +48880,7 @@
         "Algebra"
       ],
       "id": "seed_021",
-      "last_attempt_time": "2026-06-22T19:54:21.064497+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-16T10:48:49.752102+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -48801,7 +48894,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:00.118535+00:00",
       "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"

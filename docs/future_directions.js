@@ -4219,12 +4219,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every finite multigraph admits a linked, componental, rooted tree-cut decomposition. This serves as the finite graph base case and direct analogue of the main theorem (Theorem 1.1) from the paper, which focuses on infinite graphs. The componental property ensures that each part of the decomposition induces a connected subgraph, and the linked property guarantees that the adhesion sets reflect the edge-connectivity of the underlying graph, extending the finite linked tree-cut decomposition results of Giannopoulou et al.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2263",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-22T20:18:12.999334+00:00",
+    "title": "Existence of Linked Componental Tree-Cut Decompositions for Finite Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every continuum F arising as a quotient of a projective Fra\u00efss\u00e9 limit \ud835\udd3d with Aut(\ud835\udd3d) dense in Homeo(F), the universal minimal flow M(Homeo(F)) is either a singleton (i.e., Homeo(F) is extremely amenable) or is non-metrizable. This would generalize the pseudo-solenoid result and establish that no intermediate case exists where the universal minimal flow is metrizable but non-trivial.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2263",
+    "id": "fd_2264",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
@@ -4238,13 +4252,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2264",
+    "id": "fd_2265",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
     "status": "available",
     "timestamp": "2026-06-22T19:54:15.986699+00:00",
     "title": "Non\u2011existence of square\u2011sided dice pairs for the 2\u2011dice standard sum problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for every odd base B > 3, every nonconstant four-digit string reaches the triangular region T_B in at most 3 iterations of the Kaprekar map. This conjecture asserts that the bound of 3 is sharp: for every odd base B > 3, there exists a nonconstant four-digit string whose orbit requires exactly 3 iterations to enter T_B. This would complete the characterization of the pre-periodic behavior by showing no uniform improvement on the bound of 3 is possible across all odd bases.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2266",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-22T20:20:14.218648+00:00",
+    "title": "Sharpness of the Kaprekar Pre-period Bound in Odd Bases"
   },
   {
     "consumed_by_exp_id": "",
@@ -4525,7 +4554,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symmetric Group Generation Probability"
   },
   {
-    "consumed_by_exp_id": "2731a7eb",
+    "consumed_by_exp_id": "",
     "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
     "domains": [
       "Algebra"
@@ -4534,7 +4563,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.78,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:00.118535+00:00",
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
   },
