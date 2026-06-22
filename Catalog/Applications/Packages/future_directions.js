@@ -4016,6 +4016,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any \u03b5 > 0, there exists \u03b4 > 0 and N such that for any K_5-free n-vertex graph (n >= N) with independence number \u2264 \u03b4n, there exists a bipartition of vertices such that at most (1/18 + \u03b5)n^2 edges have both endpoints in the same part.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2246",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20397v1",
+    "status": "available",
+    "timestamp": "2026-06-22T13:28:04.500026+00:00",
+    "title": "Ramsey-Tur\u00e1n Bipartite Cut for K5-free Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any fixed prime power q and fixed rank r \u2265 1, the proportion of q-matroids of rank r on F_q^n that are sparse-paving approaches 1 as n \u2192 \u221e. Formally: if m_q(n,r) denotes the number of q-matroids and sp_q(n,r) the number of sparse-paving q-matroids on F_q^n with rank r, then sp_q(n,r)/m_q(n,r) \u2192 1 as n \u2192 \u221e. This is the q-analogue of the classical conjecture that almost all matroids are sparse-paving, and directly addresses the asymptotic gap identified in the paper between lower bounds (from sparse-paving constructions via constant-dimension codes) and upper bounds (from entropy and hyperplane-counting arguments).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2246",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-22T13:28:40.506342+00:00",
+    "title": "Almost all q-matroids are sparse-paving"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize Conway's surreal numbers as a universally embedding ordered field containing the reals and the ordinals, with recursive definitions of arithmetic (+, x, order), the birthday construction, and the embedding of dyadic rationals. (Conway, On Numbers and Games 1976)",
     "domains": [
       "Algebra",
