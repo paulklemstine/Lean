@@ -528,11 +528,15 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                       f"Initiating proof repair retry {job.retry_count + 1}/{extractor.max_retries}...")
                 
                 # Retrieve suggestion from Pi Agent
-                suggestion = extractor.pi_agent.suggest_retry_improvement(
-                    concept=job.concept,
-                    previous_prompt=job.prompt,
-                    result_lean=job.result_lean or "",
-                    quality_assessment=job.quality_assessment,
+                import functools
+                suggestion = await asyncio.to_thread(
+                    functools.partial(
+                        extractor.pi_agent.suggest_retry_improvement,
+                        concept=job.concept,
+                        previous_prompt=job.prompt,
+                        result_lean=job.result_lean or "",
+                        quality_assessment=job.quality_assessment,
+                    )
                 )
                 
                 # Dispatch the retry, passing the current parallel limit so the retry
@@ -743,7 +747,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         # If this was a Phase B integration completion, rebuild website index, sync docs/ and push to git
         if is_phase_b_completion and job.status == "integrated":
             print(f"[Tick] Phase B integration complete for {job.job_id[:8]}. Pushing git changes immediately...")
-            rebuild_commit_push()
+            # Fire-and-forget so git push never blocks the poll/dispatch loop
+            publish_task = asyncio.create_task(asyncio.to_thread(rebuild_commit_push))
     for pid, job in list(extractor.inflight.items()):
         if job.status == "dispatch_queued":
             job.status = "retry_queued"
@@ -1502,6 +1507,16 @@ def rebuild_commit_push() -> bool:
             )
             if commit_res.returncode != 0:
                 print(f"[Tick] git commit failed: {commit_res.stderr.decode('utf-8', errors='replace')}")
+                _short_err = commit_res.stderr.decode('utf-8', errors='replace').replace('\n', ' ')[:200]
+                print(f"[ALERT] git_publish_failed step=commit rc={commit_res.returncode} detail={_short_err}")
+                _webhook = os.environ.get("AETHER_ALERT_WEBHOOK")
+                if _webhook:
+                    try:
+                        import urllib.request, json as _json, time as _time
+                        _req = urllib.request.Request(_webhook, data=_json.dumps({'severity':'high', 'step':'commit', 'rc':commit_res.returncode, 'detail':_short_err, 'ts':_time.time()}).encode('utf-8'), headers={'Content-Type': 'application/json'})
+                        urllib.request.urlopen(_req, timeout=5)
+                    except Exception:
+                        pass
 
         # Stash remaining dirty unstaged/untracked changes to keep working tree clean for merge
         status_res = subprocess.run(
@@ -1574,6 +1589,16 @@ def rebuild_commit_push() -> bool:
                 pushed = True
             else:
                 print(f"[Tick] git push failed: {push.stderr}")
+                _short_err = push.stderr.replace('\n', ' ')[:200] if isinstance(push.stderr, str) else push.stderr.decode('utf-8', errors='replace').replace('\n', ' ')[:200]
+                print(f"[ALERT] git_publish_failed step=push rc={push.returncode} detail={_short_err}")
+                _webhook = os.environ.get("AETHER_ALERT_WEBHOOK")
+                if _webhook:
+                    try:
+                        import urllib.request, json as _json, time as _time
+                        _req = urllib.request.Request(_webhook, data=_json.dumps({'severity':'high', 'step':'push', 'rc':push.returncode, 'detail':_short_err, 'ts':_time.time()}).encode('utf-8'), headers={'Content-Type': 'application/json'})
+                        urllib.request.urlopen(_req, timeout=5)
+                    except Exception:
+                        pass
         else:
             print("[Tick] Push skipped because merge was not successful")
 

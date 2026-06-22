@@ -301,6 +301,7 @@ class PiAgentClient:
         self.model = model
         self.memory = memory
         self.catalog_root = Path(catalog_root) if catalog_root else None
+        self.pi_agent_evals_path = Path('.aether_workspace/pi_agent_evals.jsonl')
         self.timeout = timeout
         self.compact = compact
         self.use_ollama = use_ollama
@@ -3836,6 +3837,23 @@ make it beautiful to read.
                 "confidence": 0.4,
                 "analysis": "Fallback heuristic: no theorems found.",
             }
+
+    def _log_pi_agent_eval(self, job_id: str, score: float, grade: str, rationale: Dict[str, Any]) -> None:
+        import json, time
+        print(f"[Pi-Agent] eval job={job_id} score={score:.3f} grade={grade}")
+        record = {
+            "ts": time.time(),
+            "job_id": job_id,
+            "score": score,
+            "grade": grade,
+            "rationale": rationale
+        }
+        try:
+            self.pi_agent_evals_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(self.pi_agent_evals_path, "a") as f:
+                f.write(json.dumps(record) + "\\n")
+        except Exception:
+            pass
 
     def _smart_truncate(self, lean_source: str, max_chars: int = 3000) -> str:
         """Truncate Lean source while preserving theorem signatures, sorry locations,
