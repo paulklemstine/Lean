@@ -462,7 +462,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9a580942",
     "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| \u2264 2\u221ap.",
     "domains": [
       "Cryptography",
@@ -473,7 +473,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432792+00:00",
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
@@ -3779,6 +3779,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every K_5-free graph on n vertices can be made bipartite by removing at most n^2/8 edges. Formally, for every epsilon > 0, there exists n_0 such that for all n >= n_0, every K_5-free graph on n vertices has a bipartition such that the number of edges within the parts is at most (1/8 + epsilon)n^2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2230",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20397v1",
+    "status": "available",
+    "timestamp": "2026-06-22T10:29:33.981595+00:00",
+    "title": "Sudakov's Conjecture for Bipartite Cuts in K_5-free Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any fixed prime power q, the logarithmic number of q-matroids of rank r on F_q^n satisfies log_2(m_q(n, r)) ~ GaussianBinomial(n, r, q) as n -> infinity with r = floor(n/2), where m_q(n, r) is the number of q-matroids of rank r on F_q^n. This is the q-analogue of the classical conjecture that sparse-paving matroids dominate all matroids, asserting that the lower bound from sparse-paving q-matroids (constructible via constant-dimension codes) is asymptotically tight, closing the gap identified between the entropy-based upper bounds and code-based lower bounds in the paper.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2231",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-22T10:30:17.261845+00:00",
+    "title": "Asymptotic Dominance of Sparse-Paving q-Matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -4948,7 +4978,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "16bb5867",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domains": [
       "Algebra"
@@ -4957,7 +4987,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
@@ -5216,7 +5246,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "d5789bd5",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -5226,7 +5256,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

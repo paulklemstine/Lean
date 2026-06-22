@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "dc77da43",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Tropical Valuation Profiles of Rips Edge-Count Data\n\nDerived from the two research cycles in\n`RipsTropicalValuationProfile.lean` (cycle 1) and `RipsTropicalInterleaving.lean` (cy",
-      "quality_score": 0.49856,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-16T03:38:30",
-      "title": "A tropical valuation profile of finite metric filtrations from Rips edge-count data"
-    },
-    {
       "cycle_id": "6f9401e1",
       "domain": "NumberTheory",
       "key_insight": "# FUTURE DIRECTIONS — Valuation-Depth → Tropical Functor\n\nThis document collects bold, falsifiable conjectures arising from the deepening cycle\nrecorded in:\n\n* `Catalog/Bridges/ValuationDepthTropicalF",
@@ -2501,6 +2491,16 @@
       "theorem_count": 297,
       "timestamp": "2026-06-22T10:27:25",
       "title": "Triviality of Modular Form Coefficients"
+    },
+    {
+      "cycle_id": "c3a3db57",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions for the Radical Framework\n\nThese are freeform research directions that extend the foundational radical API\nin `Catalog/ABC/Radical.lean` toward ABC triples, quality bounds, squaref",
+      "quality_score": 0.50342,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-22T10:28:48",
+      "title": "ABC Conjecture: Consequences and Partial Results"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T10:27:25",
+  "last_updated": "2026-06-22T10:28:48",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "a0dd96a5",
-        "quality": 0.5271458702064897,
-        "theorems": 50,
-        "title": "These conjectures continue the research cycle begun in"
-      },
-      {
         "cycle_id": "5884df3d",
         "quality": 0.60834,
         "theorems": 10,
@@ -3265,6 +3259,12 @@
         "quality": 0.5597778115501519,
         "theorems": 74,
         "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
+      },
+      {
+        "cycle_id": "c3a3db57",
+        "quality": 0.50342,
+        "theorems": 7,
+        "title": "ABC Conjecture: Consequences and Partial Results"
       }
     ],
     "Computation": [
