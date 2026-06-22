@@ -3991,13 +3991,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2243",
+    "id": "fd_2244",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
     "status": "available",
     "timestamp": "2026-06-22T12:56:32.795752+00:00",
     "title": "Metrizable Universal Minimal Flows and the Ordered Approximate Ramsey Property for Projective Fra\u00efss\u00e9 Categories"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a topological group and H \u2264 G a dense subgroup with the subspace topology. If H is extremely amenable, meaning every continuous action of H on a nonempty compact Hausdorff space has a fixed point, then G is extremely amenable. This isolates the density step used when passing from the automorphism group of a projective Fraisse limit to the closure subgroup of the homeomorphism group of the quotient continuum.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2245",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T13:05:20.077897+00:00",
+    "title": "Extreme amenability passes from a dense subgroup to its ambient topological group"
   },
   {
     "consumed_by_exp_id": "",

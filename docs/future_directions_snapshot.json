@@ -6670,7 +6670,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2243",
+    "id": "fd_2244",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Generalize the Kechris-Pestov-Todorcevic correspondence for non-archimedean Polish groups to projective Fraïssé categories. Construct a metrizable universal minimal flow as the completion of the orbit space of the limit of the ordered expansion, and conversely, show that a metrizable universal minimal flow induces a well-behaved linear order expansion satisfying the approximate Ramsey property.",
@@ -6679,6 +6679,35 @@
     "status": "available",
     "timestamp": "2026-06-22T12:56:32.795752+00:00",
     "title": "Metrizable Universal Minimal Flows and the Ordered Approximate Ramsey Property for Projective Fraïssé Categories"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib/Topology/Algebra/Group/Basic",
+      "Mathlib/Topology/ContinuousMap/Basic",
+      "Mathlib/Topology/Algebra/MulAction",
+      "Mathlib/Topology/Subgroup"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let G be a topological group and H ≤ G a dense subgroup with the subspace topology. If H is extremely amenable, meaning every continuous action of H on a nonempty compact Hausdorff space has a fixed point, then G is extremely amenable. This isolates the density step used when passing from the automorphism group of a projective Fraisse limit to the closure subgroup of the homeomorphism group of the quotient continuum.",
+    "domain_bridges": [
+      "projective Fraisse limits to homeomorphism groups",
+      "combinatorial Ramsey properties to fixed point properties of compact flows",
+      "dense automorphism groups to closed homeomorphism groups"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2245",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Given a continuous G-action on a nonempty compact Hausdorff space X, restrict it to the dense subgroup H. Extreme amenability of H gives x ∈ X fixed by every h ∈ H. For arbitrary g ∈ G, the orbit map a ↦ a • x is continuous, and the equalizer of this map with the constant map a ↦ x is closed in G because X is Hausdorff. This closed set contains the dense subset H, hence is all of G. Therefore g • x = x for every g ∈ G.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T13:05:20.077897+00:00",
+    "title": "Extreme amenability passes from a dense subgroup to its ambient topological group"
   },
   {
     "ambition_level": "grand_challenge",
