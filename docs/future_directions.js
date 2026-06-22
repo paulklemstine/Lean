@@ -4059,18 +4059,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any two line arrangements A and A' in P^2 consisting of d \u2264 8 lines, if their intersection lattices L(A) and L(A') are isomorphic, then the graded Betti numbers of the minimal free resolutions of their Milnor algebras M(f) and M(f') are identical. Equivalently, there are no Ziegler pairs of line arrangements with d \u2264 8. This is the main result of the paper, establishing that d = 9 is the minimal degree for which Ziegler pairs can exist.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2249",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-22T14:46:02.454392+00:00",
+    "title": "No Ziegler pairs exist for line arrangements of degree at most 8"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The homeomorphism group of the Menger universal curve is extremely amenable. By the paper's characterization theorem, this is equivalent to the projective Fra\u00efss\u00e9 category whose limit yields the Menger curve having the approximate Ramsey property. This would extend the known extreme amenability result for the pseudo-arc homeomorphism group to the one-dimensional Menger curve, the natural one-dimensional analog of the Cantor set, and would contrast with the paper's result that the homeomorphism group of the pseudo-solenoid has a non-metrizable universal minimal flow.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2249",
+    "id": "fd_2250",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
     "status": "available",
     "timestamp": "2026-06-22T14:04:44.400200+00:00",
     "title": "Extreme Amenability of the Menger Universal Curve Homeomorphism Group"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every composite integer m \u2265 6, there exist distinct positive integers a, b with ab = m and polynomials P\u2081, P\u2082 with non-negative integer coefficients such that P\u2081(1) = a\u00b2, P\u2082(1) = b\u00b2, and P\u2081\u00b7P\u2082 = (x + x\u00b2 + \u00b7\u00b7\u00b7 + x\u1d50)\u00b2. Equivalently, there exists a (2,m)-solution consisting of two dice with different square numbers of sides (a\u00b2 and b\u00b2) that reproduce the sum frequency of two standard m-sided dice.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2251",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T14:46:47.093363+00:00",
+    "title": "Existence of Square-Sided Sicherman Pairs for All Composite m \u2265 6"
   },
   {
     "consumed_by_exp_id": "",
@@ -5008,7 +5037,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Follow-up conjectures arising from `CausalLoops.lean` (Cycle 0 + Cycle 1)."
   },
   {
-    "consumed_by_exp_id": "cbf8f5a6",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Non-Well-Founded Proofs in Geometry\n\nResearch theme: **\"Non-Well-Founded Proofs: Proofs That Reference Themselves\"**, domain **Geometry**.\n\nAcross two cycles we established the thesis that *self-reference / non-well-foundedness =\nself-similarity*, realized by two formal engines \u2014 **coinductive data** (`Stream'`, `corec`)\nand **contraction fixed points** (`x* = f x*`) \u2014 and unified the geometric series, the affine\nattractor, and the (golden / metallic) continued fractions as one phenomenon: *a quantity\nthat is the unique solution of its own equation*. All results live, fully verified, in\n`SelfSimilar.lean`.\n\n**Status of earlier conjectures (now closed):**\n- **C3 (bisimulation rigidity)** \u2014 PROVED (`selfSimilar_unique`): the self-similarity law\n  `map (\u00b7 * r) s = s.tail` with fixed head characterizes `geomStream a r` uniquely.\n- **C4 (metallic ratios)** \u2014 PROVED (`metallicRatio_sq`, `metallicRatio_selfReferential`,\n  `metallicGnomon_selfSimilar`, `metallicRatio_one`): the golden lemmas generalize to the\n  whole family `\u03c6_m = (m + \u221a(m\u00b2+4))/2`.\n- **C5 (similarity dimension)** \u2014 core PROVED (`simDim_spec`, `simDim_pos`): `D = log k/log(1/r)`\n  solves `k\u00b7r^D = 1` and is positive; *monotonicity remains open* (see D3 below).\n\nThe following are the bold, falsifiable conjectures for subsequent cycles.\n\n## Conjecture D1 \u2014 IFS attractor in \u211d\u207f via Banach (multidimensional self-reference)\nFor an affine contraction `f x = A x + b` on `EuclideanSpace \u211d (Fin n)` with operator norm\n`\u2016A\u2016 < 1`, there is a **unique** self-referential point `x* = f x*`, every orbit\n`f^[k] x\u2080 \u2192 x*`, and `\u2016f^[k] x\u2080 - x*\u2016 \u2264 \u2016A\u2016^k \u00b7 \u2016x\u2080 - x*\u2016`.\n*Test:* lift `affine_fixed`, `affine_fixed_unique`, `affine_iterate_error`,\n`affine_tendsto_fix` from `\u211d` to `\u211d\u207f`, ideally through Mathlib's `ContractingWith`/`edist`\nAPI. Falsified if no `\u211d\u207f` statement closes under just `\u2016A\u2016 < 1`.\n\n## Conjecture D2 \u2014 Coinductive geometric trees and self-similar measure\nDefine an infinite binary **coinductive tree** whose node at depth `d` carries scale `r^d`.\nConjecture: the depth-`d` level holds `2^d` copies of scale `r^d`, and the total-measure\nrecursion `M = 1 + 2 r \u00b7 M` has the self-referential closed form `M = 1/(1 - 2r)` for\n`2r < 1` \u2014 the tree analogue of `geometricSum_selfReferential`. *Test:* build the tree with\n`corec`, prove the level identity by induction and the measure equation by the fixed-point\nuniqueness pattern of `geometricSum_unique`.\n\n## Conjecture D3 \u2014 Monotonicity of the similarity dimension\nThe similarity dimension `simDim k r = log k / log(1/r)` is strictly increasing in `k`\n(for `0 < r < 1`) and strictly increasing in `r` on `(0,1)` (for `k \u2265 2`). Moreover it is the\n*unique* real solving `k\u00b7r^D = 1`. *Test:* prove both monotonicities and uniqueness of the\nexponent; falsified if either monotonicity reverses on any admissible `(k, r)`.\n\n## Conjecture D4 \u2014 Mixed-ratio IFS and the Moran equation\nFor a finite list of ratios `r\u2081,\u2026,r_k \u2208 (0,1)`, the similarity dimension is the unique `D`\nsolving the **self-referential Moran equation** `\u2211\u1d62 r\u1d62^D = 1`. Conjecture: the left side is\ncontinuous and strictly decreasing in `D`, equals `k > 1` at `D = 0` and `\u2192 0` as `D \u2192 \u221e`, so\na unique root exists, and it reduces to `simDim` when all `r\u1d62 = r`. *Test:* prove existence,\nuniqueness, and the uniform-ratio reduction via the intermediate value theorem + strict\nantitonicity.\n\n## Conjecture D5 \u2014 Banach contraction on the space of compact sets (Hutchinson attractor)\nThe IFS operator `F(K) = \u22c3\u1d62 f\u1d62(K)` on the complete metric space of nonempty compact subsets\nof `\u211d\u207f` under the **Hausdorff metric** is a contraction when each `f\u1d62` is, hence has a unique\nself-referential compact set `K* = F(K*)` \u2014 the genuine fractal attractor, the set-level\n`x* = f x*`. *Test:* assemble the Hausdorff-metric completeness + contraction estimate and\ninvoke Banach; falsified if the operator fails to contract under `max\u1d62 Lip(f\u1d62) < 1`.\n",
     "domains": [
       "Algebra",
@@ -5018,7 +5047,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "78c9ab60",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-17T05:40:43.553956+00:00",
     "title": "Research theme: **\"Non-Well-Founded Proofs: Proofs That Reference Themselves\"**,"
   },
@@ -6361,7 +6390,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "PKD Simulacra: Copies Without Originals and Fidelity Decay"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "805dbd7c",
     "description": "Formalize Paun's membrane computing / P-systems: hierarchical cell-like membranes with evolution rules, and characterize the computational power (P-systems with symport/antiport reach Turing-universality; active membranes solve NP problems in polynomial steps). (Paun)",
     "domains": [
       "Computation",
@@ -6371,7 +6400,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.64,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:21.420515+00:00",
     "title": "Membrane Computing (P-Systems) and Their Computational Power"
   },
@@ -6465,7 +6494,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diaspora Polis Ontology: Concept Lattices for Simulated Minds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad078564",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
       "Computation",
@@ -6475,7 +6504,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.62,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -6672,7 +6701,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polyomino and Magic-Square Enumeration"
   },
   {
-    "consumed_by_exp_id": "b72d76ec",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domains": [
       "Geometry",
@@ -6682,7 +6711,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.58,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },
