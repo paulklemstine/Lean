@@ -5904,6 +5904,62 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "math.AG",
+      "math.AC",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer d ≥ 10, there exists a Ziegler pair of line arrangements of d lines satisfying conditions (HF) and (MDR), meaning they have isomorphic intersection lattices, the same Hilbert function of the Milnor algebra, the same minimal degree of a Jacobian relation, but distinct graded Betti numbers in the minimal free resolution of the Milnor algebra.",
+    "domain_bridges": [
+      "Combinatorics",
+      "Commutative Algebra",
+      "Homological Algebra"
+    ],
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2216",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductively extend the known Ziegler pairs for d=10 and specific higher degrees to all d ≥ 10 by adding lines in configurations that preserve the intersection lattice isomorphism, Hilbert function, and minimal derivation relation degree, while ensuring the minimal graded free resolution remains distinct.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:15:12.313567+00:00",
+    "title": "Existence of Ziegler Pairs with Identical Hilbert Function and MDR for All Degrees d ≥ 10"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Chao, Gabel, Larson, and Nasr (dice relabeling via cyclotomic polynomials)",
+      "Gallian and Rusin (existence of nonstandard dice solutions)",
+      "Sicherman dice (unique 6-sided dice solution)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p² sides and one die with q² sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
+    "domain_bridges": [
+      "generating functions",
+      "cyclotomic polynomials",
+      "algebraic combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2216",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the factorization of the frequency polynomial F(x) = (∑_{i=1}^m x^i)² = x²((x^m-1)/(x-1))² using cyclotomic decomposition. Show that any valid factorization into two polynomials P₁(x) and P₂(x) where P₁(1) = p² and P₂(1) = q² requires m to have a specific square-free factorization structure. Use properties of cyclotomic polynomials Φ_d(x) and their evaluations at x=1 to establish necessary divisibility conditions that cannot be satisfied when m is not a perfect square.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:19:14.551818+00:00",
+    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",

@@ -3588,6 +3588,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer d \u2265 10, there exists a Ziegler pair of line arrangements of d lines satisfying conditions (HF) and (MDR), meaning they have isomorphic intersection lattices, the same Hilbert function of the Milnor algebra, the same minimal degree of a Jacobian relation, but distinct graded Betti numbers in the minimal free resolution of the Milnor algebra.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2216",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:15:12.313567+00:00",
+    "title": "Existence of Ziegler Pairs with Identical Hilbert Function and MDR for All Degrees d \u2265 10"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p\u00b2 sides and one die with q\u00b2 sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2216",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:19:14.551818+00:00",
+    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
