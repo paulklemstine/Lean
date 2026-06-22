@@ -35867,11 +35867,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c3ba2768",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 2,
@@ -35882,7 +35882,7 @@
         "Geometry"
       ],
       "id": "fd_2074",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-22T11:11:40.583335+00:00",
       "last_reviewed_at": "2026-06-19T17:10:36.362918+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35896,7 +35896,7 @@
       "research_mode": "team",
       "source_exp_id": "oeis:212351",
       "source_path": "https://oeis.org/",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T01:05:26.622694+00:00",
       "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
@@ -43121,53 +43121,6 @@
       "title": "Sudakov's Conjecture for Bipartite Cuts in K_5-free Graphs"
     },
     {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "math.CO",
-        "q-analogue",
-        "matroid_enumeration"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "For any fixed prime power q, the logarithmic number of q-matroids of rank r on F_q^n satisfies log_2(m_q(n, r)) ~ GaussianBinomial(n, r, q) as n -> infinity with r = floor(n/2), where m_q(n, r) is the number of q-matroids of rank r on F_q^n. This is the q-analogue of the classical conjecture that sparse-paving matroids dominate all matroids, asserting that the lower bound from sparse-paving q-matroids (constructible via constant-dimension codes) is asymptotically tight, closing the gap identified between the entropy-based upper bounds and code-based lower bounds in the paper.",
-      "domain_bridges": [
-        "information_theory",
-        "finite_field_theory",
-        "extremal_combinatorics"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
-      ],
-      "id": "fd_2230",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem q_matroid_asymptotic_density (q : ℕ) (hq : Fact (PrimePower q)) :\n    Filter.Tendsto\n      (fun n : ℕ =>\n        Real.log (Nat.card {M : QMatroid (ZMod q) n ⌊n / 2⌋ | True}) / Real.log 2 /\n          gaussianBinomial q n ⌊n / 2⌋)\n      Filter.atTop\n      (nhds 1) := by\n  sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Establish that sparse-paving q-matroids dominate by: (1) showing the number of circuit-hyperplane families (independent sets in the q-Kneser graph on r-dimensional subspaces sharing (r-1)-dimensional subspaces) is 2^{(1+o(1))GaussianBinomial(n,r,q)}, via a q-analogue of the Lovász local lemma or probabilistic method; (2) tightening the entropy-based upper bound from the paper to match this growth rate by refining the contraction-closure argument to show that any q-matroid class closed under contraction has logarithmic count O(GaussianBinomial(n,r,q)).",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20348v1",
-      "source_path": "http://arxiv.org/abs/2606.20348v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-22T10:30:17.261845+00:00",
-      "title": "Asymptotic Dominance of Sparse-Paving q-Matroids"
-    },
-    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -43215,6 +43168,53 @@
       "title": "Intersection Lattice Determinacy for Small Line Arrangements"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "q-analogue",
+        "matroid_enumeration"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any fixed prime power q, the logarithmic number of q-matroids of rank r on F_q^n satisfies log_2(m_q(n, r)) ~ GaussianBinomial(n, r, q) as n -> infinity with r = floor(n/2), where m_q(n, r) is the number of q-matroids of rank r on F_q^n. This is the q-analogue of the classical conjecture that sparse-paving matroids dominate all matroids, asserting that the lower bound from sparse-paving q-matroids (constructible via constant-dimension codes) is asymptotically tight, closing the gap identified between the entropy-based upper bounds and code-based lower bounds in the paper.",
+      "domain_bridges": [
+        "information_theory",
+        "finite_field_theory",
+        "extremal_combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2232",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem q_matroid_asymptotic_density (q : ℕ) (hq : Fact (PrimePower q)) :\n    Filter.Tendsto\n      (fun n : ℕ =>\n        Real.log (Nat.card {M : QMatroid (ZMod q) n ⌊n / 2⌋ | True}) / Real.log 2 /\n          gaussianBinomial q n ⌊n / 2⌋)\n      Filter.atTop\n      (nhds 1) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish that sparse-paving q-matroids dominate by: (1) showing the number of circuit-hyperplane families (independent sets in the q-Kneser graph on r-dimensional subspaces sharing (r-1)-dimensional subspaces) is 2^{(1+o(1))GaussianBinomial(n,r,q)}, via a q-analogue of the Lovász local lemma or probabilistic method; (2) tightening the entropy-based upper bound from the paper to match this growth rate by refining the contraction-closure argument to show that any q-matroid class closed under contraction has logarithmic count O(GaussianBinomial(n,r,q)).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20348v1",
+      "source_path": "http://arxiv.org/abs/2606.20348v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T10:30:17.261845+00:00",
+      "title": "Asymptotic Dominance of Sparse-Paving q-Matroids"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -43239,7 +43239,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2231",
+      "id": "fd_2233",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Polynomial.Basic\nimport Mathlib.Data.Nat.Prime.Basic\n\nopen Polynomial\n\n-- A die is represented as a finset of labeled faces with multiplicities,\n-- equivalently a polynomial with non-negative integer coefficients.\n-- sumFreq P Q gives the coefficient sequence of P * Q\n\ndef IsStandardDie (m : ℕ) (P : Polynomial ℕ) : Prop :=\n  P = ∑ i ∈ Finset.range m, C (1 : ℕ) * X ^ (i + 1)\n\ndef IsSquareSidedSolution (m a b : ℕ) (P₁ P₂ : Polynomial ℕ) : Prop :=\n  a ≠ b ∧ 1 < a ∧ 1 < b ∧ a * b = m ∧\n  P₁.eval 1 = a ^ 2 ∧ P₂.eval 1 = b ^ 2 ∧\n  (∀ n : ℕ, P₁.coeff n > 0 ∨ P₁.coeff n = 0) ∧\n  (∀ n : ℕ, P₂.coeff n > 0 ∨ P₂.coeff n = 0) ∧\n  P₁ * P₂ = (X * (X ^ m - 1) / (X - 1)) ^ 2\n\ntheorem square_sided_solution_exists (m : ℕ) (hm : m ≥ 4)\n    (hcomp : ∃ a b, 1 < a ∧ 1 < b ∧ a ≠ b ∧ a * b = m) :\n    ∃ a b P₁ P₂, IsSquareSidedSolution m a b P₁ P₂ := by\n  sorry\n",
@@ -43258,6 +43258,45 @@
       "thread_id": "",
       "timestamp": "2026-06-22T10:49:39.895663+00:00",
       "title": "Existence of Square-Sided (2,m)-Solutions for Composite m"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — BB84 Security Formalization (Cycle 1)\n\nDerived from the Stage-3 Analysis and Stage-4 Critique of this cycle. The cycle\nestablished, in `Catalog/Cryptography/BB84/`:\n\n* `KeyRateThreshold.lean` — the secret-key rate `r(Q) = log 2 − 2·binEntropy Q`,\n  its strict monotonicity in the QBER, IVT existence and uniqueness of a critical\n  QBER `p* ∈ (1/16, 1/8)` (bracketing the textbook ≈ 11%), with the bracket\n  *certified by the integer facts* `7^7 < 2^20` and `2^56 < 15^15`.\n* `Protocol.lean` — the intercept–resend attack induces `QBER = 1/4`, which lies\n  strictly above `p*`, so `r(1/4) < 0` (detectable).\n* `PrivacyAmplification.lean` — the leftover-hash Cauchy–Schwarz bound\n  `∑|pᵢ − 1/M| ≤ √(M·∑pᵢ² − 1)`, its exponential-decay corollary, and a catalog\n  bridge (`Cryptography.MerkleDamgard.compression_collision_of_card`) showing\n  deterministic extractors are never injective.\n\n## Conjecture 1 — The threshold is the unique transcendental certified by `2·H₂ = 1`\n\n**Statement.** The map `p ↦ binEntropy p` restricted to `(0, ½)` has a unique\npreimage of every value in `(0, log 2)`, and the BB84 threshold `p*` is the\n*algebraically independent* root of `2·binEntropy p = log 2`; no rational `p`\nsatisfies it.\n\nThe key insight is... that the bracket reduction `binEntropy(a/b) ⋛ (log 2)/2 ⟺\n(integer power comparison)` means rationality of `p*` would force an exact integer\nidentity `mᵐ·… = nⁿ·…`, which a 2-adic valuation argument can rule out.\n\n**Why now?** We already have the exact integer-reduction machinery\n(`binEntropy_one_eighth_gt` etc.); promoting it from two sample points to a general\n`binEntropy(a/b)` lemma makes the irrationality statement directly attackable.\n\n## Conjecture 2 — Tightening the bracket is purely arithmetic, to any precision\n\n**Statement.** For every `ε > 0` there are rationals `q₁ < p* < q₂` with\n`q₂ − q₁ < ε` whose verification reduces to a single `norm_num`-checkable integer\ninequality (no `log` bounds).\n\nThe key insight is... that `binEntropy(a/b) ⋛ (log 2)/2` is equivalent to\n`(b−a)^{(b−a)}·??? ⋛ b^{b}·2^{…}`, an integer comparison whose size grows only\npolynomially in the denominator, so arbitrary-precision brackets stay decidable.\n\n**Why now?** The current `(1/16, 1/8)` bracket already demonstrates the reduction;\nthe generalization is a finite-template lemma the subagent can grind once stated.\n\n## Conjecture 3 — The Cauchy–Schwarz leftover bound is order-optimal\n\n**Statement.** The constant in `∑|pᵢ − 1/M| ≤ √(M·∑pᵢ² − 1)` cannot be improved\nto `c·√(M·∑pᵢ² − 1)` with `c < 1`: there is a family of distributions (two-point\nspikes) making the ratio LHS/RHS → 1.\n\nThe key insight is... that equality in finite Cauchy–Schwarz requires `|dᵢ|`\nconstant across the support, which the balanced two-point distribution\n`p = (½+t)δ₀ + (½−t)δ₁` realizes in the limit, pinning the optimal constant at 1.\n\n**Why now?** `statDist_le_collision` is proved via `Finset.sum_mul_sq_le_sq_mul_sq`,\nwhose equality case is characterized in Mathlib; the optimality proof reuses exactly\nthat characterization.\n\n## Conjecture 4 — Composable security: the entropy gap adds across stages\n\n**Statement.** If error correction leaks `λ` bits and privacy amplification extracts\nto `ℓ = k − λ − 2s` bits (smooth min-entropy `k`), then the final statistical\ndistance is `≤ 2^{−s}`, and these bounds *compose additively in the exponent* over\nsequential protocol stages.\n\nThe key insight is... that the leftover-hash exponent `(ℓ − k)/2` is linear in the\nentropy gap, so chaining stages multiplies the small `√` factors, i.e. adds the\nexponents — exactly the structure of the catalog's `HybridTelescope` advantage sums.\n\n**Why now?** `privacyAmplification_exp_bound` already exposes the gap `ℓ − k` as a\n`zpow`; bridging to `Cryptography.Security`'s hybrid/telescope advantage lemmas\nwould yield an end-to-end composable BB84 security statement.\n\n## Conjecture 5 — Intercept–resend is the worst *symmetric* individual attack at fixed QBER\n\n**Statement.** Among individual (non-collective) eavesdropping strategies that induce\na given sifted QBER `Q ≤ p*`, intercept–resend maximizes Eve's mutual information,\nand the protocol stays secure exactly while `Q < p*`.\n\nThe key insight is... that for symmetric individual attacks Eve's information is a\nmonotone function of the disturbance, so the single-parameter trade-off `Q ↦ I_E(Q)`\ncrosses the reconciliation cost `H₂(Q)` precisely at the `2·H₂ = 1` threshold.\n\n**Why now?** We have the threshold `p*` characterized and the intercept–resend QBER\n`1/4` formalized; quantifying `I_E(Q)` for the symmetric family turns the qualitative\n\"detectable\" result into a sharp optimal-attack theorem.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2234",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "d5789bd5",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d5789bd5",
+      "status": "available",
+      "thread_id": "th_58736881",
+      "timestamp": "2026-06-22T11:08:09.053479+00:00",
+      "title": "Derived from the Stage-3 Analysis and Stage-4 Critique of this cycle. The cycle"
     },
     {
       "ambition_level": "extension",
@@ -107759,6 +107798,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6f9401e1",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — Valuation-Depth → Tropical Functor\n\nThis document collects bold, falsifiable conjectures arising from the deepening cycle\nrecorded in:\n\n* `Catalog/Bridges/ValuationDepthTropicalF",
-      "quality_score": 0.72651,
-      "sorry_count": 1,
-      "theorem_count": 17,
-      "timestamp": "2026-06-16T04:13:04",
-      "title": "Deepening: Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFuncto"
-    },
-    {
       "cycle_id": "d9dd0490",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Fibonacci rank of apparition & Pisano period\n\nThis cycle proved that the Fibonacci **rank of apparition** `z(p) = fibEntry p` is a full\nlattice homomorphism of `(ℕ, ∣)` (`fibEntr",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-06-22T10:28:48",
       "title": "ABC Conjecture: Consequences and Partial Results"
+    },
+    {
+      "cycle_id": "d5789bd5",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — BB84 Security Formalization (Cycle 1)\n\nDerived from the Stage-3 Analysis and Stage-4 Critique of this cycle. The cycle\nestablished, in `Catalog/Cryptography/BB84/`:\n\n* `KeyRateTh",
+      "quality_score": 0.69248,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-22T11:08:19",
+      "title": "Quantum Key Distribution: BB84 Security Proof"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T10:28:48",
+  "last_updated": "2026-06-22T11:08:19",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "574dbade",
-        "quality": 0.48496,
-        "theorems": 194,
-        "title": "The Hodge filtration F^p on the complexification of a pure Hodge structure is th"
-      },
-      {
         "cycle_id": "a3760248",
         "quality": 0.35307452173913045,
         "theorems": 11,
@@ -3079,6 +3073,12 @@
         "quality": 0.6924620000000001,
         "theorems": 57,
         "title": "Graph Coloring: Chromatic Polynomial Theory"
+      },
+      {
+        "cycle_id": "d5789bd5",
+        "quality": 0.69248,
+        "theorems": 14,
+        "title": "Quantum Key Distribution: BB84 Security Proof"
       }
     ],
     "Applications": [

@@ -35867,11 +35867,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c3ba2768",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 2,
@@ -35882,7 +35882,7 @@
         "Geometry"
       ],
       "id": "fd_2074",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-22T11:11:40.583335+00:00",
       "last_reviewed_at": "2026-06-19T17:10:36.362918+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35896,7 +35896,7 @@
       "research_mode": "team",
       "source_exp_id": "oeis:212351",
       "source_path": "https://oeis.org/",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T01:05:26.622694+00:00",
       "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
@@ -107798,6 +107798,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

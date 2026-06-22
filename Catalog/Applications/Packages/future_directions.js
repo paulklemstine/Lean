@@ -3794,21 +3794,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any fixed prime power q, the logarithmic number of q-matroids of rank r on F_q^n satisfies log_2(m_q(n, r)) ~ GaussianBinomial(n, r, q) as n -> infinity with r = floor(n/2), where m_q(n, r) is the number of q-matroids of rank r on F_q^n. This is the q-analogue of the classical conjecture that sparse-paving matroids dominate all matroids, asserting that the lower bound from sparse-paving q-matroids (constructible via constant-dimension codes) is asymptotically tight, closing the gap identified between the entropy-based upper bounds and code-based lower bounds in the paper.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2230",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20348v1",
-    "status": "available",
-    "timestamp": "2026-06-22T10:30:17.261845+00:00",
-    "title": "Asymptotic Dominance of Sparse-Paving q-Matroids"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For any line arrangement of fewer than 9 lines in the projective plane, the intersection lattice determines the exponent data (degree sequence of minimal Jacobian syzygy generators). Equivalently, there are no Ziegler pairs of line arrangements of degree d < 9. This captures the main theoretical result of the paper, establishing that lattice-isomorphic arrangements of at most 8 lines have isomorphic modules of Jacobian syzygies AR(f) and hence identical graded Betti numbers in the minimal free resolution of the Milnor algebra M(f).",
     "domains": [
       "Algebra",
@@ -3824,11 +3809,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any fixed prime power q, the logarithmic number of q-matroids of rank r on F_q^n satisfies log_2(m_q(n, r)) ~ GaussianBinomial(n, r, q) as n -> infinity with r = floor(n/2), where m_q(n, r) is the number of q-matroids of rank r on F_q^n. This is the q-analogue of the classical conjecture that sparse-paving matroids dominate all matroids, asserting that the lower bound from sparse-paving q-matroids (constructible via constant-dimension codes) is asymptotically tight, closing the gap identified between the entropy-based upper bounds and code-based lower bounds in the paper.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2232",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-22T10:30:17.261845+00:00",
+    "title": "Asymptotic Dominance of Sparse-Paving q-Matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every composite integer m \u2265 4 that admits a factorization m = ab with 1 < a < b, there exists a pair of dice with a\u00b2 and b\u00b2 sides respectively, each labeled with positive integers, whose sum frequency distribution is identical to that of two standard m-sided dice. Equivalently, the polynomial x\u00b2((x^m \u2212 1)/(x \u2212 1))\u00b2 can be factored into two polynomials P\u2081 and P\u2082 with non-negative integer coefficients such that P\u2081(1) = a\u00b2 and P\u2082(1) = b\u00b2.",
     "domains": [
       "Computation"
     ],
-    "id": "fd_2231",
+    "id": "fd_2233",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -4774,6 +4774,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 BB84 Security Formalization (Cycle 1)\n\nDerived from the Stage-3 Analysis and Stage-4 Critique of this cycle. The cycle\nestablished, in `Catalog/Cryptography/BB84/`:\n\n* `KeyRateThreshold.lean` \u2014 the secret-key rate `r(Q) = log 2 \u2212 2\u00b7binEntropy Q`,\n  its strict monotonicity in the QBER, IVT existence and uniqueness of a critical\n  QBER `p* \u2208 (1/16, 1/8)` (bracketing the textbook \u2248 11%), with the bracket\n  *certified by the integer facts* `7^7 < 2^20` and `2^56 < 15^15`.\n* `Protocol.lean` \u2014 the intercept\u2013resend attack induces `QBER = 1/4`, which lies\n  strictly above `p*`, so `r(1/4) < 0` (detectable).\n* `PrivacyAmplification.lean` \u2014 the leftover-hash Cauchy\u2013Schwarz bound\n  `\u2211|p\u1d62 \u2212 1/M| \u2264 \u221a(M\u00b7\u2211p\u1d62\u00b2 \u2212 1)`, its exponential-decay corollary, and a catalog\n  bridge (`Cryptography.MerkleDamgard.compression_collision_of_card`) showing\n  deterministic extractors are never injective.\n\n## Conjecture 1 \u2014 The threshold is the unique transcendental certified by `2\u00b7H\u2082 = 1`\n\n**Statement.** The map `p \u21a6 binEntropy p` restricted to `(0, \u00bd)` has a unique\npreimage of every value in `(0, log 2)`, and the BB84 threshold `p*` is the\n*algebraically independent* root of `2\u00b7binEntropy p = log 2`; no rational `p`\nsatisfies it.\n\nThe key insight is... that the bracket reduction `binEntropy(a/b) \u22db (log 2)/2 \u27fa\n(integer power comparison)` means rationality of `p*` would force an exact integer\nidentity `m\u1d50\u00b7\u2026 = n\u207f\u00b7\u2026`, which a 2-adic valuation argument can rule out.\n\n**Why now?** We already have the exact integer-reduction machinery\n(`binEntropy_one_eighth_gt` etc.); promoting it from two sample points to a general\n`binEntropy(a/b)` lemma makes the irrationality statement directly attackable.\n\n## Conjecture 2 \u2014 Tightening the bracket is purely arithmetic, to any precision\n\n**Statement.** For every `\u03b5 > 0` there are rationals `q\u2081 < p* < q\u2082` with\n`q\u2082 \u2212 q\u2081 < \u03b5` whose verification reduces to a single `norm_num`-checkable integer\ninequality (no `log` bounds).\n\nThe key insight is... that `binEntropy(a/b) \u22db (log 2)/2` is equivalent to\n`(b\u2212a)^{(b\u2212a)}\u00b7??? \u22db b^{b}\u00b72^{\u2026}`, an integer comparison whose size grows only\npolynomially in the denominator, so arbitrary-precision brackets stay decidable.\n\n**Why now?** The current `(1/16, 1/8)` bracket already demonstrates the reduction;\nthe generalization is a finite-template lemma the subagent can grind once stated.\n\n## Conjecture 3 \u2014 The Cauchy\u2013Schwarz leftover bound is order-optimal\n\n**Statement.** The constant in `\u2211|p\u1d62 \u2212 1/M| \u2264 \u221a(M\u00b7\u2211p\u1d62\u00b2 \u2212 1)` cannot be improved\nto `c\u00b7\u221a(M\u00b7\u2211p\u1d62\u00b2 \u2212 1)` with `c < 1`: there is a family of distributions (two-point\nspikes) making the ratio LHS/RHS \u2192 1.\n\nThe key insight is... that equality in finite Cauchy\u2013Schwarz requires `|d\u1d62|`\nconstant across the support, which the balanced two-point distribution\n`p = (\u00bd+t)\u03b4\u2080 + (\u00bd\u2212t)\u03b4\u2081` realizes in the limit, pinning the optimal constant at 1.\n\n**Why now?** `statDist_le_collision` is proved via `Finset.sum_mul_sq_le_sq_mul_sq`,\nwhose equality case is characterized in Mathlib; the optimality proof reuses exactly\nthat characterization.\n\n## Conjecture 4 \u2014 Composable security: the entropy gap adds across stages\n\n**Statement.** If error correction leaks `\u03bb` bits and privacy amplification extracts\nto `\u2113 = k \u2212 \u03bb \u2212 2s` bits (smooth min-entropy `k`), then the final statistical\ndistance is `\u2264 2^{\u2212s}`, and these bounds *compose additively in the exponent* over\nsequential protocol stages.\n\nThe key insight is... that the leftover-hash exponent `(\u2113 \u2212 k)/2` is linear in the\nentropy gap, so chaining stages multiplies the small `\u221a` factors, i.e. adds the\nexponents \u2014 exactly the structure of the catalog's `HybridTelescope` advantage sums.\n\n**Why now?** `privacyAmplification_exp_bound` already exposes the gap `\u2113 \u2212 k` as a\n`zpow`; bridging to `Cryptography.Security`'s hybrid/telescope advantage lemmas\nwould yield an end-to-end composable BB84 security statement.\n\n## Conjecture 5 \u2014 Intercept\u2013resend is the worst *symmetric* individual attack at fixed QBER\n\n**Statement.** Among individual (non-collective) eavesdropping strategies that induce\na given sifted QBER `Q \u2264 p*`, intercept\u2013resend maximizes Eve's mutual information,\nand the protocol stays secure exactly while `Q < p*`.\n\nThe key insight is... that for symmetric individual attacks Eve's information is a\nmonotone function of the disturbance, so the single-parameter trade-off `Q \u21a6 I_E(Q)`\ncrosses the reconciliation cost `H\u2082(Q)` precisely at the `2\u00b7H\u2082 = 1` threshold.\n\n**Why now?** We have the threshold `p*` characterized and the intercept\u2013resend QBER\n`1/4` formalized; quantifying `I_E(Q)` for the symmetric family turns the qualitative\n\"detectable\" result into a sharp optimal-attack theorem.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2234",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d5789bd5",
+    "status": "available",
+    "timestamp": "2026-06-22T11:08:09.053479+00:00",
+    "title": "Derived from the Stage-3 Analysis and Stage-4 Critique of this cycle. The cycle"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4936,7 +4951,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c3ba2768",
     "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Geometry"
@@ -4945,7 +4960,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T01:05:26.622694+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
