@@ -1,282 +1,302 @@
-# Verified Fixed-Point Theory: From Banach Contraction to Certified Nonlinear Existence
+# Fixed Point Theorems via Discrete Parity: Sperner, Brouwer, Banach, and the Shadow of Schauder
+
+**Author:** Aristotle
+**Date:** 2026-06-22
+**Domain:** Geometry / Combinatorial Topology
 
 ## Abstract
 
-We present a machine-verified development of quantitative fixed-point theory in Lean 4 with Mathlib, establishing a formally certified pipeline from metric iteration through compactness upgrades to existence theorems for differential and integral equations. Our contributions include: (1) a fully verified quantitative Banach contraction principle with explicit geometric convergence estimates; (2) a compactness upgrade principle that promotes approximate fixed points to exact ones; (3) Brouwer's fixed-point theorem in dimension one via the Intermediate Value Theorem; (4) certified stability estimates for perturbed contractions; (5) a Lyapunov energy-monotonicity principle connecting contraction iteration to global energy minimization; and (6) novel algebraic structures (`CertifiedContractionData`, `IsApproxFixedPoint`) enabling compositional reasoning about fixed-point algorithms. All theorems are fully proved with no `sorry` axioms, depending only on the standard foundations (propext, Classical.choice, Quot.sound). We demonstrate applications to ODE existence (Picard–Lindelöf), Volterra integral equations, and fixed-point stability analysis.
-
-**Keywords:** fixed-point theory, formal verification, Banach contraction, Brouwer theorem, Schauder theorem, compactness upgrade, Picard iteration, certified numerics
-
----
+We present a unified, fully formalized development of three pillars of fixed point
+theory, organized around a single elementary engine: the parity of colour changes
+along a path. From the one-dimensional Sperner lemma — that a two-colouring of a
+path with mismatched endpoints exhibits an odd, hence nonzero, number of
+bichromatic edges — we derive the one-dimensional Brouwer fixed point theorem for
+continuous self-maps of the interval. We then treat the metric side of the theory:
+for an affine contraction $f(x) = ax + b$ with $|a| < 1$ we prove that Picard
+iteration converges to the unique fixed point $b/(1-a)$ (the affine Banach
+principle), and that whenever such a map preserves an interval, its fixed point is
+localized inside that interval — the one-dimensional shadow of the retraction step
+underlying Schauder's theorem. All results are stated inline with full proof
+sketches. The combinatorial parity argument (`sperner_parity`,
+`sperner_exists_change`) is reusable as the boundary base case for higher
+dimensional Sperner and Brouwer theorems, and the affine analysis
+(`affine_iterate_tendsto`, `affine_fixedPoint_mem_Icc`) provides explicit,
+quantitative witnesses for the contraction principle.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+A *fixed point* of a self-map $f : X \to X$ is a point $x^*$ with $f(x^*) = x^*$.
+Fixed point theorems assert the existence (and sometimes the computability) of
+such points under structural hypotheses on $X$ and $f$. They are foundational
+across analysis and its applications: the Picard–Lindelöf theorem on existence and
+uniqueness of solutions to ordinary differential equations, the solvability of
+Fredholm and Volterra integral equations, the existence of Nash equilibria, and
+the convergence of iterative numerical schemes are all fixed point statements.
 
-Fixed-point theorems are among the most widely applied results in mathematics, underpinning existence and uniqueness proofs in analysis, topology, game theory, economics, and computational science. Despite their foundational importance, very few of these results have been formally verified in interactive proof assistants. This gap is particularly acute for *quantitative* fixed-point theory—the estimates that tell practitioners not merely that a solution exists, but how fast iterative methods converge to it and how sensitive the solution is to perturbations.
-
-### 1.2 Contributions
-
-Our development establishes the following verified results:
-
-1. **Geometric iterate decay** (Theorem 3.1): `dist(f^n(x), f^n(y)) ≤ K^n · dist(x, y)` for any K-contraction.
-
-2. **Fixed-point uniqueness** (Theorem 3.2): Two fixed points of a contraction with K < 1 must coincide.
-
-3. **Cauchy property of Picard iterates** (Theorem 3.3): The sequence `(f^n(x₀))` is Cauchy for any contraction.
-
-4. **Banach Fixed-Point Theorem** (Theorem 3.4): Existence and uniqueness of fixed points for contractions on complete nonempty metric spaces.
-
-5. **Quantitative convergence rate** (Theorem 3.5): `dist(f^n(x₀), x*) ≤ K^n · dist(x₀, x*)`.
-
-6. **A priori error estimate** (Theorem 4.1): `dist(f^n(x₀), x*) ≤ K^n/(1-K) · dist(x₀, f(x₀))`.
-
-7. **Compactness upgrade** (Theorem 3.6): Approximate fixed points for all ε > 0 imply an exact fixed point on compact sets.
-
-8. **Brouwer 1D** (Theorem 3.7): Every continuous self-map of [a,b] has a fixed point.
-
-9. **Perturbation stability** (Theorem 4.2): `dist(x_f*, x_g*) ≤ δ/(1-K)` when `sup dist(f, g) ≤ δ`.
-
-10. **Lyapunov energy principle** (Theorem 3.8): Contraction fixed points minimize energy functionals monotone along orbits.
-
-### 1.3 Relationship to Prior Work
-
-Mathlib's `ContractingWith` structure (in `Mathlib.Topology.MetricSpace.Contracting`) provides a verified Banach theorem using the `NNReal`-valued formulation. Our development is complementary: we work with plain `ℝ`-valued contraction constants (matching the standard textbook formulation), provide explicit a priori/a posteriori error estimates absent from Mathlib, and introduce compositional algebraic structures for certified contraction data. Brouwer's theorem and the compactness upgrade principle are entirely new to the verified mathematics ecosystem.
-
----
-
-## 2. Definitions and Notation
-
-### 2.1 Core Definitions
-
-**Definition 2.1 (Contraction).** A function `f : α → α` on a metric space `(α, d)` is a *K-contraction* if `d(f(x), f(y)) ≤ K · d(x, y)` for all `x, y ∈ α` and some `K ∈ [0, 1)`.
-
-**Definition 2.2 (CertifiedContractionData).** A structure bundling:
-```
-structure CertifiedContractionData (α : Type*) [MetricSpace α] where
-  f : α → α
-  K : ℝ
-  hK0 : 0 ≤ K
-  hK1 : K < 1
-  contract : ∀ x y, dist (f x) (f y) ≤ K * dist x y
-```
-This enables compositional reasoning: composing two certified contractions yields a new certified contraction (Proposition 4.4).
-
-**Definition 2.3 (Approximate Fixed Point).** A point `x` is an *ε-approximate fixed point* of `f` if `d(f(x), x) ≤ ε`:
-```
-def IsApproxFixedPoint (f : α → α) (ε : ℝ) (x : α) : Prop := dist (f x) x ≤ ε
-```
-
-**Proposition 2.4.** `IsApproxFixedPoint f 0 x ↔ f x = x` (verified in Lean, using `dist_eq_zero` in metric spaces).
-
----
-
-## 3. Main Results
-
-### 3.1 Quantitative Banach Contraction Principle
-
-**Theorem 3.1 (Geometric Iterate Decay).**
-*For any K-contraction f on a metric space, `dist(f^n(x), f^n(y)) ≤ K^n · dist(x, y)` for all n, x, y.*
-
-*Proof.* By induction on n. The base case is trivial (K⁰ = 1). For the inductive step:
-```
-dist(f^{n+1}(x), f^{n+1}(y))
-= dist(f(f^n(x)), f(f^n(y)))
-≤ K · dist(f^n(x), f^n(y))     [contraction]
-≤ K · K^n · dist(x, y)          [inductive hypothesis]
-= K^{n+1} · dist(x, y)
-```
-The formal proof uses `Function.iterate_succ_apply'` and `mul_le_mul_of_nonneg_left`. □
-
-**Theorem 3.2 (Uniqueness).**
-*If f is a K-contraction with K < 1, and f(x) = x, f(y) = y, then x = y.*
-
-*Proof.* We have `d(x, y) = d(f(x), f(y)) ≤ K · d(x, y)`. If `d(x, y) > 0`, then `1 ≤ K`, contradicting K < 1. The formal proof uses `dist_pos.2` and `nlinarith`. □
-
-**Theorem 3.3 (Cauchy Sequence).**
-*For any K-contraction f with K < 1 on a pseudo-metric space, the Picard iterates `(f^n(x₀))` form a Cauchy sequence.*
-
-*Proof.* We show `dist(f^{n+1}(x₀), f^n(x₀)) ≤ d₀ · K^n` where `d₀ = dist(f(x₀), x₀)`, by induction. Then apply Mathlib's `cauchySeq_of_le_geometric` for geometric series. □
-
-**Theorem 3.4 (Banach Fixed-Point Theorem).**
-*Every K-contraction (K < 1) on a nonempty complete metric space has a unique fixed point.*
-
-*Proof.*
-1. The Picard iterates are Cauchy (Theorem 3.3).
-2. By completeness, they converge to some x*.
-3. By continuity of f (Lipschitz → continuous): f(x*) = lim f(f^n(x₀)) = lim f^{n+1}(x₀) = x*.
-4. Uniqueness by Theorem 3.2. □
-
-**Theorem 3.5 (Convergence Rate).**
-*`dist(f^n(x₀), x*) ≤ K^n · dist(x₀, x*)`.*
-
-*Proof.* Since f(x*) = x*, we have f^n(x*) = x* for all n (by `Function.iterate_fixed`). Then apply Theorem 3.1. □
-
-### 3.2 Compactness Upgrade Principle
-
-**Theorem 3.6 (Compactness Upgrade).**
-*Let K be a compact subset of a metric space, f : α → α continuous with f(K) ⊆ K. If for every ε > 0 there exists x ∈ K with dist(f(x), x) ≤ ε, then there exists x ∈ K with f(x) = x.*
-
-*Proof.* The function g(x) = dist(f(x), x) is continuous on the compact set K, so it achieves its infimum at some x₀ ∈ K. If g(x₀) > 0, take ε = g(x₀)/2; by hypothesis there exists x ∈ K with g(x) ≤ ε < g(x₀), contradicting minimality. Hence g(x₀) = 0.
-
-The formal proof uses `IsCompact.exists_isMinOn` and a contrapositive argument. □
-
-### 3.3 Brouwer Fixed-Point Theorem (1D)
-
-**Theorem 3.7 (Brouwer 1D).**
-*Every continuous function f : [a,b] → [a,b] has a fixed point.*
-
-*Proof.* Define g(x) = f(x) − x. Then g(a) = f(a) − a ≥ 0 (since f(a) ≥ a) and g(b) = f(b) − b ≤ 0 (since f(b) ≤ b). By the Intermediate Value Theorem, there exists c ∈ [a,b] with g(c) = 0.
-
-The formal proof uses Mathlib's `intermediate_value_Icc'`. □
-
-### 3.4 Schauder Fixed-Point Theorem (Conditional)
-
-**Theorem 3.8 (Schauder, conditional on Brouwer).**
-*The Schauder theorem for compact convex sets reduces to the compactness upgrade principle (Theorem 3.6) together with the existence of approximate fixed points (which follows from finite-dimensional Brouwer + Schauder projections).*
-
-Our formalization expresses this reduction cleanly: the Schauder theorem takes an explicit hypothesis `happrox_fp` asserting approximate fixed-point existence, then applies Theorem 3.6. The missing ingredient—Brouwer's theorem in arbitrary finite dimensions—is not yet available in Mathlib.
-
-### 3.5 Energy Monotonicity
-
-**Theorem 3.9 (Lyapunov Energy Principle).**
-*If E : α → ℝ is continuous and non-increasing along orbits (E(f(x)) ≤ E(x) for all x), and x* is the fixed point of a contraction, then E(x*) ≤ E(x₀) for every x₀.*
-
-*Proof.* By induction, E(f^n(x₀)) ≤ E(x₀) for all n. Since f^n(x₀) → x* geometrically and E is continuous, E(x*) = lim E(f^n(x₀)) ≤ E(x₀).
-
-The formal proof uses `squeeze_zero` with the geometric bound, `tendsto_pow_atTop_nhds_zero_of_lt_one`, and `le_of_tendsto_of_tendsto'`. □
-
----
-
-## 4. Applications and Derived Results
-
-### 4.1 A Priori Error Estimate
-
-**Theorem 4.1.**
-*`dist(f^n(x₀), x*) ≤ K^n/(1-K) · dist(x₀, f(x₀))`.*
-
-*Proof.* From the triangle inequality and contraction:
-`dist(x₀, x*) ≤ dist(x₀, f(x₀)) + K · dist(x₀, x*)`
-so `dist(x₀, x*) ≤ dist(x₀, f(x₀))/(1-K)`. Combined with Theorem 3.5. □
-
-### 4.2 Perturbation Stability
-
-**Theorem 4.2.**
-*If f is a K-contraction with fixed point x_f, and g has fixed point x_g, and sup_x dist(f(x), g(x)) ≤ δ, then dist(x_f, x_g) ≤ δ/(1-K).*
-
-*Proof.*
-`dist(x_f, x_g) = dist(f(x_f), g(x_g)) ≤ dist(f(x_f), f(x_g)) + dist(f(x_g), g(x_g)) ≤ K · dist(x_f, x_g) + δ`.
-Rearranging: `(1-K) · dist(x_f, x_g) ≤ δ`. □
-
-### 4.3 Picard–Lindelöf (Abstract Form)
-
-**Theorem 4.3.** *If T : α → α satisfies dist(Tx, Ty) ≤ Lδ · dist(x, y) with Lδ < 1 on a complete nonempty metric space, then there exists a unique fixed point. Applied to the Picard integral operator for an ODE y' = f(t,y) with f Lipschitz in y with constant L, on an interval of length δ with Lδ < 1, this gives unique existence of the ODE solution.*
-
-### 4.4 Composition of Certified Contractions
-
-**Proposition 4.4.** *If (f, K_f) and (g, K_g) are certified contractions, then (f ∘ g, K_f · K_g) is a certified contraction.*
-
-This is verified constructively: `CertifiedContractionData.comp` produces a new `CertifiedContractionData` from two inputs.
-
-### 4.5 Fixed-Point Subsingleton
-
-**Theorem 4.5.** *The set of fixed points of a K-contraction (K < 1) is a subsingleton (contains at most one element).* This formally separates contraction-based fixed points (unique) from compact-based fixed points (possibly multiple).
-
----
-
-## 5. Computational Experiments
-
-### 5.1 Banach Iteration: cos(x) = x
-
-We demonstrate geometric convergence for f(x) = cos(x) with contraction constant K ≈ sin(1) ≈ 0.841. Starting from x₀ = 0, the iterates converge to x* ≈ 0.7390851332 with observed error matching the bound K^n · d₀ precisely.
-
-| n | x_n | |x_n − x*| | K^n · d₀ |
-|---|-----|-----------|----------|
-| 0 | 0.000 | 7.39e-1 | 7.39e-1 |
-| 5 | 0.714 | 2.54e-2 | 3.14e-1 |
-| 10 | 0.742 | 2.73e-3 | 1.33e-1 |
-| 20 | 0.739 | 3.15e-5 | 2.41e-2 |
-
-### 5.2 Volterra Integral Equation
-
-For u(x) = 1 + 0.3∫₀ˣ u(t)dt (true solution: e^{0.3x}), Picard iteration with λ = 0.3 converges in ~12 iterations to machine precision.
-
-### 5.3 2D Brouwer Witness
-
-Grid search on [0,1]² for f(x,y) = (0.5 + 0.3sin(2πx) + 0.2y, 0.4 + 0.25cos(3πy) + 0.15x) finds approximate fixed points with residual decreasing as O(1/N) with grid size N.
-
----
-
-## 6. Discussion
-
-### 6.1 Architecture
-
-Our development follows a layered architecture:
-
-1. **Layer 1 (Metric Iteration):** Geometric decay, Cauchy sequences, Banach theorem.
-2. **Layer 2 (Compactness):** Approximate-to-exact upgrade, Brouwer 1D.
-3. **Layer 3 (Structures):** CertifiedContractionData, composition, energy principles.
-4. **Layer 4 (Applications):** ODE existence, integral equations, stability.
-
-This layering ensures that each result is independently verifiable and reusable.
-
-### 6.2 The Schauder Gap
-
-The full Schauder fixed-point theorem requires Brouwer's theorem in arbitrary finite dimensions, which is absent from Mathlib as of 2024. Our conditional formalization makes this dependency explicit: Schauder = CompactnessUpgrade + ApproxFixedPoints(Brouwer). Formalizing Brouwer via Sperner's lemma is a major open project in machine-verified mathematics.
-
-### 6.3 Limitations
-
-- Our Brouwer theorem covers only dimension 1. The higher-dimensional case requires Sperner's lemma or degree theory.
-- The ODE application is stated in abstract metric-space form. A concrete formulation on function spaces (e.g., `C([0,T], ℝ)`) with actual integration requires additional Mathlib infrastructure.
-- The Schauder theorem carries an explicit approximate-fixed-point hypothesis rather than being fully self-contained.
-
----
-
-## 7. Future Work
-
-1. **Sperner's Lemma and Higher-Dimensional Brouwer.** Formalizing the combinatorial core would unlock Schauder, Nash equilibrium existence, and nonlinear PDE existence theory.
-
-2. **Concrete Picard Operator.** Defining the Picard operator on Bochner-integrable functions and verifying the contraction bound from Lipschitz continuity and interval length.
-
-3. **Arzelà–Ascoli and Compact Operators.** Formalizing equicontinuity criteria for compactness in function spaces.
-
-4. **Verified Numerical Certificates.** Connecting formal error bounds to floating-point computations via interval arithmetic.
-
-5. **Topological Degree Theory.** A formal degree theory would provide an alternative route to Brouwer and enable index-theoretic fixed-point results.
-
----
-
-## 8. References
-
-1. S. Banach, "Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales," *Fund. Math.* 3 (1922), 133–181.
-
-2. L.E.J. Brouwer, "Über Abbildung von Mannigfaltigkeiten," *Math. Ann.* 71 (1911), 97–115.
-
-3. J. Schauder, "Der Fixpunktsatz in Funktionalräumen," *Studia Math.* 2 (1930), 171–180.
-
-4. E. Sperner, "Neuer Beweis für die Invarianz der Dimensionszahl und des Gebietes," *Abh. Math. Sem. Univ. Hamburg* 6 (1928), 265–272.
-
-5. The mathlib Community, "Mathlib: a unified library of mathematics formalized in Lean," 2020–2024.
-
-6. K. Deimling, *Nonlinear Functional Analysis*, Springer, 1985.
-
-7. E. Zeidler, *Nonlinear Functional Analysis and its Applications I: Fixed-Point Theorems*, Springer, 1986.
-
----
-
-## Appendix: Formal Verification Summary
-
-| Theorem | Lines | Axioms | Status |
-|---------|-------|--------|--------|
-| iterate_dist_le_geometric | 3 | propext, Classical.choice, Quot.sound | ✓ |
-| eq_of_fixedPoints_of_contraction | 1 | propext, Classical.choice, Quot.sound | ✓ |
-| cauchySeq_of_contraction_iterates | 6 | propext, Classical.choice, Quot.sound | ✓ |
-| exists_unique_fixedPoint_of_contraction | 12 | propext, Classical.choice, Quot.sound | ✓ |
-| tendsto_iterate_to_fixedPoint_geometric | 2 | propext, Classical.choice, Quot.sound | ✓ |
-| exists_fixedPoint_of_approx_fixedPoint_compactness | 7 | propext, Classical.choice, Quot.sound | ✓ |
-| brouwer_fixedPoint_Icc | 5 | propext, Classical.choice, Quot.sound | ✓ |
-| contraction_fixedPoint_energy_minimizer | 6 | propext, Classical.choice, Quot.sound | ✓ |
-| approx_fixedPoint_stability | 3 | propext, Classical.choice, Quot.sound | ✓ |
-| apriori_error_estimate | 4 | propext, Classical.choice, Quot.sound | ✓ |
-| tendsto_iterate_fixedPoint_nhds | 4 | propext, Classical.choice, Quot.sound | ✓ |
-
-Total: 19 theorems/definitions verified, 0 sorry, all standard axioms only.
+Three theorems dominate the landscape:
+
+1. **Brouwer's theorem.** Every continuous self-map of a nonempty compact convex
+   subset of $\mathbb{R}^n$ has a fixed point. It is purely topological: no
+   metric, no contraction, only continuity.
+2. **Banach's contraction principle.** Every contraction of a nonempty complete
+   metric space has a *unique* fixed point, and Picard iteration converges to it
+   geometrically. It is constructive and quantitative.
+3. **Schauder's theorem.** Every continuous self-map of a nonempty compact convex
+   subset of a Banach space has a fixed point — the infinite-dimensional extension
+   of Brouwer, obtained by finite-dimensional approximation and retraction.
+
+This paper develops the combinatorial route to Brouwer through Sperner's lemma and
+the analytic route to Banach through explicit iteration, and exhibits the
+finite-dimensional core of Schauder via affine localization. The unifying thread
+is that all three reduce, at base, to elementary and fully mechanizable facts —
+in the topological case, to whether a number is even or odd.
+
+## 2. Definitions
+
+### Definition 2.1 (Colour-change count)
+
+Let $c : \mathbb{N} \to \{\,\text{R}, \text{B}\,\}$ be a two-colouring of the
+non-negative integers (modelling the vertices of a path; in the formalization the
+palette is `Bool`). For $n \in \mathbb{N}$ define the **change count**
+$$\mathrm{changes}(c, n) \;=\; \#\{\, i \in \mathbb{N} : i < n,\ c(i) \neq c(i+1) \,\},$$
+the number of bichromatic edges among the first $n$ edges of the path
+$0 - 1 - \dots - n$. In Lean this is realized via `Finset` filtering over
+`Finset.range n`.
+
+### Definition 2.2 (Affine self-map)
+
+For real parameters $a, b$, the **affine map** is $f_{a,b}(x) = ax + b$. Its
+$n$-fold iterate is written $f_{a,b}^{[n]}$. When $a \ne 1$ its unique fixed point
+is
+$$x^* = \frac{b}{1-a},$$
+the solution of $ax + b = x$.
+
+### Definition 2.3 (Contraction)
+
+A map $f : \mathbb{R} \to \mathbb{R}$ is a **contraction with ratio $a$** if
+$|f(x) - f(y)| \le a\,|x - y|$ for all $x, y$ and some $0 \le a < 1$. The affine
+map $f_{a,b}$ is a contraction with ratio $|a|$ precisely when $|a| < 1$.
+
+## 3. The one-dimensional Sperner lemma
+
+The combinatorial engine is a parity invariant of the change count.
+
+### Lemma 3.1 (Change recurrence — `changes_succ`)
+
+For every colouring $c$ and every $n$,
+$$\mathrm{changes}(c, n+1) \;=\; \mathrm{changes}(c, n) + \mathbf{1}[\,c(n) \neq c(n+1)\,],$$
+where $\mathbf{1}[\cdot]$ is the indicator ($1$ if true, $0$ otherwise).
+
+*Proof sketch.* The edge set $\{i < n+1\}$ is the disjoint union of $\{i < n\}$
+and the singleton $\{n\}$. Filtering by the predicate "$c(i) \neq c(i+1)$" and
+taking cardinalities splits accordingly; the singleton contributes $1$ exactly
+when $c(n) \neq c(n+1)$. Formally this is `Finset.range_succ` together with
+`Finset.filter_insert` and `Finset.card_insert`. $\qquad\blacksquare$
+
+### Theorem 3.2 (Sperner parity — `sperner_parity`)
+
+For every colouring $c$ and every $n$,
+$$\mathrm{changes}(c, n)\ \text{is odd} \iff c(0) \neq c(n).$$
+Equivalently, $\mathrm{changes}(c, n) \bmod 2 = \mathbf{1}[\,c(0) \neq c(n)\,]$.
+
+*Proof sketch.* Induct on $n$. For $n = 0$ the count is $0$ (even) and
+$c(0) = c(0)$, so both sides are false/zero. For the step, apply Lemma 3.1. There
+are two cases for the new edge $(n, n+1)$:
+
+- If $c(n) = c(n+1)$, the count is unchanged so its parity is unchanged, and the
+  endpoint comparison $c(0)$ vs $c(n+1) = c(n)$ is unchanged. The biconditional is
+  preserved.
+- If $c(n) \neq c(n+1)$, the count increases by $1$ so its parity flips, and the
+  endpoint comparison flips as well (since $c(n+1) \neq c(n)$, the relation between
+  $c(0)$ and $c(n+1)$ is the negation of that between $c(0)$ and $c(n)$).
+
+In both cases the inductive hypothesis transfers. This is a telescoping parity
+argument; mechanically it is `Nat.rec` plus case analysis on the `Bool` equality
+`decide (c n = c (n+1))`. $\qquad\blacksquare$
+
+### Corollary 3.3 (Existence of a change — `sperner_exists_change`)
+
+If $c(0) \neq c(n)$, then there exists $i < n$ with $c(i) \neq c(i+1)$.
+
+*Proof sketch.* By Theorem 3.2 the count $\mathrm{changes}(c, n)$ is odd, hence
+strictly positive. A nonempty filtered `Finset` has a witnessing element
+(`Finset.card_pos` ⇒ `Finset.Nonempty`), which is exactly an index $i < n$ with
+$c(i) \neq c(i+1)$. $\qquad\blacksquare$
+
+Corollary 3.3 is the discrete intermediate value principle: a binary signal that
+disagrees at its two ends must flip somewhere in between. It is the base case for
+boundary-counting (discrete Stokes) arguments in higher-dimensional Sperner
+theory.
+
+## 4. Brouwer in one dimension
+
+### Theorem 4.1 (One-dimensional Brouwer — `brouwer_one_dim`)
+
+Let $f : \mathbb{R} \to \mathbb{R}$ be continuous and suppose $f(x) \in [0,1]$ for
+all $x \in [0,1]$. Then there exists $x^* \in [0,1]$ with $f(x^*) = x^*$.
+
+*Proof sketch.* Consider $g(x) = f(x) - x$, continuous on $[0,1]$. At the left
+endpoint, $g(0) = f(0) - 0 = f(0) \ge 0$ because $f(0) \in [0,1]$. At the right
+endpoint, $g(1) = f(1) - 1 \le 0$ because $f(1) \in [0,1]$. By the intermediate
+value theorem (`intermediate_value_Icc`, or its continuous-image formulation),
+$g$ attains $0$ somewhere in $[0,1]$, yielding $x^*$ with $f(x^*) = x^*$.
+
+The combinatorial proof underlying this analytic shortcut is the content of
+Corollary 3.3: sample $[0,1]$ and colour each sample by the sign of $g$ (red where
+$g > 0$, "push right"; blue where $g < 0$, "push left"). The endpoints receive
+opposite colours, so by Corollary 3.3 adjacent samples of opposite colour exist;
+refining the sampling and invoking continuity collapses the bracketing interval to
+a genuine zero of $g$. The discrete parity guarantees the bracket exists at every
+scale; completeness of $\mathbb{R}$ delivers the limit. $\qquad\blacksquare$
+
+Theorem 4.1 is the one-dimensional instance of Brouwer. Its higher-dimensional
+form replaces the two-colour path by an $(n{+}1)$-colour triangulation of an
+$n$-simplex; the parity of fully coloured cells (the full Sperner lemma) plays the
+role of Theorem 3.2, and a fixed-point-free map would produce a colouring with no
+fully coloured cell, contradicting the parity.
+
+## 5. The finite-dimensional shadow of Schauder
+
+Schauder's theorem extends Brouwer to compact convex subsets of Banach spaces by
+finite-dimensional approximation followed by a retraction onto the convex set. The
+essential localization step — that the fixed point produced lives inside the
+preserved set — is already visible for affine maps in one dimension.
+
+### Theorem 5.1 (Affine fixed-point localization — `affine_fixedPoint_mem_Icc`)
+
+Let $f(x) = ax + b$ with $0 \le a < 1$, and let $\ell \le h$. If $f$ maps the
+interval $[\ell, h]$ into itself (i.e. $f(\ell) \in [\ell, h]$ and
+$f(h) \in [\ell, h]$, equivalently $f(x) \in [\ell, h]$ for all $x \in [\ell, h]$
+by monotonicity), then the fixed point satisfies
+$$x^* = \frac{b}{1-a} \in [\ell, h].$$
+
+*Proof sketch.* Since $0 \le a < 1$, $f$ is monotone nondecreasing, so $f$ maps
+$[\ell, h]$ into itself iff $f(\ell) \ge \ell$ and $f(h) \le h$. The first gives
+$a\ell + b \ge \ell$, i.e. $b \ge (1-a)\ell$, hence $b/(1-a) \ge \ell$ (dividing
+by $1 - a > 0$). The second gives $ah + b \le h$, i.e. $b \le (1-a)h$, hence
+$b/(1-a) \le h$. Therefore $x^* = b/(1-a) \in [\ell, h]$. Mechanically this is two
+applications of `div_le_iff`/`le_div_iff` with $1 - a > 0$ and membership in
+`Set.Icc`. $\qquad\blacksquare$
+
+Theorem 5.1 is the $n = 1$ instance of Schauder's retraction step: the self-map
+condition forces the fixed point to remain in the trapping set, so no retraction
+back onto the set is actually needed — the fixed point never left. In higher
+dimensions and infinite dimensions, the general Schauder argument restores this
+property via a retraction onto the compact convex set after a Brouwer fixed point
+is located on a finite-dimensional approximant.
+
+## 6. Banach's contraction principle for affine maps
+
+### Theorem 6.1 (Affine Picard convergence — `affine_iterate_tendsto`)
+
+Let $f(x) = ax + b$ with $|a| < 1$. Then for every starting point $x_0$,
+$$f^{[n]}(x_0) \longrightarrow \frac{b}{1-a} \qquad (n \to \infty).$$
+
+*Proof sketch.* Let $x^* = b/(1-a)$, the fixed point. A one-line induction gives
+the closed form of the orbit:
+$$f^{[n]}(x_0) - x^* = a^{n}\,(x_0 - x^*).$$
+Indeed $f^{[0]}(x_0) - x^* = x_0 - x^*$, and
+$f^{[n+1]}(x_0) - x^* = f(f^{[n]}(x_0)) - x^* = a\,f^{[n]}(x_0) + b - (a x^* + b) =
+a\,(f^{[n]}(x_0) - x^*)$, completing the induction. Since $|a| < 1$, $a^n \to 0$
+(`tendsto_pow_atTop_nhds_zero_of_abs_lt_one`), so $a^n (x_0 - x^*) \to 0$ and
+$f^{[n]}(x_0) \to x^*$. $\qquad\blacksquare$
+
+### Remark 6.2 (Quantitative a-posteriori bound)
+
+The closed form $f^{[n]}(x_0) - x^* = a^n(x_0 - x^*)$ makes the convergence rate
+*exact*: $|f^{[n]}(x_0) - x^*| = |a|^n\,|x_0 - x^*|$. Combined with the geometric
+series identity $x_0 - x^* = (x_0 - f(x_0))/(1-a)$ for affine maps, this yields the
+classical a-posteriori Picard estimate
+$$\bigl|f^{[n]}(x_0) - x^*\bigr| \;=\; \frac{|a|^n}{|1-a|}\,\bigl|x_0 - f(x_0)\bigr|,$$
+which is the affine case of the general contraction bound
+$\mathrm{dist}(f^{[n]}(x_0), x^*) \le \tfrac{a^n}{1-a}\,\mathrm{dist}(x_0, f(x_0))$
+— and here it holds with *equality*, a rare tight constant. (Stated as a remark:
+the equality witness is the natural next formalization target, Conjecture 4 below.)
+
+## 7. Algorithms
+
+### 7.1 Sperner change-locator
+
+Given a finite colour array, scan adjacent pairs and return the first index where
+the colour flips. Theorem 3.2 guarantees that, when the endpoints disagree, the
+total number of flips is odd, so this scan terminates with a witness (Corollary
+3.3). Complexity $O(n)$ in the array length.
+
+### 7.2 Affine Picard iterator with certified error
+
+Given $a, b, x_0$ with $|a| < 1$ and a tolerance $\varepsilon$, iterate
+$x \mapsto a x + b$. Using the exact bound of Remark 6.2, the number of iterations
+needed for $|x_n - x^*| \le \varepsilon$ is
+$$n \ge \frac{\log\!\bigl(\varepsilon (1-|a|) / |x_0 - f(x_0)|\bigr)}{\log |a|},$$
+so the loop is certified to stop after a predictable number of steps. Each step is
+$O(1)$.
+
+## 8. Applications
+
+- **Ordinary differential equations.** The Picard–Lindelöf existence-uniqueness
+  theorem is Banach's principle applied to the integral operator
+  $(Tu)(t) = u_0 + \int_{t_0}^{t} F(s, u(s))\,ds$ on a space of continuous
+  functions; under a Lipschitz condition on $F$, $T$ is a contraction, and the
+  affine model (Theorem 6.1) is the linear prototype $u' = au + b$.
+- **Integral equations.** Fredholm and Volterra equations of the second kind,
+  $u = g + \lambda K u$ with $K$ an integral operator, are solved by Banach (small
+  $\lambda$, contraction) or by Schauder (compact $K$, no smallness), with
+  Theorem 5.1 modelling the localization of the solution.
+- **Economics and game theory.** Brouwer (Theorem 4.1 in 1D, its simplex form in
+  general) underlies the existence of competitive equilibria and Nash equilibria
+  via best-response maps of compact convex strategy sets.
+- **Numerical analysis.** Theorem 6.1 and Remark 6.2 are the convergence and
+  error-control backbone of fixed-point iteration schemes, including the linear
+  stationary iterations (Jacobi, Gauss–Seidel) whose iteration matrices are
+  affine.
+
+## 9. Discussion
+
+The architecture of this development is deliberately layered. The topological
+guarantee (Brouwer) is reduced to a parity fact (Sperner), which is in turn a
+one-line recurrence (Lemma 3.1) plus an induction (Theorem 3.2). This makes the
+existence of fixed points *combinatorially certifiable*: no analysis is needed to
+know that a bracket exists, only the observation that an odd number is nonzero.
+The metric theory (Banach) is, by contrast, *constructive and quantitative*: the
+affine closed form turns convergence into an explicit geometric decay with an
+exact error constant. Schauder sits above both, and its finite-dimensional core —
+the trapping property of Theorem 5.1 — is the bridge between the existence-only and
+the constructive worlds.
+
+A notable feature is the reusability of the parity engine. The lemmas
+`changes_succ`, `sperner_parity`, and `sperner_exists_change` are stated for an
+arbitrary `Bool`-colouring of $\mathbb{N}$ and form the boundary base case for the
+planar Sperner lemma, where the number of tricoloured cells equals, modulo $2$,
+the number of bichromatic boundary edges — a count the one-dimensional result
+already shows is odd.
+
+## 10. Future work
+
+The following directions extend the present results.
+
+1. **Two-dimensional Sperner.** Formalize the planar Sperner lemma: a
+   boundary-admissible proper $3$-colouring of a triangulated triangle contains an
+   odd number of fully tricoloured cells. The one-dimensional parity engine serves
+   as the boundary base case via a discrete Stokes identity.
+2. **Two-dimensional Brouwer.** Derive Brouwer for continuous self-maps of the
+   closed $2$-simplex from the planar Sperner lemma, lifting the
+   `brouwer_one_dim` template one dimension.
+3. **Finite-dimensional Schauder.** Prove a Schauder-type theorem for continuous
+   self-maps of a compact convex $K \subseteq \mathbb{R}^n$ via retraction onto
+   $K$ followed by Brouwer; Theorem 5.1 is the $n = 1$ retraction instance.
+4. **Quantitative Banach.** Promote Remark 6.2 to a proved equality witness: the
+   affine a-posteriori bound holds with equality, giving a rare tight constant for
+   the contraction-mapping estimate.
+
+## 11. Conclusion
+
+Three of the most consequential existence theorems in mathematics — Brouwer,
+Banach, and Schauder — admit a common, elementary backbone. The topological side
+rests on the parity of colour changes along a path (`sperner_parity`,
+`sperner_exists_change`), which forces the one-dimensional Brouwer theorem
+(`brouwer_one_dim`). The metric side rests on the explicit geometric decay of
+affine iterates to $b/(1-a)$ (`affine_iterate_tendsto`), the constructive content
+of Banach's principle, with the fixed point trapped inside any preserved interval
+(`affine_fixedPoint_mem_Icc`), the finite-dimensional shadow of Schauder. Together
+they show that the guarantee "something stays put" is, at its core, a statement
+about counting and about geometric series.
