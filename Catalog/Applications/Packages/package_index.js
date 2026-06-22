@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5bd61b22",
     "filename": "uniqueness_of_minimal_median_decompositions_for_gr.json",
     "pkg_num": 327,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5515805555555555,
     "title": "Quotient Orbit Compression: Bounded-Horizon Collisions for Coarse-Grained Deterministic Dynamics"
   },
   {
@@ -10093,8 +10093,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "uniqueness_of_minimal_median_decompositions_for_gr",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5515805555555555,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Quotient Orbit Compression: Bounded-Horizon Collisions for Coarse-Grained Deterministic Dynamics"
     }

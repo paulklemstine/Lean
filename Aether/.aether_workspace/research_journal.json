@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b312114f",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Korselt's Criterion & the Multiplicative-Order Bridge\n\nDerived from the cycle that produced, in `Catalog/Cryptography/`:\n\n* `KorseltMultiplicativeOrder.lean`\n  * `exponent_units_",
-      "quality_score": 0.33112290909090913,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-16T01:01:30",
-      "title": "Derived from the research cycle that produced"
-    },
-    {
       "cycle_id": "7db0844d",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Rips Filtrations ↔ Tropical Valuation Objects\n\nFollow-up conjectures arising from `Catalog/Bridges/RipsTropicalFunctor.lean`, which\nestablished:\n\n* a concrete max-plus model `tro",
@@ -2501,6 +2491,16 @@
       "theorem_count": 178,
       "timestamp": "2026-06-22T06:03:53",
       "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
+    },
+    {
+      "cycle_id": "5bd61b22",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Median Decompositions and Their Uniqueness\n\nDerived from this cycle's findings (`Core.lean`: distributive-lattice median and its\nuniqueness; `GraphMedian.lean`: the hypercube as",
+      "quality_score": 0.5515805555555555,
+      "sorry_count": 0,
+      "theorem_count": 227,
+      "timestamp": "2026-06-22T06:11:38",
+      "title": "Uniqueness of Minimal Median Decompositions for Graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T06:03:53",
+  "last_updated": "2026-06-22T06:11:38",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3766,12 +3766,6 @@
     "Probability": [
       {
         "cycle_id": "a4d16ba9",
-        "quality": 0.5293251256281408,
-        "theorems": 158,
-        "title": "Close Proofs: Functorial bridge from combinatorial species generating functions "
-      },
-      {
-        "cycle_id": "a4d16ba9",
         "quality": 0.44327589652348276,
         "theorems": 319,
         "title": "Close Proofs: Functorial bridge from combinatorial species generating functions "
@@ -3823,6 +3817,12 @@
         "quality": 0.6599999999999999,
         "theorems": 19,
         "title": "Packing isolating sets exist in finite block graphs"
+      },
+      {
+        "cycle_id": "5bd61b22",
+        "quality": 0.5515805555555555,
+        "theorems": 227,
+        "title": "Uniqueness of Minimal Median Decompositions for Graphs"
       }
     ],
     "Pythagorean": [
