@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e5fe284a",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Korselt's Criterion & the Multiplicative-Order Bridge\n\nDerived from the research cycle that produced\n`Catalog/Shared/KorseltCriterion.lean` (the full Korselt **iff** and its\narbi",
-      "quality_score": 0.62032,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-15T20:39:59",
-      "title": "Derived from the v16b research cycle that produced"
-    },
-    {
       "cycle_id": "316c08e5",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Rips Filtration ↔ Tropical Valuation Bridge\n\nThese conjectures extend `Catalog/Bridges/RipsTropicalProfile.lean`, which establishes that\nthe Vietoris–Rips metric filtration is re",
@@ -2501,6 +2491,16 @@
       "theorem_count": 67,
       "timestamp": "2026-06-22T00:22:02",
       "title": "Perfect Numbers: Structure of Even Perfects"
+    },
+    {
+      "cycle_id": "34ce1554",
+      "domain": "Geometry",
+      "key_insight": "# FUTURE DIRECTIONS — Gravity from Information (manifold-free combinatorial core)\n\nThis cycle built and **fully verified** (0 sorries, only standard axioms) a\nmanifold-free combinatorial core of the h",
+      "quality_score": 0.5018846575342466,
+      "sorry_count": 0,
+      "theorem_count": 143,
+      "timestamp": "2026-06-22T00:43:38",
+      "title": "Fully verified, manifold-free combinatorial core of"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T00:22:02",
+  "last_updated": "2026-06-22T00:43:38",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "b4a517d3",
-        "quality": 0.42858307692307696,
-        "theorems": 25,
-        "title": "Self-Modifying Code That Cannot Be Stopped"
-      },
-      {
         "cycle_id": "ed805c6d",
         "quality": 0.4728086269230769,
         "theorems": 13,
@@ -3451,6 +3445,12 @@
         "quality": 0.79908,
         "theorems": 87,
         "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      },
+      {
+        "cycle_id": "34ce1554",
+        "quality": 0.5018846575342466,
+        "theorems": 143,
+        "title": "Fully verified, manifold-free combinatorial core of"
       }
     ],
     "Logic": [

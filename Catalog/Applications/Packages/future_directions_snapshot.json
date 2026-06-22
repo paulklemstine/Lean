@@ -378,7 +378,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dafe288e",
     "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
     "domain_bridges": [],
     "domains": [
@@ -391,7 +391,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:12.343420+00:00",
     "title": "Baum-Connes Conjecture"
   },
@@ -1316,7 +1316,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e2815d63",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -1330,7 +1330,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -3354,7 +3354,7 @@
       "Mathlib.Data.Finset.Basic",
       "Mathlib.Data.Real.Basic"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eafa171c",
     "description": "For every finite K5-free simple graph G on n vertices, assign weight 1/2 to every edge contained in a triangle and weight 1 to every other edge. Then G has a bipartition whose monochromatic edge-weight is at most n^2/16. Equivalently, deleting edges of total such weight at most n^2/16 always makes G bipartite. The balanced complete 4-partite graph shows that the constant 1/16 would be best possible.",
     "domain_bridges": [
       "Translates a Ramsey-Turan style forbidden-clique problem into a weighted max-cut inequality.",
@@ -3371,7 +3371,7 @@
     "proof_strategy": "A plausible route is to combine a weighted Turan symmetrization argument with a stability analysis for near-extremal K5-free graphs. First show that an extremal counterexample may be assumed to have a bounded number of vertex types under weighted twin-symmetrization. Then reduce the resulting finite weighted optimization problem to complete multipartite templates plus sparse exceptional triangle-free structure. The complete 4-partite template gives the extremal value n^2/16, while triangle-free exceptional parts should be controlled by known max-cut lower bounds for triangle-free graphs.",
     "research_mode": "team",
     "source_exp_id": "2606.20397v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T20:03:57.336500+00:00",
     "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
   },
@@ -5514,6 +5514,35 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.NT",
+      "GL_3_automorphic_forms",
+      "symmetric_square_L-functions",
+      "Kuznetsov_formula"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the spectral family of level-one cuspidal automorphic representations π of PGL₃ with Langlands parameter μπ in a T^δ-ball around a generic μ̃, the second moment of central symmetric square L-values admits an asymptotic formula with power-saving error term: ∑_{π∈B} |L(1/2,π,sym²)|² · h(μπ)/N(π) = C · vol_spec(h) + O(‖μ̃‖^{3−κ}) for explicit C > 0 and κ > 0. This extends the authors' first moment result and is the key input needed for subconvexity bounds for these L-functions.",
+    "domain_bridges": [
+      "representation_theory_of_reductive_groups",
+      "random_matrix_theory",
+      "spectral_theory_of_automorphic_forms"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2201",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the GL₃ Kuznetsov-based first moment analysis to the second moment by squaring the asymmetric approximate functional equation and opening the Dirichlet series, then applying the GL₃ Kuznetsov formula twice. The main difficulty is controlling the off-diagonal contributions from the double Kloosterman sums and the archimedean integral transforms at higher depth. One must establish orthogonality of Fourier–Whittaker coefficients across the spectral family while managing the more severe analytic complications of the rank-3 Kloosterman sums arising in the dual sum.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19959v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:50:24.590718+00:00",
+    "title": "Second Moment Asymptotic for Symmetric Square L-functions on GL₃"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "Chao et al. on cyclotomic polynomials for dice relabeling",
       "Gallian-Rusin results on prime-product dice sizes"
     ],
@@ -5527,7 +5556,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2201",
+    "id": "fd_2202",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze cyclotomic polynomial decompositions of generating functions for square-sided dice and demonstrate constructive existence via factorization properties",
@@ -5552,7 +5581,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2202",
+    "id": "fd_2203",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct F1 and F2 as specific small hypergraphs (e.g., a single edge and a pair of edges sharing (k-1) vertices) and use known exact values for their positive codegree densities; then apply a product construction to show the pair density is half the minimum.",
@@ -5579,7 +5608,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2203",
+    "id": "fd_2204",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Try to construct a clique-separator or minimal-separator decomposition for graphs with no induced cycles of length at least 5. Use induced-K_{2,d}-freeness to show that every separator bag can be enlarged so that any independent set inside the bag has size at most 2d−2: two nonadjacent vertices in a controlled separator should have fewer than d mutually independent witnesses on the opposite side, otherwise they induce K_{2,d}. Then combine the local separator bags recursively into a tree decomposition and verify that the maximum bag-independence is bounded by 2d−2.",
@@ -5609,7 +5638,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2204",
+    "id": "fd_2205",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the S_{U,V}^Q-shift operation in Lean and prove it preserves cross-intersection (the key lemma from the paper). Then establish that iterated shifting drives any cross-intersecting pair toward a canonical form. The diversity lower bounds constrain how far the pair can deviate from a common star, yielding the structural conclusion via a double-counting argument on the diversity terms.",
@@ -5618,6 +5647,37 @@
     "status": "available",
     "timestamp": "2026-06-22T00:24:18.725072+00:00",
     "title": "Cross-Intersecting Diversity Stability Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.FA",
+      "math.RT",
+      "graph_limits",
+      "quasi_random_graphs",
+      "Lovasz-Szegedy",
+      "Janson-Sos-2013"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper introduces a decomposition of the Hilbert space L²_sym([0,1]^m) of symmetric square-integrable functions on the m-dimensional unit cube into irreducible invariant subspaces V_{m,k} (k-th order interaction subspaces, analogous to the ANOVA decomposition) under the natural unitary action of the group Γ of measure-preserving bijections of [0,1]. The conjecture asserts that this decomposition is unique: the unitary representation of Γ on L²_sym([0,1]^m) is multiplicity-free, meaning each irreducible component appears with multiplicity at most one. Equivalently, if W ⊆ L²_sym([0,1]^m) is any closed subspace invariant and irreducible under the action of Γ, then W is contained in exactly one V_{m,k}. This would imply that the ANOVA-type decomposition is the only possible irreducible decomposition, strengthening the structural result in the paper and providing a representation-theoretic explanation for why certain subgraph count properties characterize quasi-randomness while others do not.",
+    "domain_bridges": [
+      "Functional analysis (Hilbert space decompositions, L² theory on measure spaces)",
+      "Representation theory (irreducible unitary representations, multiplicity-free actions)",
+      "Combinatorics (graph limits, graphon theory, quasi-random graph properties)"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2206",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove multiplicity-freeness by showing the commutant algebra of the representation on L²_sym([0,1]^m) is abelian. This can be approached by identifying the commutant with the algebra of operators that commute with all U_γ (γ ∈ Γ), which should correspond to symmetric integral operators whose kernels are invariant under simultaneous measure-preserving permutations of their arguments. Show that such operators preserve the filtration by interaction order, and are diagonal with respect to the V_{m,k} decomposition, implying multiplicity-freeness via Schur's lemma type arguments. The key step is proving that any Γ-intertwinor between V_{m,k} and V_{m,k'} must vanish when k ≠ k'.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20186v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:51:24.912485+00:00",
+    "title": "Uniqueness of the Irreducible Decomposition of Symmetric L² under Measure-Preserving Actions"
   },
   {
     "ambition_level": "extension",

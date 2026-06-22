@@ -284,7 +284,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dafe288e",
     "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
     "domains": [
       "Algebra",
@@ -294,7 +294,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:12.343420+00:00",
     "title": "Baum-Connes Conjecture"
   },
@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "e2815d63",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -998,7 +998,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -2235,7 +2235,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Approximate Ramsey Property for Finite Linear Orders Implies Extreme Amenability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eafa171c",
     "description": "For every finite K5-free simple graph G on n vertices, assign weight 1/2 to every edge contained in a triangle and weight 1 to every other edge. Then G has a bipartition whose monochromatic edge-weight is at most n^2/16. Equivalently, deleting edges of total such weight at most n^2/16 always makes G bipartite. The balanced complete 4-partite graph shows that the constant 1/16 would be best possible.",
     "domains": [
       "Pythagorean",
@@ -2245,7 +2245,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20397v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T20:03:57.336500+00:00",
     "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
   },
@@ -3386,11 +3386,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the spectral family of level-one cuspidal automorphic representations \u03c0 of PGL\u2083 with Langlands parameter \u03bc\u03c0 in a T^\u03b4-ball around a generic \u03bc\u0303, the second moment of central symmetric square L-values admits an asymptotic formula with power-saving error term: \u2211_{\u03c0\u2208B} |L(1/2,\u03c0,sym\u00b2)|\u00b2 \u00b7 h(\u03bc\u03c0)/N(\u03c0) = C \u00b7 vol_spec(h) + O(\u2016\u03bc\u0303\u2016^{3\u2212\u03ba}) for explicit C > 0 and \u03ba > 0. This extends the authors' first moment result and is the key input needed for subconvexity bounds for these L-functions.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2201",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19959v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:50:24.590718+00:00",
+    "title": "Second Moment Asymptotic for Symmetric Square L-functions on GL\u2083"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any two distinct perfect squares a\u00b2 and b\u00b2, there exists at least one pair of square-sided dice with a\u00b2 and b\u00b2 sides whose sum frequency distribution matches that of two standard dice of the same sizes.",
     "domains": [
       "Computation"
     ],
-    "id": "fd_2201",
+    "id": "fd_2202",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -3404,7 +3419,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2202",
+    "id": "fd_2203",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20494v1",
@@ -3418,7 +3433,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2203",
+    "id": "fd_2204",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -3433,13 +3448,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2204",
+    "id": "fd_2205",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
     "status": "available",
     "timestamp": "2026-06-22T00:24:18.725072+00:00",
     "title": "Cross-Intersecting Diversity Stability Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper introduces a decomposition of the Hilbert space L\u00b2_sym([0,1]^m) of symmetric square-integrable functions on the m-dimensional unit cube into irreducible invariant subspaces V_{m,k} (k-th order interaction subspaces, analogous to the ANOVA decomposition) under the natural unitary action of the group \u0393 of measure-preserving bijections of [0,1]. The conjecture asserts that this decomposition is unique: the unitary representation of \u0393 on L\u00b2_sym([0,1]^m) is multiplicity-free, meaning each irreducible component appears with multiplicity at most one. Equivalently, if W \u2286 L\u00b2_sym([0,1]^m) is any closed subspace invariant and irreducible under the action of \u0393, then W is contained in exactly one V_{m,k}. This would imply that the ANOVA-type decomposition is the only possible irreducible decomposition, strengthening the structural result in the paper and providing a representation-theoretic explanation for why certain subgraph count properties characterize quasi-randomness while others do not.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2206",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20186v1",
+    "status": "available",
+    "timestamp": "2026-06-22T00:51:24.912485+00:00",
+    "title": "Uniqueness of the Irreducible Decomposition of Symmetric L\u00b2 under Measure-Preserving Actions"
   },
   {
     "consumed_by_exp_id": "",
