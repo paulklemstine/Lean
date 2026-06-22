@@ -7116,6 +7116,31 @@
     "title": "Existence of Linked Componental Tree-Cut Decompositions for Finite Graphs"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "FranklFuredi1984"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any uniformity r ≥ 2 and number of vertices n ≥ 4r^2, there exists an r-uniform hypergraph on n vertices with at least (1/32)r^{-3} * (n choose r) edges such that every (r+1)-set of vertices spans exactly 0 or 2 edges.",
+    "domain_bridges": [
+      "Extremal Combinatorics",
+      "Hypergraph Theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2264",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct the hypergraph explicitly (using an algebraic or probabilistic construction over finite fields/random tournaments as introduced in the paper) and then verify the edge count and the local 0-or-2 constraint via double counting and algebraic arguments.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-22T20:37:40.889354+00:00",
+    "title": "Existence of Dense r-Graphs with 0 or 2 Edges per (r+1)-Set"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.LO",
@@ -7133,7 +7158,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2264",
+    "id": "fd_2265",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume for contradiction that M(Homeo(F)) is metrizable and non-trivial. Use the projective Fraïssé structure of 𝔽 to approximate the minimal flow by finite combinatorial data. Apply the approximate Ramsey property characterization: if the category lacks ARP, construct a witness to non-metrizability of the universal minimal flow via a Veech-type argument adapted to the non-locally-compact setting. The key step is showing that failure of ARP forces the universal minimal flow to have uncountable weight, leveraging the projective Fraïssé approximation hierarchy.",
@@ -7157,7 +7182,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2265",
+    "id": "fd_2266",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the factorization of the standard sum generating function into cyclotomic polynomials and show that any factorization yielding perfect‑square side counts forces the side counts to be equal, contradicting the distinctness condition.",
@@ -7185,7 +7210,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2266",
+    "id": "fd_2267",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct, for each odd base B > 3, an explicit nonconstant four-digit string whose orbit under the Kaprekar map stays outside T_B for exactly 3 iterations. This requires a detailed analysis of the pre-periodic region (the complement of T_B in the space of sorted four-digit strings) and how the Kaprekar map acts on it. The projective doubling conjugacy on T_B may help characterize which pairs {r, s} lie outside T_B and how many iterations they need to reach T_B. A likely approach is to identify a family of strings parameterized by B (e.g., strings of the form (B-1, k, 0, 0) for suitable k) that systematically require 3 iterations.",
@@ -7194,6 +7219,35 @@
     "status": "available",
     "timestamp": "2026-06-22T20:20:14.218648+00:00",
     "title": "Sharpness of the Kaprekar Pre-period Bound in Odd Bases"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "GPRS2026rational",
+      "MubayiZhao07",
+      "HLP25",
+      "BLP21"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 3 and integer s ≥ 2, there exists a finite family of k-graphs F = {F_1, ..., F_s} such that the positive codegree Turán density of F is strictly positive and strictly less than the minimum of the positive codegree Turán densities of the individual k-graphs in F. That is, 0 < γ⁺(F) < min_{i ∈ [s]} γ⁺(F_i).",
+    "domain_bridges": [
+      "hypergraph theory",
+      "Turán problems",
+      "density limits"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2268",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Generalize the size-2 construction to arbitrary size s by iteratively adding forbidden configurations that strictly decrease the positive codegree Turán density without driving it to zero, adapting the techniques used for standard and codegree Turán densities in prior work.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-22T20:38:24.674188+00:00",
+    "title": "Strong non-principality of positive codegree density for arbitrary family sizes"
   },
   {
     "ambition_level": "grand_challenge",

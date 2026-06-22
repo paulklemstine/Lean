@@ -44644,6 +44644,50 @@
       "title": "Existence of Linked Componental Tree-Cut Decompositions for Finite Graphs"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "FranklFuredi1984"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any uniformity r ≥ 2 and number of vertices n ≥ 4r^2, there exists an r-uniform hypergraph on n vertices with at least (1/32)r^{-3} * (n choose r) edges such that every (r+1)-set of vertices spans exactly 0 or 2 edges.",
+      "domain_bridges": [
+        "Extremal Combinatorics",
+        "Hypergraph Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2264",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exists_dense_r_graph_0_or_2 (r n : ℕ) (hr : 2 ≤ r) (hn : 4 * r^2 ≤ n) :\n    ∃ (H : Finset (Finset (Fin n))),\n      (∀ e ∈ H, e.card = r) ∧\n      (H.card : ℝ) ≥ (1 : ℝ) / (32 * (r : ℝ)^3) * (n.choose r : ℝ) ∧\n      (∀ S : Finset (Fin n), S.card = r + 1 →\n        (H.filter (fun e => e ⊆ S)).card ∈ ({0, 2} : Finset ℕ)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct the hypergraph explicitly (using an algebraic or probabilistic construction over finite fields/random tournaments as introduced in the paper) and then verify the edge count and the local 0-or-2 constraint via double counting and algebraic arguments.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20367v1",
+      "source_path": "http://arxiv.org/abs/2606.20367v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T20:37:40.889354+00:00",
+      "title": "Existence of Dense r-Graphs with 0 or 2 Edges per (r+1)-Set"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -44670,7 +44714,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2264",
+      "id": "fd_2265",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem umf_dichotomy_projective_fraisse_limit (F : Type*) [CompactSpace F] [ConnectedSpace F] [MetrizableSpace F] (𝔽 : Type*) [CompactSpace 𝔽] [TotallyDisconnectedSpace 𝔽] (q : 𝔽 → F) (h_q : QuotientMap q) (h_dense : Dense (aut_group_image q)) : IsSingleton (UMF (Homeo F)) ∨ ¬MetrizableSpace (UMF (Homeo F))",
@@ -44713,7 +44757,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2265",
+      "id": "fd_2266",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_square_sided_pair : ¬ ∃ (P₁ P₂ : ℕ[X]), (∀ i, (P₁).eval 1 = 6) ∧ (∀ i, (P₂).eval 1 = 6) ∧ (P₁ * P₂) = (∑ i in Finset.Icc 1 6, X ^ i) ^ 2 ∧ (P₁).natDegree = 4 ∧ (P₂).natDegree = 9",
@@ -44760,7 +44804,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2266",
+      "id": "fd_2267",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem kaprekar_preperiod_sharp (B : Nat) (hB : Odd B) (hB_gt_3 : B > 3) :\n    ∃ (s : Fin 4 → Fin B), ¬Kaprekar.isConstant s ∧\n      Kaprekar.iterate B s 3 ∈ Kaprekar.triangularRegion B ∧\n      ∀ (k : Fin 3), Kaprekar.iterate B s k.val ∉ Kaprekar.triangularRegion B :=\n  by\n    sorry",
@@ -44779,6 +44823,54 @@
       "thread_id": "",
       "timestamp": "2026-06-22T20:20:14.218648+00:00",
       "title": "Sharpness of the Kaprekar Pre-period Bound in Odd Bases"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "GPRS2026rational",
+        "MubayiZhao07",
+        "HLP25",
+        "BLP21"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer k ≥ 3 and integer s ≥ 2, there exists a finite family of k-graphs F = {F_1, ..., F_s} such that the positive codegree Turán density of F is strictly positive and strictly less than the minimum of the positive codegree Turán densities of the individual k-graphs in F. That is, 0 < γ⁺(F) < min_{i ∈ [s]} γ⁺(F_i).",
+      "domain_bridges": [
+        "hypergraph theory",
+        "Turán problems",
+        "density limits"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2268",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "def PosCodegreeTuránDensity (k : ℕ) (F : Finset (Finset (Finset ℕ))) : ℝ := sorry\n\ndef IsKUniform (H : Finset (Finset ℕ)) (k : ℕ) : Prop := ∀ e ∈ H, e.card = k\n\ntheorem strong_non_principality_arbitrary_size (k s : ℕ) (hk : 3 ≤ k) (hs : 2 ≤ s) :\n    ∃ F : Fin s → Finset (Finset ℕ),\n      (∀ i : Fin s, IsKUniform (F i) k) ∧\n      0 < PosCodegreeTuránDensity k (Finset.image F Finset.univ) ∧\n      PosCodegreeTuránDensity k (Finset.image F Finset.univ) < \n        Finset.min' (Finset.image (fun i => PosCodegreeTuránDensity k {F i}) Finset.univ) sorry := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Generalize the size-2 construction to arbitrary size s by iteratively adding forbidden configurations that strictly decrease the positive codegree Turán density without driving it to zero, adapting the techniques used for standard and codegree Turán densities in prior work.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20494v1",
+      "source_path": "http://arxiv.org/abs/2606.20494v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T20:38:24.674188+00:00",
+      "title": "Strong non-principality of positive codegree density for arbitrary family sizes"
     },
     {
       "ambition_level": "extension",

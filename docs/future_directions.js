@@ -4233,12 +4233,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any uniformity r \u2265 2 and number of vertices n \u2265 4r^2, there exists an r-uniform hypergraph on n vertices with at least (1/32)r^{-3} * (n choose r) edges such that every (r+1)-set of vertices spans exactly 0 or 2 edges.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2264",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-22T20:37:40.889354+00:00",
+    "title": "Existence of Dense r-Graphs with 0 or 2 Edges per (r+1)-Set"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every continuum F arising as a quotient of a projective Fra\u00efss\u00e9 limit \ud835\udd3d with Aut(\ud835\udd3d) dense in Homeo(F), the universal minimal flow M(Homeo(F)) is either a singleton (i.e., Homeo(F) is extremely amenable) or is non-metrizable. This would generalize the pseudo-solenoid result and establish that no intermediate case exists where the universal minimal flow is metrizable but non-trivial.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2264",
+    "id": "fd_2265",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
@@ -4252,7 +4266,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2265",
+    "id": "fd_2266",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -4267,13 +4281,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2266",
+    "id": "fd_2267",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
     "status": "available",
     "timestamp": "2026-06-22T20:20:14.218648+00:00",
     "title": "Sharpness of the Kaprekar Pre-period Bound in Odd Bases"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 3 and integer s \u2265 2, there exists a finite family of k-graphs F = {F_1, ..., F_s} such that the positive codegree Tur\u00e1n density of F is strictly positive and strictly less than the minimum of the positive codegree Tur\u00e1n densities of the individual k-graphs in F. That is, 0 < \u03b3\u207a(F) < min_{i \u2208 [s]} \u03b3\u207a(F_i).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2268",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-22T20:38:24.674188+00:00",
+    "title": "Strong non-principality of positive codegree density for arbitrary family sizes"
   },
   {
     "consumed_by_exp_id": "",
