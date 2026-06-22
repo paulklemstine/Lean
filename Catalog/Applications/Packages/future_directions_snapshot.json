@@ -6810,7 +6810,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2248",
+    "id": "fd_2249",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a projective Fraïssé category of finite graphs whose projective Fraïssé limit, quotiented by the canonical equivalence relation, yields the Menger universal curve. Then establish the approximate Ramsey property for this category by proving that for every finite graph A in the category and every ε > 0, there exists a finite graph B such that for any 2-coloring of copies of A in B, there exists a copy of A on which the coloring is ε-approximately monochromatic. This requires adapting the combinatorial partition arguments from the pseudo-arc case to handle the one-dimensional connectivity structure of the Menger curve approximants.",
@@ -10297,7 +10297,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b72d76ec",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domain_bridges": [],
     "domains": [
@@ -10310,7 +10310,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },

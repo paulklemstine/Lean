@@ -4064,7 +4064,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2248",
+    "id": "fd_2249",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
@@ -6672,7 +6672,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polyomino and Magic-Square Enumeration"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b72d76ec",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domains": [
       "Geometry",
@@ -6682,7 +6682,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.58,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },
