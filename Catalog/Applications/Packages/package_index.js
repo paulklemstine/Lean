@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f810a812",
     "filename": "the_ebc_framework_now_spans_three_files_with_0_sor.json",
     "pkg_num": 326,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5494902834008097,
     "title": "Entropy-Bounded Computation: A Bridge from Landauer's Principle to Complexity"
   },
   {
@@ -3685,7 +3685,9 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "abd63a3a",
     "source_exp_ids": [
-      "1aaaec8c"
+      "0e08543f",
+      "1aaaec8c",
+      "seed"
     ],
     "title": "Entropy-Bounded Computation: The Price of Forgetting as a Law of Computation"
   },
@@ -10062,8 +10064,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_ebc_framework_now_spans_three_files_with_0_sor",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5494902834008097,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Entropy-Bounded Computation: A Bridge from Landauer's Principle to Complexity"
     }

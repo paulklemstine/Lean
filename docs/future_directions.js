@@ -1597,20 +1597,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Formula for Zero-Sum Invariant s_1(n)"
   },
   {
-    "consumed_by_exp_id": "9ba0d905",
-    "description": "For any partial Latin square P of order n with k entries occupying at most n/4 rows and n/4 columns, the probability that a uniformly random Latin square of order n contains P is bounded between (c\u2081/n)^k and (c\u2082/n)^k for some absolute constants c\u2081, c\u2082 > 0. This is a specific instance of the paper's main theorem (Theorem 1.1) with \u03b1=1/4 and \u03b2=1/4, which satisfies the condition 2\u03b1+\u03b2 < 1.",
-    "domains": [
-      "Computation"
-    ],
-    "id": "fd_2071",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18174v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-17T23:49:01.691458+00:00",
-    "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The paper establishes an average-degree lower bound on the independence number of uncrowded uniform hypergraphs (those without Berge 2, 3, or 4-cycles). Since Verstraete and Wilson previously extended the maximum-degree bound from uncrowded to locally sparse hypergraphs (those without Berge 2 or 3-cycles), this conjecture proposes that the average-degree bound similarly extends to the broader class of locally sparse uniform hypergraphs.",
     "domains": [
@@ -4478,6 +4464,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Euler\u2013Mascheroni Constant \u03b3\n\nDerived from this cycle's findings (explicit `1/n` approximation, the positive-term\ntelescoping series, and the integer-linear-form irrationality criterion).\n\n## 1. Sharpen the approximation rate to `1/(2n)` and prove the second-order term\n\n**Conjecture.** For all `n \u2265 1`, `0 < (H_n \u2212 log n \u2212 \u03b3) < 1/(2n)`, and more precisely\n`(H_n \u2212 log n \u2212 \u03b3) \u2212 1/(2n) \u2192 0` faster than `1/n`.\n\nThe key insight is that the telescoping gap `log((n+1)/n) = 1/n \u2212 1/(2n\u00b2) + ...`\nalready exposes the `\u22121/(2n)` correction, so the crude `log x < x \u2212 1` bound used for\nthe `1/n` estimate can be replaced by the two-sided `x \u2212 1 \u2212 (x\u22121)\u00b2/2 < log x < x \u2212 1`\nto capture the next order.\n\n**Why now?** The current file already isolates the gap as a single logarithm; only a\nquadratic refinement of `Real.log_lt_sub_one_of_pos` is needed, which Mathlib supports\nvia Taylor estimates for `log`.\n\n## 2. A converse criterion: every irrational admits vanishing integer linear forms\n\n**Conjecture.** For every irrational `x`, there exist integer sequences `a\u2099, b\u2099` with\n`b\u2099 > 0`, `b\u2099 x \u2212 a\u2099 \u2260 0`, and `|b\u2099 x \u2212 a\u2099| \u2192 0` (in fact `< 1/b\u2099`).\n\nThe key insight is that Dirichlet's pigeonhole theorem produces, for each `Q`, a\ndenominator `b \u2264 Q` with `|bx \u2212 a| < 1/Q`; iterating gives the sequence, making our\n`irrational_of_int_linear_forms` an exact characterization rather than a one-way test.\n\n**Why now?** Mathlib has the Dirichlet simultaneous-approximation machinery\n(`AddCircle`, `Real.exists_...`); pairing it with the criterion proved here closes the\nbiconditional and turns \"irrationality approaches\" into a single iff-lemma.\n\n## 3. Vacca-type alternating accelerations of \u03b3\n\n**Conjecture.** `\u03b3 = \u03a3_{k\u22651} (\u22121)^k \u230alog\u2082 k\u230b / k` (Vacca's series) and the related\nbinary-digit accelerations converge to the same limit as our telescoping series, and\ntheir partial sums admit explicit error bounds analogous to `abs_harmonic_sub_log_sub_gamma_lt`.\n\nThe key insight is that grouping the positive-term telescoping series by powers of two\nreproduces Vacca's alternating series, so the already-proven `hasSum_gammaSeries` can be\nre-summed by a bijection of `\u2115` rather than re-derived from scratch.\n\n**Why now?** `hasSum_gammaSeries` gives unconditional summability, and Mathlib's\n`HasSum` reindexing lemmas (`Equiv`, `Function.Injective.hasSum_iff`) make regrouping a\nformal manipulation rather than an analytic re-proof.\n\n## 4. Stieltjes constants \u03b3\u2080 = \u03b3 and a uniform definition\n\n**Conjecture.** Defining `\u03b3_m := lim_{n} ( \u03a3_{k=1}^n (log k)^m / k \u2212 (log n)^{m+1}/(m+1) )`,\nthe case `m = 0` equals `eulerMascheroniConstant`, and each `\u03b3_m` satisfies a two-sided\nmonotone-sequence sandwich generalizing `eulerMascheroniSeq` / `eulerMascheroniSeq'`.\n\nThe key insight is that the same `log x \u2264 x \u2212 1` convexity argument that makes the\n`m = 0` auxiliary sequences monotone applies verbatim to the weighted partial sums for\ngeneral `m`, giving a uniform existence proof for all Stieltjes constants.\n\n**Why now?** The monotone-sandwich template is already formalized for `m = 0` in\nMathlib; generalizing the weight to `(log k)^m` is a parametric extension that would put\nthe entire Stieltjes family on the same footing.\n\n## 5. An effective irrationality-measure obstruction for \u03b3\n\n**Conjecture.** If \u03b3 were rational with denominator `Q`, then `|H_n \u2212 log n \u2212 \u03b3| \u2265 1/(Q\u00b7n!)`\nfails for large `n`, yielding a contradiction; equivalently, any rational `p/Q` is\nseparated from \u03b3 by at least the explicit gap implied by `abs_harmonic_sub_log_sub_gamma_lt`.\n\nThe key insight is that combining the *upper* bound `< 1/n` proved here with a putative\n*lower* bound from rationality (the `1/Q` denominator gap used in\n`irrational_of_int_linear_forms`) pinpoints exactly which growth rate of approximations\nwould settle the open irrationality question.\n\n**Why now?** Both halves \u2014 the explicit upper bound and the denominator lower bound \u2014\nare now formalized in this cycle; the only missing piece is an arithmetic sequence of\napproximants whose denominators grow slower than the error shrinks.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2213",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f810a812",
+    "status": "available",
+    "timestamp": "2026-06-22T03:38:38.310396+00:00",
+    "title": "Derived from this cycle's findings (explicit `1/n` approximation, the positive-t"
   },
   {
     "consumed_by_exp_id": "",
