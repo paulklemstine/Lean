@@ -912,6 +912,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Representation Theory: Character Tables of S_n"
   },
   {
+    "consumed_by_exp_id": "12bdf767",
+    "description": "Formalize three fundamental fixed point theorems in Lean 4. Prove Brouwer via Sperner's lemma, Banach via the contraction mapping iteration, and Schauder via Brouwer + compactness. Apply to existence proofs for ODEs and integral equations.",
+    "domains": [
+      "Analysis",
+      "Topology"
+    ],
+    "id": "seed_345",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-18T03:56:25.432654+00:00",
+    "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Formalize the Jones polynomial via the Kauffman bracket. Prove invariance under Reidemeister moves. Compute Jones polynomials for the trefoil, figure-eight, and torus knots. Prove that the Jones polynomial detects the unknot for alternating knots.",
     "domains": [
@@ -2834,7 +2849,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality of minimal free resolutions for Ziegler pairs of line arrangements of degree \u226512"
   },
   {
-    "consumed_by_exp_id": "d168a656",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
     "domains": [
       "Pythagorean"
@@ -2843,7 +2858,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20452v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-21T04:03:23.688866+00:00",
     "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
   },
@@ -3513,6 +3528,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-22T01:57:21.454061+00:00",
     "title": "Approximate Ramsey Property for Precompact Expansions Characterizes Metrizable Universal Minimal Flows"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer d \u2265 9, there exist line arrangements A and A' of degree d in P^2 that form a Ziegler pair satisfying both condition (HF) (same Hilbert function of the Milnor algebra) and condition (MDR) (same minimal degree of a Jacobian syzygy). That is, they have isomorphic intersection lattices, the same Hilbert function and mdr value, but distinct graded Betti numbers in the minimal free resolutions of their Jacobian algebras M(f) and M(f').",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2211",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-22T02:48:04.386332+00:00",
+    "title": "Ziegler Pairs Exist for All Sufficiently Large Degrees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every pair of integers 2 \u2264 a < b, there exists a unique pair of dice (D\u2081, D\u2082) such that D\u2081 has a\u00b2 sides, D\u2082 has b\u00b2 sides, and the sum frequencies of (D\u2081, D\u2082) equal those of two standard (ab)-sided dice. This extends the paper's study of square-sided dice pairs to a complete existence-and-uniqueness characterization, generalizing the classical Sicherman uniqueness result (where a = b = \u221a6 is impossible, and the unique non-standard (2,6)-solution has dice of sizes 6 and 6).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2211",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T02:48:24.262140+00:00",
+    "title": "Unique Existence of Square-Sided (2,ab)-Solutions"
   },
   {
     "consumed_by_exp_id": "",

@@ -36982,7 +36982,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Tree-cut decomposition",
         "finite adhesion",
@@ -36996,7 +36996,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d168a656",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
       "domain_bridges": [
@@ -37011,7 +37011,7 @@
         "Pythagorean"
       ],
       "id": "fd_2164",
-      "last_attempt_time": "2026-06-22T01:57:28.913416+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nuniverse u\n\nnamespace TreeCutEnds\n\n/-- Placeholder type for a locally finite multigraph. A full formalization would replace this\nwith a bundled graph structure with parallel edges. -/\nconstant LFMultigraph : Type u -> Type u\n\nconstant Connected : {V : Type u} -> LFMultigraph V -> Prop\n\n/-- Edge-ends of a graph. -/\nconstant EdgeEnd : {V : Type u} -> LFMultigraph V -> Type u\n\n/-- Edge-degree of an end, allowed to be infinite. -/\nconstant edgeDegree : {V : Type u} -> (G : LFMultigraph V) -> EdgeEnd G -> WithTop Nat\n\n/-- A rooted tree-cut decomposition of G. -/\nconstant TreeCutDecomp : {V : Type u} -> LFMultigraph V -> Type u\n\nconstant finiteBags : {V : Type u} -> {G : LFMultigraph V} -> TreeCutDecomp G -> Prop\nconstant finiteAdhesion : {V : Type u} -> {G : LFMultigraph V} -> TreeCutDecomp G -> Prop\nconstant componental : {V : Type u} -> {G : LFMultigraph V} -> TreeCutDecomp G -> Prop\nconstant linked : {V : Type u} -> {G : LFMultigraph V} -> TreeCutDecomp G -> Prop\n\n/-- End",
       "lineage_refs": [],
@@ -37024,7 +37024,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.20452v1",
       "source_path": "http://arxiv.org/abs/2606.20452v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-21T04:03:23.688866+00:00",
       "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
@@ -39017,6 +39017,93 @@
       "thread_id": "",
       "timestamp": "2026-06-22T01:57:21.454061+00:00",
       "title": "Approximate Ramsey Property for Precompact Expansions Characterizes Metrizable Universal Minimal Flows"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.AG",
+        "math.AC",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For every integer d ≥ 9, there exist line arrangements A and A' of degree d in P^2 that form a Ziegler pair satisfying both condition (HF) (same Hilbert function of the Milnor algebra) and condition (MDR) (same minimal degree of a Jacobian syzygy). That is, they have isomorphic intersection lattices, the same Hilbert function and mdr value, but distinct graded Betti numbers in the minimal free resolutions of their Jacobian algebras M(f) and M(f').",
+      "domain_bridges": [
+        "combinatorics_of_hyperplane_arrangements",
+        "commutative_algebra_minimal_free_resolutions",
+        "lattice_theory_intersection_lattices"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Cryptography"
+      ],
+      "id": "fd_2211",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem ziegler_pairs_exist_for_all_large_degrees : ∀ d ≥ 9, ∃ (A A' : LineArrangement) (f f' : C[x,y,z]) (hA : A.degree = d) (hA' : A'.degree = d), IsomorphicIntersectionLattice A A' ∧ SameHilbertFunction (MilnorAlgebra f) (MilnorAlgebra f') ∧ SameMDR f f' ∧ ¬SameGradedBettiNumbers (MinimalFreeResolution (MilnorAlgebra f)) (MinimalFreeResolution (MilnorAlgebra f')) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Construct infinite families of Ziegler pairs by deformation techniques (condition SPEC_0) extending the d=9 and d=10 examples, then show that the Hilbert function and mdr are preserved under these deformations while Betti numbers can be made to differ. A combinatorial argument on intersection lattices may establish that the lattice does not determine the full resolution structure for d ≥ 9, by showing that lattice automorphisms cannot account for all possible module structures on AR(f).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20421v1",
+      "source_path": "http://arxiv.org/abs/2606.20421v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T02:48:04.386332+00:00",
+      "title": "Ziegler Pairs Exist for All Sufficiently Large Degrees"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO_dice_relabeling",
+        "math.NT_cyclotomic_polynomials",
+        "math.CO_generating_functions"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For every pair of integers 2 ≤ a < b, there exists a unique pair of dice (D₁, D₂) such that D₁ has a² sides, D₂ has b² sides, and the sum frequencies of (D₁, D₂) equal those of two standard (ab)-sided dice. This extends the paper's study of square-sided dice pairs to a complete existence-and-uniqueness characterization, generalizing the classical Sicherman uniqueness result (where a = b = √6 is impossible, and the unique non-standard (2,6)-solution has dice of sizes 6 and 6).",
+      "domain_bridges": [
+        "algebraic_number_theory",
+        "polynomial_factorization",
+        "combinatorial_enumeration"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2211",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem unique_square_sided_solution (a b : ℕ) (h_a : 2 ≤ a) (h_b : a < b) :\n    ∃! (D₁ D₂ : Multiset ℕ),\n      D₁.card = a^2 ∧ D₂.card = b^2 ∧\n      ∀ s, (sum_freq D₁ D₂ s) = (sum_freq (standard_dice (a*b)) (standard_dice (a*b)) s) :=\n  by\n    sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Use the cyclotomic polynomial factorization framework from the paper: the frequency polynomial F(x) = x²((x^m-1)/(x-1))² factors uniquely into cyclotomic polynomials. A (2,m)-solution with dice of sizes a² and b² (where m=ab) corresponds to a partition of the cyclotomic factors of F into two groups P₁, P₂ with P₁(1)=a² and P₂(1)=b² and non-negative integer coefficients. Prove existence by constructing the canonical factorization (reassigning cyclotomic factors Φ_d with d|m but d∤a to P₂, and d|a to P₁), and prove uniqueness by showing the cyclotomic factor assignment is forced by the degree and evaluation-at-1 constraints.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20311v1",
+      "source_path": "http://arxiv.org/abs/2606.20311v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T02:48:24.262140+00:00",
+      "title": "Unique Existence of Square-Sided (2,ab)-Solutions"
     },
     {
       "ambition_level": "extension",
@@ -43864,7 +43951,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432654+00:00",
       "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
@@ -98535,7 +98622,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
