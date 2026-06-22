@@ -1,117 +1,286 @@
-# The Invisible Fence Around the Primes
+# Geometry Without Numbers: How Logic Grows a Landscape of Its Own
 
-## How mathematicians proved that nature's most mysterious numbers obey a hidden geometric law
+## A surprising kinship
 
----
+Two of the great cathedrals of modern mathematics rarely share a room. One is
+**algebraic geometry**, the study of shapes carved out by polynomial equations —
+circles, spheres, elliptic curves, and the vast generalizations that occupy
+much of twentieth-century mathematics. The other is **logic**, the study of
+proof, provability, and what follows from what. The first feels spatial and
+visual; the second feels symbolic and austere.
 
-There is a question so old it predates algebra, so deep it resists the most powerful computers on Earth, and so consequential that a million-dollar bounty still awaits anyone who can fully answer it. The question is deceptively simple: *How are the prime numbers distributed?*
+This article is about a bridge between them. It turns out that the *rules of
+proof themselves* can be organized into a geometric landscape — with points,
+with closed regions, and with a notion of "where a statement vanishes" — that
+behaves uncannily like the geometry of equations. The construction rests on a
+single, elementary algebraic gadget called a **semiring**, and on the idea of
+asking when two computations should be considered "the same."
 
-Primes — 2, 3, 5, 7, 11, 13, and so on forever — are the atoms of arithmetic. Every whole number is built by multiplying primes together, the way every molecule is assembled from elements. But unlike elements, which obey the tidy rows and columns of the periodic table, primes seem to scatter across the number line with reckless abandon. They cluster, they gap, they tease with patterns that dissolve upon closer inspection.
+The payoff is a small but complete dictionary. On one side: ideals, prime
+ideals, the Zariski topology, vanishing loci, and the radical of an ideal — the
+core vocabulary of algebraic geometry. On the other side: congruences on a
+semiring, prime congruences, closed sets of proofs, and the statements that
+"come out true everywhere." Everything matches. And, importantly, every match
+in this article has been checked all the way down to its logical foundations.
 
-And yet, viewed from the right altitude, the chaos resolves into something breathtaking: a law. The primes thin out at a precise, predictable rate, governed by a single mathematical object called the *zeta function*. The connection between this abstract function and the concrete distribution of primes is one of the greatest discoveries in the history of thought — and a new line of research has just made it possible to certify pieces of this connection with absolute, machine-verified certainty.
+Let me build the landscape from the ground up.
 
----
+## The raw material: semirings
 
-## A Function with a Secret
+A **ring** is a number system where you can add, subtract, and multiply: the
+integers $\mathbb{Z}$ are the prototype. A **semiring** is the same idea but
+*without subtraction*. You can add and multiply, addition and multiplication
+play nicely together (the distributive law $a(b+c) = ab + ac$ holds), there is a
+zero and a one — but you are not allowed to negate.
 
-In 1859, Bernhard Riemann published an eight-page paper that changed mathematics forever. He studied a function — now called the Riemann zeta function — defined by an infinite sum:
+Why drop subtraction? Because the most interesting examples of "proof algebra"
+and "optimization algebra" have no subtraction to offer. Consider:
 
-$$\zeta(s) = 1 + \frac{1}{2^s} + \frac{1}{3^s} + \frac{1}{4^s} + \cdots$$
+- The **Boolean semiring** $\mathbb{B} = \{0, 1\}$, where "addition" is logical
+  OR and "multiplication" is logical AND. Here $1 + 1 = 1$: truth OR truth is
+  still truth. There is no element you could call $-1$.
+- The **tropical semiring**, where "addition" is taking the minimum of two
+  numbers and "multiplication" is ordinary addition. Again $x + x = \min(x,x) =
+  x$, and again there is nothing to subtract.
 
-Here, *s* is a complex number — a point in a two-dimensional plane where the horizontal axis represents "real" values and the vertical axis represents "imaginary" ones. The function converges when the real part of *s* is greater than 1, and Riemann showed how to extend it (via a process called analytic continuation) to almost the entire plane.
+These are not curiosities. The Boolean semiring is the algebra of *provability*:
+read $1$ as "provable" and $0$ as "unproven," read $+$ as "I can derive this in
+at least one way," and read $\times$ as "I need both." The tropical semiring is
+the algebra of *shortest paths and cheapest costs*; it sits at the heart of
+optimization, dynamic programming, and a fast-growing field called tropical
+geometry. A theory that works for all semirings speaks to all of these at once.
 
-The secret of the zeta function is in its zeros — the points where ζ(s) = 0. Riemann discovered that the locations of these zeros encode the exact distribution of prime numbers. Where the zeros sit determines how much the actual count of primes deviates from the smooth logarithmic approximation that number theorists had conjectured decades earlier.
+A semiring in which $x + x = x$ for every $x$ is called **idempotent**. Both
+examples above are idempotent, and idempotence will return as a hero later.
 
-It is as if the primes are controlled by an invisible orchestra, and the zeros of zeta are the musicians. Each zero contributes a "note" — an oscillation — that shapes the fine-grained pattern of primes among the integers.
+## The key move: when are two things "the same"?
 
----
+Geometry begins when we decide which objects to glue together. In algebraic
+geometry, you build new spaces by declaring certain polynomials to be zero. In
+our setting, the analogous move is to declare certain elements **equivalent**.
 
-## The Fence
+A **congruence** on a semiring is an equivalence relation $\sim$ that respects
+the arithmetic. Concretely, in the Lean formalization underlying this article,
+a congruence (named `SRCong`) is a relation `rel` that is:
 
-Here is the crucial geometric insight: *the zeros cannot wander too close to a certain boundary*.
+- reflexive: $a \sim a$;
+- symmetric: $a \sim b \Rightarrow b \sim a$;
+- transitive: $a \sim b$ and $b \sim c \Rightarrow a \sim c$;
+- compatible with addition: if $a \sim b$ and $c \sim d$ then $a + c \sim b + d$;
+- compatible with multiplication: if $a \sim b$ and $c \sim d$ then
+  $a \cdot c \sim b \cdot d$.
 
-Imagine the complex plane as a map. The vertical line where the real part equals 1 — written Re(s) = 1 — acts as a kind of wall. In 1896, two mathematicians working independently — Jacques Hadamard and Charles de la Vallée-Poussin — proved that no zero of the zeta function sits exactly on this wall. Their proof immediately implied the *prime number theorem*: the number of primes up to *x* is approximately *x* / log(*x*).
+A congruence is exactly the data you need to form a *quotient* — a new, coarser
+semiring in which the glued elements have genuinely become equal. In the
+provability reading, a congruence says "these two proofs accomplish the same
+thing"; in the optimization reading, "these two computations cost the same."
 
-But Hadamard and de la Vallée-Poussin proved something stronger. They showed that the zeros are pushed *away* from the wall by a measurable distance — a "zero-free region." The shape of this exclusion zone is not a straight line but a curve:
+In a ring, congruences are interchangeable with **ideals**: knowing which
+elements are congruent to $0$ tells you everything. In a semiring this is no
+longer automatic, so we keep the congruence itself as the primary object and
+look at its shadow, the set of elements equivalent to zero.
 
-$$\text{Re}(s) > 1 - \frac{c}{\log(|\text{Im}(s)| + 2)}$$
+## The vanishing set, and why it behaves like an ideal
 
-where *c* is a positive constant. This is the **logarithmic barrier**: a fence that bends ever closer to the wall as you climb higher on the imaginary axis, but never quite touches it.
+For a congruence $C$, define its **zero class** to be
+$$Z(C) = \{\, a : a \sim_C 0 \,\}.$$
+These are the elements the congruence has "killed." In the provability reading,
+$Z(C)$ is the set of statements that the proof system $C$ regards as having no
+content; in geometry, it is the analogue of an ideal — the set of functions that
+vanish.
 
-The barrier's shape matters enormously. The wider the fence — the larger the constant *c* — the more tightly we can control the error in prime counting. A wider zero-free region means primes behave more regularly than we'd otherwise know.
+The first theorem of the theory says that $Z(C)$ really does behave like an
+ideal. Formally proved as `zero_mem_zeroClass`, `zeroClass_add_closed`, and
+`zeroClass_mul_absorb`, the statement is:
 
----
+> **Proposition (zero classes are ideals).** For every congruence $C$,
+> 1. $0 \in Z(C)$;
+> 2. if $a, b \in Z(C)$ then $a + b \in Z(C)$;
+> 3. if $a \in Z(C)$ then $a \cdot b \in Z(C)$ for every $b$.
 
-## A Pipeline of Consequences
+The third part is the "absorbing" property: an ideal swallows whatever you
+multiply it by. The proofs are short and pleasant. To see that $a + b$ vanishes
+when both $a$ and $b$ do, note that $a \sim 0$ and $b \sim 0$, so by
+compatibility with addition $a + b \sim 0 + 0 = 0$. To see absorption, from
+$a \sim 0$ and $b \sim b$ we get $a \cdot b \sim 0 \cdot b = 0$. These two
+one-line arguments are the seeds of the entire geometry.
 
-What makes the zero-free region so powerful is not just the region itself, but the *chain of logical consequences* it triggers. This is the pipeline:
+## Prime points
 
-**Step 1: Geometric exclusion.** The barrier pushes all zeros away from the 1-line. The barrier is a curve, not a straight line, so it creates different-width exclusion zones at different heights.
+In ordinary geometry the most important ideals are the **prime** ones, because
+they correspond to *points* (and, more generally, to irreducible subvarieties).
+The defining property of a prime ideal is the schoolbook rule: if a product
+$a \cdot b$ lands in the ideal, then one of the factors already did.
 
-**Step 2: Rectangular conversion.** At any fixed height *T*, the curved barrier implies a simpler *rectangular* zero-free strip: no zeros exist with real part greater than 1 − *c*/log(*T* + 2) and imaginary part at most *T*. This conversion from curves to rectangles is essential for counting zeros.
+We copy this verbatim. A **prime congruence** (named `PrimeSRCong`) is a
+congruence with the extra property
+$$a \cdot b \sim 0 \ \Longrightarrow\ a \sim 0 \ \text{or}\ b \sim 0.$$
+This is the logical "law of integral domains" transplanted onto proofs: a
+compound claim is trivial only because one of its parts already was.
 
-**Step 3: Zero density control.** The rectangular strip limits how many zeros can cluster near the critical line. This is quantified by *zero density estimates* — bounds on the number of zeros in specific regions of the plane.
+The collection of all prime congruences on a semiring $R$ is the central object
+of the theory. We call it the **proof spectrum** of $R$, written
+$\operatorname{Spec_{proof}}(R)$ (in Lean, `ProofSpectrum`). It is the exact
+analogue of the prime spectrum $\operatorname{Spec}(R)$ of a commutative ring —
+the space whose points are prime ideals and on which all of scheme-theoretic
+geometry is built. A theorem named `prime_cong_zero_class_prime_theory`
+confirms the link in the other direction: the zero class of a prime congruence
+is itself a *prime theory*, a set of statements closed under consequence and
+satisfying the integral-domain law. Points of the spectrum and prime theories
+are two faces of one coin.
 
-**Step 4: Prime error transfer.** The zero density bounds, combined with explicit formulas connecting primes to zeros, yield the celebrated error term:
+## Where statements vanish: the Zariski topology
 
-$$|\psi(x) - x| \leq A \cdot x \cdot e^{-B\sqrt{\log x}}$$
+Now we can do geometry. Given any statement (element) $a$ and any point (prime
+congruence) $P$, say that **$a$ vanishes at $P$** if $a \sim_P 0$ — that is, if
+the proof system $P$ regards $a$ as trivial. (In Lean this is the predicate
+`vanishes`.)
 
-where ψ(x) is the Chebyshev prime-counting function. This bound says the error in the prime number theorem decays faster than any power of 1/log(*x*) — a superpolynomial savings.
+Take a whole *set* $S$ of statements and ask: at which points do **all** of them
+vanish simultaneously? That set of points is the **Zariski-closed set** cut out
+by $S$,
+$$V(S) = \{\, P : a \sim_P 0 \text{ for every } a \in S \,\},$$
+named `zariskiClosed` in the formalization. This is the precise mirror of the
+classical vanishing locus $V(S) = \{x : f(x) = 0 \text{ for all } f \in S\}$ of
+a family of polynomials. The points are now proof systems instead of
+coordinates, but the definition is character-for-character the same.
 
-**Step 5: Sublinearity.** The error bound immediately implies that ψ(x)/x → 1, which is the prime number theorem itself. But the bound carries much more information: it tells you *how fast* the convergence happens, at every scale.
+For these sets to deserve the name "closed," they must obey the axioms of a
+topology. The theory proves exactly the required laws:
 
-Each step in this pipeline rests on the previous one. The whole chain, from geometric barrier to arithmetic regularity, is the intellectual backbone of analytic number theory.
+> **Theorem (the Zariski axioms hold).**
+> 1. **(`zariskiClosed_empty_eq_univ`)** $V(\varnothing)$ is the entire
+>    spectrum: with no equations to satisfy, every point qualifies.
+> 2. **(`zariskiClosed_union_eq_inter`)** $V(S \cup T) = V(S) \cap V(T)$:
+>    demanding *more* equations carves out a *smaller* set, exactly the
+>    intersection.
+> 3. **(`zariskiClosed_antiMono`)** If $S \subseteq T$ then
+>    $V(T) \subseteq V(S)$: bigger systems of equations have fewer solutions.
+> 4. **(`zariskiClosed_iInter`)** For any family of sets $\mathcal{S}$,
+>    $$V\!\left(\bigcup \mathcal{S}\right) = \bigcap_{S \in \mathcal{S}} V(S).$$
+>    Closed sets are closed under arbitrary intersection — the property that
+>    makes the topology well defined.
 
----
+Each of these is the literal semiring counterpart of a textbook fact about
+varieties, and each is proved from the definitions with no extra hypotheses.
+The third one is worth dwelling on, because it captures something both
+geometers and logicians feel in their bones: **the more you assume, the less is
+possible.** Adding axioms to a theory shrinks the class of models that satisfy
+them, just as adding equations to a system shrinks the solution set.
 
-## Making It Absolute
+## The dictionary made precise: a Galois connection
 
-Here is where the story takes a modern turn. Mathematicians have known this pipeline for over a century — but how certain are we that every step is correct? Every link in the chain involves intricate inequalities, delicate limit arguments, and subtle interactions between analysis and arithmetic. Errors have been found in published proofs of major theorems. Entire careers have been built on correcting oversights.
+We now have two directions of travel. From a set of statements $S$ we get a set
+of points $V(S)$. Conversely, from a set of points $X$ we can recover the
+statements that vanish on *all* of them,
+$$\operatorname{Th}(X) = \{\, a : a \text{ vanishes at every } P \in X \,\},$$
+the **theory** of $X$ (in Lean, `theoryOfSpec`). One map turns algebra into
+geometry; the other turns geometry back into algebra.
 
-A new approach asks: *Can we make every step in the pipeline absolutely, irrevocably certain?*
+The relationship between them is the cleanest possible. The theorem
+`galois_connection_theory_variety` states:
 
-The answer, for significant portions of the chain, is now yes.
+> **Theorem (Galois connection).** For every set of statements $S$ and every set
+> of points $X$,
+> $$S \subseteq \operatorname{Th}(X) \quad\Longleftrightarrow\quad X \subseteq V(S).$$
 
-Recent work has built a formal mathematical framework — a set of precisely defined structures and rigorously verified theorems — that captures the zero-free region pipeline in machine-checkable form. The key innovation is abstraction: instead of working only with the Riemann zeta function, the framework defines a general "zero-free datum" that applies to any function satisfying the logarithmic barrier condition.
+This single equivalence is the engine of the whole subject. It says that "every
+statement in $S$ holds throughout $X$" and "every point of $X$ satisfies $S$"
+are *the same assertion*, read from two directions. In classical algebraic
+geometry this is the formal heart of the Nullstellensatz; here it falls out of
+the definitions, and it ties provability (the $\operatorname{Th}$ side) to
+semantics (the $V$ side) in one stroke.
 
-This abstraction is powerful because the same barrier shape appears across number theory. Dirichlet L-functions, which govern primes in arithmetic progressions, have zero-free regions of the same logarithmic type. Selberg zeta functions, which arise in geometry and mathematical physics, satisfy analogous exclusion principles. By formalizing the abstract pipeline, the same infrastructure can be reused across all these settings.
+A Galois connection always comes with a **closure operator**: apply both maps in
+turn. Starting from a theory $T$, the round trip $\operatorname{Th}(V(T))$
+produces the **radical** of $T$ — the set of all consequences that are forced by
+the same set of points. Two further theorems pin down its behavior:
 
----
+- **(`radicalTheory_idempotent`)** The radical operator is *idempotent*: taking
+  the radical twice gives nothing new. Closures, once taken, stay taken.
+- **(`radical_fixpoint_iff_inter_primes`)** A theory equals its own radical
+  *exactly when* it is an intersection of prime theories.
 
-## What Has Been Certified
+The second statement is a genuine structure theorem. It tells you precisely
+which theories are "geometrically honest" — the closed ones, the fixed points of
+the round trip — and it identifies them as the theories you can assemble out of
+points. This is the proof-theoretic shadow of the classical fact that radical
+ideals are exactly the intersections of the primes containing them.
 
-The formal framework establishes several foundational results with complete, machine-verified proofs:
+## Idempotence: where logic meets optimization
 
-**Barrier Monotonicity.** As you move to greater heights in the complex plane, the zero-free boundary slides closer to the critical line — but in a controlled, monotone way. Precisely: if *y*₁ ≤ *y*₂, then 1 − *c*/log(*y*₁ + 2) ≤ 1 − *c*/log(*y*₂ + 2). This seems obvious, but proving it rigorously requires careful handling of logarithms, positivity, and division. The certified proof does this in complete detail.
+Recall the idempotent semirings, where $x + x = x$: Boolean logic and tropical
+optimization both live here. The theory has a small suite of results that make
+this world especially well behaved.
 
-**Region Inheritance.** If a function has a zero-free region with constant *c*, it automatically has a zero-free region with any smaller constant *c*′ ≤ *c*. This "downgrading" principle is used constantly in analytic number theory — often without explicit mention. The formal proof makes this hidden step visible and verified.
+When addition is idempotent it secretly *is* an order. Define $x \le y$ to mean
+$x + y = y$. The theorem `idempotent_add_natural_preorder` proves this is a
+genuine preorder, and `idem_add_is_join` proves that the addition $x + y$ is
+precisely the **join** — the least upper bound — of $x$ and $y$ in that order.
+In other words, "adding" in an idempotent semiring is the same as "taking the
+better of the two," which is exactly what OR does for truth values and what
+$\min$ does for costs. A companion lemma, `idem_nsmul_eq`, records the
+characteristic collapse: summing $n$ copies of an element gives the element
+back, $n \cdot x = x$, so there is no notion of "how many times" — only
+"whether."
 
-**Vertical Strip Conversion.** The curved barrier implies rectangular exclusion zones. At height *T*, the zero-free region excludes all zeros with imaginary part at most *T* and real part greater than the barrier evaluated at *T*. This conversion theorem is the bridge between the geometric shape of the barrier and the counting arguments used in zero density estimates.
+This is the bridge promised at the start. The very same spectral machinery —
+prime congruences, vanishing loci, the Zariski topology — runs over the
+idempotent semirings of tropical geometry and Boolean logic. The geometry of
+proofs and the geometry of optimal paths are, structurally, the same geometry.
 
-**Prime Error Sublinearity.** Given the transfer bound |ψ(x) − x| ≤ A·x·exp(−B√(log x)), the framework certifies that ψ(x)/x → 1 — the prime number theorem — as a rigorous consequence. The proof handles the squeeze argument, the decay of the exponential, and the passage to the limit with full formal precision.
+## A concrete picture
 
-**Barrier Limit.** The barrier value 1 − c/log(y + 2) tends to 1 as y → ∞. This geometric fact — that the zero-free region asymptotically approaches but never reaches the critical line — is certified with complete filter-based limit arguments.
+It helps to see the landscape in a familiar case. Take the ring
+$\mathbb{Z}/6\mathbb{Z}$ — the integers mod $6$. Its congruences correspond to
+its ideals, which are generated by the divisors of $6$: the whole thing, and the
+ideals $(2)$ and $(3)$, and $(0)$. Among these, the prime congruences are the
+two coming from the prime divisors $2$ and $3$. So the proof spectrum of
+$\mathbb{Z}/6\mathbb{Z}$ has exactly **two points**, one "at $2$" and one "at
+$3$."
 
----
+Now watch the dictionary work. The element $2$ vanishes at the point "$2$" but
+not at the point "$3$"; the element $3$ vanishes at "$3$" but not at "$2$." So
+$V(\{2\})$ is a single point, $V(\{3\})$ is the other single point, and
+$V(\{2,3\}) = V(\{2\}) \cap V(\{3\}) = \varnothing$ — there is no proof system in
+which both $2$ and $3$ are trivial, because their product $6 \equiv 0$ would
+force one of them to vanish first, and they cannot *both* be the culprit. The
+union-equals-intersection law is not an abstraction here; it is the statement
+that $6$ factors as $2 \times 3$, seen geometrically. (A purist will note one
+extra, degenerate "point" where *everything* is declared trivial at once; ignore
+it and the two genuine points are exactly the primes $2$ and $3$.)
 
-## Why It Matters
+The accompanying numerical demonstration carries this out in full: it enumerates
+all congruences of small finite semirings, isolates the prime ones, builds the
+maps $V$ and $\operatorname{Th}$, and verifies — by direct computation, over
+thousands of cases — every theorem stated above, including the Galois connection
+and the radical idempotence.
 
-The significance of this work extends far beyond any single theorem.
+## Why it matters
 
-First, it creates **reusable infrastructure**. The abstract zero-free datum and its associated theorems form a modular toolkit. Future researchers can plug in new functions — the next Dirichlet L-function, the next automorphic form — and immediately inherit the entire pipeline of consequences without re-proving the logical chain.
+The first reason is unification. A single, elementary definition — a congruence
+on a semiring — turns out to support the entire opening chapter of algebraic
+geometry, and to do so simultaneously for rings, for Boolean logic, and for
+tropical optimization. Concepts that look like accidents of one field (the
+Zariski topology, the radical, the Nullstellensatz correspondence) are revealed
+as features of the underlying *order and arithmetic*, present wherever you can
+add and multiply without needing to subtract.
 
-Second, it establishes a **formal language** for a branch of mathematics that has historically relied on intricate hand-written arguments. Analytic number theory is notoriously difficult to check. Estimates involve chains of inequalities that span pages, with implicit constants and asymptotic notation hiding crucial details. By formalizing the core structures, the framework forces every assumption to be stated and every step to be justified.
+The second reason is for logic and computation specifically. Reading $+$ as "or"
+and $\times$ as "and," the proof spectrum becomes a space of *consistent ways of
+assigning content to statements*, and the Zariski-closed sets become *provability
+loci* — the regions where a given body of claims is uniformly trivial.
+Decidability questions about proof search acquire a geometric face: a closed set
+is empty exactly when the assumptions are jointly contradictory, which is the
+content of the $V(\{2,3\}) = \varnothing$ example writ large.
 
-Third, it opens a path toward the ultimate prize: a **fully certified proof of the prime number theorem** with explicit error bounds. The formal pipeline is now in place; what remains is to connect it to the analytic heart — the explicit formula relating primes to zeros, and the proof that the zeta function actually satisfies a zero-free region. These are deep results, but the infrastructure to receive them now exists.
+The third reason is tropical. Because idempotent semirings are exactly the home
+of shortest paths, scheduling, and dynamic programming, a working spectral
+geometry over them invites the tools of algebraic geometry into optimization —
+and, conversely, lets the concrete intuition of "min and plus" illuminate the
+abstractions of scheme theory.
 
----
-
-## The Larger Vision
-
-The barrier function 1 − c/log(|t| + 2) is more than a technical device. It is a *complexity measure* — a quantification of how difficult it becomes to exclude zeros as you probe higher frequencies. In this sense, it connects number theory to information theory: the logarithmic penalty is the price of certainty at scale.
-
-This perspective bridges analytic number theory to other fields. In spectral geometry, zero-counting functions play the role of Weyl laws — asymptotic counts of eigenvalues. The Riemann-von Mangoldt formula, which says N(T) ~ (T/2π)log(T/2πe), is the number-theoretic analogue of Weyl's eigenvalue asymptotics. The same machinery that certifies zero-free regions for zeta can, in principle, certify spectral gaps in geometric settings.
-
-The dream is a unified formal framework where "spectral nonvanishing implies arithmetic regularity" — where the absence of resonances in one domain automatically certifies smooth behavior in another. The work described here is the first fully verified installment of that vision.
-
-We are entering an era where the deepest truths in mathematics can be held to the highest possible standard of certainty. The primes, those ancient and enigmatic numbers, are among the first beneficiaries. The invisible fence that keeps their secrets has been surveyed, measured, and certified — and the territory beyond it is now open for exploration.
+None of this requires numbers in the usual sense. It requires only the decision
+about when two things should count as the same — and the discovery that this
+decision, made carefully, grows a landscape with points, regions, and a horizon
+of its own.
