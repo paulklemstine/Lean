@@ -368,7 +368,7 @@ class PiAgentClient:
         self.openrouter_timeout: int = int(_or.get("timeout", 300))
 
         # Use max timeout for client connection, use per-request timeouts for operations
-        self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=300.0, write=30.0, pool=30.0))
+        self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=172800.0, write=30.0, pool=30.0))
         default_state_path = Path(__file__).parent / ".aether_workspace" / "pollinations_pollen_state.json"
         if self.catalog_root:
             default_state_path = self.catalog_root.parent / "Aether" / ".aether_workspace" / "pollinations_pollen_state.json"
@@ -1124,7 +1124,7 @@ class PiAgentClient:
         raw = self._call_ollama(
             "You are a mathematical research analyst. Extract structured research directions from text.",
             analysis_prompt,
-            timeout=2000,
+            timeout=172800,
         )
 
         if raw and not raw.startswith(("[OLLAMA", "[API_")):
@@ -1340,11 +1340,11 @@ class PiAgentClient:
         # Cloud models often timeout on large prompts - local generator is faster
         if self.compact:
             # Cloud/compact mode: shorter timeout since we have local fallback
-            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=3000)
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=172800)
             parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith("[OLLAMA") else None
         else:
             # Local model: give more time
-            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=3000)
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=172800)
             parsed = self._parse_json_response(concept_raw)
 
         if parsed:
@@ -1386,7 +1386,7 @@ class PiAgentClient:
                     "Return JSON with the same schema but a better 'concept_title'."
                 )
                 try:
-                    retry_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt + retry_suffix, timeout=120)
+                    retry_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt + retry_suffix, timeout=172800)
                     retry_parsed = self._parse_json_response(retry_raw)
                     if retry_parsed and not self._is_generic_title(retry_parsed.get("concept_title", retry_parsed.get("title", ""))):
                         new_title = retry_parsed.get("concept_title", retry_parsed.get("title", concept.title))
@@ -1509,6 +1509,13 @@ class PiAgentClient:
         if mode == "bridge" and self.catalog_analyzer:
             bridges = self.catalog_analyzer.find_missing_bridges(limit=20)
             if bridges:
+                bridge_idx = cycle % len(bridges)
+                b = bridges[bridge_idx]
+                d_a, d_b, syn = b['domain_a'], b['domain_b'], b['synonymy']
+                domain = normalize_domain(d_a)
+                concept_title = f"{d_a.lower()}_{d_b.lower()}_bridge"
+                concept_desc = f"Construct a bridge between {d_a} and {d_b} leveraging {syn:.1f} synonymy score."
+                math_framing = f"Formalize the connection between {d_a} and {d_b} objects."
 
                 # Find files from both domains for context
                 refs = []
@@ -3636,7 +3643,7 @@ make it beautiful to read.
             """)
             response = self._call_ollama(
                 "You are a senior mathematician evaluating research breakthroughs.",
-                prompt, timeout=30,
+                prompt, timeout=172800.0,
             )
             grade = response.strip().lower().split()[-1] if response.strip() else ""
             if grade in ("incremental", "significant", "breakthrough"):
@@ -3664,7 +3671,7 @@ make it beautiful to read.
         theorem_sigs: list,
         content_preview: str,
         structural_score: float,
-        timeout: int = 120,
+        timeout: int = 172800,
     ) -> Optional[Dict[str, float]]:
         """LLM scores a Catalog file across 5 dimensions for FINAL/ promotion.
 
@@ -3788,7 +3795,7 @@ make it beautiful to read.
             }}
         """)
 
-        raw = self._call_ollama(_QUALITY_SYSTEM_PROMPT, user_prompt)
+        raw = self._call_ollama(_QUALITY_SYSTEM_PROMPT, user_prompt, timeout=172800)
         parsed = self._parse_json_response(raw)
 
         if parsed:

@@ -1211,7 +1211,7 @@ Research mode: {concept.research_mode}
         # than 6 hours since dispatch, fail it regardless of checkpoint state.
         # The reasoning-log based check below also catches this, but a
         # dispatch_time-based check works even if reasoning logs are missing.
-        max_cycle_seconds = 6 * 3600
+        max_cycle_seconds = 48 * 3600
         now = time.time()
         for pid, job in list(self.inflight.items()):
             if job.status in ("completed", "failed", "integrated", "rejected"):
@@ -1219,9 +1219,9 @@ Research mode: {concept.research_mode}
             if job.dispatch_time and (now - job.dispatch_time) > max_cycle_seconds:
                 age_h = (now - job.dispatch_time) / 3600
                 print(f"[Poll] {pid[:8]} TIMEOUT: dispatch_time says {age_h:.1f}h elapsed, "
-                      f"failing cycle (6h cap)")
+                      f"failing cycle (48h cap)")
                 job.status = "failed"
-                job.error_message = f"6h dispatch timeout ({age_h:.1f}h elapsed)"
+                job.error_message = f"48h dispatch timeout ({age_h:.1f}h elapsed)"
                 self.failed_count += 1
                 self._quarantine_direction_for_job(job, days=7)
 
@@ -1295,10 +1295,10 @@ Research mode: {concept.research_mode}
                             if elapsed > 5400:  # 90 minutes RUNNING is a stall
                                 print(f"[Poll] {pid[:8]} STALL WARNING: RUNNING for {elapsed/60:.0f}min")
                             # Hard cap at 6 hours: force-fail the project
-                            if elapsed > 21600:  # 6 hours
+                            if elapsed > 172800:  # 48 hours
                                 print(f"[Poll] {pid[:8]} HARD CAP: cancelling after {elapsed/60:.0f}min")
                                 job.status = "failed"
-                                job.error_message = f"Cancelled after {elapsed/60:.0f}min (6h cap)"
+                                job.error_message = f"Cancelled after {elapsed/60:.0f}min (48h cap)"
                                 self.failed_count += 1
                                 # Quarantine the direction
                                 self._quarantine_direction_for_job(job, days=7)
@@ -4348,7 +4348,7 @@ Research mode: {concept.research_mode}
 
         return job
 
-    def _await_job(self, job: ResearchJob, timeout: int = 7200, poll_interval: int = 30) -> ResearchJob:
+    def _await_job(self, job: ResearchJob, timeout: int = 172800, poll_interval: int = 30) -> ResearchJob:
         """Block until Aristotle completes or times out.
 
         This is the SYNC version — only call from non-async code.
