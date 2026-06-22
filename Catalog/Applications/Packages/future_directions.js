@@ -3573,6 +3573,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The projective Fra\u00efss\u00e9 category of finite pseudo-arc graphs (as constructed by Irwin-Solecki) has the approximate Ramsey property. By the main theorem of the paper, this is equivalent to the statement that the homeomorphism group of the pseudo-arc is extremely amenable. The pseudo-arc is the unique hereditarily indecomposable arc-like continuum, and determining whether its homeomorphism group is extremely amenable\u2014and thus whether its universal minimal flow is trivial\u2014remains a central open problem in the dynamics of continua.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2215",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T04:28:46.975274+00:00",
+    "title": "Approximate Ramsey Property for the Pseudo-Arc Category"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

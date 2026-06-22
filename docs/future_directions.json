@@ -39192,6 +39192,51 @@
       "title": "Rationality of Positive Codegree Turán Densities"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "irwin_solecki_pseudo_arc",
+        "kpt_ramsey",
+        "pestov_book",
+        "pseudo_solenoid_paper"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "The projective Fraïssé category of finite pseudo-arc graphs (as constructed by Irwin-Solecki) has the approximate Ramsey property. By the main theorem of the paper, this is equivalent to the statement that the homeomorphism group of the pseudo-arc is extremely amenable. The pseudo-arc is the unique hereditarily indecomposable arc-like continuum, and determining whether its homeomorphism group is extremely amenable—and thus whether its universal minimal flow is trivial—remains a central open problem in the dynamics of continua.",
+      "domain_bridges": [
+        "math.DS_topological_dynamics",
+        "math.CO_Ramsey_theory",
+        "math.GN_continuum_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2215",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem approximate_ramsey_property_of_pseudo_arc_category :\n    let C : ProjectiveFraisseCategory := pseudoArcCategory\n    -- C is the projective Fraïssé category of finite pseudo-arc graphs\n    -- with surjective graph homomorphisms as morphisms\n    ApproximateRamseyProperty C := by\n  sorry\n\n-- Equivalently, by the paper's main theorem:\ntheorem homeomorph_group_pseudo_arc_extremely_amenable :\n    ExtremelyAmenable (HomeomorphGroup pseudoArc) := by\n  sorry\n  -- where ExtremelyAmenable G := |M(G)| = 1\n  -- and M(G) is the universal minimal flow of G",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Following the methodology of the paper, construct the projective Fraïssé category for the pseudo-arc using Irwin-Solecki's finite graph framework, then establish the approximate Ramsey property by verifying the combinatorial condition on colorings of morphisms in the category. The key step is proving an approximate Ramsey theorem for colorings of surjective graph homomorphisms between finite pseudo-arc models, adapting the KPT correspondence to the projective (surjective morphism) setting. This requires developing a projective analogue of structural Ramsey theory for the specific class of graphs encoding pseudo-arc combinatorics.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20407v1",
+      "source_path": "http://arxiv.org/abs/2606.20407v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T04:28:46.975274+00:00",
+      "title": "Approximate Ramsey Property for the Pseudo-Arc Category"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
