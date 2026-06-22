@@ -664,7 +664,11 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             job.phase = "complete"
         else:
             adaptive = extractor._adaptive_phase_b_threshold()
-            phase_b_threshold = max(getattr(extractor, 'phase_b_min_score', 0.6), adaptive)
+            # adaptive is the rank-based p70 promotion threshold (top 30%).
+            # phase_b_min_score is only a safety floor / operator override
+            # (default 0.25); it must NOT re-introduce a high fixed bar or
+            # it defeats the adaptive gate (the old 0.6 default did exactly that).
+            phase_b_threshold = max(getattr(extractor, 'phase_b_min_score', 0.25), adaptive)
             phase_a_q = job.quality_score
             if phase_a_q >= phase_b_threshold and job.result_lean:
                 # Phase B will be dispatched right now (within this same tick loop)

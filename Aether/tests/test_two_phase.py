@@ -3,9 +3,11 @@
 Covers:
 - Phase A prompt excludes packaging
 - Phase B prompt includes Phase A Lean content
-- Adaptive threshold cold start (0.5)
-- Adaptive threshold warm (p70 of last 50)
-- Adaptive threshold clamped to [0.4, 0.6]
+- Adaptive threshold cold start (0.25)
+- Adaptive threshold warm (p70 of last 50 = top 30%)
+- Adaptive threshold clamped to [0.25, 0.70]
+- Phase A score extraction (phase_a_quality_score preferred)
+- A_only integration floor (0.30, decoupled from promotion)
 - Phase B skipped on low quality
 - Phase B dispatched on high quality
 - Single ResearchJob carries both phases
@@ -204,24 +206,34 @@ def test_legacy_a_full_routing(research_concept):
 # ─── Adaptive threshold tests ────────────────────────────────────────────
 
 def test_adaptive_threshold_cold_start(temp_workspace):
-    """With < 50 records, threshold is 0.5 (cold start default)."""
+    """With no usable records, threshold is 0.25 (cold start default).
+
+    This lets early cycles bootstrap packaging instead of stalling at a
+    high fixed bar — the top-30% rank gate only becomes meaningful once
+    there is a window of Phase A scores to rank against.
+    """
     # Empty workspace, no cycle_analytics.json
     from knowledge_extractor import KnowledgeExtractor
     # Don't fully init — just use the threshold method
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
     threshold = ext._adaptive_phase_b_threshold()
-    assert threshold == 0.5, f"Expected 0.5 for cold start, got {threshold}"
+    assert threshold == 0.25, f"Expected 0.25 for cold start, got {threshold}"
 
 
 def test_adaptive_threshold_warm(temp_workspace):
-    """With 50+ records, threshold uses p55 of last 50 quality scores."""
+    """With 50+ records, threshold uses p70 of last 50 quality scores.
+
+    p70 = the score at the 70th percentile, so cycles scoring at or above
+    it are roughly the top 30% — exactly the desired Phase B promotion rate.
+    """
     # Create cycle_analytics.json with 60 records of known quality
     records = []
     for i in range(60):
-        # Quality scores 0.0 to 0.6, evenly distributed
+        # Quality scores 0.0 to 0.59, evenly distributed
         records.append({
             "quality_score": i * 0.01,
+            "phase": "A_only",
             "timestamp": f"2026-06-{(i % 30) + 1:02d}",
         })
     analytics_path = temp_workspace / "cycle_analytics.json"
@@ -230,19 +242,20 @@ def test_adaptive_threshold_warm(temp_workspace):
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
     threshold = ext._adaptive_phase_b_threshold()
-    # p55 of last 50 (which are 0.10 to 0.59): p55 = 0.10 + 0.55*0.49 = ~0.37
-    expected = sorted(r["quality_score"] for r in records[-50:])[int(0.55 * 49)]
-    # Clamp to [0.30, 0.6]
-    expected = max(0.30, min(0.6, expected))
+    # p70 of last 50 (which are 0.10 to 0.59): index int(0.70 * 49) = 34
+    expected = sorted(r["quality_score"] for r in records[-50:])[int(0.70 * 49)]
+    # Clamp to [0.25, 0.70]
+    expected = max(0.25, min(0.70, expected))
     assert abs(threshold - expected) < 0.01, f"Expected ~{expected}, got {threshold}"
 
 
 def test_adaptive_threshold_clamped_low(temp_workspace):
-    """Threshold never goes below 0.30 even if p70 is lower."""
+    """Threshold never goes below 0.25 even if p70 is lower."""
     records = []
     for i in range(60):
         records.append({
             "quality_score": 0.1 + i * 0.001,  # All very low
+            "phase": "A_only",
             "timestamp": f"2026-06-{(i % 30) + 1:02d}",
         })
     analytics_path = temp_workspace / "cycle_analytics.json"
@@ -251,15 +264,16 @@ def test_adaptive_threshold_clamped_low(temp_workspace):
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
     threshold = ext._adaptive_phase_b_threshold()
-    assert threshold >= 0.30, f"Threshold {threshold} below floor 0.30"
+    assert threshold >= 0.25, f"Threshold {threshold} below floor 0.25"
 
 
 def test_adaptive_threshold_clamped_high(temp_workspace):
-    """Threshold never goes above 0.6 even if p70 is higher."""
+    """Threshold never goes above 0.70 even if p70 is higher."""
     records = []
     for i in range(60):
         records.append({
             "quality_score": 0.7 + i * 0.005,  # All very high
+            "phase": "A_only",
             "timestamp": f"2026-06-{(i % 30) + 1:02d}",
         })
     analytics_path = temp_workspace / "cycle_analytics.json"
@@ -268,7 +282,51 @@ def test_adaptive_threshold_clamped_high(temp_workspace):
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
     threshold = ext._adaptive_phase_b_threshold()
-    assert threshold <= 0.6, f"Threshold {threshold} above ceiling 0.6"
+    assert threshold <= 0.70, f"Threshold {threshold} above ceiling 0.70"
+
+
+def test_adaptive_threshold_uses_phase_a_scores(temp_workspace):
+    """The percentile is over PHASE A scores, not Phase B final scores.
+
+    For records that went on to Phase B, phase_a_quality_score is used
+    (the pre-packaging score). A_only records contribute their
+    quality_score (which IS the Phase A score). Phase B records without
+    a phase_a_quality_score are excluded so the packaged-quality doesn't
+    contaminate the Phase A rank.
+    """
+    records = [
+        # A_only: Phase A score = 0.40
+        {"quality_score": 0.40, "phase": "A_only"},
+        # A_only: Phase A score = 0.50
+        {"quality_score": 0.50, "phase": "A_only"},
+        # Phase B completed: Phase A score was 0.45, final packaged 0.90
+        {"quality_score": 0.90, "phase": "complete",
+         "phase_b_prompt_version": "v1", "phase_a_quality_score": 0.45},
+        # Phase B completed but missing phase_a_quality_score -> excluded
+        {"quality_score": 0.95, "phase": "complete",
+         "phase_b_prompt_version": "v1"},
+    ]
+    analytics_path = temp_workspace / "cycle_analytics.json"
+    analytics_path.write_text(json.dumps({"records": records}))
+    from knowledge_extractor import KnowledgeExtractor
+    ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
+    ext.workspace = temp_workspace
+    threshold = ext._adaptive_phase_b_threshold()
+    # Usable Phase A scores: [0.40, 0.50, 0.45] (0.95 excluded). p70 of
+    # sorted [0.40, 0.45, 0.50]: idx int(0.70 * 2) = 1 -> 0.45
+    assert abs(threshold - 0.45) < 0.01, f"Expected ~0.45, got {threshold}"
+
+
+def test_a_only_integration_floor(temp_workspace):
+    """A_only Catalog integration uses a low fixed floor (0.30),
+    decoupled from the promotion percentile, so near-miss Lean still
+    enters the Catalog even when the top-30% cutoff is higher."""
+    from knowledge_extractor import KnowledgeExtractor
+    ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
+    ext.workspace = temp_workspace
+    ext.config = {}
+    floor = ext._a_only_integration_floor()
+    assert floor == 0.30, f"Expected 0.30 integration floor, got {floor}"
 
 
 def test_adaptive_threshold_caches(temp_workspace):
@@ -292,16 +350,16 @@ def test_adaptive_threshold_caches(temp_workspace):
 def test_phase_b_skipped_on_low_quality(research_job, temp_workspace):
     """Phase A Q < threshold → Phase B skipped, phase='A_only'."""
     # Setup: 60 records with quality 0.2 (well below threshold)
-    # p60 of these is 0.2, but clamped to 0.30 (the floor)
-    records = [{"quality_score": 0.2, "timestamp": "2026-06-01"}] * 60
+    # p70 of these is 0.2, but clamped to 0.25 (the floor)
+    records = [{"quality_score": 0.2, "phase": "A_only", "timestamp": "2026-06-01"}] * 60
     (temp_workspace / "cycle_analytics.json").write_text(json.dumps({"records": records}))
     from knowledge_extractor import KnowledgeExtractor
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
 
     threshold = ext._adaptive_phase_b_threshold()
-    # Threshold is at the floor (0.30) because all scores are 0.2
-    assert threshold == 0.30, f"Expected floor of 0.30, got {threshold}"
+    # Threshold is at the floor (0.25) because all scores are 0.2
+    assert threshold == 0.25, f"Expected floor of 0.25, got {threshold}"
     # A quality of 0.2 is below the threshold
     phase_a_q = 0.2
     assert phase_a_q < threshold  # Phase B would be skipped
@@ -314,15 +372,15 @@ def test_phase_b_skipped_on_low_quality(research_job, temp_workspace):
 
 def test_phase_b_dispatched_on_high_quality(research_job, temp_workspace):
     """Phase A Q >= threshold → Phase B dispatched, phase='B'."""
-    # Same setup: threshold clamps to 0.30
-    records = [{"quality_score": 0.2, "timestamp": "2026-06-01"}] * 60
+    # Same setup: threshold clamps to 0.25
+    records = [{"quality_score": 0.2, "phase": "A_only", "timestamp": "2026-06-01"}] * 60
     (temp_workspace / "cycle_analytics.json").write_text(json.dumps({"records": records}))
     from knowledge_extractor import KnowledgeExtractor
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
 
     threshold = ext._adaptive_phase_b_threshold()
-    assert threshold == 0.30
+    assert threshold == 0.25
     # A quality of 0.4 is above the floor
     research_job.quality_score = 0.4
     research_job.result_lean = "theorem foo : True := trivial"

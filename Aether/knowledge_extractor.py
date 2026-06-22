@@ -235,7 +235,7 @@ class KnowledgeExtractor:
         self.failed_count = 0
         self.inflight_path = self.workspace / "inflight_jobs.json"
         self.max_retries = self.config.get("autoresearch", {}).get("max_retries", 2)
-        self.phase_b_min_score = self.config.get("phase_b", {}).get("min_score", 0.6)
+        self.phase_b_min_score = self.config.get("phase_b", {}).get("min_score", 0.25)
 
         
         self._load_inflight()
@@ -310,57 +310,75 @@ class KnowledgeExtractor:
     # ==================================================================
 
     def _adaptive_phase_b_threshold(self) -> float:
-        """Compute the adaptive threshold for Phase B dispatch.
+        """Rank-based Phase B promotion gate.
 
-        Cold start (fewer than 50 cycles): use 0.5 as a fixed default.
-        Warm: use the 70th percentile of recent quality_score values,
-        clamped to [0.4, 0.6]. This gates roughly the top 30% of math
-        for packaging.
+        Promotes roughly the **top 30%** of recent Phase A cycles to
+        packaging: the threshold is the 70th percentile of recent Phase A
+        quality scores, clamped to [0.25, 0.70]. A cycle scoring at or
+        above this value gets a Phase B package; the rest stay A_only.
 
-        The threshold is cached and only re-evaluated when the cycle
-        count crosses a multiple of 50, so it doesn't recompute every tick.
+        Phase A scores are extracted from cycle_analytics records:
+        - For records that went on to Phase B, ``phase_a_quality_score``
+          is the pre-packaging score and is preferred.
+        - For A_only / Phase A records, ``quality_score`` IS the Phase A
+          score and is used.
+        - Phase B records without a ``phase_a_quality_score`` are skipped,
+          so packaged-quality doesn't contaminate the Phase A rank.
+
+        Cold start (no usable records): return 0.25 so early cycles can
+        bootstrap packaging instead of stalling behind a high fixed bar.
+
+        Cached; recompute every 10 records. The cache carries a version
+        key so changes to this formula invalidate stale entries.
         """
         cache_path = self.workspace / "phase_b_threshold_cache.json"
-        # Read cycle count
         analytics_path = self.workspace / "cycle_analytics.json"
         if not analytics_path.exists():
-            return 0.5
+            return 0.25
         try:
             import json as _json
             data = _json.loads(analytics_path.read_text())
             records = data.get("records", [])
         except Exception:
-            return 0.5
+            return 0.25
 
-        if not records:
-            return 0.5
+        # Collect Phase A scores (see docstring).
+        scores = []
+        for r in records:
+            pa = r.get("phase_a_quality_score")
+            if pa is not None:
+                scores.append(float(pa))
+            elif r.get("phase") in (None, "A", "A_only"):
+                q = r.get("quality_score")
+                if q is not None:
+                    scores.append(float(q))
+        if not scores:
+            return 0.25
 
         n = len(records)
-        # Check cache — recompute every 10 records so the threshold tracks quality trends.
         cache_bucket = n // 10
+        cache_version = 2  # bump when the formula/clamp changes
         try:
             if cache_path.exists():
                 cache = _json.loads(cache_path.read_text())
-                if cache.get("bucket") == cache_bucket and "threshold" in cache:
+                if (cache.get("bucket") == cache_bucket
+                        and cache.get("v") == cache_version
+                        and "threshold" in cache):
                     return float(cache["threshold"])
         except Exception:
             pass
 
-        # Compute p55 of the most recent quality scores (up to 50)
-        # Lowering from p70 packages more near-miss cycles while still
-        # gating roughly the top half of recent work.
-        recent = records[-50:]
-        scores = sorted(r.get("quality_score", 0.0) for r in recent)
-        if not scores:
-            return 0.5
-        p55_idx = int(0.55 * (len(scores) - 1))
-        threshold = scores[p55_idx]
-        # Clamp to [0.30, 0.6] — never gate too aggressively or too leniently.
-        threshold = max(0.30, min(0.6, threshold))
+        # p70 of the most recent Phase A scores (up to 50) -> top 30% gate.
+        recent = sorted(scores[-50:])
+        p70_idx = int(0.70 * (len(recent) - 1))
+        threshold = recent[p70_idx]
+        # Clamp to [0.25, 0.70] — never gate so low we package junk, nor
+        # so high we stall when scores cluster high.
+        threshold = max(0.25, min(0.70, threshold))
 
-        # Cache
         try:
             cache_path.write_text(_json.dumps({
+                "v": cache_version,
                 "bucket": cache_bucket,
                 "threshold": threshold,
                 "n_records": n,
@@ -370,6 +388,18 @@ class KnowledgeExtractor:
             pass
 
         return threshold
+
+    def _a_only_integration_floor(self) -> float:
+        """Quality floor for integrating A_only Lean into the Catalog.
+
+        Decoupled from the promotion percentile: near-miss A_only cycles
+        (those below the top-30% cutoff but at or above this floor) still
+        get their Lean files integrated as Lean-only, so the Catalog keeps
+        near-miss results. Below this floor, A_only Lean is skipped (and
+        the direction is quarantined by the caller).
+        """
+        phase_b_cfg = self.config.get("phase_b", {}) if hasattr(self, "config") and self.config else {}
+        return float(phase_b_cfg.get("a_only_integration_floor", 0.30))
 
     def _dispatch_phase_b(self, job: "ResearchJob") -> "ResearchJob":
         """Build a Phase B prompt on a job, in-place. Does NOT submit to Aristotle.
@@ -2035,8 +2065,8 @@ Research mode: {concept.research_mode}
         # for human consumption. Skip Catalog integration for their Lean files —
         # only high-quality results (Phase B packaged) deserve a spot in the Catalog.
         is_a_only = getattr(job, 'phase', '') == 'A_only' or getattr(job, 'phase_b_skipped_reason', None)
-        if is_a_only and job.quality_score < self._adaptive_phase_b_threshold():
-            print(f"[Integrate] A_only Q={job.quality_score:.3f} below threshold — skipping Catalog integration")
+        if is_a_only and job.quality_score < self._a_only_integration_floor():
+            print(f"[Integrate] A_only Q={job.quality_score:.3f} below integration floor — skipping Catalog integration")
             # Still quarantine low-quality directions to avoid wasting compute
             if job.quality_score < 0.3:
                 self._quarantine_direction_for_job(job, days=30)
