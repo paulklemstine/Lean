@@ -69,14 +69,76 @@ def _select_version_from_weights(
     return list(candidates.keys())[-1]
 
 
-def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None) -> str:
-    """Sample a Phase A prompt version from the configured weights.
+def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None, workspace_dir=None) -> str:
+    """Sample a Phase A prompt version using Thompson sampling over configured variants."""
+    import json
+    import os
+    import random
+    from pathlib import Path
 
-    If weights is None, uses the configured A/B weights in
-    DEFAULT_PHASE_A_PROMPT_WEIGHTS (currently v19 family). If an empty dict or
-    all-zero weights are supplied, falls back to the stable baseline v19.
-    """
-    return _select_version_from_weights(weights, DEFAULT_PHASE_A_PROMPT_WEIGHTS, "v19")
+    active_arms = list(DEFAULT_PHASE_A_PROMPT_WEIGHTS.keys())
+    
+    if weights is not None:
+        candidates = {v: w for v, w in weights.items() if w > 0}
+        if not candidates:
+            return "v19"
+        total = sum(candidates.values())
+        r = random.uniform(0, total)
+        cumulative = 0.0
+        for version, weight in candidates.items():
+            cumulative += weight
+            if r <= cumulative:
+                return version
+        return list(candidates.keys())[-1]
+
+    workspace = workspace_dir if workspace_dir else Path(__file__).parent / ".aether_workspace"
+    state_file = workspace / "prompt_bandit_state.json"
+    
+    stats = {}
+    try:
+        from cycle_analytics import CycleAnalytics
+        ca = CycleAnalytics(workspace.parent)
+        stats = ca.get_prompt_version_stats()
+    except Exception:
+        pass
+
+    under_explored = [arm for arm in active_arms if stats.get(arm, {}).get("n", 0) < 30]
+    
+    if under_explored:
+        chosen = random.choice(under_explored)
+        arm_stats = stats.get(chosen, {})
+        print(f"[Bandit] arm={chosen} n={arm_stats.get('n', 0)} avg_Q={arm_stats.get('avg_Q', 0.0):.3f} sampled={chosen}")
+        return chosen
+
+    best_sample = -1.0
+    chosen = active_arms[0]
+    
+    state = {}
+    for arm in active_arms:
+        arm_stats = stats.get(arm, {})
+        n = arm_stats.get("n", 0)
+        avg_q = arm_stats.get("avg_Q", 0.0)
+        sum_q = avg_q * n
+        alpha = 1 + sum_q
+        beta = 1 + (n - sum_q)
+        
+        state[arm] = {"alpha": alpha, "beta": beta, "n": n, "avg_Q": avg_q}
+        
+        sample = random.betavariate(alpha, beta)
+        if sample > best_sample:
+            best_sample = sample
+            chosen = arm
+
+    try:
+        os.makedirs(state_file.parent, exist_ok=True)
+        with open(state_file, "w") as f:
+            json.dump(state, f)
+    except Exception:
+        pass
+        
+    c_stats = stats.get(chosen, {})
+    print(f"[Bandit] arm={chosen} n={c_stats.get('n', 0)} avg_Q={c_stats.get('avg_Q', 0.0):.3f} sampled={chosen}")
+    return chosen
 
 
 def select_phase_b_prompt_version(weights: Optional[Dict[str, float]] = None) -> str:
@@ -301,7 +363,7 @@ class PiAgentClient:
         self.model = model
         self.memory = memory
         self.catalog_root = Path(catalog_root) if catalog_root else None
-        self.pi_agent_evals_path = Path('.aether_workspace/pi_agent_evals.jsonl')
+        self.pi_agent_evals_path = Path(".aether_workspace/pi_agent_evals.jsonl")
         self.timeout = timeout
         self.compact = compact
         self.use_ollama = use_ollama
@@ -386,6 +448,30 @@ class PiAgentClient:
         if self.catalog_root and self.catalog_root.exists():
             self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
 
+    def _load_cb_state(self):
+        state_path = self.pollen_gate.config.state_path
+        if state_path and state_path.exists():
+            try:
+                import json
+                with open(state_path, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                pass
+        return {}
+
+    def _save_cb_state(self, updates):
+        state_path = self.pollen_gate.config.state_path
+        if not state_path:
+            return
+        state = self._load_cb_state()
+        state.update(updates)
+        try:
+            import json
+            with open(state_path, "w", encoding="utf-8") as f:
+                json.dump(state, f)
+        except Exception:
+            pass
+
     def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None) -> str:
         """Dispatch LLM call through 3-tier fallback chain with pollen-reset retry.
 
@@ -403,13 +489,54 @@ class PiAgentClient:
         if self.use_ollama:
             return self._call_ollama_local(system, user, timeout=timeout)
 
-        # Tier 1: Pollinations — skip wait on depletion so we can try fallbacks first
-        result = self._call_pollinations(system, user, timeout=timeout,
-                                         skip_wait_on_depletion=True)
+        # Circuit Breaker Logic
+        import time
+        cb_state = self._load_cb_state()
+        state = cb_state.get("state", "CLOSED")
+        consecutive_402 = cb_state.get("consecutive_402", 0)
+        opened_at = cb_state.get("opened_at", 0)
 
-        # If Pollinations succeeded, return immediately
-        if not result.startswith(("[API_ERROR", "[API_TIMEOUT")):
-            return result
+        skip_tier1 = False
+        if state == "OPEN":
+            if time.time() - opened_at > 20 * 60:
+                print("[Pi-Agent] Circuit HALF-OPEN — probing Pollinations")
+                self._save_cb_state({"state": "HALF-OPEN"})
+                state = "HALF-OPEN"
+            else:
+                remaining = (20 * 60 - (time.time() - opened_at)) / 60
+                print(f"[Pi-Agent] Circuit OPEN (consecutive 402s={consecutive_402}) — skipping Pollinations for {remaining:.1f}min, going to Ollama Cloud")
+                skip_tier1 = True
+
+        result = "[API_ERROR] Circuit OPEN"
+        if not skip_tier1:
+            # Tier 1: Pollinations — skip wait on depletion so we can try fallbacks first
+            result = self._call_pollinations(system, user, timeout=timeout,
+                                             skip_wait_on_depletion=True)
+
+            is_402 = result.startswith(("[API_ERROR", "[API_TIMEOUT")) and ("402" in result or "Pollen depleted" in result)
+            if is_402:
+                consecutive_402 += 1
+                if state == "HALF-OPEN" or consecutive_402 >= 5:
+                    print(f"[Pi-Agent] Circuit OPEN (consecutive 402s={consecutive_402}) — skipping Pollinations for 20.0min, going to Ollama Cloud")
+                    self._save_cb_state({
+                        "state": "OPEN",
+                        "consecutive_402": consecutive_402,
+                        "opened_at": time.time()
+                    })
+                else:
+                    self._save_cb_state({"consecutive_402": consecutive_402})
+            else:
+                if state == "HALF-OPEN" or consecutive_402 > 0:
+                    print("[Pi-Agent] Circuit CLOSED — Pollinations recovered")
+                    self._save_cb_state({
+                        "state": "CLOSED",
+                        "consecutive_402": 0,
+                        "opened_at": 0
+                    })
+
+            # If Pollinations succeeded, return immediately
+            if not result.startswith(("[API_ERROR", "[API_TIMEOUT")):
+                return result
 
         # Tier 2: Ollama Cloud (only if enabled and configured)
         if self.ollama_cloud_enabled and self.ollama_cloud_api_key:
@@ -3618,6 +3745,27 @@ make it beautiful to read.
     # Result quality evaluation
     # ------------------------------------------------------------------
 
+
+    def _log_pi_agent_eval(self, job_id: str, score: float, grade: str, rationale: dict) -> None:
+        """Log evaluation result and append to pi_agent_evals.jsonl."""
+        print(f"[Pi-Agent] eval job={job_id} score={score:.3f} grade={grade}")
+        try:
+            import time, json
+            from pathlib import Path
+            evals_file = self.pi_agent_evals_path
+            evals_file.parent.mkdir(exist_ok=True, parents=True)
+            entry = {
+                "ts": time.time(),
+                "job_id": job_id,
+                "score": score,
+                "grade": grade,
+                "rationale": rationale
+            }
+            with open(evals_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(entry) + "\n")
+        except Exception as e:
+            pass
+
     def evaluate_breakthrough(self, result_lean: str, concept: ResearchConcept) -> str:
         """LLM grades the research result as incremental, significant, or breakthrough.
 
@@ -3837,23 +3985,6 @@ make it beautiful to read.
                 "confidence": 0.4,
                 "analysis": "Fallback heuristic: no theorems found.",
             }
-
-    def _log_pi_agent_eval(self, job_id: str, score: float, grade: str, rationale: Dict[str, Any]) -> None:
-        import json, time
-        print(f"[Pi-Agent] eval job={job_id} score={score:.3f} grade={grade}")
-        record = {
-            "ts": time.time(),
-            "job_id": job_id,
-            "score": score,
-            "grade": grade,
-            "rationale": rationale
-        }
-        try:
-            self.pi_agent_evals_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(self.pi_agent_evals_path, "a") as f:
-                f.write(json.dumps(record) + "\\n")
-        except Exception:
-            pass
 
     def _smart_truncate(self, lean_source: str, max_chars: int = 3000) -> str:
         """Truncate Lean source while preserving theorem signatures, sorry locations,

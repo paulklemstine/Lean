@@ -429,7 +429,53 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         seed_dirs = get_seed_directions()
         novelty_seeds = [sd for sd in seed_dirs if "Novelty" in sd.domains]
         added = 0
+        
+        # LLM-driven novelty replenishment
+        if hasattr(extractor.pi_agent, 'generate_novelty_directions'):
+            try:
+                import time
+                import functools
+                from research_memory import FutureDirection
+                
+                recent_bts = []
+                if hasattr(extractor, 'analytics'):
+                    breakthroughs = extractor.analytics.get_breakthroughs(threshold=0.8)
+                    recent_bts = breakthroughs[-5:] if breakthroughs else []
+                if recent_bts:
+                    bt_dicts = [{'title': b.concept_title, 'concept': getattr(b, 'concept_description', '')} for b in recent_bts]
+                    llm_dirs = await asyncio.to_thread(
+                        functools.partial(
+                            extractor.pi_agent.generate_novelty_directions,
+                            recent_breakthroughs=bt_dicts,
+                            count=3
+                        )
+                    )
+                    existing_titles = {d.title.lower().strip() for d in fd_manager._directions}
+                    for d in llm_dirs:
+                        d_title = d.get('title', '')
+                        if d_title and d_title.lower().strip() not in existing_titles:
+                            new_dir = FutureDirection(
+                                id=fd_manager._next_id(),
+                                title=d_title,
+                                description=d.get('concept', ''),
+                                source_exp_id="llm_novelty",
+                                source_path="llm_novelty",
+                                timestamp=datetime.now(timezone.utc).isoformat(),
+                                status="available",
+                                priority_score=0.9
+                            )
+                            # Tag source='llm_novelty'
+                            new_dir.source = "llm_novelty"
+                            if hasattr(new_dir, 'domains'):
+                                new_dir.domains = ["Novelty"]
+                            fd_manager.add_direction(new_dir)
+                            added += 1
+            except Exception as e:
+                print(f"[Tick] LLM novelty generation failed: {e}")
+
         for sd in novelty_seeds:
+            if available_novelty + added >= 5:
+                break
             existing_titles = {d.title.lower().strip() for d in fd_manager._directions}
             if sd.title.lower().strip() not in existing_titles:
                 sd.id = fd_manager._next_id()
@@ -438,7 +484,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 added += 1
         if added:
             fd_manager._save()
-            print(f"[Tick] Auto-refilled {added} novelty directions from seeds (was {available_novelty})")
+            print(f"[Tick] Auto-refilled {added} novelty directions (was {available_novelty})")
 
     inflight_count = len(extractor.inflight)
     print(f"[Tick] {inflight_count} inflight jobs")
@@ -523,28 +569,80 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
         # ── Dialogue-Based Proof Repair Loop ──
         if not is_phase_b_completion and job.quality_assessment and job.quality_assessment.get("should_retry"):
-            if job.retry_count < extractor.max_retries:
-                print(f"[Tick] Job {job.job_id[:8]} quality check failed (Q={job.quality_score:.3f}, quality={job.quality_assessment.get('quality')}). "
-                      f"Initiating proof repair retry {job.retry_count + 1}/{extractor.max_retries}...")
-                
-                # Retrieve suggestion from Pi Agent
-                import functools
-                suggestion = await asyncio.to_thread(
-                    functools.partial(
-                        extractor.pi_agent.suggest_retry_improvement,
-                        concept=job.concept,
-                        previous_prompt=job.prompt,
-                        result_lean=job.result_lean or "",
-                        quality_assessment=job.quality_assessment,
+            is_incremental = False
+            if job.quality_score >= 0.6 and job.quality_assessment.get("quality") == "partial":
+                job.quality_assessment["accepted_as"] = "incremental"
+                is_incremental = True
+                print(f"[Tick] Job {job.job_id[:8]} early-accept as incremental (Q={job.quality_score:.3f}).")
+            
+            if not is_incremental:
+                if job.retry_count < extractor.max_retries:
+                    print(f"[Tick] Job {job.job_id[:8]} quality check failed (Q={job.quality_score:.3f}, quality={job.quality_assessment.get('quality')}). "
+                          f"Initiating proof repair retry {job.retry_count + 1}/{extractor.max_retries}...")
+                    
+                    # Retrieve suggestion from Pi Agent
+                    import functools
+                    suggestion = await asyncio.to_thread(
+                        functools.partial(
+                            extractor.pi_agent.suggest_retry_improvement,
+                            concept=job.concept,
+                            previous_prompt=job.prompt,
+                            result_lean=job.result_lean or "",
+                            quality_assessment=job.quality_assessment,
+                        )
                     )
-                )
-                
-                # Dispatch the retry, passing the current parallel limit so the retry
-                # is queued instead of overflowing Aristotle's queue.
-                current_max_inflight = max_inflight
-                job = await extractor.dispatch_retry_async(job, suggestion, max_inflight=current_max_inflight)
-                extractor._save_inflight()
-                continue
+                    
+                    # Dispatch the retry, passing the current parallel limit so the retry
+                    # is queued instead of overflowing Aristotle's queue.
+                    current_max_inflight = max_inflight
+                    job = await extractor.dispatch_retry_async(job, suggestion, max_inflight=current_max_inflight)
+                    extractor._save_inflight()
+                    continue
+                else:
+                    import functools
+                    import time
+                    # Max retries reached - attempt decomposition
+                    if hasattr(extractor.pi_agent, 'decompose_direction'):
+                        job_depth = getattr(job, 'decomposition_depth', 0)
+                        if job_depth < 2:
+                            print(f"[Tick] Job {job.job_id[:8]} failed {extractor.max_retries} times. Attempting decomposition (depth {job_depth})...")
+                            try:
+                                # We must read concept title + description to pass to decompose
+                                concept_str = f"{job.concept.title}: {job.concept.concept_description}" if hasattr(job.concept, 'title') else str(job.concept)
+                                directions = await asyncio.to_thread(
+                                    functools.partial(
+                                        extractor.pi_agent.decompose_direction,
+                                        concept=concept_str,
+                                        job_id=job.job_id
+                                    )
+                                )
+                                if directions and hasattr(extractor, 'memory') and hasattr(extractor.memory, 'future_directions'):
+                                    mgr = extractor.memory.future_directions
+                                    from research_memory import FutureDirection
+                                    for idx, d in enumerate(directions):
+                                        new_id = f"dir_{int(time.time())}_{job.job_id[-4:]}_{idx}"
+                                        new_dir = FutureDirection(
+                                            id=new_id,
+                                            title=d.get("title", f"Sub-lemma of {job.job_id[:8]}"),
+                                            description=d.get("concept", ""),
+                                            source_exp_id="decomposition",
+                                            source_path="decomposition",
+                                            status="available",
+                                        )
+                                        new_dir.parent_direction = job.job_id
+                                        new_dir.decomposed_from_job = job.job_id
+                                        new_dir.decomposition_depth = job_depth + 1
+                                        new_dir.domains = [getattr(job, 'domain', getattr(job.concept, 'domain', ''))]
+                                        if hasattr(mgr, 'directions'):
+                                            mgr.directions.append(new_dir)
+                                        elif hasattr(mgr, 'add_direction'):
+                                            mgr.add_direction(new_dir)
+                                        print(f"[Tick]   -> Added decomposed direction: {new_dir.title}")
+                                    if hasattr(mgr, '_save'):
+                                        mgr._save()
+                            except Exception as e:
+                                print(f"[Tick] Decomposition failed: {e}")
+
 
         # ── Two-phase dispatch: gate Phase B on Phase A quality ──
 
@@ -565,12 +663,13 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         if is_phase_b_completion:
             job.phase = "complete"
         else:
-            phase_b_threshold = extractor._adaptive_phase_b_threshold()
+            adaptive = extractor._adaptive_phase_b_threshold()
+            phase_b_threshold = max(getattr(extractor, 'phase_b_min_score', 0.7), adaptive)
             phase_a_q = job.quality_score
             if phase_a_q >= phase_b_threshold and job.result_lean:
                 # Phase B will be dispatched right now (within this same tick loop)
                 # Then we wait for Phase B's results in a future tick
-                print(f"[Tick] Phase A Q={phase_a_q:.3f} >= {phase_b_threshold:.3f} threshold — "
+                print(f"[Tick] Phase A Q={phase_a_q:.3f} >= {phase_b_threshold:.3f} threshold (adaptive={adaptive:.3f}) — "
                       f"dispatching Phase B for {job.job_id[:8]}")
                 # Save Phase A quality score
                 job.phase_a_quality_score = phase_a_q
@@ -1624,7 +1723,9 @@ def rebuild_commit_push() -> bool:
 
         return True
     except Exception as e:
+        import traceback
         print(f"[Tick] git error: {e}")
+        print(traceback.format_exc())
         return False
 
 

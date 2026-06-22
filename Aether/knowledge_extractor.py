@@ -98,6 +98,7 @@ class ResearchJob:
     error_message: Optional[str] = None
     source_exp_ids: list = None  # exp_ids of parent experiments whose future directions inspired this one
     adversarial_result: Optional[Dict] = None  # Adversarial judging metadata
+    decomposition_depth: int = 0
     prompt_version: str = "v1"  # Which prompt version was used: v1, v2, v3
     # Two-phase fields (Phase A: math, Phase B: packaging)
     phase: str = "A"  # "A" | "B" | "complete" | "A_only"
@@ -232,7 +233,9 @@ class KnowledgeExtractor:
         self.locked_titles = set()
         self.completed_count = 0
         self.failed_count = 0
+        self.inflight_path = self.workspace / "inflight_jobs.json"
         self.max_retries = self.config.get("autoresearch", {}).get("max_retries", 2)
+        self.phase_b_min_score = self.config.get("phase_b", {}).get("min_score", 0.7)
 
         
         self._load_inflight()
@@ -725,15 +728,17 @@ class KnowledgeExtractor:
         print(f"[Pi] concept={concept.title}, domain={concept.domain}, "
               f"mode={concept.research_mode}, novelty={concept.novelty_estimate:.2f}")
 
-        return ResearchJob(
+        job = ResearchJob(
             job_id=job_id,
             cycle_n=cycle_n,
             concept=concept,
             prompt="",  # Will be filled in Phase 2
             source_exp_ids=source_exp_ids if source_exp_ids else None,
-            thread_id=thread_id,
-            cycle_index=cycle_index,
         )
+        job.thread_id = thread_id
+        job.cycle_index = cycle_index
+        job.decomposition_depth = getattr(best_dir, 'decomposition_depth', 0) if best_dir else 0
+        return job
 
     # ==================================================================
     # Phase 2: DISPATCH — Pi writes the prompt, Aristotle receives it
@@ -1900,9 +1905,17 @@ Research mode: {concept.research_mode}
         if qa.get("should_retry"):
             print(f"[Evaluate] should_retry=true (quality={qa.get('quality','?')}), score={job.quality_score:.3f} — keeping computed score")
 
-        print(f"[Evaluate] quality={qa.get('quality','?')}, score={job.quality_score:.3f}, "
-              f"sorries={job.sorry_count}, theorems={job.theorem_count}"
-              + (f", depth={job.quality_detail.proof_depth:.2f}" if hasattr(job, 'quality_detail') and job.quality_detail else ""))
+        if self.pi_agent and hasattr(self.pi_agent, '_log_pi_agent_eval'):
+            self.pi_agent._log_pi_agent_eval(
+                job_id=job.job_id,
+                score=job.quality_score,
+                grade=qa.get("quality", "?"),
+                rationale=qa
+            )
+        else:
+            print(f"[Evaluate] quality={qa.get('quality','?')}, score={job.quality_score:.3f}, "
+                  f"sorries={job.sorry_count}, theorems={job.theorem_count}"
+                  + (f", depth={job.quality_detail.proof_depth:.2f}" if hasattr(job, 'quality_detail') and job.quality_detail else ""))
 
         # v8-v15 output quality metrics: track research team protocol compliance
         phase_ver = getattr(job, 'phase_a_prompt_version', '')

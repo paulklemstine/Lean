@@ -263,6 +263,10 @@ class FutureDirection:
     # --- Retry tracking ---
     attempt_count: int = 0                                         # number of times this direction was dispatched
     last_attempt_time: str = ""                                    # ISO timestamp of last dispatch attempt
+    # --- Decomposition ---
+    parent_direction: str = ""
+    decomposed_from_job: str = ""
+    decomposition_depth: int = 0
     quarantined_until: str = ""                                    # ISO timestamp; if set, exclude from dispatch until then
     # --- Cleanup tracking ---
     last_reviewed_at: str = ""                                     # ISO timestamp of last Pi-Agent cleanup review
@@ -319,6 +323,9 @@ class FutureDirection:
             "lean_theorem_stub": self.lean_theorem_stub,
             "thread_id": self.thread_id,
             "category": self.category,
+            "parent_direction": self.parent_direction,
+            "decomposed_from_job": self.decomposed_from_job,
+            "decomposition_depth": self.decomposition_depth,
         }
 
     @classmethod
