@@ -6900,6 +6900,32 @@
     "title": "Linked tree-cut decompositions displaying undominated edge-ends"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Turán_problems",
+      "hypergraph_codegree"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 3 and every integer s ≥ 2, there exist k-graphs F₁, F₂, ..., Fₛ such that 0 < γ⁺({F₁, F₂, ..., Fₛ}) < min{γ⁺(F₁), γ⁺(F₂), ..., γ⁺(Fₛ)}. This generalizes the paper's Theorem 1.1 (which proves the case s = 2) and mirrors the analogous result established for codegree Turán density by Gao, Pikhurko, Rong, and Sun.",
+    "domain_bridges": [
+      "Extremal combinatorics → Order theory (subadditivity of density functionals)",
+      "Hypergraph theory → Asymptotic analysis (limit definitions of densities)"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2256",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductive construction on family size s: use the s=2 case established in the paper as the base, then iteratively apply a substitution/amalgamation argument. For the inductive step, given a non-principal family of size s, combine it with an appropriately chosen auxiliary k-graph using the same blow-up and replacement techniques that work for s=2, ensuring the joint density drops below the minimum of all individual densities while remaining positive.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-22T18:41:23.329354+00:00",
+    "title": "Arbitrary-size non-principal families for positive codegree Turán density"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.LO",
@@ -6917,7 +6943,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2256",
+    "id": "fd_2257",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize projective Fraïssé categories and their limits, define the approximate Ramsey property for morphisms, define extreme amenability for topological groups, and adapt the Kechris-Pestov-Todorcevic proof strategy to the projective setting by demonstrating that the universal minimal flow of the group is trivial precisely when the category satisfies the approximate Ramsey property.",
@@ -6945,7 +6971,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2257",
+    "id": "fd_2258",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the cyclotomic polynomial factorization of the frequency polynomial F(x) = x²·((x^{k²} − 1)/(x − 1))². The factorization of F into irreducible cyclotomic components admits nontrivial rearrangements. Show that for each k ≥ 2, the divisor structure of k² always permits at least one regrouping of these cyclotomic factors into two polynomials P, Q with non-negative integer coefficients, where P(1) and Q(1) are distinct perfect squares. The key step leverages that k² has multiple distinct divisor pairs, and the cyclotomic factors of (x^{k²} − 1)/(x − 1) can be partitioned along these divisor boundaries to produce valid die-generating polynomials with square numbers of sides.",
@@ -6972,7 +6998,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2258",
+    "id": "fd_2259",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the paper's result that the Kaprekar map on T_B is conjugate to projective doubling {[r],[s]} ↦ {[2r],[2s]} on P¹(Z/(B−1)Z). The number of terminal cycles equals the number of cycles of this projective doubling map. Analyze the orbit structure of multiplication by 2 on P¹(Z/nZ) via CRT decomposition: when n = 2^k, the group (Z/2^kZ)× and the {±1}-quotient force all orbits to collapse to a single fixed point. When n has an odd prime factor p, the action on P¹(Z/p^aZ) produces multiple orbits by properties of ord_p(2). The forward direction uses the specific structure of (Z/2^kZ)× ≅ Z/2 × Z/2^{k−2}; the backward direction uses that for odd prime p | (B−1), ord_p(2) > 1 produces distinct orbits under doubling.",
@@ -6981,6 +7007,31 @@
     "status": "available",
     "timestamp": "2026-06-22T18:17:37.265404+00:00",
     "title": "Unique Kaprekar fixed point iff base-minus-one is a power of two"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any intersecting family $\\mathcal{F} \\subseteq \\binom{[n]}{k}$ with $n > 10k$, the size of the family of symmetric differences $|\\mathcal{SD}(\\mathcal{F})|$ is at most $\\sum_{\\ell=0}^{k-1} \\binom{n-1}{2\\ell}$. Equality holds if and only if $\\mathcal{F}$ is a full star.",
+    "domain_bridges": [
+      "Set Theory",
+      "Probability Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2260",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the concentration inequality approach used for $n \\ge 60k^{3/2}$ to tighter bounds, potentially by developing stronger variance bounds or refined shifting arguments, to cover the range $n > 10k$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20043v1",
+    "status": "available",
+    "timestamp": "2026-06-22T18:41:59.749537+00:00",
+    "title": "Frankl-Kiselev-Kupavskii Conjecture on Symmetric Differences"
   },
   {
     "ambition_level": "grand_challenge",

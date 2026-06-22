@@ -44276,6 +44276,51 @@
       "title": "Linked tree-cut decompositions displaying undominated edge-ends"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "Turán_problems",
+        "hypergraph_codegree"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer k ≥ 3 and every integer s ≥ 2, there exist k-graphs F₁, F₂, ..., Fₛ such that 0 < γ⁺({F₁, F₂, ..., Fₛ}) < min{γ⁺(F₁), γ⁺(F₂), ..., γ⁺(Fₛ)}. This generalizes the paper's Theorem 1.1 (which proves the case s = 2) and mirrors the analogous result established for codegree Turán density by Gao, Pikhurko, Rong, and Sun.",
+      "domain_bridges": [
+        "Extremal combinatorics → Order theory (subadditivity of density functionals)",
+        "Hypergraph theory → Asymptotic analysis (limit definitions of densities)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2256",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem arbitrary_non_principality_positive_codegree (k s : ℕ) (hk : k ≥ 3) (hs : s ≥ 2) :\n    ∃ (Fs : Fin s → KGraph k),\n      0 < positiveCodegreeDensity (Finset.image Fs Finset.univ) ∧\n      positiveCodegreeDensity (Finset.image Fs Finset.univ) <\n        (Finset.image (fun i => positiveCodegreeDensity {Fs i}) Finset.univ).inf' ⟨0, Finset.image_nonempty _ _⟩ := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Inductive construction on family size s: use the s=2 case established in the paper as the base, then iteratively apply a substitution/amalgamation argument. For the inductive step, given a non-principal family of size s, combine it with an appropriately chosen auxiliary k-graph using the same blow-up and replacement techniques that work for s=2, ensuring the joint density drops below the minimum of all individual densities while remaining positive.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20494v1",
+      "source_path": "http://arxiv.org/abs/2606.20494v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T18:41:23.329354+00:00",
+      "title": "Arbitrary-size non-principal families for positive codegree Turán density"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -44302,7 +44347,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2256",
+      "id": "fd_2257",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem projective_fraisse_arp_iff_extremely_amenable (F_cat : ProjectiveFraisseCategory) (F_cont : Continuum) (G : ClosedSubgroup (Homeomorph F_cont)) (h_dense : Dense (image Phi (Aut (Limit F_cat)))) : ApproximateRamseyProperty F_cat ↔ ExtremelyAmenable G",
@@ -44349,7 +44394,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2257",
+      "id": "fd_2258",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem square_sided_sicherman_pairs_exist (k : ℕ) (hk : k ≥ 2) :\n    ∃ (a b : ℕ), a ≠ b ∧ ∃ P Q : Polynomial ℤ,\n    (∀ n : ℕ, P.coeff n ≥ 0) ∧ (∀ n : ℕ, Q.coeff n ≥ 0) ∧\n    P.eval (1 : ℤ) = (a : ℤ) ^ 2 ∧ Q.eval (1 : ℤ) = (b : ℤ) ^ 2 ∧\n    P * Q = (∑ i ∈ Finset.Icc 1 (k ^ 2), (Polynomial.X : Polynomial ℤ) ^ i) ^ 2 ∧\n    P ≠ (∑ i ∈ Finset.Icc 1 (k ^ 2), (Polynomial.X : Polynomial ℤ) ^ i) ∧\n    Q ≠ (∑ i ∈ Finset.Icc 1 (k ^ 2), (Polynomial.X : Polynomial ℤ) ^ i) :=\n  sorry",
@@ -44395,7 +44440,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2258",
+      "id": "fd_2259",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem kaprekar_unique_fixed_point_iff_pow_two (B : Nat) (hB_odd : Odd B) (hB_gt3 : B > 3) : (UniqueNonconstantTerminalCycle (kaprekarMap B) ↔ ∃ k : Nat, B - 1 = 2^k) := by sorry",
@@ -44414,6 +44459,50 @@
       "thread_id": "",
       "timestamp": "2026-06-22T18:17:37.265404+00:00",
       "title": "Unique Kaprekar fixed point iff base-minus-one is a power of two"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any intersecting family $\\mathcal{F} \\subseteq \\binom{[n]}{k}$ with $n > 10k$, the size of the family of symmetric differences $|\\mathcal{SD}(\\mathcal{F})|$ is at most $\\sum_{\\ell=0}^{k-1} \\binom{n-1}{2\\ell}$. Equality holds if and only if $\\mathcal{F}$ is a full star.",
+      "domain_bridges": [
+        "Set Theory",
+        "Probability Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2260",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem fkk_symmDiff_conjecture {n k : ℕ} (hk : 0 < k) (hn : 10 * k < n) \n    (F : Finset (Finset (Fin n))) (hF_card : ∀ f ∈ F, f.card = k) \n    (hF_int : ∀ f ∈ F, ∀ g ∈ F, (f ∩ g).Nonempty) :\n    (Finset.image (fun p : Finset (Fin n) × Finset (Fin n) => p.1 ∆ p.2) (F ×ˢ F)).card ≤ \n    ∑ ℓ in Finset.range k, (Nat.choose (n - 1) (2 * ℓ))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the concentration inequality approach used for $n \\ge 60k^{3/2}$ to tighter bounds, potentially by developing stronger variance bounds or refined shifting arguments, to cover the range $n > 10k$.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20043v1",
+      "source_path": "http://arxiv.org/abs/2606.20043v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T18:41:59.749537+00:00",
+      "title": "Frankl-Kiselev-Kupavskii Conjecture on Symmetric Differences"
     },
     {
       "ambition_level": "extension",

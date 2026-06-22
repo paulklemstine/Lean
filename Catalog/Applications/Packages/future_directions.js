@@ -4117,12 +4117,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 3 and every integer s \u2265 2, there exist k-graphs F\u2081, F\u2082, ..., F\u209b such that 0 < \u03b3\u207a({F\u2081, F\u2082, ..., F\u209b}) < min{\u03b3\u207a(F\u2081), \u03b3\u207a(F\u2082), ..., \u03b3\u207a(F\u209b)}. This generalizes the paper's Theorem 1.1 (which proves the case s = 2) and mirrors the analogous result established for codegree Tur\u00e1n density by Gao, Pikhurko, Rong, and Sun.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2256",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-22T18:41:23.329354+00:00",
+    "title": "Arbitrary-size non-principal families for positive codegree Tur\u00e1n density"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For a projective Fra\u00efss\u00e9 category $\\mathcal{F}$ with limit $\\mathbb{F}$, quotient continuum $F = \\mathbb{F}/R^\\mathbb{F}$, and a closed subgroup $G \\le \\operatorname{Homeo}(F)$ in which the image of $\\operatorname{Aut}(\\mathbb{F})$ is dense, $G$ is extremely amenable if and only if $\\mathcal{F}$ has the approximate Ramsey property.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2256",
+    "id": "fd_2257",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
@@ -4136,7 +4150,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2257",
+    "id": "fd_2258",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -4150,13 +4164,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2258",
+    "id": "fd_2259",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
     "status": "available",
     "timestamp": "2026-06-22T18:17:37.265404+00:00",
     "title": "Unique Kaprekar fixed point iff base-minus-one is a power of two"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any intersecting family $\\mathcal{F} \\subseteq \\binom{[n]}{k}$ with $n > 10k$, the size of the family of symmetric differences $|\\mathcal{SD}(\\mathcal{F})|$ is at most $\\sum_{\\ell=0}^{k-1} \\binom{n-1}{2\\ell}$. Equality holds if and only if $\\mathcal{F}$ is a full star.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2260",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20043v1",
+    "status": "available",
+    "timestamp": "2026-06-22T18:41:59.749537+00:00",
+    "title": "Frankl-Kiselev-Kupavskii Conjecture on Symmetric Differences"
   },
   {
     "consumed_by_exp_id": "",
