@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a0671e28",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS\n\nFollow-up conjectures arising from\n`Catalog/Applications/EGFTropicalValuation.lean`\n(\"Exponential generating functions induce a tropical valuation profile via\ncoefficient-support",
-      "quality_score": 0.5303199999999999,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-16T08:07:07",
-      "title": "Exponential generating functions induce a tropical valuation profile via coefficient-support truncat"
-    },
-    {
       "cycle_id": "5971ea29",
       "domain": "MachineLearning",
       "key_insight": "# FUTURE DIRECTIONS — Valuation-Depth → Tropical Functor (Cycle 3)\n\nThis document records the bold, falsifiable conjectures arising from the third deepening\ncycle, which **resolved** four of the previ",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-22T19:29:42",
       "title": "Membrane Computing (P-Systems) and Their Computational Power"
+    },
+    {
+      "cycle_id": "862d1e75",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Wolfram CA Four-Class Classification and its Computability\n\nDerived from the cycle recorded in `WolframClassification.lean` and\n`ComputationalEvidence.md`. Each conjecture is fal",
+      "quality_score": 0.4281950461538462,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-22T19:50:02",
+      "title": "Wolfram CA Four-Class Classification and its Computability"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T19:29:42",
+  "last_updated": "2026-06-22T19:50:02",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "667542f0",
-        "quality": 0.5307999999999999,
-        "theorems": 9,
-        "title": "Counterfactual Number Theory: What If Primes Were Random?"
-      },
-      {
         "cycle_id": "21cfd7dd",
         "quality": 0.36289866666666665,
         "theorems": 0,
@@ -3389,6 +3383,12 @@
         "quality": 0.45196000000000003,
         "theorems": 2,
         "title": "Ramsey Theory in Projective Fraïssé Limits Implies Extreme Amenability of Homeom"
+      },
+      {
+        "cycle_id": "862d1e75",
+        "quality": 0.4281950461538462,
+        "theorems": 6,
+        "title": "Wolfram CA Four-Class Classification and its Computability"
       }
     ],
     "Geometry": [

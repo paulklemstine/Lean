@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-22T19:29:45.297978+00:00",
+  "last_updated": "2026-06-22T19:50:04.134398+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -172,6 +172,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-22T19:29:44.987154+00:00",
       "title": "Membrane Computing (P-Systems) and Their Computational Power"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4455,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Cryptography",
+      "duration_seconds": 2471.7800374031067,
+      "end_time": 1782157600.758707,
+      "files_integrated": 2,
+      "job_id": "862d1e75",
+      "outcome_quality": 0.4281950461538462,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v19b",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.588,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.4428,
+        "novelty": 0.95,
+        "proof_depth": 0.2254,
+        "usefulness": 0.5627
+      },
+      "quality_score": 0.4281950461538462,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782155128.9786696,
+      "strategy_count": 0,
+      "theorem_count": 6,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-22T19:50:03.911263+00:00",
+      "title": "Wolfram CA Four-Class Classification and its Computability"
     }
   ]
 }
