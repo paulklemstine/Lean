@@ -4670,6 +4670,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Pythagorean Triples in Z[i]\n\nDerived from the v19d research cycle in `Logic/GaussianPythagorean.lean` and\n`Logic/GaussianQuaternionBridge.lean`. Each conjecture is bold and falsifiable.\n\n## C1. Primitive-triple classification in Z[i] via unique factorisation\n\n**Conjecture.** Every *primitive* Gaussian Pythagorean triple `a^2+b^2=c^2`\n(with `gcd(a,b)` a unit in Z[i] and `c \u2260 0`) is, up to the four units `{1,-1,i,-i}`\nand swapping `a,b`, of the form `a = u(s^2 - t^2)`, `b = u(2st)`, `c = u(s^2+t^2)`\nfor coprime Gaussian integers `s,t`, OR is a unit multiple of a degenerate\n(isotropic) triple `(s, \u00b1is, 0)`.\n\n*The key insight is...* that Z[i] is a Euclidean domain, so the factorisation\n`(a+ib)(a-ib) = c^2` forces each coprime factor to be a square up to units \u2014\nexactly the classical descent, but now the unit group has order 4 and the form\nis isotropic, so the degenerate branch must be added.\n\n*Why now?* The isotropy phenomenon (`gaussian_isotropic`) and the factorisation\nengine (`sq_add_sq_factor`) are already formalised; the missing step is a\nGaussian-coprime \"product of coprimes is a square \u21d2 each is a square\" lemma,\nwhich Mathlib's `UniqueFactorizationMonoid` API now supports.\n\n## C2. Counting Gaussian triples of bounded norm\n\n**Conjecture.** The number of primitive Gaussian Pythagorean triples with\n`N(c) \u2264 X` grows like `\u03ba \u00b7 X` for an explicit constant `\u03ba` involving the\nresidue of the Dedekind zeta function `\u03b6_{Q(i)}`, strictly larger than the\n`(1/2\u03c0)\u00b7X^{1/2}`-type growth of integer primitive triples of bounded hypotenuse.\n\n*The key insight is...* that the linearisation `a^2+b^2 = (a+ib)(a-ib)`\n(`triple_classification`) reduces counting to counting factorisations `pq=c^2`\nin Z[i], a lattice-point/divisor problem governed by `\u03b6_{Q(i)}`.\n\n*Why now?* Mathlib has Dedekind domains and is actively gaining analytic\nnumber-theory infrastructure; the divisor-counting reduction is elementary once\nthe factorisation theorem is in place.\n\n## C3. The isotropy obstruction is exactly \"\u22121 is a square\"\n\n**Conjecture.** For a number field `K` with ring of integers `O_K`, the\nsum-of-two-squares form on `O_K` is isotropic (represents 0 nontrivially) **iff**\n`-1` is a square in `O_K`, equivalently iff `i \u2208 O_K`.\n\n*The key insight is...* the factorisation `a^2+b^2=(a+Ib)(a-Ib)` exists exactly\nwhen a square root `I` of `-1` is available, and an integral domain has a\nnontrivial null vector for this form iff such an `I` exists\n(`sq_add_sq_eq_zero_iff` is the \"if\"; the \"only if\" needs that a null vector\nmanufactures `I = a\u00b7b^{-1}` in the fraction field and then integrality).\n\n*Why now?* The domain-level equivalence is half-proved here; generalising to\narbitrary `O_K` only requires the fraction-field argument plus integral closure,\nboth in Mathlib.\n\n## C4. Nested composition algebras: two- \u2282 four- \u2282 eight-square\n\n**Conjecture.** The isometric ring embedding `Z[i] \u21aa \u210d(\u2124)` of\n`gaussToQuat` extends to a tower `Z[i] \u21aa \u210d(\u2124) \u21aa \ud835\udd46(\u2124)` (Lipschitz \u2192 integral\noctonions) of norm-preserving multiplicative maps, so that the two-, four-, and\neight-square identities are literal restrictions of one another.\n\n*The key insight is...* the Cayley\u2013Dickson construction makes each step\n`A \u21aa A \u00d7 A` a norm-multiplicative embedding; `gaussToQuat` is the first rung and\nits proof (`gaussToQuat_mul`, `normSq_gaussToQuat`) is template-able.\n\n*Why now?* Mathlib has `Quaternion` and `CayleyDickson`-style constructions;\nformalising the octonion rung would give the first fully verified two-/four-/\neight-square nesting.\n\n## C5. Berggren-style descent for Gaussian triples\n\n**Conjecture.** There is a finite set of unimodular matrices in `GL_3(Z[i])`\nacting on Gaussian Pythagorean triples that, together with the unit/isotropy\nsymmetries, generates every primitive triple from finitely many roots \u2014 a\nGaussian analogue of the Berggren ternary tree in\n`Pythagorean.BerggrenCompleteness`.\n\n*The key insight is...* the integer Berggren matrices preserve `a^2+b^2-c^2`\nidentically (a `ring` fact), so the *same* matrices act on Z[i]; what changes is\nthe descent measure, which must use the Gaussian norm `N(c)` rather than `c`,\nand the larger unit group enlarges the root set.\n\n*Why now?* The catalog already contains the verified integer Berggren tree and\nthis file already bridges integer triples into Z[i] (`int_triple_to_gaussian`);\nporting the descent is the natural next experiment.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2227",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "032896b2",
+    "status": "available",
+    "timestamp": "2026-06-22T09:38:57.961723+00:00",
+    "title": "Derived from the v19d research cycle in `Logic/GaussianPythagorean.lean` and"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4681,6 +4696,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any family of propositional proofs of a theorem, there exists a 2\u2011local Hamiltonian H on n qubits whose ground\u2011state entanglement entropy exhibits a sharp phase transition at a critical clause density \u03b1_c that is polynomially related to the proof length L; specifically, if L exceeds a threshold scaling as O(n^\u03b2) then the entanglement entropy saturates at \u0398(n), whereas for L below this threshold it remains O(log n). Test: Construct random 3\u2011SAT instances with clause density \u03b1 near the conjectured \u03b1_c, map each clause to a set of qubit interactions defining H, compute the ground\u2011state entanglement entropy via exact diagonalization for small n, and verify the predicted scaling; a violation of the scaling law falsifies the conjecture. Impact: This would provide a physical, experimentally realizable testbed linking quantum many\u2011body physics to proof\u2011complexity bounds, enabling new algorithmic complexity classifications and potentially yielding quantum\u2011enhanced proof\u2011search heuristics.",
+    "domains": [
+      "Cryptography",
+      "Novelty"
+    ],
+    "id": "fd_2228",
+    "priority_score": 0.7157272727272728,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-22T09:41:40.071032+00:00",
+    "title": "Quantum Entanglement Phase Transition as a Complexity Barrier for Proofs"
   },
   {
     "consumed_by_exp_id": "",
@@ -4830,20 +4860,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T01:05:26.622326+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_2074",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "oeis:212351",
-    "status": "available",
-    "timestamp": "2026-06-18T01:05:26.622694+00:00",
-    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
@@ -5319,21 +5335,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.030710+00:00",
     "title": "Pythagorean Triple Group Structure"
-  },
-  {
-    "consumed_by_exp_id": "032896b2",
-    "description": "Classify all Pythagorean triples in the Gaussian integers Z[i]. Prove that every primitive triple can be parametrized as (a+bi, c+di, e+fi) where the norm of each entry satisfies the Pythagorean relation. Connect to the arithmetic of quaternionic integers.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_0512",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:47.416939+00:00",
-    "title": "Pythagorean Triples in Gaussian Integers"
   },
   {
     "consumed_by_exp_id": "",

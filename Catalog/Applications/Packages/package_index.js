@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "032896b2",
     "filename": "the_file_basiclean_establishes_a_fully_formal_axio.json",
     "pkg_num": 328,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.547645269003818,
     "title": "The Folded Ruler: A Sharp ReLU Depth-Separation Theorem via the Tent Map"
   },
   {
@@ -10124,8 +10124,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_file_basiclean_establishes_a_fully_formal_axio",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.547645269003818,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Folded Ruler: A Sharp ReLU Depth-Separation Theorem via the Tent Map"
     }

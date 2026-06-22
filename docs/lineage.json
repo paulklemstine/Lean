@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -52,7 +52,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
@@ -61,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "entropy_bounded_computation_ebc_framew",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 275
+      "hue": 95
     },
     {
       "id": "impossible_geometries_where_parallel_lines_converg",
@@ -79,7 +79,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "p_vs_np_problem",
@@ -88,7 +88,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
@@ -97,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
@@ -106,7 +106,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 100
     },
     {
       "id": "this_document_describes_five_research_conjectures_",
@@ -115,7 +115,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-09",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "self_modifying_code_that_cannot_be_stopped",
@@ -133,7 +133,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-09T15:03:34Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "tropical_compactification_of_moduli_spaces",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T15:45:33Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "logic_physics_bridge_consistency_of_physical_theor",
@@ -151,7 +151,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T15:47:22Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
@@ -160,7 +160,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09T15:49:32Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "formal_obstruction_theory_for_eml_solvability_of_l",
@@ -169,7 +169,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T17:01:57Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "formalized_bridge_between_relu_neural_network_deci",
@@ -178,7 +178,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-09T18:34:57Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "belnaps_four_is_the_smallest_non_trivial_paraconsi",
@@ -187,7 +187,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-09T18:38:15Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "cryptographic_hash_functions_collision_resistance_",
@@ -196,7 +196,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T19:54:52Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "learning_with_errors_hardness_reductions",
@@ -205,7 +205,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T19:56:17Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "diffusion_models_as_stochastic_differential_equati",
@@ -214,7 +214,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T19:57:39Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "the_exponential_decay_bound_diffusionalphabar_exp_",
@@ -223,7 +223,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T20:36:49Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "close_proofs_the_clique_complex_g_admits_a_natural",
@@ -232,7 +232,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T07:41:30Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
@@ -241,7 +241,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T07:42:32Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "quantum_error_correction_threshold_the_eastin_knil",
@@ -250,7 +250,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-10T07:42:51Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "close_proofs_close_proofs_tropical_compactificatio",
@@ -259,7 +259,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-10T07:46:48Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "algebraic_statistics_markov_bases_for_contingency_",
@@ -268,7 +268,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-10T09:30:42Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
@@ -277,7 +277,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T10:50:35Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "quasi_symmetric_maps_generalize_bi_lipschitz_maps_",
@@ -286,7 +286,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T11:38:41Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "formalize_the_paley_construction_for_any_prime_pow",
@@ -295,7 +295,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T12:15:22Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "consciousness_as_integrated_information_mathematic",
@@ -304,7 +304,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T12:15:50Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "close_proofs_stereographic_capacity_theory_packing",
@@ -313,7 +313,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T12:52:58Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "tropical_amoebas_and_ronkin_functions",
@@ -322,7 +322,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T12:53:23Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "deepening_quasi_symmetric_maps_generalize_bi_lipsc",
@@ -331,7 +331,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-10T12:53:46Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "ml_universal_approximation_width_vs_depth_trade_of",
@@ -340,7 +340,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T14:07:05Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "biological_topology_protein_folding_as_persistent_",
@@ -349,7 +349,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T14:07:33Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "tropical_differential_equations_power_series_solut",
@@ -358,7 +358,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T14:08:26Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "bridge_tropical_geometry_as_a_limit_of_classical_a",
@@ -367,7 +367,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T15:26:14Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "close_proofs_dream_logic_non_monotone_reasoning_wh",
@@ -376,7 +376,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T16:01:35Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "close_proofs_cryptographic_hash_functions_collisio",
@@ -385,7 +385,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T16:02:06Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "close_proofs_poincar_conjecture_revisited_4d_smoot",
@@ -394,7 +394,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T16:03:00Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "formally_verified_framework_computationspectralcha",
@@ -403,7 +403,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T16:38:28Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "close_proofs_deepening_quasi_symmetric_maps_genera",
@@ -412,7 +412,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T18:00:46Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "close_proofs_this_cycle_built_from_scratch_a_small",
@@ -421,7 +421,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T18:01:21Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "close_proofs_the_current_formalization_handles_0_d",
@@ -430,7 +430,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-10T18:01:58Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "close_proofs_combinatorial_categorical_bridge_spec",
@@ -439,7 +439,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T18:38:30Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "close_proofs_formalized_framework_connecting_colla",
@@ -448,7 +448,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T20:40:22Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "stereographic_neural_attention_attention_via_riema",
@@ -457,7 +457,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-10T21:59:43Z",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "chaos_and_the_three_body_problem_lyapunov_exponent",
@@ -484,7 +484,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T22:02:07Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_file_physicstopologicalordergenuslean_establis",
@@ -493,7 +493,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-10T22:02:29Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "close_proofs_proof_phase_transitions_sharp_thresho",
@@ -502,7 +502,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-10T23:48:23Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_current_ordinaltheory_framework_works_with_abs",
@@ -511,7 +511,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T01:40:39Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "the_current_framework_models_theories_by_their_set",
@@ -520,7 +520,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T02:14:52Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "linear_merkledamgrd_collision_resistance_theory",
@@ -529,7 +529,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T02:15:47Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "hilbert_6_axiomatization_of_physics",
@@ -538,7 +538,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T02:48:15Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "we_formalized_the_causal_integration_algebra_in_tw",
@@ -565,7 +565,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-11T03:21:52Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "the_bernoulli_pinsker_inequality_p___q__klberp__be",
@@ -574,7 +574,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T05:01:35Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "the_geometric_convergence_theorem_gdresidual_geome",
@@ -583,7 +583,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T05:02:31Z",
-      "hue": 359
+      "hue": 270
     },
     {
       "id": "the_file_paraconsistentlean_builds_a_fully_verifie",
@@ -592,7 +592,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-11T06:39:04Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "information_geometric_bridge_fisher_metric_on_stat",
@@ -601,7 +601,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T06:39:24Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "this_cycle_promoted_a_piece_of_proof_internal_scaf",
@@ -610,7 +610,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T06:39:41Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "close_proofs_these_directions_extend_catalogmachin",
@@ -619,7 +619,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T06:40:00Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "close_proofs_close_proofs_ml_generalization_bounds",
@@ -628,7 +628,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T07:45:04Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "close_proofs_topological_quantum_computing_braidin",
@@ -637,7 +637,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T07:45:23Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "close_proofs_foundational_analytic_infrastructure_",
@@ -646,7 +646,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T07:45:39Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "deepening_information_geometric_bridge_fisher_metr",
@@ -655,7 +655,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T08:18:05Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "neural_network_training_as_renormalization_group_f",
@@ -664,7 +664,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T08:52:53Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "integrated_information_via_tensor_networks",
@@ -673,7 +673,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T08:53:27Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "the_new_file_computationspectralchainl2operatorlea",
@@ -682,7 +682,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T09:36:36Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "the_current_framework_considers_static_observation",
@@ -691,7 +691,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T10:11:08Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "the_current_framework_establishes_qualitative_nove",
@@ -718,7 +718,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T11:20:09Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "close_proofs_formalized_bridge_between_relu_neural",
@@ -727,7 +727,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T12:05:36Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "close_proofs_close_proofs_the_current_formalizatio",
@@ -745,7 +745,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T13:36:29Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "close_proofs_this_cycle_built_from_scratch_and_sor",
@@ -754,7 +754,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T13:37:54Z",
-      "hue": 271
+      "hue": 179
     },
     {
       "id": "close_proofs_close_proofs_tropical_hodge_theory",
@@ -763,7 +763,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T14:45:08Z",
-      "hue": 95
+      "hue": 91
     },
     {
       "id": "descentsystem_abstraction_from_scratch_the_catalog",
@@ -772,7 +772,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T15:19:33Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "close_proofs_proof_theoretic_bridge_ordinal_analys",
@@ -781,7 +781,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T15:20:19Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "the_abstract_simulation_preorder_formalized_in_pro",
@@ -790,7 +790,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T15:54:06Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "this_cycle_isolated_the_structural_reason_hausdorf",
@@ -799,7 +799,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T16:28:27Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "quantum_topological_phase_computation",
@@ -826,7 +826,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T17:35:47Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "close_proofs_cobhams_theorem_1972_states_that_if_a",
@@ -835,7 +835,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T17:36:25Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "close_proofs_quantum_topological_phase_computation",
@@ -844,7 +844,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T19:10:54Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "deepening_deepening_information_geometric_bridge_f",
@@ -871,7 +871,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T21:10:33Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "close_proofs_close_proofs_the_file_physicstopologi",
@@ -880,7 +880,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T21:10:58Z",
-      "hue": 90
+      "hue": 280
     },
     {
       "id": "the_file_tropicalvaluationlimitbridgelean_formaliz",
@@ -898,7 +898,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T22:19:43Z",
-      "hue": 281
+      "hue": 275
     },
     {
       "id": "close_proofs_learning_with_errors_hardness_reducti",
@@ -907,7 +907,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T22:54:41Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "formal_foundations_for_the_logic_physics_bridge_th",
@@ -916,7 +916,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-11T22:55:02Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "temporal_logic_of_proofs_when_you_prove_something_",
@@ -925,7 +925,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T00:03:19Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "close_proofs_close_proofs_close_proofs_dream_logic",
@@ -934,7 +934,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T00:04:21Z",
-      "hue": 271
+      "hue": 101
     },
     {
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
@@ -943,7 +943,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T01:35:15Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
@@ -952,7 +952,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T03:51:59Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
@@ -961,7 +961,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:38Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "close_proofs_close_proofs_one_way_functions_existe",
@@ -970,7 +970,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:55Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
@@ -979,7 +979,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-12T04:26:56Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "rigorous_formal_framework_for_holographic_proo",
@@ -988,7 +988,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T04:27:45Z",
-      "hue": 89
+      "hue": 90
     },
     {
       "id": "the_current_formalization_uses_an_abstract_dsepora",
@@ -997,7 +997,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T04:28:20Z",
-      "hue": 272
+      "hue": 112
     },
     {
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
@@ -1015,7 +1015,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T06:05:08Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
@@ -1024,7 +1024,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T06:05:26Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
@@ -1033,7 +1033,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T06:40:28Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "close_proofs_close_proofs_cobhams_theorem_1972_sta",
@@ -1042,7 +1042,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T07:37:45Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
@@ -1051,7 +1051,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T08:13:58Z",
-      "hue": 271
+      "hue": 292
     },
     {
       "id": "the_current_formalization_establishes_the_structur",
@@ -1060,7 +1060,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T09:34:00Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "close_proofs_this_cycle_isolated_the_arithmetic_co",
@@ -1069,7 +1069,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-12T09:34:18Z",
-      "hue": 281
+      "hue": 314
     },
     {
       "id": "close_proofs_the_file_basiclean_establishes_a_full",
@@ -1078,7 +1078,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-12T09:34:39Z",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "close_proofs_bridge_stone_duality_as_a_bridge_betw",
@@ -1087,7 +1087,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T10:10:02Z",
-      "hue": 91
+      "hue": 292
     },
     {
       "id": "close_proofs_the_new_file_catalogmachinelearningpe",
@@ -1096,7 +1096,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T10:45:48Z",
-      "hue": 281
+      "hue": 280
     },
     {
       "id": "close_proofs_arithmetic_universality_in_cellular_a",
@@ -1105,7 +1105,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T10:46:10Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "close_proofs_close_proofs_formalized_bridge_betwee",
@@ -1114,7 +1114,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T11:56:43Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "close_proofs_thermodynamic_proof_system_tps_framew",
@@ -1123,7 +1123,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-12T13:48:01Z",
-      "hue": 280
+      "hue": 271
     },
     {
       "id": "the_file_prooftheoreticordinalsepsilonlean_connect",
@@ -1132,7 +1132,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-12T13:48:24Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "close_proofs_the_file_geometryfractaldimensionlean",
@@ -1141,7 +1141,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T14:23:38Z",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "12_fully_proved_theorems_zero_sorry_formalizing_th",
@@ -1150,7 +1150,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T14:24:02Z",
-      "hue": 275
+      "hue": 92
     },
     {
       "id": "the_file_catalognoveltygilbertvarshamovlean_closes",
@@ -1159,7 +1159,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T14:58:37Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "the_parametric_continuity_theorem_parametric_fixed",
@@ -1168,7 +1168,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T14:58:55Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "this_cycle_closed_the_single_open_sorry_in_bridges",
@@ -1177,7 +1177,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T14:59:16Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "close_proofs_conjecture_if_f_t_t__01_is_a_continuo",
@@ -1186,7 +1186,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T16:10:30Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "close_proofs_this_cycles_artifact_is_catalogmachin",
@@ -1195,7 +1195,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T17:39:55Z",
-      "hue": 270
+      "hue": 134
     },
     {
       "id": "the_natural_next_step_is_to_formalize_the_actual_p",
@@ -1204,7 +1204,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T18:15:51Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "reversible_computing_and_thermodynamic_efficiency",
@@ -1231,7 +1231,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-12T18:51:40Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "this_cycle_moved_the_catalogs_dream_logic_line_of_",
@@ -1240,7 +1240,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-12T19:37:08Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "rigorous_lean_4_formalization_of_provability_logic",
@@ -1249,7 +1249,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T19:37:27Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "the_file_computationeastinknilllean_isolates_the_a",
@@ -1258,7 +1258,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-12T19:37:49Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "close_proofs_formally_verified_framework_computati",
@@ -1267,7 +1267,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-12T19:38:07Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "close_proofs_belnaps_four_is_the_smallest_non_triv",
@@ -1276,7 +1276,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T21:36:12Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "self_contained_sorry_free_lean_4_formalization_of_",
@@ -1285,7 +1285,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T22:10:53Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "predicative_ordinal_analysis_fragment",
@@ -1294,7 +1294,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T22:47:06Z",
-      "hue": 314
+      "hue": 90
     },
     {
       "id": "this_cycle_opened_a_constructive_bridge_between_th",
@@ -1312,7 +1312,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T23:22:21Z",
-      "hue": 275
+      "hue": 112
     },
     {
       "id": "deepening_close_proofs_the_current_framework_consi",
@@ -1321,7 +1321,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T23:57:46Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "deepening_the_file_logiclobfixedpointlean_isolates",
@@ -1330,7 +1330,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-12T23:58:31Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "inverse_stereographic_persistence_topological_data",
@@ -1339,7 +1339,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T01:07:13Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "close_proofs_this_cycle_laid_the_missing_foundatio",
@@ -1348,7 +1348,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T01:07:34Z",
-      "hue": 280
+      "hue": 292
     },
     {
       "id": "poincar_conjecture_revisited_4d_smooth",
@@ -1357,7 +1357,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T01:42:42Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "close_proofs_this_cycle_moved_the_catalogs_dream_l",
@@ -1366,7 +1366,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-13T02:18:13Z",
-      "hue": 90
+      "hue": 89
     },
     {
       "id": "order_theoretic_core_of_the_cookreckhow_program_as",
@@ -1375,7 +1375,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T02:18:32Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "close_proofs_neural_network_training_as_renormaliz",
@@ -1384,7 +1384,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T02:53:33Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "thermodynamic_proof_erasure_landauers_principle_fo",
@@ -1393,7 +1393,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T03:27:08Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "kripke_semantic_core_of_gdellb_provability_logic",
@@ -1411,7 +1411,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T04:00:25Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "close_proofs_formal_foundations_for_the_logic_phys",
@@ -1420,7 +1420,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T04:38:21Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "the_file_tropicalmodulidimensionlean_establishes_t",
@@ -1438,7 +1438,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T05:51:53Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "close_proofs_thermodynamic_proof_erasure_landauers",
@@ -1447,7 +1447,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T06:02:16Z",
-      "hue": 314
+      "hue": 91
     },
     {
       "id": "this_cycle_was_a_cold_start_on_the_clique_complex_",
@@ -1456,7 +1456,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T07:15:55Z",
-      "hue": 270
+      "hue": 292
     },
     {
       "id": "close_proofs_the_file_cataloggeometryisingstereorg",
@@ -1465,7 +1465,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T07:47:47Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "close_proofs_algebraic_and_order_theoretic_backbon",
@@ -1474,7 +1474,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T08:36:27Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "we_have_formalized_belnaps_four_as_a_bounded_distr",
@@ -1483,7 +1483,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T09:09:07Z",
-      "hue": 134
+      "hue": 271
     },
     {
       "id": "this_cycle_isolated_the_cardinal_mechanism_behind_",
@@ -1492,7 +1492,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T09:09:25Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "close_proofs_kripke_semantic_core_of_gdellb_provab",
@@ -1501,7 +1501,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T10:52:02Z",
-      "hue": 90
+      "hue": 89
     },
     {
       "id": "deepening_this_cycle_was_a_cold_start_on_the_cliqu",
@@ -1510,7 +1510,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T10:52:19Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "close_proofs_proof_complexity_holography_geometric",
@@ -1537,7 +1537,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T10:53:26Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "this_cycle_isolated_the_rank_of_apparition_the_fib",
@@ -1546,7 +1546,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T12:18:29Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "the_foundational_file_catalogcomputationselfmodify",
@@ -1555,7 +1555,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T13:53:52Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "deepening_this_cycle_built_from_scratch_and_sorry_",
@@ -1564,7 +1564,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T15:01:29Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "from_scratch_clique_complex_theory_in",
@@ -1573,7 +1573,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-13T15:01:59Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "close_proofs_impossible_geometries_where_parallel_",
@@ -1582,7 +1582,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-13T15:33:49Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "this_cycle_isolated_the_two_engines_that_drive_eve",
@@ -1600,7 +1600,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T15:34:30Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "renormalization_fixed_points_in_transformer_in_con",
@@ -1609,7 +1609,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T16:42:17Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "close_proofs_this_cycle_deepened_the_entry_point_r",
@@ -1618,7 +1618,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T17:15:04Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "the_file_mirrorsymmetryarithmeticmirrorlean_formal",
@@ -1627,7 +1627,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-13T17:15:23Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "the_hodge_filtration_fp_on_the_complexification_of",
@@ -1636,7 +1636,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-13T17:49:13Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "the_new_file_catalogbridgeshodgeepolynomiallean_in",
@@ -1645,7 +1645,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T18:33:56Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "this_cycle_isolated_the_rank_of_apparition_rp__min",
@@ -1654,7 +1654,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T19:07:56Z",
-      "hue": 359
+      "hue": 95
     },
     {
       "id": "deepening_the_file_bridgescombinatorialspecieslean",
@@ -1663,7 +1663,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T19:42:04Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "close_proofs_the_file_bridgescombinatorialspeciesl",
@@ -1672,7 +1672,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T19:42:27Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "this_cycle_fused_two_strands_of_the_catalog_that_h",
@@ -1681,7 +1681,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T19:42:57Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "close_proofs_this_cycle_formalized_the_order_theor",
@@ -1690,7 +1690,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T19:43:24Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "this_cycle_formalized_the_fibonacci_rank_of_appari",
@@ -1699,7 +1699,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T21:04:53Z",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "this_cycle_isolated_the_entry_point_rank_of_appari",
@@ -1717,7 +1717,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T23:21:50Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "close_proofs_order_theoretic_core_of_the_cookreckh",
@@ -1726,7 +1726,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T23:54:25Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "deepening_this_cycle_isolated_the_entry_point_rank",
@@ -1735,7 +1735,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-13T23:54:47Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "deepening_the_file_applicationscombinatorialspecie",
@@ -1744,7 +1744,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T01:03:01Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "pointwise_novelty_certification_framework_of",
@@ -1753,7 +1753,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T01:37:10Z",
-      "hue": 112
+      "hue": 272
     },
     {
       "id": "close_proofs_the_file_catalogspeculativeautoresear",
@@ -1762,7 +1762,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T02:10:22Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "the_previous_cycle_established_the_hodgedeligne_e_",
@@ -1780,7 +1780,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T02:10:51Z",
-      "hue": 292
+      "hue": 90
     },
     {
       "id": "the_file_hodgespectralthresholdlean_extracts_a_rig",
@@ -1789,7 +1789,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T02:44:24Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "applicationsboltzmannbridgebottleneckstabilitylean",
@@ -1798,7 +1798,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T03:18:30Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "the_file_intersectionformslean_formalizes_the_alge",
@@ -1807,7 +1807,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T03:18:51Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "ultrametric_lipschitz_bounds_induced_by_tropical_v",
@@ -1816,7 +1816,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T03:52:58Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "nonarchimedean_triangle_inequality_for_arithmetic_",
@@ -1825,7 +1825,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T06:35:05Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "this_cycle_was_about_closing_proofs_in_the_fibonac",
@@ -1843,7 +1843,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T07:09:34Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "this_cycle_pushed_the_spectral_depth_threshold_pro",
@@ -1852,7 +1852,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T07:09:51Z",
-      "hue": 91
+      "hue": 280
     },
     {
       "id": "the_order_theoretic_core_of_the_cookreckhow_progra",
@@ -1870,7 +1870,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T07:43:46Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "this_cycle_pushed_the_catalogs_synthetic_homotopy_",
@@ -1879,7 +1879,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T08:17:09Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "close_proofs_the_catalogs_bridgescategoricaltropic",
@@ -1888,7 +1888,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T08:17:26Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "this_cycle_closed_two_of_the_standing_conjectures_",
@@ -1906,7 +1906,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T08:52:01Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "this_cycle_took_the_fibrewise_characterisation_of_",
@@ -1915,7 +1915,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T09:26:13Z",
-      "hue": 270
+      "hue": 280
     },
     {
       "id": "deepening_this_cycle_treated_the_rank_of_apparitio",
@@ -1933,7 +1933,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-14T10:36:02Z",
-      "hue": 272
+      "hue": 100
     },
     {
       "id": "applicationsboltzmannbridgeinterleavingquotientlea",
@@ -1942,7 +1942,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T11:03:09Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "the_previous_cycle_established_the_spectral_depth_",
@@ -1951,7 +1951,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T12:10:32Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "close_proofs_applicationsboltzmannbridgeinterleavi",
@@ -1960,7 +1960,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T12:44:54Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "close_proofs_topological_error_correcting_codes_fr",
@@ -1978,7 +1978,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T13:19:34Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "this_cycle_delivered_fibcarmichaelstructurelean_a_",
@@ -1987,7 +1987,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T13:19:53Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "this_cycle_did_two_things_first_it_repaired_and_re",
@@ -1996,7 +1996,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T13:53:53Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "applicationsboltzmannbridgeinterleavingclosurelean",
@@ -2005,7 +2005,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T14:28:39Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "deepening_this_cycle_delivered_fibcarmichaelstruct",
@@ -2014,7 +2014,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-14T15:02:58Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "close_proofs_this_cycle_hardened_the_foundation_th",
@@ -2059,7 +2059,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T16:17:09Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "close_proofs_the_catalogs_smoothpoincare_files_dev",
@@ -2068,7 +2068,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T16:50:48Z",
-      "hue": 281
+      "hue": 90
     },
     {
       "id": "close_proofs_this_cycle_delivered_catalogbridgesap",
@@ -2077,7 +2077,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T18:01:07Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "deepening_applicationsboltzmannbridgeinterleavingi",
@@ -2086,7 +2086,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T18:34:22Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "deepening_applicationsboltzmannbridgeinterleavingg",
@@ -2095,7 +2095,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-14T19:09:21Z",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "bridge_ix_interleavinggeodesiclean_turned_the_pers",
@@ -2113,7 +2113,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-14T22:46:23Z",
-      "hue": 90
+      "hue": 95
     },
     {
       "id": "the_catalogs_synthetic_hott_layer_cataloglogichott",
@@ -2122,7 +2122,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T00:19:27Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "this_cycle_rebuilt_the_discrete_hodge_program_on_a",
@@ -2131,7 +2131,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T00:54:22Z",
-      "hue": 270
+      "hue": 112
     },
     {
       "id": "the_persistence_stability_arc_of_the_catalog_climb",
@@ -2140,7 +2140,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T01:24:57Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "a_functorial_tropical_lower_bound_for_rips_connect",
@@ -2149,7 +2149,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T04:39:35Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "functorial_comparison_between_neural_observation_p",
@@ -2158,7 +2158,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T06:29:38Z",
-      "hue": 271
+      "hue": 95
     },
     {
       "id": "in_catalogbridgescategoricaltropicalripsinterleavi",
@@ -2167,7 +2167,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-15T09:01:32Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "this_cycle_rebuilds_the_discrete_hodge_program_on_",
@@ -2176,7 +2176,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T09:03:02Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "close_proofs_functorial_comparison_between_neural_",
@@ -2185,7 +2185,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T10:37:54Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "this_cycle_established_in_catalogbridgescategorica",
@@ -2194,7 +2194,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T10:38:25Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "intersection_form_classification_pipeline_via_self",
@@ -2212,7 +2212,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T13:41:52Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "these_directions_extend_the_ordegf_bridge_in",
@@ -2221,7 +2221,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-15T13:42:09Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "self_dual_code_length_enumerators_as_a_bridge_to_s",
@@ -2239,7 +2239,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T19:57:54Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "derived_from_the_v16b_research_cycle_that_produced",
@@ -2248,7 +2248,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-15T20:39:42Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "rips_graph_monotonicity_as_a_functor_into_tropical",
@@ -2266,7 +2266,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T00:26:31Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "follow_up_conjectures_arising_from_catalogbridgesv",
@@ -2275,7 +2275,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-16T01:42:07Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "catalogbridgesfunctorialtropicalpythagoreanlean_0_",
@@ -2284,7 +2284,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T03:36:32Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "derived_from_this_cycles_findings_in_corelean_and_",
@@ -2293,7 +2293,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T04:13:21Z",
-      "hue": 90
+      "hue": 89
     },
     {
       "id": "follow_up_conjectures_arising_from_catalogbridgesr",
@@ -2311,7 +2311,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T04:49:50Z",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "tropical_weight_enumerator_profiles_for_binary_lin",
@@ -2320,7 +2320,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T07:28:28Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "functor_from_finite_linear_codes_to_tropical_valua",
@@ -2329,7 +2329,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T08:06:20Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "combinatorial_species_exponential_generating_funct",
@@ -2338,7 +2338,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T10:37:04Z",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "deepening_functor_from_finite_linear_codes_to_trop",
@@ -2347,7 +2347,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T10:39:06Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "these_directions_continue_the_vietorisrips__tropic",
@@ -2356,7 +2356,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-16T11:25:40Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "deepening_catalogbridgesfunctorialtropicalpythagor",
@@ -2365,7 +2365,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T13:27:44Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "the_borsuk_ulam_theorem_implies_arrows_impossibili",
@@ -2374,7 +2374,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-16T15:41:01Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "diophantine_approximation_on_neural_networks_how_w",
@@ -2383,7 +2383,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T16:18:02Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "eml_single_operator_church_turing_thesis",
@@ -2401,7 +2401,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-16T20:27:04Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "cellular_automata_at_the_ordinals_transfinite_comp",
@@ -2410,7 +2410,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-16T20:27:36Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "tangled_hierarchies_proof_systems_that_reference_t",
@@ -2419,7 +2419,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-17T03:35:38Z",
-      "hue": 95
+      "hue": 275
     },
     {
       "id": "vampire_numbers_and_other_numerical_monsters_a_bes",
@@ -2428,7 +2428,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-17T04:31:49Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "causal_loops_in_category_theory_when_composition_l",
@@ -2437,7 +2437,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-17T05:04:14Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "non_well_founded_proofs_proofs_that_reference_them",
@@ -2446,7 +2446,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-17T05:40:37Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "fractal_number_theory_hausdorff_dimension_of_prime",
@@ -2455,7 +2455,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-17T05:41:29Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "the_hodge_conjecture_for_neural_networks_algebraic",
@@ -2464,7 +2464,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-17T06:17:30Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "paradoxes_as_theorems_liar_berry_and_russell_made_",
@@ -2473,7 +2473,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-17T07:30:08Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "the_riemann_roch_theorem_for_graphs_chip_firing_an",
@@ -2482,7 +2482,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-17T08:41:54Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "the_mathematics_of_memes_viral_information_topolog",
@@ -2500,7 +2500,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-17T10:23:42Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "mind_vs_gdel_can_minds_outperform_algorithms",
@@ -2509,7 +2509,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-17T10:24:10Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "counterfactual_number_theory_what_if_primes_were_r",
@@ -2518,7 +2518,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-17T10:58:31Z",
-      "hue": 95
+      "hue": 112
     },
     {
       "id": "the_spectral_gap_of_sudoku_when_puzzles_become_pha",
@@ -2527,7 +2527,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-17T13:01:54Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "phantom_topologies_spaces_that_change_when_you_loo",
@@ -2536,7 +2536,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-17T13:03:49Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "the_fermi_paradox_as_a_pigeonhole_principle_why_we",
@@ -2545,7 +2545,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-17T19:24:11Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "hypergraph_ramsey_theory_beyond_graphs",
@@ -2554,7 +2554,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-17T19:26:26Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "crystallographic_groups_and_music_the_17_wallpaper",
@@ -2563,7 +2563,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-18T04:07:18Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "scaling_laws_from_statistical_mechanics",
@@ -2572,7 +2572,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-18T06:02:32Z",
-      "hue": 270
+      "hue": 100
     },
     {
       "id": "tropical_curve_counting_gromov_witten_invariants",
@@ -2581,7 +2581,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-18T08:35:24Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "proof_automation_custom_lean_4_tactics",
@@ -2590,7 +2590,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-18T21:04:56Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "topological_quantum_compiling_braid_groups_as_univ",
@@ -2599,7 +2599,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-19T06:46:45Z",
-      "hue": 314
+      "hue": 271
     },
     {
       "id": "non_archimedean_probability_via_surreal_numbers",
@@ -2617,7 +2617,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-19T12:16:58Z",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "birch_and_swinnerton_dyer_conjecture",
@@ -2635,7 +2635,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-19T17:15:27Z",
-      "hue": 100
+      "hue": 272
     },
     {
       "id": "sheaf_theoretic_data_integration_when_databases_fo",
@@ -2644,7 +2644,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-20T04:53:23Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "tropical_cryptography_min_plus_encryption_with_tro",
@@ -2671,7 +2671,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-20T06:49:46Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "close_proofs_these_conjectures_continue_the_resear",
@@ -2689,7 +2689,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-20T09:33:29Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "semiprime_cyclotomic_transfer_for_square_sided_dic",
@@ -2698,7 +2698,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-20T10:18:38Z",
-      "hue": 134
+      "hue": 92
     },
     {
       "id": "topological_generalization_bounds_for_deep_learnin",
@@ -2707,7 +2707,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-20T11:03:07Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "linear_recurrence_for_coefficients_of_ramanujans_t",
@@ -2716,7 +2716,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-20T14:31:22Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "necessary_threshold_for_cubic_generalized_turn_gro",
@@ -2725,7 +2725,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-20T16:14:05Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "formalizing_graph_linear_notation_in_lean_4",
@@ -2734,7 +2734,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-20T19:32:10Z",
-      "hue": 314
+      "hue": 134
     },
     {
       "id": "universal_approximation_quantitative_bounds",
@@ -2752,7 +2752,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-20T22:48:00Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "the_library_of_babel_combinatorics_of_the_universa",
@@ -2761,7 +2761,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-21T00:35:48Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "bounded_tree_independence_in_k_1d_free_graphs_excl",
@@ -2779,7 +2779,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-21T02:26:28Z",
-      "hue": 101
+      "hue": 90
     },
     {
       "id": "alien_mathematics_non_standard_arithmetic",
@@ -2797,7 +2797,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-21T03:57:07Z",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "fixed_partial_latin_patterns_occur_with_asymptotic",
@@ -2806,7 +2806,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-21T07:11:47Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "lattice_cryptography_lwe_hardness",
@@ -2815,7 +2815,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-21T07:20:42Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "constructive_mathematics_bishops_analysis",
@@ -2824,7 +2824,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-21T10:38:19Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "graph_coloring_chromatic_polynomial_theory",
@@ -2833,7 +2833,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-21T13:28:04Z",
-      "hue": 100
+      "hue": 91
     },
     {
       "id": "derived_from_the_verified_lean_results_in",
@@ -2842,7 +2842,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-21T14:56:05Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "derived_from_the_phase_a_cycle_that_produced_fitne",
@@ -2851,7 +2851,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-21T17:51:31Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "linear_twin_width_bound_for_finite_posets_of_bound",
@@ -2869,7 +2869,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-21T20:11:21Z",
-      "hue": 112
+      "hue": 270
     },
     {
       "id": "quantum_thermodynamics_landauers_principle_at_the_",
@@ -2878,7 +2878,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-21T20:31:18Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "normalization_functor_into_the_probability_simplex",
@@ -2887,7 +2887,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-21T21:45:08Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "ramsey_theory_bounds_and_constructions",
@@ -2896,7 +2896,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-21T22:44:05Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "complexitydriven_emergence_of_spacetime_from_rando",
@@ -2914,7 +2914,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-22T01:51:03Z",
-      "hue": 272
+      "hue": 280
     },
     {
       "id": "the_ebc_framework_now_spans_three_files_with_0_sor",
@@ -2923,7 +2923,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-22T03:50:31Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "uniqueness_of_minimal_median_decompositions_for_gr",
@@ -2932,16 +2932,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-22T06:07:54Z",
-      "hue": 271
-    },
-    {
-      "id": "the_file_basiclean_establishes_a_fully_formal_axio",
-      "title": "The Folded Ruler: A Sharp ReLU Depth-Separation Theorem via the Tent Map",
-      "domain": "Novelty",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-22T07:24:25Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "riemann_zeta_zero_free_regions_and_density_estimat",
@@ -2950,7 +2941,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-22T09:01:13Z",
-      "hue": 270
+      "hue": 271
+    },
+    {
+      "id": "the_file_basiclean_establishes_a_fully_formal_axio",
+      "title": "The Folded Ruler: A Sharp ReLU Depth-Separation Theorem via the Tent Map",
+      "domain": "Novelty",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-22T09:38:41Z",
+      "hue": 91
     }
   ],
   "edges": [

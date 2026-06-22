@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e72864d5",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Fibonacci ranks of apparition & primitive prime divisors\n\nThis cycle established a fully-formalized rank-of-apparition toolkit\n(`Catalog/Speculative/AutoResearch/FibonacciPrimiti",
-      "quality_score": 0.35638045714285715,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-16T02:59:07",
-      "title": "These conjectures extend the results formalized in"
-    },
-    {
       "cycle_id": "3fd7a316",
       "domain": "Probability",
       "key_insight": "# FUTURE DIRECTIONS — Functorial Tropical Ultrametric from Pythagorean Lorentz Triples\n\nThis cycle produced two compiling, `sorry`-free Lean files (standard axioms only):\n\n- `Catalog/Bridges/Functoria",
@@ -2501,6 +2491,16 @@
       "theorem_count": 132,
       "timestamp": "2026-06-22T09:05:18",
       "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
+    },
+    {
+      "cycle_id": "032896b2",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — Pythagorean Triples in Z[i]\n\nDerived from the v19d research cycle in `Logic/GaussianPythagorean.lean` and\n`Logic/GaussianQuaternionBridge.lean`. Each conjecture is bold and falsi",
+      "quality_score": 0.547645269003818,
+      "sorry_count": 0,
+      "theorem_count": 150,
+      "timestamp": "2026-06-22T09:42:33",
+      "title": "Pythagorean Triples in Gaussian Integers"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T09:05:18",
+  "last_updated": "2026-06-22T09:42:33",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "03edad6d",
-        "quality": 0.5057485714285714,
-        "theorems": 28,
-        "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
-      },
-      {
         "cycle_id": "728f60d4",
         "quality": 0.4504,
         "theorems": 7,
@@ -3513,6 +3507,12 @@
         "quality": 0.52278,
         "theorems": 129,
         "title": "Derived from the Phase A cycle that produced `Fitness.lean`,"
+      },
+      {
+        "cycle_id": "032896b2",
+        "quality": 0.547645269003818,
+        "theorems": 150,
+        "title": "Pythagorean Triples in Gaussian Integers"
       }
     ],
     "MachineLearning": [
