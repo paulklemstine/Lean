@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-22T21:21:12.729699+00:00",
+  "last_updated": "2026-06-22T21:59:42.763519+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -258,6 +258,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-22T21:21:12.524965+00:00",
       "title": "Idempotent Probability: Large Deviations"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4711,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Pythagorean",
+      "duration_seconds": 5479.0988602638245,
+      "end_time": 1782164746.953628,
+      "files_integrated": 3,
+      "job_id": "59a725d3",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v15",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v15",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.5811,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.4535,
+        "novelty": 0.77,
+        "proof_depth": 0.3178,
+        "usefulness": 0.6089
+      },
+      "quality_score": 0.36443276190476187,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782159267.8547678,
+      "strategy_count": 0,
+      "theorem_count": 2,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 2,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-22T21:59:42.496591+00:00",
+      "title": "Projective Fra\u00efss\u00e9 Metrization Conjecture for Universal Minimal Flows"
     }
   ]
 }

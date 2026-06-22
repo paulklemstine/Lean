@@ -3895,7 +3895,7 @@
       "Kud3",
       "Kud4"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3633d0c1",
     "description": "This conjecture relates the modular height of a Shimura variety to the logarithmic derivative of its Hecke L-function, quantifying how arithmetic intersection data control the height structure via comparison with derivative estimates.",
     "domain_bridges": [
       "arXiv preprint category",
@@ -3911,7 +3911,7 @@
     "proof_strategy": "Construct model where logarithmic derivatives control intersection data and derive height bounds via automorphic projections.",
     "research_mode": "team",
     "source_exp_id": "2606.18579v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T17:21:57.064265+00:00",
     "title": "Modular heights of units and Shimura varieties over CM fields"
   },
@@ -7332,6 +7332,35 @@
     "title": "Bounded Tree-Independence Number of P_k and K_{d,d}-Free Graphs"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Universal minimal flows",
+      "Projective Fraisse categories",
+      "Approximate Ramsey property",
+      "Kechris-Pestov-Todorcevic correspondence"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extends the paper's characterization of extreme amenability via the Approximate Ramsey Property (ARP) to characterize metrizable universal minimal flows. Specifically, conjectures that a projective Fraisse category F corresponding to a closed subgroup G of Homeo(F) has a Metrizable Approximate Ramsey Property (MARP) if and only if the universal minimal flow of G is metrizable.",
+    "domain_bridges": [
+      "Combinatorics",
+      "General topology",
+      "Topological group theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2272",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the Metrizable Approximate Ramsey Property for projective Fraisse categories by quantifying over metric structures and finite partitions. Then, adapt the paper's proof strategy to show that MARP holds if and only if the universal minimal flow is metrizable, drawing parallels to the known KPT extension for non-archimedean groups where metric Ramsey properties characterize metrizable UMFs.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T22:01:03.918480+00:00",
+    "title": "Metrizable Approximate Ramsey Property for Projective Fraisse Categories"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -10531,7 +10560,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d4c907e",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [
@@ -10544,7 +10573,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -11304,7 +11333,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bfb13379",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -11317,7 +11346,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -11964,7 +11993,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e34371e",
     "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
     "domain_bridges": [],
     "domains": [
@@ -11977,7 +12006,7 @@
     "proof_strategy": "Given an n-player game G with strategy sets S_1, ..., S_n. Define the simplex Delta = {(p_1, ..., p_n) : p_i in Delta(S_i), sum p_i = 1}. Define Sperner coloring c: Delta -> {1, ..., n} by c(v) = i where i = argmax_j BR_i(v)_j (player i's best response to v has highest probability on strategy j). Boundary condition: if v is on the face where p_i = 0, then c(v) != i (a player with zero probability cannot have a best response there). Wait, the correct boundary condition is: if v is on the face where v_i = 0, then c(v) is not i. Sperner's lemma: there exists at least one fully colored simplex (with all colors 1, ..., n). The center of this simplex is an epsilon-Nash equilibrium where epsilon depends on the mesh size of the triangulation. As mesh -> 0, epsilon -> 0, giving an exact Nash equilibrium. Algorithm: triangulate Delta with mesh epsilon, color vertices by best responses, find fully colored simplex by Sperner's lemma (using the path-following algorithm). Complexity: O((1/epsilon)^{n-1} * |S|) per iteration. Test: implement for 2x2 games (Matching Pennies, Prisoner's Dilemma, Battle of the Sexes). Verify that the algorithm finds the unique Nash equilibrium.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.676713+00:00",
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
