@@ -299,7 +299,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Baum-Connes Conjecture"
   },
   {
-    "consumed_by_exp_id": "c3a3db57",
+    "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domains": [
       "NumberTheory",
@@ -309,7 +309,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -2279,7 +2279,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b27cec0f",
     "description": "For every integer r\u22652 there exists a constant C>0 such that for all sufficiently large n the maximum number of edges in an n\u2011vertex r\u2011uniform hypergraph in which each (r+1)-set spans exactly 0 or 2 edges is at least C\u00b7n^r / r\u00b3, and no such hypergraph can have more than C'\u00b7n^r / r\u00b2 edges. Equivalently, the Tur\u00e1n density \u03c0(H^r_3)=\u0398(1/r\u00b3).",
     "domains": [
       "Pythagorean"
@@ -2288,7 +2288,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T21:56:09.924073+00:00",
     "title": "Conjecture: Tur\u00e1n density of the 3\u2011edge r\u2011graph is \u0398(1/r\u00b3)"
   },
@@ -3603,6 +3603,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p\u00b2 sides and one die with q\u00b2 sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2216",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:19:14.551818+00:00",
+    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The maximum asymptotic density of an n-vertex r-graph in which every (r+1)-set spans exactly 0 or 2 edges is \u0398(r^{-2}) as r \u2192 \u221e. Specifically, there exists an absolute constant c > 0 such that for every r \u2265 2 and all sufficiently large n, there exists an r-graph on n vertices where every (r+1)-set spans 0 or 2 edges, with at least c/r\u00b2 \u00b7 C(n,r) edges. This would improve the \u03a9(r^{-3}) construction in the paper and match the conjectured optimal order, complementing the trivial O(r^{-1}) upper bound from de Caen's double-counting argument.",
     "domains": [
       "Pythagorean",
@@ -3633,32 +3648,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p\u00b2 sides and one die with q\u00b2 sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2219",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
-    "status": "available",
-    "timestamp": "2026-06-22T05:19:14.551818+00:00",
-    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Let n > 2k \u2265 2 be positive integers. If F, G \u2286 ([n] choose k) are cross-intersecting families (every F \u2208 F intersects every G \u2208 G), and neither F nor G is a star (i.e., \u2204x with x \u2208 \u22c2F, and \u2204y with y \u2208 \u22c2G), then |F| \u00b7 |G| \u2264 (C(n-1,k-1) - C(n-k-1,k-1) + 1)\u00b2. Equality holds if and only if (F, G) is isomorphic to (HM_{n,k}, HM_{n,k}), where HM_{n,k} = {[2,k+1]} \u222a {H \u2208 C([n],k) : 1 \u2208 H \u2227 H \u2229 [2,k+1] \u2260 \u2205} is the Hilton-Milner family.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2220",
+    "id": "fd_2218",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
     "status": "available",
     "timestamp": "2026-06-22T07:30:44.481020+00:00",
     "title": "Product Hilton-Milner Bound for Cross-Intersecting Families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the spectral family of level-one cuspidal automorphic representations on PGL(3) with Langlands parameters in generic position of size T, the second moment of central symmetric square L-values satisfies the asymptotic formula: the spectral average of |L(1/2, \u03c0, sym\u00b2)|\u00b2 equals C\u2082 \u00b7 vol_spec(h) \u00b7 log(\u2016\u03bc\u0303\u2016)(1 + o(1)) as \u2016\u03bc\u0303\u2016 \u2192 \u221e, where C\u2082 is an explicit positive constant and vol_spec(h) is the spectral volume. This extends the paper's first moment result and is consistent with the random matrix model prediction for a unitary ensemble of degree-6 L-functions, where the logarithmic factor arises from the diagonal contribution of the Rankin-Selberg L-function pole at s=1.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2219",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19959v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:58:43.167662+00:00",
+    "title": "Second Moment Asymptotic for Symmetric Square L-functions on GL(3)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let K be a field of characteristic p > 0, let f(x) \u2208 K[x] be a monic irreducible polynomial with separable presentation f(x) = f^sep(x^{p^n}), and let L = K[x]/(f(x)). If m_f denotes the numerical field invariant defined via the coefficients of f (as in Definition 1 of the referenced paper), then the degree of L over the compositum L^{pi} \u00b7 L^{sep} is given by [L : L^{pi} \u00b7 L^{sep}] = p^{n - m_f}. In particular, L = L^{pi} \u00b7 L^{sep} if and only if m_f = n.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2219",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19962v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:59:13.569422+00:00",
+    "title": "Degree Formula for the Compositum of Maximal Purely Inseparable and Separable Subfields"
   },
   {
     "consumed_by_exp_id": "",
@@ -4746,7 +4775,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization of Reasoning: Phase Transitions in Theorem-Proving Complexity"
   },
   {
-    "consumed_by_exp_id": "3d0b9aaa",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -4755,7 +4784,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T01:05:26.622326+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },

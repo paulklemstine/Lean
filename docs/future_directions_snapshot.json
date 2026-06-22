@@ -398,7 +398,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c3a3db57",
+    "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -411,7 +411,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -3451,7 +3451,7 @@
       "Gunderson and Semeraro (2017) – explicit 4‑graph construction matching upper bound",
       "Baber and Talbot (2011) – flag algebra upper bound for K_4^- (r=3)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b27cec0f",
     "description": "For every integer r≥2 there exists a constant C>0 such that for all sufficiently large n the maximum number of edges in an n‑vertex r‑uniform hypergraph in which each (r+1)-set spans exactly 0 or 2 edges is at least C·n^r / r³, and no such hypergraph can have more than C'·n^r / r² edges. Equivalently, the Turán density π(H^r_3)=Θ(1/r³).",
     "domain_bridges": [
       "Extremal hypergraph theory",
@@ -3467,7 +3467,7 @@
     "proof_strategy": "Use a probabilistic construction placing n points uniformly on the unit sphere S^{r-2} and declaring an r‑set an edge iff its convex hull contains the origin; analyze the probability that a random (r+1)-set spans 0 or 2 edges, then apply entropy compression or hypergraph container methods to show any such hypergraph cannot exceed O(n^r / r²) edges, yielding the Θ(1/r³) density conjecture.",
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T21:56:09.924073+00:00",
     "title": "Conjecture: Turán density of the 3‑edge r‑graph is Θ(1/r³)"
   },
@@ -5933,6 +5933,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Chao, Gabel, Larson, and Nasr (dice relabeling via cyclotomic polynomials)",
+      "Gallian and Rusin (existence of nonstandard dice solutions)",
+      "Sicherman dice (unique 6-sided dice solution)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p² sides and one die with q² sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
+    "domain_bridges": [
+      "generating functions",
+      "cyclotomic polynomials",
+      "algebraic combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2216",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the factorization of the frequency polynomial F(x) = (∑_{i=1}^m x^i)² = x²((x^m-1)/(x-1))² using cyclotomic decomposition. Show that any valid factorization into two polynomials P₁(x) and P₂(x) where P₁(1) = p² and P₂(1) = q² requires m to have a specific square-free factorization structure. Use properties of cyclotomic polynomials Φ_d(x) and their evaluations at x=1 to establish necessary divisibility conditions that cannot be satisfied when m is not a perfect square.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T05:19:14.551818+00:00",
+    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.CO",
       "Frankl-Furedi-1984",
       "de-Caen-1983"
@@ -5989,34 +6017,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
-      "Chao, Gabel, Larson, and Nasr (dice relabeling via cyclotomic polynomials)",
-      "Gallian and Rusin (existence of nonstandard dice solutions)",
-      "Sicherman dice (unique 6-sided dice solution)"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For any positive integer m that is not a perfect square, there does not exist a pair of dice consisting of one die with p² sides and one die with q² sides (where p and q are positive integers) that produces the same sum frequency distribution as two standard m-sided dice. This conjecture generalizes the cyclotomic polynomial approach to dice relabeling by asserting that the generating function factorization required for such square-sided solutions cannot exist when m lacks square structure.",
-    "domain_bridges": [
-      "generating functions",
-      "cyclotomic polynomials",
-      "algebraic combinatorics"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2219",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Analyze the factorization of the frequency polynomial F(x) = (∑_{i=1}^m x^i)² = x²((x^m-1)/(x-1))² using cyclotomic decomposition. Show that any valid factorization into two polynomials P₁(x) and P₂(x) where P₁(1) = p² and P₂(1) = q² requires m to have a specific square-free factorization structure. Use properties of cyclotomic polynomials Φ_d(x) and their evaluations at x=1 to establish necessary divisibility conditions that cannot be satisfied when m is not a perfect square.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
-    "status": "available",
-    "timestamp": "2026-06-22T05:19:14.551818+00:00",
-    "title": "Nonexistence of Square-Sided Dice Solutions for Non-Square Orders"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
       "math.CO",
       "Erdős-Ko-Rado",
       "Hilton-Milner",
@@ -6033,7 +6033,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2220",
+    "id": "fd_2218",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the S_{U,V}^Q-shift method introduced in the paper to reduce to shifted families, then apply diversity-based structural decomposition. The key steps are: (1) Show the S_{U,V}^Q-shift does not decrease |F|·|G| for cross-intersecting pairs, (2) Analyze the diversity structure of extremal pairs using the cross-intersecting analogue of Kupavskii's theorem established in the paper, (3) Show that if both families have positive diversity, the product is bounded by |HM_{n,k}|², (4) Verify uniqueness of the extremal configuration via stability arguments.",
@@ -6042,6 +6042,63 @@
     "status": "available",
     "timestamp": "2026-06-22T07:30:44.481020+00:00",
     "title": "Product Hilton-Milner Bound for Cross-Intersecting Families"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "11F66",
+      "11F72",
+      "11M41"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the spectral family of level-one cuspidal automorphic representations on PGL(3) with Langlands parameters in generic position of size T, the second moment of central symmetric square L-values satisfies the asymptotic formula: the spectral average of |L(1/2, π, sym²)|² equals C₂ · vol_spec(h) · log(‖μ̃‖)(1 + o(1)) as ‖μ̃‖ → ∞, where C₂ is an explicit positive constant and vol_spec(h) is the spectral volume. This extends the paper's first moment result and is consistent with the random matrix model prediction for a unitary ensemble of degree-6 L-functions, where the logarithmic factor arises from the diagonal contribution of the Rankin-Selberg L-function pole at s=1.",
+    "domain_bridges": [
+      "Random Matrix Theory",
+      "Representation Theory of GL_n",
+      "Harmonic Analysis on Reductive Groups"
+    ],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2219",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the GL(3) Kuznetsov spectral decomposition to handle the second moment. The diagonal contribution should yield the main term via a double application of the asymmetric approximate functional equation, producing a logarithm from the pole of ζ(s) at s=1 in the resulting Rankin-Selberg integral. The essential difficulty is controlling the off-diagonal terms: pairs (π, π') with π ≠ π' contribute via L(s, π ⊗ π̃'), requiring subconvexity bounds for GL(3)×GL(3) Rankin-Selberg L-functions and stationary phase analysis of the GL(3) Bessel integral transforms. The spectral large sieve on GL(3) should bound the off-diagonal below the main term, but the current state of GL(3) harmonic analysis makes this a formidable obstacle.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19959v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:58:43.167662+00:00",
+    "title": "Second Moment Asymptotic for Symmetric Square L-functions on GL(3)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.RA",
+      "math.NT",
+      "12F05",
+      "12F10",
+      "12F15"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let K be a field of characteristic p > 0, let f(x) ∈ K[x] be a monic irreducible polynomial with separable presentation f(x) = f^sep(x^{p^n}), and let L = K[x]/(f(x)). If m_f denotes the numerical field invariant defined via the coefficients of f (as in Definition 1 of the referenced paper), then the degree of L over the compositum L^{pi} · L^{sep} is given by [L : L^{pi} · L^{sep}] = p^{n - m_f}. In particular, L = L^{pi} · L^{sep} if and only if m_f = n.",
+    "domain_bridges": [
+      "algebra.field_theory",
+      "algebra.polynomial",
+      "algebra.separable"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2219",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the numerical invariant m_f in terms of the coefficients of f(x) = Σ λ_i x^{ip^n} in its separable presentation. Then establish that L^{pi} = K(θ^{p^{m_f}}) where θ is the class of x in L, and compute the tower of degrees [L : L^{sep}] = p^n, [L^{pi} : K] = p^{m_f}, [L^{pi}L^{sep} : L^{sep}] = p^{m_f}, yielding [L : L^{pi}L^{sep}] = p^n / p^{m_f} = p^{n - m_f}. The equivalence L = L^{pi} · L^{sep} ↔ m_f = n follows immediately since the degree equals 1 iff n = m_f.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19962v1",
+    "status": "available",
+    "timestamp": "2026-06-22T07:59:13.569422+00:00",
+    "title": "Degree Formula for the Compositum of Maximal Purely Inseparable and Separable Subfields"
   },
   {
     "ambition_level": "extension",
@@ -7496,7 +7553,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3d0b9aaa",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -7508,7 +7565,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T01:05:26.622326+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
