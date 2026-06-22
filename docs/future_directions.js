@@ -4247,12 +4247,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any intersecting family F of k-element subsets of [n] with n > 10k, the number of distinct symmetric differences formed by pairs of sets in F is at most the sum of binomial coefficients sum_{l=0}^{k-1} binom(n-1, 2l).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2265",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20043v1",
+    "status": "available",
+    "timestamp": "2026-06-22T20:56:59.763502+00:00",
+    "title": "Frankl-Kiselev-Kupavskii Symmetric Difference Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every continuum F arising as a quotient of a projective Fra\u00efss\u00e9 limit \ud835\udd3d with Aut(\ud835\udd3d) dense in Homeo(F), the universal minimal flow M(Homeo(F)) is either a singleton (i.e., Homeo(F) is extremely amenable) or is non-metrizable. This would generalize the pseudo-solenoid result and establish that no intermediate case exists where the universal minimal flow is metrizable but non-trivial.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2265",
+    "id": "fd_2266",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
@@ -4266,7 +4281,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2266",
+    "id": "fd_2267",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -4281,7 +4296,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2267",
+    "id": "fd_2268",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -4295,13 +4310,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2268",
+    "id": "fd_2269",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20494v1",
     "status": "available",
     "timestamp": "2026-06-22T20:38:24.674188+00:00",
     "title": "Strong non-principality of positive codegree density for arbitrary family sizes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any positive integers k and d, the class of graphs that do not contain the path graph P_k or the complete bipartite graph K_{d,d} as induced subgraphs has bounded tree-independence number.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2270",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-22T20:57:44.209742+00:00",
+    "title": "Bounded Tree-Independence Number of P_k and K_{d,d}-Free Graphs"
   },
   {
     "consumed_by_exp_id": "",
