@@ -4,6 +4,20 @@ import httpx
 from pi_agent_client import PiAgentClient
 
 
+@pytest.fixture(autouse=True)
+def _isolate_circuit_breaker(monkeypatch):
+    """Force the Pollinations circuit breaker to CLOSED for these fallback-chain
+    tests so they are not affected by persisted OPEN state from real daemon usage
+    (the breaker skips Pollinations when OPEN, which would break the mock-call
+    assertions). Also no-op _save_cb_state so the tests never write to the real
+    pollinations_pollen_state.json."""
+    monkeypatch.setattr(
+        PiAgentClient, "_load_cb_state",
+        lambda self: {"state": "CLOSED", "consecutive_402": 0, "opened_at": 0.0},
+    )
+    monkeypatch.setattr(PiAgentClient, "_save_cb_state", lambda self, updates: None)
+
+
 def test_no_fallback_if_pollinations_succeeds():
     client = PiAgentClient(
         use_ollama=False,
