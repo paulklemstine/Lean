@@ -1083,26 +1083,51 @@ class FutureDirectionsManager:
         self._record_selection_category(consumed_category)
         self._save()
 
-    def reconcile_in_progress(self, active_direction_keys: Set[str]) -> int:
+    def reconcile_in_progress(self, active_jobs) -> int:
         """Reconcile direction statuses so in_progress reflects the true state of
-        active inflight jobs at tick end. For every direction consumed by an active
-        job (keyed by job_id, or job.retry_of for retries), force status=in_progress.
+        active inflight jobs at tick end.
 
-        Fixes three gaps: (1) 'preparing' jobs whose direction wasn't yet marked
-        in_progress, (2) retry jobs whose direction was left completed/failed by the
-        original attempt (keyed by retry_of), (3) sync lag between inflight_jobs.json
-        and future_directions.json. Stale in_progress with no active job is handled
-        separately by recover_stale_directions at tick start.
+        active_jobs: iterable of (job_id, direction_id, retry_of) tuples for each
+        active inflight job (preparing/dispatched/retry_queued).
 
-        active_direction_keys = {job.retry_of or job.job_id for each active inflight job}.
-        Returns the number of directions flipped to in_progress.
+        For each active job:
+          - If it has a direction_id, locate that direction and force it to
+            in_progress with consumed_by_exp_id = (retry_of or job_id). This
+            re-establishes the link for retries whose direction was released or
+            never linked — retry-queued dispatches skip mark_direction_consumed,
+            so without this the running retry has no in_progress direction.
+          - Else fall back to the consumed_by_exp_id key: any direction whose
+            consumed_by_exp_id matches (retry_of or job_id) is forced in_progress.
+
+        Stale in_progress with no active job is cleared by recover_stale_directions
+        at tick start. Returns the number of directions flipped to in_progress.
         """
+        active_keys = set()
+        dir_to_key = {}  # direction_id -> (retry_of or job_id)
+        for tup in active_jobs:
+            # tolerate 2- or 3-tuples and bare strings
+            if isinstance(tup, str):
+                job_id, direction_id, retry_of = tup, None, None
+            else:
+                job_id = tup[0] if len(tup) > 0 else None
+                direction_id = tup[1] if len(tup) > 1 else None
+                retry_of = tup[2] if len(tup) > 2 else None
+            key = retry_of or job_id
+            if key:
+                active_keys.add(key)
+            if direction_id:
+                dir_to_key[direction_id] = key
+
         reconciled = 0
         for d in self._directions:
-            if d.consumed_by_exp_id and d.consumed_by_exp_id in active_direction_keys:
-                if d.status != "in_progress":
-                    d.status = "in_progress"
-                    reconciled += 1
+            if d.id in dir_to_key and d.status != "in_progress":
+                d.status = "in_progress"
+                d.consumed_by_exp_id = dir_to_key[d.id]
+                reconciled += 1
+            elif (d.consumed_by_exp_id and d.consumed_by_exp_id in active_keys
+                  and d.status != "in_progress"):
+                d.status = "in_progress"
+                reconciled += 1
         if reconciled:
             self._save()
         return reconciled

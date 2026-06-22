@@ -111,6 +111,16 @@ class ResearchJob:
     retry_count: int = 0
     retry_of: Optional[str] = None
     retry_queued_time: float = 0.0
+    # Reliable job↔direction link. Set when the direction is consumed (discover
+    # path, line ~693). Retries mutate the same job, so they retain this. The
+    # tick-end reconcile uses it to re-establish in_progress even if
+    # consumed_by_exp_id was cleared (retry-queued dispatches skip
+    # mark_direction_consumed).
+    direction_id: Optional[str] = None
+    # Wall-clock timestamp set whenever status -> "preparing". Lets poll_all
+    # force-fail jobs that never made it to "dispatched" (e.g. process killed
+    # mid-dispatch), so they don't occupy a slot forever.
+    preparing_started: float = 0.0
     # Multi-cycle research threads
     thread_id: Optional[str] = None
     cycle_index: int = 0
@@ -550,6 +560,7 @@ class KnowledgeExtractor:
 
         # Prepare dispatch
         job.status = "preparing"
+        job.preparing_started = time.time()
 
         try:
             project_id = await self._dispatch_to_aristotle(job)
@@ -768,6 +779,7 @@ class KnowledgeExtractor:
         job.thread_id = thread_id
         job.cycle_index = cycle_index
         job.decomposition_depth = getattr(best_dir, 'decomposition_depth', 0) if best_dir else 0
+        job.direction_id = best_dir.id if best_dir else None
         return job
 
     # ==================================================================
@@ -794,6 +806,7 @@ class KnowledgeExtractor:
 
         # Pre-register in inflight to avoid race conditions during the network call
         job.status = "preparing"
+        job.preparing_started = time.time()
         self.inflight[job.job_id] = job
         self._save_inflight()
 
@@ -853,6 +866,7 @@ class KnowledgeExtractor:
 
         # Pre-register in inflight to avoid race conditions during the network call
         job.status = "preparing"
+        job.preparing_started = time.time()
         self.inflight[job.job_id] = job
         self._save_inflight()
 
@@ -1242,25 +1256,64 @@ Research mode: {concept.research_mode}
         """
         from reasoning_log import ReasoningLog
 
-        # Defense-in-depth cycle timeout: if a job has been running for more
-        # than 6 hours since dispatch, fail it regardless of checkpoint state.
-        # The reasoning-log based check below also catches this, but a
-        # dispatch_time-based check works even if reasoning logs are missing.
-        max_cycle_seconds = 48 * 3600
+        # Stall / timeout configuration — WALL-CLOCK based. Checkpoint elapsed
+        # is unreliable: it freezes when Aristotle stops emitting checkpoints,
+        # leaving zombie jobs that never hit a checkpoint-based cap. dispatch_time
+        # age is the authoritative signal and covers no-checkpoint jobs too.
+        stall_cfg = self.config.get("stall", {}) if hasattr(self, "config") and self.config else {}
+        max_cycle_seconds = stall_cfg.get("hard_cap_seconds", 4 * 3600)        # 4h wall-clock cap
+        preparing_timeout = stall_cfg.get("preparing_timeout_seconds", 1800)   # 30min in preparing
+        warn_seconds = stall_cfg.get("warn_seconds", 5400)                     # 90min warn
+
+        completed = []
         now = time.time()
         for pid, job in list(self.inflight.items()):
             if job.status in ("completed", "failed", "integrated", "rejected"):
                 continue
+
+            # Preparing timeout: a job still in 'preparing' past the bound was
+            # never submitted to Aristotle (e.g. process killed mid-dispatch).
+            # Release its direction and fail it so the slot frees up.
+            if job.status == "preparing" and job.preparing_started:
+                p_age = now - job.preparing_started
+                if p_age > preparing_timeout:
+                    print(f"[Poll] {pid[:8]} PREPARING TIMEOUT: stuck for {p_age/60:.0f}min, failing")
+                    job.status = "failed"
+                    job.error_message = f"Stuck in preparing > {p_age/60:.0f}min"
+                    self.failed_count += 1
+                    self._release_direction(job)
+                    completed.append(job)
+                    continue
+
+            # Wall-clock stall cap — the authoritative kill signal. Covers jobs
+            # with no reasoning checkpoints (the checkpoint branch below can't
+            # see those, which is why they used to slip and run forever).
             if job.dispatch_time and (now - job.dispatch_time) > max_cycle_seconds:
-                age_h = (now - job.dispatch_time) / 3600
-                print(f"[Poll] {pid[:8]} TIMEOUT: dispatch_time says {age_h:.1f}h elapsed, "
-                      f"failing cycle (48h cap)")
+                age_min = (now - job.dispatch_time) / 60
+                print(f"[Poll] {pid[:8]} HARD CAP: {age_min:.0f}min wall-clock, "
+                      f"failing ({max_cycle_seconds/3600:.0f}h cap)")
                 job.status = "failed"
-                job.error_message = f"48h dispatch timeout ({age_h:.1f}h elapsed)"
+                job.error_message = (f"Cancelled after {age_min:.0f}min "
+                                     f"({max_cycle_seconds/3600:.0f}h wall-clock cap)")
                 self.failed_count += 1
                 self._quarantine_direction_for_job(job, days=7)
+                try:
+                    rlog = ReasoningLog(self.workspace, pid, job.job_id)
+                    rlog.record_completion(
+                        status="TIMEOUT", percent=0, has_files=False,
+                        error=job.error_message,
+                    )
+                except Exception:
+                    pass
+                completed.append(job)
+                continue
 
-        completed = []
+            # Wall-clock stall warning (independent of checkpoints).
+            if job.status == "dispatched" and job.dispatch_time \
+                    and (now - job.dispatch_time) > warn_seconds:
+                age_min = (now - job.dispatch_time) / 60
+                print(f"[Poll] {pid[:8]} STALL WARNING: RUNNING for {age_min:.0f}min (wall-clock)")
+
         for pid, job in list(self.inflight.items()):
             # Skip jobs already in terminal status — they were returned in a
             # previous poll and either processed or about to be pruned.
@@ -1315,42 +1368,23 @@ Research mode: {concept.research_mode}
                         pass
                     completed.append(job)
                 elif status == "RUNNING":
-                    # Stall detection: warn if a project is RUNNING for too long.
-                    # Note: Aristotle SDK doesn't expose percent_complete (always 0),
-                    # so we use elapsed time as the sole signal.
-                    stalled = False
+                    # Secondary checkpoint-based stall signal. The authoritative
+                    # wall-clock cap is applied above (before polling), so this
+                    # branch only emits a diagnostic warning. Aristotle's SDK
+                    # doesn't expose percent_complete (always 0), so checkpoint
+                    # elapsed is the only signal available here.
                     try:
                         rlog = ReasoningLog(self.workspace, pid, job.job_id)
                         summary = rlog.get_summary()
                         if summary.get("n_checkpoints", 0) >= 2:
                             checkpoints = rlog._data["checkpoints"]
-                            first = checkpoints[0]
-                            last = checkpoints[-1]
-                            elapsed = last["elapsed_seconds"] - first["elapsed_seconds"]
-                            if elapsed > 5400:  # 90 minutes RUNNING is a stall
-                                print(f"[Poll] {pid[:8]} STALL WARNING: RUNNING for {elapsed/60:.0f}min")
-                            # Hard cap at 6 hours: force-fail the project
-                            if elapsed > 172800:  # 48 hours
-                                print(f"[Poll] {pid[:8]} HARD CAP: cancelling after {elapsed/60:.0f}min")
-                                job.status = "failed"
-                                job.error_message = f"Cancelled after {elapsed/60:.0f}min (48h cap)"
-                                self.failed_count += 1
-                                # Quarantine the direction
-                                self._quarantine_direction_for_job(job, days=7)
-                                # Record final reasoning log entry
-                                try:
-                                    rlog.record_completion(
-                                        status="TIMEOUT", percent=0, has_files=False,
-                                        error=job.error_message,
-                                    )
-                                except Exception:
-                                    pass
-                                completed.append(job)
-                                stalled = True
+                            elapsed = (checkpoints[-1]["elapsed_seconds"]
+                                       - checkpoints[0]["elapsed_seconds"])
+                            if elapsed > 5400:  # 90 minutes of checkpoint time
+                                print(f"[Poll] {pid[:8]} STALL WARNING: RUNNING for {elapsed/60:.0f}min (checkpoint)")
                     except Exception:
                         pass
-                    if not stalled:
-                        print(f"[Poll] {pid[:8]} in progress (RUNNING, {percent:.0f}%)")
+                    print(f"[Poll] {pid[:8]} in progress (RUNNING, {percent:.0f}%)")
             except Exception as e:
                 print(f"[Poll] {pid[:8]} error: {e}")
 

@@ -1126,6 +1126,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             break
         try:
             queued.status = "preparing"
+            queued.preparing_started = time.time()
             project_id = await extractor._dispatch_to_aristotle(queued)
             if queued.project_id and queued.project_id in extractor.inflight:
                 del extractor.inflight[queued.project_id]
@@ -1135,6 +1136,16 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             queued.status = "dispatched"
             queued.dispatch_time = time.time()
             extractor.inflight[project_id] = queued
+            # Retry-queued dispatches skip the discover path (which calls
+            # mark_direction_consumed), so re-establish the direction link now
+            # using the direction_id retained from the original dispatch.
+            if getattr(queued, "direction_id", None):
+                try:
+                    from research_memory import FutureDirectionsManager as _FD
+                    _FD(extractor.workspace).mark_direction_consumed(
+                        queued.direction_id, queued.retry_of or queued.job_id)
+                except Exception as _e:
+                    print(f"[Tick] Queued retry direction link failed: {_e}")
             print(f"[Tick] Dispatched queued retry {project_id[:8]}: {queued.concept.title[:60]}")
         except Exception as e:
             if extractor._is_queue_full_error(e):
@@ -1274,20 +1285,41 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         extractor._save_inflight()
 
     # Reconcile in_progress directions to match active inflight jobs (true state at tick end).
-    # Fixes preparing/retry/sync gaps: every direction consumed by an active job (keyed
-    # by job_id, or retry_of for retries) is forced to in_progress. Stale in_progress
-    # with no active job is cleared by recover_stale_directions at tick start.
+    # Every active job's direction (keyed by direction_id, falling back to consumed_by_exp_id)
+    # is forced to in_progress — this re-links retries whose direction was released or never
+    # linked (retry-queued dispatches skip mark_direction_consumed). Stale in_progress with
+    # no active job is cleared by recover_stale_directions at tick start.
     try:
-        _active_keys = set()
+        _active_jobs = []
         for _j in extractor.inflight.values():
             if hasattr(_j, "status") and _j.status in ("preparing", "dispatched", "retry_queued"):
-                _active_keys.add(getattr(_j, "retry_of", None) or _j.job_id)
+                _active_jobs.append((
+                    _j.job_id,
+                    getattr(_j, "direction_id", None),
+                    getattr(_j, "retry_of", None),
+                ))
         from research_memory import FutureDirectionsManager as _FD
-        _n_reconciled = _FD(extractor.workspace).reconcile_in_progress(_active_keys)
+        _n_reconciled = _FD(extractor.workspace).reconcile_in_progress(_active_jobs)
         if _n_reconciled:
             print(f"[Tick] Reconciled {_n_reconciled} direction(s) to in_progress to match active inflight jobs")
     except Exception as _e:
         print(f"[Tick] in_progress reconcile failed: {_e}")
+
+    # End-of-tick state check: confirm jobs and directions are consistent.
+    # Every active dispatched job should have an in_progress direction; no
+    # in_progress direction should lack a live job. Printed each tick for health.
+    try:
+        from collections import Counter
+        from research_memory import FutureDirectionsManager as _FD2
+        _if_status = Counter(j.status for j in extractor.inflight.values())
+        _fd = _FD2(extractor.workspace)
+        _dir_status = Counter(d.status for d in _fd._directions)
+        _active = sum(1 for j in extractor.inflight.values()
+                      if j.status in ("preparing", "dispatched", "retry_queued"))
+        print(f"[State] inflight={dict(_if_status)} | directions={dict(_dir_status)} "
+              f"| active_jobs={_active} in_progress={_dir_status.get('in_progress', 0)}")
+    except Exception as _e:
+        print(f"[State] state check failed: {_e}")
 
     # Summary
     remaining = extractor._count_inflight_dispatched()
