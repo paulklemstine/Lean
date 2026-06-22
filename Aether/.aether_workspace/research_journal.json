@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "096aa5b9",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nFollow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFunctor.lean`\n(the 1-Lipschitz functor `depthTropObj`/`depthTropFunctor` from valuation-depth measures\n`D",
-      "quality_score": 0.5430773913043478,
-      "sorry_count": 0,
-      "theorem_count": 66,
-      "timestamp": "2026-06-16T00:27:15",
-      "title": "A 1-Lipschitz functor from valuation-depth measures to tropical valuation objects"
-    },
-    {
       "cycle_id": "cfed7f6c",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Metric → Tropical Filtration → Ultrametric Bridge\n\nThese conjectures extend the results formalized in\n`Catalog/Bridges/RipsTropicalUltrametric.lean`, which builds the **subdomina",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-22T03:46:41",
       "title": "Baum-Connes Conjecture"
+    },
+    {
+      "cycle_id": "e2815d63",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Schnorr / Σ-Protocols\n\nBuilding on `Catalog/Cryptography/SchnorrProtocol.lean` (abstract-group completeness,\nspecial soundness, group-level witness extraction, and perfect HVZK)",
+      "quality_score": 0.5423795180722892,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-22T03:52:55",
+      "title": "Zero-Knowledge Proofs: Schnorr Protocol"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T03:46:41",
+  "last_updated": "2026-06-22T03:52:55",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "75b4da8e",
-        "quality": 0.5219054545454546,
-        "theorems": 11,
-        "title": "Definable Ricci-Flow Renormalization Fixed Points in Simplicial Quantum Error-Co"
-      },
-      {
         "cycle_id": "b3f0c15e",
         "quality": 0.5072000000000001,
         "theorems": 24,
@@ -3761,6 +3755,12 @@
         "quality": 0.7246,
         "theorems": 13,
         "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      },
+      {
+        "cycle_id": "e2815d63",
+        "quality": 0.5423795180722892,
+        "theorems": 9,
+        "title": "Zero-Knowledge Proofs: Schnorr Protocol"
       }
     ],
     "Probability": [

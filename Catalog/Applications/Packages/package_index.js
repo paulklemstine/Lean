@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e2815d63",
     "filename": "the_ebc_framework_now_spans_three_files_with_0_sor.json",
     "pkg_num": 326,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5423795180722892,
     "title": "Entropy-Bounded Computation: A Bridge from Landauer's Principle to Complexity"
   },
   {
@@ -10064,8 +10064,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "the_ebc_framework_now_spans_three_files_with_0_sor",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5423795180722892,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Entropy-Bounded Computation: A Bridge from Landauer's Principle to Complexity"
     }
