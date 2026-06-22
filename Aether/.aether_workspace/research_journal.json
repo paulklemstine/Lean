@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cfed7f6c",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Metric → Tropical Filtration → Ultrametric Bridge\n\nThese conjectures extend the results formalized in\n`Catalog/Bridges/RipsTropicalUltrametric.lean`, which builds the **subdomina",
-      "quality_score": 0.4422638461538462,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-06-16T01:01:06",
-      "title": "Functorial metric-to-tropical filtration from Rips graphs to ultrametric valuation objects"
-    },
-    {
       "cycle_id": "b312114f",
       "domain": "Computation",
       "key_insight": "# Future Directions — Korselt's Criterion & the Multiplicative-Order Bridge\n\nDerived from the cycle that produced, in `Catalog/Cryptography/`:\n\n* `KorseltMultiplicativeOrder.lean`\n  * `exponent_units_",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-22T03:52:55",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+    },
+    {
+      "cycle_id": "eafa171c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Weighted K5-free max-cut with triangle-discounted edges\n\nDerived from the Stage 3 / Stage 4 findings of this research cycle. This cycle proved an\nunconditional **factor-3** upper",
+      "quality_score": 0.4968647748478702,
+      "sorry_count": 0,
+      "theorem_count": 178,
+      "timestamp": "2026-06-22T06:03:53",
+      "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.84432
     }
   ],
-  "last_updated": "2026-06-22T03:52:55",
+  "last_updated": "2026-06-22T06:03:53",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "0f4e6c03",
-        "quality": 0.5147914097421203,
-        "theorems": 112,
-        "title": "Homotopy Type Theory Foundations"
-      },
-      {
         "cycle_id": "b4d505d3",
         "quality": 0.5528152173913043,
         "theorems": 205,
@@ -3637,6 +3631,12 @@
         "quality": 0.84432,
         "theorems": 14,
         "title": "Ramsey Theory: Bounds and Constructions"
+      },
+      {
+        "cycle_id": "eafa171c",
+        "quality": 0.4968647748478702,
+        "theorems": 178,
+        "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
       }
     ],
     "NumberTheory": [
