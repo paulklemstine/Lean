@@ -419,7 +419,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0cf238d8",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d6329d46 (Q=0.792), which proved 22 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that a binary linear code carries a genuinely new tropical v",
     "domain_bridges": [],
     "domains": [
@@ -431,7 +431,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "d6329d46",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T10:39:16.248773+00:00",
     "title": "Deepening: Functor from finite linear codes to tropical valuation objects via weight-thresh"
   },
@@ -6515,7 +6515,7 @@
       "math.CO",
       "math.DS"
     ],
-    "consumed_by_exp_id": "59a725d3",
+    "consumed_by_exp_id": "",
     "description": "Let F be a projective Fraïssé category with limit 𝔽 whose quotient by the inherited equivalence relation yields a continuum F, and let G be a closed subgroup of Homeo(F) with Aut(𝔽) dense in G. Then the universal minimal flow M(G) is metrizable if and only if there exists a precompact expansion F' of F (in the sense of an enriched projective Fraïssé category whose forgetful functor back to F is precompact) such that F' has the approximate Ramsey property and the automorphism group of the limit of F' is dense in G. This is the projective Fraïssé analog of the Kechris–Pestov–Todorcevic metrization theorem for universal minimal flows.",
     "domain_bridges": [
       "structural_ramsey_theory",
@@ -6532,7 +6532,7 @@
     "proof_strategy": "The forward direction mirrors the KPT metrization strategy: assuming M(G) is metrizable, construct a precompact expansion F' of F by encoding the metrizable flow structure into the combinatorial data of the projective Fraïssé category, then verify the approximate Ramsey property via an ultrahomogeneity argument on the expanded limit. The reverse direction follows the pattern of this paper: given F' with the approximate Ramsey property, use the main theorem to conclude extreme amenability of an expanded group, then apply the precompactness condition to show the original group G has a metrizable universal minimal flow obtained as a quotient of the expanded group's singleton flow.",
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T12:24:38.162264+00:00",
     "title": "Projective Fraïssé Metrization Conjecture for Universal Minimal Flows"
   },
@@ -6844,6 +6844,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.AG",
+      "math.AC",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer d ≥ 9, there exist line arrangements A and A' in P²(C) of degree d with isomorphic intersection lattices L(A) ≅ L(A') but with different graded Betti numbers in the minimal free resolutions of their Milnor algebras M(f) and M(f'). This extends the known existence for d = 9 (the classical Ziegler pair) and d = 10 (six pairs constructed in the paper), and contrasts with the paper's result that for d < 9 the intersection lattice determines the exponent data.",
+    "domain_bridges": [
+      "Combinatorics of intersection lattices",
+      "Commutative algebra of minimal free resolutions",
+      "Homological algebra of graded Betti numbers"
+    ],
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2254",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct infinite families of Ziegler pairs for all d ≥ 9 by extending the d = 9 and d = 10 examples using addition-deletion techniques for line arrangements, or by identifying suitable specialization/deformation families that preserve the intersection lattice while altering the minimal graded free resolution of the Milnor algebra. One approach: show that adding lines in specific configurations to known Ziegler pairs preserves the Ziegler pair property.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-22T17:58:45.383950+00:00",
+    "title": "Universal Existence of Ziegler Pairs for Large Degrees"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.LO",
       "math.CO",
       "math.DS"
@@ -6859,7 +6887,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2254",
+    "id": "fd_2255",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize projective Fraïssé categories and their limits, define the approximate Ramsey property for morphisms, define extreme amenability for topological groups, and adapt the Kechris-Pestov-Todorcevic proof strategy to the projective setting by demonstrating that the universal minimal flow of the group is trivial precisely when the category satisfies the approximate Ramsey property.",
@@ -6868,6 +6896,34 @@
     "status": "available",
     "timestamp": "2026-06-22T17:18:23.033745+00:00",
     "title": "Projective Fraïssé KPT Correspondence"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Sicherman_dice",
+      "cyclotomic_polynomials",
+      "generating_functions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 2, there exists at least one unordered pair of dice (A, B) such that: (1) A and B together produce the same sum frequency distribution as two standard k²-sided dice (i.e., they form (2, k²)-solutions); (2) the number of sides of A and B are distinct perfect squares; and (3) neither A nor B is the standard k²-sided die. Equivalently, the generating function (x + x² + ⋯ + x^{k²})² admits at least one factorization P·Q where P(1) = a², Q(1) = b² for distinct positive integers a, b, both polynomials have non-negative integer coefficients, and neither P nor Q equals the standard die generating function.",
+    "domain_bridges": [
+      "algebraic_number_theory",
+      "polynomial_factorization_over_Z",
+      "cyclotomic_polynomial_rearrangements"
+    ],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2256",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the cyclotomic polynomial factorization of the frequency polynomial F(x) = x²·((x^{k²} − 1)/(x − 1))². The factorization of F into irreducible cyclotomic components admits nontrivial rearrangements. Show that for each k ≥ 2, the divisor structure of k² always permits at least one regrouping of these cyclotomic factors into two polynomials P, Q with non-negative integer coefficients, where P(1) and Q(1) are distinct perfect squares. The key step leverages that k² has multiple distinct divisor pairs, and the cyclotomic factors of (x^{k²} − 1)/(x − 1) can be partitioned along these divisor boundaries to produce valid die-generating polynomials with square numbers of sides.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T17:59:20.259941+00:00",
+    "title": "Existence of Square-Sided Sicherman-Type Pairs for All Perfect Square Die Sizes"
   },
   {
     "ambition_level": "grand_challenge",
@@ -10089,7 +10145,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2266dec2",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [
@@ -10102,7 +10158,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -10366,7 +10422,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c39c88d1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domain_bridges": [],
     "domains": [
@@ -10379,7 +10435,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },

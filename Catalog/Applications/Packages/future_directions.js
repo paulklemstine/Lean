@@ -315,7 +315,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Noether's Theorem: Symmetries and Conservation Laws"
   },
   {
-    "consumed_by_exp_id": "0cf238d8",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d6329d46 (Q=0.792), which proved 22 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that a binary linear code carries a genuinely new tropical v",
     "domains": [
       "Shared"
@@ -324,7 +324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8918400000000001,
     "research_mode": "team",
     "source_exp_id": "d6329d46",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T10:39:16.248773+00:00",
     "title": "Deepening: Functor from finite linear codes to tropical valuation objects via weight-thresh"
   },
@@ -3911,7 +3911,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bipartite deletion number for K_5-free graphs with sublinear independence number"
   },
   {
-    "consumed_by_exp_id": "59a725d3",
+    "consumed_by_exp_id": "",
     "description": "Let F be a projective Fra\u00efss\u00e9 category with limit \ud835\udd3d whose quotient by the inherited equivalence relation yields a continuum F, and let G be a closed subgroup of Homeo(F) with Aut(\ud835\udd3d) dense in G. Then the universal minimal flow M(G) is metrizable if and only if there exists a precompact expansion F' of F (in the sense of an enriched projective Fra\u00efss\u00e9 category whose forgetful functor back to F is precompact) such that F' has the approximate Ramsey property and the automorphism group of the limit of F' is dense in G. This is the projective Fra\u00efss\u00e9 analog of the Kechris\u2013Pestov\u2013Todorcevic metrization theorem for universal minimal flows.",
     "domains": [
       "Algebra",
@@ -3921,7 +3921,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T12:24:38.162264+00:00",
     "title": "Projective Fra\u00efss\u00e9 Metrization Conjecture for Universal Minimal Flows"
   },
@@ -4088,18 +4088,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer d \u2265 9, there exist line arrangements A and A' in P\u00b2(C) of degree d with isomorphic intersection lattices L(A) \u2245 L(A') but with different graded Betti numbers in the minimal free resolutions of their Milnor algebras M(f) and M(f'). This extends the known existence for d = 9 (the classical Ziegler pair) and d = 10 (six pairs constructed in the paper), and contrasts with the paper's result that for d < 9 the intersection lattice determines the exponent data.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2254",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-22T17:58:45.383950+00:00",
+    "title": "Universal Existence of Ziegler Pairs for Large Degrees"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For a projective Fra\u00efss\u00e9 category $\\mathcal{F}$ with limit $\\mathbb{F}$, quotient continuum $F = \\mathbb{F}/R^\\mathbb{F}$, and a closed subgroup $G \\le \\operatorname{Homeo}(F)$ in which the image of $\\operatorname{Aut}(\\mathbb{F})$ is dense, $G$ is extremely amenable if and only if $\\mathcal{F}$ has the approximate Ramsey property.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2254",
+    "id": "fd_2255",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
     "status": "available",
     "timestamp": "2026-06-22T17:18:23.033745+00:00",
     "title": "Projective Fra\u00efss\u00e9 KPT Correspondence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 2, there exists at least one unordered pair of dice (A, B) such that: (1) A and B together produce the same sum frequency distribution as two standard k\u00b2-sided dice (i.e., they form (2, k\u00b2)-solutions); (2) the number of sides of A and B are distinct perfect squares; and (3) neither A nor B is the standard k\u00b2-sided die. Equivalently, the generating function (x + x\u00b2 + \u22ef + x^{k\u00b2})\u00b2 admits at least one factorization P\u00b7Q where P(1) = a\u00b2, Q(1) = b\u00b2 for distinct positive integers a, b, both polynomials have non-negative integer coefficients, and neither P nor Q equals the standard die generating function.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2256",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-22T17:59:20.259941+00:00",
+    "title": "Existence of Square-Sided Sicherman-Type Pairs for All Perfect Square Die Sizes"
   },
   {
     "consumed_by_exp_id": "",
@@ -6509,7 +6538,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diaspora Polis Ontology: Concept Lattices for Simulated Minds"
   },
   {
-    "consumed_by_exp_id": "2266dec2",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
       "Computation",
@@ -6519,7 +6548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.62,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -6716,7 +6745,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polyomino and Magic-Square Enumeration"
   },
   {
-    "consumed_by_exp_id": "c39c88d1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domains": [
       "Geometry",
@@ -6726,7 +6755,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.58,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },
