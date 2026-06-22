@@ -6244,6 +6244,35 @@
     "title": "Approximate Ramsey Property is Preserved Under Categorical Products of Projective Fraïssé Categories"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.LO",
+      "math.CO",
+      "math.DS"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let F be a projective Fraïssé category of finite reflexive graphs such that the quotient of its projective Fraïssé limit by the inherited edge relation is a hereditarily indecomposable continuum. Then F has the approximate Ramsey property if and only if this quotient continuum is the pseudo-arc. This extends the paper's equivalence between ARP and extreme amenability by predicting that, within the class of hereditarily indecomposable continua arising as projective Fraïssé limits, only the pseudo-arc yields an extremely amenable homeomorphism group.",
+    "domain_bridges": [
+      "Ramsey_theory",
+      "topological_dynamics",
+      "Fraisse_theory",
+      "continuum_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2229",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The 'if' direction follows from known results: Homeo(pseudo-arc) is extremely amenable, so by the paper's main theorem the corresponding projective Fraïssé category has ARP. The 'only if' direction requires showing that for any hereditarily indecomposable continuum other than the pseudo-arc (e.g., the pseudo-solenoid, circle-like continua), the associated projective Fraïssé category fails ARP. This could proceed by constructing explicit finite colorings of morphisms that witness the failure of ARP, generalizing the combinatorial obstructions used for the pseudo-solenoid case.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T10:09:25.997917+00:00",
+    "title": "ARP Characterizes the Pseudo-Arc Among Hereditarily Indecomposable Continua"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -8169,7 +8198,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5789bd5",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -8182,7 +8211,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

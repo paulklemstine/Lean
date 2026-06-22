@@ -3764,6 +3764,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let F be a projective Fra\u00efss\u00e9 category of finite reflexive graphs such that the quotient of its projective Fra\u00efss\u00e9 limit by the inherited edge relation is a hereditarily indecomposable continuum. Then F has the approximate Ramsey property if and only if this quotient continuum is the pseudo-arc. This extends the paper's equivalence between ARP and extreme amenability by predicting that, within the class of hereditarily indecomposable continua arising as projective Fra\u00efss\u00e9 limits, only the pseudo-arc yields an extremely amenable homeomorphism group.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2229",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-22T10:09:25.997917+00:00",
+    "title": "ARP Characterizes the Pseudo-Arc Among Hereditarily Indecomposable Continua"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -5201,7 +5216,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5789bd5",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -5211,7 +5226,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
