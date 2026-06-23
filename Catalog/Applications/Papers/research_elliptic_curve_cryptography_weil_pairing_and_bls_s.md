@@ -1,399 +1,317 @@
-# Bilinear Pairings as the Algebraic Core of BLS Signatures and Aggregation
+# An Abstract Bilinear Pairing and the Algebraic Core of BLS Signatures, Aggregation, and the MOV Reduction
+
+**Author:** Aristotle
+**Date:** 2026-06-23
+**Domain:** Cryptography (with a Cryptography ↔ Algebra domain bridge)
 
 ## Abstract
 
-Pairing-based cryptography underpins some of the most widely deployed primitives
-in modern systems: the Boneh–Lynn–Shacham (BLS) signature scheme, signature
-aggregation for blockchain consensus, identity-based encryption, and succinct
-zero-knowledge proofs. The canonical instance of the pairing it relies on is the
-**Weil pairing** on an elliptic curve, whose construction is a substantial piece
-of algebraic geometry. We isolate the *algebraic interface* that the protocol
-layer actually consumes — a biadditive map `e : G → G → T` from an additive
-abelian group to a multiplicative abelian group — and show that the entire ladder
-of cryptographic guarantees follows from this interface alone. Concretely, from
-two axioms (additivity in each argument) we derive: the identity laws
-`e 0 q = e p 0 = 1`; the negation law `e (-p) q = (e p q)⁻¹`; the
-scalar-to-exponent laws `e (n • p) q = (e p q)ⁿ` over both `ℕ` and `ℤ`; joint
-bilinearity `e (a • p) (b • q) = (e p q)^(a·b)`; and the sum-to-product law
-`e (∑ᵢ fᵢ) q = ∏ᵢ e(fᵢ) q`. We then prove **completeness** of BLS verification
-and **completeness of aggregate BLS**, showing that a single summed group element
-verifies against the product of per-signer pairings. Finally, we identify
-**nondegeneracy** as the single additional hypothesis — used nowhere in
-completeness — that makes the pairing *bind*: a nondegenerate pairing separates
-points, the algebraic reason a verifier cannot be deceived by a substituted key.
-The central methodological claim is a clean separation of concerns: the heavy
-analytic construction of the Weil/Tate pairing is required only to *instantiate*
-the interface, never to *use* it.
-
-**Keywords:** bilinear pairing, Weil pairing, BLS signatures, signature
-aggregation, elliptic-curve cryptography, nondegeneracy, key binding.
-
----
+Pairing-based cryptography rests on a single algebraic object: a bilinear map
+$e : G \times G \to T$ from an additively written abelian group $G$ (the points
+of an elliptic curve) to a multiplicatively written abelian group $T$ (a group
+of roots of unity). We isolate the *minimal* interface this object must satisfy —
+biadditivity in each argument — and show that the entire protocol layer of the
+Boneh–Lynn–Shacham (BLS) signature scheme follows from it by elementary algebra,
+with no recourse to the analytic construction of the Weil or Tate pairing. We
+prove: (i) the family of bilinearity laws, including the scalar-sliding identity
+$e(n\cdot p, q) = e(p,q)^n$ over $\mathbb{N}$ and $\mathbb{Z}$, the joint law
+$e(a\cdot p, b\cdot q) = e(p,q)^{ab}$, and the sum-to-product law
+$e(\sum_i f_i, q) = \prod_i e(f_i, q)$; (ii) BLS completeness
+$e(x\cdot H, g) = e(H, x\cdot g)$ and aggregate completeness
+$e(\sum_i x_i\cdot H_i, g) = \prod_i e(H_i, x_i\cdot g)$, the algebraic content
+of *short aggregate signatures*; (iii) the binding property as point separation
+under nondegeneracy, equivalent to injectivity of the induced character map;
+(iv) the *alternating* refinement characterizing the genuine Weil pairing, from
+which antisymmetry $e(p,q)\cdot e(q,p) = 1$ follows; and (v) the
+Menezes–Okamoto–Vanstone (MOV) reduction as a faithful congruence, transporting
+the elliptic-curve discrete logarithm problem (ECDLP) into a discrete logarithm
+in $T$ and recovering the secret exactly modulo $\operatorname{ord}(e(g,g))$,
+with full recovery precisely when this order dominates $\operatorname{ord}(g)$.
+Every statement is backed by a formally verified proof.
 
 ## 1. Introduction
 
-### 1.1 Motivation
-
-Elliptic-curve cryptography rests on the difficulty of inverting *scalar
-multiplication*: given a generator `g` of the point group and a multiple
-`X = x • g`, recovering the scalar `x` (the elliptic-curve discrete logarithm
-problem) is believed intractable. This asymmetry yields key exchange and digital
-signatures. However, the plain group law alone does not provide a *publicly
-checkable* relation that ties together multiple secret scalars applied to
-different points — the feature that enables, for example, aggregating many
-signatures into one.
-
-A **bilinear pairing** supplies exactly this. By mapping pairs of points to a
-target group in a way that converts addition to multiplication, a pairing exposes
-products of secret scalars `e (a • p) (b • q) = (e p q)^{ab}` while leaving the
-scalars themselves hidden. This single capability is the foundation of the BLS
-signature scheme (Boneh, Lynn, and Shacham, 2001), its aggregate variant (Boneh,
-Gentry, Lynn, and Shacham, 2003), identity-based encryption (Boneh and Franklin,
-2001), and a large family of succinct proof systems.
-
-### 1.2 Contribution
-
-We make the following observations precise and prove them within a single
-self-contained algebraic framework.
-
-1. **An interface, not a construction.** We define a pairing abstractly as a
-   biadditive map and show that *all* protocol-level guarantees of BLS depend
-   only on this interface. The analytic construction of the Weil or Tate pairing
-   is orthogonal: it certifies that the interface is inhabited on a given curve,
-   but contributes nothing to the proofs of completeness, aggregation, or
-   binding.
-
-2. **A complete ladder of scalar laws.** From biadditivity alone we derive the
-   identity, negation, natural-power, integer-power, joint-bilinearity, and
-   sum-to-product laws, each by a short, structurally uniform argument.
-
-3. **Completeness of BLS and aggregation.** We prove that honest BLS signatures
-   verify, and that the *sum* of per-signer signatures — a single group element —
-   verifies against the *product* of per-signer pairings. Aggregation is revealed
-   as the sum-to-product law in disguise.
-
-4. **Isolation of binding.** We show that completeness never uses nondegeneracy,
-   and that nondegeneracy is exactly the property needed to make the pairing
-   separate points, hence to bind a public key to its holder.
-
-### 1.3 Scope and non-goals
-
-This work develops the *algebraic* layer. It deliberately does not formalize a
-game-based, probabilistic proof of existential unforgeability under the
-computational Diffie–Hellman (CDH) assumption; that argument requires an
-adversary model (random oracles, negligible functions, reductions) outside the
-present purely algebraic development. We discuss this frontier in §7.
-
----
-
-## 2. Preliminaries and Definitions
-
-Throughout, `G` denotes the **source group**, written additively, and `T` the
-**target group**, written multiplicatively.
-
-### 2.1 The source and target groups
-
-- For the *monoid-level* results (§3, §4) we require `G` to be an additive
-  commutative monoid and `T` a commutative group. The target being a group — not
-  merely a monoid — is essential and is used immediately in the identity law
-  (Theorem 3.1).
-- For the *group-level* results (§5) we strengthen `G` to an additive abelian
-  group, so that negation `-p` and integer scalar multiplication `n • p` (for
-  `n ∈ ℤ`) are available.
-
-In the canonical instance, `G` is the group `E(K)` of `K`-rational points of an
-elliptic curve `E` over a field `K` (or its `r`-torsion subgroup `E[r]`), and `T`
-is the group `μ_r ⊂ K̄*` of `r`-th roots of unity, written multiplicatively.
-
-### 2.2 Definition (Bilinear pairing)
-
-A **bilinear pairing** from `G` to `T` is a map `e : G → G → T` satisfying, for
-all `a, b, p, q ∈ G`:
-
-- **(add_left)**  `e (a + b) q = e a q · e b q`,
-- **(add_right)** `e p (a + b) = e p a · e p b`.
-
-That is, `e` is additive in each argument separately, sending the additive
-structure of `G` to the multiplicative structure of `T`. We refer to the pair of
-axioms collectively as *biadditivity* or *bilinearity*.
-
-### 2.3 Definition (Nondegeneracy)
-
-A pairing `e` is **nondegenerate** (on the left) if for all `a ∈ G`,
-
-> `(∀ q ∈ G, e a q = 1)  ⟹  a = 0`.
-
-Equivalently, the only point that pairs trivially with every point is the
-identity. The Weil pairing on `E[r]` is nondegenerate.
-
-### 2.4 Remark (Why the target must be a group)
-
-The relation `e 0 q = e 0 q · e 0 q` (obtained by setting `a = b = 0`) only forces
-`e 0 q = 1` via cancellation, which requires inverses in `T`. This mirrors the
-fact that real pairing targets are groups of roots of unity. A monoid target
-would not suffice.
-
----
-
-## 3. The Bilinearity Ladder (monoid source)
-
-We assume `G` is an additive commutative monoid and `T` a commutative group.
-
-### Theorem 3.1 (Identity laws — `map_one_left`, `map_one_right`)
-
-For all `p, q ∈ G`:  `e 0 q = 1`  and  `e p 0 = 1`.
-
-*Proof sketch.* Apply **add_left** with `a = b = 0`: since `0 + 0 = 0`,
-`e 0 q = e 0 q · e 0 q`. Writing `x := e 0 q`, we have `x = x · x` in the group
-`T`; cancelling one factor of `x` gives `x = 1`. The right identity is the mirror
-argument using **add_right**. ∎
-
-### Theorem 3.2 (Natural-power laws — `pairing_nsmul_left`, `pairing_nsmul_right`)
-
-For all `n ∈ ℕ` and `p, q ∈ G`:
-
-> `e (n • p) q = (e p q)ⁿ`   and   `e p (n • q) = (e p q)ⁿ`.
-
-*Proof sketch.* Induction on `n`. Base case `n = 0`: `0 • p = 0`, so by Theorem
-3.1 the left side is `e 0 q = 1 = (e p q)⁰`. Inductive step: write
-`(k+1) • p = (k • p) + p`; then by **add_left** and the inductive hypothesis,
-`e ((k+1) • p) q = e (k • p) q · e p q = (e p q)ᵏ · e p q = (e p q)^{k+1}`. The
-right law is symmetric, using **add_right**. ∎
-
-### Theorem 3.3 (Joint bilinearity — `pairing_bilinear_nsmul`)
-
-For all `a, b ∈ ℕ` and `p, q ∈ G`:  `e (a • p) (b • q) = (e p q)^{a·b}`.
-
-*Proof sketch.* Apply Theorem 3.2 in the left slot to get
-`e (a • p) (b • q) = (e p (b • q))^a`, then in the right slot
-`e p (b • q) = (e p q)^b`, giving `((e p q)^b)^a = (e p q)^{a·b}` by the
-power-of-power law. ∎
-
-This is the equation underlying the Diffie–Hellman tuple check: a pairing can
-detect the product `a·b` of two independently chosen scalars.
-
-### Theorem 3.4 (Sum-to-product law — `pairing_sum_left`)
-
-Let `ι` be an index type with decidable equality, `s ⊆ ι` a finite set,
-`f : ι → G`, and `q ∈ G`. Then
-
-> `e (∑_{i ∈ s} f i) q = ∏_{i ∈ s} e (f i) q`.
-
-*Proof sketch.* Finite-set induction on `s`. Empty case: the empty sum is `0`, so
-by Theorem 3.1 the left side is `e 0 q = 1`, equal to the empty product.
-Insertion case (`a ∉ s`): the sum splits as `f a + ∑_{i ∈ s} f i`; by **add_left**
-and the inductive hypothesis,
-`e (f a + ∑ f i) q = e (f a) q · ∏_{i ∈ s} e (f i) q = ∏_{i ∈ insert a s} e (f i) q`. ∎
-
-This law is the structural heart of aggregation (§4.2): it converts a single
-pairing of a *sum* of group elements into a *product* of individual pairings.
-
----
-
-## 4. BLS Signatures
-
-### 4.1 The scheme
-
-Fix a public generator `g ∈ G`.
-
-- **Key generation.** A signer samples a secret key `x ∈ ℕ` (in practice `x ∈ ℤ`
-  modulo the group order) and publishes the public key `X := x • g ∈ G`.
-- **Signing.** A message `m` is hashed to a group element `H := Hash(m) ∈ G`
-  (hash-to-curve). The signature is the single group element `σ := x • H ∈ G`.
-- **Verification.** Given `(g, X, H, σ)`, accept iff `e σ g = e H X`.
-
-### Theorem 4.1 (Completeness of BLS — `bls_verify_correct`)
-
-For all `g, H ∈ G` and `x ∈ ℕ`:  `e (x • H) g = e H (x • g)`.
-
-*Proof sketch.* By Theorem 3.2 applied on the left, `e (x • H) g = (e H g)^x`; by
-Theorem 3.2 applied on the right, `e H (x • g) = (e H g)^x`. The two sides are
-equal. ∎
-
-Interpretation: substituting `σ = x • H` and `X = x • g`, an honest signature
-satisfies the verification equation `e σ g = e H X`, and the verifier learns
-nothing about `x` — the scalar merely migrates between the two pairing slots.
-
-### 4.2 Aggregate signatures
-
-Let signers be indexed by a finite set `s ⊆ ι`. Signer `i` holds secret key
-`sk i ∈ ℕ`, signs a message hashing to `Hm i ∈ G`, and produces
-`σ_i = (sk i) • (Hm i)`. The **aggregate signature** is the single group element
-
-> `σ_agg := ∑_{i ∈ s} (sk i) • (Hm i)`.
-
-### Theorem 4.2 (Completeness of aggregate BLS — `bls_aggregate_correct`)
-
-With public keys `X_i = (sk i) • g`,
-
-> `e (∑_{i ∈ s} (sk i) • (Hm i)) g = ∏_{i ∈ s} e (Hm i) ((sk i) • g)`.
-
-*Proof sketch.* Apply the sum-to-product law (Theorem 3.4) to the left side with
-`f i = (sk i) • (Hm i)`:
-`e (σ_agg) g = ∏_{i ∈ s} e ((sk i) • (Hm i)) g`. Each factor is then a single BLS
-completeness instance (Theorem 4.1): `e ((sk i) • (Hm i)) g = e (Hm i) ((sk i) • g)`.
-Substituting termwise (a congruence of finite products) yields the claim. ∎
-
-**Consequence (short aggregate signatures).** The aggregate `σ_agg` is one group
-element — the size of a single signature — yet it verifies against the product of
-all signers' verification equations. For `n` signers this replaces `n` separate
-signatures and `n` independent checks by one group element and one product of
-pairings, the property that makes BLS aggregation practical at blockchain scale.
-
----
-
-## 5. Integer Scalars and Nondegeneracy (group source)
-
-We now take `G` to be an additive abelian group, so that `-p` and integer scalar
-multiplication are available.
-
-### Theorem 5.1 (Negation law — `map_neg_left`)
-
-For all `p, q ∈ G`:  `e (-p) q = (e p q)⁻¹`.
-
-*Proof sketch.* By **add_left**, `e (p + (-p)) q = e p q · e (-p) q`. The left side
-is `e 0 q = 1` (Theorem 3.1, since `p + (-p) = 0`). Hence
-`e p q · e (-p) q = 1`, so `e (-p) q` is the inverse of `e p q`. ∎
-
-### Theorem 5.2 (Integer-power law — `pairing_zsmul_left`)
-
-For all `n ∈ ℤ` and `p, q ∈ G`:  `e (n • p) q = (e p q)ⁿ`.
-
-*Proof sketch.* Write `n = m` or `n = -m` for some `m ∈ ℕ`. If `n = m`, the claim
-reduces to Theorem 3.2 after identifying integer and natural scalar
-multiplication. If `n = -m`, then `n • p = -(m • p)`; by Theorem 5.1,
-`e (-(m • p)) q = (e (m • p) q)⁻¹ = ((e p q)^m)⁻¹ = (e p q)^{-m}`, matching the
-target exponent. ∎
-
-This extends the scalar-to-exponent law to the full integer-graded action present
-on a genuine elliptic-curve point group, where secret keys naturally live in
-`ℤ / (order)`.
-
-### Theorem 5.3 (Left separation under nondegeneracy — `pairing_left_injective`)
-
-Suppose `e` is nondegenerate (Definition 2.3). If `p₁, p₂ ∈ G` satisfy
-`e p₁ q = e p₂ q` for all `q ∈ G`, then `p₁ = p₂`.
-
-*Proof sketch.* Consider the difference `p₁ - p₂`. For every `q`,
-`e (p₁ - p₂) q = e (p₁ + (-p₂)) q = e p₁ q · e (-p₂) q = e p₁ q · (e p₂ q)⁻¹`,
-using **add_left** and Theorem 5.1. By hypothesis `e p₁ q = e p₂ q`, so this
-product is `1`. Thus `p₁ - p₂` pairs trivially with every `q`; nondegeneracy
-forces `p₁ - p₂ = 0`, i.e. `p₁ = p₂`. ∎
-
-**Interpretation (binding).** Theorem 5.3 is the algebraic reason BLS verification
-binds a key. Two distinct points cannot induce identical verification behavior;
-hence a verifier presented with a substituted public key will observe a
-distinguishable verification equation. Crucially, *nondegeneracy is used nowhere
-in §3–§4*: completeness is a consequence of biadditivity alone, while binding is
-the precise additional contribution of nondegeneracy. This clean factorization —
-biadditivity ⇒ completeness, nondegeneracy ⇒ soundness — is one of the main
-conceptual outputs of the development.
-
----
-
-## 6. Algorithms
-
-The proofs above are constructive and translate directly into verification
-algorithms. We summarize the two principal ones.
-
-### Algorithm 6.1 (BLS verification)
-
-```
-Input:  generator g, public key X, message hash H, signature σ
-Output: accept / reject
-1. compute L ← e(σ, g)        # one pairing evaluation
-2. compute R ← e(H, X)        # one pairing evaluation
-3. if L == R then accept else reject
-```
-
-Correctness is Theorem 4.1: for an honest `σ = x • H` and `X = x • g`, both `L`
-and `R` equal `(e(H,g))^x`.
-
-### Algorithm 6.2 (Aggregate BLS verification)
-
-```
-Input:  generator g, public keys X_1..X_n, message hashes H_1..H_n,
-        aggregate signature σ_agg = Σ σ_i
-Output: accept / reject
-1. L ← e(σ_agg, g)                       # one pairing evaluation
-2. R ← Π_{i=1..n} e(H_i, X_i)            # n pairings, one product in T
-3. if L == R then accept else reject
-```
-
-Correctness is Theorem 4.2. The aggregate signature occupies the space of a
-single group element regardless of `n`.
-
----
-
-## 7. Discussion and Future Work
-
-### 7.1 Separation of concerns
-
-The development substantiates a precise version of a folklore principle: the
-protocol layer of pairing-based cryptography is a *consumer of an interface*. A
-structure carrying exactly the two biadditivity axioms suffices to derive the
-entire scalar-law ladder, completeness, and aggregation; nondegeneracy is a
-single, separable hypothesis responsible exclusively for binding. Any
-construction — Weil pairing, Tate pairing, optimal Ate pairing on a pairing-
-friendly curve — that inhabits this interface yields all the same guarantees
-without re-proof.
-
-### 7.2 Aggregation as a recurring pattern
-
-Theorem 4.2 exposes aggregation as the sum-to-product law (Theorem 3.4) composed
-with completeness. The same finite-set induction skeleton (`empty ↦` identity
-law, `insert ↦` additivity) that proves the sum-to-product law will prove
-multi-signature and threshold variants; the pattern is reusable verbatim.
-
-### 7.3 Toward unforgeability under CDH
-
-The principal omission is a game-based proof of existential unforgeability under
-chosen-message attack (EUF-CMA) reducing to the computational Diffie–Hellman
-assumption in the pairing group. This requires modeling a probabilistic
-adversary with access to a signing oracle and a random oracle for hash-to-curve,
-defining negligible advantage, and exhibiting a reduction that turns a forger
-into a CDH solver. Such a model is orthogonal to — and would build atop — the
-algebraic interface developed here.
-
-### 7.4 Further directions
-
-- **Type-III pairings.** Generalize from the symmetric setting `e : G × G → T` to
-  the asymmetric `e : G₁ × G₂ → T` used in deployed systems, where `G₁ ≠ G₂` and
-  no efficient isomorphism is assumed.
-- **Identity-based encryption.** Build the Boneh–Franklin IBE on the same
-  interface; its correctness is again a bilinearity computation.
-- **Batch and threshold verification.** Formalize randomized batch verification
-  and `t`-of-`n` threshold signatures, both expressible through the sum-to-product
-  law.
-- **Nondegeneracy on both slots and perfect pairings.** Strengthen Theorem 5.3 to
-  two-sided separation and connect to the perfectness of the Weil pairing on
-  `E[r] × E[r]`.
-
----
-
-## 8. Conclusion
-
-We have shown that the cryptographically essential content of the Weil pairing,
-as consumed by BLS signatures and their aggregate variant, is captured by a
-two-axiom algebraic interface. From biadditivity alone follow the identity,
-negation, natural- and integer-power, joint-bilinearity, and sum-to-product laws,
-and from these the completeness of BLS verification and of aggregate
-verification — the latter exhibiting short aggregate signatures as a direct
-corollary of the sum-to-product law. Nondegeneracy enters as a single, isolable
-hypothesis that endows the pairing with point separation and thereby with key
-binding. The heavy analytic construction of the pairing is needed only to
-instantiate the interface, never to reason about the protocols built upon it — a
-separation of concerns that makes the resulting theory both robust and reusable.
-
----
-
-## References
-
-- D. Boneh, B. Lynn, and H. Shacham. *Short signatures from the Weil pairing.*
-  ASIACRYPT 2001.
-- D. Boneh, C. Gentry, B. Lynn, and H. Shacham. *Aggregate and verifiably
-  encrypted signatures from bilinear maps.* EUROCRYPT 2003.
-- D. Boneh and M. Franklin. *Identity-based encryption from the Weil pairing.*
-  CRYPTO 2001.
-- J. H. Silverman. *The Arithmetic of Elliptic Curves.* Springer GTM 106
-  (for the construction and properties of the Weil pairing).
+Cryptographic pairings are the enabling technology behind a wide class of
+protocols that are not achievable with classical discrete-log groups alone:
+short signatures, signature aggregation, identity-based encryption, and
+succinct non-interactive arguments. The canonical instance is the Weil pairing
+on the $r$-torsion subgroup $E[r]$ of an elliptic curve $E$, a deep
+construction drawing on divisors and function fields. Yet the protocols that
+*consume* a pairing never use anything beyond a small set of algebraic
+identities. This paper makes that observation precise: we axiomatize the pairing
+by its characteristic property — biadditivity into a multiplicative target — and
+derive the full BLS protocol layer, its aggregate variant, the binding property,
+the alternating Weil refinement, and the MOV reduction, from this interface
+alone.
+
+The methodological payoff is twofold. First, the proofs become elementary and
+modular: each cryptographic guarantee is a one- or two-line consequence of a
+named algebraic lemma. Second, the boundary between "what the construction
+gives" and "what the protocol needs" becomes explicit. BLS completeness and
+aggregation need only biadditivity; binding needs nondegeneracy; the
+Weil-specific antisymmetry needs the alternating axiom; and the MOV reduction
+needs only biadditivity plus the order of a single target element.
+
+### 1.1 Notation and conventions
+
+Throughout, $G$ is an additively written abelian group (an `AddCommMonoid`,
+strengthened to an `AddCommGroup` where inverses are required), and $T$ is a
+multiplicatively written abelian group (`CommGroup`). We write $n\cdot p$ for
+the $n$-fold sum of $p\in G$ ($n\in\mathbb{N}$ or $\mathbb{Z}$), $t^n$ for the
+$n$-th power in $T$, $1$ for the identity of $T$, $\operatorname{ord}(t)$ for the
+order of $t\in T$, and $a\equiv b \pmod m$ for congruence of naturals. The
+symbol $e$ always denotes the pairing map.
+
+## 2. The pairing interface
+
+**Definition 1 (Pairing).** A *pairing* from $G$ to $T$ is a map
+$e : G \times G \to T$ that is additive-to-multiplicative in each argument:
+$$ e(a + b,\ q) = e(a, q)\cdot e(b, q) \quad\text{(add\_left)}, \qquad
+   e(p,\ a + b) = e(p, a)\cdot e(p, b) \quad\text{(add\_right)}. $$
+These two axioms are the complete definition; no further structure is assumed.
+
+This is exactly the interface satisfied by the Weil and Tate pairings restricted
+to the algebraic data that protocols use. The source group models the elliptic
+curve point group (secret keys act by scalar multiplication); the target group
+models the multiplicative group $\mu_r \subset K^\times$ of $r$-th roots of
+unity.
+
+## 3. Bilinearity: the derived laws
+
+**Lemma 2 (Unit on the boundary; `map_one_left`, `map_one_right`).**
+$e(0, q) = 1$ and $e(p, 0) = 1$.
+
+*Proof sketch.* Put $a = b = 0$ in add\_left: $e(0,q) = e(0,q)\cdot e(0,q)$.
+In a group, $x = x\cdot x$ forces $x = 1$ (cancel one factor). The right
+identity is the mirror argument with add\_right. $\square$
+
+**Lemma 3 (Scalar sliding; `pairing_nsmul_left`, `pairing_nsmul_right`).**
+For all $n\in\mathbb{N}$, $e(n\cdot p, q) = e(p,q)^n$ and
+$e(p, n\cdot q) = e(p,q)^n$.
+
+*Proof sketch.* Induction on $n$. Base case $n=0$ is Lemma 2 together with
+$t^0 = 1$. Inductive step: $(n+1)\cdot p = n\cdot p + p$, so by add\_left and the
+hypothesis, $e((n+1)\cdot p, q) = e(n\cdot p, q)\cdot e(p,q) = e(p,q)^n\cdot e(p,q)
+= e(p,q)^{n+1}$. The right version is identical with add\_right. $\square$
+
+**Lemma 4 (Joint scalar law; `pairing_bilinear_nsmul`).**
+For all $a, b\in\mathbb{N}$, $e(a\cdot p, b\cdot q) = e(p,q)^{ab}$.
+
+*Proof sketch.* Apply Lemma 3 in each slot in turn:
+$e(a\cdot p, b\cdot q) = e(p, b\cdot q)^a = (e(p,q)^b)^a = e(p,q)^{ab}$, using
+$(t^b)^a = t^{ab}$ and commutativity of $\mathbb{N}$-multiplication. $\square$
+
+**Lemma 5 (Sum to product; `pairing_sum_left`).**
+For a finite index set $s$ and $f : s \to G$,
+$$ e\!\Big(\sum_{i\in s} f_i,\ q\Big) = \prod_{i\in s} e(f_i, q). $$
+
+*Proof sketch.* Finite-set induction. Empty set: the empty sum is $0$, the empty
+product is $1$, and $e(0,q)=1$ by Lemma 2. Insertion step: peeling off a new
+index $a$ gives $e(f_a + \sum_{i} f_i, q) = e(f_a, q)\cdot e(\sum_i f_i, q)$ by
+add\_left, then the hypothesis. $\square$
+
+**Lemma 8 (Inverses and $\mathbb{Z}$-grading; `map_neg_left`,
+`pairing_zsmul_left`).** When $G$ is a group, $e(-p, q) = e(p,q)^{-1}$, and for
+all $n\in\mathbb{Z}$, $e(n\cdot p, q) = e(p,q)^n$.
+
+*Proof sketch.* From $e(p,q)\cdot e(-p,q) = e(p + (-p), q) = e(0,q) = 1$ we read
+off $e(-p,q) = e(p,q)^{-1}$. For the $\mathbb{Z}$ law, split $n = m$ or
+$n = -m$ with $m\in\mathbb{N}$; the nonnegative case is Lemma 3, and the negative
+case combines $e(-p,q) = e(p,q)^{-1}$ with the natural law and $t^{-m} =
+(t^m)^{-1}$. $\square$
+
+## 4. BLS signatures and aggregation
+
+We model BLS over the pairing interface. Public parameters fix a generator
+$g\in G$. A signer holds secret key $x\in\mathbb{N}$ and publishes public key
+$X = x\cdot g$. To sign a message whose hash-to-curve value is $H\in G$, the
+signer outputs the single group element $\sigma = x\cdot H$. A verifier holding
+$(g, X, H, \sigma)$ accepts iff $e(\sigma, g) = e(H, X)$.
+
+**Theorem 6 (BLS completeness; `bls_verify_correct`).**
+For all $g, H\in G$ and $x\in\mathbb{N}$,
+$$ e(x\cdot H,\ g) = e(H,\ x\cdot g). $$
+Consequently the verification equation $e(\sigma, g) = e(H, X)$ holds for every
+honestly generated signature $\sigma = x\cdot H$ with $X = x\cdot g$.
+
+*Proof sketch.* By Lemma 3 in the first slot, $e(x\cdot H, g) = e(H,g)^x$; by
+Lemma 3 in the second slot, $e(H, x\cdot g) = e(H,g)^x$. The two right-hand
+sides coincide. $\square$
+
+**Theorem 7 (Aggregate completeness; `bls_aggregate_correct`).**
+For a finite index set $s$, generator $g$, hash points $H : s \to G$, and secret
+keys $x : s \to \mathbb{N}$,
+$$ e\!\Big(\sum_{i\in s} x_i\cdot H_i,\ g\Big) = \prod_{i\in s} e\big(H_i,\ x_i\cdot g\big). $$
+The aggregate signature $\sigma_{\mathrm{agg}} = \sum_i x_i\cdot H_i$ is a single
+group element that verifies against the product of per-signer pairings.
+
+*Proof sketch.* Apply the sum-to-product law (Lemma 5) to the left side, turning
+the pairing of the aggregated sum into a product of per-index pairings
+$e(x_i\cdot H_i, g)$; then rewrite each factor by Theorem 6 to obtain
+$e(H_i, x_i\cdot g)$. $\square$
+
+This is the algebraic content of *short aggregate signatures*: $n$ signatures
+compress to one group element while verification fans out into $n$
+publicly-checkable factors $\prod_i e(H_i, X_i)$.
+
+## 5. Binding via nondegeneracy
+
+A pairing is *left-nondegenerate* if the only point pairing trivially with
+everything is $0$: $\forall a,\ (\forall q,\ e(a,q)=1) \Rightarrow a = 0$.
+
+**Theorem 9 (Point separation; `pairing_left_injective`).**
+If $e$ is left-nondegenerate and $e(p_1, q) = e(p_2, q)$ for all $q\in G$, then
+$p_1 = p_2$.
+
+*Proof sketch.* For every $q$,
+$e(p_1 - p_2, q) = e(p_1, q)\cdot e(-p_2, q) = e(p_1,q)\cdot e(p_2,q)^{-1} = 1$
+using add\_left, Lemma 8, and the hypothesis. Nondegeneracy applied to
+$p_1 - p_2$ gives $p_1 - p_2 = 0$, hence $p_1 = p_2$. $\square$
+
+**Definition 13 (Character homomorphisms; `homLeft`, `homRight`).**
+For fixed $q$ (resp. $p$), the maps $p\mapsto e(p,q)$ and $q\mapsto e(p,q)$ are
+additive-to-multiplicative homomorphisms $G \to \mathrm{Additive}\,T$, i.e.
+genuine additive group homomorphisms once $T$ is viewed additively. They
+package the two biadditivity axioms in the standard homomorphism API
+($e(0,q)=1$ becomes $\mathrm{map\_zero}$; add\_left becomes $\mathrm{map\_add}$).
+
+**Theorem 14 (Nondegeneracy is injectivity; `nondegenerate_iff_char_injective`).**
+Left-nondegeneracy is equivalent to injectivity of the character map
+$\chi : G \to (G \to T)$, $\chi(p) = \big(q \mapsto e(p,q)\big)$:
+$$ \big(\forall a,\ (\forall q,\ e(a,q)=1) \Rightarrow a = 0\big) \iff \text{$\chi$ is injective}. $$
+
+*Proof sketch.* ($\Rightarrow$) If $\chi(p_1) = \chi(p_2)$, then $e(p_1,q) =
+e(p_2,q)$ for all $q$; apply Theorem 9. ($\Leftarrow$) Given $a$ with $e(a,q)=1$
+for all $q$, note $e(0,q)=1=e(a,q)$ for all $q$, so $\chi(a) = \chi(0)$, hence
+$a = 0$ by injectivity. $\square$
+
+Theorem 14 gives the clean algebraic boundary for the binding property: a pairing
+"separates points" precisely when its character map is one-to-one, so distinct
+keys produce distinct verification fingerprints. A forgery that passed
+verification without the secret would violate this injectivity.
+
+## 6. The alternating refinement: the genuine Weil pairing
+
+The Weil pairing on $E[r]$ is *alternating*. We capture this as a refinement of
+the interface.
+
+**Definition 15 (Alternating pairing; `AlternatingPairing`).**
+An *alternating pairing* is a pairing $e$ on a group $G$ additionally satisfying
+the self-pairing axiom $e(p, p) = 1$ for all $p$.
+
+**Theorem 16 (Antisymmetry; `mul_swap_eq_one`, `swap_eq_inv`).**
+For an alternating pairing,
+$$ e(p, q)\cdot e(q, p) = 1, \qquad\text{equivalently}\qquad e(q, p) = e(p, q)^{-1}. $$
+
+*Proof sketch.* Expand the self-pairing of a sum by biadditivity:
+$$ 1 = e(p+q,\ p+q) = e(p,p)\cdot e(p,q)\cdot e(q,p)\cdot e(q,q). $$
+By the alternating axiom $e(p,p) = e(q,q) = 1$, leaving $e(p,q)\cdot e(q,p) = 1$.
+The inverse form is immediate: $e(q,p)$ is the inverse of $e(p,q)$. $\square$
+
+Antisymmetry is the algebraic fingerprint distinguishing the Weil pairing from a
+generic biadditive map, and it explains why self-pairing leaks nothing about a
+secret: $e(X, X) = 1$ for every public key $X = x\cdot g$.
+
+## 7. The MOV reduction: a Cryptography ↔ Algebra bridge
+
+The Menezes–Okamoto–Vanstone reduction transports the ECDLP in $G$ to a discrete
+logarithm in the target group $T$. Its fidelity is governed entirely by a single
+order.
+
+**Theorem 10 (The MOV map; `mov_map`).**
+For all $g\in G$ and $x\in\mathbb{N}$,
+$$ e(x\cdot g,\ g) = e(g, g)^{x}. $$
+
+*Proof sketch.* Lemma 3 in the first slot with $p = q = g$. $\square$
+
+Thus the ECDLP instance "$x$ such that $X = x\cdot g$" becomes the DLP instance
+"$x$ such that $e(X, g) = e(g,g)^x$" in $T$ — a discrete log to the base
+$e(g,g)$ in the multiplicative group of a finite field.
+
+**Theorem 11 (Faithfulness of the reduction; `mov_reduction`).**
+For all $g\in G$ and $a, b\in\mathbb{N}$,
+$$ e(a\cdot g,\ g) = e(b\cdot g,\ g) \iff a \equiv b \pmod{\operatorname{ord}\!\big(e(g,g)\big)}. $$
+
+*Proof sketch.* By Theorem 10 the equality becomes $e(g,g)^a = e(g,g)^b$. In a
+group, two equal powers of an element $t$ are characterized by congruence of
+exponents modulo $\operatorname{ord}(t)$ (the standard power-equality criterion).
+$\square$
+
+Hence solving the DLP base $e(g,g)$ in $T$ recovers the ECDLP value *exactly
+modulo* $\operatorname{ord}(e(g,g))$. The reduction loses no more and no less
+than this residue.
+
+**Theorem 12 (Full recovery; `mov_recovers_dlog`).**
+Let $n\in\mathbb{N}$ with $n \le \operatorname{ord}(e(g,g))$. If $a, b < n$ and
+$e(a\cdot g, g) = e(b\cdot g, g)$, then $a = b$.
+
+*Proof sketch.* Theorem 11 gives $a \equiv b \pmod{\operatorname{ord}(e(g,g))}$.
+Since $a, b < n \le \operatorname{ord}(e(g,g))$, both are their own residues
+modulo $\operatorname{ord}(e(g,g))$, so the congruence forces $a = b$. $\square$
+
+Taking $n = \operatorname{ord}(g)$, Theorem 12 says: whenever the order of
+$e(g,g)$ in $T$ is at least the order of $g$ — the regime of *small embedding
+degree* — the finite-field DLP solver returns the unique secret in the canonical
+range $0 \le x < \operatorname{ord}(g)$. This is the precise reason curves with
+small embedding degree are cryptographically broken: the pairing dissolves the
+ECDLP into a finite-field DLP that can be solved by subexponential index-calculus
+methods.
+
+## 8. Algorithms
+
+We summarize the constructive content of the results as algorithms over the
+abstract interface; concrete implementations appear in the companion demo.
+
+- **BLS aggregate verification (from Theorem 7).** Given $(g, \{(H_i,
+  X_i)\}_i, \sigma_{\mathrm{agg}})$, accept iff $e(\sigma_{\mathrm{agg}}, g) =
+  \prod_i e(H_i, X_i)$. Cost: one left pairing plus $n$ right pairings and $n-1$
+  target multiplications.
+- **MOV attack (from Theorems 10–12).** Given $(g, X = x\cdot g)$ on a curve of
+  small embedding degree, compute $u = e(X, g)$ and $h = e(g, g)$ in $T$, then
+  solve the finite-field discrete logarithm $u = h^x$ for $x$ in the range
+  $0 \le x < \operatorname{ord}(g)$. By Theorem 12 the recovered $x$ is unique.
+
+## 9. Discussion and applications
+
+The abstraction clarifies *exactly* what each cryptographic property costs in
+axioms. Completeness (Theorem 6) and aggregation (Theorem 7) are theorems of the
+bare biadditive interface; they require neither nondegeneracy nor the alternating
+law. Binding (Theorems 9, 14) requires nondegeneracy and nothing else. The
+Weil-specific antisymmetry (Theorem 16) requires the alternating axiom. And the
+MOV reduction (Theorems 10–12) is again a theorem of bare biadditivity, with the
+single quantitative input $\operatorname{ord}(e(g,g))$ controlling its fidelity.
+
+This separation has practical consequences. Aggregate BLS underpins the
+finality gadgets of modern proof-of-stake blockchains, where thousands of
+validator signatures per block must be stored and checked; Theorem 7 is the
+reason a single group element suffices. The MOV reduction, conversely, is a
+design *constraint*: curve selection must ensure a large embedding degree so that
+$\operatorname{ord}(e(g,g))$ does not place the ECDLP within reach of
+finite-field index calculus.
+
+## 10. Future work
+
+Four directions extend the present development. (1) *Antisymmetry vs.
+alternation:* on targets without 2-torsion, antisymmetry $e(p,q)\cdot e(q,p)=1$
+for all $p,q$ should be equivalent to the alternating law $e(p,p)=1$, the gap
+being exactly the 2-torsion subgroup of $T$ (since $e(p,p)^2 = 1$ is the only
+obstruction). (2) *Embedding degree characterization:* promote Theorem 12 to an
+*iff*, characterizing the embedding degree $k$ as the least $k$ with
+$\operatorname{ord}(g) \mid \operatorname{ord}(e(g,g))$ in $\mu_{q^k - 1}$.
+(3) *Aggregate soundness:* upgrade completeness (Theorem 7) to a binding/soundness
+statement equivalent to left-nondegeneracy (Theorem 14), by reducing aggregate
+collisions to a single equation $e(\Delta, g) = 1$ for the difference $\Delta$ of
+aggregated signatures. (4) *Cyclic targets:* when $T$ is cyclic, reduce the full
+ECDLP to a single `Nat.ModEq` solve. These are the natural next theorems given
+the lemmas already in hand.
+
+## 11. Conclusion
+
+From two equations — biadditivity in each slot — we obtain the complete BLS
+protocol layer, its short aggregate variant, the binding property as point
+separation, the alternating refinement defining the genuine Weil pairing, and
+the MOV reduction as a faithful congruence governed by a single order. The
+analytic construction of the Weil pairing is unnecessary for any of this: the
+algebra of the interface is the whole story, and it is enough to explain why
+pairing-based signatures are simultaneously powerful (aggregation) and delicate
+(the MOV pitfall).

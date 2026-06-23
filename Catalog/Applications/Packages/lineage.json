@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-22T21:20:57Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -26,6 +26,15 @@
       "shape": "icosahedron",
       "date": "2026-06-23T01:43:47Z",
       "hue": 91
+    },
+    {
+      "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
+      "title": "Elliptic Curve Cryptography: The Weil Pairing, BLS Signatures, and the MOV Reduction",
+      "domain": "Cryptography",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-06-23T04:02:19Z",
+      "hue": 89
     }
   ],
   "edges": [],

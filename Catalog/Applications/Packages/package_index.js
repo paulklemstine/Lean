@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-23T04:02:19Z",
+    "domain": "Cryptography",
+    "exp_id": "cb79327f",
+    "filename": "elliptic_curve_cryptography_weil_pairing_and_bls_s.json",
+    "pkg_num": 4,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Elliptic Curve Cryptography: The Weil Pairing, BLS Signatures, and the MOV Reduction"
+  },
+  {
     "date": "2026-06-23T01:43:47Z",
     "domain": "Applications",
     "exp_id": "bfb13379",
@@ -36,6 +46,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "elliptic_curve_cryptography_weil_pairing_and_bls_s.json": {
+    "domain": "Cryptography",
+    "exp_id": "cb79327f",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Elliptic Curve Cryptography: The Weil Pairing, BLS Signatures, and the MOV Reduction"
+  },
   "eml_transseries_asymptotic_expansions_beyond_power.json": {
     "domain": "Applications",
     "exp_id": "bfb13379",
@@ -71,7 +89,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 270,
+      "hue": 272,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -100,6 +118,17 @@ window.PACKAGE_GRAPH = {
       "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Transseries: A Hahn-Series Field and the Asymptotic Comparison Theorem"
+    },
+    {
+      "date": "2026-06-23T04:02:19Z",
+      "domain": "Cryptography",
+      "hue": 89,
+      "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
+      "primary_domain": "Cryptography",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "dodecahedron",
+      "title": "Elliptic Curve Cryptography: The Weil Pairing, BLS Signatures, and the MOV Reduction"
     }
   ]
 };
