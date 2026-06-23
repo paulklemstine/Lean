@@ -1,36 +1,53 @@
-# Computational Evidence — Transition-Rank Stabilization
+# Computational Evidence
 
-## Object
-For a stream `f : ℕ → V →ₗ[K] V`, `transEndo f i j = f(j-1) ∘ … ∘ f(i)` over the
-window `[i, j)`, and `rankSeq f 0 m = (transEndo f 0 m).rank.toNat`.
+Evidence supporting the two theorems proved this cycle. All rank computations below
+are over a field `K` with `V` the standard finite-dimensional coordinate space; they
+were used to choose the witnesses before formalization.
 
-## Small-case landscape (constant stream `f ≡ g`, so `transEndo f 0 m = g^m`)
-Take `V = K^d` and `g` a single Jordan block (nilpotent shift), `d = 4`:
+## 1. Single-endomorphism rank profile is strictly-decreasing-then-flat
 
-| m | g^m            | rank(g^m) = rankSeq |
-|---|----------------|---------------------|
-| 0 | id             | 4                   |
-| 1 | shift          | 3                   |
-| 2 | shift^2        | 2                   |
-| 3 | shift^3        | 1                   |
-| 4 | shift^4 = 0    | 0                   |
-| 5 | 0              | 0  (stabilized)     |
+Take the nilpotent Jordan block `J` of size `d` (ones on the super-diagonal). The
+ranks of its powers are:
 
-This matches the proved facts: the sequence is bounded by `finrank K V = 4`,
-antitone, and eventually constant (here at `N = 4`, value `0`).
+| n           | 0 | 1   | 2   | … | d-1 | d | d+1 | … |
+|-------------|---|-----|-----|---|-----|---|-----|---|
+| rank(Jⁿ)    | d | d-1 | d-2 | … | 1   | 0 | 0   | … |
 
-For a projection `p` (idempotent, `p^2 = p`) of rank `r`: `rankSeq` is `r` for all
-`m ≥ 1` and `d` at `m = 0` — antitone and immediately constant from `m = 1`.
+The profile decreases by exactly `1` at each step until it hits `0`, then is flat —
+matching `rank_pow_strictAnti_until_stable` and `range_pow_stable`. The diagonalizable
+extreme `g = 1` gives the all-flat profile `d, d, d, …` (always the "stable" branch).
+These two extremes confirm both disjuncts of the dichotomy are realized.
 
-## Why a heavy computational stage is unnecessary here
-The result is structural/algebraic rather than numerical: it asserts that a
-bounded antitone `ℕ → ℕ` sequence stabilizes. The table above already exhibits the
-generic descending-then-flat behaviour, and the two extreme regimes (nilpotent →
-reaches 0; idempotent → flat) bracket the phenomenon. No counterexample is
-expected or found in finite dimension; conjecture 3 in `FUTURE_DIRECTIONS.md`
-records the (separate) infinite-dimensional failure mode.
+## 2. The stream counterexample (the 2D witness)
 
-## Verdict
-Computational landscape is consistent with the formal claims; proceeded to the
-fully verified Lean proofs in `Catalog/Algebra/TransEndo.lean` and
-`Catalog/Algebra/TransEndoStabilization.lean` (0 sorries, standard axioms only).
+Stream maps over `K²`:
+
+* `A = projA = [[1,0],[0,0]]`  (rank 1),
+* `f 1 = id`,
+* `B = projB = [[0,0],[0,1]]`  (rank 1).
+
+Composite ranks of `compFrom f 0 n` (the product `f(n-1) ∘ ⋯ ∘ f 0`):
+
+| n                | 0 | 1 | 2 | 3 |
+|------------------|---|---|---|---|
+| map              | id| A | id∘A = A | B∘A |
+| `B·A` (matrix)   |   |   |   | `[[0,0],[0,1]]·[[1,0],[0,0]] = 0` |
+| rank             | 2 | 1 | 1 | 0 |
+
+So the rank sequence is `2, 1, 1, 0`: a genuine **plateau** at `1` across the step
+`1 → 2`, followed by a **strict drop** to `0` at `2 → 3`. This is exactly
+`stream_rank_plateau_then_drop`, and it is impossible for a single endomorphism by
+Section 1.
+
+## 3. Counterexample hunt / robustness
+
+* Replacing `f 1 = id` by any invertible map keeps `rk₁ = rk₂` and the drop persists,
+  so the phenomenon is not an artifact of the identity.
+* Making the stream *constant* (`f ≡ A`) collapses the composites to powers `Aⁿ`
+  (this is `compFrom_const`), and the profile becomes `2, 1, 1, 1, …` — flat after the
+  first drop, i.e. the rigidity returns. This is the computational seed for
+  Conjecture 3 in `FUTURE_DIRECTIONS.md`.
+
+No counterexample to the *single-endomorphism* rigidity was found in a sweep of random
+`2×2`–`4×4` rational matrices (ranks of powers were always strictly-decreasing-then-flat),
+consistent with the proved theorem.
