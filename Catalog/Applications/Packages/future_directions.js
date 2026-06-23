@@ -1773,9 +1773,38 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21383v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T03:02:08.314897+00:00",
     "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A left-regular bipartite graph G of degree d is an s-optimal small-set expander (meaning every subset X of left vertices of size at most s has exactly d|X| neighbors, i.e., its s-th expansion constant \u03b1_G(s) equals d) if and only if the girth of G is at least 2s+2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2305",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:53:16.749300+00:00",
+    "title": "Girth-Characterization of Optimal Small-Set Expanders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Church-Farb-Putman conjecture predicts that the codimension-i rational cohomology of SL_n(Z) vanishes for n >= i+2. It has been verified for i=0, 1, and 2. This conjecture proposes the next open case: the codimension-3 rational cohomology of SL_n(Z) vanishes for n >= 5, which is equivalent to H^{n(n-1)/2 - 3}(SL_n(Z); Q) = 0 for all n >= 5.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2306",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:54:35.360720+00:00",
+    "title": "Church-Farb-Putman Conjecture for Codimension 3"
   },
   {
     "consumed_by_exp_id": "",
@@ -2347,7 +2376,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "55431155",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -2357,7 +2386,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -2632,7 +2661,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70e63d82",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
@@ -2642,7 +2671,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
@@ -2990,6 +3019,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.643460+00:00",
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+  },
+  {
+    "consumed_by_exp_id": "d1c9c6b9",
+    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0069",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-01T12:30:30.676713+00:00",
+    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
     "consumed_by_exp_id": "",

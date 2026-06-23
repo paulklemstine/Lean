@@ -2764,7 +2764,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.676713+00:00",
       "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
@@ -14783,11 +14783,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "55431155",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14799,7 +14799,7 @@
         "Algebra"
       ],
       "id": "fd_0493",
-      "last_attempt_time": "2026-06-07T20:05:22.586223+00:00",
+      "last_attempt_time": "2026-06-23T04:54:57.333094+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14813,7 +14813,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.995091+00:00",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
@@ -15840,7 +15840,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "70e63d82",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15866,7 +15866,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:05.964661+00:00",
       "title": "Bridge: Galois Connections Between Order Theory and Topology"
@@ -34753,7 +34753,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Hasunuma 2025 connectivity-preserving Hamiltonian cycle theorem",
         "Main theorem of the submitted paper: n ≥ 6k+6 prescribed Hamiltonian path version",
@@ -34779,7 +34779,7 @@
         "Physics"
       ],
       "id": "fd_2302",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T04:54:36.881999+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Combinatorics.SimpleGraph.Connectivity\n\nopen SimpleGraph\n\nnamespace ConnectivityPreservingPath\n\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\n/-- `IsKConnected G k` means that deleting fewer than `k` vertices from `G` leaves a connected nontrivial graph, equivalently vertex-connectivity at least `k`. -/\nconstant IsKConnected : SimpleGraph V → ℕ → Prop\n\n/-- `IsHamiltonianUVPath G u v p` means that `p` is a simple walk from `u` to `v` visiting every vertex exactly once. -/\nconstant IsHamiltonianUVPath : (G : SimpleGraph V) → (u v : V) → G.Walk u v → Prop\n\n/-- The spanning graph obtained from `G` by deleting every edge traversed by the walk `p`. -/\nconstant eraseWalkEdges : (G : SimpleGraph V) → {u v : V} → G.Walk u v → SimpleGraph V\n\n/-- Conjectural strengthening of the paper's `6*k+6` order bound to `4*k+4`. -/\ntheorem conjecture_four_k_plus_four_bound\n    (G : SimpleGraph V) [DecidableRel G.Adj]\n    (k : ℕ) (hk : 2 ≤ k)\n",
       "lineage_refs": [],
@@ -34793,7 +34793,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21383v1",
       "source_path": "http://arxiv.org/abs/2606.21383v1",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-23T03:02:08.314897+00:00",
       "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
@@ -34875,6 +34875,99 @@
       "thread_id": "th_3fb74545",
       "timestamp": "2026-06-23T04:02:21.365912+00:00",
       "title": "Derived from the cycle that produced `Cryptography/WeilPairingBLS.lean`"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "05C35",
+        "05C38",
+        "94B05"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "A left-regular bipartite graph G of degree d is an s-optimal small-set expander (meaning every subset X of left vertices of size at most s has exactly d|X| neighbors, i.e., its s-th expansion constant α_G(s) equals d) if and only if the girth of G is at least 2s+2.",
+      "domain_bridges": [
+        "Graph Theory",
+        "Coding Theory",
+        "Finite Mathematics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2305",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Fintype.Basic\n\ntheorem girth_iff_optimal_expansion {d s : ℕ} {L R : Type} [Fintype L] [Fintype R]\n  [DecidableEq L] [DecidableEq R] (G : SimpleGraph (Sum L R))\n  (h_bip : G.IsBipartite)\n  (h_left_reg : ∀ v : L, (G.neighborSet (Sum.inl v)).toFinset.card = d) :\n  (∀ X : Finset L, X.Nonempty → X.card ≤ s →\n    (G.neighborFinset (X.map (Function.Embedding.inl L R))).card = d * X.card)\n  ↔ G.girth ≥ 2 * s + 2 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the neighborhood function of a subset of left vertices in a bipartite graph. Prove that a subset X of left vertices has strictly fewer than d|X| neighbors if and only if the induced subgraph on X and its neighbors contains a cycle. Show that the existence of such a cycle is equivalent to the existence of a cycle of length at most 2s, which directly yields the equivalence with the graph's girth being at least 2s+2.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23579v1",
+      "source_path": "http://arxiv.org/abs/2606.23579v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T04:53:16.749300+00:00",
+      "title": "Girth-Characterization of Optimal Small-Set Expanders"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.AT",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The Church-Farb-Putman conjecture predicts that the codimension-i rational cohomology of SL_n(Z) vanishes for n >= i+2. It has been verified for i=0, 1, and 2. This conjecture proposes the next open case: the codimension-3 rational cohomology of SL_n(Z) vanishes for n >= 5, which is equivalent to H^{n(n-1)/2 - 3}(SL_n(Z); Q) = 0 for all n >= 5.",
+      "domain_bridges": [
+        "algebraic_topology",
+        "number_theory",
+        "homological_algebra"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Pythagorean"
+      ],
+      "id": "fd_2306",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cfp_conjecture_codim_3 (n : ℕ) (hn : n ≥ 5) :\n  Nonempty (groupCohomology (SpecialLinearGroup n ℤ) (n.choose 2 - 3) ℚ ≃ₗ[ℚ] 0) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the complex of injective words or the complex of partial bases to track configurations of 3 vectors, showing that the resulting simplicial complex is sufficiently highly connected. Then, apply spectral sequence arguments to deduce the vanishing of the group cohomology from the high connectivity of the complex quotiented by the SL_n(Z) action.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23519v1",
+      "source_path": "http://arxiv.org/abs/2606.23519v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T04:54:35.360720+00:00",
+      "title": "Church-Farb-Putman Conjecture for Codimension 3"
     },
     {
       "ambition_level": "extension",
@@ -115014,6 +115107,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
