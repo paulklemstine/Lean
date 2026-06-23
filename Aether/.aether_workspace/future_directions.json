@@ -15485,7 +15485,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -15501,7 +15501,7 @@
         "Algebra"
       ],
       "id": "fd_0511",
-      "last_attempt_time": "2026-06-23T13:48:06.090345+00:00",
+      "last_attempt_time": "2026-06-06T02:04:45.911655+00:00",
       "last_reviewed_at": "2026-06-17T02:02:23.255375+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16733,7 +16733,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -16749,7 +16749,7 @@
         "Computation"
       ],
       "id": "fd_0551",
-      "last_attempt_time": "2026-06-23T13:48:10.705313+00:00",
+      "last_attempt_time": "2026-06-07T22:40:19.256795+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -36146,6 +36146,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Schur Q-functions",
+        "strict partitions",
+        "neutral fermion vertex operators",
+        "odd power-sum symmetric functions",
+        "Lean mathlib: MvPolynomial, PowerSeries, Finsupp, Nat.Odd"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let Γ_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism φ_t of Γ_R by φ_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_λ denotes the Schur Q-function indexed by a strict partition λ in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_λ denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition λ one has S^t_λ = φ_t(Q_λ). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n ↦ (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |λ|.",
+      "domain_bridges": [
+        "vertex-operator constructions ↔ plethystic substitutions",
+        "Clifford algebra modes ↔ symmetric-function bases",
+        "formal Laurent series identities ↔ polynomial algebra automorphisms"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2332",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nuniverse u\n\n/-- Strict partitions, represented abstractly as strictly decreasing lists of natural numbers. -/\nstructure StrictPartition where\n  parts : List ℕ\n  strict : parts.Pairwise (· > ·)\n\n/-- The odd power-sum symmetric-function algebra over `R`. In an implementation this can be\nmodeled degreewise by `MvPolynomial {n : ℕ // Odd n} R`. -/\nconstant OddSym (R : Type u) : Type u\n\nconstant instCommRingOddSym {R : Type u} [CommRing R] : CommRing (OddSym R)\nattribute [instance] instCommRingOddSym\n\n/-- Schur Q-functions in the odd power-sum algebra, with the neutral-fermion normalization. -/\nconstant schurQ {R : Type u} [CommRing R] : StrictPartition → OddSym R\n\n/-- Shifted `t`-Schur functions obtained from the odd GJZ Fourier modes. -/\nconstant shiftedTSchur {R : Type u} [CommRing R] : R → StrictPartition → OddSym R\n\n/-- Odd plethystic scaling: sends each odd power sum `p_n` to `c n hn • p_n`. -/\nconstant oddPlethysticScale {R : Type u} [CommRing R] :\n  ((n : ℕ) → Odd n ",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the scaling algebra automorphism Φ_t on the odd power-sum ring by Φ_t(p_n) = (1 - t^n)p_n. Show coefficientwise that Φ_t ∂/∂p_n Φ_t⁻¹ = (1 - t^n)⁻¹ ∂/∂p_n. Therefore the odd GJZ field Y(z;t) is conjugate to the t=0 neutral-fermion field: Y(z;t) = Φ_t Y(z;0) Φ_t⁻¹. Since Φ_t fixes the vacuum vector 1, applying the negative Fourier modes indexed by a strict partition λ gives S^t_λ = Φ_t(S^0_λ) = Φ_t(Q_λ). In Lean, avoid infinite series by working degreewise in a truncated odd-variable polynomial algebra up to degree |λ|, then pass to the abstract graded Γ formulation.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22058v1",
+      "source_path": "http://arxiv.org/abs/2606.22058v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T14:06:13.272860+00:00",
+      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "Erdős Problem 550"
       ],
@@ -36165,7 +36213,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2332",
+      "id": "fd_2333",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_550_upper_bound_tight (k : ℕ) (m : Fin k → ℕ) (hk : k ≥ 2)\n    (hm_sorted : ∀ i j : Fin k, i ≤ j → m i ≤ m j) :\n    ∃ (trees : ℕ → SimpleGraph ℕ), ∀ n : ℕ, ∃ N ≥ n,\n      IsTree (trees N) ∧ (trees N).vertexCount = N ∧\n      R (trees N) (CompleteMultipartiteGraph m) =\n        (k - 1) * (R (trees N) (CompleteBipartiteGraph (m ⟨0, by omega⟩) (m ⟨1, by omega⟩)) - 1) + m ⟨0, by omega⟩ := by\n  sorry",
@@ -36211,7 +36259,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2333",
+      "id": "fd_2334",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_codim_i_vanishing (p i n : ℕ) (hp : Nat.Prime p) (hi : 0 < i) \n    (hn : n ≥ (3 * i + 1) * p + (3 * i + 2)) :\n    (groupCohomology (HeckeCongruence p n) (n * (n - 1) / 2 - i) ⊗[ℤ] ℚ) ≅ 0 := by\n  sorry",
@@ -36260,7 +36308,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2334",
+      "id": "fd_2335",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_radical_shift_bound (h : ℕ) (h_pos : 0 < h) :\n    Finset.card (Finset.filter (λ j, rad j = rad (j + h)) (Finset.Icc 1 (3 * 7 ^ (3 + 2 * ω h)))) ≤ 3 * 7 ^ (3 + 2 * ω h) ∧\n    (∀ j ≥ 1, rad j = rad (j + h) → Odd h → False) :=\n  by sorry",
@@ -36307,7 +36355,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2335",
+      "id": "fd_2336",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem line_transversals_homotopy_equiv_sphere (n : ℕ) (hn : 1 ≤ n) :\n    ∃ (C : Finset (OpenConvexSet (EuclideanSpace ℝ (Fin (3 * n))))), \n      C.PairwiseDisjoint ∧ \n      Nonempty (HomotopyEquiv (LineTransversals C) (Sphere (n - 1))) := by\n  sorry",
@@ -36353,7 +36401,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2336",
+      "id": "fd_2337",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- We need to define the Grassmann scheme, Boolean degree one functions, and triviality.\n-- Since full formalization of these is complex, we state it with assumed definitions.\n\nvariable {q n : ℕ}\n\n-- Represents a point in the Grassmann scheme J_q(n, k)\n-- (to be fully formalized as k-dimensional subspaces of F_q^n)\nstructure Subspace where \n  carrier : Finset (Fin n → ZMod q)\n  -- properties omitted for stub\n\n-- Definition of a Boolean degree one function (stub)\nstructure BoolDegOneFunc where\n  toFun : Subspace → Bool\n  -- properties omitted for stub\n\n-- Definition of a trivial Boolean degree one function (stub)\ninductive TrivialBoolDegOneFunc : (Subspace → Bool) → Prop\n  | zero : TrivialBoolDegOneFunc (fun _ => false)\n  | one  : TrivialBoolDegOneFunc (fun _ => true)\n  | x_p  : (p : Fin n) → TrivialBoolDegOneFunc (fun V => decide (p ∈ V.carrier)) -- simplified\n  -- other cases omitted for stub\n\n-- Conjecture: J_q(n,2) is DOT for n >= q+2\ntheorem J_q_n_2_DOT_for_n_ge_q_plus_2 (hq : Nat.",
@@ -36398,7 +36446,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2337",
+      "id": "fd_2338",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binary_two_binomial_class_count (n : ℕ) : Fintype.card ({u : List (Fin 2) // u.length = n} / Setoid.ker (twoBinomialEquiv 2)) = (n^3 + 5*n + 6) / 6 := by\n  sorry",
@@ -36444,7 +36492,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2338",
+      "id": "fd_2339",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binomial_gcd_criterion_restricted_range (k : ℕ) (hk : 2 ≤ k) : (gcd_q2_to_k (fun q => (q * k.choose k)) = 1) ↔ ¬∃ p a, prime p ∧ a ≥ 1 ∧ p ^ a ‖ k ∧ p ^ (a + 1) ∤ k",
@@ -36493,7 +36541,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2339",
+      "id": "fd_2340",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidorenko_two_sided {Γ : Type} [Fintype Γ] (f : Γ → ℝ) (F : FinVDirGraph) : t F (C_f) ≥ ( (∑ g : Γ, f g) / (Fintype.card Γ) ) ^ (2 * F.edges) := by sorry",
@@ -36539,7 +36587,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2340",
+      "id": "fd_2341",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The class of groups admitting a star-shaped deleted co-maximal graph is exactly the star groups",
@@ -36585,7 +36633,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2341",
+      "id": "fd_2342",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alpha_es_lower_bound (G : Graph) : α_es G ≥ α G - 1",
@@ -36631,7 +36679,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2342",
+      "id": "fd_2343",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem parry_admissible_beta_expansion (β : ℝ) (hβ : β > 1)\n    (d : ℕ → ℕ) (hd : ∀ n, d n < ⌊β⌋₊ + 1) :\n    (∃ x ∈ Set.Ico 0 1, ∀ n, d n = ⌊β * (T β)^n x⌋) ↔\n    ∀ n, LexLt (fun i => d (n + i)) (fun i => d_star_one β (n + i)) := by\n  sorry",
@@ -36676,7 +36724,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2343",
+      "id": "fd_2344",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture finite_field_restriction_conjecture_p3 (p : ℕ) (hp : Prime p) (hmod : p % 4 = 3) :\n  ∃ C : ℝ, ∀ (f : P3 p → ℂ), \n    ‖E p f‖₃ ≤ C * ‖f‖₂ := sorry",
@@ -36726,7 +36774,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2344",
+      "id": "fd_2345",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem threshold_free_eq_case\n    {V : Type u} [Fintype V] [DecidableEq V]\n    {r t : ℕ} (K : FinSimplicialComplex V)\n    (ht0 : 1 ≤ t) (htr : t ≤ r)\n    (hpure : K.PureDim r)\n    (hconn : K.DownPathConnected r)\n    (hhom : ∀ σ : Finset V,\n      K.IsFace σ → σ.card = r - t →\n        ReducedHomologyVanishes ℝ t (K.link σ)) :\n    K.upSignlessLaplacianSpectralRadius (r - 1)\n      = (t : ℝ) * (Fintype.card V : ℝ)\n        - ((t - 1 : ℕ) : ℝ) * ((r + 1 : ℕ) : ℝ)\n    ↔\n    ∃ C : Finset V,\n      C.card = r + 1 - t ∧\n      K = (FinSimplicialComplex.simplexOn C).join\n            ((FinSimplicialComplex.simplexOn (Cᶜ)).skeleton (t - 1)) := by\n  sorry",
@@ -36773,7 +36821,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2345",
+      "id": "fd_2346",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem swap_chain_spectral_gap_lower_bound {m n : ℕ} (r : Fin m → ℕ) (c : Fin n → ℕ)\n    (hfeas : (Ω_binary_matrix r c).Nonempty) (hm : 2 ≤ m) (hn : 2 ≤ n) :\n    spectralGap (lazySwapChain r c) ≥\n      (1 : ℝ) / (Nat.choose m 2 * Nat.choose n 2) := by\n  sorry",
@@ -36821,7 +36869,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2346",
+      "id": "fd_2347",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen BigOperators\n\n/-- Adjacency in the rectangular grid `Fin m × Fin n`. -/\ndef GridAdj {m n : Nat} (p q : Fin m × Fin n) : Prop :=\n  (p.1 = q.1 ∧ (p.2.val + 1 = q.2.val ∨ q.2.val + 1 = p.2.val)) ∨\n  (p.2 = q.2 ∧ (p.1.val + 1 = q.1.val ∨ q.1.val + 1 = p.1.val))\n\n/-- Normalized integer-valued edge-1-Lipschitz functions on the grid. -/\ndef GridLip0 {m n : Nat} (hm : 0 < m) (hn : 0 < n)\n    (f : Fin m × Fin n → Int) : Prop :=\n  f (⟨0, hm⟩, ⟨0, hn⟩) = 0 ∧\n  ∀ p q : Fin m × Fin n, GridAdj p q → Int.natAbs (f p - f q) ≤ 1\n\n/-- L1 mass of an integer grid function. -/\ndef L1Mass {m n : Nat} (f : Fin m × Fin n → Int) : Nat :=\n  ∑ p, Int.natAbs (f p)\n\n/-- Closed-form sharp upper bound for normalized grid Lipschitz L1 mass. -/\ndef GridDiameterBound (m n : Nat) : Nat :=\n  n * (m * (m - 1) / 2) + m * (n * (n - 1) / 2)\n\n/-- Conjectural extremal inequality underlying the Miura-ori diameter upper bound. -/\ntheorem grid_lipschitz_l1Mass_exact\n    {m n : Nat} (hm : 0 < m) (hn : 0 < n) :",
@@ -36866,7 +36914,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2347",
+      "id": "fd_2348",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_irreducible_fat_colorings_eq_alpha_values {V : Type*} [Fintype V] (G : SimpleGraph V) :\n    (number_of_irreducible_FAT_colorings G) = (cardinality (alpha_values G)) := by\n  sorry",
@@ -36911,7 +36959,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2348",
+      "id": "fd_2349",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem min_perfect_matchings_3_conn_planar\n  {V : Type*} [Fintype V] {G : SimpleGraph V} [DecidableRel G.Adj]\n  (h_planar : G.IsPlanar) (h_conn : G.Is3Connected)\n  (h_even : Even (Fintype.card V)) :\n  3 ≤ G.numPerfectMatchings := by\n  sorry",
@@ -36960,7 +37008,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2349",
+      "id": "fd_2350",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Data.Matrix.Notation\nimport Mathlib.Data.Real.Basic\n\nnoncomputable section\n\nabbrev Mat2Z := Matrix (Fin 2) (Fin 2) ℤ\n\nconstant Primitive : Mat2Z → Prop\nconstant mobius : Mat2Z → ℝ → ℝ\nconstant lagrangeConst : ℝ → ℝ\nconstant Bad : Set ℝ\nconstant IsQuadraticIrrational : ℝ → Prop\n\ndef detAbs (M : Mat2Z) : ℝ := ((Int.natAbs (M.det) : ℕ) : ℝ)\n\ntheorem quadratic_irrational_ratio_spectrum_dense\n    (M : Mat2Z) (hprim : Primitive M) (hdet : M.det ≠ 0) :\n    ∀ u v : ℝ,\n      (detAbs M)⁻¹ ≤ u → u < v → v ≤ detAbs M →\n        ∃ x : ℝ,\n          x ∈ Bad ∧ IsQuadraticIrrational x ∧\n          u < lagrangeConst (mobius M x) / lagrangeConst x ∧\n          lagrangeConst (mobius M x) / lagrangeConst x < v := by\n  sorry",
@@ -37007,7 +37055,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2350",
+      "id": "fd_2351",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem row_sum_pascal_like_riordan_eq_fib (n : ℕ) :\n  (∑ k in Finset.range (n + 1), (n + k).choose (2 * k)) = Nat.fib (2 * n + 1) := by\n  sorry",
@@ -37053,7 +37101,7 @@
       "domains": [
         "Physics"
       ],
-      "id": "fd_2351",
+      "id": "fd_2352",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cubic_edge_transitive_ham_compression_ge_two {V : Type*} [Fintype V] [DecidableEq V] (Γ : SimpleGraph V) (h_cubic : ∀ v, Γ.degree v = 3) (h_connected : Γ.Connected) (h_edge_trans : EdgeTransitive Γ) (h_ham : HasHamiltonianCycle Γ) : κ Γ ≥ 2 := by sorry",
@@ -37072,6 +37120,55 @@
       "thread_id": "",
       "timestamp": "2026-06-23T13:48:00.738680+00:00",
       "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Mathlib.Analysis.SpecificLimits.Basic",
+        "Mathlib.Topology.Algebra.InfiniteSum.Basic",
+        "Mathlib.Data.Matrix.Basic",
+        "Mathlib.Data.Matrix.Notation",
+        "Mathlib.Analysis.Normed.Field.Basic"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "In Lemma 2.1 of the paper the infinite right half-strip row-exchange identity is proved under a uniform contraction assumption for every column. Conjecture: the same identity remains valid under the strictly weaker hypothesis that the contraction ratio is eventually bounded by some δ < 1. More precisely, for arbitrary top and bottom boundary occupation sequences, nonzero α, and spectral parameters v,z, if there exist δ < 1 and N such that for all i ≥ N the norm of (w₁(uᵢ/z)/w₄(uᵢ/z))*(w₄(uᵢ/v)/w₁(uᵢ/v)) is at most δ, then the two infinite row-exchange partition functions are equal up to the same scalar prefactor f(v/z)/α².",
+      "domain_bridges": [
+        "Yang-Baxter row commutation as an equality of finite transfer-matrix partition sums",
+        "Infinite-volume partition functions as limits of finite truncations",
+        "Geometric tail bounds formalized using normed-field estimates and Tendsto"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2353",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem infinite_row_exchange_of_eventual_contraction\n    {α v z : ℂ} (hα : α ≠ 0)\n    (u : ℕ → ℂ) (top bottom : ℕ → Bool)\n    (w₁ w₄ f : ℂ → ℂ)\n    (hden₁ : ∀ i, w₄ (u i / z) ≠ 0)\n    (hden₂ : ∀ i, w₁ (u i / v) ≠ 0)\n    (hcontract : ∃ δ : ℝ, 0 ≤ δ ∧ δ < 1 ∧ ∃ N : ℕ,\n      ∀ i ≥ N,\n        ‖(w₁ (u i / z) / w₄ (u i / z)) *\n          (w₄ (u i / v) / w₁ (u i / v))‖ ≤ δ)\n    (hYB : fiveVertexYangBaxter w₁ w₄ f α) :\n    infiniteRowExchangeLeft α v z u top bottom w₁ w₄ f =\n      (f (v / z) / α ^ 2) *\n        infiniteRowExchangeRight α v z u top bottom w₁ w₄ f := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define finite truncations of the two row-exchange diagrams at column n. The finite Yang-Baxter equation gives exact equality except for a boundary term where the unique path exits through the artificial right boundary. Show that this boundary term is bounded by C times the product of the contraction ratios from N to n. The eventual δ-bound gives a geometric estimate C*δ^(n-N), hence the boundary term tends to zero. Taking limits of the finite identities yields the infinite row-exchange identity for arbitrary boundary occupation sequences.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22004v1",
+      "source_path": "http://arxiv.org/abs/2606.22004v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T14:06:54.483472+00:00",
+      "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
     },
     {
       "ambition_level": "extension",
