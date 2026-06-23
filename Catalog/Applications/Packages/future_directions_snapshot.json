@@ -550,7 +550,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432609+00:00",
     "title": "Primality Testing: Miller-Rabin and AKS Formalization"
   },
@@ -1209,7 +1209,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1250,7 +1250,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
@@ -1847,7 +1847,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -4708,6 +4708,34 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Erdos Problem 550",
+      "Erdos-Faudree-Rousseau-Schelp 1989, question (2)",
+      "Chvatal 1977 tree versus clique Ramsey numbers",
+      "Burr 1981 Ramsey-goodness lower bound"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every finite tree T and every integer k >= 2 with part sizes 1 <= m_1 <= ... <= m_k, the Ramsey number of T against the complete k-partite graph K_{m_1,...,m_k} is at most (k-1)(R(T,K_{m_1,m_2})-1)+m_1. This removes the sufficiently-large-tree hypothesis from the main theorem of the paper. It is falsifiable by a single explicit finite tree T, parameter tuple (m_1,...,m_k), and red-blue coloring on the claimed number of vertices avoiding both a red T and a blue K_{m_1,...,m_k}.",
+    "domain_bridges": [
+      "Ramsey theory to extremal graph theory via Burr-type canonical colorings",
+      "complete multipartite graph structure to finite type-indexed graph formalization",
+      "asymptotic combinatorics to exact finite combinatorics"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2382",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Try to combine the paper's asymptotic argument with a finite obstruction analysis. First formalize Burr's lower-bound coloring and the monotonicity of Ramsey numbers. Then reduce a minimal counterexample to a red graph whose connected components all have order less than |T| and whose blue complement avoids the required multipartite graph. Analyze the component-size profile: if at least k-1 components have near-|T| capacity, use the bipartite bound R(T,K_{m_1,m_2}) to force the first two blue parts; otherwise use the total vertex count to force a reservoir of size at least m_1. Remaining finite exceptional profiles could in principle be discharged by exact inequalities on component capacities rather than regularity.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T19:08:41.918612+00:00",
+    "title": "Finite Erdős-550 Ramsey Upper Bound Without the Large-Tree Hypothesis"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -4838,7 +4866,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
@@ -5156,7 +5184,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "017d9527",
+    "consumed_by_exp_id": "90920e5d",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [

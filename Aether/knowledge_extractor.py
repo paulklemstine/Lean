@@ -1828,6 +1828,23 @@ Research mode: {concept.research_mode}
         LLM's job. To skip re-eval of repeated content, use the content-hash
         eval cache (Lever B), not a clear-pass gate.
 
+        DISABLED 2026-06-23 (config: static_gate=off). A 461-cycle data audit
+        of `[Evaluate] quality=... sorries=N theorems=M` lines proved the
+        count-based signals cannot predict this LLM's grade rubric:
+          - sorry_count is `\\bsorry\\b` occurrences; it was 0 in EVERY sampled
+            cycle (truncated stubs are not "sorry"), so it carries no signal.
+          - theorem_count counts declarations (stub signatures count), so the
+            LLM's "trivial" grade lands at HIGH counts (median 97 theorems —
+            stubs/wrappers), while "substantial" spans 0..469. The grades
+            overlap on every count axis.
+          - The clear-fail branch (tc==0 -> trivial) fired on 1/461 cycles and
+            DISAGREED 100% (the LLM graded that tc==0 cycle "substantial").
+        No count-based clear-fail or clear-pass can reach the >95% shadow
+        agreement bar. eval_cache (Lever B) remains the reliable eval-reduction
+        path. This method is retained for reference; re-enabling requires a
+        NEW pre-eval signal (e.g. completed-proof ratio, not raw counts) plus
+        fresh shadow validation.
+
         Built on signals already computed in extract() before evaluate():
         job.theorem_count, job.sorry_count, job.theorem_novelty. (compiles via
         `lake build` is NOT on the main tick path, so it's not used here.)

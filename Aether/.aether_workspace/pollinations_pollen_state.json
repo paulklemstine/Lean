@@ -1,26 +1,23 @@
 {
-  "consecutive_402": 0,
   "forecasts": {
     "chat": {
-      "avg_cost": 0.12034567,
-      "avg_cost_per_char": 2.2700479e-05,
-      "avg_cost_per_output_char": 4.1023767e-05,
-      "avg_input_chars": 5363.475,
-      "avg_output_chars": 2589.238,
-      "count": 17809,
-      "last_cost": 0.10648,
-      "last_input_chars": 5521,
-      "last_output_chars": 2372,
+      "avg_cost": 0.12831144,
+      "avg_cost_per_char": 2.4121466e-05,
+      "avg_cost_per_output_char": 3.9537455e-05,
+      "avg_input_chars": 5347.642,
+      "avg_output_chars": 3062.196,
+      "count": 17811,
+      "last_cost": 0.119216,
+      "last_input_chars": 5254,
+      "last_output_chars": 3594,
       "last_predicted_cost": 0.4,
       "max_cost": 0.4,
-      "updated_at": 1782240902.1290329
+      "updated_at": 1782241721.9171731
     }
   },
-  "opened_at": 0,
   "reserved": {},
-  "spent": 0.832656,
-  "state": "CLOSED",
-  "updated_at": 1782240902.1287668,
-  "used": 0.832656,
-  "window_start": 1782237600
+  "spent": 0.283552,
+  "updated_at": 1782241721.9168217,
+  "used": 0.283552,
+  "window_start": 1782241200
 }

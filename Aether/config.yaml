@@ -410,7 +410,9 @@ features:
 # call LLM, log agreement). Flip to "enabled" once shadow logs show high
 # agreement; "off" disables. See Aether/CLAUDE.md "LLM Usage Reduction".
 llm_reduction:
-  static_gate: shadow      # Phase 1: clear-fail/clear-pass skip of LLM eval
+  static_gate: off         # Phase 1: DISABLED 2026-06-23 — count-based gate is
+                           #   non-viable for this LLM rubric (see
+                           #   _static_quality_gate docstring for the data).
   critic_gate: shadow       # Phase 2: skip adversarial critic when decisive
   lint_gate: enabled         # Phase 2: auto-accept all-good-.lean batch (low risk)
   eval_cache: on            # Phase 3: content-hash eval cache
