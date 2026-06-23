@@ -2069,12 +2069,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every prime p \u2265 7 with p \u2261 3 mod 4, the determinant of the truncated Legendre-symbol matrix with polynomial parameter X is exactly ((p - 2) / 3)^2 X over \u2124[X]. Explicitly, for m = (p - 5) / 2 and matrix A indexed by Fin m with A_{j,k} = X + (j - k | p), where the Legendre symbol is viewed as an integer coefficient polynomial, det A = ((p - 2) / 3)^2 X.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2326",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22548v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:03:49.419256+00:00",
+    "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2326",
+    "id": "fd_2327",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -2089,7 +2103,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2104,7 +2118,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2328",
+    "id": "fd_2329",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2119,7 +2133,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2329",
+    "id": "fd_2330",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2133,7 +2147,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
@@ -2147,7 +2161,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
@@ -2161,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -2176,7 +2190,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -2191,7 +2205,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2334",
+    "id": "fd_2335",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -2205,7 +2219,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22972v1",
@@ -2219,7 +2233,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
@@ -2234,7 +2248,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -2249,7 +2263,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2338",
+    "id": "fd_2339",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -2264,13 +2278,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2339",
+    "id": "fd_2340",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22636v1",
     "status": "available",
     "timestamp": "2026-06-23T11:45:08.025039+00:00",
     "title": "Spectral Gap Lower Bound for the Binary Fixed-Margin Swap Chain"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every nonempty m \u00d7 n rectangular grid, let f : {0,\u2026,m\u22121} \u00d7 {0,\u2026,n\u22121} \u2192 Z satisfy f(0,0)=0 and |f(p)-f(q)|\u22641 on every grid edge. Then the total absolute mass is at most n\u00b7m(m\u22121)/2 + m\u00b7n(n\u22121)/2. This bound is sharp, attained by f(i,j)=i+j and by f(i,j)=\u2212(i+j). In the Miura-ori height-function model this is exactly the extremal inequality needed to turn the explicit lower-bound construction for the flip-graph diameter into a matching upper bound whenever flip distance is controlled by L1 height difference.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2341",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22614v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:05:30.404748+00:00",
+    "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
   },
   {
     "consumed_by_exp_id": "",
@@ -2605,7 +2633,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "0de5396c",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
       "Computation",
@@ -2615,7 +2643,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.62,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -3277,7 +3305,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a7ce801b",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domains": [
       "MachineLearning",
@@ -3287,7 +3315,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
@@ -3352,7 +3380,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d9eb365e",
     "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
     "domains": [
       "Physics",
@@ -3362,7 +3390,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },

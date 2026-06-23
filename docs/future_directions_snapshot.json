@@ -3117,6 +3117,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.NumberTheory.LegendreSymbol",
+      "Mathlib.LinearAlgebra.Matrix.Determinant",
+      "Mathlib.Data.Polynomial.Basic",
+      "Mathlib.Data.Matrix.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every prime p ≥ 7 with p ≡ 3 mod 4, the determinant of the truncated Legendre-symbol matrix with polynomial parameter X is exactly ((p - 2) / 3)^2 X over ℤ[X]. Explicitly, for m = (p - 5) / 2 and matrix A indexed by Fin m with A_{j,k} = X + (j - k | p), where the Legendre symbol is viewed as an integer coefficient polynomial, det A = ((p - 2) / 3)^2 X.",
+    "domain_bridges": [
+      "quadratic characters over finite fields to integer-valued polynomial matrices",
+      "Legendre-symbol Toeplitz matrices to determinant identities",
+      "finite linear algebra and principal minor reductions"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2326",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the matrix over Polynomial ℤ indexed by Fin ((p - 5) / 2). Prove the identity by importing or separately formalizing the inverse-data reduction from the full Chapman matrix C = [legendreSym p (j - i)] indexed by Fin ((p + 1) / 2). The determinant computation then reduces to Jacobi complementary minor identities and the rank-one determinant lemma for adding the constant X matrix. The remaining arithmetic simplification is Nat division: floor((p - 2) / 3) is represented by (p - 2) / 3.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22548v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:03:49.419256+00:00",
+    "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "Erdős Problem 550"
     ],
@@ -3130,7 +3158,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2326",
+    "id": "fd_2327",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -3157,7 +3185,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -3187,7 +3215,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2328",
+    "id": "fd_2329",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -3215,7 +3243,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2329",
+    "id": "fd_2330",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3242,7 +3270,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3268,7 +3296,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3295,7 +3323,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
@@ -3325,7 +3353,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply repeated Cauchy–Schwarz inequalities on the group sum to bound the kernel average, and argue that equality forces f to be constant.",
@@ -3352,7 +3380,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2334",
+    "id": "fd_2335",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive analysis combining subgroup inclusion properties with graph connectivity criteria",
@@ -3379,7 +3407,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the bound α_{es}(G) ≥ α(G) - 1 holds universally by constructing an ESI-set from an arbitrary maximum independent set through local modifications to satisfy the ES-condition, or disprove by finding a graph where the reduction exceeds 1.",
@@ -3406,7 +3434,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the lexicographic order on infinite sequences over a finite alphabet, formalize the $\\beta$-transformation and the quasi-greedy expansion of 1, then prove the equivalence using properties of the shift map and greedy expansions.",
@@ -3432,7 +3460,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the author's bilinear approach and point-line incidence estimates to handle the endpoint $r=3$, or establish sharp Kakeya and maximal restriction bounds over finite fields to close the remaining gap.",
@@ -3463,7 +3491,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2338",
+    "id": "fd_2339",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the paper’s inequality proof via the Rayleigh quotient for the nonnegative signless up-Laplacian. Use r-down path connectivity to obtain irreducibility and hence a strictly positive Perron vector. Analyze every equality condition in the chain of inequalities: local homology vanishing should force the relevant link shadows to attain their extremal Kruskal-Katona-type lower bounds, while equality in the Perron/Rayleigh estimates should force all maximal r-faces to contain a common core of size r+1-t and to contain every t-subset of the complementary vertex set. The remaining task is to replace the paper’s large-n rigidity lemma by an exact finite rigidity lemma for the equality case.",
@@ -3491,7 +3519,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2339",
+    "id": "fd_2340",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow the paper's three-stage argument: (1) Establish a comparison inequality between the swap chain and a two-row heat-bath chain, bounding the swap chain spectral gap from below by a constant times the heat-bath spectral gap. (2) Reduce the m×n heat-bath analysis to the 3-row case via a tensorization/reduction argument on the column-count variable. (3) Prove the 3-row inequality by decomposing the function space on {0,1}³ into the constant sector, the count sector (functions of the column sum), and the Johnson harmonic sectors, establishing a Poincaré inequality on each sector with the appropriate spectral gap lower bound.",
@@ -3500,6 +3528,35 @@
     "status": "available",
     "timestamp": "2026-06-23T11:45:08.025039+00:00",
     "title": "Spectral Gap Lower Bound for the Binary Fixed-Margin Swap Chain"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "mathlib: Data.Fin.Basic",
+      "mathlib: Algebra.BigOperators.Fin",
+      "mathlib: Combinatorics.SimpleGraph.Basic",
+      "Cereceda 2009, Mixing graph colourings",
+      "Ginepro--Hull 2014, counting Miura-ori flat foldings"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every nonempty m × n rectangular grid, let f : {0,…,m−1} × {0,…,n−1} → Z satisfy f(0,0)=0 and |f(p)-f(q)|≤1 on every grid edge. Then the total absolute mass is at most n·m(m−1)/2 + m·n(n−1)/2. This bound is sharp, attained by f(i,j)=i+j and by f(i,j)=−(i+j). In the Miura-ori height-function model this is exactly the extremal inequality needed to turn the explicit lower-bound construction for the flip-graph diameter into a matching upper bound whenever flip distance is controlled by L1 height difference.",
+    "domain_bridges": [
+      "Miura-ori flip graphs reduce to recolouring graphs of proper 3-colourings of rectangular grid graphs.",
+      "Proper 3-colourings lift to integer height functions with adjacent differences ±1.",
+      "Differences of two normalized height functions are integer-valued 1-Lipschitz grid functions, so flip-graph diameter bounds reduce to an L1 extremal inequality."
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2341",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove pointwise that any edge-1-Lipschitz f with f(0,0)=0 satisfies |f(i,j)| ≤ i+j by following a shortest Manhattan path from (0,0) to (i,j). Sum this pointwise bound over all grid vertices. Evaluate the two separable sums ∑_{i=0}^{m−1}∑_{j=0}^{n−1}(i+j)=n·m(m−1)/2 + m·n(n−1)/2. Sharpness follows by checking that f(i,j)=i+j is edge-1-Lipschitz, normalized at the origin, and attains equality termwise.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22614v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:05:30.404748+00:00",
+    "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
   },
   {
     "ambition_level": "extension",
@@ -3951,7 +4008,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0de5396c",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [
@@ -3964,7 +4021,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -4848,7 +4905,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a7ce801b",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domain_bridges": [],
     "domains": [
@@ -4861,7 +4918,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
@@ -4948,7 +5005,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d9eb365e",
     "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
     "domain_bridges": [],
     "domains": [
@@ -4961,7 +5018,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
