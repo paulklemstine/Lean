@@ -1980,9 +1980,9 @@ def main():
                 print("[Watchdog] Restarting Aether process due to mtime drift...")
                 os.execv(sys.executable, [sys.executable] + sys.argv)
 
-            _wake = datetime.now(timezone.utc) + timedelta(seconds=args.interval)
+            _wake = datetime.now() + timedelta(seconds=args.interval)
             print(f"[Tick] Sleeping {args.interval}s until next tick at "
-                  f"{_wake.strftime('%Y-%m-%dT%H:%M:%SZ')}...")
+                  f"{_wake.strftime('%H:%M')}...")
             time.sleep(args.interval)
     else:
         print(f"[Tick] Aether tick starting — max_inflight={args.max_inflight}, novelty_slots={args.novelty_slots}")
