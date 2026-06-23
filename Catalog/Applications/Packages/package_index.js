@@ -50,7 +50,7 @@ window.PACKAGE_INDEX = [
     "filename": "sperners_lemma_implies_nash_equilibria_combinatori.json",
     "pkg_num": 8,
     "quality": "partial",
-    "quality_score": 0.60268,
+    "quality_score": 0.6288,
     "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
   },
   {
@@ -313,7 +313,7 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
-      "priority_score": 0.60268,
+      "priority_score": 0.6288,
       "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
