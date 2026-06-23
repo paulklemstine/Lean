@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T07:38:38.000837+00:00",
+  "last_updated": "2026-06-23T08:33:11.413964+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -717,6 +717,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-23T07:38:37.776222+00:00",
       "title": "Attention Mechanisms: Mathematical Properties"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4018,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 11,
+      "domain": "Tropical",
+      "duration_seconds": 1337.4736676216125,
+      "end_time": 1782202911.7920532,
+      "files_integrated": 6,
+      "job_id": "07255b71",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19b",
+      "phase_b_prompt_version": "v2",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.42,
+        "applications": 0.62,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6143,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.6178,
+        "novelty": 0.95,
+        "proof_depth": 0.4754,
+        "usefulness": 0.4877
+      },
+      "quality_score": 0.5811999999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782201574.3183856,
+      "strategy_count": 0,
+      "theorem_count": 4,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 4,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-23T08:33:11.021926+00:00",
+      "title": "Sierpi\u0144ski Numbers: Covering Systems"
     }
   ]
 }

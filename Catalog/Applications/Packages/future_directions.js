@@ -507,7 +507,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d543673",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -516,7 +516,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -1937,12 +1937,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let $A(z)$ be the ordinary generating series of P\u00f3lya trees, with coefficients $a_n$, and let $\\rho$ be its radius of convergence such that $A(\\rho) = 1$. Then for all integers $k \\ge 1$ and all real numbers $t$ such that $0 \\le t < \\rho$, the truncation error of the $k$-th partial sum is bounded by $0 \\le A(t) - \\sum_{i=1}^k a_i t^i \\le \\frac{(t/\\rho)^{k+1}}{1 - t/\\rho}$.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_2317",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23439v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:33:35.541800+00:00",
+    "title": "P\u00f3lya Tree Generating Series Taylor Approximation Error Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2317",
+    "id": "fd_2318",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -1957,7 +1972,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2318",
+    "id": "fd_2319",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -1972,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2319",
+    "id": "fd_2320",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -1987,7 +2002,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2320",
+    "id": "fd_2321",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2001,13 +2016,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2321",
+    "id": "fd_2322",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
     "status": "available",
     "timestamp": "2026-06-23T08:05:42.947857+00:00",
     "title": "Degree-One Triviality of Grassmann Schemes $J_q(n,2)$ for $n \\ge q+2$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The number of binary 2-binomial equivalence classes of words of length n over the alphabet {0,1} equals the n-th cake number, i.e., (n^3 + 5n + 6) / 6 = \u2211_{r=0}^{3} C(n,r). This is the identity established by Rigo\u2013Salimov and given geometric explanation in the paper via hyperplane arrangements.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2323",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23426v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:33:50.471570+00:00",
+    "title": "Binary 2-binomial class count equals the cake number"
   },
   {
     "consumed_by_exp_id": "",
@@ -2197,21 +2226,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe verified file `Catalog/Tropical/CoveringSystems.lean` provides a reusable\n`CoveringCert` API and a concrete certificate for 78557. Below are several\noriginal directions that build on this infrastructure.\n\n## 1. A verified covering-system search and certificate compiler\n\nRight now the residue-to-prime table for 78557 is supplied by hand. A natural\nnext step is a Lean-side (or external, but Lean-checked) search procedure that,\ngiven `k` and a period `M`, attempts to *synthesize* a `CoveringCert k M` by\nchoosing for each residue a small prime dividing `k \u00b7 2^r + 1` whose order of 2\ndivides `M`. The key insight is that certificate *checking* is cheap and fully\ndecidable while certificate *finding* is a finite combinatorial search, so the\ntwo can be cleanly separated: an untrusted oracle proposes a table and the\nverified kernel of `CoveringCert.isSierpinski` certifies it. **Why now?** The\nperiodicity and propagation lemmas are already proven and axiom-clean, so the\nonly missing piece is the search front-end \u2014 there is no remaining mathematical\nrisk, just engineering.\n\n## 2. Generalization to base-`b` Sierpi\u0144ski and Riesel numbers\n\nThe same machinery applies to `k \u00b7 b^n + 1` for general bases `b`, and to Riesel\nnumbers `k \u00b7 2^n \u2212 1`. The key insight is that the entire argument depends only\non the periodicity `b^M \u2261 1 (mod p)` and the sign of the `\u00b11`, both of which are\ncaptured abstractly in the certificate fields rather than baked into the value\n`78557`. **Why now?** Our `CoveringCert` already isolates exactly those two facts\nas fields (`period` and `covers`), so a base/sign-parametric refactor is a\nmechanical generalization that immediately unlocks a whole family of theorems.\n\n## 3. Formal lower bounds via \"covering systems do not exist\" obstructions\n\nMinimality is the hard open problem, but a tractable formal sub-goal is to prove,\nfor specific small candidates, that *no* covering system of bounded period can\nexist \u2014 a structural impossibility result rather than a primality search. The key\ninsight is that the set of residues a prime `p` can cover (for fixed `k` and\nperiod `M`) is itself a decidable finite object, so non-coverability becomes a\nfinite, machine-checkable statement about unions of arithmetic progressions.\n**Why now?** Decision procedures for finite unions of residue classes are already\nexpressible with the `Finset`/`decide` tooling used in this file, making the\nobstruction side formalizable without new theory.\n\n## 4. Minimal and irredundant covering certificates\n\nOur 78557 table uses period 36 and seven primes, but it is redundant in places\n(the prime 3 alone covers half of all residues). The key insight is that a\ncertificate carries a natural notion of *cost* \u2014 number of distinct primes, total\nperiod, or table size \u2014 and one can formally verify that a proposed certificate\nis minimal or irredundant by checking that removing any class breaks coverage.\n**Why now?** Coverage is already a decidable predicate over `Fin M` in our\nsetup, so minimality-of-certificate (as opposed to minimality-of-`k`) is an\nimmediately formalizable optimization question.\n\n## 5. Connecting certificates to multiplicative-order theory in Mathlib\n\nThe hand-checked orders `2, 4, 3, 12, 18, 36, 9` of `2` modulo the covering\nprimes are currently verified only implicitly through `2^36 \u2261 1`. The key insight\nis that linking `CoveringCert.period` to Mathlib's `orderOf` and\n`ZMod.pow_card_sub_one_eq_one` would let the period condition be discharged from\ngroup-theoretic facts rather than raw computation, yielding shorter and more\nexplanatory proofs. **Why now?** Mathlib's `ZMod` and order-of-element API is\nmature in the pinned toolchain, so the bridge lemma `orderOf (2 : ZMod p) \u2223 M \u2192\n2^M \u2261 1 [MOD p]` is within immediate reach and would refactor the `period` field\ninto something human-readable.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2322",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "07255b71",
-    "status": "available",
-    "timestamp": "2026-06-23T08:30:53.247936+00:00",
-    "title": "The verified file `Catalog/Tropical/CoveringSystems.lean` provides a reusable"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2238,6 +2252,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.814374+00:00",
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
+  },
+  {
+    "consumed_by_exp_id": "731f1c25",
+    "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0435",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:28.156517+00:00",
+    "title": "Learning with Errors: Hardness Reductions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2342,7 +2371,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ffbd94a",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
       "Computation",
@@ -2352,7 +2381,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.62,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -2372,7 +2401,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pickover Clifford Attractor Family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bf529381",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -2381,7 +2410,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -2654,7 +2683,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a2118a3",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -2664,12 +2693,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "13912104",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -2679,7 +2708,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
