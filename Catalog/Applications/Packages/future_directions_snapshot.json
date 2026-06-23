@@ -219,7 +219,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a2ad5506",
+    "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domain_bridges": [],
     "domains": [
@@ -232,7 +232,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:04.360894+00:00",
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
@@ -917,7 +917,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3178683d",
+    "consumed_by_exp_id": "",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -929,7 +929,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
@@ -1813,7 +1813,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8f575d05",
+    "consumed_by_exp_id": "",
     "description": "Formalize quaternion algebras and their classification over number fields. Prove the isomorphism between unit quaternions and SO(3). Construct the Cayley-Dickson construction and prove properties of octonions. Apply to gimbal lock avoidance in 3D rotation.",
     "domain_bridges": [],
     "domains": [
@@ -1827,7 +1827,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432642+00:00",
     "title": "Quaternion Algebras and Rotations"
   },
@@ -3927,7 +3927,7 @@
       "math.CO/graph_theory/symmetric_graphs",
       "math.CO/graph_theory/cubic_graphs"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e71ceda",
     "description": "Every Hamiltonian connected cubic edge-transitive graph Γ has Hamiltonian compression factor κ(Γ) ≥ 2, i.e., it admits a 2-symmetric Hamiltonian cycle: there exists a Hamiltonian cycle C and an automorphism g of order 2 such that g acts on C as a rotation by |V(Γ)|/2 positions. This is supported by exhaustive computation on all such graphs up to 10,000 vertices, where every Hamiltonian cubic edge-transitive graph was found to have κ ≥ 2.",
     "domain_bridges": [
       "group_theory/automorphisms",
@@ -3943,7 +3943,7 @@
     "proof_strategy": "Leverage the edge-transitivity of Γ to show that any Hamiltonian cycle can be 'symmetrized': given a Hamiltonian cycle C, use the transitivity of Aut(Γ) on edges of Γ to construct an involutory automorphism that permutes the edges of C as a half-rotation. The key step is showing that edge-transitivity forces enough symmetry on the edge set of any Hamiltonian cycle to guarantee a 2-fold rotational symmetry. Alternatively, classify cubic edge-transitive graphs by their automorphism group structure and verify case-by-case for each infinite family (e.g., generalized Petersen graphs, Möbius ladders, prism graphs).",
     "research_mode": "team",
     "source_exp_id": "2606.21941v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T13:48:00.738680+00:00",
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
@@ -5037,6 +5037,64 @@
     "title": "Stability of Cayley Digraphs of Abelian Groups"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "quant-ph",
+      "Stark_conjectures",
+      "SIC-POVM"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every SIC dimension d with base quadratic field K = Q(√Δ₀), and for every Weyl-Heisenberg SIC overlap unit ε (the absolute value of a mutual scalar product of distinct SIC vectors), there exist Stark units η₁, ..., ηₖ of the ray class field K^{fd∞₁} (where f is the conductor dividing f₀(d)) and integers n₁, ..., nₖ such that ε = ∏ᵢ ηᵢ^{nᵢ/2}. In the minimal case (f = 1), the Stark units belong to K^{d∞₁} attached to the maximal ring of integers; in the non-minimal case, a lattice of ray class fields K_L^{d;f} is involved. This unifies the observed algebraic structure of SIC overlaps with Stark's conjectures and the Shintani–Faddeev modular cocycle.",
+    "domain_bridges": [
+      "quantum_information",
+      "class_field_theory",
+      "explicit_cft",
+      "lattice_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2396",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First verify computationally for all known SIC dimensions d ≤ 193 that overlap units decompose as claimed using explicit Stark unit computations in ray class fields. Then leverage the Shintani–Faddeev modular cocycle to establish the decomposition analytically: show that the cocycle values producing overlap phases coincide with the Stark unit valuations predicted by the rank-1 abelian Stark conjecture. The non-minimal case requires tracking the lattice of conductors f | f₀ and showing that each K_L^{d;f} embeds appropriately into K^{fd∞₁}. The ±1 phenomenon in alternate dimensions follows from proving that certain ray class fields have Stark units of norm ±1, which constrains the overlap phases.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23535v1",
+    "status": "available",
+    "timestamp": "2026-06-23T23:19:20.704819+00:00",
+    "title": "SIC Overlap Units are Products of Square Roots of Stark Units"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "ErdosProblems550",
+      "EFRS1989",
+      "Chvatal1977",
+      "Burr1981"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The main theorem of the paper proves that for fixed integers k ≥ 2 and 1 ≤ m₁ ≤ … ≤ m_k, there exists n₀ = n₀(m₁,…,m_k) such that for every n ≥ n₀ and every n-vertex tree T, R(T, K_{m₁,…,m_k}) ≤ (k-1)(R(T, K_{m₁,m₂}) - 1) + m₁. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n ≥ 1).",
+    "domain_bridges": [
+      "Ramsey theory",
+      "extremal graph theory",
+      "tree embeddings"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2397",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Attempt to adapt the off-Turán embedding and compactness-rounding arguments to eliminate the dependence on n₀. Alternatively, perform a systematic case analysis for small n using structural properties of trees and known exact Ramsey numbers for small complete multipartite graphs.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T23:26:49.596090+00:00",
+    "title": "Erdős Problem 550 for All Trees"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -5448,21 +5506,22 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "consumed_by_exp_id": "e63b33ee",
+    "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
-      "Geometry"
+      "Algebra",
+      "Novelty"
     ],
-    "id": "fd_2285",
+    "id": "fd_2395",
     "lineage_refs": [],
     "priority_score": 0.7,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "oeis:212351",
-    "status": "available",
-    "timestamp": "2026-06-23T00:36:02.659426+00:00",
-    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-23T23:12:45.568532+00:00",
+    "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
   {
     "ambition_level": "extension",
@@ -5803,7 +5862,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e56a1e16",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domain_bridges": [],
     "domains": [
@@ -5816,7 +5875,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
