@@ -2353,6 +2353,35 @@
     "title": "Alpha-two sharpness for conformability in odd regular graphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO/tournament-score-sequences",
+      "math.CO/permutation-xrays",
+      "math.CO/k-tournaments",
+      "math.CO/Landau-theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer k ≥ 1 and every positive integer n ≥ 1, every k-restricted characteristic sequence of a permutation on Z_n is the score sequence of some k-tournament on n vertices. Here, a characteristic sequence c(φ) of a permutation φ ∈ S_n is the non-decreasing arrangement of the multiset {i + φ(i) : i ∈ Z_n}, and it is k-restricted if each value in this multiset appears at most k times. A k-tournament on n vertices is a complete directed multigraph where each pair of vertices is connected by exactly k arcs, and its score sequence is the non-decreasing sequence of vertex outdegrees. This conjecture unifies the Bebeacua et al. conjecture (k=1: binary xrays, where each value appears at most once, correspond to 1-tournament score sequences) and the Brualdi–Fritscher conjecture (k=2: unrestricted xrays, where each value appears at most twice, correspond to 2-tournament score sequences).",
+    "domain_bridges": [
+      "tournament_graphs_and_permutation_statistics",
+      "score_sequences_and_characteristic_sequences",
+      "multigraph_enumeration_and_restricted_sequences"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_2297",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Proceed by induction on k. The base case k=1 (Bebeacua et al.) and case k=2 (Brualdi–Fritscher) would require constructing explicit injections from k-restricted characteristic sequences to k-tournament score sequences using the transitive tournament decomposition introduced in the paper. For the inductive step, leverage the construction that builds a k-tournament from a permutation: given a (k+1)-restricted characteristic sequence, decompose it into a k-restricted subsequence and an additional layer, construct the k-tournament by induction, then extend via the transitive tournament decomposition to obtain a (k+1)-tournament with the desired score sequence. The key difficulty is verifying Landau-type conditions for the constructed sequences at each stage.",
+    "research_mode": "team",
+    "source_exp_id": "2606.21532v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:42:12.378585+00:00",
+    "title": "Generalized Xray-Tournament Correspondence Conjecture"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Mathlib.Algebra.MonoidAlgebra.Basic",
@@ -2373,7 +2402,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2297",
+    "id": "fd_2298",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
@@ -2404,7 +2433,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2298",
+    "id": "fd_2299",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite simple graphs, edge sets, vertex degrees, and C5-decompositions as a finite family of subgraphs each isomorphic to a 5-cycle whose edge sets are pairwise disjoint and cover E(G). The mathematical proof would likely combine an absorption framework with approximate C5-decompositions and a stability analysis around the known extremal obstruction giving the lower bound 5/8. In Lean, the conjecture can initially be stated using abstract predicates `IsFiveCycle` and `HasC5Decomposition`, then refined to concrete cycle embeddings into `SimpleGraph`.",
@@ -2413,6 +2442,33 @@
     "status": "available",
     "timestamp": "2026-06-23T02:24:24.127531+00:00",
     "title": "Asymptotic C5-decomposition threshold equals 5/8"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.RA"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let A₁ and A₂ be central hyperplane arrangements over Q of the same rank with isomorphic intersection lattices L(A₁) ≅ L(A₂). For all primes p at which both arrangements admit good reduction, the local ask zeta functions coincide: Z^{ask}_{A₁/Z_p}(T) = Z^{ask}_{A₂/Z_p}(T). This extends the well-known combinatorial invariance conjecture for Igusa local zeta functions to the ask zeta function setting, motivated by the paper's construction recovering ask zeta functions from the Igusa local zeta function of the cone and the truncated flag Hilbert-Poincaré series. The conjecture asserts that the arithmetic content entering through the substitution in the flag Hilbert-Poincaré series is nevertheless determined by the intersection lattice for good reduction primes.",
+    "domain_bridges": [
+      "hyperplane_arrangements -> p_adic_zeta_functions",
+      "intersection_lattices -> average_kernel_enumeration",
+      "combinatorial_invariance -> arithmetic_equivalence"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2300",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Exploit the paper's main result that local ask zeta functions are recovered by substitutions in the truncated flag Hilbert-Poincaré series. Prove that (1) the truncated flag Hilbert-Poincaré series of A is determined by L(A), (2) the substitution parameters for primes of good reduction depend only on the isomorphism type of L(A) and the residue field size q, and (3) the matrix of linear forms constructed from A yields the same ask zeta function as any other arrangement with isomorphic lattice. The key difficulty is showing that the matrix construction and the substitution are both lattice-determined, which may require developing a lattice-theoretic characterization of the associated matroid and its representability constraints.",
+    "research_mode": "team",
+    "source_exp_id": "2606.21393v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:43:10.666437+00:00",
+    "title": "Combinatorial Invariance of Ask Zeta Functions for Hyperplane Arrangements"
   },
   {
     "ambition_level": "extension",
@@ -2982,7 +3038,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "38e89c84",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domain_bridges": [],
     "domains": [
@@ -2995,7 +3051,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },

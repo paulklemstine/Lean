@@ -1676,12 +1676,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every positive integer k \u2265 1 and every positive integer n \u2265 1, every k-restricted characteristic sequence of a permutation on Z_n is the score sequence of some k-tournament on n vertices. Here, a characteristic sequence c(\u03c6) of a permutation \u03c6 \u2208 S_n is the non-decreasing arrangement of the multiset {i + \u03c6(i) : i \u2208 Z_n}, and it is k-restricted if each value in this multiset appears at most k times. A k-tournament on n vertices is a complete directed multigraph where each pair of vertices is connected by exactly k arcs, and its score sequence is the non-decreasing sequence of vertex outdegrees. This conjecture unifies the Bebeacua et al. conjecture (k=1: binary xrays, where each value appears at most once, correspond to 1-tournament score sequences) and the Brualdi\u2013Fritscher conjecture (k=2: unrestricted xrays, where each value appears at most twice, correspond to 2-tournament score sequences).",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_2297",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21532v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:42:12.378585+00:00",
+    "title": "Generalized Xray-Tournament Correspondence Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let R be any commutative ring and G any finite group. Define HH\u2080(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH\u2080(R[G]) \u2243 R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2297",
+    "id": "fd_2298",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21313v1",
@@ -1695,13 +1710,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2298",
+    "id": "fd_2299",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21548v1",
     "status": "available",
     "timestamp": "2026-06-23T02:24:24.127531+00:00",
     "title": "Asymptotic C5-decomposition threshold equals 5/8"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let A\u2081 and A\u2082 be central hyperplane arrangements over Q of the same rank with isomorphic intersection lattices L(A\u2081) \u2245 L(A\u2082). For all primes p at which both arrangements admit good reduction, the local ask zeta functions coincide: Z^{ask}_{A\u2081/Z_p}(T) = Z^{ask}_{A\u2082/Z_p}(T). This extends the well-known combinatorial invariance conjecture for Igusa local zeta functions to the ask zeta function setting, motivated by the paper's construction recovering ask zeta functions from the Igusa local zeta function of the cone and the truncated flag Hilbert-Poincar\u00e9 series. The conjecture asserts that the arithmetic content entering through the substitution in the flag Hilbert-Poincar\u00e9 series is nevertheless determined by the intersection lattice for good reduction primes.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2300",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21393v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:43:10.666437+00:00",
+    "title": "Combinatorial Invariance of Ask Zeta Functions for Hyperplane Arrangements"
   },
   {
     "consumed_by_exp_id": "",
@@ -2124,7 +2154,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "38e89c84",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -2134,7 +2164,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
