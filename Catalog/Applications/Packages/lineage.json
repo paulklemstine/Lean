@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-22T21:20:57Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -16,7 +16,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T01:40:46Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T01:43:47Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
@@ -34,7 +34,16 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T04:02:19Z",
-      "hue": 89
+      "hue": 90
+    },
+    {
+      "id": "bridge_galois_connections_between_order_theory_and",
+      "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-23T05:45:49Z",
+      "hue": 90
     }
   ],
   "edges": [],
