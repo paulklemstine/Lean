@@ -240,7 +240,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Correspondence: GL(1) Case"
   },
   {
-    "consumed_by_exp_id": "f4c420b0",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
       "Physics",
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.909349+00:00",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "3e446099",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1043,7 +1043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -3076,6 +3076,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 BB84 Security (derived from this cycle)\n\nThis cycle proved (0 sorries, standard axioms only):\n- `SecurityRegion.lean`: the ~11% threshold is a **sharp two-sided boundary**\n  (`secureKeyRate_pos_iff_lt_threshold`), and partial intercept\u2013resend has a sharp\n  critical interception fraction `\u03bc* = 4 p* \u2208 (1/4, 1/2)`\n  (`partialIntercept_secure_iff`).\n- `UniversalHashing.lean`: the GF(2) parity family is **optimally 2-universal**\n  (`innerHash_two_universal`: exactly `2^{n-1}` colliding keys) via a\n  parity-flipping involution.\n\nThe following conjectures are bold, falsifiable extensions.\n\n## 1. Exact uniqueness-and-location of the threshold via rational tightening\n**Conjecture.** The critical QBER `p*` can be pinned to an interval of width\n`< 10^{-3}` by a finite sequence of *integer* inequalities (no floating point),\ne.g. `p* \u2208 (0.110, 0.111)` reduces to a comparison of two integer powers.\n**The key insight is** that `binEntropy(a/b) \u22da (log 2)/2` always collapses to a\ncomparison of the form `a\u1d43 \u00b7 (b\u2212a)^{b\u2212a} \u22da 2^{...}` after clearing logarithms, so\narbitrarily tight rational brackets are certified by pure integer arithmetic \u2014 the\nsame trick the catalog uses for `(1/16, 1/8)`, iterated.\n**Why now?** `KeyRateThreshold` already certifies one bracket this way and\n`secureKeyRate_strictAntiOn` gives uniqueness; only the bookkeeping of nested\nbrackets remains, which the involution/`norm_num` toolchain handles.\n\n## 2. Two-way post-processing raises the threshold to ~20%\n**Conjecture.** With an advantage-distillation / two-way reconciliation rate model\n`r\u2082(Q) = 1 + log\u2082(1 \u2212 2Q(1\u2212Q)) \u2212 H\u2082(Q)` (or a CASCADE-style repetition bound), the\nsecure region extends to a strictly larger threshold `p\u2082* > p*`, with\n`p\u2082* \u2208 (1/8, 1/4)` bracketing the textbook \u2248 20%.\n**The key insight is** that a single round of two-way \"advantage distillation\"\nsquares Eve's per-bit error contribution while only linearly costing reconciliation,\nso the entropy balance flips sign at a strictly higher `Q` than the one-way `p*`.\n**Why now?** The one-way machinery (`secureKeyRate`, monotonicity, IVT bracket) is\nin place; `r\u2082` is another explicit `binEntropy` expression, so the same\nexistence+uniqueness+bracket pipeline applies verbatim to a new rate function.\n\n## 3. Matrix family achieves exact `2^{-\u2113}` collision for `\u2113`-bit output\n**Conjecture.** For random `A \u2208 (\u2124/2)^{\u2113\u00d7n}` and `x \u2260 y`, exactly `2^{(n\u22121)\u2113}`\nmatrices collide, i.e. collision probability is *exactly* `2^{-\u2113}`, generalizing\n`innerHash_two_universal` (the `\u2113 = 1` case) to the full leftover-hash regime.\n**The key insight is** that the `\u2113` rows of `A` act independently and each row is an\nindependent copy of the proven single-bit parity hash, so the collision count is the\n`\u2113`-fold product `(2^{n\u22121})^\u2113` \u2014 the involution result raised to a tensor power.\n**Why now?** This cycle proves the `\u2113 = 1` base case exactly; the inductive/product\nstep is a `Fintype.card_pi`/independence argument that directly composes the existing\n`innerParity_zero_card`.\n\n## 4. Leftover-hash, end to end: collision bound \u21d2 exponential secrecy\n**Conjecture.** Composing the *exact* family-collision `2^{-\u2113}` (Direction 3) with\n`PrivacyAmplification.statDist_le_collision` yields, for any source with min-entropy\n`k`, a hashed key whose statistical distance to uniform is `\u2264 2^{(\u2113\u2212k)/2}` *on\naverage over the family* \u2014 closing the loop from \"a 2-universal family exists\" to\n\"Eve's information is exponentially small\".\n**The key insight is** that averaging the output collision probability `\u2211 p_i\u00b2` over\na 2-universal family gives `\u2264 1/M + 2^{-k}`, and feeding this into the already-proven\nCauchy\u2013Schwarz core converts the entropy gap directly into exponential decay.\n**Why now?** `statDist_le_collision` and `privacyAmplification_exp_bound` are already\nproven for a *given* collision bound; only the averaging lemma (a finite expectation\nover keys) is missing, and this cycle supplies the concrete family it averages over.\n\n## 5. Optimality: no single-bit hash beats collision probability `1/2`\n**Conjecture.** For any deterministic single-bit hash family on `(\u2124/2)^n`, there\nexist distinct `x \u2260 y` whose collision probability over keys is `\u2265 1/2`; the parity\nfamily meets this bound with equality, so it is *exactly optimal*.\n**The key insight is** a counting/pigeonhole dual to `innerHash_two_universal`: a\nsingle output bit can separate at most half the key mass for the worst-case pair, so\n`1/2` is an information-theoretic floor, not merely the parity family's value.\n**Why now?** This cycle established the achievability side as an exact equality; the\nconverse is a pigeonhole argument of the same flavor as\n`PrivacyAmplification.injective_extractor_impossible`, already in the catalog.\n",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2383",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5a2118a3",
+    "status": "available",
+    "timestamp": "2026-06-23T19:25:17.817943+00:00",
+    "title": "(0 sorries, standard axioms only):"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3104,7 +3119,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "943411ea",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -3114,7 +3129,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -3234,21 +3249,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
-  },
-  {
-    "consumed_by_exp_id": "a920a00b",
-    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
-    "domains": [
-      "Geometry",
-      "Novelty"
-    ],
-    "id": "moonshot_Pickover_32",
-    "priority_score": 0.58,
-    "research_mode": "team",
-    "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-22T11:50:17.617665+00:00",
-    "title": "Pickover Clifford Attractor Family"
   },
   {
     "consumed_by_exp_id": "",

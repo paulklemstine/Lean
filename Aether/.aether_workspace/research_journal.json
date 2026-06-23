@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ecc79db8",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Integrated Information via Tensor Networks\n\nThis research cycle established the dictionary\n\n> **IIT min-cut Φ  ≡  tensor-network min-cut entanglement capacity**\n> (under `weight",
-      "quality_score": 0.4986900000000001,
-      "sorry_count": 0,
-      "theorem_count": 34,
-      "timestamp": "2026-06-16T15:41:49",
-      "title": "Integrated Information via Tensor Networks"
-    },
-    {
       "cycle_id": "1ad32e9c",
       "domain": "Tropical",
       "key_insight": "# Future Directions — Tropical Fermat's Last Theorem\n\nThis research cycle established the core dichotomy: the classical Fermat equation\n`aⁿ + bⁿ = cⁿ` has no nontrivial solutions for `n ≥ 3`, while it",
@@ -2501,6 +2491,16 @@
       "theorem_count": 21,
       "timestamp": "2026-06-23T15:01:59",
       "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
+    },
+    {
+      "cycle_id": "5a2118a3",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — BB84 Security (derived from this cycle)\n\nThis cycle proved (0 sorries, standard axioms only):\n- `SecurityRegion.lean`: the ~11% threshold is a **sharp two-sided boundary**\n  (`se",
+      "quality_score": 0.49160000000000004,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-23T19:25:27",
+      "title": "Quantum Key Distribution: BB84 Security Proof"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T15:01:59",
+  "last_updated": "2026-06-23T19:25:27",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "15e84b40",
-        "quality": 0.5413687224669603,
-        "theorems": 109,
-        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-      },
-      {
         "cycle_id": "b3d82bf4",
         "quality": 0.74352,
         "theorems": 69,
@@ -3389,6 +3383,12 @@
         "quality": 0.67588,
         "theorems": 7,
         "title": "Learning with Errors: Hardness Reductions"
+      },
+      {
+        "cycle_id": "5a2118a3",
+        "quality": 0.49160000000000004,
+        "theorems": 13,
+        "title": "Quantum Key Distribution: BB84 Security Proof"
       }
     ],
     "Geometry": [

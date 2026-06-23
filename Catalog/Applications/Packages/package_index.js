@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5a2118a3",
     "filename": "quantum_key_distribution_bb84_security_proof.json",
     "pkg_num": 13,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.49160000000000004,
     "title": "Quantum Key Distribution: A Formally Verified BB84 Security Proof"
   },
   {
@@ -386,8 +386,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "quantum_key_distribution_bb84_security_proof",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.49160000000000004,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "Quantum Key Distribution: A Formally Verified BB84 Security Proof"
     }

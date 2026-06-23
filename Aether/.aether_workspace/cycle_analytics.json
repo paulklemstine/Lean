@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T15:02:02.935104+00:00",
+  "last_updated": "2026-06-23T19:25:29.149062+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -933,6 +933,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-23T15:02:02.701404+00:00",
       "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3393,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 5,
+      "domain": "Cryptography",
+      "duration_seconds": 22509.664412498474,
+      "end_time": 1782242691.2263649,
+      "files_integrated": 6,
+      "job_id": "5a2118a3",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v2",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.58,
+        "applications": 0.74,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6343,
+        "cross_domain": 0.7,
+        "grade": "substantial",
+        "importance": 0.5318,
+        "novelty": 0.71,
+        "proof_depth": 0.4554,
+        "usefulness": 0.5777
+      },
+      "quality_score": 0.49160000000000004,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782220181.5619524,
+      "strategy_count": 0,
+      "theorem_count": 13,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 13,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-23T19:25:28.921872+00:00",
+      "title": "Quantum Key Distribution: BB84 Security Proof"
     }
   ]
 }
