@@ -2956,6 +2956,32 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every connected, twin-free Cayley digraph of a finite abelian group of odd order is stable; that is, the automorphism group of its direct product with the complete digraph K_2 is isomorphic to the direct product of their individual automorphism groups.",
+    "domain_bridges": [
+      "Graph Theory",
+      "Group Theory",
+      "Abstract Algebra"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2320",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the direct product of digraphs, stability, and the twin-free property. Prove that an unstable connected digraph must admit an involutory automorphism that swaps twins. Show that for a Cayley digraph of an abelian group of odd order, the existence of such an automorphism forces the existence of an element of order 2 in the group, which contradicts Lagrange's theorem for groups of odd order.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22947v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:53:33.563342+00:00",
+    "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
       "Erdős Problem 550"
     ],
     "consumed_by_exp_id": "",
@@ -2968,7 +2994,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2320",
+    "id": "fd_2321",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -2995,7 +3021,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2321",
+    "id": "fd_2322",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -3025,7 +3051,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2322",
+    "id": "fd_2323",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -3053,7 +3079,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2323",
+    "id": "fd_2324",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3080,7 +3106,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2324",
+    "id": "fd_2325",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3106,7 +3132,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2325",
+    "id": "fd_2326",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3133,7 +3159,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2326",
+    "id": "fd_2327",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
@@ -3163,7 +3189,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply repeated Cauchy–Schwarz inequalities on the group sum to bound the kernel average, and argue that equality forces f to be constant.",
@@ -3172,6 +3198,33 @@
     "status": "available",
     "timestamp": "2026-06-23T09:18:43.440749+00:00",
     "title": "Conjecture on extremal constantness for two-sided group correlation kernels"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "1st-paper",
+      "2nd-paper",
+      "wee-etal"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture proposes a universal structural condition that determines whether the deleted co-maximal subgroup graph of a finite group is connected, and when it has cycles or becomes a star.",
+    "domain_bridges": [
+      "Model theory of groups",
+      "Graph theory in algebra"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2329",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive analysis combining subgroup inclusion properties with graph connectivity criteria",
+    "research_mode": "team",
+    "source_exp_id": "2606.22904v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:55:40.099936+00:00",
+    "title": "Connectivity of co-maximal subgroup graphs for finite groups"
   },
   {
     "ambition_level": "extension",
@@ -3566,7 +3619,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "57fbcb2f",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -3578,7 +3631,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },

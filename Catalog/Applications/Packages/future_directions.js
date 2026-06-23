@@ -1982,12 +1982,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every connected, twin-free Cayley digraph of a finite abelian group of odd order is stable; that is, the automorphism group of its direct product with the complete digraph K_2 is isomorphic to the direct product of their individual automorphism groups.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2320",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22947v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:53:33.563342+00:00",
+    "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2320",
+    "id": "fd_2321",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -2002,7 +2016,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2321",
+    "id": "fd_2322",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2017,7 +2031,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2322",
+    "id": "fd_2323",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2032,7 +2046,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2323",
+    "id": "fd_2324",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2046,7 +2060,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2324",
+    "id": "fd_2325",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
@@ -2060,7 +2074,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2325",
+    "id": "fd_2326",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
@@ -2074,7 +2088,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2326",
+    "id": "fd_2327",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -2089,13 +2103,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
     "status": "available",
     "timestamp": "2026-06-23T09:18:43.440749+00:00",
     "title": "Conjecture on extremal constantness for two-sided group correlation kernels"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture proposes a universal structural condition that determines whether the deleted co-maximal subgroup graph of a finite group is connected, and when it has cycles or becomes a star.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2329",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22904v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:55:40.099936+00:00",
+    "title": "Connectivity of co-maximal subgroup graphs for finite groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -2388,7 +2417,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
-    "consumed_by_exp_id": "57fbcb2f",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -2397,7 +2426,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
