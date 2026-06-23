@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T10:41:01.411638+00:00",
+  "last_updated": "2026-06-23T11:00:01.191083+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -804,6 +804,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-23T10:41:01.154135+00:00",
       "title": "Learning with Errors: Hardness Reductions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2929,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 7,
+      "domain": "Shared",
+      "duration_seconds": 3940.3652818202972,
+      "end_time": 1782212320.1871462,
+      "files_integrated": 2,
+      "job_id": "bf529381",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v17",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v17",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.5,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.4279,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.3124,
+        "novelty": 0.65,
+        "proof_depth": 0.1676,
+        "usefulness": 0.3338
+      },
+      "quality_score": 0.34015242857142863,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782208379.8218644,
+      "strategy_count": 0,
+      "theorem_count": 5,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-23T11:00:00.963019+00:00",
+      "title": "Close Proofs: These conjectures continue the research cycle begun in"
     }
   ]
 }

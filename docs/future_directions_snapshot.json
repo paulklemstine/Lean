@@ -1492,7 +1492,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432802+00:00",
     "title": "Information Geometry: Fisher Metric on Statistical Models"
   },
@@ -1793,7 +1793,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ebb608b8",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1806,7 +1806,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1867,7 +1867,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432759+00:00",
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
@@ -2901,7 +2901,7 @@
       "langlands_program",
       "algebraic_groups"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60de7dfd",
     "description": "For any connected reductive group $G$ defined over a number field $F$, and any cohomological generic automorphic representation $\\pi$ of $G(\\mathbb{A}_F)$, the ratio of the Betti-Whittaker periods $\\Omega(\\pi^\\vee) / \\Omega(\\pi)$ is an algebraic number, generalizing the explicit relation established for $\\mathrm{GL}(n)$ where the ratio is a specific power of $i$ depending on the bottom degree $b = r_1 \\lfloor n^2/4 \\rfloor + r_2 n(n-1)/2$.",
     "domain_bridges": [
       "algebraic_geometry",
@@ -2918,7 +2918,7 @@
     "proof_strategy": "Generalize the definition of Betti-Whittaker periods to arbitrary connected reductive groups using relative Lie algebra cohomology and Franke's theorem. Show that the contragredient map on cohomology acts by an algebraic scalar on the bottom-degree Whittaker cohomology classes, leveraging the algebraicity of the Whittaker functionals and the action of the Chevalley involution.",
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T08:53:00.946057+00:00",
     "title": "Algebraicity of Contragredient Betti-Whittaker Period Ratio for Reductive Groups"
   },
@@ -3034,6 +3034,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.AG",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any bounded prism (A, I) where A/I is a regular local ring of dimension d, the restriction functor from the category of prismatic F-crystals on Spec(A/I) to the category of prismatic F-crystals on the punctured spectrum Spec(A/I) \\ {m} is an equivalence of categories. This extends the paper's primitive purity theorem for Frobenius modules to the full setting of prismatic F-crystals, and would imply that the canonical F-isocrystal from Ogus's conjecture is uniquely determined by its restriction to any dense open subscheme.",
+    "domain_bridges": [
+      "prismatic_cohomology",
+      "crystalline_cohomology",
+      "p_adic_Hodge_theory",
+      "purity_theorems"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2323",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Reduce to the primitive purity theorem for Frobenius modules via the prismatic p-adic Riemann-Hilbert correspondence, showing that prismatic F-crystals on the punctured spectrum correspond to p-adic local systems that extend, then transport the purity result back through the equivalence. Key step: establish that the prismatic Riemann-Hilbert functor commutes with restriction to opens and preserves the Frobenius structure needed for the extension.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22637v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:00:28.938025+00:00",
+    "title": "Prismatic Purity for F-Crystals on Regular Schemes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "Erdős Problem 550"
     ],
@@ -3047,7 +3075,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2323",
+    "id": "fd_2324",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -3074,7 +3102,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2324",
+    "id": "fd_2325",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -3104,7 +3132,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2325",
+    "id": "fd_2326",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -3132,7 +3160,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2326",
+    "id": "fd_2327",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3159,7 +3187,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3185,7 +3213,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2328",
+    "id": "fd_2329",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3212,7 +3240,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2329",
+    "id": "fd_2330",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
@@ -3242,7 +3270,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply repeated Cauchy–Schwarz inequalities on the group sum to bound the kernel average, and argue that equality forces f to be constant.",
@@ -3269,7 +3297,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive analysis combining subgroup inclusion properties with graph connectivity criteria",
@@ -3296,7 +3324,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the bound α_{es}(G) ≥ α(G) - 1 holds universally by constructing an ESI-set from an arbitrary maximum independent set through local modifications to satisfy the ES-condition, or disprove by finding a graph where the reduction exceeds 1.",
@@ -3323,7 +3351,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the lexicographic order on infinite sequences over a finite alphabet, formalize the $\\beta$-transformation and the quasi-greedy expansion of 1, then prove the equivalence using properties of the shift map and greedy expansions.",
@@ -3332,6 +3360,32 @@
     "status": "available",
     "timestamp": "2026-06-23T10:41:57.159557+00:00",
     "title": "Parry's Theorem on Admissible Beta-Expansions"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CA",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any prime $p$ with $p \\equiv 3 \\pmod 4$, let $P_3$ denote the 3-dimensional paraboloid over the finite field $\\mathbb{F}_p$. The endpoint restriction conjecture for $P_3$ states that the Fourier extension operator associated with $P_3$ maps $L^2(P_3)$ to $L^3(\\mathbb{F}_p^3)$ with a constant independent of $p$. Equivalently, for any function $f: P_3 \\to \\mathbb{C}$, $\\| E(f) \\|_{L^3(\\mathbb{F}_p^3)} \\le C \\|f\\|_{L^2(P_3)}$ where $E(f)(x) = p^{-2} \\sum_{\\xi \\in P_3} f(\\xi) e(x \\cdot \\xi)$ and $C$ is an absolute constant.",
+    "domain_bridges": [
+      "Additive Combinatorics",
+      "Finite Geometry"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2335",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the author's bilinear approach and point-line incidence estimates to handle the endpoint $r=3$, or establish sharp Kakeya and maximal restriction bounds over finite fields to close the remaining gap.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22882v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:01:03.311156+00:00",
+    "title": "Finite Field Restriction Conjecture for the 3D Paraboloid"
   },
   {
     "ambition_level": "extension",
@@ -3823,7 +3877,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "bf529381",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -3835,7 +3889,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -4633,7 +4687,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.812055+00:00",
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
