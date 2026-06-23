@@ -11002,7 +11002,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -11018,7 +11018,7 @@
         "Physics"
       ],
       "id": "fd_0395",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:46:30.264600+00:00",
       "last_reviewed_at": "2026-06-16T10:48:45.376139+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11032,7 +11032,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:24.924994+00:00",
       "title": "Navier-Stokes Existence and Smoothness"
@@ -13770,7 +13770,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -13786,7 +13786,7 @@
         "Geometry"
       ],
       "id": "fd_0466",
-      "last_attempt_time": "2026-06-11T06:41:17.076696+00:00",
+      "last_attempt_time": "2026-06-23T17:46:38.542225+00:00",
       "last_reviewed_at": "2026-06-09T13:04:00.554364+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13800,7 +13800,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:30.651923+00:00",
       "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
@@ -36096,7 +36096,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.NT",
         "math.AG",
@@ -36121,7 +36121,7 @@
         "Geometry"
       ],
       "id": "fd_2331",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:46:34.632119+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem weil_functional_equation_F1 {n : ℕ} (V : ProjectiveVariety_F1 n) (A : Matrix (Fin (max_betti_number V)) (Fin (max_betti_number V)) ℤ) (hA : A = markov_matrix_F1 V) (hA_inv : A ∈ Matrix.GL (Fin (max_betti_number V)) ℤ) (hA_det : A.det = 1) : ∃ (ε : ℤˣ) (χ : ℤ) (hχ : χ = euler_characteristic V), ∀ (t : ℚ) (ht : t ≠ 0), zeta_F1 V (1/t) = ε * t^(-χ) * zeta_F1 V t := by sorry",
       "lineage_refs": [],
@@ -36135,7 +36135,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22010v1",
       "source_path": "http://arxiv.org/abs/2606.22010v1",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-23T13:47:18.898418+00:00",
       "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
@@ -38276,6 +38276,52 @@
       "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Erdős Problem 550",
+        "Chvátal's theorem",
+        "Burr's bound"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For fixed integers $k \\ge 2$ and $1 \\le m_1 \\le \\cdots \\le m_k$, there exists an integer $n_0$ such that for all $n \\ge n_0$ and every $n$-vertex tree $T$, the Ramsey number satisfies $R(T, K_{m_1, \\ldots, m_k}) \\le (k-1)(R(T, K_{m_1, m_2})-1)+m_1$.",
+      "domain_bridges": [
+        "Extremal graph theory",
+        "Ramsey theory",
+        "Szemerédi regularity lemma"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2377",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem erdos_550_resolution {k : ℕ} {V : Type*} [Fintype V] [DecidableEq V] (m : Fin k → ℕ) (hk : 2 ≤ k) (hm : Monotone m) : ∃ n_0, ∀ n ≥ n_0, ∀ (T : SimpleGraph V) [DecidableRel T.Adj], IsTree T → Fintype.card V = n → ramsey_number T (complete_multipartite_graph m) ≤ (k - 1) * (ramsey_number T (complete_multipartite_graph ![m 0, m 1]) - 1) + m 0 := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish an off-Turán tree-embedding theorem via Szemerédi regularity and a local regular-matching lemma, then derive a contradiction by applying a compactness-and-rounding theorem for represented bounded-rank hypergraph obstructions using shadow hypergraphs.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23659v1",
+      "source_path": "http://arxiv.org/abs/2606.23659v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T17:46:25.991940+00:00",
+      "title": "Resolution of Erdős Problem 550 on Tree versus Complete Multipartite Ramsey Numbers"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -38318,11 +38364,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 3,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "312c5627",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38334,7 +38380,7 @@
         "Novelty"
       ],
       "id": "moonshot_Pickover_32",
-      "last_attempt_time": "2026-06-23T17:45:19.011599+00:00",
+      "last_attempt_time": "2026-06-23T17:46:47.197242+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -38348,7 +38394,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Pickover)",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:17.617665+00:00",
       "title": "Pickover Clifford Attractor Family"
@@ -41065,7 +41111,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -41081,7 +41127,7 @@
         "Geometry"
       ],
       "id": "seed_040",
-      "last_attempt_time": "2026-06-11T05:04:17.618866+00:00",
+      "last_attempt_time": "2026-06-23T17:46:42.580885+00:00",
       "last_reviewed_at": "2026-06-09T13:04:08.213164+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -41095,7 +41141,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:03.446924+00:00",
       "title": "Homotopy Type Theory Foundations"
@@ -118374,6 +118420,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

@@ -623,7 +623,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
   },
@@ -2149,7 +2149,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22010v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T13:47:18.898418+00:00",
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
@@ -2804,6 +2804,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For fixed integers $k \\ge 2$ and $1 \\le m_1 \\le \\cdots \\le m_k$, there exists an integer $n_0$ such that for all $n \\ge n_0$ and every $n$-vertex tree $T$, the Ramsey number satisfies $R(T, K_{m_1, \\ldots, m_k}) \\le (k-1)(R(T, K_{m_1, m_2})-1)+m_1$.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2377",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:46:25.991940+00:00",
+    "title": "Resolution of Erd\u0151s Problem 550 on Tree versus Complete Multipartite Ramsey Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3150,7 +3164,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "312c5627",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domains": [
       "Geometry",
@@ -3160,7 +3174,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.58,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },
@@ -3697,7 +3711,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T19:55:24.924994+00:00",
     "title": "Navier-Stokes Existence and Smoothness"
   },
@@ -3892,7 +3906,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
