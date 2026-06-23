@@ -3,6 +3,21 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
+    "consumed_by_exp_id": "7ededbf5",
+    "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
+    "domains": [
+      "EML",
+      "MachineLearning"
+    ],
+    "id": "fd_0479",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:44.957997+00:00",
+    "title": "EML Universal Approximation"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
     "domains": [
@@ -613,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07255b71",
     "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domains": [
       "Algebra",
@@ -623,7 +638,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
@@ -1896,12 +1911,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The cluster algebra structure on the coordinate ring of a partial flag variety G/P, defined via the restriction of the base affine space cluster structure, is isomorphic to the cluster algebra structure defined on the corresponding Schubert cell via the double Bruhat cell cluster structure.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2313",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23474v1",
+    "status": "available",
+    "timestamp": "2026-06-23T06:42:43.429866+00:00",
+    "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2313",
+    "id": "fd_2314",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -1916,13 +1946,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2314",
+    "id": "fd_2315",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
     "status": "available",
     "timestamp": "2026-06-23T06:21:54.373451+00:00",
     "title": "Codimension-i Vanishing Conjecture for Hecke Congruence Subgroups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer h, the set \ud835\udca5_h = {j \u2265 1 : rad(j) = rad(j+h)} is finite with |\ud835\udca5_h| \u2264 3 \u00b7 7^{3+2\u03c9(h)}, where rad(n) is the product of distinct prime factors of n and \u03c9(h) is the number of distinct prime factors of h. Furthermore, \ud835\udca5_h is empty when h is odd (since rad(j) = rad(j+h) forces 2 | rad(j) = rad(j+h), requiring both j and j+h even, contradicting odd h). This bound, due to Pollack\u2013Pomerance\u2013Trevi\u00f1o, is the crucial finiteness input underpinning the paper's rank-amplified decomposition of S_h^\u03c6(x) into diagonal (Graham\u2013Holt\u2013Pomerance same-support family) and off-diagonal components.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2316",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23681v1",
+    "status": "available",
+    "timestamp": "2026-06-23T06:43:59.614397+00:00",
+    "title": "Explicit Finiteness Bound for Same-Radical Shift Sets"
   },
   {
     "consumed_by_exp_id": "",
@@ -2112,21 +2157,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Transition Endomorphisms of an Endomorphism Stream\n\nThis cycle closed the missing algebraic foundation `Algebra.TransEndo` (defining\n`transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V` together with the composition\nlaw `transEndo_comp` and the rank-antitonicity lemma `rank_transEndo_antitone`),\nwhich in turn makes `Algebra.TransEndoStabilization` compile and proves that the\nnatural-number rank profile `m \u21a6 rankSeq f 0 m` is eventually constant.\n\nThe following conjectures extend that finding.\n\n## 1. The stabilization index is bounded by `finrank K V`.\nThere exists `N \u2264 finrank K V` with `rankSeq f 0 m = rankSeq f 0 N` for all `m \u2265 N`.\n**The key insight is...** a strictly decreasing antitone `\u2115 \u2192 \u2115` chain bounded by\n`d = finrank K V` can drop at most `d` times, so the first stabilization point is\nreached within `d` steps rather than at an abstract well-founded minimum.\n**Why now?** `rankSeq_le_finrank` and `rankSeq_zero_antitone` are already proved,\nso only a quantitative refinement of `antitone_nat_eventually_const` is missing.\n\n## 2. The stable rank is the rank of an idempotent-eventually composite.\nFor a constant stream `f \u2261 g`, the eventual value of `rankSeq f 0 m` equals\n`finrank K (\u2a05 n, range (g^n))`, the dimension of the generalized image.\n**The key insight is...** `transEndo (fun _ => g) 0 m = g^m`, and the descending\nchain of ranges `range (g^m)` stabilizes at the Fitting \"core\" of `g`.\n**Why now?** `transEndo_comp` already gives the multiplicative structure\n`g^(m+n) = g^m \u2218 g^n` for free; the remaining work is the Fitting decomposition.\n\n## 3. Eventual constancy fails without finite dimension.\nOver an infinite-dimensional `V` there is a stream `f` whose cardinal rank\n`(transEndo f 0 m).rank` is strictly decreasing for every `m`.\n**The key insight is...** an infinite descending chain of subspaces (e.g. the\nshift on `\u2115 \u2192\u2080 K`) realizes a strictly decreasing rank sequence, so finiteness in\n`rankSeq_eventually_const` is genuinely load-bearing, not an artifact.\n**Why now?** The `\u2115`-valued `rankSeq` already isolates exactly where `toNat` and\n`FiniteDimensional` are used, pinpointing the counterexample target.\n\n## 4. Window rank is subadditive in a Sylvester sense.\nFor `i \u2264 j \u2264 k`, `(transEndo f i j).rank + (transEndo f j k).rank\n  \u2264 (transEndo f i k).rank + finrank K V`.\n**The key insight is...** this is Sylvester's rank inequality applied to the\nfactorization `transEndo f i k = transEndo f j k \u2218\u2097 transEndo f i j`.\n**Why now?** The composition law is in hand; only Mathlib's rank-of-composition\nlower bound needs to be located or built to discharge it.\n\n## 5. Joint stabilization across all starting windows.\nThere is a single `N` such that for every `i \u2264 N` the sequence `m \u21a6 rankSeq f i m`\nis constant for `m \u2265 N`.\n**The key insight is...** finitely many antitone bounded sequences (one per start\nindex up to `N`) stabilize simultaneously by taking a common cutoff.\n**Why now?** `rankSeq_antitone` already establishes antitonicity in both window\nendpoints, so a uniformization argument is the only new ingredient.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2315",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3db2ad68",
-    "status": "available",
-    "timestamp": "2026-06-23T06:39:58.403830+00:00",
-    "title": "This cycle closed the missing algebraic foundation `Algebra.TransEndo` (defining"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2230,7 +2260,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "57fbcb2f",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -2239,7 +2269,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
@@ -3124,7 +3154,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1c9c6b9",
     "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
     "domains": [
       "Novelty",
@@ -3134,7 +3164,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.676713+00:00",
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
