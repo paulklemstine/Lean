@@ -2440,6 +2440,34 @@
     "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Frankl-Wang conjecture",
+      "Hilton-Milner theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For integers n ≥ 2k and k ≥ 3, any two non-trivial cross-intersecting families A, B ⊆ ([n] choose k) satisfy |A| * |B| ≤ h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
+    "domain_bridges": [
+      "finite set families",
+      "combinatorial inequalities",
+      "shifting techniques"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2300",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the definitions of cross-intersecting and non-trivial families, and the size function h(n,k). Apply the shifting technique to reduce to left-compressed families, and use the diversity method to bound the sizes of families with elements far from a common core. Establish properties of the extended shift operation to manage the inductive steps.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23322v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:53:00.715630+00:00",
+    "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Mathlib.Algebra.MonoidAlgebra.Basic",
@@ -2460,7 +2488,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2300",
+    "id": "fd_2301",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
@@ -2491,7 +2519,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2301",
+    "id": "fd_2302",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite simple graphs, edge sets, vertex degrees, and C5-decompositions as a finite family of subgraphs each isomorphic to a 5-cycle whose edge sets are pairwise disjoint and cover E(G). The mathematical proof would likely combine an absorption framework with approximate C5-decompositions and a stability analysis around the known extremal obstruction giving the lower bound 5/8. In Lean, the conjecture can initially be stated using abstract predicates `IsFiveCycle` and `HasC5Decomposition`, then refined to concrete cycle embeddings into `SimpleGraph`.",
@@ -2518,7 +2546,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2302",
+    "id": "fd_2303",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the paper's main result that local ask zeta functions are recovered by substitutions in the truncated flag Hilbert-Poincaré series. Prove that (1) the truncated flag Hilbert-Poincaré series of A is determined by L(A), (2) the substitution parameters for primes of good reduction depend only on the isomorphism type of L(A) and the residue field size q, and (3) the matrix of linear forms constructed from A yields the same ask zeta function as any other arrangement with isomorphic lattice. The key difficulty is showing that the matrix construction and the substitution are both lattice-determined, which may require developing a lattice-theoretic characterization of the associated matroid and its representability constraints.",
@@ -2548,7 +2576,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2303",
+    "id": "fd_2304",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the proof of the n ≥ 6k+6 theorem and isolate where slack is used in bounding exceptional vertices and dangerous vertex cuts in G-E(P). Replace the coarse counting step by a sharper dichotomy: either every small cut in the residual complement has many cross-neighbors, allowing standard Hamiltonian path rerouting, or the graph has a near-complete bipartite/clustered structure where an explicit alternating Hamiltonian u-v path can be constructed. Formal verification would reduce the final residual k-connectivity claim to checking that every vertex set S with |S| < k leaves G-E(P)-S connected.",
@@ -2576,7 +2604,7 @@
       "Geometry",
       "Logic"
     ],
-    "id": "fd_2304",
+    "id": "fd_2305",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The authors already construct explicit families of convex sets and show nontrivial homology via a quotient/retraction argument onto a configuration space identified with a product of spheres. To upgrade H̃_{n-1}(L) ≠ 0 to a full homotopy equivalence L ≃ S^{n-1}, one would need to show that the natural retraction map from L onto a subspace homeomorphic to S^{n-1} is a homotopy equivalence—likely by establishing that the fiber of this retraction is contractible (a deformation retraction argument) or by computing all homotopy groups directly. The key geometric step is controlling the higher connectivity of the transversal space relative to its (n-1)-dimensional core.",
@@ -2585,6 +2613,31 @@
     "status": "available",
     "timestamp": "2026-06-23T04:31:35.784256+00:00",
     "title": "Homotopy type of the line transversal space equals S^{n-1}"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Menger's theorem",
+      "Graph Minors",
+      "Wall"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "In Theorem 1.2 of the paper, the function $f(n,s')$ bounding the size of the separator can be chosen to be $ns'-1$ when the vertex sets in $\\mathcal{A}$ are pairwise disjoint.",
+    "domain_bridges": [
+      "Combinatorics to Logic"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2306",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply Menger's theorem to the union of the sets in $\\mathcal{A}$ and the branch vertices of $W$. If no separator of size $ns'-1$ exists, there are $ns'$ disjoint paths, which can be distributed among the $n$ disjoint sets and then routed to distinct nails of a subwall.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:53:54.133289+00:00",
+    "title": "Optimal Separator Bound for Wall Connectors"
   },
   {
     "ambition_level": "extension",
@@ -3154,7 +3207,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "38e89c84",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domain_bridges": [],
     "domains": [
@@ -3167,7 +3220,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },

@@ -11824,7 +11824,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "38e89c84",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11850,7 +11850,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:26.588561+00:00",
       "title": "EML Kolmogorov-Arnold Representation"
@@ -34651,6 +34651,53 @@
       "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "Frankl-Wang conjecture",
+        "Hilton-Milner theorem"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For integers n ≥ 2k and k ≥ 3, any two non-trivial cross-intersecting families A, B ⊆ ([n] choose k) satisfy |A| * |B| ≤ h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
+      "domain_bridges": [
+        "finite set families",
+        "combinatorial inequalities",
+        "shifting techniques"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2300",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sharp_product_bound_non_trivial_cross_intersecting {n k : ℕ} (hn : n ≥ 2 * k) (hk : k ≥ 3)\n  (A B : Finset (Finset (Fin n)))\n  (hA : ∀ a ∈ A, a.card = k)\n  (hB : ∀ b ∈ B, b.card = k)\n  (h_cross : ∀ a ∈ A, ∀ b ∈ B, (a ∩ b).Nonempty)\n  (h_non_trivial_A : ∀ x : Fin n, ∃ a ∈ A, x ∉ a)\n  (h_non_trivial_B : ∀ x : Fin n, ∃ b ∈ B, x ∉ b) :\n  (A.card * B.card : ℕ) ≤ (Nat.choose (n - 1) (k - 1) - Nat.choose (n - k - 1) (k - 1) + 1)^2 := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the definitions of cross-intersecting and non-trivial families, and the size function h(n,k). Apply the shifting technique to reduce to left-compressed families, and use the diversity method to bound the sizes of families with elements far from a common core. Establish properties of the extended shift operation to manage the inductive steps.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23322v1",
+      "source_path": "http://arxiv.org/abs/2606.23322v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T04:53:00.715630+00:00",
+      "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -34680,7 +34727,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2300",
+      "id": "fd_2301",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nuniverse u v\n\n/-- Zeroth Hochschild homology as the cocenter: A modulo the R-span of additive commutators. -/\ndef HH0 (R A : Type*) [CommRing R] [Ring A] [Algebra R A] : Type _ :=\n  (Submodule.span R (Set.range (fun p : A × A => p.1 * p.2 - p.2 * p.1))).Quotient\n\n/-- The setoid identifying conjugate elements of a group. -/\ndef conjugacySetoid (G : Type*) [Group G] : Setoid G where\n  r x y := ∃ h : G, h * x * h⁻¹ = y\n  iseqv := by\n    constructor\n    · intro x\n      exact ⟨1, by simp⟩\n    · intro x y hxy\n      rcases hxy with ⟨h, hxy⟩\n      subst hxy\n      exact ⟨h⁻¹, by group⟩\n    · intro x y z hxy hyz\n      rcases hxy with ⟨h, hxy⟩\n      rcases hyz with ⟨k, hyz⟩\n      subst hxy\n      subst hyz\n      exact ⟨k * h, by group⟩\n\nabbrev ConjClass (G : Type*) [Group G] : Type _ := Quotient (conjugacySetoid G)\n\n/-- Conjecture: the cocenter of a finite group algebra is the free module on conjugacy classes. -/\ntheorem HH0_groupAlgebra_linearEquiv_conjClasses\n    (R G : Type*) [C",
@@ -34730,7 +34777,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2301",
+      "id": "fd_2302",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Fintype.Card\n\nopen scoped BigOperators\n\nnamespace GraphDecomposition\n\nvariable {V : Type} [Fintype V] [DecidableEq V]\n\n/-- Placeholder: `C5Divisible G` means every vertex degree is even and `5 ∣ |E(G)|`. -/\ndef C5Divisible (G : SimpleGraph V) : Prop :=\n  (∀ v : V, Even (G.degree v)) ∧ 5 ∣ Fintype.card G.edgeSet\n\n/-- Placeholder: `HasC5Decomposition G` means the edge set of `G` can be partitioned\n    into subgraphs each isomorphic to a 5-cycle. -/\ndef HasC5Decomposition (G : SimpleGraph V) : Prop :=\n  sorry\n\n/-- Conjectural asymptotic C₅-decomposition threshold: δ_{C₅} = 5/8. -/\nconjecture c5_decomposition_threshold :\n  ∀ ε : ℝ, 0 < ε →\n    ∃ N : ℕ, ∀ {V : Type} [Fintype V] [DecidableEq V],\n      N ≤ Fintype.card V →\n      ∀ G : SimpleGraph V,\n        ((∀ v : V, ((G.degree v : ℝ) ≥ ((5 : ℝ) / 8 + ε) * (Fintype.card V : ℝ))) →\n          C5Divisible G →\n          HasC5Decomposition G)\n\nend GraphDecomposition",
@@ -34776,7 +34823,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2302",
+      "id": "fd_2303",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ask_zeta_combinatorial_invariance {A₁ A₂ : CentralHyperplaneArrangement ℚ} {p : ℕ} [Fact (Nat.Prime p)] (h_lat : IntersectionLattice A₁ ≃o IntersectionLattice A₂) (h_good₁ : GoodReduction A₁ p) (h_good₂ : GoodReduction A₂ p) : askZeta A₁ p = askZeta A₂ p := sorry",
@@ -34825,7 +34872,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2303",
+      "id": "fd_2304",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Combinatorics.SimpleGraph.Connectivity\n\nopen SimpleGraph\n\nnamespace ConnectivityPreservingPath\n\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\n/-- `IsKConnected G k` means that deleting fewer than `k` vertices from `G` leaves a connected nontrivial graph, equivalently vertex-connectivity at least `k`. -/\nconstant IsKConnected : SimpleGraph V → ℕ → Prop\n\n/-- `IsHamiltonianUVPath G u v p` means that `p` is a simple walk from `u` to `v` visiting every vertex exactly once. -/\nconstant IsHamiltonianUVPath : (G : SimpleGraph V) → (u v : V) → G.Walk u v → Prop\n\n/-- The spanning graph obtained from `G` by deleting every edge traversed by the walk `p`. -/\nconstant eraseWalkEdges : (G : SimpleGraph V) → {u v : V} → G.Walk u v → SimpleGraph V\n\n/-- Conjectural strengthening of the paper's `6*k+6` order bound to `4*k+4`. -/\ntheorem conjecture_four_k_plus_four_bound\n    (G : SimpleGraph V) [DecidableRel G.Adj]\n    (k : ℕ) (hk : 2 ≤ k)\n",
@@ -34872,7 +34919,7 @@
         "Geometry",
         "Logic"
       ],
-      "id": "fd_2304",
+      "id": "fd_2305",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem line_transversals_homotopy_sphere (n : ℕ) (hn : n ≥ 1) :\n    ∃ (C : Finset (Set (EuclideanSpace ℝ (Fin (3 * n))))),\n      (∀ s ∈ C, Convex ℝ s ∧ IsOpen s ∧ IsBounded s) ∧\n      (∀ s₁ ∈ C, ∀ s₂ ∈ C, s₁ ≠ s₂ → Disjoint s₁ s₂) ∧\n      HomotopyEquiv (lineTransversals C) (Sphere (n - 1)) := by\n  sorry",
@@ -34891,6 +34938,50 @@
       "thread_id": "",
       "timestamp": "2026-06-23T04:31:35.784256+00:00",
       "title": "Homotopy type of the line transversal space equals S^{n-1}"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Menger's theorem",
+        "Graph Minors",
+        "Wall"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "In Theorem 1.2 of the paper, the function $f(n,s')$ bounding the size of the separator can be chosen to be $ns'-1$ when the vertex sets in $\\mathcal{A}$ are pairwise disjoint.",
+      "domain_bridges": [
+        "Combinatorics to Logic"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2306",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem optimal_wall_connector_bound {V : Type*} [Fintype V] {G : SimpleGraph V} {n s' t' : ℕ} (hs' : 0 < s') (hn : 0 < n) (𝓐 : Finset (Finset V)) (h𝓐 : 𝓐.card = n) (h_disjoint : ∀ A₁ ∈ 𝓐, ∀ A₂ ∈ 𝓐, A₁ ≠ A₂ → Disjoint (A₁ : Set V) A₂) : ∃ (t : ℕ), ∀ (W : Wall t), (∃ (X : Finset V) (hX : X.card ≤ n * s' - 1), Separates X 𝓐.sup W.branch_vertices) ∨ ∃ (W' : Subwall W t') (𝒫 : Connector 𝓐 W' s'), True := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Apply Menger's theorem to the union of the sets in $\\mathcal{A}$ and the branch vertices of $W$. If no separator of size $ns'-1$ exists, there are $ns'$ disjoint paths, which can be distributed among the $n$ disjoint sets and then routed to distinct nails of a subwall.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23121v1",
+      "source_path": "http://arxiv.org/abs/2606.23121v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T04:53:54.133289+00:00",
+      "title": "Optimal Separator Bound for Wall Connectors"
     },
     {
       "ambition_level": "extension",
@@ -34974,7 +35065,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 3,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -34990,7 +35081,7 @@
         "Novelty"
       ],
       "id": "moonshot_Rucker_20",
-      "last_attempt_time": "2026-06-23T01:39:05.639348+00:00",
+      "last_attempt_time": "2026-06-23T04:53:59.840158+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
