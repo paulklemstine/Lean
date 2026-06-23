@@ -628,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07255b71",
     "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domains": [
       "Algebra",
@@ -638,7 +638,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
@@ -2111,7 +2111,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "ea7f0995",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
       "Computation",
@@ -2121,7 +2121,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.62,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -2393,7 +2393,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
   {
-    "consumed_by_exp_id": "cb79327f",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -2403,7 +2403,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
