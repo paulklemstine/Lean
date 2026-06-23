@@ -628,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07255b71",
     "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domains": [
       "Algebra",
@@ -638,7 +638,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
@@ -1882,6 +1882,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a real quadratic field K with discriminant \u0394\u2080, dimension d in its AFMY tower, and conductor f dividing f\u2080(d), the excess e = [K^{fd} : K_L^{d;f}] equals 1 if and only if gcd(f, d) = 1. This characterizes when the Kopp-Lagarias ray class field K_L^{d;f} coincides with the standard ray class field K^{fd}, and is the key structural ingredient in the paper's thesis that SIC overlap units factor into Stark units from these fields.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2311",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23535v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:54:16.244333+00:00",
+    "title": "Excess-One Criterion for Kopp-Lagarias Ray Class Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2312",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:55:36.201011+00:00",
+    "title": "Tightness of the Erd\u0151s 550 Upper Bound for Tree-Multipartite Ramsey Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3063,6 +3092,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.643460+00:00",
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+  },
+  {
+    "consumed_by_exp_id": "d1c9c6b9",
+    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0069",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-01T12:30:30.676713+00:00",
+    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
     "consumed_by_exp_id": "",
