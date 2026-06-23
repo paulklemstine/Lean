@@ -2112,12 +2112,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Fix rational transmission parameters \u03b8,p with 0 < \u03b8 < 1 and 0 < p \u2264 1. For any two finite simple graphs G and H, let G \u25a1 H denote the Cartesian product and let Z_T^{\u03b8,p}(G) be the minimum size of a \u03b8-threshold, p-proportion transmission zero forcing set. Conjecture: Z_T^{\u03b8,p}(G \u25a1 H) \u2264 min(|V(H)| \u00b7 Z_T^{\u03b8,p}(G), |V(G)| \u00b7 Z_T^{\u03b8,p}(H)). This is falsifiable by a finite pair of graphs and rational parameters for which every initial set below the stated bound fails to fill the product.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2329",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22246v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:10:53.772901+00:00",
+    "title": "Cartesian-product upper bound for transmission zero forcing"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2329",
+    "id": "fd_2330",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -2132,7 +2146,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2147,7 +2161,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2162,7 +2176,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2176,7 +2190,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
@@ -2190,7 +2204,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2334",
+    "id": "fd_2335",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
@@ -2204,7 +2218,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -2219,7 +2233,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -2234,7 +2248,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -2248,7 +2262,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2338",
+    "id": "fd_2339",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22972v1",
@@ -2262,7 +2276,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2339",
+    "id": "fd_2340",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
@@ -2277,7 +2291,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2340",
+    "id": "fd_2341",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -2292,7 +2306,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2341",
+    "id": "fd_2342",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -2307,7 +2321,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2342",
+    "id": "fd_2343",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22636v1",
@@ -2321,7 +2335,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2343",
+    "id": "fd_2344",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22614v1",
@@ -2336,7 +2350,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2344",
+    "id": "fd_2345",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22374v1",
@@ -2350,13 +2364,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2345",
+    "id": "fd_2346",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22253v1",
     "status": "available",
     "timestamp": "2026-06-23T12:51:47.961383+00:00",
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2347",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22229v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:11:45.659366+00:00",
+    "title": "Quadratic irrational density in the ratio spectrum"
   },
   {
     "consumed_by_exp_id": "",
@@ -3003,7 +3031,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "5a2118a3",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -3013,7 +3041,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
