@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-22T21:20:57Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -16,7 +16,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T01:40:46Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T01:43:47Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
@@ -34,7 +34,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T04:02:19Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "bridge_galois_connections_between_order_theory_and",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T05:45:49Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "close_proofs_these_conjectures_continue_the_resear",
@@ -52,7 +52,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-23T06:39:56Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "convex_geometry_brunn_minkowski_theory",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:31:52Z",
-      "hue": 271
+      "hue": 275
     },
     {
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:35:17Z",
-      "hue": 112
+      "hue": 90
     },
     {
       "id": "attention_mechanisms_mathematical_properties",
@@ -79,7 +79,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-23T07:38:24Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "sierpiski_numbers_covering_systems",
@@ -88,7 +88,16 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-23T08:30:51Z",
-      "hue": 270
+      "hue": 280
+    },
+    {
+      "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
+      "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order",
+      "domain": "Probability",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-23T11:40:38Z",
+      "hue": 90
     }
   ],
   "edges": [],

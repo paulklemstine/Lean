@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-23T11:40:38Z",
+    "domain": "Probability",
+    "exp_id": "57fbcb2f",
+    "filename": "oeis_sequence_orderly_friedman_numbers_or_good_or_.json",
+    "pkg_num": 11,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order"
+  },
+  {
     "date": "2026-06-23T08:30:51Z",
     "domain": "Computation",
     "exp_id": "07255b71",
@@ -162,6 +172,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Idempotent Probability: Large Deviations and the Sharp Cramer Duality Gap"
   },
+  "oeis_sequence_orderly_friedman_numbers_or_good_or_.json": {
+    "domain": "Probability",
+    "exp_id": "57fbcb2f",
+    "source_exp_ids": [
+      "oeis:80035"
+    ],
+    "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order"
+  },
   "primality_testing_miller_rabin_and_aks_formalizati.json": {
     "domain": "Cryptography",
     "exp_id": "7a69691f",
@@ -197,7 +215,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 90,
+      "hue": 275,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -208,7 +226,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 272,
+      "hue": 90,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -219,7 +237,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:43:47Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 275,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
       "priority_score": 0.46096,
@@ -230,7 +248,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 91,
+      "hue": 271,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -241,7 +259,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 272,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -252,7 +270,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T06:39:56Z",
       "domain": "Pythagorean",
-      "hue": 272,
+      "hue": 271,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Pythagorean",
       "priority_score": 0.3935206787878788,
@@ -263,7 +281,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 271,
+      "hue": 275,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
@@ -274,7 +292,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 112,
+      "hue": 90,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.60268,
@@ -285,7 +303,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 90,
+      "hue": 91,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -296,13 +314,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T08:30:51Z",
       "domain": "Computation",
-      "hue": 270,
+      "hue": 280,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
       "priority_score": 0.5811999999999999,
       "quality": "partial",
       "shape": "cube",
       "title": "Sierpinski Numbers via Covering Systems: A Certificate Framework"
+    },
+    {
+      "date": "2026-06-23T11:40:38Z",
+      "domain": "Probability",
+      "hue": 90,
+      "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
+      "primary_domain": "Bridges",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "icosahedron",
+      "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order"
     }
   ]
 };
