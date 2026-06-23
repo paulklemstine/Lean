@@ -7447,6 +7447,34 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.CO",
+      "Dallard-Milanic-Storgel-2024",
+      "Hajebi-Spirkl-2026"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer d ≥ 2, there exists a constant c(d) such that every K_{1,d}-free graph that does not contain K_4 as an induced minor has tree-independence number at most c(d). This is a specific instance of the Dallard–Milanič–Štorgel conjecture, which asserts that for any positive integer d and any planar graph H, the class of K_{1,d}-free graphs without H as an induced minor has bounded tree-independence number. The instance H = K_4 is natural because K_4-induced-minor-free graphs form a rich structural class (containing all chordal graphs, all bipartite graphs, and all series-parallel graphs) where the K_{1,d}-free condition is essential—without it, the tree-independence number is unbounded even within this class.",
+    "domain_bridges": [
+      "structural_graph_theory",
+      "graph_width_parameters",
+      "induced_minor_order",
+      "independent_set_complexity"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2276",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the approach used for outerstring graphs in this paper to the broader class of K_4-induced-minor-free graphs. Key steps: (1) leverage the structural decomposition of K_4-induced-minor-free graphs—these graphs admit clique-sum decompositions over graphs of bounded treewidth; (2) show that K_{1,d}-free constraints propagate through clique-sums to bound the independence number of bags; (3) construct tree decompositions where each bag's induced subgraph has independence number bounded by a function of d, potentially by induction on the clique-sum structure. The quadratic bounds obtained for various K_{1,d}-free classes in this paper suggest the bound c(d) may be quadratic in d.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:59:30.143958+00:00",
+    "title": "Bounded Tree-Independence Number of K_{1,d}-Free Graphs Excluding K_4 as an Induced Minor"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.NT",
       "math.CO",
       "OEIS_A099009"
@@ -7462,7 +7490,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2276",
+    "id": "fd_2277",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the four-digit Kaprekar map and its terminal cycles. Prove the conjugacy to projective doubling on the triangular region T_B. Derive the cycle lengths from the orbits of projective doubling, and characterize the maximum length condition using the order of 2 modulo B.",
@@ -7486,7 +7514,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2277",
+    "id": "fd_2278",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the explicit hypergraph constructions or flag algebra methods used by Pikhurko (for standard Turán density) and Gao et al. (for codegree density) to establish the existence of an irrational positive codegree Turán density, carefully analyzing the extremal configurations under the minimum positive codegree condition.",
@@ -7495,6 +7523,34 @@
     "status": "available",
     "timestamp": "2026-06-22T23:37:23.936981+00:00",
     "title": "Existence of Irrational Positive Codegree Turán Densities"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Odoni_arboreal_Galois_representations",
+      "Pink_profinite_iterated_monodromy",
+      "Hindes_Jones_Riccati_arboreal_dynamics"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a finite field 𝔽_q of odd characteristic and any c ∈ 𝔽_q^×, the paper establishes that global arboreal maximality of f_c(x) = c*x^(q-1) + t and global adelic surjectivity of the corresponding twisted Carlitz module ρ^c are logically independent. However, they note a one-way local implication at the finite place (t). This conjecture proposes that the implication is in fact an equivalence locally at (t): the local arboreal Galois image of f_c over 𝔽_q((t)) is maximal (isomorphic to the full iterated wreath product of C_{q-1}) if and only if the local adelic Galois image of ρ^c at (t) is surjective onto 𝔽_q[[t]]^×.",
+    "domain_bridges": [
+      "Galois_theory",
+      "algebraic_dynamics",
+      "Drinfeld_modules"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2279",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the local structure of the arboreal tower of f_c(x) and the local Tate module of ρ^c at (t) to demonstrate that the local surjectivity conditions for both representations are governed by identical valuation constraints on the parameter c, effectively reversing the established one-way local implication.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:59:59.738955+00:00",
+    "title": "Local Equivalence of Arboreal Maximality and Adelic Surjectivity at (t) for Twisted Carlitz Polynomials"
   },
   {
     "ambition_level": "grand_challenge",
@@ -11469,7 +11525,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "bfb13379",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -11482,7 +11538,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

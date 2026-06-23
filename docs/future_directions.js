@@ -4406,11 +4406,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "In any odd base B > 3, the maximum length of a terminal cycle of the four-digit Kaprekar map equals (B-1)/2 if and only if B is a prime p > 5 and the least positive integer m satisfying 2^m \u2261 \u00b11 (mod p) is exactly m = (p-1)/2.",
+    "description": "For every positive integer d \u2265 2, there exists a constant c(d) such that every K_{1,d}-free graph that does not contain K_4 as an induced minor has tree-independence number at most c(d). This is a specific instance of the Dallard\u2013Milani\u010d\u2013\u0160torgel conjecture, which asserts that for any positive integer d and any planar graph H, the class of K_{1,d}-free graphs without H as an induced minor has bounded tree-independence number. The instance H = K_4 is natural because K_4-induced-minor-free graphs form a rich structural class (containing all chordal graphs, all bipartite graphs, and all series-parallel graphs) where the K_{1,d}-free condition is essential\u2014without it, the tree-independence number is unbounded even within this class.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2276",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:59:30.143958+00:00",
+    "title": "Bounded Tree-Independence Number of K_{1,d}-Free Graphs Excluding K_4 as an Induced Minor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In any odd base B > 3, the maximum length of a terminal cycle of the four-digit Kaprekar map equals (B-1)/2 if and only if B is a prime p > 5 and the least positive integer m satisfying 2^m \u2261 \u00b11 (mod p) is exactly m = (p-1)/2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2277",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -4424,13 +4438,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2277",
+    "id": "fd_2278",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20494v1",
     "status": "available",
     "timestamp": "2026-06-22T23:37:23.936981+00:00",
     "title": "Existence of Irrational Positive Codegree Tur\u00e1n Densities"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a finite field \ud835\udd3d_q of odd characteristic and any c \u2208 \ud835\udd3d_q^\u00d7, the paper establishes that global arboreal maximality of f_c(x) = c*x^(q-1) + t and global adelic surjectivity of the corresponding twisted Carlitz module \u03c1^c are logically independent. However, they note a one-way local implication at the finite place (t). This conjecture proposes that the implication is in fact an equivalence locally at (t): the local arboreal Galois image of f_c over \ud835\udd3d_q((t)) is maximal (isomorphic to the full iterated wreath product of C_{q-1}) if and only if the local adelic Galois image of \u03c1^c at (t) is surjective onto \ud835\udd3d_q[[t]]^\u00d7.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2279",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-22T23:59:59.738955+00:00",
+    "title": "Local Equivalence of Arboreal Maximality and Adelic Surjectivity at (t) for Twisted Carlitz Polynomials"
   },
   {
     "consumed_by_exp_id": "",
@@ -7403,7 +7432,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "bfb13379",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -7413,7 +7442,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

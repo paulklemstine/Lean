@@ -16776,7 +16776,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "bfb13379",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16802,7 +16802,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.956863+00:00",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
@@ -35089,7 +35089,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -35105,7 +35105,7 @@
         "Geometry"
       ],
       "id": "fd_2055",
-      "last_attempt_time": "2026-06-22T23:37:33.427688+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-19T17:10:29.768093+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -45206,6 +45206,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "Dallard-Milanic-Storgel-2024",
+        "Hajebi-Spirkl-2026"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every positive integer d ≥ 2, there exists a constant c(d) such that every K_{1,d}-free graph that does not contain K_4 as an induced minor has tree-independence number at most c(d). This is a specific instance of the Dallard–Milanič–Štorgel conjecture, which asserts that for any positive integer d and any planar graph H, the class of K_{1,d}-free graphs without H as an induced minor has bounded tree-independence number. The instance H = K_4 is natural because K_4-induced-minor-free graphs form a rich structural class (containing all chordal graphs, all bipartite graphs, and all series-parallel graphs) where the K_{1,d}-free condition is essential—without it, the tree-independence number is unbounded even within this class.",
+      "domain_bridges": [
+        "structural_graph_theory",
+        "graph_width_parameters",
+        "induced_minor_order",
+        "independent_set_complexity"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2276",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem bounded_treeIndepNum_of_K1d_free_of_K4_inducedMinor_free :\n    ∀ d : ℕ, d ≥ 2 → ∃ c : ℕ, ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V),\n      K1d_free G d → ¬HasInducedMinor G (completeGraph 4) →\n      treeIndepNum G ≤ c := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the approach used for outerstring graphs in this paper to the broader class of K_4-induced-minor-free graphs. Key steps: (1) leverage the structural decomposition of K_4-induced-minor-free graphs—these graphs admit clique-sum decompositions over graphs of bounded treewidth; (2) show that K_{1,d}-free constraints propagate through clique-sums to bound the independence number of bags; (3) construct tree decompositions where each bag's induced subgraph has independence number bounded by a function of d, potentially by induction on the clique-sum structure. The quadratic bounds obtained for various K_{1,d}-free classes in this paper suggest the bound c(d) may be quadratic in d.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20256v1",
+      "source_path": "http://arxiv.org/abs/2606.20256v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T23:59:30.143958+00:00",
+      "title": "Bounded Tree-Independence Number of K_{1,d}-Free Graphs Excluding K_4 as an Induced Minor"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.NT",
         "math.CO",
         "OEIS_A099009"
@@ -45227,7 +45274,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2276",
+      "id": "fd_2277",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem kaprekar_max_cycle_length_iff (B : ℕ) (hB : Odd B ∧ B > 3) :\n  max_cycle_length (kaprekar_4_digit_map B) = (B - 1) / 2 ↔\n    Nat.Prime B ∧ B > 5 ∧\n    IsLeast (fun m => 0 < m ∧ ((2^m : ZMod B) = 1 ∨ (2^m : ZMod B) = -1)) ((B - 1) / 2) :=\nby sorry",
@@ -45270,7 +45317,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2277",
+      "id": "fd_2278",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Real.Irrational\nimport Mathlib.Data.Finset.Basic\n\nvariable (k : ℕ) (hk : 3 ≤ k)\n\nstructure KUniformHypergraph where\n  vertices : Finset ℕ\n  edges : Finset (Finset ℕ)\n  hcard : ∀ e ∈ edges, Finset.card e = k\n\nnoncomputable def positiveCodegreeTuránDensity (F : Finset KUniformHypergraph) : ℝ := 0\n\ntheorem exists_irrational_positive_codegree_density (hk : 3 ≤ k) :\n    ∃ F : Finset (KUniformHypergraph), Irrational (positiveCodegreeTuránDensity k F) :=\n  by sorry",
@@ -45289,6 +45336,53 @@
       "thread_id": "",
       "timestamp": "2026-06-22T23:37:23.936981+00:00",
       "title": "Existence of Irrational Positive Codegree Turán Densities"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Odoni_arboreal_Galois_representations",
+        "Pink_profinite_iterated_monodromy",
+        "Hindes_Jones_Riccati_arboreal_dynamics"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a finite field 𝔽_q of odd characteristic and any c ∈ 𝔽_q^×, the paper establishes that global arboreal maximality of f_c(x) = c*x^(q-1) + t and global adelic surjectivity of the corresponding twisted Carlitz module ρ^c are logically independent. However, they note a one-way local implication at the finite place (t). This conjecture proposes that the implication is in fact an equivalence locally at (t): the local arboreal Galois image of f_c over 𝔽_q((t)) is maximal (isomorphic to the full iterated wreath product of C_{q-1}) if and only if the local adelic Galois image of ρ^c at (t) is surjective onto 𝔽_q[[t]]^×.",
+      "domain_bridges": [
+        "Galois_theory",
+        "algebraic_dynamics",
+        "Drinfeld_modules"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2279",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem local_arboreal_adelic_equivalence_at_t (Fq : Type*) [Field Fq] [Fintype Fq] (c : Fqˣ) :\n  maximal_local_arboreal_image (f_c c) (place_t) ↔ surjective_local_adelic_image (twisted_Carlitz c) (place_t) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the local structure of the arboreal tower of f_c(x) and the local Tate module of ρ^c at (t) to demonstrate that the local surjectivity conditions for both representations are governed by identical valuation constraints on the parameter c, effectively reversing the established one-way local implication.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20046v1",
+      "source_path": "http://arxiv.org/abs/2606.20046v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-22T23:59:59.738955+00:00",
+      "title": "Local Equivalence of Arboreal Maximality and Adelic Surjectivity at (t) for Twisted Carlitz Polynomials"
     },
     {
       "ambition_level": "extension",
@@ -46617,7 +46711,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -46633,7 +46727,7 @@
         "Novelty"
       ],
       "id": "moonshot_Pickover_32",
-      "last_attempt_time": "2026-06-22T23:37:29.056031+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
