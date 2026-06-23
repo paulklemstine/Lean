@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-22T21:20:57Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -16,7 +16,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T01:40:46Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T01:43:47Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
@@ -34,7 +34,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T04:02:19Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "bridge_galois_connections_between_order_theory_and",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T05:45:49Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "close_proofs_these_conjectures_continue_the_resear",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:31:52Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:35:17Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "attention_mechanisms_mathematical_properties",
@@ -79,7 +79,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-23T07:38:24Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "sierpiski_numbers_covering_systems",
@@ -88,7 +88,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-23T08:30:51Z",
-      "hue": 280
+      "hue": 270
     },
     {
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
@@ -98,6 +98,15 @@
       "shape": "icosahedron",
       "date": "2026-06-23T11:40:38Z",
       "hue": 90
+    },
+    {
+      "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
+      "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl",
+      "domain": "Novelty",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-23T15:01:50Z",
+      "hue": 271
     }
   ],
   "edges": [],
