@@ -639,25 +639,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle cb79327f (Q=0.770), which proved 6 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_cb79327f_5c9218d8",
-    "lineage_refs": [],
-    "priority_score": 0.87,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "cb79327f",
-    "status": "available",
-    "timestamp": "2026-06-23T04:02:32.431999+00:00",
-    "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n² and (n+1)². Formalize known partial results on prime gaps and connect to the Cramér model of primes.",
     "domain_bridges": [],
     "domains": [
@@ -2431,6 +2412,34 @@
     "title": "The Equilateral Torus Uniquely Maximizes the Zeta Regularized Determinant Among Orthogonal Flat Tori of Unit Volume"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer t ≥ 1, the natural density c_t := lim_{N→∞} (1/N) #{0 ≤ n < N : s₂(n+t) ≥ s₂(n)} strictly exceeds 1/2, with the explicit quantitative bound c_t ≥ 1/2 + 2^{-2s₂(t)-1}, where s₂(m) counts the ones in the binary expansion of m. This was Cusick's long-standing conjecture, recently resolved via first-exit medians for principal subsequence ideals after an exact deconvolution replacing the distribution of s₂(n+t)−s₂(n) by a finite stopped random-walk law.",
+    "domain_bridges": [
+      "probability_theory",
+      "random_walks",
+      "p_adic_valuations",
+      "combinatorics_on_words"
+    ],
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_2299",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the probability measure μ_t on ℤ giving the density of values of s₂(n+t)−s₂(n), proving its existence via the 2-adic structure of carry propagation. Develop the exact deconvolution identity that replaces μ_t by a finite stopped random-walk distribution indexed by the block structure of t in binary. Then formalize the first-exit median inequality for principal subsequence ideals to extract the quantitative bias 2^{-2s₂(t)-1}, combining the random-walk representation with the combinatorics of binary addition carries.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:31:20.306116+00:00",
+    "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Mathlib.Algebra.MonoidAlgebra.Basic",
@@ -2451,7 +2460,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2299",
+    "id": "fd_2300",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
@@ -2482,7 +2491,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2300",
+    "id": "fd_2301",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite simple graphs, edge sets, vertex degrees, and C5-decompositions as a finite family of subgraphs each isomorphic to a 5-cycle whose edge sets are pairwise disjoint and cover E(G). The mathematical proof would likely combine an absorption framework with approximate C5-decompositions and a stability analysis around the known extremal obstruction giving the lower bound 5/8. In Lean, the conjecture can initially be stated using abstract predicates `IsFiveCycle` and `HasC5Decomposition`, then refined to concrete cycle embeddings into `SimpleGraph`.",
@@ -2509,7 +2518,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2301",
+    "id": "fd_2302",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the paper's main result that local ask zeta functions are recovered by substitutions in the truncated flag Hilbert-Poincaré series. Prove that (1) the truncated flag Hilbert-Poincaré series of A is determined by L(A), (2) the substitution parameters for primes of good reduction depend only on the isomorphism type of L(A) and the residue field size q, and (3) the matrix of linear forms constructed from A yields the same ask zeta function as any other arrangement with isomorphic lattice. The key difficulty is showing that the matrix construction and the substitution are both lattice-determined, which may require developing a lattice-theoretic characterization of the associated matroid and its representability constraints.",
@@ -2539,7 +2548,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2302",
+    "id": "fd_2303",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the proof of the n ≥ 6k+6 theorem and isolate where slack is used in bounding exceptional vertices and dangerous vertex cuts in G-E(P). Replace the coarse counting step by a sharper dichotomy: either every small cut in the residual complement has many cross-neighbors, allowing standard Hamiltonian path rerouting, or the graph has a near-complete bipartite/clustered structure where an explicit alternating Hamiltonian u-v path can be constructed. Formal verification would reduce the final residual k-connectivity claim to checking that every vertex set S with |S| < k leaves G-E(P)-S connected.",
@@ -2548,6 +2557,34 @@
     "status": "available",
     "timestamp": "2026-06-23T03:02:08.314897+00:00",
     "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "math.AT",
+      "52A35",
+      "55U10"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every n ≥ 1, there exists a finite family C of pairwise disjoint open bounded convex sets in R^{3n} such that the space L of line transversals to C is homotopy equivalent to S^{n-1}. This strengthens the authors' theorem (which proves only H̃_{n-1}(L) ≠ 0) and formalizes their stated belief that the transversal spaces they construct have the homotopy type of a sphere.",
+    "domain_bridges": [
+      "geometric_transversal_theory_to_homotopy_theory",
+      "convex_geometry_to_algebraic_topology"
+    ],
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_2304",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The authors already construct explicit families of convex sets and show nontrivial homology via a quotient/retraction argument onto a configuration space identified with a product of spheres. To upgrade H̃_{n-1}(L) ≠ 0 to a full homotopy equivalence L ≃ S^{n-1}, one would need to show that the natural retraction map from L onto a subspace homeomorphic to S^{n-1} is a homotopy equivalence—likely by establishing that the fiber of this retraction is contractible (a deformation retraction argument) or by computing all homotopy groups directly. The key geometric step is controlling the higher connectivity of the transversal space relative to its (n-1)-dimensional core.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23193v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:31:35.784256+00:00",
+    "title": "Homotopy type of the line transversal space equals S^{n-1}"
   },
   {
     "ambition_level": "extension",
@@ -2804,46 +2841,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Sperner's Lemma, Combinatorial Fixed Points, and Nash Equilibria\n\nThis cycle formalised the *finite/combinatorial core* of the \"Sperner ⇒ Nash\"\nprogram: the 1-D Sperner parity law and existence (`SpernerOneDim.lean`); pure Nash\nexistence for finite potential games via potential-maximisation\n(`FinitePotentialGames.lean`); and the sharp boundary, Matching Pennies, which has\nno pure equilibrium and hence no exact potential (`PureNashBoundary.lean`). The\nconjectures below extend these verified findings.\n\n## 1. General-dimension combinatorial Sperner via mod-2 boundary counting\n**Conjecture.** For a proper Sperner colouring of a triangulated `n`-simplex, the\nnumber of fully-coloured cells is odd, generalising `flips_odd_iff` from `n = 1`.\n**The key insight is...** that the 1-D proof is a telescoping *parity* argument\n(`Odd (flips) ↔ endpoints differ`), and the higher-dimensional statement is the same\nmod-2 boundary cancellation lifted along a \"door-counting\" induction over facets.\n**Why now?** We already have the `n = 1` parity invariant fully formalised with a\nclean Boolean induction; the next dimension reuses the identical\n`filter`/`card`/parity machinery on facet incidence, so the formalisation cost is\nincremental rather than foundational.\n\n## 2. Potential = exactly the games whose best-response graph is acyclic\n**Conjecture.** A finite game admits an exact potential **iff** its better-response\nrelation on the profile hypercube has no directed cycle (the finite Monderer–Shapley\ncharacterisation), and Matching Pennies fails precisely because it carries a 4-cycle.\n**The key insight is...** that `matchingPennies_no_exactPotential` was proved *only*\nthrough non-existence of a pure equilibrium, but the real obstruction is the explicit\nbest-response 4-cycle; turning \"no potential\" into \"has an improvement cycle\" upgrades\na non-existence proof into a structural classification.\n**Why now?** Both endpoints are already formalised — `exists_pureNash_of_potential`\n(potential ⇒ equilibrium) and the concrete Matching Pennies cycle — so the missing\nmiddle is exactly the acyclicity ⇒ potential construction on a finite directed graph.\n\n## 3. ε-equilibria from finite grids converge to exact mixed Nash\n**Conjecture.** Discretising the mixed-strategy simplex at mesh `1/N` and taking a\nSperner-coloured fully-labelled cell yields an `ε(N)`-Nash equilibrium with\n`ε(N) → 0`, whose limit points are exact Nash equilibria.\n**The key insight is...** that the pure-strategy results already pin down the\n*combinatorial* fixed point (argmax / fully-coloured cell); promoting it to the\ncontinuous theorem only needs a compactness/limit step, not a new fixed-point engine.\n**Why now?** The finite existence skeleton (`Finite.exists_max`, fully-coloured cell)\nis verified; Mathlib's compactness of the probability simplex supplies the limit, so\nthe bridge is assembly rather than invention.\n\n## 4. Zero-sum 2×2 games: pure Nash exists iff a saddle entry exists\n**Conjecture.** A 2×2 zero-sum game has a pure Nash equilibrium iff its payoff matrix\nhas a saddle point (an entry simultaneously a row-min and column-max); Matching Pennies\nis the unique (up to relabelling) 2×2 zero-sum game with none.\n**The key insight is...** that `matchingPennies_no_pureNash` is the *generic* failure\nmode, and the saddle-point criterion is a fully decidable finite predicate amenable to\nthe same 4-case analysis already used for Matching Pennies.\n**Why now?** The 4-profile case-analysis proof pattern is in hand, so the\nclassification is a finite enumeration over sign patterns, directly checkable.\n\n## 5. Quantitative Sperner: door count lower-bounds equilibrium-search depth\n**Conjecture.** Along any monotone best-response path on the strategy hypercube, the\nnumber of \"label changes\" is bounded below by a Sperner-style parity count, giving an\nunconditional lower bound on the length of pivoting (Lemke–Howson-type) algorithms.\n**The key insight is...** that `flips_pos`/`flips_odd_iff` already certify that a\nsign-changing path *must* contain a door, and counting doors lower-bounds path length.\n**Why now?** The parity invariant is formalised and positive; converting \"≥ 1 door\"\ninto \"≥ (parity count) doors\" reuses the same `card` bookkeeping with no new theory.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2303",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6e34371e",
-    "status": "available",
-    "timestamp": "2026-06-23T03:21:07.949617+00:00",
-    "title": "This cycle formalised the *finite/combinatorial core* of the \"Sperner ⇒ Nash\""
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Weil Pairing, MOV, and BLS Aggregation\n\nDerived from the cycle that produced `Cryptography/WeilPairingBLS.lean`\n(abstract biadditive `Pairing`, BLS completeness/aggregation, point separation)\nand `Cryptography/WeilPairingMOV.lean` (alternation ⇒ antisymmetry, the MOV\nreduction as a faithful congruence, and the homomorphism interface).\n\nCategory declaration for this cycle: **DOMAIN BRIDGE** — Cryptography ↔ Algebra\n(group/order theory and finite fields). The MOV reduction is the load-bearing\nbridge: it equates elliptic-curve discrete-log hardness with finite-field\ndiscrete-log hardness.\n\n---\n\n## Conjecture 1 — Antisymmetry forces self-pairing triviality on 2-divisible groups\n\n**Statement.** For a `Pairing P` on an additive group `G` with no 2-torsion in the\ntarget `T`, the antisymmetry law `e(p,q)·e(q,p) = 1` *for all* `p,q` is equivalent\nto the alternating law `e(p,p) = 1`; on `T` with 2-torsion the two can diverge.\n\nThe key insight is that `e(p,p)² = e(p,p)·e(p,p) = 1` is the only obstruction, so\nalternation and antisymmetry differ *exactly* by the 2-torsion subgroup of `T`.\n\nWhy now? `AlternatingPairing.mul_swap_eq_one` already derives antisymmetry from\nalternation in this cycle; the converse is a short square-root argument and would\npin down precisely which target groups make the Weil-pairing axioms redundant.\n\n## Conjecture 2 — MOV faithfulness characterizes the embedding degree\n\n**Statement.** The MOV reduction recovers the full ECDLP secret (not merely a\nresidue) iff `orderOf (e g g) ≥ orderOf g`; equivalently, the embedding degree `k`\nis the least `k` with `orderOf g ∣ orderOf (e g g)` in `μ_{q^k − 1}`.\n\nThe key insight is that `mov_reduction` proves equality of pairing values is\n*equivalent* to congruence mod `orderOf (e g g)`, so the reduction's fidelity is a\npure order-divisibility condition, divorced from the analytic curve construction.\n\nWhy now? `mov_reduction` and `mov_recovers_dlog` already isolate `orderOf (e g g)`\nas the sole quantitative input; promoting the recovery threshold to an `iff`\ncharacterization of the embedding degree is the natural next theorem.\n\n## Conjecture 3 — Aggregate BLS soundness is equivalent to left-nondegeneracy\n\n**Statement.** The aggregate verification equation\n`e(∑ σᵢ, g) = ∏ e(Hᵢ, Xᵢ)` binds the multiset `{(Hᵢ, Xᵢ)}` (no two distinct\naggregates collide) iff the pairing is left-nondegenerate in the sense of\n`nondegenerate_iff_char_injective`.\n\nThe key insight is that the sum→product law turns aggregate collisions into a\nsingle equation `e(Δ, g) = 1` for the difference `Δ` of aggregated signatures, so\nbinding is *exactly* triviality of the left kernel.\n\nWhy now? This cycle proved both `bls_aggregate_correct` (completeness) and\n`nondegenerate_iff_char_injective` (kernel = injectivity); connecting them upgrades\ncompleteness to a soundness/binding theorem with a clean algebraic boundary.\n\n## Conjecture 4 — A pairing with cyclic target reduces ECDLP to a single Nat.ModEq solve\n\n**Statement.** If `T` is cyclic of order `N` and `e g g` is a generator, then the\nECDLP for `g` is *polynomial-time equivalent* to one discrete log in `ℤ/N`,\nwitnessed constructively by `x ↦ e(x•g, g)` being a bijection onto `⟨e g g⟩`.\n\nThe key insight is that `mov_map` makes `x ↦ (e g g)^x` literally the canonical\ngenerator map of a cyclic group, so the reduction is not just an inequality of\nhardness but an explicit isomorphism of search problems.\n\nWhy now? `mov_map` already exhibits the exponential map; with a cyclic-target\nhypothesis the reduction becomes a constructive bijection, the strongest possible\nform of the MOV bridge and a template for formalizing concrete attack complexity.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Cryptography"
-    ],
-    "id": "fd_2304",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "cb79327f",
-    "status": "available",
-    "timestamp": "2026-06-23T04:02:21.365912+00:00",
-    "title": "Derived from the cycle that produced `Cryptography/WeilPairingBLS.lean`"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3052,7 +3049,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
