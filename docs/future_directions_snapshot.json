@@ -2895,6 +2895,34 @@
     "title": "Pólya Tree Generating Series Taylor Approximation Error Bound"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "automorphic_forms",
+      "langlands_program",
+      "algebraic_groups"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any connected reductive group $G$ defined over a number field $F$, and any cohomological generic automorphic representation $\\pi$ of $G(\\mathbb{A}_F)$, the ratio of the Betti-Whittaker periods $\\Omega(\\pi^\\vee) / \\Omega(\\pi)$ is an algebraic number, generalizing the explicit relation established for $\\mathrm{GL}(n)$ where the ratio is a specific power of $i$ depending on the bottom degree $b = r_1 \\lfloor n^2/4 \\rfloor + r_2 n(n-1)/2$.",
+    "domain_bridges": [
+      "algebraic_geometry",
+      "representation_theory",
+      "homological_algebra"
+    ],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2318",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Generalize the definition of Betti-Whittaker periods to arbitrary connected reductive groups using relative Lie algebra cohomology and Franke's theorem. Show that the contragredient map on cohomology acts by an algebraic scalar on the bottom-degree Whittaker cohomology classes, leveraging the algebraicity of the Whittaker functionals and the action of the Chevalley involution.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:53:00.946057+00:00",
+    "title": "Algebraicity of Contragredient Betti-Whittaker Period Ratio for Reductive Groups"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -2910,7 +2938,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2318",
+    "id": "fd_2319",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -2937,7 +2965,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2319",
+    "id": "fd_2320",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -2967,7 +2995,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2320",
+    "id": "fd_2321",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -2995,7 +3023,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2321",
+    "id": "fd_2322",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3022,7 +3050,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2322",
+    "id": "fd_2323",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3048,7 +3076,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2323",
+    "id": "fd_2324",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3057,6 +3085,33 @@
     "status": "available",
     "timestamp": "2026-06-23T08:33:50.471570+00:00",
     "title": "Binary 2-binomial class count equals the cake number"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "OEIS A080170",
+      "Ralf Stephan's OEIS conjectures"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For k ≥ 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
+    "domain_bridges": [
+      "Binomial coefficient identities",
+      "Lucas' theorem",
+      "Prime factorization",
+      "Formal verification"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2325",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22997v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:56:07.087605+00:00",
+    "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
   {
     "ambition_level": "extension",

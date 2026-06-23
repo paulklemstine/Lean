@@ -1952,12 +1952,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any connected reductive group $G$ defined over a number field $F$, and any cohomological generic automorphic representation $\\pi$ of $G(\\mathbb{A}_F)$, the ratio of the Betti-Whittaker periods $\\Omega(\\pi^\\vee) / \\Omega(\\pi)$ is an algebraic number, generalizing the explicit relation established for $\\mathrm{GL}(n)$ where the ratio is a specific power of $i$ depending on the bottom degree $b = r_1 \\lfloor n^2/4 \\rfloor + r_2 n(n-1)/2$.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2318",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:53:00.946057+00:00",
+    "title": "Algebraicity of Contragredient Betti-Whittaker Period Ratio for Reductive Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2318",
+    "id": "fd_2319",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -1972,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2319",
+    "id": "fd_2320",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -1987,7 +2002,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2320",
+    "id": "fd_2321",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2002,7 +2017,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2321",
+    "id": "fd_2322",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2016,7 +2031,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2322",
+    "id": "fd_2323",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
@@ -2030,13 +2045,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2323",
+    "id": "fd_2324",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
     "status": "available",
     "timestamp": "2026-06-23T08:33:50.471570+00:00",
     "title": "Binary 2-binomial class count equals the cake number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For k \u2265 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2325",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22997v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:56:07.087605+00:00",
+    "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
   {
     "consumed_by_exp_id": "",
