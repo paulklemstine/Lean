@@ -1138,7 +1138,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7d2edc31",
+    "consumed_by_exp_id": "",
     "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1151,7 +1151,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -3247,7 +3247,7 @@
     "proof_strategy": "Formalize edge-colored graphs, minimum color degree, and rainbow triangles in Lean, then establish the lower bounds by analyzing the extremal graph structures and showing that any deviation from them strictly increases the number of rainbow triangles, proceeding by induction on n.",
     "research_mode": "team",
     "source_exp_id": "2606.22106v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T13:28:42.948702+00:00",
     "title": "Exact minimum number of rainbow triangles with large minimum color degree"
   },
@@ -4210,6 +4210,39 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "Nat.factorial",
+      "Nat.sqrt",
+      "Nat.Prime",
+      "Nat.ModEq",
+      "Nat.dvd_iff_modEq_zero",
+      "Nat.even_iff",
+      "Nat.odd_iff"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n ≥ 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
+    "domain_bridges": [
+      "factorial Diophantine equations",
+      "triangular numbers",
+      "modular arithmetic",
+      "p-adic obstruction heuristics",
+      "smooth-number structure"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2365",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the triangular equivalence lemma: for n ≥ 4, n! + 1 = m^2 iff there exists y such that y*(y+1)/2 = n!/8 and m = 2*y + 1. Then attempt to prove the classification by combining modular exclusions for residue classes of n with factorial divisibility facts and higher-power congruence obstructions. The conjecture is suitable for Lean because it can be stated entirely over Nat using factorials, squares, divisibility by 8, and triangular numbers.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23485v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:30:05.276546+00:00",
+    "title": "Brocard-Ramanujan Triangular Classification"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.AT",
       "math.NT",
       "math.GR"
@@ -4225,7 +4258,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2365",
+    "id": "fd_2366",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a highly connected complex of unimodular vectors or forests over the integers, and use it to establish the vanishing of the rational homology in high degrees, extending the combinatorial and homological methods used for i=0, 1, and 2.",
@@ -4255,7 +4288,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2366",
+    "id": "fd_2367",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define rad n as the product of all primes dividing n, or equivalently use the predicate that two integers have the same prime divisors. If rad(j) = rad(j+h), then 2 divides j iff 2 divides j+h. But when h is odd, j and j+h have opposite parity, so exactly one of them is divisible by 2. Hence their radicals cannot be equal. In Lean, this can be proved by rewriting oddness as h % 2 = 1 and using parity of addition modulo 2.",
@@ -4264,6 +4297,37 @@
     "status": "available",
     "timestamp": "2026-06-23T16:13:54.497477+00:00",
     "title": "Odd shifts have no same-support GHP diagonal"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Data.Finset.Basic",
+      "Mathlib.Data.Finset.Powerset",
+      "Mathlib.Data.Nat.Choose.Basic",
+      "Mathlib.Data.Fintype.Card",
+      "Mathlib.Combinatorics.SetFamily.Shatter"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for d = 3 and n = 8, the maximum size of a 4-uniform family on an 8-element ground set with VC-dimension at most 3 is exactly 40. Equivalently, M_3(8) = 40, which is one larger than the Ahlswede--Khachatrian value binom(7,3)+binom(4,1)=39. This is a finite, fully checkable strengthening of the paper's phenomenon at the smallest admissible ground-set size n=2d+2.",
+    "domain_bridges": [
+      "Encode a 4-uniform set family as a Finset of Finset (Fin 8).",
+      "Express VC-dimension at most 3 by forbidding any 4-subset whose trace set is the full powerset.",
+      "Reduce the upper bound M_3(8) ≤ 40 to a finite Boolean unsatisfiability certificate over the 70 possible 4-edges.",
+      "Prove the lower bound by giving an explicit 40-edge certificate and checking non-shattering in Lean."
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2368",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the finite extremal problem directly. For the lower bound, provide a concrete Finset of 40 four-subsets of Fin 8 and verify that no 4-subset is shattered. For the upper bound, use symmetry under permutations of Fin 8 to reduce cases, then generate a SAT/DRAT or custom branch-and-bound certificate showing that every 41-edge subfamily shatters some 4-subset. The Lean proof should only trust a small checker for the certificate plus elementary finset/cardinality lemmas.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23469v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:31:38.847897+00:00",
+    "title": "Exact first 4-uniform VC extremal value beyond Ahlswede--Khachatrian"
   },
   {
     "ambition_level": "extension",
@@ -4404,7 +4468,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "643b1455",
+    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domain_bridges": [],
     "domains": [
@@ -4416,7 +4480,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:01.145793+00:00",
     "title": "Lehmer's Mahler Measure Problem"
   },
@@ -5425,7 +5489,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },

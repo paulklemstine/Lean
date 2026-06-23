@@ -854,7 +854,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "7d2edc31",
+    "consumed_by_exp_id": "",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -864,7 +864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -2134,7 +2134,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22106v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T13:28:42.948702+00:00",
     "title": "Exact minimum number of rainbow triangles with large minimum color degree"
   },
@@ -2633,12 +2633,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n \u2265 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2365",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23485v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:30:05.276546+00:00",
+    "title": "Brocard-Ramanujan Triangular Classification"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The codimension-i rational cohomology of the special linear group SL_n(Z) vanishes for n >= i+2. Equivalently, the i-th rational cohomology group H^i(SL_n(Z); Q) is trivial for all i >= (n choose 2) - n + 2.",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2365",
+    "id": "fd_2366",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2652,13 +2666,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2366",
+    "id": "fd_2367",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
     "status": "available",
     "timestamp": "2026-06-23T16:13:54.497477+00:00",
     "title": "Odd shifts have no same-support GHP diagonal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for d = 3 and n = 8, the maximum size of a 4-uniform family on an 8-element ground set with VC-dimension at most 3 is exactly 40. Equivalently, M_3(8) = 40, which is one larger than the Ahlswede--Khachatrian value binom(7,3)+binom(4,1)=39. This is a finite, fully checkable strengthening of the paper's phenomenon at the smallest admissible ground-set size n=2d+2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2368",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23469v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:31:38.847897+00:00",
+    "title": "Exact first 4-uniform VC extremal value beyond Ahlswede--Khachatrian"
   },
   {
     "consumed_by_exp_id": "",
@@ -2762,7 +2791,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
   {
-    "consumed_by_exp_id": "643b1455",
+    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "Algebra"
@@ -2771,7 +2800,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:01.145793+00:00",
     "title": "Lehmer's Mahler Measure Problem"
   },
@@ -3525,7 +3554,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
