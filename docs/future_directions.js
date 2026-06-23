@@ -1718,7 +1718,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "P\u00f3lya tree coefficient divisor-sum recurrence"
   },
   {
-    "consumed_by_exp_id": "034c2f5e",
+    "consumed_by_exp_id": "",
     "description": "For any binary delta-matroid $D$ on ground set $E$ and any twuality operator $\\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the sequence of coefficients of the partial-$\\bullet$ polynomial $^{\\partial}w_{D}^{\\bullet}(z) = \\sum_{A \\subseteq E} z^{w(D^{\\bullet \\mid A})}$ is log-concave. This conjecture extends the interpolation property established in the paper (which implies the sequence has no internal zeros) and directly parallels the resolution of the Mason-Welsh conjecture for matroid independent sets.",
     "domains": [
       "Pythagorean",
@@ -1728,7 +1728,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T05:47:22.546695+00:00",
     "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
   },
@@ -2918,6 +2918,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "In the wall version of Menger's theorem (Theorem 1 of the paper), the separator bound f can be taken to equal s' - 1, matching the classical Menger bound. Specifically: for all positive integers s' and t', there exists an integer t such that for any vertex set A and any wall W of size at least t, either there exists a vertex set X of size at most s' - 1 that separates A from the branch vertices of W, or there exists a subwall W' of size at least t' together with s' vertex-disjoint A-W'-paths each ending in a distinct nail of W'.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2385",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "available",
+    "timestamp": "2026-06-23T21:19:02.613185+00:00",
+    "title": "Wall-Menger Separator Optimality Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -2988,7 +3002,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19e0d3d0",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -2998,7 +3012,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
