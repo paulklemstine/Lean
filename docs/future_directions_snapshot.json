@@ -676,7 +676,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d543673",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -688,7 +688,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -2779,6 +2779,34 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
+      "cs.IT",
+      "cs.CR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t ≤ s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expansion parameter α_G(t) and the optimality of the associated code B(G).",
+    "domain_bridges": [
+      "Combinatorics",
+      "Coding_Theory",
+      "Graph_Theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_2312",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The forward direction assumes a cycle of length 2k ≤ 2s and shows that the k left vertices on the cycle must share neighbors, reducing the neighborhood size below dk and violating optimality. The backward direction assumes a subset X of left vertices of size t ≤ s with shared neighbors and constructs a cycle of length ≤ 2s, contradicting the girth assumption.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-23T06:21:22.540143+00:00",
+    "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
       "Erdős Problem 550"
     ],
     "consumed_by_exp_id": "",
@@ -2791,7 +2819,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2312",
+    "id": "fd_2313",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -2800,6 +2828,33 @@
     "status": "available",
     "timestamp": "2026-06-23T05:55:36.201011+00:00",
     "title": "Tightness of the Erdős 550 Upper Bound for Tree-Multipartite Ramsey Numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AT",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any prime p and integer i ≥ 1, the codimension-i rational cohomology of the Hecke congruence subgroup Γ_{0,n}(p) vanishes for n ≥ (3i+1)p + (3i+2). Specifically, H^{n(n-1)/2 - i}(Γ_{0,n}(p); ℚ) = 0. This extrapolates the paper's results for i=1 (n ≥ 4p+5) and i=2 (n ≥ 7p+8) to arbitrary codimensions.",
+    "domain_bridges": [
+      "Cohomology of arithmetic groups",
+      "Borel-Serre duality",
+      "Steinberg modules"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2314",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T06:21:54.373451+00:00",
+    "title": "Codimension-i Vanishing Conjecture for Hecke Congruence Subgroups"
   },
   {
     "ambition_level": "extension",
