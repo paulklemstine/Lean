@@ -1661,18 +1661,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: Let G be a finite simple connected regular graph of odd order. If every independent set of G has size at most 2, then G is conformable if and only if G is complete. Equivalently, in the zero-deficiency odd regular regime, the NP-hardness threshold \u03b1(G)=3 from the paper is sharp with respect to independence number: no non-complete graph with \u03b1(G)\u22642 can be conformable.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2296",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21534v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:23:55.721827+00:00",
+    "title": "Alpha-two sharpness for conformability in odd regular graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let R be any commutative ring and G any finite group. Define HH\u2080(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH\u2080(R[G]) \u2243 R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2296",
+    "id": "fd_2297",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21313v1",
     "status": "available",
     "timestamp": "2026-06-23T02:05:39.955397+00:00",
     "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every real \u03b5 > 0, there exists N such that every finite simple graph G on n \u2265 N vertices with minimum degree at least (5/8 + \u03b5)n has an edge-decomposition into 5-cycles whenever G is C5-divisible, i.e. every vertex has even degree and 5 divides the number of edges. This is the remaining small odd-cycle case suggested by the generalized Nash-Williams threshold \u03b4_{C_\u2113} = \u2113/(2\u2113\u22122), after the triangle case and the long odd-cycle cases addressed in the paper.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2298",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21548v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:24:24.127531+00:00",
+    "title": "Asymptotic C5-decomposition threshold equals 5/8"
   },
   {
     "consumed_by_exp_id": "",
@@ -2007,21 +2036,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "868eada9",
-    "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
-    "domains": [
-      "EML",
-      "Physics"
-    ],
-    "id": "fd_0418",
-    "priority_score": 0.6299999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:26.751445+00:00",
-    "title": "EML Quantum Activation Functions"
-  },
-  {
     "consumed_by_exp_id": "ea7f0995",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
@@ -2052,7 +2066,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pickover Clifford Attractor Family"
   },
   {
-    "consumed_by_exp_id": "03341375",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -2061,7 +2075,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -2304,7 +2318,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb79327f",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -2314,7 +2328,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -2514,7 +2528,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70e63d82",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
@@ -2524,7 +2538,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },

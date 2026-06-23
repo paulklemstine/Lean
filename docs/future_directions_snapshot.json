@@ -2325,6 +2325,36 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Coloring",
+      "Mathlib.Combinatorics.SimpleGraph.Clique",
+      "Mathlib.Data.Fintype.Card",
+      "Mathlib.Data.Nat.Parity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let G be a finite simple connected regular graph of odd order. If every independent set of G has size at most 2, then G is conformable if and only if G is complete. Equivalently, in the zero-deficiency odd regular regime, the NP-hardness threshold α(G)=3 from the paper is sharp with respect to independence number: no non-complete graph with α(G)≤2 can be conformable.",
+    "domain_bridges": [
+      "regular odd graphs imply zero deficiency, so conformability requires every color class to have odd cardinality",
+      "proper color classes are independent sets, so α(G)≤2 forces every odd color class to be a singleton",
+      "using Δ(G)+1 singleton color classes forces Δ(G)+1=|V(G)|, hence G is complete"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2296",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "For a regular graph, the deficiency sum is 0. Since |V(G)| is odd, a conformable coloring must have every one of its Δ(G)+1 color classes odd, including excluding empty classes. Proper color classes are independent sets. Under α(G)≤2, each color class has size at most 2, so an odd nonempty color class must have size 1. Thus a conformable coloring partitions V(G) into singleton classes and therefore uses exactly |V(G)| colors. Since the coloring has Δ(G)+1 colors, Δ(G)+1=|V(G)|, so Δ(G)=|V(G)|-1, which implies G is complete. Conversely, an odd complete graph is conformable by coloring each vertex with its own color.",
+    "research_mode": "team",
+    "source_exp_id": "2606.21534v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:23:55.721827+00:00",
+    "title": "Alpha-two sharpness for conformability in odd regular graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Mathlib.Algebra.MonoidAlgebra.Basic",
       "Mathlib.GroupTheory.GroupAction.ConjAct",
       "Mathlib.LinearAlgebra.Finsupp",
@@ -2343,7 +2373,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2296",
+    "id": "fd_2297",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
@@ -2352,6 +2382,37 @@
     "status": "available",
     "timestamp": "2026-06-23T02:05:39.955397+00:00",
     "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Nash-Williams triangle decomposition conjecture",
+      "Delcourt--Postle theorem on triangle decompositions",
+      "Glock--Kühn--Osthus decomposition threshold problem",
+      "Wilson's theorem on graph decompositions",
+      "mathlib: Mathlib.Combinatorics.SimpleGraph.Basic",
+      "mathlib: Mathlib.Data.Fintype.Card"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every real ε > 0, there exists N such that every finite simple graph G on n ≥ N vertices with minimum degree at least (5/8 + ε)n has an edge-decomposition into 5-cycles whenever G is C5-divisible, i.e. every vertex has even degree and 5 divides the number of edges. This is the remaining small odd-cycle case suggested by the generalized Nash-Williams threshold δ_{C_ℓ} = ℓ/(2ℓ−2), after the triangle case and the long odd-cycle cases addressed in the paper.",
+    "domain_bridges": [
+      "Finite simple graph theory",
+      "Asymptotic extremal combinatorics",
+      "Design theory and graph decompositions",
+      "Formal finite combinatorics in Lean 4"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2298",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize finite simple graphs, edge sets, vertex degrees, and C5-decompositions as a finite family of subgraphs each isomorphic to a 5-cycle whose edge sets are pairwise disjoint and cover E(G). The mathematical proof would likely combine an absorption framework with approximate C5-decompositions and a stability analysis around the known extremal obstruction giving the lower bound 5/8. In Lean, the conjecture can initially be stated using abstract predicates `IsFiveCycle` and `HasC5Decomposition`, then refined to concrete cycle embeddings into `SimpleGraph`.",
+    "research_mode": "team",
+    "source_exp_id": "2606.21548v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:24:24.127531+00:00",
+    "title": "Asymptotic C5-decomposition threshold equals 5/8"
   },
   {
     "ambition_level": "extension",
@@ -2803,26 +2864,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "868eada9",
-    "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Physics"
-    ],
-    "id": "fd_0418",
-    "lineage_refs": [],
-    "priority_score": 0.6299999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:26.751445+00:00",
-    "title": "EML Quantum Activation Functions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "ea7f0995",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
@@ -2863,7 +2904,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "03341375",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -2875,7 +2916,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -3200,7 +3241,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb79327f",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domain_bridges": [],
     "domains": [
@@ -3213,7 +3254,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -3480,7 +3521,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "70e63d82",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domain_bridges": [],
     "domains": [
@@ -3493,7 +3534,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },

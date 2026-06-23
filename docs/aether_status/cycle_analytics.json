@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T01:46:29.701594+00:00",
+  "last_updated": "2026-06-23T02:22:33.140319+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -387,6 +387,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-23T01:46:29.424014+00:00",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Pythagorean",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "868eada9",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 0.0,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-23T02:22:32.924601+00:00",
+      "title": "EML Quantum Activation Functions"
     }
   ]
 }
