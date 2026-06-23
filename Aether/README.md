@@ -119,6 +119,29 @@ This creates a **closed loop** of autonomous mathematical discovery.
 - **Rollback**: Every patched file is backed up before modification.
 - **Validation checks**: syntax, semantic, deduplication, import graph integrity.
 
+## LLM Usage Reduction
+
+To cut API cost and rate-limit pressure without losing research throughput, the
+tick loop applies several call-reduction levers, all config-gated under
+`llm_reduction` and defaulting to **shadow mode** (compute the decision, still
+call the LLM, log agreement) so they can be validated before enabling:
+
+- **Static quality gate** (`static_gate`): skip the LLM eval when `sorry_count` /
+  `theorem_count` / novelty are decisive (clear-fail or clear-pass).
+- **Critic skip-gate** (`critic_gate`): skip the adversarial critic when the
+  structural composite is decisive (>0.85 or <0.15).
+- **Lint batch gate** (`lint_gate`): skip the integration file-review LLM call
+  when every file in the batch is a non-empty `.lean` with a theorem/lemma.
+- **Content-hash eval cache** (`eval_cache`): cache the full eval by
+  `sha256(lean + concept + prompt_version)` so retries/duplicates skip re-eval.
+- **Pruning rules-first** (`pruning_rules`): auto-prune clearly-worthless
+  directions by rule before the LLM cleanup batch.
+
+A per-tick `[LLM] calls=... | skipped=...` log line (next to `[State]`) reports
+actual LLM dispatches by category and calls avoided by gates/caches, so call
+reduction can be checked against the `[Quality]` rolling avg_Q to confirm
+performance held. See `Aether/CLAUDE.md` for details.
+
 ---
 
 ## Dependencies

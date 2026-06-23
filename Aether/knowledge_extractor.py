@@ -3004,6 +3004,24 @@ Research mode: {concept.research_mode}
 
         return job
 
+    @staticmethod
+    def _rule_prunable(d, score: float) -> bool:
+        """Phase 4 (Lever F): rule-based prune predicate. True if a direction
+        is clearly worthless and can be auto-pruned without an LLM review:
+        very low quality (<0.20) + empty/junk description + no protection
+        (priority <0.80, not Novelty, not seed)."""
+        _protected = (getattr(d, "priority_score", 0) >= 0.80
+                      or "Novelty" in (getattr(d, "domains", None) or [])
+                      or (getattr(d, "source_path", "") or "").startswith("seed:"))
+        if _protected:
+            return False
+        if score >= 0.20:
+            return False
+        _desc = (getattr(d, "description", "") or "").strip()
+        _title = (getattr(d, "title", "") or "").strip()
+        _junk = (not _desc or _desc == _title or len(_desc) < 15)
+        return _junk
+
     def _cleanup_future_directions(self) -> None:
         """Thoughtfully prune low-quality directions and brainstorm a novel new one.
 
@@ -3040,6 +3058,28 @@ Research mode: {concept.research_mode}
         scored.sort(key=lambda x: x[1])  # ascending — worst first
         cutoff_idx = max(5, len(scored) // 3)  # review bottom third, at least 5
         candidates = scored[:cutoff_idx]
+
+        # Phase 4 (Lever F): rules-first pre-filter. Auto-prune the clearly
+        # worthless candidates by rule (very low quality + empty/junk
+        # description + no protection) so only the ambiguous middle goes to the
+        # LLM batch. Disable via llm_reduction.pruning_rules="off".
+        _prune_rules = ((self.config.get("llm_reduction", {}) if hasattr(self, "config") and self.config else {})
+                        .get("pruning_rules", "on"))
+        if _prune_rules == "on" and candidates:
+            _survivors = []
+            _rule_removed = 0
+            for d, score in candidates:
+                if self._rule_prunable(d, score):
+                    d.status = "pruned"
+                    d.prune_reason = f"rule_cleanup: low quality ({score:.2f}) + empty/junk"
+                    d.pruned_at = datetime.now(timezone.utc).isoformat()
+                    _rule_removed += 1
+                else:
+                    _survivors.append((d, score))
+            candidates = _survivors
+            if _rule_removed:
+                print(f"[Cleanup] Rules-first auto-pruned {_rule_removed} direction(s); "
+                      f"{len(candidates)} remain for LLM review")
 
         if reviewed_ids:
             print(f"[Cleanup] Skipping {len(reviewed_ids)} directions already reviewed and kept")
