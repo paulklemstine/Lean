@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0d42792c",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Diophantine Approximation on ReLU / Tropical Networks\n\nDerived from this cycle's findings in\n`Tropical/NeuralNetworks/DiophantineReLUPi.lean` and\n`Tropical/NeuralNetworks/ReLURep",
-      "quality_score": 0.5761099999999999,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-16T16:18:18",
-      "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
-    },
-    {
       "cycle_id": "e49c5ee1",
       "domain": "Computation",
       "key_insight": "# Future Directions — Information-Theoretic Limits of Proof Search\n\nThese conjectures extend `Catalog/Computation/ProofSearchLimits.lean`, which proves\nthat the set of theorems certifiable within a pr",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-23T23:12:53",
       "title": "Self-Modifying Research via Reflective Type Theory"
+    },
+    {
+      "cycle_id": "d9f17c93",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Pickover–Clifford Attractor Family\n\nThis cycle established, for the full four-parameter family\n`f(x,y) = (sin(a·y) + c·cos(a·x), sin(b·x) + d·cos(b·y))`:\n\n* a forward-invariant a",
+      "quality_score": 0.3829593469387754,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-23T23:47:37",
+      "title": "Pickover Clifford Attractor Family"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T23:12:53",
+  "last_updated": "2026-06-23T23:47:37",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "949d41e5",
-        "quality": 0.6052,
-        "theorems": 15,
-        "title": "Hypergraph Ramsey Theory: Beyond Graphs"
-      },
-      {
         "cycle_id": "50e9a2da",
         "quality": 0.5529929095354524,
         "theorems": 62,
@@ -3575,6 +3569,12 @@
         "quality": 0.4446527272727273,
         "theorems": 8,
         "title": "Attention Mechanisms: Mathematical Properties"
+      },
+      {
+        "cycle_id": "d9f17c93",
+        "quality": 0.3829593469387754,
+        "theorems": 11,
+        "title": "Pickover Clifford Attractor Family"
       }
     ],
     "Novelty": [
