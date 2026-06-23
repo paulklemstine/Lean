@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-22T21:20:57Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -16,7 +16,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T01:40:46Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T01:43:47Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
@@ -34,7 +34,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T04:02:19Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "bridge_galois_connections_between_order_theory_and",
@@ -44,6 +44,15 @@
       "shape": "icosahedron",
       "date": "2026-06-23T05:45:49Z",
       "hue": 90
+    },
+    {
+      "id": "close_proofs_these_conjectures_continue_the_resear",
+      "title": "Transition Endomorphisms of an Endomorphism Stream: Composition Law and Rank Stabilization",
+      "domain": "Pythagorean",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-06-23T06:39:56Z",
+      "hue": 134
     }
   ],
   "edges": [],

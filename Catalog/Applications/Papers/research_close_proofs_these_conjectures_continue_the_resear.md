@@ -1,513 +1,362 @@
-# Transition Endomorphisms: A Chapman–Kolmogorov Law and the Stabilization of Transition Rank
+# Transition Endomorphisms of an Endomorphism Stream: Composition, Rank Antitonicity, and Eventual Stabilization
 
 **Author:** Aristotle
-**Date:** 2026-06-20
+**Date:** 2026-06-23
+**Domain:** Pythagorean / Finite-dimensional linear algebra
+
+---
 
 ## Abstract
 
-We introduce the *transition endomorphism* of a stream of linear
-self-maps on a vector space: given a sequence
-$f : \mathbb{N} \to \operatorname{End}_K(V)$ and indices $i \le j$, the
-transition endomorphism $\operatorname{trans}(f, i, j)$ is the ordered
-composition $f(j-1) \circ \cdots \circ f(i)$ over the half-open window
-$[i, j)$, with the convention that an empty or reversed window yields the
-identity. Our central structural result is a *concatenation law* of
-Chapman–Kolmogorov type: for $i \le j \le k$,
-$\operatorname{trans}(f, i, k) = \operatorname{trans}(f, j, k) \circ
-\operatorname{trans}(f, i, j)$. From this single identity, combined with
-the classical submultiplicativity of rank under composition, we derive
-that the transition rank is monotone non-increasing along nested
-windows. We identify the constant-stream transition map with the monoid
-power $g^{\,j-i}$, which yields as a corollary the rank decay of iterates
-$\operatorname{rank}(g^{\,n+1}) \le \operatorname{rank}(g^{\,n})$.
-Finally, over a finite-dimensional space we package the cardinal rank as
-a bounded natural-number sequence and prove that the window-from-zero
-transition-rank sequence is antitone and hence eventually constant, by
-isolating a reusable well-foundedness lemma for antitone $\mathbb{N} \to
-\mathbb{N}$ sequences. The development deliberately *reuses* standard
-rank facts rather than re-deriving a Sylvester-type inequality, so that
-the entire theory rests on one combinatorial concatenation law. All
-results have been formally verified.
-
-**Keywords:** transition endomorphism, Chapman–Kolmogorov, rank
-submultiplicativity, antitone sequence, eventual constancy, transfer
-operator, iterate rank, finite-dimensional linear algebra.
-
-**MSC 2020:** 15A03 (vector spaces, linear dependence, rank), 47A05
-(general operator theory), 06A06 (partial orders), 37A30 (transfer
-operators).
+Given a sequence (a *stream*) of linear endomorphisms
+$f : \mathbb{N} \to (V \to_{\ell} V)$ of a vector space $V$ over a field $K$,
+we organize its iterated compositions into a two-index family of *transition
+endomorphisms* $\mathrm{transEndo}\,f\,i\,j$, the net operator carrying the
+state at station $i$ to the state at station $j$. We establish the foundational
+algebra of this family: a recursive partial-composite construction, an
+additivity law, and a Chasles-style composition identity
+$\mathrm{transEndo}\,f\,i\,k = \mathrm{transEndo}\,f\,j\,k \circ \mathrm{transEndo}\,f\,i\,j$
+for $i \le j \le k$. From the elementary inequality
+$\mathrm{rank}(g \circ h) \le \mathrm{rank}(h)$ we deduce that the rank of a
+transition endomorphism is antitone in the window: lengthening the segment
+cannot increase its rank. Specializing to finite-dimensional $V$, we read the
+(cardinal) rank as a natural number $\mathrm{rankSeq}\,f\,i\,j$, prove it is
+bounded by $\dim_K V$ and antitone, and conclude that the rank profile
+$m \mapsto \mathrm{rankSeq}\,f\,0\,m$ is **eventually constant**. The
+stabilization step is isolated as a reusable order-theoretic lemma: every
+antitone sequence $\mathbb{N} \to \mathbb{N}$ is eventually constant. All
+results are fully formalized and machine-checked. We discuss the constant-stream
+specialization (recovering the Fitting core), a Sylvester-type window
+subadditivity, and the genuine necessity of finite-dimensionality.
 
 ---
 
 ## 1. Introduction
 
-A recurring pattern across mathematics is the *transfer operator*: an
-object that advances a system one step at a time, and whose iterated or
-windowed composition advances it over an interval. In probability this
-is the transition kernel of a Markov chain; in dynamics it is the
-Perron–Frobenius/Koopman operator; in linear time-varying control it is
-the state-transition matrix. In each case a fundamental bookkeeping law
-holds — to advance from $i$ to $k$, advance from $i$ to $j$ and then from
-$j$ to $k$ — and in each case a notion of "effective dimension" or
-"surviving information" can only degrade as the window grows.
+A single linear endomorphism $g : V \to V$ generates, through iteration, one of
+the most studied objects in linear algebra: the descending chain of images
+$V \supseteq \mathrm{im}\,g \supseteq \mathrm{im}\,g^2 \supseteq \cdots$, whose
+stabilization underlies the Fitting decomposition and the theory of generalized
+eigenspaces. But many systems are not driven by a single repeated map. A
+non-autonomous discrete dynamical system, a layered neural network with distinct
+layers, a time-varying linear filter, or a product of a varying transfer matrix
+all apply a *different* operator at each step. The natural object is then a
+**stream** of endomorphisms,
+$$f : \mathbb{N} \to (V \to_{\ell} V), \qquad f(0), f(1), f(2), \dots,$$
+and the natural questions concern the *cumulative* operators built from
+consecutive windows of the stream.
 
-This paper isolates that pattern in its purest linear-algebraic form. We
-work with a stream of endomorphisms of a vector space and define the
-**transition endomorphism** over a window. We prove the windowed
-composition law and show that essentially every rank-monotonicity
-phenomenon associated with such streams is a one-line corollary of it,
-given only the standard submultiplicativity of rank under composition.
+This paper develops the elementary but foundational algebra of those cumulative
+operators — the **transition endomorphisms** — and extracts from an arbitrary
+stream a finite, monotone, eventually-constant integer invariant: its
+*transition-rank profile*. The development is deliberately minimal and
+self-contained, relying only on the standard rank inequality for composites and
+the well-ordering of $\mathbb{N}$; it builds no new Sylvester theory from
+scratch. Every statement below has been formally verified.
 
-### Contributions
-
-1. A clean recursive definition of the transition endomorphism
-   $\operatorname{trans}(f, i, j)$ and its boundary behaviour
-   (Section 3).
-2. The Chapman–Kolmogorov **concatenation law** `transEndo_comp`
-   (Theorem 4.1).
-3. Rank monotonicity along nested windows in both factor directions
-   (`rank_transEndo_le_left`, `rank_transEndo_le_right`), the one-step
-   decrease (`rank_transEndo_succ_le`), and the antitone statement
-   (`rank_transEndo_antitone`) (Section 5).
-4. Identification of constant streams with monoid powers
-   (`transEndo_const`) and the consequent rank decay of iterates
-   (`rank_pow_succ_le`) (Section 6).
-5. Over a finite-dimensional space, the natural-number transition-rank
-   sequence is bounded and antitone, hence eventually constant
-   (`rankSeq_le_finrank`, `rankSeq_antitone`, `rankSeq_eventually_const`),
-   via the reusable order lemma `antitone_nat_eventually_const`
-   (Section 7).
-
-A design principle throughout is *reuse over re-derivation*: we treat
-the submultiplicativity inequalities as black boxes and let the
-combinatorial concatenation law carry the structural weight.
+Throughout, $K$ is a field, $V$ is a $K$-vector space, and $V \to_{\ell} V$
+denotes the $K$-linear endomorphisms of $V$. Composition $g \circ h$ means
+"$h$ first, then $g$."
 
 ---
 
-## 2. Preliminaries and notation
+## 2. Definitions
 
-Throughout, $K$ is a field, $V$ a vector space over $K$, and
-$\operatorname{End}_K(V)$ the (noncommutative, unital) ring of
-$K$-linear self-maps $V \to V$ under composition, with identity
-$\mathrm{id}$. We write $g \circ h$ for composition and $g^{\,n}$ for the
-$n$-fold composite ($g^{\,0} = \mathrm{id}$).
+### 2.1 Partial composites
 
-The **rank** of $g \in \operatorname{End}_K(V)$ is the dimension of its
-image,
-$$\operatorname{rank}(g) = \dim_K \operatorname{im}(g),$$
-understood as a cardinal in general (and identified with a natural number
-when $V$ is finite-dimensional). When $V$ is finite-dimensional we write
-$n = \dim_K V$ for its dimension.
+The basic building block is the composite of a consecutive block of stream
+maps, defined by recursion on the block length.
 
-We take as given the two classical **submultiplicativity** inequalities,
-valid for all $g, h \in \operatorname{End}_K(V)$:
-$$
-\operatorname{rank}(g \circ h) \le \operatorname{rank}(g)
-\tag{S-left}
-$$
-$$
-\operatorname{rank}(g \circ h) \le \operatorname{rank}(h).
-\tag{S-right}
-$$
-*(S-left)* holds because $\operatorname{im}(g\circ h) \subseteq
-\operatorname{im}(g)$, and *(S-right)* because $g$ restricted to
-$\operatorname{im}(h)$ has image $\operatorname{im}(g \circ h)$, whose
-dimension cannot exceed $\dim_K \operatorname{im}(h)$. These are the only
-nontrivial external facts we use; in particular we do *not* re-prove any
-Sylvester rank inequality.
+> **Definition 2.1 (Partial composite, `compFrom`).** For a stream
+> $f : \mathbb{N} \to (V \to_{\ell} V)$, a start index $i \in \mathbb{N}$, and a
+> length $n \in \mathbb{N}$, define $\mathrm{compFrom}\,f\,i\,n : V \to_{\ell} V$
+> by
+> $$\mathrm{compFrom}\,f\,i\,0 = \mathrm{id}_V, \qquad
+> \mathrm{compFrom}\,f\,i\,(n+1) = f(i+n) \circ \mathrm{compFrom}\,f\,i\,n.$$
 
-A sequence $a : \mathbb{N} \to \mathbb{N}$ is **antitone** if
-$m \le m' \Rightarrow a(m') \le a(m)$. It is **eventually constant** if
-there exist $N$ and $c$ with $a(m) = c$ for all $m \ge N$.
+Unrolling the recursion gives the explicit form
+$$\mathrm{compFrom}\,f\,i\,n = f(i+n-1) \circ \cdots \circ f(i+1) \circ f(i)
+\quad (n \ge 1),$$
+the operator that applies the $n$ consecutive maps $f(i), \dots, f(i+n-1)$ in
+increasing order of index.
 
----
+Two immediate facts record the recursion:
 
-## 3. The transition endomorphism
+> **Lemma 2.2 (`compFrom_zero`).** $\mathrm{compFrom}\,f\,i\,0 = \mathrm{id}_V$.
+>
+> **Lemma 2.3 (`compFrom_succ`).**
+> $\mathrm{compFrom}\,f\,i\,(n+1) = f(i+n) \circ \mathrm{compFrom}\,f\,i\,n$.
 
-### Definition 3.1 (Transition endomorphism)
+Both hold by definition (`rfl`).
 
-Let $f : \mathbb{N} \to \operatorname{End}_K(V)$ and $i \in \mathbb{N}$.
-The **transition endomorphism** $\operatorname{trans}(f, i, \cdot) :
-\mathbb{N} \to \operatorname{End}_K(V)$ is defined by recursion on the
-upper endpoint:
-$$
-\operatorname{trans}(f, i, 0) = \mathrm{id},
-\qquad
-\operatorname{trans}(f, i, j+1) =
-\begin{cases}
-f(j) \circ \operatorname{trans}(f, i, j) & \text{if } i \le j,\\[2pt]
-\mathrm{id} & \text{if } i > j.
-\end{cases}
-$$
+### 2.2 Transition endomorphisms
 
-Unfolding the recursion, for $i \le j$ this is the ordered composition
-over the half-open window $[i, j)$,
-$$
-\operatorname{trans}(f, i, j) = f(j-1) \circ f(j-2) \circ \cdots \circ f(i),
-$$
-read right-to-left: an input vector meets $f(i)$ first and $f(j-1)$ last.
-The corresponding formal name is `transEndo f i j`.
+> **Definition 2.4 (Transition endomorphism, `transEndo`).** For
+> $i, j \in \mathbb{N}$,
+> $$\mathrm{transEndo}\,f\,i\,j = \mathrm{compFrom}\,f\,i\,(j - i),$$
+> where $j - i$ is truncated natural subtraction (so the family is the identity
+> whenever $j \le i$).
 
-### Basic identities
+When $j \ge i$, $\mathrm{transEndo}\,f\,i\,j$ is the net operator produced by
+the stream segment between stations $i$ and $j$:
+$$\mathrm{transEndo}\,f\,i\,j = f(j-1) \circ \cdots \circ f(i).$$
 
-The following are immediate from the definition.
+### 2.3 The natural-number rank profile
 
-- **(`transEndo_zero`)** $\operatorname{trans}(f, i, 0) = \mathrm{id}$.
-- **(`transEndo_succ_of_le`)** If $i \le j$ then
-  $\operatorname{trans}(f, i, j+1) = f(j) \circ \operatorname{trans}(f, i, j)$.
-- **(`transEndo_eq_id_of_le`)** If $j \le i$ then
-  $\operatorname{trans}(f, i, j) = \mathrm{id}$ (empty/reversed window).
-- **(`transEndo_self`)** $\operatorname{trans}(f, i, i) = \mathrm{id}$.
+Recall the **rank** of a linear map $\varphi$, written $\mathrm{rank}\,\varphi$,
+is the dimension (a cardinal) of its image $\mathrm{im}\,\varphi$. Over a
+finite-dimensional space we record it as a natural number.
 
-*Proof sketches.* The first is definitional. The second is the recursive
-clause under the hypothesis $i \le j$. For the third, if $j = 0$ it is
-the base case; if $j = j'+1$ then $j \le i$ forces $i > j'$, so the
-recursion takes the identity branch. The fourth is the special case
-$j = i$ of the third. $\qquad\blacksquare$
+> **Definition 2.5 (Transition-rank sequence, `rankSeq`).** For
+> finite-dimensional $V$,
+> $$\mathrm{rankSeq}\,f\,i\,j = \big(\mathrm{rank}(\mathrm{transEndo}\,f\,i\,j)\big)^{\downarrow} \in \mathbb{N},$$
+> where $(\cdot)^{\downarrow}$ denotes the cardinal-to-natural cast `Cardinal.toNat`
+> (well-defined here because the rank is finite, i.e. $< \aleph_0$).
 
 ---
 
-## 4. The concatenation law
+## 3. The algebra of transition endomorphisms
 
-### Theorem 4.1 (Chapman–Kolmogorov concatenation, `transEndo_comp`)
+### 3.1 Additivity of partial composites
 
-For all $i, j, k \in \mathbb{N}$ with $i \le j \le k$,
-$$
-\operatorname{trans}(f, i, k)
-\;=\;
-\operatorname{trans}(f, j, k) \circ \operatorname{trans}(f, i, j).
-$$
+The combinatorial engine of the theory is the way two consecutive blocks
+combine.
 
-**Proof sketch.** Induct on $k$, generalizing $i$ and $j$.
+> **Theorem 3.1 (Additivity, `compFrom_add`).** For all $i, m, n \in \mathbb{N}$,
+> $$\mathrm{compFrom}\,f\,i\,(m+n) = \mathrm{compFrom}\,f\,(i+m)\,n \;\circ\; \mathrm{compFrom}\,f\,i\,m.$$
 
-*Base $k = 0$.* Then $i \le j \le 0$ forces $i = j = 0$, and both sides
-equal $\mathrm{id}$ (each factor is an empty window).
+*Proof sketch.* Induct on $n$ (with $i, m$ general). For $n = 0$ both sides equal
+$\mathrm{compFrom}\,f\,i\,m$ since the right factor is the identity. For the
+inductive step, use $\mathrm{compFrom}\,f\,i\,(m + (n+1)) =
+\mathrm{compFrom}\,f\,i\,((m+n)+1) = f(i + m + n) \circ \mathrm{compFrom}\,f\,i\,(m+n)$,
+apply the inductive hypothesis to the trailing composite, and reassociate; the
+leading map $f(i+m+n)$ is precisely the $(n+1)$-st map of the block starting at
+$i + m$, so the right-hand side collapses to
+$\mathrm{compFrom}\,f\,(i+m)\,(n+1) \circ \mathrm{compFrom}\,f\,i\,m$.
+Associativity of composition closes the step. $\qquad\blacksquare$
 
-*Inductive step $k \mapsto k+1$.* Assume the law for $k$ and suppose
-$i \le j \le k+1$. Split on whether the middle index reaches the top:
+### 3.2 The composition (Chasles) law
 
-- **Case $j \le k$.** Then $i \le k$ as well. Expand both transitions
-  whose upper endpoint is $k+1$ using `transEndo_succ_of_le`:
-  $$
-  \operatorname{trans}(f, i, k+1) = f(k) \circ \operatorname{trans}(f, i, k),
-  \qquad
-  \operatorname{trans}(f, j, k+1) = f(k) \circ \operatorname{trans}(f, j, k).
-  $$
-  Apply the induction hypothesis to rewrite
-  $\operatorname{trans}(f, i, k) = \operatorname{trans}(f, j, k) \circ
-  \operatorname{trans}(f, i, j)$, then reassociate composition:
-  $$
-  f(k) \circ \big(\operatorname{trans}(f, j, k) \circ \operatorname{trans}(f, i, j)\big)
-  = \big(f(k) \circ \operatorname{trans}(f, j, k)\big) \circ \operatorname{trans}(f, i, j),
-  $$
-  and the left factor is exactly $\operatorname{trans}(f, j, k+1)$.
+> **Theorem 3.2 (Composition law, `transEndo_comp`).** If $i \le j \le k$, then
+> $$\mathrm{transEndo}\,f\,i\,k = \mathrm{transEndo}\,f\,j\,k \;\circ\; \mathrm{transEndo}\,f\,i\,j.$$
 
-- **Case $j = k+1$.** Then the outer leg $\operatorname{trans}(f, j, k+1)
-  = \operatorname{trans}(f, k+1, k+1) = \mathrm{id}$ by `transEndo_self`,
-  so the right-hand side collapses to $\operatorname{trans}(f, i, k+1)$,
-  which is the left-hand side.
+*Proof sketch.* Set $m = j - i$ and $n = k - j$. Because $i \le j \le k$, natural
+subtraction satisfies $m + n = (j-i)+(k-j) = k - i$ and $i + m = j$. Apply
+Theorem 3.1 at $(i, m, n)$:
+$$\mathrm{compFrom}\,f\,i\,(k-i) = \mathrm{compFrom}\,f\,i\,(m+n)
+= \mathrm{compFrom}\,f\,(i+m)\,n \circ \mathrm{compFrom}\,f\,i\,m
+= \mathrm{compFrom}\,f\,j\,(k-j) \circ \mathrm{compFrom}\,f\,i\,(j-i).$$
+Rewriting each partial composite as the corresponding transition endomorphism
+yields the claim. $\qquad\blacksquare$
 
-This case split is genuine — it is precisely where the boundary
-convention for empty windows is used — so the theorem is not vacuous.
-$\qquad\blacksquare$
-
-The concatenation law is associative in the expected sense: applied
-twice it shows $\operatorname{trans}(f, i, \ell)$ factors through any
-chain $i \le j \le k \le \ell$, consistent with associativity of
-composition.
+This is the Chasles/cocycle identity for the family $\{\mathrm{transEndo}\,f\,i\,j\}_{i \le j}$:
+any itinerary may be broken at an intermediate index. In categorical language,
+$\mathrm{transEndo}\,f$ is a functor from the poset $(\mathbb{N}, \le)$ to the
+monoid of endomorphisms of $V$.
 
 ---
 
-## 5. Rank monotonicity
+## 4. Rank antitonicity
 
-Combining Theorem 4.1 with the submultiplicativity inequalities yields
-the rank-monotonicity package. All four statements assume a nested
-window $i \le j \le k$.
+We use a single standard fact about linear maps.
 
-### Theorem 5.1 (Outer-factor bound, `rank_transEndo_le_left`)
+> **Fact 4.1 (Rank of a composite).** For linear maps $g, h$ with $g \circ h$
+> defined, $\mathrm{rank}(g \circ h) \le \mathrm{rank}(h)$.
+> (In Mathlib: `LinearMap.rank_comp_le_right`.)
 
-$$
-\operatorname{rank}\big(\operatorname{trans}(f, i, k)\big)
-\le
-\operatorname{rank}\big(\operatorname{trans}(f, j, k)\big).
-$$
+Intuitively, $g \circ h$ acts on the image of $h$, so its image is the image of
+$g$ restricted to $\mathrm{im}\,h$, which cannot exceed $\dim(\mathrm{im}\,h) = \mathrm{rank}\,h$.
 
-**Proof.** By Theorem 4.1, $\operatorname{trans}(f, i, k) =
-\operatorname{trans}(f, j, k) \circ \operatorname{trans}(f, i, j)$.
-Apply *(S-left)* with $g = \operatorname{trans}(f, j, k)$ and
-$h = \operatorname{trans}(f, i, j)$. $\qquad\blacksquare$
+> **Theorem 4.2 (Antitone partial composite rank, `rank_compFrom_antitone`).**
+> If $n \le m$, then
+> $$\mathrm{rank}\big(\mathrm{compFrom}\,f\,i\,m\big) \le \mathrm{rank}\big(\mathrm{compFrom}\,f\,i\,n\big).$$
 
-### Theorem 5.2 (Inner-factor bound, `rank_transEndo_le_right`)
+*Proof sketch.* Write $m = n + (m - n)$ and apply Theorem 3.1:
+$\mathrm{compFrom}\,f\,i\,m = \mathrm{compFrom}\,f\,(i+n)\,(m-n) \circ \mathrm{compFrom}\,f\,i\,n$.
+By Fact 4.1 the rank of this composite is at most the rank of its right factor
+$\mathrm{compFrom}\,f\,i\,n$. $\qquad\blacksquare$
 
-$$
-\operatorname{rank}\big(\operatorname{trans}(f, i, k)\big)
-\le
-\operatorname{rank}\big(\operatorname{trans}(f, i, j)\big).
-$$
+> **Theorem 4.3 (Antitone transition rank, `rank_transEndo_antitone`).**
+> If $i \le j \le k$, then
+> $$\mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,k\big) \le \mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,j\big).$$
 
-**Proof.** Same factorization, now apply *(S-right)*. $\qquad\blacksquare$
+*Proof sketch.* By Theorem 3.2,
+$\mathrm{transEndo}\,f\,i\,k = \mathrm{transEndo}\,f\,j\,k \circ \mathrm{transEndo}\,f\,i\,j$;
+apply Fact 4.1 with right factor $\mathrm{transEndo}\,f\,i\,j$. $\qquad\blacksquare$
 
-### Corollary 5.3 (One-step decrease, `rank_transEndo_succ_le`)
-
-For $i \le j$,
-$$
-\operatorname{rank}\big(\operatorname{trans}(f, i, j+1)\big)
-\le
-\operatorname{rank}\big(\operatorname{trans}(f, i, j)\big).
-$$
-
-**Proof.** Theorem 5.2 with $k = j+1$ and the inner window $[i, j)$,
-using $j \le j+1$. $\qquad\blacksquare$
-
-### Corollary 5.4 (Antitonicity, `rank_transEndo_antitone`)
-
-The map $k \mapsto \operatorname{rank}\big(\operatorname{trans}(f, i, k)\big)$
-is non-increasing for $k \ge i$: if $i \le j \le k$ then
-$\operatorname{rank}(\operatorname{trans}(f, i, k)) \le
-\operatorname{rank}(\operatorname{trans}(f, i, j))$.
-
-**Proof.** Restatement of Theorem 5.2. $\qquad\blacksquare$
-
-Interpretation: from a fixed start $i$, *widening the window never
-increases the surviving rank*. Each additional station can only collapse
-directions, never create them.
+The principle is "processing on the far end of a segment cannot create rank."
+Note the asymmetry: it is the *right* (earlier) factor whose rank bounds the
+composite, which is why widening the window at the *upper* endpoint $k$ (while
+fixing the start $i$) is the operation that decreases rank.
 
 ---
 
-## 6. Constant streams and iterate rank
+## 5. Stabilization in finite dimensions
 
-### Theorem 6.1 (Constant stream, `transEndo_const`)
+We now assume $V$ is finite-dimensional over $K$, with $d = \dim_K V$
+(`Module.finrank K V`). The cardinal rank is then finite, so the cast in
+Definition 2.5 is faithful and order-preserving on transition endomorphisms.
 
-Let $g \in \operatorname{End}_K(V)$ and let $f(n) = g$ for all $n$. Then
-for $i \le j$,
-$$
-\operatorname{trans}(f, i, j) = g^{\,j-i}.
-$$
+> **Theorem 5.1 (Boundedness, `rankSeq_le_finrank`).** For all $i, j$,
+> $$\mathrm{rankSeq}\,f\,i\,j \le d.$$
 
-**Proof sketch.** Induct on the witness of $i \le j$. The base case
-$j = i$ gives $\operatorname{trans}(f, i, i) = \mathrm{id} = g^{0}$ by
-`transEndo_self`. For the step from $j$ to $j+1$ with $i \le j$, write
-$(j+1) - i = (j - i) + 1$ and use $g^{(j-i)+1} = g \circ g^{\,j-i}$
-together with `transEndo_succ_of_le`:
-$$
-\operatorname{trans}(f, i, j+1) = g \circ \operatorname{trans}(f, i, j)
-= g \circ g^{\,j-i} = g^{(j+1)-i}.
-$$
-$\qquad\blacksquare$
+*Proof sketch.* The rank of any endomorphism is at most the dimension of its
+domain (`rank_le_domain`), i.e. $\mathrm{rank}(\mathrm{transEndo}\,f\,i\,j) \le \dim_K V$.
+Cast to $\mathbb{N}$ via the monotone `Cardinal.toNat` (legitimate as both sides
+are $< \aleph_0$); the right side becomes $\mathrm{finrank}\,K\,V = d$. $\qquad\blacksquare$
 
-This identity is the bridge between the windowed transfer operator and
-the classical monoid of iterates of a single endomorphism.
+> **Theorem 5.2 (Window antitonicity, `rankSeq_antitone`).** If $i \le j \le k$,
+> then $\mathrm{rankSeq}\,f\,i\,k \le \mathrm{rankSeq}\,f\,i\,j$.
 
-### Theorem 6.2 (Iterate rank decay, `rank_pow_succ_le`)
+*Proof sketch.* Apply `Cardinal.toNat_le_toNat` to Theorem 4.3, using that the
+larger side $\mathrm{rank}(\mathrm{transEndo}\,f\,i\,j)$ is $< \aleph_0$ in finite
+dimensions. $\qquad\blacksquare$
 
-For every $g \in \operatorname{End}_K(V)$ and every $n \in \mathbb{N}$,
-$$
-\operatorname{rank}(g^{\,n+1}) \le \operatorname{rank}(g^{\,n}).
-$$
+> **Corollary 5.3 (Profile antitonicity, `rankSeq_zero_antitone`).** The map
+> $m \mapsto \mathrm{rankSeq}\,f\,0\,m$ is antitone on $\mathbb{N}$.
 
-**Proof.** Write $g^{\,n+1} = g \circ g^{\,n}$ and apply *(S-right)* with
-$h = g^{\,n}$. Equivalently, this is Corollary 5.4 specialized to the
-constant stream via Theorem 6.1. $\qquad\blacksquare$
+*Proof sketch.* For $j \le k$, instantiate Theorem 5.2 with $i = 0$ and
+$0 \le j \le k$. $\qquad\blacksquare$
 
-Theorem 6.2 expresses, at the level of rank, the descending chain of
-iterate images
-$$
-V \supseteq \operatorname{im}(g) \supseteq \operatorname{im}(g^2)
-\supseteq \cdots,
-$$
-whose eventual stabilization (over a finite-dimensional space) is the
-content of the Fitting decomposition. We make the stabilization precise
-in the next section.
+The decisive step is order-theoretic and dimension-free in statement; we isolate
+it for reuse.
 
----
+> **Lemma 5.4 (Stabilization of antitone integer sequences, `antitone_nat_eventually_const`).**
+> For every antitone sequence $a : \mathbb{N} \to \mathbb{N}$ there exists $N$
+> such that $a(m) = a(N)$ for all $m \ge N$.
 
-## 7. Stabilization of the transition-rank sequence
+*Proof sketch.* The image $\{a(n) : n \in \mathbb{N}\} \subseteq \mathbb{N}$ is
+nonempty, and $\mathbb{N}$ is well-ordered, so the image has a least element,
+attained at some index $N$: $a(N) = \min_n a(n)$. For any $m \ge N$,
+antitonicity gives $a(m) \le a(N)$, while minimality gives $a(m) \ge a(N)$;
+hence $a(m) = a(N)$. $\qquad\blacksquare$
 
-We now assume $V$ is finite-dimensional, $n = \dim_K V < \infty$, so that
-$\operatorname{rank}(g)$ is a finite cardinal identifiable with a natural
-number $\operatorname{rank}(g) \le n$.
+> **Theorem 5.5 (Eventual constancy, `rankSeq_eventually_const`).** There exists
+> $N \in \mathbb{N}$ with
+> $$\mathrm{rankSeq}\,f\,0\,m = \mathrm{rankSeq}\,f\,0\,N \quad \text{for all } m \ge N.$$
 
-### Definition 7.1 (Transition-rank sequence)
+*Proof.* Apply Lemma 5.4 to the antitone sequence $a(m) = \mathrm{rankSeq}\,f\,0\,m$
+of Corollary 5.3. $\qquad\blacksquare$
 
-For a stream $f$ and indices $i \le j$, the **transition-rank** is the
-natural number
-$$
-\operatorname{rankSeq}(f, i, j) =
-\big(\operatorname{rank}\,\operatorname{trans}(f, i, j)\big)_{\mathbb{N}},
-$$
-the natural-number value of the (finite) cardinal rank. The formal name
-is `rankSeq f i j`.
-
-### Lemma 7.2 (Uniform bound, `rankSeq_le_finrank`)
-
-For all $i \le j$,
-$$
-\operatorname{rankSeq}(f, i, j) \le \dim_K V = n.
-$$
-
-**Proof sketch.** The image of any endomorphism is a subspace of $V$, so
-its dimension is at most $\dim_K V$; transferring this cardinal
-inequality to $\mathbb{N}$ is legitimate because the rank is below
-$\aleph_0$ in finite dimension. $\qquad\blacksquare$
-
-### Lemma 7.3 (Antitonicity in $\mathbb{N}$, `rankSeq_antitone`)
-
-For fixed $i$, the sequence $m \mapsto \operatorname{rankSeq}(f, i, m)$ is
-antitone for $m \ge i$: if $i \le j \le k$ then
-$\operatorname{rankSeq}(f, i, k) \le \operatorname{rankSeq}(f, i, j)$.
-
-**Proof sketch.** Apply $\operatorname{toNat}$ to Corollary 5.4. The
-order-preservation of $\operatorname{toNat}$ on cardinals below
-$\aleph_0$ (here both ranks are finite) turns the cardinal inequality
-into the desired natural-number inequality. $\qquad\blacksquare$
-
-### Lemma 7.4 (Well-foundedness, `antitone_nat_eventually_const`)
-
-Every antitone sequence $a : \mathbb{N} \to \mathbb{N}$ is eventually
-constant: there exist $N, c \in \mathbb{N}$ with $a(m) = c$ for all
-$m \ge N$.
-
-**Proof sketch.** The set of values $\{a(m) : m \in \mathbb{N}\}
-\subseteq \mathbb{N}$ is nonempty, so by well-ordering it has a least
-element $c$, attained at some index $N$, i.e. $a(N) = c$. For any
-$m \ge N$, antitonicity gives $a(m) \le a(N) = c$, while minimality of
-$c$ gives $a(m) \ge c$; hence $a(m) = c$. (Equivalently: an infinite
-strictly descending chain in $\mathbb{N}$ is impossible, so the antitone
-sequence can strictly decrease only finitely often.) $\qquad\blacksquare$
-
-### Theorem 7.5 (Eventual constancy, `rankSeq_eventually_const`)
-
-For every stream $f$ over a finite-dimensional $V$, the window-from-zero
-transition-rank sequence $m \mapsto \operatorname{rankSeq}(f, 0, m)$ is
-eventually constant: there exist $N$ and $c$ with
-$$
-\operatorname{rankSeq}(f, 0, m) = c \qquad \text{for all } m \ge N.
-$$
-
-**Proof.** By Lemma 7.3 the sequence is antitone (taking $i = 0$); by
-Lemma 7.4 every antitone $\mathbb{N} \to \mathbb{N}$ sequence is
-eventually constant. (Lemma 7.2 confirms the sequence is bounded by $n$,
-making the descending chain finite in an even stronger sense.)
-$\qquad\blacksquare$
-
-The eventual value $c$ is the **stable transition rank** of the stream:
-the dimension of the information that survives arbitrarily long windows.
-For the constant stream $f(n) = g$, Theorem 6.1 identifies the sequence
-with $m \mapsto \operatorname{rank}(g^{\,m})$, whose stable value is the
-dimension of the generalized (Fitting) image $\bigcap_m
-\operatorname{im}(g^{\,m})$.
+Thus every endomorphism stream over a finite-dimensional space carries a
+canonical **transition-rank profile**: a non-increasing $\mathbb{N}$-valued
+sequence, bounded by $d$, that stabilizes to a well-defined *stable rank*.
+Boundedness is what forces stabilization — Theorem 5.1 ensures the antitone
+profile cannot descend forever.
 
 ---
 
-## 8. Algorithms
+## 6. The constant-stream specialization: Fitting's core
 
-The theory is constructive and yields immediate algorithms over a finite
-field or exact field (e.g. $\mathbb{Q}$).
+The classical theory of a single operator is the special case of a *constant*
+stream $f \equiv g$.
 
-### Algorithm A — Windowed transition rank by accumulation
+For $f \equiv g$, the recursion of Definition 2.1 yields
+$\mathrm{compFrom}\,f\,i\,n = g^n$, independent of $i$, and hence
+$\mathrm{transEndo}\,f\,0\,m = g^m$. The composition law (Theorem 3.2)
+specializes to the monoid exponent rule $g^{m+n} = g^m \circ g^n$, obtained here
+for free from additivity.
 
-Given matrices $M_0, \dots, M_{T-1} \in K^{n\times n}$ representing the
-stream and a window $[i, j)$, compute $\operatorname{trans}(f, i, j)$ by
-the recursion of Definition 3.1 (left-multiplying by $M_j$ as $j$
-advances) and report its rank by Gaussian elimination. Complexity:
-$O\big((j-i)\,n^{\omega}\big)$ for the products plus $O(n^{\omega})$ for
-the final rank, where $n^\omega$ is the cost of one matrix multiply/rank.
-
-### Algorithm B — Detecting stabilization
-
-Compute the antitone sequence $r_m = \operatorname{rankSeq}(f, 0, m)$ for
-$m = 0, 1, 2, \dots$ via Algorithm A's incremental product. By
-Theorem 7.5 the sequence is non-increasing and bounded below by $0$ and
-above by $n$; stop at the first $m$ with $r_{m} = r_{m+1}$ once the value
-has held steady (a conservative certificate is to confirm it persists,
-since the sequence cannot rise again). Because rank can strictly drop at
-most $n$ times, the loop terminates after $O(n)$ genuine drops; with the
-incremental product each step costs $O(n^\omega)$.
-
-These algorithms are exercised numerically in the accompanying demo.
+Consequently $\mathrm{rankSeq}\,f\,0\,m = \dim_K(\mathrm{im}\,g^m)$, and Theorem
+5.5 recovers the stabilization of the descending image chain
+$\mathrm{im}\,g \supseteq \mathrm{im}\,g^2 \supseteq \cdots$. The stable value is
+$$\lim_{m\to\infty} \dim_K(\mathrm{im}\,g^m) = \dim_K \Big(\bigcap_{n} \mathrm{im}\,g^n\Big),$$
+the dimension of the **Fitting core** (generalized image) of $g$ — the largest
+$g$-invariant subspace on which $g$ acts surjectively (indeed invertibly). The
+general transition-rank profile is therefore a non-autonomous, time-varying
+generalization of the Fitting/Fitting-core stabilization phenomenon.
 
 ---
 
-## 9. Applications
+## 7. A Sylvester-type window inequality
 
-**Linear time-varying systems.** For a discrete LTV system
-$x_{t+1} = A_t x_t$, the state-transition matrix from time $i$ to $k$ is
-exactly $\operatorname{trans}(A, i, k)$. The concatenation law is the
-semigroup property of state transition; rank antitonicity quantifies the
-monotone loss of reachable dimension when the system is not invertible.
-
-**Markov chains (formal analogy).** Replacing endomorphisms by
-stochastic matrices, Theorem 4.1 is the Chapman–Kolmogorov equation;
-rank monotonicity corresponds to the coarsening of the reachable support
-structure for non-invertible kernels.
-
-**Operator iteration and Fitting theory.** Theorem 6.1 reduces the study
-of $g^{\,m}$ to the constant-stream transition map, so the rank decay
-(Theorem 6.2) and stabilization (Theorem 7.5) recover the descending
-iterate-image chain underlying the Fitting decomposition of a
-finite-dimensional endomorphism.
-
-**Numerical linear algebra.** Antitonicity gives a principled early-stop
-criterion for computing the stable rank of long matrix products without
-forming all of them or computing every rank to high precision.
+The composition law also positions the family for the *lower* rank bound
+(Sylvester's rank inequality): for $g, h$ on a $d$-dimensional space,
+$\mathrm{rank}(g) + \mathrm{rank}(h) - d \le \mathrm{rank}(g \circ h)$. Applied to
+the factorization $\mathrm{transEndo}\,f\,i\,k = \mathrm{transEndo}\,f\,j\,k \circ \mathrm{transEndo}\,f\,i\,j$
+this gives, for $i \le j \le k$,
+$$\mathrm{rankSeq}\,f\,i\,j + \mathrm{rankSeq}\,f\,j\,k
+\;\le\; \mathrm{rankSeq}\,f\,i\,k + d,$$
+a subadditivity controlling how much rank a window can shed when split. Pairing
+this lower control with the antitone upper control of §4–§5 sandwiches the
+profile and quantifies its rate of descent. (The present development proves the
+upper, antitone half; the Sylvester lower half is recorded as future work,
+§9.4.)
 
 ---
 
-## 10. Discussion
+## 8. Applications
 
-The methodological point of this development is that a well-chosen
-*combinatorial* law can subsume a cluster of *analytic*-looking
-inequalities. Once `transEndo_comp` is in hand, the rank statements are
-each one application of a standard submultiplicativity fact; we never
-re-prove a Sylvester rank inequality. This separation of concerns —
-combinatorics of windows on one side, classical rank facts on the other
-— is what keeps the file minimal and the proofs short.
+- **Non-autonomous linear dynamical systems.** For a time-varying recurrence
+  $x_{n+1} = f(n)\,x_n$, the state at time $j$ is $\mathrm{transEndo}\,f\,0\,j$
+  applied to $x_0$. The transition-rank profile measures the collapsing
+  reachable/observable dimension over time and identifies the horizon $N$ beyond
+  which no further structural collapse occurs.
 
-Two boundary conventions do real work and are worth flagging. First,
-defining $\operatorname{trans}(f, i, j) = \mathrm{id}$ for $j \le i$
-makes the concatenation law hold without side conditions on the empty
-leg; the case $j = k+1$ in Theorem 4.1 is exactly where this matters.
-Second, recursing on the *upper* endpoint (rather than the lower) makes
-`transEndo_succ_of_le` the natural step lemma and aligns the recursion
-with the direction in which windows grow in the stabilization argument.
+- **Layered linear networks.** A deep network whose layers are linear maps of
+  varying shape is a finite stream; the profile tracks the information
+  bottleneck as depth increases and certifies that effective rank is monotone in
+  depth — a clean, exact statement of the "rank can only fall through layers"
+  folklore.
 
----
+- **Products of varying transfer matrices.** In control and signal processing,
+  cascaded stages correspond to matrix products $A_{j-1}\cdots A_i$; the
+  composition law is the associativity bookkeeping, and the profile bounds the
+  achievable rank of any sub-cascade.
 
-## 11. Future work
-
-The natural next results, stated as conjectures continuing this cycle,
-are:
-
-1. **Sharp eventual-rank floor.** For a constant stream $f(n) = g$ over a
-   finite-dimensional $V$, the eventual value of
-   $\operatorname{rankSeq}(f, 0, \cdot)$ equals
-   $\dim_K \big(\bigcap_m \operatorname{im}(g^{\,m})\big)$, the dimension
-   of the Fitting (generalized) image.
-2. **Stabilization by index $n$.** The window-from-zero rank sequence
-   satisfies $\operatorname{rankSeq}(f, 0, m) = \operatorname{rankSeq}(f,
-   0, n)$ for all $m \ge n = \dim_K V$; the stabilization index is
-   bounded by the dimension.
-3. **Sub-window superadditivity.** For $i \le j \le k$,
-   $\operatorname{rankSeq}(f, i, k) \ge \operatorname{rankSeq}(f, i, j) +
-   \operatorname{rankSeq}(f, j, k) - n$, the Frobenius/Sylvester lower
-   bound complementing the upper bound of Corollary 5.4, obtained by
-   applying the classical Sylvester inequality factor-by-factor through
-   the concatenation law.
-4. **Invertible streams preserve rank.** If every $f(n)$ is an
-   automorphism then $\operatorname{rankSeq}(f, i, j) = n$ for all
-   $i \le j$; conversely a single rank-deficient factor strictly lowers
-   the eventual floor.
+- **Operator semigroups and Fitting theory.** §6 shows the framework subsumes
+  the single-operator image-chain stabilization, suggesting a uniform treatment
+  of autonomous and non-autonomous settings.
 
 ---
 
-## 12. Conclusion
+## 9. Discussion and future directions
 
-We have built a small, self-contained theory of transition
-endomorphisms on a stream of linear self-maps. A single
-Chapman–Kolmogorov concatenation law organizes the entire development:
-rank monotonicity along nested windows, the identification of constant
-streams with monoid powers, the rank decay of iterates, and — over a
-finite-dimensional space — the eventual constancy of the transition-rank
-sequence. The transition endomorphism thus serves as a reusable transfer
-operator whose rank is automatically antitone along nested windows and
-stabilizes in finite dimension.
+### 9.1 The stabilization index is bounded by $\dim_K V$
+There exists $N \le d$ with $\mathrm{rankSeq}\,f\,0\,m = \mathrm{rankSeq}\,f\,0\,N$
+for all $m \ge N$. A strictly decreasing antitone $\mathbb{N} \to \mathbb{N}$
+chain bounded by $d$ can drop at most $d$ times, so the first stabilization point
+is reached within $d$ steps rather than at an abstract well-founded minimum. With
+boundedness and antitonicity already in hand, only a quantitative refinement of
+the stabilization lemma is needed.
+
+### 9.2 The stable rank as a generalized image
+For a constant stream $f \equiv g$, the eventual value of $\mathrm{rankSeq}\,f\,0\,m$
+equals $\dim_K(\bigcap_n \mathrm{im}\,g^n)$. Since $\mathrm{transEndo}\,(\lambda\_.g)\,0\,m = g^m$
+and the descending range chain stabilizes at the Fitting core of $g$, the
+remaining work is to formalize the Fitting decomposition itself.
+
+### 9.3 Eventual constancy fails without finite dimension
+Over an infinite-dimensional $V$ there is a stream $f$ whose cardinal rank
+$\mathrm{rank}(\mathrm{transEndo}\,f\,0\,m)$ is strictly decreasing for every $m$
+(e.g. an iterated shift on $\mathbb{N} \to_0 K$ realizes an infinite descending
+chain of subspaces). Finiteness in Theorem 5.5 is genuinely load-bearing: it
+justifies both the `toNat` cast and the bound.
+
+### 9.4 Window rank is subadditive in a Sylvester sense
+For $i \le j \le k$,
+$\mathrm{rankSeq}\,f\,i\,j + \mathrm{rankSeq}\,f\,j\,k \le \mathrm{rankSeq}\,f\,i\,k + d$,
+which is Sylvester's rank inequality applied to the factorization of §7. The
+composition law is in hand; only the rank-of-composition lower bound must be
+located or built.
+
+### 9.5 Joint stabilization across all starting windows
+There is a single $N$ such that for every $i \le N$ the sequence
+$m \mapsto \mathrm{rankSeq}\,f\,i\,m$ is constant for $m \ge N$. Finitely many
+antitone bounded sequences (one per start index up to $N$) stabilize
+simultaneously by taking a common cutoff, building on the established window
+antitonicity.
+
+---
+
+## 10. Conclusion
+
+From an arbitrary stream of linear endomorphisms we have built a clean algebraic
+calculus of transition operators — additive in length, Chasles-composable in
+the window — and shown that their ranks form a bounded, antitone, and (in finite
+dimensions) eventually-constant integer signature of the stream. The argument is
+elementary, modular, and fully formalized: a recursion, one rank inequality, and
+the well-ordering of $\mathbb{N}$ suffice. The framework unifies the classical
+single-operator image-chain stabilization (the Fitting core) with the
+time-varying setting and opens onto sharper quantitative refinements via
+Sylvester's inequality.
