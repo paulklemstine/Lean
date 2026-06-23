@@ -1926,12 +1926,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2314",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:09:34.216269+00:00",
+    "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2314",
+    "id": "fd_2315",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -1946,7 +1960,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2315",
+    "id": "fd_2316",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -1961,13 +1975,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2316",
+    "id": "fd_2317",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
     "status": "available",
     "timestamp": "2026-06-23T06:43:59.614397+00:00",
     "title": "Explicit Finiteness Bound for Same-Radical Shift Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The authors disprove a conjecture by Cheong, Goaoc, and Holmsen by showing that for every n >= 1, there is a finite family of pairwise disjoint open convex sets in R^{3n} such that the (n-1)-st reduced homology of the space of line transversals is nonzero. They explicitly state the conjecture that this space of line transversals is in fact homotopy equivalent to the (n-1)-sphere, S^{n-1}. This proposes formalizing that stronger homotopy equivalence conjecture.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2318",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23193v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:10:06.412019+00:00",
+    "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
   },
   {
     "consumed_by_exp_id": "",
@@ -3152,21 +3181,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.643460+00:00",
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-  },
-  {
-    "consumed_by_exp_id": "d1c9c6b9",
-    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0069",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.676713+00:00",
-    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
     "consumed_by_exp_id": "",

@@ -2834,6 +2834,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "DrmotaKauersSpiegelhofer2016"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer t >= 1, the natural density c_t = lim_{N->∞} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
+    "domain_bridges": [
+      "math.CO",
+      "math.NT"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2314",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "exact deconvolution replaced by finite stopped random-walk law and first-exit median analysis",
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:09:34.216269+00:00",
+    "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "Erdős Problem 550"
     ],
@@ -2847,7 +2871,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2314",
+    "id": "fd_2315",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -2874,7 +2898,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2315",
+    "id": "fd_2316",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -2904,7 +2928,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2316",
+    "id": "fd_2317",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -2913,6 +2937,34 @@
     "status": "available",
     "timestamp": "2026-06-23T06:43:59.614397+00:00",
     "title": "Explicit Finiteness Bound for Same-Radical Shift Sets"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AT",
+      "math.CO",
+      "math.GT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The authors disprove a conjecture by Cheong, Goaoc, and Holmsen by showing that for every n >= 1, there is a finite family of pairwise disjoint open convex sets in R^{3n} such that the (n-1)-st reduced homology of the space of line transversals is nonzero. They explicitly state the conjecture that this space of line transversals is in fact homotopy equivalent to the (n-1)-sphere, S^{n-1}. This proposes formalizing that stronger homotopy equivalence conjecture.",
+    "domain_bridges": [
+      "Geometric Transversal Theory",
+      "Algebraic Topology",
+      "Convex Geometry"
+    ],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2318",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23193v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:10:06.412019+00:00",
+    "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
   },
   {
     "ambition_level": "extension",
@@ -4497,26 +4549,6 @@
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.643460+00:00",
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d1c9c6b9",
-    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0069",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Given an n-player game G with strategy sets S_1, ..., S_n. Define the simplex Delta = {(p_1, ..., p_n) : p_i in Delta(S_i), sum p_i = 1}. Define Sperner coloring c: Delta -> {1, ..., n} by c(v) = i where i = argmax_j BR_i(v)_j (player i's best response to v has highest probability on strategy j). Boundary condition: if v is on the face where p_i = 0, then c(v) != i (a player with zero probability cannot have a best response there). Wait, the correct boundary condition is: if v is on the face where v_i = 0, then c(v) is not i. Sperner's lemma: there exists at least one fully colored simplex (with all colors 1, ..., n). The center of this simplex is an epsilon-Nash equilibrium where epsilon depends on the mesh size of the triangulation. As mesh -> 0, epsilon -> 0, giving an exact Nash equilibrium. Algorithm: triangulate Delta with mesh epsilon, color vertices by best responses, find fully colored simplex by Sperner's lemma (using the path-following algorithm). Complexity: O((1/epsilon)^{n-1} * |S|) per iteration. Test: implement for 2x2 games (Matching Pennies, Prisoner's Dilemma, Battle of the Sexes). Verify that the algorithm finds the unique Nash equilibrium.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.676713+00:00",
-    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
     "ambition_level": "extension",
