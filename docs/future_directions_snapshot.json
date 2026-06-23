@@ -1111,7 +1111,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-08T19:25:11.027519+00:00",
     "title": "Kaplansky's Conjectures"
   },
@@ -1250,7 +1250,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
@@ -3148,7 +3148,7 @@
       "math.CO/ramsey_theory",
       "math.CO/combinatorial_lines"
     ],
-    "consumed_by_exp_id": "3fbe11d2",
+    "consumed_by_exp_id": "",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex Δ(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) ≥ 22 and HJ(4,2) ≥ 14.",
     "domain_bridges": [
       "combinatorics",
@@ -3164,7 +3164,7 @@
     "proof_strategy": "Formalize coordinate-symmetric colorings as functions on letter-count vectors (elements of the discrete simplex). Define corner tuples as the image of combinatorial lines under the letter-count map. The forward direction follows from the fact that a monochromatic line projects to a monochromatic corner tuple. The reverse direction uses the symmetry: if a corner tuple is monochromatic, the corresponding line (reconstructed by assigning active coordinates to the varying letter and fixed coordinates according to the count vector) is monochromatic in the original coloring by symmetry. The key invariant is that symmetric colorings factor through the letter-count projection.",
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -3247,7 +3247,7 @@
     "proof_strategy": "Formalize edge-colored graphs, minimum color degree, and rainbow triangles in Lean, then establish the lower bounds by analyzing the extremal graph structures and showing that any deviation from them strictly increases the number of rainbow triangles, proceeding by induction on n.",
     "research_mode": "team",
     "source_exp_id": "2606.22106v1",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-23T13:28:42.948702+00:00",
     "title": "Exact minimum number of rainbow triangles with large minimum color degree"
   },
@@ -4243,6 +4243,35 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [
+      "math.NT",
+      "erdos_problem_400",
+      "factorial_divisibility",
+      "digit_sums",
+      "S_unit_equations"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes that for almost all n, g_k(n) ≥ (3(k-1)/log 12 − ε) log n, while pointwise g_k(n) ≤ (k-1)/log 2 · log n + O(log log n). The gap between 3/log 12 ≈ 1.207 and 1/log 2 ≈ 1.443 motivates the conjecture that the upper bound coefficient is asymptotically tight: for every k ≥ 2 and ε > 0, the set of n ≤ x with g_k(n) < ((k−1)/log 2 − ε) log n has cardinality o(x). This would mean binary carries are the essential obstruction and c_k = (k−1)/log 2 is the true almost-everywhere constant, resolving Erdős Problem 400.",
+    "domain_bridges": [
+      "computational_number_theory",
+      "additive_combinatorics",
+      "ergodic_theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2366",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish that the binary carry obstruction is not just an upper bound but the typical behavior. Likely requires: (1) strengthening the S-unit digit-sum normal-order theorem from the paper to handle all prime bases simultaneously rather than just base 2 and 3; (2) showing that the mixed-base 2-3 construction achieving 3/log 12 can be bootstrapped toward 1/log 2 by incorporating larger prime factors via the Kummer sieve uniformly; (3) developing quantitative multi-block estimates for carry patterns across all primes p ≤ n, showing that the typical n achieves near-maximal carry contributions. An ergodic-theoretic approach via equidistribution on S-unit progressions may yield the necessary uniformity.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23661v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:48:09.150861+00:00",
+    "title": "Tight Almost-Everywhere Coefficient for Erdős Excess Function g_k"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
       "math.AT",
       "math.NT",
       "math.GR"
@@ -4258,7 +4287,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2366",
+    "id": "fd_2367",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a highly connected complex of unimodular vectors or forests over the integers, and use it to establish the vanishing of the rational homology in high degrees, extending the combinatorial and homological methods used for i=0, 1, and 2.",
@@ -4288,7 +4317,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2367",
+    "id": "fd_2368",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define rad n as the product of all primes dividing n, or equivalently use the predicate that two integers have the same prime divisors. If rad(j) = rad(j+h), then 2 divides j iff 2 divides j+h. But when h is odd, j and j+h have opposite parity, so exactly one of them is divisible by 2. Hence their radicals cannot be equal. In Lean, this can be proved by rewriting oddness as h % 2 = 1 and using parity of addition modulo 2.",
@@ -4319,7 +4348,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2368",
+    "id": "fd_2369",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the finite extremal problem directly. For the lower bound, provide a concrete Finset of 40 four-subsets of Fin 8 and verify that no 4-subset is shattered. For the upper bound, use symmetry under permutations of Fin 8 to reduce cases, then generate a SAT/DRAT or custom branch-and-bound certificate showing that every 41-edge subfamily shatters some 4-subset. The Lean proof should only trust a small checker for the certificate plus elementary finset/cardinality lemmas.",
@@ -4328,6 +4357,34 @@
     "status": "available",
     "timestamp": "2026-06-23T16:31:38.847897+00:00",
     "title": "Exact first 4-uniform VC extremal value beyond Ahlswede--Khachatrian"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Cusick_sum_of_digits_conjecture",
+      "binary_sum_of_digits_function",
+      "2_adic_valuation_binomial_coefficients",
+      "carry_propagation_binary_addition"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer t ≥ 1, the asymptotic density c_t of nonnegative integers n such that s₂(n+t) ≥ s₂(n) satisfies c_t ≥ 1/2 + 2^(-(2·s₂(t)+1)), where s₂(m) denotes the number of ones in the binary expansion of m. This is the main theorem proved in the paper, resolving Cusick's conjecture with an explicit quantitative gap.",
+    "domain_bridges": [
+      "probability_theory_stopped_random_walks",
+      "combinatorics_on_words_binary_strings",
+      "p_adic_analysis_valuations"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2370",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof decomposes into four major steps amenable to separate formalization: (1) Establish the existence of the density c_t via the exact deconvolution identity that replaces the distribution of s₂(n+t)-s₂(n) with a finite stopped random-walk law over the carry blocks of t. (2) Formalize the principal subsequence ideal structure that indexes the carry block decomposition. (3) Prove the first-exit median comparison lemma for the stopped random walk, showing the median of the exit distribution is nonnegatively biased. (4) Combine the deconvolution with the median bound to derive c_t ≥ 1/2 + 2^(-(2s₂(t)+1)). Steps (1)-(2) are combinatorial and involve 2-adic carry arithmetic; step (3) is probabilistic and requires stochastic ordering arguments.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:48:35.543989+00:00",
+    "title": "Cusick's Sum-of-Digits Explicit Bound"
   },
   {
     "ambition_level": "extension",
@@ -4695,7 +4752,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -4799,7 +4856,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b8e11d4a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domain_bridges": [],
     "domains": [
@@ -4812,7 +4869,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },
@@ -5489,7 +5546,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -5649,7 +5706,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },

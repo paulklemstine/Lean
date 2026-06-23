@@ -834,7 +834,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-08T19:25:11.027519+00:00",
     "title": "Kaplansky's Conjectures"
   },
@@ -938,7 +938,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
@@ -2082,7 +2082,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
   },
   {
-    "consumed_by_exp_id": "3fbe11d2",
+    "consumed_by_exp_id": "",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex \u0394(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) \u2265 22 and HJ(4,2) \u2265 14.",
     "domains": [
       "Algebra"
@@ -2091,7 +2091,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -2134,7 +2134,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22106v1",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-23T13:28:42.948702+00:00",
     "title": "Exact minimum number of rainbow triangles with large minimum color degree"
   },
@@ -2647,12 +2647,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper establishes that for almost all n, g_k(n) \u2265 (3(k-1)/log 12 \u2212 \u03b5) log n, while pointwise g_k(n) \u2264 (k-1)/log 2 \u00b7 log n + O(log log n). The gap between 3/log 12 \u2248 1.207 and 1/log 2 \u2248 1.443 motivates the conjecture that the upper bound coefficient is asymptotically tight: for every k \u2265 2 and \u03b5 > 0, the set of n \u2264 x with g_k(n) < ((k\u22121)/log 2 \u2212 \u03b5) log n has cardinality o(x). This would mean binary carries are the essential obstruction and c_k = (k\u22121)/log 2 is the true almost-everywhere constant, resolving Erd\u0151s Problem 400.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2366",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23661v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:48:09.150861+00:00",
+    "title": "Tight Almost-Everywhere Coefficient for Erd\u0151s Excess Function g_k"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The codimension-i rational cohomology of the special linear group SL_n(Z) vanishes for n >= i+2. Equivalently, the i-th rational cohomology group H^i(SL_n(Z); Q) is trivial for all i >= (n choose 2) - n + 2.",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2366",
+    "id": "fd_2367",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2666,7 +2680,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2367",
+    "id": "fd_2368",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2681,13 +2695,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2368",
+    "id": "fd_2369",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23469v1",
     "status": "available",
     "timestamp": "2026-06-23T16:31:38.847897+00:00",
     "title": "Exact first 4-uniform VC extremal value beyond Ahlswede--Khachatrian"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer t \u2265 1, the asymptotic density c_t of nonnegative integers n such that s\u2082(n+t) \u2265 s\u2082(n) satisfies c_t \u2265 1/2 + 2^(-(2\u00b7s\u2082(t)+1)), where s\u2082(m) denotes the number of ones in the binary expansion of m. This is the main theorem proved in the paper, resolving Cusick's conjecture with an explicit quantitative gap.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2370",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:48:35.543989+00:00",
+    "title": "Cusick's Sum-of-Digits Explicit Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -2960,7 +2988,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -3037,7 +3065,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
   {
-    "consumed_by_exp_id": "b8e11d4a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domains": [
       "Geometry",
@@ -3047,7 +3075,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.58,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },
@@ -3554,7 +3582,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -3674,7 +3702,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },
