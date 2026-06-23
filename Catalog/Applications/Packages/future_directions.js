@@ -355,7 +355,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
@@ -563,7 +563,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -854,7 +854,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "7d2edc31",
+    "consumed_by_exp_id": "",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -864,7 +864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -1164,7 +1164,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-08T19:25:02.571310+00:00",
     "title": "Jacobian Conjecture"
   },
@@ -1802,7 +1802,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T04:31:35.784256+00:00",
     "title": "Homotopy type of the line transversal space equals S^{n-1}"
   },
@@ -1816,7 +1816,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T04:53:54.133289+00:00",
     "title": "Optimal Separator Bound for Wall Connectors"
   },
@@ -2082,7 +2082,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
   },
   {
-    "consumed_by_exp_id": "3fbe11d2",
+    "consumed_by_exp_id": "",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex \u0394(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) \u2265 22 and HJ(4,2) \u2265 14.",
     "domains": [
       "Algebra"
@@ -2091,7 +2091,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -2604,6 +2604,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every dimension d \u2265 2 and every Weyl-Heisenberg SIC-POVM with conductor f dividing f\u2080(d), each overlap unit (the algebraic unit arising from the phase of the inner product \u27e8\u03c8\u1d62|\u03c8\u2c7c\u27e9 for i \u2260 j, after normalizing by \u221a(d+1)) is an algebraic integer expressible as a product of integral powers of square roots of Stark units from the ray class field K^{fd\u221e\u2081}, where K = \u211a(\u221a((d+1)(d-3))). In the non-minimal case (f > 1), a lattice of ray class fields K_L^{d;f} \u2286 K^{fd} is involved. The corollary that in every second dimension (counted along the AFMY tower) some overlap units equal \u00b11 follows from the Galois-theoretic property that the relevant ray class fields force these Stark unit expressions to reduce to roots of unity.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2363",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23535v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:42:26.982227+00:00",
+    "title": "SIC Overlap Units Are Products of Square Roots of Stark Units"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every tree T on n vertices and every integer k \u2265 1, the Ramsey number R(T, K_k) equals (k-1)(n-1) + 1. This is the foundational result (Chv\u00e1tal 1977) underpinning the paper's resolution of Erd\u0151s Problem 550, establishing that trees are Ramsey-good against cliques. The lower bound follows from Burr's canonical construction; the upper bound is the substantial combinatorial claim requiring formalization.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2364",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:42:45.464256+00:00",
+    "title": "Chv\u00e1tal's Ramsey Theorem for Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -2704,7 +2733,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
   {
-    "consumed_by_exp_id": "643b1455",
+    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "Algebra"
@@ -2713,7 +2742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.79,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:01.145793+00:00",
     "title": "Lehmer's Mahler Measure Problem"
   },
@@ -2863,7 +2892,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "9dc8a91c",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -2873,7 +2902,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -2930,7 +2959,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
   },
@@ -2950,7 +2979,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
   {
-    "consumed_by_exp_id": "b8e11d4a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domains": [
       "Geometry",
@@ -2960,7 +2989,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.58,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },
@@ -3202,7 +3231,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Algebra: Closure Properties"
   },
   {
-    "consumed_by_exp_id": "d5a04e50",
+    "consumed_by_exp_id": "",
     "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domains": [
       "EML",
@@ -3212,7 +3241,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.344784+00:00",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
@@ -3227,7 +3256,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -3587,7 +3616,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },
