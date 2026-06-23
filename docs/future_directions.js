@@ -2590,6 +2590,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u22ef \u2264 m\u2096, there exists n\u2080 = n\u2080(m\u2081,\u2026,m\u2096) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m\u2096}) \u2264 (k\u22121)(R(T, K_{m\u2081,m\u2082}) \u2212 1) + m\u2081. This resolves Erd\u0151s Problem 550 and establishes that the excess over the Burr canonical lower bound is controlled by the excess in the bipartite subproblem involving the two smallest parts.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2362",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:38:06.610767+00:00",
+    "title": "Erd\u0151s Problem 550: Tree versus Complete Multipartite Ramsey Upper Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

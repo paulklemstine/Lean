@@ -4121,6 +4121,36 @@
     "title": "Universal Erdős 550: Tree–Multipartite Ramsey Bound Without Asymptotic Conditions"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Chvatal_tree_clique_ramsey",
+      "Burr_canonical_lower_bound",
+      "Szemeredi_regularity_lemma",
+      "Kovari_Sos_Turan_theorem",
+      "Hladky_Piguet_regular_matching_embedding"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For fixed integers k ≥ 2 and 1 ≤ m₁ ≤ ⋯ ≤ mₖ, there exists n₀ = n₀(m₁,…,mₖ) such that for every n ≥ n₀ and every n-vertex tree T, R(T, K_{m₁,…,mₖ}) ≤ (k−1)(R(T, K_{m₁,m₂}) − 1) + m₁. This resolves Erdős Problem 550 and establishes that the excess over the Burr canonical lower bound is controlled by the excess in the bipartite subproblem involving the two smallest parts.",
+    "domain_bridges": [
+      "graph_theory_to_hypergraph_theory_via_shadow_construction",
+      "regularity_lemma_to_structural_decomposition",
+      "compactness_arguments_to_finitary_obstructions",
+      "extremal_graph_theory_to_ramsey_theory_via_density"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2362",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize in stages: (1) Burr's canonical lower bound R(T,F) ≥ (χ(F)−1)(|T|−1)+σ(F) and Chvátal's theorem R(T,K_k)=(k−1)(|T|−1)+1 as base cases. (2) Formalize Szemerédi's regularity lemma and the local regular-matching embedding lemma of Hladký–Piguet. (3) Prove the off-Turán tree-embedding theorem: in any sufficiently dense graph relative to the Turán density, a large tree can be embedded. (4) Formalize the compactness-and-rounding theorem for represented bounded-rank hypergraph obstructions using shadow hypergraphs. (5) Combine to derive the Ramsey capacity contradiction that yields the main inequality.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:38:06.610767+00:00",
+    "title": "Erdős Problem 550: Tree versus Complete Multipartite Ramsey Upper Bound"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
