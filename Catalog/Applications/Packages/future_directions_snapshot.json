@@ -2925,6 +2925,36 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Paper: definition of S_K = Herm_2(O_K) with quadratic form 2 det",
+      "Paper: use of S_K(2N) as the Neron-Severi lattice of Picard-rank-four K3 surfaces",
+      "mathlib: Matrix.det",
+      "mathlib: QuadraticForm",
+      "mathlib: NumberTheory.NumberField"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let d < 0 be squarefree, let K = Q(√d), and let O_K have Z-basis {1, ω}, where ω = √d if d ≠ 1 mod 4 and ω = (1 + √d)/2 if d ≡ 1 mod 4. Form the rank-four lattice S_K = Herm_2(O_K) with quadratic form q(A) = 2 det(A), and use the basis given by the two diagonal Hermitian matrix units together with the off-diagonal elements 1 and ω. Then the determinant of the Gram matrix of the associated integral symmetric bilinear form is exactly the fundamental discriminant D_K: det Gram(S_K) = d if d ≡ 1 mod 4, and det Gram(S_K) = 4d otherwise.",
+    "domain_bridges": [
+      "Identifies the discriminant of the rank-four K3 Neron-Severi lattice used in the paper with the field discriminant of K",
+      "Connects Hermitian matrix models for Bianchi groups to explicit integral quadratic forms",
+      "Provides a Lean-checkable arithmetic invariant underlying the congruence-level phenomena in the automorphism groups"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2319",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Choose the standard Z-basis of Herm_2(O_K): the two diagonal basis vectors and the two off-diagonal basis vectors corresponding to 1 and ω. Write z = x + yω. Since q([[a,z],[conj z,c]]) = 2ac - 2 Norm(z), the Gram matrix splits as a hyperbolic plane with determinant -1 and a rank-two negative norm block. If Tr(ω)=T and Norm(ω)=n, the norm block has matrix [[-2, -T], [-T, -2n]], whose determinant is 4n - T^2 = -D_K. Multiplying by the hyperbolic determinant -1 gives det Gram(S_K)=D_K.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22921v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:16:17.802367+00:00",
+    "title": "Discriminant of the Hermitian Bianchi lattice S_K"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "Erdős Problem 550"
     ],
@@ -2938,7 +2968,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2319",
+    "id": "fd_2320",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -2965,7 +2995,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2320",
+    "id": "fd_2321",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -2995,7 +3025,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2321",
+    "id": "fd_2322",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -3023,7 +3053,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2322",
+    "id": "fd_2323",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3050,7 +3080,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2323",
+    "id": "fd_2324",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3076,7 +3106,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2324",
+    "id": "fd_2325",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3103,7 +3133,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2325",
+    "id": "fd_2326",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
@@ -3112,6 +3142,36 @@
     "status": "available",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "sidorenko1993correlation",
+      "sidorenko1991inequalities",
+      "hatami2010graph",
+      "conlon2018some"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite group Γ, any real-valued function f : Γ → ℝ, and any finite directed graph F, the homomorphism density t(F, C_f) satisfies t(F, C_f) ≥ (E_Gamma f)^(2 * e(F)), and equality holds iff f is constant on Γ.",
+    "domain_bridges": [
+      "graph homomorphism densities",
+      "probability on finite groups",
+      "Cayley-type kernels",
+      "extremal combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2327",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply repeated Cauchy–Schwarz inequalities on the group sum to bound the kernel average, and argue that equality forces f to be constant.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23018v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:18:43.440749+00:00",
+    "title": "Conjecture on extremal constantness for two-sided group correlation kernels"
   },
   {
     "ambition_level": "extension",

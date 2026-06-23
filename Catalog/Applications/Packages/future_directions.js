@@ -1967,12 +1967,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: Let d < 0 be squarefree, let K = Q(\u221ad), and let O_K have Z-basis {1, \u03c9}, where \u03c9 = \u221ad if d \u2260 1 mod 4 and \u03c9 = (1 + \u221ad)/2 if d \u2261 1 mod 4. Form the rank-four lattice S_K = Herm_2(O_K) with quadratic form q(A) = 2 det(A), and use the basis given by the two diagonal Hermitian matrix units together with the off-diagonal elements 1 and \u03c9. Then the determinant of the Gram matrix of the associated integral symmetric bilinear form is exactly the fundamental discriminant D_K: det Gram(S_K) = d if d \u2261 1 mod 4, and det Gram(S_K) = 4d otherwise.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2319",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22921v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:16:17.802367+00:00",
+    "title": "Discriminant of the Hermitian Bianchi lattice S_K"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2319",
+    "id": "fd_2320",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -1987,7 +2002,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2320",
+    "id": "fd_2321",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2002,7 +2017,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2321",
+    "id": "fd_2322",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2017,7 +2032,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2322",
+    "id": "fd_2323",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2031,7 +2046,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2323",
+    "id": "fd_2324",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
@@ -2045,7 +2060,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2324",
+    "id": "fd_2325",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
@@ -2059,13 +2074,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2325",
+    "id": "fd_2326",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
     "status": "available",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite group \u0393, any real-valued function f : \u0393 \u2192 \u211d, and any finite directed graph F, the homomorphism density t(F, C_f) satisfies t(F, C_f) \u2265 (E_Gamma f)^(2 * e(F)), and equality holds iff f is constant on \u0393.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2327",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23018v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:18:43.440749+00:00",
+    "title": "Conjecture on extremal constantness for two-sided group correlation kernels"
   },
   {
     "consumed_by_exp_id": "",
