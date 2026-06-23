@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "54153a72",
     "filename": "convex_geometry_brunn_minkowski_theory.json",
     "pkg_num": 7,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.56159,
     "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
   },
   {
@@ -212,8 +212,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.56159,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
     }

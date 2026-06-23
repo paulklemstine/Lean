@@ -507,7 +507,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "8d543673",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -516,7 +516,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -628,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "07255b71",
+    "consumed_by_exp_id": "",
     "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domains": [
       "Algebra",
@@ -638,7 +638,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
@@ -1240,21 +1240,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432657+00:00",
     "title": "Fourier Analysis on Finite Groups"
-  },
-  {
-    "consumed_by_exp_id": "54153a72",
-    "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "seed_351",
-    "priority_score": 0.83,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432684+00:00",
-    "title": "Convex Geometry: Brunn-Minkowski Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -2183,6 +2168,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Brunn\u2013Minkowski Theory\n\nThis cycle established the **one-dimensional Brunn\u2013Minkowski inequality**\n(`vol A + vol B \u2264 vol(A+B)` for nonempty compact `A,B \u2286 \u211d`), its sharpness on\nintervals, the self-sum corollary, and the iterated finite-family version\n(`Catalog/Geometry/BrunnMinkowski.lean`, fully verified). The following bold,\ntestable conjectures guide the next cycles.\n\n## C1. Multiplicative (dimension-free) 1-D form\n**Conjecture.** For nonempty compact `A,B \u2286 \u211d` and `t \u2208 [0,1]`,\n`vol(t\u2022A + (1-t)\u2022B) \u2265 t\u00b7vol A + (1-t)\u00b7vol B`.\nThis is the convex-combination (\"Pr\u00e9kopa\u2013Leindler at n=1\") restatement.\n*Test:* derive it from the proven `volume_add_ge` via the scaling identity\n`vol(c\u2022A) = |c|\u00b7vol A` (`Real.volume_smul`/`MeasureTheory.Measure.addHaar`).\nFalsifiable: check `A=B=[0,1]`, `t=1/2` gives `vol[0,1] = 1 = 1`.\n\n## C2. Equality rigidity in 1-D\n**Conjecture.** For nonempty compact `A,B \u2286 \u211d`, `vol(A+B) = vol A + vol B`\nholds **iff** (up to a null set) both `A` and `B` are intervals (or one is a\nsingle point). *Test:* the forward \"interval \u21d2 equality\" direction is already\nproved (`volume_add_Icc_eq`); the converse needs the \"no positive-measure gap\"\nanalysis. Falsifiable on `A=[0,1]\u222a[3,4]` where equality fails.\n\n## C3. Dimension-2 Brunn\u2013Minkowski for axis-aligned boxes\n**Conjecture.** For boxes `A = I\u2081\u00d7I\u2082`, `B = J\u2081\u00d7J\u2082 \u2286 \u211d\u00b2`,\n`vol(A+B)^(1/2) \u2265 vol(A)^(1/2) + vol(B)^(1/2)`.\n*Test:* `A+B = (I\u2081+J\u2081)\u00d7(I\u2082+J\u2082)`, reduce to the AM\u2013GM-type inequality\n`\u221a((a+c)(b+d)) \u2265 \u221a(ab) + \u221a(cd)` for nonnegative side lengths \u2014 provable by\n`nlinarith`/`Real.sqrt` lemmas. This is the first genuinely `n>1` case.\n\n## C4. The \u221a-superadditivity (concavity) reformulation\n**Conjecture.** The map `A \u21a6 vol(A)^(1/n)` is concave under Minkowski averaging\non the class of nonempty compact convex bodies. *Test:* in `n=1` it is exactly\n`volume_add_ge` (the exponent is trivial); state and prove the `n=2` box case\n(C3) as the inductive seed, then attempt boxes in general `n` via\n`Finset.prod` over coordinates.\n\n## C5. Discrete (Cauchy\u2013Davenport-flavored) analogue\n**Conjecture.** For nonempty finite `A,B \u2286 \u2124`, `|A+B| \u2265 |A| + |B| - 1`, with\nequality iff `A,B` are arithmetic progressions of equal common difference.\n*Test:* the counting bound mirrors the measure proof (place `A+min B` and\n`max A + B` overlapping in one point). This bridges the continuous\nBrunn\u2013Minkowski theory to additive combinatorics and is fully finitary, hence\n`decide`-checkable on small cases.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2319",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "54153a72",
+    "status": "available",
+    "timestamp": "2026-06-23T07:31:53.509764+00:00",
+    "title": "**one-dimensional Brunn\u2013Minkowski inequality**"
   },
   {
     "consumed_by_exp_id": "",

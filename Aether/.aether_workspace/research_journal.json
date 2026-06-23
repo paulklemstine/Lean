@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2ec4044e",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Tropicalized binary weight enumerator profiles\n\nFollow-up conjectures for the `SmoothPoincare` tropical-code thread. Each builds on the\nverified results in `TropicalWeightEnumera",
-      "quality_score": 0.5527085714285715,
-      "sorry_count": 1,
-      "theorem_count": 7,
-      "timestamp": "2026-06-16T11:25:17",
-      "title": "Tropicalized binary weight enumerator profile from Smooth Poincaré code primitives"
-    },
-    {
       "cycle_id": "ce2d79fb",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Rips ↔ Tropical Valuation Bridge (cycle output)\n\nThis cycle built and verified the missing **anchor** of the program:\n\n* `Catalog/Geometry/RipsTropicalCompletion.lean` — `tropBir",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-23T06:40:10",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
+    },
+    {
+      "cycle_id": "54153a72",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Brunn–Minkowski Theory\n\nThis cycle established the **one-dimensional Brunn–Minkowski inequality**\n(`vol A + vol B ≤ vol(A+B)` for nonempty compact `A,B ⊆ ℝ`), its sharpness on\nin",
+      "quality_score": 0.56159,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-23T07:32:03",
+      "title": "Convex Geometry: Brunn-Minkowski Theory"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T06:40:10",
+  "last_updated": "2026-06-23T07:32:03",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "78c9ab60",
-        "quality": 0.5606952380952381,
-        "theorems": 10,
-        "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
-      },
-      {
         "cycle_id": "fb1d7cfa",
         "quality": 0.536,
         "theorems": 137,
@@ -3451,6 +3445,12 @@
         "quality": 0.3928874,
         "theorems": 5,
         "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
+      },
+      {
+        "cycle_id": "54153a72",
+        "quality": 0.56159,
+        "theorems": 6,
+        "title": "Convex Geometry: Brunn-Minkowski Theory"
       }
     ],
     "Logic": [
