@@ -552,7 +552,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "2b44c5bb",
+    "consumed_by_exp_id": "",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -563,7 +563,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -3064,17 +3064,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let G be a simple left d-regular bipartite graph with d \u2265 2 and girth at least 2k + 2. Then the minimum distance of the binary linear code B(G) is at least k + 1. This connects the combinatorial structure of optimal small-set expanders (characterized by girth) to the coding-theoretic properties of their associated codes, which is central to the paper's application to post-quantum key exchange.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_2397",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-23T23:53:07.212970+00:00",
+    "title": "Girth bounds minimum distance of bipartite graph codes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2397",
+    "id": "fd_2398",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
     "status": "available",
     "timestamp": "2026-06-23T23:26:49.596090+00:00",
     "title": "Erd\u0151s Problem 550 for All Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer $i \\geq 0$ and prime $p$, there exists a constant $C_i$ such that the rational cohomology of the Hecke congruence subgroup $\\Gamma_{0,n}(p)$ vanishes in codimension $i$ for all $n \\geq C_i p$. This extends the paper's results which prove this for $i=0,1,2$ with bounds $n \\geq \\frac{p+14}{6}$, $n \\geq 4p+5$, and $n \\geq 7p+8$ respectively.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2399",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T23:53:53.632851+00:00",
+    "title": "Linear Vanishing Bound for Hecke Congruence Subgroup Cohomology"
   },
   {
     "consumed_by_exp_id": "",
@@ -3352,7 +3382,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "961bb29f",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -3362,7 +3392,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -3410,37 +3440,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "a4a5a639",
-    "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
-    "domains": [
-      "Computation",
-      "Novelty"
-    ],
-    "id": "moonshot_Rucker_20",
-    "priority_score": 0.62,
-    "research_mode": "team",
-    "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-22T11:50:11.785769+00:00",
-    "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
-  },
-  {
-    "consumed_by_exp_id": "d9f17c93",
-    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
-    "domains": [
-      "Geometry",
-      "Novelty"
-    ],
-    "id": "moonshot_Pickover_32",
-    "priority_score": 0.58,
-    "research_mode": "team",
-    "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-22T11:50:17.617665+00:00",
-    "title": "Pickover Clifford Attractor Family"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5fa8083",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -3449,7 +3449,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },

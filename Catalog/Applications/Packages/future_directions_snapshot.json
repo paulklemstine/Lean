@@ -736,7 +736,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2b44c5bb",
+    "consumed_by_exp_id": "",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domain_bridges": [],
     "domains": [
@@ -750,7 +750,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -5069,6 +5069,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "cs.IT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let G be a simple left d-regular bipartite graph with d ≥ 2 and girth at least 2k + 2. Then the minimum distance of the binary linear code B(G) is at least k + 1. This connects the combinatorial structure of optimal small-set expanders (characterized by girth) to the coding-theoretic properties of their associated codes, which is central to the paper's application to post-quantum key exchange.",
+    "domain_bridges": [
+      "graph_theory",
+      "coding_theory",
+      "expander_graphs"
+    ],
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_2397",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "By contradiction: assume a codeword x ∈ B(G) of Hamming weight w with 1 ≤ w ≤ k. Let S = supp(x). Since girth ≥ 2k + 2 ≥ 2w + 2, the induced subgraph on S ∪ N(S) is acyclic (any cycle has length ≤ 2w < 2k + 2). In this forest, each vertex in S has degree d (left-regularity) and each vertex in N(S) has even degree ≥ 2 (parity-check condition from x ∈ B(G)). Degree-sum gives d|S| = Σ_{v∈N(S)} deg(v) ≥ 2|N(S)|, so |N(S)| ≤ d|S|/2. But the forest property gives d|S| = edges ≤ vertices − 1 = |S| + |N(S)| − 1, so |N(S)| ≥ (d−1)|S| + 1. Combining yields (d−1)|S| + 1 ≤ d|S|/2, i.e., (d−2)|S|/2 ≤ −1, contradicting d ≥ 2 and |S| ≥ 1.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-23T23:53:07.212970+00:00",
+    "title": "Girth bounds minimum distance of bipartite graph codes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "ErdosProblems550",
       "EFRS1989",
       "Chvatal1977",
@@ -5084,7 +5111,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2397",
+    "id": "fd_2398",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to adapt the off-Turán embedding and compactness-rounding arguments to eliminate the dependence on n₀. Alternatively, perform a systematic case analysis for small n using structural properties of trees and known exact Ramsey numbers for small complete multipartite graphs.",
@@ -5093,6 +5120,33 @@
     "status": "available",
     "timestamp": "2026-06-23T23:26:49.596090+00:00",
     "title": "Erdős Problem 550 for All Trees"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AT",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer $i \\geq 0$ and prime $p$, there exists a constant $C_i$ such that the rational cohomology of the Hecke congruence subgroup $\\Gamma_{0,n}(p)$ vanishes in codimension $i$ for all $n \\geq C_i p$. This extends the paper's results which prove this for $i=0,1,2$ with bounds $n \\geq \\frac{p+14}{6}$, $n \\geq 4p+5$, and $n \\geq 7p+8$ respectively.",
+    "domain_bridges": [
+      "Arithmetic Groups",
+      "Homological Algebra",
+      "Geometric Group Theory"
+    ],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2399",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish a uniform linear bound by inducting on the codimension $i$, utilizing Borel-Serre duality to relate high-degree cohomology to low-degree homology, and carefully controlling the $p$-torsion dependencies in the spectral sequence of the complex of apartments.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T23:53:53.632851+00:00",
+    "title": "Linear Vanishing Bound for Hecke Congruence Subgroup Cohomology"
   },
   {
     "ambition_level": "extension",
@@ -5467,7 +5521,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "961bb29f",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domain_bridges": [],
     "domains": [
@@ -5480,7 +5534,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -5545,47 +5599,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a4a5a639",
-    "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
-    "domain_bridges": [],
-    "domains": [
-      "Computation",
-      "Novelty"
-    ],
-    "id": "moonshot_Rucker_20",
-    "lineage_refs": [],
-    "priority_score": 0.62,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-22T11:50:11.785769+00:00",
-    "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d9f17c93",
-    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Novelty"
-    ],
-    "id": "moonshot_Pickover_32",
-    "lineage_refs": [],
-    "priority_score": 0.58,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-22T11:50:17.617665+00:00",
-    "title": "Pickover Clifford Attractor Family"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a5fa8083",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -5597,7 +5611,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },

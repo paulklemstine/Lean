@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "e49c5ee1",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Information-Theoretic Limits of Proof Search\n\nThese conjectures extend `Catalog/Computation/ProofSearchLimits.lean`, which proves\nthat the set of theorems certifiable within a pr",
-      "quality_score": 0.48378234883720933,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-06-16T16:54:39",
-      "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
-    },
-    {
       "cycle_id": "d79ba9e2",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Isogeny-Based Cryptography (CSI-FiSh / CSIDH)\n\nConjectures below are stated to be *formalizable and testable* in Lean 4, building\ndirectly on `Catalog/Cryptography/CSIFiShClassGr",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-06-23T23:47:37",
       "title": "Pickover Clifford Attractor Family"
+    },
+    {
+      "cycle_id": "a4a5a639",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Rucker Gnarl & Continuous-Valued CA\n\nDerived from this cycle's findings in `Catalog/Novelty/ContinuousValuedCA.lean`,\n`Catalog/Novelty/GnarlLyapunov.lean`, and\n`Catalog/Bridges/G",
+      "quality_score": 0.3493306711864407,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-23T23:51:10",
+      "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T23:47:37",
+  "last_updated": "2026-06-23T23:51:10",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f370d5ee",
-        "quality": 0.4935106666666667,
-        "theorems": 22,
-        "title": "Consciousness as Integrated Information"
-      },
-      {
         "cycle_id": "ddafecee",
         "quality": 0.68521,
         "theorems": 36,
@@ -3636,6 +3630,12 @@
         "cycle_id": "0de5396c",
         "quality": 0.5094479615384615,
         "theorems": 21,
+        "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
+      },
+      {
+        "cycle_id": "a4a5a639",
+        "quality": 0.3493306711864407,
+        "theorems": 12,
         "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
       }
     ],
