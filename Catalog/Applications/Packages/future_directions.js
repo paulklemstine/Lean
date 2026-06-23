@@ -1498,6 +1498,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2282",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20430v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:35:57.205204+00:00",
+    "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a topological group and H \u2264 G a dense subgroup with the subspace topology. If H is extremely amenable, meaning every continuous action of H on a nonempty compact Hausdorff space has a fixed point, then G is extremely amenable. This isolates the density step used when passing from the automorphism group of a projective Fraisse limit to the closure subgroup of the homeomorphism group of the quotient continuum.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2282",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:36:00.903861+00:00",
+    "title": "Extreme amenability passes from a dense subgroup to its ambient topological group"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -1770,6 +1800,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2283",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:80035",
+    "status": "available",
+    "timestamp": "2026-06-23T00:36:02.659081+00:00",
+    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2283",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-06-23T00:36:02.659426+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
