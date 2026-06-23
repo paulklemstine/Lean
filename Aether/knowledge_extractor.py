@@ -1261,7 +1261,7 @@ Research mode: {concept.research_mode}
         # leaving zombie jobs that never hit a checkpoint-based cap. dispatch_time
         # age is the authoritative signal and covers no-checkpoint jobs too.
         stall_cfg = self.config.get("stall", {}) if hasattr(self, "config") and self.config else {}
-        max_cycle_seconds = stall_cfg.get("hard_cap_seconds", 4 * 3600)        # 4h wall-clock cap
+        max_cycle_seconds = stall_cfg.get("hard_cap_seconds", 24 * 3600)       # 24h wall-clock cap
         preparing_timeout = stall_cfg.get("preparing_timeout_seconds", 1800)   # 30min in preparing
         warn_seconds = stall_cfg.get("warn_seconds", 5400)                     # 90min warn
 

@@ -1,7 +1,7 @@
 """TDD tests for stall cap (wall-clock), preparing timeout, and direction reconcile.
 
 Covers:
-- Stall hard cap is wall-clock based (not checkpoint elapsed), 4h default.
+- Stall hard cap is wall-clock based (not checkpoint elapsed), 24h default.
 - No-checkpoint jobs are covered by the cap (regression: previously skipped).
 - Warn at 90min does NOT fail the job.
 - Preparing timeout force-fails jobs stuck in preparing.
@@ -70,12 +70,12 @@ def _job(job_id="j1", status="dispatched", dispatch_time=0.0, preparing_started=
 # ─── Stall cap (wall-clock) ──────────────────────────────────────────────
 
 def test_stall_cap_wall_clock_force_fail(temp_workspace):
-    """A dispatched job older than the 4h wall-clock cap is force-failed and
+    """A dispatched job older than the 24h wall-clock cap is force-failed and
     returned in completed — independent of reasoning checkpoints."""
     import time
     now = time.time()
     job = _job(job_id="stalled1", status="dispatched",
-               dispatch_time=now - 250 * 60)  # 4h10m, over the 4h cap
+               dispatch_time=now - 1450 * 60)  # 24h10m, over the 24h cap
     ext = _make_extractor(temp_workspace, [job])
     completed = asyncio.run(ext.poll_all())
     assert job.status == "failed", f"Expected failed, got {job.status}"
@@ -90,7 +90,7 @@ def test_stall_cap_no_checkpoint_covered(temp_workspace):
     import time
     now = time.time()
     job = _job(job_id="nockpt", status="dispatched",
-               dispatch_time=now - 250 * 60)
+               dispatch_time=now - 1450 * 60)  # 24h10m, over the 24h cap
     ext = _make_extractor(temp_workspace, [job])
     # poll_project would return RUNNING, but the wall-clock cap fires first
     completed = asyncio.run(ext.poll_all())
@@ -100,7 +100,7 @@ def test_stall_cap_no_checkpoint_covered(temp_workspace):
 
 
 def test_stall_warn_under_cap(temp_workspace):
-    """A dispatched job at 100min (over 90min warn, under 4h cap) is NOT failed."""
+    """A dispatched job at 100min (over 90min warn, under 24h cap) is NOT failed."""
     import time
     now = time.time()
     job = _job(job_id="warn1", status="dispatched",
