@@ -1850,17 +1850,21 @@ Research mode: {concept.research_mode}
         signals on the job are decisive enough to skip the LLM eval, else None
         (borderline -> the caller invokes the LLM).
 
-        Clear-fail (safe to enable): no theorems produced -> trivial.
-        Clear-pass (conservative): 0 sorries, >=5 theorems, >=2 novel -> substantial.
+        Clear-fail (safe): no theorems produced -> trivial. This matches the
+        LLM's own fallback heuristic (0 theorems => nothing proved).
+
+        NOTE: a clear-PASS branch (0 sorries, >=5 theorems, >=2 novel -> substantial)
+        was REMOVED after shadow-mode validation showed 94% disagreement (16/17
+        cycles the gate called "substantial" the LLM graded "partial"): static
+        counts cannot assess mathematical substance/interest, which is the
+        LLM's job. To skip re-eval of repeated content, use the content-hash
+        eval cache (Lever B), not a clear-pass gate.
 
         Built on signals already computed in extract() before evaluate():
         job.theorem_count, job.sorry_count, job.theorem_novelty. (compiles via
         `lake build` is NOT on the main tick path, so it's not used here.)
         """
         tc = getattr(job, "theorem_count", 0) or 0
-        sc = getattr(job, "sorry_count", 0) or 0
-        nov = getattr(job, "theorem_novelty", None) or {}
-        new = nov.get("new", 0) if isinstance(nov, dict) else 0
 
         # Clear-fail: nothing proved.
         if tc == 0:
@@ -1868,13 +1872,6 @@ Research mode: {concept.research_mode}
                 "quality": "trivial", "should_retry": True,
                 "retry_strategy": "Static gate: no theorems produced.",
                 "confidence": 0.85, "analysis": "Static gate: theorem_count == 0.",
-            }
-        # Clear-pass: complete (0 sorries), substantial (>=5 theorems), novel (>=2 new).
-        if sc == 0 and tc >= 5 and new >= 2:
-            return {
-                "quality": "substantial", "should_retry": False,
-                "retry_strategy": "", "confidence": 0.75,
-                "analysis": f"Static gate: 0 sorries, {tc} theorems, {new} novel.",
             }
         return None
 

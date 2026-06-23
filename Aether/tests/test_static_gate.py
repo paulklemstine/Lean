@@ -44,13 +44,14 @@ def test_gate_clear_fail_no_theorems():
     assert g["should_retry"] is True
 
 
-def test_gate_clear_pass_solid_novel():
+def test_gate_clear_pass_removed_returns_none():
+    """The clear-pass branch was removed (shadow data showed 94% disagreement
+    with the LLM — static counts can't assess mathematical substance). A
+    complete/novel cycle is now borderline -> None (call LLM)."""
     ext = _extractor()
     g = ext._static_quality_gate(_job(theorem_count=6, sorry_count=0,
                                       novelty={"new": 3, "strengthening": 0, "duplicate": 0, "disproof": 0, "unknown": 0}))
-    assert g is not None
-    assert g["quality"] == "substantial"
-    assert g["should_retry"] is False
+    assert g is None
 
 
 def test_gate_borderline_some_sorries():
