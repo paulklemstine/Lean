@@ -332,7 +332,7 @@
     "proof_strategy": "Define the contact filtration for protein P with N residues: for distance threshold t, build the Vietoris-Rips complex R_t from the pairwise C-alpha distances. Compute the persistent homology barcode PH(P, configuration) = {(b_i, d_i)}. Define TotalPersistence(P) = sum_i (d_i - b_i). Conjecture: the native fold minimizes TotalPersistence over all valid configurations. Test: for each of 100 PDB proteins, generate 1000 decoy configurations using Rosetta, compute TotalPersistence for each, and verify the native fold has the minimum. Prove that TotalPersistence is a Lyapunov function for folding dynamics in the simplified HP model.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T19:55:27.909349+00:00",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
@@ -412,7 +412,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432772+00:00",
     "title": "Noether's Theorem: Symmetries and Conservation Laws"
   },
@@ -856,26 +856,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "07255b71",
-    "description": "Prove that 78557 is the smallest Sierpiński number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "seed_208",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:09.067494+00:00",
-    "title": "Sierpiński Numbers: Covering Systems"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
@@ -1010,7 +990,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432777+00:00",
     "title": "Universal Approximation: Quantitative Bounds"
   },
@@ -1170,7 +1150,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -2605,6 +2585,63 @@
     "title": "Church-Farb-Putman Conjecture for Codimension 3"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT",
+      "quant-ph",
+      "Stark_conjectures",
+      "SIC_POVM",
+      "ray_class_fields"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every dimension d ≥ 2 with d ≠ 3, and every SIC-POVM in dimension d, each overlap unit (the normalized phase factor of a SIC inner product) is a product of integral powers of square roots of Stark units in ray class fields K^{fd∞₁} of the quadratic field K = ℚ(√((d+1)(d-3))), where f ranges over divisors of f₀(d). In the minimal case (f = 1), all overlap units are products of powers of square roots of Stark units from K^{d∞₁}; in the non-minimal case, a lattice of ray class fields indexed by divisors f | f₀ contributes.",
+    "domain_bridges": [
+      "Quantum Information Theory ↔ Algebraic Number Theory",
+      "SIC-POVM overlaps ↔ Stark units in ray class fields",
+      "Shintani–Faddeev cocycle ↔ SIC overlap phases"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2307",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the correspondence in two stages: (1) Show that SIC overlap units satisfy the same algebraic relations as Stark units in the relevant ray class fields, using explicit computations in low dimensions as base cases and Galois-theoretic arguments for the inductive structure; (2) Prove that the Shintani–Faddeev modular cocycle, which conjecturally computes overlap units directly, evaluates to products of square roots of Stark units by leveraging Stark's conjectures (proved in the rank-1 case by Stark) and the class field theory of the quadratic field K = ℚ(√((d+1)(d-3))). The 'every second dimension' phenomenon where some overlap units equal ±1 follows from a parity property of the ray class fields that can be verified independently.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23535v1",
+    "status": "available",
+    "timestamp": "2026-06-23T10:26:04.126549+00:00",
+    "title": "SIC Overlap Units are Stark Unit Root Products"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.AT",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any prime $p$ and integer $n \\geq 4p+5$, the rational cohomology group $H^{\\binom{n}{2}-1}(\\Gamma_{0,n}(p); \\mathbb{Q})$ is trivial.",
+    "domain_bridges": [
+      "Group Cohomology",
+      "Arithmetic Groups",
+      "Linear Algebraic Groups"
+    ],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2308",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the Hecke congruence subgroup $\\Gamma_{0,n}(p)$ in Mathlib, formalize the Borel-Serre duality theorem for finite index subgroups of $\\mathrm{SL}_n(\\mathbb{Z})$, and use the complex of partial bases to compute the homology of the associated symmetric space boundary modulo $p$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T10:29:24.389909+00:00",
+    "title": "Vanishing of Codimension-One Cohomology for Hecke Congruence Subgroups"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -3134,7 +3171,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3db2ad68",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -3146,7 +3183,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -3265,7 +3302,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
   },
@@ -3367,26 +3404,6 @@
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "55431155",
-    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0493",
-    "lineage_refs": [],
-    "priority_score": 0.5499999999999999,
-    "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.995091+00:00",
-    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
     "ambition_level": "extension",
@@ -3751,7 +3768,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "70e63d82",
+    "consumed_by_exp_id": "",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domain_bridges": [],
     "domains": [
@@ -3764,7 +3781,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
