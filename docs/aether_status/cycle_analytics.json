@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T11:00:01.191083+00:00",
+  "last_updated": "2026-06-23T11:42:32.379732+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -847,6 +847,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-23T11:00:00.963019+00:00",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4139,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Probability",
+      "duration_seconds": 7181.14297413826,
+      "end_time": 1782214757.81079,
+      "files_integrated": 6,
+      "job_id": "57fbcb2f",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v15",
+      "phase_b_prompt_version": "v2",
+      "phase_b_skipped": false,
+      "prompt_version": "v15",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7119,
+        "cross_domain": 0.7,
+        "grade": "world_class",
+        "importance": 0.7272,
+        "novelty": 0.95,
+        "proof_depth": 0.6317,
+        "usefulness": 0.6659
+      },
+      "quality_score": 0.48476875555555554,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782207576.667816,
+      "strategy_count": 0,
+      "theorem_count": 16,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 15,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-23T11:42:32.153007+00:00",
+      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
     }
   ]
 }

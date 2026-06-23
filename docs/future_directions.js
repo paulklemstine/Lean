@@ -1344,7 +1344,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ebb608b8",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domains": [
       "NumberTheory",
@@ -1354,7 +1354,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -2054,12 +2054,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
+    "description": "Conjecture that for every integer k\u22653 there exists a critical edge density \u03b3_k\u2208(0,1) such that for all sufficiently large n, any graph on n vertices with edge density at least \u03b3_k that contains no induced copy of K_{1,k} is \u03b5 n^2-close (in edit distance) to the complement of a complete (k\u22121)-partite graph whose part sizes differ by at most o(n) from the balanced partition n/(k\u22121).",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
     "id": "fd_2325",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22661v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:44:48.971200+00:00",
+    "title": "Typical (k\u22121)-partite complement structure of dense K_{1,k}-free graphs above the critical density"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2326",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -2074,7 +2089,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2326",
+    "id": "fd_2327",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2089,7 +2104,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2104,7 +2119,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2328",
+    "id": "fd_2329",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2118,7 +2133,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2329",
+    "id": "fd_2330",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
@@ -2132,7 +2147,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
@@ -2146,7 +2161,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -2161,7 +2176,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -2176,7 +2191,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -2190,7 +2205,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2334",
+    "id": "fd_2335",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22972v1",
@@ -2204,7 +2219,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
@@ -2219,7 +2234,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -2234,13 +2249,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
     "status": "available",
     "timestamp": "2026-06-23T11:22:47.373232+00:00",
     "title": "Threshold-free equality case for the local-homology signless Laplacian bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The lazy swap chain on the set \u03a9(r,c) of m\u00d7n binary matrices with prescribed row sums r and column sums c has spectral gap at least (C(m,2))\u207b\u00b9(C(n,2))\u207b\u00b9 for all feasible margins whenever m,n \u2265 2. This resolves the 1997 conjecture of Kannan, Tetali, and Vempala. The bound is tight in the worst case (e.g., r\u2081=r\u2082=1, c\u2081=c\u2082=1, all other margins zero, giving |\u03a9|=2).",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2339",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22636v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:45:08.025039+00:00",
+    "title": "Spectral Gap Lower Bound for the Binary Fixed-Margin Swap Chain"
   },
   {
     "consumed_by_exp_id": "",
@@ -2430,21 +2460,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Orderly Friedman Numbers\n\nBuilding on `Computation/OrderlyFriedman.lean` (formalization of orderly Friedman\nnumbers A080035 via an expression language, five canonical witnesses,\n`orderly_imp_friedman`, and `orderlyFriedman_ge_ten`), we propose the following\nbold, testable conjectures for follow-up cycles.\n\n## C1. No two-digit orderly Friedman numbers\n**Conjecture.** There is no orderly Friedman number `n` with `10 \u2264 n \u2264 99`.\n(We proved `n \u2265 10`; the smallest known term is 127.) A Lean proof needs a\nfiniteness argument bounding the size of relevant expressions for two-digit `n`\n(only one operation between two single digits, finitely many ops), making this a\ndecidable finite case analysis once expression depth is bounded.\n\n## C2. Infinitude via an explicit power family\n**Conjecture.** Infinitely many orderly Friedman numbers arise as `5^k`.\nEvidence: `3125 = 5^5 = (3\u00b71+2)^5` is orderly (digits `3,1,2,5` in order).\nTestable: search the values `5^k` for orderly witnesses and conjecture an explicit\nparametric construction giving an infinite subfamily.\n\n## C3. Concatenation-prefix closure\n**Conjecture.** If `n` is orderly Friedman with leading-digit-group `g`, then\ninfinitely many of the numbers obtained by prepending an evaluable digit block\n(e.g. `0`-free prefixes contributing an additive/multiplicative neutral combination)\nare again orderly Friedman. Formalize a \"prefix lemma\" and test it against A080035.\n\n## C4. Order penalty (density gap)\n**Conjecture.** Orderly Friedman numbers are asymptotically rarer than Friedman\nnumbers: `#{orderly \u2264 N} / #{Friedman \u2264 N} \u2192 0`. The proven implication\n`orderly_imp_friedman` gives the trivial `\u2264`; the conjecture asserts the ratio\nvanishes. Testable computationally by counting both sets up to `N = 10^k`.\n\n## C5. Base-`b` generalization is order-stable\n**Conjecture.** Define base-`b` orderly Friedman numbers by replacing\n`Nat.digits 10` with `Nat.digits b`. Then for every base `b \u2265 3` the set is\nnonempty, and the analogue of `orderlyFriedman_ge_ten` holds: every base-`b`\norderly Friedman number is `\u2265 b`. The `\u2265 b` half is already within reach of the\npresent machinery (`numLits_le_digitSeq_length` + `Nat.lt_digits_length_iff`);\nnonemptiness for each base is the open part.\n",
-    "domains": [
-      "Logic",
-      "Pythagorean"
-    ],
-    "id": "fd_2338",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "57fbcb2f",
-    "status": "available",
-    "timestamp": "2026-06-23T11:40:40.115834+00:00",
-    "title": "Building on `Computation/OrderlyFriedman.lean` (formalization of orderly Friedma"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2603,6 +2618,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
+  },
+  {
+    "consumed_by_exp_id": "9da6c75a",
+    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
+    "domains": [
+      "Geometry",
+      "Novelty"
+    ],
+    "id": "moonshot_Pickover_32",
+    "priority_score": 0.58,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-22T11:50:17.617665+00:00",
+    "title": "Pickover Clifford Attractor Family"
   },
   {
     "consumed_by_exp_id": "",
@@ -2782,7 +2812,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "47dffa0b",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -2792,7 +2822,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -2887,7 +2917,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a2118a3",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -2897,7 +2927,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

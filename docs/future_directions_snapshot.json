@@ -1793,7 +1793,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ebb608b8",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1806,7 +1806,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -3087,6 +3087,34 @@
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "induced K_{1,k}",
+      "graph limits",
+      "Erdős–Rényi random graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every integer k≥3 there exists a critical edge density γ_k∈(0,1) such that for all sufficiently large n, any graph on n vertices with edge density at least γ_k that contains no induced copy of K_{1,k} is ε n^2-close (in edit distance) to the complement of a complete (k−1)-partite graph whose part sizes differ by at most o(n) from the balanced partition n/(k−1).",
+    "domain_bridges": [
+      "graph limits",
+      "statistical physics",
+      "extremal combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2325",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Stability via flag algebra computations combined with a removal lemma for induced stars",
+    "research_mode": "team",
+    "source_exp_id": "2606.22661v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:44:48.971200+00:00",
+    "title": "Typical (k−1)-partite complement structure of dense K_{1,k}-free graphs above the critical density"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -3102,7 +3130,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2325",
+    "id": "fd_2326",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -3129,7 +3157,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2326",
+    "id": "fd_2327",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -3159,7 +3187,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -3187,7 +3215,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2328",
+    "id": "fd_2329",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3214,7 +3242,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2329",
+    "id": "fd_2330",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3240,7 +3268,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3267,7 +3295,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
@@ -3297,7 +3325,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply repeated Cauchy–Schwarz inequalities on the group sum to bound the kernel average, and argue that equality forces f to be constant.",
@@ -3324,7 +3352,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive analysis combining subgroup inclusion properties with graph connectivity criteria",
@@ -3351,7 +3379,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2334",
+    "id": "fd_2335",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the bound α_{es}(G) ≥ α(G) - 1 holds universally by constructing an ESI-set from an arbitrary maximum independent set through local modifications to satisfy the ES-condition, or disprove by finding a graph where the reduction exceeds 1.",
@@ -3378,7 +3406,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the lexicographic order on infinite sequences over a finite alphabet, formalize the $\\beta$-transformation and the quasi-greedy expansion of 1, then prove the equivalence using properties of the shift map and greedy expansions.",
@@ -3404,7 +3432,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the author's bilinear approach and point-line incidence estimates to handle the endpoint $r=3$, or establish sharp Kakeya and maximal restriction bounds over finite fields to close the remaining gap.",
@@ -3435,7 +3463,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the paper’s inequality proof via the Rayleigh quotient for the nonnegative signless up-Laplacian. Use r-down path connectivity to obtain irreducibility and hence a strictly positive Perron vector. Analyze every equality condition in the chain of inequalities: local homology vanishing should force the relevant link shadows to attain their extremal Kruskal-Katona-type lower bounds, while equality in the Perron/Rayleigh estimates should force all maximal r-faces to contain a common core of size r+1-t and to contain every t-subset of the complementary vertex set. The remaining task is to replace the paper’s large-n rigidity lemma by an exact finite rigidity lemma for the equality case.",
@@ -3444,6 +3472,34 @@
     "status": "available",
     "timestamp": "2026-06-23T11:22:47.373232+00:00",
     "title": "Threshold-free equality case for the local-homology signless Laplacian bound"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.PR",
+      "math.CO",
+      "cs.DS"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The lazy swap chain on the set Ω(r,c) of m×n binary matrices with prescribed row sums r and column sums c has spectral gap at least (C(m,2))⁻¹(C(n,2))⁻¹ for all feasible margins whenever m,n ≥ 2. This resolves the 1997 conjecture of Kannan, Tetali, and Vempala. The bound is tight in the worst case (e.g., r₁=r₂=1, c₁=c₂=1, all other margins zero, giving |Ω|=2).",
+    "domain_bridges": [
+      "markov_chain_mixing--combinatorial_matrix_theory",
+      "spectral_graph_theory--sampling_algorithms",
+      "johnson_scheme_harmonic_analysis--reversible_markov_chains"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2339",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Follow the paper's three-stage argument: (1) Establish a comparison inequality between the swap chain and a two-row heat-bath chain, bounding the swap chain spectral gap from below by a constant times the heat-bath spectral gap. (2) Reduce the m×n heat-bath analysis to the 3-row case via a tensorization/reduction argument on the column-count variable. (3) Prove the 3-row inequality by decomposing the function space on {0,1}³ into the constant sector, the count sector (functions of the column sum), and the Johnson harmonic sectors, establishing a Poincaré inequality on each sector with the appropriate spectral gap lower bound.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22636v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:45:08.025039+00:00",
+    "title": "Spectral Gap Lower Bound for the Binary Fixed-Margin Swap Chain"
   },
   {
     "ambition_level": "extension",
@@ -3700,26 +3756,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Orderly Friedman Numbers\n\nBuilding on `Computation/OrderlyFriedman.lean` (formalization of orderly Friedman\nnumbers A080035 via an expression language, five canonical witnesses,\n`orderly_imp_friedman`, and `orderlyFriedman_ge_ten`), we propose the following\nbold, testable conjectures for follow-up cycles.\n\n## C1. No two-digit orderly Friedman numbers\n**Conjecture.** There is no orderly Friedman number `n` with `10 ≤ n ≤ 99`.\n(We proved `n ≥ 10`; the smallest known term is 127.) A Lean proof needs a\nfiniteness argument bounding the size of relevant expressions for two-digit `n`\n(only one operation between two single digits, finitely many ops), making this a\ndecidable finite case analysis once expression depth is bounded.\n\n## C2. Infinitude via an explicit power family\n**Conjecture.** Infinitely many orderly Friedman numbers arise as `5^k`.\nEvidence: `3125 = 5^5 = (3·1+2)^5` is orderly (digits `3,1,2,5` in order).\nTestable: search the values `5^k` for orderly witnesses and conjecture an explicit\nparametric construction giving an infinite subfamily.\n\n## C3. Concatenation-prefix closure\n**Conjecture.** If `n` is orderly Friedman with leading-digit-group `g`, then\ninfinitely many of the numbers obtained by prepending an evaluable digit block\n(e.g. `0`-free prefixes contributing an additive/multiplicative neutral combination)\nare again orderly Friedman. Formalize a \"prefix lemma\" and test it against A080035.\n\n## C4. Order penalty (density gap)\n**Conjecture.** Orderly Friedman numbers are asymptotically rarer than Friedman\nnumbers: `#{orderly ≤ N} / #{Friedman ≤ N} → 0`. The proven implication\n`orderly_imp_friedman` gives the trivial `≤`; the conjecture asserts the ratio\nvanishes. Testable computationally by counting both sets up to `N = 10^k`.\n\n## C5. Base-`b` generalization is order-stable\n**Conjecture.** Define base-`b` orderly Friedman numbers by replacing\n`Nat.digits 10` with `Nat.digits b`. Then for every base `b ≥ 3` the set is\nnonempty, and the analogue of `orderlyFriedman_ge_ten` holds: every base-`b`\norderly Friedman number is `≥ b`. The `≥ b` half is already within reach of the\npresent machinery (`numLits_le_digitSeq_length` + `Nat.lt_digits_length_iff`);\nnonemptiness for each base is the open part.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Pythagorean"
-    ],
-    "id": "fd_2338",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "57fbcb2f",
-    "status": "available",
-    "timestamp": "2026-06-23T11:40:40.115834+00:00",
-    "title": "Building on `Computation/OrderlyFriedman.lean` (formalization of orderly Friedma"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3931,6 +3967,26 @@
     "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "9da6c75a",
+    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Novelty"
+    ],
+    "id": "moonshot_Pickover_32",
+    "lineage_refs": [],
+    "priority_score": 0.58,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-22T11:50:17.617665+00:00",
+    "title": "Pickover Clifford Attractor Family"
   },
   {
     "ambition_level": "extension",
@@ -4172,7 +4228,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "47dffa0b",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domain_bridges": [],
     "domains": [
@@ -4185,7 +4241,7 @@
     "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -4312,7 +4368,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a2118a3",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -4325,7 +4381,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
