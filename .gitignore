@@ -19,7 +19,7 @@ __pycache__/
 /Aether/.aether_workspace/archive_db/
 /Aether/.aether_workspace/archive_2026-06-08/
 /Aether/.aether_workspace/reasoning_logs/
-/Aether/.aether_workspace/theorems.sqlite
+/Aether/.aether_workspace/theorems.sqlite*
 /Aether/.aether_workspace/*.log
 /Aether/.aether_workspace/aether_tick.lock
 /Aether/.aether_workspace/pollinations_api_key
