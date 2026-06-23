@@ -3221,6 +3221,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Sperner's Lemma, Combinatorial Fixed Points, and Nash\n\nDerived from this cycle's findings (1D Sperner parity ⟹ discrete IVT ⟹ discrete\nBrouwer; potential-game pure Nash via optimization; supermodular-game pure Nash via\nthe catalog's Knaster–Tarski theorem).\n\n## Conjecture 1 — Sperner parity scales to a top-dimensional count\nA 2-coloring extends to an `n`-coloring of a triangulated `n`-simplex, and the\n*number* of fully-colored cells has a fixed parity (odd when the boundary coloring\nis Sperner-admissible).\n- **The key insight is...** the 1D `sperner1D_parity` we proved is the `n = 1` slice\n  of a general \"boundary coloring determines the parity of fully-colored cells\"\n  invariant; the induction on dimension mirrors the induction on path length, with\n  the door-counting argument replacing the telescoping `Nat.add_mod` step.\n- **Why now?** The 1D parity is already formal and `decide`-free; the door-counting\n  (Scarf/Cohen) recursion is the only missing combinatorial ingredient, making the\n  full Sperner lemma a realistic next formal target rather than a topology import.\n\n## Conjecture 2 — Discrete Brouwer ⟹ ε-Nash with explicit grid size\nFor any finite game with payoffs bounded by `M` and `N` total pure strategies, the\n`discrete_brouwer` bracket on a grid of mesh `1/k` yields an `ε`-Nash equilibrium\nwith `ε ≤ c · M · N / k`.\n- **The key insight is...** the bracketing index from `discrete_brouwer` bounds the\n  per-player regret by the diagonal gap `h(i+1) - h(i)`, which the Lipschitz\n  best-response map converts into a payoff gap controlled by the mesh.\n- **Why now?** We already produce the bracket constructively with a strict boundary\n  hypothesis; quantifying the regret only needs a Lipschitz estimate, turning the\n  qualitative fixed point into an algorithmic `O(k^N)` ε-Nash solver claim that can\n  be unit-tested on 2×2 games.\n\n## Conjecture 3 — Potential and supermodular existence are incomparable but both\nstrict subclasses of Brouwer-Nash\nThere exist games with a pure Nash equilibrium that are neither potential games nor\nsupermodular games, so neither `potential_game_has_pure_nash` nor\n`supermod_game_has_nash` subsumes the other, yet both are corollaries of a single\ndiscrete-fixed-point existence theorem.\n- **The key insight is...** the potential proof uses a global *scalar* certificate\n  (argmax of `Φ`) while the supermodular proof uses an *order* certificate (a\n  Tarski fixed point); a game can admit a Brouwer fixed point of best response\n  without admitting either certificate.\n- **Why now?** Both certificates are now formalized in the same namespace, so a\n  formal separation example (a 3×3 game) would cleanly delimit the three classes\n  and motivate the unifying Brouwer statement.\n\n## Conjecture 4 — Tarski fixed points compute *all* equilibria of supermodular games\nFor a supermodular game the set of pure Nash equilibria is itself a complete\nlattice, with least and greatest elements given by iterating the joint best-response\nmap from `⊥` and `⊤`.\n- **The key insight is...** `supermod_game_has_nash` only extracts the least\n  Tarski fixed point `sInf (preFixed jointBR)`; the dual `knaster_tarski_dual`\n  already in the catalog gives the greatest, and Tarski's full theorem makes the\n  fixed-point set a complete lattice.\n- **Why now?** The catalog already contains both the least and greatest fixed-point\n  theorems; assembling them into the lattice-of-equilibria statement is pure\n  reuse and would formally recover Topkis's structure theorem.\n\n## Conjecture 5 — Parity forces an odd number of equilibria generically\nIn a \"generic\" finite game (no payoff ties), the number of Nash equilibria is odd,\na game-theoretic echo of the odd bichromatic-edge count of `sperner1D_parity`.\n- **The key insight is...** the same parity bookkeeping that makes a Sperner path\n  have an odd number of bichromatic edges underlies the Wilson/Harsanyi oddness\n  theorem when the best-response coloring is generic.\n- **Why now?** The discrete parity invariant is already proved here in its cleanest\n  1D form; lifting \"odd count\" from edges to equilibria is the natural bold test of\n  whether the Sperner parity really is the source of equilibrium oddness.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2320",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "d1c9c6b9",
+    "status": "available",
+    "timestamp": "2026-06-23T07:35:18.879663+00:00",
+    "title": "Derived from this cycle's findings (1D Sperner parity ⟹ discrete IVT ⟹ discrete"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
