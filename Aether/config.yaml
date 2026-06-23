@@ -405,3 +405,13 @@ features:
   enable_abduction_loop: true
   enable_external_signal: true
   enable_computational_stage: true
+
+# LLM usage reduction levers. Defaults are shadow (compute decision, still
+# call LLM, log agreement). Flip to "enabled" once shadow logs show high
+# agreement; "off" disables. See Aether/CLAUDE.md "LLM Usage Reduction".
+llm_reduction:
+  static_gate: shadow      # Phase 1: clear-fail/clear-pass skip of LLM eval
+  critic_gate: shadow       # Phase 2: skip adversarial critic when decisive
+  lint_gate: enabled         # Phase 2: auto-accept all-good-.lean batch (low risk)
+  eval_cache: on            # Phase 3: content-hash eval cache
+  pruning_rules: on         # Phase 4: rules-first pruning pre-filter
