@@ -1257,22 +1257,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
   {
-    "consumed_by_exp_id": "62850b85",
-    "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Analysis"
-    ],
-    "id": "seed_368",
-    "priority_score": 0.83,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432784+00:00",
-    "title": "Attention Mechanisms: Mathematical Properties"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
     "domains": [
@@ -1925,12 +1909,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2315",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23437v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:39:04.351050+00:00",
+    "title": "Helly's Theorem for Convex Splinters"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2315",
+    "id": "fd_2316",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -1945,7 +1943,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2316",
+    "id": "fd_2317",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -1960,7 +1958,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2317",
+    "id": "fd_2318",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -1975,7 +1973,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2318",
+    "id": "fd_2319",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2171,36 +2169,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Brunn\u2013Minkowski Theory\n\nThis cycle established the **one-dimensional Brunn\u2013Minkowski inequality**\n(`vol A + vol B \u2264 vol(A+B)` for nonempty compact `A,B \u2286 \u211d`), its sharpness on\nintervals, the self-sum corollary, and the iterated finite-family version\n(`Catalog/Geometry/BrunnMinkowski.lean`, fully verified). The following bold,\ntestable conjectures guide the next cycles.\n\n## C1. Multiplicative (dimension-free) 1-D form\n**Conjecture.** For nonempty compact `A,B \u2286 \u211d` and `t \u2208 [0,1]`,\n`vol(t\u2022A + (1-t)\u2022B) \u2265 t\u00b7vol A + (1-t)\u00b7vol B`.\nThis is the convex-combination (\"Pr\u00e9kopa\u2013Leindler at n=1\") restatement.\n*Test:* derive it from the proven `volume_add_ge` via the scaling identity\n`vol(c\u2022A) = |c|\u00b7vol A` (`Real.volume_smul`/`MeasureTheory.Measure.addHaar`).\nFalsifiable: check `A=B=[0,1]`, `t=1/2` gives `vol[0,1] = 1 = 1`.\n\n## C2. Equality rigidity in 1-D\n**Conjecture.** For nonempty compact `A,B \u2286 \u211d`, `vol(A+B) = vol A + vol B`\nholds **iff** (up to a null set) both `A` and `B` are intervals (or one is a\nsingle point). *Test:* the forward \"interval \u21d2 equality\" direction is already\nproved (`volume_add_Icc_eq`); the converse needs the \"no positive-measure gap\"\nanalysis. Falsifiable on `A=[0,1]\u222a[3,4]` where equality fails.\n\n## C3. Dimension-2 Brunn\u2013Minkowski for axis-aligned boxes\n**Conjecture.** For boxes `A = I\u2081\u00d7I\u2082`, `B = J\u2081\u00d7J\u2082 \u2286 \u211d\u00b2`,\n`vol(A+B)^(1/2) \u2265 vol(A)^(1/2) + vol(B)^(1/2)`.\n*Test:* `A+B = (I\u2081+J\u2081)\u00d7(I\u2082+J\u2082)`, reduce to the AM\u2013GM-type inequality\n`\u221a((a+c)(b+d)) \u2265 \u221a(ab) + \u221a(cd)` for nonnegative side lengths \u2014 provable by\n`nlinarith`/`Real.sqrt` lemmas. This is the first genuinely `n>1` case.\n\n## C4. The \u221a-superadditivity (concavity) reformulation\n**Conjecture.** The map `A \u21a6 vol(A)^(1/n)` is concave under Minkowski averaging\non the class of nonempty compact convex bodies. *Test:* in `n=1` it is exactly\n`volume_add_ge` (the exponent is trivial); state and prove the `n=2` box case\n(C3) as the inductive seed, then attempt boxes in general `n` via\n`Finset.prod` over coordinates.\n\n## C5. Discrete (Cauchy\u2013Davenport-flavored) analogue\n**Conjecture.** For nonempty finite `A,B \u2286 \u2124`, `|A+B| \u2265 |A| + |B| - 1`, with\nequality iff `A,B` are arithmetic progressions of equal common difference.\n*Test:* the counting bound mirrors the measure proof (place `A+min B` and\n`max A + B` overlapping in one point). This bridges the continuous\nBrunn\u2013Minkowski theory to additive combinatorics and is fully finitary, hence\n`decide`-checkable on small cases.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2319",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "54153a72",
-    "status": "available",
-    "timestamp": "2026-06-23T07:31:53.509764+00:00",
-    "title": "**one-dimensional Brunn\u2013Minkowski inequality**"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Sperner's Lemma, Combinatorial Fixed Points, and Nash\n\nDerived from this cycle's findings (1D Sperner parity \u27f9 discrete IVT \u27f9 discrete\nBrouwer; potential-game pure Nash via optimization; supermodular-game pure Nash via\nthe catalog's Knaster\u2013Tarski theorem).\n\n## Conjecture 1 \u2014 Sperner parity scales to a top-dimensional count\nA 2-coloring extends to an `n`-coloring of a triangulated `n`-simplex, and the\n*number* of fully-colored cells has a fixed parity (odd when the boundary coloring\nis Sperner-admissible).\n- **The key insight is...** the 1D `sperner1D_parity` we proved is the `n = 1` slice\n  of a general \"boundary coloring determines the parity of fully-colored cells\"\n  invariant; the induction on dimension mirrors the induction on path length, with\n  the door-counting argument replacing the telescoping `Nat.add_mod` step.\n- **Why now?** The 1D parity is already formal and `decide`-free; the door-counting\n  (Scarf/Cohen) recursion is the only missing combinatorial ingredient, making the\n  full Sperner lemma a realistic next formal target rather than a topology import.\n\n## Conjecture 2 \u2014 Discrete Brouwer \u27f9 \u03b5-Nash with explicit grid size\nFor any finite game with payoffs bounded by `M` and `N` total pure strategies, the\n`discrete_brouwer` bracket on a grid of mesh `1/k` yields an `\u03b5`-Nash equilibrium\nwith `\u03b5 \u2264 c \u00b7 M \u00b7 N / k`.\n- **The key insight is...** the bracketing index from `discrete_brouwer` bounds the\n  per-player regret by the diagonal gap `h(i+1) - h(i)`, which the Lipschitz\n  best-response map converts into a payoff gap controlled by the mesh.\n- **Why now?** We already produce the bracket constructively with a strict boundary\n  hypothesis; quantifying the regret only needs a Lipschitz estimate, turning the\n  qualitative fixed point into an algorithmic `O(k^N)` \u03b5-Nash solver claim that can\n  be unit-tested on 2\u00d72 games.\n\n## Conjecture 3 \u2014 Potential and supermodular existence are incomparable but both\nstrict subclasses of Brouwer-Nash\nThere exist games with a pure Nash equilibrium that are neither potential games nor\nsupermodular games, so neither `potential_game_has_pure_nash` nor\n`supermod_game_has_nash` subsumes the other, yet both are corollaries of a single\ndiscrete-fixed-point existence theorem.\n- **The key insight is...** the potential proof uses a global *scalar* certificate\n  (argmax of `\u03a6`) while the supermodular proof uses an *order* certificate (a\n  Tarski fixed point); a game can admit a Brouwer fixed point of best response\n  without admitting either certificate.\n- **Why now?** Both certificates are now formalized in the same namespace, so a\n  formal separation example (a 3\u00d73 game) would cleanly delimit the three classes\n  and motivate the unifying Brouwer statement.\n\n## Conjecture 4 \u2014 Tarski fixed points compute *all* equilibria of supermodular games\nFor a supermodular game the set of pure Nash equilibria is itself a complete\nlattice, with least and greatest elements given by iterating the joint best-response\nmap from `\u22a5` and `\u22a4`.\n- **The key insight is...** `supermod_game_has_nash` only extracts the least\n  Tarski fixed point `sInf (preFixed jointBR)`; the dual `knaster_tarski_dual`\n  already in the catalog gives the greatest, and Tarski's full theorem makes the\n  fixed-point set a complete lattice.\n- **Why now?** The catalog already contains both the least and greatest fixed-point\n  theorems; assembling them into the lattice-of-equilibria statement is pure\n  reuse and would formally recover Topkis's structure theorem.\n\n## Conjecture 5 \u2014 Parity forces an odd number of equilibria generically\nIn a \"generic\" finite game (no payoff ties), the number of Nash equilibria is odd,\na game-theoretic echo of the odd bichromatic-edge count of `sperner1D_parity`.\n- **The key insight is...** the same parity bookkeeping that makes a Sperner path\n  have an odd number of bichromatic edges underlies the Wilson/Harsanyi oddness\n  theorem when the best-response coloring is generic.\n- **Why now?** The discrete parity invariant is already proved here in its cleanest\n  1D form; lifting \"odd count\" from edges to equilibria is the natural bold test of\n  whether the Sperner parity really is the source of equilibrium oddness.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2320",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d1c9c6b9",
-    "status": "available",
-    "timestamp": "2026-06-23T07:35:18.879663+00:00",
-    "title": "Derived from this cycle's findings (1D Sperner parity \u27f9 discrete IVT \u27f9 discrete"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2304,7 +2272,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
   {
-    "consumed_by_exp_id": "57fbcb2f",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
       "Bridges"
@@ -2313,7 +2281,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
@@ -2673,7 +2641,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "13912104",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -2683,7 +2651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },

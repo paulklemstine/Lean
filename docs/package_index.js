@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-23T07:38:24Z",
+    "domain": "MachineLearning",
+    "exp_id": "62850b85",
+    "filename": "attention_mechanisms_mathematical_properties.json",
+    "pkg_num": 9,
+    "quality": "partial",
+    "quality_score": 0.4446527272727273,
+    "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
+  },
+  {
     "date": "2026-06-23T07:35:17Z",
     "domain": "Geometry",
     "exp_id": "d1c9c6b9",
@@ -86,6 +96,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "attention_mechanisms_mathematical_properties.json": {
+    "domain": "MachineLearning",
+    "exp_id": "62850b85",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
+  },
   "bridge_galois_connections_between_order_theory_and.json": {
     "domain": "Bridges",
     "exp_id": "70e63d82",
@@ -161,7 +179,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 272,
+      "hue": 92,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -172,7 +190,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 91,
+      "hue": 272,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -194,7 +212,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 270,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -205,7 +223,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 95,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -227,7 +245,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 90,
+      "hue": 91,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
@@ -238,13 +256,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 100,
+      "hue": 90,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.60268,
       "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
+    },
+    {
+      "date": "2026-06-23T07:38:24Z",
+      "domain": "MachineLearning",
+      "hue": 95,
+      "id": "attention_mechanisms_mathematical_properties",
+      "primary_domain": "MachineLearning",
+      "priority_score": 0.4446527272727273,
+      "quality": "partial",
+      "shape": "sphere_rings",
+      "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
     }
   ]
 };

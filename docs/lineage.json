@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-22T21:20:57Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -16,7 +16,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T01:40:46Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
@@ -34,7 +34,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T04:02:19Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "bridge_galois_connections_between_order_theory_and",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T05:45:49Z",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "close_proofs_these_conjectures_continue_the_resear",
@@ -61,7 +61,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:31:52Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
@@ -70,7 +70,16 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:35:17Z",
-      "hue": 100
+      "hue": 90
+    },
+    {
+      "id": "attention_mechanisms_mathematical_properties",
+      "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention",
+      "domain": "MachineLearning",
+      "primary_domain": "MachineLearning",
+      "shape": "sphere_rings",
+      "date": "2026-06-23T07:38:24Z",
+      "hue": 95
     }
   ],
   "edges": [],

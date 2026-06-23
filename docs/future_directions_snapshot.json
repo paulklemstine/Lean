@@ -1676,27 +1676,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "62850b85",
-    "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Algebra",
-      "Analysis"
-    ],
-    "id": "seed_368",
-    "lineage_refs": [],
-    "priority_score": 0.83,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432784+00:00",
-    "title": "Attention Mechanisms: Mathematical Properties"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
     "domain_bridges": [],
@@ -2839,6 +2818,32 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
+      "math.MG"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
+    "domain_bridges": [
+      "Convex Geometry",
+      "Affine Geometry",
+      "Combinatorics"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2315",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the definition of a convex splinter as a union of convex sets satisfying the affine independence condition. Proceed by induction on the dimension d, adapting the original proof by Arocha, Bracho, and Montejano which leverages Radon's theorem and properties of affine dependence on splinters.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23437v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:39:04.351050+00:00",
+    "title": "Helly's Theorem for Convex Splinters"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
       "Erdős Problem 550"
     ],
     "consumed_by_exp_id": "",
@@ -2851,7 +2856,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2315",
+    "id": "fd_2316",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -2878,7 +2883,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2316",
+    "id": "fd_2317",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -2908,7 +2913,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2317",
+    "id": "fd_2318",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -2936,7 +2941,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2318",
+    "id": "fd_2319",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3201,46 +3206,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Brunn–Minkowski Theory\n\nThis cycle established the **one-dimensional Brunn–Minkowski inequality**\n(`vol A + vol B ≤ vol(A+B)` for nonempty compact `A,B ⊆ ℝ`), its sharpness on\nintervals, the self-sum corollary, and the iterated finite-family version\n(`Catalog/Geometry/BrunnMinkowski.lean`, fully verified). The following bold,\ntestable conjectures guide the next cycles.\n\n## C1. Multiplicative (dimension-free) 1-D form\n**Conjecture.** For nonempty compact `A,B ⊆ ℝ` and `t ∈ [0,1]`,\n`vol(t•A + (1-t)•B) ≥ t·vol A + (1-t)·vol B`.\nThis is the convex-combination (\"Prékopa–Leindler at n=1\") restatement.\n*Test:* derive it from the proven `volume_add_ge` via the scaling identity\n`vol(c•A) = |c|·vol A` (`Real.volume_smul`/`MeasureTheory.Measure.addHaar`).\nFalsifiable: check `A=B=[0,1]`, `t=1/2` gives `vol[0,1] = 1 = 1`.\n\n## C2. Equality rigidity in 1-D\n**Conjecture.** For nonempty compact `A,B ⊆ ℝ`, `vol(A+B) = vol A + vol B`\nholds **iff** (up to a null set) both `A` and `B` are intervals (or one is a\nsingle point). *Test:* the forward \"interval ⇒ equality\" direction is already\nproved (`volume_add_Icc_eq`); the converse needs the \"no positive-measure gap\"\nanalysis. Falsifiable on `A=[0,1]∪[3,4]` where equality fails.\n\n## C3. Dimension-2 Brunn–Minkowski for axis-aligned boxes\n**Conjecture.** For boxes `A = I₁×I₂`, `B = J₁×J₂ ⊆ ℝ²`,\n`vol(A+B)^(1/2) ≥ vol(A)^(1/2) + vol(B)^(1/2)`.\n*Test:* `A+B = (I₁+J₁)×(I₂+J₂)`, reduce to the AM–GM-type inequality\n`√((a+c)(b+d)) ≥ √(ab) + √(cd)` for nonnegative side lengths — provable by\n`nlinarith`/`Real.sqrt` lemmas. This is the first genuinely `n>1` case.\n\n## C4. The √-superadditivity (concavity) reformulation\n**Conjecture.** The map `A ↦ vol(A)^(1/n)` is concave under Minkowski averaging\non the class of nonempty compact convex bodies. *Test:* in `n=1` it is exactly\n`volume_add_ge` (the exponent is trivial); state and prove the `n=2` box case\n(C3) as the inductive seed, then attempt boxes in general `n` via\n`Finset.prod` over coordinates.\n\n## C5. Discrete (Cauchy–Davenport-flavored) analogue\n**Conjecture.** For nonempty finite `A,B ⊆ ℤ`, `|A+B| ≥ |A| + |B| - 1`, with\nequality iff `A,B` are arithmetic progressions of equal common difference.\n*Test:* the counting bound mirrors the measure proof (place `A+min B` and\n`max A + B` overlapping in one point). This bridges the continuous\nBrunn–Minkowski theory to additive combinatorics and is fully finitary, hence\n`decide`-checkable on small cases.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2319",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "54153a72",
-    "status": "available",
-    "timestamp": "2026-06-23T07:31:53.509764+00:00",
-    "title": "**one-dimensional Brunn–Minkowski inequality**"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Sperner's Lemma, Combinatorial Fixed Points, and Nash\n\nDerived from this cycle's findings (1D Sperner parity ⟹ discrete IVT ⟹ discrete\nBrouwer; potential-game pure Nash via optimization; supermodular-game pure Nash via\nthe catalog's Knaster–Tarski theorem).\n\n## Conjecture 1 — Sperner parity scales to a top-dimensional count\nA 2-coloring extends to an `n`-coloring of a triangulated `n`-simplex, and the\n*number* of fully-colored cells has a fixed parity (odd when the boundary coloring\nis Sperner-admissible).\n- **The key insight is...** the 1D `sperner1D_parity` we proved is the `n = 1` slice\n  of a general \"boundary coloring determines the parity of fully-colored cells\"\n  invariant; the induction on dimension mirrors the induction on path length, with\n  the door-counting argument replacing the telescoping `Nat.add_mod` step.\n- **Why now?** The 1D parity is already formal and `decide`-free; the door-counting\n  (Scarf/Cohen) recursion is the only missing combinatorial ingredient, making the\n  full Sperner lemma a realistic next formal target rather than a topology import.\n\n## Conjecture 2 — Discrete Brouwer ⟹ ε-Nash with explicit grid size\nFor any finite game with payoffs bounded by `M` and `N` total pure strategies, the\n`discrete_brouwer` bracket on a grid of mesh `1/k` yields an `ε`-Nash equilibrium\nwith `ε ≤ c · M · N / k`.\n- **The key insight is...** the bracketing index from `discrete_brouwer` bounds the\n  per-player regret by the diagonal gap `h(i+1) - h(i)`, which the Lipschitz\n  best-response map converts into a payoff gap controlled by the mesh.\n- **Why now?** We already produce the bracket constructively with a strict boundary\n  hypothesis; quantifying the regret only needs a Lipschitz estimate, turning the\n  qualitative fixed point into an algorithmic `O(k^N)` ε-Nash solver claim that can\n  be unit-tested on 2×2 games.\n\n## Conjecture 3 — Potential and supermodular existence are incomparable but both\nstrict subclasses of Brouwer-Nash\nThere exist games with a pure Nash equilibrium that are neither potential games nor\nsupermodular games, so neither `potential_game_has_pure_nash` nor\n`supermod_game_has_nash` subsumes the other, yet both are corollaries of a single\ndiscrete-fixed-point existence theorem.\n- **The key insight is...** the potential proof uses a global *scalar* certificate\n  (argmax of `Φ`) while the supermodular proof uses an *order* certificate (a\n  Tarski fixed point); a game can admit a Brouwer fixed point of best response\n  without admitting either certificate.\n- **Why now?** Both certificates are now formalized in the same namespace, so a\n  formal separation example (a 3×3 game) would cleanly delimit the three classes\n  and motivate the unifying Brouwer statement.\n\n## Conjecture 4 — Tarski fixed points compute *all* equilibria of supermodular games\nFor a supermodular game the set of pure Nash equilibria is itself a complete\nlattice, with least and greatest elements given by iterating the joint best-response\nmap from `⊥` and `⊤`.\n- **The key insight is...** `supermod_game_has_nash` only extracts the least\n  Tarski fixed point `sInf (preFixed jointBR)`; the dual `knaster_tarski_dual`\n  already in the catalog gives the greatest, and Tarski's full theorem makes the\n  fixed-point set a complete lattice.\n- **Why now?** The catalog already contains both the least and greatest fixed-point\n  theorems; assembling them into the lattice-of-equilibria statement is pure\n  reuse and would formally recover Topkis's structure theorem.\n\n## Conjecture 5 — Parity forces an odd number of equilibria generically\nIn a \"generic\" finite game (no payoff ties), the number of Nash equilibria is odd,\na game-theoretic echo of the odd bichromatic-edge count of `sperner1D_parity`.\n- **The key insight is...** the same parity bookkeeping that makes a Sperner path\n  have an odd number of bichromatic edges underlies the Wilson/Harsanyi oddness\n  theorem when the best-response coloring is generic.\n- **Why now?** The discrete parity invariant is already proved here in its cleanest\n  1D form; lifting \"odd count\" from edges to equilibria is the natural bold test of\n  whether the Sperner parity really is the source of equilibrium oddness.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2320",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d1c9c6b9",
-    "status": "available",
-    "timestamp": "2026-06-23T07:35:18.879663+00:00",
-    "title": "Derived from this cycle's findings (1D Sperner parity ⟹ discrete IVT ⟹ discrete"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3379,7 +3344,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "57fbcb2f",
+    "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -3391,7 +3356,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "oeis:80035",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
@@ -3873,7 +3838,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "13912104",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domain_bridges": [],
     "domains": [
@@ -3886,7 +3851,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },

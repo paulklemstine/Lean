@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "62850b85",
     "filename": "attention_mechanisms_mathematical_properties.json",
     "pkg_num": 9,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4446527272727273,
     "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
   },
   {
@@ -270,8 +270,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4446527272727273,
+      "quality": "partial",
       "shape": "sphere_rings",
       "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
     }

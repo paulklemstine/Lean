@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a0dd96a5",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Metric Filtration Rank Profiles as Tropical Valuation Objects\n\nDerived from the research cycle in\n`Catalog/Tropical/MetricFiltrationRankProfiles.lean` (foundation: `transEndo`,\n`",
-      "quality_score": 0.5271458702064897,
-      "sorry_count": 5,
-      "theorem_count": 50,
-      "timestamp": "2026-06-16T12:52:43",
-      "title": "These conjectures continue the research cycle begun in"
-    },
-    {
       "cycle_id": "16e95997",
       "domain": "Physics",
       "key_insight": "# FUTURE DIRECTIONS — Computational Complexity as a Physical Law\n\nDerived from the Phase A cycle that produced\n`Catalog/Physics/ComplexityPhysicalLaw.lean` and\n`Catalog/Speculative/ExtendedChurchTurin",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-23T07:35:28",
       "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
+    },
+    {
+      "cycle_id": "62850b85",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Mathematical Properties of Attention\n\nBold, falsifiable conjectures derived from this cycle's findings (softmax expressivity,\nkernel-smoother confinement, row-stochastic spectrum",
+      "quality_score": 0.4446527272727273,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-23T07:38:34",
+      "title": "Attention Mechanisms: Mathematical Properties"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T07:35:28",
+  "last_updated": "2026-06-23T07:38:34",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "1aac4615",
-        "quality": 0.4180994484848485,
-        "theorems": 9,
-        "title": "Spectral Graph Theory Meets Network Robustness"
-      },
-      {
         "cycle_id": "949d41e5",
         "quality": 0.6052,
         "theorems": 15,
@@ -3575,6 +3569,12 @@
         "quality": 0.5251532857142858,
         "theorems": 297,
         "title": "Triviality of Modular Form Coefficients"
+      },
+      {
+        "cycle_id": "62850b85",
+        "quality": 0.4446527272727273,
+        "theorems": 8,
+        "title": "Attention Mechanisms: Mathematical Properties"
       }
     ],
     "Novelty": [
