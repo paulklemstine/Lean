@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fba6400c",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Borsuk–Ulam ⇄ Arrow (Social Choice Is Topology)\n\nDerived from the cycle in `Computation/BorsukUlamArrow.lean` and\n`Computation/BorsukUlamArrowDichotomy.lean`. Each conjecture is",
-      "quality_score": 0.64064,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-16T15:41:16",
-      "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
-    },
-    {
       "cycle_id": "ecc79db8",
       "domain": "Physics",
       "key_insight": "# Future Directions — Integrated Information via Tensor Networks\n\nThis research cycle established the dictionary\n\n> **IIT min-cut Φ  ≡  tensor-network min-cut entanglement capacity**\n> (under `weight",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-06-23T11:40:48",
       "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
+    },
+    {
+      "cycle_id": "0de5396c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Continuous-Valued Cellular Automata and Rucker's \"Gnarl\"\n\nBuilt on `ContinuousValuedCA.lean` (the symmetric three-point continuous CA, its\ngeometric-mode spectrum, the discrete m",
+      "quality_score": 0.5094479615384615,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-06-23T15:01:59",
+      "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T11:40:48",
+  "last_updated": "2026-06-23T15:01:59",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f832cbd3",
-        "quality": 0.543562,
-        "theorems": 469,
-        "title": "The Library of Babel: Combinatorics of the Universal Library"
-      },
-      {
         "cycle_id": "f370d5ee",
         "quality": 0.4935106666666667,
         "theorems": 22,
@@ -3637,6 +3631,12 @@
         "quality": 0.5250358274479863,
         "theorems": 234,
         "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
+      },
+      {
+        "cycle_id": "0de5396c",
+        "quality": 0.5094479615384615,
+        "theorems": 21,
+        "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
       }
     ],
     "NumberTheory": [

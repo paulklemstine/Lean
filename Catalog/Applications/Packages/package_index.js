@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0de5396c",
     "filename": "rucker_gnarl_and_continuous_valued_cellular_automa.json",
     "pkg_num": 12,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5094479615384615,
     "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
   },
   {
@@ -357,8 +357,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5094479615384615,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
     }

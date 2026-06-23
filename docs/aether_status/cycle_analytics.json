@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T11:42:32.379732+00:00",
+  "last_updated": "2026-06-23T15:02:02.935104+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -890,6 +890,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-23T11:42:32.153007+00:00",
       "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5586,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 21,
+      "domain": "Novelty",
+      "duration_seconds": 10702.487647294998,
+      "end_time": 1782226892.6761584,
+      "files_integrated": 6,
+      "job_id": "0de5396c",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v15",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v15",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7736,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7242,
+        "novelty": 0.95,
+        "proof_depth": 0.6274,
+        "usefulness": 0.8137
+      },
+      "quality_score": 0.5094479615384615,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782216190.1885111,
+      "strategy_count": 0,
+      "theorem_count": 21,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 21,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-23T15:02:02.701404+00:00",
+      "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
     }
   ]
 }

@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-23T15:01:50Z",
+    "domain": "Novelty",
+    "exp_id": "0de5396c",
+    "filename": "rucker_gnarl_and_continuous_valued_cellular_automa.json",
+    "pkg_num": 12,
+    "quality": "partial",
+    "quality_score": 0.5094479615384615,
+    "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
+  },
+  {
     "date": "2026-06-23T11:40:38Z",
     "domain": "Probability",
     "exp_id": "57fbcb2f",
@@ -188,6 +198,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Primality Testing: A Formally Verified AKS Polynomial Criterion"
   },
+  "rucker_gnarl_and_continuous_valued_cellular_automa.json": {
+    "domain": "Novelty",
+    "exp_id": "0de5396c",
+    "source_exp_ids": [
+      "manual_research_brainstorm"
+    ],
+    "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
+  },
   "sierpiski_numbers_covering_systems.json": {
     "domain": "Computation",
     "exp_id": "07255b71",
@@ -215,7 +233,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 275,
+      "hue": 90,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -226,7 +244,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 270,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -237,7 +255,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:43:47Z",
       "domain": "Applications",
-      "hue": 275,
+      "hue": 90,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
       "priority_score": 0.46096,
@@ -248,7 +266,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 272,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -259,7 +277,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 271,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -281,7 +299,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 275,
+      "hue": 272,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
@@ -292,7 +310,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 90,
+      "hue": 275,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.60268,
@@ -303,7 +321,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 91,
+      "hue": 90,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -314,7 +332,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T08:30:51Z",
       "domain": "Computation",
-      "hue": 280,
+      "hue": 270,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
       "priority_score": 0.5811999999999999,
@@ -332,6 +350,17 @@ window.PACKAGE_GRAPH = {
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order"
+    },
+    {
+      "date": "2026-06-23T15:01:50Z",
+      "domain": "Novelty",
+      "hue": 271,
+      "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
+      "primary_domain": "Bridges",
+      "priority_score": 0.5094479615384615,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
     }
   ]
 };

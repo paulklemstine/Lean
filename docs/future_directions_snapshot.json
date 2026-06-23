@@ -736,7 +736,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fa13c912",
+    "consumed_by_exp_id": "",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domain_bridges": [],
     "domains": [
@@ -750,7 +750,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -1138,7 +1138,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7d2edc31",
+    "consumed_by_exp_id": "",
     "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1151,7 +1151,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -3148,7 +3148,7 @@
       "math.CO/ramsey_theory",
       "math.CO/combinatorial_lines"
     ],
-    "consumed_by_exp_id": "3fbe11d2",
+    "consumed_by_exp_id": "",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex Δ(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) ≥ 22 and HJ(4,2) ≥ 14.",
     "domain_bridges": [
       "combinatorics",
@@ -3164,7 +3164,7 @@
     "proof_strategy": "Formalize coordinate-symmetric colorings as functions on letter-count vectors (elements of the discrete simplex). Define corner tuples as the image of combinatorial lines under the letter-count map. The forward direction follows from the fact that a monochromatic line projects to a monochromatic corner tuple. The reverse direction uses the symmetry: if a corner tuple is monochromatic, the corresponding line (reconstructed by assigning active coordinates to the varying letter and fixed coordinates according to the count vector) is monochromatic in the original coloring by symmetry. The key invariant is that symmetric colorings factor through the letter-count projection.",
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -3368,6 +3368,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.RingTheory.DedekindDomain.Ideal",
+      "Mathlib.RingTheory.FiniteType",
+      "Mathlib.LinearAlgebra.TensorProduct",
+      "Mathlib.LinearAlgebra.FiniteDimensional",
+      "Mathlib.RingTheory.ClassGroup"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let A → B be a finite locally free homomorphism of commutative rings of constant rank d. If an invertible A-module P becomes free of rank one after base change to B, then P^{⊗ d} is free; equivalently, the kernel of the pullback map Pic(A) → Pic(B) is annihilated by d. Applied to A = O_K[t]/(f) and B = O_L[t]/(f), this predicts that whenever two non-derogatory integral matrices with characteristic polynomial f become similar over O_L, the associated Latimer--MacDuffee Picard-class difference has order dividing [L : K].",
+    "domain_bridges": [
+      "integral matrix similarity as isomorphism of modules over O_K[t]/(f)",
+      "Latimer--MacDuffee correspondence between non-derogatory matrices and ideal/Picard classes of orders",
+      "finite locally free norm maps on Picard groups give lower bounds for extension degrees"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2335",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the norm of an invertible B-module along a finite locally free A-algebra B using determinant of restriction of scalars. Prove the standard identity Norm_{B/A}(B ⊗_A P) ≅ P^{⊗ d} for every invertible A-module P, by localizing on Spec A where P is free rank one and B is free rank d. If B ⊗_A P is trivial in Pic(B), its norm is trivial in Pic(A), hence P^{⊗ d} is trivial. The matrix-similarity consequence follows by transporting similarity to isomorphism of the corresponding rank-one projective modules over the order O_K[t]/(f).",
+    "research_mode": "team",
+    "source_exp_id": "2606.21628v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:03:20.079971+00:00",
+    "title": "Finite-flat capitulation divisibility for Picard classes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "Erdős Problem 550"
     ],
@@ -3381,7 +3410,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -3408,7 +3437,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -3438,7 +3467,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -3466,7 +3495,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2338",
+    "id": "fd_2339",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3493,7 +3522,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2339",
+    "id": "fd_2340",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3519,7 +3548,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2340",
+    "id": "fd_2341",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3546,7 +3575,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2341",
+    "id": "fd_2342",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
@@ -3576,7 +3605,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2342",
+    "id": "fd_2343",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply repeated Cauchy–Schwarz inequalities on the group sum to bound the kernel average, and argue that equality forces f to be constant.",
@@ -3603,7 +3632,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2343",
+    "id": "fd_2344",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive analysis combining subgroup inclusion properties with graph connectivity criteria",
@@ -3630,7 +3659,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2344",
+    "id": "fd_2345",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the bound α_{es}(G) ≥ α(G) - 1 holds universally by constructing an ESI-set from an arbitrary maximum independent set through local modifications to satisfy the ES-condition, or disprove by finding a graph where the reduction exceeds 1.",
@@ -3657,7 +3686,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2345",
+    "id": "fd_2346",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the lexicographic order on infinite sequences over a finite alphabet, formalize the $\\beta$-transformation and the quasi-greedy expansion of 1, then prove the equivalence using properties of the shift map and greedy expansions.",
@@ -3683,7 +3712,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2346",
+    "id": "fd_2347",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the author's bilinear approach and point-line incidence estimates to handle the endpoint $r=3$, or establish sharp Kakeya and maximal restriction bounds over finite fields to close the remaining gap.",
@@ -3714,7 +3743,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2347",
+    "id": "fd_2348",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the paper’s inequality proof via the Rayleigh quotient for the nonnegative signless up-Laplacian. Use r-down path connectivity to obtain irreducibility and hence a strictly positive Perron vector. Analyze every equality condition in the chain of inequalities: local homology vanishing should force the relevant link shadows to attain their extremal Kruskal-Katona-type lower bounds, while equality in the Perron/Rayleigh estimates should force all maximal r-faces to contain a common core of size r+1-t and to contain every t-subset of the complementary vertex set. The remaining task is to replace the paper’s large-n rigidity lemma by an exact finite rigidity lemma for the equality case.",
@@ -3742,7 +3771,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2348",
+    "id": "fd_2349",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow the paper's three-stage argument: (1) Establish a comparison inequality between the swap chain and a two-row heat-bath chain, bounding the swap chain spectral gap from below by a constant times the heat-bath spectral gap. (2) Reduce the m×n heat-bath analysis to the 3-row case via a tensorization/reduction argument on the column-count variable. (3) Prove the 3-row inequality by decomposing the function space on {0,1}³ into the constant sector, the count sector (functions of the column sum), and the Johnson harmonic sectors, establishing a Poincaré inequality on each sector with the appropriate spectral gap lower bound.",
@@ -3771,7 +3800,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2349",
+    "id": "fd_2350",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove pointwise that any edge-1-Lipschitz f with f(0,0)=0 satisfies |f(i,j)| ≤ i+j by following a shortest Manhattan path from (0,0) to (i,j). Sum this pointwise bound over all grid vertices. Evaluate the two separable sums ∑_{i=0}^{m−1}∑_{j=0}^{n−1}(i+j)=n·m(m−1)/2 + m·n(n−1)/2. Sharpness follows by checking that f(i,j)=i+j is edge-1-Lipschitz, normalized at the origin, and attains equality termwise.",
@@ -3797,7 +3826,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2350",
+    "id": "fd_2351",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that merging color classes in a FAT coloring scales the fairness parameter α by a predictable rational factor (as described in the paper). Hence, along any chain in the coarsening poset, the α values form a strictly decreasing sequence. Irreducible FAT colorings are precisely the minimal elements in this poset, so each yields a distinct α that cannot be obtained by scaling another α. Conversely, given any α arising from a FAT coloring, repeatedly refine the coloring while preserving the FAT property until an irreducible coloring is reached; this process does not change α. This establishes a bijection between irreducible FAT colorings and distinct α values.",
@@ -3823,7 +3852,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2351",
+    "id": "fd_2352",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Tutte's theorem and structural properties of 3-connected planar graphs to show that such a graph cannot have exactly 1 or 2 perfect matchings. A graph with exactly 2 perfect matchings must have a Hamiltonian cycle as its symmetric difference, which imposes restrictive structural constraints incompatible with 3-connectivity in planar graphs.",
@@ -3853,7 +3882,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2352",
+    "id": "fd_2353",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the paper's construction realizing arbitrary ratios in the interval by bounded continued fraction sequences, but replace the infinite nonperiodic tail by sufficiently long periodic repetitions of the finite blocks controlling the limsup. Since ultimately periodic continued fractions are quadratic irrationals, it remains to prove that the Lagrange-constant ratio changes by an arbitrarily small amount under this periodic approximation. Formalization would isolate a continuity lemma for finite-window limsup maxima of periodic continued fractions and combine it with the Smith-normal-form reduction used for the general matrix M.",
@@ -3881,7 +3910,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2353",
+    "id": "fd_2354",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the lower-triangular matrix $T$ with entries $T_{n,k} = \\binom{n+k}{2k}$ for $0 \\le k \\le n$. 2. Show that the row sums $S_n = \\sum_{k=0}^n T_{n,k}$ correspond to the coefficients of the generating function $\\frac{1-x}{1-3x+x^2}$. 3. Prove that the sequence generated by $\\frac{1-x}{1-3x+x^2}$ satisfies the Fibonacci recurrence $S_n = 3S_{n-1} - S_{n-2}$ with initial conditions $S_0 = 1, S_1 = 2$. 4. Prove by induction that $S_n = F_{2n+1}$, where $F_m$ is the $m$-th Fibonacci number.",
@@ -3908,7 +3937,7 @@
     "domains": [
       "Physics"
     ],
-    "id": "fd_2354",
+    "id": "fd_2355",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the edge-transitivity of Γ to show that any Hamiltonian cycle can be 'symmetrized': given a Hamiltonian cycle C, use the transitivity of Aut(Γ) on edges of Γ to construct an involutory automorphism that permutes the edges of C as a half-rotation. The key step is showing that edge-transitivity forces enough symmetry on the edge set of any Hamiltonian cycle to guarantee a 2-fold rotational symmetry. Alternatively, classify cubic edge-transitive graphs by their automorphism group structure and verify case-by-case for each infinite family (e.g., generalized Petersen graphs, Möbius ladders, prism graphs).",
@@ -3938,7 +3967,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2355",
+    "id": "fd_2356",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define finite truncations of the two row-exchange diagrams at column n. The finite Yang-Baxter equation gives exact equality except for a boundary term where the unique path exits through the artificial right boundary. Show that this boundary term is bounded by C times the product of the contraction ratios from N to n. The eventual δ-bound gives a geometric estimate C*δ^(n-N), hence the boundary term tends to zero. Taking limits of the finite identities yields the infinite row-exchange identity for arbitrary boundary occupation sequences.",
@@ -3966,7 +3995,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2356",
+    "id": "fd_2357",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The upper bound is exactly the Cameron--Puleo construction: take an extremal F-saturated graph on n-1 vertices and join one new universal vertex to it. For the lower bound, let G be any (K1∨F)-saturated graph on n vertices. Analyze a nonedge xy and the forced copy of K1∨F in G+xy. Because F is a matching plus isolated vertices, any forced copy can be decomposed into one apex vertex, t independent edges, and q remaining vertices avoiding the apex constraints. Show that the saturation condition forces either a universal vertex whose deletion is F-saturated, giving |E(G)| ≥ n-1+sat(n-1,F), or else enough local edge-disjoint matching witnesses around nonedges to yield the same global edge lower bound by degree counting. The base cases t=1,2 are supplied by the paper; the induction step increases t by removing one forced matching edge from each witness copy and applying the lower bound to the residual (t-1)K2∪qK1 configuration.",
@@ -3992,7 +4021,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2357",
+    "id": "fd_2358",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply generating functions and the stuffle product relations of multiple zeta values, or adapt the iterated integral representation approach introduced in the paper for multiple mixed values.",
@@ -4001,6 +4030,36 @@
     "status": "available",
     "timestamp": "2026-06-23T14:44:47.583620+00:00",
     "title": "Ohno-Zudilin Weighted Sum Formula for Double Zeta Values"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Mathlib.RingTheory.HahnSeries",
+      "Mathlib.Data.Finsupp",
+      "Mathlib.RingTheory.Valuation.Basic",
+      "Mathlib.Algebra.Polynomial.Basic",
+      "Mathlib.Order.WellFoundedSet"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let 𝔓(y)=Σ_{a∈A} c_a(t) Π_{i=0}^k (y^(i))^{a_i} be a nonzero ordinary algebraic differential polynomial over algebraically closed characteristic-zero Hahn series with finite support A. Let E_k(trop(𝔓)) be the set of t-adic orders r of Boolean Hahn elementary k-solutions of its tropicalization, equivalently the r for which the active indicial tropical minimum is attained at least twice. For each r in E_k(trop(𝔓)), form the classical indicial initial polynomial I_r(Z) in the leading coefficient Z, using exactly the monomials attaining that minimum and the falling-factorial factors coming from derivatives. Conjecture: if every r in E_k(trop(𝔓)) has a simple nonzero root of I_r(Z), then every elementary tropical order is realized by an actual Hahn-series solution; hence ord_t(Sol(𝔓)) = E_k(trop(𝔓)). This strengthens the paper's containment ord_t(Sol(𝔓)) ⊆ E_k(trop(𝔓)) to equality under a Newton-nondegeneracy hypothesis.",
+    "domain_bridges": [
+      "Boolean tropical differential equations ↔ valuations of Hahn-series differential equations",
+      "indicial tropical corner locus ↔ leading-term cancellation in algebraic ODEs",
+      "simple initial root ↔ Newton-Hensel lifting for formal differential equations"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2359",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove the known tropicalization inclusion first: the order of any Hahn solution forces at least two lowest-valued differential monomials, so it lies in E_k(trop(𝔓)). For the reverse inclusion, fix r in E_k and choose a simple nonzero root c of the indicial polynomial I_r. Substitute y = c t^r + z with ord(z) > r. Develop a transfinite Newton-Hensel recursion on the well-ordered support of z. At each stage, the simple-root condition makes the linearized initial operator invertible for the next coefficient, preventing resonant obstructions. Show that the constructed support remains well ordered, so the recursion defines a Hahn series y satisfying 𝔓(y)=0 and ord_t(y)=r. Formalization would isolate the differential-polynomial combinatorics, falling-factorial leading terms, and a Hahn-series transfinite recursion lemma.",
+    "research_mode": "team",
+    "source_exp_id": "2606.21829v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:04:46.154289+00:00",
+    "title": "Newton-nondegenerate elementary tropical orders lift to Hahn-series solutions"
   },
   {
     "ambition_level": "extension",
@@ -4141,7 +4200,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "643b1455",
+    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domain_bridges": [],
     "domains": [
@@ -4153,7 +4212,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:01.145793+00:00",
     "title": "Lehmer's Mahler Measure Problem"
   },
@@ -4355,7 +4414,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9dc8a91c",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -4368,7 +4427,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -4452,7 +4511,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fa4b841e",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [
@@ -4465,14 +4524,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b8e11d4a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domain_bridges": [],
     "domains": [
@@ -4485,7 +4544,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },
@@ -4809,7 +4868,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d5a04e50",
+    "consumed_by_exp_id": "",
     "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domain_bridges": [],
     "domains": [
@@ -4822,7 +4881,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.344784+00:00",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },

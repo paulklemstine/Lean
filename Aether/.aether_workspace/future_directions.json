@@ -35911,14 +35911,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO/ramsey_theory",
         "math.CO/combinatorial_lines"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3fbe11d2",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35933,11 +35933,11 @@
         "Algebra"
       ],
       "id": "fd_2327",
-      "last_attempt_time": "2026-06-23T14:44:58.520382+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem symmetric_reduction {t n r K : ℕ} (ht : t ≥ 2) (hn : n ≥ 1) (hK : K ≥ 1) (hK_le : K ≤ n) : ∀ (c : SymmetricColoring t n r), (∀ l ∈ lines_with_active_leq t n K, ¬IsMonochromatic l c) ↔ (∀ ct ∈ corner_tuples t n K, ¬IsMonochromaticCorner ct c.toSimplexColoring) := by\n  sorry",
       "lineage_refs": [],
-      "outcome_quality": 0.5094479615384615,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Formalize coordinate-symmetric colorings as functions on letter-count vectors (elements of the discrete simplex). Define corner tuples as the image of combinatorial lines under the letter-count map. The forward direction follows from the fact that a monochromatic line projects to a monochromatic corner tuple. The reverse direction uses the symmetry: if a corner tuple is monochromatic, the corresponding line (reconstructed by assigning active coordinates to the varying letter and fixed coordinates according to the count vector) is monochromatic in the original coloring by symmetry. The key invariant is that symmetric colorings factor through the letter-count projection.",
@@ -35947,7 +35947,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22155v1",
       "source_path": "http://arxiv.org/abs/2606.22155v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T12:25:51.858994+00:00",
       "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
@@ -36288,6 +36288,54 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Mathlib.RingTheory.DedekindDomain.Ideal",
+        "Mathlib.RingTheory.FiniteType",
+        "Mathlib.LinearAlgebra.TensorProduct",
+        "Mathlib.LinearAlgebra.FiniteDimensional",
+        "Mathlib.RingTheory.ClassGroup"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let A → B be a finite locally free homomorphism of commutative rings of constant rank d. If an invertible A-module P becomes free of rank one after base change to B, then P^{⊗ d} is free; equivalently, the kernel of the pullback map Pic(A) → Pic(B) is annihilated by d. Applied to A = O_K[t]/(f) and B = O_L[t]/(f), this predicts that whenever two non-derogatory integral matrices with characteristic polynomial f become similar over O_L, the associated Latimer--MacDuffee Picard-class difference has order dividing [L : K].",
+      "domain_bridges": [
+        "integral matrix similarity as isomorphism of modules over O_K[t]/(f)",
+        "Latimer--MacDuffee correspondence between non-derogatory matrices and ideal/Picard classes of orders",
+        "finite locally free norm maps on Picard groups give lower bounds for extension degrees"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2335",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "class FiniteLocallyFreeRank (A B : Type*) [CommRing A] [CommRing B] [Algebra A B] (d : ℕ) : Prop :=\n  (finite : Module.Finite A B)\n  (projective : Module.Projective A B)\n  (constant_rank : True)\n\n/-- Pullback of Picard classes along base change. This is a placeholder for the\nmap induced by `B ⊗[A] -` on invertible modules. -/\nconstant PicardGroup : Type u → Type u\nconstant PicardGroup.instGroup (A : Type u) [CommRing A] : Group (PicardGroup A)\nattribute [instance] PicardGroup.instGroup\nconstant PicardGroup.baseChange\n  (A B : Type u) [CommRing A] [CommRing B] [Algebra A B] :\n  PicardGroup A →* PicardGroup B\n\n/-- Conjecture: finite locally free capitulation is annihilated by the rank. -/\ntheorem picard_kernel_baseChange_pow_rank_eq_one\n    (A B : Type u) [CommRing A] [CommRing B] [Algebra A B]\n    (d : ℕ) [FiniteLocallyFreeRank A B d]\n    (P : PicardGroup A)\n    (hP : PicardGroup.baseChange A B P = 1) :\n    P ^ d = 1 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the norm of an invertible B-module along a finite locally free A-algebra B using determinant of restriction of scalars. Prove the standard identity Norm_{B/A}(B ⊗_A P) ≅ P^{⊗ d} for every invertible A-module P, by localizing on Spec A where P is free rank one and B is free rank d. If B ⊗_A P is trivial in Pic(B), its norm is trivial in Pic(A), hence P^{⊗ d} is trivial. The matrix-similarity consequence follows by transporting similarity to isomorphism of the corresponding rank-one projective modules over the order O_K[t]/(f).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.21628v1",
+      "source_path": "http://arxiv.org/abs/2606.21628v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T15:03:20.079971+00:00",
+      "title": "Finite-flat capitulation divisibility for Picard classes"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "Erdős Problem 550"
       ],
@@ -36307,7 +36355,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2335",
+      "id": "fd_2336",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_550_upper_bound_tight (k : ℕ) (m : Fin k → ℕ) (hk : k ≥ 2)\n    (hm_sorted : ∀ i j : Fin k, i ≤ j → m i ≤ m j) :\n    ∃ (trees : ℕ → SimpleGraph ℕ), ∀ n : ℕ, ∃ N ≥ n,\n      IsTree (trees N) ∧ (trees N).vertexCount = N ∧\n      R (trees N) (CompleteMultipartiteGraph m) =\n        (k - 1) * (R (trees N) (CompleteBipartiteGraph (m ⟨0, by omega⟩) (m ⟨1, by omega⟩)) - 1) + m ⟨0, by omega⟩ := by\n  sorry",
@@ -36353,7 +36401,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2336",
+      "id": "fd_2337",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_codim_i_vanishing (p i n : ℕ) (hp : Nat.Prime p) (hi : 0 < i) \n    (hn : n ≥ (3 * i + 1) * p + (3 * i + 2)) :\n    (groupCohomology (HeckeCongruence p n) (n * (n - 1) / 2 - i) ⊗[ℤ] ℚ) ≅ 0 := by\n  sorry",
@@ -36402,7 +36450,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2337",
+      "id": "fd_2338",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_radical_shift_bound (h : ℕ) (h_pos : 0 < h) :\n    Finset.card (Finset.filter (λ j, rad j = rad (j + h)) (Finset.Icc 1 (3 * 7 ^ (3 + 2 * ω h)))) ≤ 3 * 7 ^ (3 + 2 * ω h) ∧\n    (∀ j ≥ 1, rad j = rad (j + h) → Odd h → False) :=\n  by sorry",
@@ -36449,7 +36497,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2338",
+      "id": "fd_2339",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem line_transversals_homotopy_equiv_sphere (n : ℕ) (hn : 1 ≤ n) :\n    ∃ (C : Finset (OpenConvexSet (EuclideanSpace ℝ (Fin (3 * n))))), \n      C.PairwiseDisjoint ∧ \n      Nonempty (HomotopyEquiv (LineTransversals C) (Sphere (n - 1))) := by\n  sorry",
@@ -36495,7 +36543,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2339",
+      "id": "fd_2340",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- We need to define the Grassmann scheme, Boolean degree one functions, and triviality.\n-- Since full formalization of these is complex, we state it with assumed definitions.\n\nvariable {q n : ℕ}\n\n-- Represents a point in the Grassmann scheme J_q(n, k)\n-- (to be fully formalized as k-dimensional subspaces of F_q^n)\nstructure Subspace where \n  carrier : Finset (Fin n → ZMod q)\n  -- properties omitted for stub\n\n-- Definition of a Boolean degree one function (stub)\nstructure BoolDegOneFunc where\n  toFun : Subspace → Bool\n  -- properties omitted for stub\n\n-- Definition of a trivial Boolean degree one function (stub)\ninductive TrivialBoolDegOneFunc : (Subspace → Bool) → Prop\n  | zero : TrivialBoolDegOneFunc (fun _ => false)\n  | one  : TrivialBoolDegOneFunc (fun _ => true)\n  | x_p  : (p : Fin n) → TrivialBoolDegOneFunc (fun V => decide (p ∈ V.carrier)) -- simplified\n  -- other cases omitted for stub\n\n-- Conjecture: J_q(n,2) is DOT for n >= q+2\ntheorem J_q_n_2_DOT_for_n_ge_q_plus_2 (hq : Nat.",
@@ -36540,7 +36588,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2340",
+      "id": "fd_2341",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binary_two_binomial_class_count (n : ℕ) : Fintype.card ({u : List (Fin 2) // u.length = n} / Setoid.ker (twoBinomialEquiv 2)) = (n^3 + 5*n + 6) / 6 := by\n  sorry",
@@ -36586,7 +36634,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2341",
+      "id": "fd_2342",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binomial_gcd_criterion_restricted_range (k : ℕ) (hk : 2 ≤ k) : (gcd_q2_to_k (fun q => (q * k.choose k)) = 1) ↔ ¬∃ p a, prime p ∧ a ≥ 1 ∧ p ^ a ‖ k ∧ p ^ (a + 1) ∤ k",
@@ -36635,7 +36683,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2342",
+      "id": "fd_2343",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidorenko_two_sided {Γ : Type} [Fintype Γ] (f : Γ → ℝ) (F : FinVDirGraph) : t F (C_f) ≥ ( (∑ g : Γ, f g) / (Fintype.card Γ) ) ^ (2 * F.edges) := by sorry",
@@ -36681,7 +36729,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2343",
+      "id": "fd_2344",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The class of groups admitting a star-shaped deleted co-maximal graph is exactly the star groups",
@@ -36727,7 +36775,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2344",
+      "id": "fd_2345",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alpha_es_lower_bound (G : Graph) : α_es G ≥ α G - 1",
@@ -36773,7 +36821,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2345",
+      "id": "fd_2346",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem parry_admissible_beta_expansion (β : ℝ) (hβ : β > 1)\n    (d : ℕ → ℕ) (hd : ∀ n, d n < ⌊β⌋₊ + 1) :\n    (∃ x ∈ Set.Ico 0 1, ∀ n, d n = ⌊β * (T β)^n x⌋) ↔\n    ∀ n, LexLt (fun i => d (n + i)) (fun i => d_star_one β (n + i)) := by\n  sorry",
@@ -36818,7 +36866,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2346",
+      "id": "fd_2347",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture finite_field_restriction_conjecture_p3 (p : ℕ) (hp : Prime p) (hmod : p % 4 = 3) :\n  ∃ C : ℝ, ∀ (f : P3 p → ℂ), \n    ‖E p f‖₃ ≤ C * ‖f‖₂ := sorry",
@@ -36868,7 +36916,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2347",
+      "id": "fd_2348",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem threshold_free_eq_case\n    {V : Type u} [Fintype V] [DecidableEq V]\n    {r t : ℕ} (K : FinSimplicialComplex V)\n    (ht0 : 1 ≤ t) (htr : t ≤ r)\n    (hpure : K.PureDim r)\n    (hconn : K.DownPathConnected r)\n    (hhom : ∀ σ : Finset V,\n      K.IsFace σ → σ.card = r - t →\n        ReducedHomologyVanishes ℝ t (K.link σ)) :\n    K.upSignlessLaplacianSpectralRadius (r - 1)\n      = (t : ℝ) * (Fintype.card V : ℝ)\n        - ((t - 1 : ℕ) : ℝ) * ((r + 1 : ℕ) : ℝ)\n    ↔\n    ∃ C : Finset V,\n      C.card = r + 1 - t ∧\n      K = (FinSimplicialComplex.simplexOn C).join\n            ((FinSimplicialComplex.simplexOn (Cᶜ)).skeleton (t - 1)) := by\n  sorry",
@@ -36915,7 +36963,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2348",
+      "id": "fd_2349",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem swap_chain_spectral_gap_lower_bound {m n : ℕ} (r : Fin m → ℕ) (c : Fin n → ℕ)\n    (hfeas : (Ω_binary_matrix r c).Nonempty) (hm : 2 ≤ m) (hn : 2 ≤ n) :\n    spectralGap (lazySwapChain r c) ≥\n      (1 : ℝ) / (Nat.choose m 2 * Nat.choose n 2) := by\n  sorry",
@@ -36963,7 +37011,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2349",
+      "id": "fd_2350",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen BigOperators\n\n/-- Adjacency in the rectangular grid `Fin m × Fin n`. -/\ndef GridAdj {m n : Nat} (p q : Fin m × Fin n) : Prop :=\n  (p.1 = q.1 ∧ (p.2.val + 1 = q.2.val ∨ q.2.val + 1 = p.2.val)) ∨\n  (p.2 = q.2 ∧ (p.1.val + 1 = q.1.val ∨ q.1.val + 1 = p.1.val))\n\n/-- Normalized integer-valued edge-1-Lipschitz functions on the grid. -/\ndef GridLip0 {m n : Nat} (hm : 0 < m) (hn : 0 < n)\n    (f : Fin m × Fin n → Int) : Prop :=\n  f (⟨0, hm⟩, ⟨0, hn⟩) = 0 ∧\n  ∀ p q : Fin m × Fin n, GridAdj p q → Int.natAbs (f p - f q) ≤ 1\n\n/-- L1 mass of an integer grid function. -/\ndef L1Mass {m n : Nat} (f : Fin m × Fin n → Int) : Nat :=\n  ∑ p, Int.natAbs (f p)\n\n/-- Closed-form sharp upper bound for normalized grid Lipschitz L1 mass. -/\ndef GridDiameterBound (m n : Nat) : Nat :=\n  n * (m * (m - 1) / 2) + m * (n * (n - 1) / 2)\n\n/-- Conjectural extremal inequality underlying the Miura-ori diameter upper bound. -/\ntheorem grid_lipschitz_l1Mass_exact\n    {m n : Nat} (hm : 0 < m) (hn : 0 < n) :",
@@ -37008,7 +37056,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2350",
+      "id": "fd_2351",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_irreducible_fat_colorings_eq_alpha_values {V : Type*} [Fintype V] (G : SimpleGraph V) :\n    (number_of_irreducible_FAT_colorings G) = (cardinality (alpha_values G)) := by\n  sorry",
@@ -37053,7 +37101,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2351",
+      "id": "fd_2352",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem min_perfect_matchings_3_conn_planar\n  {V : Type*} [Fintype V] {G : SimpleGraph V} [DecidableRel G.Adj]\n  (h_planar : G.IsPlanar) (h_conn : G.Is3Connected)\n  (h_even : Even (Fintype.card V)) :\n  3 ≤ G.numPerfectMatchings := by\n  sorry",
@@ -37102,7 +37150,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2352",
+      "id": "fd_2353",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Data.Matrix.Notation\nimport Mathlib.Data.Real.Basic\n\nnoncomputable section\n\nabbrev Mat2Z := Matrix (Fin 2) (Fin 2) ℤ\n\nconstant Primitive : Mat2Z → Prop\nconstant mobius : Mat2Z → ℝ → ℝ\nconstant lagrangeConst : ℝ → ℝ\nconstant Bad : Set ℝ\nconstant IsQuadraticIrrational : ℝ → Prop\n\ndef detAbs (M : Mat2Z) : ℝ := ((Int.natAbs (M.det) : ℕ) : ℝ)\n\ntheorem quadratic_irrational_ratio_spectrum_dense\n    (M : Mat2Z) (hprim : Primitive M) (hdet : M.det ≠ 0) :\n    ∀ u v : ℝ,\n      (detAbs M)⁻¹ ≤ u → u < v → v ≤ detAbs M →\n        ∃ x : ℝ,\n          x ∈ Bad ∧ IsQuadraticIrrational x ∧\n          u < lagrangeConst (mobius M x) / lagrangeConst x ∧\n          lagrangeConst (mobius M x) / lagrangeConst x < v := by\n  sorry",
@@ -37149,7 +37197,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2353",
+      "id": "fd_2354",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem row_sum_pascal_like_riordan_eq_fib (n : ℕ) :\n  (∑ k in Finset.range (n + 1), (n + k).choose (2 * k)) = Nat.fib (2 * n + 1) := by\n  sorry",
@@ -37195,7 +37243,7 @@
       "domains": [
         "Physics"
       ],
-      "id": "fd_2354",
+      "id": "fd_2355",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cubic_edge_transitive_ham_compression_ge_two {V : Type*} [Fintype V] [DecidableEq V] (Γ : SimpleGraph V) (h_cubic : ∀ v, Γ.degree v = 3) (h_connected : Γ.Connected) (h_edge_trans : EdgeTransitive Γ) (h_ham : HasHamiltonianCycle Γ) : κ Γ ≥ 2 := by sorry",
@@ -37244,7 +37292,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2355",
+      "id": "fd_2356",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_row_exchange_of_eventual_contraction\n    {α v z : ℂ} (hα : α ≠ 0)\n    (u : ℕ → ℂ) (top bottom : ℕ → Bool)\n    (w₁ w₄ f : ℂ → ℂ)\n    (hden₁ : ∀ i, w₄ (u i / z) ≠ 0)\n    (hden₂ : ∀ i, w₁ (u i / v) ≠ 0)\n    (hcontract : ∃ δ : ℝ, 0 ≤ δ ∧ δ < 1 ∧ ∃ N : ℕ,\n      ∀ i ≥ N,\n        ‖(w₁ (u i / z) / w₄ (u i / z)) *\n          (w₄ (u i / v) / w₁ (u i / v))‖ ≤ δ)\n    (hYB : fiveVertexYangBaxter w₁ w₄ f α) :\n    infiniteRowExchangeLeft α v z u top bottom w₁ w₄ f =\n      (f (v / z) / α ^ 2) *\n        infiniteRowExchangeRight α v z u top bottom w₁ w₄ f := by\n  sorry",
@@ -37291,7 +37339,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2356",
+      "id": "fd_2357",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\n\n/-!\nThis stub assumes a finite-graph saturation library defining:\n* `Graph`: finite simple graphs up to isomorphism or bundled finite simple graphs;\n* `sat n H`: the minimum number of edges in an n-vertex H-saturated graph;\n* `join K1 F`: graph join of K1 and F;\n* `matchingWithIsolates t q`: the graph tK₂ ∪ qK₁.\n-/\n\nnamespace GraphSaturation\n\nconstant Graph : Type\nconstant sat : ℕ → Graph → ℕ\nconstant K1 : Graph\nconstant join : Graph → Graph → Graph\nconstant matchingWithIsolates : ℕ → ℕ → Graph\n\n/-- Conjecture: Cameron--Puleo equality holds for every matching plus isolated vertices. -/\ntheorem sat_join_matchingWithIsolates_eq\n    (t q n : ℕ)\n    (ht : 1 ≤ t) (hq : 1 ≤ q) (hn : 2 * t + q < n) :\n    sat n (join K1 (matchingWithIsolates t q)) =\n      (n - 1) + sat (n - 1) (matchingWithIsolates t q) := by\n  sorry\n\nend GraphSaturation",
@@ -37336,7 +37384,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2357",
+      "id": "fd_2358",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ohno_zudilin_weighted_sum (k : ℕ) (hk : 3 ≤ k) :\n  (∑ i in Finset.Icc 2 (k - 1), (2 : ℝ)^i * zeta [k - i, i]) = (k + 1) * zeta [k] := by\n  sorry",
@@ -37357,43 +37405,53 @@
       "title": "Ohno-Zudilin Weighted Sum Formula for Double Zeta Values"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "Mathlib.RingTheory.HahnSeries",
+        "Mathlib.Data.Finsupp",
+        "Mathlib.RingTheory.Valuation.Basic",
+        "Mathlib.Algebra.Polynomial.Basic",
+        "Mathlib.Order.WellFoundedSet"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Continuous-Valued Cellular Automata and Rucker's \"Gnarl\"\n\nBuilt on `ContinuousValuedCA.lean` (the symmetric three-point continuous CA, its\ngeometric-mode spectrum, the discrete maximum principle on `[0,1/2]`, and the\nsharp linear-stability threshold `a = 1/2`). Each conjecture below is falsifiable\nand intended to be formalized in a follow-up cycle.\n\n## C1. Continuous-time (heat-semigroup) scaling limit\nThe mass-conservation and maximum-principle results (`mass_iter_conserved`,\n`abs_iter_le`, now **proved** in `ContinuousValuedCA.lean`) make the three-point\nrule a genuine discrete heat flow. Conjecture the diffusive scaling limit: fixing\n`t > 0`, lattice spacing `h = 1/N`, and `a = t/(2 N^... )` matched so the\ngeometric-mode eigenvalues `λ(a, e^{iθ})^{N^2} → e^{-t θ^2}`, the iterated CA\nconverges (mode-by-mode, then in an appropriate norm) to the continuous heat\nsemigroup `e^{tΔ}`. **Test (formalizable kernel):** prove the eigenvalue limit\n`(eigenvalue a (exp(iθ)))^{m} → exp(-c t θ^2)` under the stated scaling — a clean\n`Real.exp`/`Real.cos` Taylor estimate — as the spectral core of the full limit.\nThis upgrades the discrete invariants to the PDE they discretize.\n\n## C2. Strict contraction and convergence to the mean in the interior\nFor `0 < a < 1/2` the rule is not merely non-expansive but **smoothing**: any two\nconfigurations that agree at infinity converge, and a finitely supported pattern's\nsup-norm is *strictly* decreasing until it is constant. Precisely, conjecture that\nfor `0 < a < 1/2` and bounded `c`, `oscillation(iter a n c) → 0` as `n → ∞`, where\n`oscillation = sup - inf`. **Test:** prove a strict one-step oscillation-decrease\nlemma `osc(step a c) ≤ (1 - 2a)·osc(c)` (a discrete Harnack/contraction estimate),\nthen iterate.\n\n## C3. Total-variation (Lyapunov) monotonicity\nDefine the total variation `TV(c) = ∑_x |c(x+1) - c(x)|`. Conjecture that in the\nconvex regime `0 ≤ a ≤ 1/2`, `TV(step a c) ≤ TV(c)` for all finitely supported\n`c` (a discrete entropy/Lyapunov functional), and that this **fails** for `a`\noutside `[0,1/2]`. This would give a second, gradient-flavored proof of the\nlaminar/gnarl dichotomy and a candidate Lyapunov function pinning the edge of\nchaos. **Test:** TV is a 1-Lipschitz seminorm under convex averaging; prove via\nthe telescoping `(step a c)(x+1) - (step a c)(x)` being a convex combination of\nneighboring differences.\n\n## C4. Nonlinearity is necessary for gnarl (a no-go theorem)\nConjecture: **no** translation-equivariant *linear* continuous CA with\nnonnegative, summing-to-one weights can exhibit sensitive dependence on initial\nconditions in sup norm — every such rule is non-expansive (a contraction in the\nstrict interior). Hence Rucker's gnarl in the convex-weight family *requires*\neither operating exactly on the spectral boundary or breaking linearity. **Test:**\ngeneralize the maximum principle from the three-point stencil to an arbitrary\nfinite nonnegative stencil `w : ℤ → ℝ` with `∑ w = 1`, proving `abs_step_le` for\nthe general convolution operator; then show the spectral radius equals `1` iff the\nweights are a probability distribution.\n\n## C5. The general dispersion relation and the spectral-radius formula\nFor the three-point rule the geometric-mode eigenvalue is\n`λ(a,r) = (1-2a) + a(r + 1/r)`. Conjecture the **spectral radius** over bounded\nmodes (`r = e^{iθ}`, i.e. `r + 1/r = 2cos θ ∈ [-2,2]`) is\n`ρ(a) = max(|1|, |1 - 4a|) = max(1, |1-4a|)`, with marginal stability `ρ(a) = 1`\nexactly on `0 ≤ a ≤ 1/2`. Generalize to arbitrary symmetric `k`-point stencils:\n`λ(θ) = ∑_j w_j cos(jθ)` and conjecture the laminar window is\n`{w : max_θ |∑_j w_j cos(jθ)| ≤ 1}`, a convex polytope in weight space whose\nboundary is the linear edge of chaos. **Test:** formalize `λ` as a real function\nof `cos θ`, prove the `max(1, |1-4a|)` formula for the three-point case, then\nattack the symmetric five-point stencil `(b, a, 1-2a-2b, a, b)`.\n",
-      "domain_bridges": [],
+      "description": "Let 𝔓(y)=Σ_{a∈A} c_a(t) Π_{i=0}^k (y^(i))^{a_i} be a nonzero ordinary algebraic differential polynomial over algebraically closed characteristic-zero Hahn series with finite support A. Let E_k(trop(𝔓)) be the set of t-adic orders r of Boolean Hahn elementary k-solutions of its tropicalization, equivalently the r for which the active indicial tropical minimum is attained at least twice. For each r in E_k(trop(𝔓)), form the classical indicial initial polynomial I_r(Z) in the leading coefficient Z, using exactly the monomials attaining that minimum and the falling-factorial factors coming from derivatives. Conjecture: if every r in E_k(trop(𝔓)) has a simple nonzero root of I_r(Z), then every elementary tropical order is realized by an actual Hahn-series solution; hence ord_t(Sol(𝔓)) = E_k(trop(𝔓)). This strengthens the paper's containment ord_t(Sol(𝔓)) ⊆ E_k(trop(𝔓)) to equality under a Newton-nondegeneracy hypothesis.",
+      "domain_bridges": [
+        "Boolean tropical differential equations ↔ valuations of Hahn-series differential equations",
+        "indicial tropical corner locus ↔ leading-term cancellation in algebraic ODEs",
+        "simple initial root ↔ Newton-Hensel lifting for formal differential equations"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
-        "Geometry"
+        "Pythagorean"
       ],
-      "id": "fd_2358",
+      "id": "fd_2359",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "import Mathlib.RingTheory.HahnSeries\nimport Mathlib.Data.Finsupp\nimport Mathlib.RingTheory.Valuation.Basic\nimport Mathlib.Algebra.Polynomial.Basic\n\nnamespace TropicalDifferential\n\nvariable {K Γ : Type*} [Field K] [IsAlgClosed K] [CharZero K]\nvariable [LinearOrderedAddCommGroup Γ]\n\nconstant ODEPoly : Type _ → Type _ → ℕ → Type _\nconstant TropicalODEPoly : Type _ → ℕ → Type _\n\nconstant tropicalization : ODEPoly K Γ k → TropicalODEPoly Γ k\nconstant hahnSolutionOrders : ODEPoly K Γ k → Set Γ\nconstant elementaryOrders : TropicalODEPoly Γ k → Set Γ\n\n/-- `indicialHasSimpleUnitRoot P r` means that the initial indicial polynomial\nat the elementary tropical order `r` has a simple nonzero root in the coefficient field. -/\nconstant indicialHasSimpleUnitRoot : ODEPoly K Γ k → Γ → Prop\n\n/-- Conjecture: Newton-nondegenerate elementary tropical orders are exactly the\norders of genuine Hahn-series solutions. -/\ntheorem elementary_orders_eq_solution_orders_of_indicial_nondegenerate\n    {k : ℕ} (P : ODEP",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Prove the known tropicalization inclusion first: the order of any Hahn solution forces at least two lowest-valued differential monomials, so it lies in E_k(trop(𝔓)). For the reverse inclusion, fix r in E_k and choose a simple nonzero root c of the indicial polynomial I_r. Substitute y = c t^r + z with ord(z) > r. Develop a transfinite Newton-Hensel recursion on the well-ordered support of z. At each stage, the simple-root condition makes the linearized initial operator invertible for the next coefficient, preventing resonant obstructions. Show that the constructed support remains well ordered, so the recursion defines a Hahn series y satisfying 𝔓(y)=0 and ord_t(y)=r. Formalization would isolate the differential-polynomial combinatorics, falling-factorial leading terms, and a Hahn-series transfinite recursion lemma.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "0de5396c",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/0de5396c",
+      "source_exp_id": "2606.21829v1",
+      "source_path": "http://arxiv.org/abs/2606.21829v1",
       "status": "available",
-      "thread_id": "th_7d0907de",
-      "timestamp": "2026-06-23T15:01:51.296954+00:00",
-      "title": "Built on `ContinuousValuedCA.lean` (the symmetric three-point continuous CA, its"
+      "thread_id": "",
+      "timestamp": "2026-06-23T15:04:46.154289+00:00",
+      "title": "Newton-nondegenerate elementary tropical orders lift to Hahn-series solutions"
     },
     {
       "ambition_level": "extension",
@@ -37438,11 +37496,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "b8e11d4a",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37454,7 +37512,7 @@
         "Novelty"
       ],
       "id": "moonshot_Pickover_32",
-      "last_attempt_time": "2026-06-23T14:44:52.779261+00:00",
+      "last_attempt_time": "2026-06-23T01:39:02.281343+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -37468,7 +37526,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Pickover)",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:17.617665+00:00",
       "title": "Pickover Clifford Attractor Family"
@@ -37477,11 +37535,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 3,
+      "attempt_count": 4,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fa4b841e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37493,7 +37551,7 @@
         "Novelty"
       ],
       "id": "moonshot_Rucker_20",
-      "last_attempt_time": "2026-06-23T05:49:02.126896+00:00",
+      "last_attempt_time": "2026-06-23T15:04:52.497810+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -37507,7 +37565,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Rucker)",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:11.785769+00:00",
       "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
@@ -117375,7 +117433,7 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 304,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 57,
     "Computation": 100,
@@ -117419,7 +117477,7 @@
     "directions": 531,
     "distinct": 72,
     "distribution": 48,
-    "enabling": 40,
+    "enabling": 39,
     "ensemble": 10,
     "exhibit": 55,
     "exists": 132,
@@ -117494,7 +117552,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
