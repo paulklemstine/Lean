@@ -2114,6 +2114,63 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.RingTheory.Polynomial.Basic",
+      "Mathlib.LinearAlgebra.Dimension.Basic",
+      "Mathlib.Combinatorics.Matroid.Basic",
+      "Mathlib.Algebra.Homology.HomologicalComplex"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let A and B be reduced arrangements of d projective complex lines in P^2 with d <= 9. If their central intersection lattices are isomorphic, their Milnor algebras S/J_f and S/J_g have the same Hilbert function in every degree, and mdr(f) = mdr(g), then the minimal graded free resolutions of S/J_f and S/J_g have identical graded Betti numbers. Equivalently, there is no Ziegler pair of at most nine lines satisfying both conditions (HF) and (MDR).",
+    "domain_bridges": [
+      "intersection lattices of line arrangements as rank-3 matroids",
+      "Jacobian ideals and Milnor algebras as graded modules over C[x,y,z]",
+      "Hilbert functions versus graded Betti tables of minimal free resolutions",
+      "minimal Jacobian syzygy degree as the initial degree of the logarithmic derivation module"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2287",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize line arrangements by products of pairwise non-proportional homogeneous linear forms in C[x,y,z]. Define the intersection lattice combinatorially via the induced rank-3 matroid, and define the Milnor algebra, Hilbert function, mdr, and graded Betti numbers algebraically. For d < 9, use the paper's small-degree rigidity theorem together with a finite verification of the remaining Betti possibilities. For d = 9, reduce to the finite list of realizable rank-3 matroids on nine elements and verify, by certified Gröbner-basis computations over algebraic parameter strata, that every pair with equal Hilbert function and equal mdr has the same graded Betti table.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:12:03.280702+00:00",
+    "title": "No HF-MDR Ziegler pairs with at most nine lines"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Dice relabeling via generating functions: P_1⋯P_n=(x+⋯+x^m)^n",
+      "Cyclotomic factorization x+⋯+x^m = x ∏_{d | m, d > 1} Φ_d(x)",
+      "Mathlib: Polynomial over semirings, polynomial evaluation, Nat.Prime, Finset sums"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let p and q be distinct primes. Suppose P,Q ∈ ℕ[x] are generating polynomials for two dice with no 0-labeled sides, with P(1)=p^2 and Q(1)=q^2, and whose sum-frequency polynomial equals that of two standard pq-sided dice: P Q = (x + x^2 + ⋯ + x^(pq))^2. Then P and Q must be one of exactly three explicit pairs, indexed by c=0,1,2: with G(n,s)=∑_{i=0}^{n-1} x^(s i), the p^2-sided die is x·G(p,1)^(2-c)·G(p,q)^c and the q^2-sided die is x·G(q,1)^c·G(q,p)^(2-c).",
+    "domain_bridges": [
+      "Cyclotomic polynomial divisibility translates dice relabeling into factor allocation among irreducible factors.",
+      "The explicit polynomials G(p,1) and G(p,q) encode rectangular decompositions of labels modulo p and q.",
+      "Nonnegative polynomial factorization over ℕ can be reduced to uniqueness of factorization over ℤ plus evaluation at x=1."
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2287",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First rewrite the standard pq-sided die polynomial as x·G(p,1)·G(q,p)=x·G(q,1)·G(p,q). Over ℤ[x], use unique factorization and the cyclotomic decomposition x+⋯+x^(pq)=x Φ_p Φ_q Φ_pq. Since Φ_p(1)=p, Φ_q(1)=q, and Φ_pq(1)=1, the condition P(1)=p^2 forces P/x to contain exactly two Φ_p factors and no Φ_q factors; only the exponent c∈{0,1,2} of Φ_pq remains free. The complementary factor goes to Q. Finally identify the three resulting products with the explicit nonnegative polynomials using Φ_p Φ_pq=G(p,q) and Φ_q Φ_pq=G(q,p).",
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:13:50.667614+00:00",
+    "title": "Prime-product square-sided dice have exactly three relabeling types"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",

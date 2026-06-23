@@ -1558,6 +1558,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: Let A and B be reduced arrangements of d projective complex lines in P^2 with d <= 9. If their central intersection lattices are isomorphic, their Milnor algebras S/J_f and S/J_g have the same Hilbert function in every degree, and mdr(f) = mdr(g), then the minimal graded free resolutions of S/J_f and S/J_g have identical graded Betti numbers. Equivalently, there is no Ziegler pair of at most nine lines satisfying both conditions (HF) and (MDR).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2287",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:12:03.280702+00:00",
+    "title": "No HF-MDR Ziegler pairs with at most nine lines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let p and q be distinct primes. Suppose P,Q \u2208 \u2115[x] are generating polynomials for two dice with no 0-labeled sides, with P(1)=p^2 and Q(1)=q^2, and whose sum-frequency polynomial equals that of two standard pq-sided dice: P Q = (x + x^2 + \u22ef + x^(pq))^2. Then P and Q must be one of exactly three explicit pairs, indexed by c=0,1,2: with G(n,s)=\u2211_{i=0}^{n-1} x^(s i), the p^2-sided die is x\u00b7G(p,1)^(2-c)\u00b7G(p,q)^c and the q^2-sided die is x\u00b7G(q,1)^c\u00b7G(q,p)^(2-c).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2287",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:13:50.667614+00:00",
+    "title": "Prime-product square-sided dice have exactly three relabeling types"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
