@@ -2055,6 +2055,65 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Clique",
+      "Mathlib.Data.Finset.Basic",
+      "Mathlib.Data.Real.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every finite K5-free simple graph G on n vertices, assign weight 1/2 to every edge contained in a triangle and weight 1 to every other edge. Then G has a bipartition whose monochromatic edge-weight is at most n^2/16. Equivalently, deleting edges of total such weight at most n^2/16 always makes G bipartite. The balanced complete 4-partite graph shows that the constant 1/16 would be best possible.",
+    "domain_bridges": [
+      "Translates a Ramsey-Turan style forbidden-clique problem into a weighted max-cut inequality.",
+      "Extends the paper's weighted K4-free triangle-discounted cut result to the next clique size K5.",
+      "Connects Sudakov-type bipartization bounds with edge weights determined by local clique membership."
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2286",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "A plausible route is to combine a weighted Turan symmetrization argument with a stability analysis for near-extremal K5-free graphs. First show that an extremal counterexample may be assumed to have a bounded number of vertex types under weighted twin-symmetrization. Then reduce the resulting finite weighted optimization problem to complete multipartite templates plus sparse exceptional triangle-free structure. The complete 4-partite template gives the extremal value n^2/16, while triangle-free exceptional parts should be controlled by known max-cut lower bounds for triangle-free graphs.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20397v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:54:19.630900+00:00",
+    "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.LinearAlgebra.FiniteDimensional",
+      "Mathlib.LinearAlgebra.Dimension.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Data.Fintype.Basic",
+      "Mathlib.Order.Lattice"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every finite-dimensional vector space E over a finite field F and every rank r with 0 <= r <= dim E, the map sending a sparse-paving q-matroid M of rank r on E to its set of r-dimensional circuit-hyperplanes is a bijection onto the stable sets of the q-Johnson graph J_q(E,r), whose vertices are r-dimensional subspaces and whose edges join pairs with intersection dimension r-1. Equivalently, a set S of r-subspaces defines a sparse-paving q-matroid precisely when any two distinct members of S intersect in dimension at most r-2.",
+    "domain_bridges": [
+      "q-matroid circuit-hyperplanes to constant-dimension codes",
+      "sparse-paving q-matroids to independent sets in the q-Johnson graph",
+      "finite vector-space submodule lattice to graph-theoretic stable sets"
+    ],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2286",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize q-matroids by rank functions on the submodule lattice satisfying the q-matroid rank axioms. Define paving and sparse-paving in terms of circuit dimensions and dual paving, or equivalently by the circuit-hyperplane characterization. Prove first that in any sparse-paving q-matroid, two distinct r-dimensional circuit-hyperplanes cannot meet in dimension r-1, since their sum would violate the sparse-paving circuit elimination/dual-paving condition. Conversely, given a stable set S of r-subspaces, define a rank function by declaring subspaces contained in members of S to have the expected ranks, declaring members of S to be dependent hyperplanes of rank r-1, and all other r-subspaces to be bases; then extend by truncation to all subspaces. Verify the rank axioms R1-R3 by splitting on dimensions below r, equal to r, and above r, using the stable-set intersection bound for the only nontrivial submodularity case. Show the two constructions are inverse.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:54:23.693302+00:00",
+    "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
