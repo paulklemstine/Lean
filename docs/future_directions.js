@@ -2976,11 +2976,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a finite group \\(\\Gamma\\) and any non\u2011negative function \\(f:\\Gamma\\to\\mathbb{R}_{\\ge 0}\\), define the two\u2011sided correlation kernel \\(\\mathcal C_f\\) by\n\\[\\mathcal C_f(x,y)=\\frac{1}{|\\Gamma|}\\sum_{a_1,a_2\\in\\Gamma:\\, xa_1=a_2 y} f(a_1)f(a_2) = \\mathbb{E}_{z\\in\\Gamma} f(x^{-1}z)f(zy^{-1}).\\]\nThe conjecture asserts that \\(\\mathcal C_f\\) satisfies Sidorenko\u2019s inequality for **all** finite (undirected) bipartite graphs \\(H\\):\n\\[ t(H,\\mathcal C_f) \\ge t(K_2,\\mathcal C_f)^{e(H)}. \\]\nEquivalently, the homomorphism density of any bipartite graph in \\(\\mathcal C_f\\) is at least the \\(e(H)\\)-th power of the edge density of \\(\\mathcal C_f\\). This extends the theorem of the paper, which proves the statement only for directed graphs (or for the 1\u2011subdivision of any directed graph). The conjecture is precise and falsifiable: a single counterexample \\((\\Gamma,f,H)\\) with \\(t(H,\\mathcal C_f)<t(K_2,\\mathcal C_f)^{e(H)}\\) disproves it.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2389",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23018v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:54:21.592113+00:00",
+    "title": "Sidorenko Property for Two\u2011Sided Correlation Kernels on Finite Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let (a_k)_{k \u2265 1} be the P\u00f3lya tree enumeration sequence with ordinary generating function A(z) = \u03a3_{k\u22651} a_k z^k satisfying A(z) = z\u00b7exp(A(z))\u00b7\u03a6(z) where \u03a6(z) = exp(\u03a3_{i\u22652} A(z^i)/i). Define \u03c9_k = \u03a3_{d|k} d\u00b7a_d. Then a_1 = 1 and for all k \u2265 2, a_k = (1/(k-1))\u00b7\u03a3_{j=1}^{k-1} a_j\u00b7\u03c9_{k-j}.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2389",
+    "id": "fd_2390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -2995,7 +3010,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2390",
+    "id": "fd_2391",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -3010,13 +3025,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2391",
+    "id": "fd_2392",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22921v1",
     "status": "available",
     "timestamp": "2026-06-23T22:28:18.306332+00:00",
     "title": "Exact Realization of Level-2 Bianchi Congruence Subgroups as K3 Surface Automorphisms over Q(i)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every connected, twin-free Cayley digraph of a finite abelian group is stable, i.e., for such a digraph G, Aut(G \u00d7 K\u2082) = Aut(G) \u00d7 Aut(K\u2082). This extends the paper's result (Theorem 1.3) which proves nonexistence of nontrivially unstable Cayley digraphs of abelian groups of odd order to all finite abelian groups, resolving the even order case that remains open.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2393",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22947v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:54:48.936774+00:00",
+    "title": "Stability of Cayley Digraphs of Abelian Groups"
   },
   {
     "consumed_by_exp_id": "",

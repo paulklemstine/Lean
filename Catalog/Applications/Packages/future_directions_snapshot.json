@@ -4903,6 +4903,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "FormalMath/GraphLimits",
+      "FormalMath/GroupTheory",
+      "FormalMath/Probability"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a finite group \\(\\Gamma\\) and any non‑negative function \\(f:\\Gamma\\to\\mathbb{R}_{\\ge 0}\\), define the two‑sided correlation kernel \\(\\mathcal C_f\\) by\n\\[\\mathcal C_f(x,y)=\\frac{1}{|\\Gamma|}\\sum_{a_1,a_2\\in\\Gamma:\\, xa_1=a_2 y} f(a_1)f(a_2) = \\mathbb{E}_{z\\in\\Gamma} f(x^{-1}z)f(zy^{-1}).\\]\nThe conjecture asserts that \\(\\mathcal C_f\\) satisfies Sidorenko’s inequality for **all** finite (undirected) bipartite graphs \\(H\\):\n\\[ t(H,\\mathcal C_f) \\ge t(K_2,\\mathcal C_f)^{e(H)}. \\]\nEquivalently, the homomorphism density of any bipartite graph in \\(\\mathcal C_f\\) is at least the \\(e(H)\\)-th power of the edge density of \\(\\mathcal C_f\\). This extends the theorem of the paper, which proves the statement only for directed graphs (or for the 1‑subdivision of any directed graph). The conjecture is precise and falsifiable: a single counterexample \\((\\Gamma,f,H)\\) with \\(t(H,\\mathcal C_f)<t(K_2,\\mathcal C_f)^{e(H)}\\) disproves it.",
+    "domain_bridges": [
+      "GraphTheory↔MeasureTheory",
+      "Algebra↔Analysis"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2389",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture can be approached by adapting the entropy‑based proof of Sidorenko for trees and strongly tree‑decomposable graphs to the kernel \\(\\mathcal C_f\\). One promising route is to view \\(\\mathcal C_f\\) as the convolution \\(f * f^{\\mathrm{rev}}\\) on the group algebra, where \\(f^{\\mathrm{rev}}(g)=f(g^{-1})\\). The edge density is then \\(\\|f\\|_1^2/|\\Gamma|^2\\). For a bipartite graph \\(H\\) with a tree‑like decomposition, one can iteratively apply Hölder’s inequality together with the invariance of \\(\\mathcal C_f\\) under left and right translations to obtain the desired lower bound. A second line of attack uses the graphon formalism: embed \\(\\mathcal C_f\\) as a step‑function graphon and invoke the known validity of Sidorenko for step‑graphons that are products of a function and its reverse. Formalizing either route in Lean would provide a mechanised proof or a counterexample via exhaustive search on small groups.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23018v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:54:21.592113+00:00",
+    "title": "Sidorenko Property for Two‑Sided Correlation Kernels on Finite Groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MR1577579",
       "MR0025715",
       "MR2483235"
@@ -4917,7 +4944,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2389",
+    "id": "fd_2390",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define Pólya trees via the functional equation A(z) = z·exp(A(z))·Φ(z) as a formal power series. Differentiate both sides to obtain z·A'(z) = A(z)·(1 + Σ_{i≥1} z^i·A'(z^i)). Extract the coefficient of z^k on both sides. The inner sum Σ_{i≥1} z^i·A'(z^i) has coefficient [z^k] = Σ_{d|k} d·a_d = ω_k by collecting terms where i·j = k with j indexing powers of A'. The left side gives k·a_k and the right side gives a_k + Σ_{j=1}^{k-1} a_j·ω_{k-j}, yielding the recurrence after rearrangement.",
@@ -4945,7 +4972,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2390",
+    "id": "fd_2391",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the cohomological generic representations of GL(n) over number fields, define the bottom-degree Betti-Whittaker period functional via continuous group cohomology H^b_ct(GL_n(k_∞)⁰; F_π ⊗ π) → ℂ through the Whittaker pairing, establish the identification π₀(k_∞×) ≅ π₀(GL_n(k_∞)) via determinant, then prove the period relation by extending Chen's argument using the functional equation framework and the Casselman-Wallach module structure on the Whittaker model.",
@@ -4973,7 +5000,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2391",
+    "id": "fd_2392",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit double-cover models of the K3 surface from the Kummer surface Km(E_K x E_K). Compute the Néron-Severi lattice to show it is isometric to S_K(2). Prove that the representation of the automorphism group on the Néron-Severi lattice is injective, and explicitly match the automorphisms to the generators of the level-2 projective congruence subgroup via their geometric actions (deck involutions and Mordell-Weil translations).",
@@ -4982,6 +5009,32 @@
     "status": "available",
     "timestamp": "2026-06-23T22:28:18.306332+00:00",
     "title": "Exact Realization of Level-2 Bianchi Congruence Subgroups as K3 Surface Automorphisms over Q(i)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every connected, twin-free Cayley digraph of a finite abelian group is stable, i.e., for such a digraph G, Aut(G × K₂) = Aut(G) × Aut(K₂). This extends the paper's result (Theorem 1.3) which proves nonexistence of nontrivially unstable Cayley digraphs of abelian groups of odd order to all finite abelian groups, resolving the even order case that remains open.",
+    "domain_bridges": [
+      "Group theory (abelian groups, group actions)",
+      "Graph theory (digraphs, direct products, automorphism groups)",
+      "Combinatorics (Cayley digraphs, circulants)"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2393",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the paper's necessary and sufficient condition for instability of connected digraphs to reduce the problem to ruling out the existence of certain automorphism structures in Cayley digraphs of even-order abelian groups. Leverage the algebraic regularity of Cayley digraphs and the structure theorem for finite abelian groups to show that the twin-free condition and connectedness preclude any additional automorphisms in G × K₂ beyond the product action.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22947v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:54:48.936774+00:00",
+    "title": "Stability of Cayley Digraphs of Abelian Groups"
   },
   {
     "ambition_level": "extension",
