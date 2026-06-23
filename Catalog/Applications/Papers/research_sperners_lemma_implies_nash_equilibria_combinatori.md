@@ -1,314 +1,212 @@
-# Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory
+# Sperner's Lemma Implies Brouwer's Fixed Point Theorem on the Standard Simplex, with Application to Nash Equilibria
+
+**Author:** Aristotle
+**Date:** 2026-06-23
+**Domain:** Geometry / Combinatorial Topology / Game Theory
+
+---
 
 ## Abstract
 
-We develop the theory of **Best Response Coloring Systems (BRCS)**, a novel mathematical framework that formalizes the deep connection between Sperner's combinatorial lemma and Nash's theorem on the existence of equilibria in finite games. The BRCS framework captures how best-response correspondences induce Sperner-type colorings on the mixed strategy simplex, yielding approximate Nash equilibria from fully-colored simplices whose quality improves with mesh refinement. We prove thirteen theorems with complete machine-verified proofs, including the Nash Support Lemma, the Dominated Strategy Elimination Theorem, the Regret Decomposition, payoff bounds, and the BRCS Convergence Theorem. Our results establish that Nash equilibria are fundamentally combinatorial fixed points, providing a constructive path from discrete colorings to continuous equilibria.
-
-**Keywords**: Nash equilibrium, Sperner's lemma, combinatorial fixed points, game theory, best response, regret, formal verification
+We present a complete, self-contained derivation of **Brouwer's fixed point theorem** for continuous self-maps of the standard $n$-simplex from **Sperner's lemma**, organized around a small number of elementary lemmas. The development takes Sperner's lemma as an explicit combinatorial hypothesis (in a geometric "rainbow cell" form) and uses *no* topological fixed-point input. The core construction colors each lattice vertex of the $m$-th barycentric subdivision by a *descent coordinate* of the map — a coordinate that the map does not increase — which we show always exists and automatically yields a proper Sperner labelling. Sperner's lemma then produces, at every mesh level, a rainbow cell of diameter $O(1/m)$ across which all colors appear; a compactness-and-squeeze argument extracts a limit point at which the map cannot increase any coordinate, and a "pinning" lemma on the simplex upgrades this to exact equality, i.e. a fixed point. We close the circle to game theory: Brouwer's theorem, applied to Nash's best-response improvement map on a product of strategy simplices, yields the existence of mixed Nash equilibria in every finite game; and the constructive door-following proof of Sperner's lemma furnishes a simplicial algorithm for computing approximate equilibria. The five load-bearing results are stated below as `label_exists`, `eq_of_le_on_stdSimplex`, `tendsto_of_close`, `approx`, and `sperner_implies_brouwer`, together with the supporting `latticeVertex_mem`.
 
 ---
 
 ## 1. Introduction
 
-Nash's theorem (1950) states that every finite game has at least one mixed strategy Nash equilibrium. The classical proof relies on Kakutani's fixed point theorem, situating the result firmly in the realm of continuous mathematics. However, the underlying structure has a combinatorial core: Sperner's lemma (1928), a purely combinatorial result about simplicial colorings, is known to be equivalent to Brouwer's fixed point theorem, which implies Kakutani's theorem.
+The deep existence theorems of analysis and economics — Brouwer's fixed point theorem and Nash's equilibrium theorem — are usually presented as fruits of algebraic topology (degree theory, homology) or of advanced fixed-point machinery (Kakutani's theorem). Yet there is a far more elementary route. Sperner's lemma (1928), a purely combinatorial statement about colorings of triangulated simplices, encodes the same content as Brouwer's theorem and indeed *implies* it. The deduction is constructive in spirit: it converts a continuous map into a coloring, invokes a counting fact, and passes to a limit.
 
-This raises a fundamental question: **can Nash's theorem be proved directly from Sperner's lemma, without passing through continuous fixed point theory?**
+This paper isolates the logical skeleton of that deduction and renders it as a sequence of sharp, individually verifiable lemmas, taking Sperner's lemma itself as a clearly stated hypothesis. The benefit of this organization is twofold. First, it cleanly separates the *one* nontrivial combinatorial input (Sperner) from the *purely elementary* analytic glue (compactness, continuity, and two one-line inequalities about the simplex). Second, it exposes precisely how the discrete object — a rainbow cell — collapses into the continuous object — a fixed point.
 
-We answer this affirmatively by constructing the **Best Response Coloring System (BRCS)**, a mathematical structure that bridges the combinatorial world of Sperner colorings with the game-theoretic world of Nash equilibria. The BRCS framework provides:
+We then trace the classical implications: Brouwer $\Rightarrow$ Nash via the best-response improvement map, and the constructive Scarf walk underlying Sperner $\Rightarrow$ an algorithm for approximate equilibria.
 
-1. A formal connection between simplicial colorings and approximate Nash equilibria
-2. Quantitative bounds on approximation quality in terms of mesh size
-3. A constructive algorithm for computing approximate Nash equilibria
-4. Structural theorems (support lemma, dominance elimination) as consequences of the coloring structure
-
-All thirteen main theorems are formally verified in Lean 4 using the Mathlib library, ensuring mathematical correctness at the highest standard of rigor.
-
-### 1.1 Related Work
-
-The connection between Sperner's lemma and fixed point theorems has a long history. Knaster, Kuratowski, and Mazurkiewicz (1929) used Sperner's lemma to prove Brouwer's fixed point theorem. Scarf (1967) developed algorithms for computing fixed points based on simplicial subdivisions, effectively using Sperner's lemma as an algorithmic tool. Lemke and Howson (1964) developed complementary pivot algorithms for finding Nash equilibria.
-
-Our contribution is to formalize this connection as a mathematical structure (the BRCS) with precise definitions, quantitative bounds, and machine-verified proofs. We also prove structural theorems about games (support lemma, dominance elimination) within this framework, showing they are natural consequences of the combinatorial structure.
+**Notation.** Throughout, $n \in \mathbb{N}$ and indices range over the finite set $\{0,1,\dots,n\}$ (denoted $\mathrm{Fin}(n+1)$). For a vector $v = (v_0,\dots,v_n)$ we write $v_i$ for its $i$-th coordinate.
 
 ---
 
-## 2. Definitions
+## 2. The standard simplex and its subdivisions
 
-### 2.1 Finite Normal-Form Games
+### 2.1 The standard simplex
 
-**Definition 2.1 (Finite Game).** A finite normal-form game G consists of:
-- A positive integer n (the number of players)
-- For each player i ∈ {1,...,n}, a positive integer sᵢ (the number of pure strategies)
-- For each player i, a payoff function uᵢ : S₁ × ... × Sₙ → ℝ
+> **Definition 2.1 (Standard simplex).** The *standard $n$-simplex* is
+> $$\Delta^n = \Big\{\, v \in \mathbb{R}^{n+1} : v_i \ge 0 \text{ for all } i,\ \ \textstyle\sum_{i=0}^{n} v_i = 1 \,\Big\}.$$
 
-**Definition 2.2 (Mixed Strategy).** A mixed strategy for player i is a probability distribution σᵢ = (σᵢ(1), ..., σᵢ(sᵢ)) satisfying σᵢ(k) ≥ 0 for all k and Σₖ σᵢ(k) = 1.
+$\Delta^n$ is compact and convex. The case $n=1$ is a segment, $n=2$ a filled triangle, $n=3$ a tetrahedron. We regard points of $\Delta^n$ as **barycentric weight-vectors**.
 
-**Definition 2.3 (Mixed Profile).** A mixed strategy profile σ = (σ₁, ..., σₙ) assigns a mixed strategy to each player.
+### 2.2 Lattice vertices of the $m$-th subdivision
 
-**Definition 2.4 (Expected Payoff).** The expected payoff to player i under profile σ is:
+> **Definition 2.2 (Lattice vertex).** For $m \ge 1$ and a lattice point $k=(k_0,\dots,k_n) \in \mathbb{N}^{n+1}$, define
+> $$\mathrm{latticeVertex}(m,k) = \Big(\tfrac{k_0}{m}, \tfrac{k_1}{m}, \dots, \tfrac{k_n}{m}\Big) \in \mathbb{R}^{n+1}.$$
 
-  E[uᵢ(σ)] = Σₛ (∏ⱼ σⱼ(sⱼ)) · uᵢ(s)
+The lattice points with $\sum_i k_i = m$ index the vertices of the standard $m$-fold subdivision (the "grid of mesh $1/m$") of $\Delta^n$.
 
-where the sum ranges over all pure strategy profiles s = (s₁, ..., sₙ).
+> **Lemma 2.3 (`latticeVertex_mem`).** If $m \ge 1$ and $\sum_{i} k_i = m$, then $\mathrm{latticeVertex}(m,k) \in \Delta^n$.
 
-**Definition 2.5 (Deviation Payoff).** The deviation payoff to player i from pure strategy k under profile σ is:
-
-  Dᵢ(σ, k) = Σₛ₋ᵢ (∏ⱼ≠ᵢ σⱼ(sⱼ)) · uᵢ(k, s₋ᵢ)
-
-### 2.2 Nash Equilibrium and Approximations
-
-**Definition 2.6 (Nash Equilibrium).** A profile σ is a Nash equilibrium if for all players i and pure strategies k:
-
-  Dᵢ(σ, k) ≤ E[uᵢ(σ)]
-
-**Definition 2.7 (ε-Approximate Nash Equilibrium).** A profile σ is an ε-Nash equilibrium if for all i, k:
-
-  Dᵢ(σ, k) ≤ E[uᵢ(σ)] + ε
-
-**Definition 2.8 (Regret).** The regret of player i from strategy k is:
-
-  rᵢ(σ, k) = Dᵢ(σ, k) - E[uᵢ(σ)]
-
-**Definition 2.9 (Maximum Regret).** The maximum regret of profile σ is:
-
-  R(σ) = sup_{i,k} rᵢ(σ, k)
-
-### 2.3 Best Response Coloring System (Novel Structure)
-
-**Definition 2.10 (Best Response Coloring System).** A BRCS for a finite game G consists of:
-- A mesh size function δ : ℕ → ℝ₊ with δ(n) > 0 for all n and δ(n) → 0
-- A sequence of approximate equilibria σ⁽ⁿ⁾ for each refinement level n
-- A quality guarantee: σ⁽ⁿ⁾ is a δ(n)-Nash equilibrium for each n
-
-The BRCS captures the process of: (1) triangulating the strategy simplex with mesh size δ(n), (2) coloring vertices by the maximum-regret player, (3) applying Sperner's lemma to find a fully-colored simplex, and (4) extracting an approximate equilibrium from its center.
-
-**Definition 2.11 (Player Max Regret).** The per-player maximum regret is:
-
-  Rᵢ(σ) = sup_k rᵢ(σ, k)
-
-**Definition 2.12 (Payoff Dominance).** Strategy k **payoff-dominates** strategy k' for player i if:
-
-  uᵢ(k, s₋ᵢ) > uᵢ(k', s₋ᵢ) for all opponent profiles s₋ᵢ
+*Proof.* Each coordinate $k_i/m \ge 0$ as a quotient of non-negative numbers. Summing, $\sum_i k_i/m = (\sum_i k_i)/m = m/m = 1$. $\qquad\blacksquare$
 
 ---
 
-## 3. Main Results
+## 3. Sperner's lemma as a hypothesis
 
-### 3.1 Characterization Theorems
+We isolate Sperner's lemma in a geometric, coordinate-friendly form sufficient to drive the fixed-point argument. A *labelling* assigns to each lattice point $k$ a color $L(k) \in \{0,\dots,n\}$. It is **proper** when no lattice point receives a color in a coordinate where it vanishes, i.e. $k_{L(k)} \neq 0$ for all admissible $k$. (This is precisely the boundary condition of classical Sperner colorings: a vertex on the face $\{v_i=0\}$ is never colored $i$.)
 
-**Theorem 3.1 (Nash ↔ Zero Regret).** σ is Nash if and only if rᵢ(σ, k) ≤ 0 for all i, k.
+> **Definition 3.1 (`IsSpernerLemma n`).** The proposition $\mathrm{IsSpernerLemma}(n)$ asserts: for every $m \ge 1$ and every proper labelling $L$ of the lattice points with coordinate sum $m$, there exist $n+1$ lattice points $q(0), q(1), \dots, q(n)$ such that
+> 1. **(on the grid)** $\sum_{i} q(s)_i = m$ for each $s$;
+> 2. **(unit-step proximity)** for all $s,t$ and all coordinates $i$, $\big| q(s)_i - q(t)_i \big| \le 1$;
+> 3. **(rainbow)** the map $s \mapsto L(q(s))$ is surjective onto $\{0,\dots,n\}$ — the cell exhibits all $n+1$ colors.
 
-**Theorem 3.2 (ε-Nash ↔ Bounded Regret).** σ is ε-Nash if and only if rᵢ(σ, k) ≤ ε for all i, k.
-
-**Theorem 3.3 (Nash ↔ 0-Nash).** σ is Nash if and only if σ is 0-Nash.
-
-*Proof sketch.* Direct unfolding of definitions. ∎
-
-### 3.2 Convexity and the Support Lemma
-
-**Theorem 3.4 (Convex Decomposition).** The expected payoff decomposes as a convex combination of deviation payoffs:
-
-  E[uᵢ(σ)] = Σₖ σᵢ(k) · Dᵢ(σ, k)
-
-*Proof sketch.* Factor the probability product ∏ⱼ σⱼ(sⱼ) as σᵢ(sᵢ) · ∏ⱼ≠ᵢ σⱼ(sⱼ), then swap the order of summation. The inner sum over s₋ᵢ yields exactly the deviation payoff Dᵢ(σ, k). ∎
-
-**Theorem 3.5 (Nash Support Lemma).** If σ is Nash and σᵢ(k) > 0, then Dᵢ(σ, k) = E[uᵢ(σ)].
-
-*Proof sketch.* By Theorem 3.4, E[uᵢ] = Σₖ σᵢ(k) · Dᵢ(σ, k). Nash says Dᵢ(σ, k) ≤ E[uᵢ] for all k. A convex combination of terms all ≤ E[uᵢ] equals E[uᵢ], so any term with positive weight must equal E[uᵢ]. ∎
-
-This is the key theorem connecting Sperner colorings to Nash equilibria. In a Nash equilibrium, all supported strategies achieve the same payoff, so the Sperner coloring degenerates—all supported strategies receive the same "color." This is precisely the fixed-point condition.
-
-**Theorem 3.6 (Pure Best Response Existence).** For every player i, there exists a pure strategy k with E[uᵢ(σ)] ≤ Dᵢ(σ, k).
-
-**Theorem 3.7 (Pure Worst Response Existence).** For every player i, there exists a pure strategy k with Dᵢ(σ, k) ≤ E[uᵢ(σ)].
-
-*Proof sketch.* Both follow from the convex decomposition: the maximum (resp. minimum) of terms in a convex combination is at least (resp. at most) the combination itself. ∎
-
-### 3.3 Regret Structure
-
-**Theorem 3.8 (Per-Player Regret Non-negativity).** Rᵢ(σ) ≥ 0 for all profiles σ and players i.
-
-*Proof sketch.* By Theorem 3.6, some pure strategy has deviation payoff ≥ expected payoff, hence regret ≥ 0. ∎
-
-**Theorem 3.9 (Regret Decomposition).** R(σ) = supᵢ Rᵢ(σ).
-
-*Proof.* By definition, R(σ) = sup_{i,k} rᵢ(σ,k) = supᵢ supₖ rᵢ(σ,k) = supᵢ Rᵢ(σ). ∎
-
-**Theorem 3.10 (Nash ⇒ Non-positive Max Regret).** If σ is Nash, then R(σ) ≤ 0.
-
-### 3.4 Dominance and Elimination
-
-**Theorem 3.11 (Dominated Strategy Elimination).** If Dᵢ(σ, k) > Dᵢ(σ, k') and σ is Nash, then σᵢ(k') = 0.
-
-*Proof sketch.* If σᵢ(k') > 0, the Support Lemma gives Dᵢ(σ, k') = E[uᵢ(σ)]. But then Dᵢ(σ, k) > E[uᵢ(σ)], contradicting Nash. ∎
-
-This result connects to the BRCS: dominated strategies create "forbidden colors" in the Sperner coloring. A vertex colored with a dominated strategy's player index cannot appear in a fully-colored simplex near equilibrium.
-
-### 3.5 BRCS Convergence
-
-**Theorem 3.12 (BRCS Approximation Sequence).** For every BRCS B and every ε > 0, there exists a refinement level n such that B.σ⁽ⁿ⁾ is an ε-Nash equilibrium.
-
-*Proof sketch.* Since δ(n) → 0, there exists n with δ(n) < ε. Since σ⁽ⁿ⁾ is δ(n)-Nash, it is also ε-Nash by monotonicity. ∎
-
-**Theorem 3.13 (Approximate Nash Intersection).** If σ is ε-Nash for all ε > 0, then σ is Nash.
-
-*Proof sketch.* Contrapositive: if σ is not Nash, some deviation gain δ > 0 exists, and σ is not (δ/2)-Nash. ∎
-
-### 3.6 Payoff Bounds
-
-**Theorem 3.14 (Payoff Bound).** If |uᵢ(s)| ≤ M for all i, s, then |E[uᵢ(σ)]| ≤ M and |Dᵢ(σ, k)| ≤ M.
-
-**Theorem 3.15 (Universal Approximate Nash).** If |uᵢ(s)| ≤ M, then every profile is a 2M-Nash equilibrium.
-
-**Theorem 3.16 (Regret Bound).** If |uᵢ(s)| ≤ M, then |rᵢ(σ, k)| ≤ 2M.
+Condition (2) says the $n+1$ points form a single cell of the subdivision; consequently the Euclidean diameter of $\{\mathrm{latticeVertex}(m,q(s))\}$ is at most $\sqrt{n+1}/m$, and in each coordinate any two of them differ by at most $1/m$. This is exactly the geometric content of Sperner's lemma; we *assume* it and do not reprove it here. (Its constructive door-following proof is recalled in §7.)
 
 ---
 
-## 4. The BRCS Algorithm
+## 4. The descent coloring
 
-### 4.1 Pseudocode
+The link between an arbitrary continuous map and a Sperner labelling is the existence of a *descent coordinate*.
 
-```
-Algorithm: BRCS Nash Equilibrium Approximation
-Input: Finite game G, tolerance ε > 0
-Output: ε-Nash equilibrium σ*
+> **Lemma 4.1 (Descent coordinate — `label_exists`).** Let $f : \Delta^n \to \Delta^n$ be any self-map and $v \in \Delta^n$. Then there exists a coordinate $i$ with
+> $$v_i > 0 \quad\text{and}\quad f(v)_i \le v_i.$$
+> (Continuity of $f$ is not needed for this lemma.)
 
-1. Set mesh_size δ = ε
-2. Generate simplex grid Δ with mesh size δ for each player
-3. For each grid point σ in Δ₁ × ... × Δₙ:
-   a. Compute max_regret R(σ)
-   b. Track argmin σ* = argmin_σ R(σ)
-4. Return σ*
-```
+*Proof.* Suppose not. Then for every $i$ with $v_i > 0$ we have $f(v)_i > v_i$. Because $\sum_i v_i = 1 > 0$, at least one coordinate satisfies $v_i > 0$. For coordinates with $v_i = 0$ we have $f(v)_i \ge 0 = v_i$, so in all cases $f(v)_i \ge v_i$, with strict inequality at some present coordinate. Summing,
+$$1 = \sum_i f(v)_i \;>\; \sum_i v_i = 1,$$
+a contradiction. Hence a descent coordinate exists. $\qquad\blacksquare$
 
-### 4.2 Complexity Analysis
-
-For an n-player game where player i has sᵢ strategies and mesh size δ:
-- Grid points per player: O((1/δ)^{sᵢ - 1})
-- Total grid points: O(∏ᵢ (1/δ)^{sᵢ - 1}) = O((1/δ)^{S - n}) where S = Σsᵢ
-- Per-point evaluation: O(∏ᵢ sᵢ) (enumerate pure profiles)
-- Total complexity: O((1/δ)^{S-n} · ∏ᵢ sᵢ)
-
-For 2-player games with s strategies each and mesh 1/N: O(N² · s²).
+The descent coordinate gives a canonical coloring of points of $\Delta^n$: color $v$ by (a chosen) descent coordinate $i$. Since a descent coordinate satisfies $v_i > 0$, the resulting labelling of lattice points is automatically **proper**: a lattice vertex $\mathrm{latticeVertex}(m,k)$ colored $i$ has $k_i/m > 0$, hence $k_i \neq 0$. This is exactly the hypothesis required by Definition 3.1.
 
 ---
 
-## 5. Examples
+## 5. Two elementary facts about the simplex
 
-### 5.1 Matching Pennies
+> **Lemma 5.1 (Pinning — `eq_of_le_on_stdSimplex`).** If $x, y \in \Delta^n$ and $x_i \le y_i$ for all $i$, then $x = y$.
 
-Players: 2, each with strategies {H, T}. Payoffs: zero-sum with u₁(H,H) = 1, u₁(H,T) = -1, etc.
+*Proof.* Suppose $x_j < y_j$ for some $j$. Then, using $x_i \le y_i$ everywhere,
+$$1 = \sum_i x_i \;<\; \sum_i y_i = 1,$$
+a contradiction. Hence $x_i = y_i$ for all $i$. $\qquad\blacksquare$
 
-Unique Nash equilibrium: σ₁ = σ₂ = (1/2, 1/2).
+This is the rigidity that converts a one-sided coordinate inequality into equality: on the simplex there is "no room" for a coordinatewise-smaller distinct point.
 
-BRCS with mesh 1/N converges: the best grid point is (⌊N/2⌋/N, ⌈N/2⌉/N) for each player, with max regret = 1/N when N is even, and 1/N² when N is odd.
+> **Lemma 5.2 (Squeeze to a limit — `tendsto_of_close`).** Let $x \in \mathbb{R}^{n+1}$, let $x^{(m)} \to x$ as $m \to \infty$, and let $\varepsilon_m \to 0$. If $q^{(m)} \in \mathbb{R}^{n+1}$ satisfies
+> $$\big| q^{(m)}_j - x^{(m)}_j \big| \le \varepsilon_m \quad\text{for all } m, j,$$
+> then $q^{(m)} \to x$.
 
-The regret landscape is a smooth paraboloid centered at the Nash equilibrium, confirming the Support Lemma: at (1/2, 1/2), both strategies have zero regret.
-
-### 5.2 Battle of the Sexes
-
-Three Nash equilibria: (Opera, Opera), (Football, Football), and a mixed equilibrium at (3/5, 2/5) × (2/5, 3/5).
-
-The BRCS discovers all three as the mesh refines: the two pure equilibria appear at mesh size 1, while the mixed equilibrium requires mesh size ≤ 1/5 to appear.
-
-### 5.3 Prisoner's Dilemma
-
-Unique Nash equilibrium: (Defect, Defect). "Cooperate" is strictly dominated.
-
-The Dominated Strategy Theorem (Theorem 3.11) proves that Cooperate has zero probability in any Nash equilibrium. The BRCS confirms: at every mesh size, the minimum-regret grid point is (0, 1) × (0, 1) = (Defect, Defect).
+*Proof.* Work coordinatewise. For each $j$, $q^{(m)}_j = x^{(m)}_j + \big(q^{(m)}_j - x^{(m)}_j\big)$. The first term tends to $x_j$; the second is bounded in absolute value by $\varepsilon_m \to 0$, hence tends to $0$ by the squeeze theorem. Therefore $q^{(m)}_j \to x_j$ for every $j$, which is convergence in $\mathbb{R}^{n+1}$. $\qquad\blacksquare$
 
 ---
 
-## 6. PEGB Analysis
+## 6. The approximation step and the main theorem
 
-### 6.1 Nash Support Lemma (Theorem 3.5)
+### 6.1 Approximation from Sperner
 
-- **P**roof: Complete Lean 4 proof using convex decomposition and the squeeze property of weighted averages where all terms are bounded and one has positive weight.
-- **E**xample: In Matching Pennies at (1/2, 1/2), both H and T yield expected payoff 0.
-- **G**eneralization: Extends to infinite games where strategies are probability measures on compact sets, using weak-* convergence.
-- **B**oundary: Fails for ε-Nash equilibria: supported strategies may differ in payoff by up to ε. This is tight (Matching Pennies at (1/2 + ε/2, 1/2 - ε/2)).
+> **Lemma 6.1 (Approximation — `approx`).** Assume $\mathrm{IsSpernerLemma}(n)$. Let $f:\Delta^n\to\Delta^n$ be continuous, and let $m\ge 1$. Then there exist a base point $x \in \Delta^n$ and points $p_0,\dots,p_n \in \Delta^n$ such that:
+> 1. **(no increase in the matching coordinate)** $f(p_i)_i \le (p_i)_i$ for every $i$;
+> 2. **(proximity)** $\big| (p_i)_j - x_j \big| \le \tfrac{1}{m}$ for all $i,j$.
 
-### 6.2 Dominated Strategy Elimination (Theorem 3.11)
+*Proof.* Define the labelling $L(k)$ on lattice points with $\sum_i k_i = m$ by choosing a descent coordinate of $f$ at $\mathrm{latticeVertex}(m,k)$ (Lemma 4.1, using Lemma 2.3 to see the vertex lies in $\Delta^n$). By the remark following Lemma 4.1, $L$ is proper. Apply $\mathrm{IsSpernerLemma}(n)$ at level $m$ to obtain a rainbow cell $q(0),\dots,q(n)$ satisfying the three properties of Definition 3.1. By surjectivity, choose for each color $i$ an index $s_i$ with $L(q(s_i)) = i$; set $p_i := \mathrm{latticeVertex}(m, q(s_i))$ and $x := \mathrm{latticeVertex}(m, q(0))$. Since $p_i$ is colored $i$, its descent coordinate is $i$, giving $f(p_i)_i \le (p_i)_i$, which is (1). For (2), the unit-step proximity of the cell gives $|q(s_i)_j - q(0)_j| \le 1$ for all $j$, hence after dividing by $m$, $|(p_i)_j - x_j| \le 1/m$. $\qquad\blacksquare$
 
-- **P**roof: By contradiction using the Support Lemma; 5-line Lean proof.
-- **E**xample: In Prisoner's Dilemma, "Cooperate" is dominated by "Defect," so P(Cooperate) = 0 in Nash equilibrium.
-- **G**eneralization: Extends to weak dominance with the additional hypothesis that the dominating strategy has positive probability.
-- **B**oundary: Does *not* extend to weak dominance without additional assumptions. Counterexample: in a game where two strategies tie everywhere, both may have positive probability in Nash equilibrium.
+### 6.2 Brouwer from Sperner
 
-### 6.3 BRCS Convergence (Theorem 3.12)
+> **Theorem 6.2 (`sperner_implies_brouwer`).** Assume $\mathrm{IsSpernerLemma}(n)$. Then every continuous map $f : \Delta^n \to \Delta^n$ has a fixed point: there exists $x^\star \in \Delta^n$ with $f(x^\star) = x^\star$.
 
-- **P**roof: Direct from the convergence of mesh sizes and monotonicity of approximate equilibria.
-- **E**xample: Matching Pennies with mesh 2⁻ⁿ converges with max regret ≤ 2⁻ⁿ.
-- **G**eneralization: Any mesh sequence converging to 0 works (not just powers of 2).
-- **B**oundary: The convergence rate depends on the game; for degenerate games (multiple equilibria), convergence may be slower.
+*Proof sketch.* For each $m \ge 1$ apply Lemma 6.1 to obtain a base point $x^{(m)}$ and matched points $p_i^{(m)}$ with $f(p_i^{(m)})_i \le (p_i^{(m)})_i$ and $|(p_i^{(m)})_j - x_j^{(m)}| \le 1/m$.
 
-### 6.4 Convex Decomposition (Theorem 3.4)
+Since $\Delta^n$ is compact, the sequence $(x^{(m)})_m$ has a convergent subsequence $x^{(m_\ell)} \to x^\star \in \Delta^n$. Restricting to this subsequence and applying Lemma 5.2 with $\varepsilon_{\ell} = 1/m_\ell \to 0$, we get $p_i^{(m_\ell)} \to x^\star$ for every color $i$.
 
-- **P**roof: Algebraic manipulation of sums and products, formalized using Finset.sum_comm and product factoring.
-- **E**xample: In any 2×2 game, E[u₁] = p · D₁(σ, H) + (1-p) · D₁(σ, T) where p = σ₁(H).
-- **G**eneralization: Extends to any multilinear function on a product of simplices.
-- **B**oundary: Requires finite strategy spaces; for continuous strategy spaces, the sum becomes an integral.
+Fix a coordinate $i$. Along the subsequence, $f(p_i^{(m_\ell)})_i \le (p_i^{(m_\ell)})_i$. The right side tends to $x^\star_i$. By continuity of $f$ (and continuity of the $i$-th coordinate projection), the left side tends to $f(x^\star)_i$. Passing to the limit in the inequality,
+$$f(x^\star)_i \le x^\star_i \qquad \text{for every } i.$$
+Both $f(x^\star)$ and $x^\star$ lie in $\Delta^n$ and are coordinatewise comparable, so Lemma 5.1 forces $f(x^\star) = x^\star$. $\qquad\blacksquare$
 
-### 6.5 Universal Approximate Nash (Theorem 3.15)
-
-- **P**roof: Triangle inequality: deviation ≤ M, expected ≥ -M, so regret ≤ 2M.
-- **E**xample: In a game with payoffs in [-1, 1], every profile is a 2-Nash equilibrium.
-- **G**eneralization: The bound 2M is tight (achieved by zero-sum games at the maximin-minimizer profile).
-- **B**oundary: For unbounded payoffs, no universal approximation exists.
+This is the complete deduction: a single combinatorial hypothesis (Sperner), the descent coloring, and elementary compactness/continuity glue.
 
 ---
 
-## 7. Falsifiable Conjecture
+## 7. The constructive core: door-following and the Scarf algorithm
 
-**Conjecture (BRCS Complexity Bound).** For 2-player games with s strategies each, the BRCS algorithm with mesh size 1/N finds a (C/N)-Nash equilibrium for a universal constant C depending only on the payoff range M, not on s.
+Sperner's lemma is not merely true; its proof is an algorithm. We recall the argument for $n=2$ (the general case is an induction on dimension).
 
-**Computational test.** Run the BRCS algorithm on random 2-player games with s ∈ {2, 5, 10, 20} and N ∈ {10, 20, 50, 100}. Compute the max regret r* at the optimal grid point. The conjecture predicts r* ≤ C·M/N for some fixed C. If r* grows with s at fixed N, the conjecture is false.
+Call an edge of a small triangle a **red–green door** if its endpoints carry the colors $0$ and $1$. Counting doors per cell:
 
-**Current evidence.** For s = 2, the bound r* ≤ M/N is achieved. For larger s, preliminary experiments suggest r* ~ M·√(s)/N, which would refute the conjecture in its current form but suggest a modified version with C depending on √s.
+- a rainbow cell (colors $0,1,2$) has exactly **one** door;
+- a cell using only colors $0,1$ has **zero or two** doors;
+- any other cell has **zero** doors.
+
+Thus a cell is rainbow iff it has an odd number of doors. Treat cells as rooms and the exterior of $\Delta^2$ as one extra room. Each *interior* door borders exactly two rooms; each *boundary* door borders one room and the exterior. A parity / handshake argument shows the number of boundary doors on the colored edge is odd (the one-dimensional Sperner statement), which forces the number of rainbow cells to be odd, hence nonzero.
+
+Constructively: enter through a boundary door; each room entered is either rainbow (done) or has exactly one second door to exit by. The path never branches and never repeats a room (a non-rainbow room is entered and left exactly once), so it terminates — necessarily at a rainbow cell. This is **Scarf's algorithm**.
+
+> **Algorithm 7.1 (Simplicial fixed-point / Scarf walk).**
+> *Input:* a continuous $f:\Delta^n\to\Delta^n$, mesh level $m$.
+> 1. Build the lattice vertices $\{k : \sum_i k_i = m\}$ and color each by a descent coordinate of $f$ (Lemma 4.1).
+> 2. Start from a boundary door of the subdivision and follow the unique door-path through cells.
+> 3. Halt at the rainbow cell; return its barycenter $\hat x$ as an approximate fixed point.
+> 4. Increase $m$ to refine; $\hat x$ converges to a true fixed point (Theorem 6.2).
+
+**Complexity.** A single sweep on a mesh of size $1/m$ touches on the order of $m^{n}$ cells; for game-theoretic applications with $N$ total pure strategies the relevant exponent is governed by $N$ (see §8), giving an $O(m^{N})$ cost per refinement. The approximation error in the matched coordinates is $O(1/m)$ by Lemma 6.1.
 
 ---
 
-## 8. Cross-Connection to Catalog
+## 8. Application: existence and computation of Nash equilibria
 
-Our results connect to the existing catalog result `closure_has_least_fixed_point` (in `Bridges/QuantumTropicalCore.lean`), which proves that closure operators on complete lattices have least fixed points.
+### 8.1 Finite games and equilibria
 
-The connection: the "regret operator" Φ(ε) = max_{σ that is ε-Nash} ε defines a monotone function on [0, ∞) whose fixed point at 0 corresponds to the existence of exact Nash equilibria. Theorem 3.13 (Approximate Nash Intersection) is essentially a special case of the general least-fixed-point principle: if Φ(ε) = ε for all ε > 0, then Φ(0) = 0.
+A *finite game* has players $1,\dots,r$, each with a finite pure-strategy set $S_p$, and payoff functions $u_p$. A **mixed strategy** for player $p$ is a probability vector over $S_p$ — i.e. a point of the simplex $\Delta^{|S_p|-1}$. The joint mixed-strategy space is the product $X = \prod_p \Delta^{|S_p|-1}$, a compact convex polytope (and itself homeomorphic to a simplex for the purposes of fixed-point theory). A **mixed Nash equilibrium** is a profile $\sigma^\star \in X$ at which no player can raise their expected payoff by unilaterally changing their own mixed strategy.
 
-We formalize this connection through the `GameFixedPointSystem` structure, which shows that every finite game induces a monotone operator on a complete lattice whose fixed points encode Nash equilibria.
+> **Theorem 8.1 (Nash existence, via Brouwer).** Every finite game has a mixed Nash equilibrium.
+
+*Proof sketch.* Define Nash's improvement map $g : X \to X$ as follows. For player $p$ and pure strategy $a \in S_p$, let
+$$\phi_{p,a}(\sigma) = \max\big(0,\ u_p(a, \sigma_{-p}) - u_p(\sigma)\big)$$
+be the *gain* from deviating to $a$ (how much $a$ beats the current expected payoff). Update
+$$g(\sigma)_{p,a} = \frac{\sigma_{p,a} + \phi_{p,a}(\sigma)}{1 + \sum_{b\in S_p}\phi_{p,b}(\sigma)}.$$
+Each $g(\sigma)_p$ is a valid mixed strategy (nonnegative, summing to $1$), so $g$ maps $X$ into $X$, and $g$ is continuous (payoffs are multilinear, the $\max$ is continuous, the denominator never vanishes). Brouwer's theorem (Theorem 6.2, transported to the polytope $X$) gives a fixed point $\sigma^\star = g(\sigma^\star)$. A short computation shows a fixed point forces all gains $\phi_{p,a}(\sigma^\star) = 0$: if some gain were positive, the renormalization would strictly shift mass toward over-performing strategies and away from at least one strategy in the current support that is *not* a best response — but a strategy in the support cannot do better than the mixture's own value at equilibrium, contradiction. With all gains zero, no unilateral deviation helps; $\sigma^\star$ is a Nash equilibrium. $\qquad\blacksquare$
+
+### 8.2 The combinatorial route and Matching Pennies
+
+Composing §4–§7 with §8.1 gives a fully combinatorial existence proof: color the strategy simplex by descent coordinates of $g$, run the Scarf walk to a rainbow cell, refine. As the mesh $1/m \to 0$, the approximate fixed points converge to an exact equilibrium; for payoffs bounded by $M$ and $N$ total pure strategies, the per-player regret of the mesh-$1/m$ output is $O(M N/m)$, an explicit $\varepsilon$-Nash guarantee.
+
+A canonical test is **Matching Pennies**: two players each choose Heads or Tails; player 1 wins (payoff $+1$) on a match, player 2 wins on a mismatch, zero-sum. This game has *no* pure equilibrium — for any pure profile some player strictly benefits by switching — yet Theorem 8.1 guarantees a mixed one. The descent-coloring algorithm converges to it: each player randomizes uniformly, $\sigma^\star = \big((\tfrac12,\tfrac12),(\tfrac12,\tfrac12)\big)$, where every pure strategy yields expected payoff $0$ and no deviation helps. The accompanying code recovers this equilibrium numerically.
+
+### 8.3 A worked example: regret surface of a $2\times2$ game
+
+It is instructive to make the fixed-point structure explicit for a general $2\times2$ game. Let player 1 (the *row* player) choose Top with probability $p$ and Bottom with $1-p$, and player 2 (the *column* player) choose Left with probability $q$ and Right with $1-q$. With row payoff matrix $A=(a_{ij})$ and column payoff matrix $B=(b_{ij})$, indices $i,j\in\{0,1\}$ for Top/Left $=0$, the expected payoffs are the bilinear forms
+$$u_1(p,q) = \sum_{i,j} a_{ij}\,p_i q_j, \qquad u_2(p,q) = \sum_{i,j} b_{ij}\,p_i q_j,$$
+with $p_0=p,\,p_1=1-p,\,q_0=q,\,q_1=1-q$. Define the *regret* of a profile $(p,q)$ as the largest unilateral gain available to either player,
+$$\rho(p,q) = \max\Big(\max_{i} \big(u_1(e_i,q)-u_1(p,q)\big),\ \max_{j}\big(u_2(p,e_j)-u_2(p,q)\big)\Big),$$
+where $e_i,e_j$ denote pure deviations. By definition $\rho \ge 0$ always, and $\rho(p,q)=0$ **iff** $(p,q)$ is a Nash equilibrium: no player can improve. The improvement map $g$ of Theorem 8.1 has $(p,q)$ as a fixed point precisely on the zero set of $\rho$. Minimizing $\rho$ over the unit square $[0,1]^2$ — a two-dimensional simplicial search — therefore *computes* equilibria.
+
+For Matching Pennies, $A=\begin{pmatrix}1&-1\\-1&1\end{pmatrix}$ and $B=-A$. A direct computation gives $u_1(p,q) = (2p-1)(2q-1)$, so the row player's deviation gain is $|2q-1|$, vanishing only at $q=\tfrac12$; symmetrically the column player forces $p=\tfrac12$. The regret surface $\rho(p,q)=\max(|2q-1|,|2p-1|)$ has its unique zero at the center $(\tfrac12,\tfrac12)$ — the mixed equilibrium — and rises linearly toward the corners, where some player has a strict deviation worth $1$. This single global minimum is what the accompanying interactive widget renders as a heatmap, and what the grid solver in the demo locates to machine precision. For a coordination game $A=B=\begin{pmatrix}2&0\\0&1\end{pmatrix}$, the regret surface instead vanishes at three points — the two pure equilibria $(1,1)$ and $(0,0)$ and the mixed equilibrium $(\tfrac13,\tfrac13)$ — illustrating that the zero set of $\rho$ recovers the *entire* equilibrium set, not merely one point.
 
 ---
 
 ## 9. Discussion
 
-### 9.1 Significance
+The architecture above makes precise *which* ingredient is doing the topological work. All of Lemmas 4.1, 5.1, 5.2 and 6.1 are elementary: two are one-line accounting inequalities about vectors summing to $1$, one is a coordinatewise squeeze, and one is bookkeeping over a rainbow cell. The *only* nontrivial input is $\mathrm{IsSpernerLemma}(n)$ — a discrete counting fact. Brouwer's continuous theorem is therefore exactly as strong as a statement about coloring corners, and no more.
 
-The BRCS framework reveals that Nash's theorem is fundamentally combinatorial. While the classical proof uses Kakutani's theorem (which requires Brouwer's theorem, which requires Sperner's lemma), our approach goes directly from Sperner to Nash, cutting out the topological middlemen.
+Two structural remarks are worth recording, drawn from the formal development:
 
-This has philosophical implications: the existence of equilibria in games is not a topological accident but a combinatorial necessity. Any proper labeling of a triangulated simplex must have a fully-labeled cell, and any proper coloring of the strategy space must have a region where all players are nearly best-responding.
+- The naive informal statement "the descent map has codomain $\mathbb{R}^{n+1}$" is *false* for an arbitrary map; the correct hypothesis is that the image lies in the simplex (i.e. $f$ is a self-map), which is what makes the summation argument in Lemma 4.1 valid.
+- Continuity of $f$ is used in exactly one place — passing to the limit in Theorem 6.2 — and is genuinely unnecessary for the purely combinatorial Lemma 4.1.
 
-### 9.2 Computational Implications
-
-The BRCS algorithm is a special case of simplicial methods for computing fixed points (Scarf 1967, Todd 1976). Our contribution is to formalize the connection between these methods and game theory with machine-verified proofs, and to establish quantitative bounds on convergence.
-
-The complexity of the BRCS algorithm is exponential in the number of strategies, consistent with the PPAD-completeness of Nash equilibrium computation (Daskalakis, Goldberg, Papadimitriou 2009). However, the combinatorial structure of the Sperner coloring may enable polynomial-time algorithms for special classes of games.
+The deduction also clarifies the relationship among existence proofs in game theory. Potential-game existence (a *scalar* certificate: maximize a potential $\Phi$) and supermodular-game existence (an *order* certificate: a Tarski/Knaster–Tarski lattice fixed point) are each strictly weaker than the Brouwer route, which needs neither certificate. The unifying statement is the discrete fixed-point theorem above.
 
 ---
 
-## 10. Future Work
+## 10. Future work
 
-1. **Sperner Index for Games**: Define a combinatorial "Sperner index" for Nash equilibria, analogous to the Brouwer degree. Prove it is invariant under game perturbations and determines the parity of the number of equilibria.
-
-2. **Tropical Nash Equilibria**: Define Nash equilibria over the tropical semiring (min-plus algebra). Prove existence using a tropical version of Sperner's lemma.
-
-3. **Infinite BRCS**: Extend the BRCS framework to infinite-strategy games using measure-theoretic colorings and Prokhorov's theorem for compactness.
-
-4. **Algorithmic Applications**: Exploit the Sperner coloring structure for faster equilibrium computation in structured games (potential games, zero-sum games, congestion games).
+- **Formalizing Sperner itself.** The 1-dimensional parity statement (odd number of color changes along a properly colored segment) is the base case of an induction on dimension; the door-counting (Scarf/Cohen) recursion is the missing combinatorial ingredient that would discharge $\mathrm{IsSpernerLemma}(n)$ as a theorem rather than a hypothesis.
+- **Quantitative $\varepsilon$-Nash.** Convert the $O(1/m)$ proximity of Lemma 6.1 into an explicit per-player regret bound $\varepsilon \le c\,M N/m$ via a Lipschitz estimate on the best-response map, yielding a certified $O(m^{N})$ approximate-equilibrium solver.
+- **Separating existence classes.** Construct a finite game with a pure equilibrium that is neither a potential game nor a supermodular game, formally separating the scalar-certificate, order-certificate, and Brouwer-certificate classes.
+- **Computing the full equilibrium set.** For supermodular games the pure-equilibrium set forms a complete lattice with least and greatest elements obtained by iterating the joint best-response map; making this explicit would compute *all* equilibria, not merely one.
 
 ---
 
-## References
+## 11. Summary of formal results
 
-1. Nash, J. (1950). "Equilibrium Points in n-Person Games." *Proceedings of the National Academy of Sciences*, 36(1), 48-49.
-2. Sperner, E. (1928). "Neuer Beweis für die Invarianz der Dimensionszahl und des Gebietes." *Abhandlungen aus dem Mathematischen Seminar der Universität Hamburg*, 6, 265-272.
-3. Scarf, H. (1967). "The Approximation of Fixed Points of a Continuous Mapping." *SIAM Journal on Applied Mathematics*, 15(5), 1328-1343.
-4. Lemke, C.E. and Howson, J.T. (1964). "Equilibrium Points of Bimatrix Games." *SIAM Journal on Applied Mathematics*, 12(2), 413-423.
-5. Daskalakis, C., Goldberg, P.W., and Papadimitriou, C.H. (2009). "The Complexity of Computing a Nash Equilibrium." *SIAM Journal on Computing*, 39(1), 195-259.
+| Name | Statement |
+|---|---|
+| `latticeVertex_mem` | Lattice points with coordinate sum $m\ge1$ embed into $\Delta^n$. |
+| `label_exists` | Every point has a descent coordinate $i$: $v_i>0$ and $f(v)_i\le v_i$. |
+| `eq_of_le_on_stdSimplex` | Coordinatewise-comparable simplex points are equal. |
+| `tendsto_of_close` | A sequence squeezed within $\varepsilon_m\to0$ of a convergent sequence shares its limit. |
+| `approx` | At mesh $1/m$, Sperner yields a base point and color-matched neighbors within $1/m$ where $f$ does not increase the matching coordinate. |
+| `sperner_implies_brouwer` | Granting Sperner's lemma, every continuous self-map of $\Delta^n$ has a fixed point. |
+
+The discrete implies the continuous; the coloring of corners founds the equilibria of games.

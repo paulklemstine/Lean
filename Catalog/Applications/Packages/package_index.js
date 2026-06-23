@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-23T07:35:17Z",
+    "domain": "Geometry",
+    "exp_id": "d1c9c6b9",
+    "filename": "sperners_lemma_implies_nash_equilibria_combinatori.json",
+    "pkg_num": 8,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
+  },
+  {
     "date": "2026-06-23T07:31:52Z",
     "domain": "Geometry",
     "exp_id": "54153a72",
@@ -131,6 +141,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Primality Testing: A Formally Verified AKS Polynomial Criterion"
+  },
+  "sperners_lemma_implies_nash_equilibria_combinatori.json": {
+    "domain": "Geometry",
+    "exp_id": "d1c9c6b9",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
   }
 };
 
@@ -143,7 +161,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 92,
+      "hue": 272,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -154,7 +172,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 91,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -165,7 +183,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:43:47Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 270,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
       "priority_score": 0.46096,
@@ -176,7 +194,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 90,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -187,7 +205,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 275,
+      "hue": 272,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -198,7 +216,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T06:39:56Z",
       "domain": "Pythagorean",
-      "hue": 271,
+      "hue": 270,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Pythagorean",
       "priority_score": 0.3935206787878788,
@@ -209,13 +227,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 95,
+      "hue": 90,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
       "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
+    },
+    {
+      "date": "2026-06-23T07:35:17Z",
+      "domain": "Geometry",
+      "hue": 100,
+      "id": "sperners_lemma_implies_nash_equilibria_combinatori",
+      "primary_domain": "Geometry",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "hexagonal_prism",
+      "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
     }
   ]
 };
