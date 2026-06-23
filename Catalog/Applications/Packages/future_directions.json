@@ -13770,7 +13770,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -13786,7 +13786,7 @@
         "Geometry"
       ],
       "id": "fd_0466",
-      "last_attempt_time": "2026-06-23T12:05:37.436436+00:00",
+      "last_attempt_time": "2026-06-11T06:41:17.076696+00:00",
       "last_reviewed_at": "2026-06-09T13:04:00.554364+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16928,7 +16928,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16944,7 +16944,7 @@
         "Logic"
       ],
       "id": "fd_0556",
-      "last_attempt_time": "2026-06-23T12:05:33.426983+00:00",
+      "last_attempt_time": "2026-06-11T19:13:59.015295+00:00",
       "last_reviewed_at": "2026-06-09T17:02:10.089664+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35913,6 +35913,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO/ramsey_theory",
+        "math.CO/combinatorial_lines"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex Δ(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) ≥ 22 and HJ(4,2) ≥ 14.",
+      "domain_bridges": [
+        "combinatorics",
+        "constraint_satisfaction",
+        "computational_verification"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2327",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem symmetric_reduction {t n r K : ℕ} (ht : t ≥ 2) (hn : n ≥ 1) (hK : K ≥ 1) (hK_le : K ≤ n) : ∀ (c : SymmetricColoring t n r), (∀ l ∈ lines_with_active_leq t n K, ¬IsMonochromatic l c) ↔ (∀ ct ∈ corner_tuples t n K, ¬IsMonochromaticCorner ct c.toSimplexColoring) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize coordinate-symmetric colorings as functions on letter-count vectors (elements of the discrete simplex). Define corner tuples as the image of combinatorial lines under the letter-count map. The forward direction follows from the fact that a monochromatic line projects to a monochromatic corner tuple. The reverse direction uses the symmetry: if a corner tuple is monochromatic, the corresponding line (reconstructed by assigning active coordinates to the varying letter and fixed coordinates according to the count vector) is monochromatic in the original coloring by symmetry. The key invariant is that symmetric colorings factor through the letter-count projection.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22155v1",
+      "source_path": "http://arxiv.org/abs/2606.22155v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T12:25:51.858994+00:00",
+      "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "Erdős Problem 550"
       ],
@@ -35932,7 +35977,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2327",
+      "id": "fd_2328",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_550_upper_bound_tight (k : ℕ) (m : Fin k → ℕ) (hk : k ≥ 2)\n    (hm_sorted : ∀ i j : Fin k, i ≤ j → m i ≤ m j) :\n    ∃ (trees : ℕ → SimpleGraph ℕ), ∀ n : ℕ, ∃ N ≥ n,\n      IsTree (trees N) ∧ (trees N).vertexCount = N ∧\n      R (trees N) (CompleteMultipartiteGraph m) =\n        (k - 1) * (R (trees N) (CompleteBipartiteGraph (m ⟨0, by omega⟩) (m ⟨1, by omega⟩)) - 1) + m ⟨0, by omega⟩ := by\n  sorry",
@@ -35978,7 +36023,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2328",
+      "id": "fd_2329",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_codim_i_vanishing (p i n : ℕ) (hp : Nat.Prime p) (hi : 0 < i) \n    (hn : n ≥ (3 * i + 1) * p + (3 * i + 2)) :\n    (groupCohomology (HeckeCongruence p n) (n * (n - 1) / 2 - i) ⊗[ℤ] ℚ) ≅ 0 := by\n  sorry",
@@ -36027,7 +36072,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2329",
+      "id": "fd_2330",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_radical_shift_bound (h : ℕ) (h_pos : 0 < h) :\n    Finset.card (Finset.filter (λ j, rad j = rad (j + h)) (Finset.Icc 1 (3 * 7 ^ (3 + 2 * ω h)))) ≤ 3 * 7 ^ (3 + 2 * ω h) ∧\n    (∀ j ≥ 1, rad j = rad (j + h) → Odd h → False) :=\n  by sorry",
@@ -36074,7 +36119,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2330",
+      "id": "fd_2331",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem line_transversals_homotopy_equiv_sphere (n : ℕ) (hn : 1 ≤ n) :\n    ∃ (C : Finset (OpenConvexSet (EuclideanSpace ℝ (Fin (3 * n))))), \n      C.PairwiseDisjoint ∧ \n      Nonempty (HomotopyEquiv (LineTransversals C) (Sphere (n - 1))) := by\n  sorry",
@@ -36120,7 +36165,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2331",
+      "id": "fd_2332",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- We need to define the Grassmann scheme, Boolean degree one functions, and triviality.\n-- Since full formalization of these is complex, we state it with assumed definitions.\n\nvariable {q n : ℕ}\n\n-- Represents a point in the Grassmann scheme J_q(n, k)\n-- (to be fully formalized as k-dimensional subspaces of F_q^n)\nstructure Subspace where \n  carrier : Finset (Fin n → ZMod q)\n  -- properties omitted for stub\n\n-- Definition of a Boolean degree one function (stub)\nstructure BoolDegOneFunc where\n  toFun : Subspace → Bool\n  -- properties omitted for stub\n\n-- Definition of a trivial Boolean degree one function (stub)\ninductive TrivialBoolDegOneFunc : (Subspace → Bool) → Prop\n  | zero : TrivialBoolDegOneFunc (fun _ => false)\n  | one  : TrivialBoolDegOneFunc (fun _ => true)\n  | x_p  : (p : Fin n) → TrivialBoolDegOneFunc (fun V => decide (p ∈ V.carrier)) -- simplified\n  -- other cases omitted for stub\n\n-- Conjecture: J_q(n,2) is DOT for n >= q+2\ntheorem J_q_n_2_DOT_for_n_ge_q_plus_2 (hq : Nat.",
@@ -36165,7 +36210,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2332",
+      "id": "fd_2333",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binary_two_binomial_class_count (n : ℕ) : Fintype.card ({u : List (Fin 2) // u.length = n} / Setoid.ker (twoBinomialEquiv 2)) = (n^3 + 5*n + 6) / 6 := by\n  sorry",
@@ -36211,7 +36256,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2333",
+      "id": "fd_2334",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binomial_gcd_criterion_restricted_range (k : ℕ) (hk : 2 ≤ k) : (gcd_q2_to_k (fun q => (q * k.choose k)) = 1) ↔ ¬∃ p a, prime p ∧ a ≥ 1 ∧ p ^ a ‖ k ∧ p ^ (a + 1) ∤ k",
@@ -36260,7 +36305,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2334",
+      "id": "fd_2335",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidorenko_two_sided {Γ : Type} [Fintype Γ] (f : Γ → ℝ) (F : FinVDirGraph) : t F (C_f) ≥ ( (∑ g : Γ, f g) / (Fintype.card Γ) ) ^ (2 * F.edges) := by sorry",
@@ -36306,7 +36351,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2335",
+      "id": "fd_2336",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The class of groups admitting a star-shaped deleted co-maximal graph is exactly the star groups",
@@ -36352,7 +36397,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2336",
+      "id": "fd_2337",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alpha_es_lower_bound (G : Graph) : α_es G ≥ α G - 1",
@@ -36398,7 +36443,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2337",
+      "id": "fd_2338",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem parry_admissible_beta_expansion (β : ℝ) (hβ : β > 1)\n    (d : ℕ → ℕ) (hd : ∀ n, d n < ⌊β⌋₊ + 1) :\n    (∃ x ∈ Set.Ico 0 1, ∀ n, d n = ⌊β * (T β)^n x⌋) ↔\n    ∀ n, LexLt (fun i => d (n + i)) (fun i => d_star_one β (n + i)) := by\n  sorry",
@@ -36443,7 +36488,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2338",
+      "id": "fd_2339",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture finite_field_restriction_conjecture_p3 (p : ℕ) (hp : Prime p) (hmod : p % 4 = 3) :\n  ∃ C : ℝ, ∀ (f : P3 p → ℂ), \n    ‖E p f‖₃ ≤ C * ‖f‖₂ := sorry",
@@ -36493,7 +36538,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2339",
+      "id": "fd_2340",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem threshold_free_eq_case\n    {V : Type u} [Fintype V] [DecidableEq V]\n    {r t : ℕ} (K : FinSimplicialComplex V)\n    (ht0 : 1 ≤ t) (htr : t ≤ r)\n    (hpure : K.PureDim r)\n    (hconn : K.DownPathConnected r)\n    (hhom : ∀ σ : Finset V,\n      K.IsFace σ → σ.card = r - t →\n        ReducedHomologyVanishes ℝ t (K.link σ)) :\n    K.upSignlessLaplacianSpectralRadius (r - 1)\n      = (t : ℝ) * (Fintype.card V : ℝ)\n        - ((t - 1 : ℕ) : ℝ) * ((r + 1 : ℕ) : ℝ)\n    ↔\n    ∃ C : Finset V,\n      C.card = r + 1 - t ∧\n      K = (FinSimplicialComplex.simplexOn C).join\n            ((FinSimplicialComplex.simplexOn (Cᶜ)).skeleton (t - 1)) := by\n  sorry",
@@ -36540,7 +36585,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2340",
+      "id": "fd_2341",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem swap_chain_spectral_gap_lower_bound {m n : ℕ} (r : Fin m → ℕ) (c : Fin n → ℕ)\n    (hfeas : (Ω_binary_matrix r c).Nonempty) (hm : 2 ≤ m) (hn : 2 ≤ n) :\n    spectralGap (lazySwapChain r c) ≥\n      (1 : ℝ) / (Nat.choose m 2 * Nat.choose n 2) := by\n  sorry",
@@ -36588,7 +36633,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2341",
+      "id": "fd_2342",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen BigOperators\n\n/-- Adjacency in the rectangular grid `Fin m × Fin n`. -/\ndef GridAdj {m n : Nat} (p q : Fin m × Fin n) : Prop :=\n  (p.1 = q.1 ∧ (p.2.val + 1 = q.2.val ∨ q.2.val + 1 = p.2.val)) ∨\n  (p.2 = q.2 ∧ (p.1.val + 1 = q.1.val ∨ q.1.val + 1 = p.1.val))\n\n/-- Normalized integer-valued edge-1-Lipschitz functions on the grid. -/\ndef GridLip0 {m n : Nat} (hm : 0 < m) (hn : 0 < n)\n    (f : Fin m × Fin n → Int) : Prop :=\n  f (⟨0, hm⟩, ⟨0, hn⟩) = 0 ∧\n  ∀ p q : Fin m × Fin n, GridAdj p q → Int.natAbs (f p - f q) ≤ 1\n\n/-- L1 mass of an integer grid function. -/\ndef L1Mass {m n : Nat} (f : Fin m × Fin n → Int) : Nat :=\n  ∑ p, Int.natAbs (f p)\n\n/-- Closed-form sharp upper bound for normalized grid Lipschitz L1 mass. -/\ndef GridDiameterBound (m n : Nat) : Nat :=\n  n * (m * (m - 1) / 2) + m * (n * (n - 1) / 2)\n\n/-- Conjectural extremal inequality underlying the Miura-ori diameter upper bound. -/\ntheorem grid_lipschitz_l1Mass_exact\n    {m n : Nat} (hm : 0 < m) (hn : 0 < n) :",
@@ -36607,6 +36652,51 @@
       "thread_id": "",
       "timestamp": "2026-06-23T12:05:30.404748+00:00",
       "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "05C15",
+        "05C07"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: For any finite simple graph G, the number of irreducible FAT colorings of G is exactly the cardinality of the set of real numbers α ∈ [0,1] for which there exists β ∈ [0,1] such that (α,β) yields a FAT coloring of G. In other words, each irreducible FAT coloring corresponds to a unique fairness parameter α, and distinct irreducible FAT colorings give distinct α values.",
+      "domain_bridges": [
+        "Equitable partitions",
+        "Algebraic graph theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2343",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem conjecture_irreducible_fat_colorings_eq_alpha_values {V : Type*} [Fintype V] (G : SimpleGraph V) :\n    (number_of_irreducible_FAT_colorings G) = (cardinality (alpha_values G)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Show that merging color classes in a FAT coloring scales the fairness parameter α by a predictable rational factor (as described in the paper). Hence, along any chain in the coarsening poset, the α values form a strictly decreasing sequence. Irreducible FAT colorings are precisely the minimal elements in this poset, so each yields a distinct α that cannot be obtained by scaling another α. Conversely, given any α arising from a FAT coloring, repeatedly refine the coloring while preserving the FAT property until an irreducible coloring is reached; this process does not change α. This establishes a bijection between irreducible FAT colorings and distinct α values.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22374v1",
+      "source_path": "http://arxiv.org/abs/2606.22374v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T12:28:11.255044+00:00",
+      "title": "Number of irreducible FAT colorings equals number of distinct fairness parameters"
     },
     {
       "ambition_level": "extension",

@@ -3145,6 +3145,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO/ramsey_theory",
+      "math.CO/combinatorial_lines"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex Δ(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) ≥ 22 and HJ(4,2) ≥ 14.",
+    "domain_bridges": [
+      "combinatorics",
+      "constraint_satisfaction",
+      "computational_verification"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2327",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize coordinate-symmetric colorings as functions on letter-count vectors (elements of the discrete simplex). Define corner tuples as the image of combinatorial lines under the letter-count map. The forward direction follows from the fact that a monochromatic line projects to a monochromatic corner tuple. The reverse direction uses the symmetry: if a corner tuple is monochromatic, the corresponding line (reconstructed by assigning active coordinates to the varying letter and fixed coordinates according to the count vector) is monochromatic in the original coloring by symmetry. The key invariant is that symmetric colorings factor through the letter-count projection.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22155v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:25:51.858994+00:00",
+    "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "Erdős Problem 550"
     ],
@@ -3158,7 +3184,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -3185,7 +3211,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2328",
+    "id": "fd_2329",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -3215,7 +3241,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2329",
+    "id": "fd_2330",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -3243,7 +3269,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3270,7 +3296,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3296,7 +3322,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3323,7 +3349,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
@@ -3353,7 +3379,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2334",
+    "id": "fd_2335",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply repeated Cauchy–Schwarz inequalities on the group sum to bound the kernel average, and argue that equality forces f to be constant.",
@@ -3380,7 +3406,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive analysis combining subgroup inclusion properties with graph connectivity criteria",
@@ -3407,7 +3433,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the bound α_{es}(G) ≥ α(G) - 1 holds universally by constructing an ESI-set from an arbitrary maximum independent set through local modifications to satisfy the ES-condition, or disprove by finding a graph where the reduction exceeds 1.",
@@ -3434,7 +3460,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the lexicographic order on infinite sequences over a finite alphabet, formalize the $\\beta$-transformation and the quasi-greedy expansion of 1, then prove the equivalence using properties of the shift map and greedy expansions.",
@@ -3460,7 +3486,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2338",
+    "id": "fd_2339",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the author's bilinear approach and point-line incidence estimates to handle the endpoint $r=3$, or establish sharp Kakeya and maximal restriction bounds over finite fields to close the remaining gap.",
@@ -3491,7 +3517,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2339",
+    "id": "fd_2340",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the paper’s inequality proof via the Rayleigh quotient for the nonnegative signless up-Laplacian. Use r-down path connectivity to obtain irreducibility and hence a strictly positive Perron vector. Analyze every equality condition in the chain of inequalities: local homology vanishing should force the relevant link shadows to attain their extremal Kruskal-Katona-type lower bounds, while equality in the Perron/Rayleigh estimates should force all maximal r-faces to contain a common core of size r+1-t and to contain every t-subset of the complementary vertex set. The remaining task is to replace the paper’s large-n rigidity lemma by an exact finite rigidity lemma for the equality case.",
@@ -3519,7 +3545,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2340",
+    "id": "fd_2341",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow the paper's three-stage argument: (1) Establish a comparison inequality between the swap chain and a two-row heat-bath chain, bounding the swap chain spectral gap from below by a constant times the heat-bath spectral gap. (2) Reduce the m×n heat-bath analysis to the 3-row case via a tensorization/reduction argument on the column-count variable. (3) Prove the 3-row inequality by decomposing the function space on {0,1}³ into the constant sector, the count sector (functions of the column sum), and the Johnson harmonic sectors, establishing a Poincaré inequality on each sector with the appropriate spectral gap lower bound.",
@@ -3548,7 +3574,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2341",
+    "id": "fd_2342",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove pointwise that any edge-1-Lipschitz f with f(0,0)=0 satisfies |f(i,j)| ≤ i+j by following a shortest Manhattan path from (0,0) to (i,j). Sum this pointwise bound over all grid vertices. Evaluate the two separable sums ∑_{i=0}^{m−1}∑_{j=0}^{n−1}(i+j)=n·m(m−1)/2 + m·n(n−1)/2. Sharpness follows by checking that f(i,j)=i+j is edge-1-Lipschitz, normalized at the origin, and attains equality termwise.",
@@ -3557,6 +3583,32 @@
     "status": "available",
     "timestamp": "2026-06-23T12:05:30.404748+00:00",
     "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "05C15",
+      "05C07"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite simple graph G, the number of irreducible FAT colorings of G is exactly the cardinality of the set of real numbers α ∈ [0,1] for which there exists β ∈ [0,1] such that (α,β) yields a FAT coloring of G. In other words, each irreducible FAT coloring corresponds to a unique fairness parameter α, and distinct irreducible FAT colorings give distinct α values.",
+    "domain_bridges": [
+      "Equitable partitions",
+      "Algebraic graph theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2343",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that merging color classes in a FAT coloring scales the fairness parameter α by a predictable rational factor (as described in the paper). Hence, along any chain in the coarsening poset, the α values form a strictly decreasing sequence. Irreducible FAT colorings are precisely the minimal elements in this poset, so each yields a distinct α that cannot be obtained by scaling another α. Conversely, given any α arising from a FAT coloring, repeatedly refine the coloring while preserving the FAT property until an irreducible coloring is reached; this process does not change α. This establishes a bijection between irreducible FAT colorings and distinct α values.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22374v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:28:11.255044+00:00",
+    "title": "Number of irreducible FAT colorings equals number of distinct fairness parameters"
   },
   {
     "ambition_level": "extension",

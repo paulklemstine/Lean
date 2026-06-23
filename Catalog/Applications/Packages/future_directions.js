@@ -2083,12 +2083,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex \u0394(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) \u2265 22 and HJ(4,2) \u2265 14.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2327",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22155v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:25:51.858994+00:00",
+    "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -2103,7 +2117,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2328",
+    "id": "fd_2329",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2118,7 +2132,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2329",
+    "id": "fd_2330",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2133,7 +2147,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2147,7 +2161,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
@@ -2161,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
@@ -2175,7 +2189,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -2190,7 +2204,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2334",
+    "id": "fd_2335",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -2205,7 +2219,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -2219,7 +2233,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22972v1",
@@ -2233,7 +2247,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
@@ -2248,7 +2262,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2338",
+    "id": "fd_2339",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -2263,7 +2277,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2339",
+    "id": "fd_2340",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -2278,7 +2292,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2340",
+    "id": "fd_2341",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22636v1",
@@ -2292,13 +2306,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2341",
+    "id": "fd_2342",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22614v1",
     "status": "available",
     "timestamp": "2026-06-23T12:05:30.404748+00:00",
     "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite simple graph G, the number of irreducible FAT colorings of G is exactly the cardinality of the set of real numbers \u03b1 \u2208 [0,1] for which there exists \u03b2 \u2208 [0,1] such that (\u03b1,\u03b2) yields a FAT coloring of G. In other words, each irreducible FAT coloring corresponds to a unique fairness parameter \u03b1, and distinct irreducible FAT colorings give distinct \u03b1 values.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2343",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22374v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:28:11.255044+00:00",
+    "title": "Number of irreducible FAT colorings equals number of distinct fairness parameters"
   },
   {
     "consumed_by_exp_id": "",
