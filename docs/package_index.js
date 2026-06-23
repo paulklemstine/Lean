@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-23T06:39:56Z",
+    "domain": "Pythagorean",
+    "exp_id": "3db2ad68",
+    "filename": "close_proofs_these_conjectures_continue_the_resear.json",
+    "pkg_num": 6,
+    "quality": "partial",
+    "quality_score": 0.3935206787878788,
+    "title": "Transition Endomorphisms of an Endomorphism Stream: Composition Law and Rank Stabilization"
+  },
+  {
     "date": "2026-06-23T05:45:49Z",
     "domain": "Bridges",
     "exp_id": "70e63d82",
@@ -64,6 +74,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
   },
+  "close_proofs_these_conjectures_continue_the_resear.json": {
+    "domain": "Pythagorean",
+    "exp_id": "3db2ad68",
+    "source_exp_ids": [
+      "a0dd96a5"
+    ],
+    "title": "Transition Endomorphisms of an Endomorphism Stream: Composition Law and Rank Stabilization"
+  },
   "elliptic_curve_cryptography_weil_pairing_and_bls_s.json": {
     "domain": "Cryptography",
     "exp_id": "cb79327f",
@@ -107,7 +125,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 91,
+      "hue": 92,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -118,7 +136,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 271,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -129,7 +147,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:43:47Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
       "priority_score": 0.46096,
@@ -140,7 +158,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 270,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -158,6 +176,17 @@ window.PACKAGE_GRAPH = {
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
+    },
+    {
+      "date": "2026-06-23T06:39:56Z",
+      "domain": "Pythagorean",
+      "hue": 134,
+      "id": "close_proofs_these_conjectures_continue_the_resear",
+      "primary_domain": "Pythagorean",
+      "priority_score": 0.3935206787878788,
+      "quality": "partial",
+      "shape": "triangular_prism",
+      "title": "Transition Endomorphisms of an Endomorphism Stream: Composition Law and Rank Stabilization"
     }
   ]
 };
