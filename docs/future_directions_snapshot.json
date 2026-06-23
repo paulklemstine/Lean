@@ -2664,7 +2664,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9949e0b1",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domain_bridges": [],
     "domains": [
@@ -2677,7 +2677,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -2781,7 +2781,27 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3dade48e",
+    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Novelty"
+    ],
+    "id": "moonshot_Pickover_32",
+    "lineage_refs": [],
+    "priority_score": 0.58,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-22T11:50:17.617665+00:00",
+    "title": "Pickover Clifford Attractor Family"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "03341375",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -2793,7 +2813,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -3878,7 +3898,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e34371e",
     "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
     "domain_bridges": [],
     "domains": [
@@ -3891,7 +3911,7 @@
     "proof_strategy": "Given an n-player game G with strategy sets S_1, ..., S_n. Define the simplex Delta = {(p_1, ..., p_n) : p_i in Delta(S_i), sum p_i = 1}. Define Sperner coloring c: Delta -> {1, ..., n} by c(v) = i where i = argmax_j BR_i(v)_j (player i's best response to v has highest probability on strategy j). Boundary condition: if v is on the face where p_i = 0, then c(v) != i (a player with zero probability cannot have a best response there). Wait, the correct boundary condition is: if v is on the face where v_i = 0, then c(v) is not i. Sperner's lemma: there exists at least one fully colored simplex (with all colors 1, ..., n). The center of this simplex is an epsilon-Nash equilibrium where epsilon depends on the mesh size of the triangulation. As mesh -> 0, epsilon -> 0, giving an exact Nash equilibrium. Algorithm: triangulate Delta with mesh epsilon, color vertices by best responses, find fully colored simplex by Sperner's lemma (using the path-following algorithm). Complexity: O((1/epsilon)^{n-1} * |S|) per iteration. Test: implement for 2x2 games (Matching Pennies, Prisoner's Dilemma, Battle of the Sexes). Verify that the algorithm finds the unique Nash equilibrium.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.676713+00:00",
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
