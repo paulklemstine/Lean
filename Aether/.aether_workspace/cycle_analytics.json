@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-23T02:22:33.140319+00:00",
+  "last_updated": "2026-06-23T03:23:49.986512+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -416,6 +416,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-23T02:22:32.924601+00:00",
       "title": "EML Quantum Activation Functions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4477,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "NumberTheory",
+      "duration_seconds": 5974.481755018234,
+      "end_time": 1782184690.466463,
+      "files_integrated": 2,
+      "job_id": "6e34371e",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v16a",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v16a",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.5,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6832,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.8197,
+        "novelty": 0.95,
+        "proof_depth": 0.7639,
+        "usefulness": 0.6319
+      },
+      "quality_score": 0.3216371714285714,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782178715.984708,
+      "strategy_count": 0,
+      "theorem_count": 3,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 3,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-23T03:23:49.722691+00:00",
+      "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
     }
   ]
 }
