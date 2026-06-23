@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "07255b71",
     "filename": "sierpiski_numbers_covering_systems.json",
     "pkg_num": 10,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5811999999999999,
     "title": "Sierpinski Numbers via Covering Systems: A Certificate Framework"
   },
   {
@@ -299,8 +299,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5811999999999999,
+      "quality": "partial",
       "shape": "cube",
       "title": "Sierpinski Numbers via Covering Systems: A Certificate Framework"
     }

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "16e95997",
-      "domain": "Physics",
-      "key_insight": "# FUTURE DIRECTIONS — Computational Complexity as a Physical Law\n\nDerived from the Phase A cycle that produced\n`Catalog/Physics/ComplexityPhysicalLaw.lean` and\n`Catalog/Speculative/ExtendedChurchTurin",
-      "quality_score": 0.5482400000000001,
-      "sorry_count": 5,
-      "theorem_count": 51,
-      "timestamp": "2026-06-16T12:53:15",
-      "title": "Speculative: Computational Complexity as Physical Law"
-    },
-    {
       "cycle_id": "3b102b1d",
       "domain": "Probability",
       "key_insight": "# Future Directions — Functorial Tropical–Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-23T07:38:34",
       "title": "Attention Mechanisms: Mathematical Properties"
+    },
+    {
+      "cycle_id": "07255b71",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nThe verified file `Catalog/Tropical/CoveringSystems.lean` provides a reusable\n`CoveringCert` API and a concrete certificate for 78557. Below are several\noriginal directions that b",
+      "quality_score": 0.5811999999999999,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-23T08:31:02",
+      "title": "Sierpiński Numbers: Covering Systems"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T07:38:34",
+  "last_updated": "2026-06-23T08:31:02",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "24a3af22",
-        "quality": 0.606,
-        "theorems": 30,
-        "title": "Speculative: Category Theory as the DNA of Mathematics"
-      },
-      {
         "cycle_id": "2d22ac65",
         "quality": 0.5060211363636364,
         "theorems": 12,
@@ -4009,6 +4003,12 @@
         "quality": 0.7829999999999999,
         "theorems": 21,
         "title": "Idempotent Probability: Large Deviations"
+      },
+      {
+        "cycle_id": "07255b71",
+        "quality": 0.5811999999999999,
+        "theorems": 4,
+        "title": "Sierpiński Numbers: Covering Systems"
       }
     ]
   }
