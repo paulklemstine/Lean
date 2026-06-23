@@ -837,7 +837,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "07255b71",
+    "consumed_by_exp_id": "",
     "description": "Prove that 78557 is the smallest Sierpiński number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domain_bridges": [],
     "domains": [
@@ -850,7 +850,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpiński Numbers: Covering Systems"
   },
@@ -2497,6 +2497,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "delta-matroids",
+      "log-concavity",
+      "polynomial invariants"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any binary delta-matroid $D$ on ground set $E$ and any twuality operator $\\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the sequence of coefficients of the partial-$\\bullet$ polynomial $^{\\partial}w_{D}^{\\bullet}(z) = \\sum_{A \\subseteq E} z^{w(D^{\\bullet \\mid A})}$ is log-concave. This conjecture extends the interpolation property established in the paper (which implies the sequence has no internal zeros) and directly parallels the resolution of the Mason-Welsh conjecture for matroid independent sets.",
+    "domain_bridges": [
+      "matroid theory",
+      "algebraic combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2302",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish log-concavity by demonstrating that the partial-twuality polynomial is Lorentzian (by verifying that the quadratic forms associated with its coefficients correspond to M-convex functions), or by constructing an explicit combinatorial injection for the coefficient sequence analogous to the proof of the Mason-Welsh conjecture for matroids.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22888v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:47:22.546695+00:00",
+    "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Mathlib.Algebra.MonoidAlgebra.Basic",
       "Mathlib.GroupTheory.GroupAction.ConjAct",
       "Mathlib.LinearAlgebra.Finsupp",
@@ -2515,7 +2543,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2302",
+    "id": "fd_2303",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
@@ -2546,7 +2574,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2303",
+    "id": "fd_2304",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite simple graphs, edge sets, vertex degrees, and C5-decompositions as a finite family of subgraphs each isomorphic to a 5-cycle whose edge sets are pairwise disjoint and cover E(G). The mathematical proof would likely combine an absorption framework with approximate C5-decompositions and a stability analysis around the known extremal obstruction giving the lower bound 5/8. In Lean, the conjecture can initially be stated using abstract predicates `IsFiveCycle` and `HasC5Decomposition`, then refined to concrete cycle embeddings into `SimpleGraph`.",
@@ -2573,7 +2601,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2304",
+    "id": "fd_2305",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the paper's main result that local ask zeta functions are recovered by substitutions in the truncated flag Hilbert-Poincaré series. Prove that (1) the truncated flag Hilbert-Poincaré series of A is determined by L(A), (2) the substitution parameters for primes of good reduction depend only on the isomorphism type of L(A) and the residue field size q, and (3) the matrix of linear forms constructed from A yields the same ask zeta function as any other arrangement with isomorphic lattice. The key difficulty is showing that the matrix construction and the substitution are both lattice-determined, which may require developing a lattice-theoretic characterization of the associated matroid and its representability constraints.",
@@ -2603,7 +2631,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2305",
+    "id": "fd_2306",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the proof of the n ≥ 6k+6 theorem and isolate where slack is used in bounding exceptional vertices and dangerous vertex cuts in G-E(P). Replace the coarse counting step by a sharper dichotomy: either every small cut in the residual complement has many cross-neighbors, allowing standard Hamiltonian path rerouting, or the graph has a near-complete bipartite/clustered structure where an explicit alternating Hamiltonian u-v path can be constructed. Formal verification would reduce the final residual k-connectivity claim to checking that every vertex set S with |S| < k leaves G-E(P)-S connected.",
@@ -2631,7 +2659,7 @@
       "Geometry",
       "Logic"
     ],
-    "id": "fd_2306",
+    "id": "fd_2307",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The authors already construct explicit families of convex sets and show nontrivial homology via a quotient/retraction argument onto a configuration space identified with a product of spheres. To upgrade H̃_{n-1}(L) ≠ 0 to a full homotopy equivalence L ≃ S^{n-1}, one would need to show that the natural retraction map from L onto a subspace homeomorphic to S^{n-1} is a homotopy equivalence—likely by establishing that the fiber of this retraction is contractible (a deformation retraction argument) or by computing all homotopy groups directly. The key geometric step is controlling the higher connectivity of the transversal space relative to its (n-1)-dimensional core.",
@@ -2656,7 +2684,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2307",
+    "id": "fd_2308",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Menger's theorem to the union of the sets in $\\mathcal{A}$ and the branch vertices of $W$. If no separator of size $ns'-1$ exists, there are $ns'$ disjoint paths, which can be distributed among the $n$ disjoint sets and then routed to distinct nails of a subwall.",
@@ -2686,7 +2714,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2308",
+    "id": "fd_2309",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires: (1) formalizing the bottom cohomological degree formula b(F,n) = r₁⌊n²/4⌋ + r₂·n(n-1)/2 and proving its parity properties; (2) constructing the Betti-Whittaker period as a pairing between relative Lie algebra cohomology and Whittaker models; (3) establishing the duality isomorphism on cohomology induced by the contragredient map on representations; (4) computing the sign incurred by the contragredient action on the bottom-degree cohomology, which reduces to tracking how the Chevalley involution acts on the lowest weight vector of the coefficient system and how this interacts with the Whittaker functional. Key intermediate lemma: the sign equals (-1)^b because the contragredient reverses the orientation of the flag variety contributing exactly b mod 2 sign changes.",
@@ -2695,6 +2723,31 @@
     "status": "available",
     "timestamp": "2026-06-23T05:20:19.284015+00:00",
     "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.DS",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ can be realized as the $(-\\beta)$-expansion of some $x \\in I_\\beta$ if and only if for all $n \\ge 1$, the suffix $x_n x_{n+1} \\dots$ is less than or equal to $d^*(0, -\\beta)$ in the alternating lexicographic order. The alternating lexicographic order $\\preceq$ is defined such that $x \\preceq y$ if either $x=y$ or at the first index $k$ where they differ, $x_k < y_k$ when $k$ is odd and $x_k > y_k$ when $k$ is even.",
+    "domain_bridges": [
+      "Combinatorics on Words",
+      "Symbolic Dynamics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2310",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the alternating lexicographic order on infinite sequences, the $(-\\beta)$-transformation $T_{-\\beta}$, and the sequence $d^*(0, -\\beta)$. Prove that the shift space defined by this order condition is invariant and corresponds exactly to the admissible sequences of the $(-\\beta)$-transformation, mirroring Parry's proof for positive $\\beta$-expansions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23097v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:48:57.058098+00:00",
+    "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
   },
   {
     "ambition_level": "extension",
@@ -3146,7 +3199,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43b98190",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [
@@ -3159,7 +3212,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
@@ -3186,7 +3239,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3db2ad68",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -3198,7 +3251,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -4103,7 +4156,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "873e12da",
+    "consumed_by_exp_id": "",
     "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
     "domain_bridges": [],
     "domains": [
@@ -4116,7 +4169,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.050227+00:00",
     "title": "Homotopy Type Theory as Foundations"
   },
@@ -4279,26 +4332,6 @@
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.643460+00:00",
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d1c9c6b9",
-    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0069",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Given an n-player game G with strategy sets S_1, ..., S_n. Define the simplex Delta = {(p_1, ..., p_n) : p_i in Delta(S_i), sum p_i = 1}. Define Sperner coloring c: Delta -> {1, ..., n} by c(v) = i where i = argmax_j BR_i(v)_j (player i's best response to v has highest probability on strategy j). Boundary condition: if v is on the face where p_i = 0, then c(v) != i (a player with zero probability cannot have a best response there). Wait, the correct boundary condition is: if v is on the face where v_i = 0, then c(v) is not i. Sperner's lemma: there exists at least one fully colored simplex (with all colors 1, ..., n). The center of this simplex is an epsilon-Nash equilibrium where epsilon depends on the mesh size of the triangulation. As mesh -> 0, epsilon -> 0, giving an exact Nash equilibrium. Algorithm: triangulate Delta with mesh epsilon, color vertices by best responses, find fully colored simplex by Sperner's lemma (using the path-following algorithm). Complexity: O((1/epsilon)^{n-1} * |S|) per iteration. Test: implement for 2x2 games (Matching Pennies, Prisoner's Dilemma, Battle of the Sexes). Verify that the algorithm finds the unique Nash equilibrium.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.676713+00:00",
-    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
     "ambition_level": "extension",

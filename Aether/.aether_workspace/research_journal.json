@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c3d42768",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Korselt Criterion & Divisor-Lattice Tropical Flatness\n\nDerived from the cycle that produced `Shared/KorseltCarmichael.lean` and\n`Bridges/KorseltTropicalFlatness.lean`. In that cy",
-      "quality_score": 0.57488,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-16T10:39:41",
-      "title": "Korselt criterion completion and Carmichael divisor-lattice tropical flatness"
-    },
-    {
       "cycle_id": "bfb62bb9",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Weight-Threshold Profiles & the Codes → Tropical Valuation Functor\n\nDerived from the research cycle recorded in\n`Catalog/Novelty/ThresholdDirectSum.lean`, `Catalog/Novelty/Thresh",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-23T04:02:32",
       "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+    },
+    {
+      "cycle_id": "70e63d82",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Galois Connections Between Order Theory and Topology\n\nDerived from this cycle's findings (files `GaloisAlexandrovTopology.lean`,\n`GaloisFixedPointLattice.lean`, `GaloisZariskiBri",
+      "quality_score": 0.47904,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-23T05:46:00",
+      "title": "Bridge: Galois Connections Between Order Theory and Topology"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T04:02:32",
+  "last_updated": "2026-06-23T05:46:00",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "e42393e4",
-        "quality": 0.79224,
-        "theorems": 42,
-        "title": "Functor from finite linear codes to tropical valuation objects via weight-thresh"
-      },
-      {
         "cycle_id": "29ffc67c",
         "quality": 0.5227499999999999,
         "theorems": 9,
@@ -3203,6 +3197,12 @@
         "quality": 0.3034976,
         "theorems": 3,
         "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
+      },
+      {
+        "cycle_id": "70e63d82",
+        "quality": 0.47904,
+        "theorems": 11,
+        "title": "Bridge: Galois Connections Between Order Theory and Topology"
       }
     ],
     "Combinatorics": [

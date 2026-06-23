@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "70e63d82",
     "filename": "bridge_galois_connections_between_order_theory_and.json",
     "pkg_num": 5,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.47904,
     "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
   },
   {
@@ -154,8 +154,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.47904,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
     }

@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-23T05:45:49Z",
+    "domain": "Bridges",
+    "exp_id": "70e63d82",
+    "filename": "bridge_galois_connections_between_order_theory_and.json",
+    "pkg_num": 5,
+    "quality": "partial",
+    "quality_score": 0.47904,
+    "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
+  },
+  {
     "date": "2026-06-23T04:02:19Z",
     "domain": "Cryptography",
     "exp_id": "cb79327f",
@@ -46,6 +56,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "bridge_galois_connections_between_order_theory_and.json": {
+    "domain": "Bridges",
+    "exp_id": "70e63d82",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
+  },
   "elliptic_curve_cryptography_weil_pairing_and_bls_s.json": {
     "domain": "Cryptography",
     "exp_id": "cb79327f",
@@ -89,7 +107,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 272,
+      "hue": 91,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -100,7 +118,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 270,
+      "hue": 90,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -111,7 +129,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:43:47Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 270,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
       "priority_score": 0.46096,
@@ -122,13 +140,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 89,
+      "hue": 90,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
       "quality": "substantial",
       "shape": "dodecahedron",
       "title": "Elliptic Curve Cryptography: The Weil Pairing, BLS Signatures, and the MOV Reduction"
+    },
+    {
+      "date": "2026-06-23T05:45:49Z",
+      "domain": "Bridges",
+      "hue": 90,
+      "id": "bridge_galois_connections_between_order_theory_and",
+      "primary_domain": "Bridges",
+      "priority_score": 0.47904,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
     }
   ]
 };

@@ -2738,7 +2738,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d1c9c6b9",
+      "consumed_by_exp_id": "6e34371e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -2764,7 +2764,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.676713+00:00",
       "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
@@ -12994,7 +12994,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "873e12da",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13020,7 +13020,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:29.050227+00:00",
       "title": "Homotopy Type Theory as Foundations"
@@ -34749,6 +34749,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "delta-matroids",
+        "log-concavity",
+        "polynomial invariants"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any binary delta-matroid $D$ on ground set $E$ and any twuality operator $\\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the sequence of coefficients of the partial-$\\bullet$ polynomial $^{\\partial}w_{D}^{\\bullet}(z) = \\sum_{A \\subseteq E} z^{w(D^{\\bullet \\mid A})}$ is log-concave. This conjecture extends the interpolation property established in the paper (which implies the sequence has no internal zeros) and directly parallels the resolution of the Mason-Welsh conjecture for matroid independent sets.",
+      "domain_bridges": [
+        "matroid theory",
+        "algebraic combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2302",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem partial_twuality_polynomial_log_concave\n  {E : Type*} [Fintype E] [DecidableEq E]\n  (D : DeltaMatroid E) (h_bin : IsBinary D)\n  (op : TwualityOp) :\n  LogConcaveSeq (coeffs (partialTwualityPolynomial D op)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish log-concavity by demonstrating that the partial-twuality polynomial is Lorentzian (by verifying that the quadratic forms associated with its coefficients correspond to M-convex functions), or by constructing an explicit combinatorial injection for the coefficient sequence analogous to the proof of the Mason-Welsh conjecture for matroids.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22888v1",
+      "source_path": "http://arxiv.org/abs/2606.22888v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T05:47:22.546695+00:00",
+      "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Mathlib.Algebra.MonoidAlgebra.Basic",
         "Mathlib.GroupTheory.GroupAction.ConjAct",
         "Mathlib.LinearAlgebra.Finsupp",
@@ -34773,7 +34820,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2302",
+      "id": "fd_2303",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nuniverse u v\n\n/-- Zeroth Hochschild homology as the cocenter: A modulo the R-span of additive commutators. -/\ndef HH0 (R A : Type*) [CommRing R] [Ring A] [Algebra R A] : Type _ :=\n  (Submodule.span R (Set.range (fun p : A × A => p.1 * p.2 - p.2 * p.1))).Quotient\n\n/-- The setoid identifying conjugate elements of a group. -/\ndef conjugacySetoid (G : Type*) [Group G] : Setoid G where\n  r x y := ∃ h : G, h * x * h⁻¹ = y\n  iseqv := by\n    constructor\n    · intro x\n      exact ⟨1, by simp⟩\n    · intro x y hxy\n      rcases hxy with ⟨h, hxy⟩\n      subst hxy\n      exact ⟨h⁻¹, by group⟩\n    · intro x y z hxy hyz\n      rcases hxy with ⟨h, hxy⟩\n      rcases hyz with ⟨k, hyz⟩\n      subst hxy\n      subst hyz\n      exact ⟨k * h, by group⟩\n\nabbrev ConjClass (G : Type*) [Group G] : Type _ := Quotient (conjugacySetoid G)\n\n/-- Conjecture: the cocenter of a finite group algebra is the free module on conjugacy classes. -/\ntheorem HH0_groupAlgebra_linearEquiv_conjClasses\n    (R G : Type*) [C",
@@ -34823,7 +34870,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2303",
+      "id": "fd_2304",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Fintype.Card\n\nopen scoped BigOperators\n\nnamespace GraphDecomposition\n\nvariable {V : Type} [Fintype V] [DecidableEq V]\n\n/-- Placeholder: `C5Divisible G` means every vertex degree is even and `5 ∣ |E(G)|`. -/\ndef C5Divisible (G : SimpleGraph V) : Prop :=\n  (∀ v : V, Even (G.degree v)) ∧ 5 ∣ Fintype.card G.edgeSet\n\n/-- Placeholder: `HasC5Decomposition G` means the edge set of `G` can be partitioned\n    into subgraphs each isomorphic to a 5-cycle. -/\ndef HasC5Decomposition (G : SimpleGraph V) : Prop :=\n  sorry\n\n/-- Conjectural asymptotic C₅-decomposition threshold: δ_{C₅} = 5/8. -/\nconjecture c5_decomposition_threshold :\n  ∀ ε : ℝ, 0 < ε →\n    ∃ N : ℕ, ∀ {V : Type} [Fintype V] [DecidableEq V],\n      N ≤ Fintype.card V →\n      ∀ G : SimpleGraph V,\n        ((∀ v : V, ((G.degree v : ℝ) ≥ ((5 : ℝ) / 8 + ε) * (Fintype.card V : ℝ))) →\n          C5Divisible G →\n          HasC5Decomposition G)\n\nend GraphDecomposition",
@@ -34869,7 +34916,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2304",
+      "id": "fd_2305",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ask_zeta_combinatorial_invariance {A₁ A₂ : CentralHyperplaneArrangement ℚ} {p : ℕ} [Fact (Nat.Prime p)] (h_lat : IntersectionLattice A₁ ≃o IntersectionLattice A₂) (h_good₁ : GoodReduction A₁ p) (h_good₂ : GoodReduction A₂ p) : askZeta A₁ p = askZeta A₂ p := sorry",
@@ -34918,7 +34965,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2305",
+      "id": "fd_2306",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Combinatorics.SimpleGraph.Connectivity\n\nopen SimpleGraph\n\nnamespace ConnectivityPreservingPath\n\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\n/-- `IsKConnected G k` means that deleting fewer than `k` vertices from `G` leaves a connected nontrivial graph, equivalently vertex-connectivity at least `k`. -/\nconstant IsKConnected : SimpleGraph V → ℕ → Prop\n\n/-- `IsHamiltonianUVPath G u v p` means that `p` is a simple walk from `u` to `v` visiting every vertex exactly once. -/\nconstant IsHamiltonianUVPath : (G : SimpleGraph V) → (u v : V) → G.Walk u v → Prop\n\n/-- The spanning graph obtained from `G` by deleting every edge traversed by the walk `p`. -/\nconstant eraseWalkEdges : (G : SimpleGraph V) → {u v : V} → G.Walk u v → SimpleGraph V\n\n/-- Conjectural strengthening of the paper's `6*k+6` order bound to `4*k+4`. -/\ntheorem conjecture_four_k_plus_four_bound\n    (G : SimpleGraph V) [DecidableRel G.Adj]\n    (k : ℕ) (hk : 2 ≤ k)\n",
@@ -34965,7 +35012,7 @@
         "Geometry",
         "Logic"
       ],
-      "id": "fd_2306",
+      "id": "fd_2307",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem line_transversals_homotopy_sphere (n : ℕ) (hn : n ≥ 1) :\n    ∃ (C : Finset (Set (EuclideanSpace ℝ (Fin (3 * n))))),\n      (∀ s ∈ C, Convex ℝ s ∧ IsOpen s ∧ IsBounded s) ∧\n      (∀ s₁ ∈ C, ∀ s₂ ∈ C, s₁ ≠ s₂ → Disjoint s₁ s₂) ∧\n      HomotopyEquiv (lineTransversals C) (Sphere (n - 1)) := by\n  sorry",
@@ -35009,7 +35056,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2307",
+      "id": "fd_2308",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem optimal_wall_connector_bound {V : Type*} [Fintype V] {G : SimpleGraph V} {n s' t' : ℕ} (hs' : 0 < s') (hn : 0 < n) (𝓐 : Finset (Finset V)) (h𝓐 : 𝓐.card = n) (h_disjoint : ∀ A₁ ∈ 𝓐, ∀ A₂ ∈ 𝓐, A₁ ≠ A₂ → Disjoint (A₁ : Set V) A₂) : ∃ (t : ℕ), ∀ (W : Wall t), (∃ (X : Finset V) (hX : X.card ≤ n * s' - 1), Separates X 𝓐.sup W.branch_vertices) ∨ ∃ (W' : Subwall W t') (𝒫 : Connector 𝓐 W' s'), True := by sorry",
@@ -35058,7 +35105,7 @@
         "Algebra",
         "Logic"
       ],
-      "id": "fd_2308",
+      "id": "fd_2309",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem contragredient_period_sign_formula (F : Type*) [NumberField F] (n : ℕ) (hn : n ≥ 2) (r₁ : ℕ) (r₂ : ℕ) (hr : r₁ + 2*r₂ = Module.finrank ℚ F) (π : GenericCohomologicalRep F n) : betti_whittaker_period π.contragredient = (-1)^(bottom_degree r₁ r₂ n) • betti_whittaker_period π := by sorry",
@@ -35077,6 +35124,50 @@
       "thread_id": "",
       "timestamp": "2026-06-23T05:20:19.284015+00:00",
       "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.DS",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ can be realized as the $(-\\beta)$-expansion of some $x \\in I_\\beta$ if and only if for all $n \\ge 1$, the suffix $x_n x_{n+1} \\dots$ is less than or equal to $d^*(0, -\\beta)$ in the alternating lexicographic order. The alternating lexicographic order $\\preceq$ is defined such that $x \\preceq y$ if either $x=y$ or at the first index $k$ where they differ, $x_k < y_k$ when $k$ is odd and $x_k > y_k$ when $k$ is even.",
+      "domain_bridges": [
+        "Combinatorics on Words",
+        "Symbolic Dynamics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2310",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nvariable {α : Type*} [LT α]\n\n-- Alternating lexicographic order\ndef altLexLE (s t : Nat → α) : Prop :=\n  s = t ∨ ∃ k : ℕ, (∀ i < k, s i = t i) ∧ (\n    (k % 2 = 1 ∧ s k < t k) ∨ (k % 2 = 0 ∧ t k < s k))\n\ndef is_admissible_neg_beta (β : ℝ) (hβ : β > 1) (seq : Nat → ℕ) : Prop :=\n  ∀ n : ℕ, altLexLE (fun i => seq (n + i)) (d_star_zero_neg β hβ)\n\ntheorem ito_sadahiro_admissibility (β : ℝ) (hβ : β > 1) (seq : Nat → ℕ) :\n    (∃ x : ℝ, x ∈ I β ∧ neg_beta_expansion β x = seq) ↔ is_admissible_neg_beta β hβ seq :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the alternating lexicographic order on infinite sequences, the $(-\\beta)$-transformation $T_{-\\beta}$, and the sequence $d^*(0, -\\beta)$. Prove that the shift space defined by this order condition is invariant and corresponds exactly to the admissible sequences of the $(-\\beta)$-transformation, mirroring Parry's proof for positive $\\beta$-expansions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23097v1",
+      "source_path": "http://arxiv.org/abs/2606.23097v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T05:48:57.058098+00:00",
+      "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
     },
     {
       "ambition_level": "extension",
@@ -35164,7 +35255,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "43b98190",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35176,7 +35267,7 @@
         "Novelty"
       ],
       "id": "moonshot_Rucker_20",
-      "last_attempt_time": "2026-06-23T05:20:24.836653+00:00",
+      "last_attempt_time": "2026-06-23T05:49:02.126896+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35190,7 +35281,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Rucker)",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:11.785769+00:00",
       "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
@@ -38488,7 +38579,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "07255b71",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38514,7 +38605,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:09.067494+00:00",
       "title": "Sierpiński Numbers: Covering Systems"
@@ -49218,7 +49309,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3db2ad68",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -49243,7 +49334,7 @@
       "research_mode": "team",
       "source_exp_id": "a0dd96a5",
       "source_path": "These conjectures continue the research cycle begun in",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-16T12:52:43.615426+00:00",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
