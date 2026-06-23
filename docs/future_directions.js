@@ -1616,6 +1616,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any inner form G of GL_n over a non-archimedean local field F, the Hochschild homology of the Braverman-Kazhdan asymptotic Hecke algebra J(G) is canonically isomorphic to the Hochschild homology of the classical Hecke algebra C_c^\u221e(G), and the Kazhdan-Lusztig bijection on Bernstein components appears in this isomorphism. Concretely, for each Bernstein component s indexed by an inertial equivalence class, the summand HH_*(J(G))_s is identified with HH_*(C_c^\u221e(G))_s via the map induced by the natural inclusion of Schwartz functions, and this identification is compatible with the Kazhdan-Lusztig bijection between Bernstein components and certain data on the dual side. This conjecture is established in the paper for inner forms of GL_n; the grand challenge extension to all connected reductive p-adic groups remains open.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2293",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21313v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:47:05.451556+00:00",
+    "title": "Hochschild homology isomorphism between asymptotic and classical Hecke algebras for inner forms of GL_n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer k \u2265 3, the Conformability problem is NP-complete when restricted to connected d-regular graphs G of odd order n with independence number \u03b1(G) = k and maximum degree d \u2265 n/2. The paper establishes this for k = 3 by reduction from perfect triangle packing in K\u2084-free graphs. The conjecture asserts that hardness persists for all larger independence numbers, where the complement graph has clique number k and conformable color classes correspond to cliques of odd size up to k in the complement, requiring richer packing structures to encode NP-hard problems.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2294",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21534v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:48:36.909062+00:00",
+    "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -1787,6 +1817,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Primality Testing (AKS & Miller\u2013Rabin)\n\nDerived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`.\nEach conjecture is bold, falsifiable, and accompanied by the decisive insight and\na \"why now?\" justification.\n\n## 1. Introspective-base AKS bound\n\n**Conjecture.** There is an explicit polynomial bound `B(n)` (polylog in `n`)\nsuch that: `n` is prime iff `(X + a)^n = X^n + a` in `(ZMod n)[X] / (X^r - 1)`\nfor all `1 \u2264 a \u2264 B(n)`, where `r = O((log n)^c)`. Formalizing this turns the\nsingle-base criterion `aks_criterion` into the full deterministic\npolynomial-time AKS algorithm.\n\nThe key insight is... the proven exact criterion `aks_criterion` already isolates\nthe obstruction (the inner coefficient `C(n,q)`); the remaining work is purely\nthe cyclotomic *order/coprime-base counting* that bounds how many bases are\nneeded once one quotients by `X^r - 1`.\n\n**Why now?** With the freshman's-dream equivalence fully formalized (0 sorries)\nand `not_dvd_choose_prime_dvd` in hand, the algebraic core is settled; the\noutstanding piece is a self-contained counting argument that Mathlib's\ncyclotomic and `orderOf` API can now support.\n\n## 2. Monier\u2013Rabin 1/4 error bound\n\n**Conjecture.** For every odd composite `n > 9`, the number of Miller\u2013Rabin\nnon-witnesses in `(ZMod n)\u02e3` is at most `\u03c6(n)/4`. Equivalently, the soundness\ntheorem `miller_rabin_sound` has a quantitative converse: composites have many\nwitnesses.\n\nThe key insight is... `sqrt_one_in_ZMod_prime` fails modulo a composite (there\nare \u2265 4 square roots of `1` by CRT), and the strong-liar set is contained in a\nproper subgroup of `(ZMod n)\u02e3`; bounding that subgroup's index by `4` is the\nwhole game.\n\n**Why now?** Soundness (the easy half) is verified; Mathlib's `ZMod.unitsEquiv`\nCRT decomposition and subgroup-index lemmas make the proper-subgroup counting\ntractable for the first time in this codebase.\n\n## 3. AKS strictly dominates Fermat on every Carmichael number\n\n**Conjecture.** For *every* Carmichael number `n` (not just `561`), the Fermat\ncongruence holds for all bases yet the AKS identity fails for some base coprime\nto `n`; moreover the failing base can be taken to be the least prime factor's\nco-factor. This generalizes `carmichael_561_fools_fermat_not_aks` to the entire\nfamily A002997.\n\nThe key insight is... `aks_identity_imp_fermat` shows AKS \u21d2 Fermat, and\n`aks_criterion` shows AKS \u21d4 primality, so AKS-failure is automatic for any\ncomposite; the new content is identifying a *coprime* failing base uniformly via\nKorselt's structure (`n` squarefree, `(p-1) \u2223 (n-1)`).\n\n**Why now?** The separation is already proved at `561` with a reusable mechanism\n(contrapositive of `aks_criterion`); only Korselt's criterion needs to be\nformalized to make the argument uniform over A002997.\n\n## 4. Carmichael numbers are exactly the Fermat-universal composites\n\n**Conjecture.** A composite `n` satisfies `\u2200 a, a^n \u2261 a (mod n)` iff `n` is\nsquarefree and `(p-1) \u2223 (n-1)` for every prime `p \u2223 n` (Korselt's criterion),\nand these are exactly the composites on which the Fermat test never detects\ncompositeness.\n\nThe key insight is... the universal Fermat congruence decomposes via CRT into\nper-prime-power conditions, and `a^n \u2261 a` modulo `p^k` for all `a` forces\n`k = 1` and `(p-1) \u2223 (n-1)` through the cyclic structure of `(ZMod p)\u02e3`.\n\n**Why now?** Our `native_decide` evidence already confirms the family begins\n`561, 1105` (A002997); a structural Korselt proof would replace finite checks by\na general theorem and feed directly into Direction 3.\n\n## 5. A `ZMod`-native fast modular-exponentiation tactic with a correctness theorem\n\n**Conjecture.** A `csimp`-backed binary modular-exponentiation routine computes\n`a^e mod n` with a kernel-checked correctness lemma `powMod a e n = a^e % n`,\nfast enough to discharge Miller\u2013Rabin / AKS instances by `decide` rather than\n`native_decide`, removing the `Lean.ofReduceBool` dependency from results like\n`carmichael_561_fools_fermat_not_aks`.\n\nThe key insight is... square-and-multiply is a fold over the binary digits of the\nexponent; its correctness is a clean induction, and a `@[csimp]` replacement\nkeeps the kernel in charge (no `@[implemented_by]` trust gap).\n\n**Why now?** The only non-`propext`/`Classical`/`Quot` axiom in this cycle is the\ncompiler-trust `Lean.ofReduceBool` from `native_decide`; a verified `powMod`\nwould let the Carmichael witness be checked by the kernel alone.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2292",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7a69691f",
+    "status": "available",
+    "timestamp": "2026-06-23T01:40:49.707518+00:00",
+    "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1932,7 +1977,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "868eada9",
     "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
     "domains": [
       "EML",
@@ -1942,7 +1987,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6299999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.751445+00:00",
     "title": "EML Quantum Activation Functions"
   },
@@ -1962,22 +2007,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
   {
-    "consumed_by_exp_id": "3dade48e",
-    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
-    "domains": [
-      "Geometry",
-      "Novelty"
-    ],
-    "id": "moonshot_Pickover_32",
-    "priority_score": 0.58,
-    "research_mode": "team",
-    "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-22T11:50:17.617665+00:00",
-    "title": "Pickover Clifford Attractor Family"
-  },
-  {
-    "consumed_by_exp_id": "03341375",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -1986,7 +2016,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -2799,7 +2829,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
   },
   {
-    "consumed_by_exp_id": "6e34371e",
+    "consumed_by_exp_id": "",
     "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
     "domains": [
       "Novelty",
@@ -2809,7 +2839,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.676713+00:00",
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },

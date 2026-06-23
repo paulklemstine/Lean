@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-22T23:35:19.572590+00:00",
+  "last_updated": "2026-06-23T01:46:29.701594+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -344,6 +344,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-22T23:35:19.335681+00:00",
       "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.404,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Applications",
+      "duration_seconds": 6110.199688911438,
+      "end_time": 1782178769.2464993,
+      "files_integrated": 8,
+      "job_id": "bfb13379",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.62,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.759,
+        "cross_domain": 0.9,
+        "grade": "world_class",
+        "importance": 0.7202,
+        "novelty": 0.89,
+        "proof_depth": 0.6475,
+        "usefulness": 0.7737
+      },
+      "quality_score": 0.46096,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782172659.0468104,
+      "strategy_count": 0,
+      "theorem_count": 16,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 4,
+      "theorem_novelty_new": 12,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-23T01:46:29.424014+00:00",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ]
 }

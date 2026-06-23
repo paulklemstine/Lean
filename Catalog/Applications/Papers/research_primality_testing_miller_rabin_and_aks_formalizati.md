@@ -1,391 +1,329 @@
-# Witness Geometry in Primality Testing: A Unified Formal Framework
+# A Formally Verified AKS Polynomial Criterion for Primality
+
+**Author:** Aristotle
+**Date:** 2026-06-23
+**Domain:** Cryptography / Computational Number Theory
 
 ## Abstract
 
-We present a formally verified framework in Lean 4 that unifies three approaches to primality testing: Miller–Rabin probabilistic certification, AKS deterministic polynomial-identity certification, and spectral/combinatorial witness theory. The framework introduces formal definitions of the strong liar set as a finite set with cardinality bounds, AKS primality certificates as algebraic structures, and spectral collision profiles linking modular regularity to compositeness detection. We prove 10 theorems, of which 5 are fully machine-verified without any unproven assumptions, and 5 follow from a single deep assumption (the Rabin–Monier quarter bound). Key results include: (1) the AKS polynomial congruence identity for all primes, (2) error amplification from counting to probability form, (3) orbit periodicity of repeated squaring, (4) spectral obstruction for overly regular pseudowitness sets, and (5) correctness of certified boolean checkers. The framework bridges additive combinatorics and algorithmic number theory through a novel spectral analysis of liar set structure.
+We present a complete, machine-verified proof of the *AKS polynomial criterion*
+for primality: for every integer $n \ge 2$ and every unit $a$ in the ring
+$\mathbb{Z}/n\mathbb{Z}$,
+$$n \text{ is prime} \iff (X + a)^n = X^n + a \quad \text{in } (\mathbb{Z}/n\mathbb{Z})[X].$$
+This equivalence is the algebraic core of the Agrawal–Kayal–Saxena deterministic
+polynomial-time primality test. The forward direction is the Frobenius
+endomorphism identity combined with Fermat's little theorem. The reverse
+direction is established constructively: for composite $n$ with least prime
+factor $q$, the coefficient of $X^q$ in $(X + a)^n$ is shown to be nonzero,
+witnessing failure of the identity. The crux is a pair of arithmetic facts about
+binomial coefficients — the identity $q\binom{n}{q} = n\binom{n-1}{q-1}$ and the
+congruence $\binom{n-1}{q-1} \equiv 1 \pmod q$ — from which we derive that $n
+\nmid \binom{n}{q}$. We give full statements, proof sketches, an algorithmic
+realization, numerical demonstrations including the Carmichael number $561$, and
+a discussion of applications to cryptography and directions toward the complete
+deterministic algorithm. All results have been formalized and verified with no
+remaining gaps.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Primality testing is foundational to public-key cryptography: RSA key generation,
+Diffie–Hellman parameter selection, and DSA all require large, certified primes.
+The question of whether primality can be decided *deterministically* in time
+polynomial in the number of digits of $n$ was resolved affirmatively by Agrawal,
+Kayal, and Saxena in 2002 (*"PRIMES is in P"*). Their algorithm rests on a
+polynomial generalization of Fermat's little theorem.
 
-Primality testing is a fundamental problem in computational number theory with direct applications to cryptography. The two most important algorithms are:
+The classical Fermat test uses the scalar congruence $a^n \equiv a \pmod n$,
+which is necessary but not sufficient for primality: *Carmichael numbers* satisfy
+it for all bases while being composite. The AKS insight is to lift the test from
+scalars to *polynomials*. The scalar congruence $a^n \equiv a$ becomes the
+polynomial identity $(X + a)^n \equiv X^n + a$, and — crucially — this lifted
+identity is both necessary and sufficient for primality. The present work
+formalizes exactly this sufficiency-and-necessity statement, which we call the
+**AKS polynomial criterion**.
 
-1. **Miller–Rabin** (1976, 1980): A probabilistic test with error probability ≤ (1/4)^k for k rounds, based on the strong pseudoprime condition.
+We work over the commutative ring $R = \mathbb{Z}/n\mathbb{Z}$ and its polynomial
+ring $R[X]$. The notation $C\,a$ denotes the constant polynomial with value $a$,
+and $X$ the indeterminate. Throughout, $n \ge 2$ and $a$ is a *unit* of $R$
+(equivalently $\gcd(a, n) = 1$).
 
-2. **AKS** (2002): The first deterministic polynomial-time algorithm, based on polynomial congruences in (ℤ/nℤ)[X]/(X^r − 1).
+### 1.1 Contributions
 
-Despite their practical importance, these algorithms have been treated as largely independent in formal mathematics. We develop a unified framework that:
+1. A formally verified proof of the forward implication (Theorem
+   `aks_forward`): primality implies the polynomial identity.
+2. A formally verified proof of the reverse implication via an explicit
+   witnessing coefficient (Theorems `coeff_Xq_ne_zero`, `aks_reverse`).
+3. Verified supporting number theory: the binomial recurrence
+   `mul_choose_eq`, the congruence `choose_pred_eq_one_mod`, and the
+   non-divisibility `not_dvd_choose_of_prime_dvd`.
+4. The assembled equivalence (Theorem `aks_criterion`).
+5. An algorithmic realization, numerical demonstrations, and a separation
+   from the Fermat test on the Carmichael number $561$.
 
-- Formalizes the strong liar set as a Finset with explicit cardinality bounds
-- Proves the AKS polynomial identity from Frobenius endomorphism theory
-- Introduces spectral collision profiles connecting witness geometry to additive combinatorics
-- Provides certified boolean implementations with correctness proofs
+## 2. Preliminaries and Definitions
 
-### 1.2 Context and Significance
+**Definition 2.1 (Clock arithmetic ring).** For $n \ge 1$, $\mathbb{Z}/n\mathbb
+{Z}$ is the ring of integers modulo $n$, with elements $\{0, 1, \dots, n-1\}$ and
+arithmetic performed modulo $n$.
 
-Primality testing occupies a unique position in computational mathematics: it is simultaneously one of the oldest mathematical problems (Euclid studied primes in 300 BC) and one of the most practically important algorithms in modern computing (every TLS handshake, every cryptocurrency transaction, every digital signature relies on primality testing). The gap between the theoretical understanding of these algorithms and their formal verification has been a persistent challenge. Our framework aims to close this gap by providing machine-checkable proofs of the core mathematical properties that make primality testing reliable.
+**Definition 2.2 (Unit).** An element $a \in \mathbb{Z}/n\mathbb{Z}$ is a *unit*
+if there exists $b$ with $ab = 1$. Equivalently, $\gcd(a, n) = 1$. We write
+`IsUnit a`.
 
-The distinction between probabilistic and deterministic testing is not merely theoretical. In practice, Miller–Rabin is overwhelmingly preferred due to its simplicity and speed, while AKS remains primarily of theoretical interest. Our framework suggests that this dichotomy is artificial: both algorithms probe the same underlying algebraic structure, and the connection between them can be made precise through the lens of witness geometry.
+**Definition 2.3 (Polynomial ring).** $(\mathbb{Z}/n\mathbb{Z})[X]$ is the ring
+of polynomials with coefficients in $\mathbb{Z}/n\mathbb{Z}$. For $p \in R[X]$,
+$p.\mathrm{coeff}\, k$ denotes the coefficient of $X^k$.
 
-### 1.3 Related Work
+**Definition 2.4 (Binomial coefficient).** $\binom{n}{k}$ is the number of
+$k$-element subsets of an $n$-element set, with the conventions $\binom{n}{0} = 1$
+and $\binom{n}{k} = 0$ for $k > n$.
 
-Prior formalizations of primality testing in proof assistants have been limited. The Coq formalization of the four-color theorem (Gonthier, 2008) demonstrated the feasibility of large-scale formal verification, but number-theoretic formalizations have lagged. Harrison's HOL Light formalization of the prime number theorem (2009) addressed analytic number theory but not algorithmic aspects.
+**Definition 2.5 (Modular congruence).** For naturals $a, b, m$, we write $a
+\equiv b \pmod m$ (Lean: `a ≡ b [MOD m]`) to mean $a \bmod m = b \bmod m$.
 
-Our work builds on Mathlib's extensive library of modular arithmetic, polynomial algebra, and finite group theory, extending it with novel definitions and theorems specific to primality testing witness theory.
+**Definition 2.6 (Least prime factor).** For $n \ge 2$, $\mathrm{minFac}(n)$ is
+the smallest prime dividing $n$. If $n$ is prime, $\mathrm{minFac}(n) = n$;
+otherwise $\mathrm{minFac}(n) < n$.
 
-### 1.4 Contributions
+We rely on three classical inputs, each available in formalized form:
 
-1. **Formal definitions**: `StrongLiarSet'`, `MRBaseSet'`, `liarTupleSet'`, `AKSCertificate'`, `HasLowCollisionResidueSystem'`, `repeatedSquaringOrbit'`
-
-2. **Fully verified theorems** (no sorry):
-   - `aks_prime_satisfies_congruence'`: Primes satisfy AKS polynomial congruences
-   - `fermat_zmod'`: Fermat's little theorem in ZMod
-   - `repeatedSquaring_orbit_eventually_periodic'`: Orbit periodicity
-   - `millerRabinCheck_false_witness'`: Checker correctness (false case)
-   - `millerRabinCheck_true_all_pass'`: Checker correctness (true case)
-
-3. **Conditional theorems** (assuming the Rabin–Monier quarter bound):
-   - `strongLiar_density_le_quarter'`: Liar density ≤ 1/4
-   - `liarTupleSet_card_le_pow'`: Amplification in tuple form
-   - `millerRabin_k_round_error_bound'`: Amplification in probability form
-   - `strongLiar_spectral_upper_bound'`: 4|L| ≤ n − 1
-   - `many_strong_liars_force_collision_obstruction'`: Spectral obstruction
-
-4. **Certified algorithms**: Boolean Miller–Rabin checker and AKS polynomial checker with formal soundness proofs.
-
-## 2. Definitions and Notation
-
-### 2.1 Two-adic Decomposition
-
-For any positive integer m, we write m = 2^s · d where d is odd. This is computed by `DecomposeTwos'`.
-
-### 2.2 Strong Pseudoprime Base
-
-**Definition** (`strongPseudoprimeBaseDecide'`). A base a is a *strong probable prime base* for n if:
-- gcd(a, n) = 1
-- Writing n − 1 = 2^s · d with d odd, either:
-  - a^d ≡ 1 (mod n), or
-  - a^(d · 2^r) ≡ n − 1 (mod n) for some 0 ≤ r < s
-
-### 2.3 Liar and Base Sets
-
-**Definition** (`MRBaseSet'`). The admissible base set for n:
-```
-MRBaseSet'(n) = {a ∈ {2, …, n−1} | gcd(a, n) = 1}
-```
-
-**Definition** (`StrongLiarSet'`). The strong liar set:
-```
-StrongLiarSet'(n) = {a ∈ MRBaseSet'(n) | strongPseudoprimeBaseDecide'(n, a) = true}
-```
-
-**Definition** (`liarTupleSet'`). For k-round amplification:
-```
-liarTupleSet'(n, k) = (StrongLiarSet'(n))^k ⊆ (Fin k → ℕ)
-```
-
-### 2.4 AKS Certificate
-
-**Definition** (`AKSCertificate'`). An AKS certificate (n, r, amax) consists of:
-1. **ordLarge**: ∀k, 0 < k ≤ (log₂ n)² → n^k mod r ≠ 1
-2. **gcdClean**: ∀d, 2 ≤ d ≤ r → gcd(d, n) = 1 ∨ d = n
-3. **congruenceWindow**: ∀a, 1 ≤ a ≤ amax → (X + a)^n ≡ X^n + a mod (X^r − 1, n)
-4. **amaxSufficient**: ⌊√φ(r)⌋ · log₂(n) ≤ amax
-
-### 2.5 Spectral Collision Profile
-
-**Definition** (`HasLowCollisionResidueSystem'`). A low-collision residue system (n, m) is a set S ⊆ {0, …, n−1} with |S| = m and |S + S mod n| ≤ m. This captures anomalous additive regularity.
-
-### 2.6 Error Probability
-
-**Definition** (`errorProb'`).
-```
-errorProb'(n, k) = (|StrongLiarSet'(n)| / |MRBaseSet'(n)|)^k
-```
+- **Frobenius / freshman's dream:** in a commutative ring of prime characteristic
+  $p$, $(x + y)^p = x^p + y^p$.
+- **Fermat's little theorem (ring form):** for prime $p$, every $a \in \mathbb
+  {Z}/p\mathbb{Z}$ satisfies $a^p = a$.
+- **Expansion of $(X + Ca)^n$:** $\bigl((X + Ca)^n\bigr).\mathrm{coeff}\, k =
+  \binom{n}{k}\, a^{\,n-k}$.
 
 ## 3. Main Results
 
-### 3.1 Theorem 1: Quarter Bound (Assumed)
-
-**Theorem** (`strongLiarSet_card_le_quarter'`). For odd composite n ≥ 3:
-```
-4 · |StrongLiarSet'(n)| ≤ |MRBaseSet'(n)|
-```
-
-*Status*: Stated with sorry. This is the deep Rabin–Monier theorem requiring CRT decomposition of the unit group and analysis of subgroup indices. All other conditional theorems depend on this single assumption.
-
-*Proof sketch*: Case analysis on whether n has two coprime factors (CRT gives nontrivial square roots of unity, splitting the unit group into cosets of index ≥ 4) or is a prime power p^k with k ≥ 2 (cyclic unit group structure bounds the liar subgroup index).
-
-### 3.2 Theorem 2: Error Amplification
-
-**Theorem** (`liarTupleSet_card_le_pow'`). For odd composite n ≥ 3:
-```
-4^k · |liarTupleSet'(n, k)| ≤ |MRBaseSet'(n)|^k
-```
-
-*Proof*: Rewrite |liarTupleSet'| = |StrongLiarSet'|^k, then:
-```
-4^k · |S|^k = (4 · |S|)^k ≤ |B|^k
-```
-using the quarter bound and monotonicity of k-th powers.
-
-**Corollary** (`millerRabin_k_round_error_bound'`):
-```
-errorProb'(n, k) ≤ (1/4)^k
-```
-
-*Proof*: From the density bound, |S|/|B| ≤ 1/4, take k-th powers.
-
-### 3.3 Theorem 3: AKS Polynomial Identity
-
-**Theorem** (`aks_prime_satisfies_congruence'`). For prime p and r ≥ 2:
-```
-(X + a)^p ≡ X^p + a  mod (X^r − 1)  in (ℤ/pℤ)[X]
-```
-
-*Proof*: By the Frobenius endomorphism (freshman's dream): in characteristic p,
-```
-(X + a)^p = X^p + a^p = X^p + a
-```
-where the last equality uses a^p = a in ℤ/pℤ (Fermat's little theorem). The difference is 0, and 0 mod anything is 0. ∎
-
-This is fully machine-verified using Mathlib's `add_pow_char` and `ZMod.pow_card`.
-
-**Corollary** (`aks_prime_certificate'`): Primes admit valid AKS certificates for any suitable (r, amax).
-
-### 3.4 Theorem 4: Spectral Obstruction
-
-**Theorem** (`many_strong_liars_force_collision_obstruction'`). For odd composite n ≥ 3, if there exists a low-collision residue system of size m with m ≤ |StrongLiarSet'(n)| and |MRBaseSet'(n)| < 4m, then we reach a contradiction.
-
-*Proof*: Direct from the quarter bound: 4m ≤ 4|S| ≤ |B| < 4m, contradiction. ∎
-
-This theorem demonstrates that pseudowitness abundance with spectral regularity is incompatible with the quarter bound.
-
-### 3.5 Theorem 5: Orbit Periodicity
-
-**Theorem** (`repeatedSquaring_orbit_eventually_periodic'`). For n ≥ 2 and any base a, there exist i < j with:
-```
-a^(2^i) ≡ a^(2^j) (mod n)
-```
-
-*Proof*: By pigeonhole on the finite type ZMod n. The map i ↦ a^(2^i) sends ℕ to the finite set ZMod n, so it cannot be injective. Any collision with i ≠ j gives the result. ∎
-
-This is fully verified using Lean's `Set.infinite_range_of_injective` and finiteness of `ZMod n`.
-
-### 3.6 Checker Correctness
-
-**Theorem** (`millerRabinCheck_true_all_pass'`). If `millerRabinCheck'(n, bases) = true`, then all bases pass the strong pseudoprime test.
-
-**Theorem** (`millerRabinCheck_false_witness'`). If `millerRabinCheck'(n, bases) = false`, then some base in the list is a compositeness witness.
-
-Both are fully machine-verified.
-
-### 3.7 Fermat's Little Theorem
-
-**Theorem** (`fermat_zmod'`). For prime p and a coprime to p:
-```
-a^(p−1) ≡ 1 (mod p)
-```
-
-Proved using Mathlib's `ZMod.pow_card_sub_one_eq_one`. ∎
-
-## 4. Algorithms
-
-### 4.1 Miller–Rabin Algorithm
-
-```
-function MillerRabin(n, bases):
-    for each a in bases:
-        if gcd(a, n) ≠ 1: return COMPOSITE
-        (s, d) ← TwoAdicDecomposition(n − 1)
-        x ← a^d mod n
-        if x = 1 or x = n − 1: continue
-        for r = 1 to s − 1:
-            x ← x² mod n
-            if x = n − 1: continue outer
-        return COMPOSITE
-    return PROBABLY_PRIME
-```
-
-**Time complexity**: O(k · log²(n) · M(log n)) where M(b) is b-bit multiplication cost.
-**Error probability**: ≤ (1/4)^k (Theorem 2).
-
-### 4.2 AKS Polynomial Congruence Check
-
-```
-function AKSPolyCheck(n, r, a):
-    LHS ← PolyPowMod((X + a), n, X^r − 1, n)
-    RHS ← (X^(n mod r) + a) mod n
-    return LHS = RHS
-```
-
-**Time complexity**: O(r² · log(n)) with schoolbook polynomial multiplication.
-
-### 4.3 Additive Energy Computation
-
-```
-function AdditiveEnergy(S, n):
-    counts ← empty dictionary
-    for a in S, b in S:
-        counts[(a + b) mod n] += 1
-    return sum(c² for c in counts.values())
-```
-
-**Time complexity**: O(|S|²).
-
-## 5. Computational Experiments
-
-### 5.1 Liar Density Analysis
-
-We computed liar densities for all odd composites n ≤ 200:
-
-| n | Factorization | |L| | |B| | Density | 4|L| ≤ |B|? |
-|---|---------------|-----|-----|---------|-------------|
-| 9 | 3² | 2 | 5 | 0.400 | No* |
-| 15 | 3·5 | 2 | 7 | 0.286 | Yes |
-| 21 | 3·7 | 4 | 11 | 0.364 | Yes |
-| 25 | 5² | 3 | 19 | 0.158 | Yes |
-| 341 | 11·31 | 49 | 299 | 0.164 | Yes |
-| 561 | 3·11·17 | 9 | 319 | 0.028 | Yes |
-| 1729 | 7·13·19 | 161 | 1295 | 0.124 | Yes |
-
-*Note: n = 9 has |MRBaseSet'| = 5 but the quarter bound requires 4·2 = 8 ≤ 5, which fails. This is because MRBaseSet' excludes a = 1, while the standard formulation of the quarter bound is 4|L| ≤ φ(n) where φ(9) = 6. The discrepancy arises from our choice to exclude base 1.
-
-### 5.2 Spectral Regularity
-
-For each odd composite n, we computed E(L)/|L|³:
-
-| n | |L| | E(L) | E(L)/|L|³ | Random threshold |
-|---|-----|------|-----------|-----------------|
-| 25 | 3 | 15 | 0.556 | 0.040 |
-| 49 | 5 | 53 | 0.424 | 0.020 |
-| 91 | 17 | 1293 | 0.263 | 0.011 |
-| 341 | 49 | 21875 | 0.186 | 0.003 |
-| 561 | 9 | 277 | 0.380 | 0.002 |
-| 1729 | 161 | 702649 | 0.168 | 0.001 |
-
-Observation: E(L)/|L|³ decreases as n grows, supporting the spectral sparsity conjecture.
-
-### 5.3 AKS Polynomial Congruences
-
-Verified that all primes p ≤ 100 satisfy (X + a)^p ≡ X^p + a mod (X^r − 1) for r ∈ {3, 5, 7} and a ∈ {1, 2, 3, 4, 5}. All composites in the same range fail for at least one value of a.
-
-## 6. Proof Architecture
-
-### 6.1 Proof of AKS Polynomial Identity
-
-The proof of `aks_prime_satisfies_congruence'` proceeds in three steps:
-
-1. **Establish Fact instance**: We declare `Fact (Nat.Prime p)` to access Mathlib's characteristic-p lemmas.
-
-2. **Apply Frobenius endomorphism**: Mathlib's `add_pow_char` gives us `(X + C a)^p = X^p + (C a)^p` in any commutative ring of characteristic p. This is the freshman's dream identity.
-
-3. **Reduce constant polynomial**: By `Polynomial.C_pow` and `ZMod.pow_card`, we have `(C a)^p = C(a^p) = C(a)` in `(ZMod p)[X]`. The last equality is Fermat's little theorem.
-
-4. **Conclude**: The difference `(X + C a)^p - (X^p + C a)` is the zero polynomial, and `0 %ₘ q = 0` for any monic q.
-
-The formal proof is remarkably concise (5 lines) because Mathlib provides all the necessary infrastructure. The key insight is that `ZMod.expand_card` gives us the Frobenius endomorphism directly.
-
-### 6.2 Proof of Orbit Periodicity
-
-The proof of `repeatedSquaring_orbit_eventually_periodic'` uses a contrapositive argument:
-
-1. Assume for contradiction that no two distinct indices give the same value.
-2. Then the map `i ↦ (a : ZMod n)^(2^i)` is injective from ℕ to ZMod n.
-3. But ℕ is infinite and ZMod n is finite (for n ≥ 2), so the range is infinite.
-4. This contradicts finiteness of ZMod n.
-
-The formal proof uses Lean's `Set.infinite_range_of_injective` and the fact that `ZMod n` is finite when `n ≥ 1` (via `Set.toFinite`).
-
-### 6.3 Proof of Error Amplification
-
-The proof of `liarTupleSet_card_le_pow'` uses a clean algebraic rewriting:
-
-1. Rewrite `|liarTupleSet'(n, k)|` as `|StrongLiarSet'(n)|^k` using `liarTupleSet'_card`.
-2. Factor `4^k · |S|^k = (4 · |S|)^k` using `mul_pow`.
-3. Apply `gcongr` (generalized congruence) with the quarter bound `4 · |S| ≤ |B|`.
-
-This proof is just two lines in Lean, demonstrating the power of the `gcongr` tactic for monotonicity reasoning.
-
-### 6.4 Proof of Fermat's Little Theorem
-
-The proof of `fermat_zmod'` uses Mathlib's `ZMod.pow_card_sub_one_eq_one`, which states that for prime p and nonzero `x : ZMod p`, `x^(p-1) = 1`. The key step is showing `(a : ZMod p) ≠ 0`, which follows from coprimality: if `(a : ZMod p) = 0` then `p | a`, contradicting `gcd(a, p) = 1`.
-
-### 6.5 Proof of Checker Correctness
-
-The checker correctness proofs (`millerRabinCheck_true_all_pass'` and `millerRabinCheck_false_witness'`) unfold the definitions and use Lean's `aesop` and `grind` tactics to handle the boolean logic. The key insight is that `List.all` is equivalent to universal quantification over list elements.
+### 3.1 Forward direction
+
+**Theorem 3.1 (`aks_forward`).** If $n$ is prime, then for every $a \in \mathbb
+{Z}/n\mathbb{Z}$,
+$$(X + Ca)^n = X^n + Ca \quad \text{in } (\mathbb{Z}/n\mathbb{Z})[X].$$
+
+*Proof sketch.* Since $n$ is prime, $\mathbb{Z}/n\mathbb{Z}$ has characteristic
+$n$, so the Frobenius identity `add_pow_char` gives $(X + Ca)^n = X^n + (Ca)^n$.
+The constant-polynomial map is a ring homomorphism, so $(Ca)^n = C(a^n)$. By
+Fermat's little theorem in ring form (`ZMod.pow_card`), $a^n = a$, hence $(Ca)^n
+= Ca$. Combining, $(X + Ca)^n = X^n + Ca$. $\qquad\blacksquare$
+
+This direction needs no unit hypothesis on $a$: it holds for every coefficient.
+
+### 3.2 Binomial arithmetic
+
+**Theorem 3.2 (`mul_choose_eq`).** For $1 \le q \le n$,
+$$q \cdot \binom{n}{q} = n \cdot \binom{n-1}{q-1}.$$
+
+*Proof sketch.* Write $n = m + 1$ and $q = j + 1$. The absorption identity
+`Nat.add_one_mul_choose_eq` states $(m+1)\binom{m}{j} = (j+1)\binom{m+1}{j+1}$,
+i.e. $n\binom{n-1}{q-1} = q\binom{n}{q}$; rearranging gives the claim. The
+boundary cases $n = 0$ or $q = 0$ are excluded by the hypotheses and dispatched
+by linear arithmetic. $\qquad\blacksquare$
+
+Combinatorially, both sides count pairs (a $q$-subset $S$ of $[n]$, a
+distinguished element of $S$): the left side chooses $S$ then its chairman; the
+right side chooses the chairman from $[n]$ then the remaining $q-1$ members from
+the other $n-1$ elements.
+
+**Theorem 3.3 (`choose_pred_eq_one_mod`).** If $q$ is prime, $q \mid n$, and $q
+\le n$, then
+$$\binom{n-1}{q-1} \equiv 1 \pmod q.$$
+
+*Proof sketch.* Pass to the field $\mathbb{Z}/q\mathbb{Z}$ via `ZMod.
+natCast_eq_natCast_iff`. Expand the falling factorial:
+$$(n-1)^{\underline{q-1}} = (q-1)! \cdot \binom{n-1}{q-1}$$
+using `Nat.descFactorial_eq_factorial_mul_choose`. Since $q \mid n$, we have $n
+\equiv 0$, so $n - 1 \equiv -1$ in $\mathbb{Z}/q\mathbb{Z}$, and the descending
+product becomes
+$$(n-1)^{\underline{q-1}} = \prod_{i=0}^{q-2}(n-1-i) \equiv \prod_{i=0}^{q-2}(-1-i)
+= (-1)^{q-1}\,(q-1)!.$$
+Equating the two expressions for the falling factorial modulo $q$ and cancelling
+the unit $(q-1)!$ (nonzero modulo the prime $q$ by Wilson-type reasoning /
+`hq.dvd_factorial`), we obtain $\binom{n-1}{q-1} \equiv (-1)^{q-1} \pmod q$. For
+$q$ odd, $(-1)^{q-1} = 1$; the case $q = 2$ is checked directly. Hence
+$\binom{n-1}{q-1} \equiv 1$. $\qquad\blacksquare$
+
+**Theorem 3.4 (`not_dvd_choose_of_prime_dvd`).** If $n \ge 2$, $q$ is prime, $q
+\mid n$, and $q < n$, then
+$$n \nmid \binom{n}{q}.$$
+
+*Proof sketch.* Suppose for contradiction $n \mid \binom{n}{q}$, say $\binom{n}
+{q} = n k$. From Theorem 3.2, $q \binom{n}{q} = n \binom{n-1}{q-1}$, so $q n k =
+n \binom{n-1}{q-1}$, giving $\binom{n-1}{q-1} = q k$, i.e. $q \mid \binom{n-1}
+{q-1}$. But Theorem 3.3 gives $\binom{n-1}{q-1} \equiv 1 \pmod q$, so its
+remainder modulo $q$ is $1$, not $0$. Since $q \ge 2$, $1 \ne 0 \bmod q$, a
+contradiction. $\qquad\blacksquare$
+
+### 3.3 The witnessing coefficient
+
+**Theorem 3.5 (`coeff_Xq_ne_zero`).** If $n \ge 2$, $a$ is a unit, $q$ is prime,
+$q \mid n$, and $q < n$, then the coefficient of $X^q$ in $(X + Ca)^n$ is nonzero
+in $\mathbb{Z}/n\mathbb{Z}$:
+$$\bigl((X + Ca)^n\bigr).\mathrm{coeff}\, q \ne 0.$$
+
+*Proof sketch.* By the binomial expansion, $\bigl((X + Ca)^n\bigr).\mathrm{coeff}
+\, q = \binom{n}{q}\, a^{\,n-q}$ in $\mathbb{Z}/n\mathbb{Z}$. By Theorem 3.4, $n
+\nmid \binom{n}{q}$, so $\binom{n}{q} \ne 0$ in $\mathbb{Z}/n\mathbb{Z}$. Since
+$a$ is a unit, so is $a^{n-q}$, and multiplying a nonzero element by a unit
+cannot yield zero. Hence the product is nonzero. $\qquad\blacksquare$
+
+### 3.4 Reverse direction and the criterion
+
+**Theorem 3.6 (`aks_reverse`).** If $n \ge 2$, $a$ is a unit, and $n$ is *not*
+prime, then
+$$(X + Ca)^n \ne X^n + Ca.$$
+
+*Proof sketch.* Let $q = \mathrm{minFac}(n)$. Since $n \ge 2$ is composite, $q$
+is prime (`Nat.minFac_prime`), $q \mid n$ (`Nat.minFac_dvd`), and $q < n$
+(strict because $n$ is composite). The right-hand side $X^n + Ca$ has zero
+coefficient at $X^q$, because $0 < q < n$ excludes both the $X^n$ term and the
+constant term. The left-hand side has nonzero coefficient at $X^q$ by Theorem
+3.5. Hence the polynomials differ. $\qquad\blacksquare$
+
+**Theorem 3.7 (`aks_criterion`).** For $n \ge 2$ and $a$ a unit in $\mathbb{Z}/n
+\mathbb{Z}$,
+$$n \text{ is prime} \iff (X + Ca)^n = X^n + Ca.$$
+
+*Proof sketch.* ($\Rightarrow$) Theorem 3.1. ($\Leftarrow$) Contrapositive: if
+$n$ were composite, Theorem 3.6 would make the identity fail; so the identity
+forces primality. $\qquad\blacksquare$
+
+## 4. Algorithmic Realization
+
+The criterion yields a clean (if not yet polynomial-time) decision procedure.
+
+**Algorithm AKS-Single-Base.** *Input:* $n \ge 2$. *Output:* `PRIME` or
+`COMPOSITE`.
+
+1. Choose a unit $a$ modulo $n$ (e.g. $a = 1$, always a unit).
+2. Compute $P \gets (X + a)^n \bmod n$ in $(\mathbb{Z}/n\mathbb{Z})[X]$ by
+   repeated squaring of polynomials.
+3. Compute $Q \gets X^n + a$.
+4. If $P = Q$ return `PRIME`, else return `COMPOSITE`.
+
+By Theorem 3.7 this is *correct for every $n$* — there is no error probability
+and no Carmichael loophole. Its cost is dominated by step 2: the polynomial
+$(X + a)^n$ has degree $n$, so each multiplication touches $\Theta(n)$
+coefficients and there are $\Theta(\log n)$ squarings, giving roughly $\tilde O
+(n)$ ring operations — exponential in the bit-length of $n$. The full AKS
+algorithm removes this blow-up by reducing modulo $X^r - 1$ for a small $r =
+O((\log n)^c)$, keeping polynomials of degree $< r$, and by checking $O(\sqrt
+{r}\log n)$ bases; that reduction is the subject of Future Direction 1 below and
+is *not* part of the present formalization. The verified content is the exact
+correctness of the *unbounded-degree* identity, which is the algorithm's logical
+foundation.
+
+## 5. Numerical Demonstrations
+
+The accompanying `demo.py` realizes Algorithm AKS-Single-Base with explicit
+polynomial arithmetic over $\mathbb{Z}/n\mathbb{Z}$ and confirms every theorem
+empirically.
+
+- **Primes (freshman's dream).** For $n \in \{2,3,5,7,11,13\}$, the identity
+  $(X + a)^n = X^n + a$ holds for *every* unit $a$, illustrating Theorem 3.1.
+- **Composites and the witnessing coefficient.** For $n \in \{4,6,8,9,12,15,21,
+  25\}$, the identity fails, and the surviving coefficient is exactly $\binom{n}
+  {q}\bmod n$ at $q = \mathrm{minFac}(n)$, as predicted by Theorem 3.5. For
+  instance $n = 9$: $q = 3$, $\binom{9}{3} \equiv 3 \pmod 9 \ne 0$.
+- **Carmichael separation.** For $n = 561 = 3 \cdot 11 \cdot 17$, the Fermat
+  congruence $a^{561} \equiv a$ holds for all tested bases, yet the AKS identity
+  fails: $q = 3$ and $\binom{561}{3} \equiv 187 \pmod{561}$. AKS detects the
+  composite the Fermat test cannot.
+- **Binomial identity.** $q\binom{n}{q} = n\binom{n-1}{q-1}$ checked for $(n,q)
+  \in \{(10,3),(12,4),(21,3),(561,3)\}$ (Theorem 3.2).
+- **Congruence.** $\binom{n-1}{q-1} \equiv 1 \pmod q$ checked at $q = \mathrm
+  {minFac}(n)$ for $n \in \{6,12,15,21,561\}$ (Theorem 3.3).
+
+## 6. Applications
+
+**Cryptographic key generation.** RSA and discrete-log systems need certified
+large primes. Probabilistic tests (Miller–Rabin) are used in practice for speed,
+but a *deterministic, unconditionally correct* criterion such as AKS is valuable
+as a final certificate and as a specification against which fast tests are
+validated. The verified equivalence here removes any doubt about the algebraic
+core of that certificate.
+
+**Distinguishing from Fermat-style tests.** The Carmichael number $561$ makes
+concrete why the polynomial lift is strictly stronger than the scalar Fermat
+test. Any system relying on Fermat-only checks is, in principle, defeatable by
+Carmichael inputs; the AKS criterion is not.
+
+**A trustworthy specification.** Because the criterion is machine-checked, it can
+serve as a reference oracle for testing optimized but unverified primality code:
+discrepancies on any input reveal bugs in the optimized implementation.
 
 ## 7. Discussion
 
-### 7.1 The Quarter Bound
+The proof exhibits a recurring theme in elementary number theory: prime
+characteristic both *creates* and *detects* structure. In the forward direction,
+prime characteristic annihilates the middle binomial terms (Frobenius),
+collapsing the expansion. In the reverse direction, the *absence* of that
+collapse is pinned to a single coefficient $\binom{n}{q}$, and the same
+prime-divisibility analysis — now applied to $q = \mathrm{minFac}(n)$ rather than
+to $n$ itself — guarantees that coefficient survives. The technical heart is
+remarkably small: one binomial recurrence and one congruence, combined by a
+one-line contradiction.
 
-The Rabin–Monier theorem (our `strongLiarSet_card_le_quarter'`) is the deepest single result in the framework. Its formalization requires:
+A subtle point worth emphasizing is the role of the unit hypothesis. It is used
+*only* in the reverse direction (Theorem 3.5), to ensure $a^{n-q}$ cannot
+silently zero out the surviving coefficient. The forward direction holds for all
+$a$. This asymmetry is faithfully reflected in the formal statements.
 
-1. CRT decomposition of (ℤ/nℤ)× for n with coprime factors
-2. Analysis of cyclic unit groups for prime powers
-3. Careful case analysis and subgroup index calculations
+The formalization also makes the case analysis explicit where informal proofs
+often gloss: the congruence $\binom{n-1}{q-1} \equiv 1 \pmod q$ genuinely
+requires separating $q = 2$ from odd primes because of the $(-1)^{q-1}$ factor,
+and the boundary conditions $1 \le q \le n$ in the binomial recurrence must be
+tracked to avoid vacuous or ill-typed natural-number subtraction.
 
-This remains as the single sorry in our development. All other results are either fully verified or follow directly from this assumption. Fully formalizing this theorem would be a significant contribution to the Mathlib library.
+## 8. Future Directions
 
-### 7.2 Cross-Domain Connections
+The single-base criterion is the algebraic keystone; several natural extensions
+remain.
 
-The spectral obstruction theorem (`many_strong_liars_force_collision_obstruction'`) establishes a novel link between:
-- **Algebraic number theory**: via the Miller–Rabin liar set
-- **Additive combinatorics**: via collision profiles and additive energy
-- **Spectral analysis**: via the connection between energy bounds and Fourier analysis
+1. **Introspective-base AKS bound.** Establish an explicit polylogarithmic bound
+   $B(n)$ such that $n$ is prime iff $(X + a)^n = X^n + a$ in $(\mathbb{Z}/n
+   \mathbb{Z})[X]/(X^r - 1)$ for all $1 \le a \le B(n)$ with $r = O((\log n)^c)$.
+   This upgrades the exact criterion to the full deterministic polynomial-time
+   algorithm. The algebraic obstruction (the coefficient $\binom{n}{q}$) is
+   already isolated; what remains is the cyclotomic order/coprime-base counting
+   after quotienting by $X^r - 1$.
 
-This bridge suggests that tools from additive combinatorics (Plünnecke-Ruzsa inequalities, Bogolyubov's lemma, spectral methods) could be applied to primality testing — a direction that, to our knowledge, has not been explored in the literature.
+2. **Monier–Rabin $1/4$ error bound.** Prove that for every odd composite $n >
+   9$, the number of Miller–Rabin non-witnesses in $(\mathbb{Z}/n\mathbb{Z})^
+   \times$ is at most $\varphi(n)/4$. The strong-liar set lies in a proper
+   subgroup of $(\mathbb{Z}/n\mathbb{Z})^\times$; bounding its index by $4$ is
+   the whole game, leaning on the CRT decomposition of the unit group.
 
-### 7.3 Certified Algorithms
+3. **AKS strictly dominates Fermat on every Carmichael number.** Show that for
+   *every* Carmichael number $n$, the Fermat congruence holds for all bases yet
+   the AKS identity fails for some base coprime to $n$, generalizing the $561$
+   separation to the entire family. The needed ingredient is Korselt's
+   criterion ($n$ squarefree and $(p-1) \mid (n-1)$ for each prime $p \mid n$).
 
-Our boolean checkers (`isStrongProbablePrimeTo'`, `millerRabinCheck'`) are formally verified to agree with their mathematical specifications. This provides a foundation for *certified primality testing* — implementations whose correctness is guaranteed by machine-checked proofs.
+4. **Characterizing Carmichael numbers.** Prove that a composite $n$ satisfies
+   $a^n \equiv a \pmod n$ for all $a$ if and only if $n$ is squarefree and
+   $(p-1) \mid (n-1)$ for every prime $p \mid n$ (Korselt's criterion).
 
-### 7.4 Comparison with Existing Formalizations
+## 9. Conclusion
 
-To our knowledge, this is the first formalization of Miller–Rabin witness theory as a *counting theorem* over finite sets. Prior work on primality testing in proof assistants has focused on:
+We have given a fully machine-verified proof that the polynomial identity $(X +
+a)^n = X^n + a$ over $\mathbb{Z}/n\mathbb{Z}$ holds exactly when $n$ is prime,
+together with all supporting binomial number theory. The forward direction is
+classical algebra; the reverse direction is a constructive unmasking of every
+composite via a single surviving binomial coefficient at its least prime factor.
+This equivalence is the verified foundation on which the deterministic
+polynomial-time AKS algorithm is built, and it cleanly separates from the
+classical Fermat test on Carmichael numbers such as $561$.
 
-- **Correctness of individual algorithms**: showing that specific implementations produce correct yes/no answers
-- **Complexity analysis**: bounding the running time of primality tests
-- **Special cases**: verifying primality of specific numbers or small families
+## Appendix: Index of Verified Results
 
-Our approach is fundamentally different: we formalize the *geometry of witness sets* as mathematical objects in their own right, with cardinality bounds, spectral properties, and cross-domain connections. This provides not just correctness certificates for algorithms, but a reusable mathematical infrastructure for reasoning about primality testing.
-
-The framework also introduces the novel concept of *spectral collision profiles* connecting primality testing to additive combinatorics. While the connection between modular arithmetic and additive structure is well-known in analytic number theory, our formalization is the first to make this connection computationally precise and formally verifiable.
-
-### 7.5 Limitations
-
-Several limitations of the current framework should be noted:
-
-1. **The quarter bound remains unproved**: The Rabin–Monier theorem requires substantial algebraic infrastructure (CRT decomposition of unit groups, cyclic group structure of prime-power units) that, while available in Mathlib in pieces, has not been assembled into the required form.
-
-2. **AKS correctness is one-directional**: We prove that primes satisfy the AKS congruences, but not the converse (that satisfaction implies primality). The converse requires the theory of introspective numbers and field extension degree arguments that are significantly more involved.
-
-3. **Spectral bounds are qualitative**: The collision obstruction theorem gives a qualitative impossibility result rather than a quantitative bound on liar set structure. Strengthening this to a quantitative spectral sparsity theorem would require deeper tools from additive combinatorics.
-
-4. **Computational efficiency**: The current AKS polynomial checker has O(r² log n) complexity per test value, which is adequate for demonstration but not for production use. An FFT-based polynomial multiplication would reduce this to O(r log r log n).
-
-## 8. Future Work
-
-1. **Formalize the Rabin–Monier theorem**: Complete the proof of `strongLiarSet_card_le_quarter'` in Lean 4, requiring formalization of CRT decomposition for unit groups and subgroup index theory.
-
-2. **Prove the spectral sparsity conjecture**: Show that liar sets have subgeneric additive energy, using Fourier analysis over ZMod n.
-
-3. **Construct explicit hitting sets**: Use the framework to find small deterministic base sets for compositeness testing, connecting to the derandomization program.
-
-4. **AKS full correctness**: Extend the AKS soundness theorem to full correctness (the converse direction: if the certificate holds, n is prime).
-
-5. **Complexity-theoretic applications**: Formalize the connection between liar set geometry and circuit lower bounds.
-
-## References
-
-1. Agrawal, M., Kayal, N., & Saxena, N. (2004). PRIMES is in P. *Annals of Mathematics*, 160(2), 781-793.
-
-2. Miller, G. L. (1976). Riemann's hypothesis and tests for primality. *Journal of Computer and System Sciences*, 13(3), 300-317.
-
-3. Rabin, M. O. (1980). Probabilistic algorithm for testing primality. *Journal of Number Theory*, 12(1), 128-138.
-
-4. Monier, L. (1980). Evaluation and comparison of two efficient probabilistic primality testing algorithms. *Theoretical Computer Science*, 12(1), 97-108.
-
-5. Tao, T., & Vu, V. H. (2006). *Additive Combinatorics*. Cambridge University Press.
-
-6. The Mathlib Community. (2020). The Lean mathematical library. *Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs*.
+| Name | Statement |
+|------|-----------|
+| `aks_forward` | $n$ prime $\Rightarrow (X+Ca)^n = X^n + Ca$ |
+| `mul_choose_eq` | $q\binom{n}{q} = n\binom{n-1}{q-1}$ for $1 \le q \le n$ |
+| `choose_pred_eq_one_mod` | $q$ prime, $q \mid n \Rightarrow \binom{n-1}{q-1} \equiv 1 \pmod q$ |
+| `not_dvd_choose_of_prime_dvd` | $q$ prime, $q \mid n$, $q < n \Rightarrow n \nmid \binom{n}{q}$ |
+| `coeff_Xq_ne_zero` | coefficient of $X^q$ in $(X+Ca)^n$ is nonzero |
+| `aks_reverse` | $n$ composite $\Rightarrow (X+Ca)^n \ne X^n + Ca$ |
+| `aks_criterion` | $n$ prime $\iff (X+Ca)^n = X^n + Ca$ |
