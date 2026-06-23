@@ -34747,7 +34747,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "delta-matroids",
@@ -34756,7 +34756,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "034c2f5e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34771,7 +34771,7 @@
         "Algebra"
       ],
       "id": "fd_2302",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T19:58:49.646287+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem partial_twuality_polynomial_log_concave\n  {E : Type*} [Fintype E] [DecidableEq E]\n  (D : DeltaMatroid E) (h_bin : IsBinary D)\n  (op : TwualityOp) :\n  LogConcaveSeq (coeffs (partialTwualityPolynomial D op)) := by\n  sorry",
       "lineage_refs": [],
@@ -34785,7 +34785,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22888v1",
       "source_path": "http://arxiv.org/abs/2606.22888v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T05:47:22.546695+00:00",
       "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
@@ -38183,7 +38183,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [
         "Erdos--Ko--Rado theorem for intersecting uniform families",
         "Hilton--Milner theorem for non-trivial intersecting families",
@@ -38210,7 +38210,7 @@
         "Bridges"
       ],
       "id": "fd_2375",
-      "last_attempt_time": "2026-06-23T19:42:31.942991+00:00",
+      "last_attempt_time": "2026-06-23T19:58:31.060304+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Data.Finset.Basic\nimport Mathlib.Algebra.BigOperators.Fin\n\nopen scoped BigOperators\n\nabbrev IsKUniform {n : ℕ} (k : ℕ) (F : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, A.card = k\n\nabbrev IsStar {n : ℕ} (F : Finset (Finset (Fin n))) : Prop :=\n  ∃ x : Fin n, ∀ A ∈ F, x ∈ A\n\nabbrev CrossIntersecting {n : ℕ} (F G : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, ∀ B ∈ G, (A ∩ B).Nonempty\n\nnoncomputable abbrev HMbound (n k : ℕ) : ℕ :=\n  Nat.choose (n - 1) (k - 1) - Nat.choose (n - k - 1) (k - 1) + 1\n\n/-- Conjectural multilateral extension of the sharp non-trivial cross-intersection product bound. -/\ntheorem multilateral_nontrivial_cross_intersecting_product_bound\n    {n k r : ℕ}\n    (hn : 2 * k ≤ n) (hk : 3 ≤ k) (hr : 2 ≤ r)\n    (F : Fin r → Finset (Finset (Fin n)))\n    (h_uniform : ∀ i : Fin r, IsKUniform k (F i))\n    (h_nontrivial : ∀ i : Fin r, ¬ IsStar (F i))\n    (h_cross : ∀ ⦃i j : Fin r⦄, i ≠ j → CrossIntersecting (F i) (F j)) :\n    ",
       "lineage_refs": [],
@@ -44688,11 +44688,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "2b44c5bb",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44705,7 +44705,7 @@
         "Analysis"
       ],
       "id": "seed_364",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T19:58:44.096104+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44719,7 +44719,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432774+00:00",
       "title": "Statistical Mechanics: Ising Model Phase Transition"
@@ -118701,6 +118701,8 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

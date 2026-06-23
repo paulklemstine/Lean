@@ -552,7 +552,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2b44c5bb",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -563,7 +563,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -1718,7 +1718,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "P\u00f3lya tree coefficient divisor-sum recurrence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "034c2f5e",
     "description": "For any binary delta-matroid $D$ on ground set $E$ and any twuality operator $\\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the sequence of coefficients of the partial-$\\bullet$ polynomial $^{\\partial}w_{D}^{\\bullet}(z) = \\sum_{A \\subseteq E} z^{w(D^{\\bullet \\mid A})}$ is log-concave. This conjecture extends the interpolation property established in the paper (which implies the sequence has no internal zeros) and directly parallels the resolution of the Mason-Welsh conjecture for matroid independent sets.",
     "domains": [
       "Pythagorean",
@@ -1728,7 +1728,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T05:47:22.546695+00:00",
     "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
   },

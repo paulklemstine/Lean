@@ -736,7 +736,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2b44c5bb",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domain_bridges": [],
     "domains": [
@@ -750,7 +750,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -2461,7 +2461,7 @@
       "log-concavity",
       "polynomial invariants"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "034c2f5e",
     "description": "For any binary delta-matroid $D$ on ground set $E$ and any twuality operator $\\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the sequence of coefficients of the partial-$\\bullet$ polynomial $^{\\partial}w_{D}^{\\bullet}(z) = \\sum_{A \\subseteq E} z^{w(D^{\\bullet \\mid A})}$ is log-concave. This conjecture extends the interpolation property established in the paper (which implies the sequence has no internal zeros) and directly parallels the resolution of the Mason-Welsh conjecture for matroid independent sets.",
     "domain_bridges": [
       "matroid theory",
@@ -2477,7 +2477,7 @@
     "proof_strategy": "Establish log-concavity by demonstrating that the partial-twuality polynomial is Lorentzian (by verifying that the quadratic forms associated with its coefficients correspond to M-convex functions), or by constructing an explicit combinatorial injection for the coefficient sequence analogous to the proof of the Mason-Welsh conjecture for matroids.",
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T05:47:22.546695+00:00",
     "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
   },
