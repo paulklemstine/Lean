@@ -2619,18 +2619,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the standard rectangular/plabic cluster seed on the coordinate ring of the Grassmannian partial flag variety Gr(k,n), the cluster algebra is of finite type exactly in the classical finite Grassmannian cases: k=1 or n-k=1, k=2 or n-k=2, or (min(k,n-k),n) equal to (3,6), (3,7), or (3,8). Moreover the Dynkin type is respectively A0, A_{n-3}, D4, E6, and E8; in all other cases the seed is not mutation-equivalent to any Dynkin quiver.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2364",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23474v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:13:15.113462+00:00",
+    "title": "Finite-type classification for Grassmannian partial-flag seeds"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The codimension-i rational cohomology of the special linear group SL_n(Z) vanishes for n >= i+2. Equivalently, the i-th rational cohomology group H^i(SL_n(Z); Q) is trivial for all i >= (n choose 2) - n + 2.",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2364",
+    "id": "fd_2365",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
     "status": "available",
     "timestamp": "2026-06-23T15:56:00.070698+00:00",
     "title": "Church-Farb-Putman Vanishing Conjecture for SL_n(Z)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer j and every odd positive integer h, the prime radicals of j and j+h are unequal. Equivalently, the same-prime-support index set J_h = {j \u2265 1 : rad(j) = rad(j+h)} is empty whenever h is odd. This formalizes the elementary obstruction behind the paper's statement that the Graham--Holt--Pomerance diagonal contribution is empty for odd shifts.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2366",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23681v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:13:54.497477+00:00",
+    "title": "Odd shifts have no same-support GHP diagonal"
   },
   {
     "consumed_by_exp_id": "",

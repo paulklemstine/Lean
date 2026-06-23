@@ -15134,7 +15134,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -15150,7 +15150,7 @@
         "Physics"
       ],
       "id": "fd_0502",
-      "last_attempt_time": "2026-06-10T06:05:09.735020+00:00",
+      "last_attempt_time": "2026-06-23T16:14:01.978487+00:00",
       "last_reviewed_at": "2026-06-09T17:35:09.672546+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35312,7 +35312,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "DrmotaKauersSpiegelhofer2016"
       ],
@@ -35332,7 +35332,7 @@
         "Bridges"
       ],
       "id": "fd_2314",
-      "last_attempt_time": "2026-06-23T15:56:13.062100+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem c_t_bias (t : ℕ) (ht : 1 <= t) : (lim_{N→∞} (1 / (N : ℝ)) * (Finset.filter (fun n => s2 (n + t) >= s2 n) (Finset.range N)).card >= (1 / 2 : ℝ) + 2 ^ (-(2 * s2 t + 1 : ℤ)))",
       "lineage_refs": [],
@@ -37645,6 +37645,56 @@
       "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Fomin-Zelevinsky finite type classification of cluster algebras",
+        "Scott cluster structure on Grassmannians",
+        "Dynkin diagram classification A/D/E",
+        "Mathlib.Combinatorics.Quiver.Basic",
+        "Mathlib.LinearAlgebra.Matrix",
+        "Mathlib.Data.Finset.Basic"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For the standard rectangular/plabic cluster seed on the coordinate ring of the Grassmannian partial flag variety Gr(k,n), the cluster algebra is of finite type exactly in the classical finite Grassmannian cases: k=1 or n-k=1, k=2 or n-k=2, or (min(k,n-k),n) equal to (3,6), (3,7), or (3,8). Moreover the Dynkin type is respectively A0, A_{n-3}, D4, E6, and E8; in all other cases the seed is not mutation-equivalent to any Dynkin quiver.",
+      "domain_bridges": [
+        "partial flag coordinate rings to combinatorial quiver mutation",
+        "Grassmannian Plucker seeds to rectangular grid quivers",
+        "finite cluster type to Dynkin Cartan companions",
+        "quiver mutation equivalence to finite ADE classification"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2364",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nnamespace ClusterFlag\n\n/-- Placeholder for seeds of skew-symmetrizable cluster algebras with frozen variables. -/\nconstant Seed : Type\n\n/-- The standard rectangular/plabic seed for the Grassmannian Gr(k,n). -/\nconstant grassmannianRectSeed : Nat → Nat → Seed\n\n/-- Finite Fomin-Zelevinsky cluster type. -/\nconstant FiniteClusterType : Seed → Prop\n\n/-- Dynkin labels, with `A 0` used for the coefficient-only/trivial mutable case. -/\ninductive DynkinType where\n  | A : Nat → DynkinType\n  | D : Nat → DynkinType\n  | E6 : DynkinType\n  | E7 : DynkinType\n  | E8 : DynkinType\n  deriving DecidableEq, Repr\n\n/-- The Dynkin type of a finite-type seed, if it exists. -/\nconstant seedDynkinType? : Seed → Option DynkinType\n\n/-- Expected finite type for the standard Grassmannian seed. -/\ndef expectedGrassmannianDynkinType (k n : Nat) : Option DynkinType :=\n  if k = 1 ∨ k + 1 = n then\n    some (DynkinType.A 0)\n  else if k = 2 ∨ k + 2 = n then\n    some (DynkinType.A (n - 3))\n  else if (k = 3 ∨ ",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the rectangular Grassmannian seed as a finite quiver with frozen boundary vertices. Define mutation equivalence and finite cluster type using Fomin-Zelevinsky's criterion: a skew-symmetrizable exchange matrix is of finite type iff some matrix in its mutation class has Cartan counterpart a finite Dynkin Cartan matrix. Prove by explicit mutation sequences that the listed finite cases reduce to Dynkin quivers A_{n-3}, D4, E6, or E8. For the remaining cases, exhibit a mutation-invariant obstruction or a mutable full subquiver whose Cartan companion is affine/indefinite, proving non-finite type.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23474v1",
+      "source_path": "http://arxiv.org/abs/2606.23474v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T16:13:15.113462+00:00",
+      "title": "Finite-type classification for Grassmannian partial-flag seeds"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -37671,7 +37721,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2364",
+      "id": "fd_2365",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.LinearAlgebra.SpecialLinearGroup\nimport Mathlib.GroupTheory.Cohomology\n\ntheorem church_farb_putman_conjecture (n i : ℕ) (h : n ≥ i + 2) :\n  groupCohomology (SpecialLinearGroup n ℤ) ℚ (n.choose 2 - i) ≅ 0 := by\n  sorry",
@@ -37690,6 +37740,55 @@
       "thread_id": "",
       "timestamp": "2026-06-23T15:56:00.070698+00:00",
       "title": "Church-Farb-Putman Vanishing Conjecture for SL_n(Z)"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Euler's totient function",
+        "prime radical / squarefree kernel",
+        "Graham--Holt--Pomerance same-support family",
+        "mathlib: Nat.Prime",
+        "mathlib: Nat.Coprime",
+        "mathlib: Nat.factorization"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every positive integer j and every odd positive integer h, the prime radicals of j and j+h are unequal. Equivalently, the same-prime-support index set J_h = {j ≥ 1 : rad(j) = rad(j+h)} is empty whenever h is odd. This formalizes the elementary obstruction behind the paper's statement that the Graham--Holt--Pomerance diagonal contribution is empty for odd shifts.",
+      "domain_bridges": [
+        "analytic shifted-totient counting to finite radical-support obstruction",
+        "GHP diagonal parametrization to parity of prime supports",
+        "Euler totient equality problem to elementary divisibility"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2366",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nnamespace ShiftedTotient\n\n/-- `rad n` is the product of the distinct prime divisors of `n`. One may alternatively\nreplace equality of radicals by equality of prime-divisor predicates. -/\nnoncomputable def rad (n : ℕ) : ℕ :=\n  n.factorization.prod fun p _ => p\n\n/-- Odd shifts have no Graham--Holt--Pomerance same-support index. -/\ntheorem no_same_support_of_odd_shift\n    {j h : ℕ} (hj : 0 < j) (hh : Odd h) :\n    rad j ≠ rad (j + h) := by\n  sorry\n\n/-- Predicate-only version avoiding any dependence on a particular radical definition. -/\ntheorem no_same_prime_divisors_of_odd_shift\n    {j h : ℕ} (hj : 0 < j) (hh : Odd h) :\n    ¬ (∀ p : ℕ, Nat.Prime p → (p ∣ j ↔ p ∣ j + h)) := by\n  sorry\n\nend ShiftedTotient",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define rad n as the product of all primes dividing n, or equivalently use the predicate that two integers have the same prime divisors. If rad(j) = rad(j+h), then 2 divides j iff 2 divides j+h. But when h is odd, j and j+h have opposite parity, so exactly one of them is divisible by 2. Hence their radicals cannot be equal. In Lean, this can be proved by rewriting oddness as h % 2 = 1 and using parity of addition modulo 2.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23681v1",
+      "source_path": "http://arxiv.org/abs/2606.23681v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T16:13:54.497477+00:00",
+      "title": "Odd shifts have no same-support GHP diagonal"
     },
     {
       "ambition_level": "extension",
@@ -41637,7 +41736,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -41652,7 +41751,7 @@
         "Geometry"
       ],
       "id": "seed_223",
-      "last_attempt_time": "2026-06-23T15:56:07.750603+00:00",
+      "last_attempt_time": "2026-06-11T13:05:09.065851+00:00",
       "last_reviewed_at": "2026-06-09T13:04:11.320190+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43659,7 +43758,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -43675,7 +43774,7 @@
         "Computation"
       ],
       "id": "seed_361",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T16:13:57.418783+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43817,7 +43916,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -43834,7 +43933,7 @@
         "Computation"
       ],
       "id": "seed_365",
-      "last_attempt_time": "2026-06-23T15:56:02.793369+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-19T17:10:36.362918+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -117790,7 +117889,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

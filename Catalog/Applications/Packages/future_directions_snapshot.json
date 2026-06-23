@@ -4177,6 +4177,37 @@
     "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Fomin-Zelevinsky finite type classification of cluster algebras",
+      "Scott cluster structure on Grassmannians",
+      "Dynkin diagram classification A/D/E",
+      "Mathlib.Combinatorics.Quiver.Basic",
+      "Mathlib.LinearAlgebra.Matrix",
+      "Mathlib.Data.Finset.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the standard rectangular/plabic cluster seed on the coordinate ring of the Grassmannian partial flag variety Gr(k,n), the cluster algebra is of finite type exactly in the classical finite Grassmannian cases: k=1 or n-k=1, k=2 or n-k=2, or (min(k,n-k),n) equal to (3,6), (3,7), or (3,8). Moreover the Dynkin type is respectively A0, A_{n-3}, D4, E6, and E8; in all other cases the seed is not mutation-equivalent to any Dynkin quiver.",
+    "domain_bridges": [
+      "partial flag coordinate rings to combinatorial quiver mutation",
+      "Grassmannian Plucker seeds to rectangular grid quivers",
+      "finite cluster type to Dynkin Cartan companions",
+      "quiver mutation equivalence to finite ADE classification"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2364",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the rectangular Grassmannian seed as a finite quiver with frozen boundary vertices. Define mutation equivalence and finite cluster type using Fomin-Zelevinsky's criterion: a skew-symmetrizable exchange matrix is of finite type iff some matrix in its mutation class has Cartan counterpart a finite Dynkin Cartan matrix. Prove by explicit mutation sequences that the listed finite cases reduce to Dynkin quivers A_{n-3}, D4, E6, or E8. For the remaining cases, exhibit a mutation-invariant obstruction or a mutable full subquiver whose Cartan companion is affine/indefinite, proving non-finite type.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23474v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:13:15.113462+00:00",
+    "title": "Finite-type classification for Grassmannian partial-flag seeds"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.AT",
@@ -4194,7 +4225,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2364",
+    "id": "fd_2365",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a highly connected complex of unimodular vectors or forests over the integers, and use it to establish the vanishing of the rational homology in high degrees, extending the combinatorial and homological methods used for i=0, 1, and 2.",
@@ -4203,6 +4234,36 @@
     "status": "available",
     "timestamp": "2026-06-23T15:56:00.070698+00:00",
     "title": "Church-Farb-Putman Vanishing Conjecture for SL_n(Z)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Euler's totient function",
+      "prime radical / squarefree kernel",
+      "Graham--Holt--Pomerance same-support family",
+      "mathlib: Nat.Prime",
+      "mathlib: Nat.Coprime",
+      "mathlib: Nat.factorization"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer j and every odd positive integer h, the prime radicals of j and j+h are unequal. Equivalently, the same-prime-support index set J_h = {j ≥ 1 : rad(j) = rad(j+h)} is empty whenever h is odd. This formalizes the elementary obstruction behind the paper's statement that the Graham--Holt--Pomerance diagonal contribution is empty for odd shifts.",
+    "domain_bridges": [
+      "analytic shifted-totient counting to finite radical-support obstruction",
+      "GHP diagonal parametrization to parity of prime supports",
+      "Euler totient equality problem to elementary divisibility"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2366",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define rad n as the product of all primes dividing n, or equivalently use the predicate that two integers have the same prime divisors. If rad(j) = rad(j+h), then 2 divides j iff 2 divides j+h. But when h is odd, j and j+h have opposite parity, so exactly one of them is divisible by 2. Hence their radicals cannot be equal. In Lean, this can be proved by rewriting oddness as h % 2 = 1 and using parity of addition modulo 2.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23681v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:13:54.497477+00:00",
+    "title": "Odd shifts have no same-support GHP diagonal"
   },
   {
     "ambition_level": "extension",
