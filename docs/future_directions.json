@@ -12444,7 +12444,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -12460,7 +12460,7 @@
         "Geometry"
       ],
       "id": "fd_0432",
-      "last_attempt_time": "2026-06-23T17:25:48.643971+00:00",
+      "last_attempt_time": "2026-06-11T09:04:58.858543+00:00",
       "last_reviewed_at": "2026-06-09T13:13:14.334342+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -34411,7 +34411,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.Data.Finset.Basic",
         "Mathlib.Order.Closure",
@@ -34438,7 +34438,7 @@
         "Algebra"
       ],
       "id": "fd_2295",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:45:13.527701+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Finset.Basic\n\nuniverse u\n\n/-- Placeholder predicate: `cl` is the resolving-closure operator obtained from\n    the indecomposable modules/arcs of a finite-global-dimension gentle tree algebra. -/\nconstant IsGentleTreeResolvingClosure\n    {α : Type u} [DecidableEq α] [Fintype α]\n    (cl : Finset α → Finset α) : Prop\n\ndef ResolvingClosed {α : Type u} [DecidableEq α]\n    (cl : Finset α → Finset α) (C : Finset α) : Prop :=\n  cl C = C\n\n/-- Conjecture: resolving closure for gentle tree algebras satisfies anti-exchange. -/\ntheorem gentleTree_resolvingClosure_antiExchange\n    {α : Type u} [DecidableEq α] [Fintype α]\n    (cl : Finset α → Finset α)\n    (hcl : IsGentleTreeResolvingClosure cl) :\n    ∀ (C : Finset α), ResolvingClosed cl C →\n      ∀ x y : α, x ≠ y → x ∉ C → y ∉ C →\n        x ∈ cl (insert y C) →\n        y ∉ cl (insert x C) := by\n  sorry",
       "lineage_refs": [],
@@ -34452,7 +34452,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21424v1",
       "source_path": "http://arxiv.org/abs/2606.21424v1",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-23T02:04:29.943864+00:00",
       "title": "Anti-exchange for resolving closure in gentle tree algebras"
@@ -34558,7 +34558,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.SP",
         "math.AP",
@@ -34584,7 +34584,7 @@
         "Cryptography"
       ],
       "id": "fd_2298",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:45:09.033969+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem equilateral_torus_unique_maximizer (n : ℕ) (hn : 2 ≤ n) (l : Fin n → ℝ) (hl_pos : ∀ i, 0 < l i) (hl_vol : (∏ i : Fin n, l i) = 1) : detZeta (laplacian (orthogonalTorus l)) ≤ detZeta (laplacian (equilateralTorus n)) ∧ (detZeta (laplacian (orthogonalTorus l)) = detZeta (laplacian (equilateralTorus n)) ↔ ∀ i, l i = 1) := sorry",
       "lineage_refs": [],
@@ -34598,7 +34598,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21442v1",
       "source_path": "http://arxiv.org/abs/2606.21442v1",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-23T03:00:56.801830+00:00",
       "title": "The Equilateral Torus Uniquely Maximizes the Zeta Regularized Determinant Among Orthogonal Flat Tori of Unit Volume"
@@ -35446,7 +35446,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.CA"
@@ -35469,7 +35469,7 @@
         "MachineLearning"
       ],
       "id": "fd_2317",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:45:04.508591+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem polya_tree_taylor_error_bound {A : ℕ → ℝ} {ρ : ℝ} (k : ℕ) (t : ℝ) (hk : 1 ≤ k) (ht : 0 ≤ t) (ht_ρ : t < ρ) (hρ : ∀ n, A n ≤ ρ^(-n)) : (∑ i in Finset.range k, A i * t^i ≤ ∑ i, A i * t^i) ∧ (∑ i, A i * t^i - ∑ i in Finset.range k, A i * t^i ≤ (t/ρ)^(k+1) / (1 - t/ρ)) := by sorry",
       "lineage_refs": [],
@@ -35483,7 +35483,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23439v1",
       "source_path": "http://arxiv.org/abs/2606.23439v1",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-23T08:33:35.541800+00:00",
       "title": "Pólya Tree Generating Series Taylor Approximation Error Bound"
@@ -36612,7 +36612,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "OEIS A080170",
         "Ralf Stephan's OEIS conjectures"
@@ -36635,7 +36635,7 @@
         "Pythagorean"
       ],
       "id": "fd_2342",
-      "last_attempt_time": "2026-06-23T17:26:00.763382+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binomial_gcd_criterion_restricted_range (k : ℕ) (hk : 2 ≤ k) : (gcd_q2_to_k (fun q => (q * k.choose k)) = 1) ↔ ¬∃ p a, prime p ∧ a ≥ 1 ∧ p ^ a ‖ k ∧ p ^ (a + 1) ∤ k",
       "lineage_refs": [],
@@ -36649,7 +36649,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22997v1",
       "source_path": "http://arxiv.org/abs/2606.22997v1",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T08:56:07.087605+00:00",
       "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
@@ -37893,6 +37893,52 @@
       "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Menger's theorem",
+        "wall minors",
+        "graph minors",
+        "vertex-disjoint paths"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "In the Wall-Menger theorem (Theorem 1 of the paper), for positive integers s' and t', there exist t and f such that given a vertex set A and a wall W of size at least t, either (i) a vertex set X of size at most f separates A from the branch vertices of W, or (ii) a subwall W' of size at least t' admits s' disjoint A-W' paths each ending in a distinct nail of W'. The conjecture asserts that the optimal bound on the separator size is f(s') = s' - 1, matching the classical Menger theorem exactly, regardless of the wall structure.",
+      "domain_bridges": [
+        "structural_graph_theory",
+        "min_max_theorems_in_combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2369",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem wall_menger_optimal_separator (s' t' : ℕ) (hs : 0 < s') (ht : 0 < t') :\n    ∃ t : ℕ, ∀ {V : Type} [Fintype V] [DecidableEq V] (G : SimpleGraph V) (A : Finset V) (W : Wall G) (hW : W.size ≥ t),\n      (∃ X : Finset V, X.card ≤ s' - 1 ∧ Separates G X A W.branch_vertices) ∨\n      (∃ W' : Subwall W, W'.size ≥ t' ∧ ∃ P : Finset (Path V), P.card = s' ∧ DisjointPathsToNails P A W')",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize walls, branch vertices, nails, subwalls, and A-W paths in Lean. Prove the lower bound f >= s'-1 by constructing a graph where any separator must have size s'-1 (e.g., a wall with s'-1 vertices on a single subdivided edge acting as a bottleneck). For the upper bound, attempt to show that if no set of s'-1 vertices separates A from the branch vertices of W, then by iterated application of Menger's theorem and the grid structure of walls, one can route s' disjoint paths to distinct nails of a suitably large subwall, possibly after discarding a bounded portion of W.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23121v1",
+      "source_path": "http://arxiv.org/abs/2606.23121v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T17:42:20.767813+00:00",
+      "title": "Optimal separator bound in the Wall-Menger theorem matches Menger's theorem"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -37919,7 +37965,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2369",
+      "id": "fd_2370",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.LinearAlgebra.SpecialLinearGroup\nimport Mathlib.GroupTheory.Cohomology\n\ntheorem church_farb_putman_conjecture (n i : ℕ) (h : n ≥ i + 2) :\n  groupCohomology (SpecialLinearGroup n ℤ) ℚ (n.choose 2 - i) ≅ 0 := by\n  sorry",
@@ -37968,7 +38014,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2370",
+      "id": "fd_2371",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nnamespace ShiftedTotient\n\n/-- `rad n` is the product of the distinct prime divisors of `n`. One may alternatively\nreplace equality of radicals by equality of prime-divisor predicates. -/\nnoncomputable def rad (n : ℕ) : ℕ :=\n  n.factorization.prod fun p _ => p\n\n/-- Odd shifts have no Graham--Holt--Pomerance same-support index. -/\ntheorem no_same_support_of_odd_shift\n    {j h : ℕ} (hj : 0 < j) (hh : Odd h) :\n    rad j ≠ rad (j + h) := by\n  sorry\n\n/-- Predicate-only version avoiding any dependence on a particular radical definition. -/\ntheorem no_same_prime_divisors_of_odd_shift\n    {j h : ℕ} (hj : 0 < j) (hh : Odd h) :\n    ¬ (∀ p : ℕ, Nat.Prime p → (p ∣ j ↔ p ∣ j + h)) := by\n  sorry\n\nend ShiftedTotient",
@@ -38018,7 +38064,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2371",
+      "id": "fd_2372",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Finset.Basic\nimport Mathlib.Data.Finset.Powerset\nimport Mathlib.Data.Nat.Choose.Basic\n\nopen Finset\n\n/-- `Shatters 𝓕 S` means every subset of `S` occurs as a trace of a member of `𝓕`. -/\ndef Shatters {n : ℕ} (𝓕 : Finset (Finset (Fin n))) (S : Finset (Fin n)) : Prop :=\n  ∀ T ∈ S.powerset, ∃ F ∈ 𝓕, F ∩ S = T\n\n/-- `VCdimLE d 𝓕` means no set of size `d+1` is shattered. -/\ndef VCdimLE {n : ℕ} (d : ℕ) (𝓕 : Finset (Finset (Fin n))) : Prop :=\n  ∀ S : Finset (Fin n), S.card = d + 1 → ¬ Shatters 𝓕 S\n\n/-- The Erdős--Frankl--Pach extremal number for `(d+1)`-uniform families. -/\ndef EFPMax (d n : ℕ) : ℕ :=\n  sSup {m : ℕ | ∃ 𝓕 : Finset (Finset (Fin n)),\n    𝓕.card = m ∧\n    (∀ F ∈ 𝓕, F.card = d + 1) ∧\n    VCdimLE d 𝓕}\n\n/-- Conjecture: the smallest admissible `d = 3` case already beats the\nAhlswede--Khachatrian value `Nat.choose 7 3 + Nat.choose 4 1 = 39` by one. -/\ntheorem conjecture_EFPMax_three_eight :\n    EFPMax 3 8 = 40 := by\n  sorry",
@@ -38065,7 +38111,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2372",
+      "id": "fd_2373",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cusick_sum_of_digits_bound (t : ℕ) (ht : 1 ≤ t) :\n    ∃ c : ℝ,\n      Tendsto (fun N : ℕ ↦\n        ((Finset.range N).filter fun n ↦ s₂ (n + t) ≥ s₂ n).card / (N : ℝ))\n        atTop (𝓝 c)\n      ∧ 1/2 + (2 : ℝ) ^ (-(2 * s₂ t + 1)) ≤ c :=\n  sorry\n/-- where s₂ : ℕ → ℕ computes the number of 1-bits in the binary expansion of n -/",
@@ -38113,7 +38159,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2373",
+      "id": "fd_2374",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Finset.Card\n\nopen scoped BigOperators\n\nnamespace SemiInducedStar\n\n/-- Number of edges of a finite simple graph. In a full formalization this would be\nimplemented using `SimpleGraph.edgeFinset.card`. -/\naxiom edgeCount : {V : Type} → [Fintype V] → [DecidableEq V] → SimpleGraph V → ℕ\n\n/-- The semi-induced labeled count `∑ v, d(v)(d(v)-1)(n-1-d(v))`. -/\naxiom S21Count : {V : Type} → [Fintype V] → [DecidableEq V] → SimpleGraph V → ℕ\n\n/-- The quasi-clique on `n` vertices with `m` edges: if\n`m = q.choose 2 + r`, `0 ≤ r < q`, it is `K_q` plus one vertex joined to\n`r` clique vertices, with all remaining vertices isolated. -/\naxiom quasiClique : (n m : ℕ) → SimpleGraph (Fin n)\n\naxiom quasiClique_edgeCount (n m : ℕ) :\n  edgeCount (quasiClique n m) = m\n\n/-- Finite low-density extremality conjecture for the semi-induced star `S_{2,1}`. -/\ntheorem quasiClique_maximizes_S21_low_density\n    (n m : ℕ)\n    (hm : 8 * m ≤ n * (n - 1))\n   ",
@@ -38163,7 +38209,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2374",
+      "id": "fd_2375",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Data.Finset.Basic\nimport Mathlib.Algebra.BigOperators.Fin\n\nopen scoped BigOperators\n\nabbrev IsKUniform {n : ℕ} (k : ℕ) (F : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, A.card = k\n\nabbrev IsStar {n : ℕ} (F : Finset (Finset (Fin n))) : Prop :=\n  ∃ x : Fin n, ∀ A ∈ F, x ∈ A\n\nabbrev CrossIntersecting {n : ℕ} (F G : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, ∀ B ∈ G, (A ∩ B).Nonempty\n\nnoncomputable abbrev HMbound (n k : ℕ) : ℕ :=\n  Nat.choose (n - 1) (k - 1) - Nat.choose (n - k - 1) (k - 1) + 1\n\n/-- Conjectural multilateral extension of the sharp non-trivial cross-intersection product bound. -/\ntheorem multilateral_nontrivial_cross_intersecting_product_bound\n    {n k r : ℕ}\n    (hn : 2 * k ≤ n) (hk : 3 ≤ k) (hr : 2 ≤ r)\n    (F : Fin r → Finset (Finset (Fin n)))\n    (h_uniform : ∀ i : Fin r, IsKUniform k (F i))\n    (h_nontrivial : ∀ i : Fin r, ¬ IsStar (F i))\n    (h_cross : ∀ ⦃i j : Fin r⦄, i ≠ j → CrossIntersecting (F i) (F j)) :\n    ",
@@ -38182,6 +38228,52 @@
       "thread_id": "",
       "timestamp": "2026-06-23T17:25:43.582970+00:00",
       "title": "Multilateral non-trivial cross-intersection product bound"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Bruen and Drudge 1999",
+        "Filmus and Ihringer 2019",
+        "Gavrilyuk and Mogilnykh 2014"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For q ≥ 3 and n ≥ 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
+      "domain_bridges": [
+        "Quadratic forms on vector spaces",
+        "Combinatorial designs",
+        "Algebraic geometry of Grassmann varieties"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2376",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "∃f: J_q(n,2) → {0,1} | f has degree one, f is Boolean, and f ∉ {0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r} for q ≥ 3, n ≥ 4",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a specific Boolean degree one function using a quadratic form (e.g., a conic or quadric) that violates triviality conditions, inspired by the q=3, n=4, k=2 example.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23465v1",
+      "source_path": "http://arxiv.org/abs/2606.23465v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T17:44:54.697706+00:00",
+      "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
     },
     {
       "ambition_level": "extension",
@@ -38226,7 +38318,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 3,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -38242,7 +38334,7 @@
         "Novelty"
       ],
       "id": "moonshot_Pickover_32",
-      "last_attempt_time": "2026-06-23T17:26:09.514623+00:00",
+      "last_attempt_time": "2026-06-23T17:45:19.011599+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -38265,11 +38357,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 5,
+      "attempt_count": 6,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a5a78821",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38281,7 +38373,7 @@
         "Novelty"
       ],
       "id": "moonshot_Rucker_20",
-      "last_attempt_time": "2026-06-23T15:32:38.252946+00:00",
+      "last_attempt_time": "2026-06-23T17:45:23.200903+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -38295,7 +38387,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Rucker)",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:11.785769+00:00",
       "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
@@ -43956,7 +44048,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -43971,7 +44063,7 @@
         "Combinatorics"
       ],
       "id": "seed_356",
-      "last_attempt_time": "2026-06-23T17:25:52.529392+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43985,7 +44077,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432745+00:00",
       "title": "Extremal Graph Theory: Turán and Szemerédi"
@@ -43994,7 +44086,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -44010,7 +44102,7 @@
         "Logic"
       ],
       "id": "seed_357",
-      "last_attempt_time": "2026-06-23T17:25:56.605692+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-19T17:10:36.362918+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44024,7 +44116,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432748+00:00",
       "title": "Circuit Complexity: Monotone Lower Bounds"
@@ -44388,7 +44480,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -44405,7 +44497,7 @@
         "Computation"
       ],
       "id": "seed_367",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:44:59.501080+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44419,7 +44511,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432779+00:00",
       "title": "PAC-Bayes Generalization Bounds"
@@ -118282,6 +118374,8 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

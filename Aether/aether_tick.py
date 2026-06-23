@@ -439,7 +439,6 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         # LLM-driven novelty replenishment
         if hasattr(extractor.pi_agent, 'generate_novelty_directions'):
             try:
-                import time
                 import functools
                 from research_memory import FutureDirection
                 
@@ -606,7 +605,6 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     continue
                 else:
                     import functools
-                    import time
                     # Max retries reached - attempt decomposition
                     if hasattr(extractor.pi_agent, 'decompose_direction'):
                         job_depth = getattr(job, 'decomposition_depth', 0)

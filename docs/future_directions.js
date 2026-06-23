@@ -547,7 +547,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -697,7 +697,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -1104,7 +1104,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432779+00:00",
     "title": "PAC-Bayes Generalization Bounds"
   },
@@ -1624,7 +1624,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21424v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T02:04:29.943864+00:00",
     "title": "Anti-exchange for resolving closure in gentle tree algebras"
   },
@@ -1669,7 +1669,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21442v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T03:00:56.801830+00:00",
     "title": "The Equilateral Torus Uniquely Maximizes the Zeta Regularized Determinant Among Orthogonal Flat Tori of Unit Volume"
   },
@@ -1946,7 +1946,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T08:33:35.541800+00:00",
     "title": "P\u00f3lya Tree Generating Series Taylor Approximation Error Bound"
   },
@@ -2308,7 +2308,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
@@ -2690,12 +2690,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "In the Wall-Menger theorem (Theorem 1 of the paper), for positive integers s' and t', there exist t and f such that given a vertex set A and a wall W of size at least t, either (i) a vertex set X of size at most f separates A from the branch vertices of W, or (ii) a subwall W' of size at least t' admits s' disjoint A-W' paths each ending in a distinct nail of W'. The conjecture asserts that the optimal bound on the separator size is f(s') = s' - 1, matching the classical Menger theorem exactly, regardless of the wall structure.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2369",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:42:20.767813+00:00",
+    "title": "Optimal separator bound in the Wall-Menger theorem matches Menger's theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The codimension-i rational cohomology of the special linear group SL_n(Z) vanishes for n >= i+2. Equivalently, the i-th rational cohomology group H^i(SL_n(Z); Q) is trivial for all i >= (n choose 2) - n + 2.",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2369",
+    "id": "fd_2370",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2709,7 +2723,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2370",
+    "id": "fd_2371",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2724,7 +2738,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2371",
+    "id": "fd_2372",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23469v1",
@@ -2738,7 +2752,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2372",
+    "id": "fd_2373",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -2752,7 +2766,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2373",
+    "id": "fd_2374",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
@@ -2766,13 +2780,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2374",
+    "id": "fd_2375",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
     "status": "available",
     "timestamp": "2026-06-23T17:25:43.582970+00:00",
     "title": "Multilateral non-trivial cross-intersection product bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For q \u2265 3 and n \u2265 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2376",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23465v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:44:54.697706+00:00",
+    "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
   },
   {
     "consumed_by_exp_id": "",
@@ -3107,7 +3135,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "a5a78821",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
       "Computation",
@@ -3117,7 +3145,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.62,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
