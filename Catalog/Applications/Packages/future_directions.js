@@ -628,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "07255b71",
+    "consumed_by_exp_id": "",
     "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domains": [
       "Algebra",
@@ -638,7 +638,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
@@ -1923,12 +1923,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For all positive integers s' and t', there exist integers t and f such that for any graph G, vertex set A, and wall W of size at least t, either there exists a vertex set X of size at most f separating A from the branch vertices of W, or there exists a subwall W' of W of size at least t' and s' vertex-disjoint A-W'-paths ending in distinct nails of W'.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2316",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:05:12.495306+00:00",
+    "title": "Wall-Menger Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2316",
+    "id": "fd_2317",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -1943,7 +1957,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2317",
+    "id": "fd_2318",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -1958,7 +1972,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2318",
+    "id": "fd_2319",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -1973,13 +1987,27 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2319",
+    "id": "fd_2320",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
     "status": "available",
     "timestamp": "2026-06-23T07:10:06.412019+00:00",
     "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any prime power $q$ and integer $n \\ge q+2$, the Grassmann scheme $J_q(n,2)$ is degree-one trivial (DOT), meaning that all Boolean degree one functions on $J_q(n,2)$ are trivial. This extends Drudge's theorem for $q=3, n \\ge 5$ and the known result for $q=2, n \\ge 4$, proposing a unified threshold $n \\ge q+2$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2321",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23465v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:05:42.947857+00:00",
+    "title": "Degree-One Triviality of Grassmann Schemes $J_q(n,2)$ for $n \\ge q+2$"
   },
   {
     "consumed_by_exp_id": "",
@@ -2197,7 +2225,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "731f1c25",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -2207,7 +2235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -2314,7 +2342,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "43b98190",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
       "Computation",
@@ -2324,7 +2352,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.62,
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
