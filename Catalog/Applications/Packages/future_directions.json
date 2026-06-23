@@ -12444,11 +12444,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f4c420b0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12460,7 +12460,7 @@
         "Geometry"
       ],
       "id": "fd_0432",
-      "last_attempt_time": "2026-06-11T09:04:58.858543+00:00",
+      "last_attempt_time": "2026-06-23T17:25:48.643971+00:00",
       "last_reviewed_at": "2026-06-09T13:13:14.334342+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -12474,7 +12474,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:27.909349+00:00",
       "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
@@ -14316,7 +14316,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -14332,7 +14332,7 @@
         "Logic"
       ],
       "id": "fd_0481",
-      "last_attempt_time": "2026-06-23T17:07:44.194568+00:00",
+      "last_attempt_time": "2026-06-08T00:59:15.998469+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14346,7 +14346,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.101987+00:00",
       "title": "Consciousness as Integrated Information"
@@ -16460,7 +16460,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16476,7 +16476,7 @@
         "Computation"
       ],
       "id": "fd_0544",
-      "last_attempt_time": "2026-06-23T17:07:49.005037+00:00",
+      "last_attempt_time": "2026-06-11T07:47:34.716203+00:00",
       "last_reviewed_at": "2026-06-09T17:35:09.672546+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16490,7 +16490,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.295536+00:00",
       "title": "Code-Based Cryptography: McEliece from Goppa Codes"
@@ -16694,7 +16694,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16710,7 +16710,7 @@
         "Algebra"
       ],
       "id": "fd_0550",
-      "last_attempt_time": "2026-06-23T17:07:39.023202+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-09T15:01:17.105553+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16724,7 +16724,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.786215+00:00",
       "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
@@ -34510,7 +34510,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO/tournament-score-sequences",
         "math.CO/permutation-xrays",
@@ -34535,7 +34535,7 @@
         "Bridges"
       ],
       "id": "fd_2297",
-      "last_attempt_time": "2026-06-23T17:07:55.222972+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_xray_tournament_correspondence (k n : ℕ) (hk : k ≥ 1) (hn : n ≥ 1) (φ : Fin n → Fin n) (hφ : Function.Bijective φ) (h_k_restricted : ∀ m ∈ Finset.univ (Fin n), (Finset.filter (fun i => (i.val + (φ i).val) = m.val) Finset.univ).card ≤ k) : ∃ (T : KTournament k n), ScoreSequence T = CharSequence φ := by\n  sorry",
       "lineage_refs": [],
@@ -34549,7 +34549,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21532v1",
       "source_path": "http://arxiv.org/abs/2606.21532v1",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T02:42:12.378585+00:00",
       "title": "Generalized Xray-Tournament Correspondence Conjecture"
@@ -36612,7 +36612,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "OEIS A080170",
         "Ralf Stephan's OEIS conjectures"
@@ -36635,7 +36635,7 @@
         "Pythagorean"
       ],
       "id": "fd_2342",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:26:00.763382+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binomial_gcd_criterion_restricted_range (k : ℕ) (hk : 2 ≤ k) : (gcd_q2_to_k (fun q => (q * k.choose k)) = 1) ↔ ¬∃ p a, prime p ∧ a ≥ 1 ∧ p ^ a ‖ k ∧ p ^ (a + 1) ∤ k",
       "lineage_refs": [],
@@ -36649,7 +36649,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22997v1",
       "source_path": "http://arxiv.org/abs/2606.22997v1",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-23T08:56:07.087605+00:00",
       "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
@@ -37844,6 +37844,55 @@
       "title": "Inflated line-transversal counterexamples have sphere homotopy type"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Arocha--Bracho--Montejano Helly theorem for convex splinters: Helly number 2d+1",
+        "Katchalski--Liu fractional Helly theorem",
+        "Alon--Kleitman proof of the Hadwiger--Debrunner (p,q) theorem",
+        "Mathlib.Analysis.Convex.Basic",
+        "Mathlib.LinearAlgebra.AffineSpace.AffineSubspace"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
+      "domain_bridges": [
+        "convex geometry ↔ finite set systems",
+        "fractional Helly theory ↔ piercing numbers",
+        "affine dependence ↔ convex splinter structure",
+        "combinatorial geometry ↔ Lean finite family formalization"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "id": "fd_2368",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Analysis.Convex.Basic\nimport Mathlib.Analysis.InnerProductSpace.EuclideanDist\n\nopen scoped BigOperators\nopen Set\n\n/-- Placeholder predicate: `ConvexSplinter K` means that `K : Set (EuclideanSpace ℝ (Fin d))`\nis a convex splinter in the sense of Arocha--Bracho--Montejano. -/\nconstant ConvexSplinter {d : ℕ} : Set (EuclideanSpace ℝ (Fin d)) → Prop\n\n/-- Conjectural Hadwiger--Debrunner theorem for convex splinters. -/\ntheorem convexSplinter_hadwiger_debrunner_conjecture\n    (d p q : ℕ) (hpq : q ≤ p) (hq : 2 * d + 1 ≤ q) :\n    ∃ N : ℕ, ∀ F : Finset (Set (EuclideanSpace ℝ (Fin d))),\n      (∀ K ∈ F, ConvexSplinter K) →\n      (∀ G : Finset (Set (EuclideanSpace ℝ (Fin d))),\n        G ⊆ F → G.card = p →\n          ∃ H : Finset (Set (EuclideanSpace ℝ (Fin d))),\n            H ⊆ G ∧ H.card = q ∧ ∃ x : EuclideanSpace ℝ (Fin d), ∀ K ∈ H, x ∈ K) →\n      ∃ P : Finset (EuclideanSpace ℝ (Fin d)),\n        P.card ≤ N ∧ ∀ K ∈ F, ∃ x ∈ P, x ∈ K := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize convex splinters as finite unions of convex sets satisfying the minimal affine-dependence containment axiom. Combine the paper's fractional Helly theorem for convex splinters with the standard Alon--Kleitman bootstrapping scheme: derive a weak epsilon-net or selection lemma appropriate to splinters, then use the (p,q)-property to obtain a bounded-size hitting set. The Lean development can separate the abstract finite-set-system part from the geometric input, so that the final theorem only requires the convex-splinter fractional Helly lemma and the Helly number 2d+1.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23437v1",
+      "source_path": "http://arxiv.org/abs/2606.23437v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T17:24:48.021151+00:00",
+      "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -37870,7 +37919,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2368",
+      "id": "fd_2369",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.LinearAlgebra.SpecialLinearGroup\nimport Mathlib.GroupTheory.Cohomology\n\ntheorem church_farb_putman_conjecture (n i : ℕ) (h : n ≥ i + 2) :\n  groupCohomology (SpecialLinearGroup n ℤ) ℚ (n.choose 2 - i) ≅ 0 := by\n  sorry",
@@ -37919,7 +37968,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2369",
+      "id": "fd_2370",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nnamespace ShiftedTotient\n\n/-- `rad n` is the product of the distinct prime divisors of `n`. One may alternatively\nreplace equality of radicals by equality of prime-divisor predicates. -/\nnoncomputable def rad (n : ℕ) : ℕ :=\n  n.factorization.prod fun p _ => p\n\n/-- Odd shifts have no Graham--Holt--Pomerance same-support index. -/\ntheorem no_same_support_of_odd_shift\n    {j h : ℕ} (hj : 0 < j) (hh : Odd h) :\n    rad j ≠ rad (j + h) := by\n  sorry\n\n/-- Predicate-only version avoiding any dependence on a particular radical definition. -/\ntheorem no_same_prime_divisors_of_odd_shift\n    {j h : ℕ} (hj : 0 < j) (hh : Odd h) :\n    ¬ (∀ p : ℕ, Nat.Prime p → (p ∣ j ↔ p ∣ j + h)) := by\n  sorry\n\nend ShiftedTotient",
@@ -37969,7 +38018,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2370",
+      "id": "fd_2371",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Finset.Basic\nimport Mathlib.Data.Finset.Powerset\nimport Mathlib.Data.Nat.Choose.Basic\n\nopen Finset\n\n/-- `Shatters 𝓕 S` means every subset of `S` occurs as a trace of a member of `𝓕`. -/\ndef Shatters {n : ℕ} (𝓕 : Finset (Finset (Fin n))) (S : Finset (Fin n)) : Prop :=\n  ∀ T ∈ S.powerset, ∃ F ∈ 𝓕, F ∩ S = T\n\n/-- `VCdimLE d 𝓕` means no set of size `d+1` is shattered. -/\ndef VCdimLE {n : ℕ} (d : ℕ) (𝓕 : Finset (Finset (Fin n))) : Prop :=\n  ∀ S : Finset (Fin n), S.card = d + 1 → ¬ Shatters 𝓕 S\n\n/-- The Erdős--Frankl--Pach extremal number for `(d+1)`-uniform families. -/\ndef EFPMax (d n : ℕ) : ℕ :=\n  sSup {m : ℕ | ∃ 𝓕 : Finset (Finset (Fin n)),\n    𝓕.card = m ∧\n    (∀ F ∈ 𝓕, F.card = d + 1) ∧\n    VCdimLE d 𝓕}\n\n/-- Conjecture: the smallest admissible `d = 3` case already beats the\nAhlswede--Khachatrian value `Nat.choose 7 3 + Nat.choose 4 1 = 39` by one. -/\ntheorem conjecture_EFPMax_three_eight :\n    EFPMax 3 8 = 40 := by\n  sorry",
@@ -38016,7 +38065,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2371",
+      "id": "fd_2372",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cusick_sum_of_digits_bound (t : ℕ) (ht : 1 ≤ t) :\n    ∃ c : ℝ,\n      Tendsto (fun N : ℕ ↦\n        ((Finset.range N).filter fun n ↦ s₂ (n + t) ≥ s₂ n).card / (N : ℝ))\n        atTop (𝓝 c)\n      ∧ 1/2 + (2 : ℝ) ^ (-(2 * s₂ t + 1)) ≤ c :=\n  sorry\n/-- where s₂ : ℕ → ℕ computes the number of 1-bits in the binary expansion of n -/",
@@ -38064,7 +38113,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2372",
+      "id": "fd_2373",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Finset.Card\n\nopen scoped BigOperators\n\nnamespace SemiInducedStar\n\n/-- Number of edges of a finite simple graph. In a full formalization this would be\nimplemented using `SimpleGraph.edgeFinset.card`. -/\naxiom edgeCount : {V : Type} → [Fintype V] → [DecidableEq V] → SimpleGraph V → ℕ\n\n/-- The semi-induced labeled count `∑ v, d(v)(d(v)-1)(n-1-d(v))`. -/\naxiom S21Count : {V : Type} → [Fintype V] → [DecidableEq V] → SimpleGraph V → ℕ\n\n/-- The quasi-clique on `n` vertices with `m` edges: if\n`m = q.choose 2 + r`, `0 ≤ r < q`, it is `K_q` plus one vertex joined to\n`r` clique vertices, with all remaining vertices isolated. -/\naxiom quasiClique : (n m : ℕ) → SimpleGraph (Fin n)\n\naxiom quasiClique_edgeCount (n m : ℕ) :\n  edgeCount (quasiClique n m) = m\n\n/-- Finite low-density extremality conjecture for the semi-induced star `S_{2,1}`. -/\ntheorem quasiClique_maximizes_S21_low_density\n    (n m : ℕ)\n    (hm : 8 * m ≤ n * (n - 1))\n   ",
@@ -38083,6 +38132,56 @@
       "thread_id": "",
       "timestamp": "2026-06-23T17:07:33.678816+00:00",
       "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Erdos--Ko--Rado theorem for intersecting uniform families",
+        "Hilton--Milner theorem for non-trivial intersecting families",
+        "Pyber product theorem for two cross-intersecting families",
+        "Frankl--Wang non-trivial cross-intersection product conjecture proved in the paper",
+        "Mathlib.Data.Nat.Choose.Basic",
+        "Mathlib.Data.Finset.Basic",
+        "Mathlib.Algebra.BigOperators.Fin"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every n,k,r with n ≥ 2k, k ≥ 3, and r ≥ 2, let (𝓕_i)_{i∈Fin r} be k-uniform families of subsets of Fin n. Assume each 𝓕_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i ≠ j, every A ∈ 𝓕_i and B ∈ 𝓕_j have A ∩ B ≠ ∅. Then the multilateral product is bounded by the Hilton--Milner value: ∏_{i∈Fin r} |𝓕_i| ≤ h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
+      "domain_bridges": [
+        "Represents k-uniform set families as Finset (Finset (Fin n)) in Lean 4.",
+        "Reduces an r-family product inequality to the two-family sharp product theorem by multiplying pairwise inequalities over unordered pairs.",
+        "Connects extremal set theory with finite products and binomial coefficient arithmetic in Nat."
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2374",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Data.Finset.Basic\nimport Mathlib.Algebra.BigOperators.Fin\n\nopen scoped BigOperators\n\nabbrev IsKUniform {n : ℕ} (k : ℕ) (F : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, A.card = k\n\nabbrev IsStar {n : ℕ} (F : Finset (Finset (Fin n))) : Prop :=\n  ∃ x : Fin n, ∀ A ∈ F, x ∈ A\n\nabbrev CrossIntersecting {n : ℕ} (F G : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, ∀ B ∈ G, (A ∩ B).Nonempty\n\nnoncomputable abbrev HMbound (n k : ℕ) : ℕ :=\n  Nat.choose (n - 1) (k - 1) - Nat.choose (n - k - 1) (k - 1) + 1\n\n/-- Conjectural multilateral extension of the sharp non-trivial cross-intersection product bound. -/\ntheorem multilateral_nontrivial_cross_intersecting_product_bound\n    {n k r : ℕ}\n    (hn : 2 * k ≤ n) (hk : 3 ≤ k) (hr : 2 ≤ r)\n    (F : Fin r → Finset (Finset (Fin n)))\n    (h_uniform : ∀ i : Fin r, IsKUniform k (F i))\n    (h_nontrivial : ∀ i : Fin r, ¬ IsStar (F i))\n    (h_cross : ∀ ⦃i j : Fin r⦄, i ≠ j → CrossIntersecting (F i) (F j)) :\n    ",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the paper's two-family theorem as a Lean lemma: for any two non-star k-uniform cross-intersecting families A,B ⊆ binom(Fin n,k), |A|*|B| ≤ h(n,k)^2. Apply this lemma to every unordered pair of distinct indices i,j ∈ Fin r. Multiplying all pairwise inequalities gives (∏ᵢ |𝓕_i|)^(r-1) ≤ (h(n,k)^r)^(r-1), since each |𝓕_i| occurs in exactly r-1 pair products. Use positivity/monotonicity of natural powers to extract the (r-1)-st root, noting r ≥ 2.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23322v1",
+      "source_path": "http://arxiv.org/abs/2606.23322v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T17:25:43.582970+00:00",
+      "title": "Multilateral non-trivial cross-intersection product bound"
     },
     {
       "ambition_level": "extension",
@@ -38143,7 +38242,7 @@
         "Novelty"
       ],
       "id": "moonshot_Pickover_32",
-      "last_attempt_time": "2026-06-23T17:08:04.999994+00:00",
+      "last_attempt_time": "2026-06-23T17:26:09.514623+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43857,7 +43956,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -43872,7 +43971,7 @@
         "Combinatorics"
       ],
       "id": "seed_356",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:25:52.529392+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43886,7 +43985,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432745+00:00",
       "title": "Extremal Graph Theory: Turán and Szemerédi"
@@ -43895,7 +43994,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -43911,7 +44010,7 @@
         "Logic"
       ],
       "id": "seed_357",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:25:56.605692+00:00",
       "last_reviewed_at": "2026-06-19T17:10:36.362918+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43925,7 +44024,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432748+00:00",
       "title": "Circuit Complexity: Monotone Lower Bounds"
