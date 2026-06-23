@@ -1847,21 +1847,33 @@ class TeeStream:
         import re as _re
         from datetime import datetime
 
-        # Clean ansi codes
+        # Clean ansi codes for the file copy (the console gets raw data).
         clean_data = _re.sub(r'\033\[[0-9;]*m', '', data)
-        if not self._is_duplicate:
-            # Process and prepend timestamps to each line written to the file
-            lines = clean_data.split('\n')
-            for i, line in enumerate(lines):
-                if (i > 0 or self._at_line_start) and (i < len(lines) - 1 or line):
-                    tstr = datetime.now().strftime("[%Y-%m-%d %H:%M:%S] ")
-                    lines[i] = tstr + line
-            self._at_line_start = clean_data.endswith('\n')
-            self._file.write('\n'.join(lines))
-            self._file.flush()
+        # Prepend a timestamp to each line written to the file. This runs in
+        # BOTH the duplicate and non-duplicate cases, so the log file always
+        # gets per-line timestamps even when stdout was already redirected to
+        # it via shell `>>` (which sets _is_duplicate and previously caused
+        # timestamping to be skipped entirely).
+        lines = clean_data.split('\n')
+        for i, line in enumerate(lines):
+            if (i > 0 or self._at_line_start) and (i < len(lines) - 1 or line):
+                tstr = datetime.now().strftime("[%Y-%m-%d %H:%M:%S] ")
+                lines[i] = tstr + line
+        self._at_line_start = clean_data.endswith('\n')
+        timestamped = '\n'.join(lines)
 
-        self._original_stream.write(data)
-        self._original_stream.flush()
+        if not self._is_duplicate:
+            # Distinct file and console: timestamped to file, raw to console.
+            self._file.write(timestamped)
+            self._file.flush()
+            self._original_stream.write(data)
+            self._original_stream.flush()
+        else:
+            # stdout already points at the log file (shell `>>` redirection);
+            # writing to self._file too would duplicate output. Send the
+            # timestamped text to the original stream, which IS the file.
+            self._original_stream.write(timestamped)
+            self._original_stream.flush()
 
     def flush(self):
         if not self._is_duplicate:
@@ -1968,7 +1980,9 @@ def main():
                 print("[Watchdog] Restarting Aether process due to mtime drift...")
                 os.execv(sys.executable, [sys.executable] + sys.argv)
 
-            print(f"[Tick] Sleeping {args.interval}s until next tick...")
+            _wake = datetime.now(timezone.utc) + timedelta(seconds=args.interval)
+            print(f"[Tick] Sleeping {args.interval}s until next tick at "
+                  f"{_wake.strftime('%Y-%m-%dT%H:%M:%SZ')}...")
             time.sleep(args.interval)
     else:
         print(f"[Tick] Aether tick starting — max_inflight={args.max_inflight}, novelty_slots={args.novelty_slots}")
