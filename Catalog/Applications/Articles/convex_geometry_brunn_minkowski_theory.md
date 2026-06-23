@@ -1,95 +1,188 @@
-# The Hidden Calculus of Shape: How Adding Shapes Reveals the Deep Structure of Space
+# When Shapes Add Up: The Surprising Arithmetic of Size
 
-## When Shapes Collide
+Imagine you have two clouds of points scattered along a straight wire — say, two
+piles of beads threaded on a string. Now perform a strange operation: take every
+bead in the first pile, and every bead in the second pile, and for each pair slide
+one bead along the wire by the position of the other. The set of all the new
+landing spots is a brand-new pile of beads. Mathematicians call this the
+**Minkowski sum** of the two piles.
 
-Imagine you are a robot navigating a warehouse. You need to know exactly where you can move without hitting a shelf. Engineers discovered decades ago that the answer lies in a deceptively simple operation: *adding* shapes together. Take the outline of the robot and the outline of the shelf, slide one around the boundary of the other, and the region you trace out tells you precisely where collisions happen.
+Here is the question that turns out to have a beautiful answer: *how big is the new
+pile?* If the first pile occupies a total length of $1$ centimeter, and the second
+occupies a length of $2$ centimeters, how much wire does their sum occupy? Could
+it be smaller than either? Larger than both? Is there a rule?
 
-This operation — called the **Minkowski sum** — is one of the most powerful ideas in geometry, and its consequences reach far beyond robotics. It connects the geometry of shapes to information theory, optimization, combinatorics, and even the behavior of random processes. And at its heart lies a single, stunning inequality that mathematicians have been exploring for over a century.
+There is a rule, and it is one of the most far-reaching facts in all of geometry.
+It says that **adding shapes can never lose size — in fact, it always gains at
+least as much as you put in.** On a line, the precise statement is
 
-## The Volume Paradox
+$$\operatorname{vol}(A+B) \;\ge\; \operatorname{vol}(A) + \operatorname{vol}(B).$$
 
-Here is a surprising fact about combining shapes. Take two boxes in three-dimensional space — say, a 1×1×1 cube and a 2×2×2 cube. Their Minkowski sum (the set of all points you get by adding a point from the first box to a point from the second) is a 3×3×3 cube. The cube root of the volume of this sum is 3, which is exactly the sum of the cube roots of the individual volumes (1 + 2 = 3).
+The length of the sum is at least the sum of the lengths. This is the
+one-dimensional **Brunn–Minkowski inequality**, and it is the seed from which an
+entire forest of modern mathematics grows.
 
-Now try something different: a 1×1×4 box and a 4×4×1 box. Their Minkowski sum is a 5×5×5 box, and the cube root of its volume is 5. But the cube roots of the individual volumes are about 1.59 and 2.52, adding up to 4.11 — which is *less* than 5.
+## What is a Minkowski sum, really?
 
-This is not a coincidence. It is a theorem, discovered independently by Hermann Brunn in 1887 and Hermann Minkowski in 1896:
+Let's be precise about the operation. Given two sets of real numbers $A$ and $B$,
+their Minkowski sum is
 
-> **The Brunn–Minkowski Inequality:** For any two reasonable shapes A and B in n-dimensional space, the n-th root of the volume of their Minkowski sum is at least the sum of the n-th roots of their individual volumes.
+$$A + B \;=\; \{\, a + b \;:\; a \in A,\; b \in B \,\}.$$
 
-In symbols: vol(A+B)^{1/n} ≥ vol(A)^{1/n} + vol(B)^{1/n}.
+You take *every* element of $A$, add to it *every* element of $B$, and collect all
+the answers. If $A = \{0, 10\}$ and $B = \{0, 1, 2\}$, then
+$A + B = \{0, 1, 2, 10, 11, 12\}$ — two copies of $B$, one anchored at $0$ and one
+anchored at $10$.
 
-Equality holds only when the shapes are scaled copies of each other — "homothetic," in mathematical language. When the shapes are different, combining them always creates *more* volume than you would expect from a simple sum.
+The most important special case is when $A$ and $B$ are **intervals**, solid
+segments of the line. If $A = [0, 1]$ (every point from $0$ to $1$) and
+$B = [0, 2]$, then their sum is $[0, 3]$: the smallest reachable point is
+$0 + 0 = 0$ and the largest is $1 + 2 = 3$, and every value in between is hit. The
+lengths are $1$, $2$, and $3$ — and indeed $3 = 1 + 2$. For intervals, the
+inequality is an *equality*. Intervals are the "perfect adders," the shapes that
+lose nothing and gain nothing.
 
-## Why Shapes Grow Faster Than You Think
+What the Brunn–Minkowski inequality tells us is that intervals are the *worst
+case*. No matter how jagged, scattered, or full of holes your sets $A$ and $B$
+are, their sum is always **at least** as long as the interval case would predict.
+Adding messy shapes can only help.
 
-The Brunn–Minkowski inequality says something profound about space itself: volume is *superadditive* when measured in the right units. Think of it this way. If you inflate two balloons and then combine them (Minkowski-style, not by deflating and reinflating), the resulting balloon is bigger than you would predict by adding up the "radii" (really, the n-th roots of volume) of the originals.
+## Why isn't this obvious?
 
-Why? The deep answer involves a concept called **concavity**. When you blend two shapes — taking the Minkowski combination (1-t)A + tB as t varies from 0 to 1 — the n-th root of volume traces out a curve that bows *upward*. It lies above the straight line connecting the endpoints. This is concavity, the same mathematical property that makes logarithms useful and compound interest powerful.
+At first glance you might think: of course the sum is big — we're combining two
+sets. But Minkowski addition is sneaky. Sets can overlap with themselves in the
+sum, folding back on top of each other, and you might fear that all that folding
+could *shrink* the total. After all, $A + B$ is built from many overlapping copies
+of $B$ (one shifted copy for each point of $A$), and overlapping copies share
+territory.
 
-For boxes, the proof is surprisingly elegant. It reduces to the **AM-GM inequality** — the ancient fact that the geometric mean of positive numbers never exceeds their arithmetic mean. The volume of a box is a product of side lengths, and the n-th root of a product is a geometric mean. When you add boxes (coordinatewise), each side length increases, and the AM-GM inequality guarantees the total volume grows by at least as much as the individual contributions.
+Consider a concrete worry. Let $A = \{0, 1\}$ — just two points, with total length
+zero (single points are infinitely thin). Let $B = [0, 1]$, a unit interval. Then
 
-## The Linearizer: Support Functions
+$$A + B = [0,1] \cup [1,2] = [0,2],$$
 
-One of the most powerful tools in this story is the **support function**. For any compact convex shape K, its support function h_K assigns to every direction u a single number: how far K extends in that direction. Formally, it is the maximum of the dot product of u with any point in K.
+an interval of length $2$. The inequality says
+$\operatorname{vol}(A+B) \ge \operatorname{vol}(A) + \operatorname{vol}(B) = 0 + 1 = 1$,
+and indeed $2 \ge 1$. The two thin points *spread* the interval out rather than
+collapsing it. The folding fear is unfounded: spreading always wins.
 
-The magic of support functions is that they convert the nonlinear operation of Minkowski addition into ordinary addition:
+So the content of the theorem is genuine. It is a statement that the operation of
+addition, applied to *sizes*, behaves super-additively. And proving it rigorously
+requires a genuinely clever idea.
 
-> h_{A+B}(u) = h_A(u) + h_B(u)
+## The trick: anchor the corners
 
-This equation transforms geometry into algebra. Instead of wrestling with complicated shapes, you can work with their support functions — ordinary real-valued functions that add like numbers. This linearization is the gateway to the entire theory of mixed volumes, duality, and the deep inequalities of convex geometry.
+Here is the elegant argument, valid whenever $A$ and $B$ are **compact** — closed
+and bounded, with no points escaping to infinity and no missing boundary points.
+Compactness guarantees that $A$ has a genuine largest element, call it $a$ (its
+supremum, which it actually attains), and that $B$ has a genuine smallest element,
+call it $b$ (its infimum).
 
-## Newton's Shadow: When Polynomials Behave
+Now form two specific shifted copies *inside* the sum $A + B$:
 
-When you look at how the volume of A + tB changes as you vary the parameter t, something remarkable happens. For boxes, the volume is a polynomial in t — each factor (a_i + t·b_i) contributes one coordinate, and the product is a polynomial of degree n in t.
+- **$U = A + \{b\}$**: the whole set $A$, slid to the right by $b$. Because $b$ is
+  a member of $B$, every point of $U$ is a legitimate element of $A + B$. And
+  sliding a set rigidly never changes its length, so
+  $\operatorname{vol}(U) = \operatorname{vol}(A)$.
 
-The coefficients of this polynomial are the **mixed volume coefficients**. They encode how the geometry of A and B interact at each "order" of mixing. And these coefficients satisfy a beautiful log-concavity property known as **Newton's inequality**:
+- **$V = \{a\} + B$**: the whole set $B$, slid to the right by $a$. Because $a$ is
+  a member of $A$, every point of $V$ lies in $A + B$ too, and again
+  $\operatorname{vol}(V) = \operatorname{vol}(B)$.
 
-> c_k² ≥ c_{k-1} · c_{k+1}
+Both $U$ and $V$ live inside $A + B$, so their union does as well:
+$U \cup V \subseteq A + B$. The decisive observation is *how little they overlap*.
+The set $U = A + b$ consists of points no larger than $a + b$ (since the biggest
+point of $A$ is $a$). The set $V = a + B$ consists of points no smaller than
+$a + b$ (since the smallest point of $B$ is $b$). The two copies meet only where
+they are squeezed against the single common value $a + b$:
 
-This means the coefficient sequence, plotted on a logarithmic scale, forms a concave curve — it rises, peaks, and falls, never dipping and rebounding. This pattern appears throughout mathematics: in the coefficients of the characteristic polynomial of a matrix, in the face numbers of convex polytopes, and in the Whitney numbers of matroids.
+$$U \cap V \subseteq \{a + b\}.$$
 
-The proof, which dates back to Isaac Newton and was refined by many mathematicians since, uses a beautiful inductive argument. Each linear factor (a + tb) preserves a property called "PF₂" — a stronger form of log-concavity related to the theory of total positivity. The entire polynomial inherits this property because PF₂ is preserved under multiplication.
+A single point has length zero. So the overlap is negligible, and the lengths
+simply add:
 
-## From Shapes to Signals
+$$\operatorname{vol}(A+B) \;\ge\; \operatorname{vol}(U \cup V)
+   \;=\; \operatorname{vol}(U) + \operatorname{vol}(V)
+   \;=\; \operatorname{vol}(A) + \operatorname{vol}(B).$$
 
-The connections radiating from Brunn–Minkowski are astonishing. In information theory, Claude Shannon's **entropy power inequality** (EPI) states that when you add two independent random signals, the resulting "information content" grows at least as fast as you would expect from the individual signals. Mathematically:
+That's the entire proof. We placed a copy of $A$ flush against the right end of the
+sum and a copy of $B$ flush against the left end of the *same* sum, arranged so
+they kiss at exactly one point, and let their lengths combine. The cleverness is
+entirely in the *placement* — anchoring on the extreme corners $a = \sup A$ and
+$b = \inf B$ so the two copies can't double-count any real length.
 
-> N(X+Y) ≥ N(X) + N(Y)
+## A wider sky: why mathematicians care
 
-where N is the entropy power. This inequality has exactly the same structure as Brunn–Minkowski — and for Gaussian distributions, it *is* Brunn–Minkowski, applied to covariance ellipsoids. The volume of a Gaussian "concentration region" is controlled by the determinant of its covariance matrix, and adding independent Gaussians corresponds to adding covariance matrices — a Minkowski sum of ellipsoids.
+In one dimension the inequality reads $\operatorname{vol}(A+B) \ge
+\operatorname{vol}(A) + \operatorname{vol}(B)$. In $n$ dimensions it sharpens into
+the form that gives the theorem its fame:
 
-This is not a superficial analogy. The mathematical machinery is the same: concavity of a root-volume functional under a natural addition operation. The discovery that volume concavity and entropy concavity are faces of the same coin has profoundly influenced both geometry and information theory.
+$$\operatorname{vol}(A+B)^{1/n} \;\ge\; \operatorname{vol}(A)^{1/n}
+   + \operatorname{vol}(B)^{1/n}.$$
 
-## Tropical Geometry: When Addition Becomes Maximum
+Take $n=1$ and the exponent $1/n$ becomes $1$, recovering exactly the statement we
+proved. The higher-dimensional version says that the $n$-th *root* of volume — a
+quantity with the units of length — is super-additive under Minkowski addition.
+Equivalently, the map "shape $\mapsto$ (its volume)$^{1/n}$" is **concave**:
+averaging two shapes geometrically produces something at least as voluminous as
+averaging their root-volumes numerically.
 
-There is another surprising connection. In **tropical geometry**, the usual operations of arithmetic are replaced: addition becomes maximum, and multiplication becomes addition. In this world, polynomials become piecewise-linear functions, and their "zero sets" are polyhedral complexes instead of smooth curves.
+This single inequality is a powerhouse:
 
-The support function of a convex body is naturally a "tropical" object: it takes the maximum of linear functions. And the Minkowski sum of convex bodies corresponds to the sum of their support functions — which, in tropical language, is the "tropical product" of their associated objects. The Newton polytope of a product of polynomials is the Minkowski sum of the Newton polytopes of the factors.
+- **The isoperimetric inequality.** Among all shapes of a given perimeter, the
+  circle (in the plane) and the sphere (in space) enclose the most area or volume.
+  This ancient optimization — the reason soap bubbles are round and raindrops tend
+  toward spheres — falls out of Brunn–Minkowski by adding a tiny ball to a shape
+  and watching how fast its volume grows. The rate of growth *is* the surface
+  area, and Brunn–Minkowski controls it.
 
-This bridge between classical convexity and tropical mathematics has opened new avenues in algebraic geometry, optimization, and even theoretical computer science.
+- **The shape of shadows.** Slice a convex body by a moving family of parallel
+  planes and record the area of each cross-section. Brunn's original theorem says
+  the *root* of that cross-sectional area, as a function of position, is a concave
+  function — the body bulges in the middle and tapers smoothly, never pinching
+  inward. A lemon is convex; an hourglass is not.
 
-## The Alexandrov–Fenchel Horizon
+- **Information and probability.** Replace "volume" with "spread of a probability
+  distribution" and Brunn–Minkowski morphs into the **entropy power inequality**,
+  a cornerstone of information theory that governs how noise accumulates when
+  independent signals are added. The same super-additivity that makes shapes grow
+  makes uncertainty grow.
 
-Beyond Brunn–Minkowski lies a vast landscape of deeper inequalities. The **Alexandrov–Fenchel inequality**, proved by A.D. Alexandrov in the 1930s, generalizes Newton's inequality to arbitrary convex bodies:
+- **Additive number theory.** Replace continuous length with *counting* and you
+  reach the discrete cousin: for finite sets of integers,
+  $|A + B| \ge |A| + |B| - 1$, the Cauchy–Davenport phenomenon. Sumsets of
+  numbers, like sumsets of shapes, refuse to be small. This bridge — from the
+  geometry of measure to the combinatorics of counting — is one of the liveliest
+  frontiers of modern mathematics.
 
-> V(K, L, C₃, …, Cₙ)² ≥ V(K, K, C₃, …, Cₙ) · V(L, L, C₃, …, Cₙ)
+## The meaning of "equality"
 
-where V denotes the mixed volume. This inequality, which implies Brunn–Minkowski as a special case, remains one of the deepest results in convex geometry. Its proof techniques have inspired recent breakthroughs in combinatorics, including the resolution of long-standing conjectures about the log-concavity of sequences arising from matroids and graphs.
+We saw that intervals add perfectly: $[0,1] + [0,2] = [0,3]$ with lengths
+$1 + 2 = 3$. It turns out this is essentially the *only* way to achieve equality.
+If $\operatorname{vol}(A+B)$ exactly equals $\operatorname{vol}(A) +
+\operatorname{vol}(B)$, then — apart from negligible adjustments — both $A$ and $B$
+must already be intervals (or one of them a single point). Any genuine
+"raggedness," any gap of positive length inside one of the sets, forces the sum to
+be *strictly* longer than the floor predicts.
 
-The Newton inequality for boxes — proved here for the first time with complete machine verification — is a shadow of Alexandrov–Fenchel. It shows that even in the restricted setting of axis-aligned boxes, the algebraic structure of mixed volumes forces log-concavity. This is not a toy result; it captures the essential mechanism that drives the full inequality.
+You can feel this with a quick experiment. Take $A = [0,1] \cup [3,4]$, a set with
+a hole in the middle, of total length $2$. Add $B = [0,1]$, of length $1$. The sum
+is $[0,2] \cup [3,5]$, of total length $4$ — and $4 > 2 + 1 = 3$. The hole did not
+shrink the answer; it *enlarged* it. Spreading wins again, and strictly so. Only
+the gapless, hole-free intervals sit exactly on the boundary.
 
-## Why This Matters Now
+## A small theorem with a long reach
 
-We live in an era where geometry is becoming computational. Machine learning algorithms operate in high-dimensional spaces where convex geometry governs convergence rates and generalization bounds. Optimization algorithms exploit the structure of convex sets to find solutions efficiently. Robotics uses Minkowski sums for collision detection. Signal processing relies on entropy inequalities for channel capacity.
+The one-dimensional Brunn–Minkowski inequality is, on its face, a modest claim
+about lengths on a line. But it carries the full DNA of a vast theory. The corner-
+anchoring proof we walked through — slide $A$ to the right edge, slide $B$ to the
+left edge, let them touch at one point — is the cleanest possible glimpse of why
+geometric addition is super-additive. The higher-dimensional theorem, the
+isoperimetric inequality, the entropy power inequality, and the arithmetic of
+sumsets are all, in a sense, echoes of this single line of reasoning.
 
-The formal verification of these geometric principles — ensuring that every step of the argument is logically airtight — is not just an academic exercise. As algorithms make increasingly consequential decisions based on geometric reasoning, the correctness of the underlying mathematics becomes a practical concern. A bug in a geometric algorithm can send a robot into a wall or cause an optimization procedure to converge to the wrong answer.
-
-The results described here establish the first complete, machine-verified infrastructure for the Brunn–Minkowski theory of boxes: Minkowski addition, support function linearization, the AM-GM-based proof of volume superadditivity, and Newton's log-concavity of mixed volume coefficients via the PF₂ property. Every theorem has been checked by a computer, every logical step verified beyond human error.
-
-## The Shape of Things to Come
-
-What does the future hold? The immediate goal is to extend these results from boxes to arbitrary convex bodies — a project that requires formalizing substantial parts of geometric measure theory. Beyond that lie displacement convexity (the foundation of optimal transport), concentration of measure (the mathematical basis for high-dimensional statistics), and the emerging theory of Hodge-type inequalities in combinatorics.
-
-Each of these areas draws on the same wellspring: the principle that volume, measured correctly, behaves concavely under natural operations. Brunn and Minkowski glimpsed this principle over a century ago. We are only beginning to understand its full reach.
-
-The geometry of adding shapes is not just a curiosity. It is a window into the deep structure of space, information, and computation — a structure that is gradually, theorem by verified theorem, coming into focus.
+There is something quietly profound in the lesson. When you combine two objects by
+adding all their possibilities together, the result is never poorer than the parts
+suggest. Mixing, in this geometric sense, is always at least fair and usually
+generous. Shapes, like ideas, grow when you let them interact — and the
+mathematics guarantees it.

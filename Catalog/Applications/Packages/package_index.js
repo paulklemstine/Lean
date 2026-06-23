@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-23T07:31:52Z",
+    "domain": "Geometry",
+    "exp_id": "54153a72",
+    "filename": "convex_geometry_brunn_minkowski_theory.json",
+    "pkg_num": 7,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
+  },
+  {
     "date": "2026-06-23T06:39:56Z",
     "domain": "Pythagorean",
     "exp_id": "3db2ad68",
@@ -82,6 +92,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Transition Endomorphisms of an Endomorphism Stream: Composition Law and Rank Stabilization"
   },
+  "convex_geometry_brunn_minkowski_theory.json": {
+    "domain": "Geometry",
+    "exp_id": "54153a72",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
+  },
   "elliptic_curve_cryptography_weil_pairing_and_bls_s.json": {
     "domain": "Cryptography",
     "exp_id": "cb79327f",
@@ -136,7 +154,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 90,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -147,7 +165,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:43:47Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 92,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
       "priority_score": 0.46096,
@@ -158,7 +176,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 270,
+      "hue": 271,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -169,7 +187,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 275,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -180,13 +198,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T06:39:56Z",
       "domain": "Pythagorean",
-      "hue": 134,
+      "hue": 271,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Pythagorean",
       "priority_score": 0.3935206787878788,
       "quality": "partial",
       "shape": "triangular_prism",
       "title": "Transition Endomorphisms of an Endomorphism Stream: Composition Law and Rank Stabilization"
+    },
+    {
+      "date": "2026-06-23T07:31:52Z",
+      "domain": "Geometry",
+      "hue": 95,
+      "id": "convex_geometry_brunn_minkowski_theory",
+      "primary_domain": "Geometry",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "hexagonal_prism",
+      "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
     }
   ]
 };
