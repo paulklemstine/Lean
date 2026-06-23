@@ -1691,12 +1691,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any dimension n \u2265 2, among all n-dimensional orthogonal flat tori of unit volume, the equilateral torus (with all lattice side lengths equal) uniquely maximizes the zeta regularized determinant of the Laplacian. Formally, if T_l = \u211d\u207f/(l\u2081\u2124 \u00d7 \u22ef \u00d7 l\u2099\u2124) with \u220fl\u1d62 = 1 and l\u1d62 > 0, then det_\u03b6(\u0394_{T_l}) \u2264 det_\u03b6(\u0394_{T_eq}) with equality if and only if l\u2081 = \u22ef = l\u2099 = 1, where T_eq is the equilateral torus. This validates Sarnak's conjecture in the orthogonal setting.",
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_2298",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21442v1",
+    "status": "available",
+    "timestamp": "2026-06-23T03:00:56.801830+00:00",
+    "title": "The Equilateral Torus Uniquely Maximizes the Zeta Regularized Determinant Among Orthogonal Flat Tori of Unit Volume"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let R be any commutative ring and G any finite group. Define HH\u2080(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH\u2080(R[G]) \u2243 R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2298",
+    "id": "fd_2299",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21313v1",
@@ -1710,7 +1725,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2299",
+    "id": "fd_2300",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21548v1",
@@ -1725,13 +1740,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2300",
+    "id": "fd_2301",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21393v1",
     "status": "available",
     "timestamp": "2026-06-23T02:43:10.666437+00:00",
     "title": "Combinatorial Invariance of Ask Zeta Functions for Hyperplane Arrangements"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for every integer k \u2265 2, every finite simple k-connected graph G on n \u2265 4k+4 vertices with minimum degree \u03b4(G) \u2265 ceil((n+1)/2) has, for every ordered pair of distinct vertices u,v, a Hamiltonian u-v path P such that the spanning graph G with all edges of P deleted is still k-connected. This is a precise strengthening of the paper's n \u2265 6k+6 bound while keeping the same degree threshold and prescribed endpoints.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2302",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21383v1",
+    "status": "available",
+    "timestamp": "2026-06-23T03:02:08.314897+00:00",
+    "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
   },
   {
     "consumed_by_exp_id": "",
@@ -2096,7 +2126,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pickover Clifford Attractor Family"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3db2ad68",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -2105,7 +2135,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },

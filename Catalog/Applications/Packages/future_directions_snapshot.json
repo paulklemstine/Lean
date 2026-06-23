@@ -2382,6 +2382,36 @@
     "title": "Generalized Xray-Tournament Correspondence Conjecture"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.SP",
+      "math.AP",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any dimension n ≥ 2, among all n-dimensional orthogonal flat tori of unit volume, the equilateral torus (with all lattice side lengths equal) uniquely maximizes the zeta regularized determinant of the Laplacian. Formally, if T_l = ℝⁿ/(l₁ℤ × ⋯ × lₙℤ) with ∏lᵢ = 1 and lᵢ > 0, then det_ζ(Δ_{T_l}) ≤ det_ζ(Δ_{T_eq}) with equality if and only if l₁ = ⋯ = lₙ = 1, where T_eq is the equilateral torus. This validates Sarnak's conjecture in the orthogonal setting.",
+    "domain_bridges": [
+      "Spectral theory of the Laplacian",
+      "Epstein zeta functions",
+      "Heat kernel asymptotics",
+      "Analytic number theory",
+      "Variational methods on moduli spaces"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_2298",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Express the zeta regularized determinant on an orthogonal torus in terms of Epstein-type zeta functions of the lattice. Show log-concavity of the determinant as a function of the logarithmic side-length parameters using the arithmetic-geometric mean inequality and convexity properties of the Epstein zeta function. The unique maximizer follows from strict concavity of the log-determinant functional on the simplex of unit-volume configurations.",
+    "research_mode": "team",
+    "source_exp_id": "2606.21442v1",
+    "status": "available",
+    "timestamp": "2026-06-23T03:00:56.801830+00:00",
+    "title": "The Equilateral Torus Uniquely Maximizes the Zeta Regularized Determinant Among Orthogonal Flat Tori of Unit Volume"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Mathlib.Algebra.MonoidAlgebra.Basic",
@@ -2402,7 +2432,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2298",
+    "id": "fd_2299",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
@@ -2433,7 +2463,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2299",
+    "id": "fd_2300",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite simple graphs, edge sets, vertex degrees, and C5-decompositions as a finite family of subgraphs each isomorphic to a 5-cycle whose edge sets are pairwise disjoint and cover E(G). The mathematical proof would likely combine an absorption framework with approximate C5-decompositions and a stability analysis around the known extremal obstruction giving the lower bound 5/8. In Lean, the conjecture can initially be stated using abstract predicates `IsFiveCycle` and `HasC5Decomposition`, then refined to concrete cycle embeddings into `SimpleGraph`.",
@@ -2460,7 +2490,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2300",
+    "id": "fd_2301",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the paper's main result that local ask zeta functions are recovered by substitutions in the truncated flag Hilbert-Poincaré series. Prove that (1) the truncated flag Hilbert-Poincaré series of A is determined by L(A), (2) the substitution parameters for primes of good reduction depend only on the isomorphism type of L(A) and the residue field size q, and (3) the matrix of linear forms constructed from A yields the same ask zeta function as any other arrangement with isomorphic lattice. The key difficulty is showing that the matrix construction and the substitution are both lattice-determined, which may require developing a lattice-theoretic characterization of the associated matroid and its representability constraints.",
@@ -2469,6 +2499,36 @@
     "status": "available",
     "timestamp": "2026-06-23T02:43:10.666437+00:00",
     "title": "Combinatorial Invariance of Ask Zeta Functions for Hyperplane Arrangements"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Hasunuma 2025 connectivity-preserving Hamiltonian cycle theorem",
+      "Main theorem of the submitted paper: n ≥ 6k+6 prescribed Hamiltonian path version",
+      "Dirac-type minimum degree Hamiltonicity",
+      "Menger theorem and vertex-cut characterization of k-connectivity",
+      "Lean/mathlib SimpleGraph finite graph infrastructure"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for every integer k ≥ 2, every finite simple k-connected graph G on n ≥ 4k+4 vertices with minimum degree δ(G) ≥ ceil((n+1)/2) has, for every ordered pair of distinct vertices u,v, a Hamiltonian u-v path P such that the spanning graph G with all edges of P deleted is still k-connected. This is a precise strengthening of the paper's n ≥ 6k+6 bound while keeping the same degree threshold and prescribed endpoints.",
+    "domain_bridges": [
+      "Dirac Hamiltonicity plus Menger-style cut avoidance",
+      "finite graph connectivity formalization in Lean 4",
+      "edge-deletion complements of Hamiltonian structures"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2302",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Start from the proof of the n ≥ 6k+6 theorem and isolate where slack is used in bounding exceptional vertices and dangerous vertex cuts in G-E(P). Replace the coarse counting step by a sharper dichotomy: either every small cut in the residual complement has many cross-neighbors, allowing standard Hamiltonian path rerouting, or the graph has a near-complete bipartite/clustered structure where an explicit alternating Hamiltonian u-v path can be constructed. Formal verification would reduce the final residual k-connectivity claim to checking that every vertex set S with |S| < k leaves G-E(P)-S connected.",
+    "research_mode": "team",
+    "source_exp_id": "2606.21383v1",
+    "status": "available",
+    "timestamp": "2026-06-23T03:02:08.314897+00:00",
+    "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
   },
   {
     "ambition_level": "extension",
@@ -2960,7 +3020,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3db2ad68",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -2972,7 +3032,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
