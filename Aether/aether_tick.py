@@ -403,6 +403,12 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         # Reload inflight state from disk in case another process updated it
         # while we were waiting for the lock.
         extractor._load_inflight()
+        # Phase 0: reset per-tick LLM call accounting.
+        try:
+            if hasattr(extractor, "pi_agent") and extractor.pi_agent is not None:
+                extractor.pi_agent.reset_llm_stats()
+        except Exception:
+            pass
         await _tick_impl(extractor, max_inflight, novelty_slots)
 
 
@@ -1320,6 +1326,25 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
               f"| active_jobs={_active} in_progress={_dir_status.get('in_progress', 0)}")
     except Exception as _e:
         print(f"[State] state check failed: {_e}")
+
+    # Phase 0: per-tick LLM call accounting — actual calls by category and
+    # calls avoided by static gates/caches. Lets us verify call reduction
+    # against quality drift (quality_score distribution is in [Quality] below).
+    try:
+        _s = getattr(getattr(extractor, "pi_agent", None), "llm_stats", None)
+        if _s:
+            _c = _s["calls"]
+            _sk = _s["skipped"]
+            _skip_total = sum(_sk.values())
+            print(f"[LLM] calls={_c['total']} "
+                  f"(eval={_c.get('eval',0)} breakthrough={_c.get('breakthrough',0)} "
+                  f"critic={_c.get('critic',0)}+{_c.get('critic_tiebreak',0)}tie "
+                  f"lint={_c.get('lint',0)} pruning={_c.get('pruning',0)} "
+                  f"other={_c.get('other',0)}) | skipped={_skip_total} "
+                  f"(eval={_sk.get('eval',0)} critic={_sk.get('critic',0)} "
+                  f"lint={_sk.get('lint',0)} pruning={_sk.get('pruning',0)})")
+    except Exception as _e:
+        print(f"[LLM] stats failed: {_e}")
 
     # Summary
     remaining = extractor._count_inflight_dispatched()

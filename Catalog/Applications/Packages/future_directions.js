@@ -1048,7 +1048,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Continued Fractions and Diophantine Approximation"
   },
   {
-    "consumed_by_exp_id": "112edb5a",
+    "consumed_by_exp_id": "",
     "description": "Prove the invariant subspace theorem for compact operators on Hilbert spaces (Aronszajn-Smith). Formalize Lomonosov's theorem: operators commuting with a nonzero compact operator have invariant subspaces. Explore the Enflo-Read counterexample structure.",
     "domains": [
       "Analysis",
@@ -1058,7 +1058,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432648+00:00",
     "title": "Invariant Subspace Problem: Special Cases"
   },
@@ -1242,7 +1242,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fourier Analysis on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54153a72",
     "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} \u2265 vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
     "domains": [
       "Geometry",
@@ -1252,7 +1252,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432684+00:00",
     "title": "Convex Geometry: Brunn-Minkowski Theory"
   },
@@ -1272,7 +1272,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62850b85",
     "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
     "domains": [
       "MachineLearning",
@@ -1283,7 +1283,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432784+00:00",
     "title": "Attention Mechanisms: Mathematical Properties"
   },
@@ -1543,21 +1543,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every finite-dimensional vector space E over a finite field F and every rank r with 0 <= r <= dim E, the map sending a sparse-paving q-matroid M of rank r on E to its set of r-dimensional circuit-hyperplanes is a bijection onto the stable sets of the q-Johnson graph J_q(E,r), whose vertices are r-dimensional subspaces and whose edges join pairs with intersection dimension r-1. Equivalently, a set S of r-subspaces defines a sparse-paving q-matroid precisely when any two distinct members of S intersect in dimension at most r-2.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2286",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20348v1",
-    "status": "available",
-    "timestamp": "2026-06-23T00:54:23.693302+00:00",
-    "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Conjecture: Let A and B be reduced arrangements of d projective complex lines in P^2 with d <= 9. If their central intersection lattices are isomorphic, their Milnor algebras S/J_f and S/J_g have the same Hilbert function in every degree, and mdr(f) = mdr(g), then the minimal graded free resolutions of S/J_f and S/J_g have identical graded Betti numbers. Equivalently, there is no Ziegler pair of at most nine lines satisfying both conditions (HF) and (MDR).",
     "domains": [
       "Pythagorean",
@@ -1573,17 +1558,61 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2288",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:38:47.066128+00:00",
+    "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every finite-dimensional vector space E over a finite field F and every rank r with 0 <= r <= dim E, the map sending a sparse-paving q-matroid M of rank r on E to its set of r-dimensional circuit-hyperplanes is a bijection onto the stable sets of the q-Johnson graph J_q(E,r), whose vertices are r-dimensional subspaces and whose edges join pairs with intersection dimension r-1. Equivalently, a set S of r-subspaces defines a sparse-paving q-matroid precisely when any two distinct members of S intersect in dimension at most r-2.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2289",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:54:23.693302+00:00",
+    "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let p and q be distinct primes. Suppose P,Q \u2208 \u2115[x] are generating polynomials for two dice with no 0-labeled sides, with P(1)=p^2 and Q(1)=q^2, and whose sum-frequency polynomial equals that of two standard pq-sided dice: P Q = (x + x^2 + \u22ef + x^(pq))^2. Then P and Q must be one of exactly three explicit pairs, indexed by c=0,1,2: with G(n,s)=\u2211_{i=0}^{n-1} x^(s i), the p^2-sided die is x\u00b7G(p,1)^(2-c)\u00b7G(p,q)^c and the q^2-sided die is x\u00b7G(q,1)^c\u00b7G(q,p)^(2-c).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2287",
+    "id": "fd_2290",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
     "status": "available",
     "timestamp": "2026-06-23T01:13:50.667614+00:00",
     "title": "Prime-product square-sided dice have exactly three relabeling types"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m \u2261 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2291",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:38:50.878342+00:00",
+    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
   },
   {
     "consumed_by_exp_id": "",
@@ -1918,7 +1947,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Quantum Activation Functions"
   },
   {
-    "consumed_by_exp_id": "af0ccbb7",
+    "consumed_by_exp_id": "ea7f0995",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domains": [
       "Computation",
@@ -1933,7 +1962,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
   {
-    "consumed_by_exp_id": "68612a70",
+    "consumed_by_exp_id": "3dade48e",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domains": [
       "Geometry",

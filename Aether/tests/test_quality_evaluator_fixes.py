@@ -155,7 +155,7 @@ class TestAdversarialEvaluateDomains:
     def test_adversarial_evaluate_with_agent_respects_domains(self, monkeypatch):
         """With pi_agent, adversarial_evaluate, critic, and tiebreaker use domain-weighted composite."""
         class MockPiAgent:
-            def _call_ollama(self, system: str, user: str, timeout=None) -> str:
+            def _call_ollama(self, system: str, user: str, timeout=None, category="other") -> str:
                 # Return scores that yield different composites depending on domains
                 import json
                 return json.dumps({

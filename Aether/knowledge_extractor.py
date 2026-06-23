@@ -1845,6 +1845,39 @@ Research mode: {concept.research_mode}
             + result_lean[-tail:]
         )
 
+    def _static_quality_gate(self, job: ResearchJob) -> Optional[Dict[str, Any]]:
+        """Phase 1 (Lever A): return a quality_assessment dict when static
+        signals on the job are decisive enough to skip the LLM eval, else None
+        (borderline -> the caller invokes the LLM).
+
+        Clear-fail (safe to enable): no theorems produced -> trivial.
+        Clear-pass (conservative): 0 sorries, >=5 theorems, >=2 novel -> substantial.
+
+        Built on signals already computed in extract() before evaluate():
+        job.theorem_count, job.sorry_count, job.theorem_novelty. (compiles via
+        `lake build` is NOT on the main tick path, so it's not used here.)
+        """
+        tc = getattr(job, "theorem_count", 0) or 0
+        sc = getattr(job, "sorry_count", 0) or 0
+        nov = getattr(job, "theorem_novelty", None) or {}
+        new = nov.get("new", 0) if isinstance(nov, dict) else 0
+
+        # Clear-fail: nothing proved.
+        if tc == 0:
+            return {
+                "quality": "trivial", "should_retry": True,
+                "retry_strategy": "Static gate: no theorems produced.",
+                "confidence": 0.85, "analysis": "Static gate: theorem_count == 0.",
+            }
+        # Clear-pass: complete (0 sorries), substantial (>=5 theorems), novel (>=2 new).
+        if sc == 0 and tc >= 5 and new >= 2:
+            return {
+                "quality": "substantial", "should_retry": False,
+                "retry_strategy": "", "confidence": 0.75,
+                "analysis": f"Static gate: 0 sorries, {tc} theorems, {new} novel.",
+            }
+        return None
+
     def evaluate(self, job: ResearchJob) -> ResearchJob:
         """Pi-Agent evaluates the quality of Aristotle's result."""
         if not job.result_lean:
@@ -1852,15 +1885,71 @@ Research mode: {concept.research_mode}
             job.quality_assessment = {"quality": "trivial", "analysis": "No Lean output"}
             return job
 
+        # Shared config for LLM-reduction levers (Phases 1-4).
+        _red_cfg = self.config.get("llm_reduction", {}) if hasattr(self, "config") and self.config else {}
+
+        # Phase 3 (Lever B): content-hash eval cache. If we've already
+        # evaluated identical (content + concept + prompt_version) content,
+        # restore the cached result and skip the LLM eval + critic entirely.
+        # Safe because the eval is deterministic given those inputs (novelty
+        # is computed in extract(), before eval). Disable via llm_reduction.eval_cache="off".
+        _ec = None
+        _ec_key = None
+        if _red_cfg.get("eval_cache", "on") == "on":
+            try:
+                from eval_cache import EvalCache
+                _ec = EvalCache(self.workspace)
+                _ec_key = _ec.key_for(job.result_lean, job.concept,
+                                      getattr(job, "prompt_version", None))
+                _cached = _ec.get(_ec_key)
+                if _cached is not None:
+                    job.quality_score = float(_cached.get("quality_score", 0.0))
+                    job.quality_assessment = _cached.get("quality_assessment", {})
+                    job.adversarial_result = _cached.get("adversarial_result")
+                    _qd = _cached.get("quality_detail")
+                    if _qd:
+                        try:
+                            from quality_evaluator import QualityScore
+                            job.quality_detail = QualityScore.from_dict(_qd)
+                        except Exception:
+                            job.quality_detail = None
+                    if self.pi_agent is not None:
+                        self.pi_agent.record_llm_skip("eval")
+                        self.pi_agent.record_llm_skip("critic")
+                    print(f"[Cache] eval hit (hash={_ec_key[:8]}) for {job.job_id[:8]} "
+                          f"-> score={job.quality_score:.3f}")
+                    return job
+            except Exception as _e:
+                print(f"[Cache] eval cache read failed: {_e}")
+
         # Compact oversized result_lean before passing to evaluation
         compact_lean = self._compact_result_lean(job.result_lean)
 
-        # Pi-Agent: THE BRAINS — evaluates quality
-        qa = self.pi_agent.evaluate_result_quality(
-            result_lean=compact_lean,
-            concept=job.concept,
-            prompt=job.prompt,
-        )
+        # Phase 1 (Lever A): static quality gate. Modes:
+        #   "shadow"  -> compute gate, still call LLM, log agreement (default; safe)
+        #   "enabled" -> skip LLM when the gate is decisive
+        #   "off"     -> no gate
+        _gate_mode = _red_cfg.get("static_gate", "shadow")
+        _gate_qa = None
+        if _gate_mode in ("shadow", "enabled"):
+            _gate_qa = self._static_quality_gate(job)
+
+        if _gate_mode == "enabled" and _gate_qa is not None:
+            qa = _gate_qa
+            if self.pi_agent is not None:
+                self.pi_agent.record_llm_skip("eval")
+            print(f"[Gate] eval skipped (static: {qa['quality']}) for {job.job_id[:8]}")
+        else:
+            # Pi-Agent: THE BRAINS — evaluates quality
+            qa = self.pi_agent.evaluate_result_quality(
+                result_lean=compact_lean,
+                concept=job.concept,
+                prompt=job.prompt,
+            )
+            if _gate_mode == "shadow" and _gate_qa is not None:
+                _agree = _gate_qa.get("quality") == qa.get("quality")
+                print(f"[Gate] shadow: gate={_gate_qa.get('quality')} "
+                      f"llm={qa.get('quality')} agree={_agree} for {job.job_id[:8]}")
         job.quality_assessment = qa
 
         # Compute the heuristic composite score
@@ -1924,42 +2013,58 @@ Research mode: {concept.research_mode}
             # Second LLM evaluates as a skeptical critic; if they disagree,
             # a third tiebreaker adjudicates.
             if self.pi_agent and hasattr(qeval, 'adversarial_evaluate'):
-                try:
-                    adversarial_result = qeval.adversarial_evaluate(
-                        lean_source=compact_lean,
-                        concept_title=job.concept.title,
-                        concept_description=job.concept.concept_description,
-                        primary_score=qscore,
-                        disagreement_threshold=0.2,
-                        domains=concept_domains,
-                    )
-                    adj_score = adversarial_result.get("adjudicated_score", composite)
-                    agreement = adversarial_result.get("agreement", "unknown")
-                    adv_composite = adversarial_result.get("adversarial_composite")
-                    delta = adversarial_result.get("delta", 0.0)
+                # Phase 2 (Lever E): critic skip-gate. When the structural
+                # composite is decisive (>0.85 clearly good, <0.15 clearly
+                # bad) the adversarial critic is unlikely to change the
+                # outcome, so skip it. Modes: shadow (default) / enabled / off.
+                _critic_gate = _red_cfg.get("critic_gate", "shadow")
+                _critic_decisive = (composite > 0.85) or (composite < 0.15)
+                adversarial_result = None
+                if _critic_gate == "enabled" and _critic_decisive:
+                    if self.pi_agent is not None:
+                        self.pi_agent.record_llm_skip("critic")
+                    print(f"[Gate] critic skipped (composite={composite:.3f} decisive) "
+                          f"for {job.job_id[:8]}")
+                else:
+                    try:
+                        adversarial_result = qeval.adversarial_evaluate(
+                            lean_source=compact_lean,
+                            concept_title=job.concept.title,
+                            concept_description=job.concept.concept_description,
+                            primary_score=qscore,
+                            disagreement_threshold=0.2,
+                            domains=concept_domains,
+                        )
+                        adj_score = adversarial_result.get("adjudicated_score", composite)
+                        agreement = adversarial_result.get("agreement", "unknown")
+                        adv_composite = adversarial_result.get("adversarial_composite")
+                        delta = adversarial_result.get("delta", 0.0)
 
-                    if agreement == "agree":
-                        # Judges agree — blend adjudicated score with heuristic
-                        job.quality_score = 0.3 * heuristic_score + 0.7 * adj_score
-                    elif agreement in ("tiebreak", "disagree"):
-                        # Disagreement resolved — but cap the adversarial override.
-                        # When the structural composite is 0.7+ but the adversarial
-                        # judge scores 0.1, a delta of 0.6 is too extreme.  Limit the
-                        # adjudicated score to no less than composite * 0.5 so the
-                        # final blend stays reasonable.
-                        floor = composite * 0.5
-                        adj_score = max(adj_score, floor)
-                        job.quality_score = 0.2 * heuristic_score + 0.8 * adj_score
+                        if agreement == "agree":
+                            # Judges agree — blend adjudicated score with heuristic
+                            job.quality_score = 0.3 * heuristic_score + 0.7 * adj_score
+                        elif agreement in ("tiebreak", "disagree"):
+                            # Disagreement resolved — but cap the adversarial override.
+                            # When the structural composite is 0.7+ but the adversarial
+                            # judge scores 0.1, a delta of 0.6 is too extreme.  Limit the
+                            # adjudicated score to no less than composite * 0.5 so the
+                            # final blend stays reasonable.
+                            floor = composite * 0.5
+                            adj_score = max(adj_score, floor)
+                            job.quality_score = 0.2 * heuristic_score + 0.8 * adj_score
 
-                    # Store adversarial metadata
-                    job.adversarial_result = adversarial_result
-                    primary_val = adversarial_result.get("primary_composite", composite)
-                    primary_str = f"{primary_val:.3f}" if primary_val is not None else "?"
-                    critic_str = f"{adv_composite:.3f}" if adv_composite is not None else "?"
-                    print(f"[Adversarial] {agreement}: primary={primary_str} critic={critic_str} "
-                          f"adjudicated={adj_score:.3f} delta={delta:.3f}")
-                except Exception as ae:
-                    print(f"[Adversarial] Failed (using primary only): {ae}")
+                        # Store adversarial metadata
+                        job.adversarial_result = adversarial_result
+                        primary_val = adversarial_result.get("primary_composite", composite)
+                        primary_str = f"{primary_val:.3f}" if primary_val is not None else "?"
+                        critic_str = f"{adv_composite:.3f}" if adv_composite is not None else "?"
+                        print(f"[Adversarial] {agreement}: primary={primary_str} critic={critic_str} "
+                              f"adjudicated={adj_score:.3f} delta={delta:.3f}")
+                        if _critic_gate == "shadow" and _critic_decisive:
+                            print(f"[Gate] critic shadow: composite={composite:.3f} "
+                                  f"agreement={agreement} for {job.job_id[:8]}")
+                    except Exception as ae:
+                        print(f"[Adversarial] Failed (using primary only): {ae}")
         except Exception as e:
             print(f"[Evaluate] Warning: QualityEvaluator failed, using heuristic only: {e}")
             job.quality_score = heuristic_score
@@ -2040,6 +2145,21 @@ Research mode: {concept.research_mode}
                       f"aggregate={aggregate:.2f} final_q={job.quality_score:.3f}")
             except Exception as e:
                 print(f"[SpecializedCritics] Warning: failed to run: {e}")
+
+        # Phase 3 (Lever B): store the fully-evaluated result so future cycles
+        # with identical content+concept+prompt skip the LLM eval + critic.
+        if _ec is not None and _ec_key is not None:
+            try:
+                _qd = (job.quality_detail.to_dict()
+                       if hasattr(job, "quality_detail") and job.quality_detail else None)
+                _ec.put(_ec_key, {
+                    "quality_score": job.quality_score,
+                    "quality_assessment": job.quality_assessment,
+                    "adversarial_result": job.adversarial_result,
+                    "quality_detail": _qd,
+                })
+            except Exception:
+                pass
 
         return job
 
@@ -2437,6 +2557,36 @@ Research mode: {concept.research_mode}
         Returns a dict mapping each file's original path to its authorized
         target path (or "REJECT" if Pi says not to integrate).
         """
+        # Phase 2 (Lever F): lint batch skip-gate. If every file in the batch
+        # is a non-empty .lean file with a theorem/lemma declaration, the batch
+        # is clearly a real contribution -> auto-accept with suggested paths,
+        # skipping the LLM review. Modes: shadow (default) / enabled / off.
+        _lint_cfg = self.config.get("llm_reduction", {}) if hasattr(self, "config") and self.config else {}
+        _lint_gate = _lint_cfg.get("lint_gate", "shadow")
+
+        def _all_good_lean(b: List[Dict[str, Any]]) -> bool:
+            for p in b:
+                content = p.get("content", "") or ""
+                path = p.get("path", "") or ""
+                if not path.endswith(".lean"):
+                    return False
+                if not content.strip():
+                    return False
+                if not re.search(r'\b(theorem|lemma)\b', content):
+                    return False
+            return True
+
+        _lint_decisive = _all_good_lean(batch) if batch else False
+        if _lint_gate == "enabled" and _lint_decisive:
+            if self.pi_agent is not None:
+                self.pi_agent.record_llm_skip("lint")
+            print(f"[Gate] lint batch {batch_idx+1}/{total_batches} skipped "
+                  f"(all non-empty .lean with theorems)")
+            return {p["path"]: p["path"] for p in batch}
+        if _lint_gate == "shadow" and _lint_decisive:
+            print(f"[Gate] lint shadow: batch {batch_idx+1}/{total_batches} "
+                  f"would skip (all good .lean)")
+
         # Strip _aristotle project dir prefixes (e.g. c6e162ae_aristotle/) from
         # file paths before including them in the review listing
         for p in batch:
@@ -2473,7 +2623,8 @@ Research mode: {concept.research_mode}
         )
 
         try:
-            raw = self.pi_agent._call_ollama(system, user, timeout=120)
+            raw = self.pi_agent._call_ollama(system, user, timeout=120,
+                                             category="lint")
         except Exception as e:
             print(f"[Integrate] Pi-Agent batch review failed: {e}")
             # On failure, auto-accept all files in the batch
@@ -2939,7 +3090,8 @@ Research mode: {concept.research_mode}
             user = f"Here are {len(batch)} future research directions to evaluate (sorted by quality, worst first):\n\n{directions_text}"
 
             try:
-                raw = self.pi_agent._call_ollama(system, user, timeout=60)
+                raw = self.pi_agent._call_ollama(system, user, timeout=60,
+                                                 category="pruning")
             except Exception as e:
                 print(f"[Cleanup] Pi-Agent call failed for batch: {e}")
                 continue
@@ -3014,7 +3166,8 @@ Research mode: {concept.research_mode}
 
         new_direction_data = None
         try:
-            raw = self.pi_agent._call_ollama(brainstorm_system, brainstorm_user, timeout=60)
+            raw = self.pi_agent._call_ollama(brainstorm_system, brainstorm_user, timeout=60,
+                                             category="pruning")
             result = self.pi_agent._parse_json_response(raw)
             if result:
                 new_direction_data = result.get("new_direction")

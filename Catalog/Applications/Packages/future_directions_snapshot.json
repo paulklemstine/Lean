@@ -1397,7 +1397,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "112edb5a",
+    "consumed_by_exp_id": "",
     "description": "Prove the invariant subspace theorem for compact operators on Hilbert spaces (Aronszajn-Smith). Formalize Lomonosov's theorem: operators commuting with a nonzero compact operator have invariant subspaces. Explore the Enflo-Read counterexample structure.",
     "domain_bridges": [],
     "domains": [
@@ -1410,7 +1410,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432648+00:00",
     "title": "Invariant Subspace Problem: Special Cases"
   },
@@ -1656,7 +1656,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54153a72",
     "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} ≥ vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
     "domain_bridges": [],
     "domains": [
@@ -1669,7 +1669,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432684+00:00",
     "title": "Convex Geometry: Brunn-Minkowski Theory"
   },
@@ -1696,7 +1696,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62850b85",
     "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
     "domain_bridges": [],
     "domains": [
@@ -1710,7 +1710,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432784+00:00",
     "title": "Attention Mechanisms: Mathematical Properties"
   },
@@ -2085,36 +2085,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Mathlib.LinearAlgebra.FiniteDimensional",
-      "Mathlib.LinearAlgebra.Dimension.Basic",
-      "Mathlib.Combinatorics.SimpleGraph.Basic",
-      "Mathlib.Data.Fintype.Basic",
-      "Mathlib.Order.Lattice"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every finite-dimensional vector space E over a finite field F and every rank r with 0 <= r <= dim E, the map sending a sparse-paving q-matroid M of rank r on E to its set of r-dimensional circuit-hyperplanes is a bijection onto the stable sets of the q-Johnson graph J_q(E,r), whose vertices are r-dimensional subspaces and whose edges join pairs with intersection dimension r-1. Equivalently, a set S of r-subspaces defines a sparse-paving q-matroid precisely when any two distinct members of S intersect in dimension at most r-2.",
-    "domain_bridges": [
-      "q-matroid circuit-hyperplanes to constant-dimension codes",
-      "sparse-paving q-matroids to independent sets in the q-Johnson graph",
-      "finite vector-space submodule lattice to graph-theoretic stable sets"
-    ],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2286",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize q-matroids by rank functions on the submodule lattice satisfying the q-matroid rank axioms. Define paving and sparse-paving in terms of circuit dimensions and dual paving, or equivalently by the circuit-hyperplane characterization. Prove first that in any sparse-paving q-matroid, two distinct r-dimensional circuit-hyperplanes cannot meet in dimension r-1, since their sum would violate the sparse-paving circuit elimination/dual-paving condition. Conversely, given a stable set S of r-subspaces, define a rank function by declaring subspaces contained in members of S to have the expected ranks, declaring members of S to be dependent hyperplanes of rank r-1, and all other r-subspaces to be bases; then extend by truncation to all subspaces. Verify the rank axioms R1-R3 by splitting on dimensions below r, equal to r, and above r, using the stable-set intersection bound for the only nontrivial submodularity case. Show the two constructions are inverse.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20348v1",
-    "status": "available",
-    "timestamp": "2026-06-23T00:54:23.693302+00:00",
-    "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Mathlib.RingTheory.Polynomial.Basic",
       "Mathlib.LinearAlgebra.Dimension.Basic",
       "Mathlib.Combinatorics.Matroid.Basic",
@@ -2145,6 +2115,71 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Tree-cut decomposition",
+      "finite adhesion",
+      "linked tree-cut decomposition",
+      "componental rooted tree-cut decomposition",
+      "edge-end",
+      "undominated edge-end",
+      "edge-degree of an end",
+      "locally finite graph",
+      "Main theorem: every graph admits a linked componental finite-adhesion rooted tree-cut decomposition displaying all undominated edge-ends"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
+    "domain_bridges": [
+      "Menger-type edge-disjoint path linkage conditions",
+      "Freudenthal-style end theory for locally finite graphs",
+      "Lean formalization of finite cuts via Finset edge sets",
+      "withTop Nat formulation of finite versus infinite edge-degree",
+      "rooted tree rays as sequences indexed by Nat"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2288",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Start from the linked componental finite-adhesion decomposition given by the paper for locally finite graphs. Refine the construction along each displayed tree ray by choosing nested finite edge-cuts that are minimal representatives of the corresponding end whenever the end has finite edge-degree, using edge-Menger to maintain linkedness after contractions/refinements. For infinite-degree ends, diagonalize over k and choose the nth sufficiently far cut to have size at least k, again preserving componentality by taking the end-side component and preserving linkedness via the minimum-cut characterization of the linked condition. The main technical point is a simultaneous refinement argument over all tree rays that does not destroy previously normalized adhesion values.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:38:47.066128+00:00",
+    "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.LinearAlgebra.FiniteDimensional",
+      "Mathlib.LinearAlgebra.Dimension.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Data.Fintype.Basic",
+      "Mathlib.Order.Lattice"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every finite-dimensional vector space E over a finite field F and every rank r with 0 <= r <= dim E, the map sending a sparse-paving q-matroid M of rank r on E to its set of r-dimensional circuit-hyperplanes is a bijection onto the stable sets of the q-Johnson graph J_q(E,r), whose vertices are r-dimensional subspaces and whose edges join pairs with intersection dimension r-1. Equivalently, a set S of r-subspaces defines a sparse-paving q-matroid precisely when any two distinct members of S intersect in dimension at most r-2.",
+    "domain_bridges": [
+      "q-matroid circuit-hyperplanes to constant-dimension codes",
+      "sparse-paving q-matroids to independent sets in the q-Johnson graph",
+      "finite vector-space submodule lattice to graph-theoretic stable sets"
+    ],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2289",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize q-matroids by rank functions on the submodule lattice satisfying the q-matroid rank axioms. Define paving and sparse-paving in terms of circuit dimensions and dual paving, or equivalently by the circuit-hyperplane characterization. Prove first that in any sparse-paving q-matroid, two distinct r-dimensional circuit-hyperplanes cannot meet in dimension r-1, since their sum would violate the sparse-paving circuit elimination/dual-paving condition. Conversely, given a stable set S of r-subspaces, define a rank function by declaring subspaces contained in members of S to have the expected ranks, declaring members of S to be dependent hyperplanes of rank r-1, and all other r-subspaces to be bases; then extend by truncation to all subspaces. Verify the rank axioms R1-R3 by splitting on dimensions below r, equal to r, and above r, using the stable-set intersection bound for the only nontrivial submodularity case. Show the two constructions are inverse.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:54:23.693302+00:00",
+    "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Dice relabeling via generating functions: P_1⋯P_n=(x+⋯+x^m)^n",
       "Cyclotomic factorization x+⋯+x^m = x ∏_{d | m, d > 1} Φ_d(x)",
       "Mathlib: Polynomial over semirings, polynomial evaluation, Nat.Prime, Finset sums"
@@ -2159,7 +2194,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2287",
+    "id": "fd_2290",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First rewrite the standard pq-sided die polynomial as x·G(p,1)·G(q,p)=x·G(q,1)·G(p,q). Over ℤ[x], use unique factorization and the cyclotomic decomposition x+⋯+x^(pq)=x Φ_p Φ_q Φ_pq. Since Φ_p(1)=p, Φ_q(1)=q, and Φ_pq(1)=1, the condition P(1)=p^2 forces P/x to contain exactly two Φ_p factors and no Φ_q factors; only the exponent c∈{0,1,2} of Φ_pq remains free. The complementary factor goes to Q. Finally identify the three resulting products with the explicit nonnegative polynomials using Φ_p Φ_pq=G(p,q) and Φ_q Φ_pq=G(q,p).",
@@ -2168,6 +2203,36 @@
     "status": "available",
     "timestamp": "2026-06-23T01:13:50.667614+00:00",
     "title": "Prime-product square-sided dice have exactly three relabeling types"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Mathlib.Data.ZMod.Basic",
+      "Mathlib.Data.Nat.Prime.Basic",
+      "Mathlib.GroupTheory.OrderOfElement",
+      "Mathlib.Order.SetNotation",
+      "Kaprekar four-digit odd-base projective-doubling classification"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m ≡ 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
+    "domain_bridges": [
+      "Kaprekar digit dynamics to multiplication by 2 on projective residue classes",
+      "terminal cycle length to projective multiplicative order modulo p",
+      "extremal cycle length to Artin-type primitive root phenomena"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2291",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the paper's equivalence: for prime p > 5, the longest terminal four-digit Kaprekar cycle in base p has length (p - 1) / 2 iff the least m > 0 with 2^m = ±1 in ZMod p is (p - 1) / 2. Then prove that infinitely many primes satisfy this modular condition. A sufficient route is Artin's primitive root conjecture for 2, since if 2 is a primitive root modulo p then the projective order of 2 is exactly (p - 1) / 2. Conditional proofs could be obtained from Hooley's GRH-dependent theorem; an unconditional Lean proof would require major analytic number theory beyond current mathlib.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:38:50.878342+00:00",
+    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
   },
   {
     "ambition_level": "extension",
@@ -2619,7 +2684,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "af0ccbb7",
+    "consumed_by_exp_id": "ea7f0995",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [
@@ -2639,7 +2704,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "68612a70",
+    "consumed_by_exp_id": "3dade48e",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domain_bridges": [],
     "domains": [

@@ -367,6 +367,15 @@ class PiAgentClient:
         self.timeout = timeout
         self.compact = compact
         self.use_ollama = use_ollama
+        # Per-tick LLM call accounting (Phase 0 instrumentation). Reset at the
+        # start of each tick by the tick loop; read at tick end for the [LLM]
+        # stats line. `calls` counts actual LLM dispatches by category;
+        # `skipped` counts calls avoided by a static gate/cache.
+        self.llm_stats: Dict[str, Any] = {
+            "calls": {"total": 0, "eval": 0, "breakthrough": 0, "critic": 0,
+                      "critic_tiebreak": 0, "lint": 0, "pruning": 0, "other": 0},
+            "skipped": {"eval": 0, "critic": 0, "lint": 0, "pruning": 0},
+        }
         self.ollama_base_url = ollama_base_url or self.OLLAMA_BASE_URL
         self.ollama_model = ollama_model  # None means auto-detect from local Ollama
 
@@ -472,7 +481,28 @@ class PiAgentClient:
         except Exception:
             pass
 
-    def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None) -> str:
+    def record_llm_skip(self, category: str) -> None:
+        """Record an LLM call avoided by a static gate or cache (Phase 0).
+
+        category is one of "eval"/"critic"/"lint"/"pruning" — the call that
+        would have happened. Incremented alongside llm_stats["calls"] so the
+        tick-end [LLM] line shows both actual calls and avoided calls.
+        """
+        try:
+            self.llm_stats["skipped"][category] = self.llm_stats["skipped"].get(category, 0) + 1
+        except Exception:
+            pass
+
+    def reset_llm_stats(self) -> None:
+        """Reset per-tick LLM counters. Called at the start of each tick."""
+        self.llm_stats = {
+            "calls": {"total": 0, "eval": 0, "breakthrough": 0, "critic": 0,
+                      "critic_tiebreak": 0, "lint": 0, "pruning": 0, "other": 0},
+            "skipped": {"eval": 0, "critic": 0, "lint": 0, "pruning": 0},
+        }
+
+    def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None,
+                     category: str = "other") -> str:
         """Dispatch LLM call through 3-tier fallback chain with pollen-reset retry.
 
         Tier 1: Pollinations (cloud, free, pollen-limited, resets hourly)
@@ -484,7 +514,17 @@ class PiAgentClient:
         and retries Tier 1.
 
         When use_ollama=True, skip directly to local Ollama (for dev/testing).
+
+        `category` tags the call for per-tick LLM accounting (eval/breakthrough/
+        critic/critic_tiebreak/lint/pruning/other); defaults to "other".
         """
+        # Phase 0 instrumentation: count every LLM dispatch by category.
+        try:
+            self.llm_stats["calls"]["total"] += 1
+            self.llm_stats["calls"][category] = self.llm_stats["calls"].get(category, 0) + 1
+        except Exception:
+            pass
+
         # If user explicitly wants local Ollama (dev/testing), go straight there
         if self.use_ollama:
             return self._call_ollama_local(system, user, timeout=timeout)
@@ -3793,6 +3833,7 @@ make it beautiful to read.
             response = self._call_ollama(
                 "You are a senior mathematician evaluating research breakthroughs.",
                 prompt, timeout=172800.0,
+                category="breakthrough",
             )
             grade = response.strip().lower().split()[-1] if response.strip() else ""
             if grade in ("incremental", "significant", "breakthrough"):
@@ -3944,7 +3985,8 @@ make it beautiful to read.
             }}
         """)
 
-        raw = self._call_ollama(_QUALITY_SYSTEM_PROMPT, user_prompt, timeout=172800)
+        raw = self._call_ollama(_QUALITY_SYSTEM_PROMPT, user_prompt, timeout=172800,
+                                category="eval")
         parsed = self._parse_json_response(raw)
 
         if parsed:

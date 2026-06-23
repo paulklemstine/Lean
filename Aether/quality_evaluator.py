@@ -155,6 +155,17 @@ class QualityScore:
             "grade": self.grade,
         }
 
+    @classmethod
+    def from_dict(cls, d: dict) -> "QualityScore":
+        """Reconstruct a QualityScore from a to_dict() snapshot (used by the
+        Phase 3 eval cache to restore a cached quality_detail). Only the 9
+        axis fields are read; composite/grade are derived."""
+        d = d or {}
+        return cls(**{k: float(d.get(k, 0.0)) for k in (
+            "proof_depth", "novelty", "cross_domain", "artifact_richness",
+            "actionability", "importance", "usefulness", "applications",
+            "catalog_anchoring")})
+
     def breakdown_str(self) -> str:
         """Human-readable breakdown."""
         lines = [f"Quality: {self.grade.upper()} (composite={self.composite:.3f})"]
@@ -916,7 +927,8 @@ class QualityEvaluator:
         )
 
         try:
-            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120)
+            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120,
+                                             category="critic")
             data = self.pi_agent._parse_json_response(raw)
             if data:
                 # Build a QualityScore from the critic's assessment
@@ -965,7 +977,8 @@ class QualityEvaluator:
         )
 
         try:
-            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120)
+            raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120,
+                                             category="critic_tiebreak")
             data = self.pi_agent._parse_json_response(raw)
             if data:
                 qs = QualityScore(
