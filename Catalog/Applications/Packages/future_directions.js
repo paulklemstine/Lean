@@ -480,6 +480,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle cb79327f (Q=0.770), which proved 6 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_cb79327f_5c9218d8",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "cb79327f",
+    "status": "available",
+    "timestamp": "2026-06-23T04:02:32.431999+00:00",
+    "title": "Deepening: Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
     "domains": [
       "Algebra"
@@ -1966,6 +1980,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Weil Pairing, MOV, and BLS Aggregation\n\nDerived from the cycle that produced `Cryptography/WeilPairingBLS.lean`\n(abstract biadditive `Pairing`, BLS completeness/aggregation, point separation)\nand `Cryptography/WeilPairingMOV.lean` (alternation \u21d2 antisymmetry, the MOV\nreduction as a faithful congruence, and the homomorphism interface).\n\nCategory declaration for this cycle: **DOMAIN BRIDGE** \u2014 Cryptography \u2194 Algebra\n(group/order theory and finite fields). The MOV reduction is the load-bearing\nbridge: it equates elliptic-curve discrete-log hardness with finite-field\ndiscrete-log hardness.\n\n---\n\n## Conjecture 1 \u2014 Antisymmetry forces self-pairing triviality on 2-divisible groups\n\n**Statement.** For a `Pairing P` on an additive group `G` with no 2-torsion in the\ntarget `T`, the antisymmetry law `e(p,q)\u00b7e(q,p) = 1` *for all* `p,q` is equivalent\nto the alternating law `e(p,p) = 1`; on `T` with 2-torsion the two can diverge.\n\nThe key insight is that `e(p,p)\u00b2 = e(p,p)\u00b7e(p,p) = 1` is the only obstruction, so\nalternation and antisymmetry differ *exactly* by the 2-torsion subgroup of `T`.\n\nWhy now? `AlternatingPairing.mul_swap_eq_one` already derives antisymmetry from\nalternation in this cycle; the converse is a short square-root argument and would\npin down precisely which target groups make the Weil-pairing axioms redundant.\n\n## Conjecture 2 \u2014 MOV faithfulness characterizes the embedding degree\n\n**Statement.** The MOV reduction recovers the full ECDLP secret (not merely a\nresidue) iff `orderOf (e g g) \u2265 orderOf g`; equivalently, the embedding degree `k`\nis the least `k` with `orderOf g \u2223 orderOf (e g g)` in `\u03bc_{q^k \u2212 1}`.\n\nThe key insight is that `mov_reduction` proves equality of pairing values is\n*equivalent* to congruence mod `orderOf (e g g)`, so the reduction's fidelity is a\npure order-divisibility condition, divorced from the analytic curve construction.\n\nWhy now? `mov_reduction` and `mov_recovers_dlog` already isolate `orderOf (e g g)`\nas the sole quantitative input; promoting the recovery threshold to an `iff`\ncharacterization of the embedding degree is the natural next theorem.\n\n## Conjecture 3 \u2014 Aggregate BLS soundness is equivalent to left-nondegeneracy\n\n**Statement.** The aggregate verification equation\n`e(\u2211 \u03c3\u1d62, g) = \u220f e(H\u1d62, X\u1d62)` binds the multiset `{(H\u1d62, X\u1d62)}` (no two distinct\naggregates collide) iff the pairing is left-nondegenerate in the sense of\n`nondegenerate_iff_char_injective`.\n\nThe key insight is that the sum\u2192product law turns aggregate collisions into a\nsingle equation `e(\u0394, g) = 1` for the difference `\u0394` of aggregated signatures, so\nbinding is *exactly* triviality of the left kernel.\n\nWhy now? This cycle proved both `bls_aggregate_correct` (completeness) and\n`nondegenerate_iff_char_injective` (kernel = injectivity); connecting them upgrades\ncompleteness to a soundness/binding theorem with a clean algebraic boundary.\n\n## Conjecture 4 \u2014 A pairing with cyclic target reduces ECDLP to a single Nat.ModEq solve\n\n**Statement.** If `T` is cyclic of order `N` and `e g g` is a generator, then the\nECDLP for `g` is *polynomial-time equivalent* to one discrete log in `\u2124/N`,\nwitnessed constructively by `x \u21a6 e(x\u2022g, g)` being a bijection onto `\u27e8e g g\u27e9`.\n\nThe key insight is that `mov_map` makes `x \u21a6 (e g g)^x` literally the canonical\ngenerator map of a cyclic group, so the reduction is not just an inequality of\nhardness but an explicit isomorphism of search problems.\n\nWhy now? `mov_map` already exhibits the exponential map; with a cyclic-target\nhypothesis the reduction becomes a constructive bijection, the strongest possible\nform of the MOV bridge and a template for formalizing concrete attack complexity.\n",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2304",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cb79327f",
+    "status": "available",
+    "timestamp": "2026-06-23T04:02:21.365912+00:00",
+    "title": "Derived from the cycle that produced `Cryptography/WeilPairingBLS.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2199,7 +2228,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
-    "consumed_by_exp_id": "38e89c84",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -2209,7 +2238,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -2603,7 +2632,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "70e63d82",
+    "consumed_by_exp_id": "",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
@@ -2613,7 +2642,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
@@ -2961,21 +2990,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.643460+00:00",
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-  },
-  {
-    "consumed_by_exp_id": "d1c9c6b9",
-    "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0069",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.676713+00:00",
-    "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
     "consumed_by_exp_id": "",

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cb79327f",
     "filename": "elliptic_curve_cryptography_weil_pairing_and_bls_s.json",
     "pkg_num": 4,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.77,
     "title": "Elliptic Curve Cryptography: The Weil Pairing, BLS Signatures, and the MOV Reduction"
   },
   {
@@ -125,8 +125,8 @@ window.PACKAGE_GRAPH = {
       "hue": 89,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.77,
+      "quality": "substantial",
       "shape": "dodecahedron",
       "title": "Elliptic Curve Cryptography: The Weil Pairing, BLS Signatures, and the MOV Reduction"
     }

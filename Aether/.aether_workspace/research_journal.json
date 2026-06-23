@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "0914fa07",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Boltzmann Bridge IX: The Persistence Functor and the Representation Theorem\n\n## Synthesis\n\n`Catalog/Applications/BoltzmannBridge/InterleavingFunctor.lean` (Bridge IX)\ndischarges",
-      "quality_score": 0.7653149514563107,
-      "sorry_count": 8,
-      "theorem_count": 206,
-      "timestamp": "2026-06-14T15:42:20",
-      "title": "`Applications/BoltzmannBridge/InterleavingIsometry.lean` discharges **Future"
-    },
-    {
       "cycle_id": "c73ec1f1",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Hodge–Laplacian Message Passing as a Discrete Heat Semigroup\n\n## Synthesis\n\nThis cycle closed the conceptual loop opened by the spectral-depth-threshold work\n(`Speculative.AutoRe",
@@ -499,19 +489,19 @@
       "theorem_count": 21,
       "timestamp": "2026-06-22T21:21:10",
       "title": "Idempotent Probability: Large Deviations"
+    },
+    {
+      "cycle_id": "cb79327f",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Weil Pairing, MOV, and BLS Aggregation\n\nDerived from the cycle that produced `Cryptography/WeilPairingBLS.lean`\n(abstract biadditive `Pairing`, BLS completeness/aggregation, poin",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-23T04:02:32",
+      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d6329d46",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Cumulative weight thresholds & convolution of binary linear codes\n\nDerived from this research cycle, which added two `sorry`-free Lean files to\n`Catalog/Applications/SmoothPoinca",
-      "quality_score": 0.7918400000000001,
-      "sorry_count": 2,
-      "theorem_count": 22,
-      "timestamp": "2026-06-16T10:39:15",
-      "title": "Deepening: Functor from finite linear codes to tropical valuation objects via weight-thresh"
-    },
     {
       "cycle_id": "c3d42768",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 3,
       "timestamp": "2026-06-23T03:21:18",
       "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
+    },
+    {
+      "cycle_id": "cb79327f",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Weil Pairing, MOV, and BLS Aggregation\n\nDerived from the cycle that produced `Cryptography/WeilPairingBLS.lean`\n(abstract biadditive `Pairing`, BLS completeness/aggregation, poin",
+      "quality_score": 0.77,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-23T04:02:32",
+      "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e88eb144",
-      "domain": "Combinatorics",
-      "name": "contradiction_eq_frontier",
-      "quality": 0.7144
-    },
-    {
-      "cycle_id": "e88eb144",
-      "domain": "Combinatorics",
-      "name": "lnc_holds_iff_clopen",
-      "quality": 0.7144
-    },
-    {
-      "cycle_id": "b3d82bf4",
-      "domain": "Cryptography",
-      "name": "this",
-      "quality": 0.74352
-    },
     {
       "cycle_id": "b3d82bf4",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "in",
       "quality": 0.7829999999999999
+    },
+    {
+      "cycle_id": "cb79327f",
+      "domain": "Cryptography",
+      "name": "mov_map",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "cb79327f",
+      "domain": "Cryptography",
+      "name": "mov_reduction",
+      "quality": 0.77
+    },
+    {
+      "cycle_id": "cb79327f",
+      "domain": "Cryptography",
+      "name": "mov_recovers_dlog",
+      "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T03:21:18",
+  "last_updated": "2026-06-23T04:02:32",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "21cfd7dd",
-        "quality": 0.36289866666666665,
-        "theorems": 0,
-        "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
-      },
-      {
         "cycle_id": "6e109ffd",
         "quality": 0.4288495652173913,
         "theorems": 0,
@@ -3389,6 +3383,12 @@
         "quality": 0.4281950461538462,
         "theorems": 6,
         "title": "Wolfram CA Four-Class Classification and its Computability"
+      },
+      {
+        "cycle_id": "cb79327f",
+        "quality": 0.77,
+        "theorems": 6,
+        "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
       }
     ],
     "Geometry": [
