@@ -14332,7 +14332,7 @@
         "Logic"
       ],
       "id": "fd_0481",
-      "last_attempt_time": "2026-06-23T16:48:51.173552+00:00",
+      "last_attempt_time": "2026-06-23T17:07:44.194568+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16460,7 +16460,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16476,7 +16476,7 @@
         "Computation"
       ],
       "id": "fd_0544",
-      "last_attempt_time": "2026-06-11T07:47:34.716203+00:00",
+      "last_attempt_time": "2026-06-23T17:07:49.005037+00:00",
       "last_reviewed_at": "2026-06-09T17:35:09.672546+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16490,7 +16490,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.295536+00:00",
       "title": "Code-Based Cryptography: McEliece from Goppa Codes"
@@ -16694,7 +16694,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16710,7 +16710,7 @@
         "Algebra"
       ],
       "id": "fd_0550",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:07:39.023202+00:00",
       "last_reviewed_at": "2026-06-09T15:01:17.105553+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16724,7 +16724,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.786215+00:00",
       "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
@@ -16733,7 +16733,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -16749,7 +16749,7 @@
         "Computation"
       ],
       "id": "fd_0551",
-      "last_attempt_time": "2026-06-23T16:48:42.624916+00:00",
+      "last_attempt_time": "2026-06-07T22:40:19.256795+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16763,7 +16763,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.873771+00:00",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
@@ -34510,7 +34510,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO/tournament-score-sequences",
         "math.CO/permutation-xrays",
@@ -34535,7 +34535,7 @@
         "Bridges"
       ],
       "id": "fd_2297",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T17:07:55.222972+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem generalized_xray_tournament_correspondence (k n : ℕ) (hk : k ≥ 1) (hn : n ≥ 1) (φ : Fin n → Fin n) (hφ : Function.Bijective φ) (h_k_restricted : ∀ m ∈ Finset.univ (Fin n), (Finset.filter (fun i => (i.val + (φ i).val) = m.val) Finset.univ).card ≤ k) : ∃ (T : KTournament k n), ScoreSequence T = CharSequence φ := by\n  sorry",
       "lineage_refs": [],
@@ -34549,7 +34549,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21532v1",
       "source_path": "http://arxiv.org/abs/2606.21532v1",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-23T02:42:12.378585+00:00",
       "title": "Generalized Xray-Tournament Correspondence Conjecture"
@@ -37795,6 +37795,55 @@
       "title": "Tight Almost-Everywhere Coefficient for Erdős Excess Function g_k"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Cheong-Goaoc-Holmsen Conjecture 4.5",
+        "Theorem t:compact_intro",
+        "Theorem t:inflated_intro",
+        "Remark in introduction: constructed spaces are believed to be homotopy equivalent to S^{n-1}"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every n ≥ 1, let I_n be the explicit finite family of pairwise disjoint bounded open convex subsets of R^(3n) obtained by the inflation step in the paper's proof of Theorem t:inflated_intro. Then the full space of unoriented line transversals to I_n, with the standard affine-Grassmannian topology, is homotopy equivalent to S^(n-1). This strengthens the paper's nonvanishing reduced homology conclusion to a complete homotopy-type identification for the constructed examples.",
+      "domain_bridges": [
+        "convex geometry of line transversals -> affine Grassmannian topology",
+        "explicit geometric construction -> definable finite family in EuclideanSpace R (Fin (3*n))",
+        "homology nonvanishing -> homotopy equivalence with a sphere",
+        "geometric deformation retraction -> Lean formalization using ContinuousMap/Homotopy"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Logic"
+      ],
+      "id": "fd_2367",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nnoncomputable section\nopen scoped EuclideanGeometry\n\nnamespace LineTransversal\n\nabbrev E (n : ℕ) := EuclideanSpace ℝ (Fin (3 * n))\nabbrev SphereSpace (n : ℕ) := {x : EuclideanSpace ℝ (Fin n) // x ∈ Metric.sphere (0 : EuclideanSpace ℝ (Fin n)) 1}\n\n/-- Unoriented affine lines in `E n`, equipped with the affine-Grassmannian topology. -/\nconstant Line : (n : ℕ) → Type*\nconstant lineTopologicalSpace : ∀ n : ℕ, TopologicalSpace (Line n)\nattribute [instance] lineTopologicalSpace\n\n/-- A line meets a set. -/\nconstant Meets : {n : ℕ} → Line n → Set (E n) → Prop\n\n/-- The space of line transversals to a finite family. -/\ndef TransversalSpace {n : ℕ} (𝓕 : Finset (Set (E n))) : Type* :=\n  {ℓ : Line n // ∀ K ∈ 𝓕, Meets ℓ K}\n\ninstance {n : ℕ} (𝓕 : Finset (Set (E n))) : TopologicalSpace (TransversalSpace 𝓕) := by\n  infer_instance\n\n/-- The explicit inflated family from the proof of Theorem `t:inflated_intro`. -/\nconstant inflatedFamily : (n : ℕ) → 1 ≤ n → Finset (Set (E n))\n\n/-- Predicat",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the paper's inflated family I_n explicitly. Parametrize a line transversal by the same block-coordinate data used in the construction. Define a continuous map from the transversal space to the unit sphere in R^n extracting the normalized parameter vector, and define a section from S^(n-1) by choosing the canonical transversal line associated to each parameter. Prove that the two composites are homotopic to the identities, using convexity of the inflated sets to keep the interpolated lines transversal throughout the homotopy. The key Lean tasks are: define the topology on unoriented affine lines, prove openness/convexity/disjointness of I_n, prove continuity of the parameter maps, and formalize the deformation homotopies.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23193v1",
+      "source_path": "http://arxiv.org/abs/2606.23193v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T17:06:01.247488+00:00",
+      "title": "Inflated line-transversal counterexamples have sphere homotopy type"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -37821,7 +37870,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2367",
+      "id": "fd_2368",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.LinearAlgebra.SpecialLinearGroup\nimport Mathlib.GroupTheory.Cohomology\n\ntheorem church_farb_putman_conjecture (n i : ℕ) (h : n ≥ i + 2) :\n  groupCohomology (SpecialLinearGroup n ℤ) ℚ (n.choose 2 - i) ≅ 0 := by\n  sorry",
@@ -37870,7 +37919,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2368",
+      "id": "fd_2369",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nnamespace ShiftedTotient\n\n/-- `rad n` is the product of the distinct prime divisors of `n`. One may alternatively\nreplace equality of radicals by equality of prime-divisor predicates. -/\nnoncomputable def rad (n : ℕ) : ℕ :=\n  n.factorization.prod fun p _ => p\n\n/-- Odd shifts have no Graham--Holt--Pomerance same-support index. -/\ntheorem no_same_support_of_odd_shift\n    {j h : ℕ} (hj : 0 < j) (hh : Odd h) :\n    rad j ≠ rad (j + h) := by\n  sorry\n\n/-- Predicate-only version avoiding any dependence on a particular radical definition. -/\ntheorem no_same_prime_divisors_of_odd_shift\n    {j h : ℕ} (hj : 0 < j) (hh : Odd h) :\n    ¬ (∀ p : ℕ, Nat.Prime p → (p ∣ j ↔ p ∣ j + h)) := by\n  sorry\n\nend ShiftedTotient",
@@ -37920,7 +37969,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2369",
+      "id": "fd_2370",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Finset.Basic\nimport Mathlib.Data.Finset.Powerset\nimport Mathlib.Data.Nat.Choose.Basic\n\nopen Finset\n\n/-- `Shatters 𝓕 S` means every subset of `S` occurs as a trace of a member of `𝓕`. -/\ndef Shatters {n : ℕ} (𝓕 : Finset (Finset (Fin n))) (S : Finset (Fin n)) : Prop :=\n  ∀ T ∈ S.powerset, ∃ F ∈ 𝓕, F ∩ S = T\n\n/-- `VCdimLE d 𝓕` means no set of size `d+1` is shattered. -/\ndef VCdimLE {n : ℕ} (d : ℕ) (𝓕 : Finset (Finset (Fin n))) : Prop :=\n  ∀ S : Finset (Fin n), S.card = d + 1 → ¬ Shatters 𝓕 S\n\n/-- The Erdős--Frankl--Pach extremal number for `(d+1)`-uniform families. -/\ndef EFPMax (d n : ℕ) : ℕ :=\n  sSup {m : ℕ | ∃ 𝓕 : Finset (Finset (Fin n)),\n    𝓕.card = m ∧\n    (∀ F ∈ 𝓕, F.card = d + 1) ∧\n    VCdimLE d 𝓕}\n\n/-- Conjecture: the smallest admissible `d = 3` case already beats the\nAhlswede--Khachatrian value `Nat.choose 7 3 + Nat.choose 4 1 = 39` by one. -/\ntheorem conjecture_EFPMax_three_eight :\n    EFPMax 3 8 = 40 := by\n  sorry",
@@ -37967,7 +38016,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2370",
+      "id": "fd_2371",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cusick_sum_of_digits_bound (t : ℕ) (ht : 1 ≤ t) :\n    ∃ c : ℝ,\n      Tendsto (fun N : ℕ ↦\n        ((Finset.range N).filter fun n ↦ s₂ (n + t) ≥ s₂ n).card / (N : ℝ))\n        atTop (𝓝 c)\n      ∧ 1/2 + (2 : ℝ) ^ (-(2 * s₂ t + 1)) ≤ c :=\n  sorry\n/-- where s₂ : ℕ → ℕ computes the number of 1-bits in the binary expansion of n -/",
@@ -37986,6 +38035,54 @@
       "thread_id": "",
       "timestamp": "2026-06-23T16:48:35.543989+00:00",
       "title": "Cusick's Sum-of-Digits Explicit Bound"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Mathlib.Combinatorics.SimpleGraph.Basic",
+        "Mathlib.Combinatorics.SimpleGraph.DegreeSum",
+        "Mathlib.Data.Finset.Card",
+        "Mathlib.Algebra.BigOperators.Fin"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let G be a simple graph on n vertices with m edges, and define N(S_{2,1},G)=∑_v d(v)(d(v)-1)(n-1-d(v)). If 8m ≤ n(n-1), then N(S_{2,1},G) is maximized by the quasi-clique Q(n,m): writing m = binom(q,2)+r with 0 ≤ r < q, Q(n,m) consists of a K_q, one additional vertex adjacent to exactly r vertices of the clique, and all remaining vertices isolated. Equivalently, the asymptotic low-density upper branch proved in the paper admits an exact finite-n strengthening throughout the range β ≤ 1/4.",
+      "domain_bridges": [
+        "semi-induced subgraph density",
+        "threshold and quasi-clique extremal constructions",
+        "degree-sequence optimization",
+        "finite strengthening of graphon/asymptotic extremal profiles"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2372",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Finset.Card\n\nopen scoped BigOperators\n\nnamespace SemiInducedStar\n\n/-- Number of edges of a finite simple graph. In a full formalization this would be\nimplemented using `SimpleGraph.edgeFinset.card`. -/\naxiom edgeCount : {V : Type} → [Fintype V] → [DecidableEq V] → SimpleGraph V → ℕ\n\n/-- The semi-induced labeled count `∑ v, d(v)(d(v)-1)(n-1-d(v))`. -/\naxiom S21Count : {V : Type} → [Fintype V] → [DecidableEq V] → SimpleGraph V → ℕ\n\n/-- The quasi-clique on `n` vertices with `m` edges: if\n`m = q.choose 2 + r`, `0 ≤ r < q`, it is `K_q` plus one vertex joined to\n`r` clique vertices, with all remaining vertices isolated. -/\naxiom quasiClique : (n m : ℕ) → SimpleGraph (Fin n)\n\naxiom quasiClique_edgeCount (n m : ℕ) :\n  edgeCount (quasiClique n m) = m\n\n/-- Finite low-density extremality conjecture for the semi-induced star `S_{2,1}`. -/\ntheorem quasiClique_maximizes_S21_low_density\n    (n m : ℕ)\n    (hm : 8 * m ≤ n * (n - 1))\n   ",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize N(S_{2,1},G) as a degree-sum functional. Prove that any maximizer in the range 8m ≤ n(n-1) can be transformed, via edge-compressions preserving the number of edges, into a threshold graph without decreasing the functional. Then classify threshold graphs in this sparse range and show that every non-quasi-clique threshold configuration admits a local edge transfer increasing or preserving N until the quasi-clique degree sequence is reached. The final step is a finite arithmetic verification using m = binom(q,2)+r.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23351v1",
+      "source_path": "http://arxiv.org/abs/2606.23351v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T17:07:33.678816+00:00",
+      "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
     },
     {
       "ambition_level": "extension",
@@ -38046,7 +38143,7 @@
         "Novelty"
       ],
       "id": "moonshot_Pickover_32",
-      "last_attempt_time": "2026-06-23T16:49:01.213126+00:00",
+      "last_attempt_time": "2026-06-23T17:08:04.999994+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -41739,7 +41836,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -41755,7 +41852,7 @@
         "Computation"
       ],
       "id": "seed_218",
-      "last_attempt_time": "2026-06-23T16:48:38.186398+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-09T13:04:08.213164+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -41769,7 +41866,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:11.027519+00:00",
       "title": "Kaplansky's Conjectures"
@@ -44272,7 +44369,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -44289,7 +44386,7 @@
         "Geometry"
       ],
       "id": "seed_369",
-      "last_attempt_time": "2026-06-23T16:48:46.852510+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44303,7 +44400,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432786+00:00",
       "title": "Optimal Transport and Wasserstein Distances"
@@ -118086,6 +118183,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

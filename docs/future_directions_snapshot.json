@@ -1052,7 +1052,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.786215+00:00",
     "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
@@ -1111,7 +1111,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:11.027519+00:00",
     "title": "Kaplansky's Conjectures"
   },
@@ -1250,7 +1250,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
@@ -2336,7 +2336,7 @@
     "proof_strategy": "Proceed by induction on k. The base case k=1 (Bebeacua et al.) and case k=2 (Brualdi–Fritscher) would require constructing explicit injections from k-restricted characteristic sequences to k-tournament score sequences using the transitive tournament decomposition introduced in the paper. For the inductive step, leverage the construction that builds a k-tournament from a permutation: given a (k+1)-restricted characteristic sequence, decompose it into a k-restricted subsequence and an additional layer, construct the k-tournament by induction, then extend via the transitive tournament decomposition to obtain a (k+1)-tournament with the desired score sequence. The key difficulty is verifying Landau-type conditions for the constructed sequences at each stage.",
     "research_mode": "team",
     "source_exp_id": "2606.21532v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T02:42:12.378585+00:00",
     "title": "Generalized Xray-Tournament Correspondence Conjecture"
   },
@@ -4270,6 +4270,36 @@
     "title": "Tight Almost-Everywhere Coefficient for Erdős Excess Function g_k"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cheong-Goaoc-Holmsen Conjecture 4.5",
+      "Theorem t:compact_intro",
+      "Theorem t:inflated_intro",
+      "Remark in introduction: constructed spaces are believed to be homotopy equivalent to S^{n-1}"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every n ≥ 1, let I_n be the explicit finite family of pairwise disjoint bounded open convex subsets of R^(3n) obtained by the inflation step in the paper's proof of Theorem t:inflated_intro. Then the full space of unoriented line transversals to I_n, with the standard affine-Grassmannian topology, is homotopy equivalent to S^(n-1). This strengthens the paper's nonvanishing reduced homology conclusion to a complete homotopy-type identification for the constructed examples.",
+    "domain_bridges": [
+      "convex geometry of line transversals -> affine Grassmannian topology",
+      "explicit geometric construction -> definable finite family in EuclideanSpace R (Fin (3*n))",
+      "homology nonvanishing -> homotopy equivalence with a sphere",
+      "geometric deformation retraction -> Lean formalization using ContinuousMap/Homotopy"
+    ],
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_2367",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the paper's inflated family I_n explicitly. Parametrize a line transversal by the same block-coordinate data used in the construction. Define a continuous map from the transversal space to the unit sphere in R^n extracting the normalized parameter vector, and define a section from S^(n-1) by choosing the canonical transversal line associated to each parameter. Prove that the two composites are homotopic to the identities, using convexity of the inflated sets to keep the interpolated lines transversal throughout the homotopy. The key Lean tasks are: define the topology on unoriented affine lines, prove openness/convexity/disjointness of I_n, prove continuity of the parameter maps, and formalize the deformation homotopies.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23193v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:06:01.247488+00:00",
+    "title": "Inflated line-transversal counterexamples have sphere homotopy type"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.AT",
@@ -4287,7 +4317,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2367",
+    "id": "fd_2368",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a highly connected complex of unimodular vectors or forests over the integers, and use it to establish the vanishing of the rational homology in high degrees, extending the combinatorial and homological methods used for i=0, 1, and 2.",
@@ -4317,7 +4347,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2368",
+    "id": "fd_2369",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define rad n as the product of all primes dividing n, or equivalently use the predicate that two integers have the same prime divisors. If rad(j) = rad(j+h), then 2 divides j iff 2 divides j+h. But when h is odd, j and j+h have opposite parity, so exactly one of them is divisible by 2. Hence their radicals cannot be equal. In Lean, this can be proved by rewriting oddness as h % 2 = 1 and using parity of addition modulo 2.",
@@ -4348,7 +4378,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2369",
+    "id": "fd_2370",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the finite extremal problem directly. For the lower bound, provide a concrete Finset of 40 four-subsets of Fin 8 and verify that no 4-subset is shattered. For the upper bound, use symmetry under permutations of Fin 8 to reduce cases, then generate a SAT/DRAT or custom branch-and-bound certificate showing that every 41-edge subfamily shatters some 4-subset. The Lean proof should only trust a small checker for the certificate plus elementary finset/cardinality lemmas.",
@@ -4376,7 +4406,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2370",
+    "id": "fd_2371",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof decomposes into four major steps amenable to separate formalization: (1) Establish the existence of the density c_t via the exact deconvolution identity that replaces the distribution of s₂(n+t)-s₂(n) with a finite stopped random-walk law over the carry blocks of t. (2) Formalize the principal subsequence ideal structure that indexes the carry block decomposition. (3) Prove the first-exit median comparison lemma for the stopped random walk, showing the median of the exit distribution is nonnegatively biased. (4) Combine the deconvolution with the median bound to derive c_t ≥ 1/2 + 2^(-(2s₂(t)+1)). Steps (1)-(2) are combinatorial and involve 2-adic carry arithmetic; step (3) is probabilistic and requires stochastic ordering arguments.",
@@ -4385,6 +4415,35 @@
     "status": "available",
     "timestamp": "2026-06-23T16:48:35.543989+00:00",
     "title": "Cusick's Sum-of-Digits Explicit Bound"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.DegreeSum",
+      "Mathlib.Data.Finset.Card",
+      "Mathlib.Algebra.BigOperators.Fin"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let G be a simple graph on n vertices with m edges, and define N(S_{2,1},G)=∑_v d(v)(d(v)-1)(n-1-d(v)). If 8m ≤ n(n-1), then N(S_{2,1},G) is maximized by the quasi-clique Q(n,m): writing m = binom(q,2)+r with 0 ≤ r < q, Q(n,m) consists of a K_q, one additional vertex adjacent to exactly r vertices of the clique, and all remaining vertices isolated. Equivalently, the asymptotic low-density upper branch proved in the paper admits an exact finite-n strengthening throughout the range β ≤ 1/4.",
+    "domain_bridges": [
+      "semi-induced subgraph density",
+      "threshold and quasi-clique extremal constructions",
+      "degree-sequence optimization",
+      "finite strengthening of graphon/asymptotic extremal profiles"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2372",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize N(S_{2,1},G) as a degree-sum functional. Prove that any maximizer in the range 8m ≤ n(n-1) can be transformed, via edge-compressions preserving the number of edges, into a threshold graph without decreasing the functional. Then classify threshold graphs in this sparse range and show that every non-quasi-clique threshold configuration admits a local edge transfer increasing or preserving N until the quasi-clique degree sequence is reached. The final step is a finite arithmetic verification using m = binom(q,2)+r.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23351v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:07:33.678816+00:00",
+    "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
   },
   {
     "ambition_level": "extension",
@@ -4732,7 +4791,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -4752,7 +4811,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },

@@ -790,7 +790,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.786215+00:00",
     "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
   },
@@ -834,7 +834,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:11.027519+00:00",
     "title": "Kaplansky's Conjectures"
   },
@@ -938,7 +938,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
@@ -1654,7 +1654,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21532v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T02:42:12.378585+00:00",
     "title": "Generalized Xray-Tournament Correspondence Conjecture"
   },
@@ -2661,12 +2661,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every n \u2265 1, let I_n be the explicit finite family of pairwise disjoint bounded open convex subsets of R^(3n) obtained by the inflation step in the paper's proof of Theorem t:inflated_intro. Then the full space of unoriented line transversals to I_n, with the standard affine-Grassmannian topology, is homotopy equivalent to S^(n-1). This strengthens the paper's nonvanishing reduced homology conclusion to a complete homotopy-type identification for the constructed examples.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_2367",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23193v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:06:01.247488+00:00",
+    "title": "Inflated line-transversal counterexamples have sphere homotopy type"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The codimension-i rational cohomology of the special linear group SL_n(Z) vanishes for n >= i+2. Equivalently, the i-th rational cohomology group H^i(SL_n(Z); Q) is trivial for all i >= (n choose 2) - n + 2.",
     "domains": [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2367",
+    "id": "fd_2368",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2680,7 +2695,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2368",
+    "id": "fd_2369",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2695,7 +2710,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2369",
+    "id": "fd_2370",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23469v1",
@@ -2709,13 +2724,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2370",
+    "id": "fd_2371",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
     "status": "available",
     "timestamp": "2026-06-23T16:48:35.543989+00:00",
     "title": "Cusick's Sum-of-Digits Explicit Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a simple graph on n vertices with m edges, and define N(S_{2,1},G)=\u2211_v d(v)(d(v)-1)(n-1-d(v)). If 8m \u2264 n(n-1), then N(S_{2,1},G) is maximized by the quasi-clique Q(n,m): writing m = binom(q,2)+r with 0 \u2264 r < q, Q(n,m) consists of a K_q, one additional vertex adjacent to exactly r vertices of the clique, and all remaining vertices isolated. Equivalently, the asymptotic low-density upper branch proved in the paper admits an exact finite-n strengthening throughout the range \u03b2 \u2264 1/4.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2372",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23351v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:07:33.678816+00:00",
+    "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
   },
   {
     "consumed_by_exp_id": "",
@@ -2973,7 +3002,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -2988,7 +3017,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
