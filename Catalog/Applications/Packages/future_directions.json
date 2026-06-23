@@ -14787,7 +14787,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "47dffa0b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14813,7 +14813,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.995091+00:00",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
@@ -15485,11 +15485,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d5a04e50",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15501,7 +15501,7 @@
         "Algebra"
       ],
       "id": "fd_0511",
-      "last_attempt_time": "2026-06-06T02:04:45.911655+00:00",
+      "last_attempt_time": "2026-06-23T13:48:06.090345+00:00",
       "last_reviewed_at": "2026-06-17T02:02:23.255375+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -15515,7 +15515,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:47.344784+00:00",
       "title": "EML Number Theory: Transcendence and Algebraic Independence"
@@ -16733,11 +16733,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9dc8a91c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16749,7 +16749,7 @@
         "Computation"
       ],
       "id": "fd_0551",
-      "last_attempt_time": "2026-06-07T22:40:19.256795+00:00",
+      "last_attempt_time": "2026-06-23T13:48:10.705313+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16763,7 +16763,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.873771+00:00",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
@@ -35500,7 +35500,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "60de7dfd",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35530,7 +35530,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23171v1",
       "source_path": "http://arxiv.org/abs/2606.23171v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T08:53:00.946057+00:00",
       "title": "Algebraicity of Contragredient Betti-Whittaker Period Ratio for Reductive Groups"
@@ -36093,6 +36093,54 @@
       "title": "Exact minimum number of rainbow triangles with large minimum color degree"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT",
+        "math.AG",
+        "math.OA"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a projective variety V of dimension n over F_1 with associated invertible Markov matrix A = Mk_1 ∈ GL_b(Z) (arising from the Markov endomorphism construction), the zeta function Z(V/F_1, t) = 1/det(I - tA) satisfies the Weil-type functional equation Z(V/F_1, 1/t) = ε · t^{-χ(V)} · Z(V/F_1, t), where ε ∈ {±1} and χ(V) = Σ_{i=0}^{2n} (-1)^i b_i is the topological Euler characteristic of V(C). This formalizes the paper's claim that the zeta function of V(F_1) satisfies all Weil conjectures except the Riemann hypothesis analog, using the bridge between F_1-geometry and the K-theory of Cuntz-Krieger algebras O_A.",
+      "domain_bridges": [
+        "Cuntz-Krieger_algebras_K_theory",
+        "Weil_conjectures_functional_equation",
+        "Markov_endomorphism_matrices",
+        "zeta_functions_over_F1"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Geometry"
+      ],
+      "id": "fd_2331",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem weil_functional_equation_F1 {n : ℕ} (V : ProjectiveVariety_F1 n) (A : Matrix (Fin (max_betti_number V)) (Fin (max_betti_number V)) ℤ) (hA : A = markov_matrix_F1 V) (hA_inv : A ∈ Matrix.GL (Fin (max_betti_number V)) ℤ) (hA_det : A.det = 1) : ∃ (ε : ℤˣ) (χ : ℤ) (hχ : χ = euler_characteristic V), ∀ (t : ℚ) (ht : t ≠ 0), zeta_F1 V (1/t) = ε * t^(-χ) * zeta_F1 V t := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Reduce to computing det(I - tA) for the Markov matrix A = Mk_1 ∈ GL_b(Z) associated to V. The functional equation for Z(V/F_1, t) = 1/det(I - tA) follows from the identity det(I - (1/t)A) = det(-A/t) · det(I - tA^{-1})/det(A) combined with the constraint det(A) = 1^n = 1 (from det(Mk_q) = q^n evaluated at q = 1). The sign ε is determined by the determinant of A and the parity of χ(V). The K-theoretic computation of |V(F_{1^r})| via tr(ε_i^{π_i(1^r)}) in K_0(O_{A^r}) ⊕ K_1(O_{A^r}) provides the point-count interpretation linking to the Weil conjecture framework.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22010v1",
+      "source_path": "http://arxiv.org/abs/2606.22010v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T13:47:18.898418+00:00",
+      "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -36117,7 +36165,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2331",
+      "id": "fd_2332",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_550_upper_bound_tight (k : ℕ) (m : Fin k → ℕ) (hk : k ≥ 2)\n    (hm_sorted : ∀ i j : Fin k, i ≤ j → m i ≤ m j) :\n    ∃ (trees : ℕ → SimpleGraph ℕ), ∀ n : ℕ, ∃ N ≥ n,\n      IsTree (trees N) ∧ (trees N).vertexCount = N ∧\n      R (trees N) (CompleteMultipartiteGraph m) =\n        (k - 1) * (R (trees N) (CompleteBipartiteGraph (m ⟨0, by omega⟩) (m ⟨1, by omega⟩)) - 1) + m ⟨0, by omega⟩ := by\n  sorry",
@@ -36163,7 +36211,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2332",
+      "id": "fd_2333",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_codim_i_vanishing (p i n : ℕ) (hp : Nat.Prime p) (hi : 0 < i) \n    (hn : n ≥ (3 * i + 1) * p + (3 * i + 2)) :\n    (groupCohomology (HeckeCongruence p n) (n * (n - 1) / 2 - i) ⊗[ℤ] ℚ) ≅ 0 := by\n  sorry",
@@ -36212,7 +36260,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2333",
+      "id": "fd_2334",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_radical_shift_bound (h : ℕ) (h_pos : 0 < h) :\n    Finset.card (Finset.filter (λ j, rad j = rad (j + h)) (Finset.Icc 1 (3 * 7 ^ (3 + 2 * ω h)))) ≤ 3 * 7 ^ (3 + 2 * ω h) ∧\n    (∀ j ≥ 1, rad j = rad (j + h) → Odd h → False) :=\n  by sorry",
@@ -36259,7 +36307,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2334",
+      "id": "fd_2335",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem line_transversals_homotopy_equiv_sphere (n : ℕ) (hn : 1 ≤ n) :\n    ∃ (C : Finset (OpenConvexSet (EuclideanSpace ℝ (Fin (3 * n))))), \n      C.PairwiseDisjoint ∧ \n      Nonempty (HomotopyEquiv (LineTransversals C) (Sphere (n - 1))) := by\n  sorry",
@@ -36305,7 +36353,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2335",
+      "id": "fd_2336",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- We need to define the Grassmann scheme, Boolean degree one functions, and triviality.\n-- Since full formalization of these is complex, we state it with assumed definitions.\n\nvariable {q n : ℕ}\n\n-- Represents a point in the Grassmann scheme J_q(n, k)\n-- (to be fully formalized as k-dimensional subspaces of F_q^n)\nstructure Subspace where \n  carrier : Finset (Fin n → ZMod q)\n  -- properties omitted for stub\n\n-- Definition of a Boolean degree one function (stub)\nstructure BoolDegOneFunc where\n  toFun : Subspace → Bool\n  -- properties omitted for stub\n\n-- Definition of a trivial Boolean degree one function (stub)\ninductive TrivialBoolDegOneFunc : (Subspace → Bool) → Prop\n  | zero : TrivialBoolDegOneFunc (fun _ => false)\n  | one  : TrivialBoolDegOneFunc (fun _ => true)\n  | x_p  : (p : Fin n) → TrivialBoolDegOneFunc (fun V => decide (p ∈ V.carrier)) -- simplified\n  -- other cases omitted for stub\n\n-- Conjecture: J_q(n,2) is DOT for n >= q+2\ntheorem J_q_n_2_DOT_for_n_ge_q_plus_2 (hq : Nat.",
@@ -36350,7 +36398,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2336",
+      "id": "fd_2337",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binary_two_binomial_class_count (n : ℕ) : Fintype.card ({u : List (Fin 2) // u.length = n} / Setoid.ker (twoBinomialEquiv 2)) = (n^3 + 5*n + 6) / 6 := by\n  sorry",
@@ -36396,7 +36444,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2337",
+      "id": "fd_2338",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binomial_gcd_criterion_restricted_range (k : ℕ) (hk : 2 ≤ k) : (gcd_q2_to_k (fun q => (q * k.choose k)) = 1) ↔ ¬∃ p a, prime p ∧ a ≥ 1 ∧ p ^ a ‖ k ∧ p ^ (a + 1) ∤ k",
@@ -36445,7 +36493,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2338",
+      "id": "fd_2339",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidorenko_two_sided {Γ : Type} [Fintype Γ] (f : Γ → ℝ) (F : FinVDirGraph) : t F (C_f) ≥ ( (∑ g : Γ, f g) / (Fintype.card Γ) ) ^ (2 * F.edges) := by sorry",
@@ -36491,7 +36539,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2339",
+      "id": "fd_2340",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The class of groups admitting a star-shaped deleted co-maximal graph is exactly the star groups",
@@ -36537,7 +36585,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2340",
+      "id": "fd_2341",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alpha_es_lower_bound (G : Graph) : α_es G ≥ α G - 1",
@@ -36583,7 +36631,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2341",
+      "id": "fd_2342",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem parry_admissible_beta_expansion (β : ℝ) (hβ : β > 1)\n    (d : ℕ → ℕ) (hd : ∀ n, d n < ⌊β⌋₊ + 1) :\n    (∃ x ∈ Set.Ico 0 1, ∀ n, d n = ⌊β * (T β)^n x⌋) ↔\n    ∀ n, LexLt (fun i => d (n + i)) (fun i => d_star_one β (n + i)) := by\n  sorry",
@@ -36628,7 +36676,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2342",
+      "id": "fd_2343",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture finite_field_restriction_conjecture_p3 (p : ℕ) (hp : Prime p) (hmod : p % 4 = 3) :\n  ∃ C : ℝ, ∀ (f : P3 p → ℂ), \n    ‖E p f‖₃ ≤ C * ‖f‖₂ := sorry",
@@ -36678,7 +36726,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2343",
+      "id": "fd_2344",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem threshold_free_eq_case\n    {V : Type u} [Fintype V] [DecidableEq V]\n    {r t : ℕ} (K : FinSimplicialComplex V)\n    (ht0 : 1 ≤ t) (htr : t ≤ r)\n    (hpure : K.PureDim r)\n    (hconn : K.DownPathConnected r)\n    (hhom : ∀ σ : Finset V,\n      K.IsFace σ → σ.card = r - t →\n        ReducedHomologyVanishes ℝ t (K.link σ)) :\n    K.upSignlessLaplacianSpectralRadius (r - 1)\n      = (t : ℝ) * (Fintype.card V : ℝ)\n        - ((t - 1 : ℕ) : ℝ) * ((r + 1 : ℕ) : ℝ)\n    ↔\n    ∃ C : Finset V,\n      C.card = r + 1 - t ∧\n      K = (FinSimplicialComplex.simplexOn C).join\n            ((FinSimplicialComplex.simplexOn (Cᶜ)).skeleton (t - 1)) := by\n  sorry",
@@ -36725,7 +36773,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2344",
+      "id": "fd_2345",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem swap_chain_spectral_gap_lower_bound {m n : ℕ} (r : Fin m → ℕ) (c : Fin n → ℕ)\n    (hfeas : (Ω_binary_matrix r c).Nonempty) (hm : 2 ≤ m) (hn : 2 ≤ n) :\n    spectralGap (lazySwapChain r c) ≥\n      (1 : ℝ) / (Nat.choose m 2 * Nat.choose n 2) := by\n  sorry",
@@ -36773,7 +36821,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2345",
+      "id": "fd_2346",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen BigOperators\n\n/-- Adjacency in the rectangular grid `Fin m × Fin n`. -/\ndef GridAdj {m n : Nat} (p q : Fin m × Fin n) : Prop :=\n  (p.1 = q.1 ∧ (p.2.val + 1 = q.2.val ∨ q.2.val + 1 = p.2.val)) ∨\n  (p.2 = q.2 ∧ (p.1.val + 1 = q.1.val ∨ q.1.val + 1 = p.1.val))\n\n/-- Normalized integer-valued edge-1-Lipschitz functions on the grid. -/\ndef GridLip0 {m n : Nat} (hm : 0 < m) (hn : 0 < n)\n    (f : Fin m × Fin n → Int) : Prop :=\n  f (⟨0, hm⟩, ⟨0, hn⟩) = 0 ∧\n  ∀ p q : Fin m × Fin n, GridAdj p q → Int.natAbs (f p - f q) ≤ 1\n\n/-- L1 mass of an integer grid function. -/\ndef L1Mass {m n : Nat} (f : Fin m × Fin n → Int) : Nat :=\n  ∑ p, Int.natAbs (f p)\n\n/-- Closed-form sharp upper bound for normalized grid Lipschitz L1 mass. -/\ndef GridDiameterBound (m n : Nat) : Nat :=\n  n * (m * (m - 1) / 2) + m * (n * (n - 1) / 2)\n\n/-- Conjectural extremal inequality underlying the Miura-ori diameter upper bound. -/\ntheorem grid_lipschitz_l1Mass_exact\n    {m n : Nat} (hm : 0 < m) (hn : 0 < n) :",
@@ -36818,7 +36866,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2346",
+      "id": "fd_2347",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_irreducible_fat_colorings_eq_alpha_values {V : Type*} [Fintype V] (G : SimpleGraph V) :\n    (number_of_irreducible_FAT_colorings G) = (cardinality (alpha_values G)) := by\n  sorry",
@@ -36863,7 +36911,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2347",
+      "id": "fd_2348",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem min_perfect_matchings_3_conn_planar\n  {V : Type*} [Fintype V] {G : SimpleGraph V} [DecidableRel G.Adj]\n  (h_planar : G.IsPlanar) (h_conn : G.Is3Connected)\n  (h_even : Even (Fintype.card V)) :\n  3 ≤ G.numPerfectMatchings := by\n  sorry",
@@ -36912,7 +36960,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2348",
+      "id": "fd_2349",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Data.Matrix.Notation\nimport Mathlib.Data.Real.Basic\n\nnoncomputable section\n\nabbrev Mat2Z := Matrix (Fin 2) (Fin 2) ℤ\n\nconstant Primitive : Mat2Z → Prop\nconstant mobius : Mat2Z → ℝ → ℝ\nconstant lagrangeConst : ℝ → ℝ\nconstant Bad : Set ℝ\nconstant IsQuadraticIrrational : ℝ → Prop\n\ndef detAbs (M : Mat2Z) : ℝ := ((Int.natAbs (M.det) : ℕ) : ℝ)\n\ntheorem quadratic_irrational_ratio_spectrum_dense\n    (M : Mat2Z) (hprim : Primitive M) (hdet : M.det ≠ 0) :\n    ∀ u v : ℝ,\n      (detAbs M)⁻¹ ≤ u → u < v → v ≤ detAbs M →\n        ∃ x : ℝ,\n          x ∈ Bad ∧ IsQuadraticIrrational x ∧\n          u < lagrangeConst (mobius M x) / lagrangeConst x ∧\n          lagrangeConst (mobius M x) / lagrangeConst x < v := by\n  sorry",
@@ -36959,7 +37007,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2349",
+      "id": "fd_2350",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem row_sum_pascal_like_riordan_eq_fib (n : ℕ) :\n  (∑ k in Finset.range (n + 1), (n + k).choose (2 * k)) = Nat.fib (2 * n + 1) := by\n  sorry",
@@ -36978,6 +37026,52 @@
       "thread_id": "",
       "timestamp": "2026-06-23T13:29:49.823733+00:00",
       "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO/graph_theory/hamiltonian_cycles",
+        "math.CO/graph_theory/symmetric_graphs",
+        "math.CO/graph_theory/cubic_graphs"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every Hamiltonian connected cubic edge-transitive graph Γ has Hamiltonian compression factor κ(Γ) ≥ 2, i.e., it admits a 2-symmetric Hamiltonian cycle: there exists a Hamiltonian cycle C and an automorphism g of order 2 such that g acts on C as a rotation by |V(Γ)|/2 positions. This is supported by exhaustive computation on all such graphs up to 10,000 vertices, where every Hamiltonian cubic edge-transitive graph was found to have κ ≥ 2.",
+      "domain_bridges": [
+        "group_theory/automorphisms",
+        "group_theory/semiregular_actions",
+        "computability/algorithmic_graph_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "id": "fd_2351",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cubic_edge_transitive_ham_compression_ge_two {V : Type*} [Fintype V] [DecidableEq V] (Γ : SimpleGraph V) (h_cubic : ∀ v, Γ.degree v = 3) (h_connected : Γ.Connected) (h_edge_trans : EdgeTransitive Γ) (h_ham : HasHamiltonianCycle Γ) : κ Γ ≥ 2 := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Leverage the edge-transitivity of Γ to show that any Hamiltonian cycle can be 'symmetrized': given a Hamiltonian cycle C, use the transitivity of Aut(Γ) on edges of Γ to construct an involutory automorphism that permutes the edges of C as a half-rotation. The key step is showing that edge-transitivity forces enough symmetry on the edge set of any Hamiltonian cycle to guarantee a 2-fold rotational symmetry. Alternatively, classify cubic edge-transitive graphs by their automorphism group structure and verify case-by-case for each infinite family (e.g., generalized Petersen graphs, Möbius ladders, prism graphs).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.21941v1",
+      "source_path": "http://arxiv.org/abs/2606.21941v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T13:48:00.738680+00:00",
+      "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
     },
     {
       "ambition_level": "extension",

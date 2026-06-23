@@ -1951,7 +1951,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "P\u00f3lya Tree Generating Series Taylor Approximation Error Bound"
   },
   {
-    "consumed_by_exp_id": "60de7dfd",
+    "consumed_by_exp_id": "",
     "description": "For any connected reductive group $G$ defined over a number field $F$, and any cohomological generic automorphic representation $\\pi$ of $G(\\mathbb{A}_F)$, the ratio of the Betti-Whittaker periods $\\Omega(\\pi^\\vee) / \\Omega(\\pi)$ is an algebraic number, generalizing the explicit relation established for $\\mathrm{GL}(n)$ where the ratio is a specific power of $i$ depending on the bottom degree $b = r_1 \\lfloor n^2/4 \\rfloor + r_2 n(n-1)/2$.",
     "domains": [
       "Algebra",
@@ -1961,7 +1961,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T08:53:00.946057+00:00",
     "title": "Algebraicity of Contragredient Betti-Whittaker Period Ratio for Reductive Groups"
   },
@@ -2140,12 +2140,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a projective variety V of dimension n over F_1 with associated invertible Markov matrix A = Mk_1 \u2208 GL_b(Z) (arising from the Markov endomorphism construction), the zeta function Z(V/F_1, t) = 1/det(I - tA) satisfies the Weil-type functional equation Z(V/F_1, 1/t) = \u03b5 \u00b7 t^{-\u03c7(V)} \u00b7 Z(V/F_1, t), where \u03b5 \u2208 {\u00b11} and \u03c7(V) = \u03a3_{i=0}^{2n} (-1)^i b_i is the topological Euler characteristic of V(C). This formalizes the paper's claim that the zeta function of V(F_1) satisfies all Weil conjectures except the Riemann hypothesis analog, using the bridge between F_1-geometry and the K-theory of Cuntz-Krieger algebras O_A.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2331",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22010v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:47:18.898418+00:00",
+    "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -2160,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -2175,7 +2190,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -2190,7 +2205,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2334",
+    "id": "fd_2335",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -2204,7 +2219,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
@@ -2218,7 +2233,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
@@ -2232,7 +2247,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -2247,7 +2262,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2338",
+    "id": "fd_2339",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -2262,7 +2277,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2339",
+    "id": "fd_2340",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -2276,7 +2291,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2340",
+    "id": "fd_2341",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22972v1",
@@ -2290,7 +2305,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2341",
+    "id": "fd_2342",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
@@ -2305,7 +2320,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2342",
+    "id": "fd_2343",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -2320,7 +2335,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2343",
+    "id": "fd_2344",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -2335,7 +2350,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2344",
+    "id": "fd_2345",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22636v1",
@@ -2349,7 +2364,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2345",
+    "id": "fd_2346",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22614v1",
@@ -2364,7 +2379,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2346",
+    "id": "fd_2347",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22374v1",
@@ -2378,7 +2393,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2347",
+    "id": "fd_2348",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22253v1",
@@ -2392,7 +2407,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2348",
+    "id": "fd_2349",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
@@ -2406,13 +2421,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2349",
+    "id": "fd_2350",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22070v1",
     "status": "available",
     "timestamp": "2026-06-23T13:29:49.823733+00:00",
     "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every Hamiltonian connected cubic edge-transitive graph \u0393 has Hamiltonian compression factor \u03ba(\u0393) \u2265 2, i.e., it admits a 2-symmetric Hamiltonian cycle: there exists a Hamiltonian cycle C and an automorphism g of order 2 such that g acts on C as a rotation by |V(\u0393)|/2 positions. This is supported by exhaustive computation on all such graphs up to 10,000 vertices, where every Hamiltonian cubic edge-transitive graph was found to have \u03ba \u2265 2.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_2351",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21941v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:48:00.738680+00:00",
+    "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -2675,7 +2704,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9dc8a91c",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -2685,7 +2714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -2954,7 +2983,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "47dffa0b",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -2964,7 +2993,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -3014,7 +3043,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Algebra: Closure Properties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5a04e50",
     "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domains": [
       "EML",
@@ -3024,7 +3053,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.344784+00:00",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
