@@ -35492,7 +35492,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "automorphic_forms",
         "langlands_program",
@@ -35516,7 +35516,7 @@
         "Logic"
       ],
       "id": "fd_2318",
-      "last_attempt_time": "2026-06-23T11:01:09.913837+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture betti_whittaker_contragredient_ratio_algebraic {F : Type*} [NumberField F] {G : Type*} [CommGroup G] [IsConnected G] [IsReductive G] (π : AutomorphicRepresentation G) [Cohomological π] [Generic π] (ε : QuadraticCharacter (ComponentGroup (InfiniteAdeles F)ˣ)) : \n  ∃ (c : ℂ), c ∈ (⊥ : Subalgebra ℚ ℂ) ∧ BettiWhittakerPeriod π ε = c * BettiWhittakerPeriod (Contragredient π) ε",
       "lineage_refs": [],
@@ -35774,6 +35774,52 @@
       "attempt_count": 0,
       "catalog_references": [
         "math.CO",
+        "Polymatroid_connectivity",
+        "Slice_projections"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
+      "domain_bridges": [
+        "Matroid_theory",
+        "Submodular_optimization"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2324",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem connected_slice_projection_interval \n    {E : Type*} [Fintype E] [DecidableEq E]\n    {P : Polymatroid E} {e : E} (hP : P.Connected) (j k l : ℕ) \n    (hj : j ≤ P.r {e}) (hk : j < k) (hl : k < l) (hl_le : l ≤ P.r {e})\n    (h_conn_j : (P.slice_projection e j).Connected)\n    (h_conn_l : (P.slice_projection e l).Connected) :\n    (P.slice_projection e k).Connected := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Assume for contradiction that there exist indices $j < k < l$ such that the $j$-th and $l$-th slice-projections are connected, but the $k$-th is disconnected. Use the submodularity of the polymatroid rank function and the lattice of flats to demonstrate that if $P^{(k)}$ is disconnected by a partition $(A, B)$, then either $P^{(j)}$ or $P^{(l)}$ must also be disconnected by a related partition, contradicting the initial assumption.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22819v1",
+      "source_path": "http://arxiv.org/abs/2606.22819v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T11:20:57.671444+00:00",
+      "title": "Interval Property for Connected Slice-Projections of Polymatroids"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
         "Erdős Problem 550"
       ],
       "category": "cross_domain_bridge",
@@ -35792,7 +35838,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2324",
+      "id": "fd_2325",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_550_upper_bound_tight (k : ℕ) (m : Fin k → ℕ) (hk : k ≥ 2)\n    (hm_sorted : ∀ i j : Fin k, i ≤ j → m i ≤ m j) :\n    ∃ (trees : ℕ → SimpleGraph ℕ), ∀ n : ℕ, ∃ N ≥ n,\n      IsTree (trees N) ∧ (trees N).vertexCount = N ∧\n      R (trees N) (CompleteMultipartiteGraph m) =\n        (k - 1) * (R (trees N) (CompleteBipartiteGraph (m ⟨0, by omega⟩) (m ⟨1, by omega⟩)) - 1) + m ⟨0, by omega⟩ := by\n  sorry",
@@ -35838,7 +35884,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2325",
+      "id": "fd_2326",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_codim_i_vanishing (p i n : ℕ) (hp : Nat.Prime p) (hi : 0 < i) \n    (hn : n ≥ (3 * i + 1) * p + (3 * i + 2)) :\n    (groupCohomology (HeckeCongruence p n) (n * (n - 1) / 2 - i) ⊗[ℤ] ℚ) ≅ 0 := by\n  sorry",
@@ -35887,7 +35933,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2326",
+      "id": "fd_2327",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_radical_shift_bound (h : ℕ) (h_pos : 0 < h) :\n    Finset.card (Finset.filter (λ j, rad j = rad (j + h)) (Finset.Icc 1 (3 * 7 ^ (3 + 2 * ω h)))) ≤ 3 * 7 ^ (3 + 2 * ω h) ∧\n    (∀ j ≥ 1, rad j = rad (j + h) → Odd h → False) :=\n  by sorry",
@@ -35934,7 +35980,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2327",
+      "id": "fd_2328",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem line_transversals_homotopy_equiv_sphere (n : ℕ) (hn : 1 ≤ n) :\n    ∃ (C : Finset (OpenConvexSet (EuclideanSpace ℝ (Fin (3 * n))))), \n      C.PairwiseDisjoint ∧ \n      Nonempty (HomotopyEquiv (LineTransversals C) (Sphere (n - 1))) := by\n  sorry",
@@ -35980,7 +36026,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2328",
+      "id": "fd_2329",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- We need to define the Grassmann scheme, Boolean degree one functions, and triviality.\n-- Since full formalization of these is complex, we state it with assumed definitions.\n\nvariable {q n : ℕ}\n\n-- Represents a point in the Grassmann scheme J_q(n, k)\n-- (to be fully formalized as k-dimensional subspaces of F_q^n)\nstructure Subspace where \n  carrier : Finset (Fin n → ZMod q)\n  -- properties omitted for stub\n\n-- Definition of a Boolean degree one function (stub)\nstructure BoolDegOneFunc where\n  toFun : Subspace → Bool\n  -- properties omitted for stub\n\n-- Definition of a trivial Boolean degree one function (stub)\ninductive TrivialBoolDegOneFunc : (Subspace → Bool) → Prop\n  | zero : TrivialBoolDegOneFunc (fun _ => false)\n  | one  : TrivialBoolDegOneFunc (fun _ => true)\n  | x_p  : (p : Fin n) → TrivialBoolDegOneFunc (fun V => decide (p ∈ V.carrier)) -- simplified\n  -- other cases omitted for stub\n\n-- Conjecture: J_q(n,2) is DOT for n >= q+2\ntheorem J_q_n_2_DOT_for_n_ge_q_plus_2 (hq : Nat.",
@@ -36025,7 +36071,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2329",
+      "id": "fd_2330",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binary_two_binomial_class_count (n : ℕ) : Fintype.card ({u : List (Fin 2) // u.length = n} / Setoid.ker (twoBinomialEquiv 2)) = (n^3 + 5*n + 6) / 6 := by\n  sorry",
@@ -36071,7 +36117,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2330",
+      "id": "fd_2331",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binomial_gcd_criterion_restricted_range (k : ℕ) (hk : 2 ≤ k) : (gcd_q2_to_k (fun q => (q * k.choose k)) = 1) ↔ ¬∃ p a, prime p ∧ a ≥ 1 ∧ p ^ a ‖ k ∧ p ^ (a + 1) ∤ k",
@@ -36120,7 +36166,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2331",
+      "id": "fd_2332",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidorenko_two_sided {Γ : Type} [Fintype Γ] (f : Γ → ℝ) (F : FinVDirGraph) : t F (C_f) ≥ ( (∑ g : Γ, f g) / (Fintype.card Γ) ) ^ (2 * F.edges) := by sorry",
@@ -36166,7 +36212,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2332",
+      "id": "fd_2333",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The class of groups admitting a star-shaped deleted co-maximal graph is exactly the star groups",
@@ -36212,7 +36258,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2333",
+      "id": "fd_2334",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alpha_es_lower_bound (G : Graph) : α_es G ≥ α G - 1",
@@ -36258,7 +36304,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2334",
+      "id": "fd_2335",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem parry_admissible_beta_expansion (β : ℝ) (hβ : β > 1)\n    (d : ℕ → ℕ) (hd : ∀ n, d n < ⌊β⌋₊ + 1) :\n    (∃ x ∈ Set.Ico 0 1, ∀ n, d n = ⌊β * (T β)^n x⌋) ↔\n    ∀ n, LexLt (fun i => d (n + i)) (fun i => d_star_one β (n + i)) := by\n  sorry",
@@ -36303,7 +36349,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2335",
+      "id": "fd_2336",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture finite_field_restriction_conjecture_p3 (p : ℕ) (hp : Prime p) (hmod : p % 4 = 3) :\n  ∃ C : ℝ, ∀ (f : P3 p → ℂ), \n    ‖E p f‖₃ ≤ C * ‖f‖₂ := sorry",
@@ -36322,6 +36368,56 @@
       "thread_id": "",
       "timestamp": "2026-06-23T11:01:03.311156+00:00",
       "title": "Finite Field Restriction Conjecture for the 3D Paraboloid"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "finite abstract simplicial complexes: faces, purity, links, joins, skeletons",
+        "reduced simplicial homology over ℝ",
+        "finite real symmetric matrices and spectral radius",
+        "Perron-Frobenius theory for irreducible nonnegative matrices",
+        "signless up-Laplacian of a simplicial complex"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: Let r,t,n be natural numbers with 1 ≤ t ≤ r and n ≥ r+1. Let K be a pure r-dimensional simplicial complex on n vertices which is r-down path connected. Suppose that for every face σ of K with |σ| = r - t, the reduced homology group H_t(lk_K(σ); ℝ) vanishes. Then q_{r-1}(K) = t n - (t-1)(r+1) if and only if K is isomorphic to Δ_{r+1-t} ⋆ Δ_{n-r-1+t}^{t}. Equivalently, the large lower bound on n appearing in the paper’s equality characterization is unnecessary.",
+      "domain_bridges": [
+        "local link homology constraints ↔ extremal spectral radius",
+        "pure simplicial complexes ↔ uniform hypergraphs with downward closure",
+        "r-down path connectivity ↔ irreducibility of the signless up-Laplacian",
+        "join of a simplex with a skeleton ↔ extremal Perron-equality structure"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2337",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem threshold_free_eq_case\n    {V : Type u} [Fintype V] [DecidableEq V]\n    {r t : ℕ} (K : FinSimplicialComplex V)\n    (ht0 : 1 ≤ t) (htr : t ≤ r)\n    (hpure : K.PureDim r)\n    (hconn : K.DownPathConnected r)\n    (hhom : ∀ σ : Finset V,\n      K.IsFace σ → σ.card = r - t →\n        ReducedHomologyVanishes ℝ t (K.link σ)) :\n    K.upSignlessLaplacianSpectralRadius (r - 1)\n      = (t : ℝ) * (Fintype.card V : ℝ)\n        - ((t - 1 : ℕ) : ℝ) * ((r + 1 : ℕ) : ℝ)\n    ↔\n    ∃ C : Finset V,\n      C.card = r + 1 - t ∧\n      K = (FinSimplicialComplex.simplexOn C).join\n            ((FinSimplicialComplex.simplexOn (Cᶜ)).skeleton (t - 1)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the paper’s inequality proof via the Rayleigh quotient for the nonnegative signless up-Laplacian. Use r-down path connectivity to obtain irreducibility and hence a strictly positive Perron vector. Analyze every equality condition in the chain of inequalities: local homology vanishing should force the relevant link shadows to attain their extremal Kruskal-Katona-type lower bounds, while equality in the Perron/Rayleigh estimates should force all maximal r-faces to contain a common core of size r+1-t and to contain every t-subset of the complementary vertex set. The remaining task is to replace the paper’s large-n rigidity lemma by an exact finite rigidity lemma for the equality case.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22825v1",
+      "source_path": "http://arxiv.org/abs/2606.22825v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T11:22:47.373232+00:00",
+      "title": "Threshold-free equality case for the local-homology signless Laplacian bound"
     },
     {
       "ambition_level": "extension",
@@ -36370,7 +36466,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9da6c75a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36382,7 +36478,7 @@
         "Novelty"
       ],
       "id": "moonshot_Pickover_32",
-      "last_attempt_time": "2026-06-23T11:01:23.321590+00:00",
+      "last_attempt_time": "2026-06-23T11:22:58.739378+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -36396,7 +36492,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Pickover)",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:17.617665+00:00",
       "title": "Pickover Clifford Attractor Family"
@@ -36409,7 +36505,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0de5396c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36421,7 +36517,7 @@
         "Novelty"
       ],
       "id": "moonshot_Rucker_20",
-      "last_attempt_time": "2026-06-23T11:01:18.525283+00:00",
+      "last_attempt_time": "2026-06-23T11:22:54.942759+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -36435,7 +36531,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Rucker)",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:11.785769+00:00",
       "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
@@ -41084,7 +41180,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -41100,7 +41196,7 @@
         "Computation"
       ],
       "id": "seed_330",
-      "last_attempt_time": "2026-06-23T11:01:06.170121+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42212,7 +42308,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -42228,7 +42324,7 @@
         "Analysis"
       ],
       "id": "seed_359",
-      "last_attempt_time": "2026-06-23T11:01:14.543031+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42242,7 +42338,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432759+00:00",
       "title": "Constructive Mathematics: Bishop's Analysis"
@@ -42409,11 +42505,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fa13c912",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42426,7 +42522,7 @@
         "Analysis"
       ],
       "id": "seed_364",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T11:22:50.586163+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42440,7 +42536,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432774+00:00",
       "title": "Statistical Mechanics: Ising Model Phase Transition"
@@ -116422,7 +116518,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
