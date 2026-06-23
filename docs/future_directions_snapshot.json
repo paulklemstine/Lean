@@ -3228,6 +3228,33 @@
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
+      "Rainbow_triangles",
+      "Supersaturation",
+      "Edge-colored_graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any edge-colored graph G on n ≥ 3 vertices, if the minimum color degree δc(G) ≥ (n+1)/2, then the number of rainbow triangles rt(G) is at least f(n), where f(n) = (n^2-1)/8 if n is odd, f(n) = n^2/4 - 1 if n is even and n ≥ 6, and f(4) = 4.",
+    "domain_bridges": [
+      "Graph theory",
+      "Extremal combinatorics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2330",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize edge-colored graphs, minimum color degree, and rainbow triangles in Lean, then establish the lower bounds by analyzing the extremal graph structures and showing that any deviation from them strictly increases the number of rainbow triangles, proceeding by induction on n.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22106v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:28:42.948702+00:00",
+    "title": "Exact minimum number of rainbow triangles with large minimum color degree"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
       "Erdős Problem 550"
     ],
     "consumed_by_exp_id": "",
@@ -3240,7 +3267,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -3267,7 +3294,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -3297,7 +3324,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2332",
+    "id": "fd_2333",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -3325,7 +3352,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2333",
+    "id": "fd_2334",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3352,7 +3379,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2334",
+    "id": "fd_2335",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3378,7 +3405,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2335",
+    "id": "fd_2336",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3405,7 +3432,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2336",
+    "id": "fd_2337",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
@@ -3435,7 +3462,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2337",
+    "id": "fd_2338",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply repeated Cauchy–Schwarz inequalities on the group sum to bound the kernel average, and argue that equality forces f to be constant.",
@@ -3462,7 +3489,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2338",
+    "id": "fd_2339",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive analysis combining subgroup inclusion properties with graph connectivity criteria",
@@ -3489,7 +3516,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2339",
+    "id": "fd_2340",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the bound α_{es}(G) ≥ α(G) - 1 holds universally by constructing an ESI-set from an arbitrary maximum independent set through local modifications to satisfy the ES-condition, or disprove by finding a graph where the reduction exceeds 1.",
@@ -3516,7 +3543,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2340",
+    "id": "fd_2341",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the lexicographic order on infinite sequences over a finite alphabet, formalize the $\\beta$-transformation and the quasi-greedy expansion of 1, then prove the equivalence using properties of the shift map and greedy expansions.",
@@ -3542,7 +3569,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2341",
+    "id": "fd_2342",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the author's bilinear approach and point-line incidence estimates to handle the endpoint $r=3$, or establish sharp Kakeya and maximal restriction bounds over finite fields to close the remaining gap.",
@@ -3573,7 +3600,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2342",
+    "id": "fd_2343",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the paper’s inequality proof via the Rayleigh quotient for the nonnegative signless up-Laplacian. Use r-down path connectivity to obtain irreducibility and hence a strictly positive Perron vector. Analyze every equality condition in the chain of inequalities: local homology vanishing should force the relevant link shadows to attain their extremal Kruskal-Katona-type lower bounds, while equality in the Perron/Rayleigh estimates should force all maximal r-faces to contain a common core of size r+1-t and to contain every t-subset of the complementary vertex set. The remaining task is to replace the paper’s large-n rigidity lemma by an exact finite rigidity lemma for the equality case.",
@@ -3601,7 +3628,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2343",
+    "id": "fd_2344",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Follow the paper's three-stage argument: (1) Establish a comparison inequality between the swap chain and a two-row heat-bath chain, bounding the swap chain spectral gap from below by a constant times the heat-bath spectral gap. (2) Reduce the m×n heat-bath analysis to the 3-row case via a tensorization/reduction argument on the column-count variable. (3) Prove the 3-row inequality by decomposing the function space on {0,1}³ into the constant sector, the count sector (functions of the column sum), and the Johnson harmonic sectors, establishing a Poincaré inequality on each sector with the appropriate spectral gap lower bound.",
@@ -3630,7 +3657,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2344",
+    "id": "fd_2345",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove pointwise that any edge-1-Lipschitz f with f(0,0)=0 satisfies |f(i,j)| ≤ i+j by following a shortest Manhattan path from (0,0) to (i,j). Sum this pointwise bound over all grid vertices. Evaluate the two separable sums ∑_{i=0}^{m−1}∑_{j=0}^{n−1}(i+j)=n·m(m−1)/2 + m·n(n−1)/2. Sharpness follows by checking that f(i,j)=i+j is edge-1-Lipschitz, normalized at the origin, and attains equality termwise.",
@@ -3656,7 +3683,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2345",
+    "id": "fd_2346",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that merging color classes in a FAT coloring scales the fairness parameter α by a predictable rational factor (as described in the paper). Hence, along any chain in the coarsening poset, the α values form a strictly decreasing sequence. Irreducible FAT colorings are precisely the minimal elements in this poset, so each yields a distinct α that cannot be obtained by scaling another α. Conversely, given any α arising from a FAT coloring, repeatedly refine the coloring while preserving the FAT property until an irreducible coloring is reached; this process does not change α. This establishes a bijection between irreducible FAT colorings and distinct α values.",
@@ -3682,7 +3709,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2346",
+    "id": "fd_2347",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Tutte's theorem and structural properties of 3-connected planar graphs to show that such a graph cannot have exactly 1 or 2 perfect matchings. A graph with exactly 2 perfect matchings must have a Hamiltonian cycle as its symmetric difference, which imposes restrictive structural constraints incompatible with 3-connectivity in planar graphs.",
@@ -3712,7 +3739,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2347",
+    "id": "fd_2348",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the paper's construction realizing arbitrary ratios in the interval by bounded continued fraction sequences, but replace the infinite nonperiodic tail by sufficiently long periodic repetitions of the finite blocks controlling the limsup. Since ultimately periodic continued fractions are quadratic irrationals, it remains to prove that the Lagrange-constant ratio changes by an arbitrarily small amount under this periodic approximation. Formalization would isolate a continuity lemma for finite-window limsup maxima of periodic continued fractions and combine it with the Smith-normal-form reduction used for the general matrix M.",
@@ -3721,6 +3748,34 @@
     "status": "available",
     "timestamp": "2026-06-23T13:11:45.659366+00:00",
     "title": "Quadratic irrational density in the ratio spectrum"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Riordan_arrays",
+      "Fibonacci_numbers",
+      "Binomial_coefficients"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The sum of the elements in the $n$-th row of the Pascal-like Riordan array defined by the power series pair $(1/(1-x), x/(1-x)^2)$, whose entries are given by the binomial coefficient $t_{n,k} = \\binom{n+k}{2k}$, equals the $(2n+1)$-th Fibonacci number. This is derived from the paper's demonstration that the generating function of the row sums is $(1-x)/(1-3x+x^2)$, which characterizes the odd-indexed Fibonacci sequence.",
+    "domain_bridges": [
+      "Generating_functions",
+      "Formal_power_series",
+      "Linear_algebra"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2349",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Define the lower-triangular matrix $T$ with entries $T_{n,k} = \\binom{n+k}{2k}$ for $0 \\le k \\le n$. 2. Show that the row sums $S_n = \\sum_{k=0}^n T_{n,k}$ correspond to the coefficients of the generating function $\\frac{1-x}{1-3x+x^2}$. 3. Prove that the sequence generated by $\\frac{1-x}{1-3x+x^2}$ satisfies the Fibonacci recurrence $S_n = 3S_{n-1} - S_{n-2}$ with initial conditions $S_0 = 1, S_1 = 2$. 4. Prove by induction that $S_n = F_{2n+1}$, where $F_m$ is the $m$-th Fibonacci number.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22070v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:29:49.823733+00:00",
+    "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
   },
   {
     "ambition_level": "extension",
