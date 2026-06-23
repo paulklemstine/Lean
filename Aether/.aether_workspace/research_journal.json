@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3b102b1d",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Functorial Tropical–Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `",
-      "quality_score": 0.7943200000000001,
-      "sorry_count": 0,
-      "theorem_count": 75,
-      "timestamp": "2026-06-16T13:28:06",
-      "title": "Deepening: `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
-    },
-    {
       "cycle_id": "6fe73404",
       "domain": "Applications",
       "key_insight": "# Proofs as DAGs — Future Directions\n\nResearch cycle 1 established a self-contained, choice-light theory of the\n*directed acyclic* structure of mathematical dependency, centred on a single\nconstructiv",
@@ -2501,6 +2491,16 @@
       "theorem_count": 4,
       "timestamp": "2026-06-23T08:31:02",
       "title": "Sierpiński Numbers: Covering Systems"
+    },
+    {
+      "cycle_id": "731f1c25",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — LWE Worst-Case Hardness Reductions\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\nresearch cycle, recorded in the Lab Notes of `WorstCaseLattice.lea",
+      "quality_score": 0.67588,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-23T10:40:58",
+      "title": "Learning with Errors: Hardness Reductions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T08:31:02",
+  "last_updated": "2026-06-23T10:40:58",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "6e109ffd",
-        "quality": 0.4288495652173913,
-        "theorems": 0,
-        "title": "Close Proofs: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
-      },
-      {
         "cycle_id": "15e84b40",
         "quality": 0.5413687224669603,
         "theorems": 109,
@@ -3389,6 +3383,12 @@
         "quality": 0.77,
         "theorems": 6,
         "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+      },
+      {
+        "cycle_id": "731f1c25",
+        "quality": 0.67588,
+        "theorems": 7,
+        "title": "Learning with Errors: Hardness Reductions"
       }
     ],
     "Geometry": [

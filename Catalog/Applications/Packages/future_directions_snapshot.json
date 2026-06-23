@@ -1492,7 +1492,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432802+00:00",
     "title": "Information Geometry: Fisher Metric on Statistical Models"
   },
@@ -3007,6 +3007,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "GrossMansourTucker2021",
+      "YanJin2024",
+      "Bouchet1987"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every binary delta-matroid and every nontrivial twuality operator $\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the partial-$\\bullet$ polynomial $^\\partial w_D^\\bullet(z)$ is either even, odd, or both even-interpolating and odd-interpolating.",
+    "domain_bridges": [
+      "Delta-matroid theory",
+      "Ribbon graph twuality",
+      "Polynomial interpolation"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2322",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize delta-matroids and binary delta-matroids over a finite ground set, define the five twuality operators (twist, loop complementation, and their compositions), and construct the partial-twuality polynomial using the width function. Establish the parity and interpolation properties of the polynomial coefficients by analyzing how the twuality operators transform the feasible sets of a binary delta-matroid.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22888v1",
+    "status": "available",
+    "timestamp": "2026-06-23T10:41:26.252321+00:00",
+    "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "Erdős Problem 550"
     ],
@@ -3020,7 +3047,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2322",
+    "id": "fd_2323",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a sequence of trees (e.g., specific brooms or generalized stars) that maximize the bipartite excess $R(T, K_{m_1,m_2}) - (|T| + m_1 - 1)$ and prove that these trees simultaneously maximize the multipartite excess against $K_{m_1,\\ldots,m_k}$, thereby saturating the upper bound exactly.",
@@ -3047,7 +3074,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2323",
+    "id": "fd_2324",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
@@ -3077,7 +3104,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2324",
+    "id": "fd_2325",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof proceeds in two parts. (1) For odd h: if rad(j) = rad(j+h) and h is odd, then j and j+h have opposite parity, so 2 divides exactly one of rad(j), rad(j+h), a contradiction. Hence 𝒥_h = ∅. (2) For the bound |𝒥_h| ≤ 3·7^{3+2ω(h)}: follow the Pollack–Pomerance–Treviño argument which analyzes the constraint rad(j) = rad(j+h) by factoring out d = gcd(j, j+h) | h, writing j = dm, j+h = d(m+k) where k = h/d, and classifying solutions via the resulting divisibility constraints on prime factors. The bound arises from enumerating prime-signature patterns compatible with rad(m) = rad(m+k), using that each prime factor of h constrains the local options at that prime to finitely many residue classes, with the 7^{2ω(h)} factor accounting for independent choices at each of the ω(h) prime divisors of h.",
@@ -3105,7 +3132,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2325",
+    "id": "fd_2326",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
@@ -3132,7 +3159,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2326",
+    "id": "fd_2327",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the eigenvalue bound methods and combinatorial arguments used for small $q$ to the general case. Specifically, show that any non-trivial Boolean degree one function on $J_q(q+2, 2)$ would violate the properties of the association scheme eigenvalues, utilizing the character theory of $GL_n(\\mathbb{F}_q)$ to constrain the coefficients $c_p$ of degree one functions.",
@@ -3158,7 +3185,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2327",
+    "id": "fd_2328",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define binary 2-binomial equivalence on words via scattered subword counts, then count equivalence classes. The geometric route constructs n hyperplanes in R^3 in general position and establishes a bijection between chambers and equivalence classes; the chamber count follows from the Steiner–Schläfli formula. A direct combinatorial proof would enumerate classes by their defining binomial coefficient invariants.",
@@ -3185,7 +3212,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2328",
+    "id": "fd_2329",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
@@ -3215,7 +3242,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2329",
+    "id": "fd_2330",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply repeated Cauchy–Schwarz inequalities on the group sum to bound the kernel average, and argue that equality forces f to be constant.",
@@ -3242,7 +3269,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2330",
+    "id": "fd_2331",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive analysis combining subgroup inclusion properties with graph connectivity criteria",
@@ -3269,7 +3296,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2331",
+    "id": "fd_2332",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove the bound α_{es}(G) ≥ α(G) - 1 holds universally by constructing an ESI-set from an arbitrary maximum independent set through local modifications to satisfy the ES-condition, or disprove by finding a graph where the reduction exceeds 1.",
@@ -3278,6 +3305,33 @@
     "status": "available",
     "timestamp": "2026-06-23T10:23:23.483072+00:00",
     "title": "Lower Bound Conjecture for Externally Supported Independence Number"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.DS",
+      "math.NT",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ is realized as the $\\beta$-expansion $d(x,\\beta)$ for some real number $x \\in [0, 1)$ if and only if for all $n \\in \\mathbb{N}$, the tail $x_nx_{n+1}\\dots$ is lexicographically strictly less than the quasi-greedy $\\beta$-expansion of 1, $d^*(1,\\beta)$.",
+    "domain_bridges": [
+      "dynamical systems",
+      "combinatorics on words",
+      "number theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2333",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the lexicographic order on infinite sequences over a finite alphabet, formalize the $\\beta$-transformation and the quasi-greedy expansion of 1, then prove the equivalence using properties of the shift map and greedy expansions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23097v1",
+    "status": "available",
+    "timestamp": "2026-06-23T10:41:57.159557+00:00",
+    "title": "Parry's Theorem on Admissible Beta-Expansions"
   },
   {
     "ambition_level": "extension",
@@ -3572,7 +3626,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "731f1c25",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domain_bridges": [],
     "domains": [
@@ -3585,7 +3639,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -3729,7 +3783,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4ffbd94a",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [
@@ -3742,14 +3796,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6fa489a4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domain_bridges": [],
     "domains": [
@@ -3762,7 +3816,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-22T11:50:17.617665+00:00",
     "title": "Pickover Clifford Attractor Family"
   },
@@ -4579,7 +4633,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T19:55:30.812055+00:00",
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },

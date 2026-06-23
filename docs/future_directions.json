@@ -12565,7 +12565,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "731f1c25",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12591,7 +12591,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:28.156517+00:00",
       "title": "Learning with Errors: Hardness Reductions"
@@ -13848,7 +13848,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -13864,7 +13864,7 @@
         "Algebra"
       ],
       "id": "fd_0468",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T10:42:03.298633+00:00",
       "last_reviewed_at": "2026-06-16T10:48:45.376139+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -13878,7 +13878,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:30.812055+00:00",
       "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
@@ -16304,7 +16304,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16320,7 +16320,7 @@
         "Computation"
       ],
       "id": "fd_0540",
-      "last_attempt_time": "2026-06-23T10:23:27.373679+00:00",
+      "last_attempt_time": "2026-06-09T18:41:44.912018+00:00",
       "last_reviewed_at": "2026-06-09T17:35:09.672546+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35680,6 +35680,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "GrossMansourTucker2021",
+        "YanJin2024",
+        "Bouchet1987"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every binary delta-matroid and every nontrivial twuality operator $\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the partial-$\\bullet$ polynomial $^\\partial w_D^\\bullet(z)$ is either even, odd, or both even-interpolating and odd-interpolating.",
+      "domain_bridges": [
+        "Delta-matroid theory",
+        "Ribbon graph twuality",
+        "Polynomial interpolation"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2322",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem binary_delta_matroid_partial_twuality_interpolation \n    {E : Type*} [Fintype E] [DecidableEq E]\n    (D : DeltaMatroid E) (hD : D.IsBinary) (op : TwualityOp) :\n    IsEvenPolynomial (D.partialTwualityPolynomial op) \\/ \n    IsOddPolynomial (D.partialTwualityPolynomial op) \\/ \n    (IsEvenInterpolating (D.partialTwualityPolynomial op) /\\ \n     IsOddInterpolating (D.partialTwualityPolynomial op)) :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize delta-matroids and binary delta-matroids over a finite ground set, define the five twuality operators (twist, loop complementation, and their compositions), and construct the partial-twuality polynomial using the width function. Establish the parity and interpolation properties of the polynomial coefficients by analyzing how the twuality operators transform the feasible sets of a binary delta-matroid.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22888v1",
+      "source_path": "http://arxiv.org/abs/2606.22888v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T10:41:26.252321+00:00",
+      "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "Erdős Problem 550"
       ],
@@ -35699,7 +35745,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2322",
+      "id": "fd_2323",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_550_upper_bound_tight (k : ℕ) (m : Fin k → ℕ) (hk : k ≥ 2)\n    (hm_sorted : ∀ i j : Fin k, i ≤ j → m i ≤ m j) :\n    ∃ (trees : ℕ → SimpleGraph ℕ), ∀ n : ℕ, ∃ N ≥ n,\n      IsTree (trees N) ∧ (trees N).vertexCount = N ∧\n      R (trees N) (CompleteMultipartiteGraph m) =\n        (k - 1) * (R (trees N) (CompleteBipartiteGraph (m ⟨0, by omega⟩) (m ⟨1, by omega⟩)) - 1) + m ⟨0, by omega⟩ := by\n  sorry",
@@ -35745,7 +35791,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2323",
+      "id": "fd_2324",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_codim_i_vanishing (p i n : ℕ) (hp : Nat.Prime p) (hi : 0 < i) \n    (hn : n ≥ (3 * i + 1) * p + (3 * i + 2)) :\n    (groupCohomology (HeckeCongruence p n) (n * (n - 1) / 2 - i) ⊗[ℤ] ℚ) ≅ 0 := by\n  sorry",
@@ -35794,7 +35840,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2324",
+      "id": "fd_2325",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem same_radical_shift_bound (h : ℕ) (h_pos : 0 < h) :\n    Finset.card (Finset.filter (λ j, rad j = rad (j + h)) (Finset.Icc 1 (3 * 7 ^ (3 + 2 * ω h)))) ≤ 3 * 7 ^ (3 + 2 * ω h) ∧\n    (∀ j ≥ 1, rad j = rad (j + h) → Odd h → False) :=\n  by sorry",
@@ -35841,7 +35887,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2325",
+      "id": "fd_2326",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem line_transversals_homotopy_equiv_sphere (n : ℕ) (hn : 1 ≤ n) :\n    ∃ (C : Finset (OpenConvexSet (EuclideanSpace ℝ (Fin (3 * n))))), \n      C.PairwiseDisjoint ∧ \n      Nonempty (HomotopyEquiv (LineTransversals C) (Sphere (n - 1))) := by\n  sorry",
@@ -35887,7 +35933,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2326",
+      "id": "fd_2327",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "-- We need to define the Grassmann scheme, Boolean degree one functions, and triviality.\n-- Since full formalization of these is complex, we state it with assumed definitions.\n\nvariable {q n : ℕ}\n\n-- Represents a point in the Grassmann scheme J_q(n, k)\n-- (to be fully formalized as k-dimensional subspaces of F_q^n)\nstructure Subspace where \n  carrier : Finset (Fin n → ZMod q)\n  -- properties omitted for stub\n\n-- Definition of a Boolean degree one function (stub)\nstructure BoolDegOneFunc where\n  toFun : Subspace → Bool\n  -- properties omitted for stub\n\n-- Definition of a trivial Boolean degree one function (stub)\ninductive TrivialBoolDegOneFunc : (Subspace → Bool) → Prop\n  | zero : TrivialBoolDegOneFunc (fun _ => false)\n  | one  : TrivialBoolDegOneFunc (fun _ => true)\n  | x_p  : (p : Fin n) → TrivialBoolDegOneFunc (fun V => decide (p ∈ V.carrier)) -- simplified\n  -- other cases omitted for stub\n\n-- Conjecture: J_q(n,2) is DOT for n >= q+2\ntheorem J_q_n_2_DOT_for_n_ge_q_plus_2 (hq : Nat.",
@@ -35932,7 +35978,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2327",
+      "id": "fd_2328",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binary_two_binomial_class_count (n : ℕ) : Fintype.card ({u : List (Fin 2) // u.length = n} / Setoid.ker (twoBinomialEquiv 2)) = (n^3 + 5*n + 6) / 6 := by\n  sorry",
@@ -35978,7 +36024,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2328",
+      "id": "fd_2329",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binomial_gcd_criterion_restricted_range (k : ℕ) (hk : 2 ≤ k) : (gcd_q2_to_k (fun q => (q * k.choose k)) = 1) ↔ ¬∃ p a, prime p ∧ a ≥ 1 ∧ p ^ a ‖ k ∧ p ^ (a + 1) ∤ k",
@@ -36027,7 +36073,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2329",
+      "id": "fd_2330",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidorenko_two_sided {Γ : Type} [Fintype Γ] (f : Γ → ℝ) (F : FinVDirGraph) : t F (C_f) ≥ ( (∑ g : Γ, f g) / (Fintype.card Γ) ) ^ (2 * F.edges) := by sorry",
@@ -36073,7 +36119,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2330",
+      "id": "fd_2331",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The class of groups admitting a star-shaped deleted co-maximal graph is exactly the star groups",
@@ -36119,7 +36165,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2331",
+      "id": "fd_2332",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem alpha_es_lower_bound (G : Graph) : α_es G ≥ α G - 1",
@@ -36138,6 +36184,52 @@
       "thread_id": "",
       "timestamp": "2026-06-23T10:23:23.483072+00:00",
       "title": "Lower Bound Conjecture for Externally Supported Independence Number"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.DS",
+        "math.NT",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ is realized as the $\\beta$-expansion $d(x,\\beta)$ for some real number $x \\in [0, 1)$ if and only if for all $n \\in \\mathbb{N}$, the tail $x_nx_{n+1}\\dots$ is lexicographically strictly less than the quasi-greedy $\\beta$-expansion of 1, $d^*(1,\\beta)$.",
+      "domain_bridges": [
+        "dynamical systems",
+        "combinatorics on words",
+        "number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2333",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem parry_admissible_beta_expansion (β : ℝ) (hβ : β > 1)\n    (d : ℕ → ℕ) (hd : ∀ n, d n < ⌊β⌋₊ + 1) :\n    (∃ x ∈ Set.Ico 0 1, ∀ n, d n = ⌊β * (T β)^n x⌋) ↔\n    ∀ n, LexLt (fun i => d (n + i)) (fun i => d_star_one β (n + i)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the lexicographic order on infinite sequences over a finite alphabet, formalize the $\\beta$-transformation and the quasi-greedy expansion of 1, then prove the equivalence using properties of the shift map and greedy expansions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23097v1",
+      "source_path": "http://arxiv.org/abs/2606.23097v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T10:41:57.159557+00:00",
+      "title": "Parry's Theorem on Admissible Beta-Expansions"
     },
     {
       "ambition_level": "extension",
@@ -36182,11 +36274,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 3,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "6fa489a4",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36198,7 +36290,7 @@
         "Novelty"
       ],
       "id": "moonshot_Pickover_32",
-      "last_attempt_time": "2026-06-23T01:39:02.281343+00:00",
+      "last_attempt_time": "2026-06-23T10:42:15.906109+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -36212,7 +36304,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Pickover)",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:17.617665+00:00",
       "title": "Pickover Clifford Attractor Family"
@@ -36225,7 +36317,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "4ffbd94a",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36251,7 +36343,7 @@
       "research_mode": "team",
       "source_exp_id": "manual_research_brainstorm",
       "source_path": "antigravity:research 2026-06-22 (Rucker)",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-22T11:50:11.785769+00:00",
       "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
@@ -42744,7 +42836,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -42761,7 +42853,7 @@
         "Bridges"
       ],
       "id": "seed_377",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-23T10:42:07.646586+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42775,7 +42867,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432802+00:00",
       "title": "Information Geometry: Fisher Metric on Statistical Models"
