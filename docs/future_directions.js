@@ -240,7 +240,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Correspondence: GL(1) Case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4c420b0",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
       "Physics",
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.909349+00:00",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
@@ -1252,7 +1252,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -2970,7 +2970,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -3119,7 +3119,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "943411ea",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -3129,7 +3129,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -3189,7 +3189,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -3249,6 +3249,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
+  },
+  {
+    "consumed_by_exp_id": "a920a00b",
+    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
+    "domains": [
+      "Geometry",
+      "Novelty"
+    ],
+    "id": "moonshot_Pickover_32",
+    "priority_score": 0.58,
+    "research_mode": "team",
+    "source_exp_id": "manual_research_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-22T11:50:17.617665+00:00",
+    "title": "Pickover Clifford Attractor Family"
   },
   {
     "consumed_by_exp_id": "",
@@ -3349,7 +3364,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
   },
@@ -3473,7 +3488,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5caaa8da",
     "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
     "domains": [
       "EML",
@@ -3483,7 +3498,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.201625+00:00",
     "title": "EML Differential Algebra: Closure Properties"
   },
