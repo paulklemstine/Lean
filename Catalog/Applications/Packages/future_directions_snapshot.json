@@ -7473,6 +7473,35 @@
     "title": "Bounded Tree-Independence Number of K_{1,d}-Free Graphs Excluding K_4 as an Induced Minor"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Erdos-Ko-Rado theorem",
+      "Hilton-Milner theorem",
+      "Frankl-Kupavskii-Zakharov diversity stability",
+      "mathlib: Finset, Set, Finset.card, Finset.inter_nonempty"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any type with decidable equality, any two k-uniform families of finite sets that are cross-intersecting remain cross-intersecting after applying the same standard ij-shift to both families. Here the ij-shift replaces j by i in a set when possible, and the usual family-level shift keeps the original set whenever the shifted set is already present. This is a Lean-friendly compression lemma that can serve as a foundational formalization step toward the paper's more refined S^Q_{U,V}-shift.",
+    "domain_bridges": [
+      "Finite set systems as Set (Finset α)",
+      "Compression/shifting operators as computable transformations on Finset α",
+      "Cross-intersection as a first-order predicate over two families",
+      "Uniformity as a cardinality predicate on all members of a family"
+    ],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_2277",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the pointwise ij-compression Cᵢⱼ(A) = insert i (erase j A) when j ∈ A and i ∉ A, otherwise A. Define the standard family shift Sᵢⱼ(F) by replacing A with Cᵢⱼ(A) only when the compressed set is not already in F. Prove basic lemmas: Cᵢⱼ preserves cardinality for i ≠ j; every shifted family member is either an original member or the compression of one; and if two shifted members are disjoint, then by a case analysis on whether each came from a compressed or uncompressed original, one obtains two original members that were disjoint. This contradicts the assumed cross-intersection of F and G.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:19:41.446757+00:00",
+    "title": "Simultaneous ij-compressions preserve cross-intersection for uniform finite-set families"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.NT",
@@ -7490,7 +7519,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2277",
+    "id": "fd_2278",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the four-digit Kaprekar map and its terminal cycles. Prove the conjugacy to projective doubling on the triangular region T_B. Derive the cycle lengths from the orbits of projective doubling, and characterize the maximum length condition using the order of 2 modulo B.",
@@ -7514,7 +7543,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2278",
+    "id": "fd_2279",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the explicit hypergraph constructions or flag algebra methods used by Pikhurko (for standard Turán density) and Gao et al. (for codegree density) to establish the existence of an irrational positive codegree Turán density, carefully analyzing the extremal configurations under the minimum positive codegree condition.",
@@ -7542,7 +7571,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2279",
+    "id": "fd_2280",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the local structure of the arboreal tower of f_c(x) and the local Tate module of ρ^c at (t) to demonstrate that the local surjectivity conditions for both representations are governed by identical valuation constraints on the parameter c, effectively reversing the established one-way local implication.",
@@ -7551,6 +7580,32 @@
     "status": "available",
     "timestamp": "2026-06-22T23:59:59.738955+00:00",
     "title": "Local Equivalence of Arboreal Maximality and Adelic Surjectivity at (t) for Twisted Carlitz Polynomials"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Data.Polynomial.Basic",
+      "Mathlib.Algebra.BigOperators.Group.Finset.Basic",
+      "Mathlib.Data.Fin.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a GL3 unramified local parameter with Satake parameters a,b,c in a field and trivial central character a*b*c=1, the denominator of the symmetric-square Euler factor multiplied by the denominator of the contragredient standard Euler factor equals the denominator of the tensor-square Euler factor. Equivalently, the local polynomial identity behind L(s,pi,sym^2)L(s,pi^vee)=L(s,pi tensor pi) holds for all field-valued Satake parameters satisfying abc=1.",
+    "domain_bridges": [
+      "Automorphic GL3 unramified Satake parameters to polynomial Euler factors",
+      "Representation-theoretic decomposition Std tensor Std = Sym^2 Std plus exterior square, with exterior square identified with the dual under determinant one"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2281",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Work in Polynomial K for an arbitrary field K. From h : a*b*c = 1 derive a⁻¹ = b*c, b⁻¹ = a*c, and c⁻¹ = a*b using field simplification. Substitute these into the three contragredient factors. The remaining statement is equality of products of the same nine linear polynomial factors, up to commutativity and associativity; close by polynomial extensionality or by ring_nf after the inverse substitutions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19959v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:20:35.676635+00:00",
+    "title": "GL3 unramified symmetric-square Euler factor identity with trivial central character"
   },
   {
     "ambition_level": "grand_challenge",

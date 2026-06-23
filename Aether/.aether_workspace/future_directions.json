@@ -45248,6 +45248,54 @@
       "title": "Bounded Tree-Independence Number of K_{1,d}-Free Graphs Excluding K_4 as an Induced Minor"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Erdos-Ko-Rado theorem",
+        "Hilton-Milner theorem",
+        "Frankl-Kupavskii-Zakharov diversity stability",
+        "mathlib: Finset, Set, Finset.card, Finset.inter_nonempty"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any type with decidable equality, any two k-uniform families of finite sets that are cross-intersecting remain cross-intersecting after applying the same standard ij-shift to both families. Here the ij-shift replaces j by i in a set when possible, and the usual family-level shift keeps the original set whenever the shifted set is already present. This is a Lean-friendly compression lemma that can serve as a foundational formalization step toward the paper's more refined S^Q_{U,V}-shift.",
+      "domain_bridges": [
+        "Finite set systems as Set (Finset α)",
+        "Compression/shifting operators as computable transformations on Finset α",
+        "Cross-intersection as a first-order predicate over two families",
+        "Uniformity as a cardinality predicate on all members of a family"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Logic"
+      ],
+      "id": "fd_2277",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem ijShiftFamily_crossIntersecting\n    {α : Type*} [DecidableEq α]\n    {i j : α} (hij : i ≠ j)\n    {k : ℕ} {F G : Set (Finset α)}\n    (hF : ∀ A ∈ F, A.card = k)\n    (hG : ∀ B ∈ G, B.card = k)\n    (hcross : CrossIntersecting F G) :\n    CrossIntersecting (ijShiftFamily i j F) (ijShiftFamily i j G) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the pointwise ij-compression Cᵢⱼ(A) = insert i (erase j A) when j ∈ A and i ∉ A, otherwise A. Define the standard family shift Sᵢⱼ(F) by replacing A with Cᵢⱼ(A) only when the compressed set is not already in F. Prove basic lemmas: Cᵢⱼ preserves cardinality for i ≠ j; every shifted family member is either an original member or the compression of one; and if two shifted members are disjoint, then by a case analysis on whether each came from a compressed or uncompressed original, one obtains two original members that were disjoint. This contradicts the assumed cross-intersection of F and G.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20085v1",
+      "source_path": "http://arxiv.org/abs/2606.20085v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T00:19:41.446757+00:00",
+      "title": "Simultaneous ij-compressions preserve cross-intersection for uniform finite-set families"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -45274,7 +45322,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2277",
+      "id": "fd_2278",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem kaprekar_max_cycle_length_iff (B : ℕ) (hB : Odd B ∧ B > 3) :\n  max_cycle_length (kaprekar_4_digit_map B) = (B - 1) / 2 ↔\n    Nat.Prime B ∧ B > 5 ∧\n    IsLeast (fun m => 0 < m ∧ ((2^m : ZMod B) = 1 ∨ (2^m : ZMod B) = -1)) ((B - 1) / 2) :=\nby sorry",
@@ -45317,7 +45365,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2278",
+      "id": "fd_2279",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Real.Irrational\nimport Mathlib.Data.Finset.Basic\n\nvariable (k : ℕ) (hk : 3 ≤ k)\n\nstructure KUniformHypergraph where\n  vertices : Finset ℕ\n  edges : Finset (Finset ℕ)\n  hcard : ∀ e ∈ edges, Finset.card e = k\n\nnoncomputable def positiveCodegreeTuránDensity (F : Finset KUniformHypergraph) : ℝ := 0\n\ntheorem exists_irrational_positive_codegree_density (hk : 3 ≤ k) :\n    ∃ F : Finset (KUniformHypergraph), Irrational (positiveCodegreeTuránDensity k F) :=\n  by sorry",
@@ -45364,7 +45412,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2279",
+      "id": "fd_2280",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_arboreal_adelic_equivalence_at_t (Fq : Type*) [Field Fq] [Fintype Fq] (c : Fqˣ) :\n  maximal_local_arboreal_image (f_c c) (place_t) ↔ surjective_local_adelic_image (twisted_Carlitz c) (place_t) := by\n  sorry",
@@ -45383,6 +45431,51 @@
       "thread_id": "",
       "timestamp": "2026-06-22T23:59:59.738955+00:00",
       "title": "Local Equivalence of Arboreal Maximality and Adelic Surjectivity at (t) for Twisted Carlitz Polynomials"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Mathlib.Data.Polynomial.Basic",
+        "Mathlib.Algebra.BigOperators.Group.Finset.Basic",
+        "Mathlib.Data.Fin.Basic"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a GL3 unramified local parameter with Satake parameters a,b,c in a field and trivial central character a*b*c=1, the denominator of the symmetric-square Euler factor multiplied by the denominator of the contragredient standard Euler factor equals the denominator of the tensor-square Euler factor. Equivalently, the local polynomial identity behind L(s,pi,sym^2)L(s,pi^vee)=L(s,pi tensor pi) holds for all field-valued Satake parameters satisfying abc=1.",
+      "domain_bridges": [
+        "Automorphic GL3 unramified Satake parameters to polynomial Euler factors",
+        "Representation-theoretic decomposition Std tensor Std = Sym^2 Std plus exterior square, with exterior square identified with the dual under determinant one"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2281",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nopen Polynomial\n\ntheorem gl3_unramified_sym2_dual_euler_denominator_identity\n    (K : Type*) [Field K] (a b c : K) (habc : a * b * c = 1) :\n    (((1 - C (a * a) * X) * (1 - C (a * b) * X) * (1 - C (a * c) * X) *\n      (1 - C (b * b) * X) * (1 - C (b * c) * X) * (1 - C (c * c) * X)) *\n     ((1 - C (a⁻¹) * X) * (1 - C (b⁻¹) * X) * (1 - C (c⁻¹) * X)) : Polynomial K) =\n    ((1 - C (a * a) * X) * (1 - C (a * b) * X) * (1 - C (a * c) * X) *\n     (1 - C (b * a) * X) * (1 - C (b * b) * X) * (1 - C (b * c) * X) *\n     (1 - C (c * a) * X) * (1 - C (c * b) * X) * (1 - C (c * c) * X) : Polynomial K) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Work in Polynomial K for an arbitrary field K. From h : a*b*c = 1 derive a⁻¹ = b*c, b⁻¹ = a*c, and c⁻¹ = a*b using field simplification. Substitute these into the three contragredient factors. The remaining statement is equality of products of the same nine linear polynomial factors, up to commutativity and associativity; close by polynomial extensionality or by ring_nf after the inverse substitutions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19959v1",
+      "source_path": "http://arxiv.org/abs/2606.19959v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T00:20:35.676635+00:00",
+      "title": "GL3 unramified symmetric-square Euler factor identity with trivial central character"
     },
     {
       "ambition_level": "extension",

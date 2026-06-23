@@ -4420,11 +4420,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any type with decidable equality, any two k-uniform families of finite sets that are cross-intersecting remain cross-intersecting after applying the same standard ij-shift to both families. Here the ij-shift replaces j by i in a set when possible, and the usual family-level shift keeps the original set whenever the shifted set is already present. This is a Lean-friendly compression lemma that can serve as a foundational formalization step toward the paper's more refined S^Q_{U,V}-shift.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_2277",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:19:41.446757+00:00",
+    "title": "Simultaneous ij-compressions preserve cross-intersection for uniform finite-set families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "In any odd base B > 3, the maximum length of a terminal cycle of the four-digit Kaprekar map equals (B-1)/2 if and only if B is a prime p > 5 and the least positive integer m satisfying 2^m \u2261 \u00b11 (mod p) is exactly m = (p-1)/2.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2277",
+    "id": "fd_2278",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -4438,7 +4452,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2278",
+    "id": "fd_2279",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20494v1",
@@ -4453,13 +4467,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2279",
+    "id": "fd_2280",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20046v1",
     "status": "available",
     "timestamp": "2026-06-22T23:59:59.738955+00:00",
     "title": "Local Equivalence of Arboreal Maximality and Adelic Surjectivity at (t) for Twisted Carlitz Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a GL3 unramified local parameter with Satake parameters a,b,c in a field and trivial central character a*b*c=1, the denominator of the symmetric-square Euler factor multiplied by the denominator of the contragredient standard Euler factor equals the denominator of the tensor-square Euler factor. Equivalently, the local polynomial identity behind L(s,pi,sym^2)L(s,pi^vee)=L(s,pi tensor pi) holds for all field-valued Satake parameters satisfying abc=1.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2281",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19959v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:20:35.676635+00:00",
+    "title": "GL3 unramified symmetric-square Euler factor identity with trivial central character"
   },
   {
     "consumed_by_exp_id": "",
