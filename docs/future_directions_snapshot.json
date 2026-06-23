@@ -4876,6 +4876,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "OEIS A080170",
+      "FC100OpenSet1"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The original theorem characterizes $D(k) = \\gcd_{2\\leq q\\leq k+1} \\binom{qk}{k} = 1$ based on the largest prime-power component of $n=k+1$. We propose a generalization: For fixed $k \\geq 2$ and a step size $s \\geq 1$, define $D(k, s) = \\gcd_{j=1}^{\\lfloor (k+1)/s \\rfloor} \\binom{(js)k}{k}$. The conjecture is that $D(k, s) = 1$ if and only if for every prime power $p^a \\parallel n=k+1$, the condition $n/p^a > p^a$ is modified by a factor dependent on $s$, specifically involving the p-adic valuation of $s$.",
+    "domain_bridges": [
+      "p-adic Analysis",
+      "Combinatorics",
+      "Formal Verification"
+    ],
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_2388",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the finite-difference argument to show that any prime divisor of $D(k, s)$ must divide $s(k+1)$. Use Lucas' Theorem to analyze the p-adic carry behavior of $\\binom{qsk}{k}$ and apply the digit-box stabilizer method to determine the conditions under which the gcd remains 1, specifically examining the interaction between the base-$p$ expansions of $s$ and $k$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22997v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:28:01.614691+00:00",
+    "title": "Generalization of the Binomial GCD Criterion for Arithmetic Progressions of Upper Indices"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MR1577579",
       "MR0025715",
       "MR2483235"
@@ -4890,7 +4917,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2388",
+    "id": "fd_2389",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define Pólya trees via the functional equation A(z) = z·exp(A(z))·Φ(z) as a formal power series. Differentiate both sides to obtain z·A'(z) = A(z)·(1 + Σ_{i≥1} z^i·A'(z^i)). Extract the coefficient of z^k on both sides. The inner sum Σ_{i≥1} z^i·A'(z^i) has coefficient [z^k] = Σ_{d|k} d·a_d = ω_k by collecting terms where i·j = k with j indexing powers of A'. The left side gives k·a_k and the right side gives a_k + Σ_{j=1}^{k-1} a_j·ω_{k-j}, yielding the recurrence after rearrangement.",
@@ -4918,7 +4945,7 @@
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2389",
+    "id": "fd_2390",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the cohomological generic representations of GL(n) over number fields, define the bottom-degree Betti-Whittaker period functional via continuous group cohomology H^b_ct(GL_n(k_∞)⁰; F_π ⊗ π) → ℂ through the Whittaker pairing, establish the identification π₀(k_∞×) ≅ π₀(GL_n(k_∞)) via determinant, then prove the period relation by extending Chen's argument using the functional equation framework and the Casselman-Wallach module structure on the Whittaker model.",
@@ -4927,6 +4954,34 @@
     "status": "available",
     "timestamp": "2026-06-23T22:02:58.683140+00:00",
     "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.AG",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the imaginary quadratic field K = Q(i), the automorphism group of a very general S_K(2)-polarized K3 surface X_{K,2} is isomorphic to the projective principal congruence subgroup of level 2 of the Bianchi group PGL_2(O_K). Specifically, Aut(X_{Q(i),2}) ≅ PΓ_{Q(i)}(2).",
+    "domain_bridges": [
+      "Arithmetic Groups",
+      "K3 Surfaces",
+      "Hyperbolic Geometry",
+      "Lattice Theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2391",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit double-cover models of the K3 surface from the Kummer surface Km(E_K x E_K). Compute the Néron-Severi lattice to show it is isometric to S_K(2). Prove that the representation of the automorphism group on the Néron-Severi lattice is injective, and explicitly match the automorphisms to the generators of the level-2 projective congruence subgroup via their geometric actions (deck involutions and Mordell-Weil translations).",
+    "research_mode": "team",
+    "source_exp_id": "2606.22921v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:28:18.306332+00:00",
+    "title": "Exact Realization of Level-2 Bianchi Congruence Subgroups as K3 Surface Automorphisms over Q(i)"
   },
   {
     "ambition_level": "extension",

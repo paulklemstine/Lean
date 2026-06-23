@@ -38803,6 +38803,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "OEIS A080170",
+        "FC100OpenSet1"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The original theorem characterizes $D(k) = \\gcd_{2\\leq q\\leq k+1} \\binom{qk}{k} = 1$ based on the largest prime-power component of $n=k+1$. We propose a generalization: For fixed $k \\geq 2$ and a step size $s \\geq 1$, define $D(k, s) = \\gcd_{j=1}^{\\lfloor (k+1)/s \\rfloor} \\binom{(js)k}{k}$. The conjecture is that $D(k, s) = 1$ if and only if for every prime power $p^a \\parallel n=k+1$, the condition $n/p^a > p^a$ is modified by a factor dependent on $s$, specifically involving the p-adic valuation of $s$.",
+      "domain_bridges": [
+        "p-adic Analysis",
+        "Combinatorics",
+        "Formal Verification"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "MachineLearning"
+      ],
+      "id": "fd_2388",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem binomial_gcd_generalization (k s : ℕ) (hk : k ≥ 2) (hs : s ≥ 1) : \n  Nat.gcd {binom (j * s * k) k | j : ℕ, 1 ≤ j, j * s ≤ k + 1} = 1 ↔ \n  ∀ (p : ℕ), p.Prime → (let a := p_adic_valuation p (k + 1) in (k + 1) / p^a > p^a * (s_factor p s))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Extend the finite-difference argument to show that any prime divisor of $D(k, s)$ must divide $s(k+1)$. Use Lucas' Theorem to analyze the p-adic carry behavior of $\\binom{qsk}{k}$ and apply the digit-box stabilizer method to determine the conditions under which the gcd remains 1, specifically examining the interaction between the base-$p$ expansions of $s$ and $k$.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22997v1",
+      "source_path": "http://arxiv.org/abs/2606.22997v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T22:28:01.614691+00:00",
+      "title": "Generalization of the Binomial GCD Criterion for Arithmetic Progressions of Upper Indices"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "MR1577579",
         "MR0025715",
         "MR2483235"
@@ -38823,7 +38869,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2388",
+      "id": "fd_2389",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem polya_tree_coeff_recurrence (a : ℕ → ℝ) (ha1 : a 1 = 1) (hA : ∀ k, a k = (1/(k-1)) * ∑ j in Finset.range (k-1), a (j+1) * ∑ d in Nat.divisors k, d * a d) : True := sorry -- Placeholder; actual statement requires defining A(z) via the functional equation and deriving the recurrence from coefficient extraction of the differentiated identity",
@@ -38870,7 +38916,7 @@
         "Algebra",
         "Logic"
       ],
-      "id": "fd_2389",
+      "id": "fd_2390",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem betti_whittaker_period_contragredient_relation (k : Type*) [NumberField k] (n : ℕ) (hn : 0 < n) (π : CohomologicalGenericRepresentation k n) (ε : QuadraticCharacter (π₀ (k_∞ˣ k))) : let b := (NumberField.r₁ k) * (n^2 / 4) + (NumberField.r₂ k) * (n * (n - 1) / 2); bettiWhittakerPeriod π.contragredient π.contragredient.coefficientSystem ε b = ε (NumberField.disc k)^b * bettiWhittakerPeriod π π.coefficientSystem ε b",
@@ -38889,6 +38935,53 @@
       "thread_id": "",
       "timestamp": "2026-06-23T22:02:58.683140+00:00",
       "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.AG",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For the imaginary quadratic field K = Q(i), the automorphism group of a very general S_K(2)-polarized K3 surface X_{K,2} is isomorphic to the projective principal congruence subgroup of level 2 of the Bianchi group PGL_2(O_K). Specifically, Aut(X_{Q(i),2}) ≅ PΓ_{Q(i)}(2).",
+      "domain_bridges": [
+        "Arithmetic Groups",
+        "K3 Surfaces",
+        "Hyperbolic Geometry",
+        "Lattice Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2391",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem bianchi_level_2_automorphism_realization (K : Type*) [Field K] [NumberField K] (hK : K = ℚ[I]) : ∃ (X : Type*) [AlgebraicGeometry.Variety X] [IsK3Surface X], Nonempty (MulEquiv (Aut X) (ProjectivePrincipalCongruenceSubgroup 2 (RingOfIntegers K))) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct explicit double-cover models of the K3 surface from the Kummer surface Km(E_K x E_K). Compute the Néron-Severi lattice to show it is isometric to S_K(2). Prove that the representation of the automorphism group on the Néron-Severi lattice is injective, and explicitly match the automorphisms to the generators of the level-2 projective congruence subgroup via their geometric actions (deck involutions and Mordell-Weil translations).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22921v1",
+      "source_path": "http://arxiv.org/abs/2606.22921v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T22:28:18.306332+00:00",
+      "title": "Exact Realization of Level-2 Bianchi Congruence Subgroups as K3 Surface Automorphisms over Q(i)"
     },
     {
       "ambition_level": "extension",

@@ -2961,11 +2961,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The original theorem characterizes $D(k) = \\gcd_{2\\leq q\\leq k+1} \\binom{qk}{k} = 1$ based on the largest prime-power component of $n=k+1$. We propose a generalization: For fixed $k \\geq 2$ and a step size $s \\geq 1$, define $D(k, s) = \\gcd_{j=1}^{\\lfloor (k+1)/s \\rfloor} \\binom{(js)k}{k}$. The conjecture is that $D(k, s) = 1$ if and only if for every prime power $p^a \\parallel n=k+1$, the condition $n/p^a > p^a$ is modified by a factor dependent on $s$, specifically involving the p-adic valuation of $s$.",
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_2388",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22997v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:28:01.614691+00:00",
+    "title": "Generalization of the Binomial GCD Criterion for Arithmetic Progressions of Upper Indices"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let (a_k)_{k \u2265 1} be the P\u00f3lya tree enumeration sequence with ordinary generating function A(z) = \u03a3_{k\u22651} a_k z^k satisfying A(z) = z\u00b7exp(A(z))\u00b7\u03a6(z) where \u03a6(z) = exp(\u03a3_{i\u22652} A(z^i)/i). Define \u03c9_k = \u03a3_{d|k} d\u00b7a_d. Then a_1 = 1 and for all k \u2265 2, a_k = (1/(k-1))\u00b7\u03a3_{j=1}^{k-1} a_j\u00b7\u03c9_{k-j}.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2388",
+    "id": "fd_2389",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -2980,13 +2995,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2389",
+    "id": "fd_2390",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
     "status": "available",
     "timestamp": "2026-06-23T22:02:58.683140+00:00",
     "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the imaginary quadratic field K = Q(i), the automorphism group of a very general S_K(2)-polarized K3 surface X_{K,2} is isomorphic to the projective principal congruence subgroup of level 2 of the Bianchi group PGL_2(O_K). Specifically, Aut(X_{Q(i),2}) \u2245 P\u0393_{Q(i)}(2).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2391",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22921v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:28:18.306332+00:00",
+    "title": "Exact Realization of Level-2 Bianchi Congruence Subgroups as K3 Surface Automorphisms over Q(i)"
   },
   {
     "consumed_by_exp_id": "",
