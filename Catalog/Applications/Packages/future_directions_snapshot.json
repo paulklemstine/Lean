@@ -957,7 +957,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62217675",
     "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
     "domain_bridges": [],
     "domains": [
@@ -971,7 +971,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432775+00:00",
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
@@ -4152,6 +4152,60 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "cs.IT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any left-regular bipartite graph G of degree d ≥ 3 with girth at least 2s (equivalently, G is s-optimal), the binary linear code B(G) has minimum distance at least 2(d-1)^{s-2}. This conjecture asserts that the girth characterization of s-optimal expanders proven in the paper transfers to a strong lower bound on the minimum distance of the associated code, providing the coding-theoretic foundation needed for the post-quantum key exchange application.",
+    "domain_bridges": [
+      "combinatorics--coding_theory",
+      "graph_theory--expander_graphs"
+    ],
+    "domains": [
+      "Cryptography",
+      "Pythagorean"
+    ],
+    "id": "fd_2363",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the girth ≥ 2s condition to show that any nonempty subset X ⊆ L with |X| < 2(d-1)^{s-2} cannot have all right vertices with even-degree neighborhoods (the parity condition defining B(G)), by arguing that the local tree structure around small sets forces at least one right vertex to have odd degree in the induced subgraph. The factor of 2 arises from the bipartite structure and the even-girth constraint.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:55:03.027965+00:00",
+    "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.AT",
+      "math.NT",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The codimension-i rational cohomology of the special linear group SL_n(Z) vanishes for n >= i+2. Equivalently, the i-th rational cohomology group H^i(SL_n(Z); Q) is trivial for all i >= (n choose 2) - n + 2.",
+    "domain_bridges": [
+      "Homological Stability",
+      "Arithmetic Groups",
+      "Group Cohomology"
+    ],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2364",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a highly connected complex of unimodular vectors or forests over the integers, and use it to establish the vanishing of the rational homology in high degrees, extending the combinatorial and homological methods used for i=0, 1, and 2.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:56:00.070698+00:00",
+    "title": "Church-Farb-Putman Vanishing Conjecture for SL_n(Z)"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -4503,7 +4557,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9dc8a91c",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -4516,7 +4570,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -4957,7 +5011,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d5a04e50",
+    "consumed_by_exp_id": "",
     "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domain_bridges": [],
     "domains": [
@@ -4970,7 +5024,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.344784+00:00",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },

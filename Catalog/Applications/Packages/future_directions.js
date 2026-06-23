@@ -718,7 +718,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Type Theory: Cubical Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "62217675",
     "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
     "domains": [
       "Physics",
@@ -729,7 +729,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432775+00:00",
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
@@ -2604,6 +2604,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any left-regular bipartite graph G of degree d \u2265 3 with girth at least 2s (equivalently, G is s-optimal), the binary linear code B(G) has minimum distance at least 2(d-1)^{s-2}. This conjecture asserts that the girth characterization of s-optimal expanders proven in the paper transfers to a strong lower bound on the minimum distance of the associated code, providing the coding-theoretic foundation needed for the post-quantum key exchange application.",
+    "domains": [
+      "Cryptography",
+      "Pythagorean"
+    ],
+    "id": "fd_2363",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:55:03.027965+00:00",
+    "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The codimension-i rational cohomology of the special linear group SL_n(Z) vanishes for n >= i+2. Equivalently, the i-th rational cohomology group H^i(SL_n(Z); Q) is trivial for all i >= (n choose 2) - n + 2.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2364",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:56:00.070698+00:00",
+    "title": "Church-Farb-Putman Vanishing Conjecture for SL_n(Z)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -2863,7 +2893,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "9dc8a91c",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -2873,7 +2903,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -3202,7 +3232,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Algebra: Closure Properties"
   },
   {
-    "consumed_by_exp_id": "d5a04e50",
+    "consumed_by_exp_id": "",
     "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
     "domains": [
       "EML",
@@ -3212,7 +3242,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.344784+00:00",
     "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
