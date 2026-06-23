@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7e82348b",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Mandelbrot Quadratic Recurrence & Number Theory\n\nDerived from the research cycle that produced:\n\n- `Tropical/MandelbrotGleason.lean` — the Gleason polynomials `gₙ = g_{n-1}² + X`",
-      "quality_score": 0.44762947252747254,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-06-16T15:04:12",
-      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-    },
-    {
       "cycle_id": "fba6400c",
       "domain": "Computation",
       "key_insight": "# Future Directions — Borsuk–Ulam ⇄ Arrow (Social Choice Is Topology)\n\nDerived from the cycle in `Computation/BorsukUlamArrow.lean` and\n`Computation/BorsukUlamArrowDichotomy.lean`. Each conjecture is",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-23T10:59:59",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
+    },
+    {
+      "cycle_id": "57fbcb2f",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Orderly Friedman Numbers\n\nBuilding on `Computation/OrderlyFriedman.lean` (formalization of orderly Friedman\nnumbers A080035 via an expression language, five canonical witnesses,",
+      "quality_score": 0.48476875555555554,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-23T11:40:48",
+      "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers ("
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T10:59:59",
+  "last_updated": "2026-06-23T11:40:48",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "3fd7a316",
-        "quality": 0.8053600000000001,
-        "theorems": 25,
-        "title": "`Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
-      },
-      {
         "cycle_id": "3b102b1d",
         "quality": 0.7943200000000001,
         "theorems": 75,
@@ -3823,6 +3817,12 @@
         "quality": 0.43946266666666667,
         "theorems": 3,
         "title": "Finite approximate Ramsey degrees characterize metrizable universal minimal flow"
+      },
+      {
+        "cycle_id": "57fbcb2f",
+        "quality": 0.48476875555555554,
+        "theorems": 16,
+        "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers)"
       }
     ],
     "Pythagorean": [

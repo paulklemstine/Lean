@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "57fbcb2f",
     "filename": "oeis_sequence_orderly_friedman_numbers_or_good_or_.json",
     "pkg_num": 11,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.48476875555555554,
     "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order"
   },
   {
@@ -328,8 +328,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.48476875555555554,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order"
     }

@@ -676,7 +676,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8d543673",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -688,7 +688,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -1793,7 +1793,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ebb608b8",
+    "consumed_by_exp_id": "",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1806,7 +1806,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -3700,6 +3700,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Orderly Friedman Numbers\n\nBuilding on `Computation/OrderlyFriedman.lean` (formalization of orderly Friedman\nnumbers A080035 via an expression language, five canonical witnesses,\n`orderly_imp_friedman`, and `orderlyFriedman_ge_ten`), we propose the following\nbold, testable conjectures for follow-up cycles.\n\n## C1. No two-digit orderly Friedman numbers\n**Conjecture.** There is no orderly Friedman number `n` with `10 ≤ n ≤ 99`.\n(We proved `n ≥ 10`; the smallest known term is 127.) A Lean proof needs a\nfiniteness argument bounding the size of relevant expressions for two-digit `n`\n(only one operation between two single digits, finitely many ops), making this a\ndecidable finite case analysis once expression depth is bounded.\n\n## C2. Infinitude via an explicit power family\n**Conjecture.** Infinitely many orderly Friedman numbers arise as `5^k`.\nEvidence: `3125 = 5^5 = (3·1+2)^5` is orderly (digits `3,1,2,5` in order).\nTestable: search the values `5^k` for orderly witnesses and conjecture an explicit\nparametric construction giving an infinite subfamily.\n\n## C3. Concatenation-prefix closure\n**Conjecture.** If `n` is orderly Friedman with leading-digit-group `g`, then\ninfinitely many of the numbers obtained by prepending an evaluable digit block\n(e.g. `0`-free prefixes contributing an additive/multiplicative neutral combination)\nare again orderly Friedman. Formalize a \"prefix lemma\" and test it against A080035.\n\n## C4. Order penalty (density gap)\n**Conjecture.** Orderly Friedman numbers are asymptotically rarer than Friedman\nnumbers: `#{orderly ≤ N} / #{Friedman ≤ N} → 0`. The proven implication\n`orderly_imp_friedman` gives the trivial `≤`; the conjecture asserts the ratio\nvanishes. Testable computationally by counting both sets up to `N = 10^k`.\n\n## C5. Base-`b` generalization is order-stable\n**Conjecture.** Define base-`b` orderly Friedman numbers by replacing\n`Nat.digits 10` with `Nat.digits b`. Then for every base `b ≥ 3` the set is\nnonempty, and the analogue of `orderlyFriedman_ge_ten` holds: every base-`b`\norderly Friedman number is `≥ b`. The `≥ b` half is already within reach of the\npresent machinery (`numLits_le_digitSeq_length` + `Nat.lt_digits_length_iff`);\nnonemptiness for each base is the open part.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_2338",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "57fbcb2f",
+    "status": "available",
+    "timestamp": "2026-06-23T11:40:40.115834+00:00",
+    "title": "Building on `Computation/OrderlyFriedman.lean` (formalization of orderly Friedma"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3911,26 +3931,6 @@
     "status": "in_progress",
     "timestamp": "2026-06-22T11:50:11.785769+00:00",
     "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "9da6c75a",
-    "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Novelty"
-    ],
-    "id": "moonshot_Pickover_32",
-    "lineage_refs": [],
-    "priority_score": 0.58,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "manual_research_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-22T11:50:17.617665+00:00",
-    "title": "Pickover Clifford Attractor Family"
   },
   {
     "ambition_level": "extension",
@@ -4312,7 +4312,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5a2118a3",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -4325,14 +4325,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "13912104",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domain_bridges": [],
     "domains": [
@@ -4345,7 +4345,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
