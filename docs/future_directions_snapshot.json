@@ -1019,7 +1019,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "06454730",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domain_bridges": [],
     "domains": [
@@ -1032,7 +1032,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -4513,7 +4513,7 @@
       "Mathlib.Data.Finset.Basic",
       "Mathlib.Algebra.BigOperators.Fin"
     ],
-    "consumed_by_exp_id": "ca1a2c0c",
+    "consumed_by_exp_id": "",
     "description": "For every n,k,r with n ≥ 2k, k ≥ 3, and r ≥ 2, let (𝓕_i)_{i∈Fin r} be k-uniform families of subsets of Fin n. Assume each 𝓕_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i ≠ j, every A ∈ 𝓕_i and B ∈ 𝓕_j have A ∩ B ≠ ∅. Then the multilateral product is bounded by the Hilton--Milner value: ∏_{i∈Fin r} |𝓕_i| ≤ h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
     "domain_bridges": [
       "Represents k-uniform set families as Finset (Finset (Fin n)) in Lean 4.",
@@ -4529,7 +4529,7 @@
     "proof_strategy": "Formalize the paper's two-family theorem as a Lean lemma: for any two non-star k-uniform cross-intersecting families A,B ⊆ binom(Fin n,k), |A|*|B| ≤ h(n,k)^2. Apply this lemma to every unordered pair of distinct indices i,j ∈ Fin r. Multiplying all pairwise inequalities gives (∏ᵢ |𝓕_i|)^(r-1) ≤ (h(n,k)^r)^(r-1), since each |𝓕_i| occurs in exactly r-1 pair products. Use positivity/monotonicity of natural powers to extract the (r-1)-st root, noting r ≥ 2.",
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:25:43.582970+00:00",
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
@@ -4762,6 +4762,33 @@
     "status": "available",
     "timestamp": "2026-06-23T20:33:56.015910+00:00",
     "title": "Base-b Cusick Bias for Sum-of-Digits Increments"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO/2025_fix_density_S21",
+      "Balogh_Lidicky_Mubayi_Pfender_Volec_star_inducibility",
+      "Basit_Granet_Horsley_Kundgen_Staden_semi_inducibility"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 2, there exists an open interval I_k ⊂ (0,1) such that for all β ∈ I_k, the minimum fixed-density semi-inducibility of the red-blue star S_{k,1} (with k red edges and 1 blue edge from a distinguished center) at density β strictly exceeds min(β^k(1−β), β(1−β)^k), the envelope formed by the quasi-clique and quasi-star constructions. This generalizes the paper's result for S_{2,1}, where the true minimum is given by a three-class complement-split family rather than the natural quasi-star/quasi-clique endpoint profile on an interval around β = 1/2. For S_{k,1}, the conjectured minimizer is a step-function graphon with at most k+1 classes.",
+    "domain_bridges": [
+      "graph_limits",
+      "flag_algebras",
+      "variational_calculus_on_graphons"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2384",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the paper's transfer argument with degree-power tie-breaking to the functional f_k(d) = d(d−1)⋯(d−k+1)(n−1−d). Reduce the graphon variational problem to almost-regular, threshold, and finite-staircase optimizations. Show that any graphon achieving the quasi-star/quasi-clique envelope can be perturbed into a (k+1)-class complement-split graphon that strictly decreases the S_{k,1} density at the same edge density, using a Lagrangian comparison on the class-structured ansatz. The key step is proving that the complement-split family dominates the envelope on an interval whose width grows with k.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23351v1",
+    "status": "available",
+    "timestamp": "2026-06-23T20:57:57.730978+00:00",
+    "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
   {
     "ambition_level": "extension",
@@ -5213,7 +5240,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "90920e5d",
+    "consumed_by_exp_id": "a4a5a639",
     "description": "Formalize Rucker's continuous-valued cellular automata and the 'gnarl' complexity measure characterizing the edge-of-chaos regime where unpredictable-but-structured patterns arise, relating it to Wolfram class-4 and computational irreducibility. (Rucker)",
     "domain_bridges": [],
     "domains": [
