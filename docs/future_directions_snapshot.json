@@ -15,7 +15,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -590,7 +590,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432770+00:00",
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
@@ -611,7 +611,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-18T03:56:25.432792+00:00",
     "title": "Elliptic Curve Arithmetic: Group Law Formalization"
   },
@@ -750,7 +750,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -1229,7 +1229,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432755+00:00",
     "title": "Proof Complexity: Resolution and Cutting Planes"
   },
@@ -1271,7 +1271,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1350,7 +1350,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-08T19:25:08.870932+00:00",
     "title": "Wall-Sun-Sun Primes"
   },
@@ -1847,7 +1847,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -3638,7 +3638,7 @@
     "proof_strategy": "Constructive analysis combining subgroup inclusion properties with graph connectivity criteria",
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-23T09:55:40.099936+00:00",
     "title": "Connectivity of co-maximal subgroup graphs for finite groups"
   },
@@ -3749,7 +3749,7 @@
     "proof_strategy": "Formalize the paper’s inequality proof via the Rayleigh quotient for the nonnegative signless up-Laplacian. Use r-down path connectivity to obtain irreducibility and hence a strictly positive Perron vector. Analyze every equality condition in the chain of inequalities: local homology vanishing should force the relevant link shadows to attain their extremal Kruskal-Katona-type lower bounds, while equality in the Perron/Rayleigh estimates should force all maximal r-faces to contain a common core of size r+1-t and to contain every t-subset of the complementary vertex set. The remaining task is to replace the paper’s large-n rigidity lemma by an exact finite rigidity lemma for the equality case.",
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T11:22:47.373232+00:00",
     "title": "Threshold-free equality case for the local-homology signless Laplacian bound"
   },
@@ -4172,7 +4172,7 @@
     "proof_strategy": "Use the girth ≥ 2s condition to show that any nonempty subset X ⊆ L with |X| < 2(d-1)^{s-2} cannot have all right vertices with even-degree neighborhoods (the parity condition defining B(G)), by arguing that the local tree structure around small sets forces at least one right vertex to have odd degree in the induced subgraph. The factor of 2 arises from the bipartite structure and the even-girth constraint.",
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-23T15:55:03.027965+00:00",
     "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
   },
@@ -4615,6 +4615,36 @@
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Erdos Problem 400",
+      "Legendre formula for p-adic valuations of factorials",
+      "Kummer carries and binary digit sums",
+      "mathlib: NumberTheory.Padics.PadicVal",
+      "mathlib: NumberTheory.ArithmeticFunction",
+      "mathlib: Analysis.Asymptotics.Asymptotics"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
+    "domain_bridges": [
+      "factorial divisibility to p-adic valuation inequalities",
+      "binary digit sums to carries in addition",
+      "density-one asymptotics to filter convergence over finite counting measures"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2379",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Legendre's formula to translate a_1! ... a_k! | n! into simultaneous digit-sum inequalities. The paper proves the upper bound from the binary digit-sum obstruction and a density-one lower bound from mixed 2--3 rarefaction. The conjectural strengthening is that the binary obstruction is asymptotically sharp for almost all n. A proof would likely construct, for almost every n, admissible tuples a_i whose total excess is ((k - 1) / log 2 - o(1)) log n, while controlling all odd-prime valuation constraints by showing that the binary carry construction can be locally repaired at negligible logarithmic cost.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23661v1",
+    "status": "available",
+    "timestamp": "2026-06-23T18:54:10.361464+00:00",
+    "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Borel--Serre virtual cohomological dimension and duality for finite-index subgroups of SL_n(Z)",
@@ -4635,7 +4665,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2379",
+    "id": "fd_2380",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Borel--Serre duality to identify H^{binom(n,2)-3}(Gamma_{0,n}(p); Q) with the dual of H_3(Gamma_{0,n}(p); St_n ⊗ Q), where St_n is the Steinberg module. Extend the paper's codimension-one and codimension-two spectral-sequence argument to total degree 3. The expected new input is a strengthened acyclicity range for the relevant sharbly or partial-frame complex modulo the Hecke congruence action, together with explicit control of stabilizer homology in degrees at most 3. The conjectural linear bound 10p+11 continues the observed codimension-one and codimension-two pattern 4p+5, 7p+8.",
@@ -4644,6 +4674,37 @@
     "status": "available",
     "timestamp": "2026-06-23T18:04:16.541804+00:00",
     "title": "Codimension-three rational cohomology of Hecke congruence subgroups vanishes in a linear stable range"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.LinearAlgebra.Matrix.Spectrum",
+      "Mathlib.LinearAlgebra.Matrix.Symmetric",
+      "Mathlib.Analysis.InnerProductSpace.PiL2",
+      "Mathlib.Data.Matrix.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let Σ be a finite connected signed simple graph, let v be a non-isolated vertex, and let ρ(Σ) denote the spectral radius of its signed adjacency matrix. The paper proves ρ(Σ)^2 ≤ ρ(Σ - v)^2 + 2 d(v) - 1. Conjecture: equality holds if and only if either the underlying unsigned graph is a star and v is a pendant vertex, or the underlying unsigned graph is complete and the signing is balanced or antibalanced.",
+    "domain_bridges": [
+      "signed graphs as symmetric real matrices",
+      "spectral radius via finite-dimensional eigenspaces",
+      "Perron-Frobenius comparison with the unsigned adjacency matrix",
+      "switching equivalence of signed graphs"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2381",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize signed simple graphs as symmetric {−1,0,1}-valued adjacency matrices over a finite vertex type, with deletion as principal submatrix restriction. Prove the vertex-deletion inequality using the block-matrix spectral-radius lemma from the paper. For equality, trace equality through the block estimate and through |A(Σ)| ≤ A(G). Show that equality forces the underlying unsigned graph to be one of the unsigned extremal cases of Sun-Das: a star with v pendant or a complete graph. In the star case every signing is switching-equivalent on a tree, so equality follows. In the complete case, prove that a signed complete graph on n vertices has spectral radius n−1 exactly when its signing is balanced or antibalanced, equivalently switching-equivalent to the all-positive or all-negative complete graph.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23584v1",
+    "status": "available",
+    "timestamp": "2026-06-23T18:55:02.130931+00:00",
+    "title": "Equality cases for signed vertex-deletion spectral-radius bound"
   },
   {
     "ambition_level": "extension",
@@ -5115,7 +5176,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "312c5627",
+    "consumed_by_exp_id": "a920a00b",
     "description": "Formalize the Pickover/Clifford strange-attractor parameter family (de Jong, Pickover attractors): their fixed-point structure, basin geometry, and the bifurcation diagram of attractor-type vs. parameter. (Pickover)",
     "domain_bridges": [],
     "domains": [
@@ -5186,7 +5247,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.309278+00:00",
     "title": "Category-Theoretic Neural Architectures"
   },
@@ -5385,7 +5446,7 @@
     "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
@@ -5725,7 +5786,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.562165+00:00",
     "title": "Fermat's Last Theorem for Polynomials"
   },
@@ -5765,7 +5826,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
@@ -5805,7 +5866,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -6085,7 +6146,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
@@ -6105,7 +6166,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
