@@ -1518,7 +1518,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2282",
+    "id": "fd_2284",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20407v1",
@@ -1821,7 +1821,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2283",
+    "id": "fd_2285",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",

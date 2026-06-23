@@ -2043,7 +2043,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2282",
+    "id": "fd_2284",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Given a continuous G-action on a nonempty compact Hausdorff space X, restrict it to the dense subgroup H. Extreme amenability of H gives x ∈ X fixed by every h ∈ H. For arbitrary g ∈ G, the orbit map a ↦ a • x is continuous, and the equalizer of this map with the constant map a ↦ x is closed in G because X is Hausdorff. This closed set contains the dense subset H, hence is all of G. Therefore g • x = x for every g ∈ G.",
@@ -2451,7 +2451,7 @@
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2283",
+    "id": "fd_2285",
     "lineage_refs": [],
     "priority_score": 0.7,
     "proof_strategy": "",
