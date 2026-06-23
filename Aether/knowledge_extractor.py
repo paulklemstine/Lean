@@ -163,12 +163,10 @@ class KnowledgeExtractor:
         self.aristotle_loop = AristotleLoop(exploration_constant=1.5)
         self.git = GitAutomator(self.catalog_root.parent)
 
-        # SQLite-backed theorem index for fast novelty/duplicate detection
-        from theorem_database import TheoremDatabase
-        self.theorem_db = TheoremDatabase(
-            db_path=self.workspace / "theorems.sqlite",
-            catalog_root=self.catalog_root,
-        )
+        # Novelty/duplicate detection no longer uses a SQLite index: it corrupted
+        # on SIGTERM mid-rebuild and produced a 142MB file that blocked pushes.
+        # _classify_theorem_novelty now counts every theorem as "new" (disproofs
+        # still detected by keyword). self.theorem_db is intentionally absent.
 
         # Content-addressable archive of every Aristotle project input/output
         archive_root = self.config.get("archive", {}).get("root_dir", "../Archive")
@@ -1764,61 +1762,31 @@ Research mode: {concept.research_mode}
         return job
 
     def _classify_theorem_novelty(self, result_lean: str, lean_files: List[str]) -> Dict[str, int]:
-        """Classify each theorem in result_lean relative to the existing catalog.
+        """Classify each theorem in result_lean.
 
-        Returns counts by novelty bucket: new, strengthening, duplicate, disproof, unknown.
-        Uses the SQLite theorem index for fast lookups.
+        Novelty/duplicate detection against the catalog was removed: the SQLite
+        theorem index corrupted on SIGTERM mid-rebuild and produced a 142MB file
+        that blocked pushes, and the per-theorem file-scan fallback was too slow
+        on a large catalog. Every theorem now counts as "new"; disproofs are
+        still detected by keyword. The dict shape is preserved so downstream
+        callers ([Novelty] metrics, quality scoring) keep working — the novelty
+        input simply no longer differentiates duplicate vs genuinely-new work.
         """
         import re as _re
         counts = {"new": 0, "strengthening": 0, "duplicate": 0, "disproof": 0, "unknown": 0}
-        if not self.catalog_root or not self.catalog_root.exists():
-            return counts
-
-        # Ensure the theorem DB is up to date with the latest catalog
-        if hasattr(self, "theorem_db") and self.theorem_db:
-            try:
-                self.theorem_db.rebuild_if_needed()
-            except Exception:
-                pass
-
-        # Extract theorems from the new result
         theorem_decl_pattern = _re.compile(
             r"^(?:theorem|lemma|nonrec theorem|protected theorem|private theorem|example)\s+(\w+)",
             _re.MULTILINE,
         )
         for m in theorem_decl_pattern.finditer(result_lean):
-            name = m.group(1)
-            # Grab the next ~400 chars as a rough statement signature
             start = m.end()
             statement = result_lean[start:start + 400].strip()
             lower_stmt = statement.lower()
             is_disproof = any(
                 kw in lower_stmt for kw in ("not exists", "no such", "false", "disprove", "counterexample")
             )
-
-            # Use SQLite theorem index if available, fall back to file scan
-            in_catalog = False
-            if hasattr(self, "theorem_db") and self.theorem_db:
-                try:
-                    in_catalog = self.theorem_db.contains_name(name)
-                except Exception:
-                    pass
-            if not in_catalog and not (hasattr(self, "theorem_db") and self.theorem_db):
-                # Fallback for safety if DB not initialized
-                for f in self.catalog_root.rglob("*.lean"):
-                    try:
-                        if name in f.read_text(encoding="utf-8", errors="ignore"):
-                            in_catalog = True
-                            break
-                    except Exception:
-                        pass
-
             if is_disproof:
                 counts["disproof"] += 1
-            elif in_catalog:
-                # Same name exists — treat as strengthening/duplicate heuristically
-                stronger_hints = any(kw in lower_stmt for kw in ("general", "stronger", "extends", "forall"))
-                counts["strengthening" if stronger_hints else "duplicate"] += 1
             else:
                 counts["new"] += 1
         return counts
