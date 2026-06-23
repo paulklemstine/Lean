@@ -417,3 +417,15 @@ llm_reduction:
   lint_gate: enabled         # Phase 2: auto-accept all-good-.lean batch (low risk)
   eval_cache: on            # Phase 3: content-hash eval cache
   pruning_rules: on         # Phase 4: rules-first pruning pre-filter
+
+# Stall/zombie handling for dispatched jobs. Aristotle exposes no
+# project-cancel API, so hung server-side projects can't be killed remotely;
+# these caps free the local slot + return the direction to available instead
+# of pinning max_inflight forever. Times in seconds.
+stall:
+  no_progress_seconds: 3600    # fail a dispatched job whose last reasoning
+                                #   checkpoint is older than this (server-side
+                                #   hang). > the ~44min healthy checkpoint gap.
+  preparing_timeout_seconds: 1800  # fail a job stuck in 'preparing' (never submitted)
+  warn_seconds: 5400           # 90min wall-clock stall warning (no action)
+  hard_cap_seconds: 86400      # 24h wall-clock cap (quarantines the direction)

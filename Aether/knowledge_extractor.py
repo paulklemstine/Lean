@@ -1262,6 +1262,11 @@ Research mode: {concept.research_mode}
         max_cycle_seconds = stall_cfg.get("hard_cap_seconds", 24 * 3600)       # 24h wall-clock cap
         preparing_timeout = stall_cfg.get("preparing_timeout_seconds", 1800)   # 30min in preparing
         warn_seconds = stall_cfg.get("warn_seconds", 5400)                     # 90min warn
+        # No-progress zombie cap (seconds). A dispatched job whose last
+        # Aristotle reasoning checkpoint is older than this has hung
+        # server-side. Set > the healthy checkpoint gap (observed ~44min) so
+        # legitimately-progressing jobs aren't killed. Default 60min.
+        no_progress_seconds = stall_cfg.get("no_progress_seconds", 3600)
 
         completed = []
         now = time.time()
@@ -1280,6 +1285,48 @@ Research mode: {concept.research_mode}
                     job.error_message = f"Stuck in preparing > {p_age/60:.0f}min"
                     self.failed_count += 1
                     self._release_direction(job)
+                    completed.append(job)
+                    continue
+
+            # No-progress zombie cap: a dispatched job whose last Aristotle
+            # reasoning checkpoint is older than `no_progress_seconds` has hung
+            # server-side. Aristotle exposes no project-cancel API (POST
+            # /project/{id}/cancel -> 404, DELETE /project/{id} -> 405), so the
+            # dead project lingers remotely — but we free the local slot and
+            # return the direction to available so a fresh dispatch can retry
+            # it, instead of pinning max_inflight on a dead project forever.
+            # (Distinct from the 24h hard cap, which quarantines; a no-progress
+            # hang is presumed a server glitch, not a bad concept.)
+            if job.status == "dispatched" and job.dispatch_time:
+                _last_progress = job.dispatch_time  # baseline when no checkpoints yet
+                try:
+                    _rlog = ReasoningLog(self.workspace, pid, job.job_id)
+                    _cps = _rlog._data.get("checkpoints", [])
+                    if _cps:
+                        _ts = _cps[-1].get("timestamp")
+                        if _ts:
+                            _dt = datetime.fromisoformat(_ts)
+                            if _dt.tzinfo is None:
+                                _dt = _dt.replace(tzinfo=timezone.utc)
+                            _last_progress = _dt.timestamp()
+                except Exception:
+                    pass
+                if _last_progress and (now - _last_progress) > no_progress_seconds:
+                    _idle_min = (now - _last_progress) / 60
+                    print(f"[Poll] {pid[:8]} NO-PROGRESS ZOMBIE: idle {_idle_min:.0f}min, "
+                          f"releasing direction to available")
+                    job.status = "failed"
+                    job.error_message = (f"No Aristotle progress for {_idle_min:.0f}min "
+                                         f"(no_progress cap)")
+                    self.failed_count += 1
+                    self._release_direction_back_to_available(job)
+                    try:
+                        ReasoningLog(self.workspace, pid, job.job_id).record_completion(
+                            status="ZOMBIE", percent=0, has_files=False,
+                            error=job.error_message,
+                        )
+                    except Exception:
+                        pass
                     completed.append(job)
                     continue
 
