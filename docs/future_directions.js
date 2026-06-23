@@ -2946,17 +2946,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every natural number n \u2265 1, the number of 2-binomial equivalence classes of binary words of length n equals the n-th cake number: |{0,1}^n / \u223c\u2082| = (n\u00b3 + 5n + 6)/6 = \u03a3_{r=0}^{3} C(n,r). Two words u,v \u2208 {0,1}* are 2-binomially equivalent if for every word w of length at most 2, the binomial coefficient (u choose w) = (v choose w), where (u choose w) counts scattered subword occurrences of w in u. This identity, first proved by Rigo and Salimov (2015), connects the algebraic structure of k-binomial equivalence on words to the enumerative geometry of hyperplane arrangements in \u211d\u00b3 via the Steiner-Schl\u00e4fli formula.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2387",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23426v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:02:34.284898+00:00",
+    "title": "Binary 2-binomial equivalence class count equals cake number"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let (a_k)_{k \u2265 1} be the P\u00f3lya tree enumeration sequence with ordinary generating function A(z) = \u03a3_{k\u22651} a_k z^k satisfying A(z) = z\u00b7exp(A(z))\u00b7\u03a6(z) where \u03a6(z) = exp(\u03a3_{i\u22652} A(z^i)/i). Define \u03c9_k = \u03a3_{d|k} d\u00b7a_d. Then a_1 = 1 and for all k \u2265 2, a_k = (1/(k-1))\u00b7\u03a3_{j=1}^{k-1} a_j\u00b7\u03c9_{k-j}.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2387",
+    "id": "fd_2388",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
     "status": "available",
     "timestamp": "2026-06-23T21:42:09.482956+00:00",
     "title": "P\u00f3lya tree coefficient recurrence formula"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a number field k with r\u2081 real and r\u2082 complex places, let b = r\u2081\u00b7\u230an\u00b2/4\u230b + r\u2082\u00b7n(n-1)/2. For any cohomological generic representation \u03c0 in R_\u03b5^{coge,\u221e} of GL(n,k_\u221e) with coefficient system F_\u03c0 and quadratic character \u03b5: \u03c0\u2080(k_\u221e\u00d7) \u2192 \u2102\u00d7, the Betti-Whittaker period of the contragredient \u03c0\u2228 in degree b satisfies P^b(\u03c0\u2228, F_{\u03c0\u2228}, \u03b5) = \u03b5(disc(k))^b \u00b7 P^b(\u03c0, F_\u03c0, \u03b5), where disc(k) is viewed as an element of \u03c0\u2080(k_\u221e\u00d7) via the determinant identification \u03c0\u2080(k_\u221e\u00d7) \u2245 \u03c0\u2080(GL_n(k_\u221e)).",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2389",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:02:58.683140+00:00",
+    "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
   },
   {
     "consumed_by_exp_id": "",

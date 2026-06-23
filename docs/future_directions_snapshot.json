@@ -4845,6 +4845,35 @@
     "title": "Non-triviality of the Bruen-Drudge Boolean degree one function on $J_3(4,2)$"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "68R15",
+      "52C35"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every natural number n ≥ 1, the number of 2-binomial equivalence classes of binary words of length n equals the n-th cake number: |{0,1}^n / ∼₂| = (n³ + 5n + 6)/6 = Σ_{r=0}^{3} C(n,r). Two words u,v ∈ {0,1}* are 2-binomially equivalent if for every word w of length at most 2, the binomial coefficient (u choose w) = (v choose w), where (u choose w) counts scattered subword occurrences of w in u. This identity, first proved by Rigo and Salimov (2015), connects the algebraic structure of k-binomial equivalence on words to the enumerative geometry of hyperplane arrangements in ℝ³ via the Steiner-Schläfli formula.",
+    "domain_bridges": [
+      "Combinatorics on words",
+      "Hyperplane arrangements",
+      "Enumerative combinatorics",
+      "Gaussian binomial coefficients"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2387",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define word binomial coefficients (u choose w) counting scattered subword occurrences, define 2-binomial equivalence ∼₂, show that for binary words of length n the equivalence is determined by the triple (|u|_a, (u choose ab), (u choose ba)) subject to the constraints |u|_a + |u|_b = n and (u choose ab) + (u choose ba) = |u|_a · |u|_b, then establish a bijection between valid triples and chambers of the associated hyperplane arrangement in ℝ³, and count these chambers via the Steiner-Schläfli formula to obtain the cake number.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23426v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:02:34.284898+00:00",
+    "title": "Binary 2-binomial equivalence class count equals cake number"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "MR1577579",
@@ -4861,7 +4890,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2387",
+    "id": "fd_2388",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define Pólya trees via the functional equation A(z) = z·exp(A(z))·Φ(z) as a formal power series. Differentiate both sides to obtain z·A'(z) = A(z)·(1 + Σ_{i≥1} z^i·A'(z^i)). Extract the coefficient of z^k on both sides. The inner sum Σ_{i≥1} z^i·A'(z^i) has coefficient [z^k] = Σ_{d|k} d·a_d = ω_k by collecting terms where i·j = k with j indexing powers of A'. The left side gives k·a_k and the right side gives a_k + Σ_{j=1}^{k-1} a_j·ω_{k-j}, yielding the recurrence after rearrangement.",
@@ -4870,6 +4899,34 @@
     "status": "available",
     "timestamp": "2026-06-23T21:42:09.482956+00:00",
     "title": "Pólya tree coefficient recurrence formula"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.RT",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a number field k with r₁ real and r₂ complex places, let b = r₁·⌊n²/4⌋ + r₂·n(n-1)/2. For any cohomological generic representation π in R_ε^{coge,∞} of GL(n,k_∞) with coefficient system F_π and quadratic character ε: π₀(k_∞×) → ℂ×, the Betti-Whittaker period of the contragredient π∨ in degree b satisfies P^b(π∨, F_{π∨}, ε) = ε(disc(k))^b · P^b(π, F_π, ε), where disc(k) is viewed as an element of π₀(k_∞×) via the determinant identification π₀(k_∞×) ≅ π₀(GL_n(k_∞)).",
+    "domain_bridges": [
+      "automorphic_forms",
+      "representation_theory",
+      "algebraic_topology",
+      "algebraic_number_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2389",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the cohomological generic representations of GL(n) over number fields, define the bottom-degree Betti-Whittaker period functional via continuous group cohomology H^b_ct(GL_n(k_∞)⁰; F_π ⊗ π) → ℂ through the Whittaker pairing, establish the identification π₀(k_∞×) ≅ π₀(GL_n(k_∞)) via determinant, then prove the period relation by extending Chen's argument using the functional equation framework and the Casselman-Wallach module structure on the Whittaker model.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:02:58.683140+00:00",
+    "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
   },
   {
     "ambition_level": "extension",
