@@ -2470,6 +2470,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "MR1577579",
+      "MR0025715",
+      "MR2483235"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let $a_k$ denote the number of Pólya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the Pólya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
+    "domain_bridges": [
+      "analytic_combinatorics",
+      "number_theory_divisor_sums",
+      "formal_power_series_coefficient_extraction"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2301",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the OGF A(z) via the Pólya functional equation A(z) = z·exp(A(z))·Φ(z) where Φ(z) = exp(∑_{i≥2} A(z^i)/i). Take the logarithmic derivative to obtain zA'(z) = A(z)(1 + ∑_{i≥1} z^i A'(z^i)). Extract the coefficient of z^k on both sides: the left side gives k·a_k; the right side gives a_k + ∑_{j=1}^{k-1} a_j·ω_{k-j}, where ω_k arises from the identity [z^k]∑_{i≥1} z^i A'(z^i) = ∑_{d|k} d·a_d. Rearranging yields the recurrence. The Lean formalization should first establish the coefficient extraction identity for the divisor sum, then apply it to the differentiated functional equation.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23439v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:17:21.927856+00:00",
+    "title": "Pólya tree coefficient divisor-sum recurrence"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Mathlib.Algebra.MonoidAlgebra.Basic",
       "Mathlib.GroupTheory.GroupAction.ConjAct",
       "Mathlib.LinearAlgebra.Finsupp",
@@ -2488,7 +2515,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2301",
+    "id": "fd_2302",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
@@ -2519,7 +2546,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2302",
+    "id": "fd_2303",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite simple graphs, edge sets, vertex degrees, and C5-decompositions as a finite family of subgraphs each isomorphic to a 5-cycle whose edge sets are pairwise disjoint and cover E(G). The mathematical proof would likely combine an absorption framework with approximate C5-decompositions and a stability analysis around the known extremal obstruction giving the lower bound 5/8. In Lean, the conjecture can initially be stated using abstract predicates `IsFiveCycle` and `HasC5Decomposition`, then refined to concrete cycle embeddings into `SimpleGraph`.",
@@ -2546,7 +2573,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2303",
+    "id": "fd_2304",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Exploit the paper's main result that local ask zeta functions are recovered by substitutions in the truncated flag Hilbert-Poincaré series. Prove that (1) the truncated flag Hilbert-Poincaré series of A is determined by L(A), (2) the substitution parameters for primes of good reduction depend only on the isomorphism type of L(A) and the residue field size q, and (3) the matrix of linear forms constructed from A yields the same ask zeta function as any other arrangement with isomorphic lattice. The key difficulty is showing that the matrix construction and the substitution are both lattice-determined, which may require developing a lattice-theoretic characterization of the associated matroid and its representability constraints.",
@@ -2576,7 +2603,7 @@
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2304",
+    "id": "fd_2305",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Start from the proof of the n ≥ 6k+6 theorem and isolate where slack is used in bounding exceptional vertices and dangerous vertex cuts in G-E(P). Replace the coarse counting step by a sharper dichotomy: either every small cut in the residual complement has many cross-neighbors, allowing standard Hamiltonian path rerouting, or the graph has a near-complete bipartite/clustered structure where an explicit alternating Hamiltonian u-v path can be constructed. Formal verification would reduce the final residual k-connectivity claim to checking that every vertex set S with |S| < k leaves G-E(P)-S connected.",
@@ -2604,7 +2631,7 @@
       "Geometry",
       "Logic"
     ],
-    "id": "fd_2305",
+    "id": "fd_2306",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The authors already construct explicit families of convex sets and show nontrivial homology via a quotient/retraction argument onto a configuration space identified with a product of spheres. To upgrade H̃_{n-1}(L) ≠ 0 to a full homotopy equivalence L ≃ S^{n-1}, one would need to show that the natural retraction map from L onto a subspace homeomorphic to S^{n-1} is a homotopy equivalence—likely by establishing that the fiber of this retraction is contractible (a deformation retraction argument) or by computing all homotopy groups directly. The key geometric step is controlling the higher connectivity of the transversal space relative to its (n-1)-dimensional core.",
@@ -2629,7 +2656,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2306",
+    "id": "fd_2307",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply Menger's theorem to the union of the sets in $\\mathcal{A}$ and the branch vertices of $W$. If no separator of size $ns'-1$ exists, there are $ns'$ disjoint paths, which can be distributed among the $n$ disjoint sets and then routed to distinct nails of a subwall.",
@@ -2638,6 +2665,36 @@
     "status": "available",
     "timestamp": "2026-06-23T04:53:54.133289+00:00",
     "title": "Optimal Separator Bound for Wall Connectors"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.RT",
+      "math.NT",
+      "Betti-Whittaker periods",
+      "contragredient representations",
+      "cohomological automorphic representations"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a number field F with r₁ real embeddings and r₂ pairs of complex conjugate embeddings, and for every integer n ≥ 2, the bottom-degree Betti-Whittaker periods of a generic cohomological automorphic representation π of GLₙ over F and its contragredient π∨ satisfy p^b(π∨) = (-1)^{b(F,n)} · p^b(π), where b(F,n) = r₁·⌊n²/4⌋ + r₂·n(n-1)/2 is the bottom cohomological degree. This removes the regularity assumptions in Chen's earlier result and extends the contragredient period relation to the full class of generic cohomological representations.",
+    "domain_bridges": [
+      "algebraic_topology",
+      "representation_theory",
+      "algebraic_number_theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2308",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof requires: (1) formalizing the bottom cohomological degree formula b(F,n) = r₁⌊n²/4⌋ + r₂·n(n-1)/2 and proving its parity properties; (2) constructing the Betti-Whittaker period as a pairing between relative Lie algebra cohomology and Whittaker models; (3) establishing the duality isomorphism on cohomology induced by the contragredient map on representations; (4) computing the sign incurred by the contragredient action on the bottom-degree cohomology, which reduces to tracking how the Chevalley involution acts on the lowest weight vector of the coefficient system and how this interacts with the Whittaker functional. Key intermediate lemma: the sign equals (-1)^b because the contragredient reverses the orientation of the flag variety contributing exactly b mod 2 sign changes.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:20:19.284015+00:00",
+    "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
   },
   {
     "ambition_level": "extension",
@@ -3746,7 +3803,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "70e63d82",
+    "consumed_by_exp_id": "",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domain_bridges": [],
     "domains": [
@@ -3759,7 +3816,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },

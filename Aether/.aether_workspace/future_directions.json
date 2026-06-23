@@ -15840,7 +15840,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "70e63d82",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15866,7 +15866,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:05.964661+00:00",
       "title": "Bridge: Galois Connections Between Order Theory and Topology"
@@ -34703,6 +34703,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "MR1577579",
+        "MR0025715",
+        "MR2483235"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let $a_k$ denote the number of Pólya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the Pólya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
+      "domain_bridges": [
+        "analytic_combinatorics",
+        "number_theory_divisor_sums",
+        "formal_power_series_coefficient_extraction"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2301",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem polya_tree_coeff_recurrence (k : ℕ) (hk : k ≥ 2) : polya_tree_count k = (1 / (k - 1)) * ∑ j in Finset.range k, polya_tree_count j * omega (k - j) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the OGF A(z) via the Pólya functional equation A(z) = z·exp(A(z))·Φ(z) where Φ(z) = exp(∑_{i≥2} A(z^i)/i). Take the logarithmic derivative to obtain zA'(z) = A(z)(1 + ∑_{i≥1} z^i A'(z^i)). Extract the coefficient of z^k on both sides: the left side gives k·a_k; the right side gives a_k + ∑_{j=1}^{k-1} a_j·ω_{k-j}, where ω_k arises from the identity [z^k]∑_{i≥1} z^i A'(z^i) = ∑_{d|k} d·a_d. Rearranging yields the recurrence. The Lean formalization should first establish the coefficient extraction identity for the divisor sum, then apply it to the differentiated functional equation.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23439v1",
+      "source_path": "http://arxiv.org/abs/2606.23439v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T05:17:21.927856+00:00",
+      "title": "Pólya tree coefficient divisor-sum recurrence"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Mathlib.Algebra.MonoidAlgebra.Basic",
         "Mathlib.GroupTheory.GroupAction.ConjAct",
         "Mathlib.LinearAlgebra.Finsupp",
@@ -34727,7 +34773,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2301",
+      "id": "fd_2302",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nuniverse u v\n\n/-- Zeroth Hochschild homology as the cocenter: A modulo the R-span of additive commutators. -/\ndef HH0 (R A : Type*) [CommRing R] [Ring A] [Algebra R A] : Type _ :=\n  (Submodule.span R (Set.range (fun p : A × A => p.1 * p.2 - p.2 * p.1))).Quotient\n\n/-- The setoid identifying conjugate elements of a group. -/\ndef conjugacySetoid (G : Type*) [Group G] : Setoid G where\n  r x y := ∃ h : G, h * x * h⁻¹ = y\n  iseqv := by\n    constructor\n    · intro x\n      exact ⟨1, by simp⟩\n    · intro x y hxy\n      rcases hxy with ⟨h, hxy⟩\n      subst hxy\n      exact ⟨h⁻¹, by group⟩\n    · intro x y z hxy hyz\n      rcases hxy with ⟨h, hxy⟩\n      rcases hyz with ⟨k, hyz⟩\n      subst hxy\n      subst hyz\n      exact ⟨k * h, by group⟩\n\nabbrev ConjClass (G : Type*) [Group G] : Type _ := Quotient (conjugacySetoid G)\n\n/-- Conjecture: the cocenter of a finite group algebra is the free module on conjugacy classes. -/\ntheorem HH0_groupAlgebra_linearEquiv_conjClasses\n    (R G : Type*) [C",
@@ -34777,7 +34823,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2302",
+      "id": "fd_2303",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Fintype.Card\n\nopen scoped BigOperators\n\nnamespace GraphDecomposition\n\nvariable {V : Type} [Fintype V] [DecidableEq V]\n\n/-- Placeholder: `C5Divisible G` means every vertex degree is even and `5 ∣ |E(G)|`. -/\ndef C5Divisible (G : SimpleGraph V) : Prop :=\n  (∀ v : V, Even (G.degree v)) ∧ 5 ∣ Fintype.card G.edgeSet\n\n/-- Placeholder: `HasC5Decomposition G` means the edge set of `G` can be partitioned\n    into subgraphs each isomorphic to a 5-cycle. -/\ndef HasC5Decomposition (G : SimpleGraph V) : Prop :=\n  sorry\n\n/-- Conjectural asymptotic C₅-decomposition threshold: δ_{C₅} = 5/8. -/\nconjecture c5_decomposition_threshold :\n  ∀ ε : ℝ, 0 < ε →\n    ∃ N : ℕ, ∀ {V : Type} [Fintype V] [DecidableEq V],\n      N ≤ Fintype.card V →\n      ∀ G : SimpleGraph V,\n        ((∀ v : V, ((G.degree v : ℝ) ≥ ((5 : ℝ) / 8 + ε) * (Fintype.card V : ℝ))) →\n          C5Divisible G →\n          HasC5Decomposition G)\n\nend GraphDecomposition",
@@ -34823,7 +34869,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2303",
+      "id": "fd_2304",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ask_zeta_combinatorial_invariance {A₁ A₂ : CentralHyperplaneArrangement ℚ} {p : ℕ} [Fact (Nat.Prime p)] (h_lat : IntersectionLattice A₁ ≃o IntersectionLattice A₂) (h_good₁ : GoodReduction A₁ p) (h_good₂ : GoodReduction A₂ p) : askZeta A₁ p = askZeta A₂ p := sorry",
@@ -34872,7 +34918,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2304",
+      "id": "fd_2305",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Combinatorics.SimpleGraph.Connectivity\n\nopen SimpleGraph\n\nnamespace ConnectivityPreservingPath\n\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\n/-- `IsKConnected G k` means that deleting fewer than `k` vertices from `G` leaves a connected nontrivial graph, equivalently vertex-connectivity at least `k`. -/\nconstant IsKConnected : SimpleGraph V → ℕ → Prop\n\n/-- `IsHamiltonianUVPath G u v p` means that `p` is a simple walk from `u` to `v` visiting every vertex exactly once. -/\nconstant IsHamiltonianUVPath : (G : SimpleGraph V) → (u v : V) → G.Walk u v → Prop\n\n/-- The spanning graph obtained from `G` by deleting every edge traversed by the walk `p`. -/\nconstant eraseWalkEdges : (G : SimpleGraph V) → {u v : V} → G.Walk u v → SimpleGraph V\n\n/-- Conjectural strengthening of the paper's `6*k+6` order bound to `4*k+4`. -/\ntheorem conjecture_four_k_plus_four_bound\n    (G : SimpleGraph V) [DecidableRel G.Adj]\n    (k : ℕ) (hk : 2 ≤ k)\n",
@@ -34919,7 +34965,7 @@
         "Geometry",
         "Logic"
       ],
-      "id": "fd_2305",
+      "id": "fd_2306",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem line_transversals_homotopy_sphere (n : ℕ) (hn : n ≥ 1) :\n    ∃ (C : Finset (Set (EuclideanSpace ℝ (Fin (3 * n))))),\n      (∀ s ∈ C, Convex ℝ s ∧ IsOpen s ∧ IsBounded s) ∧\n      (∀ s₁ ∈ C, ∀ s₂ ∈ C, s₁ ≠ s₂ → Disjoint s₁ s₂) ∧\n      HomotopyEquiv (lineTransversals C) (Sphere (n - 1)) := by\n  sorry",
@@ -34963,7 +35009,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2306",
+      "id": "fd_2307",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem optimal_wall_connector_bound {V : Type*} [Fintype V] {G : SimpleGraph V} {n s' t' : ℕ} (hs' : 0 < s') (hn : 0 < n) (𝓐 : Finset (Finset V)) (h𝓐 : 𝓐.card = n) (h_disjoint : ∀ A₁ ∈ 𝓐, ∀ A₂ ∈ 𝓐, A₁ ≠ A₂ → Disjoint (A₁ : Set V) A₂) : ∃ (t : ℕ), ∀ (W : Wall t), (∃ (X : Finset V) (hX : X.card ≤ n * s' - 1), Separates X 𝓐.sup W.branch_vertices) ∨ ∃ (W' : Subwall W t') (𝒫 : Connector 𝓐 W' s'), True := by sorry",
@@ -34982,6 +35028,55 @@
       "thread_id": "",
       "timestamp": "2026-06-23T04:53:54.133289+00:00",
       "title": "Optimal Separator Bound for Wall Connectors"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.RT",
+        "math.NT",
+        "Betti-Whittaker periods",
+        "contragredient representations",
+        "cohomological automorphic representations"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a number field F with r₁ real embeddings and r₂ pairs of complex conjugate embeddings, and for every integer n ≥ 2, the bottom-degree Betti-Whittaker periods of a generic cohomological automorphic representation π of GLₙ over F and its contragredient π∨ satisfy p^b(π∨) = (-1)^{b(F,n)} · p^b(π), where b(F,n) = r₁·⌊n²/4⌋ + r₂·n(n-1)/2 is the bottom cohomological degree. This removes the regularity assumptions in Chen's earlier result and extends the contragredient period relation to the full class of generic cohomological representations.",
+      "domain_bridges": [
+        "algebraic_topology",
+        "representation_theory",
+        "algebraic_number_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Logic"
+      ],
+      "id": "fd_2308",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem contragredient_period_sign_formula (F : Type*) [NumberField F] (n : ℕ) (hn : n ≥ 2) (r₁ : ℕ) (r₂ : ℕ) (hr : r₁ + 2*r₂ = Module.finrank ℚ F) (π : GenericCohomologicalRep F n) : betti_whittaker_period π.contragredient = (-1)^(bottom_degree r₁ r₂ n) • betti_whittaker_period π := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof requires: (1) formalizing the bottom cohomological degree formula b(F,n) = r₁⌊n²/4⌋ + r₂·n(n-1)/2 and proving its parity properties; (2) constructing the Betti-Whittaker period as a pairing between relative Lie algebra cohomology and Whittaker models; (3) establishing the duality isomorphism on cohomology induced by the contragredient map on representations; (4) computing the sign incurred by the contragredient action on the bottom-degree cohomology, which reduces to tracking how the Chevalley involution acts on the lowest weight vector of the coefficient system and how this interacts with the Whittaker functional. Key intermediate lemma: the sign equals (-1)^b because the contragredient reverses the orientation of the flag variety contributing exactly b mod 2 sign changes.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23171v1",
+      "source_path": "http://arxiv.org/abs/2606.23171v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-23T05:20:19.284015+00:00",
+      "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
     },
     {
       "ambition_level": "extension",
@@ -35081,7 +35176,7 @@
         "Novelty"
       ],
       "id": "moonshot_Rucker_20",
-      "last_attempt_time": "2026-06-23T04:53:59.840158+00:00",
+      "last_attempt_time": "2026-06-23T05:20:24.836653+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],

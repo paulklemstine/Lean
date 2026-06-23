@@ -1736,12 +1736,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let $a_k$ denote the number of P\u00f3lya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the P\u00f3lya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2301",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23439v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:17:21.927856+00:00",
+    "title": "P\u00f3lya tree coefficient divisor-sum recurrence"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let R be any commutative ring and G any finite group. Define HH\u2080(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH\u2080(R[G]) \u2243 R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2301",
+    "id": "fd_2302",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21313v1",
@@ -1755,7 +1769,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2302",
+    "id": "fd_2303",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21548v1",
@@ -1770,7 +1784,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2303",
+    "id": "fd_2304",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21393v1",
@@ -1785,7 +1799,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2304",
+    "id": "fd_2305",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21383v1",
@@ -1800,7 +1814,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Logic"
     ],
-    "id": "fd_2305",
+    "id": "fd_2306",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -1814,13 +1828,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2306",
+    "id": "fd_2307",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
     "status": "available",
     "timestamp": "2026-06-23T04:53:54.133289+00:00",
     "title": "Optimal Separator Bound for Wall Connectors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a number field F with r\u2081 real embeddings and r\u2082 pairs of complex conjugate embeddings, and for every integer n \u2265 2, the bottom-degree Betti-Whittaker periods of a generic cohomological automorphic representation \u03c0 of GL\u2099 over F and its contragredient \u03c0\u2228 satisfy p^b(\u03c0\u2228) = (-1)^{b(F,n)} \u00b7 p^b(\u03c0), where b(F,n) = r\u2081\u00b7\u230an\u00b2/4\u230b + r\u2082\u00b7n(n-1)/2 is the bottom cohomological degree. This removes the regularity assumptions in Chen's earlier result and extends the contragredient period relation to the full class of generic cohomological representations.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2308",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:20:19.284015+00:00",
+    "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2647,7 +2676,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "70e63d82",
+    "consumed_by_exp_id": "",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
@@ -2657,7 +2686,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
