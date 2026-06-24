@@ -12561,11 +12561,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "09edd445",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12577,7 +12577,7 @@
         "Computation"
       ],
       "id": "fd_0435",
-      "last_attempt_time": "2026-06-24T16:39:18.666571+00:00",
+      "last_attempt_time": "2026-06-09T18:42:13.174234+00:00",
       "last_reviewed_at": "2026-06-09T15:04:16.867772+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -12591,7 +12591,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:28.156517+00:00",
       "title": "Learning with Errors: Hardness Reductions"
@@ -14238,11 +14238,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "935bc3f6",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14254,7 +14254,7 @@
         "MachineLearning"
       ],
       "id": "fd_0479",
-      "last_attempt_time": "2026-06-24T16:39:29.386462+00:00",
+      "last_attempt_time": "2026-06-23T05:49:06.134813+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14268,7 +14268,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:44.957997+00:00",
       "title": "EML Universal Approximation"
@@ -16776,7 +16776,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "449dda28",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16802,7 +16802,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.956863+00:00",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
@@ -35408,7 +35408,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "5c61161b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35437,7 +35437,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23121v1",
       "source_path": "http://arxiv.org/abs/2606.23121v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T08:05:12.495306+00:00",
       "title": "Wall-Menger Theorem"
@@ -39117,11 +39117,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c904c856",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39133,7 +39133,7 @@
         "Novelty"
       ],
       "id": "fd_2395",
-      "last_attempt_time": "2026-06-24T16:39:32.856164+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -41323,10 +41323,56 @@
       "title": "Logarithmic formula for the regularised Wallis hierarchy"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Brualdi and Quinn Massey (conjectured)",
+        "arXiv:2304.12345 (current paper)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies χ'_s(G) ≤ Δ_A Δ_B, where Δ_A and Δ_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 Δ_A Δ_B for sufficiently large products.",
+      "domain_bridges": [
+        "Graph Theory",
+        "Combinatorial Optimization",
+        "Edge Coloring Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2443",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem brualdi_quinn_massey_conjecture (G : SimpleGraph) [bipartite G] : \\chi_s'_fin G ≤ (Δ_A G) * (Δ_B G)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The conjecture can be approached via probabilistic methods combined with sparse neighborhood analysis, similar to techniques used in prior improvements of the Erdős-Nesetrýl conjecture. Key steps include constructing an induced matching decomposition that respects the product bound Δ_A Δ_B and leveraging the bipartite structure to minimize color conflicts.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23824v1",
+      "source_path": "http://arxiv.org/abs/2606.23824v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T17:05:28.615107+00:00",
+      "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
@@ -41334,7 +41380,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "18853638",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41348,8 +41394,8 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2443",
-      "last_attempt_time": "2026-06-24T16:39:22.636318+00:00",
+      "id": "fd_2444",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
       "lineage_refs": [],
@@ -41363,7 +41409,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24776v1",
       "source_path": "http://arxiv.org/abs/2606.24776v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T10:40:45.798036+00:00",
       "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
@@ -41391,7 +41437,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2444",
+      "id": "fd_2445",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41436,7 +41482,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2445",
+      "id": "fd_2446",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41481,7 +41527,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2446",
+      "id": "fd_2447",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41527,7 +41573,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2447",
+      "id": "fd_2448",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -41572,7 +41618,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2448",
+      "id": "fd_2449",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -41619,7 +41665,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2449",
+      "id": "fd_2450",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -41663,7 +41709,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2450",
+      "id": "fd_2451",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -41709,7 +41755,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2451",
+      "id": "fd_2452",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
@@ -41757,7 +41803,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2452",
+      "id": "fd_2453",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_cohomology_vanishing (p : Nat.primes) (k : ℕ) (n : ℕ) : n ≥ (3*k + 1)*p + (3*k + 2) → cohomology_group (Γ₀ₙ(p)) (binom(n, 2) - k) ℚ = 0",
@@ -41776,6 +41822,50 @@
       "thread_id": "",
       "timestamp": "2026-06-24T16:39:13.817680+00:00",
       "title": "Generalized vanishing range for Hecke congruence subgroup cohomology"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT:11N37",
+        "math.NT:11A25"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that the upper bound S₁^φ(x) ≪ x exp(-(1/2+o(1))√(log x log₂ x)) is best possible, i.e., there exists a function ε(x)→0 such that S₁^φ(x) ≫ x exp(-(1/2+o(1))√(log x log₂ x)) for infinitely many x, or equivalently liminf_{x→∞} (log (x/S₁^φ(x))) / √(log x log₂ x) ≥ 1/2.",
+      "domain_bridges": [
+        "Analytic Number Theory",
+        "Sieve Methods"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2454",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem S_one_phi_lower_bound (x : ℕ) (hx : x ≥ 2) : (S_one_phi x : ℝ) ≥ x * Real.exp ( - (1 / 2 + eps x) * Real.sqrt (Real.log x * Real.log (Real.log x)) ) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23681v1",
+      "source_path": "http://arxiv.org/abs/2606.23681v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T17:06:47.221428+00:00",
+      "title": "Optimality of the exponent in the upper bound for S₁^φ(x)"
     },
     {
       "ambition_level": "extension",
@@ -46577,11 +46667,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3db423d6",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46592,7 +46682,7 @@
         "NumberTheory"
       ],
       "id": "seed_331",
-      "last_attempt_time": "2026-06-24T16:39:36.682527+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46606,7 +46696,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432603+00:00",
       "title": "Perfect Numbers: Structure of Even Perfects"
@@ -46775,7 +46865,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "a53dd8c8",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46801,7 +46891,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432613+00:00",
       "title": "ABC Conjecture: Consequences and Partial Results"
@@ -47511,11 +47601,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cd105090",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47527,7 +47617,7 @@
         "Probability"
       ],
       "id": "seed_355",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T17:06:52.030728+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47541,7 +47631,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432742+00:00",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
@@ -121876,7 +121966,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
