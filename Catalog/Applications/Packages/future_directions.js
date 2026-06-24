@@ -688,7 +688,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "5a434903",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -697,7 +697,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -1375,7 +1375,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "cd105090",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1385,7 +1385,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -4149,6 +4149,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Euler\u2013Mascheroni constant `\u03b3`\n\nDerived from this cycle's findings: a positive-term series\n`\u03b3 = \u2211_k (1/(k+1) \u2212 log((k+2)/(k+1)))`, its term-wise integral form\n`\u03b3 = \u2211_k \u222b_{k+1}^{k+2}(1/(k+1) \u2212 1/x) dx`, strict monotonicity of the lower\napproximants `eulerMascheroniSeq`, and the identification of the zeroth Stieltjes\nconstant `stieltjesSeq 0 \u2192 \u03b3`.\n\n## Conjecture 1 \u2014 Quadratic convergence rate of the term\n\n**Statement.** `gterm k \u2264 1/(2(k+1)^2)` for all `k`, hence the tail\n`\u2211_{k\u2265n} gterm k \u2264 1/(2n)`, giving an explicit effective error bound for the\nlower approximant.\n\n*The key insight is* that `gterm k = 1/(k+1) \u2212 log(1 + 1/(k+1))` and the\nquadratic Taylor remainder of `log(1+x)` bounds it by `x^2/2`, turning a\nqualitative `summable` into a quantitative `O(1/k^2)` term and `O(1/n)` tail.\n\n*Why now?* We already have `gterm_pos` and `summable_gterm`; the missing\ningredient is the single inequality `x \u2212 log(1+x) \u2264 x^2/2`, which Mathlib's\nlog-convexity API (`Real.add_one_le_exp`, `Real.log_le_sub_one_of_pos`) makes\nimmediately reachable.\n\n## Conjecture 2 \u2014 Averaged (accelerated) approximant\n\n**Statement.** The midpoint `m_n = (eulerMascheroniSeq n + eulerMascheroniSeq' n)/2`\nsatisfies `|m_n \u2212 \u03b3| \u2264 C/n^2` for an explicit `C`, i.e. averaging the lower and\nupper Mathlib approximants accelerates `1/n` convergence to `1/n^2`.\n\n*The key insight is* that the two one-sided errors are `~ \u00b11/(2n)` to leading\norder, so their average cancels the `1/n` term and exposes the `1/n^2` curvature\nof `log(1+1/n)`.\n\n*Why now?* The exact trap width `log(1+1/n)` is already proved\n(`eulerMascheroni_trap_width_eq` in the catalog); only a second-order expansion\nof `log(1+1/n)` separates us from a provably faster approximation.\n\n## Conjecture 3 \u2014 Stieltjes hierarchy is well-defined and `\u03b3_0 = \u03b3`\n\n**Statement.** For every `m`, `stieltjesSeq m` converges; the limit `\u03b3_m` is the\n`m`-th Stieltjes constant, and `\u03b3_0 = eulerMascheroniConstant` (proved here).\n\n*The key insight is* that `\u2211_{k\u2264n}(log k)^m/k \u2212 (log n)^{m+1}/(m+1)` is a\ndiscrete-vs-integral comparison whose increments telescope against\n`\u222b (log x)^m/x dx = (log x)^{m+1}/(m+1)`, exactly the `m = 0` mechanism we used.\n\n*Why now?* The `m = 0` case is fully formalized (`tendsto_stieltjesSeq_zero`);\nthe general case reduces to Euler\u2013Maclaurin / summation-by-parts bounds on\n`(log x)^m/x`, for which Mathlib's `Filter.Tendsto` and monotone-convergence\ntoolkit already suffice.\n\n## Conjecture 4 \u2014 Integral representation over `[1,\u221e)`\n\n**Statement.** `\u03b3 = \u222b_1^\u221e (1/\u230ax\u230b \u2212 1/x) dx`, the continuous form of the proved\ndiscrete sum `\u03b3 = \u2211_k \u222b_{k+1}^{k+2}(1/(k+1) \u2212 1/x) dx`.\n\n*The key insight is* that on `[k+1, k+2)` we have `\u230ax\u230b = k+1`, so the global\nintegral splits as the very sum `hasSum_integral_repr` already established;\nonly an `integrableOn`/`tendsto` interchange remains.\n\n*Why now?* The per-window integral identity `gterm_eq_integral` is proved; the\nstep to a single improper integral is a standard `MeasureTheory.integral_iUnion`\n/ `intervalIntegral` limit argument.\n\n## Conjecture 5 \u2014 No purely rational Diophantine acceleration\n\n**Statement.** Any approximation of `\u03b3` built solely from `H_n` and elementary\n`log` corrections has error `\u03a9(1/n)`; no such construction yields the `o(1/q)`\nrational forms the catalog irrationality engine requires.\n\n*The key insight is* that the trap width is exactly `log(1+1/n) = \u0398(1/n)`, a\nhard floor for `log`-corrected harmonic approximants, so irrationality cannot\nfollow from this family \u2014 a genuinely *different* approximant is needed.\n\n*Why now?* The exact width and the engine characterization\n(`irrational_eulerMascheroniConstant_iff`) are both in the catalog; formalizing\nthe `\u0398(1/n)` lower bound would turn folklore intuition into a theorem delimiting\nthe whole approach.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2461",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "71ab9721",
+    "status": "available",
+    "timestamp": "2026-06-24T18:56:30.873315+00:00",
+    "title": "Derived from this cycle's findings: a positive-term series"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4160,6 +4175,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite-dimensional integrable Hamiltonian system whose equations of motion are polynomial vector fields of degree at most d, there exists a neural ordinary differential equation (neural ODE) with width O(poly(n,d)) that can learn a matrix-valued function L(x) satisfying the zero\u2011curvature condition [\u2202_t L \u2212 [M, L]] = 0 for some M, thus representing a Lax pair. Test: Generate synthetic trajectories from known integrable systems (e.g., Toda lattice, Calogero\u2011Moser), train neural ODEs to predict dynamics, extract learned L and M via sparse regression, and verify the Lax equation numerically to a tolerance \u03b5. Impact: Provides a data\u2011driven pathway to discover Lax representations and potentially new integrable models, bridging machine learning, differential geometry, and mathematical physics.",
+    "domains": [
+      "Physics",
+      "Novelty"
+    ],
+    "id": "fd_2462",
+    "priority_score": 0.7157272727272728,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-24T18:57:52.847007+00:00",
+    "title": "Neural ODE Representation of Lax Pairs for Polynomial Integrable Systems"
   },
   {
     "consumed_by_exp_id": "",
@@ -4177,7 +4207,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "09edd445",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -4187,7 +4217,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -4264,21 +4294,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
-  },
-  {
-    "consumed_by_exp_id": "173cb117",
-    "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
-    "domains": [
-      "Algebra",
-      "Novelty"
-    ],
-    "id": "fd_2395",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T23:12:45.568532+00:00",
-    "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
   {
     "consumed_by_exp_id": "",
