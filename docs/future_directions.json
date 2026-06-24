@@ -16889,11 +16889,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0aab775d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16905,7 +16905,7 @@
         "Computation"
       ],
       "id": "fd_0555",
-      "last_attempt_time": "2026-06-23T01:48:45.023208+00:00",
+      "last_attempt_time": "2026-06-24T15:22:18.888409+00:00",
       "last_reviewed_at": "2026-06-09T17:32:42.519242+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16919,7 +16919,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:08.217813+00:00",
       "title": "ML Universal Approximation: Width vs Depth Trade-offs"
@@ -36232,7 +36232,11 @@
       "research_mode": "team",
       "source_exp_id": "2606.21902v1",
       "source_path": "http://arxiv.org/abs/2606.21902v1",
+<<<<<<< Updated upstream
       "status": "available",
+=======
+      "status": "completed",
+>>>>>>> Stashed changes
       "thread_id": "",
       "timestamp": "2026-06-23T14:24:58.237232+00:00",
       "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
@@ -37174,7 +37178,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "Riordan_arrays",
@@ -37183,7 +37187,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "1530c799",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37198,7 +37202,7 @@
         "Bridges"
       ],
       "id": "fd_2354",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:22:29.677216+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem row_sum_pascal_like_riordan_eq_fib (n : ℕ) :\n  (∑ k in Finset.range (n + 1), (n + k).choose (2 * k)) = Nat.fib (2 * n + 1) := by\n  sorry",
       "lineage_refs": [],
@@ -37212,7 +37216,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22070v1",
       "source_path": "http://arxiv.org/abs/2606.22070v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T13:29:49.823733+00:00",
       "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
@@ -39345,14 +39349,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Sun and Das (2020)",
         "Lan et al. (2023)"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cd498e83",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39367,7 +39371,7 @@
         "Physics"
       ],
       "id": "fd_2400",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:22:26.934367+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_radius_equality_char {Σ : SignedGraph} {v : Σ.vertex} (h₁ : Σ.connected) (h₂ : ¬_isolated v) : λ₁ Σ = Real.sqrt (λ₁ (Σ.delete v)^2 + 2 * degree v - 1) ↔ (is_signed_star Σ v ∧ is_center v) ∨ is_signed_complete_graph Σ",
       "lineage_refs": [],
@@ -39381,7 +39385,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23584v1",
       "source_path": "http://arxiv.org/abs/2606.23584v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-24T01:36:45.202062+00:00",
       "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
@@ -39750,7 +39754,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "C24",
         "JLS26",
@@ -39759,7 +39763,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ce159def",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39774,7 +39778,7 @@
         "Logic"
       ],
       "id": "fd_2409",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:22:24.335688+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem: For π ∈ CR_ε^cog,∞, there exists a non-vanishing period integral I(π) = ∫_{Γ} f(π, z) dz such that I(π) = ε(π^∨) · L(s, π^∨) for s ∈ ℂ, where f(π, ·) is a Whittaker function and Γ is a suitable adelic subgroup.",
       "lineage_refs": [],
@@ -39788,7 +39792,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23171v1",
       "source_path": "http://arxiv.org/abs/2606.23171v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-24T07:44:52.667456+00:00",
       "title": "GeneralizedPeriod Relation for Betti-Whittaker Periods and Contragredient Representations of GL(n)"
@@ -39843,14 +39847,14 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.SP"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b70338e0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39865,7 +39869,7 @@
         "Physics"
       ],
       "id": "fd_2411",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:22:32.412360+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem necessity_homology (K : PureComplex r n) (t : ℕ) : q_{r-1}(K) = t*n - (t-1)*(r+1) → ∀σ ∈ Faces K (|σ| = r-t), H_t(lk_K σ, ℝ) = 0",
       "lineage_refs": [],
@@ -39879,7 +39883,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22825v1",
       "source_path": "http://arxiv.org/abs/2606.22825v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-24T08:40:38.583867+00:00",
       "title": "Necessity of Homological Condition for Spectral Radius Bound"
@@ -40208,7 +40212,11 @@
       "research_mode": "team",
       "source_exp_id": "2606.23485v1",
       "source_path": "http://arxiv.org/abs/2606.23485v1",
+<<<<<<< Updated upstream
       "status": "available",
+=======
+      "status": "completed",
+>>>>>>> Stashed changes
       "thread_id": "",
       "timestamp": "2026-06-24T00:22:38.508639+00:00",
       "title": "Non‑existence of Further Brown Numbers Beyond n=7"
@@ -41509,39 +41517,124 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
+<<<<<<< Updated upstream
       "catalog_references": [],
       "category": "",
+=======
+      "catalog_references": [
+        "AFL2024.1",
+        "Lean4.Mathlib.Combinatorics.Hypergraph",
+        "Lean4.Mathlib.Tactic.Linarith"
+      ],
+      "category": "cross_domain_bridge",
+>>>>>>> Stashed changes
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+<<<<<<< Updated upstream
       "description": "# Future Directions — Degree-4 vertices in the flip graph of the m×n Miura-ori\n\nThis cycle established a rigorous combinatorial core (`Catalog/Pythagorean/MiuraFlipDegree.lean`):\nthe local degree-4 flat-foldable origami vertex has exactly 4 valid MV assignments\n(`card_genericValid`, `mountains_of_genericValid`), and the *independent-vertex*\nreconfiguration / flip graph is the Boolean hypercube `Q_d`, which is `d`-regular\n(`flipGraph_degree`, hence `flipGraph_degree_four`), bipartite\n(`flipGraph_adj_parity`), connected (`flipGraph_connected`), with `2^d` vertices\nand `d·2^{d-1}` edges (`flipGraph_card_verts`, `flipGraph_card_edges`).\n\nThe open frontier is the *coupled* regime, where shared creases of the real\nm×n Miura-ori break the product structure. The following conjectures are bold,\nprecise, and testable (each is stated so it can be falsified by a finite `#eval`\nsearch before any proof attempt).\n\n## Conjecture 1 (Degree-4 vertices are non-generic in the coupled flip graph)\nModel the m×n Miura-ori flip graph `F(m,n)` with nodes = globally valid MV\nassignments and edges = single *vertex flips* (negate all four creases at one\ninterior vertex) that preserve global validity. **Conjecture:** for `m,n ≥ 3`,\n`F(m,n)` is *not* regular, and the set of degree-4 nodes is non-empty and forms a\nproper, identifiable subset characterized by a local boundary pattern (exactly 4\ninterior vertices are independently flippable). Falsifiable: enumerate `F(3,3)`\nand check whether any node has degree exactly 4.\n\n## Conjecture 2 (Hypercube-subgraph dichotomy)\nThe coupled flip graph `F(m,n)` embeds as an isometric subgraph of a hypercube\n`Q_{N}` (a *partial cube*), where `N` is the number of interior vertices.\n**Conjecture:** `F(m,n)` is always a partial cube, and its isometric dimension\nequals the number of \"free\" creases. This would make every flip-graph distance\nequal to a Hamming distance and force `F(m,n)` to be bipartite (generalizing\n`flipGraph_adj_parity`).\n\n## Conjecture 3 (Connectivity / mixing of the coupled space)\nGeneralize `flipGraph_connected`: **Conjecture:** for all `m,n ≥ 1` the coupled\nflip graph `F(m,n)` is connected — any valid MV assignment can be transformed into\nany other by a sequence of validity-preserving vertex flips. A quantitative\nrefinement: its diameter is `Θ(mn)`. (Cereceda-style mixing.)\n\n## Conjecture 4 (Exact regular-degree spectrum)\nDefine `δ(m,n)` = the multiset of vertex degrees of `F(m,n)`. **Conjecture:**\n`min δ(m,n) = 4` for all `m,n ≥ 2`, i.e. *every* valid configuration has at least\n4 independently flippable interior vertices, with equality achieved exactly at the\n\"all-mountain-frame\" configurations. This pins the title phenomenon: degree-4\nnodes are the minimum-degree (most rigid) configurations.\n\n## Conjecture 5 (Counting via the flip graph)\nLet `C(m,n) = |V(F(m,n))|` be the Ginepro–Hull MV-assignment count. **Conjecture:**\n`C(m,n)` satisfies a linear transfer-matrix recurrence in `n` (fixed `m`) whose\ncharacteristic polynomial has degree `2^{m-1}`, and the per-node average flip-graph\ndegree is asymptotically `c·mn` for an explicit constant `c`. Falsifiable: compute\n`C(m,n)` for small `m,n`, fit a recurrence, and cross-check against OEIS.\n",
       "domain_bridges": [],
       "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Algebra"
+=======
+      "description": "For fixed integers r≥2 and t≥2, define β_{r,t} as the optimum value of the linear program described in the paper that minimizes the fraction of vertices left uncovered by the largest monochromatic matching in any r‑edge‑colouring of the complete t‑uniform hypergraph. The conjecture states that for every ε>0 there exists N such that for all n≥N, every r‑edge‑colouring of K_n^{(t)} contains a monochromatic matching of size at least (β_{r,t}−ε)·n. Moreover, β_{r,t}=1/(r+t−1), so the bound coincides with the classical Alon‑Frankl‑Lovász theorem in the asymptotic regime.",
+      "domain_bridges": [
+        "linear programming in combinatorics",
+        "hypergraph matching theory",
+        "asymptotic combinatorial analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+>>>>>>> Stashed changes
       ],
       "id": "fd_2447",
       "last_attempt_time": "",
       "last_reviewed_at": "",
+<<<<<<< Updated upstream
       "lean_theorem_stub": "",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.75,
       "proof_strategy": "",
+=======
+      "lean_theorem_stub": "theorem asymptotic_AFL_bound {r t : ℕ} (hr : 2 ≤ r) (ht : 2 ≤ t) {ε : ℝ} (hε : 0 < ε) : ∃ N : ℕ, ∀ n ≥ N, ∀ χ : edge_coloring (complete_hypergraph t n) r,\n  ∃ m : ℕ, (m : ℝ) / n ≥ (1 / (r + t - 1) : ℝ) - ε ∧\n  is_monochromatic_matching χ m :=\nby\n  -- proof to be completed",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalise the LP from the paper in Lean and prove that its optimal value equals 1/(r+t−1). Then, using the hypergraph regularity lemma already available in Mathlib, show that any r‑colouring of a sufficiently large complete t‑uniform hypergraph can be reduced (up to o(n) vertices) to an r‑strip colouring. For r‑strip colourings the size of the largest monochromatic matching can be computed directly via the LP, yielding the lower bound (1/(r+t−1)−ε)n. The proof proceeds by (1) defining the LP variables and constraints, (2) proving feasibility of the explicit solution achieving value 1/(r+t−1), (3) establishing optimality via duality (also formalised in Lean), and (4) transferring the bound from the reduced model back to the original hypergraph using the compression theorem proved in the paper (formalised as a lemma about loss of o(n) vertices).",
+>>>>>>> Stashed changes
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
+<<<<<<< Updated upstream
       "source_exp_id": "72f1519b",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/72f1519b",
       "status": "available",
       "thread_id": "th_6f96da51",
       "timestamp": "2026-06-24T15:18:44.784211+00:00",
       "title": "Rigorous combinatorial core (`Catalog/Pythagorean/Miura"
+=======
+      "source_exp_id": "2606.24863v1",
+      "source_path": "http://arxiv.org/abs/2606.24863v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T15:21:05.113302+00:00",
+      "title": "Asymptotic Monochromatic Matching Bound via LP‑Derived Constant"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Graham–Knuth–Patashnik, Concrete Mathematics",
+        "ArXiv: math.CO (the provided paper)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that for any poset P with n elements and width w tending to infinity with n, the number of strict alternating cycles s_w(n) satisfies s_w(n) = Θ((w-1)! (n(n+w)/(2w^2))^w).",
+      "domain_bridges": [
+        "combinatorial enumeration",
+        "order theory",
+        "hypergraph coloring"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2448",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem strict_alt_cycle_asymptotics {n w : ℕ} (hn : 0 < n) (hw : 0 < w) : ∃ (c1 c2 : ℝ), 0 < c1 ∧ 0 < c2 ∧ ∀ (s : ℕ), s = strict_alt_cycles n w → c1 * (Nat.factorial (w-1)) * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2))^w ≤ s ∧ s ≤ c2 * (Nat.factorial (w-1)) * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2))^w := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish matching lower and upper bounds via double counting and Stirling's approximation, showing the Theta behavior.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24877v1",
+      "source_path": "http://arxiv.org/abs/2606.24877v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T15:22:17.220902+00:00",
+      "title": "Asymptotic tightness of strict alternating cycle bounds for posets"
+>>>>>>> Stashed changes
     },
     {
       "ambition_level": "extension",
@@ -44979,7 +45072,11 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
+<<<<<<< Updated upstream
       "status": "available",
+=======
+      "status": "completed",
+>>>>>>> Stashed changes
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:09.067494+00:00",
       "title": "Sierpiński Numbers: Covering Systems"
@@ -46682,7 +46779,11 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
+<<<<<<< Updated upstream
       "status": "available",
+=======
+      "status": "completed",
+>>>>>>> Stashed changes
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432630+00:00",
       "title": "Homological Algebra: Derived Functors"
@@ -47190,7 +47291,11 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
+<<<<<<< Updated upstream
       "status": "available",
+=======
+      "status": "completed",
+>>>>>>> Stashed changes
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432688+00:00",
       "title": "Ramsey Theory: Bounds and Constructions"
@@ -47277,11 +47382,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b3a4e879",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47293,7 +47398,7 @@
         "Probability"
       ],
       "id": "seed_355",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:22:21.723993+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47307,7 +47412,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432742+00:00",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
@@ -121642,6 +121747,9 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
+    "cross_domain_bridge",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
