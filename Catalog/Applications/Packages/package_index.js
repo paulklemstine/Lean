@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "04a6a732",
     "filename": "nisq_optimized_quantum_error_mitigation_via_algebr.json",
     "pkg_num": 45,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6946599999999999,
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology: The Agreement Complex"
   },
   {
@@ -1314,8 +1314,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6946599999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology: The Agreement Complex"
     }

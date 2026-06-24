@@ -195,21 +195,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Standard Conjectures on Algebraic Cycles"
   },
   {
-    "consumed_by_exp_id": "f88074cd",
-    "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "seed_233",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:17.429886+00:00",
-    "title": "Whitehead Problem: Independence from ZFC"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domains": [
@@ -4363,6 +4348,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 NISQ Error Mitigation via Algebraic Topology\n\nDerived from the Phase-A cycle that produced `FiltrationPersistence.lean`,\n`NearestCodeword.lean`, and `AgreementComplex.lean` (building on the existing\n`PersistentH0.lean` and `MajorityDecoding.lean`). Each conjecture is falsifiable.\n\n## 1. Higher-Betti barcodes detect *correlated* (burst) errors\n\n**Conjecture.** For repetition-style codes the agreement complex has `H\u2080`\ndimension `\u2264 2` and trivial higher homology (`betti0_agree_le_two`), but for a\n2D surface-code syndrome stream the *first* persistent Betti number `\u03b2\u2081` of the\nsyndrome\u2013proximity filtration is strictly positive exactly when a logical\n(non-correctable) error chain is present.\n\nThe key insight is that a logical error is a *non-contractible cycle* of\nsyndrome defects, so it must register in `H\u2081` rather than `H\u2080`; the `\u03b2\u2080` decoder\nof `AgreementComplex.lean` is provably blind to it (it only ever distinguishes\ntwo components), which is precisely the failure mode we should be able to see one\ndimension up.\n\nWhy now? We already have, in this cycle, a fully formal `\u03b2\u2080` theory with proven\nendpoint values and a conservation law; extending the same `Quot (EqvGen \u2026)`\nmachinery to a 1-skeleton with a boundary map is the minimal next increment, and\nsurface-code syndrome data is the most-studied NISQ benchmark available today.\n\n## 2. The merge-event conservation law gives a decoder confidence score\n\n**Conjecture.** The telescoping total `betti0_merge_events`,\n`\u2211 (\u03b2\u2080(R\u1d62) \u2212 \u03b2\u2080(R\u1d62\u208a\u2081)) = \u03b2\u2080(R\u2080) \u2212 \u03b2\u2080(R_N)`, is monotone in the noise rate: the\nfiltration index at which `\u03b2\u2080` first reaches `1` (the \"consensus persistence\")\nis a sufficient statistic for the posterior error probability, and thresholding\non it strictly dominates fixed-distance majority voting on biased channels.\n\nThe key insight is that *when* components merge (the death times in the barcode),\nnot merely *that* they merge, carries the channel information majority voting\nthrows away \u2014 the conservation law guarantees these death times are a complete,\nnon-redundant accounting of the merging process.\n\nWhy now? `betti0_antitone` + `betti0_merge_events` already pin down the global\nshape of the persistence diagram; quantifying the death times is a direct,\ntestable refinement against the `errors`/`majority` baseline already formalised.\n\n## 3. Nearest-codeword optimality is exactly the collapse of `H\u2081`\n\n**Conjecture.** `majority_eq_min_errors` (majority = minimum-Hamming decoding)\ngeneralises: a linear code admits an exact `\u03b2\u2080`-only optimal decoder **iff** its\nTanner-graph proximity complex is homotopy-equivalent to a discrete set (i.e.\nhas vanishing `H\u2081`). Codes with `\u03b2\u2081 > 0` provably require higher-dimensional\nmitigation.\n\nThe key insight is that the one-dimensional reduction \"everything collapses onto\nthe scalar `ones s`\" found in `NearestCodeword.lean` is a *topological* accident\nof the repetition code's contractible complex, not a generic feature of decoding.\n\nWhy now? We have a clean, exact (`min`) optimality proof for the contractible\ncase; the natural adversarial test is to exhibit the smallest code where it\nbreaks, which the `H\u2081` criterion predicts precisely.\n\n## 4. Persistence is stable under measurement perturbation (a NISQ stability theorem)\n\n**Conjecture.** If two readouts `s, s'` differ in `k` positions then their\nagreement-complex Betti vectors satisfy a bottleneck bound `\u2016\u03b2(s) \u2212 \u03b2(s')\u2016 \u2264 k`,\nand more sharply the persistence diagrams are `k`-interleaved \u2014 so persistent\nhomology degrades *gracefully*, not catastrophically, with shot noise.\n\nThe key insight is that Hamming distance on readouts should be a `1`-Lipschitz\ncontrol on the topological summary, mirroring the classical stability theorem of\npersistent homology but in the finite, fully-formalisable `Quot (EqvGen \u2026)`\nsetting we already use.\n\nWhy now? `consensus_zero_errors` and `betti0_agree_eq_two_iff` already connect\nthe Hamming metric to the invariant at the two extreme values; a Lipschitz\ninterpolation between them is the missing quantitative link and is provable with\nthe injectivity technique of `betti0_agree_le_two`.\n\n## 5. A topological decoder strictly beats majority voting on asymmetric noise\n\n**Conjecture.** There is an explicit asymmetric bit-flip channel and block length\n`n` on which the `\u03b2\u2080`-weighted decoder (weight each component by its persistence\nlifetime, then vote) has strictly higher success probability than the\n`majority`/nearest-codeword decoder of `NearestCodeword.lean`.\n\nThe key insight is that majority voting is optimal only under the *symmetric*\nlikelihood that makes `errors s true` and `errors s false` directly comparable;\nweighting by topological persistence reintroduces the channel asymmetry that the\nplain count discards.\n\nWhy now? Maximum-likelihood optimality of majority voting is now a theorem\n(`majority_nearest_codeword`), so its boundary is sharply defined \u2014 the asymmetric\nchannel is the canonical place to look for a provable separation, and asymmetric\n(amplitude-damping\u2013dominated) noise is the dominant error mode on current NISQ\nhardware.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2478",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "04a6a732",
+    "status": "available",
+    "timestamp": "2026-06-24T23:26:46.312392+00:00",
+    "title": "Derived from the Phase-A cycle that produced `FiltrationPersistence.lean`,"
   },
   {
     "consumed_by_exp_id": "",

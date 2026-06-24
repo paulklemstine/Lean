@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cb56480f",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology\n\nThis cycle produced `Catalog/Logic/JigsawPuzzles.lean`, a self-contained, fully\nverified (0 `sorry`) theory of ed",
-      "quality_score": 0.4729431683168317,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-06-17T16:38:19",
-      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-    },
-    {
       "cycle_id": "74e64b1f",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries\n\nThis research cycle established (in `DecisionBoundaryVariety.lean` and\n`DecisionBoundaryVarietyAlgebra.le",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-24T23:02:00",
       "title": "Cusick's Sum-of-Digits Explicit Bound"
+    },
+    {
+      "cycle_id": "04a6a732",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — NISQ Error Mitigation via Algebraic Topology\n\nDerived from the Phase-A cycle that produced `FiltrationPersistence.lean`,\n`NearestCodeword.lean`, and `AgreementComplex.lean` (buil",
+      "quality_score": 0.6946599999999999,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-06-24T23:27:00",
+      "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77328
     }
   ],
-  "last_updated": "2026-06-24T23:02:00",
+  "last_updated": "2026-06-24T23:27:00",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "50d5b31e",
-        "quality": 0.84432,
-        "theorems": 14,
-        "title": "Ramsey Theory: Bounds and Constructions"
-      },
-      {
         "cycle_id": "eafa171c",
         "quality": 0.4968647748478702,
         "theorems": 178,
@@ -3637,6 +3631,12 @@
         "quality": 0.42325214328358207,
         "theorems": 12,
         "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
+      },
+      {
+        "cycle_id": "04a6a732",
+        "quality": 0.6946599999999999,
+        "theorems": 18,
+        "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
       }
     ],
     "NumberTheory": [
