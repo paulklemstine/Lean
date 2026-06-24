@@ -1,103 +1,86 @@
-# The Secret Language of Primes: How Mathematicians Discovered a Hidden Bridge Between Numbers and Symmetry
+# The Rosetta Stone of Numbers: How Symmetry and Counting Speak the Same Language
 
-## A Cosmic Conspiracy Among Primes
+## A dictionary written in primes
 
-Here is a fact that should keep you up at night: the prime numbers — those indivisible atoms of arithmetic, scattered across the number line in what appears to be a chaotic, unpredictable pattern — are secretly coordinating with each other.
+In 1799, a young Carl Friedrich Gauss became obsessed with a deceptively simple question: when can you draw a perfect regular polygon — a triangle, a pentagon, a 17-sided figure — using only a compass and an unmarked straightedge? The answer he found was not really about geometry at all. It was about *numbers*, and about a hidden symmetry lurking inside the humble roots of unity. That discovery cracked open a door, and behind it lay one of the deepest themes in all of mathematics: that two utterly different-looking worlds — the world of **symmetry** and the world of **arithmetic** — are secretly the same world, viewed from two sides.
 
-Not metaphorically. Not poetically. *Mathematically.*
+This article tells the story of the simplest, sharpest case of that idea. It is a story whose modern name is the **Langlands correspondence**, often called a "grand unified theory of mathematics." The full theory is vast, conjectural, and famously difficult. But its very first chapter — the *abelian* or **GL(1)** case — can be stated completely, proved completely, and even *counted* completely. That is what we explore here.
 
-When you study the prime 7 in isolation, you can learn certain things about it: it divides 49, it doesn't divide 50, its remainder when dividing various numbers follows specific patterns. The same goes for the prime 13, or 97, or any other prime. Each prime has its own local world of divisibility patterns.
+## Two worlds, two casts of characters
 
-But here is the astonishing discovery that has driven a century of mathematical research: these local worlds are not independent. There exists a hidden communication protocol — a set of mathematical laws — that constrains what can happen at one prime based on what happens at every other prime. The laws are so tight, so rigid, so perfectly interlocking, that if you know the local behavior at all but one prime, you can often deduce the behavior at the missing prime.
+Pick a whole number $n$ — say $n = 5$. Now consider the complex number
+$$\zeta_5 = \cos\!\left(\tfrac{2\pi}{5}\right) + i\,\sin\!\left(\tfrac{2\pi}{5}\right),$$
+a point sitting on the unit circle, one-fifth of the way around. It is a **root of unity**: raise it to the fifth power and you get back to $1$. The five powers $1, \zeta_5, \zeta_5^2, \zeta_5^3, \zeta_5^4$ mark the corners of a perfect pentagon inscribed in the circle.
 
-This is not numerology. This is one of the deepest structural truths in all of mathematics. And for the first time, its algebraic skeleton has been carved into a form that a computer can verify, theorem by theorem, with absolute certainty.
+If you take the ordinary rational numbers and throw $\zeta_5$ into the mix, you build a richer number system called a **cyclotomic field**, written $\mathbb{Q}(\zeta_5)$ — "the rationals adjoined a fifth root of unity." This field is the setting for our entire story, and it gives us two completely different casts of characters.
 
-## The Post Office Analogy
+**Cast One: the symmetries.** A *symmetry* of $\mathbb{Q}(\zeta_5)$ is a way of shuffling its numbers around that respects all addition and multiplication and leaves the ordinary rationals untouched. The only freedom such a symmetry has is to send $\zeta_5$ to one of its sibling roots $\zeta_5^k$. The collection of all these symmetries is the **Galois group**, written $\mathrm{Gal}(\mathbb{Q}(\zeta_5)/\mathbb{Q})$. It is the "rotation group" of the number field — the abstract embodiment of how the pentagon's corners can be permuted without breaking any arithmetic.
 
-Imagine every prime number runs its own post office. The post office at prime 2 handles all the even-and-odd information about numbers. The post office at prime 3 handles divisibility-by-three. The post office at prime 5 handles divisibility-by-five. And so on, forever.
+**Cast Two: the rhythms.** Completely separately, number theorists have long studied **Dirichlet characters** — periodic, multiplicative patterns on the integers. A Dirichlet character modulo $5$ assigns to each integer (coprime to $5$) a complex number on the unit circle, in a way that respects multiplication: $\chi(ab) = \chi(a)\chi(b)$. These rhythms are the heartbeat of analytic number theory; they are exactly the gadgets Dirichlet used in 1837 to prove that every arithmetic progression like $3, 8, 13, 18, \ldots$ (numbers leaving remainder $3$ when divided by $5$) contains infinitely many primes. In the grander language of the Langlands program, these are the simplest **Hecke characters** — the "automorphic" objects.
 
-Each post office has its own filing system, its own rules, its own internal logic. From the outside, they look independent.
+Here is the punchline, and it is genuinely surprising the first time you meet it: **these two casts are the same cast.** Every symmetry corresponds to a rhythm, and every rhythm to a symmetry, in a way that perfectly respects how you combine them. That correspondence is the GL(1) Langlands correspondence, and below we make it exact.
 
-But now imagine you want to send a single global message — a number, like 60 — that arrives at every post office simultaneously. At the post office of 2, the number 60 is filed as "divisible by 4 but not 8." At the post office of 3, it's "divisible by 3 but not 9." At the post office of 5, it's "divisible by 5 but not 25."
+## The bridge: Artin reciprocity
 
-The key insight: *not every combination of local filings is possible.* You cannot walk up to the post offices and hand them arbitrary filing instructions. The global number 60 forces a very specific pattern of local data. And the set of all possible patterns — the "allowed messages" — forms a beautifully structured mathematical object.
+The keystone connecting the two worlds is a single, beautiful isomorphism. It says that the abstract Galois symmetry group of $\mathbb{Q}(\zeta_n)$ is *the same group* as something utterly concrete: the group of remainders modulo $n$ that are coprime to $n$, under multiplication. In symbols,
+$$\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \;\cong\; (\mathbb{Z}/n\mathbb{Z})^\times.$$
+This is the **Artin reciprocity** map (in our work, the result `artinIso`). The idea is intuitive once you see it: a symmetry sends $\zeta_n$ to $\zeta_n^k$ for some $k$ coprime to $n$, and the recipe "remember that exponent $k$" is exactly the translation into the world of multiplicative remainders. Composing the symmetry "send to the $k$-th power" with "send to the $j$-th power" gives "send to the $jk$-th power" — multiplication of exponents — so the dictionary respects the group operation perfectly.
 
-This object is called the **idèle class group**, and understanding it is equivalent to understanding how prime numbers talk to each other.
+A free but profound consequence falls out immediately: because multiplication of remainders is commutative ($jk = kj$), the Galois group of any cyclotomic field is **abelian** — its symmetries all commute with one another. In our formalization this is the theorem `galois_abelian`: for any two symmetries $a$ and $b$, we have $ab = ba$. This is not a triviality. It is the structural reason the *abelian* class field theory — the GL(1) corner of Langlands — applies here at all. The whole edifice rests on this commutativity.
 
-## Two Hundred Years of Eavesdropping
+## The main theorem, in plain language
 
-The first person to systematically eavesdrop on this conversation was Carl Friedrich Gauss, around 1800. His *law of quadratic reciprocity* was, in hindsight, the first decryption of a message passing between primes. Gauss showed that whether a number is a perfect square modulo one prime is mysteriously linked to whether another number is a perfect square modulo a different prime.
+We can now state the central result, the one called `langlandsGL1`. Reading off the casts of characters above, the correspondence is an **isomorphism of groups**:
+$$\Big\{\text{Dirichlet characters mod } n\Big\} \;\cong\; \Big\{\text{one-dimensional symmetries' characters of } \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})\Big\}.$$
 
-Gauss found the law so striking that he proved it multiple times, using different methods, as if trying to understand *why* such a conspiracy should exist. The proof told him the law was true. It didn't tell him what it meant.
+Let us unpack the right-hand side. A "one-dimensional complex representation" of the Galois group is simply a way of assigning to each symmetry a nonzero complex number, multiplicatively — a homomorphism $\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \to \mathbb{C}^\times$. Because the group is abelian, these are exactly its **characters**.
 
-Over the next century, mathematicians gradually extended Gauss's discovery. Emil Artin, in the 1920s, formulated a vastly more general version: a single, universal reciprocity law that governed not just square roots but all roots, not just pairs of primes but all primes simultaneously. Artin's reciprocity law said, in essence: *there exists a master decoder that translates between the global arithmetic of a number field and the local arithmetic at each prime.*
+The correspondence itself could not be more explicit. Given a Dirichlet character $\chi$ (a rhythm on remainders), and given the Artin dictionary that turns each symmetry into a remainder, you build a Galois character by simply *feeding the symmetry through the dictionary and then applying the rhythm*:
+$$\rho \;=\; \chi \circ (\text{Artin map}).$$
+That single formula — "compose with reciprocity" — *is* the GL(1) Langlands correspondence. And crucially, it is not merely a bijection that pairs things up one-to-one; it is a structure-preserving isomorphism. Multiply two Dirichlet characters together (pointwise) and you get the product of the two corresponding Galois characters. The two worlds don't just have the same number of inhabitants — they have the same *social structure*.
 
-This was the birth of class field theory — the mathematics of how primes coordinate.
+One more point of pride: over the rational numbers, this correspondence holds **unconditionally, for every single $n$**. There is no fine print, no "for sufficiently large $n$," no hypothesis to verify case by case. The reason is a classical fact about the polynomials whose roots are the primitive roots of unity (the *cyclotomic polynomials*): over $\mathbb{Q}$ they are always irreducible. That irreducibility is precisely what guarantees the Galois group is as large as possible — exactly $(\mathbb{Z}/n\mathbb{Z})^\times$ — and so the bridge is always fully built.
 
-## The Langlands Revolution
+## Counting characters: arithmetic's shadow
 
-In 1967, a young Canadian mathematician named Robert Langlands wrote a letter to André Weil, one of the most formidable mathematicians of the twentieth century. In that letter, Langlands proposed something audacious: that Artin's reciprocity law was just the simplest case of a vast, largely invisible web of connections between number theory and a completely different branch of mathematics called representation theory.
+Whenever you have an exact correspondence between two collections, you can count one side by counting the other. This is where the abstract isomorphism casts a concrete *arithmetic shadow*.
 
-Representation theory studies symmetry — not the visual symmetry of snowflakes and butterflies, but the abstract symmetry of mathematical structures. A "representation" is a way of encoding symmetry as matrices, turning abstract algebraic relationships into concrete calculations with numbers arranged in grids.
+How many Dirichlet characters are there modulo $n$? Exactly as many as there are remainders coprime to $n$ — a quantity with a famous name, **Euler's totient** $\varphi(n)$, the count of integers from $1$ to $n$ that share no common factor with $n$. This is our theorem `card_dirichlet_eq_totient`:
+$$\#\{\text{Dirichlet characters mod } n\} = \varphi(n).$$
 
-Langlands conjectured that every pattern of prime behavior (encoded by what mathematicians call a "Galois representation") should correspond to a specific object from the world of symmetry and analysis (called an "automorphic form"). And vice versa.
+Now push this count *through* the correspondence. Since the two sides are isomorphic, the Galois side must have exactly the same count. So we obtain `card_galois_reps_eq_totient`:
+$$\#\{\text{1-dimensional complex representations of } \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})\} = \varphi(n).$$
+Read that again: a question about the *symmetries of an abstract number field* — how many ways can you assign complex numbers to its symmetries multiplicatively? — is answered by a humble counting function from elementary number theory. The deep and the elementary turn out to be the same fact wearing two outfits.
 
-This was like claiming that every possible conversation between prime numbers has an exact translation in the language of symmetry — and that the dictionary between these two languages, while incredibly complex, is completely determined by the structure of mathematics itself.
+The cleanest special case is when $n = p$ is prime. Then every nonzero remainder is coprime to $p$, so $\varphi(p) = p - 1$. This is our corollary `card_galois_reps_prime`: the symmetry group of $\mathbb{Q}(\zeta_p)$ has exactly $p - 1$ one-dimensional characters.
 
-The conjecture became known as the **Langlands program**, and it has dominated number theory for over half a century. It earned Langlands the Abel Prize in 2018. Major breakthroughs related to it — including Andrew Wiles's proof of Fermat's Last Theorem in 1995 — have reshaped the mathematical landscape.
+Take $p = 5$. There are exactly $5 - 1 = 4$ Dirichlet characters modulo $5$, and therefore exactly $4$ one-dimensional characters of the symmetry group of $\mathbb{Q}(\zeta_5)$ — the pentagon field we started with. Four rhythms, four symmetry-patterns, paired off perfectly. Take $p = 7$: six and six. Take the prime $p = 101$: one hundred and one minus one, a hundred characters on each side. The pattern is exact and eternal.
 
-## The Simplest Case: GL(1)
+## Splitting into primes: a local-to-global story
 
-But there is a curious gap in this grand story. The simplest case of the Langlands correspondence — the case called GL(1), where the symmetry objects are one-dimensional, where the representations are just characters (functions that assign a single number to each group element) — is the one case where the correspondence has been proven for nearly a century. It *is* class field theory. Artin reciprocity *is* the GL(1) Langlands correspondence.
+There is one final movement in this symphony, and it foreshadows the entire architecture of modern number theory. Suppose your modulus factors into coprime pieces — say $n = m \cdot k$ where $m$ and $k$ share no common factor (for instance $15 = 3 \times 5$). Then a character modulo $15$ is *nothing more and nothing less* than a character modulo $3$ together with a character modulo $5$:
+$$\widehat{(\mathbb{Z}/15)^\times} \;\cong\; \widehat{(\mathbb{Z}/3)^\times} \times \widehat{(\mathbb{Z}/5)^\times}.$$
+This is the result `heckeFactorization`, and its engine is the ancient **Chinese Remainder Theorem**: knowing a number's remainder modulo $15$ is equivalent to knowing its remainders modulo $3$ and modulo $5$ separately. Characters inherit that splitting.
 
-And yet, precisely because it was "already known," the GL(1) case has never been given the formal, rigorous, machine-verified treatment that would make it a proper foundation for building upward.
+Why does this matter? Because it is the small, finite shadow of the single most important structural principle in the Langlands program: **global objects factor into local pieces, one for each prime.** A character on the whole is assembled, like a chord, from independent notes played at each prime. In the full theory those "local pieces" live at every prime simultaneously and are glued together into objects called *idèles* and *adèles*. Here, in the cyclotomic GL(1) world, the gluing is just the Chinese Remainder Theorem — but the melody is unmistakably the same one that plays throughout the entire cathedral.
 
-Think of it this way: you want to build a skyscraper. The architectural plans for the hundredth floor are breathtaking. But nobody has ever formally verified that the foundation — the first floor — actually supports the rest of the building. Everyone *knows* it does. The mathematics has been checked by hand, by generations of experts. But it has never been checked by a machine, with absolute logical certainty, in a form that can be extended and built upon systematically.
+## Why this is the right first chapter
 
-Until now.
+It is tempting to dismiss the GL(1) case as "merely" the easy one. That would miss the point. Mathematics advances by finding the smallest example in which a profound phenomenon becomes fully visible and fully provable, and then using it as a lighthouse for the storm-tossed general case. The cyclotomic GL(1) correspondence is exactly such a lighthouse.
 
-## Building the Bridge, Bolt by Bolt
+Everything the grand program promises is already here in miniature and rendered exact:
+- a **dictionary** between symmetry (Galois) and rhythm (automorphic/Hecke), via Artin reciprocity;
+- the dictionary is a true **isomorphism of groups**, not a mere pairing;
+- an **arithmetic shadow** — a hard structural fact ($\varphi(n)$ many characters on each side) that you can compute with a pencil;
+- and a **local-to-global** factorization that previews the adelic architecture of the whole subject.
 
-What has been accomplished is the first formally verified construction of the algebraic machinery underlying the GL(1) Langlands correspondence. Not the full theorem — that requires topology, analysis, and algebraic number theory infrastructure that is still being built — but the precise algebraic skeleton that makes the correspondence work.
+Gauss saw the first glimmer of this when he realized the regular 17-gon was constructible — a geometric miracle that was really a statement about the symmetry group of $\mathbb{Q}(\zeta_{17})$ being a tower of "doublings." Two centuries later, the same circle of ideas, made completely precise, tells us that the symmetries of numbers and the rhythms of arithmetic are two languages for one truth. The Rosetta Stone is real, and for GL(1), we hold the full translation in our hands.
 
-The construction proceeds in layers, each building on the last:
+## Try it yourself
 
-**Layer 1: The Restricted Product.** The idèle group of a number field is not a simple product of local groups. It is a *restricted* product — you take one group for each prime, but you require that all but finitely many components lie in a designated "integral" subgroup. Think of it as requiring that your global message only deviates from the default at finitely many post offices.
+Pick your favorite prime $p$. Count the integers from $1$ to $p-1$: there are $p - 1$ of them, and every one is coprime to $p$. That count, $p - 1$, is simultaneously:
+- the number of multiplicative rhythms (Dirichlet characters) modulo $p$;
+- the number of one-dimensional characters of the symmetry group of $\mathbb{Q}(\zeta_p)$;
+- the size of the Galois group itself.
 
-Formally verifying that this restricted product is actually a group — that multiplying two restricted elements gives a restricted element, that inverses preserve the restricted property — requires careful set-theoretic arguments about finite unions and subgroup closure. These arguments have now been verified with complete rigor.
-
-**Layer 2: The Principal Embedding.** A number in a field — say, the rational number 60 — embeds "diagonally" into the idèle group: it simultaneously appears at every local post office. The crucial theorem is that this diagonal embedding actually lands in the restricted product: a nonzero rational number has non-trivial valuation at only finitely many primes.
-
-This is the **product formula**, one of the most fundamental results in algebraic number theory, and it has now been verified formally for the first time in this algebraic framework.
-
-**Layer 3: The Descent Theorem.** A character of the idèle group that happens to be trivial on all principal idèles (the diagonal images of field elements) descends uniquely to a character of the quotient — the idèle class group. This is the universal property that makes the whole correspondence work: it says that Hecke characters (the automorphic objects on the GL(1) side) are exactly the characters of the idèle class group.
-
-This descent theorem, its uniqueness, and the resulting bijection between "principal-trivial characters" and "quotient characters" have all been formally verified.
-
-**Layer 4: Local Determines Global.** If two characters of the idèle class group agree on their local data at every prime — their values on local uniformizers and integral units — then they must be the same character. This extensionality theorem is the formal expression of the principle that global automorphic data is entirely controlled by local data, which is the conceptual heart of the Langlands correspondence.
-
-## Why This Matters Beyond Mathematics
-
-You might reasonably ask: why should anyone outside of pure mathematics care about formally verifying the algebraic foundation of the Langlands program?
-
-Three reasons.
-
-**First, certainty.** Mathematics is the only human endeavor that claims absolute logical certainty. But that claim rests on the assumption that human proofs are correct — and history shows they sometimes aren't. Machine verification eliminates this uncertainty. When a theorem has been formally verified, it is correct. Period. No caveats, no assumptions about human infallibility.
-
-**Second, extensibility.** The GL(1) case is the template. Every higher-dimensional generalization of the Langlands correspondence — GL(2) (which includes the theory of modular forms and elliptic curves), GL(n), and beyond — must pass through the same algebraic mechanisms: restricted products, principal embeddings, descent theorems, local-global compatibility. By verifying these mechanisms once, in a form that a computer can manipulate, we create a foundation that can be systematically extended.
-
-**Third, computation.** The formal framework is not just theoretical. It comes with algorithms: procedures that take local character data as input, check principal triviality constraints, construct the induced quotient character, and verify whether two local datasets determine the same global object. These algorithms are the computational avatar of class field theory, and they work on concrete examples *today*.
-
-## The Road Ahead
-
-What remains? Everything — and nothing.
-
-Everything, because the full Langlands correspondence involves topology (the idèle group carries a natural topology, and characters should be continuous), analysis (automorphic forms are analytic objects satisfying differential equations), and deep algebraic geometry (the higher-dimensional case requires the theory of algebraic groups, their representations, and the geometry of Shimura varieties).
-
-Nothing, because the *pattern* is now clear. The algebraic skeleton verified here — restricted products, principal descent, local-global extensionality, functoriality of character pullback — repeats at every stage of the Langlands program. The GL(2) case needs the same restricted product structure, the same quotient descent, the same principle that local data determines global data. The foundation is built. The higher floors can follow.
-
-Robert Langlands, in his original 1967 letter, wrote with characteristic modesty about his "speculations" on connections between automorphic forms and Galois representations. Nearly sixty years later, those speculations have become one of the most active and productive research programs in all of mathematics.
-
-Now, for the first time, the simplest case of that program has been given a foundation of absolute logical certainty — a foundation built not on the authority of experts, but on the unforgiving precision of formal logic.
-
-The primes are still talking to each other. But we are finally learning to verify, with complete rigor, that we are translating their conversation correctly.
+Three questions from three different mathematical universes — analysis, algebra, and the geometry of roots of unity — and one identical answer. That is the quiet magic of the correspondence, and it is exactly as true for $p = 1{,}000{,}003$ as it is for $p = 5$.

@@ -1,267 +1,216 @@
-# Formal Verification of the Algebraic Skeleton of the GL(1) Langlands Correspondence
+# The GL(1) Langlands Correspondence over $\mathbb{Q}$: An Explicit Cyclotomic Isomorphism and Its Arithmetic Shadow
+
+**Author:** Aristotle
+**Date:** 2026-06-24
+**Domain:** Algebra / Number Theory (Class Field Theory)
+
+---
 
 ## Abstract
 
-We present the first formally verified construction of the algebraic machinery underlying the GL(1) Langlands correspondence in the Lean 4 proof assistant with the Mathlib library. Our formalization introduces the restricted product structure for idèle-like objects, proves that principal embeddings land in the restricted product, establishes the canonical bijection between principal-trivial characters and idèle class group characters, proves proto-Artin reciprocity descent, and verifies local-data extensionality for quotient characters. All proofs are fully machine-checked with no axioms beyond the standard foundational ones (propext, Classical.choice, Quot.sound). We also provide computational implementations demonstrating the correspondence in finite-place models. This work establishes an extensible formal foundation for higher-dimensional generalizations of the Langlands program.
+We give a complete, unconditional treatment of the abelian — i.e. $\mathrm{GL}(1)$ — case of the Langlands correspondence over the rational numbers, in its sharpest classical incarnation: the cyclotomic case of global class field theory. For each modulus $n \ge 1$ and each field $L$ realizing the cyclotomic extension $\mathbb{Q}(\zeta_n)$, we identify the two sides of the correspondence concretely. The *automorphic* (Hecke) side is the group of Dirichlet characters modulo $n$ valued in $\mathbb{C}$, which are exactly the finite-order Hecke characters of $\mathbb{Q}$ of conductor dividing $n$. The *Galois* side is the group of one-dimensional complex representations of $\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$. The bridge is the Artin reciprocity isomorphism $\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^\times$. Our central result establishes the correspondence as an explicit **isomorphism of groups**
+$$\widehat{(\mathbb{Z}/n\mathbb{Z})^\times} \;\cong\; \big(\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \to \mathbb{C}^\times\big),$$
+given by $\chi \mapsto \chi \circ (\text{Artin map})$, and not merely as a bijection of sets. We prove that the Galois group is abelian (the structural prerequisite for abelian class field theory), and we extract the arithmetic shadow of the correspondence: the number of one-dimensional complex Galois representations equals $\varphi(n)$, Euler's totient, specializing to $p - 1$ for a prime $p$. Finally we record the local–global factorization of the Hecke side: for coprime $m, k$, the character group of $(\mathbb{Z}/mk)^\times$ factors as a product, driven by the Chinese Remainder Theorem — the finite shadow of the adelic restricted-product structure. Over $\mathbb{Q}$ all statements are unconditional, because the cyclotomic polynomials are irreducible over $\mathbb{Q}$.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The Langlands program predicts a profound web of correspondences between two kinds of mathematical objects: $n$-dimensional representations of Galois groups (the *arithmetic* side) and automorphic representations of reductive groups such as $\mathrm{GL}_n$ (the *analytic* side). In its full generality the program is largely conjectural and forms one of the central research efforts of contemporary mathematics. Its first nontrivial case, $n = 1$ — the $\mathrm{GL}(1)$ case — is, however, completely understood: it *is* class field theory, the crowning achievement of early twentieth-century number theory.
 
-The Langlands program, initiated by Robert Langlands in his 1967 letter to André Weil, conjectures deep connections between automorphic forms and Galois representations. The simplest case — GL(1) — corresponds to class field theory, established by Artin, Takagi, and Chevalley in the early twentieth century. Despite being "known" for nearly a century, the GL(1) case has never been given a machine-verified formal treatment that serves as an extensible foundation for higher-dimensional formalization.
+This paper formalizes the $\mathrm{GL}(1)$ correspondence over $\mathbb{Q}$ in the case where the relevant abelian extensions are cyclotomic. This case has three virtues that make it ideal as a foundational, fully provable instance:
 
-The present work addresses this gap by formalizing the algebraic skeleton of the GL(1) correspondence: the structures and universal properties that make reciprocity work, abstracted from the topological and analytic components that require additional infrastructure.
+1. **It is unconditional.** Over $\mathbb{Q}$, the cyclotomic polynomial $\Phi_n(x)$ is irreducible, so $[\mathbb{Q}(\zeta_n):\mathbb{Q}] = \varphi(n)$ and the Galois group is *exactly* $(\mathbb{Z}/n\mathbb{Z})^\times$ for every $n$. No further hypotheses are required.
+2. **It is explicit.** The correspondence is realized by a single formula — composition with the Artin reciprocity map — and is a genuine isomorphism of abelian groups, transporting the pointwise product of Dirichlet characters to the pointwise product of Galois characters.
+3. **It is computable.** The correspondence has an arithmetic shadow: both sides are counted by Euler's totient $\varphi(n)$, a fact one can verify numerically for any modulus.
 
-### 1.2 Contributions
+The remainder of the paper is organized as follows. Section 2 fixes notation and recalls the two sides of the correspondence. Section 3 develops the structural ingredients — Artin reciprocity for cyclotomic fields and the functoriality of character groups under group isomorphisms. Section 4 states and sketches the proofs of the main results. Section 5 presents algorithms and numerical demonstrations. Section 6 discusses the place of these results within the broader Langlands philosophy. Section 7 lists future directions.
 
-Our main contributions are:
+---
 
-1. **New algebraic structures** formalized in Lean 4:
-   - `RestrictedProductData`: families of local groups with integral subgroups
-   - `IsRestrictedFamily`: the finite-support predicate defining restricted products
-   - `restrictedSubgroup`: proof that restricted families form a subgroup
-   - `ValuationIdeleData`: valuation-based idèle models
-   - `PrincipalTrivialCharacter` and `IdeleClassCharacter`: the two sides of the GL(1) correspondence
+## 2. Setting and definitions
 
-2. **Formally verified theorems** (11 total, all sorry-free):
-   - Restricted product closure under multiplication and inversion
-   - Principal embedding finiteness (Theorem 1)
-   - Character descent to quotient groups (Theorem 2)
-   - Canonical bijection between principal-trivial and quotient characters (Theorem 3)
-   - Proto-Artin reciprocity descent
-   - Character extensionality from generators (Theorem 4)
-   - Quotient character extensionality from generator images
-   - Functoriality of character descent
+Throughout, $n \ge 1$ is a natural number with $n \ne 0$ (so that a primitive $n$-th root of unity exists), and $L$ denotes a field equipped with a $\mathbb{Q}$-algebra structure that makes it a cyclotomic extension of $\mathbb{Q}$ of order $n$; concretely $L \cong \mathbb{Q}(\zeta_n)$ where $\zeta_n = e^{2\pi i/n}$.
 
-3. **Computational implementations** in Python demonstrating the correspondence for finite-place models.
+### 2.1 The Galois side
 
-### 1.3 Relation to Prior Work
+**Definition 2.1 (Cyclotomic field and its Galois group).** Let $\zeta_n$ be a primitive $n$-th root of unity. The *cyclotomic field* is $\mathbb{Q}(\zeta_n)$. Its *Galois group* $\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$ is the group of field automorphisms of $\mathbb{Q}(\zeta_n)$ fixing $\mathbb{Q}$ pointwise, under composition. Each such automorphism $\sigma$ is determined by an exponent: $\sigma(\zeta_n) = \zeta_n^{k}$ for a unique $k \in (\mathbb{Z}/n\mathbb{Z})^\times$.
 
-Mathlib contains substantial infrastructure for quotient groups, monoid homomorphisms, and group theory. Our work builds on these foundations but introduces genuinely new structures (restricted products, valuation-based idèle data) and proves theorems connecting them in the specific configuration required by the Langlands program.
+**Definition 2.2 (One-dimensional Galois representations).** A *one-dimensional complex representation* of $\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$ is a group homomorphism
+$$\rho : \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \longrightarrow \mathbb{C}^\times.$$
+Equivalently, since the target $\mathbb{C}^\times$ is abelian, it is a character of the Galois group. These homomorphisms form an abelian group under pointwise multiplication, denoted $\big(\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \to \mathbb{C}^\times\big)$.
 
-The restricted product construction is new to Mathlib. While products and subgroups exist separately, the "restricted product" — requiring finite deviation from a designated subgroup — has not been formalized. This construction is essential for adèles and idèles and has no existing substitute.
+### 2.2 The automorphic / Hecke side
 
-## 2. Definitions and Notation
+**Definition 2.3 (Dirichlet character).** A *Dirichlet character modulo $n$ valued in $\mathbb{C}$* is a multiplicative character of the unit group $(\mathbb{Z}/n\mathbb{Z})^\times$ extended by $0$ off the units; formally it is an element of $\mathrm{MulChar}(\mathbb{Z}/n\mathbb{Z}, \mathbb{C})$. The set of all such characters, denoted $\mathrm{DirichletCharacter}(\mathbb{C}, n)$, forms an abelian group under pointwise multiplication. These are precisely the finite-order Hecke characters of $\mathbb{Q}$ of conductor dividing $n$.
 
-### 2.1 Restricted Product Data
+The Galois side and the Hecke side are, a priori, defined in completely different mathematical languages: one in terms of field automorphisms of an extension of $\mathbb{Q}$, the other in terms of multiplicative functions on residue classes. The content of the correspondence is that they are canonically the same.
 
-**Definition 2.1** (RestrictedProductData). A *restricted product datum* over an index type ι consists of:
-- A family of types `Local : ι → Type*`, each carrying a `CommGroup` instance
-- A family of subgroups `Integral : ∀ v, Subgroup (Local v)`
+---
 
-The `Integral` subgroup models the compact-open subgroup of units in a local field (e.g., ℤ_p× ⊂ ℚ_p×).
+## 3. Structural ingredients
 
-**Definition 2.2** (IsRestrictedFamily). Given restricted product data D over ι, a family `x : ∀ v, D.Local v` is *restricted* if:
+### 3.1 Artin reciprocity for cyclotomic fields
 
-```
-{v : ι | x v ∉ D.Integral v}.Finite
-```
+**Definition 3.1 / Theorem 4.1 (`artinIso`).** There is a canonical group isomorphism
+$$\mathrm{artinIso}_n \;:\; \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \;\xrightarrow{\ \sim\ }\; (\mathbb{Z}/n\mathbb{Z})^\times.$$
 
-That is, x lies outside the integral subgroup at only finitely many places.
+*Construction.* The map sends an automorphism $\sigma$ to the unique class $k \in (\mathbb{Z}/n\mathbb{Z})^\times$ with $\sigma(\zeta_n) = \zeta_n^k$. This is a homomorphism because $(\sigma \circ \tau)(\zeta_n) = \sigma(\zeta_n^{\ell}) = \zeta_n^{k\ell}$ when $\tau$ has exponent $\ell$ and $\sigma$ has exponent $k$; thus composition of automorphisms corresponds to multiplication of exponents. It is injective because an automorphism fixing $\mathbb{Q}$ is determined by its value on the generator $\zeta_n$, and it is surjective because every $k$ coprime to $n$ yields a valid automorphism. The surjectivity (equivalently, that the Galois group has order $\varphi(n)$, the full size of $(\mathbb{Z}/n\mathbb{Z})^\times$) is exactly the statement that $[\mathbb{Q}(\zeta_n):\mathbb{Q}] = \varphi(n)$, which over $\mathbb{Q}$ follows from the irreducibility of the cyclotomic polynomial $\Phi_n$ over $\mathbb{Q}$. $\square$
 
-### 2.2 Valuation-Based Idèle Data
+This map is the cyclotomic incarnation of the global Artin reciprocity law: it identifies the abstract Galois group with an explicit, computable arithmetic group of residues.
 
-**Definition 2.3** (ValuationIdeleData). A *valuation idèle datum* for a field K consists of:
-- A type `Places` of places
-- A function `val : Places → K → ℤ` satisfying:
-  - Multiplicativity: `val p (x * y) = val p x + val p y`
-  - Normalization: `val p 1 = 0`
-  - Finite support: `∀ x : Kˣ, {p | val p x ≠ 0}.Finite`
+### 3.2 Abelianness
 
-This abstracts the essential properties of p-adic valuations on a number field.
+**Theorem 4.2 (`galois_abelian`).** For all $a, b \in \mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$, we have $ab = ba$.
 
-### 2.3 Characters and the Correspondence
+*Proof sketch.* Apply the injective homomorphism $\mathrm{artinIso}_n$. Then $\mathrm{artinIso}_n(ab) = \mathrm{artinIso}_n(a)\,\mathrm{artinIso}_n(b)$, and since the target $(\mathbb{Z}/n\mathbb{Z})^\times$ is a commutative group, the right side equals $\mathrm{artinIso}_n(b)\,\mathrm{artinIso}_n(a) = \mathrm{artinIso}_n(ba)$. Injectivity of $\mathrm{artinIso}_n$ then forces $ab = ba$. $\square$
 
-**Definition 2.4** (PrincipalTrivialCharacter). For a commutative group G with subgroup P and target group A:
+This is the structural reason that *abelian* class field theory — the $\mathrm{GL}(1)$ corner of the Langlands program — governs these extensions. Without commutativity, the dual (character) group would not capture the full group, and the correspondence would fail.
 
-```
-PrincipalTrivialCharacter G P A := {χ : G →* A // ∀ p : P, χ p.1 = 1}
-```
+### 3.3 Functoriality of character groups
 
-**Definition 2.5** (IdeleClassCharacter). For a commutative group G with normal subgroup P:
+**Lemma 3.3 (`precompMulEquiv`).** Let $G, H$ be groups, $M$ a commutative group, and $e : G \xrightarrow{\sim} H$ a group isomorphism. Then precomposition with $e$ induces a group isomorphism of character groups
+$$e^* : (H \to M) \;\xrightarrow{\ \sim\ }\; (G \to M), \qquad \varphi \mapsto \varphi \circ e,$$
+with inverse $\psi \mapsto \psi \circ e^{-1}$.
 
-```
-IdeleClassCharacter G P A := (G ⧸ P) →* A
-```
+*Proof sketch.* The two assignments are mutually inverse because $e \circ e^{-1} = \mathrm{id}_H$ and $e^{-1} \circ e = \mathrm{id}_G$, so $(\varphi \circ e) \circ e^{-1} = \varphi$ and likewise on the other side. It is a homomorphism of character groups because precomposition is linear in the character: $(\varphi_1 \varphi_2) \circ e = (\varphi_1 \circ e)(\varphi_2 \circ e)$, the products being pointwise in the commutative target $M$. $\square$
 
-## 3. Main Results
+This lemma is the categorical statement that "taking one-dimensional representations" (the Pontryagin/character dual) is a contravariant functor that turns isomorphisms into isomorphisms. It is the formal device that lets us transport the Artin isomorphism to the level of character groups.
 
-### 3.1 Theorem 1: Principal Embedding Finiteness
+---
 
-**Theorem** (principal_family_is_restricted). *Let V be a valuation idèle datum for a field K. For every unit x ∈ Kˣ, the principal family `V.principalFamily x` is a restricted family in the associated restricted product data.*
+## 4. Main results
 
-**Proof sketch.** The principal family at place v is `Multiplicative.ofAdd (V.val v x)`. This lies outside the integral subgroup ⊥ (which consists of the identity) iff `V.val v x ≠ 0`. By the finite support axiom of V, this set is finite. The non-integral locus of the principal family is a subset of the non-zero valuation locus, hence finite. □
+### 4.1 The correspondence
 
-**Significance.** This theorem is the formal hinge connecting field elements to idèles. Without it, the diagonal embedding K× → 𝔸_K× is meaningless — it would not land in the restricted product. The theorem ensures that global arithmetic data (a field element) correctly maps to local-global arithmetic data (an idèle).
+We combine two isomorphisms. First, Mathlib's identification (here `MulChar.mulEquivToUnitHom`) of Dirichlet characters with homomorphisms out of the unit group:
+$$\mathrm{DirichletCharacter}(\mathbb{C}, n) \;\cong\; \big((\mathbb{Z}/n\mathbb{Z})^\times \to \mathbb{C}^\times\big).$$
+Second, the dual of Artin reciprocity from Lemma 3.3 applied to $e = \mathrm{artinIso}_n$:
+$$\big((\mathbb{Z}/n\mathbb{Z})^\times \to \mathbb{C}^\times\big) \;\cong\; \big(\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \to \mathbb{C}^\times\big).$$
+Composing yields the main theorem.
 
-### 3.2 Theorem 2: Character Descent
+**Theorem 4.3 (Main; `langlandsGL1`).** There is an explicit isomorphism of abelian groups
+$$\mathrm{langlandsGL1}_n \;:\; \mathrm{DirichletCharacter}(\mathbb{C}, n) \;\xrightarrow{\ \sim\ }\; \big(\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \to \mathbb{C}^\times\big),$$
+given by sending a Dirichlet character $\chi$ to the Galois representation $\chi \circ (\text{Artin map})$, i.e. $\sigma \mapsto \chi\big(\mathrm{artinIso}_n(\sigma)\big)$.
 
-**Theorem** (character_descends_to_idele_class_group). *Let G be a commutative group, P a normal subgroup, A a commutative group, and χ : G →* A a homomorphism such that χ(p) = 1 for all p ∈ P. Then there exists a unique homomorphism χ̄ : G/P →* A such that χ = χ̄ ∘ π, where π : G → G/P is the quotient map.*
+*Proof sketch.* The map is the composition of the isomorphism $\mathrm{MulChar.mulEquivToUnitHom}$ with $\mathrm{precompMulEquiv}(\mathrm{artinIso}_n)$. Being a composition of group isomorphisms, it is a group isomorphism. The explicit formula follows by unwinding the two component maps on a character $\chi$: first $\chi$ is identified with a homomorphism on $(\mathbb{Z}/n\mathbb{Z})^\times$, then that homomorphism is precomposed with $\mathrm{artinIso}_n$. $\square$
 
-**Proof sketch.** Existence follows from `QuotientGroup.lift`, which constructs the descended map from the condition P ≤ ker(χ). For uniqueness, if χ̄' also satisfies χ = χ̄' ∘ π, then χ̄ and χ̄' agree on the image of π, which is surjective, so they agree everywhere. □
+This is the precise meaning of the slogan "1-dimensional Galois representations correspond to Hecke characters." The correspondence is structure-preserving: the pointwise product $\chi_1 \chi_2$ of Dirichlet characters maps to the pointwise product of the corresponding Galois representations.
 
-**Significance.** This is the exact algebraic content of the statement "Hecke characters are characters of the idèle class group." The map χ is an idèle character, P is the principal subgroup, and χ̄ is the induced Hecke character.
+### 4.2 Counting: the arithmetic shadow
 
-### 3.3 Theorem 3: The GL(1) Bijection
+**Theorem 4.4 (`card_dirichlet_eq_totient`).** The number of Dirichlet characters modulo $n$ valued in $\mathbb{C}$ is
+$$\#\,\mathrm{DirichletCharacter}(\mathbb{C}, n) = \varphi(n),$$
+where $\varphi$ is Euler's totient.
 
-**Theorem** (principal_trivial_character_equiv_quotient_character). *For a commutative group G with normal subgroup P and target group A, there is a canonical equivalence:*
+*Proof sketch.* Dirichlet characters mod $n$ over $\mathbb{C}$ are identified with homomorphisms $(\mathbb{Z}/n\mathbb{Z})^\times \to \mathbb{C}^\times$. Because $\mathbb{C}$ contains enough roots of unity (every finite cyclic group embeds into $\mathbb{C}^\times$), the character group of the finite abelian group $(\mathbb{Z}/n\mathbb{Z})^\times$ has the same order as the group itself. Finally $\#(\mathbb{Z}/n\mathbb{Z})^\times = \varphi(n)$ by definition of the totient. $\square$
 
-```
-PrincipalTrivialCharacter G P A ≃ IdeleClassCharacter G P A
-```
+**Theorem 4.5 (`card_galois_reps_eq_totient`).** The number of one-dimensional complex representations of $\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$ is
+$$\#\big(\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \to \mathbb{C}^\times\big) = \varphi(n).$$
 
-**Proof sketch.** The forward map sends (χ, hχ) to `QuotientGroup.lift P χ hχ`. The inverse sends χ̄ to (χ̄ ∘ π, proof that χ̄(π(p)) = χ̄(1) = 1 for p ∈ P). Left inverse: the composition lift-then-compose recovers χ by the computation rule of lift. Right inverse: the composition compose-then-lift recovers χ̄ by the universal property of the quotient. □
+*Proof sketch.* Transport the cardinality across the main isomorphism of Theorem 4.3: an isomorphism of groups is in particular a bijection of underlying sets, so the two finite sets have equal cardinality. Then apply Theorem 4.4. (Finiteness on the Galois side is inherited from finiteness of the Dirichlet side via the bijection.) $\square$
 
-**Significance.** This is the precise algebraic statement of the GL(1) Langlands correspondence: the space of automorphic characters (characters trivial on principal idèles) is canonically bijective with the space of representations (characters of the idèle class group).
+**Corollary 4.6 (`card_galois_reps_prime`).** For a prime $p$,
+$$\#\big(\mathrm{Gal}(\mathbb{Q}(\zeta_p)/\mathbb{Q}) \to \mathbb{C}^\times\big) = p - 1.$$
 
-### 3.4 Theorem 4: Character Extensionality
+*Proof sketch.* Specialize Theorem 4.5 to $n = p$ and use $\varphi(p) = p - 1$, which holds because every integer in $\{1, \dots, p-1\}$ is coprime to the prime $p$. $\square$
 
-**Theorem** (character_ext_of_generators). *If S generates a commutative group G (i.e., Subgroup.closure S = ⊤), and two homomorphisms χ, ψ : G →* A agree on S, then χ = ψ.*
+These counting theorems are the concrete arithmetic content of the correspondence: a question about the representation theory of an abstract Galois group is answered by an elementary counting function.
 
-**Proof.** Uses `MonoidHom.eq_of_eqOn_dense` from Mathlib, which proves that homomorphisms agreeing on a dense (generating) subset are equal. □
+### 4.3 Local–global factorization on the Hecke side
 
-**Corollary** (quotient_character_ext_of_generator_images). *Two characters of G/P that agree on the quotient images of generators of G are equal.*
+**Theorem 4.7 (`heckeFactorization`).** For coprime natural numbers $m$ and $k$, there is a canonical isomorphism of character groups
+$$\widehat{(\mathbb{Z}/mk\mathbb{Z})^\times} \;\cong\; \widehat{(\mathbb{Z}/m\mathbb{Z})^\times} \times \widehat{(\mathbb{Z}/k\mathbb{Z})^\times},$$
+i.e. a Dirichlet character of conductor dividing $mk$ splits canonically into its $m$-part and its $k$-part.
 
-**Significance.** This formalizes the local-global principle: global characters (of the idèle class group) are entirely determined by their local data (values on generators coming from local uniformizers and units at each place). This is the conceptual core of reciprocity: local information determines global behavior.
+*Proof sketch.* The Chinese Remainder Theorem gives a ring isomorphism $\mathbb{Z}/mk\mathbb{Z} \cong \mathbb{Z}/m\mathbb{Z} \times \mathbb{Z}/k\mathbb{Z}$ for coprime $m, k$, which restricts to a group isomorphism of units $(\mathbb{Z}/mk\mathbb{Z})^\times \cong (\mathbb{Z}/m\mathbb{Z})^\times \times (\mathbb{Z}/k\mathbb{Z})^\times$. Dualizing (taking characters into $\mathbb{C}^\times$) and using that the character group of a product is the product of character groups yields the stated factorization. $\square$
 
-### 3.5 Proto-Artin Reciprocity
+At the level of cardinalities this recovers the multiplicativity of the totient, $\varphi(mk) = \varphi(m)\varphi(k)$ for coprime $m, k$, consistent with Theorems 4.4–4.5. Conceptually it is the GL(1) shadow of the adelic restricted-product structure: a global character is assembled from independent local data, one factor per prime.
 
-**Theorem** (proto_artin_reciprocity_descends). *For any group homomorphism Art : G →* Γ that is trivial on a normal subgroup P, there exists a unique Art̄ : G/P →* Γ such that Art = Art̄ ∘ π.*
+---
 
-This is the algebraic skeleton of Artin reciprocity: the Artin map from idèles to the abelianized Galois group, being trivial on principal idèles, factors uniquely through the idèle class group.
+## 5. Algorithms and numerical demonstrations
 
-### 3.6 Functoriality
+The arithmetic shadow of the correspondence is fully computable. We describe the core algorithms; full implementations appear in the accompanying `demo.py`.
 
-**Definition** (quotient_map_of_subgroup_map). Given f : G →* H with f(P) ⊆ Q, construct the induced map G/P →* H/Q.
+### 5.1 Enumerating Dirichlet characters modulo $n$
 
-**Definition** (character_descent_pullback). Pullback of quotient characters along a subgroup-preserving morphism.
+Because $(\mathbb{Z}/n\mathbb{Z})^\times$ is a finite abelian group, it decomposes as a product of cyclic groups, and its characters are products of characters of the cyclic factors. The algorithm:
 
-**Significance.** This is the categorical skeleton of Langlands functoriality for GL(1): morphisms of arithmetic data (maps between idèle groups preserving principal subgroups) induce morphisms of automorphic data (pullback of characters on the quotient).
+1. Compute the unit group $U = \{a \in \{1, \dots, n\} : \gcd(a, n) = 1\}$; its size is $\varphi(n)$.
+2. Find a generating set / cyclic decomposition $U \cong \prod_i \mathbb{Z}/d_i\mathbb{Z}$.
+3. A character is specified by assigning to each cyclic generator $g_i$ a $d_i$-th root of unity $e^{2\pi i a_i / d_i}$; there are $\prod_i d_i = \varphi(n)$ choices.
+4. Evaluate a character on an arbitrary unit by writing it in terms of generators.
 
-## 4. Algorithms
+This both lists all $\varphi(n)$ characters and verifies Theorem 4.4.
 
-### 4.1 Principal Triviality Check
+### 5.2 The correspondence as a relabeling
 
-**Input:** Character exponents (a_p)_{p ∈ S} ∈ ℚ^S, test elements q_1, ..., q_n ∈ ℚˣ.
+Given a Dirichlet character $\chi$ and the Artin map $\sigma \mapsto k_\sigma$ (the exponent with $\sigma(\zeta_n) = \zeta_n^{k_\sigma}$), the Galois representation $\rho = \mathrm{langlandsGL1}_n(\chi)$ is computed by $\rho(\sigma) = \chi(k_\sigma)$. Since the Galois group is concretely $(\mathbb{Z}/n\mathbb{Z})^\times$ under Artin reciprocity, this is a pure relabeling: the demo verifies that the multiplication tables of the two character groups coincide under the correspondence, confirming it is a group isomorphism (Theorem 4.3) and not merely a bijection.
 
-**Output:** Boolean indicating whether the character is trivial on principal idèles.
+### 5.3 Verifying the totient count and CRT factorization
 
-**Pseudocode:**
-```
-function CheckPrincipalTriviality(exponents, test_elements):
-    for q in test_elements:
-        total = Σ_p exponents[p] · v_p(q)
-        if total ∉ ℤ:
-            return (False, q)  // witness of non-triviality
-    return (True, None)
-```
+For a range of $n$, compute $\varphi(n)$ directly by counting, enumerate the characters, and check the two counts agree (Theorems 4.4–4.5; Corollary 4.6 for primes). For coprime $m, k$, verify the bijection $\widehat{(\mathbb{Z}/mk)^\times} \cong \widehat{(\mathbb{Z}/m)^\times} \times \widehat{(\mathbb{Z}/k)^\times}$ at the level of both cardinalities and explicit character values (Theorem 4.7).
 
-**Complexity:** O(|test_elements| · |S| · log(max |q_i|))
-
-### 4.2 Character Descent Construction
-
-**Input:** Principal-trivial character data (exponents, places).
-
-**Output:** Quotient character data.
-
-**Pseudocode:**
-```
-function DescendToQuotient(exponents, places, test_elements):
-    if not CheckPrincipalTriviality(exponents, test_elements):
-        return None
-    return QuotientCharacter(exponents, places)
-```
-
-### 4.3 Local-to-Global Reconstruction
-
-**Input:** Local character values at each place.
-
-**Output:** Unique global character (if principal-trivial) or failure.
-
-**Pseudocode:**
-```
-function ReconstructFromLocal(local_values, places, test_elements):
-    char = Character(local_values, places)
-    if CheckPrincipalTriviality(char, test_elements):
-        return char  // unique by extensionality theorem
-    return None
-```
-
-## 5. Computational Experiments
-
-### 5.1 Finite-Place Model over ℚ
-
-We implemented the correspondence for S = {2, 3, 5}. Key observations:
-
-| Character | Exponents (a_2, a_3, a_5) | Principal-trivial? | Conductor |
-|-----------|---------------------------|-------------------|-----------|
-| Trivial   | (0, 0, 0)                | ✓                 | 1         |
-| χ₂        | (1/3, 0, 0)              | ✗                 | 2         |
-| χ₃        | (1/2, 1/2, 0)            | ✗                 | 6         |
-
-### 5.2 Character Group Structure
-
-For the places S = {2, 3, 5}, the number of characters of order dividing n that are principal-trivial is always 1 (the trivial character). This reflects the fact that ℚ has class number 1 and our model captures this: the constraint Σ_p a_p · v_p(q) ∈ ℤ for q = p (each prime in S) forces a_p ∈ ℤ for each p, leaving only the trivial character modulo ℤ.
-
-### 5.3 Partial L-Values
-
-We computed Euler products at S = {2, 3, 5} for s = 2, 3, 4:
-
-| s | L(s, trivial) | L(s, ramified@2) |
-|---|--------------|-----------------|
-| 2 | 1.5625       | 0.9375          |
-| 3 | 1.1964       | 0.9305          |
-| 4 | 1.0817       | 0.9545          |
-
-The trivial character values converge to ζ(s) restricted to {2,3,5}. The ramified character produces twisted L-values.
+---
 
 ## 6. Discussion
 
-### 6.1 What We Have Formalized
+The cyclotomic GL(1) correspondence is the smallest example in which every promise of the Langlands program is simultaneously visible and provable. Four features deserve emphasis.
 
-Our formalization captures the *algebraic core* of the GL(1) Langlands correspondence:
+**A dictionary between two languages.** The Galois side and the Hecke side are defined in incompatible vocabularies — automorphisms of a field versus multiplicative functions on residues. Artin reciprocity (Theorem 4.1) is the dictionary, and Theorem 4.3 promotes it to an isomorphism of the *dual* (character) groups, which is where the automorphic objects live.
 
-1. **Restricted product structure**: the correct algebraic framework for idèles
-2. **Principal embedding**: the bridge from global to local-global
-3. **Character descent**: the universal property making the correspondence possible
-4. **Canonical bijection**: the precise algebraic statement of GL(1) Langlands
-5. **Local-global extensionality**: the principle that local data determines global data
-6. **Functoriality**: the categorical behavior of the correspondence under morphisms
+**An isomorphism, not a bijection.** It would be a strictly weaker statement to assert merely that the two sides have equally many elements. Theorem 4.3 asserts that they are isomorphic *as groups*: the pointwise product of Dirichlet characters is carried to the pointwise product of Galois representations. This is the GL(1) form of the compatibility of the correspondence with tensor products of representations.
 
-### 6.2 What Remains
+**A computable arithmetic invariant.** Theorems 4.4–4.5 and Corollary 4.6 distill the correspondence into a number, $\varphi(n)$ (and $p - 1$ for primes), that one can compute by hand. That a representation-theoretic count of an abstract Galois group equals an elementary number-theoretic function is the kind of "unreasonable effectiveness" the Langlands program systematizes.
 
-To formalize the *full* GL(1) Langlands correspondence requires:
+**Local–global structure.** Theorem 4.7 exhibits, in finite form, the principle that global automorphic objects factor into local pieces indexed by primes. In the full theory this is the restricted-product decomposition of idèle class characters over the places of $\mathbb{Q}$; here it is the Chinese Remainder Theorem, but the architecture is identical.
 
-1. **Topology**: The idèle group carries a restricted product topology. Characters should be continuous. The Artin map is continuous.
+The restriction to cyclotomic extensions is what makes everything unconditional and explicit: over $\mathbb{Q}$ the cyclotomic polynomials are irreducible, so the Galois group is the full $(\mathbb{Z}/n\mathbb{Z})^\times$ and no case analysis is needed. The Kronecker–Weber theorem guarantees that *every* finite abelian extension of $\mathbb{Q}$ is contained in a cyclotomic field, so the cyclotomic case is not a special corner but a cofinal, essentially complete account of abelian class field theory over $\mathbb{Q}$.
 
-2. **Completions**: The local fields ℚ_p must be formalized as completions, with their topologies and valuations.
+---
 
-3. **Galois theory**: The abelianized Galois group Gal(K^ab/K) must be formalized, and the Artin map must be shown to be an isomorphism (not just a homomorphism that factors through the quotient).
+## 7. Worked examples
 
-4. **Analytic theory**: Hecke L-functions, their analytic continuation, and functional equations.
+To make the abstract statements concrete, we trace the correspondence through three moduli of increasing structural richness. Throughout, we use that under Artin reciprocity (Theorem 4.1) a Galois automorphism is recorded by its exponent $k$ with $\sigma(\zeta_n) = \zeta_n^k$, so the Galois side may be computed directly on $(\mathbb{Z}/n\mathbb{Z})^\times$.
 
-5. **Global class field theory**: The precise isomorphism between the idèle class group and the abelianized Galois group, including the Artin map's compatibility with local Frobenius elements.
+### 7.1 The prime modulus $n = 5$
 
-### 6.3 Extensibility to Higher Rank
+Here $(\mathbb{Z}/5\mathbb{Z})^\times = \{1, 2, 3, 4\}$ is cyclic of order $\varphi(5) = 4$, generated by $g = 2$ (since $2^1 = 2$, $2^2 = 4$, $2^3 = 3$, $2^4 = 1$ modulo $5$). A character is determined by where it sends the generator, which must go to a fourth root of unity $i^a$ for $a \in \{0, 1, 2, 3\}$. The four Dirichlet characters are therefore $\chi_a(2^j) = i^{aj}$. By Corollary 4.6 there are exactly $5 - 1 = 4$ of them, matching the four one-dimensional representations of $\mathrm{Gal}(\mathbb{Q}(\zeta_5)/\mathbb{Q})$. The trivial character $\chi_0$ corresponds to the trivial representation; $\chi_2$ is the unique real nontrivial character (the quadratic, or Legendre, character mod $5$), taking values $\pm 1$; and $\chi_1, \chi_3$ are complex conjugate characters of order $4$. The Galois representation attached to $\chi_a$ sends the automorphism $\sigma : \zeta_5 \mapsto \zeta_5^k$ to $\chi_a(k)$.
 
-The algebraic mechanisms we formalized — restricted products, principal descent, extensionality — are exactly the same mechanisms needed for GL(n):
+### 7.2 A non-cyclic unit group: $n = 8$
 
-- **GL(2)**: Restricted products of GL_2(ℚ_p) with GL_2(ℤ_p) as integral subgroup. Characters become 2-dimensional representations. The descent theorem generalizes to automorphic representations.
-- **GL(n)**: The same pattern, with n-dimensional representations and GL_n(ℤ_p) as integral subgroup.
-- **General reductive groups**: The restricted product structure generalizes, with maximal compact subgroups as integral subgroups.
+The modulus $n = 8$ is the smallest where the unit group is not cyclic: $(\mathbb{Z}/8\mathbb{Z})^\times = \{1, 3, 5, 7\} \cong \mathbb{Z}/2\mathbb{Z} \times \mathbb{Z}/2\mathbb{Z}$, with $\varphi(8) = 4$. Every nonidentity element has order $2$ ($3^2 = 5^2 = 7^2 = 1 \bmod 8$), so no single generator exists. Choosing the basis $\{3, 5\}$, a character is specified by two independent signs $\chi(3), \chi(5) \in \{\pm 1\}$, giving $2 \times 2 = 4$ characters — again $\varphi(8) = 4$, consistent with Theorem 4.4. The corresponding Galois group $\mathrm{Gal}(\mathbb{Q}(\zeta_8)/\mathbb{Q})$ is the Klein four-group, the symmetry group fixing $\mathbb{Q}$ inside $\mathbb{Q}(\zeta_8) = \mathbb{Q}(i, \sqrt{2})$. This example shows that the correspondence handles non-cyclic Galois groups with no modification: it is the full character group, not merely a cyclic dual, that is transported.
 
-## 7. Future Work
+### 7.3 The Chinese Remainder split: $n = 15 = 3 \cdot 5$
 
-1. Formalize the restricted product topology and prove character continuity.
-2. Formalize p-adic completions ℚ_p and connect them to the valuation-based model.
-3. Prove the Artin reciprocity isomorphism for the rationals ℚ.
-4. Extend to GL(2) by defining automorphic forms as functions on GL_2(𝔸_ℚ).
-5. Formalize the conductor of a Hecke character and prove conductor-discriminant formulas.
+Since $\gcd(3, 5) = 1$, Theorem 4.7 gives
+$$\widehat{(\mathbb{Z}/15\mathbb{Z})^\times} \cong \widehat{(\mathbb{Z}/3\mathbb{Z})^\times} \times \widehat{(\mathbb{Z}/5\mathbb{Z})^\times}.$$
+Numerically, $\varphi(15) = 8 = 2 \times 4 = \varphi(3)\varphi(5)$, confirming the multiplicativity of the totient as the cardinality shadow of the factorization. Every character mod $15$ arises uniquely as a product $\chi^{(3)} \cdot \chi^{(5)}$ of a character mod $3$ and a character mod $5$, read through the ring isomorphism $\mathbb{Z}/15\mathbb{Z} \cong \mathbb{Z}/3\mathbb{Z} \times \mathbb{Z}/5\mathbb{Z}$. This is the finite, fully explicit prototype of the place-by-place factorization of idèle class characters that organizes the entire automorphic side of the Langlands program.
 
-## 8. References
+The accompanying computational artifacts verify all three examples — and the general identities $\#\{\text{characters}\} = \varphi(n)$ and the multiplicativity of the correspondence — exactly (using integer exponent vectors, so without floating-point error) for all moduli in a substantial range.
 
-1. Langlands, R.P. "Letter to André Weil." Institute for Advanced Study, 1967.
-2. Tate, J. "Fourier Analysis in Number Fields and Hecke's Zeta Functions." Ph.D. thesis, Princeton University, 1950.
-3. Neukirch, J. *Algebraic Number Theory.* Springer, 1999.
-4. Bump, D. *Automorphic Forms and Representations.* Cambridge University Press, 1997.
-5. Kudla, S.S. "From modular forms to automorphic representations." In *An Introduction to the Langlands Program*, Birkhäuser, 2003.
+## 8. Future directions
+
+**Conjecture 1 — Conductor-graded refinement.** Under the correspondence, a Dirichlet character of conductor exactly $d \mid n$ should map to a Galois representation factoring through $\mathrm{Gal}(\mathbb{Q}(\zeta_d)/\mathbb{Q})$ (trivial on $\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}(\zeta_d))$), giving a graded isomorphism indexed by conductor. The correspondence is then compatible with the conductor filtration, and the inclusion $\mathbb{Q}(\zeta_d) \subseteq \mathbb{Q}(\zeta_n)$ becomes inflation of representations.
+
+**Conjecture 2 — Matching of L-functions.** For a Dirichlet character $\chi$ and its Galois counterpart $\rho$, the Dirichlet L-function $L(s, \chi)$ should equal the Artin L-function $L(s, \rho)$ term by term as Euler products. The local CRT factorization (Theorem 4.7) is exactly the place-by-place decomposition that makes the two Euler products agree factor by factor, reducing global equality to a per-prime statement.
+
+**Conjecture 3 — Functoriality of the count under the cyclotomic tower.** The totient counts should assemble into an exact statement: the natural restriction map $\big(\mathrm{Gal}(\mathbb{Q}(\zeta_{mn})/\mathbb{Q}) \to \mathbb{C}^\times\big) \to \big(\mathrm{Gal}(\mathbb{Q}(\zeta_m)/\mathbb{Q}) \to \mathbb{C}^\times\big)$ is surjective with kernel of order $\varphi(mn)/\varphi(m)$, mirroring the surjection $(\mathbb{Z}/mn\mathbb{Z})^\times \twoheadrightarrow (\mathbb{Z}/m\mathbb{Z})^\times$.
+
+**Conjecture 4 — Real-place / sign data at GL(1) over $\mathbb{Q}$.** Every finite-order Hecke character of $\mathbb{Q}$ should be determined by its restriction to $(\mathbb{Z}/n\mathbb{Z})^\times$ together with a single sign at the archimedean place, and the correspondence is a bijection onto Galois characters once that sign (the parity $\chi(-1) = \pm 1$) is recorded.
+
+---
+
+## Appendix: Summary of formal results
+
+| Name | Statement |
+|---|---|
+| `artinIso` | $\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \cong (\mathbb{Z}/n\mathbb{Z})^\times$ |
+| `galois_abelian` | $ab = ba$ for all $a, b$ in the Galois group |
+| `precompMulEquiv` | $e : G \cong H \Rightarrow (H \to M) \cong (G \to M)$ for commutative $M$ |
+| `langlandsGL1` | $\mathrm{DirichletCharacter}(\mathbb{C}, n) \cong \big(\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \to \mathbb{C}^\times\big)$ |
+| `card_dirichlet_eq_totient` | $\#\,\mathrm{DirichletCharacter}(\mathbb{C}, n) = \varphi(n)$ |
+| `card_galois_reps_eq_totient` | $\#\big(\mathrm{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \to \mathbb{C}^\times\big) = \varphi(n)$ |
+| `card_galois_reps_prime` | for prime $p$, the count is $p - 1$ |
+| `heckeFactorization` | $\widehat{(\mathbb{Z}/mk)^\times} \cong \widehat{(\mathbb{Z}/m)^\times} \times \widehat{(\mathbb{Z}/k)^\times}$, $\gcd(m,k)=1$ |
