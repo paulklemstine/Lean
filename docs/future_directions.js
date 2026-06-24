@@ -1879,21 +1879,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
   {
-    "consumed_by_exp_id": "ff0eab6a",
-    "description": "The cluster algebra structure on the coordinate ring of a partial flag variety G/P, defined via the restriction of the base affine space cluster structure, is isomorphic to the cluster algebra structure defined on the corresponding Schubert cell via the double Bruhat cell cluster structure.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2313",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23474v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T06:42:43.429866+00:00",
-    "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domains": [
@@ -3888,6 +3873,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Ramsey Theory: Bounds and Constructions\n\nThis cycle settled the two-colour Schur number `S(2) = 4` exactly and supplied\nthe extremal construction for the lower bound `S(3) \u2265 13`\n(`Algebra/SchurNumberTwo.lean`, `Algebra/SchurNumberThree.lean`). Below are\nfalsifiable conjectures for follow-up cycles.\n\n## Conjecture 1 \u2014 Upper bound `S(3) \u2264 13`\n**Statement.** `\u00ac SchurColourableR 3 14`: every three-colouring of `{1,\u2026,14}`\ncontains a monochromatic Schur triple.\n**Plan.** Reduce to a `Fin 3`-coloured `decide`/`native_decide` search over the\n`3^13` relevant colourings (fix `c 1 = 0` by symmetry to cut the space).\nCombined with `schurColourable_three_thirteen` this proves `S(3) = 13`.\n**Falsifiable:** exhibit a sum-free three-colouring of `{1,\u2026,14}` to refute.\n\n## Conjecture 2 \u2014 Schur \u21d0 Ramsey bridge\n**Statement.** For every `r`, `SchurColourableR r (RamseyMulti r 3 - 1)` fails to\nextend: `S(r) \u2264 R_r(3) - 1`, where `R_r(3)` is the `r`-colour Ramsey number for\ntriangles. Formally connect `Algebra/SchurNumber*` to the arrow relation in\n`Applications/Ramsey.lean` via the map \"colour the edge `{i,j}` by the colour of\n`|i - j|`\".\n**Falsifiable:** a Schur colouring of `{1,\u2026,R_r(3)-1}` surviving the bridge.\n\n## Conjecture 3 \u2014 Exponential lower bound `S(r) \u2265 (3^r + 1)/2`\n**Statement.** `SchurColourableR r ((3^r + 1)/2 - 1)` for all `r \u2265 1`, via the\nrecursive Schur construction (lift a colouring of `{1,\u2026,S(r-1)}` by three shifted\ncopies). Verified small cases: `r=1 \u2192 1`, `r=2 \u2192 4`, `r=3 \u2192 13`, `r=4 \u2192 40`.\n**Falsifiable:** show the recursive construction produces a monochromatic triple\nfor some `r`.\n\n## Conjecture 4 \u2014 Weak (distinct-entry) Schur numbers\n**Statement.** Define `WS(r)` using Schur triples with `x \u2260 y`. Then\n`WS(2) = 8` and `WS(3) = 23`. Formalise `WeakSchurColourable` (add `x \u2260 y` to\n`IsSchurTriple`) and prove `WS(2) = 8` by the same `decide` methodology used for\n`S(2) = 4`.\n**Falsifiable:** any colouring beating these bounds.\n\n## Conjecture 5 \u2014 Diagonal Ramsey from the binomial bound\n**Statement.** Extend `Applications/Ramsey.lean`'s `arrows_recursion` to the\ndiagonal bound `Arrows (4^s) (s+1) (s+1)`, i.e. `R(s+1,s+1) \u2264 4^s`, using the\ncentral-binomial estimate `(2s).choose s \u2264 4^s`. Pair with the probabilistic\nlower bound `R(s,s) > 2^(s/2)` for a clean two-sided diagonal result.\n**Falsifiable:** a colouring of `K_{4^s}` with no monochromatic `(s+1)`-clique.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2442",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1670a4b8",
+    "status": "available",
+    "timestamp": "2026-06-24T13:10:06.638792+00:00",
+    "title": "This cycle settled the two-colour Schur number `S(2) = 4` exactly and supplied"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4211,7 +4211,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "4a138f86",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -4221,7 +4221,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },

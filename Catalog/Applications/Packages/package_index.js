@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1670a4b8",
     "filename": "ramsey_theory_bounds_and_constructions.json",
     "pkg_num": 29,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.61528,
     "title": "Schur Numbers: The Exact Value S(2)=4 and the Extremal Lower Bound S(3)>=13"
   },
   {
@@ -850,8 +850,8 @@ window.PACKAGE_GRAPH = {
       "hue": 359,
       "id": "ramsey_theory_bounds_and_constructions",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.61528,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Schur Numbers: The Exact Value S(2)=4 and the Extremal Lower Bound S(3)>=13"
     }

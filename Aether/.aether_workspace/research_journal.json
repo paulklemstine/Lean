@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1873f003",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Tangled Hierarchies (GL-Kripke geometry of self-soundness)\n\nDerived from this cycle's findings in `Core.lean`, `SelfSoundness.lean`,\n`Examples.lean`. This cycle established, on f",
-      "quality_score": 0.4749530303030304,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-17T03:57:54",
-      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-    },
-    {
       "cycle_id": "29ffc67c",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Numerical Monsters Bestiary (Bridges domain)\n\nThis research cycle established a verified core for digit-combinatorial\n\"monsters\": vampire numbers (`Vampire.lean`), the narcissist",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-24T12:15:24",
       "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+    },
+    {
+      "cycle_id": "1670a4b8",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nThis cycle settled the two-colour Schur number `S(2) = 4` exactly and supplied\nthe extremal construction for the lower bound `S(3) ≥ 13`",
+      "quality_score": 0.61528,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-24T13:10:21",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.789328
     }
   ],
-  "last_updated": "2026-06-24T12:15:24",
+  "last_updated": "2026-06-24T13:10:21",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "ab2bf6f4",
-        "quality": 0.5330519163763068,
-        "theorems": 32,
-        "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
-      },
-      {
         "cycle_id": "3d9b7416",
         "quality": 0.5508906250000001,
         "theorems": 70,
@@ -3079,6 +3073,12 @@
         "quality": 0.63257,
         "theorems": 15,
         "title": "Type Theory: Cubical Type Theory Foundations"
+      },
+      {
+        "cycle_id": "1670a4b8",
+        "quality": 0.61528,
+        "theorems": 6,
+        "title": "Ramsey Theory: Bounds and Constructions"
       }
     ],
     "Applications": [
