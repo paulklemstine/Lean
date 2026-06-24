@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-24T12:15:26.870926+00:00",
+  "last_updated": "2026-06-24T12:43:54.508351+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -2807,6 +2807,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-24T12:15:26.638930+00:00",
       "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Applications",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "c891ac10",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16a",
+      "phase_b_skipped": false,
+      "prompt_version": "v16a",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782299577.380763,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-24T12:43:54.001567+00:00",
+      "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
     }
   ]
 }
