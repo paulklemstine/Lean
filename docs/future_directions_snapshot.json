@@ -198,7 +198,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0dfef380",
+    "consumed_by_exp_id": "",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domain_bridges": [],
     "domains": [
@@ -212,7 +212,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -1019,7 +1019,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "06454730",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domain_bridges": [],
     "domains": [
@@ -1032,7 +1032,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -3927,7 +3927,7 @@
       "math.CO/graph_theory/symmetric_graphs",
       "math.CO/graph_theory/cubic_graphs"
     ],
-    "consumed_by_exp_id": "7e71ceda",
+    "consumed_by_exp_id": "",
     "description": "Every Hamiltonian connected cubic edge-transitive graph Γ has Hamiltonian compression factor κ(Γ) ≥ 2, i.e., it admits a 2-symmetric Hamiltonian cycle: there exists a Hamiltonian cycle C and an automorphism g of order 2 such that g acts on C as a rotation by |V(Γ)|/2 positions. This is supported by exhaustive computation on all such graphs up to 10,000 vertices, where every Hamiltonian cubic edge-transitive graph was found to have κ ≥ 2.",
     "domain_bridges": [
       "group_theory/automorphisms",
@@ -3943,7 +3943,7 @@
     "proof_strategy": "Leverage the edge-transitivity of Γ to show that any Hamiltonian cycle can be 'symmetrized': given a Hamiltonian cycle C, use the transitivity of Aut(Γ) on edges of Γ to construct an involutory automorphism that permutes the edges of C as a half-rotation. The key step is showing that edge-transitivity forces enough symmetry on the edge set of any Hamiltonian cycle to guarantee a 2-fold rotational symmetry. Alternatively, classify cubic edge-transitive graphs by their automorphism group structure and verify case-by-case for each infinite family (e.g., generalized Petersen graphs, Möbius ladders, prism graphs).",
     "research_mode": "team",
     "source_exp_id": "2606.21941v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T13:48:00.738680+00:00",
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
@@ -5096,6 +5096,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.AC",
+      "math.AG",
+      "math.CO",
+      "math.RA"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the full flag variety GL_{n+1}/ℂ B, let w ∈ S_{n+1} index the Schubert cell X_w^o. The cluster algebra structure on ℂ[X_w^o] (coming from the reduced expression of the longest element in the Weyl group modulo the stabilizer of w) is of finite type if and only if w is a Grassmannian permutation (i.e., w has at most one descent).",
+    "domain_bridges": [
+      "cluster algebras",
+      "Schubert calculus",
+      "permutation patterns"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2398",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that the exchange matrix associated to a reduced word for w is mutation-equivalent to a Cartesian product of type A_{k_i} cluster algebras exactly when the corresponding permutation has at most one descent, using the correspondence between reduced words and pipe dreams, and applying known classification of finite type cluster algebras via Dynkin diagrams. Conversely, if w has ≥2 descents, exhibit a mutable vertex whose mutation creates a cycle of length >2, preventing finite type.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23474v1",
+    "status": "available",
+    "timestamp": "2026-06-24T00:22:07.112237+00:00",
+    "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "ErdosProblems550",
       "EFRS1989",
       "Chvatal1977",
@@ -5111,7 +5140,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2398",
+    "id": "fd_2399",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to adapt the off-Turán embedding and compactness-rounding arguments to eliminate the dependence on n₀. Alternatively, perform a systematic case analysis for small n using structural properties of trees and known exact Ramsey numbers for small complete multipartite graphs.",
@@ -5138,7 +5167,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2399",
+    "id": "fd_2400",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a uniform linear bound by inducting on the codimension $i$, utilizing Borel-Serre duality to relate high-degree cohomology to low-degree homology, and carefully controlling the $p$-torsion dependencies in the spectral sequence of the complex of apartments.",
@@ -5147,6 +5176,35 @@
     "status": "available",
     "timestamp": "2026-06-23T23:53:53.632851+00:00",
     "title": "Linear Vanishing Bound for Hecke Congruence Subgroup Cohomology"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Brocard Problem (n!+1 = m^2)",
+      "Brown numbers: (4,5), (5,11), (7,71)",
+      "Adleman–Pomerance–Rumely bounds on factorial growth",
+      "Lattice basis reduction in Diophantine equations"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every natural number n > 7, the equation n! + 1 = m^2 has no integer solution m. In other words, the only solutions to the Brocard problem are the three known Brown pairs (4,5), (5,11), and (7,71).",
+    "domain_bridges": [
+      "Diophantine equations",
+      "Factorial arithmetic",
+      "p‑adic valuation theory",
+      "Lattice basis reduction (LLL)"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2401",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use a combination of modular arithmetic to rule out congruence classes mod small primes, p‑adic valuation to show that n! + 1 cannot be a square when n exceeds 7, and LLL lattice reduction to bound possible m via approximations of sqrt(n!+1). The strategy involves proving that for any n > 7, there exists a prime p > 7 such that v_p(n!) is odd, which forces n! + 1 to be congruent to 1 mod p but not a quadratic residue modulo p. This approach would be formalized by iteratively eliminating admissible n using explicit bounds from the Chebyshev theta function and explicit factorial bounds, culminating in a contradiction for each n > 7.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23485v1",
+    "status": "available",
+    "timestamp": "2026-06-24T00:22:38.508639+00:00",
+    "title": "Non‑existence of Further Brown Numbers Beyond n=7"
   },
   {
     "ambition_level": "extension",
@@ -5247,7 +5305,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "19e0d3d0",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -5260,7 +5318,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -5521,7 +5579,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "961bb29f",
+    "consumed_by_exp_id": "",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domain_bridges": [],
     "domains": [
@@ -5534,7 +5592,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -5560,7 +5618,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e63b33ee",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -5573,7 +5631,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -5599,7 +5657,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a5fa8083",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -5611,7 +5669,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -5876,7 +5934,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e56a1e16",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domain_bridges": [],
     "domains": [
@@ -5889,7 +5947,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
@@ -6256,7 +6314,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c8daa509",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -6269,7 +6327,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },

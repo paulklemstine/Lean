@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d79ba9e2",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Isogeny-Based Cryptography (CSI-FiSh / CSIDH)\n\nConjectures below are stated to be *formalizable and testable* in Lean 4, building\ndirectly on `Catalog/Cryptography/CSIFiShClassGr",
-      "quality_score": 0.66144,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-16T16:55:32",
-      "title": "Isogeny-Based Cryptography: CSI-FiSh"
-    },
-    {
       "cycle_id": "24a3af22",
       "domain": "Tropical",
       "key_insight": "# FUTURE DIRECTIONS — Category Theory as the DNA of Mathematics (Tropical cycle)\n\nDerived from the verified results in\n`Catalog/Tropical/ModelCategoryGenome.lean` and\n`Catalog/Tropical/TropicalResidua",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-06-23T23:51:10",
       "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
+    },
+    {
+      "cycle_id": "2b44c5bb",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nThis file establishes the algebraic Kramers–Wannier self-dual critical point\n`β_c = ½ log(1 + √2)` for the 2D Ising model. Below are concrete follow-up directions\nthat build on it",
+      "quality_score": 0.6913,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-24T00:21:18",
+      "title": "Statistical Mechanics: Ising Model Phase Transition"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.77
     }
   ],
-  "last_updated": "2026-06-23T23:51:10",
+  "last_updated": "2026-06-24T00:21:18",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "3b102b1d",
-        "quality": 0.7943200000000001,
-        "theorems": 75,
-        "title": "Deepening: `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
-      },
-      {
         "cycle_id": "46951c2e",
         "quality": 0.36179759999999994,
         "theorems": 6,
@@ -3823,6 +3817,12 @@
         "quality": 0.48476875555555554,
         "theorems": 16,
         "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers)"
+      },
+      {
+        "cycle_id": "2b44c5bb",
+        "quality": 0.6913,
+        "theorems": 6,
+        "title": "Statistical Mechanics: Ising Model Phase Transition"
       }
     ],
     "Pythagorean": [

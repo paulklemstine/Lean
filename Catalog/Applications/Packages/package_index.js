@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2b44c5bb",
     "filename": "statistical_mechanics_ising_model_phase_transition.json",
     "pkg_num": 14,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6913,
     "title": "Statistical Mechanics: The Self-Dual Critical Point of the 2D Ising Model"
   },
   {
@@ -415,8 +415,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6913,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Statistical Mechanics: The Self-Dual Critical Point of the 2D Ising Model"
     }
