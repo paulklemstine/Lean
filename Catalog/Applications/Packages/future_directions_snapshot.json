@@ -120,7 +120,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64791022",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domain_bridges": [],
     "domains": [
@@ -132,7 +132,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -1874,7 +1874,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24d81b77",
     "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
     "domain_bridges": [],
     "domains": [
@@ -1888,7 +1888,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432797+00:00",
     "title": "Tropical Convexity and Linear Programming"
   },
@@ -6045,6 +6045,62 @@
     "status": "available",
     "timestamp": "2026-06-24T10:38:46.496140+00:00",
     "title": "Equivalence of Line‑Freeness and Corner‑Tuple Monochromaticity for Coordinate‑Symmetric Colorings"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "AlonFranklLovasz2022",
+      "Meunier2021",
+      "BurrErdosSpencer1975"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For each t,r >= 2, there exists N such that for all n >= N, any t-uniform hypergraph G on n vertices that is (n,d,λ)-pseudo-random (i.e., each vertex has degree (1+o(1)) * binomial(n-1, t-1) and any two vertices belong to at most (1+o(1)) * binomial(n-2, t-2) edges) yields that any r-edge-colouring of G contains a monochromatic matching of size exactly floor((n+r-1)/(r+t-1)). In particular, this conjecture implies that the only extremal colourings achieving the Alon–Frankl–Lovász bound are the r‑strip colourings (vertex set partitioned into ≤ r parts and colour depends only on intersection profile).",
+    "domain_bridges": [
+      "topological combinatorics",
+      "LP duality",
+      "hypergraph regularity",
+      "convex-geometric compression"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2433",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "To prove the conjecture, one would extend the structural reduction theorem of the paper to an exact version. The main steps are: (1) Show that for pseudo-random hypergraphs the density of each colour class is close to 1/r, (2) Apply hypergraph regularity to partition the vertex set into a bounded number of quasi‑random parts, (3) Use convex‑geometric compression to reduce the colouring to one where the colour of an edge depends only on its intersection profile with the parts (an r‑strip colouring), (4) Observe that an r‑strip colouring attains the exact AFL bound, and (5) Argue that any deviation from an r‑strip colouring would force a larger monochromatic matching, contradicting maximality. An induction on n together with a careful analysis of the LP dual for the matching problem would yield the required exactness.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24863v1",
+    "status": "available",
+    "timestamp": "2026-06-24T10:40:06.279518+00:00",
+    "title": "Exact Monochromatic Matching Bound for Pseudo-Random Hypergraphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO/2305.01234",
+      "math.CO/2407.05678",
+      "math.CO/2603.01456"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For integers d≥2 and 0≤s≤d, let ℱ⊆[n]^{(d+1)} be a (d+1)-uniform family such that every F∈ℱ has a missing trace of size exactly s (i.e. there exists B_F⊂F with |B_F|=s and B_F∉Tr_ℱ(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |ℱ| ≤ W(d,s,n) for all n≥2(d+1). Moreover, equality holds precisely for the constructions given by Chao‑Xu‑Yip‑Zhang and by the recent disproof for ⌈(d+2)/2⌉≤s≤d‑1.",
+    "domain_bridges": [
+      "Lean4/Mathlib combinatorics.set_family",
+      "Lean4/Mathlib data.nat.choose"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_2434",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24776v1",
+    "status": "available",
+    "timestamp": "2026-06-24T10:40:45.798036+00:00",
+    "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
   },
   {
     "ambition_level": "extension",

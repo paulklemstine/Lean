@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64791022",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -1405,7 +1405,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24d81b77",
     "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
     "domains": [
       "Tropical",
@@ -1416,7 +1416,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432797+00:00",
     "title": "Tropical Convexity and Linear Programming"
   },
@@ -3583,6 +3583,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-24T10:38:46.496140+00:00",
     "title": "Equivalence of Line\u2011Freeness and Corner\u2011Tuple Monochromaticity for Coordinate\u2011Symmetric Colorings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For each t,r >= 2, there exists N such that for all n >= N, any t-uniform hypergraph G on n vertices that is (n,d,\u03bb)-pseudo-random (i.e., each vertex has degree (1+o(1)) * binomial(n-1, t-1) and any two vertices belong to at most (1+o(1)) * binomial(n-2, t-2) edges) yields that any r-edge-colouring of G contains a monochromatic matching of size exactly floor((n+r-1)/(r+t-1)). In particular, this conjecture implies that the only extremal colourings achieving the Alon\u2013Frankl\u2013Lov\u00e1sz bound are the r\u2011strip colourings (vertex set partitioned into \u2264 r parts and colour depends only on intersection profile).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2433",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24863v1",
+    "status": "available",
+    "timestamp": "2026-06-24T10:40:06.279518+00:00",
+    "title": "Exact Monochromatic Matching Bound for Pseudo-Random Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_2434",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24776v1",
+    "status": "available",
+    "timestamp": "2026-06-24T10:40:45.798036+00:00",
+    "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
   },
   {
     "consumed_by_exp_id": "",
