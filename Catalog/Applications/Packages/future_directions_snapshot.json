@@ -2955,6 +2955,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO",
+      "math.GR"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every connected, twin-free Cayley digraph of a finite abelian group of odd order is stable; that is, the automorphism group of its direct product with the complete digraph K_2 is isomorphic to the direct product of their individual automorphism groups.",
+    "domain_bridges": [
+      "Graph Theory",
+      "Group Theory",
+      "Abstract Algebra"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2320",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the direct product of digraphs, stability, and the twin-free property. Prove that an unstable connected digraph must admit an involutory automorphism that swaps twins. Show that for a Cayley digraph of an abelian group of odd order, the existence of such an automorphism forces the existence of an element of order 2 in the group, which contradicts Lagrange's theorem for groups of odd order.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22947v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:53:33.563342+00:00",
+    "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Amitsur-Levitzki Theorem (MR36751)",
       "Irelli et al. (irelli2025quiverspolynomialidentities)"
     ],
@@ -3819,7 +3845,7 @@
       "Lagrange theorem: real quadratic irrationals are exactly eventually periodic continued fractions",
       "Mathlib modules: Mathlib.Data.Matrix.Basic, Mathlib.NumberTheory.ContinuedFractions, Mathlib.Topology.Algebra.Order.LiminfLimsup"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cc1a412b",
     "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
     "domain_bridges": [
       "continued fractions to real quadratic irrationals via eventual periodicity",
@@ -3836,7 +3862,7 @@
     "proof_strategy": "Adapt the paper's construction realizing arbitrary ratios in the interval by bounded continued fraction sequences, but replace the infinite nonperiodic tail by sufficiently long periodic repetitions of the finite blocks controlling the limsup. Since ultimately periodic continued fractions are quadratic irrationals, it remains to prove that the Lagrange-constant ratio changes by an arbitrarily small amount under this periodic approximation. Formalization would isolate a continuity lemma for finite-window limsup maxima of periodic continued fractions and combine it with the Smith-normal-form reduction used for the general matrix M.",
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T13:11:45.659366+00:00",
     "title": "Quadratic irrational density in the ratio spectrum"
   },
@@ -6493,6 +6519,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "GineproHull2014counting",
+      "Christensen2025origami",
+      "Cereceda2009mixing"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every integer degree d ≥ 1 there exists a polynomial P_d(m,n) with integer coefficients such that for all sufficiently large grid dimensions (i.e., m,n ≥ T(d) for some threshold depending only on d) the number N_{m,n}(d) of vertices of degree d in the flip graph ΟұG(Ζ_{m,n}) equals P_d(m,n). Moreover, P_d is symmetric in m and n and can be expressed as a ℤ‑linear combination of binomial coefficients.",
+    "domain_bridges": [
+      "Discrete Morse theory",
+      "Combinatorial species",
+      "Extremal combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2453",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture is approached by induction on d. Using the height‑function reduction, a vertex of degree d corresponds to a height function with exactly d strict local extrema. For d ≤ 5 the explicit polynomial formulas are known. For larger d we decompose a height function into a connected component of extrema surrounded by a “valley” or “mountain” region, reducing the counting problem to a convolution of lower‑degree counts. This yields a recurrence that forces N_{m,n}(d) to be a polynomial in m,n. Verifying the recurrence against the known low‑degree cases and proving polynomiality via generating‑function arguments establishes the conjecture.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22614v1",
+    "status": "available",
+    "timestamp": "2026-06-24T22:36:31.788869+00:00",
+    "title": "Polynomial degree sequence for all degrees in the Miura‑ori flip graph"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO/2305.01234",
       "math.CO/2407.05678",
       "math.CO/2603.01456"
@@ -6507,7 +6560,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2453",
+    "id": "fd_2455",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6531,7 +6584,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2454",
+    "id": "fd_2456",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6557,7 +6610,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2455",
+    "id": "fd_2457",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6583,7 +6636,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2456",
+    "id": "fd_2458",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6610,7 +6663,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2457",
+    "id": "fd_2459",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6636,7 +6689,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2458",
+    "id": "fd_2460",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
@@ -6664,7 +6717,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2459",
+    "id": "fd_2461",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
@@ -6689,7 +6742,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2460",
+    "id": "fd_2462",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -6716,7 +6769,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2461",
+    "id": "fd_2463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
@@ -6745,7 +6798,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2462",
+    "id": "fd_2464",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Borel-Serre duality techniques and spectral sequence arguments used in codimension 1 and 2 cases to arbitrary k. Analyze the action of the congruence subgroup on Bruhat-Tits buildings and leverage representation stability to control cohomology in high degrees.",
@@ -6770,7 +6823,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2463",
+    "id": "fd_2465",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
@@ -6798,7 +6851,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2464",
+    "id": "fd_2466",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
@@ -6825,7 +6878,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2465",
+    "id": "fd_2467",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on dimension d, leveraging the structure of convex splinters and the affine dependence condition. Possibly using induction on the number of convex sets composing the splinter, combined with probabilistic method or measure concentration techniques to establish the lower bound.",
@@ -6844,7 +6897,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2468",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct proof using inequalities derived from asymptotic estimates",
@@ -6873,7 +6926,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2467",
+    "id": "fd_2469",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the paper's prime-divisor criterion to an exact p-adic valuation statement. First reuse the finite-difference argument to show that every prime divisor of D(k) divides n = k+1. For an exact component p^a ∥ n, use Kummer's theorem to express v_p(binom(qk,k)) as a number of base-p carries in k + (q-1)k. Prove a uniform lower bound v_p ≥ a for all q in the range exactly when n/p^a ≤ p^a. Then construct an explicit q, plausibly q = n/p^a + 1 or a small digit-adjusted variant, for which the carry count is exactly a, giving v_p(D(k)) = a. Show that all other prime components have valuation zero in the gcd. Combining over primes yields the asserted exact formula.",
@@ -6904,7 +6957,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2468",
+    "id": "fd_2470",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicitly a non-central element that is St₃ by utilizing long paths in the quiver. For a path p of length ≥ 3, consider x = p₁ + p₂ + ... + pₖ where pᵢ are appropriately chosen paths satisfying the St₃ condition but not the centrality condition. Verify St₃(x, y₁, y₂) = 0 for all y₁, y₂ using the alternating symmetry and multilinearity of St₃, while showing [x, z] ≠ 0 for some z in the algebra to prove non-centrality.",
@@ -6932,7 +6985,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2469",
+    "id": "fd_2471",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the construction of the Betti-Whittaker periods using the pairing between the Whittaker model and the cohomology of the arithmetic quotient. Implement the duality between π and π^* via the contragredient representation, and use the functional equation of the associated L-function to establish the proportionality constant. The Lean proof would require the formalization of Casselman-Wallach representations and the continuous cohomology of GL(n, R).",
@@ -6960,7 +7013,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2470",
+    "id": "fd_2472",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive proof on delta-matroid rank with case analysis for each ⋆∙ operator, leveraging existing results for partial-∗ polynomials and properties of twist/loop complementation.",
@@ -6988,7 +7041,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2471",
+    "id": "fd_2473",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on n using the known extremal construction, counting arguments, and verifying that any C_{4k+2}^{4-}-free hypergraph cannot exceed the bipartite bound, formalizing the odd‑bipartite structure in Lean.",
@@ -7017,7 +7070,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2472",
+    "id": "fd_2474",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Derive the explicit parameters (a_i,b_j) of the {}_nF_{n-1} series from the known hypergeometric representation of the roots of the trinomial in powers of the discriminant D (using the formulas from the paper).\n2. Verify the conjectured transformation for small n (n=3,4,5) with computer algebra (e.g., Mathematica, Maple, or Sage) by expanding both sides as power series in D and checking equality term-by-term.\n3. Once the pattern holds for these cases, use known results on higher-order Kummer transformations (e.g., Karlsson-Minton theorem) to argue that the conjectured identity follows from the general transformation theory for Saalschützian {}_nF_{n-1} series.\n4. Formalise the conjecture in Lean 4: define the hypergeometric series in mathlib, encode the parameters as dependent types, and state the identity as a theorem. Use the existing hypergeometric transformation lemmas to attempt a proof, or develop new lemmas for the specific parameter shifts.\n5. Aim to complete a machine-check",
@@ -7026,6 +7079,33 @@
     "status": "available",
     "timestamp": "2026-06-24T22:02:43.917391+00:00",
     "title": "Higher-order Kummer transformation for trinomial root series"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "q-analogs",
+      "Gaussian binomial coefficients",
+      "q-exponential generating functions",
+      "descent set"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every integer k≥2 and n≥0, the polynomial a_n^{(k)}(q) equals the finite sum ∑_{m=0}^{⌊n/k⌋} q^{m(m+1)/2} * GaussianBinomial(n - m(k-1), m)_q where GaussianBinomial(n,m)_q denotes the q-binomial coefficient",
+    "domain_bridges": [
+      "analytic combinatorics",
+      "enumerative combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2475",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Induction on n using the functional equation of the q-exponential generating function F_k(t;q) and coefficient extraction to verify the claimed closed form",
+    "research_mode": "team",
+    "source_exp_id": "2606.23748v1",
+    "status": "available",
+    "timestamp": "2026-06-24T22:36:50.930027+00:00",
+    "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
   {
     "ambition_level": "extension",
@@ -7282,26 +7362,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Partial-Twuality Polynomials in Binary Delta-Matroids\n\nDerived from the Stage 3/4 findings of this research cycle (formalised in\n`Twist.lean`, `Interpolation.lean`, `Examples.lean`). Each conjecture is bold,\nfalsifiable, and motivated by what the formal experiments revealed.\n\n## Cycle findings that seed these directions\n\n- The single-feasible-set partial-twuality polynomial is **always** `(1+z)^{|E|}`,\n  hence always interpolating with support `[0,|E|]` (`twuality_spectrum`,\n  `ptCoeff_interpolating`).\n- The polynomial is a genuine **twist-orbit invariant** (`ptCoeff_twist_invariant`).\n- Delta-matroids are **closed under twist** (`twist_symExchange`), so partial twuality\n  is a well-defined operation on the whole class.\n- Therefore any failure of interpolation (Yan–Jin counterexamples) must come from the\n  *interaction of several feasible sets*, not from the twist mechanism itself.\n\n## Conjecture 1 — Width-polynomial interpolation dichotomy\nFor a delta-matroid `D` on `E`, define the *width partial-twuality polynomial*\n`W_D(z) = Σ_{A ⊆ E} z^{w(D * A)}`, where `w` is the max-minus-min feasible-set size.\n**Conjecture:** `W_D` is interpolating if and only if `D` is *even* (all feasible sets of\none parity).\nThe key insight is that the single-set computation gives the binomial `(1+z)^{|E|}`\nwith no gaps, so gaps can only be manufactured by parity obstructions across distinct\nfeasible sets. Why now? We have the twist-invariance and closure infrastructure in Lean,\nso the parity refinement is the first untested structural lever.\n\n## Conjecture 2 — Binary representability forces gap-freeness\nLet `D` be a **binary** delta-matroid (representable by a symmetric matrix over GF(2)).\n**Conjecture:** the width partial-twuality polynomial of any binary delta-matroid is\ninterpolating, even though general delta-matroids admit gaps (Yan–Jin).\nThe key insight is that GF(2)-pivoting realises twist as a linear operation, so the set of\nattainable widths inherits the contiguity of linear-algebraic rank changes (rank moves by\n±1 under a single pivot). Why now? `twist_twist`/`twist_involutive` already model the twist\ngroup action abstractly; adding a GF(2) representation layer makes the rank-step argument\nformalisable.\n\n## Conjecture 3 — Loop-complementation extends interpolation to all nontrivial twuals\nBinary delta-matroids carry a second involution, *loop complementation*, generating with\ntwist the full `S_3` of \"twuals\". **Conjecture:** every nontrivial twual operation (the six\nelements of the twuality group) preserves the interpolation status of the width polynomial.\nThe key insight is that twist and loop complementation both act by single-coordinate\nGF(2) moves, so each generator changes the width spectrum by a contiguous shift, and a\nproduct of contiguity-preserving maps is contiguity-preserving. Why now? We proved twist is\nan involution and a group action; the analogous laws for loop complementation are the next\nformal target and would complete the `S_3` picture named in the mission title.\n\n## Conjecture 4 — Categorical functoriality of the twuality polynomial\nThere is a category whose objects are set systems on finite ground sets and whose morphisms\nare ground-set bijections compatible with twist. **Conjecture:** the partial-twuality\npolynomial is a *functor* to graded `ℕ`-modules, and twist-invariance\n(`ptCoeff_twist_invariant`) is the statement that it factors through the twist-orbit\nquotient groupoid. The key insight is that the symmetric-difference group action we\nformalised *is* the morphism structure, so the invariant is exactly a coequalizer of that\naction. Why now? The group-action laws are already proven; promoting them to a functor is a\ndirect categorical packaging.\n\n## Conjecture 5 — Chmutov bridge: ribbon-graph genus polynomial = delta-matroid width polynomial\nFor the binary delta-matroid `D(G)` of a ribbon graph `G` (Chmutov), **conjecture:** the\nGMT partial-duality genus polynomial of `G` equals the width partial-twuality polynomial of\n`D(G)` after the substitution `genus = width/2`. The key insight is that partial duality of\nribbon graphs corresponds exactly to twist of the associated binary delta-matroid, and our\n`twist_symExchange` shows this correspondence stays inside the delta-matroid class. Why now?\nWith twist closure and twist-invariance proven, the only missing ingredient is the explicit\ngenus↔width dictionary, making this bridge a concrete next formalisation.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Bridges"
-    ],
-    "id": "fd_2473",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "72ef5a59",
-    "status": "available",
-    "timestamp": "2026-06-24T22:33:02.474398+00:00",
-    "title": "Derived from the Stage 3/4 findings of this research cycle (formalised in"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -7459,7 +7519,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "04a6a732",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -7472,9 +7532,47 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723). with terms 36,180,252,392,396,468,612,684,828,1044,1116,1176,1260,1332,1476,1548,1692,1908,1960,1980,2124,2196,. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2454",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "oeis:307958",
+    "status": "available",
+    "timestamp": "2026-06-24T22:36:53.103641+00:00",
+    "title": "OEIS sequence: Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723)."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Stack polyominoes with square core. with terms 1,1,0,0,1,2,3,4,5,7,9,13,17,24,31,42,54,71,90,117,147,188,236,298,371,466,576,716,882,1088,1331,1633. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2476",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "oeis:188674",
+    "status": "available",
+    "timestamp": "2026-06-24T22:36:53.104224+00:00",
+    "title": "OEIS sequence: Stack polyominoes with square core."
   },
   {
     "ambition_level": "extension",

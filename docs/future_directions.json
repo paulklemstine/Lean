@@ -35588,14 +35588,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "math.GR"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "b45eb1d8",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35610,11 +35610,11 @@
         "Algebra"
       ],
       "id": "fd_2320",
-      "last_attempt_time": "2026-06-24T22:02:56.670225+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:40.163741+00:00",
       "lean_theorem_stub": "theorem stable_cayley_digraph_abelian_odd_order\n    (G : Type*) [Fintype G] [CommGroup G] [DecidableEq G]\n    (S : Finset G) (h_one_not_mem : (1 : G) ∉ S)\n    (h_conn : Digraph.Connected (CayleyDigraph G S))\n    (h_twin_free : Digraph.TwinFree (CayleyDigraph G S)) :\n    (Digraph.DirectProduct (CayleyDigraph G S) Digraph.K₂).Aut ≃*\n      (CayleyDigraph G S).Aut ×* Digraph.K₂.Aut :=\n  sorry",
       "lineage_refs": [],
-      "outcome_quality": 0.6934400000000001,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Formalize the direct product of digraphs, stability, and the twin-free property. Prove that an unstable connected digraph must admit an involutory automorphism that swaps twins. Show that for a Cayley digraph of an abelian group of odd order, the existence of such an automorphism forces the existence of an element of order 2 in the group, which contradicts Lagrange's theorem for groups of odd order.",
@@ -35624,7 +35624,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22947v1",
       "source_path": "http://arxiv.org/abs/2606.22947v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T09:53:33.563342+00:00",
       "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
@@ -37125,7 +37125,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Lagarias-Shallit bounds for Lagrange constants under integer linear fractional transformations",
         "Smith normal form over Z for reducing integer matrices",
@@ -37135,7 +37135,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cc1a412b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37151,7 +37151,7 @@
         "Bridges"
       ],
       "id": "fd_2353",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T22:36:55.014740+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Data.Matrix.Notation\nimport Mathlib.Data.Real.Basic\n\nnoncomputable section\n\nabbrev Mat2Z := Matrix (Fin 2) (Fin 2) ℤ\n\nconstant Primitive : Mat2Z → Prop\nconstant mobius : Mat2Z → ℝ → ℝ\nconstant lagrangeConst : ℝ → ℝ\nconstant Bad : Set ℝ\nconstant IsQuadraticIrrational : ℝ → Prop\n\ndef detAbs (M : Mat2Z) : ℝ := ((Int.natAbs (M.det) : ℕ) : ℝ)\n\ntheorem quadratic_irrational_ratio_spectrum_dense\n    (M : Mat2Z) (hprim : Primitive M) (hdet : M.det ≠ 0) :\n    ∀ u v : ℝ,\n      (detAbs M)⁻¹ ≤ u → u < v → v ≤ detAbs M →\n        ∃ x : ℝ,\n          x ∈ Bad ∧ IsQuadraticIrrational x ∧\n          u < lagrangeConst (mobius M x) / lagrangeConst x ∧\n          lagrangeConst (mobius M x) / lagrangeConst x < v := by\n  sorry",
       "lineage_refs": [],
@@ -37165,7 +37165,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22229v1",
       "source_path": "http://arxiv.org/abs/2606.22229v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T13:11:45.659366+00:00",
       "title": "Quadratic irrational density in the ratio spectrum"
@@ -39117,11 +39117,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "04a6a732",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39133,7 +39133,7 @@
         "Novelty"
       ],
       "id": "fd_2395",
-      "last_attempt_time": "2026-06-24T22:02:52.311926+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -41775,6 +41775,90 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "GineproHull2014counting",
+        "Christensen2025origami",
+        "Cereceda2009mixing"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that for every integer degree d ≥ 1 there exists a polynomial P_d(m,n) with integer coefficients such that for all sufficiently large grid dimensions (i.e., m,n ≥ T(d) for some threshold depending only on d) the number N_{m,n}(d) of vertices of degree d in the flip graph ΟұG(Ζ_{m,n}) equals P_d(m,n). Moreover, P_d is symmetric in m and n and can be expressed as a ℤ‑linear combination of binomial coefficients.",
+      "domain_bridges": [
+        "Discrete Morse theory",
+        "Combinatorial species",
+        "Extremal combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2453",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem degree_sequence_polynomial :\n  • (d : Δnat) (hd : d ≥ 1),\n    • ∆ (P : Δnat → Δnat → Δnat) (T : Δnat),\n      (• (m n : Δnat), m ≥ T → n ≥ T → count_vertices_of_degree m n d = P m n)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The conjecture is approached by induction on d. Using the height‑function reduction, a vertex of degree d corresponds to a height function with exactly d strict local extrema. For d ≤ 5 the explicit polynomial formulas are known. For larger d we decompose a height function into a connected component of extrema surrounded by a “valley” or “mountain” region, reducing the counting problem to a convolution of lower‑degree counts. This yields a recurrence that forces N_{m,n}(d) to be a polynomial in m,n. Verifying the recurrence against the known low‑degree cases and proving polynomiality via generating‑function arguments establishes the conjecture.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22614v1",
+      "source_path": "http://arxiv.org/abs/2606.22614v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T22:36:31.788869+00:00",
+      "title": "Polynomial degree sequence for all degrees in the Miura‑ori flip graph"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 2,
+      "description": "Investigate the sequence Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723). with terms 36,180,252,392,396,468,612,684,828,1044,1116,1176,1260,1332,1476,1548,1692,1908,1960,1980,2124,2196,. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2454",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.7,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "oeis:307958",
+      "source_path": "https://oeis.org/",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T22:36:53.103641+00:00",
+      "title": "OEIS sequence: Coreful perfect numbers: numbers k such that csigma(k) = 2*k, where csigma(k) is the sum of the coreful divisors of k (A057723)."
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
         "math.CO/2603.01456"
@@ -41795,7 +41879,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2453",
+      "id": "fd_2455",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41838,7 +41922,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2454",
+      "id": "fd_2456",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41883,7 +41967,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2455",
+      "id": "fd_2457",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41928,7 +42012,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2456",
+      "id": "fd_2458",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41974,7 +42058,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2457",
+      "id": "fd_2459",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -42019,7 +42103,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2458",
+      "id": "fd_2460",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -42066,7 +42150,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2459",
+      "id": "fd_2461",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -42110,7 +42194,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2460",
+      "id": "fd_2462",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -42156,7 +42240,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2461",
+      "id": "fd_2463",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
@@ -42204,7 +42288,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2462",
+      "id": "fd_2464",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_cohomology_vanishing (p : Nat.primes) (k : ℕ) (n : ℕ) : n ≥ (3*k + 1)*p + (3*k + 2) → cohomology_group (Γ₀ₙ(p)) (binom(n, 2) - k) ℚ = 0",
@@ -42248,7 +42332,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2463",
+      "id": "fd_2465",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem S_one_phi_lower_bound (x : ℕ) (hx : x ≥ 2) : (S_one_phi x : ℝ) ≥ x * Real.exp ( - (1 / 2 + eps x) * Real.sqrt (Real.log x * Real.log (Real.log x)) ) := by sorry",
@@ -42295,7 +42379,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2464",
+      "id": "fd_2466",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sum_of_digits_bias (t : nat) (h : t > 0) : \\lim_{N\\rightarrow\\infty} ((\\text{set.mem_imprediate} (n\\mapsto s_2(n + t) \\ge s_2(n)) : N)) `N `real_imprediate (1/2 + 2^{-2s_2(t)-1})",
@@ -42341,7 +42425,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2465",
+      "id": "fd_2467",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture colorful_fractional_helly_beta_bound (d : ℕ) (α : ℝ) (hα : α > 0 ∧ α ≤ 1) : ∃ β : ℝ, β ≥ α^(d+1) ∧ Helly.colorful_fractional_convex_splinters.d d α β",
@@ -42379,7 +42463,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2466",
+      "id": "fd_2468",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "a_n ≤ ρ^{-n}",
@@ -42427,7 +42511,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2467",
+      "id": "fd_2469",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nnamespace BinomialGCD\n\ndef IsExactPrimePowerComponent (n P : ℕ) : Prop :=\n  ∃ p a : ℕ, Nat.Prime p ∧ 0 < a ∧ P = p ^ a ∧ p ^ a ∣ n ∧ ¬ (p ^ (a + 1) ∣ n)\n\ndef IsLargestExactPrimePowerComponent (n P : ℕ) : Prop :=\n  IsExactPrimePowerComponent n P ∧\n    ∀ Q : ℕ, IsExactPrimePowerComponent n Q → Q ≤ P\n\ndef binomGCD (k : ℕ) : ℕ :=\n  (Finset.Icc 2 (k + 1)).gcd fun q => Nat.choose (q * k) k\n\n/-- Conjectural strengthening of the A080170 criterion: the gcd is exactly the\nlargest dominating exact prime-power component, not just nontrivial in that case. -/\ntheorem exact_binomial_gcd_largest_prime_power_conjecture\n    {k n P : ℕ}\n    (hk : 2 ≤ k)\n    (hn : n = k + 1)\n    (hP : IsLargestExactPrimePowerComponent n P) :\n    binomGCD k = if n / P ≤ P then P else 1 := by\n  sorry\n\nend BinomialGCD",
@@ -42477,7 +42561,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2468",
+      "id": "fd_2470",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_noncentral_St3_element (Q : Quiver) (hQ : Finite Q) (hpath : ∃ (p : Path Q), length p ≥ 3) : ∃ (A : Alg K), ∃ (x : A), St3_element x ∧ ¬ Central x",
@@ -42524,7 +42608,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2469",
+      "id": "fd_2471",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem betti_whittaker_period_relation (k : NumberField) (n : ℕ) (π : AutomorphicRepresentation (GL n k)) [Cohomological π] (π_star : Contragredient π) : ∃ (c : ℂ), Period_BettiWhittaker π = c * Period_BettiWhittaker π_star",
@@ -42571,7 +42655,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2470",
+      "id": "fd_2472",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem partial_twuality_interpolates (D : binary_delta_matroid) (⋆∙ : twuality_operator) : (∀ z, is_even (partial_twuality_polynomial D ⋆∙ z) ∨ is_odd (partial_twuality_polynomial D ⋆∙ z) ∨ (is_even_interpolating (partial_twuality_polynomial D ⋆∙) ∧ is_odd_interpolating (partial_twuality_polynomial D ⋆∙)))",
@@ -42618,7 +42702,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2471",
+      "id": "fd_2473",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_C4k2_minus_one (k n : ℕ) (hk : k ≥ 2) (hn : n ≥ 4*k) : ex n (C_4k2_minus_one) = (1/2 : ℚ) * (n.choose 4 : ℚ) := by sorry",
@@ -42666,7 +42750,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2472",
+      "id": "fd_2474",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem higher_order_kummer (n : ℕ) (hn : 3 ≤ n) (p q : ℝ) (hp : p ≠ 0) (hq : q ≠ 0) :\n  let D := discriminant_trinomial p q n;\n  let S_D := hypergeometric_series_nF_nMinus1 a_params b_params D;\n  let S_1D := hypergeometric_series_nF_nMinus1 (b_params.map (· - ·) ++ [1]) (a_params.drop_right 1) (1 / D);\n  S_D = (1 - D)^(gamma) * S_1D := by\n  -- placeholder: to be filled with proof steps using hypergeometric transformation lemmas\n  sorry",
@@ -42691,39 +42775,84 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "q-analogs",
+        "Gaussian binomial coefficients",
+        "q-exponential generating functions",
+        "descent set"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Partial-Twuality Polynomials in Binary Delta-Matroids\n\nDerived from the Stage 3/4 findings of this research cycle (formalised in\n`Twist.lean`, `Interpolation.lean`, `Examples.lean`). Each conjecture is bold,\nfalsifiable, and motivated by what the formal experiments revealed.\n\n## Cycle findings that seed these directions\n\n- The single-feasible-set partial-twuality polynomial is **always** `(1+z)^{|E|}`,\n  hence always interpolating with support `[0,|E|]` (`twuality_spectrum`,\n  `ptCoeff_interpolating`).\n- The polynomial is a genuine **twist-orbit invariant** (`ptCoeff_twist_invariant`).\n- Delta-matroids are **closed under twist** (`twist_symExchange`), so partial twuality\n  is a well-defined operation on the whole class.\n- Therefore any failure of interpolation (Yan–Jin counterexamples) must come from the\n  *interaction of several feasible sets*, not from the twist mechanism itself.\n\n## Conjecture 1 — Width-polynomial interpolation dichotomy\nFor a delta-matroid `D` on `E`, define the *width partial-twuality polynomial*\n`W_D(z) = Σ_{A ⊆ E} z^{w(D * A)}`, where `w` is the max-minus-min feasible-set size.\n**Conjecture:** `W_D` is interpolating if and only if `D` is *even* (all feasible sets of\none parity).\nThe key insight is that the single-set computation gives the binomial `(1+z)^{|E|}`\nwith no gaps, so gaps can only be manufactured by parity obstructions across distinct\nfeasible sets. Why now? We have the twist-invariance and closure infrastructure in Lean,\nso the parity refinement is the first untested structural lever.\n\n## Conjecture 2 — Binary representability forces gap-freeness\nLet `D` be a **binary** delta-matroid (representable by a symmetric matrix over GF(2)).\n**Conjecture:** the width partial-twuality polynomial of any binary delta-matroid is\ninterpolating, even though general delta-matroids admit gaps (Yan–Jin).\nThe key insight is that GF(2)-pivoting realises twist as a linear operation, so the set of\nattainable widths inherits the contiguity of linear-algebraic rank changes (rank moves by\n±1 under a single pivot). Why now? `twist_twist`/`twist_involutive` already model the twist\ngroup action abstractly; adding a GF(2) representation layer makes the rank-step argument\nformalisable.\n\n## Conjecture 3 — Loop-complementation extends interpolation to all nontrivial twuals\nBinary delta-matroids carry a second involution, *loop complementation*, generating with\ntwist the full `S_3` of \"twuals\". **Conjecture:** every nontrivial twual operation (the six\nelements of the twuality group) preserves the interpolation status of the width polynomial.\nThe key insight is that twist and loop complementation both act by single-coordinate\nGF(2) moves, so each generator changes the width spectrum by a contiguous shift, and a\nproduct of contiguity-preserving maps is contiguity-preserving. Why now? We proved twist is\nan involution and a group action; the analogous laws for loop complementation are the next\nformal target and would complete the `S_3` picture named in the mission title.\n\n## Conjecture 4 — Categorical functoriality of the twuality polynomial\nThere is a category whose objects are set systems on finite ground sets and whose morphisms\nare ground-set bijections compatible with twist. **Conjecture:** the partial-twuality\npolynomial is a *functor* to graded `ℕ`-modules, and twist-invariance\n(`ptCoeff_twist_invariant`) is the statement that it factors through the twist-orbit\nquotient groupoid. The key insight is that the symmetric-difference group action we\nformalised *is* the morphism structure, so the invariant is exactly a coequalizer of that\naction. Why now? The group-action laws are already proven; promoting them to a functor is a\ndirect categorical packaging.\n\n## Conjecture 5 — Chmutov bridge: ribbon-graph genus polynomial = delta-matroid width polynomial\nFor the binary delta-matroid `D(G)` of a ribbon graph `G` (Chmutov), **conjecture:** the\nGMT partial-duality genus polynomial of `G` equals the width partial-twuality polynomial of\n`D(G)` after the substitution `genus = width/2`. The key insight is that partial duality of\nribbon graphs corresponds exactly to twist of the associated binary delta-matroid, and our\n`twist_symExchange` shows this correspondence stays inside the delta-matroid class. Why now?\nWith twist closure and twist-invariance proven, the only missing ingredient is the explicit\ngenus↔width dictionary, making this bridge a concrete next formalisation.\n",
+      "description": "Conjecture that for every integer k≥2 and n≥0, the polynomial a_n^{(k)}(q) equals the finite sum ∑_{m=0}^{⌊n/k⌋} q^{m(m+1)/2} * GaussianBinomial(n - m(k-1), m)_q where GaussianBinomial(n,m)_q denotes the q-binomial coefficient",
+      "domain_bridges": [
+        "analytic combinatorics",
+        "enumerative combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2475",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem conjecture_k_alt_inv_enumerator (k n : ℕ) (q : ℚ) : a_n_k k q = ∑ m in Finset.range (n / k + 1), q^(m*(m+1)/2) * GaussianBinomial (n - m*(k-1)) m q := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Induction on n using the functional equation of the q-exponential generating function F_k(t;q) and coefficient extraction to verify the claimed closed form",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23748v1",
+      "source_path": "http://arxiv.org/abs/2606.23748v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T22:36:50.930027+00:00",
+      "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 2,
+      "description": "Investigate the sequence Stack polyominoes with square core. with terms 1,1,0,0,1,2,3,4,5,7,9,13,17,24,31,42,54,71,90,117,147,188,236,298,371,466,576,716,882,1088,1331,1633. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
         "Bridges"
       ],
-      "id": "fd_2473",
+      "id": "fd_2476",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
+      "priority_score": 0.7,
       "proof_strategy": "",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "72ef5a59",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/72ef5a59",
+      "source_exp_id": "oeis:188674",
+      "source_path": "https://oeis.org/",
       "status": "available",
-      "thread_id": "th_8fd42dbe",
-      "timestamp": "2026-06-24T22:33:02.474398+00:00",
-      "title": "Derived from the Stage 3/4 findings of this research cycle (formalised in"
+      "thread_id": "",
+      "timestamp": "2026-06-24T22:36:53.104224+00:00",
+      "title": "OEIS sequence: Stack polyominoes with square core."
     },
     {
       "ambition_level": "extension",
@@ -122705,7 +122834,7 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 304,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 57,
     "Computation": 100,
@@ -122730,7 +122859,7 @@
     "bridge": 299,
     "close": 295,
     "codes": 13,
-    "complete": 394,
+    "complete": 393,
     "computational": 66,
     "compute": 99,
     "computed": 42,
@@ -122804,7 +122933,7 @@
     "single": 248,
     "spacing": 4,
     "spectral": 116,
-    "stable": 39,
+    "stable": 38,
     "statistically": 10,
     "statistics": 26,
     "structure": 227,

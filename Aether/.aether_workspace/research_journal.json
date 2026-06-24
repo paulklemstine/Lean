@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "36dba103",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Boltzmann Bridge X: Primitive Divisors as a Strong-Divisibility Phenomenon\n\n## Synthesis\n\nThe Carmichael arc of this catalog set out to prove that every Fibonacci number `F(n)`\nw",
-      "quality_score": 0.7248000000000001,
-      "sorry_count": 3,
-      "theorem_count": 175,
-      "timestamp": "2026-06-14T21:35:45",
-      "title": "Close Proofs: The Boltzmann Bridge arc has, over several cycles, reduced the entire "
-    },
-    {
       "cycle_id": "70f20089",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — The Fundamental Theorem of Identity Systems and Homotopy-Initial Families\n\n## Synthesis of this cycle\n\nThe catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`)",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-24T19:02:30",
       "title": "Brocard's Problem: n! + 1 = m²"
+    },
+    {
+      "cycle_id": "1d985141",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\nA few freeform research directions building on\n`Catalog/Tropical/TropicalPolynomialFunctions.lean`.\n\n## 1. A tropical fundamental theorem of algebra in Lean\n\nFormalize the break-p",
+      "quality_score": 0.751851,
+      "sorry_count": 1,
+      "theorem_count": 12,
+      "timestamp": "2026-06-24T22:34:09",
+      "title": "Proof Strategy Mining from Deep Mathematics"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "8e98f715",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Transreal Arithmetic & the Wheel Collapse\n\nDerived from this cycle's verified findings in\n`Catalog/Algebra/Transreal/{Basic,RingFails,Wheel,TropicalBridge}.lean`.\n\nCycle summary",
-      "quality_score": 0.46684,
-      "sorry_count": 0,
-      "theorem_count": 41,
-      "timestamp": "2026-06-17T15:29:46",
-      "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-    },
     {
       "cycle_id": "16b03c84",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-24T22:33:13",
       "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
+    },
+    {
+      "cycle_id": "1d985141",
+      "domain": "Tropical",
+      "key_insight": "# Future directions\n\nA few freeform research directions building on\n`Catalog/Tropical/TropicalPolynomialFunctions.lean`.\n\n## 1. A tropical fundamental theorem of algebra in Lean\n\nFormalize the break-p",
+      "quality_score": 0.751851,
+      "sorry_count": 1,
+      "theorem_count": 12,
+      "timestamp": "2026-06-24T22:34:09",
+      "title": "Proof Strategy Mining from Deep Mathematics"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "acb790ee",
-      "domain": "Physics",
-      "name": "fusionCount_one",
-      "quality": 0.8075699999999999
-    },
-    {
-      "cycle_id": "acb790ee",
-      "domain": "Physics",
-      "name": "fusionCount_add_two",
-      "quality": 0.8075699999999999
-    },
-    {
-      "cycle_id": "97399ed6",
-      "domain": "Applications",
-      "name": "window_bijective",
-      "quality": 0.71035
-    },
     {
       "cycle_id": "97399ed6",
       "domain": "Applications",
@@ -2803,17 +2785,28 @@
       "domain": "Probability",
       "name": "brown_seven",
       "quality": 0.7684399999999999
+    },
+    {
+      "cycle_id": "1d985141",
+      "domain": "Tropical",
+      "name": "le_finMax",
+      "quality": 0.751851
+    },
+    {
+      "cycle_id": "1d985141",
+      "domain": "Tropical",
+      "name": "exists_finMax_eq",
+      "quality": 0.751851
+    },
+    {
+      "cycle_id": "1d985141",
+      "domain": "Tropical",
+      "name": "finMax_le_iff",
+      "quality": 0.751851
     }
   ],
-  "last_updated": "2026-06-24T22:33:13",
+  "last_updated": "2026-06-24T22:34:09",
   "open_questions": [
-    {
-      "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
-      "cycle_id": "a37014f1",
-      "domain": "Bridges",
-      "sorry_count": 3,
-      "timestamp": "2026-06-15T07:16:49"
-    },
     {
       "context": "",
       "cycle_id": "94b6b70d",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-06-24T04:32:03"
+    },
+    {
+      "context": "All results are fully proved; there are no `sorry`s. -/",
+      "cycle_id": "1d985141",
+      "domain": "Tropical",
+      "sorry_count": 1,
+      "timestamp": "2026-06-24T22:34:09"
     }
   ],
   "research_threads": {
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "0d2b0b43",
-        "quality": 0.5115800000000001,
-        "theorems": 128,
-        "title": "Tropical Curve Counting: Gromov-Witten Invariants"
-      },
-      {
         "cycle_id": "b53ecc44",
         "quality": 0.43941381818181824,
         "theorems": 18,
@@ -4009,6 +4003,12 @@
         "quality": 0.6934400000000001,
         "theorems": 13,
         "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
+      },
+      {
+        "cycle_id": "1d985141",
+        "quality": 0.751851,
+        "theorems": 12,
+        "title": "Proof Strategy Mining from Deep Mathematics"
       }
     ]
   }
