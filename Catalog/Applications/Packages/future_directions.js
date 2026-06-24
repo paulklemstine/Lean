@@ -344,7 +344,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolution of Singularities in Positive Characteristic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8c355ed",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domains": [
       "Cryptography",
@@ -355,7 +355,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
@@ -628,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d77f583",
     "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domains": [
       "Algebra",
@@ -638,7 +638,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
@@ -658,7 +658,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2689333c",
     "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
     "domains": [
       "Algebra",
@@ -668,7 +668,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432630+00:00",
     "title": "Homological Algebra: Derived Functors"
   },
@@ -898,7 +898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87071021",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -907,7 +907,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -2168,7 +2168,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dcf70a3f",
     "description": "For every finite connected simple graph G on n \u2265 2 vertices with unit edge resistances, let R_G be its effective-resistance matrix and define \u0394(G) = (-1)^(n-1) det(R_G). Conjecture: 2^n (n-1) / n^n \u2264 \u0394(G) \u2264 2^(n-2) (n-1). Moreover, equality on the left holds exactly for the complete graph K_n, and equality on the right holds exactly for trees. This extends the Graham--Pollak tree determinant formula and predicts that adding simple edges monotonically decreases the signed resistance determinant down to the complete graph.",
     "domains": [
       "Pythagorean",
@@ -2178,7 +2178,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:24:58.237232+00:00",
     "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
   },
@@ -3324,20 +3324,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Integrality of coefficients in Eichler-Selberg type relations for third-order mock theta functions"
   },
   {
-    "consumed_by_exp_id": "d2f439ad",
-    "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2416",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23659v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T23:26:49.596090+00:00",
-    "title": "Erd\u0151s Problem 550 for All Trees"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any integer $i \\geq 0$ and prime $p$, there exists a constant $C_i$ such that the rational cohomology of the Hecke congruence subgroup $\\Gamma_{0,n}(p)$ vanishes in codimension $i$ for all $n \\geq C_i p$. This extends the paper's results which prove this for $i=0,1,2$ with bounds $n \\geq \\frac{p+14}{6}$, $n \\geq 4p+5$, and $n \\geq 7p+8$ respectively.",
     "domains": [
@@ -3353,7 +3339,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Linear Vanishing Bound for Hecke Congruence Subgroup Cohomology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71e0f12b",
     "description": "Conjecture: For every natural number n > 7, the equation n! + 1 = m^2 has no integer solution m. In other words, the only solutions to the Brocard problem are the three known Brown pairs (4,5), (5,11), and (7,71).",
     "domains": [
       "Pythagorean"
@@ -3362,7 +3348,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T00:22:38.508639+00:00",
     "title": "Non\u2011existence of Further Brown Numbers Beyond n=7"
   },
@@ -4078,7 +4064,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1f85a79",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4088,7 +4074,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },

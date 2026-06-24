@@ -458,7 +458,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8c355ed",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domain_bridges": [],
     "domains": [
@@ -472,7 +472,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
@@ -837,7 +837,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d77f583",
     "description": "Prove that 78557 is the smallest Sierpiński number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domain_bridges": [],
     "domains": [
@@ -850,7 +850,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpiński Numbers: Covering Systems"
   },
@@ -877,7 +877,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2689333c",
     "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
     "domain_bridges": [],
     "domains": [
@@ -890,7 +890,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432630+00:00",
     "title": "Homological Algebra: Derived Functors"
   },
@@ -1197,7 +1197,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87071021",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1209,7 +1209,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -3318,7 +3318,7 @@
       "Mathlib.LinearAlgebra.Matrix.PosDef",
       "Mathlib.Data.Matrix.Basic"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dcf70a3f",
     "description": "For every finite connected simple graph G on n ≥ 2 vertices with unit edge resistances, let R_G be its effective-resistance matrix and define Δ(G) = (-1)^(n-1) det(R_G). Conjecture: 2^n (n-1) / n^n ≤ Δ(G) ≤ 2^(n-2) (n-1). Moreover, equality on the left holds exactly for the complete graph K_n, and equality on the right holds exactly for trees. This extends the Graham--Pollak tree determinant formula and predicts that adding simple edges monotonically decreases the signed resistance determinant down to the complete graph.",
     "domain_bridges": [
       "spectral graph theory ↔ Euclidean distance matrices",
@@ -3335,7 +3335,7 @@
     "proof_strategy": "Formalize the resistance matrix through the Moore--Penrose inverse of the graph Laplacian or equivalently through Kirchhoff ratios. Prove an edge-addition monotonicity lemma: if H is obtained from G by adding one missing simple edge, then (-1)^(n-1) det R_H ≤ (-1)^(n-1) det R_G, with strict inequality unless the edge was already present. This should follow from Bapat's determinant expression plus the matrix determinant lemma, or from Loewner monotonicity of reduced Laplacian inverses and the Euclidean-distance-matrix determinant formula. Since every connected simple graph contains a spanning tree and is contained in K_n, the upper bound follows from Graham--Pollak for trees and the lower bound from the explicit resistance matrix of K_n, whose off-diagonal entries are 2/n. Equality cases are forced by strict edge-addition monotonicity.",
     "research_mode": "team",
     "source_exp_id": "2606.21902v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:24:58.237232+00:00",
     "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
   },
@@ -5553,34 +5553,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "ErdosProblems550",
-      "EFRS1989",
-      "Chvatal1977",
-      "Burr1981"
-    ],
-    "consumed_by_exp_id": "d2f439ad",
-    "description": "The main theorem of the paper proves that for fixed integers k ≥ 2 and 1 ≤ m₁ ≤ … ≤ m_k, there exists n₀ = n₀(m₁,…,m_k) such that for every n ≥ n₀ and every n-vertex tree T, R(T, K_{m₁,…,m_k}) ≤ (k-1)(R(T, K_{m₁,m₂}) - 1) + m₁. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n ≥ 1).",
-    "domain_bridges": [
-      "Ramsey theory",
-      "extremal graph theory",
-      "tree embeddings"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2416",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Attempt to adapt the off-Turán embedding and compactness-rounding arguments to eliminate the dependence on n₀. Alternatively, perform a systematic case analysis for small n using structural properties of trees and known exact Ramsey numbers for small complete multipartite graphs.",
-    "research_mode": "team",
-    "source_exp_id": "2606.23659v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T23:26:49.596090+00:00",
-    "title": "Erdős Problem 550 for All Trees"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "math.AT",
       "math.NT"
     ],
@@ -5613,7 +5585,7 @@
       "Adleman–Pomerance–Rumely bounds on factorial growth",
       "Lattice basis reduction in Diophantine equations"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71e0f12b",
     "description": "Conjecture: For every natural number n > 7, the equation n! + 1 = m^2 has no integer solution m. In other words, the only solutions to the Brocard problem are the three known Brown pairs (4,5), (5,11), and (7,71).",
     "domain_bridges": [
       "Diophantine equations",
@@ -5630,7 +5602,7 @@
     "proof_strategy": "Use a combination of modular arithmetic to rule out congruence classes mod small primes, p‑adic valuation to show that n! + 1 cannot be a square when n exceeds 7, and LLL lattice reduction to bound possible m via approximations of sqrt(n!+1). The strategy involves proving that for any n > 7, there exists a prime p > 7 such that v_p(n!) is odd, which forces n! + 1 to be congruent to 1 mod p but not a quadratic residue modulo p. This approach would be formalized by iteratively eliminating admissible n using explicit bounds from the Chebyshev theta function and explicit factorial bounds, culminating in a contradiction for each n > 7.",
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T00:22:38.508639+00:00",
     "title": "Non‑existence of Further Brown Numbers Beyond n=7"
   },
@@ -6805,7 +6777,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e1f85a79",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -6818,7 +6790,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
