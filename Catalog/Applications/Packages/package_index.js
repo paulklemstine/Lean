@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "91104b94",
     "filename": "consciousness_as_integrated_information.json",
     "pkg_num": 26,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.67432,
     "title": "Integrated Information (Phi): A Formally Verified Structural Core"
   },
   {
@@ -763,8 +763,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "consciousness_as_integrated_information",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.67432,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Integrated Information (Phi): A Formally Verified Structural Core"
     }

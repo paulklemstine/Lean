@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d1b34dda",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Ramanujan-Style Intuition as Formalizable Meta-Reasoning\n\nDerived from this cycle's findings (`Core.lean`, `Halting.lean`,\n`FiniteBoundary.lean`, `JumpBridge.lean`). Each conject",
-      "quality_score": 0.46740400000000004,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-17T01:06:25",
-      "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-    },
-    {
       "cycle_id": "ed805c6d",
       "domain": "Geometry",
       "key_insight": "# FUTURE DIRECTIONS — Gravity from Information: Spacetime as a Quantum Error-Correcting Code\n\nThis research cycle built a fully verified, manifold-free combinatorial core of\nthe holographic principle",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-24T09:33:10",
       "title": "Symmetric Group Generation Probability"
+    },
+    {
+      "cycle_id": "91104b94",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Consciousness as Integrated Information\n\nThis cycle established a fully verified core for Integrated Information Theory\n(IIT) in `Catalog/Novelty/IntegratedInformation.lean`:\n\n-",
+      "quality_score": 0.67432,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-06-24T10:36:07",
+      "title": "Consciousness as Integrated Information"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.789328
     }
   ],
-  "last_updated": "2026-06-24T09:33:10",
+  "last_updated": "2026-06-24T10:36:07",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2fe3f01b",
-        "quality": 0.86456,
-        "theorems": 62,
-        "title": "Constructive Mathematics: Bishop's Analysis"
-      },
-      {
         "cycle_id": "a0d2774b",
         "quality": 0.42573236521739133,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.4162,
         "theorems": 6,
         "title": "Symmetric Group Generation Probability"
+      },
+      {
+        "cycle_id": "91104b94",
+        "quality": 0.67432,
+        "theorems": 18,
+        "title": "Consciousness as Integrated Information"
       }
     ],
     "NumberTheory": [
