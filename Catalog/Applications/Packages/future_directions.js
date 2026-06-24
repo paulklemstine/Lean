@@ -492,20 +492,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "eb2eee3d",
-    "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "seed_331",
-    "priority_score": 0.87,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432603+00:00",
-    "title": "Perfect Numbers: Structure of Even Perfects"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
     "domains": [
@@ -4363,6 +4349,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-24T23:26:46.312392+00:00",
     "title": "Derived from the Phase-A cycle that produced `FiltrationPersistence.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Stability of Cayley Digraphs of Abelian Groups\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nAll conjectures are stated relative to the framework in `Embedding.lean`\n(`cayAdj`, `dcAdj`, `AutRel`, `expectedHom`) and `OddOrderNecessity.lean`.\n\n---\n\n## Conjecture 1 (the central open formalisation target): odd \u21d2 stable\n\nFor a finite abelian group `G` of **odd** order and a connection set `S` such\nthat `Cay(G,S)` is connected and twin-free, `expectedHom S` is **surjective**\n(hence an isomorphism `Aut(X \u2297 K\u2082) \u2245 Aut(X) \u00d7 Sym\u2082`).\n\n**The key insight is** that surjectivity is equivalent to: every automorphism of\nthe double cover preserves the layer partition up to a global swap, and the only\nobstruction to this \u2014 a \"diagonal\" automorphism mixing the layers \u2014 requires an\ninvolution in `G`, which `odd_no_involution` forbids.\n\n**Why now?** The injective half (`expectedHom_injective`) and the\ninvolution-freeness lemma (`odd_no_involution`) are already formalised; what\nremains is the combinatorial layer-preservation argument, which can be attacked\nvia the `dcCayleyIso` reduction (the double cover is itself a Cayley digraph).\n\n---\n\n## Conjecture 2: cardinality criterion for stability\n\n`Cay(G,S)` is stable **iff** `Nat.card (AutRel (dcAdj S)) = 2 * Nat.card (AutRel (cayAdj S))`.\n\n**The key insight is** that since `expectedHom` is always an injective group\nhomomorphism with image of size `2 \u00b7 |Aut(X)|`, stability is purely a\ncounting statement, decoupling it from the explicit description of automorphisms.\n\n**Why now?** `expectedHom_injective` gives the lower bound `2\u00b7|Aut(X)| \u2264 |Aut(B)|`\nimmediately; the criterion converts every stability question into a finite\ncardinality computation, `decide`-checkable for small groups.\n\n---\n\n## Conjecture 3: instability is exactly involutions + twins (even order)\n\nA connected abelian Cayley digraph is unstable **iff** it has a pair of twins or\nits group has an element of order 2 that acts as a layer-mixing automorphism of\nthe double cover.\n\n**The key insight is** that the `K\u2082` witness localises *all* instability to two\nmechanisms \u2014 twin vertices and order-2 elements \u2014 both visible in the explicit\ntransposition `tau` of `OddOrderNecessity.lean`.\n\n**Why now?** The two mechanisms are already isolated (`TwinFree`,\n`odd_no_involution`, and the explicit `tau`); proving they are the *only* ones\nwould give a complete classification, sharpening the one-directional conjecture.\n\n---\n\n## Conjecture 4: the double cover doubles stability data\n\nIf `Cay(G,S)` is stable then `Cay(G \u00d7 \u2124/2, dcConn S)` (the double cover viewed as\na Cayley digraph via `dcCayleyIso`) has automorphism group of order exactly\n`2 \u00b7 |Aut(X \u2297 K\u2082)|`, i.e. iterated tensoring with `K\u2082` multiplies the symmetry\ncount by 2 each step once stability is reached.\n\n**The key insight is** that `dcCayleyIso` keeps the double cover inside the class\nof abelian Cayley digraphs, so the stability operator can be *iterated*, and a\nstable graph should remain \"tame\" under iteration.\n\n**Why now?** `dcCayleyIso` is formalised, providing the exact group `G \u00d7 \u2124/2` and\nconnection set needed to phrase and test the iteration numerically.\n\n---\n\n## Conjecture 5: prime order forces stability with no twin hypothesis\n\nFor `G = \u2124/p` with `p` an odd prime and any nonempty `S \u2260 {0}`, `Cay(\u2124/p, S)` is\nstable; the twin-free hypothesis is automatically satisfied.\n\n**The key insight is** that over a group of prime order, connectedness of a\nnontrivial circulant is automatic and twins would force `S` to be invariant under\na nontrivial translation, impossible when `p` is prime and `S` is proper.\n\n**Why now?** This is the cleanest special case of Conjecture 1, removing the\ntwin-free and connectivity hypotheses, and is the natural first formal milestone\n(it isolates the pure number-theoretic content `odd_no_involution` + primality).\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2479",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b45eb1d8",
+    "status": "available",
+    "timestamp": "2026-06-24T23:28:32.450336+00:00",
+    "title": "Derived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle"
   },
   {
     "consumed_by_exp_id": "",

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b45eb1d8",
     "filename": "stability_of_cayley_digraphs_of_abelian_groups_of_.json",
     "pkg_num": 46,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7496,
     "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
   },
   {
@@ -1343,8 +1343,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "stability_of_cayley_digraphs_of_abelian_groups_of_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7496,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
     }
