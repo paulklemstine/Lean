@@ -1,263 +1,370 @@
-# Integrated Information as Minimum Cut: A Formal Theory of Causal Decomposition
+# A Formally Verified Structural Core for Integrated Information ($\Phi$)
+
+**Author:** Aristotle
+**Date:** 2026-06-24
+**Domain:** Novelty (Mathematical foundations of consciousness science)
 
 ## Abstract
 
-We present a rigorous mathematical formalization of Integrated Information Theory (IIT) that reduces the core measure Φ to the minimum cut of a directed causal graph. We prove the **Fundamental Theorem of Integrated Information**: Φ > 0 if and only if the causal system is connected (every non-trivial bipartition severs at least one causal edge). We establish **monotonicity** (adding causal connections cannot decrease Φ), **cut symmetry** (partitions and their complements yield identical integration), and **exponential complexity** (the partition space has exactly 2ⁿ − 2 elements). We formalize causal systems as a category with structure-preserving morphisms, connecting IIT to algebraic and spectral graph theory. All results are machine-verified in Lean 4 with the Mathlib library, with no unproven assumptions.
+Integrated Information Theory (IIT) proposes a scalar invariant $\Phi$ ("phi")
+that quantifies the *irreducibility* of a system of interacting elements: the
+degree to which the whole generates information above and beyond the information
+generated independently by its parts. We isolate and rigorously establish the
+combinatorial-order-theoretic skeleton on which every concrete formulation of
+$\Phi$ rests. Working over a finite element set $\{0, \dots, n-1\}$, we define
+the lattice of nontrivial bipartitions ("cuts"), model a system as an arbitrary
+nonnegative *effective-information functional* $\mathrm{ei}$ on cuts, and define
+the integrated information $\Phi$ as the value of $\mathrm{ei}$ at the **Minimum
+Information Partition** (MIP), i.e. the minimum of $\mathrm{ei}$ over all cuts.
+We prove: (i) the MIP exists and realizes $\Phi$; (ii) $\Phi$ is the greatest
+lower bound of the effective-information landscape; (iii) $\Phi \ge 0$; (iv) the
+reducibility characterization $\Phi = 0 \iff$ some cut destroys no information;
+(v) monotonicity of $\Phi$ in the functional $\mathrm{ei}$; and (vi) a
+shared-bottleneck rigidity result equating $\Phi$ across systems that agree at a
+common minimizing cut. Crucially, every theorem depends only on the
+nonnegativity of $\mathrm{ei}$, so the entire structure transfers verbatim to any
+concrete information measure (mutual information, KL divergence, etc.). All
+results have been formalized and machine-checked.
+
+---
 
 ## 1. Introduction
 
-Integrated Information Theory (IIT), introduced by Tononi [1], proposes that consciousness corresponds to integrated information — a quantity measuring how much a system's causal structure resists decomposition into independent parts. The central measure Φ (phi) quantifies this resistance.
+### 1.1 Motivation
 
-Despite significant interest in neuroscience and philosophy of mind, the mathematical foundations of IIT have received less formal attention than they deserve. The original formulations involve probability distributions over state spaces, earth mover's distances, and information-theoretic divergences. These are powerful but complex, and the essential mathematical structure can be obscured by implementation details.
+Integrated Information Theory, introduced by Tononi, seeks to characterize the
+extent to which a physical system is an irreducible whole rather than a
+collection of quasi-independent parts. Its central quantity, $\Phi$, is intended
+to vanish precisely for systems that decompose into informationally independent
+components and to be large for systems whose components are tightly bound. While
+the philosophical claims of IIT — that $\Phi$ measures the *quantity* of
+consciousness — are contested, the *mathematical* core of the theory is an
+optimization problem over the bipartitions of a finite system, and that core can
+be made fully precise.
 
-In this work, we strip IIT to its combinatorial core. We define a **causal system** as a finite directed graph with a transition function, and define Φ as the **minimum directed cut** over all non-trivial bipartitions. This abstraction preserves the essential features of IIT — composition, exclusion, connectivity — while connecting to the rich mathematical literature on graph cuts, spectral theory, and category theory.
+The literature contains several competing definitions of the per-cut measure
+(effective information, integrated conceptual information, $\Phi^{\max}$, and so
+on), and arguments about $\Phi$ frequently entangle the choice of per-cut measure
+with the structural properties of the minimization. The purpose of this paper is
+to **disentangle** the two. We show that the foundational properties of $\Phi$ —
+existence of the MIP, the greatest-lower-bound property, nonnegativity, the
+reducibility equivalence, monotonicity, and bottleneck rigidity — are *purely
+structural*: they require only that the per-cut measure is nonnegative. We
+formalize the per-cut measure as an opaque nonnegative functional, prove the
+structural theorems once, and thereby obtain results that hold for *every*
+admissible instantiation simultaneously.
 
-### 1.1 Contributions
+### 1.2 Contributions
 
-1. **Fundamental Theorem** (Theorem 3.1): Φ > 0 ⟺ causal connectivity
-2. **Monotonicity** (Theorem 3.2): CausalExtension implies Φ₁ ≤ Φ₂
-3. **Cut Symmetry** (Theorem 3.3): cutSize(A) = cutSize(Aᶜ)
-4. **Exponential Complexity** (Theorem 3.4): |nontrivialSubsets(S)| = 2^|S| − 2
-5. **Categorical Structure** (Section 4): Causal morphisms compose associatively
-6. **Boundary Results** (Theorems 3.5–3.6): Complete and empty graph extremes
+1. A precise definition of the bipartition landscape $\mathrm{parts}(n)$ of a
+   finite system and its boundary behavior (Section 2).
+2. An abstract model of an IIT system as a nonnegative effective-information
+   functional, with $\Phi$ defined as the MIP value (Section 2).
+3. Six structural theorems characterizing $\Phi$ (Section 3), each proved from
+   nonnegativity alone.
+4. A discussion of computational complexity, instantiation by mutual
+   information, and falsifiable extensions (Sections 4–6).
 
-### 1.2 Relation to Prior Work
+All definitions and theorems below correspond one-to-one to machine-checked
+formal statements; the formal names are given in brackets, e.g. [`phi_nonneg`].
 
-Our formalization connects to:
-
-- **Graph theory**: Minimum cuts, Ford-Fulkerson theorem, Menger's theorem
-- **Spectral graph theory**: Algebraic connectivity (Fiedler value), Cheeger inequality
-- **Complexity theory**: Partition problems, NP-hardness of minimum bisection
-- **Category theory**: Categories of transition systems, behavioral equivalence
-- **Existing catalog results**: We build on `complexity_measure_coherence` from `Bridges/ProofThermodynamicsEntropy.lean` which established coherence measures for proof structures, extending the paradigm to causal structures. We also connect to `exclusion_composition` from `Cryptography/PrimeGapCrossword.lean` which demonstrated exclusion-composition interactions in number-theoretic settings.
+---
 
 ## 2. Definitions
 
-### 2.1 Causal Systems
+Throughout, $n \in \mathbb{N}$ and the elements of the system are identified with
+the finite set $\mathrm{Fin}\,n = \{0, 1, \dots, n-1\}$. Subsets of elements are
+ranged over by $A, B$, and the complement of $A$ within the full element set is
+written $A^{c}$.
 
-**Definition 2.1** (Causal System). A *causal system* over a finite type S consists of:
-- A transition function `transition : S → S`
-- A decidable adjacency relation `adj : S → S → Bool`
-- The coherence condition: `∀ s, adj s (transition s) = true`
+### Definition 2.1 (Nontrivial bipartitions) [`parts`]
 
-The coherence condition ensures that the transition function is compatible with the causal structure: each state is adjacent to its successor.
+The set of **nontrivial bipartitions** of an $n$-element system is
+$$
+\mathrm{parts}(n) \;=\; \bigl\{\, A \subseteq \mathrm{Fin}\,n \;:\;
+A \neq \varnothing \ \text{and}\ A \neq \mathrm{Fin}\,n \,\bigr\}.
+$$
+Each $A \in \mathrm{parts}(n)$ encodes the cut that separates $A$ from its
+complement $A^{c}$. (As a cut, $A$ and $A^{c}$ describe the same separation;
+this symmetry is harmless for everything below, which depends only on the value
+of $\mathrm{ei}$.)
 
-### 2.2 Cut Size
+### Lemma 2.2 (Membership) [`mem_parts`]
 
-**Definition 2.2** (Cut Size). For a causal system on S and a subset A ⊆ S, the *cut size* is:
+For any $A \subseteq \mathrm{Fin}\,n$,
+$$
+A \in \mathrm{parts}(n) \iff A \neq \varnothing \ \wedge\ A \neq \mathrm{Fin}\,n .
+$$
+*Proof.* Immediate by unfolding the definition (a powerset filter). $\square$
 
-```
-cutSize(A) = |{(s,t) ∈ A × (S\A) : adj(s,t)}| + |{(s,t) ∈ (S\A) × A : adj(s,t)}|
-```
+The cardinality of $\mathrm{parts}(n)$ is $2^{n} - 2$.
 
-This counts all directed causal edges crossing the partition in both directions.
+### Lemma 2.4 (Boundary behavior) [`parts_nonempty`, `parts_eq_empty`]
 
-### 2.3 Non-trivial Subsets
+1. If $2 \le n$, then $\mathrm{parts}(n) \neq \varnothing$.
+2. If $n \le 1$, then $\mathrm{parts}(n) = \varnothing$.
 
-**Definition 2.3**. The *non-trivial subsets* of S are:
+*Proof.* (1) The singleton $\{0\}$ is nonempty, and it is proper because its
+cardinality $1$ differs from $|\mathrm{Fin}\,n| = n \ge 2$; hence
+$\{0\} \in \mathrm{parts}(n)$. (2) For $n \in \{0, 1\}$ every subset equals
+$\varnothing$ or $\mathrm{Fin}\,n$, so no member satisfies both conditions of
+Lemma 2.2; a finite case check closes both cases. $\square$
 
-```
-nontrivialSubsets(S) = {A ⊆ S : A ≠ ∅ ∧ A ≠ S}
-```
+Lemma 2.4 records the natural domain of $\Phi$: integration is defined precisely
+when the system has at least two elements.
 
-### 2.4 Integrated Information (Φ)
+### Definition 2.3 (IIT system) [`System`]
 
-**Definition 2.4** (Phi). For a causal system with at least two states:
+An **IIT system** on $n$ elements is a pair $S = (\mathrm{ei}, \text{nonneg})$
+where
+$$
+\mathrm{ei} : \mathcal{P}(\mathrm{Fin}\,n) \to \mathbb{R}, \qquad
+\mathrm{ei}(A) \ge 0 \ \text{ for all } A.
+$$
+The value $\mathrm{ei}(A)$ is the **effective information** lost when the cut $A$
+is imposed. The sole axiom is nonnegativity: severing a cut never produces
+negative information loss.
 
-```
-Φ(cs) = min{cutSize(A) : A ∈ nontrivialSubsets(S)}
-```
+We emphasize what is *not* assumed: no symmetry, no additivity, no submodularity,
+no particular functional form. The structural theory below uses nonnegativity and
+nothing more.
 
-### 2.5 Causal Connectivity
+### Definition 2.5 (Integrated information $\Phi$) [`Phi`]
 
-**Definition 2.5**. A causal system is *causally connected* if:
+Let $S$ be a system on $n$ elements with $2 \le n$ (so that
+$\mathrm{parts}(n) \neq \varnothing$ by Lemma 2.4). The **integrated
+information** of $S$ is
+$$
+\Phi(S) \;=\; \min_{A \,\in\, \mathrm{parts}(n)} \mathrm{ei}(A),
+$$
+the minimum of the effective information over all nontrivial cuts. The minimizing
+cut is the **Minimum Information Partition (MIP)**. Formally $\Phi(S)$ is
+$\min'$ of the finite nonempty image $\mathrm{ei}\bigl(\mathrm{parts}(n)\bigr)$,
+where nonemptiness is supplied by Lemma 2.4(1).
 
-```
-∀ A ⊆ S, A ≠ ∅ → A ≠ S → cutSize(A) > 0
-```
+The choice of *minimum* (rather than mean or maximum) encodes the principle that
+a system is only as integrated as its weakest seam: a single low-cost cut
+suffices to expose the system as nearly decomposable.
 
-### 2.6 Causal Extension
-
-**Definition 2.6**. System cs₂ is a *causal extension* of cs₁ if:
-
-```
-∀ s t, adj₁(s,t) = true → adj₂(s,t) = true
-```
+---
 
 ## 3. Main Results
 
-### 3.1 The Fundamental Theorem
+Fix a system $S$ on $n$ elements with $2 \le n$ throughout this section.
 
-**Theorem 3.1** (Fundamental Theorem of Integrated Information).
-*Φ(cs) > 0 if and only if cs is causally connected.*
+### Theorem 3.1 ($\Phi$ is a lower bound) [`phi_le_ei`]
 
-*Proof sketch.* (⇒) If Φ > 0, then min_A cutSize(A) > 0, so cutSize(A) > 0 for all non-trivial A, which is exactly causal connectivity.
+For every nontrivial cut $A \in \mathrm{parts}(n)$,
+$$
+\Phi(S) \le \mathrm{ei}(A).
+$$
+*Proof sketch.* $\mathrm{ei}(A)$ belongs to the finite image
+$\mathrm{ei}(\mathrm{parts}(n))$, and $\Phi(S)$ is the minimum of that image; the
+minimum is $\le$ each member (`Finset.min'_le`). $\square$
 
-(⇐) If cs is causally connected, then cutSize(A) > 0 for all non-trivial A. The minimum of finitely many positive natural numbers is positive. □
+### Theorem 3.2 (Existence of the MIP) [`exists_MIP`]
 
-**PEGB Analysis:**
-- **P**roof: Complete formal proof in `Novelty/IIT/Core.lean`
-- **E**xample: A two-state system with mutual causation has Φ = 2 (each partition has exactly 2 crossing edges). A two-state system with one-directional causation has Φ = 1.
-- **G**eneralization: This naturally generalizes to weighted causal graphs where edge weights represent causal strength, and to probabilistic causal systems where Φ becomes an infimum over a continuous space.
-- **B**oundary: The theorem breaks down for infinite state spaces where the infimum may not be achieved, and for weighted systems where Φ can be positive but arbitrarily close to zero.
+There exists a nontrivial cut realizing $\Phi$:
+$$
+\exists\, A \in \mathrm{parts}(n), \quad \mathrm{ei}(A) = \Phi(S).
+$$
+*Proof sketch.* Since $\mathrm{parts}(n)$ is finite and nonempty, its image
+under $\mathrm{ei}$ is a finite nonempty subset of $\mathbb{R}$, whose minimum is
+a member of the image (`Finset.min'_mem`). Pulling that member back through
+`Finset.mem_image` yields a witnessing partition. $\square$
 
-### 3.2 Monotonicity
+The MIP need not be unique; Theorem 3.2 asserts only that the infimum is
+attained, which is what distinguishes a genuine minimum from a mere bound.
 
-**Theorem 3.2** (Monotonicity of Φ under Extension).
-*If cs₂ extends cs₁, then Φ(cs₁) ≤ Φ(cs₂).*
+### Theorem 3.3 ($\Phi$ is the greatest lower bound) [`le_phi`]
 
-*Proof sketch.* For each non-trivial A, cutSize₁(A) ≤ cutSize₂(A) because every edge counted in cs₁'s cut is also present in cs₂. The minimum of pointwise-larger values is at least the minimum of the smaller values. □
+If $c \in \mathbb{R}$ is a common lower bound of the landscape — i.e.
+$c \le \mathrm{ei}(A)$ for all $A \in \mathrm{parts}(n)$ — then
+$$
+c \le \Phi(S).
+$$
+*Proof sketch.* Every element of the image $\mathrm{ei}(\mathrm{parts}(n))$ has
+the form $\mathrm{ei}(A)$ for some $A \in \mathrm{parts}(n)$ and hence is
+$\ge c$; by `Finset.le_min'`, $c$ is below the minimum. $\square$
 
-**PEGB Analysis:**
-- **P**roof: Complete formal proof in `Novelty/IIT/Composition.lean`
-- **E**xample: Start with a ring of 4 nodes (Φ = 2). Add one diagonal edge: Φ increases to 3 because the weakest cut now has an extra crossing.
-- **G**eneralization: Extends to weighted systems via a weighted monotonicity theorem. Also generalizes to "causal refinement" where the state space itself can be refined.
-- **B**oundary: Monotonicity is strict only when the new edge crosses the minimum information partition. Adding edges within one side of the MIP has no effect on Φ.
+Theorems 3.1 and 3.3 together state exactly that $\Phi(S) = \inf$ of the
+effective-information landscape: it is a lower bound (3.1) and the largest one
+(3.3). This is the order-theoretic identity of $\Phi$.
 
-### 3.3 Cut Symmetry
+### Corollary 3.4 (Nonnegativity) [`phi_nonneg`]
 
-**Theorem 3.3** (Cut Symmetry).
-*cutSize(A) = cutSize(S \ A).*
+$$
+0 \le \Phi(S).
+$$
+*Proof sketch.* Apply Theorem 3.3 with $c = 0$; the hypothesis
+$0 \le \mathrm{ei}(A)$ for all $A$ is exactly the nonnegativity axiom of the
+system. $\square$
 
-*Proof sketch.* cutSize(A) counts edges A → Aᶜ and Aᶜ → A. cutSize(Aᶜ) counts edges Aᶜ → (Aᶜ)ᶜ and (Aᶜ)ᶜ → Aᶜ. Since (Aᶜ)ᶜ = A, these are the same sums in reversed order. □
+### Theorem 3.5 (Reducibility characterization) [`phi_eq_zero_iff`]
 
-**PEGB Analysis:**
-- **P**roof: Complete formal proof in `Novelty/IIT/Core.lean`
-- **E**xample: In a 4-node directed path a→b→c→d, partition {a,b} has cut = 1 (b→c) + 0 = 1. Complement {c,d} has cut = 0 + 1 (b→c) = 1. ✓
-- **G**eneralization: For weighted directed graphs, the symmetry still holds: the total weight crossing from A to Aᶜ plus Aᶜ to A is the same regardless of which side you call A.
-- **B**oundary: If we consider asymmetric measures (only forward edges, not backward), symmetry breaks. This corresponds to distinguishing "effect information" from "cause information" in IIT.
+$$
+\Phi(S) = 0 \;\iff\; \exists\, A \in \mathrm{parts}(n),\ \mathrm{ei}(A) = 0.
+$$
+*Proof sketch.*
+($\Rightarrow$) If $\Phi(S) = 0$, apply Theorem 3.2 to obtain a cut $A$ with
+$\mathrm{ei}(A) = \Phi(S) = 0$.
+($\Leftarrow$) Suppose $A \in \mathrm{parts}(n)$ has $\mathrm{ei}(A) = 0$. Then
+$0 \le \Phi(S)$ by Corollary 3.4, while $\Phi(S) \le \mathrm{ei}(A) = 0$ by
+Theorem 3.1; antisymmetry gives $\Phi(S) = 0$. $\square$
 
-### 3.4 Exponential Partition Space
+Theorem 3.5 is the formal content of "reducibility": a system has $\Phi = 0$
+exactly when some nontrivial cut loses no effective information, i.e. when the
+system decomposes (along that cut) into informationally independent parts.
+Contrapositively, $\Phi(S) > 0$ iff **every** cut destroys information — the
+defining signature of an integrated whole.
 
-**Theorem 3.4** (Partition Cardinality).
-*For |S| ≥ 2, |nontrivialSubsets(S)| = 2^|S| − 2.*
+### Theorem 3.6 (Monotonicity in the functional) [`phi_mono`]
 
-*Proof sketch.* There are 2^|S| total subsets. Exactly two are trivial: ∅ and S. Since |S| ≥ 2, ∅ ≠ S, giving 2^|S| − 2 non-trivial subsets. □
+Let $S, T$ be systems on the same $n$ with $\mathrm{ei}_S(A) \le \mathrm{ei}_T(A)$
+for every cut $A$. Then
+$$
+\Phi(S) \le \Phi(T).
+$$
+*Proof sketch.* Let $A$ be a MIP of $T$, so $\mathrm{ei}_T(A) = \Phi(T)$
+(Theorem 3.2). Then
+$\Phi(S) \le \mathrm{ei}_S(A) \le \mathrm{ei}_T(A) = \Phi(T)$,
+using Theorem 3.1 for the first inequality and the hypothesis for the second.
+$\square$
 
-**PEGB Analysis:**
-- **P**roof: Complete formal proof in `Novelty/IIT/Composition.lean`
-- **E**xample: For |S| = 3: 2³ − 2 = 6 non-trivial subsets ({1}, {2}, {3}, {1,2}, {1,3}, {2,3}).
-- **G**eneralization: For k-partitions (k > 2), the number grows as Stirling numbers of the second kind, making the problem even harder.
-- **B**oundary: For |S| = 1, there are 0 non-trivial subsets and Φ is undefined. For |S| = 0, the formula gives −2 (vacuously satisfied by the hypothesis |S| ≥ 2).
+Monotonicity guarantees that uniformly strengthening (or never weakening) the
+cut-wise information loss cannot decrease integration: $\Phi$ moves in the
+expected direction as a substrate's couplings change.
 
-### 3.5 Complete Graph Extremum
+### Theorem 3.7 (Shared-bottleneck rigidity) [`phi_eq_of_common_mip`]
 
-**Theorem 3.5** (Complete Graph Cut).
-*If all adjacencies hold, cutSize(A) = |A|·|S\A| + |S\A|·|A| = 2|A|·|S\A|.*
+Let $S, T$ be systems on the same $n$ and let $A_0 \in \mathrm{parts}(n)$ be a
+common minimizer:
+$$
+\mathrm{ei}_S(A_0) \le \mathrm{ei}_S(B) \ \text{ and } \
+\mathrm{ei}_T(A_0) \le \mathrm{ei}_T(B) \quad \text{for all } B \in \mathrm{parts}(n),
+$$
+and suppose the two systems agree there, $\mathrm{ei}_S(A_0) = \mathrm{ei}_T(A_0)$.
+Then
+$$
+\Phi(S) = \Phi(T).
+$$
+*Proof sketch.* By Theorem 3.1, $\Phi(S) \le \mathrm{ei}_S(A_0)$; by Theorem 3.3
+applied with $c = \mathrm{ei}_S(A_0)$ (a lower bound by hypothesis),
+$\mathrm{ei}_S(A_0) \le \Phi(S)$. Hence $\Phi(S) = \mathrm{ei}_S(A_0)$, and
+symmetrically $\Phi(T) = \mathrm{ei}_T(A_0)$. The agreement hypothesis then gives
+$\Phi(S) = \Phi(T)$. $\square$
 
-### 3.6 Zero Cut Characterization
+Theorem 3.7 isolates the locality of $\Phi$: integrated information is a function
+of the bottleneck cut and its value there, independent of the system's behavior
+along all other cuts. Two systems may differ arbitrarily away from their shared
+weakest seam and still carry identical $\Phi$.
 
-**Theorem 3.6** (Zero Cut).
-*If no edges cross a partition in either direction, the cut size is zero.*
+---
 
-These boundary results establish the extremes of integration: fully connected systems have maximal cuts, while fully disconnected partitions have zero cuts.
+## 4. Algorithms and Complexity
 
-## 4. Categorical Structure
+The definition of $\Phi$ is a minimization over $\mathrm{parts}(n)$, which has
+$2^{n} - 2$ elements. A direct evaluation therefore costs
+$$
+\Theta\!\left(2^{n}\right)
+$$
+calls to the effective-information functional $\mathrm{ei}$, each of which is
+itself typically expensive (involving marginalization or divergence
+computations). This exponential blow-up is intrinsic to the brute-force MIP
+search and is the principal obstacle to applying IIT to large systems; it has
+motivated a substantial literature on approximations and queyranne-style
+submodular minimization heuristics for specific $\mathrm{ei}$.
 
-### 4.1 The Category of Causal Systems
+We record the exact algorithm here, since it is what the structural theorems
+certify.
 
-We define:
-- **Objects**: Causal systems (S, transition, adj) for finite types S
-- **Morphisms**: Structure-preserving maps f : S → T satisfying:
-  - adj₁(s₁, s₂) ⟹ adj₂(f(s₁), f(s₂)) (adjacency preservation)
-  - f(transition₁(s)) = transition₂(f(s)) (dynamics preservation)
+**Algorithm (Exact MIP / $\Phi$ search).**
+*Input:* $n \ge 2$ and an oracle for $\mathrm{ei} : \mathcal{P}(\mathrm{Fin}\,n)
+\to \mathbb{R}_{\ge 0}$.
+*Output:* $\Phi$ and a realizing MIP $A^{\star}$.
+1. Enumerate all subsets $A \subseteq \{0, \dots, n-1\}$.
+2. Discard $A = \varnothing$ and $A = \{0, \dots, n-1\}$ (Definition 2.1).
+3. For each surviving $A$, evaluate $\mathrm{ei}(A)$.
+4. Return the minimum value $\Phi$ (guaranteed to exist, Theorem 3.2) and an
+   argmin $A^{\star}$.
 
-**Proposition 4.1**. Identity morphisms and morphism composition satisfy the category axioms.
+By Theorem 3.2 step 4 always succeeds; by Theorems 3.1 and 3.3 the returned value
+is the true infimum; by Theorem 3.5 the returned $\Phi$ is zero iff the loop
+encountered a zero-cost cut. Restricting the cut set to a chosen subfamily (e.g.
+only balanced cuts, or only contiguous cuts) yields a *restricted* $\Phi$ for
+which the identical theorems hold, since they assume nothing about which family of
+cuts is used beyond nonemptiness.
 
-*Proof.* Identity: trivial. Composition: (g ∘ f) preserves adjacency because f preserves it and then g preserves the result. Dynamics: g(f(transition₁(s))) = g(transition₂(f(s))) = transition₃(g(f(s))). □
+---
 
-### 4.2 Connection to IIT's Exclusion Principle
+## 5. Applications and Instantiations
 
-The minimum information partition (MIP) is formalized as the element of nontrivialSubsets achieving the infimum of cutSize. We prove its existence (Theorem 3.7 in the formalization: `phi_eq_cutSize_mip_aux`), establishing that Φ is always achieved at some concrete partition.
+The abstraction by a nonnegative functional is not merely convenient; it is the
+mechanism by which the structural theorems become reusable. Any concrete IIT
+proposal that supplies a nonnegative per-cut measure inherits Theorems 3.1–3.7
+for free. Two natural instantiations:
 
-This connects to IIT's exclusion postulate: each system has a unique level of "grain" at which it is maximally integrated. In our framework, the MIP is the partition that identifies this grain.
+- **Mutual information across a cut.** Let the system state be a joint
+  distribution and set $\mathrm{ei}(A) = I(A ; A^{c})$, the mutual information
+  between the two sides. Mutual information is nonnegative (Gibbs' inequality) and
+  vanishes exactly under independence, so $\Phi = 0$ (Theorem 3.5) reproduces the
+  classical statement "$\Phi = 0$ iff the system factorizes across some cut," and
+  $\Phi > 0$ certifies that no cut yields independent halves.
 
-## 5. Cross-Domain Bridge: IIT and Spectral Graph Theory
+- **Kullback–Leibler effective information.** Set $\mathrm{ei}(A)$ to the KL
+  divergence between the system's transition behavior and that of the
+  cut-disconnected system. Nonnegativity of KL again places this within the
+  framework, so the MIP exists and $\Phi$ is its canonical greatest lower bound.
 
-The most significant cross-domain connection is between IIT's Φ and the **Cheeger constant** (or isoperimetric number) of graph theory.
+In each case the *analytic* work is confined to proving nonnegativity of the
+chosen measure; all *order-theoretic* and *combinatorial* content is already
+discharged by the results above.
 
-For an undirected graph G, the Cheeger constant is:
+---
 
-```
-h(G) = min_{∅ ≠ A ⊊ V} |E(A, V\A)| / min(|A|, |V\A|)
-```
+## 6. Discussion and Future Directions
 
-Our Φ is the unnormalized version: Φ = min |E(A, V\A)| (in the directed, bidirectional sense). The Cheeger inequality relates h(G) to the second eigenvalue λ₂ of the graph Laplacian:
+We have made precise the structural backbone of $\Phi$ and proved that the
+properties one expects of a measure of irreducibility — attained minimum, exact
+infimum, nonnegativity, the reducibility equivalence, monotonicity, and
+bottleneck rigidity — follow from a single nonnegativity hypothesis. This cleanly
+separates the *combinatorics of cuts* from the *information theory of any one
+cut*, and it guarantees that future work on concrete effective-information
+measures may focus solely on analytic properties of those measures.
 
-```
-λ₂/2 ≤ h(G) ≤ √(2λ₂)
-```
+Several precise, falsifiable extensions arise once $\mathrm{ei}$ is instantiated
+by mutual information $I(A; A^c)$:
 
-This means:
-- **Φ = 0 ⟺ λ₂ = 0 ⟺ the graph is disconnected** (our Fundamental Theorem)
-- **Φ large ⟺ λ₂ large ⟺ the graph is an expander** (high integration = expansion)
+- **Capacity bound.** $I(A; A^c) \le \log \min(|A\text{-states}|,
+  |A^c\text{-states}|)$, hence $\Phi$ is bounded by the log-capacity of the
+  smaller side of its MIP; equality is approached by perfectly correlated states.
+- **Chain rule / refinement monotonicity.** Coarsening a cut (merging two sides)
+  cannot decrease the cross-cut mutual information, via a conditional-mutual-
+  information chain rule with a nonnegative remainder.
+- **Data-processing monotonicity.** Applying a stochastic channel independently
+  within each side of a cut cannot increase $I(A; A^c)$, so intra-part processing
+  cannot manufacture integration; combined with Theorem 3.6 this bounds $\Phi$
+  under local processing.
+- **Reducibility = disconnection.** Over the full MIP family, $\Phi = 0$ iff the
+  system's dependency hypergraph is disconnected, sharpening Theorem 3.5.
+- **Continuity / stability.** Mutual-information-based $\Phi$ is uniformly continuous on
+  the interior of the simplex and globally bounded, giving a modulus of stability
+  under total-variation perturbations of the state.
 
-The spectral perspective suggests that consciousness, in IIT's framework, corresponds to graph expansion — the property that makes random walks mix rapidly, error-correcting codes work, and communication networks robust.
+Each is a concrete theorem-shaped target that sits directly on top of the
+verified skeleton of Section 3.
 
-## 6. Algorithms
+---
 
-### 6.1 Brute-Force Φ Computation
+## 7. Conclusion
 
-```
-Algorithm ComputePhi(S, adj):
-  min_cut ← ∞
-  for each A ∈ nontrivialSubsets(S):
-    c ← cutSize(A, adj)
-    if c < min_cut:
-      min_cut ← c
-  return min_cut
-```
-
-Time complexity: O(2ⁿ · n²) where n = |S|.
-
-### 6.2 Improved Algorithms
-
-For undirected graphs, the minimum cut can be computed in polynomial time (Stoer-Wagner algorithm, O(n³)). For directed graphs, the minimum cut in our bidirectional sense can be reduced to a minimum s-t cut problem via standard techniques, giving O(n³) via max-flow.
-
-However, the *normalized* version (Cheeger constant) remains NP-hard, connecting IIT to the computational complexity of consciousness.
-
-## 7. Discussion
-
-### 7.1 What the Formalization Reveals
-
-The reduction of Φ to minimum cut clarifies several aspects of IIT:
-
-1. **Φ is a topological invariant**: It depends only on the causal graph structure, not on metric properties of state space.
-2. **Monotonicity is structural**: Adding edges helps integration because it adds potential crossing edges to every partition.
-3. **Exclusion is selection**: The MIP selects the "weakest link" in the causal structure.
-
-### 7.2 Limitations
-
-1. Our formalization uses a combinatorial (unweighted) adjacency, whereas the original IIT uses weighted causal mechanisms. The generalization to weighted systems is natural but requires real-valued analysis.
-2. We consider only bipartitions; IIT's full formulation considers all possible decompositions.
-3. The temporal dynamics of causal systems (multi-step causal influence) are not captured in our single-step transition model.
-
-### 7.3 Connections to Catalog
-
-Our work extends:
-- `complexity_measure_coherence` (Bridges/ProofThermodynamicsEntropy.lean): We generalize coherence measures from proof trees to causal systems, showing that information integration is a broader phenomenon than proof complexity.
-- `exclusion_composition` (Cryptography/PrimeGapCrossword.lean): We formalize exclusion and composition as independent axioms of IIT, extending the number-theoretic exclusion-composition interaction to graph-theoretic settings.
-
-## 8. Future Work
-
-1. Weighted causal graphs with real-valued Φ
-2. Connection to quantum information theory (quantum Φ)
-3. Computational complexity of Φ (formal NP-hardness proof)
-4. Higher-categorical structure of causal systems
-5. Application to neural network architectures
-
-## References
-
-[1] G. Tononi, "An information integration theory of consciousness," BMC Neuroscience, vol. 5, no. 42, 2004.
-
-[2] G. Tononi, M. Boly, M. Massimini, and C. Koch, "Integrated information theory: from consciousness to its physical substrate," Nature Reviews Neuroscience, vol. 17, pp. 450–461, 2016.
-
-[3] M. Fiedler, "Algebraic connectivity of graphs," Czechoslovak Mathematical Journal, vol. 23, pp. 298–305, 1973.
-
-[4] J. Cheeger, "A lower bound for the smallest eigenvalue of the Laplacian," Problems in Analysis, pp. 195–199, 1970.
-
-[5] M. Stoer and F. Wagner, "A simple min-cut algorithm," Journal of the ACM, vol. 44, no. 4, pp. 585–591, 1997.
-
-[6] `complexity_measure_coherence` from `FINAL/Bridges/ProofThermodynamicsEntropy.lean` — establishes coherence measures for proof structures.
-
-[7] `exclusion_composition` from `Cryptography/PrimeGapCrossword.lean` — demonstrates exclusion-composition interactions in number-theoretic settings.
+Integrated Information Theory rests, mathematically, on minimizing an
+effective-information functional over the bipartitions of a finite system. We
+formalized that minimization, identified nonnegativity as its only essential
+hypothesis, and proved the six structural theorems that make $\Phi$ a coherent
+invariant: the MIP exists and realizes $\Phi$ (Theorem 3.2), $\Phi$ is the
+greatest lower bound (Theorems 3.1, 3.3), $\Phi \ge 0$ (Corollary 3.4),
+$\Phi = 0$ characterizes reducibility (Theorem 3.5), $\Phi$ is monotone in the
+functional (Theorem 3.6), and $\Phi$ is determined by its bottleneck
+(Theorem 3.7). Whatever one concludes about the relationship between $\Phi$ and
+consciousness, the quantity itself now has a rigorous and reusable foundation.
