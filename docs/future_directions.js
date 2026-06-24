@@ -898,7 +898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1670a4b8",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -907,7 +907,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1599,7 +1599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hochschild homology isomorphism between asymptotic and classical Hecke algebras for inner forms of GL_n"
   },
   {
-    "consumed_by_exp_id": "d135fcbe",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k \u2265 3, the Conformability problem is NP-complete when restricted to connected d-regular graphs G of odd order n with independence number \u03b1(G) = k and maximum degree d \u2265 n/2. The paper establishes this for k = 3 by reduction from perfect triangle packing in K\u2084-free graphs. The conjecture asserts that hardness persists for all larger independence numbers, where the complement graph has clique number k and conformable color classes correspond to cliques of odd size up to k in the complement, requiring richer packing structures to encode NP-hard problems.",
     "domains": [
       "Pythagorean",
@@ -1609,7 +1609,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21534v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T01:48:36.909062+00:00",
     "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
   },
@@ -3601,12 +3601,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let H be any nonempty finite simple graph, let b : Fin m -> Nat be a nonempty list of positive clique sizes, and let B(b) be the disjoint union of cliques K_{b_r}. Form the graph G = H * B(b), where * denotes graph join. If nu(b) is the number of indices r with b_r >= 2, then over every field k the Castelnuovo--Mumford regularity of the edge-ideal quotient satisfies reg_k(R/I(G)) = max(1, reg_k(R/I(H)), nu(b)). This extends the split-like and clique-star cases from the paper by replacing the independent or complete core by an arbitrary finite graph.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2435",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24822v1",
+    "status": "available",
+    "timestamp": "2026-06-24T11:34:29.009323+00:00",
+    "title": "Regularity of arbitrary-core joins with clique blocks"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2435",
+    "id": "fd_2436",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3620,13 +3634,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2436",
+    "id": "fd_2437",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
     "status": "available",
     "timestamp": "2026-06-24T11:12:45.893373+00:00",
     "title": "Upper bound on the number of strict alternating cycles in posets of bounded width"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any finite transitively antisymmetrically ordered set S, the nilpotent Lie algebra L(S) constructed via the incidence algebra admits a left\u2011invariant Ricci soliton metric whose Ricci scalar curvature equals minus the ratio of the number of comparable pairs in S to the dimension of L(S). In particular, Ric = -((#comparable_pairs S) / (dim L(S)))\u00b7g.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2438",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24569v1",
+    "status": "available",
+    "timestamp": "2026-06-24T11:36:11.076325+00:00",
+    "title": "Scalar curvature formula for incidence-algebra nilpotent Lie algebras"
   },
   {
     "consumed_by_exp_id": "",

@@ -1197,7 +1197,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1670a4b8",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1209,7 +1209,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -2228,7 +2228,7 @@
       "overfull_conjecture",
       "total_coloring"
     ],
-    "consumed_by_exp_id": "d135fcbe",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k ≥ 3, the Conformability problem is NP-complete when restricted to connected d-regular graphs G of odd order n with independence number α(G) = k and maximum degree d ≥ n/2. The paper establishes this for k = 3 by reduction from perfect triangle packing in K₄-free graphs. The conjecture asserts that hardness persists for all larger independence numbers, where the complement graph has clique number k and conformable color classes correspond to cliques of odd size up to k in the complement, requiring richer packing structures to encode NP-hard problems.",
     "domain_bridges": [
       "computational_complexity_NP_completeness",
@@ -2246,7 +2246,7 @@
     "proof_strategy": "Adapt the paper's reduction by constructing, for each k ≥ 3, a family of connected d-regular graphs with α(G) = k and d ≥ n/2 whose conformability encodes exact clique-packing problems in K_{k+1}-free complements. For odd k, conformable color classes map to cliques of sizes 1,3,...,k in G̅; for even k, to cliques of sizes 1,3,...,k-1. The key challenge is designing gadgets that force the correct distribution of clique sizes in any conformable coloring, generalizing the triangle-packing enforcement at k=3. A reduction from exact cover by k-sets or k-clique packing in K_{k+1}-free graphs would establish hardness.",
     "research_mode": "team",
     "source_exp_id": "2606.21534v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T01:48:36.909062+00:00",
     "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
   },
@@ -6080,6 +6080,37 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Subgraph",
+      "Mathlib.Algebra.Homology.HomologicalComplex",
+      "Mathlib.RingTheory.Polynomial.Basic",
+      "Hochster formula for edge ideals",
+      "Independence complexes of graph joins"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let H be any nonempty finite simple graph, let b : Fin m -> Nat be a nonempty list of positive clique sizes, and let B(b) be the disjoint union of cliques K_{b_r}. Form the graph G = H * B(b), where * denotes graph join. If nu(b) is the number of indices r with b_r >= 2, then over every field k the Castelnuovo--Mumford regularity of the edge-ideal quotient satisfies reg_k(R/I(G)) = max(1, reg_k(R/I(H)), nu(b)). This extends the split-like and clique-star cases from the paper by replacing the independent or complete core by an arbitrary finite graph.",
+    "domain_bridges": [
+      "graph join -> disjoint union decomposition of independence complexes",
+      "disjoint union of clique blocks -> join of discrete simplicial complexes",
+      "reduced simplicial homology -> nonzero Hochster summands",
+      "Hochster formula -> Castelnuovo--Mumford regularity"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2435",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove first that Ind((H * B)[U union T]) is the union of Ind(H[U]) and Ind(B[T]) with only the empty face in common. Deduce that positive-degree reduced homology is the direct sum of the two sides, while degree-zero homology contributes one extra class whenever both vertex parts are nonempty, giving the max with 1. Next compute reg(B(b)) by writing Ind(B[T]) as a join of discrete complexes D_{t_r}; its only possible top reduced homology occurs in degree s-1, where s is the number of selected blocks with t_r >= 2, so the maximum value of q+1 is nu(b). Combine these facts through Hochster's formula to obtain the stated equality.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24822v1",
+    "status": "available",
+    "timestamp": "2026-06-24T11:34:29.009323+00:00",
+    "title": "Regularity of arbitrary-core joins with clique blocks"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO/2305.01234",
       "math.CO/2407.05678",
       "math.CO/2603.01456"
@@ -6094,7 +6125,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2435",
+    "id": "fd_2436",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6118,7 +6149,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2436",
+    "id": "fd_2437",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6127,6 +6158,32 @@
     "status": "available",
     "timestamp": "2026-06-24T11:12:45.893373+00:00",
     "title": "Upper bound on the number of strict alternating cycles in posets of bounded width"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MR4941781",
+      "MR4583772"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any finite transitively antisymmetrically ordered set S, the nilpotent Lie algebra L(S) constructed via the incidence algebra admits a left‑invariant Ricci soliton metric whose Ricci scalar curvature equals minus the ratio of the number of comparable pairs in S to the dimension of L(S). In particular, Ric = -((#comparable_pairs S) / (dim L(S)))·g.",
+    "domain_bridges": [
+      "math.CO",
+      "math.RA"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2438",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24569v1",
+    "status": "available",
+    "timestamp": "2026-06-24T11:36:11.076325+00:00",
+    "title": "Scalar curvature formula for incidence-algebra nilpotent Lie algebras"
   },
   {
     "ambition_level": "extension",
