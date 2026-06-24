@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-24T00:21:07Z",
+    "domain": "Physics",
+    "exp_id": "2b44c5bb",
+    "filename": "statistical_mechanics_ising_model_phase_transition.json",
+    "pkg_num": 14,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Statistical Mechanics: The Self-Dual Critical Point of the 2D Ising Model"
+  },
+  {
     "date": "2026-06-23T19:25:16Z",
     "domain": "Cryptography",
     "exp_id": "5a2118a3",
@@ -239,6 +249,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
+  },
+  "statistical_mechanics_ising_model_phase_transition.json": {
+    "domain": "Physics",
+    "exp_id": "2b44c5bb",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Statistical Mechanics: The Self-Dual Critical Point of the 2D Ising Model"
   }
 };
 
@@ -251,7 +269,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 272,
+      "hue": 91,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -262,7 +280,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 95,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -273,7 +291,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:43:47Z",
       "domain": "Applications",
-      "hue": 275,
+      "hue": 270,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
       "priority_score": 0.46096,
@@ -284,7 +302,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 91,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -295,7 +313,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 270,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -306,7 +324,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T06:39:56Z",
       "domain": "Pythagorean",
-      "hue": 270,
+      "hue": 91,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Pythagorean",
       "priority_score": 0.3935206787878788,
@@ -317,7 +335,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 92,
+      "hue": 271,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
@@ -328,7 +346,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 275,
+      "hue": 270,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.6288,
@@ -339,7 +357,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 101,
+      "hue": 95,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -361,7 +379,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T11:40:38Z",
       "domain": "Probability",
-      "hue": 272,
+      "hue": 281,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
       "priority_score": 0.48476875555555554,
@@ -372,7 +390,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T15:01:50Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 280,
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
       "primary_domain": "Bridges",
       "priority_score": 0.5094479615384615,
@@ -383,13 +401,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T19:25:16Z",
       "domain": "Cryptography",
-      "hue": 91,
+      "hue": 271,
       "id": "quantum_key_distribution_bb84_security_proof",
       "primary_domain": "Cryptography",
       "priority_score": 0.49160000000000004,
       "quality": "partial",
       "shape": "dodecahedron",
       "title": "Quantum Key Distribution: A Formally Verified BB84 Security Proof"
+    },
+    {
+      "date": "2026-06-24T00:21:07Z",
+      "domain": "Physics",
+      "hue": 91,
+      "id": "statistical_mechanics_ising_model_phase_transition",
+      "primary_domain": "Physics",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "diamond",
+      "title": "Statistical Mechanics: The Self-Dual Critical Point of the 2D Ising Model"
     }
   ]
 };
