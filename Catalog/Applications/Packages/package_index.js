@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4a138f86",
     "filename": "eml_interpolation_theory_stone_weierstrass_for_exp.json",
     "pkg_num": 31,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6288800000000001,
     "title": "One Logarithm Is Enough: A Non-Circular Stone-Weierstrass Density Theorem for the Log-Coordinate Algebra"
   },
   {
@@ -908,8 +908,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "eml_interpolation_theory_stone_weierstrass_for_exp",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6288800000000001,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "One Logarithm Is Enough: A Non-Circular Stone-Weierstrass Density Theorem for the Log-Coordinate Algebra"
     }

@@ -35633,14 +35633,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Amitsur-Levitzki Theorem (MR36751)",
         "Irelli et al. (irelli2025quiverspolynomialidentities)"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c235005e",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35655,7 +35655,7 @@
         "Algebra"
       ],
       "id": "fd_2321",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:00:29.830168+00:00",
       "last_reviewed_at": "2026-06-23T23:10:40.163741+00:00",
       "lean_theorem_stub": "Theorem: For acyclic Q with path length n-1, ∩_{a,b,c} <S(x₁,...,x_n)> = ∩_{a,b,c} <x₁...x_n>.",
       "lineage_refs": [],
@@ -35669,7 +35669,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23024v1",
       "source_path": "http://arxiv.org/abs/2606.23024v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T10:17:17.086233+00:00",
       "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
@@ -36202,7 +36202,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "dcf70a3f",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36232,7 +36232,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21902v1",
       "source_path": "http://arxiv.org/abs/2606.21902v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T14:24:58.237232+00:00",
       "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
@@ -39121,7 +39121,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "e1f85a79",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -40178,7 +40178,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "71e0f12b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40208,7 +40208,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23485v1",
       "source_path": "http://arxiv.org/abs/2606.23485v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T00:22:38.508639+00:00",
       "title": "Non‑existence of Further Brown Numbers Beyond n=7"
@@ -40641,7 +40641,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "72f1519b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40671,7 +40671,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22614v1",
       "source_path": "http://arxiv.org/abs/2606.22614v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T08:42:34.928992+00:00",
       "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
@@ -41151,6 +41151,48 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "arXiv:proposals/a123",
+        "maclaganSturmfels paper"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The stable tropical intersection is reduced iff specific structural conditions on the subvariety and fan hold, verified via algebraic validation.",
+      "domain_bridges": "math.CO, Lean",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Tropical"
+      ],
+      "id": "fd_2439",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Reduced Point Theorem",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Constructive induction on polynomial ring structures",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24339v1",
+      "source_path": "http://arxiv.org/abs/2606.24339v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T14:55:13.285563+00:00",
+      "title": "Reduction Condition for Reduced Points"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
         "math.CO/2603.01456"
@@ -41171,7 +41213,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2439",
+      "id": "fd_2440",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41214,7 +41256,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2440",
+      "id": "fd_2441",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41259,7 +41301,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2441",
+      "id": "fd_2442",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41304,7 +41346,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2442",
+      "id": "fd_2443",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41350,7 +41392,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2443",
+      "id": "fd_2444",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -41395,7 +41437,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2444",
+      "id": "fd_2445",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -41414,6 +41456,53 @@
       "thread_id": "",
       "timestamp": "2026-06-24T13:57:00.706176+00:00",
       "title": "Extremal trees for H_alpha indices"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2406.xxxxx (this paper)",
+        "Ball2020Additive",
+        "Kurz2024Additive",
+        "Bartoli2025Long"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any prime power q and integer h ≥ 2, let n_min(q,h,k) denote the minimum length of a nondegenerate minimal additive code of dimension k over F_{q^h}. Then the limit lim_{k→∞} n_min(q,h,k)/k exists and equals h·(q^h - 1)/(q - 1).",
+      "domain_bridges": [
+        "coding_theory",
+        "finite_geometry",
+        "additive_combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2446",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24262v1",
+      "source_path": "http://arxiv.org/abs/2606.24262v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T15:00:24.085231+00:00",
+      "title": "Asymptotic Growth Rate of Minimum Length for Minimal Additive Codes"
     },
     {
       "ambition_level": "extension",
@@ -44825,7 +44914,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "7d77f583",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44851,7 +44940,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:09.067494+00:00",
       "title": "Sierpiński Numbers: Covering Systems"
@@ -46524,11 +46613,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "2689333c",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46540,7 +46629,7 @@
         "Topology"
       ],
       "id": "seed_339",
-      "last_attempt_time": "2026-06-24T13:57:06.519041+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46554,7 +46643,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432630+00:00",
       "title": "Homological Algebra: Derived Functors"
@@ -47033,11 +47122,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "87071021",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47048,7 +47137,7 @@
         "Combinatorics"
       ],
       "id": "seed_352",
-      "last_attempt_time": "2026-06-24T13:57:13.506234+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47062,7 +47151,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432688+00:00",
       "title": "Ramsey Theory: Bounds and Constructions"
@@ -121514,6 +121603,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
