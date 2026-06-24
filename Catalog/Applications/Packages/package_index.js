@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "758d973b",
     "filename": "degree_normalized_linked_tree_cut_decompositions_f.json",
     "pkg_num": 28,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.51744,
     "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
   },
   {
@@ -821,8 +821,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "degree_normalized_linked_tree_cut_decompositions_f",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.51744,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
     }

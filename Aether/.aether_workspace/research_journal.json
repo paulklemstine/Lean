@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2d22ac65",
-      "domain": "Tropical",
-      "key_insight": "# FUTURE DIRECTIONS — Tropical Persistent Topology\n\nResearch cycle: *Topological Data Analysis of Theorem Networks* (Domain: Tropical).\nFoundation laid in `Catalog/Tropical/Persistence/SublevelFiltrat",
-      "quality_score": 0.5060211363636364,
-      "sorry_count": 0,
-      "theorem_count": 12,
-      "timestamp": "2026-06-17T02:02:36",
-      "title": "Speculative: Topological Data Analysis of Theorem Networks"
-    },
-    {
       "cycle_id": "1873f003",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Tangled Hierarchies (GL-Kripke geometry of self-soundness)\n\nDerived from this cycle's findings in `Core.lean`, `SelfSoundness.lean`,\n`Examples.lean`. This cycle established, on f",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-24T11:03:07",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
+    },
+    {
+      "cycle_id": "758d973b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Degree-normalized linked tree-cut decompositions\n\nThis cycle reduced the *degree-normalization clause* of the conjecture (exact\nstabilization along finite-degree ends, divergence",
+      "quality_score": 0.51744,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-24T12:15:24",
+      "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.789328
     }
   ],
-  "last_updated": "2026-06-24T11:03:07",
+  "last_updated": "2026-06-24T12:15:24",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a0d2774b",
-        "quality": 0.42573236521739133,
-        "theorems": 13,
-        "title": "Consciousness as Integrated Information"
-      },
-      {
         "cycle_id": "d6c114ef",
         "quality": 0.6766,
         "theorems": 100,
@@ -3637,6 +3631,12 @@
         "quality": 0.67432,
         "theorems": 18,
         "title": "Consciousness as Integrated Information"
+      },
+      {
+        "cycle_id": "758d973b",
+        "quality": 0.51744,
+        "theorems": 8,
+        "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
       }
     ],
     "NumberTheory": [

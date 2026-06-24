@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-24T12:15:09Z",
+    "domain": "Novelty",
+    "exp_id": "758d973b",
+    "filename": "degree_normalized_linked_tree_cut_decompositions_f.json",
+    "pkg_num": 28,
+    "quality": "partial",
+    "quality_score": 0.51744,
+    "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
+  },
+  {
     "date": "2026-06-24T11:02:54Z",
     "domain": "Logic",
     "exp_id": "43854327",
@@ -316,6 +326,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
   },
+  "degree_normalized_linked_tree_cut_decompositions_f.json": {
+    "domain": "Novelty",
+    "exp_id": "758d973b",
+    "source_exp_ids": [
+      "2606.20452v1"
+    ],
+    "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
+  },
   "elliptic_curve_cryptography_weil_pairing_and_bls_s.json": {
     "domain": "Cryptography",
     "exp_id": "cb79327f",
@@ -503,7 +521,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 270,
+      "hue": 90,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -514,7 +532,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 272,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -525,7 +543,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 275,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -536,7 +554,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 275,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -547,7 +565,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 90,
+      "hue": 92,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
@@ -558,7 +576,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 271,
+      "hue": 270,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.6288,
@@ -569,7 +587,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 271,
+      "hue": 90,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -580,7 +598,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T08:30:51Z",
       "domain": "Computation",
-      "hue": 272,
+      "hue": 270,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
       "priority_score": 0.5811999999999999,
@@ -591,7 +609,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T11:40:38Z",
       "domain": "Probability",
-      "hue": 272,
+      "hue": 270,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
       "priority_score": 0.48476875555555554,
@@ -613,7 +631,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T19:25:16Z",
       "domain": "Cryptography",
-      "hue": 272,
+      "hue": 90,
       "id": "quantum_key_distribution_bb84_security_proof",
       "primary_domain": "Cryptography",
       "priority_score": 0.49160000000000004,
@@ -624,7 +642,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T00:21:07Z",
       "domain": "Physics",
-      "hue": 90,
+      "hue": 95,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Physics",
       "priority_score": 0.6913,
@@ -635,7 +653,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:21:56Z",
       "domain": "Bridges",
-      "hue": 275,
+      "hue": 270,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
       "priority_score": 0.7484,
@@ -646,7 +664,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:35:46Z",
       "domain": "Tropical",
-      "hue": 90,
+      "hue": 270,
       "id": "eml_universal_approximation_density_of_eml_functio",
       "primary_domain": "Tropical",
       "priority_score": 0.86528,
@@ -657,7 +675,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:59:38Z",
       "domain": "Computation",
-      "hue": 270,
+      "hue": 95,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Computation",
       "priority_score": 0.789328,
@@ -668,7 +686,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T02:14:47Z",
       "domain": "Physics",
-      "hue": 92,
+      "hue": 90,
       "id": "hamiltonian_compression_factor_of_cubic_edge_trans",
       "primary_domain": "Physics",
       "priority_score": 0.48598591282051284,
@@ -679,7 +697,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T04:28:44Z",
       "domain": "Algebra",
-      "hue": 92,
+      "hue": 271,
       "id": "langlands_correspondence_gl1_case",
       "primary_domain": "Algebra",
       "priority_score": 0.57755,
@@ -690,7 +708,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T04:39:42Z",
       "domain": "Geometry",
-      "hue": 270,
+      "hue": 101,
       "id": "homotopy_type_theory_foundations",
       "primary_domain": "Geometry",
       "priority_score": 0.48341799999999996,
@@ -701,7 +719,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T05:17:28Z",
       "domain": "Geometry",
-      "hue": 91,
+      "hue": 272,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Geometry",
       "priority_score": 0.702,
@@ -712,7 +730,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T06:14:07Z",
       "domain": "Cryptography",
-      "hue": 272,
+      "hue": 271,
       "id": "secret_sharing_shamirs_scheme_and_verifiable_varia",
       "primary_domain": "Cryptography",
       "priority_score": 0.5671600000000001,
@@ -734,7 +752,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T08:09:20Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 359,
       "id": "whitehead_problem_independence_from_zfc",
       "primary_domain": "Bridges",
       "priority_score": 0.729932,
@@ -745,7 +763,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T08:38:58Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "type_theory_cubical_type_theory_foundations",
       "primary_domain": "Algebra",
       "priority_score": 0.63257,
@@ -756,7 +774,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T09:33:05Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 90,
       "id": "symmetric_group_generation_probability",
       "primary_domain": "Bridges",
       "priority_score": 0.4162,
@@ -778,7 +796,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T10:57:53Z",
       "domain": "Shared",
-      "hue": 91,
+      "hue": 270,
       "id": "existence_of_non_trivial_boolean_degree_one_functi",
       "primary_domain": "Bridges",
       "priority_score": 0.69522,
@@ -789,13 +807,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T11:02:54Z",
       "domain": "Logic",
-      "hue": 91,
+      "hue": 275,
       "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
       "primary_domain": "Logic",
       "priority_score": 0.43844913758865245,
       "quality": "partial",
       "shape": "star_of_david",
       "title": "Two Invariants of NISQ Error Mitigation: A Sharp Majority-Vote Threshold and the Persistence of H_0"
+    },
+    {
+      "date": "2026-06-24T12:15:09Z",
+      "domain": "Novelty",
+      "hue": 91,
+      "id": "degree_normalized_linked_tree_cut_decompositions_f",
+      "primary_domain": "Bridges",
+      "priority_score": 0.51744,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
     }
   ]
 };

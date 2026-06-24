@@ -898,7 +898,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "1670a4b8",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -907,7 +907,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1405,7 +1405,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
   {
-    "consumed_by_exp_id": "24d81b77",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
     "domains": [
       "Tropical",
@@ -1416,7 +1416,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432797+00:00",
     "title": "Tropical Convexity and Linear Programming"
   },
@@ -1597,21 +1597,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:47:05.451556+00:00",
     "title": "Hochschild homology isomorphism between asymptotic and classical Hecke algebras for inner forms of GL_n"
-  },
-  {
-    "consumed_by_exp_id": "168f9c96",
-    "description": "For every fixed integer k \u2265 3, the Conformability problem is NP-complete when restricted to connected d-regular graphs G of odd order n with independence number \u03b1(G) = k and maximum degree d \u2265 n/2. The paper establishes this for k = 3 by reduction from perfect triangle packing in K\u2084-free graphs. The conjecture asserts that hardness persists for all larger independence numbers, where the complement graph has clique number k and conformable color classes correspond to cliques of odd size up to k in the complement, requiring richer packing structures to encode NP-hard problems.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2294",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.21534v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T01:48:36.909062+00:00",
-    "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
   },
   {
     "consumed_by_exp_id": "",
@@ -3873,6 +3858,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Degree-normalized linked tree-cut decompositions\n\nThis cycle reduced the *degree-normalization clause* of the conjecture (exact\nstabilization along finite-degree ends, divergence along infinite-degree ends)\nto a single combinatorial property of the decomposition: **monotonicity of the\nadhesion-size sequence `n \u21a6 |F_{e_n}|` along each root-to-end ray**. We proved\n(0 sorries, in `SequenceLemmas.lean` and `Core.lean`):\n\n* `degreeNormalized_finite`: a nested (componental) ray stabilizes *exactly* at\n  `displayedEdgeDegree = \u2a05\u2099 |F_{e_n}|`;\n* `degreeNormalized_finite_minCut`: under `Linked`, the eventual value equals the\n  eventual edge **min-cut** (Menger), so `displayedEdgeDegree` is the genuine\n  edge-degree of the displayed end;\n* `degreeNormalized_infinite`: a monotone-unbounded ray diverges (`|F_{e_n}| \u2192 \u221e`);\n* `degreeNormalization_dichotomy`: any eventually-monotone ray realizes exactly\n  one of the two normalization regimes.\n\nThe Critic isolated the *load-bearing* gap: oscillating sequences (`1,2,1,2,\u2026`)\nviolate the dichotomy, so the open content of the conjecture is entirely the\nconstruction of a decomposition whose adhesion sizes are monotone along every\nend-ray. The directions below attack that gap.\n\n---\n\n## Conjecture 1 \u2014 Linkedness alone forces eventual monotonicity along nested rays\n\n**Statement.** In a *linked* rooted tree-cut decomposition of a connected locally\nfinite multigraph, for every root-to-end ray `e` the sequence `|F_{e_n}|` is\n*eventually monotone* (eventually antitone if the end has finite edge-degree,\neventually monotone increasing if infinite).\n\n**The key insight is** that linkedness pins each adhesion to the Menger min-cut of\nits side (`linked_adhesion_eq_minCut`), and min-cuts toward a fixed end can only\n\"tighten then settle\" \u2014 there is no mechanism for a strict decrease to be undone\nwithout violating the linked witness paths, which would have to reappear.\n\n**Why now?** `Core.lean` already supplies the missing top layer: once monotonicity\nis established, `degreeNormalization_dichotomy` immediately yields the full clause.\nOnly the monotonicity lemma remains, turning an analytic conjecture into a finite\nlocal statement about consecutive adhesions `F_{e_n}, F_{e_{n+1}}`.\n\n## Conjecture 2 \u2014 `displayedEdgeDegree` is a complete invariant of the end's edge-degree\n\n**Statement.** For a linked, componental decomposition that displays an end `\u03c9`\nbijectively, `displayedEdgeDegree e` (finite case) equals the maximum number of\npairwise edge-disjoint rays converging to `\u03c9`; in the infinite case both sides are\n`+\u221e`.\n\n**The key insight is** that the eventual min-cut along the ray (which we proved is\nthe stabilized adhesion size) is exactly the edge-version of Menger/Halin for ends:\nthe bottleneck separator size equals the max edge-disjoint ray packing.\n\n**Why now?** We have already proved the cut side of the equality\n(`degreeNormalized_finite_minCut`); the remaining work is the ray-packing side, a\nself-contained edge-Menger statement for which the catalog's\n`card_le_of_disjoint_crossPaths` provides one of the two inequalities.\n\n## Conjecture 3 \u2014 Stabilization index is bounded by the initial adhesion\n\n**Statement.** Along a nested ray, the stabilization threshold `N\u2080` of\n`degreeNormalized_finite` satisfies `N\u2080 \u2264 |F_{e_0}| - displayedEdgeDegree`: the\nsequence can strictly decrease at most `|F_{e_0}| - d` times.\n\n**The key insight is** that an antitone `\u2115`-sequence drops by at least `1` at each\nstrict step, so the number of strict steps is bounded by the total decrease\n`|F_{e_0}| - d`, giving an *effective* (constructive) stabilization bound.\n\n**Why now?** `antitone_nat_eventually_eq_iInf` already produces *some* `N\u2080`; refining\nits proof to count strict descents converts an existence statement into a quantitative\none with no new graph theory required.\n\n## Conjecture 4 \u2014 Two-sided normalization for bi-infinite (double-ray) ends\n\n**Statement.** For a tree-cut decomposition indexed by `\u2124` along a double ray\nbetween two ends `\u03c9\u208b, \u03c9\u208a`, the adhesion sizes `|F_{e_n}|` are eventually constant in\n*both* directions, with the two limits equal to the edge-degrees of `\u03c9\u208b` and `\u03c9\u208a`.\n\n**The key insight is** that the `\u2115`-dichotomy applies independently to the two tails\n`n \u2192 +\u221e` and `n \u2192 -\u221e`; the only new ingredient is that a linked decomposition makes\nthe two tails monotone in *opposite* orientations.\n\n**Why now?** The `\u2115` machinery in `SequenceLemmas.lean` is orientation-agnostic and\nreuses verbatim after composing with `n \u21a6 -n`, so the double-ray case is one short\nlemma away from the single-ray results proved this cycle.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2441",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "758d973b",
+    "status": "available",
+    "timestamp": "2026-06-24T12:15:11.962987+00:00",
+    "title": "This cycle reduced the *degree-normalization clause* of the conjecture (exact"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4196,7 +4196,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4a138f86",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domains": [
       "EML",
@@ -4206,7 +4206,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
