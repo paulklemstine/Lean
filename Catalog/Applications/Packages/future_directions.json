@@ -14475,7 +14475,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "f25c8810",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14501,7 +14501,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.398671+00:00",
       "title": "Alien Number Systems: Beyond Base-N"
@@ -15840,7 +15840,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "226a5c12",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15866,7 +15866,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:05.964661+00:00",
       "title": "Bridge: Galois Connections Between Order Theory and Topology"
@@ -16737,7 +16737,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "7242c7d6",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16763,7 +16763,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.873771+00:00",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
@@ -35595,7 +35595,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "b45eb1d8",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35624,7 +35624,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22947v1",
       "source_path": "http://arxiv.org/abs/2606.22947v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T09:53:33.563342+00:00",
       "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
@@ -37125,7 +37125,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Lagarias-Shallit bounds for Lagrange constants under integer linear fractional transformations",
         "Smith normal form over Z for reducing integer matrices",
@@ -37135,7 +37135,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "cc1a412b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37151,7 +37151,7 @@
         "Bridges"
       ],
       "id": "fd_2353",
-      "last_attempt_time": "2026-06-24T22:36:55.014740+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Data.Matrix.Notation\nimport Mathlib.Data.Real.Basic\n\nnoncomputable section\n\nabbrev Mat2Z := Matrix (Fin 2) (Fin 2) ℤ\n\nconstant Primitive : Mat2Z → Prop\nconstant mobius : Mat2Z → ℝ → ℝ\nconstant lagrangeConst : ℝ → ℝ\nconstant Bad : Set ℝ\nconstant IsQuadraticIrrational : ℝ → Prop\n\ndef detAbs (M : Mat2Z) : ℝ := ((Int.natAbs (M.det) : ℕ) : ℝ)\n\ntheorem quadratic_irrational_ratio_spectrum_dense\n    (M : Mat2Z) (hprim : Primitive M) (hdet : M.det ≠ 0) :\n    ∀ u v : ℝ,\n      (detAbs M)⁻¹ ≤ u → u < v → v ≤ detAbs M →\n        ∃ x : ℝ,\n          x ∈ Bad ∧ IsQuadraticIrrational x ∧\n          u < lagrangeConst (mobius M x) / lagrangeConst x ∧\n          lagrangeConst (mobius M x) / lagrangeConst x < v := by\n  sorry",
       "lineage_refs": [],
@@ -37165,7 +37165,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22229v1",
       "source_path": "http://arxiv.org/abs/2606.22229v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T13:11:45.659366+00:00",
       "title": "Quadratic irrational density in the ratio spectrum"
@@ -39121,7 +39121,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "04a6a732",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -41858,6 +41858,44 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The critical density γ_k must exactly equal n²/k for the phase transition to occur.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2455",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "γ_k = n²/k",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "explicit_calculation",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22661v1",
+      "source_path": "http://arxiv.org/abs/2606.22661v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T23:02:39.791517+00:00",
+      "title": "Critical Density Determination"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
@@ -41879,7 +41917,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2455",
+      "id": "fd_2456",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41922,7 +41960,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2456",
+      "id": "fd_2457",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41967,7 +42005,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2457",
+      "id": "fd_2458",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -42012,7 +42050,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2458",
+      "id": "fd_2459",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -42058,7 +42096,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2459",
+      "id": "fd_2460",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -42103,7 +42141,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2460",
+      "id": "fd_2461",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -42150,7 +42188,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2461",
+      "id": "fd_2462",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -42194,7 +42232,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2462",
+      "id": "fd_2463",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -42240,7 +42278,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2463",
+      "id": "fd_2464",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
@@ -42288,7 +42326,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2464",
+      "id": "fd_2465",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_cohomology_vanishing (p : Nat.primes) (k : ℕ) (n : ℕ) : n ≥ (3*k + 1)*p + (3*k + 2) → cohomology_group (Γ₀ₙ(p)) (binom(n, 2) - k) ℚ = 0",
@@ -42332,7 +42370,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2465",
+      "id": "fd_2466",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem S_one_phi_lower_bound (x : ℕ) (hx : x ≥ 2) : (S_one_phi x : ℝ) ≥ x * Real.exp ( - (1 / 2 + eps x) * Real.sqrt (Real.log x * Real.log (Real.log x)) ) := by sorry",
@@ -42379,7 +42417,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2466",
+      "id": "fd_2467",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sum_of_digits_bias (t : nat) (h : t > 0) : \\lim_{N\\rightarrow\\infty} ((\\text{set.mem_imprediate} (n\\mapsto s_2(n + t) \\ge s_2(n)) : N)) `N `real_imprediate (1/2 + 2^{-2s_2(t)-1})",
@@ -42425,7 +42463,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2467",
+      "id": "fd_2468",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture colorful_fractional_helly_beta_bound (d : ℕ) (α : ℝ) (hα : α > 0 ∧ α ≤ 1) : ∃ β : ℝ, β ≥ α^(d+1) ∧ Helly.colorful_fractional_convex_splinters.d d α β",
@@ -42463,7 +42501,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2468",
+      "id": "fd_2469",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "a_n ≤ ρ^{-n}",
@@ -42511,7 +42549,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2469",
+      "id": "fd_2470",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nnamespace BinomialGCD\n\ndef IsExactPrimePowerComponent (n P : ℕ) : Prop :=\n  ∃ p a : ℕ, Nat.Prime p ∧ 0 < a ∧ P = p ^ a ∧ p ^ a ∣ n ∧ ¬ (p ^ (a + 1) ∣ n)\n\ndef IsLargestExactPrimePowerComponent (n P : ℕ) : Prop :=\n  IsExactPrimePowerComponent n P ∧\n    ∀ Q : ℕ, IsExactPrimePowerComponent n Q → Q ≤ P\n\ndef binomGCD (k : ℕ) : ℕ :=\n  (Finset.Icc 2 (k + 1)).gcd fun q => Nat.choose (q * k) k\n\n/-- Conjectural strengthening of the A080170 criterion: the gcd is exactly the\nlargest dominating exact prime-power component, not just nontrivial in that case. -/\ntheorem exact_binomial_gcd_largest_prime_power_conjecture\n    {k n P : ℕ}\n    (hk : 2 ≤ k)\n    (hn : n = k + 1)\n    (hP : IsLargestExactPrimePowerComponent n P) :\n    binomGCD k = if n / P ≤ P then P else 1 := by\n  sorry\n\nend BinomialGCD",
@@ -42561,7 +42599,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2470",
+      "id": "fd_2471",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_noncentral_St3_element (Q : Quiver) (hQ : Finite Q) (hpath : ∃ (p : Path Q), length p ≥ 3) : ∃ (A : Alg K), ∃ (x : A), St3_element x ∧ ¬ Central x",
@@ -42608,7 +42646,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2471",
+      "id": "fd_2472",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem betti_whittaker_period_relation (k : NumberField) (n : ℕ) (π : AutomorphicRepresentation (GL n k)) [Cohomological π] (π_star : Contragredient π) : ∃ (c : ℂ), Period_BettiWhittaker π = c * Period_BettiWhittaker π_star",
@@ -42655,7 +42693,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2472",
+      "id": "fd_2473",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem partial_twuality_interpolates (D : binary_delta_matroid) (⋆∙ : twuality_operator) : (∀ z, is_even (partial_twuality_polynomial D ⋆∙ z) ∨ is_odd (partial_twuality_polynomial D ⋆∙ z) ∨ (is_even_interpolating (partial_twuality_polynomial D ⋆∙) ∧ is_odd_interpolating (partial_twuality_polynomial D ⋆∙)))",
@@ -42702,7 +42740,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2473",
+      "id": "fd_2474",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_C4k2_minus_one (k n : ℕ) (hk : k ≥ 2) (hn : n ≥ 4*k) : ex n (C_4k2_minus_one) = (1/2 : ℚ) * (n.choose 4 : ℚ) := by sorry",
@@ -42750,7 +42788,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2474",
+      "id": "fd_2475",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem higher_order_kummer (n : ℕ) (hn : 3 ≤ n) (p q : ℝ) (hp : p ≠ 0) (hq : q ≠ 0) :\n  let D := discriminant_trinomial p q n;\n  let S_D := hypergeometric_series_nF_nMinus1 a_params b_params D;\n  let S_1D := hypergeometric_series_nF_nMinus1 (b_params.map (· - ·) ++ [1]) (a_params.drop_right 1) (1 / D);\n  S_D = (1 - D)^(gamma) * S_1D := by\n  -- placeholder: to be filled with proof steps using hypergeometric transformation lemmas\n  sorry",
@@ -42796,7 +42834,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2475",
+      "id": "fd_2476",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_k_alt_inv_enumerator (k n : ℕ) (q : ℚ) : a_n_k k q = ∑ m in Finset.range (n / k + 1), q^(m*(m+1)/2) * GaussianBinomial (n - m*(k-1)) m q := by sorry",
@@ -42834,7 +42872,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2476",
+      "id": "fd_2477",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
@@ -46881,7 +46919,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "b21b1644",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46907,7 +46945,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:12.561612+00:00",
       "title": "Self-Avoiding Walk: Connective Constant"
@@ -47654,11 +47692,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "eb2eee3d",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47669,7 +47707,7 @@
         "NumberTheory"
       ],
       "id": "seed_331",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T23:02:57.123196+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47683,7 +47721,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432603+00:00",
       "title": "Perfect Numbers: Structure of Even Perfects"
@@ -56994,7 +57032,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c37a84a2",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -57019,7 +57057,7 @@
       "research_mode": "team",
       "source_exp_id": "a0dd96a5",
       "source_path": "These conjectures continue the research cycle begun in",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-16T12:52:43.615426+00:00",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
@@ -122953,7 +122991,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

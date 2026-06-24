@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "70f20089",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — The Fundamental Theorem of Identity Systems and Homotopy-Initial Families\n\n## Synthesis of this cycle\n\nThe catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`)",
-      "quality_score": 0.74211,
-      "sorry_count": 1,
-      "theorem_count": 24,
-      "timestamp": "2026-06-14T22:46:33",
-      "title": "Close Proofs: The catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.le"
-    },
-    {
       "cycle_id": "32c81afa",
       "domain": "Shared",
       "key_insight": "# Future Directions — Boltzmann Bridge XI: Convexity & Bicombing of Interleaving Geodesics\n\n## Synthesis\n\nThe persistence-stability arc of the catalog has climbed a ladder of structure: a\nrelational p",
@@ -499,19 +489,19 @@
       "theorem_count": 12,
       "timestamp": "2026-06-24T22:34:09",
       "title": "Proof Strategy Mining from Deep Mathematics"
+    },
+    {
+      "cycle_id": "ef60a392",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cusick's Sum-of-Digits Explicit Bound\n\nDerived from the carry-reformulation cycle in `CusickSumOfDigits.lean`,\n`CusickCarryReformulation.lean`, and `CusickDensityWitness.lean`.",
+      "quality_score": 0.77328,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-24T23:02:00",
+      "title": "Cusick's Sum-of-Digits Explicit Bound"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "16b03c84",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Cellular Automata as Algebraic Geometry over GF(2)\n\nThese conjectures are distilled from the v16a research cycle in\n`Computation/ECAFixedVariety.lean` and `Computation/ECALinearS",
-      "quality_score": 0.49697377834557654,
-      "sorry_count": 0,
-      "theorem_count": 29,
-      "timestamp": "2026-06-17T16:03:46",
-      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-    },
     {
       "cycle_id": "cb56480f",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-06-24T22:34:09",
       "title": "Proof Strategy Mining from Deep Mathematics"
+    },
+    {
+      "cycle_id": "ef60a392",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cusick's Sum-of-Digits Explicit Bound\n\nDerived from the carry-reformulation cycle in `CusickSumOfDigits.lean`,\n`CusickCarryReformulation.lean`, and `CusickDensityWitness.lean`.",
+      "quality_score": 0.77328,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-24T23:02:00",
+      "title": "Cusick's Sum-of-Digits Explicit Bound"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "97399ed6",
-      "domain": "Applications",
-      "name": "every_address_once",
-      "quality": 0.71035
-    },
-    {
-      "cycle_id": "97399ed6",
-      "domain": "Applications",
-      "name": "catalog_complete",
-      "quality": 0.71035
-    },
-    {
-      "cycle_id": "2fe3f01b",
-      "domain": "Novelty",
-      "name": "This",
-      "quality": 0.86456
-    },
     {
       "cycle_id": "2fe3f01b",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "finMax_le_iff",
       "quality": 0.751851
+    },
+    {
+      "cycle_id": "ef60a392",
+      "domain": "Applications",
+      "name": "in",
+      "quality": 0.77328
+    },
+    {
+      "cycle_id": "ef60a392",
+      "domain": "Applications",
+      "name": "carries_eq_sub",
+      "quality": 0.77328
+    },
+    {
+      "cycle_id": "ef60a392",
+      "domain": "Applications",
+      "name": "s2_add_carries",
+      "quality": 0.77328
     }
   ],
-  "last_updated": "2026-06-24T22:34:09",
+  "last_updated": "2026-06-24T23:02:00",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "568da95c",
-        "quality": 0.4444041217391304,
-        "theorems": 13,
-        "title": "EML Quantum Activation Functions"
-      },
-      {
         "cycle_id": "97399ed6",
         "quality": 0.71035,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.7770400000000002,
         "theorems": 20,
         "title": "EML Universal Approximation"
+      },
+      {
+        "cycle_id": "ef60a392",
+        "quality": 0.77328,
+        "theorems": 15,
+        "title": "Cusick's Sum-of-Digits Explicit Bound"
       }
     ],
     "Bridges": [
