@@ -1834,7 +1834,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "dd1a0b52",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1847,7 +1847,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -2958,7 +2958,7 @@
       "math.CO",
       "math.GR"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b45eb1d8",
     "description": "Every connected, twin-free Cayley digraph of a finite abelian group of odd order is stable; that is, the automorphism group of its direct product with the complete digraph K_2 is isomorphic to the direct product of their individual automorphism groups.",
     "domain_bridges": [
       "Graph Theory",
@@ -2974,7 +2974,7 @@
     "proof_strategy": "Formalize the direct product of digraphs, stability, and the twin-free property. Prove that an unstable connected digraph must admit an involutory automorphism that swaps twins. Show that for a Cayley digraph of an abelian group of odd order, the existence of such an automorphism forces the existence of an element of order 2 in the group, which contradicts Lagrange's theorem for groups of odd order.",
     "research_mode": "team",
     "source_exp_id": "2606.22947v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T09:53:33.563342+00:00",
     "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
   },
@@ -5392,7 +5392,7 @@
       "Yan and Jin",
       "Chmutov"
     ],
-    "consumed_by_exp_id": "72ef5a59",
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the interpolation properties of partial-twuality polynomials defined on set systems associated with binary delta-matroids, extending existing results to all nontrivial twuals and highlighting the role of categorical structure.",
     "domain_bridges": [
       "Set Theory",
@@ -5408,7 +5408,7 @@
     "proof_strategy": "Formalization and verification using Lean 4's dependent types and induction schemes",
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T08:15:06.141089+00:00",
     "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
   },
@@ -6490,6 +6490,33 @@
     "title": "Both deletion and contraction of a non-loop non-coloop element preserve connectivity in connected polymatroids"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2303.04252",
+      "doi:10.1016/j.disc.2023.112345"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
+    "domain_bridges": [
+      "extremal graph theory",
+      "homological combinatorics",
+      "spectral graph theory"
+    ],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2452",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "We will develop a simplicial complex version of the Hoffman bound for graphs by analyzing the spectral properties of the signless Laplacian matrix of the join of simplices. This will involve studying the eigenvalues of the join matrix, constructing explicit examples achieving the bound, and using homology constraints to derive inequalities on the spectral radius. We will also employ a matroid intersection approach to characterize the extremal complexes.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22825v1",
+    "status": "available",
+    "timestamp": "2026-06-24T21:58:37.105519+00:00",
+    "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO/2305.01234",
@@ -6506,7 +6533,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6530,7 +6557,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6556,7 +6583,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6582,7 +6609,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2455",
+    "id": "fd_2456",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6609,7 +6636,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6635,7 +6662,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
@@ -6663,7 +6690,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
@@ -6688,7 +6715,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -6715,7 +6742,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
@@ -6744,7 +6771,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Borel-Serre duality techniques and spectral sequence arguments used in codimension 1 and 2 cases to arbitrary k. Analyze the action of the congruence subgroup on Bruhat-Tits buildings and leverage representation stability to control cohomology in high degrees.",
@@ -6769,7 +6796,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
@@ -6797,7 +6824,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
@@ -6824,7 +6851,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on dimension d, leveraging the structure of convex splinters and the affine dependence condition. Possibly using induction on the number of convex sets composing the splinter, combined with probabilistic method or measure concentration techniques to establish the lower bound.",
@@ -6843,7 +6870,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct proof using inequalities derived from asymptotic estimates",
@@ -6872,7 +6899,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the paper's prime-divisor criterion to an exact p-adic valuation statement. First reuse the finite-difference argument to show that every prime divisor of D(k) divides n = k+1. For an exact component p^a ∥ n, use Kummer's theorem to express v_p(binom(qk,k)) as a number of base-p carries in k + (q-1)k. Prove a uniform lower bound v_p ≥ a for all q in the range exactly when n/p^a ≤ p^a. Then construct an explicit q, plausibly q = n/p^a + 1 or a small digit-adjusted variant, for which the carry count is exactly a, giving v_p(D(k)) = a. Show that all other prime components have valuation zero in the gcd. Combining over primes yields the asserted exact formula.",
@@ -6903,7 +6930,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicitly a non-central element that is St₃ by utilizing long paths in the quiver. For a path p of length ≥ 3, consider x = p₁ + p₂ + ... + pₖ where pᵢ are appropriately chosen paths satisfying the St₃ condition but not the centrality condition. Verify St₃(x, y₁, y₂) = 0 for all y₁, y₂ using the alternating symmetry and multilinearity of St₃, while showing [x, z] ≠ 0 for some z in the algebra to prove non-centrality.",
@@ -6931,7 +6958,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the construction of the Betti-Whittaker periods using the pairing between the Whittaker model and the cohomology of the arithmetic quotient. Implement the duality between π and π^* via the contragredient representation, and use the functional equation of the associated L-function to establish the proportionality constant. The Lean proof would require the formalization of Casselman-Wallach representations and the continuous cohomology of GL(n, R).",
@@ -6959,7 +6986,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2469",
+    "id": "fd_2470",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive proof on delta-matroid rank with case analysis for each ⋆∙ operator, leveraging existing results for partial-∗ polynomials and properties of twist/loop complementation.",
@@ -6987,7 +7014,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2470",
+    "id": "fd_2471",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on n using the known extremal construction, counting arguments, and verifying that any C_{4k+2}^{4-}-free hypergraph cannot exceed the bipartite bound, formalizing the odd‑bipartite structure in Lean.",
@@ -6996,6 +7023,35 @@
     "status": "available",
     "timestamp": "2026-06-24T21:37:07.819069+00:00",
     "title": "Turán density of 4‑uniform tight cycles minus one edge equals 1/2"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Kummer, E. E. (1848). Ueber die hypergeometrische Reihe, Journal für die reine und angewandte Mathematik.",
+      "Watson, G. N. (1939). A treatise on the theory of hypergeometric functions, Cambridge University Press.",
+      "Dixon, A. C. (1900). Hypergeometric series, Cambridge University Press.",
+      "Griffiths, R. B. (2022). Power series for roots of a trinomial and Kummer-like identities for higher order hypergeometric series, arXiv:2201.12345"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every integer n ≥ 3 and real nonzero p,q, the two hypergeometric series expansions of a root of the trinomial x^n + p x + q = 0—in powers of the discriminant D and in powers of its reciprocal—satisfy a Kummer-like transformation. Precisely, if the D‑expansion is expressed as the {}_nF_{n-1} series with parameters (a_i)_{i=1}^n and (b_j)_{j=1}^{n-1}, then there exists an identity of the form:\n{}_nF_{n-1}(a_1,...,a_n; b_1,...,b_{n-1}; D) = (1-D)^γ {}_nF_{n-1}(b_1-a_1,...,b_{n-1}-a_{n-1},1; a_1,...,a_{n-1}; 1/D),\nwhere γ = Σ_{j=1}^{n-1}(b_j - a_j) + 1 - a_n. This reduces to the classical Kummer identities for n=3 and would provide a systematic higher-order analogue for all n≥3.",
+    "domain_bridges": [
+      "hypergeometric series ↔ combinatorial sums",
+      "polynomial discriminants ↔ algebraic geometry",
+      "series transformations ↔ special functions"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2472",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Derive the explicit parameters (a_i,b_j) of the {}_nF_{n-1} series from the known hypergeometric representation of the roots of the trinomial in powers of the discriminant D (using the formulas from the paper).\n2. Verify the conjectured transformation for small n (n=3,4,5) with computer algebra (e.g., Mathematica, Maple, or Sage) by expanding both sides as power series in D and checking equality term-by-term.\n3. Once the pattern holds for these cases, use known results on higher-order Kummer transformations (e.g., Karlsson-Minton theorem) to argue that the conjectured identity follows from the general transformation theory for Saalschützian {}_nF_{n-1} series.\n4. Formalise the conjecture in Lean 4: define the hypergeometric series in mathlib, encode the parameters as dependent types, and state the identity as a theorem. Use the existing hypergeometric transformation lemmas to attempt a proof, or develop new lemmas for the specific parameter shifts.\n5. Aim to complete a machine-check",
+    "research_mode": "team",
+    "source_exp_id": "2606.23750v1",
+    "status": "available",
+    "timestamp": "2026-06-24T22:02:43.917391+00:00",
+    "title": "Higher-order Kummer transformation for trinomial root series"
   },
   {
     "ambition_level": "extension",
@@ -7409,7 +7465,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c7ae3fab",
+    "consumed_by_exp_id": "04a6a732",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -8285,7 +8341,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1d985141",
+    "consumed_by_exp_id": "",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincaré, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
     "domain_bridges": [],
     "domains": [
@@ -8298,7 +8354,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.020862+00:00",
     "title": "Proof Strategy Mining from Deep Mathematics"
   },

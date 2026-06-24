@@ -1375,7 +1375,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "dd1a0b52",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1385,7 +1385,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -1981,7 +1981,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Discriminant of the Hermitian Bianchi lattice S_K"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b45eb1d8",
     "description": "Every connected, twin-free Cayley digraph of a finite abelian group of odd order is stable; that is, the automorphism group of its direct product with the complete digraph K_2 is isomorphic to the direct product of their individual automorphism groups.",
     "domains": [
       "Algebra"
@@ -1990,7 +1990,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22947v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T09:53:33.563342+00:00",
     "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
   },
@@ -3236,7 +3236,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "GeneralizedPeriod Relation for Betti-Whittaker Periods and Contragredient Representations of GL(n)"
   },
   {
-    "consumed_by_exp_id": "72ef5a59",
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the interpolation properties of partial-twuality polynomials defined on set systems associated with binary delta-matroids, extending existing results to all nontrivial twuals and highlighting the role of categorical structure.",
     "domains": [
       "Algebra"
@@ -3245,7 +3245,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T08:15:06.141089+00:00",
     "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
   },
@@ -3835,12 +3835,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2452",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22825v1",
+    "status": "available",
+    "timestamp": "2026-06-24T21:58:37.105519+00:00",
+    "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3854,7 +3869,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3869,7 +3884,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3883,7 +3898,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2455",
+    "id": "fd_2456",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3898,7 +3913,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3912,7 +3927,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3926,7 +3941,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -3940,7 +3955,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -3954,7 +3969,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -3969,7 +3984,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3983,7 +3998,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -3997,7 +4012,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -4012,7 +4027,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
@@ -4026,7 +4041,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -4040,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -4055,7 +4070,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23024v1",
@@ -4070,7 +4085,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -4084,7 +4099,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2469",
+    "id": "fd_2470",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
@@ -4098,13 +4113,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2470",
+    "id": "fd_2471",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22828v1",
     "status": "available",
     "timestamp": "2026-06-24T21:37:07.819069+00:00",
     "title": "Tur\u00e1n density of 4\u2011uniform tight cycles minus one edge equals 1/2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every integer n \u2265 3 and real nonzero p,q, the two hypergeometric series expansions of a root of the trinomial x^n + p x + q = 0\u2014in powers of the discriminant D and in powers of its reciprocal\u2014satisfy a Kummer-like transformation. Precisely, if the D\u2011expansion is expressed as the {}_nF_{n-1} series with parameters (a_i)_{i=1}^n and (b_j)_{j=1}^{n-1}, then there exists an identity of the form:\n{}_nF_{n-1}(a_1,...,a_n; b_1,...,b_{n-1}; D) = (1-D)^\u03b3 {}_nF_{n-1}(b_1-a_1,...,b_{n-1}-a_{n-1},1; a_1,...,a_{n-1}; 1/D),\nwhere \u03b3 = \u03a3_{j=1}^{n-1}(b_j - a_j) + 1 - a_n. This reduces to the classical Kummer identities for n=3 and would provide a systematic higher-order analogue for all n\u22653.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2472",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23750v1",
+    "status": "available",
+    "timestamp": "2026-06-24T22:02:43.917391+00:00",
+    "title": "Higher-order Kummer transformation for trinomial root series"
   },
   {
     "consumed_by_exp_id": "",
@@ -4411,7 +4441,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "c7ae3fab",
+    "consumed_by_exp_id": "04a6a732",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -5067,7 +5097,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "1d985141",
+    "consumed_by_exp_id": "",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
     "domains": [
       "Logic",
@@ -5077,7 +5107,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.020862+00:00",
     "title": "Proof Strategy Mining from Deep Mathematics"
   },
