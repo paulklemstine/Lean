@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "449dda28",
     "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
     "pkg_num": 35,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.67296,
     "title": "EML Transseries: A Verified Base Layer for Asymptotic Expansions Beyond Power Series"
   },
   {
@@ -1024,8 +1024,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.67296,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Transseries: A Verified Base Layer for Asymptotic Expansions Beyond Power Series"
     }

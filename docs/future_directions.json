@@ -12565,7 +12565,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "09edd445",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12591,7 +12591,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:28.156517+00:00",
       "title": "Learning with Errors: Hardness Reductions"
@@ -14242,7 +14242,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "935bc3f6",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14268,7 +14268,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:44.957997+00:00",
       "title": "EML Universal Approximation"
@@ -35408,7 +35408,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "5c61161b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35437,7 +35437,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23121v1",
       "source_path": "http://arxiv.org/abs/2606.23121v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T08:05:12.495306+00:00",
       "title": "Wall-Menger Theorem"
@@ -39121,7 +39121,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c904c856",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -41333,7 +41333,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "18853638",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41363,10 +41363,51 @@
       "research_mode": "team",
       "source_exp_id": "2606.23824v1",
       "source_path": "http://arxiv.org/abs/2606.23824v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T17:05:28.615107+00:00",
       "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "The Brocard Problem: Structural Invariants",
+        "Abstract Analysis"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The conjecture asserts no primes exceeding 7 satisfy $n! + 1 = m^2$ for $n < p$. This is falsifiable via computational checks.",
+      "domain_bridges": "Lean 4 compatibility",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2444",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "No such $n$ exists for primes $p > 7",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Verification using computational verification of primes >7",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23485v1",
+      "source_path": "http://arxiv.org/abs/2606.23485v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T17:29:38.955405+00:00",
+      "title": "The Non-Existence of New Factorial Square Solutions"
     },
     {
       "ambition_level": "extension",
@@ -41394,7 +41435,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2444",
+      "id": "fd_2445",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41437,7 +41478,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2445",
+      "id": "fd_2446",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41482,7 +41523,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2446",
+      "id": "fd_2447",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41527,7 +41568,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2447",
+      "id": "fd_2448",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41573,7 +41614,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2448",
+      "id": "fd_2449",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -41618,7 +41659,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2449",
+      "id": "fd_2450",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -41665,7 +41706,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2450",
+      "id": "fd_2451",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -41709,7 +41750,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2451",
+      "id": "fd_2452",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -41755,7 +41796,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2452",
+      "id": "fd_2453",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
@@ -41803,7 +41844,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2453",
+      "id": "fd_2454",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_cohomology_vanishing (p : Nat.primes) (k : ℕ) (n : ℕ) : n ≥ (3*k + 1)*p + (3*k + 2) → cohomology_group (Γ₀ₙ(p)) (binom(n, 2) - k) ℚ = 0",
@@ -41847,7 +41888,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2454",
+      "id": "fd_2455",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem S_one_phi_lower_bound (x : ℕ) (hx : x ≥ 2) : (S_one_phi x : ℝ) ≥ x * Real.exp ( - (1 / 2 + eps x) * Real.sqrt (Real.log x * Real.log (Real.log x)) ) := by sorry",
@@ -41866,6 +41907,53 @@
       "thread_id": "",
       "timestamp": "2026-06-24T17:06:47.221428+00:00",
       "title": "Optimality of the exponent in the upper bound for S₁^φ(x)"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Besineau1972",
+        "DrmotaKauersSpiegelhofer2016",
+        "SpiegelhoferWallner2019",
+        "SobolewskiSpiegelhofer2026"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Prove that for every integer \\(t\\ge 1\\), the density of integers \\(n\\) where \\(s_2(n+t) \\ge s_2(n)\\) exceeds \\(1/2\\), with a lower bound of \\(1/2 + 2^{-2s_2(t)-1}\\), by analyzing carry propagation as a finite random walk and utilizing first-exit medians in binary digit deconvolution.",
+      "domain_bridges": [
+        "random-walk-theory",
+        "binary-carry-chains",
+        "density-measures"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "id": "fd_2456",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem sum_of_digits_bias (t : nat) (h : t > 0) : \\lim_{N\\rightarrow\\infty} ((\\text{set.mem_imprediate} (n\\mapsto s_2(n + t) \\ge s_2(n)) : N)) `N `real_imprediate (1/2 + 2^{-2s_2(t)-1})",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23398v1",
+      "source_path": "http://arxiv.org/abs/2606.23398v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T17:30:07.652508+00:00",
+      "title": "Strict Positivity of the Binary Sum-of-Digits Bias for All Integers"
     },
     {
       "ambition_level": "extension",
@@ -46671,7 +46759,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3db423d6",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46696,7 +46784,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432603+00:00",
       "title": "Perfect Numbers: Structure of Even Perfects"
@@ -46822,11 +46910,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "71ab9721",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46838,7 +46926,7 @@
         "NumberTheory"
       ],
       "id": "seed_335",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T17:30:12.372024+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46852,7 +46940,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432611+00:00",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
@@ -47601,11 +47689,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "cd105090",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47617,7 +47705,7 @@
         "Probability"
       ],
       "id": "seed_355",
-      "last_attempt_time": "2026-06-24T17:06:52.030728+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47631,7 +47719,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432742+00:00",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
@@ -47644,7 +47732,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "5a434903",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47669,7 +47757,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432745+00:00",
       "title": "Extremal Graph Theory: Turán and Szemerédi"

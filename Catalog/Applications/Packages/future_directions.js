@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "935bc3f6",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -507,7 +507,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "3db423d6",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -516,7 +516,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -688,7 +688,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "5a434903",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -697,7 +697,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -1375,7 +1375,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "cd105090",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1385,7 +1385,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -1922,7 +1922,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Helly's Theorem for Convex Splinters"
   },
   {
-    "consumed_by_exp_id": "5c61161b",
+    "consumed_by_exp_id": "",
     "description": "For all positive integers s' and t', there exist integers t and f such that for any graph G, vertex set A, and wall W of size at least t, either there exists a vertex set X of size at most f separating A from the branch vertices of W, or there exists a subwall W' of W of size at least t' and s' vertex-disjoint A-W'-paths ending in distinct nails of W'.",
     "domains": [
       "Bridges"
@@ -1931,7 +1931,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T08:05:12.495306+00:00",
     "title": "Wall-Menger Theorem"
   },
@@ -3702,7 +3702,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic formula for the regularised Wallis hierarchy"
   },
   {
-    "consumed_by_exp_id": "18853638",
+    "consumed_by_exp_id": "",
     "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies \u03c7'_s(G) \u2264 \u0394_A \u0394_B, where \u0394_A and \u0394_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 \u0394_A \u0394_B for sufficiently large products.",
     "domains": [
       "Pythagorean",
@@ -3712,9 +3712,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T17:05:28.615107+00:00",
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts no primes exceeding 7 satisfy $n! + 1 = m^2$ for $n < p$. This is falsifiable via computational checks.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2444",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23485v1",
+    "status": "available",
+    "timestamp": "2026-06-24T17:29:38.955405+00:00",
+    "title": "The Non-Existence of New Factorial Square Solutions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3723,7 +3737,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2444",
+    "id": "fd_2445",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3737,7 +3751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2445",
+    "id": "fd_2446",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3752,7 +3766,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2446",
+    "id": "fd_2447",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3766,7 +3780,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2447",
+    "id": "fd_2448",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3781,7 +3795,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2448",
+    "id": "fd_2449",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3795,7 +3809,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2449",
+    "id": "fd_2450",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3809,7 +3823,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2450",
+    "id": "fd_2451",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -3823,7 +3837,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2451",
+    "id": "fd_2452",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -3837,7 +3851,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -3852,7 +3866,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3866,13 +3880,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
     "status": "available",
     "timestamp": "2026-06-24T17:06:47.221428+00:00",
     "title": "Optimality of the exponent in the upper bound for S\u2081^\u03c6(x)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every integer \\(t\\ge 1\\), the density of integers \\(n\\) where \\(s_2(n+t) \\ge s_2(n)\\) exceeds \\(1/2\\), with a lower bound of \\(1/2 + 2^{-2s_2(t)-1}\\), by analyzing carry propagation as a finite random walk and utilizing first-exit medians in binary digit deconvolution.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2456",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-24T17:30:07.652508+00:00",
+    "title": "Strict Positivity of the Binary Sum-of-Digits Bias for All Integers"
   },
   {
     "consumed_by_exp_id": "",
@@ -3946,7 +3974,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71ab9721",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -3956,7 +3984,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -4090,7 +4118,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "09edd445",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -4100,7 +4128,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -4179,7 +4207,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "c904c856",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4189,7 +4217,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },

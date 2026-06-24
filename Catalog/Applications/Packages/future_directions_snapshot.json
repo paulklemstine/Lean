@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "935bc3f6",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -676,7 +676,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3db423d6",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -688,7 +688,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -917,7 +917,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5a434903",
+    "consumed_by_exp_id": "",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -929,7 +929,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
@@ -1834,7 +1834,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cd105090",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1847,7 +1847,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -2847,7 +2847,7 @@
       "Walls in Graphs",
       "Graph Minors"
     ],
-    "consumed_by_exp_id": "5c61161b",
+    "consumed_by_exp_id": "",
     "description": "For all positive integers s' and t', there exist integers t and f such that for any graph G, vertex set A, and wall W of size at least t, either there exists a vertex set X of size at most f separating A from the branch vertices of W, or there exists a subwall W' of W of size at least t' and s' vertex-disjoint A-W'-paths ending in distinct nails of W'.",
     "domain_bridges": [
       "Structural Graph Theory",
@@ -2863,7 +2863,7 @@
     "proof_strategy": "Formalize walls, subwalls, branch vertices, nails, and vertex separators in Lean. Establish Menger's Theorem as a baseline. Construct the subwall W' by analyzing the connectivity from A to the branch vertices of W, and apply the paper's arguments to find the disjoint paths ending in distinct nails.",
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T08:05:12.495306+00:00",
     "title": "Wall-Menger Theorem"
   },
@@ -6265,7 +6265,7 @@
       "Brualdi and Quinn Massey (conjectured)",
       "arXiv:2304.12345 (current paper)"
     ],
-    "consumed_by_exp_id": "18853638",
+    "consumed_by_exp_id": "",
     "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies χ'_s(G) ≤ Δ_A Δ_B, where Δ_A and Δ_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 Δ_A Δ_B for sufficiently large products.",
     "domain_bridges": [
       "Graph Theory",
@@ -6282,9 +6282,31 @@
     "proof_strategy": "The conjecture can be approached via probabilistic methods combined with sparse neighborhood analysis, similar to techniques used in prior improvements of the Erdős-Nesetrýl conjecture. Key steps include constructing an induced matching decomposition that respects the product bound Δ_A Δ_B and leveraging the bipartite structure to minimize color conflicts.",
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T17:05:28.615107+00:00",
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "The Brocard Problem: Structural Invariants",
+      "Abstract Analysis"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts no primes exceeding 7 satisfy $n! + 1 = m^2$ for $n < p$. This is falsifiable via computational checks.",
+    "domain_bridges": "Lean 4 compatibility",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2444",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Verification using computational verification of primes >7",
+    "research_mode": "team",
+    "source_exp_id": "2606.23485v1",
+    "status": "available",
+    "timestamp": "2026-06-24T17:29:38.955405+00:00",
+    "title": "The Non-Existence of New Factorial Square Solutions"
   },
   {
     "ambition_level": "extension",
@@ -6303,7 +6325,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2444",
+    "id": "fd_2445",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6327,7 +6349,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2445",
+    "id": "fd_2446",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6353,7 +6375,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2446",
+    "id": "fd_2447",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6379,7 +6401,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2447",
+    "id": "fd_2448",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6406,7 +6428,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2448",
+    "id": "fd_2449",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6432,7 +6454,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2449",
+    "id": "fd_2450",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
@@ -6460,7 +6482,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2450",
+    "id": "fd_2451",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
@@ -6485,7 +6507,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2451",
+    "id": "fd_2452",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -6512,7 +6534,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
@@ -6541,7 +6563,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Borel-Serre duality techniques and spectral sequence arguments used in codimension 1 and 2 cases to arbitrary k. Analyze the action of the congruence subgroup on Bruhat-Tits buildings and leverage representation stability to control cohomology in high degrees.",
@@ -6566,7 +6588,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
@@ -6575,6 +6597,34 @@
     "status": "available",
     "timestamp": "2026-06-24T17:06:47.221428+00:00",
     "title": "Optimality of the exponent in the upper bound for S₁^φ(x)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Besineau1972",
+      "DrmotaKauersSpiegelhofer2016",
+      "SpiegelhoferWallner2019",
+      "SobolewskiSpiegelhofer2026"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every integer \\(t\\ge 1\\), the density of integers \\(n\\) where \\(s_2(n+t) \\ge s_2(n)\\) exceeds \\(1/2\\), with a lower bound of \\(1/2 + 2^{-2s_2(t)-1}\\), by analyzing carry propagation as a finite random walk and utilizing first-exit medians in binary digit deconvolution.",
+    "domain_bridges": [
+      "random-walk-theory",
+      "binary-carry-chains",
+      "density-measures"
+    ],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2456",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-24T17:30:07.652508+00:00",
+    "title": "Strict Positivity of the Binary Sum-of-Digits Bias for All Integers"
   },
   {
     "ambition_level": "extension",
@@ -6675,7 +6725,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71ab9721",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -6688,7 +6738,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -6869,7 +6919,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "09edd445",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domain_bridges": [],
     "domains": [
@@ -6882,7 +6932,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -6988,7 +7038,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c904c856",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -7001,7 +7051,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },

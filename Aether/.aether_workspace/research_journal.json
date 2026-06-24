@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "77489d34",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Chip-Firing, Divisors, and Graph Riemann–Roch\n\nThese conjectures are derived from the verified results in\n`Tropical/ChipFiring/{Defs,Theorems,CompleteGraph,Rank}.lean`. Each is f",
-      "quality_score": 0.5406000000000001,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-17T08:43:16",
-      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-    },
-    {
       "cycle_id": "8c9d3809",
       "domain": "Logic",
       "key_insight": "# Future Directions — Viral Information Topology\n\nThis research cycle (cold start, Logic domain) formalized memetic/viral spread as\na forward-chaining **consequence operator** and established its orde",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-24T17:02:37",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+    },
+    {
+      "cycle_id": "449dda28",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese build on the verified base layer in `MonomialOrder.lean` (monomial signs, monomial\narithmetic, square roots of positive square-compatible monomials, and infinitesimals).\n\n##",
+      "quality_score": 0.67296,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-24T17:28:48",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7276800000000001
     }
   ],
-  "last_updated": "2026-06-24T17:02:37",
+  "last_updated": "2026-06-24T17:28:48",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "808095a3",
-        "quality": 0.453335,
-        "theorems": 9,
-        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-      },
-      {
         "cycle_id": "0d8fceb6",
         "quality": 0.6901600000000001,
         "theorems": 104,
@@ -3140,6 +3134,12 @@
         "cycle_id": "bfb13379",
         "quality": 0.46096,
         "theorems": 16,
+        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+      },
+      {
+        "cycle_id": "449dda28",
+        "quality": 0.67296,
+        "theorems": 10,
         "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
       }
     ],
