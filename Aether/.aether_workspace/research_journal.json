@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5a4a0b2c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Boltzmann Bridge X: The Path Space of Filtrations\n\n## Synthesis\n\nBridge IX (`InterleavingGeodesic.lean`) gave the persistence-stability arc its first\nexplicit *path of filtration",
-      "quality_score": 0.7868,
-      "sorry_count": 2,
-      "theorem_count": 30,
-      "timestamp": "2026-06-14T19:09:33",
-      "title": "Deepening: `Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes the"
-    },
-    {
       "cycle_id": "36dba103",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Boltzmann Bridge X: Primitive Divisors as a Strong-Divisibility Phenomenon\n\n## Synthesis\n\nThe Carmichael arc of this catalog set out to prove that every Fibonacci number `F(n)`\nw",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-06-24T18:22:31",
       "title": "EML Universal Approximation"
+    },
+    {
+      "cycle_id": "a1973066",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Brocard's Problem (Probability domain)\n\nThis cycle established: the three Brown numbers `{4,5,7}`, an exhaustive\n`native_decide` verification that no others occur below `1000`, t",
+      "quality_score": 0.7684399999999999,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-24T19:02:30",
+      "title": "Brocard's Problem: n! + 1 = m²"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c2929b61",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Retrocausal Mathematics: Where Effects Precede Causes\n\nDerived from this cycle's verified results in\n`Catalog/Logic/RetrocausalHeyting.lean` and `Catalog/Bridges/RetrocausalCPTBr",
-      "quality_score": 0.5083935828877005,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-17T10:23:58",
-      "title": "Retrocausal Mathematics: Where Effects Precede Causes"
-    },
     {
       "cycle_id": "95c512f5",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-24T18:58:02",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+    },
+    {
+      "cycle_id": "a1973066",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Brocard's Problem (Probability domain)\n\nThis cycle established: the three Brown numbers `{4,5,7}`, an exhaustive\n`native_decide` verification that no others occur below `1000`, t",
+      "quality_score": 0.7684399999999999,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-24T19:02:30",
+      "title": "Brocard's Problem: n! + 1 = m²"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "443cc80d",
-      "domain": "Geometry",
-      "name": "tropMatPow_succ",
-      "quality": 0.7460199999999999
-    },
-    {
-      "cycle_id": "443cc80d",
-      "domain": "Geometry",
-      "name": "tropMatVecMul_tropMatMul",
-      "quality": 0.7460199999999999
-    },
-    {
-      "cycle_id": "acb790ee",
-      "domain": "Physics",
-      "name": "fusionCount_zero",
-      "quality": 0.8075699999999999
-    },
     {
       "cycle_id": "acb790ee",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "separatesPoints_adjoin_of_separatesPoints",
       "quality": 0.7770400000000002
+    },
+    {
+      "cycle_id": "a1973066",
+      "domain": "Probability",
+      "name": "brown_four",
+      "quality": 0.7684399999999999
+    },
+    {
+      "cycle_id": "a1973066",
+      "domain": "Probability",
+      "name": "brown_five",
+      "quality": 0.7684399999999999
+    },
+    {
+      "cycle_id": "a1973066",
+      "domain": "Probability",
+      "name": "brown_seven",
+      "quality": 0.7684399999999999
     }
   ],
-  "last_updated": "2026-06-24T18:58:02",
+  "last_updated": "2026-06-24T19:02:30",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "46951c2e",
-        "quality": 0.36179759999999994,
-        "theorems": 6,
-        "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
-      },
-      {
         "cycle_id": "6495e602",
         "quality": 0.8166,
         "theorems": 139,
@@ -3823,6 +3817,12 @@
         "quality": 0.6913,
         "theorems": 6,
         "title": "Statistical Mechanics: Ising Model Phase Transition"
+      },
+      {
+        "cycle_id": "a1973066",
+        "quality": 0.7684399999999999,
+        "theorems": 13,
+        "title": "Brocard's Problem: n! + 1 = m²"
       }
     ],
     "Pythagorean": [

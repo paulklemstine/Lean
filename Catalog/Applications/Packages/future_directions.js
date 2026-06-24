@@ -3123,7 +3123,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Unmixed Reduced Tropical Bernstein Criterion"
   },
   {
-    "consumed_by_exp_id": "d3c0af99",
+    "consumed_by_exp_id": "",
     "description": "Every \u2286-minimal minor-closed graph class with limiting density greater than some \u03b4 < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class \ud835\udca2, there exists a graph H such that \ud835\udca2 = excl({H}).",
     "domains": [
       "Bridges"
@@ -3132,7 +3132,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24326v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T02:41:49.567859+00:00",
     "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
   },
@@ -3250,7 +3250,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
   },
   {
-    "consumed_by_exp_id": "50adb4ee",
+    "consumed_by_exp_id": "",
     "description": "If a pure r-dimensional complex K achieves the spectral radius bound q_{r-1}(K) = tn - (t-1)(r+1), then all links of (r-t)-dimensional faces must have trivial reduced homology H_t(lk_K(\u03c3), R) = 0.",
     "domains": [
       "Geometry",
@@ -3260,7 +3260,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T08:40:38.583867+00:00",
     "title": "Necessity of Homological Condition for Spectral Radius Bound"
   },
@@ -3702,7 +3702,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic formula for the regularised Wallis hierarchy"
   },
   {
-    "consumed_by_exp_id": "18853638",
+    "consumed_by_exp_id": "",
     "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies \u03c7'_s(G) \u2264 \u0394_A \u0394_B, where \u0394_A and \u0394_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 \u0394_A \u0394_B for sufficiently large products.",
     "domains": [
       "Pythagorean",
@@ -3712,7 +3712,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T17:05:28.615107+00:00",
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
   },
@@ -3762,12 +3762,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every length n, among all binary 2-binomial equivalence classes of words of length n, the largest class has exactly floor(n/2) occurrences of one letter and inversion statistic floor(floor(n/2) * ceil(n/2) / 2). Equivalently, among all coefficients of all Gaussian binomial coefficients [n choose m]_q, the global maximum is attained at m = floor(n/2) and at the middle degree.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2447",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23426v1",
+    "status": "available",
+    "timestamp": "2026-06-24T19:03:49.721168+00:00",
+    "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2447",
+    "id": "fd_2448",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3781,7 +3795,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2448",
+    "id": "fd_2449",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3796,7 +3810,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2449",
+    "id": "fd_2450",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3810,7 +3824,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2450",
+    "id": "fd_2451",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3825,7 +3839,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2451",
+    "id": "fd_2452",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3839,7 +3853,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3853,7 +3867,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -3867,7 +3881,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -3881,7 +3895,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2455",
+    "id": "fd_2456",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -3896,7 +3910,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3910,7 +3924,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -3924,7 +3938,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -3939,7 +3953,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
@@ -3953,13 +3967,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
     "status": "available",
     "timestamp": "2026-06-24T18:25:32.579492+00:00",
     "title": "Coefficient Decay Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let k \u2265 2, n = k + 1, and D(k) = gcd_{2 \u2264 q \u2264 k+1} binom(qk,k). If P is the largest exact prime-power component p^a exactly dividing n, then D(k) is not merely nontrivial exactly when n/P \u2264 P; conjecturally its exact value is P in that case and 1 otherwise. Equivalently, D(k) = P if the largest exact prime-power component of k+1 dominates its complementary factor, and D(k) = 1 otherwise.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2462",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22997v1",
+    "status": "available",
+    "timestamp": "2026-06-24T19:09:47.341905+00:00",
+    "title": "Exact Value of the Binomial GCD in OEIS A080170"
   },
   {
     "consumed_by_exp_id": "",
@@ -4149,21 +4177,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Euler\u2013Mascheroni constant `\u03b3`\n\nDerived from this cycle's findings: a positive-term series\n`\u03b3 = \u2211_k (1/(k+1) \u2212 log((k+2)/(k+1)))`, its term-wise integral form\n`\u03b3 = \u2211_k \u222b_{k+1}^{k+2}(1/(k+1) \u2212 1/x) dx`, strict monotonicity of the lower\napproximants `eulerMascheroniSeq`, and the identification of the zeroth Stieltjes\nconstant `stieltjesSeq 0 \u2192 \u03b3`.\n\n## Conjecture 1 \u2014 Quadratic convergence rate of the term\n\n**Statement.** `gterm k \u2264 1/(2(k+1)^2)` for all `k`, hence the tail\n`\u2211_{k\u2265n} gterm k \u2264 1/(2n)`, giving an explicit effective error bound for the\nlower approximant.\n\n*The key insight is* that `gterm k = 1/(k+1) \u2212 log(1 + 1/(k+1))` and the\nquadratic Taylor remainder of `log(1+x)` bounds it by `x^2/2`, turning a\nqualitative `summable` into a quantitative `O(1/k^2)` term and `O(1/n)` tail.\n\n*Why now?* We already have `gterm_pos` and `summable_gterm`; the missing\ningredient is the single inequality `x \u2212 log(1+x) \u2264 x^2/2`, which Mathlib's\nlog-convexity API (`Real.add_one_le_exp`, `Real.log_le_sub_one_of_pos`) makes\nimmediately reachable.\n\n## Conjecture 2 \u2014 Averaged (accelerated) approximant\n\n**Statement.** The midpoint `m_n = (eulerMascheroniSeq n + eulerMascheroniSeq' n)/2`\nsatisfies `|m_n \u2212 \u03b3| \u2264 C/n^2` for an explicit `C`, i.e. averaging the lower and\nupper Mathlib approximants accelerates `1/n` convergence to `1/n^2`.\n\n*The key insight is* that the two one-sided errors are `~ \u00b11/(2n)` to leading\norder, so their average cancels the `1/n` term and exposes the `1/n^2` curvature\nof `log(1+1/n)`.\n\n*Why now?* The exact trap width `log(1+1/n)` is already proved\n(`eulerMascheroni_trap_width_eq` in the catalog); only a second-order expansion\nof `log(1+1/n)` separates us from a provably faster approximation.\n\n## Conjecture 3 \u2014 Stieltjes hierarchy is well-defined and `\u03b3_0 = \u03b3`\n\n**Statement.** For every `m`, `stieltjesSeq m` converges; the limit `\u03b3_m` is the\n`m`-th Stieltjes constant, and `\u03b3_0 = eulerMascheroniConstant` (proved here).\n\n*The key insight is* that `\u2211_{k\u2264n}(log k)^m/k \u2212 (log n)^{m+1}/(m+1)` is a\ndiscrete-vs-integral comparison whose increments telescope against\n`\u222b (log x)^m/x dx = (log x)^{m+1}/(m+1)`, exactly the `m = 0` mechanism we used.\n\n*Why now?* The `m = 0` case is fully formalized (`tendsto_stieltjesSeq_zero`);\nthe general case reduces to Euler\u2013Maclaurin / summation-by-parts bounds on\n`(log x)^m/x`, for which Mathlib's `Filter.Tendsto` and monotone-convergence\ntoolkit already suffice.\n\n## Conjecture 4 \u2014 Integral representation over `[1,\u221e)`\n\n**Statement.** `\u03b3 = \u222b_1^\u221e (1/\u230ax\u230b \u2212 1/x) dx`, the continuous form of the proved\ndiscrete sum `\u03b3 = \u2211_k \u222b_{k+1}^{k+2}(1/(k+1) \u2212 1/x) dx`.\n\n*The key insight is* that on `[k+1, k+2)` we have `\u230ax\u230b = k+1`, so the global\nintegral splits as the very sum `hasSum_integral_repr` already established;\nonly an `integrableOn`/`tendsto` interchange remains.\n\n*Why now?* The per-window integral identity `gterm_eq_integral` is proved; the\nstep to a single improper integral is a standard `MeasureTheory.integral_iUnion`\n/ `intervalIntegral` limit argument.\n\n## Conjecture 5 \u2014 No purely rational Diophantine acceleration\n\n**Statement.** Any approximation of `\u03b3` built solely from `H_n` and elementary\n`log` corrections has error `\u03a9(1/n)`; no such construction yields the `o(1/q)`\nrational forms the catalog irrationality engine requires.\n\n*The key insight is* that the trap width is exactly `log(1+1/n) = \u0398(1/n)`, a\nhard floor for `log`-corrected harmonic approximants, so irrationality cannot\nfollow from this family \u2014 a genuinely *different* approximant is needed.\n\n*Why now?* The exact width and the engine characterization\n(`irrational_eulerMascheroniConstant_iff`) are both in the catalog; formalizing\nthe `\u0398(1/n)` lower bound would turn folklore intuition into a theorem delimiting\nthe whole approach.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2461",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "71ab9721",
-    "status": "available",
-    "timestamp": "2026-06-24T18:56:30.873315+00:00",
-    "title": "Derived from this cycle's findings: a positive-term series"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4175,21 +4188,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For any finite-dimensional integrable Hamiltonian system whose equations of motion are polynomial vector fields of degree at most d, there exists a neural ordinary differential equation (neural ODE) with width O(poly(n,d)) that can learn a matrix-valued function L(x) satisfying the zero\u2011curvature condition [\u2202_t L \u2212 [M, L]] = 0 for some M, thus representing a Lax pair. Test: Generate synthetic trajectories from known integrable systems (e.g., Toda lattice, Calogero\u2011Moser), train neural ODEs to predict dynamics, extract learned L and M via sparse regression, and verify the Lax equation numerically to a tolerance \u03b5. Impact: Provides a data\u2011driven pathway to discover Lax representations and potentially new integrable models, bridging machine learning, differential geometry, and mathematical physics.",
-    "domains": [
-      "Physics",
-      "Novelty"
-    ],
-    "id": "fd_2462",
-    "priority_score": 0.7157272727272728,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-24T18:57:52.847007+00:00",
-    "title": "Neural ODE Representation of Lax Pairs for Polynomial Integrable Systems"
   },
   {
     "consumed_by_exp_id": "",
@@ -4294,6 +4292,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
+    "domains": [
+      "Algebra",
+      "Novelty"
+    ],
+    "id": "fd_2395",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-23T23:12:45.568532+00:00",
+    "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
   {
     "consumed_by_exp_id": "",
@@ -4502,7 +4515,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ddef5de",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -4512,7 +4525,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },

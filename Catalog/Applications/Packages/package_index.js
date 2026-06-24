@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a1973066",
     "filename": "brocards_problem_n__1__m.json",
     "pkg_num": 37,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7684399999999999,
     "title": "Brocard's Problem n! + 1 = m^2: A Borel-Cantelli Finiteness Theorem"
   },
   {
@@ -1082,8 +1082,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "brocards_problem_n__1__m",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7684399999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Brocard's Problem n! + 1 = m^2: A Borel-Cantelli Finiteness Theorem"
     }
