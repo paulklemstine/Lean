@@ -39439,13 +39439,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Diestel2010Book"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d3c0af99",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39460,7 +39460,7 @@
         "Bridges"
       ],
       "id": "fd_2402",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T18:25:35.463237+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimal_class_single_forbidden (δ : ℝ) (hδ : δ < 3 / 2) : ∃ (𝒢 : GraphClass) (H : Graph), 𝒢 = excl {H} ∧ minimal_strictly_above_density δ 𝒢",
       "lineage_refs": [],
@@ -39474,7 +39474,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24326v1",
       "source_path": "http://arxiv.org/abs/2606.24326v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-24T02:41:49.567859+00:00",
       "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
@@ -41333,7 +41333,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "18853638",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41363,7 +41363,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23824v1",
       "source_path": "http://arxiv.org/abs/2606.23824v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T17:05:28.615107+00:00",
       "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
@@ -41462,6 +41462,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Filmus and Ihringer (2019)",
+        "Bruen and Drudge (1999)",
+        "Gavrilyuk and Mogilnykh (2014)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Prove that for any prime power q, the Grassmann scheme J_q(n,k) is degree-one trivial (DOT) for all n >= N(q,k), where N(q,k) is a constant depending on q and k. Specifically, for q=2, N(2,k)=4 for min(k,n-k) >= 2, and for q > 2, the threshold N(q,k) must be determined to exclude sporadic counterexamples like the Bruen-Drudge example in J_3(4,2).",
+      "domain_bridges": [
+        "Finite Geometry",
+        "Representation Theory of GL_n(q)",
+        "Boolean Function Analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2446",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem grassmann_dot_threshold (q : ℕ) [Fact (PrimePower q)] (k : ℕ) (n : ℕ) (h_min : 2 ≤ min k (n - k)) (h_large : n ≥ N_threshold q k) : \n  ∀ (f : Grassmannian q n k → ℝ), (is_boolean f ∧ is_degree_one f) → is_trivial f",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Define the Grassmannian as a set of subspaces using Lean's LinearAlgebra library. Formalize the space of functions f: J_q(n,k) -> R. Define 'degree one' as functions in the span of indicator functions of points. Implement the 'trivial' list of functions. Use an induction on n or a stability result from representation theory to show that as n increases, the gap between the eigenvalues of the Grassmann graph forces any Boolean degree-one function to be a linear combination of trivial indicators.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23465v1",
+      "source_path": "http://arxiv.org/abs/2606.23465v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T18:25:05.562991+00:00",
+      "title": "Characterization of Degree-One Triviality for Grassmannians over Finite Fields"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
         "math.CO/2603.01456"
@@ -41482,7 +41529,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2446",
+      "id": "fd_2447",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41525,7 +41572,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2447",
+      "id": "fd_2448",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41570,7 +41617,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2448",
+      "id": "fd_2449",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41615,7 +41662,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2449",
+      "id": "fd_2450",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41661,7 +41708,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2450",
+      "id": "fd_2451",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -41706,7 +41753,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2451",
+      "id": "fd_2452",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -41753,7 +41800,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2452",
+      "id": "fd_2453",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -41797,7 +41844,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2453",
+      "id": "fd_2454",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -41843,7 +41890,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2454",
+      "id": "fd_2455",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
@@ -41891,7 +41938,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2455",
+      "id": "fd_2456",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_cohomology_vanishing (p : Nat.primes) (k : ℕ) (n : ℕ) : n ≥ (3*k + 1)*p + (3*k + 2) → cohomology_group (Γ₀ₙ(p)) (binom(n, 2) - k) ℚ = 0",
@@ -41935,7 +41982,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2456",
+      "id": "fd_2457",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem S_one_phi_lower_bound (x : ℕ) (hx : x ≥ 2) : (S_one_phi x : ℝ) ≥ x * Real.exp ( - (1 / 2 + eps x) * Real.sqrt (Real.log x * Real.log (Real.log x)) ) := by sorry",
@@ -41982,7 +42029,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2457",
+      "id": "fd_2458",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sum_of_digits_bias (t : nat) (h : t > 0) : \\lim_{N\\rightarrow\\infty} ((\\text{set.mem_imprediate} (n\\mapsto s_2(n + t) \\ge s_2(n)) : N)) `N `real_imprediate (1/2 + 2^{-2s_2(t)-1})",
@@ -42028,7 +42075,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2458",
+      "id": "fd_2459",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture colorful_fractional_helly_beta_bound (d : ℕ) (α : ℝ) (hα : α > 0 ∧ α ≤ 1) : ∃ β : ℝ, β ≥ α^(d+1) ∧ Helly.colorful_fractional_convex_splinters.d d α β",
@@ -42049,43 +42096,42 @@
       "title": "Lower Bound on Beta Function for Colorful and Fractional Helly's Theorem on Convex Splinters"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": "Linear time sampling of Pólya trees",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# FUTURE DIRECTIONS — EML Universal Approximation\n\nThis cycle established (all fully verified, 0 sorries):\n\n- `EML/ExponentialPolynomialDensity.lean`: a single **injective** feature `g`, and in\n  particular the exponential feature `exp ∘ g`, generates a uniformly dense subalgebra of\n  `C(X, ℝ)` on any compact `X`; the strict exponential polynomials `∑ cₖ e^{k·g(x)}`\n  (linear span of powers) are already dense.\n- `EML/MultivariateExponentialDensity.lean`: the `n` coordinate exponential features\n  `{x ↦ e^{xᵢ}}` are dense on any compact `K ⊆ ℝⁿ`, and a **dimension obstruction** shows a\n  single ridge feature is never injective for `n ≥ 2`, so `n` features are necessary.\n\nThe unifying finding: **all universal-approximation content reduces to point separation**;\nnonlinearity is supplied by one `exp`, while *width is forced by domain dimension*.\n\nThe following conjectures are bold but testable in Lean for the next cycle.\n\n## C1 (Müntz-type density for distinct exponential rates)\nFor any compact `[a,b] ⊆ ℝ` and any sequence of **distinct** reals `λ₀, λ₁, …`, the linear\nspan of `{x ↦ e^{λₖ x} : k ∈ ℕ}` is uniformly dense in `C([a,b], ℝ)` whenever the set\n`{λₖ}` is infinite. (Sharper than this cycle's `{e^{kx}}`, which uses `λₖ = k`.)\nFalsifier: a finite or convergent set of rates whose span omits some continuous function.\nLean handle: show `{e^{λₖ x}}` separates points (any single `λ ≠ 0` already does) and that\nthe span equals the subalgebra generated, then reuse `dense_of_topologicalClosure_eq_top`.\n\n## C2 (Exact minimal width in ℝⁿ)\nOn every compact `K ⊆ ℝⁿ` with nonempty interior, **exactly `n`** affinely-independent\nexponential ridge features `{x ↦ e^{⟨wⱼ,x⟩}}` (`j < n`, `{wⱼ}` linearly independent) are\nnecessary and sufficient for the generated subalgebra to be dense; any family of `< n`\nridge features fails to separate points. Necessity strengthens `ridge_not_injective` from\n\"one feature\" to \"any `n−1` features share a common kernel direction\".\n\n## C3 (Logarithmic fragment on the positive orthant)\nOn any compact `K ⊆ (0, ∞)`, the feature `log` is injective, so by the single-feature\ntheorem the subalgebra generated by `log ∘ (coordinate)` is dense in `C(K, ℝ)`. Conjecture:\nthe **full EML term algebra** (`+, ×, exp, log`, from `EMLTermAlgebra`) restricted to a\ncompact `K ⊆ (0,∞)ⁿ` is dense, and `log` features give strictly better conditioning than\n`exp` features near `0`. Falsifier: a continuous function on such `K` not approximable by\nEML terms.\n\n## C4 (Quantitative Jackson-type rate for exponential polynomials)\nFor `f ∈ C([a,b], ℝ)` with modulus of continuity `ω`, the degree-`N` exponential-polynomial\nerror `Eₙ(f) := inf over span{e^{kx} : k ≤ N}` satisfies `Eₙ(f) ≤ C·ω(1/N)` with a constant\n`C = C(a,b)` independent of `f`. This upgrades the qualitative density of this cycle to a\nrate, and should follow by transporting classical polynomial Jackson estimates through the\nanalytic diffeomorphism `x ↦ e^x`.\n\n## C5 (Compositional / deep EML error budget)\nCombine the single-layer density here with telescoping composition (cf. `DeepComposition`):\na depth-`d` EML network with per-layer injective exponential features approximates any\n`f ∈ C(K, ℝᵐ)` with total error `≤ Σᵢ εᵢ ∏_{j>i} Lⱼ`, and the **minimal total feature\ncount** to reach uniform error `ε` grows like `Θ(n · log(1/ε))` in fixed dimension `n`.\nFalsifier: a target requiring super-logarithmic feature growth in fixed dimension.\n",
-      "domain_bridges": [],
+      "description": "The conjecture asserts that coefficients a_n decay exponentially as ρ^{-n}, bounding their growth to ensure exact-size sampling feasibility.",
+      "domain_bridges": "Number theory",
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "Geometry"
+        "Pythagorean"
       ],
-      "id": "fd_2459",
+      "id": "fd_2460",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "a_n ≤ ρ^{-n}",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Direct proof using inequalities derived from asymptotic estimates",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "935bc3f6",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/935bc3f6",
+      "source_exp_id": "2606.23439v1",
+      "source_path": "http://arxiv.org/abs/2606.23439v1",
       "status": "available",
-      "thread_id": "th_2701d239",
-      "timestamp": "2026-06-24T18:22:19.064100+00:00",
-      "title": "(all fully verified, 0 sorries):"
+      "thread_id": "",
+      "timestamp": "2026-06-24T18:25:32.579492+00:00",
+      "title": "Coefficient Decay Bound"
     },
     {
       "ambition_level": "extension",
@@ -122186,6 +122232,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

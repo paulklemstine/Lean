@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "935bc3f6",
     "filename": "eml_universal_approximation.json",
     "pkg_num": 36,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7770400000000002,
     "title": "EML Universal Approximation: One Exponential Feature Is Enough"
   },
   {
@@ -1053,8 +1053,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "eml_universal_approximation",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7770400000000002,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "EML Universal Approximation: One Exponential Feature Is Enough"
     }

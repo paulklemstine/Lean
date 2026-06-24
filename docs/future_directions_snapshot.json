@@ -676,7 +676,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3db423d6",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -688,7 +688,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -917,7 +917,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5a434903",
+    "consumed_by_exp_id": "",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -929,7 +929,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
@@ -1754,7 +1754,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a1973066",
+    "consumed_by_exp_id": "",
     "description": "Determine all integer solutions to n! + 1 = m². Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
     "domain_bridges": [],
     "domains": [
@@ -1766,7 +1766,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:08.676107+00:00",
     "title": "Brocard's Problem: n! + 1 = m²"
   },
@@ -1834,7 +1834,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "cd105090",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1847,7 +1847,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -5184,7 +5184,7 @@
     "catalog_references": [
       "Diestel2010Book"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3c0af99",
     "description": "Every ⊆-minimal minor-closed graph class with limiting density greater than some δ < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class 𝒢, there exists a graph H such that 𝒢 = excl({H}).",
     "domain_bridges": [
       "Graph minors",
@@ -5200,7 +5200,7 @@
     "proof_strategy": "Leverage the Robertson-Seymour theorem on finite forbidden minors and the paper's classification of minimal classes to show that the minimal sets of forbidden graphs for these classes must be singletons.",
     "research_mode": "team",
     "source_exp_id": "2606.24326v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T02:41:49.567859+00:00",
     "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
   },
@@ -6265,7 +6265,7 @@
       "Brualdi and Quinn Massey (conjectured)",
       "arXiv:2304.12345 (current paper)"
     ],
-    "consumed_by_exp_id": "18853638",
+    "consumed_by_exp_id": "",
     "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies χ'_s(G) ≤ Δ_A Δ_B, where Δ_A and Δ_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 Δ_A Δ_B for sufficiently large products.",
     "domain_bridges": [
       "Graph Theory",
@@ -6282,7 +6282,7 @@
     "proof_strategy": "The conjecture can be approached via probabilistic methods combined with sparse neighborhood analysis, similar to techniques used in prior improvements of the Erdős-Nesetrýl conjecture. Key steps include constructing an induced matching decomposition that respects the product bound Δ_A Δ_B and leveraging the bipartite structure to minimize color conflicts.",
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T17:05:28.615107+00:00",
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
   },
@@ -6339,6 +6339,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Filmus and Ihringer (2019)",
+      "Bruen and Drudge (1999)",
+      "Gavrilyuk and Mogilnykh (2014)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Prove that for any prime power q, the Grassmann scheme J_q(n,k) is degree-one trivial (DOT) for all n >= N(q,k), where N(q,k) is a constant depending on q and k. Specifically, for q=2, N(2,k)=4 for min(k,n-k) >= 2, and for q > 2, the threshold N(q,k) must be determined to exclude sporadic counterexamples like the Bruen-Drudge example in J_3(4,2).",
+    "domain_bridges": [
+      "Finite Geometry",
+      "Representation Theory of GL_n(q)",
+      "Boolean Function Analysis"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2446",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the Grassmannian as a set of subspaces using Lean's LinearAlgebra library. Formalize the space of functions f: J_q(n,k) -> R. Define 'degree one' as functions in the span of indicator functions of points. Implement the 'trivial' list of functions. Use an induction on n or a stability result from representation theory to show that as n increases, the gap between the eigenvalues of the Grassmann graph forces any Boolean degree-one function to be a linear combination of trivial indicators.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23465v1",
+    "status": "available",
+    "timestamp": "2026-06-24T18:25:05.562991+00:00",
+    "title": "Characterization of Degree-One Triviality for Grassmannians over Finite Fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO/2305.01234",
       "math.CO/2407.05678",
       "math.CO/2603.01456"
@@ -6353,7 +6381,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2446",
+    "id": "fd_2447",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6377,7 +6405,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2447",
+    "id": "fd_2448",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6403,7 +6431,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2448",
+    "id": "fd_2449",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6429,7 +6457,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2449",
+    "id": "fd_2450",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6456,7 +6484,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2450",
+    "id": "fd_2451",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6482,7 +6510,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2451",
+    "id": "fd_2452",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
@@ -6510,7 +6538,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
@@ -6535,7 +6563,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -6562,7 +6590,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
@@ -6591,7 +6619,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2455",
+    "id": "fd_2456",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Borel-Serre duality techniques and spectral sequence arguments used in codimension 1 and 2 cases to arbitrary k. Analyze the action of the congruence subgroup on Bruhat-Tits buildings and leverage representation stability to control cohomology in high degrees.",
@@ -6616,7 +6644,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
@@ -6644,7 +6672,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
@@ -6671,7 +6699,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on dimension d, leveraging the structure of convex splinters and the affine dependence condition. Possibly using induction on the number of convex sets composing the splinter, combined with probabilistic method or measure concentration techniques to establish the lower bound.",
@@ -6680,6 +6708,25 @@
     "status": "available",
     "timestamp": "2026-06-24T17:58:21.103250+00:00",
     "title": "Lower Bound on Beta Function for Colorful and Fractional Helly's Theorem on Convex Splinters"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": "Linear time sampling of Pólya trees",
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that coefficients a_n decay exponentially as ρ^{-n}, bounding their growth to ensure exact-size sampling feasibility.",
+    "domain_bridges": "Number theory",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2460",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Direct proof using inequalities derived from asymptotic estimates",
+    "research_mode": "team",
+    "source_exp_id": "2606.23439v1",
+    "status": "available",
+    "timestamp": "2026-06-24T18:25:32.579492+00:00",
+    "title": "Coefficient Decay Bound"
   },
   {
     "ambition_level": "extension",
@@ -6780,7 +6827,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "71ab9721",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -6793,7 +6840,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -6974,7 +7021,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "09edd445",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domain_bridges": [],
     "domains": [
@@ -6987,7 +7034,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -7093,7 +7140,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c904c856",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -7106,7 +7153,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
