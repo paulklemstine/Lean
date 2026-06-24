@@ -2522,7 +2522,7 @@
       "mathlib: Mathlib.Combinatorics.SimpleGraph.Basic",
       "mathlib: Mathlib.Data.Fintype.Card"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "99725b45",
     "description": "For every real ε > 0, there exists N such that every finite simple graph G on n ≥ N vertices with minimum degree at least (5/8 + ε)n has an edge-decomposition into 5-cycles whenever G is C5-divisible, i.e. every vertex has even degree and 5 divides the number of edges. This is the remaining small odd-cycle case suggested by the generalized Nash-Williams threshold δ_{C_ℓ} = ℓ/(2ℓ−2), after the triangle case and the long odd-cycle cases addressed in the paper.",
     "domain_bridges": [
       "Finite simple graph theory",
@@ -2539,7 +2539,7 @@
     "proof_strategy": "Formalize finite simple graphs, edge sets, vertex degrees, and C5-decompositions as a finite family of subgraphs each isomorphic to a 5-cycle whose edge sets are pairwise disjoint and cover E(G). The mathematical proof would likely combine an absorption framework with approximate C5-decompositions and a stability analysis around the known extremal obstruction giving the lower bound 5/8. In Lean, the conjecture can initially be stated using abstract predicates `IsFiveCycle` and `HasC5Decomposition`, then refined to concrete cycle embeddings into `SimpleGraph`.",
     "research_mode": "team",
     "source_exp_id": "2606.21548v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T02:24:24.127531+00:00",
     "title": "Asymptotic C5-decomposition threshold equals 5/8"
   },

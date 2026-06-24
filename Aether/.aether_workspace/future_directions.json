@@ -34844,7 +34844,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Nash-Williams triangle decomposition conjecture",
         "Delcourt--Postle theorem on triangle decompositions",
@@ -34855,7 +34855,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "99725b45",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34871,7 +34871,7 @@
         "Bridges"
       ],
       "id": "fd_2304",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T23:35:36.126049+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Fintype.Card\n\nopen scoped BigOperators\n\nnamespace GraphDecomposition\n\nvariable {V : Type} [Fintype V] [DecidableEq V]\n\n/-- Placeholder: `C5Divisible G` means every vertex degree is even and `5 ∣ |E(G)|`. -/\ndef C5Divisible (G : SimpleGraph V) : Prop :=\n  (∀ v : V, Even (G.degree v)) ∧ 5 ∣ Fintype.card G.edgeSet\n\n/-- Placeholder: `HasC5Decomposition G` means the edge set of `G` can be partitioned\n    into subgraphs each isomorphic to a 5-cycle. -/\ndef HasC5Decomposition (G : SimpleGraph V) : Prop :=\n  sorry\n\n/-- Conjectural asymptotic C₅-decomposition threshold: δ_{C₅} = 5/8. -/\nconjecture c5_decomposition_threshold :\n  ∀ ε : ℝ, 0 < ε →\n    ∃ N : ℕ, ∀ {V : Type} [Fintype V] [DecidableEq V],\n      N ≤ Fintype.card V →\n      ∀ G : SimpleGraph V,\n        ((∀ v : V, ((G.degree v : ℝ) ≥ ((5 : ℝ) / 8 + ε) * (Fintype.card V : ℝ))) →\n          C5Divisible G →\n          HasC5Decomposition G)\n\nend GraphDecomposition",
       "lineage_refs": [],
@@ -34885,7 +34885,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21548v1",
       "source_path": "http://arxiv.org/abs/2606.21548v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T02:24:24.127531+00:00",
       "title": "Asymptotic C5-decomposition threshold equals 5/8"
@@ -123081,6 +123081,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
