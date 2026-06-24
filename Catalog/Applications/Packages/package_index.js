@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d3c0af99",
     "filename": "minimal_minor_closed_classes_below_32_have_single_.json",
     "pkg_num": 38,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.63104,
     "title": "Minimal Minor-Closed Classes Below Density 3/2 Have Single Forbidden Minors: The Forest Case"
   },
   {
@@ -1111,8 +1111,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "minimal_minor_closed_classes_below_32_have_single_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.63104,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Minimal Minor-Closed Classes Below Density 3/2 Have Single Forbidden Minors: The Forest Case"
     }

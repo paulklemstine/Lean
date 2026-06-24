@@ -688,7 +688,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "5a434903",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -697,7 +697,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -1894,7 +1894,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
   },
   {
-    "consumed_by_exp_id": "a83f4fe5",
+    "consumed_by_exp_id": "",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domains": [
       "Bridges"
@@ -1903,7 +1903,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -2759,20 +2759,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T17:07:33.678816+00:00",
     "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
-  },
-  {
-    "consumed_by_exp_id": "9368eda6",
-    "description": "For every n,k,r with n \u2265 2k, k \u2265 3, and r \u2265 2, let (\ud835\udcd5_i)_{i\u2208Fin r} be k-uniform families of subsets of Fin n. Assume each \ud835\udcd5_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i \u2260 j, every A \u2208 \ud835\udcd5_i and B \u2208 \ud835\udcd5_j have A \u2229 B \u2260 \u2205. Then the multilateral product is bounded by the Hilton--Milner value: \u220f_{i\u2208Fin r} |\ud835\udcd5_i| \u2264 h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2375",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T17:25:43.582970+00:00",
-    "title": "Multilateral non-trivial cross-intersection product bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -4207,6 +4193,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Minor-Closed Classes Below Density 3/2\n\nDerived from this cycle's findings (`OrderFramework.lean`, `ForestDensity.lean`,\n`MinorModel.lean`).  Each conjecture is bold, falsifiable, and stated so a future\nAristotle cycle can attack it directly.\n\n## C1. Transitivity of the branch-set minor relation\n\n**Conjecture.** `IsMinor` (from `MinorModel.lean`) is transitive, hence a\n`Preorder` (in fact a `PartialOrder` up to isomorphism), so `SimpleGraph` graphs\nform a legitimate instance of the `OrderFramework` abstraction.\n\n*The key insight is...* that composing two branch-set models routes each\n`H`-edge through a `G`-path inside a branch set, so the composite branch set of a\ntop-level vertex is the **union of the branch sets of the middle graph that it\ncovers**, and connectivity is preserved because the realising edges of the middle\nlayer glue the unioned pieces together.\n\n*Why now?* `isMinor_refl` and `isMinor_of_le` are already formalised; transitivity\nis the single remaining preorder law, and Mathlib's `SimpleGraph.Connected` /\n`induce` API is now rich enough to express the gluing argument.\n\n## C2. Forests are exactly the K\u2083-minor-free graphs\n\n**Conjecture.** Under the (contraction) minor order, the forest class equals\n`excl {K\u2083}`; equivalently `obstructions (acyclicClass) = {K\u2083}`, so forests are a\nsingle-excluded-minor class in the *true* minor order, not merely the subgraph\norder.\n\n*The key insight is...* that any cycle contracts to `K\u2083`, and conversely a\n`K\u2083`-minor forces a cycle; so \"acyclic\" and \"`K\u2083`-minor-free\" are the same\npredicate once contraction is available.\n\n*Why now?* `acyclicClass_minorClosed` already gives subgraph-closure, and\n`obstructions_excl_singleton` reduces the goal to identifying the unique minimal\nnon-forest as `K\u2083` \u2014 a finite, checkable obstruction.\n\n## C3. Limiting density is attained as a supremum, not a maximum\n\n**Conjecture.** For the forest class, `limitingDensity = 1` but no member attains\ndensity `1`; more generally every \u2286-minimal minor-closed class strictly below\n`3/2` has limiting density `1` and is `excl {H}` for a single `H`.\n\n*The key insight is...* that below `3/2` the only \"growth mode\" available is a\nsingle spanning-tree-like skeleton plus bounded local decoration, which forces\nthe density supremum to the integer/half-integer value `1` and the obstruction\nset to be a singleton.\n\n*Why now?* The proved bound `(n\u22121)/n < 1` with `(n\u22121)/n \u2192 1` already exhibits the\nsup-not-max phenomenon for forests; generalising needs only a uniform edge bound\nper class, which the `OrderFramework` obstruction machinery can carry.\n\n## C4. Well-quasi-ordering \u21d2 finite obstruction sets below 3/2\n\n**Conjecture.** Restricted to classes of limiting density `< 3/2`, the minor order\nis a well-quasi-order, so every such minor-closed class has a **finite** set of\nforbidden minors; combined with C3, that finite set is a singleton.\n\n*The key insight is...* that `WellFoundedLT` (already an explicit hypothesis of\n`minorClosed_excl_obstructions`) upgrades to full WQO in the sparse density\nregime, because bounded average degree caps the structural complexity of\nantichains.\n\n*Why now?* The framework already proves \"minor-closed `=` excl of obstructions\"\nunder `WellFoundedLT`; the missing ingredient is purely the WQO/antichain bound,\nisolatable as a standalone density lemma.\n\n## C5. A density gap below 3/2 (no classes between 1 and 3/2)\n\n**Conjecture.** There is **no** \u2286-minimal minor-closed class with limiting density\nstrictly between `1` and `3/2`: the set of achievable limiting densities has a gap\n`(1, 3/2)`.\n\n*The key insight is...* that adding any structure beyond a forest (a second\nindependent cycle per component) already pushes the limiting density to `3/2`\n(the `K\u2084`/series\u2013parallel regime), so densities cannot land inside the open\ninterval `(1, 3/2)`.\n\n*Why now?* `ComputationalEvidence.md` tabulates exactly this gap (forests at `1`,\nseries\u2013parallel at `2`, `K\u2084` at `3/2`), turning the gap into a concrete, testable\nfinite-case search over small obstruction graphs.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2465",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d3c0af99",
+    "status": "available",
+    "timestamp": "2026-06-24T20:19:24.729807+00:00",
+    "title": "Derived from this cycle's findings (`OrderFramework.lean`, `ForestDensity.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4324,7 +4325,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "173cb117",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4334,7 +4335,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -4545,7 +4546,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "6ddef5de",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -4555,7 +4556,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
