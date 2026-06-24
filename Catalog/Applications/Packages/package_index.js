@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0dfef380",
     "filename": "proof_automation_custom_lean_4_tactics.json",
     "pkg_num": 15,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7484,
     "title": "The Coefficient That Counts Primes: A Binomial \u2192 Prime-Distribution Bridge"
   },
   {
@@ -444,8 +444,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7484,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Coefficient That Counts Primes: A Binomial \u2192 Prime-Distribution Bridge"
     }

@@ -374,7 +374,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Odd Perfect Numbers"
   },
   {
-    "consumed_by_exp_id": "12082da5",
+    "consumed_by_exp_id": "",
     "description": "Mihailescu proved that 8 and 9 are the only consecutive perfect powers. Generalize: find all solutions to x^a - y^b = k for fixed small k. Formalize the theory of exponential Diophantine equations and Pillai's conjecture.",
     "domains": [
       "Algebra"
@@ -383,7 +383,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:08.480584+00:00",
     "title": "Catalan's Conjecture Generalizations"
   },
@@ -3352,6 +3352,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Proof Automation: Custom Lean 4 Tactics\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle (`TropicalSimp.lean`, `NumberTheoryDecide.lean`, `SpectralBound.lean`).\n\n## 1. A confluent, terminating `tropical_simp` normal form\n**Conjecture.** The min-plus rewrite system underlying `tropical_simp`\n(scalar distributivity + idempotent commutative monoid laws of `min`) is\nconfluent and terminating, so every min-plus expression has a *unique* normal\nform: a single `min` over affine monomials with no repeated exponents.\n**The key insight is** that min-plus distributivity pushes every `+` past every\n`min`, after which idempotency (`min_self`) deduplicates monomials \u2014 exactly the\ncanonicalisation already proved for tropical polynomials in `Tropical/Core`.\n**Why now?** This cycle proved the distributive backbone (`tropical_fold_distrib`,\n`tropical_inf'_distrib`); a termination measure (multiset of `+`-depths) is now\nwithin reach and would turn `tropical_simp` into a decision procedure for\nmin-plus equality.\n\n## 2. `number_theory_decide` as a residue-class reflection tactic\n**Conjecture.** Every universally-quantified statement of the form\n`\u2200 n, P (n % m)` with `P` decidable is provably equivalent to the finite check\n`\u2200 r < m, P r`, and this reduction can be automated soundly.\n**The key insight is** that `n % m` ranges over exactly `{0, \u2026, m-1}`, so the\nunbounded universal collapses to a `decide`-able finite disjunction \u2014 the same\nparity move used in `sq_mod_four`, generalised from `m = 2,4` to arbitrary `m`.\n**Why now?** `sq_mod_four` showed the two-case instance; lifting it to a\n`Fin m`-indexed reflection lemma would let `number_theory_decide` settle a whole\nclass of Catalog quadratic-residue and divisibility facts in one line.\n\n## 3. Column-sum and symmetric-matrix sharpenings of `spectral_bound`\n**Conjecture.** For Hermitian `A`, the eigenvalue bound\n`\u2016\u03bc\u2016 \u2264 \u2a06 i, \u2211 j \u2016A i j\u2016` can be strengthened to a two-sided real interval\n`[\u03bb_min, \u03bb_max]` contained in the union of Gershgorin discs, with the discs\ncentred on real diagonal entries.\n**The key insight is** that Hermitian matrices have real spectra and equal row /\ncolumn sums for the modulus, so the existential `eigenvalue_norm_le_row_sum`\nbecomes a genuine interval localisation rather than a modulus bound.\n**Why now?** This cycle established the modulus bound from Gershgorin; Mathlib\nalready carries the spectral theorem for Hermitian matrices, so the interval\nrefinement only needs to glue the two existing results.\n\n## 4. Tropical eigenvalue (max-plus) bridge to `spectral_bound`\n**Conjecture.** The tropical (min-plus) eigenvalue of a square matrix \u2014 the\nminimum cycle mean \u2014 admits a Gershgorin-style localisation\n`\u03bb_trop \u2265 \u2a05 i, A i i` analogous to `eigenvalue_norm_le_max_row_sum`.\n**The key insight is** that min-plus matrix powers compute shortest paths, so the\ntropical eigenvalue is a min over cycle means, and the diagonal entries are the\nlength-1 cycles bounding it \u2014 directly reusing `tropical_inf'_distrib`.\n**Why now?** With both a verified min-plus distributive calculus (File I) and a\nverified classical spectral bound (File III) in hand, the max-plus eigenvalue is\nthe natural bridge object unifying the two automation themes.\n\n## 5. A unified soundness meta-theorem for `simp`-set tactics\n**Conjecture.** Any tactic defined as `simp only [L]` for a list `L` of proved\nequational lemmas is sound by construction, and this can be packaged as a\nreusable Lean attribute that certifies new domain tactics automatically.\n**The key insight is** that soundness of such tactics is *not* a per-tactic\ntheorem but a corollary of `simp` emitting kernel-checked terms \u2014 so the audit\nreduces to checking each member of `L` is a `theorem`, which is mechanisable.\n**Why now?** All three tactics in this cycle share the identical soundness\nargument; abstracting it would let the Catalog add domain tactics with a single\ncertified template instead of bespoke soundness prose.\n",
+    "domains": [
+      "Tropical",
+      "Logic"
+    ],
+    "id": "fd_2404",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0dfef380",
+    "status": "available",
+    "timestamp": "2026-06-24T01:21:59.076442+00:00",
+    "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3440,7 +3455,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
-    "consumed_by_exp_id": "961bb29f",
+    "consumed_by_exp_id": "",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -3450,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -3469,7 +3484,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "e63b33ee",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -3479,7 +3494,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -3498,7 +3513,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "a5fa8083",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -3507,7 +3522,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -3990,7 +4005,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "c8daa509",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -4000,7 +4015,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
