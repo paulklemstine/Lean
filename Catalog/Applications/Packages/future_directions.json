@@ -14238,7 +14238,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -14254,7 +14254,7 @@
         "MachineLearning"
       ],
       "id": "fd_0479",
-      "last_attempt_time": "2026-06-24T15:28:12.934990+00:00",
+      "last_attempt_time": "2026-06-23T05:49:06.134813+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14268,7 +14268,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:44.957997+00:00",
       "title": "EML Universal Approximation"
@@ -16772,7 +16772,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -16788,7 +16788,7 @@
         "Logic"
       ],
       "id": "fd_0552",
-      "last_attempt_time": "2026-06-24T15:28:04.693123+00:00",
+      "last_attempt_time": "2026-06-07T22:40:42.374910+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35400,7 +35400,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Menger's Theorem",
         "Walls in Graphs",
@@ -35408,7 +35408,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5c61161b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35423,7 +35423,7 @@
         "Bridges"
       ],
       "id": "fd_2316",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:57:01.692552+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem wall_menger (s' t' : ℕ) :\n    ∃ t f : ℕ, ∀ {V : Type} [Fintype V] [DecidableEq V]\n      (G : SimpleGraph V) (A : Set V) (W : Wall G) (hW : t ≤ W.size),\n    (∃ X : Finset V, X.card ≤ f ∧ G.Separates X A W.branch_vertices) ∨\n    (∃ W' : Subwall W, t' ≤ W'.size ∧ HasDisjointAWPaths G A W' s') :=\n  by sorry",
       "lineage_refs": [],
@@ -35437,7 +35437,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23121v1",
       "source_path": "http://arxiv.org/abs/2606.23121v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T08:05:12.495306+00:00",
       "title": "Wall-Menger Theorem"
@@ -35640,7 +35640,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "c235005e",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35669,7 +35669,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23024v1",
       "source_path": "http://arxiv.org/abs/2606.23024v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T10:17:17.086233+00:00",
       "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
@@ -39117,7 +39117,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -39133,7 +39133,7 @@
         "Novelty"
       ],
       "id": "fd_2395",
-      "last_attempt_time": "2026-06-24T15:28:21.120105+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -41234,6 +41234,51 @@
       "title": "Finite Obstructions for Minor-Closed Classes with Bounded Limiting Density"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Bin26",
+        "DFV22"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "This paper investigates the local obstruction groups for obstructed deformation problems arising from weightℒ newforms of level N, using the Greenberg-Wiles formula and explicit classification of inertial Weil-Deligne types. It aims to provide a constructive framework for understanding deformation in arithmetic settings with restricted primes.",
+      "domain_bridges": [
+        "ArXiv preprint database",
+        "mathematical physics research"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2441",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Constructive computation reliant on weight intercategory structures",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Intermediate computation with explicit presentation of deformation rings",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23918v1",
+      "source_path": "http://arxiv.org/abs/2606.23918v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T15:53:57.795484+00:00",
+      "title": "Obstructed deformation problems for weight-2 newforms with local-global conditions"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -41259,7 +41304,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2441",
+      "id": "fd_2442",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41302,7 +41347,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2442",
+      "id": "fd_2443",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41347,7 +41392,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2443",
+      "id": "fd_2444",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41392,7 +41437,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2444",
+      "id": "fd_2445",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41438,7 +41483,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2445",
+      "id": "fd_2446",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -41483,7 +41528,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2446",
+      "id": "fd_2447",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -41530,7 +41575,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2447",
+      "id": "fd_2448",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -41574,7 +41619,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2448",
+      "id": "fd_2449",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -41593,6 +41638,52 @@
       "thread_id": "",
       "timestamp": "2026-06-24T15:27:55.505425+00:00",
       "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via Duality Framework"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "West (1990)",
+        "Defant (2020)",
+        "zhang26"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The limit λ = lim_{n→∞} D_n/n is exactly equal to 3/5*(7 - 8 ln 2), where D_n is the average stack-sorting depth over S_n. This would imply that Defant's upper bound is tight and the Golomb-Dickman constant is strictly less than λ.",
+      "domain_bridges": [
+        "permutation statistics",
+        "stack-sorting algorithms",
+        "asymptotic analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2450",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24110v1",
+      "source_path": "http://arxiv.org/abs/2606.24110v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T15:56:46.510928+00:00",
+      "title": "Conjecture: The limit of average stack-sorting depth equals Defant's upper bound"
     },
     {
       "ambition_level": "extension",
@@ -46549,7 +46640,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -46565,7 +46656,7 @@
         "NumberTheory"
       ],
       "id": "seed_335",
-      "last_attempt_time": "2026-06-24T15:28:08.340623+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46588,7 +46679,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -46604,7 +46695,7 @@
         "Algebra"
       ],
       "id": "seed_336",
-      "last_attempt_time": "2026-06-24T15:28:00.827583+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47289,7 +47380,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -47305,7 +47396,7 @@
         "Algebra"
       ],
       "id": "seed_354",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:56:51.938788+00:00",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47319,7 +47410,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432739+00:00",
       "title": "Graph Coloring: Chromatic Polynomial Theory"
@@ -47923,7 +48014,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "f8c355ed",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47950,7 +48041,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432791+00:00",
       "title": "Lattice Cryptography: LWE Hardness"
@@ -48079,7 +48170,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -48096,7 +48187,7 @@
         "Geometry"
       ],
       "id": "seed_374",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:56:56.729223+00:00",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -48110,7 +48201,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432797+00:00",
       "title": "Tropical Convexity and Linear Programming"
@@ -55730,7 +55821,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -55745,7 +55836,7 @@
         "Combinatorics"
       ],
       "id": "sorry_fill_a0dd96a5_00b573d8",
-      "last_attempt_time": "2026-06-24T15:28:17.062450+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -55759,7 +55850,7 @@
       "research_mode": "team",
       "source_exp_id": "a0dd96a5",
       "source_path": "These conjectures continue the research cycle begun in",
-      "status": "failed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-16T12:52:43.615426+00:00",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
@@ -121693,6 +121784,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
