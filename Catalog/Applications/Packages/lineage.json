@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-22T21:20:57Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -16,7 +16,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T01:40:46Z",
-      "hue": 281
+      "hue": 271
     },
     {
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
@@ -25,7 +25,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T04:02:19Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "bridge_galois_connections_between_order_theory_and",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T05:45:49Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "convex_geometry_brunn_minkowski_theory",
@@ -52,7 +52,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:35:17Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "attention_mechanisms_mathematical_properties",
@@ -61,7 +61,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-23T07:38:24Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "sierpiski_numbers_covering_systems",
@@ -70,7 +70,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-23T08:30:51Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
@@ -79,7 +79,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T11:40:38Z",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
@@ -88,7 +88,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T15:01:50Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "quantum_key_distribution_bb84_security_proof",
@@ -133,7 +133,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-24T01:59:38Z",
-      "hue": 275
+      "hue": 270
     },
     {
       "id": "hamiltonian_compression_factor_of_cubic_edge_trans",
@@ -142,7 +142,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-24T02:14:47Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -151,7 +151,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-24T04:28:44Z",
-      "hue": 272
+      "hue": 92
     },
     {
       "id": "homotopy_type_theory_foundations",
@@ -169,7 +169,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-24T05:17:28Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "secret_sharing_shamirs_scheme_and_verifiable_varia",
@@ -178,7 +178,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-24T06:14:07Z",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "tropical_curves_and_chip_firing_games",
@@ -187,16 +187,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-24T06:45:24Z",
-      "hue": 112
-    },
-    {
-      "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
-      "title": "The Berggren Pythagorean Tree as Linear Dynamics on Euclid Generator Pairs",
-      "domain": "Pythagorean",
-      "primary_domain": "Pythagorean",
-      "shape": "triangular_prism",
-      "date": "2026-06-24T07:42:39Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "whitehead_problem_independence_from_zfc",
@@ -214,7 +205,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-24T08:38:58Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "symmetric_group_generation_probability",
@@ -223,7 +214,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-24T09:33:05Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "consciousness_as_integrated_information",
@@ -232,7 +223,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-24T10:35:56Z",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "existence_of_non_trivial_boolean_degree_one_functi",
@@ -241,7 +232,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-24T10:57:53Z",
-      "hue": 270
+      "hue": 91
+    },
+    {
+      "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
+      "title": "Two Invariants of NISQ Error Mitigation: A Sharp Majority-Vote Threshold and the Persistence of H_0",
+      "domain": "Logic",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-06-24T11:02:54Z",
+      "hue": 91
     }
   ],
   "edges": [],
