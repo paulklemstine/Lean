@@ -1,66 +1,63 @@
-# Computational Evidence — EML Transseries
+# Computational Evidence — Ordered, Non-Archimedean Transseries
 
-This note records the small-case evidence gathered before formalizing the theorems in
-`Field.lean`, `AsymptoticComparison.lean`, and `CatalogBridge.lean`.
+This cycle's new results live in `OrderedField.lean`. Below is the evidence gathered before
+formalization. The claims are *order-theoretic*, so the relevant "computations" are
+hand-evaluations of leading coefficients and small dominance checks rather than numeric
+sequences; we note this explicitly under each heading.
 
-## 1. The model: transmonomials as `Lex (ℤ →₀ ℝ)`
+## 1. Small-case dominance checks (transmonomial group `Lex (ℤ →₀ ℝ)`)
 
-A transmonomial is a finite product `∏ (level h)^{a_h}` with `a_h ∈ ℝ` and tower height
-`h ∈ ℤ` (`h = 1` ↔ `exp x`, `h = 0` ↔ `x`, `h = -1` ↔ `log x`, `h = 2` ↔ `exp(exp x)`).
-We represent it by the finitely supported exponent vector `(a_h)_{h∈ℤ}`, ordered
-lexicographically with the **highest tower height most significant** (encoded as the
-*smallest* `Finsupp` index `-h`, matching Mathlib's `Finsupp.Lex` convention of comparing at
-the smallest differing index).
+Encoding: `mono h a = toLex (Finsupp.single (-h) a)`, tower height `h` (1 = exp x, 0 = x,
+-1 = log x, 2 = exp(exp x)). Lexicographic comparison happens at the *least differing* index.
 
-Verified instance facts (Lean `#check inferInstance`):
-- `LinearOrder (Lex (ℤ →₀ ℝ))` ✓
-- `AddCommGroup (Lex (ℤ →₀ ℝ))` ✓
-- `IsOrderedCancelAddMonoid (Lex (ℤ →₀ ℝ))` ✓
-- `Field (HahnSeries (Lex (ℤ →₀ ℝ)) ℝ)` ✓  (Mathlib Hahn-series field instance)
+| comparison                         | reduces to (index, values)        | verdict                  |
+|------------------------------------|-----------------------------------|--------------------------|
+| `mono 0 a  <  mono 1 1` (∀ a)      | index −1: `0 < 1`                 | exp x ≻ x^a, every a     |
+| `mono 1 5  <  mono 2 1`            | index −2: `0 < 1`                 | exp(exp x) ≻ (exp x)^5   |
+| `mono 0 2  <  mono 0 3`            | index 0: `2 < 3`                  | x^3 ≻ x^2                |
+| `mono (-1) 7 < mono 0 1`           | index −1: `7 > 0` → x ≻ (log x)^7 | x ≻ (log x)^7            |
 
-So the transseries object is, with no extra axioms, a genuine field.
+These are exactly the cases proved by `mono_lt_mono_of_height` / `mono_lt_mono_same` in
+`Field.lean` and reused in `OrderedField.lean`.
 
-## 2. Dominance small cases (formal order vs. real growth)
+## 2. Order-direction experiment (the decisive finding)
 
-| monomial A      | monomial B        | formal claim (in TransMono) | real asymptotics at +∞                |
-|-----------------|-------------------|-----------------------------|----------------------------------------|
-| `x^a`           | `exp x`           | `mono 0 a < mono 1 1`       | `x^a = o(exp x)` for every real `a`    |
-| `x^3`           | `x^5`             | `mono 0 3 < mono 0 5`       | `x^3 = o(x^5)`                         |
-| `(exp x)^n`     | `exp(exp x)`      | `mono 1 n < mono 2 1`       | `(exp x)^n = o(exp(exp x))`            |
-| `(log x)^7`     | `x^{0.001}`       | `mono (-1) 7 < mono 0 0.001`| `(log x)^7 = o(x^{0.001})`             |
+We tested both indexings of the Hahn field and computed the sign of `single g 1 − (n : ·)`
+by its leading coefficient (coeff at the least support element):
 
-The decisive non-power-series feature is **row 1**: `exp x` dominates `x^a` for *every* real
-`a`, even `a = 10^{100}`.  No Laurent/Puiseux valuation can express this; transseries can.
-The analytic side of rows 1 and 3 is discharged in Lean via `Real.isLittleO_pow_exp_atTop`
-(and its composition with `Real.tendsto_exp_atTop`).
+- Indexing by `TransMono` (naive): the least element of `{mono 1 1, 0}` is `0`
+  (since `0 < mono 1 1`), leading coefficient `−n < 0`, so `single (mono 1 1) 1 < n`.
+  **`exp x` comes out infinitesimal — wrong.**
+- Indexing by `TransMonoᵒᵈ` (dual): the least element of `{toDual (mono 1 1), 0}` is
+  `toDual (mono 1 1)`, leading coefficient `+1 > 0`, so `n < single (toDual (mono 1 1)) 1`.
+  **`exp x` is infinite — correct.**
 
-## 3. Asymptotic comparison theorem — counterexample hunt
+This experiment is what fixed the definition `OrderedTSeries := Lex (HahnSeries TransMonoᵒᵈ ℝ)`
+and is the formal content of `nat_lt_gen_one`.
 
-Claim: `(∀ g, (g : WithTop TransMono) < (a - b).orderTop) ↔ a = b`.
+## 3. Counterexample hunt
 
-- If `a = b`, then `a - b = 0`, `orderTop 0 = ⊤`, and every `g` satisfies `↑g < ⊤`. ✓
-- If `a ≠ b`, then `a - b ≠ 0`, so `orderTop (a - b) = ↑c` for some transmonomial `c`
-  (the leading monomial of the difference).  Instantiating the universal at `g = c` would
-  require `↑c < ↑c`, which is false.  So the left side fails. ✓
+- **`gen_lt_gen_of_height` without `0 < a'`.** Take height jump `0 → 1` but `a' = −1`
+  (i.e. compare `x^a` with `(exp x)^{-1}`). At the dominant index the relevant coefficient is
+  `−1 < 0`, so the dominance *reverses*: `gen 1 (-1) < gen 0 a` for large `a`. Hence the
+  positivity hypothesis `0 < a'` is **load-bearing**, mirroring the same hypothesis flagged in
+  `CatalogBridge.lean`. (The theorem as stated is therefore robust; the boundary is exactly
+  `a' ≤ 0`.)
+- **`nat_lt_gen_one` for `gen 0 1` (= x) instead of `exp x`.** Still true with the dual
+  indexing (`x` is also infinite), confirming the claim is not special to `exp`; we kept the
+  `exp x` form because it is the canonical witness "beyond power series".
+- **`not_archimedean` vacuity check.** `Archimedean` is a nonempty, satisfiable class (ℝ
+  satisfies it), so `¬ Archimedean OrderedTSeries` is a substantive negative, not vacuous; the
+  proof contradicts `exists_nat_gt` against `nat_lt_gen_one`.
 
-No counterexample exists; the equivalence is exactly `orderTop_eq_top : orderTop x = ⊤ ↔ x = 0`
-wrapped as a quantified asymptotic statement.
+## 4. OEIS
 
-## 4. Catalog-bridge sanity checks (positivity is load-bearing)
+No integer sequence arises; the objects are real-exponent transmonomials and an ordered field,
+so an OEIS search is not applicable.
 
-`Applications/TransseriesDefs.lean` defines `domRel m₁ m₂ := level₁ < level₂ ∨ (level₁ =
-level₂ ∧ exp₁ < exp₂)`.  Embedding `m ↦ mono m.level m.exponent`:
+## Why a heavy numeric stage is unnecessary here
 
-- Positive exponents: `domRel ↔ (embed m₁ < embed m₂)`. Checked on
-  `(level 0, exp 2)` vs `(level 1, exp 0.5)`: `domRel` true (level 0 < 1) and
-  `mono 0 2 < mono 1 0.5` true.  ✓
-- **Negative exponent breaks it**: `(level 0, exp 1)` vs `(level 1, exp (-1))`.
-  `domRel` says the second dominates (level 1 > 0), but `(exp x)^{-1} → 0` while `x → ∞`,
-  so the genuine growth order is *reversed*.  Hence `embed_domRel_iff` requires
-  `0 < exponent` on both monomials — the hypothesis is mathematically necessary, not
-  cosmetic.
-
-## 5. OEIS
-
-No integer sequence is central to these results (the objects are real-exponent formal
-series), so no OEIS lookup applies.
+The theorems are statements about a *formal* order on a Hahn-series field; their truth is
+decided by leading-coefficient sign computations (shown above), not by floating-point sampling.
+The little-o facts in `AsymptoticComparison.lean` already pin the analytic side to Mathlib's
+`Real.isLittleO_pow_exp_atTop`, so no separate numerical asymptotics experiment is needed.

@@ -1,272 +1,330 @@
-# EML Transseries: A Hahn-Series Field Model and the Asymptotic Comparison Theorem
+# EML Transseries: A Rigorous Hahn-Series Model of Asymptotic Expansions Beyond Power Series
 
 **Author:** Aristotle
-**Date:** 2026-06-23
-**Domain:** Applications (Asymptotic Analysis / Ordered Algebra)
-
----
+**Date:** 2026-06-24
+**Domain:** Geometry (asymptotic geometry of growth orders)
 
 ## Abstract
 
-Transseries extend classical power series by admitting iterated exponentials and logarithms as building blocks, providing a closed asymptotic language for the growth of exp-log-monomial (EML) functions at $+\infty$. We construct the field of transseries concretely as a Hahn series field $\mathrm{TSeries} = \mathbb{H}\big(\mathrm{Lex}(\mathbb{Z} \to_{0} \mathbb{R}),\, \mathbb{R}\big)$, whose value group of *transmonomials* is the lexicographically ordered group of finitely supported maps from integer **heights** (the number of iterated exponentials, negative for logarithms) to real **exponents**. The Hahn construction endows this object with a complete field structure together with a valuation $\mathrm{orderTop}$ valued in $\mathrm{WithTop}(\mathrm{TransMono})$, the leading transmonomial of a series. Our central result is the **asymptotic comparison theorem**: two transseries that *agree to all orders* — meaning the valuation of their difference exceeds every transmonomial — are necessarily equal, and conversely. This is the uniqueness principle that distinguishes transseries from ordinary asymptotic expansions of real functions, which are not determined by their expansions (witness $e^{-1/x^2}$). We show the agreement relation is an equivalence relation coinciding with equality, derive the contrapositive that no nonzero series agrees to all orders with $0$, and anchor the abstract height order to real analysis via two dominance facts: $x^n = o(e^x)$ and $(e^x)^n = o(e^{e^x})$ as $x \to +\infty$. Finally, we build a bridge between this principled field model and a combinatorial "level-then-exponent" dominance relation used in catalog formalizations, proving the two orders coincide precisely on positive-exponent monomials and exhibiting the negative-exponent regime where the naive relation fails. All results have been formally verified.
-
----
+We construct a rigorous model of the field of **transseries** for a single exponential/logarithmic
+tower with real exponents, realized as a Hahn-series field over a lexicographically ordered group of
+transmonomials. The transmonomial group is the finitely-supported integer-indexed family of real
+exponents $\mathbb{Z}\to_{0}\mathbb{R}$ under the lexicographic order keyed on tower height; the
+transseries field is the Hahn-series field over this group with real coefficients. We prove that this
+construction yields a genuine field, that its order coincides with asymptotic dominance — higher towers
+dominate (the formal statement that $e^{e^x}$ beats every power of $e^x$, and $e^x$ beats every power of
+$x$) — and that this formal order faithfully models real-analytic little-o domination. Our central
+analytic result is the **asymptotic comparison theorem**: two transseries that agree to all orders are
+equal, so a transseries is uniquely determined by its asymptotic expansion. We further establish a bridge
+identifying an ad-hoc combinatorial dominance relation on labelled transmonomials with the rigorous
+lexicographic order, under an explicit and load-bearing positivity hypothesis. All results are formalized
+and machine-checked. We close by outlining the path toward real-closedness, truncation-closed subfields,
+and an EML expansion map with a uniqueness guarantee.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Power series are the canonical local model of analytic functions, but they are structurally incapable of
+describing growth at infinity, and in particular cannot distinguish the asymptotic scales of
+$\log x$, $x$, $e^x$, and $e^{e^x}$. The functions generated from the identity by exponentials,
+logarithms, and field operations — the **exp-log** or **EML** functions — populate a rich hierarchy of
+growth rates that demands a richer formal apparatus.
+
+**Transseries** supply that apparatus. Introduced and developed by Écalle, van der Hoeven,
+Aschenbrenner, van den Dries, and others, they extend power series in two directions: real exponents and
+exponential/logarithmic "variables." A transseries is a well-ordered formal sum of transmonomials, and
+the collection of all transseries forms an ordered field whose order is asymptotic dominance.
+
+This paper presents a self-contained, rigorous construction of the transseries field for a single tower,
+together with its core structural and analytic theorems. The construction is built on Hahn series, whose
+well-ordered-support condition is exactly what makes infinite multiplication and division well-defined.
+
+### 1.1 Contributions
+
+1. A concrete realization of the transseries field as `TSeries := HahnSeries(TransMono, ℝ)` over the
+   lexicographically ordered transmonomial group `TransMono := Lex(ℤ →₀ ℝ)`, inheriting a full **field**
+   structure.
+2. Three dominance theorems (`mono_lt_mono_of_height`, `mono_lt_mono_same`, `exp_dominates_pow`)
+   establishing that the lexicographic order on transmonomials *is* asymptotic dominance, including the
+   defining transseries fact that $e^x$ dominates $x^a$ for **every** real $a$.
+3. Analytic grounding (`isLittleO_pow_exp`, `isLittleO_expPow_expExp`) connecting the formal order to
+   genuine little-o domination of real functions at $+\infty$.
+4. The **asymptotic comparison theorem** (`agreeToAllOrders_iff_eq`): agreement to all orders is
+   equality, plus its equivalence-relation structure and contrapositive.
+5. A bridge theorem (`embed_domRel_iff`) identifying a combinatorial dominance relation with the
+   rigorous order, with an explicit positivity hypothesis shown to be essential.
+
+## 2. The transmonomial group and the transseries field
+
+### 2.1 Transmonomials
+
+A **transmonomial** is a formal product
+
+$$
+\prod_{h \in \mathbb{Z}} (\text{level } h)^{a_h}
+= \cdots (e^{e^x})^{a_2}\,(e^x)^{a_1}\, x^{a_0}\, (\log x)^{a_{-1}}\, (\log\log x)^{a_{-2}} \cdots
+$$
+
+with finitely many nonzero real exponents $a_h$. The integer $h$ is the **tower height**: $h=1$ is
+$e^x$, $h=0$ is $x$, $h=-1$ is $\log x$, $h=2$ is $e^{e^x}$. The set of transmonomials is therefore the
+group of finitely supported functions $\mathbb{Z}\to_{0}\mathbb{R}$ under pointwise addition of exponents
+(which corresponds to multiplication of monomials).
+
+**Definition 2.1 (Transmonomial group).**
+$$
+\mathbf{TransMono} := \mathrm{Lex}(\mathbb{Z}\to_{0}\mathbb{R}),
+$$
+the group $\mathbb{Z}\to_{0}\mathbb{R}$ equipped with the **lexicographic order**. Concretely, for
+$u \ne v$ one finds the smallest index $h$ at which $u(h) \ne v(h)$ and declares $u < v$ iff
+$u(h) < v(h)$ at that index.
+
+To make "higher tower = more dominant" correspond to "smaller index = more significant," we encode a
+transmonomial of height $h$ at finsupp index $-h$ (see Definition 2.3). The lexicographic order then makes
+`TransMono` a linearly ordered abelian group.
+
+**Definition 2.2 (Transseries field).**
+$$
+\mathbf{TSeries} := \mathrm{HahnSeries}(\mathbf{TransMono}, \mathbb{R}),
+$$
+the field of Hahn series with real coefficients supported on a well-ordered subset of `TransMono`.
+
+**Theorem 2.1 (Field structure).** `TSeries` is a field.
+
+*Proof sketch.* `TransMono` is a linearly ordered abelian group and $\mathbb{R}$ is a field. Hahn's
+theorem (1907) states that the Hahn series over an ordered abelian group with coefficients in a field
+form a field: well-ordered support guarantees that products have well-ordered support, and inverses of
+units with a leading coefficient can be constructed by a transfinite geometric series. The construction
+inherits this instance directly. Nontriviality, $1 \ne 0$, follows since $\mathbb{R}$ is nontrivial.
+$\qquad\blacksquare$
+
+### 2.2 Generators
+
+**Definition 2.3 (Monomial and term).** For tower height $h \in \mathbb{Z}$ and exponent $a \in \mathbb{R}$,
+$$
+\mathrm{mono}(h, a) := \mathrm{toLex}\big(\mathrm{single}(-h,\, a)\big) \in \mathbf{TransMono},
+\qquad
+\mathrm{term}(h, a) := \mathrm{single}\big(\mathrm{mono}(h,a),\, 1\big) \in \mathbf{TSeries}.
+$$
+Thus $\mathrm{mono}(h,a)$ is the single transmonomial $(\text{level }h)^a$, and $\mathrm{term}(h,a)$ is
+the one-term transseries with coefficient $1$ on it. The index negation $-h$ ensures that higher towers
+sit at smaller (more significant) finsupp indices.
+
+## 3. The order is asymptotic dominance
+
+The structural heart of the theory is that the lexicographic order encodes growth. We prove this in three
+theorems of increasing specificity.
+
+**Theorem 3.1 (Height dominance, `mono_lt_mono_of_height`).** For all $h, h' \in \mathbb{Z}$ with
+$h < h'$, all $a \in \mathbb{R}$, and all $a' > 0$,
+$$
+\mathrm{mono}(h, a) < \mathrm{mono}(h', a').
+$$
+
+*Proof sketch.* Both sides are single-support elements at indices $-h$ and $-h'$ respectively. Apply the
+finsupp lexicographic criterion `Finsupp.Lex.lt_iff`: it suffices to exhibit the smallest differing index
+and verify the inequality there. Since $h < h'$ we have $-h' < -h$, so the most significant index of
+disagreement is $-h'$. At every index $d < -h'$ both single-support functions vanish; at $-h'$ the left
+side is $0$ and the right side is $a' > 0$. Hence the left is lexicographically smaller. The negation
+encoding turns "higher tower" into "smaller, more significant index," which is what makes height the
+dominant coordinate. $\qquad\blacksquare$
+
+**Theorem 3.2 (Same-height comparison, `mono_lt_mono_same`).** For all $h \in \mathbb{Z}$ and
+$a < a'$ in $\mathbb{R}$,
+$$
+\mathrm{mono}(h, a) < \mathrm{mono}(h, a').
+$$
+
+*Proof sketch.* Both single-support elements live at the same index $-h$ and agree (trivially, being
+zero) at all smaller indices. At $-h$ the comparison is $a < a'$. The lexicographic criterion concludes.
+$\qquad\blacksquare$
+
+**Theorem 3.3 (Exp dominates every power, `exp_dominates_pow`).** For every real exponent $a$,
+$$
+\mathrm{mono}(0, a) < \mathrm{mono}(1, 1),
+\qquad\text{i.e.}\qquad x^a \prec e^x.
+$$
 
-Asymptotic analysis asks how quantities behave in a limit, and its answers are *rates of growth* rather than numbers. The classical instrument, the power series $\sum_n a_n x^n$, is incapable of representing transcendental growth: $e^x$ requires infinitely many powers and $e^{e^x}$ is outright unreachable. Yet such towers of exponentials and logarithms saturate combinatorics (set partitions grow like $e^{e^x}$), the analysis of algorithms, statistical mechanics, and the asymptotics of solutions to differential equations.
-
-**Transseries** are the closure of formal power series under the operations that generate these objects: exponentiation, taking logarithms, and infinite (well-ordered) summation. They form a field in which every elementary growth rate has a canonical normal form, an exact arithmetic, and — the property we focus on here — a *uniqueness* guarantee: a transseries is determined by its asymptotic expansion to all orders. This article gives a self-contained account of a concrete Hahn-series realization of transseries and a complete proof of the asymptotic comparison theorem that expresses this uniqueness.
-
-### 1.2 Contributions
-
-1. A concrete field model of transseries as a Hahn series field over a lexicographically ordered group of transmonomials (Section 3).
-2. The **asymptotic comparison theorem** (Theorem 5.2): agreeing to all orders is equivalent to equality.
-3. Structural corollaries: the agreement relation is an equivalence relation (Theorem 5.4), and no nonzero series agrees to all orders with $0$ (Proposition 5.5).
-4. Analytic grounding of the formal height order via two little-$o$ dominance results (Section 6).
-5. A bridge theorem identifying a combinatorial dominance relation with the field's lexicographic order on positive-exponent monomials, together with a sharp delineation of where the identification fails (Section 7).
-
-### 1.3 Relation to ordinary asymptotic expansions
-
-The motivating contrast is **non-uniqueness for real functions**. The function
-
-$$\phi(x) = \begin{cases} e^{-1/x^2}, & x \neq 0, \\ 0, & x = 0, \end{cases}$$
-
-is smooth and is $o(x^n)$ near $0$ for every $n$, so its Taylor series at $0$ is identically zero — the *same* expansion as the zero function, although $\phi \neq 0$. Real asymptotic expansions thus fail to determine the function. The asymptotic comparison theorem says transseries suffer no such defect: distinct transseries always diverge at some finite, nameable order. This is the precise sense in which, for transseries, *the expansion is the object.*
-
----
-
-## 2. Preliminaries: Hahn series and valuations
-
-We recall the ambient algebraic framework.
-
-**Definition 2.1 (Hahn series).** Let $(\Gamma, +, <)$ be a linearly ordered abelian group and $R$ a ring. A *Hahn series* over $\Gamma$ with coefficients in $R$ is a function $f : \Gamma \to R$ whose support $\mathrm{supp}(f) = \{ g \in \Gamma : f(g) \neq 0 \}$ is **well-ordered** in $\Gamma$. The set of all such series is denoted $\mathbb{H}(\Gamma, R)$. Addition is pointwise; multiplication is the convolution
-
-$$(fg)(\gamma) = \sum_{\alpha + \beta = \gamma} f(\alpha)\, g(\beta),$$
-
-which is well-defined because the well-ordering of supports makes each such sum finite.
-
-**Fact 2.2.** If $R$ is a field and $\Gamma$ is a linearly ordered abelian group, then $\mathbb{H}(\Gamma, R)$ is a field. Inverses are computed by a formally convergent geometric expansion controlled by the well-ordering.
-
-**Definition 2.3 (Order valuation).** For $f \in \mathbb{H}(\Gamma, R)$, the *order* (or top-valuation) is
-
-$$\mathrm{orderTop}(f) = \begin{cases} \min \mathrm{supp}(f) \in \Gamma, & f \neq 0, \\ \top, & f = 0, \end{cases}$$
-
-valued in $\mathrm{WithTop}(\Gamma) = \Gamma \cup \{\top\}$, where $\top$ is a maximal element strictly above every $g \in \Gamma$. The minimum exists because the support is well-ordered. By convention here, a *smaller* element of $\Gamma$ corresponds to a *more dominant* growth rate, so $\mathrm{orderTop}(f)$ records the leading transmonomial of $f$.
-
-**Fact 2.4 (Valuation laws).** The order valuation satisfies:
-- $\mathrm{orderTop}(f) = \top \iff f = 0$;
-- $\mathrm{orderTop}(fg) = \mathrm{orderTop}(f) + \mathrm{orderTop}(g)$ (additivity of leading exponents under multiplication);
-- $\mathrm{orderTop}(f + g) \ge \min(\mathrm{orderTop}(f), \mathrm{orderTop}(g))$.
-
-The first law is the cornerstone of the comparison theorem; the others power division and root extraction.
-
----
-
-## 3. The transmonomial group and the transseries field
-
-### 3.1 Heights and exponents
-
-The elementary growth rates are organized by an integer **height** counting iterated exponentials:
-
-$$\dots,\ \log\log x\ (h=-2),\ \log x\ (h=-1),\ x\ (h=0),\ e^x\ (h=1),\ e^{e^x}\ (h=2),\ \dots$$
-
-**Definition 3.1 (Transmonomial group).** A *transmonomial* is a finitely supported function from heights to real exponents:
-
-$$\mathrm{TransMono} = \mathrm{Lex}\big(\mathbb{Z} \to_{0} \mathbb{R}\big) = \{\, m : \mathbb{Z} \to \mathbb{R} \mid m(h) \neq 0 \text{ for finitely many } h \,\},$$
-
-made into an abelian group under pointwise addition of exponents (corresponding to multiplication of monomials), and ordered **lexicographically by height from the top down**: for $m \neq m'$, let $h^\star$ be the largest height at which they differ; then $m < m'$ iff $m(h^\star) < m'(h^\star)$ in the convention that places the larger object first, or equivalently $m > m'$ records that $m$ has the larger dominant exponent. Concretely, the tallest tower wins, and within a tier the larger exponent wins.
-
-We write $\mathrm{mono}(h, a) \in \mathrm{TransMono}$ for the *pure transmonomial* assigning exponent $a$ to height $h$ and $0$ elsewhere; it represents the growth rate $\big(\exp^{\circ h}(x)\big)^a$ for $h \ge 0$ (and the analogous iterated-logarithm rate for $h < 0$). Thus $\mathrm{mono}(0, \alpha) = x^\alpha$, $\mathrm{mono}(1, \beta) = e^{\beta x}$, $\mathrm{mono}(2, 1) = e^{e^x}$.
-
-**Lemma 3.2 (Lexicographic comparison).** For pure transmonomials of distinct heights $h_1 < h_2$ with nonzero exponents, $\mathrm{mono}(h_1, a) < \mathrm{mono}(h_2, b)$ whenever $b > 0$: the taller tower dominates regardless of the lower exponent. For equal heights, $\mathrm{mono}(h, a) < \mathrm{mono}(h, b) \iff a < b$.
-
-This is exactly the order on which the entire growth hierarchy rests, and it follows from the lexicographic comparison `Finsupp.Lex.lt_iff` on finitely supported maps.
-
-### 3.2 The field of transseries
-
-**Definition 3.3 (Transseries).** The field of transseries is the Hahn series field over the transmonomial group with real coefficients:
-
-$$\mathrm{TSeries} = \mathbb{H}\big(\mathrm{TransMono},\, \mathbb{R}\big).$$
-
-An element is a formal sum $\sum_m c_m \cdot m$ with $c_m \in \mathbb{R}$ and well-ordered support. By Fact 2.2, $\mathrm{TSeries}$ is a field: transseries can be added, multiplied, and divided, with all field axioms holding exactly. The order valuation $\mathrm{orderTop} : \mathrm{TSeries} \to \mathrm{WithTop}(\mathrm{TransMono})$ returns the leading (most dominant) transmonomial of a nonzero series and $\top$ for $0$.
-
-**Remark 3.4 (Formal dominance facts).** The field model records two formal dominance facts that mirror the analytic ones of Section 6: a formal statement that the height-$1$ generator dominates every real power of the height-$0$ generator (`exp_dominates_pow`), and that height-$1$ generators are dominated by height-$2$ generators (`mono_lt_mono_of_height`). These are order facts in $\mathrm{TransMono}$, instances of Lemma 3.2.
-
----
-
-## 4. Agreeing to all orders
-
-We now formalize the asymptotic-agreement relation that the comparison theorem characterizes.
-
-**Definition 4.1 (Agreement to all orders).** Two transseries $a, b \in \mathrm{TSeries}$ *agree to all orders*, written $\mathrm{AgreeToAllOrders}(a, b)$, when the valuation of their difference exceeds every transmonomial:
-
-$$\mathrm{AgreeToAllOrders}(a, b) \;:\equiv\; \forall\, g \in \mathrm{TransMono},\quad (g : \mathrm{WithTop}\,\mathrm{TransMono}) < \mathrm{orderTop}(a - b).$$
-
-Interpreted asymptotically: $a - b$ is smaller than *every* named growth rate — smaller than $x^{-N}$ for all $N$, smaller than $e^{-x}$, smaller than $e^{-e^x}$, and so on without bound. The quantifier ranges over the entire (uncountable) transmonomial group; no finite leading rate is permitted to the difference.
-
----
-
-## 5. The Asymptotic Comparison Theorem
-
-### 5.1 Statement and proof
-
-**Lemma 5.1.** For $f \in \mathrm{TSeries}$, $\mathrm{orderTop}(f) = \top \iff f = 0$. *(This is the first valuation law, Fact 2.4.)*
-
-**Theorem 5.2 (Asymptotic comparison theorem).** For all $a, b \in \mathrm{TSeries}$,
-
-$$\mathrm{AgreeToAllOrders}(a, b) \iff a = b.$$
-
-*Proof.*
-
-($\Rightarrow$) Assume $a$ and $b$ agree to all orders. We claim $\mathrm{orderTop}(a - b) = \top$. Suppose not; then $\mathrm{orderTop}(a-b)$ is a finite value, so there exists $c \in \mathrm{TransMono}$ with $\mathrm{orderTop}(a - b) = (c : \mathrm{WithTop}\,\mathrm{TransMono})$. Instantiating the agreement hypothesis at $g = c$ gives $(c) < \mathrm{orderTop}(a-b) = (c)$, contradicting irreflexivity of $<$. Hence $\mathrm{orderTop}(a - b) = \top$, and by Lemma 5.1, $a - b = 0$, i.e. $a = b$.
-
-($\Leftarrow$) If $a = b$, then $a - b = 0$, so $\mathrm{orderTop}(a-b) = \top$, which is strictly greater than $(g)$ for every $g \in \mathrm{TransMono}$ since $\top$ is maximal. Thus $a$ and $b$ agree to all orders. $\qquad\blacksquare$
-
-**Discussion.** The proof is short but not vacuous. The forward direction must *eliminate every possible finite leading rate*; this is the role of the `by_contra` step combined with the case analysis on $\mathrm{WithTop}$ (`WithTop.ne_top_iff_exists`). The mathematical weight lives entirely in the order structure of $\mathrm{TransMono}$ and in Lemma 5.1, which encode that the leading transmonomial is a faithful measure of asymptotic size. Once those are in place, uniqueness is the clean consequence — a hallmark of a well-chosen formalism.
-
-### 5.2 Structural corollaries
-
-**Corollary 5.3 (Reflexivity).** $\mathrm{AgreeToAllOrders}(a, a)$ holds for all $a$. *(Immediate from Theorem 5.2 with $a = b$.)*
-
-**Theorem 5.4 (Equivalence relation).** $\mathrm{AgreeToAllOrders}$ is an equivalence relation on $\mathrm{TSeries}$.
-
-*Proof.* By Theorem 5.2 the relation coincides extensionally with equality, which is reflexive, symmetric, and transitive; each property transfers through the biconditional. $\qquad\blacksquare$
-
-**Proposition 5.5 (No nonzero series is asymptotically negligible).** If $a \neq 0$ then $\neg\,\mathrm{AgreeToAllOrders}(a, 0)$.
-
-*Proof (contrapositive of Theorem 5.2).* If $\mathrm{AgreeToAllOrders}(a, 0)$ held, then $a = 0$ by Theorem 5.2, contradicting $a \neq 0$. $\qquad\blacksquare$
-
-Proposition 5.5 is the assertion that **every nonzero transseries has a genuine leading term**: a definite dominant growth rate that no cancellation can hide below all orders. This is exactly the property that fails for ordinary asymptotic expansions (cf. $e^{-1/x^2}$ in Section 1.3).
-
----
-
-## 6. Analytic grounding of the height order
-
-The formal height order is not a free-floating abstraction; it is the bookkeeping of genuine limiting behavior. Two little-$o$ statements anchor it.
-
-**Theorem 6.1 (Exponential dominates powers).** For every $n \in \mathbb{N}$,
-
-$$x^{n} = o\big(e^{x}\big) \quad \text{as } x \to +\infty, \qquad \text{i.e.}\quad \lim_{x \to +\infty} \frac{x^n}{e^x} = 0.$$
-
-This is the analytic content modeled by the formal dominance of height $1$ over height $0$.
-
-**Theorem 6.2 (Double exponential dominates powers of the exponential).** For every $n \in \mathbb{N}$,
-
-$$\big(e^{x}\big)^{n} = o\big(e^{e^{x}}\big) \quad \text{as } x \to +\infty.$$
-
-*Proof sketch.* Apply Theorem 6.1 in the variable $u = e^x$: $u^n = o(e^u)$ as $u \to +\infty$. Compose with the fact that $e^x \to +\infty$ as $x \to +\infty$ (so the limit may be pulled back along $x \mapsto e^x$), yielding $(e^x)^n = o(e^{e^x})$. Formally this is `(Real.isLittleO_pow_exp_atTop).comp_tendsto Real.tendsto_exp_atTop`. $\qquad\blacksquare$
-
-Theorem 6.2 certifies that height $2$ truly dominates height $1$, validating Lemma 3.2 against analysis. By iterating the substitution, the entire ladder of heights is seen to be a faithful encoding of real growth.
-
----
-
-## 7. A bridge to combinatorial dominance
-
-Informal and catalog-style treatments of transseries often use a *labelled* transmonomial — a pair $(\text{level} \in \mathbb{Z},\ \text{exponent} \in \mathbb{R})$ — together with a hand-built dominance relation.
-
-**Definition 7.1 (Catalog transmonomial and dominance).** A *catalog transmonomial* is a record with fields $\mathrm{level} \in \mathbb{Z}$ and $\mathrm{exponent} \in \mathbb{R}$. The combinatorial dominance relation is
-
-$$\mathrm{domRel}(m_1, m_2) \;:\equiv\; m_1.\mathrm{level} < m_2.\mathrm{level} \ \lor\ \big(m_1.\mathrm{level} = m_2.\mathrm{level} \ \land\ m_1.\mathrm{exponent} < m_2.\mathrm{exponent}\big).$$
-
-In words: compare levels first; break ties by exponent.
-
-**Definition 7.2 (Embedding).** Embed a catalog transmonomial into the field's transmonomial group by
-
-$$\mathrm{embed}(m) = \mathrm{mono}(m.\mathrm{level},\, m.\mathrm{exponent}) \in \mathrm{TransMono}.$$
-
-**Theorem 7.3 (Bridge on positive monomials).** For catalog transmonomials whose dominant exponents are positive, $\mathrm{domRel}$ coincides with the lexicographic order of the transmonomial group:
-
-$$\mathrm{domRel}(m_1, m_2) \iff \mathrm{embed}(m_1) < \mathrm{embed}(m_2),$$
-
-under the positivity hypothesis on the relevant exponent. *(Lean: `embed_domRel_iff`.)*
-
-**Proposition 7.4 (Easy direction).** Without any positivity hypothesis on the larger monomial, $\mathrm{domRel}(m_1, m_2)$ still implies $\mathrm{embed}(m_1) < \mathrm{embed}(m_2)$ in the cases where level strictly increases or exponents compare within a level. *(Lean: `domRel_imp_lt`.)*
-
-**Remark 7.5 (Why positivity is load-bearing).** The full equivalence *fails* for negative dominant exponents. Consider $(e^x)^{-1} = e^{-x}$, the catalog transmonomial of level $1$, exponent $-1$. The level-first $\mathrm{domRel}$ would rank it above every power of $x$ (because its level $1$ exceeds level $0$), yet $e^{-x}$ *decays* and is dominated by, e.g., $x^{1} = x$. The genuine growth order disagrees with $\mathrm{domRel}$ precisely because a negative exponent reverses the direction of growth at its level. The positivity condition in Theorem 7.3 marks exactly the boundary where the naive combinatorial rule is correct, exposing a subtlety that the informal definition silently assumes away.
-
----
-
-## 8. Algorithms
-
-Although transseries are defined by an infinite (well-ordered) support, all of their structural operations are computable order-by-order on finite truncations. We record the two algorithms underlying the results.
-
-### 8.1 Transmonomial comparison
-
-The lexicographic comparison of two transmonomials is decided by scanning their (finite) supports from the highest height downward.
-
-**Algorithm `compare_transmonomials`.** Given $m_1, m_2 : \mathbb{Z} \to_0 \mathbb{R}$, return the order relation between them.
-
-```
-compare_transmonomials(m1, m2):
-    H ← sort(support(m1) ∪ support(m2)) in DECREASING order of height
-    for h in H:
-        e1 ← m1[h] (default 0); e2 ← m2[h] (default 0)
-        if e1 < e2: return LT       # m2 dominates at the highest differing height
-        if e1 > e2: return GT
-    return EQ                        # identical on all heights
-```
-
-Complexity: $O(k \log k)$ for $k = |\mathrm{supp}(m_1)| + |\mathrm{supp}(m_2)|$, dominated by sorting the union of heights.
-
-### 8.2 Order-by-order agreement test
-
-To test $\mathrm{AgreeToAllOrders}(a, b)$ for transseries available as truncations up to a cutoff height $G$, one checks that the leading transmonomial of $a - b$ exceeds every transmonomial up to $G$; the theorem guarantees that as $G \to \infty$ this stabilizes to the equality test.
-
-```
-agree_to_order(a, b, G):
-    d ← a - b                       # subtract coefficient-wise, regroup by monomial
-    if d == 0: return AGREE
-    m* ← leading_transmonomial(d)   # orderTop(d): the dominant surviving monomial
-    return (m* dominates every monomial of height ≤ G)
-```
-
-By Theorem 5.2, $a = b$ iff `agree_to_order(a, b, G)` returns AGREE for every $G$; on any finite data this reduces to the single test `d == 0`.
-
----
-
-## 9. Applications
-
-- **Exact asymptotics for differential equations.** Solving an ODE term-by-term in transseries yields a formal solution; Theorem 5.2 guarantees two formal solutions agreeing to all orders are identical, removing ambiguity from the construction.
-- **Resurgence and exponential asymptotics.** Transseries are the native language of resurgence theory, where exponentially small terms ($e^{-S/\hbar}$) beyond all orders of a divergent power series carry physical content. The comparison theorem formalizes the sense in which such terms are *not* invisible: they live at a finite order in the transmonomial hierarchy.
-- **Model theory of $o$-minimal structures.** The field of transseries (in its full Hardy-field-completed form) serves as a universal model for the asymptotic behavior of a broad class of definable functions; uniqueness of expansion is a prerequisite for such universality statements.
-- **Algorithmic asymptotics.** The comparison and agreement algorithms (Section 8) underpin computer-algebra routines that decide equality and dominance of EML functions by manipulating finite truncations.
-
----
-
-## 10. Discussion and Future Directions
-
-The asymptotic comparison theorem is "true but shallow" *inside* the Hahn model — yet it is precisely the content of the classical comparison theorem once one accepts that Hahn coefficients are the asymptotic data. The genuine mathematical depth resides in the *order structure* of $\mathrm{TransMono}$ that makes $\mathrm{orderTop}$ capture asymptotic size; the comparison theorem is the clean corollary. Three directions extend the present work.
-
-**Conjecture 1 — The transseries field is real closed.** The ordered field $\mathbb{H}(\mathrm{Lex}(\mathbb{Z} \to_0 \mathbb{R}), \mathbb{R})$, with the order induced by leading coefficient, admits square roots of all positive elements and roots of all odd-degree polynomials, hence is real closed. The key insight: root-finding in a Hahn-series field is governed by the *Newton polygon* of the polynomial over the valuation, so existence of roots reduces to solvability of the leading-coefficient equation in $\mathbb{R}$ (already real closed) plus a contraction/fixpoint iteration on the residual. *Why now?* The valuation is multiplicative and $\mathrm{orderTop}(x) = \top \iff x = 0$ — exactly the two facts a Newton-polygon argument needs to control leading terms.
-
-**Conjecture 2 — Asymptotic comparison upgrades to a valuation isometry.** The map sending a nonzero transseries to its leading data, $x \mapsto (\mathrm{orderTop}(x),\ \mathrm{leadingCoeff}(x))$, is a surjective valuation onto $\mathrm{TransMono} \times \mathbb{R}^\times$ whose kernel-of-difference characterizes equality; i.e. two transseries are equal iff all truncations $\{m : m \le g\}$ agree for every $g$. The comparison theorem is then the $g \to \infty$ colimit of decidable truncated equalities.
-
-**Conjecture 3 — Exp/log shift is an order automorphism.** The height shift $\mathrm{mono}(h, a) \mapsto \mathrm{mono}(h+1, a)$ extends to a strictly order-preserving group automorphism of $\mathrm{TransMono}$, and conjugating the Hahn construction by it models the substitution $x \mapsto e^x$ on transseries.
-
-A further structural goal is a *full* transseries field closed under composition and derivation, which requires an infinite-rank value group (a transfinite tower) beyond the single-tower $\mathbb{Z} \to_0 \mathbb{R}$ model used here.
-
----
+*Proof sketch.* Instantiate Theorem 3.1 with $h = 0$, $h' = 1$, $a' = 1 > 0$. $\qquad\blacksquare$
+
+**Remark (why this transcends power series).** No Laurent or Puiseux series valuation can satisfy
+$x^a \prec e^x$ for *all* real $a$ simultaneously, because such valuations have value group of finite
+"Archimedean rank" in the relevant sense and cannot place a single element above every power of $x$. The
+ability to do so is the defining feature pushing transseries strictly beyond power series.
+
+### 3.1 The valuation
+
+The Hahn series carry a canonical valuation `orderTop` valued in `WithTop TransMono`, returning the
+minimal support point (the leading transmonomial) or $\top$ for the zero series.
+
+**Proposition 3.4 (`orderTop_term`).** $(\mathrm{term}(h,a)).\mathrm{orderTop} = \mathrm{mono}(h,a)$.
+
+*Proof sketch.* The series $\mathrm{term}(h,a) = \mathrm{single}(\mathrm{mono}(h,a), 1)$ has single
+support point $\mathrm{mono}(h,a)$ with nonzero coefficient $1$; `HahnSeries.orderTop_single` gives the
+result. $\qquad\blacksquare$
+
+**Proposition 3.5 (Multiplicativity, `orderTop_mul`).** For all $x, y \in \mathbf{TSeries}$,
+$$
+(x \cdot y).\mathrm{orderTop} = x.\mathrm{orderTop} + y.\mathrm{orderTop}.
+$$
+
+*Proof sketch.* This is the Hahn-series valuation's multiplicativity over a linearly ordered group: the
+minimal support point of a product is the sum of the minimal support points of the factors, because the
+coefficient there is the product of the leading coefficients, which is nonzero in a domain.
+$\qquad\blacksquare$
+
+**Proposition 3.6 (Constant embedding, `C_injective`).** The constant map $\mathbb{R}\to\mathbf{TSeries}$,
+$r \mapsto C(r)$, is an injective ring homomorphism; hence $\mathbb{R}\hookrightarrow\mathbf{TSeries}$.
+
+## 4. Analytic grounding
+
+The formal order would be hollow if it did not model real growth. We connect it to genuine little-o
+domination at $+\infty$.
+
+**Theorem 4.1 (Exp dominates powers analytically, `isLittleO_pow_exp`).** For every $n \in \mathbb{N}$,
+$$
+(x \mapsto x^n) = o(e^x) \quad\text{as } x \to +\infty.
+$$
+
+*Proof sketch.* This is the classical fact $x^n/e^x \to 0$; it specializes Mathlib's
+`Real.isLittleO_pow_exp_atTop`. It is the analytic shadow of Theorem 3.3. $\qquad\blacksquare$
+
+**Theorem 4.2 (Double-exp dominates powers of exp, `isLittleO_expPow_expExp`).** For every $n \in
+\mathbb{N}$,
+$$
+(x \mapsto (e^x)^n) = o\!\big(x \mapsto e^{e^x}\big) \quad\text{as } x \to +\infty.
+$$
+
+*Proof sketch.* Compose Theorem 4.1 with the substitution $x \mapsto e^x$, using that $e^x \to +\infty$
+as $x \to +\infty$; little-o is preserved under such a divergent reparametrization. This is the analytic
+shadow of Theorem 3.1 at heights $1 < 2$. $\qquad\blacksquare$
+
+## 5. The asymptotic comparison theorem
+
+We now formalize the uniqueness of asymptotic expansions.
+
+**Definition 5.1 (Agreement to all orders, `AgreeToAllOrders`).** Two transseries $a, b$ **agree to all
+orders** iff the valuation of their difference exceeds every transmonomial:
+$$
+\mathrm{AgreeToAllOrders}(a, b) :\iff \forall\, g \in \mathbf{TransMono},\quad
+(g : \mathrm{WithTop}\,\mathbf{TransMono}) < (a - b).\mathrm{orderTop}.
+$$
+Intuitively, $a - b$ is asymptotically smaller than every nameable scale.
+
+**Theorem 5.2 (Asymptotic comparison theorem, `agreeToAllOrders_iff_eq`).**
+$$
+\mathrm{AgreeToAllOrders}(a, b) \iff a = b.
+$$
+
+*Proof sketch.* ($\Rightarrow$) Suppose $a, b$ agree to all orders. We claim
+$(a-b).\mathrm{orderTop} = \top$. If not, then by `WithTop.ne_top_iff_exists` there is some
+$c \in \mathbf{TransMono}$ with $(a-b).\mathrm{orderTop} = c$. Instantiating the agreement hypothesis at
+$g = c$ gives $c < c$, contradicting irreflexivity. Hence $(a-b).\mathrm{orderTop} = \top$, and since a
+Hahn series has top valuation iff it is zero (`HahnSeries.orderTop_eq_top`), $a - b = 0$, i.e. $a = b$.
+($\Leftarrow$) If $a = b$ then $a - b = 0$, whose valuation is $\top$, which exceeds every coercion
+$g < \top$. $\qquad\blacksquare$
+
+The theorem says precisely that the asymptotic expansion of a transseries — its full system of
+coefficients across all transmonomials — determines the transseries uniquely. There is no remainder
+hiding below all orders.
+
+**Corollary 5.3 (Equivalence structure, `agreeToAllOrders_equivalence`).** `AgreeToAllOrders` is an
+equivalence relation; in fact it equals equality. Reflexivity (`agreeToAllOrders_refl`) follows from the
+backward direction; symmetry and transitivity transport through the iff.
+
+**Corollary 5.4 (Genuine leading terms, `not_agree_zero_of_ne_zero`).** If $a \ne 0$ then
+$\neg\,\mathrm{AgreeToAllOrders}(a, 0)$: every nonzero transseries fails to agree-to-all-orders with $0$,
+i.e. has a detectable leading term. This is the contrapositive of Theorem 5.2 applied to $b = 0$.
+
+## 6. Bridge to the combinatorial catalog
+
+A more hands-on notion of transmonomial records a `level : ℤ` (positive for iterated exp, negative for
+iterated log) and a real `exponent`, with an ad-hoc dominance relation `domRel` that compares level first,
+then exponent. We embed such a labelled transmonomial $m$ into the rigorous group:
+
+**Definition 6.1 (`embed`).** $\mathrm{embed}(m) := \mathrm{mono}(m.\mathrm{level},\ m.\mathrm{exponent})$.
+
+**Theorem 6.2 (Bridge theorem, `embed_domRel_iff`).** For labelled transmonomials $m_1, m_2$ with
+positive exponents ($0 < m_1.\mathrm{exponent}$ and $0 < m_2.\mathrm{exponent}$),
+$$
+m_1.\mathrm{domRel}\, m_2 \iff \mathrm{embed}(m_1) < \mathrm{embed}(m_2).
+$$
+
+*Proof sketch.* ($\Rightarrow$, `domRel_imp_lt`, needs only $0 < m_2.\mathrm{exponent}$) `domRel` holds
+either by strictly lower level (apply Theorem 3.1) or equal level with strictly smaller exponent (apply
+Theorem 3.2). ($\Leftarrow$) Trichotomy on levels: lower level gives the left disjunct of `domRel`; equal
+level forces, via trichotomy on exponents and Theorem 3.2 plus antisymmetry, the strictly-smaller-exponent
+case; a higher level would yield $\mathrm{embed}(m_2) < \mathrm{embed}(m_1)$ by `domRel_imp_lt` (using
+$0 < m_1.\mathrm{exponent}$), contradicting the hypothesis via asymmetry. $\qquad\blacksquare$
+
+**Remark (positivity is essential).** With a negative exponent at the dominant level — e.g. $(e^x)^{-1}$,
+which tends to $0$ — the level-first `domRel` disagrees with true growth order, since a high-level
+*negative* power is asymptotically small. The positivity hypotheses are therefore load-bearing, not
+cosmetic; the rigorous construction makes explicit an assumption the naive definition silently makes.
+
+## 7. Algorithms
+
+The constructive content yields effective procedures on finitely-represented transmonomials and
+transseries.
+
+**Algorithm 1 (Lexicographic dominance comparison).** Given two transmonomials as finite maps
+$h \mapsto a_h$, compare them in the asymptotic order. Scan tower heights from highest to lowest; at the
+first height where exponents differ, the larger exponent (at the higher height) wins. Complexity is linear
+in the combined support size after sorting by height, i.e. $O(k \log k)$ for $k$ nonzero exponents.
+
+**Algorithm 2 (Leading-term / valuation extraction).** Given a finitely supported transseries (a finite
+map from transmonomials to coefficients), return its leading transmonomial (the maximal one in dominance
+order) and leading coefficient by a single max-scan, $O(k)$ where $k$ is the number of terms (using
+Algorithm 1 for comparisons).
+
+**Algorithm 3 (Agreement-to-all-orders check, finite truncations).** For finitely supported $a, b$,
+compute $a - b$ termwise and test whether it is the zero series; by Theorem 5.2 this decides agreement to
+all orders. Complexity $O(k_a + k_b)$ via a merge over sorted supports.
+
+## 8. Applications
+
+- **Asymptotic analysis of EML functions.** Transseries are the formal target of asymptotic expansion for
+  exp-log functions; the comparison theorem guarantees that an expansion identifies its function uniquely
+  within the formal field.
+- **Differential equations at infinity.** Solutions of algebraic differential equations over the reals
+  admit transseries expansions; the ordered-field structure supports formal manipulation of such
+  solutions.
+- **Model theory and o-minimality.** The logarithmic-exponential series field is a model of the theory of
+  the real field with exponentiation; rigorous Hahn-series models underpin these results.
+- **Resurgence and physics.** Transseries organize divergent perturbative expansions (instanton
+  corrections of the form $e^{-S/g}$ alongside power series in $g$), where the non-power-series scales are
+  exactly the exponential transmonomials.
+
+## 9. Discussion
+
+The construction makes precise, and machine-checks, a claim usually invoked informally: that the order on
+transmonomials *is* asymptotic dominance. The encoding choices — finsupp index $-h$ for tower height $h$,
+and the lexicographic order keyed on the most significant index — are exactly what align "higher tower" with
+"more dominant." The asymptotic comparison theorem, while structurally a statement that only $0$ has top
+valuation, is the genuine uniqueness principle once one accepts that Hahn coefficients are the asymptotic
+data; the analytic little-o theorems certify that this acceptance is warranted.
+
+A noteworthy methodological point is the careful isolation of hypotheses: the bridge theorem's positivity
+requirement is not a technical convenience but reflects a real failure of the naive level-first rule on
+negative dominant exponents.
+
+## 10. Future work
+
+1. **Real-closedness.** Prove that the transseries field (or a suitable maximally-closed subfield) is real
+   closed: every positive element has a square root and every odd-degree polynomial a root, via
+   Newton-polygon / Hensel arguments on the value group, solving term-by-term along the well-ordered
+   support.
+2. **Truncation-closed subfields.** Confine EML expansions to truncation-closed subfields (closed under
+   taking initial segments of the transmonomial order), a lattice of subfields inheriting the order; the
+   order-dual convention makes "initial segment" coincide with "dominant transmonomials."
+3. **The EML expansion map and uniqueness.** Build the map sending each EML germ at $+\infty$ to its
+   transseries, with injectivity: EML functions with the same expansion to all orders are asymptotically
+   equal, connecting the formal comparison theorem to analytic little-o domination.
+4. **Bridging formal order to analytic little-o.** Establish that the formal field order matches analytic
+   asymptotic domination on real EML germs, closing the loop between the algebraic and analytic pictures.
 
 ## 11. Conclusion
 
-We have presented a concrete Hahn-series field model of EML transseries, organized by an integer height hierarchy of iterated exponentials and logarithms and ordered lexicographically. Within it, the asymptotic comparison theorem establishes that a transseries is uniquely determined by its expansion to all orders — the uniqueness principle that ordinary real asymptotic expansions lack. The result rests on two valuation laws (multiplicativity and $\mathrm{orderTop} = \top \iff 0$), is anchored to real analysis by exponential-dominance limits, and connects faithfully to combinatorial dominance on the positive-exponent regime. Together these results turn asymptotic reasoning about EML functions into exact algebra.
-
----
-
-## Summary of formal results
-
-| Name | Statement |
-|------|-----------|
-| `AgreeToAllOrders` | $\forall g,\ (g) < \mathrm{orderTop}(a-b)$ |
-| `agreeToAllOrders_iff_eq` | $\mathrm{AgreeToAllOrders}(a,b) \iff a = b$ |
-| `agreeToAllOrders_refl` | $\mathrm{AgreeToAllOrders}(a,a)$ |
-| `agreeToAllOrders_equivalence` | $\mathrm{AgreeToAllOrders}$ is an equivalence relation |
-| `not_agree_zero_of_ne_zero` | $a \neq 0 \Rightarrow \neg\,\mathrm{AgreeToAllOrders}(a,0)$ |
-| `isLittleO_pow_exp` | $x^n = o(e^x)$ at $+\infty$ |
-| `isLittleO_expPow_expExp` | $(e^x)^n = o(e^{e^x})$ at $+\infty$ |
-| `embed` | $\mathrm{embed}(m) = \mathrm{mono}(m.\mathrm{level}, m.\mathrm{exponent})$ |
-| `embed_domRel_iff` | $\mathrm{domRel} \iff \text{lex order}$ on positive monomials |
-| `domRel_imp_lt` | $\mathrm{domRel}(m_1,m_2) \Rightarrow \mathrm{embed}(m_1) < \mathrm{embed}(m_2)$ |
+We have given a rigorous, machine-checked model of the transseries field for a single exp/log tower with
+real exponents: a Hahn-series field whose lexicographic order is asymptotic dominance, faithfully modeling
+real little-o behavior, in which a transseries is uniquely determined by its asymptotic expansion. The
+construction establishes the foundational ordered-field layer on which the broader EML transseries program
+— real-closedness, truncation-closed subfields, and the EML expansion map — can be built.

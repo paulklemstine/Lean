@@ -4,11 +4,81 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-24T09:33:05Z",
+    "domain": "Novelty",
+    "exp_id": "f0048c68",
+    "filename": "symmetric_group_generation_probability.json",
+    "pkg_num": 25,
+    "quality": "partial",
+    "quality_score": 0.4162,
+    "title": "The Three-Quarter Generation Ceiling for the Symmetric Group"
+  },
+  {
+    "date": "2026-06-24T08:38:58Z",
+    "domain": "Algebra",
+    "exp_id": "bcd85103",
+    "filename": "type_theory_cubical_type_theory_foundations.json",
+    "pkg_num": 24,
+    "quality": "partial",
+    "quality_score": 0.63257,
+    "title": "Cubical Foundations: A Set-Level Quotient Model of the Circle and Torus"
+  },
+  {
+    "date": "2026-06-24T08:09:20Z",
+    "domain": "Novelty",
+    "exp_id": "1e3d4863",
+    "filename": "whitehead_problem_independence_from_zfc.json",
+    "pkg_num": 23,
+    "quality": "substantial",
+    "quality_score": 0.729932,
+    "title": "The Whitehead Problem: The ZFC-Provable Skeleton via Projectivity and the Cyclic Obstruction"
+  },
+  {
+    "date": "2026-06-24T07:42:39Z",
+    "domain": "Pythagorean",
+    "exp_id": "67990ab1",
+    "filename": "nisq_optimized_quantum_error_mitigation_via_algebr.json",
+    "pkg_num": 22,
+    "quality": "partial",
+    "quality_score": 0.48928166666666667,
+    "title": "The Berggren Pythagorean Tree as Linear Dynamics on Euclid Generator Pairs"
+  },
+  {
+    "date": "2026-06-24T06:45:24Z",
+    "domain": "Tropical",
+    "exp_id": "f9dc8407",
+    "filename": "tropical_curves_and_chip_firing_games.json",
+    "pkg_num": 21,
+    "quality": "partial",
+    "quality_score": 0.6342000000000001,
+    "title": "Tropical Curves and Chip-Firing: Degree Invariance and the Canonical Genus Formula"
+  },
+  {
+    "date": "2026-06-24T06:14:07Z",
+    "domain": "Cryptography",
+    "exp_id": "d453f6ce",
+    "filename": "secret_sharing_shamirs_scheme_and_verifiable_varia.json",
+    "pkg_num": 20,
+    "quality": "partial",
+    "quality_score": 0.5671600000000001,
+    "title": "Secret Sharing: Shamir's Scheme and Verifiable Feldman Variants"
+  },
+  {
+    "date": "2026-06-24T05:17:28Z",
+    "domain": "Geometry",
+    "exp_id": "81f9ab1d",
+    "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
+    "pkg_num": 19,
+    "quality": "substantial",
+    "quality_score": 0.702,
+    "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+  },
+  {
     "date": "2026-06-24T04:39:42Z",
     "domain": "Geometry",
     "exp_id": "146bc8b0",
     "filename": "homotopy_type_theory_foundations.json",
-    "pkg_num": 19,
+    "pkg_num": 18,
     "quality": "partial",
     "quality_score": 0.48341799999999996,
     "title": "Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence"
@@ -18,7 +88,7 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "exp_id": "f39e2cb3",
     "filename": "langlands_correspondence_gl1_case.json",
-    "pkg_num": 18,
+    "pkg_num": 17,
     "quality": "partial",
     "quality_score": 0.57755,
     "title": "The GL(1) Langlands Correspondence over the Rationals: A Cyclotomic Isomorphism"
@@ -28,7 +98,7 @@ window.PACKAGE_INDEX = [
     "domain": "Physics",
     "exp_id": "7e71ceda",
     "filename": "hamiltonian_compression_factor_of_cubic_edge_trans.json",
-    "pkg_num": 17,
+    "pkg_num": 16,
     "quality": "partial",
     "quality_score": 0.48598591282051284,
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs: A Verified Mobius-Ladder Symmetry Certificate"
@@ -38,7 +108,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "a5fa8083",
     "filename": "close_proofs_these_conjectures_continue_the_resear.json",
-    "pkg_num": 16,
+    "pkg_num": 15,
     "quality": "substantial",
     "quality_score": 0.789328,
     "title": "The Fitting Kernel Bound: Sharp Stabilization of Iterated-Endomorphism Kernels"
@@ -48,7 +118,7 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical",
     "exp_id": "e56a1e16",
     "filename": "eml_universal_approximation_density_of_eml_functio.json",
-    "pkg_num": 15,
+    "pkg_num": 14,
     "quality": "substantial",
     "quality_score": 0.86528,
     "title": "EML Universal Approximation: Density of Exp-Log Functions on the Unit Cube"
@@ -58,7 +128,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "0dfef380",
     "filename": "proof_automation_custom_lean_4_tactics.json",
-    "pkg_num": 14,
+    "pkg_num": 13,
     "quality": "substantial",
     "quality_score": 0.7484,
     "title": "The Coefficient That Counts Primes: A Binomial \u2192 Prime-Distribution Bridge"
@@ -68,7 +138,7 @@ window.PACKAGE_INDEX = [
     "domain": "Physics",
     "exp_id": "2b44c5bb",
     "filename": "statistical_mechanics_ising_model_phase_transition.json",
-    "pkg_num": 13,
+    "pkg_num": 12,
     "quality": "partial",
     "quality_score": 0.6913,
     "title": "Statistical Mechanics: The Self-Dual Critical Point of the 2D Ising Model"
@@ -78,7 +148,7 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "exp_id": "5a2118a3",
     "filename": "quantum_key_distribution_bb84_security_proof.json",
-    "pkg_num": 12,
+    "pkg_num": 11,
     "quality": "partial",
     "quality_score": 0.49160000000000004,
     "title": "Quantum Key Distribution: A Formally Verified BB84 Security Proof"
@@ -88,7 +158,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "0de5396c",
     "filename": "rucker_gnarl_and_continuous_valued_cellular_automa.json",
-    "pkg_num": 11,
+    "pkg_num": 10,
     "quality": "partial",
     "quality_score": 0.5094479615384615,
     "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
@@ -98,7 +168,7 @@ window.PACKAGE_INDEX = [
     "domain": "Probability",
     "exp_id": "57fbcb2f",
     "filename": "oeis_sequence_orderly_friedman_numbers_or_good_or_.json",
-    "pkg_num": 10,
+    "pkg_num": 9,
     "quality": "partial",
     "quality_score": 0.48476875555555554,
     "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order"
@@ -108,7 +178,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "07255b71",
     "filename": "sierpiski_numbers_covering_systems.json",
-    "pkg_num": 9,
+    "pkg_num": 8,
     "quality": "partial",
     "quality_score": 0.5811999999999999,
     "title": "Sierpinski Numbers via Covering Systems: A Certificate Framework"
@@ -118,7 +188,7 @@ window.PACKAGE_INDEX = [
     "domain": "MachineLearning",
     "exp_id": "62850b85",
     "filename": "attention_mechanisms_mathematical_properties.json",
-    "pkg_num": 8,
+    "pkg_num": 7,
     "quality": "partial",
     "quality_score": 0.4446527272727273,
     "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
@@ -128,7 +198,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "d1c9c6b9",
     "filename": "sperners_lemma_implies_nash_equilibria_combinatori.json",
-    "pkg_num": 7,
+    "pkg_num": 6,
     "quality": "partial",
     "quality_score": 0.6288,
     "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
@@ -138,7 +208,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "54153a72",
     "filename": "convex_geometry_brunn_minkowski_theory.json",
-    "pkg_num": 6,
+    "pkg_num": 5,
     "quality": "partial",
     "quality_score": 0.56159,
     "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
@@ -148,7 +218,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "70e63d82",
     "filename": "bridge_galois_connections_between_order_theory_and.json",
-    "pkg_num": 5,
+    "pkg_num": 4,
     "quality": "partial",
     "quality_score": 0.47904,
     "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
@@ -158,20 +228,10 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "exp_id": "cb79327f",
     "filename": "elliptic_curve_cryptography_weil_pairing_and_bls_s.json",
-    "pkg_num": 4,
+    "pkg_num": 3,
     "quality": "substantial",
     "quality_score": 0.77,
     "title": "Elliptic Curve Cryptography: The Weil Pairing, BLS Signatures, and the MOV Reduction"
-  },
-  {
-    "date": "2026-06-23T01:43:47Z",
-    "domain": "Applications",
-    "exp_id": "bfb13379",
-    "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
-    "pkg_num": 3,
-    "quality": "partial",
-    "quality_score": 0.46096,
-    "title": "EML Transseries: A Hahn-Series Field and the Asymptotic Comparison Theorem"
   },
   {
     "date": "2026-06-23T01:40:46Z",
@@ -237,12 +297,12 @@ window.PACKAGE_DB_INDEX = {
     "title": "Elliptic Curve Cryptography: The Weil Pairing, BLS Signatures, and the MOV Reduction"
   },
   "eml_transseries_asymptotic_expansions_beyond_power.json": {
-    "domain": "Applications",
-    "exp_id": "bfb13379",
+    "domain": "Geometry",
+    "exp_id": "81f9ab1d",
     "source_exp_ids": [
       "seed"
     ],
-    "title": "EML Transseries: A Hahn-Series Field and the Asymptotic Comparison Theorem"
+    "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
   "eml_universal_approximation_density_of_eml_functio.json": {
     "domain": "Tropical",
@@ -284,6 +344,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The GL(1) Langlands Correspondence over the Rationals: A Cyclotomic Isomorphism"
   },
+  "nisq_optimized_quantum_error_mitigation_via_algebr.json": {
+    "domain": "Pythagorean",
+    "exp_id": "67990ab1",
+    "source_exp_ids": [
+      "pi_brainstorm"
+    ],
+    "title": "The Berggren Pythagorean Tree as Linear Dynamics on Euclid Generator Pairs"
+  },
   "oeis_sequence_orderly_friedman_numbers_or_good_or_.json": {
     "domain": "Probability",
     "exp_id": "57fbcb2f",
@@ -324,6 +392,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
   },
+  "secret_sharing_shamirs_scheme_and_verifiable_varia.json": {
+    "domain": "Cryptography",
+    "exp_id": "d453f6ce",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Secret Sharing: Shamir's Scheme and Verifiable Feldman Variants"
+  },
   "sierpiski_numbers_covering_systems.json": {
     "domain": "Computation",
     "exp_id": "07255b71",
@@ -347,6 +423,38 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Statistical Mechanics: The Self-Dual Critical Point of the 2D Ising Model"
+  },
+  "symmetric_group_generation_probability.json": {
+    "domain": "Novelty",
+    "exp_id": "f0048c68",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "The Three-Quarter Generation Ceiling for the Symmetric Group"
+  },
+  "tropical_curves_and_chip_firing_games.json": {
+    "domain": "Tropical",
+    "exp_id": "f9dc8407",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Tropical Curves and Chip-Firing: Degree Invariance and the Canonical Genus Formula"
+  },
+  "type_theory_cubical_type_theory_foundations.json": {
+    "domain": "Algebra",
+    "exp_id": "bcd85103",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Cubical Foundations: A Set-Level Quotient Model of the Circle and Torus"
+  },
+  "whitehead_problem_independence_from_zfc.json": {
+    "domain": "Novelty",
+    "exp_id": "1e3d4863",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "The Whitehead Problem: The ZFC-Provable Skeleton via Projectivity and the Cyclic Obstruction"
   }
 };
 
@@ -370,7 +478,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 272,
+      "hue": 92,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -379,20 +487,9 @@ window.PACKAGE_GRAPH = {
       "title": "Primality Testing: A Formally Verified AKS Polynomial Criterion"
     },
     {
-      "date": "2026-06-23T01:43:47Z",
-      "domain": "Applications",
-      "hue": 271,
-      "id": "eml_transseries_asymptotic_expansions_beyond_power",
-      "primary_domain": "Bridges",
-      "priority_score": 0.46096,
-      "quality": "partial",
-      "shape": "icosahedron",
-      "title": "EML Transseries: A Hahn-Series Field and the Asymptotic Comparison Theorem"
-    },
-    {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 91,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -403,7 +500,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 90,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -414,7 +511,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 292,
+      "hue": 92,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
@@ -425,7 +522,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 275,
+      "hue": 272,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.6288,
@@ -436,7 +533,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 95,
+      "hue": 271,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -458,7 +555,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T11:40:38Z",
       "domain": "Probability",
-      "hue": 270,
+      "hue": 90,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
       "priority_score": 0.48476875555555554,
@@ -469,7 +566,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T15:01:50Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 90,
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
       "primary_domain": "Bridges",
       "priority_score": 0.5094479615384615,
@@ -480,7 +577,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T19:25:16Z",
       "domain": "Cryptography",
-      "hue": 270,
+      "hue": 91,
       "id": "quantum_key_distribution_bb84_security_proof",
       "primary_domain": "Cryptography",
       "priority_score": 0.49160000000000004,
@@ -491,7 +588,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T00:21:07Z",
       "domain": "Physics",
-      "hue": 275,
+      "hue": 91,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Physics",
       "priority_score": 0.6913,
@@ -502,7 +599,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:21:56Z",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 275,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
       "priority_score": 0.7484,
@@ -513,7 +610,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:35:46Z",
       "domain": "Tropical",
-      "hue": 272,
+      "hue": 359,
       "id": "eml_universal_approximation_density_of_eml_functio",
       "primary_domain": "Tropical",
       "priority_score": 0.86528,
@@ -524,7 +621,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:59:38Z",
       "domain": "Computation",
-      "hue": 270,
+      "hue": 271,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Computation",
       "priority_score": 0.789328,
@@ -535,7 +632,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T02:14:47Z",
       "domain": "Physics",
-      "hue": 90,
+      "hue": 270,
       "id": "hamiltonian_compression_factor_of_cubic_edge_trans",
       "primary_domain": "Physics",
       "priority_score": 0.48598591282051284,
@@ -557,13 +654,90 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T04:39:42Z",
       "domain": "Geometry",
-      "hue": 271,
+      "hue": 92,
       "id": "homotopy_type_theory_foundations",
       "primary_domain": "Geometry",
       "priority_score": 0.48341799999999996,
       "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence"
+    },
+    {
+      "date": "2026-06-24T05:17:28Z",
+      "domain": "Geometry",
+      "hue": 95,
+      "id": "eml_transseries_asymptotic_expansions_beyond_power",
+      "primary_domain": "Geometry",
+      "priority_score": 0.702,
+      "quality": "substantial",
+      "shape": "hexagonal_prism",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "date": "2026-06-24T06:14:07Z",
+      "domain": "Cryptography",
+      "hue": 89,
+      "id": "secret_sharing_shamirs_scheme_and_verifiable_varia",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.5671600000000001,
+      "quality": "partial",
+      "shape": "dodecahedron",
+      "title": "Secret Sharing: Shamir's Scheme and Verifiable Feldman Variants"
+    },
+    {
+      "date": "2026-06-24T06:45:24Z",
+      "domain": "Tropical",
+      "hue": 90,
+      "id": "tropical_curves_and_chip_firing_games",
+      "primary_domain": "Tropical",
+      "priority_score": 0.6342000000000001,
+      "quality": "partial",
+      "shape": "star",
+      "title": "Tropical Curves and Chip-Firing: Degree Invariance and the Canonical Genus Formula"
+    },
+    {
+      "date": "2026-06-24T07:42:39Z",
+      "domain": "Pythagorean",
+      "hue": 271,
+      "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
+      "primary_domain": "Pythagorean",
+      "priority_score": 0.48928166666666667,
+      "quality": "partial",
+      "shape": "triangular_prism",
+      "title": "The Berggren Pythagorean Tree as Linear Dynamics on Euclid Generator Pairs"
+    },
+    {
+      "date": "2026-06-24T08:09:20Z",
+      "domain": "Novelty",
+      "hue": 280,
+      "id": "whitehead_problem_independence_from_zfc",
+      "primary_domain": "Bridges",
+      "priority_score": 0.729932,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "The Whitehead Problem: The ZFC-Provable Skeleton via Projectivity and the Cyclic Obstruction"
+    },
+    {
+      "date": "2026-06-24T08:38:58Z",
+      "domain": "Algebra",
+      "hue": 275,
+      "id": "type_theory_cubical_type_theory_foundations",
+      "primary_domain": "Algebra",
+      "priority_score": 0.63257,
+      "quality": "partial",
+      "shape": "tetrahedron",
+      "title": "Cubical Foundations: A Set-Level Quotient Model of the Circle and Torus"
+    },
+    {
+      "date": "2026-06-24T09:33:05Z",
+      "domain": "Novelty",
+      "hue": 281,
+      "id": "symmetric_group_generation_probability",
+      "primary_domain": "Bridges",
+      "priority_score": 0.4162,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "The Three-Quarter Generation Ceiling for the Symmetric Group"
     }
   ]
 };

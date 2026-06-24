@@ -1503,6 +1503,20 @@ def resolve_all_conflicts() -> bool:
                 
     return resolved_any
 
+def _clean_stale_git_locks():
+    """Remove .git/index.lock if no git process is running."""
+    lock_file = REPO_ROOT / ".git" / "index.lock"
+    if lock_file.exists():
+        try:
+            r = subprocess.run(["pgrep", "-x", "git"], capture_output=True)
+            if r.returncode != 0:
+                print(f"[Tick] Found stale {lock_file} with no active git process. Removing...")
+                lock_file.unlink(missing_ok=True)
+            else:
+                print(f"[Tick] Found {lock_file} but git is running. Leaving it alone.")
+        except Exception as e:
+            print(f"[Tick] Failed to clean stale git lock: {e}")
+
 
 def rebuild_commit_push() -> bool:
     """Rebuild website index, sync to docs/, commit all changes, and push to git.
@@ -1637,6 +1651,9 @@ def rebuild_commit_push() -> bool:
                 print("[Tick] Auto-generated files regenerated after conflict")
             else:
                 print(f"[Tick] Regeneration failed: {r.stderr}")
+
+    # Clean any stale git locks from previous runs before starting automated git ops
+    _clean_stale_git_locks()
 
     # Git add only changed files (not -A which scans everything)
     try:

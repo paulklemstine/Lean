@@ -1,98 +1,236 @@
-# When Paths Become Proofs: A New Mathematics of Identity
+# Building a Doughnut Out of Two Circles: A Tour of Cubical Geometry
 
-*How a radical rethinking of what "equals" means is connecting geometry, physics, and logic in ways nobody expected*
+## The shape of a piece of string
 
----
+Take a single piece of string. Hold one end in your left hand and the other
+end in your right hand. As it lies between your hands, it is the simplest
+geometric object imaginable: an *interval*, a line segment that begins at one
+point and ends at another. Mathematicians call the idealized version of this
+the **unit interval**, the set of all real numbers $t$ with $0 \le t \le 1$.
+Its two endpoints, $0$ and $1$, are genuinely different places — you can pinch
+them, label them, and tell them apart.
 
-What does it mean for two things to be the same? The question sounds almost childishly simple. Two plus two equals four. A circle is a circle. Your reflection in a mirror is you — sort of.
+Now bring your two hands together and tie the ends into a loop. Something
+remarkable has happened. The two endpoints, which a moment ago were distinct,
+are now *the same point*. The string has become a circle. You did not add any
+material; you did not stretch it; you simply declared that two points should be
+treated as one. The geometry of the circle is born entirely from a single act
+of **gluing**.
 
-But mathematicians have spent the better part of a century wrestling with this question, and their answers have upended entire fields. The latest chapter in this story involves a seemingly bizarre idea: that equality itself has *shape*. That the statement "A equals B" doesn't merely record a fact — it traces a *path* through mathematical space, and different paths carry different information about *how* and *why* two things are identical.
+This little experiment is the seed of an entire modern viewpoint on geometry
+and logic called **cubical type theory**. The central slogan is disarmingly
+simple: *spaces are built from intervals, and the interesting structure lives
+in how the endpoints are glued together.* A path is just a map out of an
+interval. A loop is a path whose two ends land on the same spot. A surface is a
+map out of a square. And complicated spaces — circles, doughnuts, spheres — are
+assembled by recording, very explicitly, which boundary pieces of these basic
+cubes are to be identified.
 
-This idea, which goes by the technical name of *cubical type theory*, has just taken a significant leap forward. Researchers have built a working computational framework that makes these "paths of identity" into concrete, checkable mathematical objects — and in doing so, they've uncovered unexpected connections between the foundations of mathematics, Einstein's theory of relativity, and the topology of shapes.
+This article tells the story of a small, self-contained mathematical world in
+which exactly this philosophy is carried out with complete precision. We will
+build the circle from an interval, build the torus (the surface of a doughnut)
+from a square, and then prove a clean and satisfying fact: **the torus is
+nothing more than two circles multiplied together.**
 
-## The Trouble with Equals Signs
+## Gluing as a mathematical operation
 
-Every student learns that the equals sign is simple: it says two sides are the same. But consider this. You can prove that 2 + 3 = 5 by counting. You can also prove it by rearranging blocks, or by appealing to the definition of addition, or by using properties of the number line. Each proof is different. Each takes a different *route* to the same conclusion.
+The everyday word "gluing" hides a precise mathematical machine called a
+**quotient**. Suppose you have a collection of points and a rule that says
+which points should be regarded as the same. The quotient is the new collection
+you obtain after honoring that rule — every group of "to-be-identified" points
+collapses into a single new point, and everything else is carried along
+untouched.
 
-Classical mathematics says: "Who cares? Equal is equal." But starting in the 2000s, a group of mathematicians — inspired by the Fields Medal–winning work of Vladimir Voevodsky — argued that this attitude throws away valuable information. The different *proofs* of an equality are like different paths connecting two cities. The fact that a path exists tells you the cities are connected, but the paths themselves carry geometric information: one might go through mountains, another along the coast.
+To build the circle, we start with the interval and impose exactly one gluing
+rule:
 
-This is not a metaphor. In a precise mathematical sense, proofs of equality *are* paths. And the collection of all such paths between two objects forms a space — a *path space* — with its own geometry.
+$$\text{glue the point } 0 \text{ to the point } 1.$$
 
-## Building an Interval from Scratch
+We write this rule as a relation: the point $0$ is *related* to the point $1$,
+and to nothing else. Forming the quotient of the interval by this relation
+produces a brand-new space. We call it the **Circle**. Every point of the
+interval becomes a point of the circle, but the two former endpoints now
+coincide. Their shared image is a distinguished point we call the **base
+point**.
 
-The new framework starts with the simplest possible geometric object: an interval. Think of a line segment with two endpoints — call them 0 and 1. A "path" from A to B is then a function that starts at A when you plug in 0 and arrives at B when you plug in 1. In between, it traces a continuous route through whatever mathematical universe you're working in.
+There is a canonical way to view the original interval sitting inside the
+circle: the map that sends each interval point $t$ to its image in the circle.
+This map is the **loop**. It is the formal embodiment of "running once around
+the circle." And it satisfies precisely the property we engineered:
 
-This sounds obvious, but the power lies in what you can *do* with these paths once you have them.
+$$\text{loop}(0) = \text{base} = \text{loop}(1).$$
 
-The first major theorem proved in the new framework is called *cubical function extensionality*. Stated informally: if two functions agree pointwise — meaning they give the same output for every input — then they are connected by a path in the space of all functions. This is not trivial. The space of functions is infinite-dimensional, and the theorem says that pointwise agreement is enough to guarantee a global geometric connection.
+In words: the loop starts at the base point and ends at the base point. The two
+endpoints of the string have been tied together. Nothing else has been
+identified — every interior point of the loop is still its own distinct place
+on the circle.
 
-The proof is elegant. Given functions *f* and *g* and a path between *f(x)* and *g(x)* for every input *x*, you construct a function-space path by evaluating all the pointwise paths simultaneously. At interval parameter *t*, the path gives you the function *x ↦ (path from f(x) to g(x), evaluated at t)*. The endpoints work out exactly, and you have your global path.
+## How to use a circle: the recursion principle
 
-## Equivalences Preserve Geometry
+Building a space is only half the job. The other half is knowing how to *use*
+it — how to define functions out of it. Here cubical thinking offers an elegant
+and rigid answer, and it is worth pausing on because it is the real engine of
+the subject.
 
-The second breakthrough involves *equivalences* — bijective correspondences between mathematical structures. When you have a perfect dictionary translating between type A and type B (every element of A maps to exactly one element of B, and vice versa), the classical view says A and B are "essentially the same." But the cubical view says something much stronger: the *path geometry* is preserved.
+Suppose you want to define a function from the circle to some target collection
+$X$. The circle was built from the interval by gluing, so a function out of the
+circle is "the same as" a function out of the interval — **provided** that
+function respects the gluing. Concretely:
 
-The theorem says that the mapping between A and B induces a bijection between their path spaces. If there's a path from *a* to *a'* in A, there's a corresponding path from their translations in B — and this correspondence is one-to-one and onto. No paths are created or destroyed by the equivalence.
+> **Recursion principle for the circle.** To define a map from the circle to a
+> set $X$, it suffices to give a map $f$ from the interval to $X$ together with
+> a single proof that the two endpoints agree, $f(0) = f(1)$. This data induces
+> a unique map out of the circle.
 
-This result is sometimes called a "shadow of univalence," referencing Voevodsky's famous Univalence Axiom, which asserts that equivalent structures are literally identical. The new framework doesn't go quite that far — it doesn't require modifying the logical foundations — but it captures the essential geometric content: equivalences don't just preserve cardinality; they preserve the full topology of identity.
+This is a contract. The map $f$ tells you where every point of the loop should
+go. The equation $f(0) = f(1)$ is the toll you must pay for the gluing: since
+the circle identified $0$ with $1$, any function out of the circle is obliged
+to send them to the same place. Pay the toll, and you get your function.
 
-## When Physics Meets Paths
+Two computation rules describe how the resulting function behaves. At the base
+point it returns $f(0)$, and along the loop at any point $t$ it returns $f(t)$.
+In symbols, if $g$ is the induced map then $g(\text{base}) = f(0)$ and
+$g(\text{loop}(t)) = f(t)$. There is also a **uniqueness** guarantee: any two
+functions out of the circle that agree along the entire loop are in fact the
+*same* function. There is no hidden freedom, no secret extra point you forgot
+about — the loop sees everything. (Formally: the loop is *surjective*; every
+point of the circle is $\text{loop}(t)$ for some $t$.)
 
-Perhaps the most surprising application connects this abstract framework to Einstein's special relativity.
+This trio — *construct by gluing, compute on the generators, and pin down by
+uniqueness* — is the rhythm of the entire theory. Once you internalize it for
+the circle, the torus follows the same beat one dimension up.
 
-In special relativity, the *spacetime interval* between two events is a fundamental invariant. It measures a kind of "distance" through space and time that all observers agree on, no matter how fast they're moving. When you switch from one observer's frame to another's — a mathematical operation called a *Lorentz boost* — the coordinates of events change, but the interval stays the same.
+## From string to fabric: the torus
 
-This invariance is usually stated as an equation: the interval before the boost equals the interval after. But in the cubical framework, it becomes something more: a *path*. The equality between the two intervals is witnessed by a cubical path — a concrete mathematical object that encodes not just the fact of invariance, but the *reason* for it.
+A circle came from gluing the two ends of a one-dimensional interval. A torus
+comes from gluing the edges of a two-dimensional **square**.
 
-This might sound like a distinction without a difference, but it has real consequences. The path carries information about *how* the invariance arises, and it can be composed with other paths to derive further invariances. When you iterate a symmetry transformation — applying a Lorentz boost, then another, then another — the cubical framework automatically produces paths connecting all the intermediate results. The algebraic structure of symmetry becomes geometric.
+Picture a flat square sheet of rubber. Its boundary consists of four edges: a
+bottom and a top (the horizontal pair), and a left and a right (the vertical
+pair). Now perform two gluings:
 
-## Higher Shapes from Simple Rules
+1. **Glue the bottom edge to the top edge.** Rolling the sheet so its bottom
+   meets its top turns the square into a cylinder — a tube.
+2. **Glue the left edge to the right edge.** Bending the tube around so its two
+   circular ends meet turns the cylinder into a doughnut.
 
-The framework also tackles one of the deepest problems in modern mathematics: constructing *higher-dimensional shapes* from simple rules.
+The result is the **Torus**, the surface of a doughnut. As with the circle, we
+never added material; we only declared identifications. Formally, we take the
+square — the set of pairs $(x, y)$ where both coordinates lie in the unit
+interval — and impose two gluing rules:
 
-Consider a circle. You can describe it as having one point and one loop — a path that starts and ends at the same point. But in classical mathematics, you can't easily build types (mathematical structures) with this kind of circular connectivity. You need *higher inductive types*: types where the constructors can include not just points but paths between points.
+$$ (x, 0) \sim (x, 1) \quad\text{for every } x \qquad\text{(top to bottom)},$$
+$$ (0, y) \sim (1, y) \quad\text{for every } y \qquad\text{(left to right)}.$$
 
-True higher inductive types require modifications to the logical foundations that most systems don't support. But the new framework provides a workaround: *suspension approximations*. A suspension takes a set of points and glues them into a shape by adding a "north pole" and a "south pole" and connecting each point to both poles via a path.
+The quotient by these two families of relations is the torus. There is a
+canonical map sending each square point $(x,y)$ to its image on the torus, and
+it satisfies exactly the two gluing equations we imposed: the bottom and top
+edges coincide, and the left and right edges coincide.
 
-The key theorem establishes a *universal property*: for any target structure with the right shape (a north, a south, and paths between them for each point of the original set), there is exactly one map from the suspension that respects the structure. This uniqueness theorem is mathematically powerful — it means the suspension is completely characterized by its gluing data, without needing to specify its internal structure.
+The torus comes with its own recursion principle, in the same spirit as the
+circle's but now demanding **two** tolls instead of one:
 
-## The Path Count Invariant
+> **Recursion principle for the torus.** To define a map from the torus to a
+> set $X$, it suffices to give a map $f$ from the square to $X$ together with
+> two proofs: that $f$ agrees on the horizontal edges, $f(x,0) = f(x,1)$ for
+> all $x$, and that $f$ agrees on the vertical edges, $f(0,y) = f(1,y)$ for all
+> $y$. This data induces a unique map out of the torus.
 
-One of the most computationally testable results involves counting. When the interval and the type are both finite, the set of all paths between two elements is also finite. You can count them.
+Again there is a computation rule (the induced map sends the image of $(x,y)$
+to $f(x,y)$) and a uniqueness guarantee (any map that agrees with $f$ on every
+square point is *the* induced map). The square map is surjective: every point
+of the torus is the image of some point of the square.
 
-The theorem proves that this count is invariant under equivalences: if you translate from type A to type B, the number of paths between any pair of corresponding elements stays the same. This is a purely combinatorial consequence of the bijection theorem, but it yields concrete, checkable predictions.
+## The punchline: a doughnut is two circles
 
-For instance, consider a three-point interval {0, 1, 2} with endpoints 0 and 2, and a two-element type {a, b}. There are exactly 2 paths from *a* to *b*: the function can send the middle point 1 to either *a* or *b*. If you translate to any other two-element type via a bijection, you'll again get exactly 2 paths. This can be verified by exhaustive enumeration — and it always works.
+Here is where the construction pays a genuine dividend. There is an old and
+beautiful intuition that the torus is a "product" of two circles. Think of how
+you might address a point on a doughnut: you need to know *how far around the
+big loop* you are (the longitude) and *how far around the tube* you are (the
+meridian). Each coordinate is an angle — a point on a circle. So a point on the
+torus is exactly a pair of circle-points. The torus *is* the circle times the
+circle.
 
-## Interpolation as Identity
+In our gluing model this intuition becomes a precise, verified theorem:
 
-Another connection links the cubical framework to *analysis* — the mathematics of continuous change.
+$$\boxed{\; \text{Torus} \;\simeq\; \text{Circle} \times \text{Circle}. \;}$$
 
-The affine interpolation between two real numbers *y₀* and *y₁* — the function *p(t) = (1-t)·y₀ + t·y₁* — is precisely a cubical path. At *t = 0*, you get *y₀*; at *t = 1*, you get *y₁*; in between, you get a smooth transition. The formal framework proves that this path always stays between its endpoints.
+The symbol $\simeq$ means **equivalence**: a perfect dictionary translating
+back and forth between the two spaces with no information lost. The
+construction of this dictionary is wholly explicit and uses only the recursion
+principles we have already met.
 
-This means that every time an engineer designs a smooth transition — a crossfade between audio signals, a gradient blend in computer graphics, a control parameter ramp in robotics — they are, whether they know it or not, constructing a cubical path. The theory of identity and the practice of interpolation turn out to be the same thing.
+Going *from the torus to the pair of circles* is the natural move. Take a point
+on the torus, lift it to a representative square point $(x, y)$, and send it to
+the pair $(\text{loop}(x), \text{loop}(y))$ — its longitude and its meridian.
+This is well defined precisely because the loop already glues its own
+endpoints: the toll on the torus's horizontal edges is paid by the circle's
+identity $\text{loop}(0) = \text{loop}(1)$, and likewise for the vertical
+edges. The gluings of the torus are *exactly* the gluings the two circles
+already perform, so the map descends cleanly to the quotient.
 
-## What Makes This Different
+Going *back, from a pair of circles to the torus*, we feed each circle
+coordinate through the circle's recursion principle, nesting one inside the
+other to assemble the square point and then map it into the torus. The two
+tolls of the torus recursor are once more discharged by the circle's endpoint
+identifications.
 
-Previous approaches to higher-dimensional identity in mathematics required either working in specially designed logical systems (like Homotopy Type Theory) or axiomatically assuming principles that couldn't be computed with. The new framework works entirely within a standard mathematical environment. No new axioms are needed. Every theorem is mechanically verified. Every construction computes.
+Finally one checks the two round-trips. Start on the torus, travel to the pair
+of circles, and come home: you are exactly where you began. Start with a pair
+of circles, travel to the torus, and come home: again, exactly where you began.
+Both checks reduce, after unfolding the definitions, to bookkeeping that the
+computation rules settle automatically. The dictionary is faithful in both
+directions, and the equivalence is sealed.
 
-This is possible because the framework is deliberately modest in its ambitions. It doesn't claim to implement the full Univalence Axiom or genuine higher inductive types. Instead, it builds *shadows* and *approximations* that capture the essential mathematical content while remaining computationally tractable. The suspension approximation, for instance, doesn't have path constructors in the type-theoretic sense — but it has a universal property that gives it the same mathematical power.
+## Why this matters
 
-## A Bridge Between Worlds
+It would be easy to dismiss all of this as an elaborate way of saying something
+obvious. But the value lies in the *method*, not just the conclusion. Three
+ideas deserve emphasis.
 
-The deepest significance of this work may be as a *bridge*. It connects:
+**Spaces from instructions.** We never needed the real numbers' geometry,
+distances, or continuity to make the circle and the torus behave like a circle
+and a torus. We needed only an interval, a square, and a precise list of which
+boundary pieces to identify. This is the cubical creed: geometry is a record of
+gluing instructions, and those instructions can be written down with the same
+rigor as an arithmetic identity. It is geometry rebuilt as algebra.
 
-- **Geometry and Logic**: Paths are proofs; topology is reasoning.
-- **Physics and Foundations**: Symmetry invariance is a special case of identity.
-- **Analysis and Algebra**: Continuous interpolation and discrete equivalence are both instances of the same path structure.
-- **Computation and Theory**: Everything is mechanically verified and concretely executable.
+**Recursion as the universal interface.** Every one of our spaces came packaged
+with a recursion principle — a single, uniform rule for defining maps out of
+it, gated by exactly the equations that the gluing imposes. This is what makes
+the constructions *composable*. To build the torus-to-circles map we did not
+reach into the guts of the quotient; we simply invoked the torus's recursion
+principle and paid its tolls using facts we had already proved about circles.
+Large structures grow from small ones without ever reopening the foundations.
 
-These connections suggest that the rigid boundaries between mathematical fields are artifacts of our notation, not features of the mathematics itself. When you have the right notion of identity — one that carries geometric information — seemingly unrelated results in different fields turn out to be instances of a single principle.
+**Equivalence as the right notion of sameness.** When we said the torus *is*
+two circles, we did not mean they are literally the same set of points. We
+meant there is a lossless translation between them. In the cubical world this
+notion of "sameness up to perfect translation" is the protagonist. It is the
+shadow, at the level of plain sets, of one of the deepest principles in the
+modern foundations of mathematics — the idea that equivalent structures may be
+*identified*, treated as genuinely equal for all purposes. Our humble
+torus-equals-two-circles theorem is a hands-on rehearsal of that principle.
 
-## What Comes Next
+## The road ahead
 
-The framework opens several avenues for future exploration. Can the suspension construction be extended to produce genuine sphere-like objects with detectable nontrivial topology? Can the path-counting invariant be extended to infinite types using measure theory? Can the Lorentz invariance path be composed with other physical symmetries to produce a path-theoretic account of the full Poincaré group?
+The constructions here are deliberately minimal — a one-dimensional gluing for
+the circle and a two-dimensional gluing for the torus — and that minimality is
+a feature. It exposes the skeleton of the subject so cleanly that the next
+steps almost suggest themselves.
 
-Perhaps most ambitiously: can this framework serve as the foundation for a new kind of mathematics where geometric structure is built into the very notion of identity — not as an axiom to be assumed, but as a consequence of how mathematical objects are constructed?
+One can ask for a *dependent* recursion principle, which would let the target
+of a function vary from point to point across the space — the difference
+between painting a circle a single color and wrapping it in a ribbon whose
+pattern changes as you go around. One can ask to *fill in* the square of the
+torus with genuine two-dimensional cells, capturing not just the edges but the
+surface they bound. One can try to compute, combinatorially, the famous
+**fundamental group** that detects how loops wind around a space. And one can
+seek a single, uniform "pushout" recipe that produces the circle, the torus,
+spheres, and wedges all as instances of one master gluing construction.
 
-The equals sign, it turns out, has been hiding a universe inside it. We are only beginning to explore what's there.
+Each of these is a natural extension of the same idea we have followed from the
+very first piece of string: a space is what you get when you decide, carefully
+and explicitly, which points to glue. Tie the ends of a string and you have a
+circle. Glue the edges of a square and you have a doughnut. And a doughnut, it
+turns out, is just two circles holding hands.

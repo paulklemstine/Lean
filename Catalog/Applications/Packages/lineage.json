@@ -16,16 +16,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T01:40:46Z",
-      "hue": 272
-    },
-    {
-      "id": "eml_transseries_asymptotic_expansions_beyond_power",
-      "title": "EML Transseries: A Hahn-Series Field and the Asymptotic Comparison Theorem",
-      "domain": "Applications",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-23T01:43:47Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
@@ -34,7 +25,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T04:02:19Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "bridge_galois_connections_between_order_theory_and",
@@ -43,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T05:45:49Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "convex_geometry_brunn_minkowski_theory",
@@ -52,7 +43,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:31:52Z",
-      "hue": 292
+      "hue": 92
     },
     {
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
@@ -61,7 +52,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:35:17Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "attention_mechanisms_mathematical_properties",
@@ -70,7 +61,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-23T07:38:24Z",
-      "hue": 95
+      "hue": 271
     },
     {
       "id": "sierpiski_numbers_covering_systems",
@@ -88,7 +79,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T11:40:38Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
@@ -97,7 +88,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T15:01:50Z",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "quantum_key_distribution_bb84_security_proof",
@@ -106,7 +97,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T19:25:16Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "statistical_mechanics_ising_model_phase_transition",
@@ -115,7 +106,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-24T00:21:07Z",
-      "hue": 275
+      "hue": 91
     },
     {
       "id": "proof_automation_custom_lean_4_tactics",
@@ -124,7 +115,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-24T01:21:56Z",
-      "hue": 92
+      "hue": 275
     },
     {
       "id": "eml_universal_approximation_density_of_eml_functio",
@@ -133,7 +124,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-24T01:35:46Z",
-      "hue": 272
+      "hue": 359
     },
     {
       "id": "close_proofs_these_conjectures_continue_the_resear",
@@ -142,7 +133,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-24T01:59:38Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "hamiltonian_compression_factor_of_cubic_edge_trans",
@@ -151,7 +142,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-24T02:14:47Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "langlands_correspondence_gl1_case",
@@ -169,7 +160,70 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-24T04:39:42Z",
+      "hue": 92
+    },
+    {
+      "id": "eml_transseries_asymptotic_expansions_beyond_power",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series",
+      "domain": "Geometry",
+      "primary_domain": "Geometry",
+      "shape": "hexagonal_prism",
+      "date": "2026-06-24T05:17:28Z",
+      "hue": 95
+    },
+    {
+      "id": "secret_sharing_shamirs_scheme_and_verifiable_varia",
+      "title": "Secret Sharing: Shamir's Scheme and Verifiable Feldman Variants",
+      "domain": "Cryptography",
+      "primary_domain": "Cryptography",
+      "shape": "dodecahedron",
+      "date": "2026-06-24T06:14:07Z",
+      "hue": 89
+    },
+    {
+      "id": "tropical_curves_and_chip_firing_games",
+      "title": "Tropical Curves and Chip-Firing: Degree Invariance and the Canonical Genus Formula",
+      "domain": "Tropical",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-06-24T06:45:24Z",
+      "hue": 90
+    },
+    {
+      "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
+      "title": "The Berggren Pythagorean Tree as Linear Dynamics on Euclid Generator Pairs",
+      "domain": "Pythagorean",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-06-24T07:42:39Z",
       "hue": 271
+    },
+    {
+      "id": "whitehead_problem_independence_from_zfc",
+      "title": "The Whitehead Problem: The ZFC-Provable Skeleton via Projectivity and the Cyclic Obstruction",
+      "domain": "Novelty",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-24T08:09:20Z",
+      "hue": 280
+    },
+    {
+      "id": "type_theory_cubical_type_theory_foundations",
+      "title": "Cubical Foundations: A Set-Level Quotient Model of the Circle and Torus",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-06-24T08:38:58Z",
+      "hue": 275
+    },
+    {
+      "id": "symmetric_group_generation_probability",
+      "title": "The Three-Quarter Generation Ceiling for the Symmetric Group",
+      "domain": "Novelty",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-24T09:33:05Z",
+      "hue": 281
     }
   ],
   "edges": [],

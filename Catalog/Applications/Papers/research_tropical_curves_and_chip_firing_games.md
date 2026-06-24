@@ -1,318 +1,273 @@
-# A Formal Tropical Geometry Engine: Chip-Firing, Divisor Theory, and Machine-Checked Riemann–Roch on Graphs
+# Foundations of Chip-Firing Divisor Theory on Finite Graphs: Degree Invariance and the Canonical Genus Formula
+
+**Author:** Aristotle
+**Date:** 2026-06-24
+**Domain:** Combinatorics (Tropical Curves & Chip-Firing)
 
 ## Abstract
 
-We present a formally verified development of tropical divisor theory on finite graphs in Lean 4, comprising definitions of graph divisors, the discrete Laplacian, chip-firing equivalence (linear equivalence), canonical divisors, genus, and divisor rank. We prove 25 theorems with machine-checked proofs, including: (1) conservation of charge for the graph Laplacian (principal divisors have degree zero), (2) the canonical divisor degree formula deg(K_G) = 2g − 2, (3) linear equivalence forms an equivalence relation, (4) a bidirectional characterization of linear equivalence via the Laplacian image, and (5) explicit complete-graph computations including genus formulas, canonical divisor coefficients, and connectivity. Alongside the formal development, we implement a verified Dhar-style reduction algorithm and rank computation in Python, numerically confirming the Baker–Norine (tropical Riemann–Roch) theorem on K₃ for all tested divisors. This work establishes the first reusable formal infrastructure for tropical Brill–Noether theory, sandpile group computation, and certified discrete potential theory.
-
-**Keywords:** tropical geometry, Baker–Norine theorem, chip-firing, graph Laplacian, Riemann–Roch, formal verification, divisor rank, sandpile group, discrete potential theory
-
----
+We develop, from first principles and with non-circular proofs, the elementary
+combinatorial foundations of chip-firing divisor theory on finite simple
+graphs — the discrete (tropical) analogue of divisor theory on algebraic
+curves. A *divisor* is an integer-valued function on the vertex set, a *firing
+pattern* acts through the graph Laplacian, and two structural invariants govern
+the whole theory. First, we prove that the Laplacian has total degree zero:
+for every integer vertex labelling $f$, $\sum_v \operatorname{lap} f(v) = 0$.
+Consequently linear equivalence of divisors preserves degree, so degree is a
+well-defined invariant of a divisor class. Second, we prove the discrete
+canonical genus formula $\sum_v K(v) = 2g - 2$, where $K(v) = \deg(v) - 2$ is
+the canonical divisor and $g = |E| - |V| + 1$ is the combinatorial genus. The
+first result rests on a single source/target relabeling identity that uses
+only the symmetry of adjacency; the second is a short consequence of the
+handshake lemma. Together these two facts are exactly the structural pillars
+on which the tropical Riemann–Roch theorem of Baker–Norine is built. All
+results have been formally verified; here we give the mathematical statements
+and proof sketches. We close with the precise statement of the Riemann–Roch
+target and a program of open conjectures.
 
 ## 1. Introduction
 
-### 1.1 Motivation
-
-The Baker–Norine theorem [BN07] establishes a graph-theoretic analogue of the classical Riemann–Roch theorem: for any divisor D on a finite connected graph G of genus g with canonical divisor K,
-
-$$r(D) - r(K - D) = \deg(D) - g + 1$$
-
-This result has spawned an active research program in tropical geometry [MS15], algebraic combinatorics [CP18], and connections to classical algebraic geometry [BJ16]. However, despite its importance, no formal machine-checked proof of these foundations has previously existed, creating a gap between the theoretical literature and verified mathematics.
-
-### 1.2 Contributions
-
-We address this gap with the following contributions:
-
-1. **Formal definitions** in Lean 4 with Mathlib of: graph divisors (`GraphDivisor`), the discrete Laplacian (`laplacianDivisor`), chip-firing equivalence (`LinearEquivalent`), canonical divisors (`canonicalDivisor`), genus (`genus`), effectiveness (`Effective`), and divisor rank (`DivisorRankAtLeast`, `divisorRank`).
-
-2. **Machine-checked proofs** of:
-   - Degree invariance of the Laplacian: `divisorDegree_laplacian_zero`
-   - Degree preservation under linear equivalence: `linearEquivalent_degree_eq`
-   - Canonical divisor degree: `degree_canonicalDivisor` (2g − 2 formula)
-   - Linear equivalence ↔ Laplacian image: `linearEquivalent_iff_diff_in_laplacian_image`
-   - Equivalence relation properties of linear equivalence
-   - Laplacian linearity and nullity
-   - Complete graph genus: `completeGraph_genus`
-   - Complete graph canonical divisor: `completeGraph_canonicalDivisor_coeff`, `completeGraph_canonicalDivisor_degree`
-   - Verified genus computations for K₃, K₄, K₅
-
-3. **Algorithmic implementations** in Python:
-   - Dhar's burning algorithm for q-reduced divisor testing
-   - Divisor reduction algorithm
-   - Baker–Norine rank computation
-   - Numerical verification of Riemann–Roch on K₃
-
-4. **Cross-domain applications**: network load balancing, sandpile dynamics, resistor network analysis, and Riemann–Roch certificates.
-
-### 1.3 Related Work
-
-Baker and Norine [BN07] proved the graph-theoretic Riemann–Roch theorem. Dhar [Dha90] introduced the burning algorithm for sandpile theory. Corry and Perkinson [CP18] provide a comprehensive treatment connecting divisors to sandpiles. Gathmann and Kerber [GK08] extended the theory to tropical curves. The formal verification of graph theory in Lean/Mathlib has advanced significantly [Mat24], but tropical divisor theory has not previously been formalized.
-
----
-
-## 2. Definitions and Notation
-
-### 2.1 Graph Divisors
-
-Let G = (V, E) be a finite simple graph with vertex set V and edge set E. A **divisor** on G is a function D : V → ℤ. We represent this as:
-
-```
-structure GraphDivisor (V : Type*) [Fintype V] [DecidableEq V] where
-  coeff : V → ℤ
-```
-
-The **degree** of D is deg(D) = Σ_{v ∈ V} D(v). A divisor is **effective** if D(v) ≥ 0 for all v ∈ V.
-
-### 2.2 The Graph Laplacian
-
-For a function f : V → ℤ, the **Laplacian divisor** is:
-
-$$(\Delta f)(v) = \sum_{w \sim v} (f(v) - f(w))$$
-
-In Lean:
-```
-def laplacianDivisor (G : SimpleGraph V) (f : V → ℤ) : GraphDivisor V :=
-  ⟨fun v => ∑ w : V, if G.Adj v w then f v - f w else 0⟩
-```
-
-### 2.3 Linear Equivalence
-
-Two divisors D, E are **linearly equivalent** (D ~ E) if there exists f : V → ℤ with:
-
-$$E(v) = D(v) - (\Delta f)(v) \quad \forall v \in V$$
-
-### 2.4 Canonical Divisor and Genus
-
-The **canonical divisor** is K_G(v) = deg_G(v) − 2. The **genus** is g = |E| − |V| + 1.
-
-### 2.5 Divisor Rank
-
-The **rank** r(D) is the largest integer r ≥ 0 such that for every effective divisor E with deg(E) = r, the divisor D − E is linearly equivalent to an effective divisor. If D is not linearly equivalent to any effective divisor, r(D) = −1.
-
----
-
-## 3. Main Results
-
-### 3.1 Theorem: Conservation of Charge
-
-**Theorem 3.1** (divisorDegree_laplacian_zero). *For any simple graph G and any function f : V → ℤ, deg(Δf) = 0.*
-
-*Proof sketch.* We need to show Σ_v Σ_{w~v} (f(v) − f(w)) = 0. By Finset.sum_comm, this equals Σ_w Σ_{v~w} (f(v) − f(w)). Using the symmetry G.adj_comm (if v ~ w then w ~ v), each term (f(v) − f(w)) in the original sum is canceled by the corresponding term (f(w) − f(v)) in the transposed sum. The formal proof uses `Finset.sum_comm` and `SimpleGraph.adj_comm` with `simp` and `ring`. □
-
-**Significance.** This is simultaneously:
-- A tropical geometry fact: principal divisors have degree zero.
-- A physics fact: Kirchhoff's current law (conservation of charge).
-- A graph theory fact: the Laplacian matrix has zero column sums.
-
-### 3.2 Theorem: Degree Preservation
-
-**Theorem 3.2** (linearEquivalent_degree_eq). *If D ~ E, then deg(D) = deg(E).*
-
-*Proof sketch.* From D ~ E, obtain f with E(v) = D(v) − (Δf)(v). Then deg(E) = Σ_v (D(v) − (Δf)(v)) = deg(D) − deg(Δf) = deg(D) − 0 = deg(D), using Theorem 3.1. □
-
-### 3.3 Theorem: Canonical Divisor Degree
-
-**Theorem 3.3** (degree_canonicalDivisor). *For any finite simple graph G, deg(K_G) = 2g − 2.*
-
-*Proof sketch.* 
-- deg(K_G) = Σ_v (deg_G(v) − 2) = (Σ_v deg_G(v)) − 2|V|
-- By the handshaking lemma (SimpleGraph.sum_degrees_eq_twice_card_edges): Σ_v deg_G(v) = 2|E|
-- So deg(K_G) = 2|E| − 2|V| = 2(|E| − |V| + 1) − 2 = 2g − 2 □
-
-**Significance.** This identifies the graph-theoretic canonical divisor with the Euler characteristic of the underlying topological space, establishing the combinatorial backbone of Riemann–Roch.
-
-### 3.4 Theorem: Laplacian Image Characterization
-
-**Theorem 3.4** (linearEquivalent_iff_diff_in_laplacian_image). *D ~ E if and only if there exists f : V → ℤ such that E(v) − D(v) = −(Δf)(v) for all v.*
-
-*Proof.* Direct from the definition of LinearEquivalent. Both directions are algebraic rearrangements. □
-
-**Cross-domain significance.** This connects:
-- Tropical geometry: divisor classes = cokernel of the Laplacian map
-- Discrete electrostatics: potential differences = Laplacian image
-- Algebraic graph theory: chip-firing classes = integer lattice quotient
-
-### 3.5 Theorem: Linear Equivalence is an Equivalence Relation
-
-**Theorem 3.5.** *LinearEquivalent G is reflexive (witness: f = 0), symmetric (witness: −f), and transitive (witness: f₁ + f₂).*
-
-The proofs use `laplacianDivisor_zero`, `laplacianDivisor_neg`, and `laplacianDivisor_add` respectively.
-
-### 3.6 Complete Graph Specializations
-
-**Theorem 3.6** (completeGraph_genus). *For n ≥ 2, genus(K_n) = (n−1)(n−2)/2.*
-
-*Proof.* |E| = n(n−1)/2, |V| = n, so g = n(n−1)/2 − n + 1 = (n−1)(n−2)/2. □
-
-**Theorem 3.7** (completeGraph_degree_eq). *Every vertex of K_n has degree n − 1.*
-
-**Theorem 3.8** (completeGraph_canonicalDivisor_coeff). *K_{K_n}(v) = n − 3 for all v.*
-
-**Theorem 3.9** (completeGraph_canonicalDivisor_degree). *deg(K_{K_n}) = n(n−3).*
-
----
-
-## 4. Algorithms
-
-### 4.1 Dhar's Burning Algorithm
-
-**Input:** Graph G, divisor D (with D(v) ≥ 0 for v ≠ q), base vertex q.
-**Output:** Is D q-reduced? If not, the unburned set.
-
-```
-def dhars_burning(G, D, q):
-    burned = {q}
-    repeat:
-        for v in V \ burned:
-            if D[v] < |adj(v) ∩ burned|:
-                burned.add(v)
-    return (burned == V, V \ burned)
-```
-
-**Complexity:** O(|V| + |E|) per call.
-
-**Correctness:** A vertex v burns if it cannot "resist" the fire from its burned neighbors (fewer chips than burning neighbors). If all vertices burn, condition 2 of q-reducedness holds.
-
-### 4.2 Divisor Reduction Algorithm
-
-**Input:** Graph G, divisor D, base vertex q.
-**Output:** The unique q-reduced divisor D' ~ D.
-
-```
-def reduce_divisor(G, D, q):
-    while non-q vertices have negative values:
-        for each negative vertex v:
-            fire V\{v}  # adds deg(v) chips to v
-    while not q-reduced:
-        (_, S) = dhars_burning(G, D, q)
-        fire S
-    return D
-```
-
-**Complexity:** O(deg(D) · |V| · (|V| + |E|)).
-
-**Termination:** Each firing of the unburned set strictly decreases a well-defined potential function (the sum of the "firing script" values), which is bounded below.
-
-### 4.3 Rank Computation
-
-**Input:** Graph G, divisor D.
-**Output:** The Baker–Norine rank r(D).
-
-```
-def compute_rank(G, D):
-    if D is not equivalent to effective:
-        return -1
-    r = 0
-    while r ≤ deg(D):
-        for each effective E with deg(E) = r+1:
-            if D - E is not equivalent to effective:
-                return r
-        r += 1
-    return r
-```
-
-**Complexity:** The naive implementation has complexity O(binom(|V|+d, |V|-1) · T_equiv) where d = deg(D) and T_equiv is the time to test equivalence to effective. For K₃ and small divisors, this is practical; for larger graphs, the reduction-based approach is much faster.
-
----
-
-## 5. Computational Experiments
-
-### 5.1 Riemann–Roch on K₃
-
-We numerically verified the Baker–Norine theorem r(D) − r(K−D) = deg(D) − g + 1 for all divisors of the form k·[0] with −1 ≤ k ≤ 4 and for four mixed divisors on K₃ (genus 1). All 10 test cases passed.
-
-| Divisor | deg(D) | r(D) | r(K−D) | r(D)−r(K−D) | deg(D)−g+1 | ✓ |
-|---------|--------|------|--------|-------------|------------|---|
-| −[0]    | −1     | −1   | 0      | −1          | −1         | ✓ |
-| 0       | 0      | 0    | 0      | 0           | 0          | ✓ |
-| [0]     | 1      | 0    | −1     | 1           | 1          | ✓ |
-| 2·[0]   | 2      | 1    | −1     | 2           | 2          | ✓ |
-| 3·[0]   | 3      | 2    | −1     | 3           | 3          | ✓ |
-| 4·[0]   | 4      | 3    | −1     | 4           | 4          | ✓ |
-| (1,1,0) | 2      | 1    | −1     | 2           | 2          | ✓ |
-| (2,1,0) | 3      | 2    | −1     | 3           | 3          | ✓ |
-| (0,0,2) | 2      | 1    | −1     | 2           | 2          | ✓ |
-| (1,1,1) | 3      | 2    | −1     | 3           | 3          | ✓ |
-
-### 5.2 Genus Computations
-
-Verified genus(K_n) = (n−1)(n−2)/2 computationally for n = 2, ..., 10 and formally in Lean for n = 3, 4, 5.
-
-### 5.3 Canonical Divisor Degree
-
-Verified deg(K_{K_n}) = 2g − 2 for n = 2, ..., 10 both computationally and formally.
-
-### 5.4 Conservation of Charge
-
-Tested deg(Δf) = 0 for random potentials on K₃, K₅, C₆, K₇. All passed.
-
-### 5.5 Sandpile Group
-
-Computed recurrent configurations on K₄ \ {sink}: found 16 recurrent states, matching the prediction n^(n−2) = 4² = 16 from Cayley's formula.
-
----
-
-## 6. Applications
-
-### 6.1 Network Load Balancing
-
-Chip-firing models distributed load balancing: each processor (vertex) has a task count (chip count), and firing redistributes tasks to neighbors. The conservation property guarantees total task count preservation. The reduced divisor gives the unique stable configuration achievable through local redistribution.
-
-### 6.2 Discrete Electrostatics
-
-The graph Laplacian is the discrete analogue of the continuous Laplacian operator. The principal divisor Δf represents the current flow induced by voltage assignment f. Conservation of charge (deg(Δf) = 0) is Kirchhoff's current law. The reduced divisor is the minimum-energy configuration.
-
-### 6.3 Sandpile Dynamics
-
-The chip-firing game on a graph with a designated sink vertex models sandpile dynamics. Recurrent configurations form the critical group (sandpile group), a finite abelian group isomorphic to the cokernel of the reduced Laplacian. Its order equals the number of spanning trees by the matrix-tree theorem.
-
-### 6.4 Riemann–Roch Certificates
-
-The Baker–Norine theorem provides certified lower bounds on divisor rank: if deg(D) ≥ g, then r(D) ≥ deg(D) − g ≥ 0, guaranteeing that D is equivalent to an effective divisor. This has applications in combinatorial optimization and network design.
-
----
-
-## 7. Discussion
-
-### 7.1 Formal vs. Computational
-
-Our development highlights the complementary roles of formal proofs and computational experiments. The Lean proofs guarantee absolute correctness of the foundational identities (degree invariance, canonical degree formula), while the Python implementations enable exploration of phenomena (rank computation, Riemann–Roch verification) that are computationally intensive to formalize.
-
-### 7.2 Limitations
-
-The current formalization does not include:
-- A formal proof of the full Baker–Norine theorem (Riemann–Roch for arbitrary connected graphs)
-- Formal verification of the Dhar reduction algorithm
-- Computation of the sandpile/critical group in Lean
-- Tropical Jacobian construction
-
-These are natural targets for future work.
-
-### 7.3 Connection to Tropical Geometry
-
-Our definitions align with the broader tropical geometry framework. The graph Laplacian is the combinatorial counterpart of the tropical Laplacian on metric graphs. The divisor rank defined here specializes to the tropical rank on tropical curves obtained as metric completions of finite graphs.
-
----
-
-## 8. Future Work
-
-1. **Full Baker–Norine proof**: Formalize the complete Riemann–Roch theorem for arbitrary finite connected graphs, likely using the q-reduced divisor characterization.
-
-2. **Verified Dhar algorithm**: Prove termination, correctness, and uniqueness of the reduction algorithm in Lean, producing a certified computation pipeline.
-
-3. **Critical group formalization**: Define the divisor class group (Jacobian) as a quotient and compute it for specific graph families.
-
-4. **Tropical Brill–Noether theory**: Formalize the tropical analogue of the Brill–Noether theorem, which constrains which divisor ranks are achievable on graphs of given genus.
-
-5. **Metric graph extension**: Extend the theory from combinatorial graphs to metric graphs (tropical curves), connecting to the continuous tropical geometry literature.
-
----
+### 1.1 Motivation: graphs as tropical curves
+
+Tropical geometry studies piecewise-linear shadows of algebraic varieties.
+When a smooth algebraic curve degenerates — its complex structure pinching and
+its handles collapsing — the limiting object is a *metric graph*: a finite
+graph with positive real lengths on its edges. The edge lengths record the
+rate of degeneration, and the combinatorial genus of the graph equals the
+geometric genus of the curve. This degeneration dictionary turns hard analytic
+questions about curves into finite, combinatorial questions about graphs.
+
+The central such question concerns *divisors*. On an algebraic curve a divisor
+is a finite formal sum of points with integer multiplicities; the
+Riemann–Roch theorem controls the dimension of the space of meromorphic
+functions with poles bounded by that divisor. Baker and Norine (2007)
+discovered a perfect combinatorial analogue on finite graphs, in which divisors
+are integer vertex labellings, "functions" are integer labellings acted on by
+the graph Laplacian, and an exact Riemann–Roch identity holds. The
+mechanical heart of their theory is the *chip-firing game*: a vertex fires by
+sending one chip along each incident edge.
+
+### 1.2 Scope and contribution
+
+This paper isolates and rigorously establishes the two foundational invariants
+that any development of graph divisor theory must have in place *before*
+Riemann–Roch can even be stated:
+
+1. **Degree invariance under firing** (Theorem 3.2): the graph Laplacian
+   sends every divisor to one of equal degree, so degree descends to a
+   well-defined function on linear-equivalence classes.
+2. **The canonical genus formula** (Theorem 3.3): the canonical divisor has
+   degree $2g - 2$, exactly matching the degree of the canonical class of a
+   genus-$g$ curve.
+
+Both proofs are deliberately *non-circular*: they invoke neither linear
+equivalence, the rank function, nor Riemann–Roch. The degree-invariance proof
+uses only the symmetry of the adjacency relation, and the genus formula uses
+only the handshake lemma. This makes them a sound, reusable base layer. The
+full Riemann–Roch equality and the explicit Baker–Norine theory on complete
+graphs are stated as targets (Section 6) but are not claimed here.
+
+### 1.3 Conventions
+
+Throughout, $G = (V, E)$ is a finite simple graph: $V$ is a finite vertex set
+and adjacency $\sim$ is a symmetric, irreflexive relation. We write $w \sim v$
+for "$w$ is adjacent to $v$", $N(v) = \{ w : w \sim v\}$ for the neighborhood,
+and $\deg(v) = |N(v)|$ for the vertex degree. We write $|V|$ and $|E|$ for the
+number of vertices and edges. All divisor and labelling values are integers.
+
+## 2. Definitions
+
+**Definition 2.1 (Divisor and degree).**
+A *divisor* on $G$ is a function $D : V \to \mathbb{Z}$, assigning an integer
+(a signed chip count) to each vertex. Its *degree* is the total
+$$\deg D \;=\; \sum_{v \in V} D(v) \;\in\; \mathbb{Z}.$$
+(In the formalization this is `divisorDegree`.)
+
+**Definition 2.2 (Graph Laplacian, flow form).**
+For an integer labelling $f : V \to \mathbb{Z}$, the *Laplacian* of $f$ is the
+divisor
+$$\operatorname{lap} f(v) \;=\; \sum_{w \sim v} \big( f(v) - f(w) \big),
+\qquad v \in V.$$
+Interpreted as a chip-firing operation, $f(v)$ is the (signed) number of times
+vertex $v$ fires: firing $v$ once removes one chip from $v$ per incident edge
+and deposits one chip on each neighbor. Divisors $D$ and $D'$ are *linearly
+equivalent*, $D \sim D'$, iff $D' - D = \operatorname{lap} f$ for some integer
+labelling $f$. (In the formalization this is `lap`.)
+
+**Definition 2.3 (Canonical divisor).**
+The *canonical divisor* of $G$ is
+$$K(v) \;=\; \deg(v) - 2, \qquad v \in V.$$
+It is the graph-theoretic counterpart of the canonical class of an algebraic
+curve. (In the formalization this is `canonicalDivisor`.)
+
+**Definition 2.4 (Genus).**
+The *(combinatorial) genus* of $G$ is
+$$g \;=\; |E| - |V| + 1.$$
+For a connected graph this is the first Betti number — the number of
+independent cycles (equivalently the cyclomatic number); it equals the
+geometric genus of the curve whose skeleton is $G$. (In the formalization this
+is `genus`.) A tree has $g = 0$; a single cycle has $g = 1$.
+
+## 3. Main results
+
+### 3.1 The source/target relabeling identity
+
+**Lemma 3.1 (Source equals target).**
+For every $f : V \to \mathbb{Z}$,
+$$\sum_{v \in V}\ \sum_{w \sim v} f(v) \;=\; \sum_{v \in V}\ \sum_{w \sim v} f(w).$$
+(In the formalization this is `sum_source_eq_sum_target`.)
+
+*Proof sketch.* Both sides are sums over the set of *ordered* adjacent pairs
+$\{(v, w) : w \sim v\}$. On the left each ordered pair contributes the value of
+$f$ at its first coordinate (the *source*); on the right, at its second
+coordinate (the *target*). Because adjacency is symmetric, the map
+$(v, w) \mapsto (w, v)$ is an involution of the set of ordered adjacent pairs.
+Re-indexing the left-hand sum along this involution turns every source term
+$f(v)$ into a target term, yielding the right-hand sum. Formally one rewrites
+each neighbor-sum as a sum over $V$ filtered by adjacency, exchanges the two
+outer/inner summations (`Finset.sum_comm`), and applies the symmetry of
+adjacency (`SimpleGraph.adj_comm`). $\square$
+
+### 3.2 Degree invariance of the Laplacian
+
+**Theorem 3.2 (The Laplacian has degree zero).**
+For every $f : V \to \mathbb{Z}$,
+$$\sum_{v \in V} \operatorname{lap} f(v) \;=\; 0.$$
+(In the formalization this is `deg_lap_eq_zero`.)
+
+*Proof sketch.* Expand the definition and split the double sum using
+distributivity of subtraction over a finite sum:
+$$\sum_{v} \operatorname{lap} f(v)
+= \sum_{v} \sum_{w \sim v} \big(f(v) - f(w)\big)
+= \underbrace{\sum_{v}\sum_{w \sim v} f(v)}_{\text{source}}
+- \underbrace{\sum_{v}\sum_{w \sim v} f(w)}_{\text{target}}.$$
+By Lemma 3.1 the two terms are equal, so their difference is $0$. $\square$
+
+**Corollary 3.2.1 (Degree is a linear-equivalence invariant).**
+If $D \sim D'$ then $\deg D = \deg D'$. Indeed
+$\deg D' - \deg D = \sum_v (D' - D)(v) = \sum_v \operatorname{lap} f(v) = 0$
+for the labelling $f$ witnessing the equivalence. Hence degree descends to a
+well-defined map on the divisor class group $\operatorname{Pic}(G) = \mathbb{Z}^V / \operatorname{im}(\operatorname{lap})$.
+
+This corollary is the reason degree appears on the right-hand side of
+Riemann–Roch: the entire theory is stated up to linear equivalence, and only a
+degree that is *invariant* under firing can serve as a class function.
+
+### 3.3 The canonical genus formula
+
+**Theorem 3.3 ($\deg K = 2g - 2$).**
+For every finite simple graph $G$,
+$$\sum_{v \in V} K(v) \;=\; 2g - 2.$$
+(In the formalization this is `deg_canonicalDivisor_eq_two_genus_sub_two`.)
+
+*Proof sketch.* Expand the canonical divisor and separate the constant term:
+$$\sum_{v} K(v) = \sum_{v}\big(\deg(v) - 2\big)
+= \Big(\sum_{v} \deg(v)\Big) - 2|V|.$$
+The handshake lemma (`SimpleGraph.sum_degrees_eq_twice_card_edges`) gives
+$\sum_v \deg(v) = 2|E|$, because summing vertex degrees counts each edge once
+at each endpoint. Therefore
+$$\sum_{v} K(v) = 2|E| - 2|V| = 2\big(|E| - |V| + 1\big) - 2 = 2g - 2,$$
+using $g = |E| - |V| + 1$. $\square$
+
+## 4. Worked examples
+
+We verify both theorems on small graphs (these computations are reproduced
+numerically in the accompanying demo).
+
+**Triangle $C_3$.** Vertices $\{1,2,3\}$, all pairwise adjacent.
+Each $\deg(v) = 2$, so $K(v) = 0$ and $\sum_v K(v) = 0$. With $|E| = 3$,
+$|V| = 3$, the genus is $g = 1$ and $2g - 2 = 0$: Theorem 3.3 holds. Firing
+vertex $1$ once gives $\operatorname{lap} f$ with $f = (1,0,0)$:
+$\operatorname{lap} f(1) = (1-0) + (1-0) = 2$,
+$\operatorname{lap} f(2) = (0-1) = -1$,
+$\operatorname{lap} f(3) = (0-1) = -1$, total $0$: Theorem 3.2 holds.
+
+**Path $P_3$.** Vertices $1 - 2 - 3$. Degrees $1, 2, 1$ give
+$K = (-1, 0, -1)$ with sum $-2$. Here $|E| = 2$, $|V| = 3$, $g = 0$,
+$2g - 2 = -2$: Theorem 3.3 holds. The path is a tree, $g = 0$, as expected.
+
+**Complete graph $K_4$.** Every vertex has degree $3$, so $K(v) = 1$ and
+$\sum_v K(v) = 4$. With $|E| = 6$, $|V| = 4$, $g = 3$ and $2g - 2 = 4$:
+Theorem 3.3 holds. For any firing pattern $f$ on $K_4$,
+$\operatorname{lap} f(v) = \sum_{w \ne v}(f(v) - f(w)) = 4 f(v) - \sum_w f(w)$,
+and $\sum_v \operatorname{lap} f(v) = 4\sum_v f(v) - 4\sum_w f(w) = 0$:
+Theorem 3.2 holds.
+
+## 5. Algorithms
+
+The results are constructive and yield directly executable procedures.
+
+**Algorithm A (Divisor degree under firing).** Given a graph and a firing
+pattern $f$, compute $D' = D + \operatorname{lap} f$ and verify
+$\deg D' = \deg D$. The Laplacian is evaluated as
+$\operatorname{lap} f(v) = \sum_{w \sim v}(f(v) - f(w))$ in
+$O(|V| + |E|)$ time; Theorem 3.2 guarantees the degree check always passes.
+
+**Algorithm B (Canonical divisor and genus check).** Given a graph, build
+$K(v) = \deg(v) - 2$ for each vertex, compute $g = |E| - |V| + 1$, and confirm
+$\sum_v K(v) = 2g - 2$. Both sides are computed in $O(|V| + |E|)$ time, and
+Theorem 3.3 guarantees equality.
+
+## 6. The Riemann–Roch target
+
+For completeness we record the theorem these foundations are designed to
+support, *as a target, not a result of this paper*. Define a divisor $D$ to be
+*effective* ($D \ge 0$) if $D(v) \ge 0$ for all $v$, and define the
+Baker–Norine **rank** $r(D)$ to be $-1$ if no divisor linearly equivalent to
+$D$ is effective, and otherwise the largest integer $r \ge 0$ such that for
+every effective divisor $E$ of degree $r$ the difference $D - E$ is linearly
+equivalent to an effective divisor. The **tropical Riemann–Roch theorem**
+(Baker–Norine) asserts
+$$r(D) - r(K - D) = \deg D - g + 1.$$
+Here $\deg D$ is well defined on classes precisely because of Theorem 3.2, and
+the self-dual point $D = K$, where $\deg K = 2g - 2$ by Theorem 3.3, makes the
+involution $D \mapsto K - D$ balance the two ranks. Establishing the full
+equality is future work (Section 7).
+
+## 7. Discussion and future directions
+
+The two theorems proved here are the non-negotiable base layer of graph
+divisor theory: degree must be class-invariant for $\deg D$ to be meaningful,
+and the canonical class must have degree $2g - 2$ for the Riemann–Roch
+involution to be symmetric. Their proofs are intentionally minimal and
+self-contained, depending only on adjacency symmetry and the handshake lemma,
+which makes them safe to build upon without circularity.
+
+The natural continuations, in increasing depth, are:
+
+- **Riemann's inequality** $r(D) \ge \deg D - g$, via $q$-reduced divisors and
+  Dhar's burning algorithm — a finite, terminating, decidable procedure that
+  replaces the $\forall$-over-all-labellings definition of linear equivalence
+  with a constructive normal form.
+- **Full Riemann–Roch** $r(D) - r(K - D) = \deg D - g + 1$, obtained by
+  combining Riemann's inequality with its dual through the involution
+  $D \mapsto K - D$ and the fact that the maximal degree of a non-winnable
+  divisor is exactly $g - 1$.
+- **Canonical rank on complete graphs**: on $K_n$, the conjecture
+  $r(K) = n - 2$ for $n \ge 2$, sitting at the self-dual point
+  $\deg K / 2 = g - 1$.
+- **Semicontinuity under edge contraction**: contracting an edge enlarges the
+  image of the Laplacian, so it can only make divisors easier to win;
+  consequently rank should not decrease under contraction.
+
+These are stated precisely in the package's future-directions record. The
+present paper supplies the verified groundwork on which each of them rests.
+
+## 8. Conclusion
+
+We have given clean, non-circular proofs of the two structural invariants of
+chip-firing divisor theory on finite graphs: the Laplacian preserves degree
+($\sum_v \operatorname{lap} f(v) = 0$), so degree is a linear-equivalence
+invariant; and the canonical divisor satisfies $\sum_v K(v) = 2g - 2$, the
+discrete shadow of the classical canonical degree formula. Elementary as their
+proofs are, these results are exactly the foundation upon which the tropical
+Riemann–Roch theorem stands, and they make the discrete theory a faithful,
+fully computable mirror of the geometry of algebraic curves.
 
 ## References
 
-- [BN07] M. Baker and S. Norine, "Riemann–Roch and Abel–Jacobi theory on a finite graph," *Advances in Mathematics*, 215(2):766–788, 2007.
-- [BJ16] M. Baker and D. Jensen, "Degeneration of linear series from the tropical point of view and applications," in *Nonarchimedean and Tropical Geometry*, Springer, 2016.
-- [CP18] S. Corry and D. Perkinson, *Divisors and Sandpiles*, AMS, 2018.
-- [Dha90] D. Dhar, "Self-organized critical state of sandpile automaton models," *Physical Review Letters*, 64(14):1613, 1990.
-- [GK08] A. Gathmann and M. Kerber, "A Riemann–Roch theorem in tropical geometry," *Mathematische Zeitschrift*, 259(1):217–230, 2008.
-- [Mat24] The Mathlib Community, *Mathlib: A unified library of mathematics formalized in Lean*, 2024.
-- [MS15] D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, AMS, 2015.
+The development is self-contained. For background, the combinatorial
+Riemann–Roch theorem is due to M. Baker and S. Norine, *Riemann–Roch and
+Abel–Jacobi theory on a finite graph* (Advances in Mathematics, 2007); the
+metric-graph/tropical-curve perspective is developed by Baker, Mikhalkin, and
+others. No external reference is required to follow the proofs above.
