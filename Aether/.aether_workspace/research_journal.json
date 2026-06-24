@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1cfdf3f4",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nFollow-up conjectures arising from `CausalLoops.lean` (Cycle 0 + Cycle 1).\nAll results in that file are fully proved (0 sorries, standard axioms",
-      "quality_score": 0.6660400000000001,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-17T05:04:36",
-      "title": "Causal Loops in Category Theory: When Composition Loops Back"
-    },
-    {
       "cycle_id": "78c9ab60",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Non-Well-Founded Proofs in Geometry\n\nResearch theme: **\"Non-Well-Founded Proofs: Proofs That Reference Themselves\"**, domain **Geometry**.\n\nAcross two cycles we established the t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-24T13:14:57",
       "title": "Proof Automation: Custom Lean 4 Tactics"
+    },
+    {
+      "cycle_id": "168f9c96",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Conformability of odd-order regular graphs\n\nDerived from this cycle's findings (`ConformabilityOddOrder.lean`,\n`PerfectTrianglePacking.lean`). Each conjecture is falsifiable.\n\n##",
+      "quality_score": 0.68184,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-24T13:16:10",
+      "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7045299999999999
     }
   ],
-  "last_updated": "2026-06-24T13:14:57",
+  "last_updated": "2026-06-24T13:16:10",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "3d9b7416",
-        "quality": 0.5508906250000001,
-        "theorems": 70,
-        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-      },
-      {
         "cycle_id": "a2755e7b",
         "quality": 0.5554623188405797,
         "theorems": 6,
@@ -3079,6 +3073,12 @@
         "quality": 0.61528,
         "theorems": 6,
         "title": "Ramsey Theory: Bounds and Constructions"
+      },
+      {
+        "cycle_id": "168f9c96",
+        "quality": 0.68184,
+        "theorems": 13,
+        "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
       }
     ],
     "Applications": [

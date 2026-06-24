@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "168f9c96",
     "filename": "conformability_remains_np_complete_for_all_fixed_i.json",
     "pkg_num": 30,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.68184,
     "title": "The Odd-Clique Obstruction for Conformability of Odd-Order Regular Graphs"
   },
   {
@@ -879,8 +879,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "conformability_remains_np_complete_for_all_fixed_i",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.68184,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "The Odd-Clique Obstruction for Conformability of Odd-Order Regular Graphs"
     }
