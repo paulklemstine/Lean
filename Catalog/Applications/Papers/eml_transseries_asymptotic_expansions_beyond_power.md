@@ -1,63 +1,35 @@
-# Computational Evidence — Ordered, Non-Archimedean Transseries
+# Theorem Trace (internal, anti-hallucination)
 
-This cycle's new results live in `OrderedField.lean`. Below is the evidence gathered before
-formalization. The claims are *order-theoretic*, so the relevant "computations" are
-hand-evaluations of leading coefficients and small dominance checks rather than numeric
-sequences; we note this explicitly under each heading.
+Source of truth: `Catalog/EML/Transseries/MonomialOrder.lean`
+(namespace `EMLTransseries.MonomialOrder`).
 
-## 1. Small-case dominance checks (transmonomial group `Lex (ℤ →₀ ℝ)`)
+## Definitions
 
-Encoding: `mono h a = toLex (Finsupp.single (-h) a)`, tower height `h` (1 = exp x, 0 = x,
--1 = log x, 2 = exp(exp x)). Lexicographic comparison happens at the *least differing* index.
+| Lean name | Mathematical statement | Article | Paper |
+|---|---|---|---|
+| `TransMono` | `Lex (ℤ →₀ ℝ)`: ordered value group of transmonomials (finitely supported real exponents indexed by integer tower height, lexicographic order). | §"A ladder of magnitudes" | Def. 2.1 |
+| `TSeries` | `Lex (HahnSeries TransMono ℝ)`: ordered field of transseries (Hahn series over `TransMono`, lexicographically ordered). | §"A ladder of magnitudes" | Def. 2.2 |
+| `term g a` | `toLex (HahnSeries.single g a)`: one-term series, coefficient `a` on monomial `g`. | §"One brick at a time" | Def. 2.3 |
+| `posExp` | `toLex (Finsupp.single (0:ℤ) (1:ℝ))`: the exponent of `x` itself. | §"Building an infinitesimal" | Def. 2.4 |
 
-| comparison                         | reduces to (index, values)        | verdict                  |
-|------------------------------------|-----------------------------------|--------------------------|
-| `mono 0 a  <  mono 1 1` (∀ a)      | index −1: `0 < 1`                 | exp x ≻ x^a, every a     |
-| `mono 1 5  <  mono 2 1`            | index −2: `0 < 1`                 | exp(exp x) ≻ (exp x)^5   |
-| `mono 0 2  <  mono 0 3`            | index 0: `2 < 3`                  | x^3 ≻ x^2                |
-| `mono (-1) 7 < mono 0 1`           | index −1: `7 > 0` → x ≻ (log x)^7 | x ≻ (log x)^7            |
+## Theorems / lemmas
 
-These are exactly the cases proved by `mono_lt_mono_of_height` / `mono_lt_mono_same` in
-`Field.lean` and reused in `OrderedField.lean`.
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `single_pos_iff_coeff_pos` | `0 < term g a ↔ 0 < a` | §"Signs from a single number" | Thm 3.1 |
+| `single_neg_of_coeff_neg` | `a < 0 → term g a < 0` | §"Signs from a single number" | Thm 3.2 |
+| `term_mul_term` | `term g a * term h b = term (g + h) (a * b)` | §"The monomial law" | Thm 3.3 |
+| `single_square_of_double_exponent` | `g = k + k → 0 ≤ a → term k (Real.sqrt a) ^ 2 = term g a` | §"Taking a square root" | Thm 3.4 |
+| `not_square_negative_monomial` | `a < 0 → ¬ IsSquare (term g a)` | §"What cannot be a square" | Thm 3.5 |
+| `natCast_eq_term` | `(n : TSeries) = term 0 (n : ℝ)` | §"Constants" | Lem 3.6 |
+| `one_eq_term` | `(1 : TSeries) = term 0 1` | §"Constants" | Lem 3.7 |
+| `positive_infinitesimal_monomial` | `0 < δ → (0 < term δ 1 ∧ ∀ n:ℕ, (n:TSeries) * term δ 1 < 1)` | §"Building an infinitesimal" | Thm 3.8 |
+| `posExp_pos` | `0 < posExp` | §"Building an infinitesimal" | Lem 3.9 |
+| `explicit_positive_infinitesimal` | concrete instance of `positive_infinitesimal_monomial` at `δ = posExp` | §"Building an infinitesimal" | Cor 3.10 |
 
-## 2. Order-direction experiment (the decisive finding)
-
-We tested both indexings of the Hahn field and computed the sign of `single g 1 − (n : ·)`
-by its leading coefficient (coeff at the least support element):
-
-- Indexing by `TransMono` (naive): the least element of `{mono 1 1, 0}` is `0`
-  (since `0 < mono 1 1`), leading coefficient `−n < 0`, so `single (mono 1 1) 1 < n`.
-  **`exp x` comes out infinitesimal — wrong.**
-- Indexing by `TransMonoᵒᵈ` (dual): the least element of `{toDual (mono 1 1), 0}` is
-  `toDual (mono 1 1)`, leading coefficient `+1 > 0`, so `n < single (toDual (mono 1 1)) 1`.
-  **`exp x` is infinite — correct.**
-
-This experiment is what fixed the definition `OrderedTSeries := Lex (HahnSeries TransMonoᵒᵈ ℝ)`
-and is the formal content of `nat_lt_gen_one`.
-
-## 3. Counterexample hunt
-
-- **`gen_lt_gen_of_height` without `0 < a'`.** Take height jump `0 → 1` but `a' = −1`
-  (i.e. compare `x^a` with `(exp x)^{-1}`). At the dominant index the relevant coefficient is
-  `−1 < 0`, so the dominance *reverses*: `gen 1 (-1) < gen 0 a` for large `a`. Hence the
-  positivity hypothesis `0 < a'` is **load-bearing**, mirroring the same hypothesis flagged in
-  `CatalogBridge.lean`. (The theorem as stated is therefore robust; the boundary is exactly
-  `a' ≤ 0`.)
-- **`nat_lt_gen_one` for `gen 0 1` (= x) instead of `exp x`.** Still true with the dual
-  indexing (`x` is also infinite), confirming the claim is not special to `exp`; we kept the
-  `exp x` form because it is the canonical witness "beyond power series".
-- **`not_archimedean` vacuity check.** `Archimedean` is a nonempty, satisfiable class (ℝ
-  satisfies it), so `¬ Archimedean OrderedTSeries` is a substantive negative, not vacuous; the
-  proof contradicts `exists_nat_gt` against `nat_lt_gen_one`.
-
-## 4. OEIS
-
-No integer sequence arises; the objects are real-exponent transmonomials and an ordered field,
-so an OEIS search is not applicable.
-
-## Why a heavy numeric stage is unnecessary here
-
-The theorems are statements about a *formal* order on a Hahn-series field; their truth is
-decided by leading-coefficient sign computations (shown above), not by floating-point sampling.
-The little-o facts in `AsymptoticComparison.lean` already pin the analytic side to Mathlib's
-`Real.isLittleO_pow_exp_atTop`, so no separate numerical asymptotics experiment is needed.
+## Honesty constraints (from Lean docstring "Scope")
+- This is NOT a proof of real closure of the transseries field.
+- This is NOT square-root closure in general.
+- It IS a verified base layer: monomial signs, monomial arithmetic, valid square
+  roots of positive square-compatible monomials, and infinitesimals.
+- Real closure / general square roots / divisibility of the value group are FUTURE work.

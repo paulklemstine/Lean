@@ -1,215 +1,232 @@
-# Beyond Power Series: A Number System Where "Exp Beats Everything" Becomes Arithmetic
+# Beyond Power Series: Building a Number System for Infinitely Many Scales
 
-## The trouble with infinity-flavored algebra
+## A question of magnitude
 
-Every student of calculus eventually internalizes a small piece of folklore: as $x$ grows
-without bound, the exponential function $e^x$ outpaces every power of $x$. Plot $x^{10}$ and
-$e^x$ on the same axes and, for a while, the polynomial wins by a mile. But wait long enough
-and the exponential surges past it, never to be caught. We say $x^{10} = o(e^x)$, read "little-o
-of $e^x$": the ratio $x^{10}/e^x$ collapses to zero.
+Ask a physicist how a quantity behaves as some parameter $x$ grows without bound,
+and you will rarely get a single number. You will get a *story about scales*. A
+current might decay like $1/x$. A correction might be exponentially small, like
+$e^{-x}$. A resonance might blow up like $x^{2}$, or — stranger still — grow so
+fast that it outruns every polynomial *and* every exponential, like $e^{e^{x}}$.
 
-This is more than a curiosity. It is the opening line of a vast, strangely beautiful story about
-how functions *grow*. Logarithms crawl. Powers stride. Exponentials sprint. Iterated
-exponentials — $e^{e^x}$ and beyond — accelerate into regimes so violent that no ordinary
-notation can keep up. Mathematicians have a name for the functions built by composing exponentials,
-logarithms, and ordinary algebra: the **exp-log** functions, or in the language of this work,
-**EML functions** (Exp, Multiply, Log).
+Ordinary mathematics has a beautiful tool for the gentle end of this spectrum:
+the **power series**. Near a point we can write a function as
+$$a_0 + a_1 x + a_2 x^2 + a_3 x^3 + \cdots,$$
+and almost all of calculus follows. But power series are blind to two whole worlds.
+They cannot see anything that grows faster than every polynomial — they have no
+symbol for $e^{x}$. And they cannot resolve the *infinitely fine gradations* of
+smallness that appear when you compare $e^{-x}$ against $1/x$ against $e^{-x^2}$.
+A power series knows about $x$, $x^2$, $x^3$. It does not know about $\log x$, or
+$e^{x}$, or the towers you build by stacking exponentials.
 
-Here is the problem. Power series — those infinite sums $a_0 + a_1 x + a_2 x^2 + \cdots$ — are
-the workhorse tool for understanding functions near a point. But power series are hopeless at
-infinity, and they are utterly blind to the difference between $e^x$ and $e^{e^x}$. They simply
-do not contain the vocabulary. If you want a *calculus of growth rates* — a formal system in which
-"$e^x$ beats $x^{10}$" is not a limit you have to recompute every time but a fixed, structural fact
-you can do arithmetic with — you need something bigger.
+**Transseries** are the number system that fixes this. They are the natural
+arena for *asymptotic expansions beyond power series*: formal expressions that
+combine powers of $x$, powers of $\log x$, and powers of $e^{x}$, $e^{e^{x}}$,
+and higher towers, all at once. They were forged in the study of differential
+equations and "exponentially small" effects — the corrections that vanish faster
+than any power and are invisible to classical perturbation theory but decide, for
+instance, whether a planet's orbit is stable over cosmic time.
 
-That something is the field of **transseries**.
+This article tells the story of a small, fully verified foundation for that
+number system: how to assign a *sign* to a transseries, how to *multiply* its
+basic pieces, when you can *take a square root*, and how to construct a genuine
+*infinitesimal* — a positive quantity smaller than every ordinary fraction.
 
-## What is a transseries?
+## A ladder of magnitudes
 
-Imagine generalizing a power series in two directions at once. First, allow real exponents, not just
-integer ones: $x^{1/2}$, $x^{\pi}$, $x^{-3.7}$ are all fair game. Second, and more radically, allow
-the "variables" themselves to be exponentials and logarithms of $x$. A single **transmonomial** is a
-formal product
+The first idea is to stop thinking of a magnitude as a single number and start
+thinking of it as a **position on an infinite ladder of scales**.
 
-$$
-(e^{e^x})^{a_2}\cdot (e^x)^{a_1}\cdot x^{a_0}\cdot (\log x)^{a_{-1}}\cdot (\log\log x)^{a_{-2}}\cdots
-$$
+Imagine a tower of growth rates. At the bottom rung sit the constants. Above them,
+the powers of $x$. Above *those*, things built from $e^{x}$; above those, things
+built from $e^{e^{x}}$; and so on upward forever. Each rung of the tower is
+indexed by an integer "height" $h$, and at each height we are allowed a *real
+exponent*. A single magnitude — a **transmonomial** — is therefore a choice of
+finitely many heights together with a real exponent at each one. Multiplying two
+of these magnitudes adds their exponents, height by height.
 
-where only finitely many of the real exponents $a_h$ are nonzero. The integer $h$ is the **tower
-height**: $h=1$ is $e^x$, $h=0$ is plain $x$, $h=-1$ is $\log x$, $h=2$ is $e^{e^x}$, and so on. A
-**transseries** is a (possibly infinite, but well-organized) formal sum of such transmonomials with
-real coefficients, for example
+To compare two transmonomials we use a **dictionary (lexicographic) order**: scan
+the tower heights from the bottom upward and stop at the *first* (lowest) height
+where the two exponents differ; whichever has the larger exponent there is the
+larger element of the group. In the verified development this ordered set of
+magnitudes is written
+$$\textsf{TransMono} \;=\; \mathrm{Lex}\,(\mathbb{Z} \to_{0} \mathbb{R}),$$
+"finitely supported real exponents indexed by an integer height, ordered like a
+dictionary." It is the *value group* — the group of pure scales — of the whole
+theory. A crucial convention, which we will make precise in the section on
+infinitesimals, links this order to actual size: the **dominant** term of a
+transseries is the one sitting on the *smallest* group element, and a *positive*
+group element marks an *infinitesimal* scale — a magnitude smaller than every
+constant.
 
-$$
-e^x + 3x^2 - \tfrac{1}{2}x + 7 + \frac{1}{\log x} + \frac{4}{x} + \cdots
-$$
+A **transseries** is then a (possibly infinite, but well-structured) sum of real
+multiples of these magnitudes:
+$$\sum_{g} c_g \cdot (\text{magnitude } g).$$
+The precise notion that makes such infinite sums behave — the technical engine
+that guarantees you can add, multiply, and order them — is the **Hahn series**.
+In the verified development the field of transseries is
+$$\textsf{TSeries} \;=\; \mathrm{Lex}\big(\mathrm{HahnSeries}\;\textsf{TransMono}\;\mathbb{R}\big),$$
+the Hahn series with real coefficients over our ladder of magnitudes, ordered so
+that the *leading term* — the coefficient sitting on the dominant magnitude —
+decides everything.
 
-Transseries were developed by analysts and logicians — Écalle, van der Hoeven, Aschenbrenner, van den
-Dries, and others — precisely to give the asymptotic behavior of EML functions a home. And the central
-miracle is that this enormous collection of formal objects is not a chaotic zoo. It is a **field**: you
-can add, subtract, multiply, and — crucially — divide transseries, and the usual laws of arithmetic
-hold. Even better, it is an **ordered** field, and its order is exactly asymptotic dominance.
+That last sentence is the secret of the whole subject, and it is worth saying
+slowly: **the sign and the size of a transseries are decided by its single
+dominant term** — the term on the smallest (most significant) magnitude.
+Everything else is a correction.
 
-This article describes a rigorous, machine-checked construction of the transseries field for a single
-exp/log tower with real powers, together with three landmark facts: that the transmonomials are
-ordered so that *higher towers always dominate*, that this order genuinely models real-analytic
-growth, and that a transseries is *uniquely determined by its asymptotic expansion*.
+## One brick at a time
 
-## Building the field out of Hahn series
+Before you can reason about complicated transseries you need to understand the
+simplest possible ones: the **one-term series**. We write
+$$\textsf{term}(g, a)$$
+for the transseries that is exactly the real number $a$ sitting on the single
+magnitude $g$, and nothing else. Think of $3x^2$, or $-7e^{x}$, or
+$\tfrac12 e^{-x}$. These are the bricks; every transseries is built from them.
 
-How do you turn a wishful pile of formal sums into an honest field? The key technology is a
-construction due to Hans Hahn from 1907: the **Hahn series**. Fix an ordered abelian group $\Gamma$
-of "exponents." A Hahn series with coefficients in a field $K$ is a formal sum
+The verified foundation establishes, with full rigor, the laws these bricks obey.
 
-$$
-\sum_{\gamma \in \Gamma} c_\gamma\, t^{\gamma}, \qquad c_\gamma \in K,
-$$
+### Signs from a single number
 
-subject to one decisive condition: the set of $\gamma$ where $c_\gamma \neq 0$ must be
-**well-ordered**. Well-orderedness is the structural backbone that makes infinite multiplication and,
-remarkably, *division* well-defined. Hahn's theorem says that if $K$ is a field and $\Gamma$ is an
-ordered group, then these series form a field.
+The first law is almost shocking in its simplicity. A one-term series is positive
+*exactly when its coefficient is positive* — no matter how large or small the
+magnitude it sits on:
+$$0 < \textsf{term}(g, a) \quad\Longleftrightarrow\quad 0 < a.$$
+The magnitude $g$ does not enter at all. Whether you are looking at $3$ (a
+constant), $3x^{100}$ (enormous), or $3e^{-x}$ (vanishingly small), the sign is
+the sign of the $3$. And dually, a negative coefficient forces a negative series:
+if $a < 0$ then $\textsf{term}(g,a) < 0$. This is exactly the "leading term
+decides the sign" principle made precise for a single brick.
 
-The trick, then, is to choose the right exponent group $\Gamma$. For transseries, the exponents are
-the transmonomials. A transmonomial is determined by its finite list of real exponents
-$(\ldots, a_{-1}, a_0, a_1, \ldots)$ indexed by tower height. That is exactly a **finitely supported
-function from the integers to the reals**, written $\mathbb{Z} \to_{0} \mathbb{R}$. To capture the
-asymptotic ordering — "higher tower wins" — we equip this group with the **lexicographic order**: to
-compare two transmonomials, look at the most significant tower height where they differ and compare the
-exponents there.
+### The monomial law
 
-The construction crystallizes into two definitions:
+The second law says multiplication of bricks is *bookkeeping on the exponents*:
+$$\textsf{term}(g, a) \cdot \textsf{term}(h, b) \;=\; \textsf{term}(g + h,\; a\,b).$$
+Multiply the coefficients, *add* the magnitudes. This mirrors the schoolroom rule
+$x^{m}\cdot x^{n}=x^{m+n}$, but now "exponent" means an entire position on the
+infinite ladder of scales. Concretely, $(3x^2)\cdot(-2x^5) = -6x^7$ adds the
+exponents $2$ and $5$; the very same law governs $(3e^{x})\cdot(2e^{e^{x}})$,
+where the magnitudes live on different rungs of the tower and simply add
+coordinate by coordinate. This single law — humble as it looks — is the
+computational heart of everything that follows.
 
-$$
-\textbf{TransMono} := \mathrm{Lex}(\mathbb{Z} \to_{0} \mathbb{R}),
-\qquad
-\textbf{TSeries} := \mathrm{HahnSeries}(\textbf{TransMono}, \mathbb{R}).
-$$
+### Constants
 
-The first is the lexicographically ordered group of transmonomials; the second is the Hahn-series field
-built over it. Because the underlying group is a linearly ordered abelian group and the coefficient ring
-$\mathbb{R}$ is a field, Hahn's theorem hands us the headline structural result for free: **the
-transseries form a field.** Addition, multiplication, and division all make sense, and $1 \neq 0$, so the
-field is genuinely nontrivial.
+It is reassuring to check that ordinary numbers are bricks too. The constant $1$
+is the brick on the *identity magnitude* $0$ (the bottom rung, where nothing
+grows): $1 = \textsf{term}(0, 1)$. More generally every counting number $n$ is
+the brick $\textsf{term}(0, n)$. Constants are precisely the transseries that
+live entirely on the bottom rung.
 
-A single transmonomial of height $h$ and exponent $a$ is written $\mathrm{mono}(h, a)$; the corresponding
-one-term transseries with coefficient $1$ is $\mathrm{term}(h, a)$. With these in hand, every formal
-growth-rate object we care about is an element of an honest algebraic field.
+### Taking a square root
 
-## The order *is* asymptotic dominance
+Now for something with real content. When can a magnitude have a square root
+*inside the system*? If you want $\sqrt{\textsf{term}(g,a)}$ to again be an
+honest one-term transseries, two things must go right at once:
 
-A field is only half the story. The soul of transseries is that their order encodes growth. We need to
-know, formally, that bigger-in-the-field means faster-growing-at-infinity. Three theorems pin this down.
+1. **The coefficient** $a$ must be nonnegative, so that $\sqrt{a}$ is a real
+   number. (You cannot take a real square root of a negative coefficient.)
+2. **The magnitude** $g$ must be *halvable* on the ladder — it must be $k + k$
+   for some magnitude $k$ — so that "half the exponent" makes sense.
 
-**Higher towers dominate.** The first result states that a transmonomial of strictly *higher* tower
-height — with a positive exponent — dominates any transmonomial of lower height, no matter how large the
-lower one's exponent. In symbols, if $h < h'$ and $a' > 0$, then
+When both hold, the square root is exactly what you would hope:
+$$\big(\textsf{term}(k, \sqrt{a})\big)^{2} \;=\; \textsf{term}(g, a)
+\qquad\text{whenever } g = k + k \text{ and } a \ge 0.$$
+Halve the exponent, take the real square root of the coefficient. For example
+$\sqrt{9x^{4}} = 3x^{2}$ because $9$ has square root $3$ and the exponent $4$
+halves to $2$. The verified statement is careful in a way that an informal
+treatment often is not: it tracks **both** the coefficient *and* the exponent.
+An earlier, naïve version of this claim handled only the exponent and silently
+got the coefficient wrong — a reminder of why machine-checked foundations matter.
 
-$$
-\mathrm{mono}(h, a) \;<\; \mathrm{mono}(h', a').
-$$
+### What cannot be a square
 
-This is the formal heartbeat of the whole theory. It says $e^{e^x}$ beats every power of $e^x$, that
-$e^x$ beats every power of $x$, and that $x$ beats every power of $\log x$ — all at once, as a single
-clean statement about the lexicographic order. The proof is not a numerical limit; it is a structural
-comparison at the most significant differing coordinate of the exponent group.
+The flip side is just as important. A brick with a **negative** coefficient is
+*never* a square — not just "has no real square root," but provably not a square
+of anything in the entire field:
+$$a < 0 \;\Longrightarrow\; \textsf{term}(g,a) \text{ is not a square.}$$
+The reason is pure order theory. In any ordered system a square is $\ge 0$. But a
+negative-coefficient brick is strictly negative (by the sign law above). A
+negative thing cannot equal a nonnegative thing, so no square can produce it.
+This is the transseries echo of the familiar fact that $-1$ has no real square
+root, and it is a first hint at the deep question lurking in the background: *how
+close is this field to being real-closed?*
 
-**Within a tower, bigger exponent dominates.** At a fixed tower height, the order reduces to the
-familiar one: if $a < a'$ then $\mathrm{mono}(h, a) < \mathrm{mono}(h, a')$. So $x^2$ beats $x$, and
-$(e^x)^5$ beats $(e^x)^3$, exactly as intuition demands.
+## Building an infinitesimal
 
-**Exp beats *every* power.** The crowning special case deserves its own billing. For *every* real
-exponent $a$ — including absurdly large ones like $a = 10^{100}$ —
+Here is where transseries reveal their most counterintuitive power. They contain
+genuine **infinitesimals**: positive quantities smaller than every ordinary
+fraction $1/n$.
 
-$$
-\mathrm{mono}(0, a) \;<\; \mathrm{mono}(1, 1),
-\qquad\text{i.e.}\qquad x^{a} \;\prec\; e^{x}.
-$$
+Take any magnitude $\delta$ that is strictly positive in the value group. By the
+convention above, a positive group element marks an *infinitesimal* scale. The
+brick $\varepsilon = \textsf{term}(\delta, 1)$ is then a strange and wonderful
+object.
+On one hand it is strictly positive: $0 < \varepsilon$. On the other hand it is
+*infinitesimal* in the strongest sense — no integer multiple of it ever reaches $1$:
+$$n \cdot \varepsilon < 1 \qquad\text{for every natural number } n.$$
+You can add $\varepsilon$ to itself a billion times, a googol times, as many times
+as you like, and you will never climb past $1$. This flatly violates the
+**Archimedean property** that the real numbers enjoy (where some multiple of any
+positive number eventually exceeds $1$), and that is exactly the point:
+transseries are a *non-Archimedean* world, rich enough to hold infinitely many
+distinct scales of smallness simultaneously.
 
-No power-series valuation can express this. A Laurent or Puiseux series can only "see" finitely many
-orders of growth at a time; the statement "$e^x$ dominates $x^a$ for *all* real $a$ simultaneously" is
-precisely what forces us out of power series and into transseries. It is the defining feature of the
-larger universe.
+Why does it work? Because $\varepsilon$ lives on the positive (infinitesimal)
+magnitude $\delta$, while $1$ lives on the bottom rung, the identity magnitude $0$,
+which is *smaller* in the group order and therefore *dominant*. Multiplying
+$\varepsilon$ by the constant $n$ keeps it on the magnitude $\delta$; by the
+"smallest magnitude dominates" principle, the constant $1$ towers over it no
+matter how large $n$ is. Concretely, $\varepsilon$ behaves like a reciprocal scale
+such as $1/x$ as $x \to \infty$: smaller than every $1/n$.
 
-## Grounding the formalism in real analysis
+To make this fully concrete rather than abstract, the foundation pins down an
+explicit such magnitude: $\textsf{posExp}$, the generator with real exponent $1$
+at tower-height $0$. It is verified to be strictly positive in the value group,
+and feeding it into the construction above yields an *explicit, named
+infinitesimal* — a concrete witness that this exotic number system is not a mirage
+but something you can actually point at and compute with.
 
-A skeptic might object: these are formal symbols pushed around by a lexicographic rule. Why should we
-believe the order has anything to do with actual functions? The construction answers this by tying the
-formal order back to honest little-o statements about real functions.
+## Why this is the right foundation
 
-First, **exp dominates every polynomial**: for every natural number $n$,
+It is tempting to dream big and try to prove, in one heroic stroke, that the
+field of transseries is **real-closed** — the property (shared with the real
+numbers) that every odd-degree polynomial has a root and every positive element
+has a square root. That is a celebrated and genuinely deep theorem. But heroic
+strokes are exactly where errors hide. The work described here deliberately does
+*not* claim real closure, and it does *not* claim that every positive transseries
+has a square root. It claims something smaller and completely solid: a verified
+**base layer**.
 
-$$
-x^{n} \;=\; o(e^{x}) \quad\text{as } x \to +\infty.
-$$
+That base layer is the set of facts every higher result must stand on:
 
-The ratio $x^n / e^x \to 0$. This is the analytic shadow of "exp beats every power."
+- the **sign** of a brick is the sign of its coefficient;
+- **multiplication** of bricks adds magnitudes and multiplies coefficients;
+- a brick has a square root *precisely* when its coefficient is nonnegative and
+  its magnitude is halvable, and a negative brick is never a square at all;
+- the field genuinely contains positive **infinitesimals**, with an explicit one
+  exhibited by name.
 
-Second, **iterated exponentials dominate powers of exponentials**: for every $n$,
+Each of these is exactly the kind of statement that "everyone knows" and that
+turns out, on close inspection, to have a subtle hypothesis (the coefficient
+*and* the exponent in the square-root law) or a subtle proof (the order-theoretic
+reason a negative brick can never be a square). Getting them airtight is what lets
+the next layer be built without fear.
 
-$$
-(e^{x})^{n} \;=\; o\!\left(e^{e^{x}}\right) \quad\text{as } x \to +\infty.
-$$
+## The road ahead
 
-The double exponential outraces any fixed power of the single exponential. This is the analytic shadow of
-"a height-2 monomial dominates every height-1 monomial." With these in place, the abstract order is no
-empty game: each step up the lexicographic ladder corresponds to a real, verifiable acceleration of
-growth.
+The square-root law quietly names the obstacle to going further. A *general*
+positive brick has a square root only if its magnitude can be halved — only if
+the ladder of magnitudes is *divisible*. Our ladder, indexed by **integer**
+heights, is not: you cannot, in general, halve an odd integer height. So the very
+first step toward square-root closure is to rebuild the ladder over a *divisible*
+index — rational heights, say — after which every positive brick acquires a square
+root. From there one climbs toward square roots of arbitrary positive series (by
+peeling off the dominant term and recursively correcting), toward a clean
+**valuation** that reads off each series' dominant magnitude, and ultimately
+toward the summit: real closure of the entire transseries field.
 
-## Uniqueness: a transseries is its expansion
-
-The final pillar is a uniqueness principle, and it is the most philosophically satisfying. Two
-transseries are said to **agree to all orders** if their difference is asymptotically smaller than
-*every* transmonomial — smaller than $1/x$, smaller than $1/x^2$, smaller than $1/(e^x)$, smaller than
-everything the system can name. The **asymptotic comparison theorem** states:
-
-> If two transseries agree to all orders, they are equal.
-
-Formally, writing the relation as $\mathrm{AgreeToAllOrders}(a, b)$,
-
-$$
-\mathrm{AgreeToAllOrders}(a, b) \iff a = b.
-$$
-
-There is no "hidden remainder," no infinitesimal ghost lurking below all detectable orders. The
-asymptotic expansion of a transseries determines it completely. The proof rests on a feature of the Hahn
-valuation: the only "size" strictly above every transmonomial is the symbol $\top$ ("infinitely small"),
-and that size is attained by exactly one element — zero. So if the difference is smaller than everything,
-the difference is zero.
-
-This relation, it turns out, is an honest **equivalence relation** — reflexive, symmetric, transitive —
-because it *is* equality in disguise. And its contrapositive is just as illuminating: every nonzero
-transseries fails to agree-to-all-orders with $0$, which is to say every nonzero transseries has a
-genuine, detectable leading term. There are no invisible elements.
-
-## Connecting the rigorous field to a working catalog
-
-Finally, the construction builds a bridge to a more hands-on, combinatorial notion of transmonomial — one
-that simply records a level (positive for iterated exponentials, negative for iterated logarithms) and a
-real exponent, with an ad-hoc "dominance" rule. The bridge theorem shows that, for transmonomials with
-positive exponents, this homespun dominance relation coincides *exactly* with the lexicographic order of
-the rigorous Hahn-series group. The combinatorial bookkeeping and the deep algebra are two views of the
-same object.
-
-There is a subtlety worth savoring here, because it is the kind of detail that separates a careful theory
-from a sloppy one. The correspondence *requires* positive exponents. With a negative exponent at the
-dominant level — think $(e^x)^{-1}$, which *shrinks* to zero — the naive "level-first" rule disagrees with
-true growth order. The rigorous construction does not paper over this; it makes the positivity hypothesis
-explicit and load-bearing.
-
-## Why this matters
-
-Transseries are not an idle generalization. They are the natural setting for **asymptotic analysis**: the
-art of describing how solutions of differential equations, integrals, and recurrences behave in extreme
-regimes. They underpin model theory's spectacular results on the field of "logarithmic-exponential" series
-and connect to Conway's surreal numbers, to o-minimality, and to the resurgence theory used in modern
-physics to tame divergent perturbation expansions.
-
-What the construction described here delivers is a foundation made of stone rather than sand: a fully
-rigorous, ordered, non-power-series field in which the everyday miracle "exp beats everything" is no longer
-a limit to be recomputed but a permanent fact of arithmetic — and in which an asymptotic expansion is not
-an approximation to a function but, in the formal world, *is* the function. From this base, the longer
-program reaches toward real-closedness (square roots and odd-degree roots of every transseries),
-truncation-closed subfields tailored to actual EML expansions, and ultimately an expansion map sending each
-EML germ to its transseries with a guarantee of uniqueness. The first stones are laid; the cathedral of
-growth has its foundation.
+But every one of those steps will lean on the four facts established here. That is
+how durable mathematics gets built — not by leaping to the summit, but by setting
+one verified stone, then the next, until the tower stands. Transseries give us a
+language for *every* scale of growth and decay at once; this foundation makes the
+first sentences of that language precise, and true.
