@@ -4,17 +4,4844 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Consciousness as Integrated Information\n\nThis cycle established a fully verified core for Integrated Information Theory\n(IIT) in `Catalog/Novelty/IntegratedInformation.lean`:\n\n- `mutualInfo` of a joint `FinDist (\u03b1 \u00d7 \u03b2)` (KL to the product of marginals),\n  with `mutualInfo_nonneg` (Gibbs), `mutualInfo_eq_zero_iff` (vanishes iff\n  independent), and `mutualInfo_swap` (symmetry of a part vs. its complement).\n- The Minimum-Information-Partition value `Phi` over a nonempty family of cuts\n  `Finset (Finset \u03b9)`, with `Phi_nonneg` and `Phi_eq_zero_iff` (\u03a6 vanishes iff\n  some candidate cut decomposes the system into independent parts).\n- Witnesses: `mutualInfo_prod = 0` (product = unintegrated) and\n  `mutualInfo_correlatedBits_pos` (a maximally correlated pair of bits has \u03a6 > 0).\n\nThe following conjectures are precise, falsifiable, and ready to formalize.\n\n## C1 \u2014 Capacity upper bound on integration\nFor any `P : FinDist (\u03b1 \u00d7 \u03b2)`,\n`mutualInfo P \u2264 Real.log (Fintype.card \u03b1)` and symmetrically\n`mutualInfo P \u2264 Real.log (Fintype.card \u03b2)`; hence\n`mutualInfo P \u2264 Real.log (min (Fintype.card \u03b1) (Fintype.card \u03b2))`.\n*Test:* equality is approached by the correlated-bits family generalized to\n`n`-ary perfectly-correlated states, where `mutualInfo = Real.log n`.\n\n## C2 \u2014 Chain rule / superadditivity for a refined cut\nFor a tripartite `P : FinDist (\u03b1 \u00d7 (\u03b2 \u00d7 \u03b3))` with the induced bipartite views,\n`mutualInfo (X ; (Y,Z)) = mutualInfo (X ; Y) + condMutualInfo (X ; Z | Y)`,\nwhere the conditional term is `\u2265 0`. Consequently coarsening a cut (merging two\nsides) cannot decrease the cross-cut mutual information.\n*Test:* with all three parts independent both sides are `0`; with `Z = X` the\nconditional term carries the full `mutualInfo (X;X)`.\n\n## C3 \u2014 Data-processing monotonicity of \u03a6\nIf `K` is a stochastic channel applied independently within each side of a cut\n(a per-part `Markov` map), then `mutualInfo (pushforward K P) \u2264 mutualInfo P`,\nand therefore `Phi` cannot increase under intra-part processing. Formally: a\ncolumn-stochastic matrix acting on one factor is a contraction for `mutualInfo`.\n*Test:* the identity channel gives equality; a constant (information-erasing)\nchannel sends `mutualInfo` to `0`.\n\n## C4 \u2014 \u03a6 = 0 \u21d4 global Markov factorization\nFor the full MIP family `cuts = univ \\ {\u2205, univ}` over `\u03b9`,\n`Phi P cuts hne = 0` iff `P` factorizes as a product across *some* nontrivial\nbipartition of the elements `\u03b9`. Strengthen to: a system is \"minimally\nintegrated\" exactly when its dependency hypergraph is disconnected.\n*Test:* a product distribution over two element-blocks has `Phi = 0`; the\nall-bits-equal distribution over `n \u2265 2` elements has `Phi > 0` for every cut.\n\n## C5 \u2014 Continuity / stability of integration\n`mutualInfo` is uniformly continuous in `P` on the simplex away from the\nboundary, and globally bounded; quantitatively, for distributions within total\nvariation `\u03b4`, `|mutualInfo P \u2212 mutualInfo Q|` is controlled by a modulus\n`\u03c9(\u03b4)` independent of `P, Q` (a Csisz\u00e1r\u2013Kemperman\u2013Kullback-style bound).\n*Test:* perturbing the correlated-bits masses by `\u03b5` changes `mutualInfo`\ncontinuously, with no jump at independence.\n",
+    "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
+    "domains": [
+      "EML",
+      "MachineLearning"
+    ],
+    "id": "fd_0479",
+    "priority_score": 1.0,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:44.957997+00:00",
+    "title": "EML Universal Approximation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0426",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.392825+00:00",
+    "title": "Topological Quantum Error Correction from Homological Persistence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "seed_327",
+    "priority_score": 0.95,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432569+00:00",
+    "title": "Goldbach Verification Framework"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_017",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:59.227937+00:00",
+    "title": "Birch and Swinnerton-Dyer Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_231",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:16.980012+00:00",
+    "title": "Natural Proofs Barrier: Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_004",
+    "priority_score": 0.93,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:56.613461+00:00",
+    "title": "Twin Prime Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "seed_328",
+    "priority_score": 0.93,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432595+00:00",
+    "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
+    "domains": [
+      "Analysis",
+      "Physics"
+    ],
+    "id": "seed_342",
+    "priority_score": 0.93,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432645+00:00",
+    "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "fd_0408",
+    "priority_score": 0.92,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.938639+00:00",
+    "title": "Certified Novelty Detection for Theorem Provers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the rank of an elliptic curve over Q is computable. Formalize the Mordell-Weil theorem, height pairings, and descent algorithms. Connect to the conjecture that ranks are bounded and explore the parity conjecture.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_204",
+    "priority_score": 0.92,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:08.281573+00:00",
+    "title": "BSD Conjecture: Rank Computability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
+    "domains": [
+      "Logic",
+      "Computation",
+      "Bridges"
+    ],
+    "id": "seed_379",
+    "priority_score": 0.92,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432809+00:00",
+    "title": "Proof Automation: Custom Lean 4 Tactics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "seed_056",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:04.360894+00:00",
+    "title": "Self-Modifying Research via Reflective Type Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_221",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.683325+00:00",
+    "title": "Standard Conjectures on Algebraic Cycles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "seed_233",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:17.429886+00:00",
+    "title": "Whitehead Problem: Independence from ZFC"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_337",
+    "priority_score": 0.91,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432615+00:00",
+    "title": "Galois Theory: Solvability of Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
+    "domains": [
+      "Algebra",
+      "NumberTheory",
+      "Bridges"
+    ],
+    "id": "seed_375",
+    "priority_score": 0.91,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432799+00:00",
+    "title": "Langlands Correspondence: GL(1) Case"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0432",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.909349+00:00",
+    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_029",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.580148+00:00",
+    "title": "ABC Conjecture Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "seed_224",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:12.343420+00:00",
+    "title": "Baum-Connes Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "seed_336",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432613+00:00",
+    "title": "ABC Conjecture: Consequences and Partial Results"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
+    "domains": [
+      "Physics",
+      "Algebra",
+      "Analysis"
+    ],
+    "id": "seed_363",
+    "priority_score": 0.9,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432772+00:00",
+    "title": "Noether's Theorem: Symmetries and Conservation Laws"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that any integer a \u2260 -1,\u25a1 that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_210",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:09.481636+00:00",
+    "title": "Artin's Conjecture on Primitive Roots"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove Hironaka's resolution of singularities theorem for varieties in characteristic p > 0. Formalize known results for dimensions \u2264 3.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_222",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.907572+00:00",
+    "title": "Resolution of Singularities in Positive Characteristic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
+    "domains": [
+      "Cryptography",
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_370",
+    "priority_score": 0.89,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432791+00:00",
+    "title": "Lattice Cryptography: LWE Hardness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_013",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:58.688448+00:00",
+    "title": "Odd Perfect Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mihailescu proved that 8 and 9 are the only consecutive perfect powers. Generalize: find all solutions to x^a - y^b = k for fixed small k. Formalize the theory of exponential Diophantine equations and Pillai's conjecture.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_205",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:08.480584+00:00",
+    "title": "Catalan's Conjecture Generalizations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a K\u00e4hler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_239",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:18.648941+00:00",
+    "title": "K\u00e4hler-Einstein Metrics and K-Stability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "seed_334",
+    "priority_score": 0.88,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432609+00:00",
+    "title": "Primality Testing: Miller-Rabin and AKS Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Compute and formalize \u03c0_n(S^m) for small n, m. Prove \u03c0_3(S^2) \u2245 \u2124 via the Hopf fibration. Construct the Hopf invariant and prove it detects the generator. Formalize the long exact sequence of a fibration.",
+    "domains": [
+      "Topology",
+      "Algebra"
+    ],
+    "id": "seed_350",
+    "priority_score": 0.88,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432680+00:00",
+    "title": "Homotopy Groups of Spheres: Low-Dimensional"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
+    "domains": [
+      "Physics",
+      "Analysis"
+    ],
+    "id": "seed_362",
+    "priority_score": 0.88,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432770+00:00",
+    "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| \u2264 2\u221ap.",
+    "domains": [
+      "Cryptography",
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "seed_371",
+    "priority_score": 0.88,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-18T03:56:25.432792+00:00",
+    "title": "Elliptic Curve Arithmetic: Group Law Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_380",
+    "priority_score": 0.88,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432811+00:00",
+    "title": "Formal Verification of Algorithms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_024",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:00.735432+00:00",
+    "title": "Legendre's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that higher signatures are homotopy invariants for all finitely presented groups. Formalize the assembly map in topological K-theory and connections to Baum-Connes.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "seed_223",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:12.120491+00:00",
+    "title": "Novikov Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "seed_331",
+    "priority_score": 0.87,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432603+00:00",
+    "title": "Perfect Numbers: Structure of Even Perfects"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
+    "domains": [
+      "Analysis",
+      "Physics",
+      "Algebra"
+    ],
+    "id": "seed_344",
+    "priority_score": 0.87,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432652+00:00",
+    "title": "Spectral Theory: Self-Adjoint Operators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_357",
+    "priority_score": 0.87,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432748+00:00",
+    "title": "Circuit Complexity: Monotone Lower Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
+    "domains": [
+      "Physics",
+      "Probability",
+      "Analysis"
+    ],
+    "id": "seed_364",
+    "priority_score": 0.87,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432774+00:00",
+    "title": "Statistical Mechanics: Ising Model Phase Transition"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Bridges"
+    ],
+    "id": "seed_376",
+    "priority_score": 0.87,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432801+00:00",
+    "title": "Categorical Foundations: Yoneda and Adjunctions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_0539",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.880463+00:00",
+    "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that there are infinitely many primes of the form n\u00b2+1. Formalize Iwaniec's result on semi-primes of this form and connect to Friedlander-Iwaniec theorem on primes of form a\u00b2+b\u2074.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_025",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:00.953818+00:00",
+    "title": "Primes of the Form n\u00b2+1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
+    "domains": [
+      "Logic",
+      "Geometry"
+    ],
+    "id": "seed_040",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:03.446924+00:00",
+    "title": "Homotopy Type Theory Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_0000",
+    "id": "seed_208",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:09.067494+00:00",
+    "title": "Sierpi\u0144ski Numbers: Covering Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "seed_333",
+    "priority_score": 0.86,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432607+00:00",
+    "title": "Quadratic Reciprocity: Five Proofs Formalized"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
+    "domains": [
+      "Algebra",
+      "Topology"
+    ],
+    "id": "seed_339",
+    "priority_score": 0.86,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432630+00:00",
+    "title": "Homological Algebra: Derived Functors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Euler characteristic for CW complexes. Prove the Gauss-Bonnet theorem for compact surfaces: \u222b K dA = 2\u03c0\u03c7(M). Prove the Poincar\u00e9-Hopf index theorem. Apply to classify surfaces by genus.",
+    "domains": [
+      "Geometry",
+      "Topology"
+    ],
+    "id": "seed_349",
+    "priority_score": 0.86,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432672+00:00",
+    "title": "Euler Characteristic and Gauss-Bonnet"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "seed_356",
+    "priority_score": 0.86,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432745+00:00",
+    "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize cubical type theory primitives in Lean 4. Construct the interval type and path types. Prove function extensionality and the univalence axiom. Implement higher inductive types: circles, torus, suspension.",
+    "domains": [
+      "Logic",
+      "Topology",
+      "Algebra"
+    ],
+    "id": "seed_360",
+    "priority_score": 0.86,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432767+00:00",
+    "title": "Type Theory: Cubical Type Theory Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
+    "domains": [
+      "Physics",
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_365",
+    "priority_score": 0.86,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432775+00:00",
+    "title": "Quantum Information: No-Cloning and Teleportation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
+    "domains": [
+      "MachineLearning",
+      "Analysis"
+    ],
+    "id": "seed_366",
+    "priority_score": 0.86,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432777+00:00",
+    "title": "Universal Approximation: Quantitative Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "seed_373",
+    "priority_score": 0.86,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432796+00:00",
+    "title": "Tropical Curves and Chip-Firing Games"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
+    "domains": [
+      "Bridges",
+      "Tropical"
+    ],
+    "id": "fd_0536",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.637226+00:00",
+    "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0550",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.786215+00:00",
+    "title": "Tropical Schemes: Foundations of Tropical Algebraic Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_006",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:57.058856+00:00",
+    "title": "Collatz Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_020",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:59.906325+00:00",
+    "title": "Hilbert 12: Kronecker-Weber Generalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Resolve Kaplansky's conjectures on group rings: no zero divisors, no idempotents other than 0/1, and no nontrivial units in K[G] for torsion-free G.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_218",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.027519+00:00",
+    "title": "Kaplansky's Conjectures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "seed_227",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:16.651864+00:00",
+    "title": "Random Matrices: Edge Universality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "seed_236",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:18.020118+00:00",
+    "title": "Reverse Mathematics: Ramsey's Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_338",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432625+00:00",
+    "title": "Representation Theory: Character Tables of S_n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Jones polynomial via the Kauffman bracket. Prove invariance under Reidemeister moves. Compute Jones polynomials for the trefoil, figure-eight, and torus knots. Prove that the Jones polynomial detects the unknot for alternating knots.",
+    "domains": [
+      "Topology",
+      "Algebra"
+    ],
+    "id": "seed_348",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432668+00:00",
+    "title": "Knot Invariants: Jones Polynomial Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "seed_352",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432688+00:00",
+    "title": "Ramsey Theory: Bounds and Constructions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_358",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432755+00:00",
+    "title": "Proof Complexity: Resolution and Cutting Planes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
+    "domains": [
+      "MachineLearning",
+      "Analysis",
+      "Geometry"
+    ],
+    "id": "seed_369",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432786+00:00",
+    "title": "Optimal Transport and Wasserstein Distances"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
+    "domains": [
+      "Cryptography",
+      "Logic",
+      "Computation"
+    ],
+    "id": "seed_372",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432794+00:00",
+    "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
+    "domains": [
+      "Algebra",
+      "Computation",
+      "Cryptography"
+    ],
+    "id": "seed_378",
+    "priority_score": 0.85,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432807+00:00",
+    "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0454",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.664610+00:00",
+    "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_030",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.788604+00:00",
+    "title": "Invariant Subspace Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that Wall-Sun-Sun primes exist (primes p where p\u00b2 divides F_{p-(p|5)}). Formalize the connection to Fermat's Last Theorem and establish search bounds for the first such prime.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_207",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-08T19:25:08.870932+00:00",
+    "title": "Wall-Sun-Sun Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "seed_225",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:12.561612+00:00",
+    "title": "Self-Avoiding Walk: Connective Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
+    "domains": [
+      "NumberTheory",
+      "Analysis"
+    ],
+    "id": "seed_332",
+    "priority_score": 0.84,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432605+00:00",
+    "title": "Continued Fractions and Diophantine Approximation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the invariant subspace theorem for compact operators on Hilbert spaces (Aronszajn-Smith). Formalize Lomonosov's theorem: operators commuting with a nonzero compact operator have invariant subspaces. Explore the Enflo-Read counterexample structure.",
+    "domains": [
+      "Analysis",
+      "Algebra"
+    ],
+    "id": "seed_343",
+    "priority_score": 0.84,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432648+00:00",
+    "title": "Invariant Subspace Problem: Special Cases"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension \u2265 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
+    "domains": [
+      "Geometry",
+      "Analysis"
+    ],
+    "id": "seed_347",
+    "priority_score": 0.84,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432660+00:00",
+    "title": "Kakeya Conjecture: Known Cases and Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "seed_361",
+    "priority_score": 0.84,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432769+00:00",
+    "title": "Lambda Calculus: Church-Rosser and Normalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the PAC-Bayes framework in Lean 4. Prove the Catoni bound and McAllester bound. Apply to neural networks via Gaussian perturbation priors. Prove that PAC-Bayes bounds are asymptotically tight for linear classifiers.",
+    "domains": [
+      "MachineLearning",
+      "Probability",
+      "Computation"
+    ],
+    "id": "seed_367",
+    "priority_score": 0.84,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-18T03:56:25.432779+00:00",
+    "title": "PAC-Bayes Generalization Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cram\u00e9r-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
+    "domains": [
+      "Geometry",
+      "Probability",
+      "Bridges"
+    ],
+    "id": "seed_377",
+    "priority_score": 0.84,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-18T03:56:25.432802+00:00",
+    "title": "Information Geometry: Fisher Metric on Statistical Models"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0076",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.711975+00:00",
+    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_012",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:58.445057+00:00",
+    "title": "Sums of Three Cubes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that if a polynomial map F: C\u207f \u2192 C\u207f has constant non-zero Jacobian determinant, then F is invertible. Formalize the reduction to degree 3 and connect to the Dixmier conjecture.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "seed_034",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:02.571310+00:00",
+    "title": "Jacobian Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the gap between consecutive primes p_n satisfies p_{n+1} - p_n = O((log p_n)\u00b2). Formalize probabilistic models of primes and known unconditional bounds.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_037",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:03.180355+00:00",
+    "title": "Cram\u00e9r's Conjecture on Prime Gaps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_212",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:09.877085+00:00",
+    "title": "Erd\u0151s-Faber-Lov\u00e1sz Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every convex body K in R\u207f of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_219",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.258186+00:00",
+    "title": "Bourgain's Slicing Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Jacobian conjecture for polynomial maps of degree 2 in all dimensions. Formalize the reduction to degree 3 (Dru\u017ckowski's theorem). Construct explicit counterexample candidates and verify they fail. Prove the conjecture implies the Dixmier conjecture.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "seed_340",
+    "priority_score": 0.83,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432638+00:00",
+    "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
+    "domains": [
+      "Analysis",
+      "Algebra"
+    ],
+    "id": "seed_346",
+    "priority_score": 0.83,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432657+00:00",
+    "title": "Fourier Analysis on Finite Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "seed_354",
+    "priority_score": 0.83,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432739+00:00",
+    "title": "Graph Coloring: Chromatic Polynomial Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
+    "domains": [
+      "Physics",
+      "Logic"
+    ],
+    "id": "fd_0396",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.003856+00:00",
+    "title": "Hilbert 6: Axiomatization of Physics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve known bounds.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_010",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:57.972073+00:00",
+    "title": "Happy End Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_027",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.338705+00:00",
+    "title": "Euler-Mascheroni Constant Irrationality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_036",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:02.987606+00:00",
+    "title": "Beal's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine all integer solutions to n! + 1 = m\u00b2. Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_206",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:08.676107+00:00",
+    "title": "Brocard's Problem: n! + 1 = m\u00b2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "seed_215",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:10.494305+00:00",
+    "title": "Reconstruction Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "seed_330",
+    "priority_score": 0.82,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432601+00:00",
+    "title": "Collatz Stopping Times: Density Analysis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize quaternion algebras and their classification over number fields. Prove the isomorphism between unit quaternions and SO(3). Construct the Cayley-Dickson construction and prove properties of octonions. Apply to gimbal lock avoidance in 3D rotation.",
+    "domains": [
+      "Algebra",
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "seed_341",
+    "priority_score": 0.82,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432642+00:00",
+    "title": "Quaternion Algebras and Rotations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
+    "domains": [
+      "Combinatorics",
+      "Probability"
+    ],
+    "id": "seed_355",
+    "priority_score": 0.82,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432742+00:00",
+    "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
+    "domains": [
+      "Logic",
+      "Analysis"
+    ],
+    "id": "seed_359",
+    "priority_score": 0.82,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432759+00:00",
+    "title": "Constructive Mathematics: Bishop's Analysis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
+    "domains": [
+      "Tropical",
+      "Computation",
+      "Geometry"
+    ],
+    "id": "seed_374",
+    "priority_score": 0.82,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432797+00:00",
+    "title": "Tropical Convexity and Linear Programming"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "seed_213",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:10.070200+00:00",
+    "title": "Sensitivity Conjecture Extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that \u03c0, e, \u221a2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_226",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:16.410337+00:00",
+    "title": "Normality of Mathematical Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0506",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.975605+00:00",
+    "title": "Consciousness as Integrated Information: Mathematical Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2282",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20430v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:35:57.205204+00:00",
+    "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a topological group and H \u2264 G a dense subgroup with the subspace topology. If H is extremely amenable, meaning every continuous action of H on a nonempty compact Hausdorff space has a fixed point, then G is extremely amenable. This isolates the density step used when passing from the automorphism group of a projective Fraisse limit to the closure subgroup of the homeomorphism group of the quotient continuum.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2284",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:36:00.903861+00:00",
+    "title": "Extreme amenability passes from a dense subgroup to its ambient topological group"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every finite K5-free simple graph G on n vertices, assign weight 1/2 to every edge contained in a triangle and weight 1 to every other edge. Then G has a bipartition whose monochromatic edge-weight is at most n^2/16. Equivalently, deleting edges of total such weight at most n^2/16 always makes G bipartite. The balanced complete 4-partite graph shows that the constant 1/16 would be best possible.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2286",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20397v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:54:19.630900+00:00",
+    "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let A and B be reduced arrangements of d projective complex lines in P^2 with d <= 9. If their central intersection lattices are isomorphic, their Milnor algebras S/J_f and S/J_g have the same Hilbert function in every degree, and mdr(f) = mdr(g), then the minimal graded free resolutions of S/J_f and S/J_g have identical graded Betti numbers. Equivalently, there is no Ziegler pair of at most nine lines satisfying both conditions (HF) and (MDR).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2287",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:12:03.280702+00:00",
+    "title": "No HF-MDR Ziegler pairs with at most nine lines"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2288",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20452v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:38:47.066128+00:00",
+    "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every finite-dimensional vector space E over a finite field F and every rank r with 0 <= r <= dim E, the map sending a sparse-paving q-matroid M of rank r on E to its set of r-dimensional circuit-hyperplanes is a bijection onto the stable sets of the q-Johnson graph J_q(E,r), whose vertices are r-dimensional subspaces and whose edges join pairs with intersection dimension r-1. Equivalently, a set S of r-subspaces defines a sparse-paving q-matroid precisely when any two distinct members of S intersect in dimension at most r-2.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2289",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-23T00:54:23.693302+00:00",
+    "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let p and q be distinct primes. Suppose P,Q \u2208 \u2115[x] are generating polynomials for two dice with no 0-labeled sides, with P(1)=p^2 and Q(1)=q^2, and whose sum-frequency polynomial equals that of two standard pq-sided dice: P Q = (x + x^2 + \u22ef + x^(pq))^2. Then P and Q must be one of exactly three explicit pairs, indexed by c=0,1,2: with G(n,s)=\u2211_{i=0}^{n-1} x^(s i), the p^2-sided die is x\u00b7G(p,1)^(2-c)\u00b7G(p,q)^c and the q^2-sided die is x\u00b7G(q,1)^c\u00b7G(q,p)^(2-c).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2290",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:13:50.667614+00:00",
+    "title": "Prime-product square-sided dice have exactly three relabeling types"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let p > 5 be prime, and let mu(p) be the least positive integer m such that 2^m \u2261 1 or -1 mod p. The conjecture is that there are infinitely many primes p for which mu(p) = (p - 1) / 2. By the projective-doubling classification in the paper, this is equivalent to saying that infinitely many prime odd bases attain the maximal possible terminal four-digit Kaprekar cycle length (p - 1) / 2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2291",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:38:50.878342+00:00",
+    "title": "Infinitely many extremal prime odd bases for four-digit Kaprekar dynamics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any inner form G of GL_n over a non-archimedean local field F, the Hochschild homology of the Braverman-Kazhdan asymptotic Hecke algebra J(G) is canonically isomorphic to the Hochschild homology of the classical Hecke algebra C_c^\u221e(G), and the Kazhdan-Lusztig bijection on Bernstein components appears in this isomorphism. Concretely, for each Bernstein component s indexed by an inertial equivalence class, the summand HH_*(J(G))_s is identified with HH_*(C_c^\u221e(G))_s via the map induced by the natural inclusion of Schwartz functions, and this identification is compatible with the Kazhdan-Lusztig bijection between Bernstein components and certain data on the dual side. This conjecture is established in the paper for inner forms of GL_n; the grand challenge extension to all connected reductive p-adic groups remains open.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2293",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21313v1",
+    "status": "available",
+    "timestamp": "2026-06-23T01:47:05.451556+00:00",
+    "title": "Hochschild homology isomorphism between asymptotic and classical Hecke algebras for inner forms of GL_n"
+  },
+  {
+    "consumed_by_exp_id": "d135fcbe",
+    "description": "For every fixed integer k \u2265 3, the Conformability problem is NP-complete when restricted to connected d-regular graphs G of odd order n with independence number \u03b1(G) = k and maximum degree d \u2265 n/2. The paper establishes this for k = 3 by reduction from perfect triangle packing in K\u2084-free graphs. The conjecture asserts that hardness persists for all larger independence numbers, where the complement graph has clique number k and conformable color classes correspond to cliques of odd size up to k in the complement, requiring richer packing structures to encode NP-hard problems.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2294",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21534v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-23T01:48:36.909062+00:00",
+    "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every gentle tree algebra A = KQ/<R> of finite global dimension, let \u03a9_A be the finite set of indecomposable A-modules, equivalently the permissible arcs in the modified surface model. For S \u2286 \u03a9_A, let cl_A(S) be the set of indecomposable summands lying in the resolving subcategory generated by S together with the projective modules. The conjecture is that cl_A is a convex-geometry closure operator: in particular, it satisfies anti-exchange. Explicitly, if C is resolving-closed, x and y are distinct indecomposables not in C, and x \u2208 cl_A(C \u222a {y}), then y \u2209 cl_A(C \u222a {x}). This is finite, falsifiable by computation on gentle trees, and would imply that the poset of resolving subcategories of a gentle tree algebra is meet-distributive.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2295",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21424v1",
+    "status": "failed",
+    "timestamp": "2026-06-23T02:04:29.943864+00:00",
+    "title": "Anti-exchange for resolving closure in gentle tree algebras"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let G be a finite simple connected regular graph of odd order. If every independent set of G has size at most 2, then G is conformable if and only if G is complete. Equivalently, in the zero-deficiency odd regular regime, the NP-hardness threshold \u03b1(G)=3 from the paper is sharp with respect to independence number: no non-complete graph with \u03b1(G)\u22642 can be conformable.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2296",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21534v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:23:55.721827+00:00",
+    "title": "Alpha-two sharpness for conformability in odd regular graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer k \u2265 1 and every positive integer n \u2265 1, every k-restricted characteristic sequence of a permutation on Z_n is the score sequence of some k-tournament on n vertices. Here, a characteristic sequence c(\u03c6) of a permutation \u03c6 \u2208 S_n is the non-decreasing arrangement of the multiset {i + \u03c6(i) : i \u2208 Z_n}, and it is k-restricted if each value in this multiset appears at most k times. A k-tournament on n vertices is a complete directed multigraph where each pair of vertices is connected by exactly k arcs, and its score sequence is the non-decreasing sequence of vertex outdegrees. This conjecture unifies the Bebeacua et al. conjecture (k=1: binary xrays, where each value appears at most once, correspond to 1-tournament score sequences) and the Brualdi\u2013Fritscher conjecture (k=2: unrestricted xrays, where each value appears at most twice, correspond to 2-tournament score sequences).",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_2297",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21532v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:42:12.378585+00:00",
+    "title": "Generalized Xray-Tournament Correspondence Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any dimension n \u2265 2, among all n-dimensional orthogonal flat tori of unit volume, the equilateral torus (with all lattice side lengths equal) uniquely maximizes the zeta regularized determinant of the Laplacian. Formally, if T_l = \u211d\u207f/(l\u2081\u2124 \u00d7 \u22ef \u00d7 l\u2099\u2124) with \u220fl\u1d62 = 1 and l\u1d62 > 0, then det_\u03b6(\u0394_{T_l}) \u2264 det_\u03b6(\u0394_{T_eq}) with equality if and only if l\u2081 = \u22ef = l\u2099 = 1, where T_eq is the equilateral torus. This validates Sarnak's conjecture in the orthogonal setting.",
+    "domains": [
+      "Pythagorean",
+      "Cryptography"
+    ],
+    "id": "fd_2298",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21442v1",
+    "status": "failed",
+    "timestamp": "2026-06-23T03:00:56.801830+00:00",
+    "title": "The Equilateral Torus Uniquely Maximizes the Zeta Regularized Determinant Among Orthogonal Flat Tori of Unit Volume"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer t \u2265 1, the natural density c_t := lim_{N\u2192\u221e} (1/N) #{0 \u2264 n < N : s\u2082(n+t) \u2265 s\u2082(n)} strictly exceeds 1/2, with the explicit quantitative bound c_t \u2265 1/2 + 2^{-2s\u2082(t)-1}, where s\u2082(m) counts the ones in the binary expansion of m. This was Cusick's long-standing conjecture, recently resolved via first-exit medians for principal subsequence ideals after an exact deconvolution replacing the distribution of s\u2082(n+t)\u2212s\u2082(n) by a finite stopped random-walk law.",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_2299",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:31:20.306116+00:00",
+    "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For integers n \u2265 2k and k \u2265 3, any two non-trivial cross-intersecting families A, B \u2286 ([n] choose k) satisfy |A| * |B| \u2264 h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2300",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23322v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:53:00.715630+00:00",
+    "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let $a_k$ denote the number of P\u00f3lya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the P\u00f3lya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2301",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23439v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:17:21.927856+00:00",
+    "title": "P\u00f3lya tree coefficient divisor-sum recurrence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any binary delta-matroid $D$ on ground set $E$ and any twuality operator $\\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the sequence of coefficients of the partial-$\\bullet$ polynomial $^{\\partial}w_{D}^{\\bullet}(z) = \\sum_{A \\subseteq E} z^{w(D^{\\bullet \\mid A})}$ is log-concave. This conjecture extends the interpolation property established in the paper (which implies the sequence has no internal zeros) and directly parallels the resolution of the Mason-Welsh conjecture for matroid independent sets.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2302",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22888v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:47:22.546695+00:00",
+    "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let R be any commutative ring and G any finite group. Define HH\u2080(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH\u2080(R[G]) \u2243 R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2303",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21313v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:05:39.955397+00:00",
+    "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every real \u03b5 > 0, there exists N such that every finite simple graph G on n \u2265 N vertices with minimum degree at least (5/8 + \u03b5)n has an edge-decomposition into 5-cycles whenever G is C5-divisible, i.e. every vertex has even degree and 5 divides the number of edges. This is the remaining small odd-cycle case suggested by the generalized Nash-Williams threshold \u03b4_{C_\u2113} = \u2113/(2\u2113\u22122), after the triangle case and the long odd-cycle cases addressed in the paper.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2304",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21548v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:24:24.127531+00:00",
+    "title": "Asymptotic C5-decomposition threshold equals 5/8"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let A\u2081 and A\u2082 be central hyperplane arrangements over Q of the same rank with isomorphic intersection lattices L(A\u2081) \u2245 L(A\u2082). For all primes p at which both arrangements admit good reduction, the local ask zeta functions coincide: Z^{ask}_{A\u2081/Z_p}(T) = Z^{ask}_{A\u2082/Z_p}(T). This extends the well-known combinatorial invariance conjecture for Igusa local zeta functions to the ask zeta function setting, motivated by the paper's construction recovering ask zeta functions from the Igusa local zeta function of the cone and the truncated flag Hilbert-Poincar\u00e9 series. The conjecture asserts that the arithmetic content entering through the substitution in the flag Hilbert-Poincar\u00e9 series is nevertheless determined by the intersection lattice for good reduction primes.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2305",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21393v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:43:10.666437+00:00",
+    "title": "Combinatorial Invariance of Ask Zeta Functions for Hyperplane Arrangements"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for every integer k \u2265 2, every finite simple k-connected graph G on n \u2265 4k+4 vertices with minimum degree \u03b4(G) \u2265 ceil((n+1)/2) has, for every ordered pair of distinct vertices u,v, a Hamiltonian u-v path P such that the spanning graph G with all edges of P deleted is still k-connected. This is a precise strengthening of the paper's n \u2265 6k+6 bound while keeping the same degree threshold and prescribed endpoints.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2306",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21383v1",
+    "status": "available",
+    "timestamp": "2026-06-23T03:02:08.314897+00:00",
+    "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every n \u2265 1, there exists a finite family C of pairwise disjoint open bounded convex sets in R^{3n} such that the space L of line transversals to C is homotopy equivalent to S^{n-1}. This strengthens the authors' theorem (which proves only H\u0303_{n-1}(L) \u2260 0) and formalizes their stated belief that the transversal spaces they construct have the homotopy type of a sphere.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_2307",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23193v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:31:35.784256+00:00",
+    "title": "Homotopy type of the line transversal space equals S^{n-1}"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In Theorem 1.2 of the paper, the function $f(n,s')$ bounding the size of the separator can be chosen to be $ns'-1$ when the vertex sets in $\\mathcal{A}$ are pairwise disjoint.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2308",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:53:54.133289+00:00",
+    "title": "Optimal Separator Bound for Wall Connectors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a number field F with r\u2081 real embeddings and r\u2082 pairs of complex conjugate embeddings, and for every integer n \u2265 2, the bottom-degree Betti-Whittaker periods of a generic cohomological automorphic representation \u03c0 of GL\u2099 over F and its contragredient \u03c0\u2228 satisfy p^b(\u03c0\u2228) = (-1)^{b(F,n)} \u00b7 p^b(\u03c0), where b(F,n) = r\u2081\u00b7\u230an\u00b2/4\u230b + r\u2082\u00b7n(n-1)/2 is the bottom cohomological degree. This removes the regularity assumptions in Chen's earlier result and extends the contragredient period relation to the full class of generic cohomological representations.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2309",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:20:19.284015+00:00",
+    "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ can be realized as the $(-\\beta)$-expansion of some $x \\in I_\\beta$ if and only if for all $n \\ge 1$, the suffix $x_n x_{n+1} \\dots$ is less than or equal to $d^*(0, -\\beta)$ in the alternating lexicographic order. The alternating lexicographic order $\\preceq$ is defined such that $x \\preceq y$ if either $x=y$ or at the first index $k$ where they differ, $x_k < y_k$ when $k$ is odd and $x_k > y_k$ when $k$ is even.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2310",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23097v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:48:57.058098+00:00",
+    "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a real quadratic field K with discriminant \u0394\u2080, dimension d in its AFMY tower, and conductor f dividing f\u2080(d), the excess e = [K^{fd} : K_L^{d;f}] equals 1 if and only if gcd(f, d) = 1. This characterizes when the Kopp-Lagarias ray class field K_L^{d;f} coincides with the standard ray class field K^{fd}, and is the key structural ingredient in the paper's thesis that SIC overlap units factor into Stark units from these fields.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2311",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23535v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:54:16.244333+00:00",
+    "title": "Excess-One Criterion for Kopp-Lagarias Ray Class Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expansion parameter \u03b1_G(t) and the optimality of the associated code B(G).",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_2312",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-23T06:21:22.540143+00:00",
+    "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The cluster algebra structure on the coordinate ring of a partial flag variety G/P, defined via the restriction of the base affine space cluster structure, is isomorphic to the cluster algebra structure defined on the corresponding Schubert cell via the double Bruhat cell cluster structure.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2313",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23474v1",
+    "status": "available",
+    "timestamp": "2026-06-23T06:42:43.429866+00:00",
+    "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2314",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:09:34.216269+00:00",
+    "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2315",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23437v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:39:04.351050+00:00",
+    "title": "Helly's Theorem for Convex Splinters"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all positive integers s' and t', there exist integers t and f such that for any graph G, vertex set A, and wall W of size at least t, either there exists a vertex set X of size at most f separating A from the branch vertices of W, or there exists a subwall W' of W of size at least t' and s' vertex-disjoint A-W'-paths ending in distinct nails of W'.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2316",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:05:12.495306+00:00",
+    "title": "Wall-Menger Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let $A(z)$ be the ordinary generating series of P\u00f3lya trees, with coefficients $a_n$, and let $\\rho$ be its radius of convergence such that $A(\\rho) = 1$. Then for all integers $k \\ge 1$ and all real numbers $t$ such that $0 \\le t < \\rho$, the truncation error of the $k$-th partial sum is bounded by $0 \\le A(t) - \\sum_{i=1}^k a_i t^i \\le \\frac{(t/\\rho)^{k+1}}{1 - t/\\rho}$.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_2317",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23439v1",
+    "status": "failed",
+    "timestamp": "2026-06-23T08:33:35.541800+00:00",
+    "title": "P\u00f3lya Tree Generating Series Taylor Approximation Error Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any connected reductive group $G$ defined over a number field $F$, and any cohomological generic automorphic representation $\\pi$ of $G(\\mathbb{A}_F)$, the ratio of the Betti-Whittaker periods $\\Omega(\\pi^\\vee) / \\Omega(\\pi)$ is an algebraic number, generalizing the explicit relation established for $\\mathrm{GL}(n)$ where the ratio is a specific power of $i$ depending on the bottom degree $b = r_1 \\lfloor n^2/4 \\rfloor + r_2 n(n-1)/2$.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2318",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:53:00.946057+00:00",
+    "title": "Algebraicity of Contragredient Betti-Whittaker Period Ratio for Reductive Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let d < 0 be squarefree, let K = Q(\u221ad), and let O_K have Z-basis {1, \u03c9}, where \u03c9 = \u221ad if d \u2260 1 mod 4 and \u03c9 = (1 + \u221ad)/2 if d \u2261 1 mod 4. Form the rank-four lattice S_K = Herm_2(O_K) with quadratic form q(A) = 2 det(A), and use the basis given by the two diagonal Hermitian matrix units together with the off-diagonal elements 1 and \u03c9. Then the determinant of the Gram matrix of the associated integral symmetric bilinear form is exactly the fundamental discriminant D_K: det Gram(S_K) = d if d \u2261 1 mod 4, and det Gram(S_K) = 4d otherwise.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2319",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22921v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:16:17.802367+00:00",
+    "title": "Discriminant of the Hermitian Bianchi lattice S_K"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every connected, twin-free Cayley digraph of a finite abelian group of odd order is stable; that is, the automorphism group of its direct product with the complete digraph K_2 is isomorphic to the direct product of their individual automorphism groups.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2320",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22947v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:53:33.563342+00:00",
+    "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a finite acyclic quiver Q with longest path length n-1, the T-ideal of the principal subalgebra \ud835\udd3dQ\u22651 is generated by the standard polynomial S = \u2211_{\u03c3\u2208S_n} x_{\u03c3(1)}x_{\u03c3(2)}...x_{\u03c3(n)}.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2321",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23024v1",
+    "status": "available",
+    "timestamp": "2026-06-23T10:17:17.086233+00:00",
+    "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every binary delta-matroid and every nontrivial twuality operator $\bullet \\in \\{\\ast, \\times, \\ast\\times, \\times\\ast, \\ast\\times\\ast\\}$, the partial-$\\bullet$ polynomial $^\\partial w_D^\\bullet(z)$ is either even, odd, or both even-interpolating and odd-interpolating.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2322",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22888v1",
+    "status": "available",
+    "timestamp": "2026-06-23T10:41:26.252321+00:00",
+    "title": "Binary Delta-Matroid Partial-Twuality Interpolation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any bounded prism (A, I) where A/I is a regular local ring of dimension d, the restriction functor from the category of prismatic F-crystals on Spec(A/I) to the category of prismatic F-crystals on the punctured spectrum Spec(A/I) \\ {m} is an equivalence of categories. This extends the paper's primitive purity theorem for Frobenius modules to the full setting of prismatic F-crystals, and would imply that the canonical F-isocrystal from Ogus's conjecture is uniquely determined by its restriction to any dense open subscheme.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2323",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22637v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:00:28.938025+00:00",
+    "title": "Prismatic Purity for F-Crystals on Regular Schemes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2324",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22819v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:20:57.671444+00:00",
+    "title": "Interval Property for Connected Slice-Projections of Polymatroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every integer k\u22653 there exists a critical edge density \u03b3_k\u2208(0,1) such that for all sufficiently large n, any graph on n vertices with edge density at least \u03b3_k that contains no induced copy of K_{1,k} is \u03b5 n^2-close (in edit distance) to the complement of a complete (k\u22121)-partite graph whose part sizes differ by at most o(n) from the balanced partition n/(k\u22121).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2325",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22661v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:44:48.971200+00:00",
+    "title": "Typical (k\u22121)-partite complement structure of dense K_{1,k}-free graphs above the critical density"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every prime p \u2265 7 with p \u2261 3 mod 4, the determinant of the truncated Legendre-symbol matrix with polynomial parameter X is exactly ((p - 2) / 3)^2 X over \u2124[X]. Explicitly, for m = (p - 5) / 2 and matrix A indexed by Fin m with A_{j,k} = X + (j - k | p), where the Legendre symbol is viewed as an integer coefficient polynomial, det A = ((p - 2) / 3)^2 X.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2326",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22548v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:03:49.419256+00:00",
+    "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex \u0394(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) \u2265 22 and HJ(4,2) \u2265 14.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2327",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22155v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:25:51.858994+00:00",
+    "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a totally real number field $k$, a prime $p$, and a subset $\\Sigma$ of the $p$-adic primes of $k$, if $N_\\infty/k$ is a $\\Sigma$-ramified $\\mathbb{Z}_p$-extension (i.e., $N_\\infty$ is contained in the maximal abelian pro-$p$-extension of $k$ unramified outside $\\Sigma$), then the unramified Iwasawa module $X(N_\\infty)$ is finite. This generalizes Greenberg's Conjecture from the cyclotomic $\\mathbb{Z}_p$-extension to any $\\Sigma$-ramified $\\mathbb{Z}_p$-extension.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2328",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22324v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:50:31.085426+00:00",
+    "title": "Finiteness of Unramified Iwasawa Module for Sigma-Ramified Extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Fix rational transmission parameters \u03b8,p with 0 < \u03b8 < 1 and 0 < p \u2264 1. For any two finite simple graphs G and H, let G \u25a1 H denote the Cartesian product and let Z_T^{\u03b8,p}(G) be the minimum size of a \u03b8-threshold, p-proportion transmission zero forcing set. Conjecture: Z_T^{\u03b8,p}(G \u25a1 H) \u2264 min(|V(H)| \u00b7 Z_T^{\u03b8,p}(G), |V(G)| \u00b7 Z_T^{\u03b8,p}(H)). This is falsifiable by a finite pair of graphs and rational parameters for which every initial set below the stated bound fails to fill the product.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2329",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22246v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:10:53.772901+00:00",
+    "title": "Cartesian-product upper bound for transmission zero forcing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any edge-colored graph G on n \u2265 3 vertices, if the minimum color degree \u03b4c(G) \u2265 (n+1)/2, then the number of rainbow triangles rt(G) is at least f(n), where f(n) = (n^2-1)/8 if n is odd, f(n) = n^2/4 - 1 if n is even and n \u2265 6, and f(4) = 4.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2330",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22106v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:28:42.948702+00:00",
+    "title": "Exact minimum number of rainbow triangles with large minimum color degree"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a projective variety V of dimension n over F_1 with associated invertible Markov matrix A = Mk_1 \u2208 GL_b(Z) (arising from the Markov endomorphism construction), the zeta function Z(V/F_1, t) = 1/det(I - tA) satisfies the Weil-type functional equation Z(V/F_1, 1/t) = \u03b5 \u00b7 t^{-\u03c7(V)} \u00b7 Z(V/F_1, t), where \u03b5 \u2208 {\u00b11} and \u03c7(V) = \u03a3_{i=0}^{2n} (-1)^i b_i is the topological Euler characteristic of V(C). This formalizes the paper's claim that the zeta function of V(F_1) satisfies all Weil conjectures except the Riemann hypothesis analog, using the bridge between F_1-geometry and the K-theory of Cuntz-Krieger algebras O_A.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2331",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22010v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:47:18.898418+00:00",
+    "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2332",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22058v1",
+    "status": "available",
+    "timestamp": "2026-06-23T14:06:13.272860+00:00",
+    "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every finite connected simple graph G on n \u2265 2 vertices with unit edge resistances, let R_G be its effective-resistance matrix and define \u0394(G) = (-1)^(n-1) det(R_G). Conjecture: 2^n (n-1) / n^n \u2264 \u0394(G) \u2264 2^(n-2) (n-1). Moreover, equality on the left holds exactly for the complete graph K_n, and equality on the right holds exactly for trees. This extends the Graham--Pollak tree determinant formula and predicts that adding simple edges monotonically decreases the signed resistance determinant down to the complete graph.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2333",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21902v1",
+    "status": "available",
+    "timestamp": "2026-06-23T14:24:58.237232+00:00",
+    "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjectures that for all integers $p \\ge 3$ and $s \\ge 1$, the Cameron-Puleo bound is tight for the graph $K^-_p \\cup sK_1$, generalizing the paper's results for $K^-_3 \\cup sK_1$ and $K^-_{p-1} \\cup K_1$. Specifically, $\\mathrm{sat}(n, K_1 \\vee (K^-_p \\cup sK_1)) = n - 1 + \\mathrm{sat}(n-1, K^-_p \\cup sK_1)$ for all $n \\ge p + s + 1$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2334",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22006v1",
+    "status": "available",
+    "timestamp": "2026-06-23T14:43:25.621350+00:00",
+    "title": "Cameron-Puleo Equality for $K^-_p \\cup sK_1$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let A \u2192 B be a finite locally free homomorphism of commutative rings of constant rank d. If an invertible A-module P becomes free of rank one after base change to B, then P^{\u2297 d} is free; equivalently, the kernel of the pullback map Pic(A) \u2192 Pic(B) is annihilated by d. Applied to A = O_K[t]/(f) and B = O_L[t]/(f), this predicts that whenever two non-derogatory integral matrices with characteristic polynomial f become similar over O_L, the associated Latimer--MacDuffee Picard-class difference has order dividing [L : K].",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2335",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21628v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:03:20.079971+00:00",
+    "title": "Finite-flat capitulation divisibility for Picard classes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjectures that the upper bound for the Ramsey number $R(T, K_{m_1,\\ldots,m_k}) \\le (k-1)(R(T, K_{m_1,m_2})-1)+m_1$ established in the resolution of Erd\u0151s Problem 550 is tight. Specifically, for any fixed $k \\ge 2$ and $1 \\le m_1 \\le \\dots \\le m_k$, there exist arbitrarily large trees $T$ for which equality holds, demonstrating that the excess over the canonical Burr lower bound cannot be improved in general.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2336",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T05:55:36.201011+00:00",
+    "title": "Tightness of the Erd\u0151s 550 Upper Bound for Tree-Multipartite Ramsey Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any prime p and integer i \u2265 1, the codimension-i rational cohomology of the Hecke congruence subgroup \u0393_{0,n}(p) vanishes for n \u2265 (3i+1)p + (3i+2). Specifically, H^{n(n-1)/2 - i}(\u0393_{0,n}(p); \u211a) = 0. This extrapolates the paper's results for i=1 (n \u2265 4p+5) and i=2 (n \u2265 7p+8) to arbitrary codimensions.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2337",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T06:21:54.373451+00:00",
+    "title": "Codimension-i Vanishing Conjecture for Hecke Congruence Subgroups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer h, the set \ud835\udca5_h = {j \u2265 1 : rad(j) = rad(j+h)} is finite with |\ud835\udca5_h| \u2264 3 \u00b7 7^{3+2\u03c9(h)}, where rad(n) is the product of distinct prime factors of n and \u03c9(h) is the number of distinct prime factors of h. Furthermore, \ud835\udca5_h is empty when h is odd (since rad(j) = rad(j+h) forces 2 | rad(j) = rad(j+h), requiring both j and j+h even, contradicting odd h). This bound, due to Pollack\u2013Pomerance\u2013Trevi\u00f1o, is the crucial finiteness input underpinning the paper's rank-amplified decomposition of S_h^\u03c6(x) into diagonal (Graham\u2013Holt\u2013Pomerance same-support family) and off-diagonal components.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2338",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23681v1",
+    "status": "available",
+    "timestamp": "2026-06-23T06:43:59.614397+00:00",
+    "title": "Explicit Finiteness Bound for Same-Radical Shift Sets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The authors disprove a conjecture by Cheong, Goaoc, and Holmsen by showing that for every n >= 1, there is a finite family of pairwise disjoint open convex sets in R^{3n} such that the (n-1)-st reduced homology of the space of line transversals is nonzero. They explicitly state the conjecture that this space of line transversals is in fact homotopy equivalent to the (n-1)-sphere, S^{n-1}. This proposes formalizing that stronger homotopy equivalence conjecture.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2339",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23193v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:10:06.412019+00:00",
+    "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any prime power $q$ and integer $n \\ge q+2$, the Grassmann scheme $J_q(n,2)$ is degree-one trivial (DOT), meaning that all Boolean degree one functions on $J_q(n,2)$ are trivial. This extends Drudge's theorem for $q=3, n \\ge 5$ and the known result for $q=2, n \\ge 4$, proposing a unified threshold $n \\ge q+2$.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2340",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23465v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:05:42.947857+00:00",
+    "title": "Degree-One Triviality of Grassmann Schemes $J_q(n,2)$ for $n \\ge q+2$"
+  },
+  {
+    "consumed_by_exp_id": "f8155d9b",
+    "description": "The number of binary 2-binomial equivalence classes of words of length n over the alphabet {0,1} equals the n-th cake number, i.e., (n^3 + 5n + 6) / 6 = \u2211_{r=0}^{3} C(n,r). This is the identity established by Rigo\u2013Salimov and given geometric explanation in the paper via hyperplane arrangements.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2341",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23426v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-23T08:33:50.471570+00:00",
+    "title": "Binary 2-binomial class count equals the cake number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For k \u2265 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2342",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22997v1",
+    "status": "available",
+    "timestamp": "2026-06-23T08:56:07.087605+00:00",
+    "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite group \u0393, any real-valued function f : \u0393 \u2192 \u211d, and any finite directed graph F, the homomorphism density t(F, C_f) satisfies t(F, C_f) \u2265 (E_Gamma f)^(2 * e(F)), and equality holds iff f is constant on \u0393.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2343",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23018v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:18:43.440749+00:00",
+    "title": "Conjecture on extremal constantness for two-sided group correlation kernels"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture proposes a universal structural condition that determines whether the deleted co-maximal subgroup graph of a finite group is connected, and when it has cycles or becomes a star.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2344",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22904v1",
+    "status": "available",
+    "timestamp": "2026-06-23T09:55:40.099936+00:00",
+    "title": "Connectivity of co-maximal subgroup graphs for finite groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any graph G, the externally supported independence number \u03b1_{es}(G) is at least \u03b1(G) - 1, where \u03b1(G) is the standard independence number of G. This conjecture posits that the additional ES-condition does not reduce the maximum independent set size by more than one, even in cases where the standard independence number is achievable without the ES-condition.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2345",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22972v1",
+    "status": "available",
+    "timestamp": "2026-06-23T10:23:23.483072+00:00",
+    "title": "Lower Bound Conjecture for Externally Supported Independence Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ is realized as the $\\beta$-expansion $d(x,\\beta)$ for some real number $x \\in [0, 1)$ if and only if for all $n \\in \\mathbb{N}$, the tail $x_nx_{n+1}\\dots$ is lexicographically strictly less than the quasi-greedy $\\beta$-expansion of 1, $d^*(1,\\beta)$.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2346",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23097v1",
+    "status": "available",
+    "timestamp": "2026-06-23T10:41:57.159557+00:00",
+    "title": "Parry's Theorem on Admissible Beta-Expansions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any prime $p$ with $p \\equiv 3 \\pmod 4$, let $P_3$ denote the 3-dimensional paraboloid over the finite field $\\mathbb{F}_p$. The endpoint restriction conjecture for $P_3$ states that the Fourier extension operator associated with $P_3$ maps $L^2(P_3)$ to $L^3(\\mathbb{F}_p^3)$ with a constant independent of $p$. Equivalently, for any function $f: P_3 \\to \\mathbb{C}$, $\\| E(f) \\|_{L^3(\\mathbb{F}_p^3)} \\le C \\|f\\|_{L^2(P_3)}$ where $E(f)(x) = p^{-2} \\sum_{\\xi \\in P_3} f(\\xi) e(x \\cdot \\xi)$ and $C$ is an absolute constant.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2347",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22882v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:01:03.311156+00:00",
+    "title": "Finite Field Restriction Conjecture for the 3D Paraboloid"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let r,t,n be natural numbers with 1 \u2264 t \u2264 r and n \u2265 r+1. Let K be a pure r-dimensional simplicial complex on n vertices which is r-down path connected. Suppose that for every face \u03c3 of K with |\u03c3| = r - t, the reduced homology group H_t(lk_K(\u03c3); \u211d) vanishes. Then q_{r-1}(K) = t n - (t-1)(r+1) if and only if K is isomorphic to \u0394_{r+1-t} \u22c6 \u0394_{n-r-1+t}^{t}. Equivalently, the large lower bound on n appearing in the paper\u2019s equality characterization is unnecessary.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2348",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22825v1",
+    "status": "failed",
+    "timestamp": "2026-06-23T11:22:47.373232+00:00",
+    "title": "Threshold-free equality case for the local-homology signless Laplacian bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The lazy swap chain on the set \u03a9(r,c) of m\u00d7n binary matrices with prescribed row sums r and column sums c has spectral gap at least (C(m,2))\u207b\u00b9(C(n,2))\u207b\u00b9 for all feasible margins whenever m,n \u2265 2. This resolves the 1997 conjecture of Kannan, Tetali, and Vempala. The bound is tight in the worst case (e.g., r\u2081=r\u2082=1, c\u2081=c\u2082=1, all other margins zero, giving |\u03a9|=2).",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2349",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22636v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:45:08.025039+00:00",
+    "title": "Spectral Gap Lower Bound for the Binary Fixed-Margin Swap Chain"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every nonempty m \u00d7 n rectangular grid, let f : {0,\u2026,m\u22121} \u00d7 {0,\u2026,n\u22121} \u2192 Z satisfy f(0,0)=0 and |f(p)-f(q)|\u22641 on every grid edge. Then the total absolute mass is at most n\u00b7m(m\u22121)/2 + m\u00b7n(n\u22121)/2. This bound is sharp, attained by f(i,j)=i+j and by f(i,j)=\u2212(i+j). In the Miura-ori height-function model this is exactly the extremal inequality needed to turn the explicit lower-bound construction for the flip-graph diameter into a matching upper bound whenever flip distance is controlled by L1 height difference.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2350",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22614v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:05:30.404748+00:00",
+    "title": "Extremal L1 mass of normalized 1-Lipschitz grid height differences"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite simple graph G, the number of irreducible FAT colorings of G is exactly the cardinality of the set of real numbers \u03b1 \u2208 [0,1] for which there exists \u03b2 \u2208 [0,1] such that (\u03b1,\u03b2) yields a FAT coloring of G. In other words, each irreducible FAT coloring corresponds to a unique fairness parameter \u03b1, and distinct irreducible FAT colorings give distinct \u03b1 values.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2351",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22374v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:28:11.255044+00:00",
+    "title": "Number of irreducible FAT colorings equals number of distinct fairness parameters"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every 3-connected planar graph with an even number of vertices has at least 3 perfect matchings. While the paper establishes that the minimum non-zero number of perfect matchings for 3-connected planar graphs is bounded by a constant, this conjecture posits that the exact constant is 3, which is achieved by the complete graph on 4 vertices.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2352",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22253v1",
+    "status": "available",
+    "timestamp": "2026-06-23T12:51:47.961383+00:00",
+    "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2353",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22229v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:11:45.659366+00:00",
+    "title": "Quadratic irrational density in the ratio spectrum"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The sum of the elements in the $n$-th row of the Pascal-like Riordan array defined by the power series pair $(1/(1-x), x/(1-x)^2)$, whose entries are given by the binomial coefficient $t_{n,k} = \\binom{n+k}{2k}$, equals the $(2n+1)$-th Fibonacci number. This is derived from the paper's demonstration that the generating function of the row sums is $(1-x)/(1-3x+x^2)$, which characterizes the odd-indexed Fibonacci sequence.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2354",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22070v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:29:49.823733+00:00",
+    "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every Hamiltonian connected cubic edge-transitive graph \u0393 has Hamiltonian compression factor \u03ba(\u0393) \u2265 2, i.e., it admits a 2-symmetric Hamiltonian cycle: there exists a Hamiltonian cycle C and an automorphism g of order 2 such that g acts on C as a rotation by |V(\u0393)|/2 positions. This is supported by exhaustive computation on all such graphs up to 10,000 vertices, where every Hamiltonian cubic edge-transitive graph was found to have \u03ba \u2265 2.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_2355",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21941v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:48:00.738680+00:00",
+    "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In Lemma 2.1 of the paper the infinite right half-strip row-exchange identity is proved under a uniform contraction assumption for every column. Conjecture: the same identity remains valid under the strictly weaker hypothesis that the contraction ratio is eventually bounded by some \u03b4 < 1. More precisely, for arbitrary top and bottom boundary occupation sequences, nonzero \u03b1, and spectral parameters v,z, if there exist \u03b4 < 1 and N such that for all i \u2265 N the norm of (w\u2081(u\u1d62/z)/w\u2084(u\u1d62/z))*(w\u2084(u\u1d62/v)/w\u2081(u\u1d62/v)) is at most \u03b4, then the two infinite row-exchange partition functions are equal up to the same scalar prefactor f(v/z)/\u03b1\u00b2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2356",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22004v1",
+    "status": "available",
+    "timestamp": "2026-06-23T14:06:54.483472+00:00",
+    "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer t \u2265 1 and q \u2265 1, let F = tK\u2082 \u222a qK\u2081 be the disjoint union of a matching of size t and q isolated vertices. Then for every n > 2t + q, the Cameron--Puleo upper bound is tight: sat(n, K\u2081 \u2228 F) = n - 1 + sat(n - 1, F). This extends the paper's proved cases t = 1 and t = 2 to all matchings with isolated vertices.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2357",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22011v1",
+    "status": "available",
+    "timestamp": "2026-06-23T14:25:38.671844+00:00",
+    "title": "Join-saturation equality for matchings with isolated vertices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer k >= 3, the sum of 2^{k_2} * zeta(k_1, k_2) over all positive integers k_1, k_2 such that k_1 + k_2 = k and k_2 >= 2, equals (k + 1) * zeta(k). This theorem is explicitly mentioned in the paper as the foundational starting point that is generalized to multiple mixed values.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2358",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21978v1",
+    "status": "available",
+    "timestamp": "2026-06-23T14:44:47.583620+00:00",
+    "title": "Ohno-Zudilin Weighted Sum Formula for Double Zeta Values"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let \ud835\udd13(y)=\u03a3_{a\u2208A} c_a(t) \u03a0_{i=0}^k (y^(i))^{a_i} be a nonzero ordinary algebraic differential polynomial over algebraically closed characteristic-zero Hahn series with finite support A. Let E_k(trop(\ud835\udd13)) be the set of t-adic orders r of Boolean Hahn elementary k-solutions of its tropicalization, equivalently the r for which the active indicial tropical minimum is attained at least twice. For each r in E_k(trop(\ud835\udd13)), form the classical indicial initial polynomial I_r(Z) in the leading coefficient Z, using exactly the monomials attaining that minimum and the falling-factorial factors coming from derivatives. Conjecture: if every r in E_k(trop(\ud835\udd13)) has a simple nonzero root of I_r(Z), then every elementary tropical order is realized by an actual Hahn-series solution; hence ord_t(Sol(\ud835\udd13)) = E_k(trop(\ud835\udd13)). This strengthens the paper's containment ord_t(Sol(\ud835\udd13)) \u2286 E_k(trop(\ud835\udd13)) to equality under a Newton-nondegeneracy hypothesis.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2359",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21829v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:04:46.154289+00:00",
+    "title": "Newton-nondegenerate elementary tropical orders lift to Hahn-series solutions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let d >= 4 and let K = Q(sqrt((d+1)(d-3))) be real quadratic with maximal order O_K. For an integer f > 0 with gcd(d,f)=1, let K^{fd} be the ordinary ray class field of K of finite modulus fd attached to O_K, and let K_L^{d;f} be the Kopp--Lagarias ray class field of finite modulus d attached to the order Z + f O_K. Define the canonical totally positive unit u = (d - 1 + sqrt((d+1)(d-3)))/2. Let P_f = (O_K/f O_K)^\u00d7 / (Z/fZ)^\u00d7, and let [u]_f be the image of u in P_f. The conjecture is that the excess e(d,f) = [K^{fd} : K_L^{d;f}] equals the index of the cyclic subgroup generated by [u]_f in P_f. Equivalently, e(d,f) = |P_f| / order([u]_f), and when f is prime to the discriminant this is Phi_K(f)/(Phi(f) * order([u]_f)). This gives a precise class-field-theoretic explanation for when the non-maximal ray class field is a proper subfield of the maximal ray class field.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2360",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23535v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:30:32.966496+00:00",
+    "title": "Excess of Kopp--Lagarias ray class fields is the projective order defect of the SIC unit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves R(T, K_{m\u2081,\u2026,m\u2096}) \u2264 (k\u22121)(R(T, K_{m\u2081,m\u2082}) \u2212 1) + m\u2081 for all sufficiently large n-vertex trees T. We conjecture this bound holds for ALL trees T with |T| \u2265 m\u2096, removing the asymptotic 'sufficiently large n' condition. This would extend the resolution of Erd\u0151s Problem 550 to a universal statement and subsumes Chv\u00e1tal's theorem R(T, K\u2096) = (k\u22121)(|T|\u22121)+1 as the special case m\u2081=\u22ef=m\u2096=1. Verified for n=1,2 and the paper's asymptotic regime; the intermediate range requires new techniques.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2361",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:32:33.434800+00:00",
+    "title": "Universal Erd\u0151s 550: Tree\u2013Multipartite Ramsey Bound Without Asymptotic Conditions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u22ef \u2264 m\u2096, there exists n\u2080 = n\u2080(m\u2081,\u2026,m\u2096) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m\u2096}) \u2264 (k\u22121)(R(T, K_{m\u2081,m\u2082}) \u2212 1) + m\u2081. This resolves Erd\u0151s Problem 550 and establishes that the excess over the Burr canonical lower bound is controlled by the excess in the bipartite subproblem involving the two smallest parts.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2362",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:38:06.610767+00:00",
+    "title": "Erd\u0151s Problem 550: Tree versus Complete Multipartite Ramsey Upper Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any left-regular bipartite graph G of degree d \u2265 3 with girth at least 2s (equivalently, G is s-optimal), the binary linear code B(G) has minimum distance at least 2(d-1)^{s-2}. This conjecture asserts that the girth characterization of s-optimal expanders proven in the paper transfers to a strong lower bound on the minimum distance of the associated code, providing the coding-theoretic foundation needed for the post-quantum key exchange application.",
+    "domains": [
+      "Cryptography",
+      "Pythagorean"
+    ],
+    "id": "fd_2363",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "failed",
+    "timestamp": "2026-06-23T15:55:03.027965+00:00",
+    "title": "Girth-Implied Minimum Distance Bound for Optimal Small-Set Expander Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the standard rectangular/plabic cluster seed on the coordinate ring of the Grassmannian partial flag variety Gr(k,n), the cluster algebra is of finite type exactly in the classical finite Grassmannian cases: k=1 or n-k=1, k=2 or n-k=2, or (min(k,n-k),n) equal to (3,6), (3,7), or (3,8). Moreover the Dynkin type is respectively A0, A_{n-3}, D4, E6, and E8; in all other cases the seed is not mutation-equivalent to any Dynkin quiver.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2364",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23474v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:13:15.113462+00:00",
+    "title": "Finite-type classification for Grassmannian partial-flag seeds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n \u2265 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2365",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23485v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:30:05.276546+00:00",
+    "title": "Brocard-Ramanujan Triangular Classification"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes that for almost all n, g_k(n) \u2265 (3(k-1)/log 12 \u2212 \u03b5) log n, while pointwise g_k(n) \u2264 (k-1)/log 2 \u00b7 log n + O(log log n). The gap between 3/log 12 \u2248 1.207 and 1/log 2 \u2248 1.443 motivates the conjecture that the upper bound coefficient is asymptotically tight: for every k \u2265 2 and \u03b5 > 0, the set of n \u2264 x with g_k(n) < ((k\u22121)/log 2 \u2212 \u03b5) log n has cardinality o(x). This would mean binary carries are the essential obstruction and c_k = (k\u22121)/log 2 is the true almost-everywhere constant, resolving Erd\u0151s Problem 400.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2366",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23661v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:48:09.150861+00:00",
+    "title": "Tight Almost-Everywhere Coefficient for Erd\u0151s Excess Function g_k"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every n \u2265 1, let I_n be the explicit finite family of pairwise disjoint bounded open convex subsets of R^(3n) obtained by the inflation step in the paper's proof of Theorem t:inflated_intro. Then the full space of unoriented line transversals to I_n, with the standard affine-Grassmannian topology, is homotopy equivalent to S^(n-1). This strengthens the paper's nonvanishing reduced homology conclusion to a complete homotopy-type identification for the constructed examples.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_2367",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23193v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:06:01.247488+00:00",
+    "title": "Inflated line-transversal counterexamples have sphere homotopy type"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2368",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23437v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:24:48.021151+00:00",
+    "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the Wall-Menger theorem (Theorem 1 of the paper), for positive integers s' and t', there exist t and f such that given a vertex set A and a wall W of size at least t, either (i) a vertex set X of size at most f separates A from the branch vertices of W, or (ii) a subwall W' of size at least t' admits s' disjoint A-W' paths each ending in a distinct nail of W'. The conjecture asserts that the optimal bound on the separator size is f(s') = s' - 1, matching the classical Menger theorem exactly, regardless of the wall structure.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2369",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:42:20.767813+00:00",
+    "title": "Optimal separator bound in the Wall-Menger theorem matches Menger's theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The codimension-i rational cohomology of the special linear group SL_n(Z) vanishes for n >= i+2. Equivalently, the i-th rational cohomology group H^i(SL_n(Z); Q) is trivial for all i >= (n choose 2) - n + 2.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2370",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T15:56:00.070698+00:00",
+    "title": "Church-Farb-Putman Vanishing Conjecture for SL_n(Z)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer j and every odd positive integer h, the prime radicals of j and j+h are unequal. Equivalently, the same-prime-support index set J_h = {j \u2265 1 : rad(j) = rad(j+h)} is empty whenever h is odd. This formalizes the elementary obstruction behind the paper's statement that the Graham--Holt--Pomerance diagonal contribution is empty for odd shifts.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2371",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23681v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:13:54.497477+00:00",
+    "title": "Odd shifts have no same-support GHP diagonal"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for d = 3 and n = 8, the maximum size of a 4-uniform family on an 8-element ground set with VC-dimension at most 3 is exactly 40. Equivalently, M_3(8) = 40, which is one larger than the Ahlswede--Khachatrian value binom(7,3)+binom(4,1)=39. This is a finite, fully checkable strengthening of the paper's phenomenon at the smallest admissible ground-set size n=2d+2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2372",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23469v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:31:38.847897+00:00",
+    "title": "Exact first 4-uniform VC extremal value beyond Ahlswede--Khachatrian"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer t \u2265 1, the asymptotic density c_t of nonnegative integers n such that s\u2082(n+t) \u2265 s\u2082(n) satisfies c_t \u2265 1/2 + 2^(-(2\u00b7s\u2082(t)+1)), where s\u2082(m) denotes the number of ones in the binary expansion of m. This is the main theorem proved in the paper, resolving Cusick's conjecture with an explicit quantitative gap.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2373",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T16:48:35.543989+00:00",
+    "title": "Cusick's Sum-of-Digits Explicit Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a simple graph on n vertices with m edges, and define N(S_{2,1},G)=\u2211_v d(v)(d(v)-1)(n-1-d(v)). If 8m \u2264 n(n-1), then N(S_{2,1},G) is maximized by the quasi-clique Q(n,m): writing m = binom(q,2)+r with 0 \u2264 r < q, Q(n,m) consists of a K_q, one additional vertex adjacent to exactly r vertices of the clique, and all remaining vertices isolated. Equivalently, the asymptotic low-density upper branch proved in the paper admits an exact finite-n strengthening throughout the range \u03b2 \u2264 1/4.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2374",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23351v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:07:33.678816+00:00",
+    "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every n,k,r with n \u2265 2k, k \u2265 3, and r \u2265 2, let (\ud835\udcd5_i)_{i\u2208Fin r} be k-uniform families of subsets of Fin n. Assume each \ud835\udcd5_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i \u2260 j, every A \u2208 \ud835\udcd5_i and B \u2208 \ud835\udcd5_j have A \u2229 B \u2260 \u2205. Then the multilateral product is bounded by the Hilton--Milner value: \u220f_{i\u2208Fin r} |\ud835\udcd5_i| \u2264 h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2375",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23322v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:25:43.582970+00:00",
+    "title": "Multilateral non-trivial cross-intersection product bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For q \u2265 3 and n \u2265 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2376",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23465v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:44:54.697706+00:00",
+    "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For fixed integers $k \\ge 2$ and $1 \\le m_1 \\le \\cdots \\le m_k$, there exists an integer $n_0$ such that for all $n \\ge n_0$ and every $n$-vertex tree $T$, the Ramsey number satisfies $R(T, K_{m_1, \\ldots, m_k}) \\le (k-1)(R(T, K_{m_1, m_2})-1)+m_1$.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2377",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:46:25.991940+00:00",
+    "title": "Resolution of Erd\u0151s Problem 550 on Tree versus Complete Multipartite Ramsey Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let G be a finite left-regular bipartite graph of left degree d \u2265 2 with left vertex set L and right vertex set R. Suppose G is s-optimal in the small-set sense that every nonempty X \u2286 L with |X| \u2264 s satisfies |N(X)| \u2265 (d - 1)|X| + 1. Then the binary Tanner code B(G) defined by the right-side parity checks has minimum Hamming distance at least s + 1; equivalently, every codeword x \u2208 B(G) whose support has size at most s is the zero word.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2378",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-23T18:03:42.374042+00:00",
+    "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2379",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23661v1",
+    "status": "available",
+    "timestamp": "2026-06-23T18:54:10.361464+00:00",
+    "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every prime p and every n with n >= 10*p + 11, the codimension-three rational cohomology of the Hecke congruence subgroup Gamma_{0,n}(p) is zero: H^{binom(n,2)-3}(Gamma_{0,n}(p); Q) = 0.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2380",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T18:04:16.541804+00:00",
+    "title": "Codimension-three rational cohomology of Hecke congruence subgroups vanishes in a linear stable range"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let \u03a3 be a finite connected signed simple graph, let v be a non-isolated vertex, and let \u03c1(\u03a3) denote the spectral radius of its signed adjacency matrix. The paper proves \u03c1(\u03a3)^2 \u2264 \u03c1(\u03a3 - v)^2 + 2 d(v) - 1. Conjecture: equality holds if and only if either the underlying unsigned graph is a star and v is a pendant vertex, or the underlying unsigned graph is complete and the signing is balanced or antibalanced.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2381",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23584v1",
+    "status": "available",
+    "timestamp": "2026-06-23T18:55:02.130931+00:00",
+    "title": "Equality cases for signed vertex-deletion spectral-radius bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every finite tree T and every integer k >= 2 with part sizes 1 <= m_1 <= ... <= m_k, the Ramsey number of T against the complete k-partite graph K_{m_1,...,m_k} is at most (k-1)(R(T,K_{m_1,m_2})-1)+m_1. This removes the sufficiently-large-tree hypothesis from the main theorem of the paper. It is falsifiable by a single explicit finite tree T, parameter tuple (m_1,...,m_k), and red-blue coloring on the claimed number of vertices avoiding both a red T and a blue K_{m_1,...,m_k}.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2382",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-23T19:08:41.918612+00:00",
+    "title": "Finite Erd\u0151s-550 Ramsey Upper Bound Without the Large-Tree Hypothesis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer base b \u2265 2 and every t \u2265 1, let s_b(n) be the sum of the base-b digits of n. The limiting density, computed along complete radix intervals [0, b^k), of n such that s_b(n+t) \u2265 s_b(n) exists and is strictly greater than 1/2. Equivalently, the sequence (# {0 \u2264 n < b^k : s_b(n+t) \u2265 s_b(n)} / b^k) converges to a real c_{b,t} with c_{b,t} > 1/2. A counterexample would be a pair (b,t) with b \u2265 2, t \u2265 1 for which this limit fails to exist or is \u2264 1/2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2383",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T20:33:56.015910+00:00",
+    "title": "Base-b Cusick Bias for Sum-of-Digits Increments"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 2, there exists an open interval I_k \u2282 (0,1) such that for all \u03b2 \u2208 I_k, the minimum fixed-density semi-inducibility of the red-blue star S_{k,1} (with k red edges and 1 blue edge from a distinguished center) at density \u03b2 strictly exceeds min(\u03b2^k(1\u2212\u03b2), \u03b2(1\u2212\u03b2)^k), the envelope formed by the quasi-clique and quasi-star constructions. This generalizes the paper's result for S_{2,1}, where the true minimum is given by a three-class complement-split family rather than the natural quasi-star/quasi-clique endpoint profile on an interval around \u03b2 = 1/2. For S_{k,1}, the conjectured minimizer is a step-function graphon with at most k+1 classes.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2384",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23351v1",
+    "status": "available",
+    "timestamp": "2026-06-23T20:57:57.730978+00:00",
+    "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the wall version of Menger's theorem (Theorem 1 of the paper), the separator bound f can be taken to equal s' - 1, matching the classical Menger bound. Specifically: for all positive integers s' and t', there exists an integer t such that for any vertex set A and any wall W of size at least t, either there exists a vertex set X of size at most s' - 1 that separates A from the branch vertices of W, or there exists a subwall W' of size at least t' together with s' vertex-disjoint A-W'-paths each ending in a distinct nail of W'.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2385",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "available",
+    "timestamp": "2026-06-23T21:19:02.613185+00:00",
+    "title": "Wall-Menger Separator Optimality Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The specific degree one function on the Grassmann scheme $J_3(4,2)$ defined by $f = \\frac{1}{2} \\sum_{Q(p) = 0} x_p + \\frac{1}{6} \\sum_{Q(p) = 1} x_p - \\frac{1}{6} \\sum_{Q(p) = 2} x_p$, where $Q(x,y,z,w) = x^2 + y^2 + z^2 - w^2$ is an elliptic quadric over $\\mathbb{F}_3$, is Boolean and not a trivial Boolean degree one function.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2386",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23465v1",
+    "status": "available",
+    "timestamp": "2026-06-23T21:41:56.533485+00:00",
+    "title": "Non-triviality of the Bruen-Drudge Boolean degree one function on $J_3(4,2)$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every natural number n \u2265 1, the number of 2-binomial equivalence classes of binary words of length n equals the n-th cake number: |{0,1}^n / \u223c\u2082| = (n\u00b3 + 5n + 6)/6 = \u03a3_{r=0}^{3} C(n,r). Two words u,v \u2208 {0,1}* are 2-binomially equivalent if for every word w of length at most 2, the binomial coefficient (u choose w) = (v choose w), where (u choose w) counts scattered subword occurrences of w in u. This identity, first proved by Rigo and Salimov (2015), connects the algebraic structure of k-binomial equivalence on words to the enumerative geometry of hyperplane arrangements in \u211d\u00b3 via the Steiner-Schl\u00e4fli formula.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2387",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23426v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:02:34.284898+00:00",
+    "title": "Binary 2-binomial equivalence class count equals cake number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The original theorem characterizes $D(k) = \\gcd_{2\\leq q\\leq k+1} \\binom{qk}{k} = 1$ based on the largest prime-power component of $n=k+1$. We propose a generalization: For fixed $k \\geq 2$ and a step size $s \\geq 1$, define $D(k, s) = \\gcd_{j=1}^{\\lfloor (k+1)/s \\rfloor} \\binom{(js)k}{k}$. The conjecture is that $D(k, s) = 1$ if and only if for every prime power $p^a \\parallel n=k+1$, the condition $n/p^a > p^a$ is modified by a factor dependent on $s$, specifically involving the p-adic valuation of $s$.",
+    "domains": [
+      "Pythagorean",
+      "MachineLearning"
+    ],
+    "id": "fd_2388",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22997v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:28:01.614691+00:00",
+    "title": "Generalization of the Binomial GCD Criterion for Arithmetic Progressions of Upper Indices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a finite group \\(\\Gamma\\) and any non\u2011negative function \\(f:\\Gamma\\to\\mathbb{R}_{\\ge 0}\\), define the two\u2011sided correlation kernel \\(\\mathcal C_f\\) by\n\\[\\mathcal C_f(x,y)=\\frac{1}{|\\Gamma|}\\sum_{a_1,a_2\\in\\Gamma:\\, xa_1=a_2 y} f(a_1)f(a_2) = \\mathbb{E}_{z\\in\\Gamma} f(x^{-1}z)f(zy^{-1}).\\]\nThe conjecture asserts that \\(\\mathcal C_f\\) satisfies Sidorenko\u2019s inequality for **all** finite (undirected) bipartite graphs \\(H\\):\n\\[ t(H,\\mathcal C_f) \\ge t(K_2,\\mathcal C_f)^{e(H)}. \\]\nEquivalently, the homomorphism density of any bipartite graph in \\(\\mathcal C_f\\) is at least the \\(e(H)\\)-th power of the edge density of \\(\\mathcal C_f\\). This extends the theorem of the paper, which proves the statement only for directed graphs (or for the 1\u2011subdivision of any directed graph). The conjecture is precise and falsifiable: a single counterexample \\((\\Gamma,f,H)\\) with \\(t(H,\\mathcal C_f)<t(K_2,\\mathcal C_f)^{e(H)}\\) disproves it.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2389",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23018v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:54:21.592113+00:00",
+    "title": "Sidorenko Property for Two\u2011Sided Correlation Kernels on Finite Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let (a_k)_{k \u2265 1} be the P\u00f3lya tree enumeration sequence with ordinary generating function A(z) = \u03a3_{k\u22651} a_k z^k satisfying A(z) = z\u00b7exp(A(z))\u00b7\u03a6(z) where \u03a6(z) = exp(\u03a3_{i\u22652} A(z^i)/i). Define \u03c9_k = \u03a3_{d|k} d\u00b7a_d. Then a_1 = 1 and for all k \u2265 2, a_k = (1/(k-1))\u00b7\u03a3_{j=1}^{k-1} a_j\u00b7\u03c9_{k-j}.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2390",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23439v1",
+    "status": "available",
+    "timestamp": "2026-06-23T21:42:09.482956+00:00",
+    "title": "P\u00f3lya tree coefficient recurrence formula"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a number field k with r\u2081 real and r\u2082 complex places, let b = r\u2081\u00b7\u230an\u00b2/4\u230b + r\u2082\u00b7n(n-1)/2. For any cohomological generic representation \u03c0 in R_\u03b5^{coge,\u221e} of GL(n,k_\u221e) with coefficient system F_\u03c0 and quadratic character \u03b5: \u03c0\u2080(k_\u221e\u00d7) \u2192 \u2102\u00d7, the Betti-Whittaker period of the contragredient \u03c0\u2228 in degree b satisfies P^b(\u03c0\u2228, F_{\u03c0\u2228}, \u03b5) = \u03b5(disc(k))^b \u00b7 P^b(\u03c0, F_\u03c0, \u03b5), where disc(k) is viewed as an element of \u03c0\u2080(k_\u221e\u00d7) via the determinant identification \u03c0\u2080(k_\u221e\u00d7) \u2245 \u03c0\u2080(GL_n(k_\u221e)).",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2391",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:02:58.683140+00:00",
+    "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the imaginary quadratic field K = Q(i), the automorphism group of a very general S_K(2)-polarized K3 surface X_{K,2} is isomorphic to the projective principal congruence subgroup of level 2 of the Bianchi group PGL_2(O_K). Specifically, Aut(X_{Q(i),2}) \u2245 P\u0393_{Q(i)}(2).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2392",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22921v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:28:18.306332+00:00",
+    "title": "Exact Realization of Level-2 Bianchi Congruence Subgroups as K3 Surface Automorphisms over Q(i)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every connected, twin-free Cayley digraph of a finite abelian group is stable, i.e., for such a digraph G, Aut(G \u00d7 K\u2082) = Aut(G) \u00d7 Aut(K\u2082). This extends the paper's result (Theorem 1.3) which proves nonexistence of nontrivially unstable Cayley digraphs of abelian groups of odd order to all finite abelian groups, resolving the even order case that remains open.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2393",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22947v1",
+    "status": "available",
+    "timestamp": "2026-06-23T22:54:48.936774+00:00",
+    "title": "Stability of Cayley Digraphs of Abelian Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every SIC dimension d with base quadratic field K = Q(\u221a\u0394\u2080), and for every Weyl-Heisenberg SIC overlap unit \u03b5 (the absolute value of a mutual scalar product of distinct SIC vectors), there exist Stark units \u03b7\u2081, ..., \u03b7\u2096 of the ray class field K^{fd\u221e\u2081} (where f is the conductor dividing f\u2080(d)) and integers n\u2081, ..., n\u2096 such that \u03b5 = \u220f\u1d62 \u03b7\u1d62^{n\u1d62/2}. In the minimal case (f = 1), the Stark units belong to K^{d\u221e\u2081} attached to the maximal ring of integers; in the non-minimal case, a lattice of ray class fields K_L^{d;f} is involved. This unifies the observed algebraic structure of SIC overlaps with Stark's conjectures and the Shintani\u2013Faddeev modular cocycle.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2396",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23535v1",
+    "status": "available",
+    "timestamp": "2026-06-23T23:19:20.704819+00:00",
+    "title": "SIC Overlap Units are Products of Square Roots of Stark Units"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let G be a simple left d-regular bipartite graph with d \u2265 2 and girth at least 2k + 2. Then the minimum distance of the binary linear code B(G) is at least k + 1. This connects the combinatorial structure of optimal small-set expanders (characterized by girth) to the coding-theoretic properties of their associated codes, which is central to the paper's application to post-quantum key exchange.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_2397",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-23T23:53:07.212970+00:00",
+    "title": "Girth bounds minimum distance of bipartite graph codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the full flag variety GL_{n+1}/\u2102 B, let w \u2208 S_{n+1} index the Schubert cell X_w^o. The cluster algebra structure on \u2102[X_w^o] (coming from the reduced expression of the longest element in the Weyl group modulo the stabilizer of w) is of finite type if and only if w is a Grassmannian permutation (i.e., w has at most one descent).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2398",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23474v1",
+    "status": "available",
+    "timestamp": "2026-06-24T00:22:07.112237+00:00",
+    "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For integers d\u22652 and n\u22652d+2, the maximum size M_d(n) of a (d+1)-uniform family on [n] with VC\u2011dimension at most d equals the maximum, over 0\u2264k\u2264\u230ad/2\u230b, of the sum of binomial coefficients \u03a3_{i=0}^k binom{n-2i-1}{d-2i}. This quantity is attained by the \u201clayered star\u201d construction that takes all (d+1)-subsets containing a fixed element and, for each i\u2264k, also all (d+1)-subsets containing a second fixed element and missing exactly i additional prescribed points. The conjecture refines the Ahlswede\u2013Khachatrian bound and predicts the exact extremal families for all d and n.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2399",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23469v1",
+    "status": "available",
+    "timestamp": "2026-06-24T00:56:46.736617+00:00",
+    "title": "A Sharp Upper Bound for Uniform VC\u2011Dimension Families via Layered Stars"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a connected signed graph \u03a3 and a non-isolated vertex v, the inequality \u03bb\u2081(\u03a3) \u2264 \u221a(\u03bb\u2081\u00b2(\u03a3\u2212v) + 2d(v) \u2212 1) holds, with equality if and only if \u03a3 is a signed star with v as the center or \u03a3 is a signed complete graph.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_2400",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23584v1",
+    "status": "available",
+    "timestamp": "2026-06-24T01:36:45.202062+00:00",
+    "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every full-dimensional lattice polytope P in Z^n, let Sigma_P be the tropical hypersurface given by the codimension-one skeleton of the normal fan of P, with edge-length weights. The n-fold stable self-intersection Sigma_P \u2229_st ... \u2229_st Sigma_P is a reduced point at the origin if and only if P is a unimodular simplex, equivalently if and only if the normalized lattice volume n! vol(P) is equal to 1.",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_2401",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24339v1",
+    "status": "available",
+    "timestamp": "2026-06-24T02:18:16.655288+00:00",
+    "title": "Unmixed Reduced Tropical Bernstein Criterion"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every \u2286-minimal minor-closed graph class with limiting density greater than some \u03b4 < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class \ud835\udca2, there exists a graph H such that \ud835\udca2 = excl({H}).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2402",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24326v1",
+    "status": "available",
+    "timestamp": "2026-06-24T02:41:49.567859+00:00",
+    "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers n \u2265 (s+1)k and a prime power q, the maximum cardinality m_q(n,k,s) of a family of k\u2011dimensional subspaces of an n\u2011dimensional vector space over \ud835\udd3d_q with no s+1 members whose sum is direct equals the larger of the two natural constructions: all k\u2011subspaces contained in a ((s+1)k\u22121)\u2011dimensional subspace, or all k\u2011subspaces intersecting a fixed s\u2011dimensional subspace nontrivially.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2403",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24529v1",
+    "status": "available",
+    "timestamp": "2026-06-24T04:01:44.618392+00:00",
+    "title": "Exactevaluation of the vector-space Erd\u0151s Matching number m_q(n,k,s)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 1, let t = 2^k. Then the limit c_t = 1/2 + 2^{-2s_2(t)-1}, where s_2(t) is the binary sum-of-digits function. This conjecture asserts that the explicit lower bound provided in the paper is tight for all powers of two.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2404",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-24T04:55:09.073513+00:00",
+    "title": "Tightness of the lower bound for powers of two in Cusick's sum-of-digits conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any prime power q and integers k, n with 2 \u2264 k \u2264 n/2, if n \u2265 2k+1 then every Boolean degree-one function on the Grassmann scheme J_q(n,k) is trivial (i.e., a linear combination of point indicators and their duals with coefficients in {0,1}). This extends the known result for q=2 and matches the thresholds proved for q=3,4,5 in the case k=2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2405",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23465v1",
+    "status": "available",
+    "timestamp": "2026-06-24T05:25:46.726799+00:00",
+    "title": "Degree-one triviality threshold for Grassmann schemes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n there exists a finite family of pairwise disjoint open convex subsets of \u211d^{3n} whose space of line transversals has non\u2011trivial reduced homology in degree n\u22121.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2406",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23193v1",
+    "status": "available",
+    "timestamp": "2026-06-24T05:50:07.508827+00:00",
+    "title": "Non-acyclicity of transversal spaces in high dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any Cayley digraph G of an abelian group of even order, the pair (G, K\u2082) is unstable.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2407",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22947v1",
+    "status": "available",
+    "timestamp": "2026-06-24T06:20:52.702234+00:00",
+    "title": "Stability of Cayley Digraphs of Even Order with K2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For positive integers s and r, set T(s,r) = (8*s + 4)*r and F(s) = 4*s - 4. Conjecture: in every finite simple graph G, for every vertex set A and every elementary wall W in G of height at least T(s,r), either there is a vertex set X with |X| \u2264 F(s) separating A from the branch vertices of W, or W contains an r-subwall W' for which there are s pairwise vertex-disjoint A--W' paths whose W'-endvertices are distinct nails of W' and whose internal vertices avoid A \u222a V(W'). This gives an explicit linear-in-r wall-size bound and an explicit separator bound depending only on s, strengthening the existential bound pattern of the paper in the one-terminal-set case.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2408",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "available",
+    "timestamp": "2026-06-24T07:12:31.058915+00:00",
+    "title": "Linear one-set wall-Menger bound for elementary walls"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a broad class of cohomological automorphic representations \u03c0 of GL(n), the Betti-Whittaker periods associated with \u03c0 and its contragredient representation \u03c0^\u2228 satisfy a functional equation involving special values of L-functions, generalizing Chen's result without regularity assumptions.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2409",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-24T07:44:52.667456+00:00",
+    "title": "GeneralizedPeriod Relation for Betti-Whittaker Periods and Contragredient Representations of GL(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the interpolation properties of partial-twuality polynomials defined on set systems associated with binary delta-matroids, extending existing results to all nontrivial twuals and highlighting the role of categorical structure.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2410",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22888v1",
+    "status": "available",
+    "timestamp": "2026-06-24T08:15:06.141089+00:00",
+    "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If a pure r-dimensional complex K achieves the spectral radius bound q_{r-1}(K) = tn - (t-1)(r+1), then all links of (r-t)-dimensional faces must have trivial reduced homology H_t(lk_K(\u03c3), R) = 0.",
+    "domains": [
+      "Geometry",
+      "Physics"
+    ],
+    "id": "fd_2411",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22825v1",
+    "status": "available",
+    "timestamp": "2026-06-24T08:40:38.583867+00:00",
+    "title": "Necessity of Homological Condition for Spectral Radius Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for all integers $k \\ge 2$ and $n \\ge 0$, letting $m = \\lfloor n/k \\rfloor$ and $r = n - mk$, the inversion enumerator $a_n^{(k)}(q)$ of permutations whose descent set is exactly $\\{i : k \\mid i\\}$ satisfies the product formula\n$$ a_n^{(k)}(q) = q^{\\binom{m}{2}\\,k + \\binom{r}{2}} \\; \\prod_{j=0}^{m-1} \\begin{bmatrix} n - jk \\\\ k \\end{bmatrix}_q \\; \\cdot \\; \\begin{bmatrix} n - mk \\\\ r \\end{bmatrix}_q, $$\nwhere $\\begin{bmatrix} a \\\\ b \\end{bmatrix}_q$ denotes the Gaussian (or $q$-) binomial coefficient.  This identity extends the analytic derivation of the generating function $F_k(t;q)$ given in the paper and can be verified computationally for many small $k$, $n$, and $q$ (e.g., $q=2,3$).  It is proposed as a new combinatorial closed form for the $q$-inversion enumerator of $k$-alternating permutations.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2412",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23748v1",
+    "status": "available",
+    "timestamp": "2026-06-24T09:12:06.701682+00:00",
+    "title": "A closed-form product formula for $k$-alternating permutation inversion enumerators"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer s, there exists a finite connected simple graph G whose poset of FAT vertex colorings has exactly s maximal elements under the refinement order; equivalently, G has exactly s irreducible FAT colorings. This strengthens the realization theorem in the paper by requiring the realizing graph to be connected.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2413",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22374v1",
+    "status": "available",
+    "timestamp": "2026-06-24T09:34:21.916191+00:00",
+    "title": "Connected realization of arbitrary irreducible FAT-coloring counts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every 4-connected planar graph with an even number n \u2265 4 of vertices has at least n\u00b2/8 perfect matchings. This conjecture bridges the known linear lower bound and the existence of 4-connected planar graphs with quadratically many perfect matchings, and would establish a sharp threshold between 3-connected (constant) and 5-connected triangulations (exponential) behavior.",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_2414",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22253v1",
+    "status": "available",
+    "timestamp": "2026-06-24T10:03:02.541653+00:00",
+    "title": "Quadratic Lower Bound for Perfect Matchings in 4-Connected Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For each integer v \u2265 1, let F_v(q) denote the q\u2011series given in equation (1.1) of the paper. Conjecture: the Fourier coefficients of F_v(q) are all integers.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2415",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22458v1",
+    "status": "available",
+    "timestamp": "2026-06-24T10:37:22.686031+00:00",
+    "title": "Integrality of coefficients in Eichler-Selberg type relations for third-order mock theta functions"
+  },
+  {
+    "consumed_by_exp_id": "d2f439ad",
+    "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2416",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-23T23:26:49.596090+00:00",
+    "title": "Erd\u0151s Problem 550 for All Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer $i \\geq 0$ and prime $p$, there exists a constant $C_i$ such that the rational cohomology of the Hecke congruence subgroup $\\Gamma_{0,n}(p)$ vanishes in codimension $i$ for all $n \\geq C_i p$. This extends the paper's results which prove this for $i=0,1,2$ with bounds $n \\geq \\frac{p+14}{6}$, $n \\geq 4p+5$, and $n \\geq 7p+8$ respectively.",
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2417",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-23T23:53:53.632851+00:00",
+    "title": "Linear Vanishing Bound for Hecke Congruence Subgroup Cohomology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every natural number n > 7, the equation n! + 1 = m^2 has no integer solution m. In other words, the only solutions to the Brocard problem are the three known Brown pairs (4,5), (5,11), and (7,71).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2418",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23485v1",
+    "status": "available",
+    "timestamp": "2026-06-24T00:22:38.508639+00:00",
+    "title": "Non\u2011existence of Further Brown Numbers Beyond n=7"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the constants in the known bounds for $g_k(n)$ are best possible. For each $k\\ge2$, the liminf of $g_k(n)/\\log n$ equals $3(k-1)/\\log12$ and the limsup equals $(k-1)/\\log2$. Equivalently, any larger lower constant fails on a set of density\u00a01 and any smaller upper constant fails on a set of density\u00a01.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2419",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23661v1",
+    "status": "available",
+    "timestamp": "2026-06-24T00:59:28.784546+00:00",
+    "title": "Optimality of the density\u2011one lower and pointwise upper bounds for Erd\u0151s Problem\u202f400"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all integers t \u2265 2 and m \u2265 1, if nonzero linear forms \u2113\u2081,\u2026,\u2113_t over a field of characteristic zero have m-th powers \u2113\u2081^m,\u2026,\u2113_t^m that are minimally linearly dependent, then dim Span{\u2113\u2081,\u2026,\u2113_t} \u2264 (t + m - 2)/m, with equality if and only if the linear forms are linearly dependent in a way that their supports form a rational normal curve in the Veronese embedding.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2420",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24349v1",
+    "status": "available",
+    "timestamp": "2026-06-24T01:38:01.066930+00:00",
+    "title": "Sharp dimension bound for minimal dependencies of linear-form powers in Veronese circuits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let A be any finite parallel toric arrangement in (C*)^n, defined by nonzero rank-one integral characters and constants in C*. If n >= 2, then the Euler-Poincare characteristic of the complement M(A) is zero. Equivalently, deleting any finite family of pairwise disjoint parallel hypertori from a complex algebraic torus of dimension at least two does not change the vanishing Euler characteristic of the ambient torus.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2421",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24299v1",
+    "status": "available",
+    "timestamp": "2026-06-24T02:19:37.944210+00:00",
+    "title": "Vanishing of Euler characteristic for higher-dimensional parallel toric arrangement complements"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For tensor-product function spaces with a worst-case function h satisfying specific integrality and sparsity conditions, the information complexity for non-negative linear rules exhibits a curse of dimensionality.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2422",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24195v1",
+    "status": "available",
+    "timestamp": "2026-06-24T04:05:20.240232+00:00",
+    "title": "Exponential Information Complexity in Tensor-Product Function Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every natural number n the hyperplane arrangement A_n constructed in the paper (the 3-dimensional member of the infinite family) has exactly sum_{i=0}^3 binomial(n,i) full-dimensional chambers, and the number of chambers of codimension k equals binomial(n,k) for each k=0,1,2,3.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2423",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23426v1",
+    "status": "available",
+    "timestamp": "2026-06-24T05:26:09.585106+00:00",
+    "title": "Chamber count conjecture for the binary 2-binomial equivalence hyperplane arrangement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every finite quiver Q, the 3\u2011center Z\u2083(\ud835\udd42Q\u22651) (the set of all St\u2083\u2011elements) coincides with the \ud835\udd42\u2011span of all paths of length at most\u202f2 whose source and target vertices are equal (including trivial paths). This gives a concrete, testable description of the 3\u2011center and is falsifiable by finding a St\u2083\u2011element involving a longer path.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2424",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23024v1",
+    "status": "available",
+    "timestamp": "2026-06-24T06:21:04.823853+00:00",
+    "title": "The 3-center of the principal subalgebra of a path algebra is generated by length\u2011\u22642 closed paths"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any finite simple graph G, the externally supported independence number es(G) satisfies es(G) \u2265 \u2308\u03b1(G)/(\u0394(G)+1)\u2309, where \u03b1(G) is the independence number and \u0394(G) the maximum degree.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2425",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22972v1",
+    "status": "available",
+    "timestamp": "2026-06-24T07:12:56.145887+00:00",
+    "title": "ESI_lower_bound_conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formulate a precise conjecture stating that the endpoint Fourier restriction inequality for the three\u2011dimensional paraboloid over a prime field \ud835\udd3d\u209a (with \u20131 non\u2011square) holds if and only if the set of integer lattice points on the Euclidean paraboloid  \\(\\{(x,y,z)\\in\\mathbb Z^3 : z = x^2 + y^2\\}\\) is a \u039b(3) set. This makes the qualitative observation in the paper into a bidirectional, falsifiable statement that can be expressed in the language of finite\u2011field harmonic analysis and additive combinatorics, and thus be formalised in Lean 4.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2426",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22882v1",
+    "status": "available",
+    "timestamp": "2026-06-24T07:47:01.901499+00:00",
+    "title": "Equivalence between the finite\u2011field endpoint restriction estimate for the 3\u2011dimensional paraboloid and the \u039b(3) property of the integer lattice paraboloid"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite polymatroid P with ground set E and rank function f, and any integer j with 1 \u2264 j \u2264 f(E)\u22121, the j\u2011th slice\u2011projection from the top of P is connected if and only if the j\u2011th slice\u2011projection from the bottom of its dual polymatroid P\u204e is connected. This extends the known equality for j = 1 (deletion/contraction) to all intermediate slice\u2011projections.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2427",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22819v1",
+    "status": "available",
+    "timestamp": "2026-06-24T08:15:33.714345+00:00",
+    "title": "Dual Slice-Projection Connectivity Conjecture for Polymatroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all grid sizes m,n \u2265 3 the number of vertices of degree\u202f4 in the flip graph of the m\u00d7n Miura\u2011ori equals (m\u20111)(n\u20111).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2428",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22614v1",
+    "status": "available",
+    "timestamp": "2026-06-24T08:42:34.928992+00:00",
+    "title": "Degree\u20114 vertices in the flip graph of the m\u00d7n Miura\u2011ori"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any fixed k \u22653 and \u03b3 > \u03b3_k (as defined in the paper), there exists a constant c >0 such that any induced-K_{1,k}-free graph G with edge density at least \u03b3 is within edit distance at most cn\u00b2 of a graph that is the union of k\u22121 cliques with no edges between them. This conjecture directly formalizes the paper's structural claim about the supercritical regime and can be verified by proving bounds on the deviation from such a partitioned structure.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2429",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22661v1",
+    "status": "available",
+    "timestamp": "2026-06-24T09:14:43.208847+00:00",
+    "title": "Typical structure of induced-K_{1,k}-free graphs in the supercritical regime"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let k be a totally real number field, p a prime, and Sigma a nonempty set of p-adic primes of k. Suppose the Galois group X_Sigma(k) of the maximal abelian pro-p extension of k unramified outside Sigma has Z_p-rank exactly 1, so that there is a unique Sigma-ramified Z_p-extension N_infty/k. Then the unramified Iwasawa module X(N_infty) is finite as a Z_p-module.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2430",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22324v1",
+    "status": "available",
+    "timestamp": "2026-06-24T09:35:03.389870+00:00",
+    "title": "Restricted-ramification Greenberg finiteness for rank-one p-ramified towers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For the complete bipartite graph K_{a,b} with 2 \u2264 a \u2264 b, transmission proportion p = 1/a, and threshold \u03c4 = 1, the transmission zero forcing number TZF(K_{a,b}, 1/a, 1) equals a. This conjecture posits that the minimum initial set consists of all vertices from the smaller part, and that no smaller set can percolate under these parameters.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2431",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22246v1",
+    "status": "available",
+    "timestamp": "2026-06-24T10:09:46.202583+00:00",
+    "title": "Transmission Zero Forcing Number of Complete Bipartite Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For fixed integers t \u2265 2, r \u2265 2 and n \u2265 1, let a coloring c : (Fin t)^n \u2192 Fin r be *coordinate\u2011symmetric*, i.e. c depends only on the vector of letter\u2011counts (the histogram of each colour in the word). Define the discrete simplex \u0394_{t,n} = {v : Fin t \u2192 \u2115 // \u2211_{i} v i = n}. A *corner tuple* in \u0394_{t,n} is a triple (v, v+e_i, v+e_j) with i \u2260 j and e_i the unit vector at i, provided the three vectors lie in \u0394_{t,n}. The conjecture states that such a symmetric coloring c is line\u2011free (contains no monochromatic combinatorial line in [t]^n) if and only if no corner tuple of \u0394_{t,n} is monochromatic under the induced coloring on \u0394_{t,n}. This gives a finite, polynomial\u2011size certificate for line\u2011freeness of symmetric colorings, matching the reduction lemma used in the Hales\u2011Jewett lower\u2011bound constructions.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2432",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22155v1",
+    "status": "available",
+    "timestamp": "2026-06-24T10:38:46.496140+00:00",
+    "title": "Equivalence of Line\u2011Freeness and Corner\u2011Tuple Monochromaticity for Coordinate\u2011Symmetric Colorings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "seed_011",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:58.210984+00:00",
+    "title": "Perfect Cuboid (Euler Brick)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_019",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:59.481690+00:00",
+    "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_031",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.987080+00:00",
+    "title": "Frankl's Union-Closed Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Characterize numbers representable as a sum of three squares of primes. Formalize the circle method approach to ternary Goldbach-type problems for squares.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_209",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:09.281210+00:00",
+    "title": "Legendre's Three-Square Theorem Extension"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every polynomial with all roots in the closed unit disk, every root has a critical point within distance 1 of it. Formalize known partial results and the connection to Gauss-Lucas.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_220",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.463002+00:00",
+    "title": "Sendov's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
+    "domains": [
+      "Analysis",
+      "NumberTheory"
+    ],
+    "id": "seed_335",
+    "priority_score": 0.8,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432611+00:00",
+    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Frankl's conjecture and prove it for families of size \u2264 50 (Bo\u0161njak-Markovi\u0107). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "seed_353",
+    "priority_score": 0.8,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432728+00:00",
+    "title": "Frankl's Union-Closed Conjecture: Partial Results"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_026",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.145793+00:00",
+    "title": "Lehmer's Mahler Measure Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every tree admits a graceful labeling. Formalize known results for paths, caterpillars, and olive trees. Explore connections to decompositions of complete graphs.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_214",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:10.274474+00:00",
+    "title": "Graceful Tree Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_009",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:57.744824+00:00",
+    "title": "Symmetric Group Generation Probability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_021",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:00.118535+00:00",
+    "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_032",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:02.177753+00:00",
+    "title": "Erd\u0151s\u2013Straus Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Primality Testing (AKS & Miller\u2013Rabin)\n\nDerived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`.\nEach conjecture is bold, falsifiable, and accompanied by the decisive insight and\na \"why now?\" justification.\n\n## 1. Introspective-base AKS bound\n\n**Conjecture.** There is an explicit polynomial bound `B(n)` (polylog in `n`)\nsuch that: `n` is prime iff `(X + a)^n = X^n + a` in `(ZMod n)[X] / (X^r - 1)`\nfor all `1 \u2264 a \u2264 B(n)`, where `r = O((log n)^c)`. Formalizing this turns the\nsingle-base criterion `aks_criterion` into the full deterministic\npolynomial-time AKS algorithm.\n\nThe key insight is... the proven exact criterion `aks_criterion` already isolates\nthe obstruction (the inner coefficient `C(n,q)`); the remaining work is purely\nthe cyclotomic *order/coprime-base counting* that bounds how many bases are\nneeded once one quotients by `X^r - 1`.\n\n**Why now?** With the freshman's-dream equivalence fully formalized (0 sorries)\nand `not_dvd_choose_prime_dvd` in hand, the algebraic core is settled; the\noutstanding piece is a self-contained counting argument that Mathlib's\ncyclotomic and `orderOf` API can now support.\n\n## 2. Monier\u2013Rabin 1/4 error bound\n\n**Conjecture.** For every odd composite `n > 9`, the number of Miller\u2013Rabin\nnon-witnesses in `(ZMod n)\u02e3` is at most `\u03c6(n)/4`. Equivalently, the soundness\ntheorem `miller_rabin_sound` has a quantitative converse: composites have many\nwitnesses.\n\nThe key insight is... `sqrt_one_in_ZMod_prime` fails modulo a composite (there\nare \u2265 4 square roots of `1` by CRT), and the strong-liar set is contained in a\nproper subgroup of `(ZMod n)\u02e3`; bounding that subgroup's index by `4` is the\nwhole game.\n\n**Why now?** Soundness (the easy half) is verified; Mathlib's `ZMod.unitsEquiv`\nCRT decomposition and subgroup-index lemmas make the proper-subgroup counting\ntractable for the first time in this codebase.\n\n## 3. AKS strictly dominates Fermat on every Carmichael number\n\n**Conjecture.** For *every* Carmichael number `n` (not just `561`), the Fermat\ncongruence holds for all bases yet the AKS identity fails for some base coprime\nto `n`; moreover the failing base can be taken to be the least prime factor's\nco-factor. This generalizes `carmichael_561_fools_fermat_not_aks` to the entire\nfamily A002997.\n\nThe key insight is... `aks_identity_imp_fermat` shows AKS \u21d2 Fermat, and\n`aks_criterion` shows AKS \u21d4 primality, so AKS-failure is automatic for any\ncomposite; the new content is identifying a *coprime* failing base uniformly via\nKorselt's structure (`n` squarefree, `(p-1) \u2223 (n-1)`).\n\n**Why now?** The separation is already proved at `561` with a reusable mechanism\n(contrapositive of `aks_criterion`); only Korselt's criterion needs to be\nformalized to make the argument uniform over A002997.\n\n## 4. Carmichael numbers are exactly the Fermat-universal composites\n\n**Conjecture.** A composite `n` satisfies `\u2200 a, a^n \u2261 a (mod n)` iff `n` is\nsquarefree and `(p-1) \u2223 (n-1)` for every prime `p \u2223 n` (Korselt's criterion),\nand these are exactly the composites on which the Fermat test never detects\ncompositeness.\n\nThe key insight is... the universal Fermat congruence decomposes via CRT into\nper-prime-power conditions, and `a^n \u2261 a` modulo `p^k` for all `a` forces\n`k = 1` and `(p-1) \u2223 (n-1)` through the cyclic structure of `(ZMod p)\u02e3`.\n\n**Why now?** Our `native_decide` evidence already confirms the family begins\n`561, 1105` (A002997); a structural Korselt proof would replace finite checks by\na general theorem and feed directly into Direction 3.\n\n## 5. A `ZMod`-native fast modular-exponentiation tactic with a correctness theorem\n\n**Conjecture.** A `csimp`-backed binary modular-exponentiation routine computes\n`a^e mod n` with a kernel-checked correctness lemma `powMod a e n = a^e % n`,\nfast enough to discharge Miller\u2013Rabin / AKS instances by `decide` rather than\n`native_decide`, removing the `Lean.ofReduceBool` dependency from results like\n`carmichael_561_fools_fermat_not_aks`.\n\nThe key insight is... square-and-multiply is a fold over the binary digits of the\nexponent; its correctness is a clean induction, and a `@[csimp]` replacement\nkeeps the kernel in charge (no `@[implemented_by]` trust gap).\n\n**Why now?** The only non-`propext`/`Classical`/`Quot` axiom in this cycle is the\ncompiler-trust `Lean.ofReduceBool` from `native_decide`; a verified `powMod`\nwould let the Carmichael witness be checked by the kernel alone.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2292",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "91104b94",
+    "source_exp_id": "7a69691f",
     "status": "available",
-    "timestamp": "2026-06-24T10:35:57.730575+00:00",
-    "title": "Fully verified core for Integrated Information Theory"
+    "timestamp": "2026-06-23T01:40:49.707518+00:00",
+    "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_007",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-08T19:24:57.290512+00:00",
+    "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0093",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.814374+00:00",
+    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0435",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.156517+00:00",
+    "title": "Learning with Errors: Hardness Reductions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0540",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.964548+00:00",
+    "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
+    "domains": [
+      "Cryptography",
+      "Computation"
+    ],
+    "id": "fd_0544",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.295536+00:00",
+    "title": "Code-Based Cryptography: McEliece from Goppa Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
+    "domains": [
+      "EML",
+      "Computation"
+    ],
+    "id": "fd_0551",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.873771+00:00",
+    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "id": "fd_0555",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.217813+00:00",
+    "title": "ML Universal Approximation: Width vs Depth Trade-offs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2283",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "oeis:80035",
+    "status": "available",
+    "timestamp": "2026-06-23T00:36:02.659081+00:00",
+    "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
+    "domains": [
+      "Algebra",
+      "Novelty"
+    ],
+    "id": "fd_2395",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-23T23:12:45.568532+00:00",
+    "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_008",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:57.516415+00:00",
+    "title": "10 is a Solitary Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "sorry_fill_a0dd96a5_00b573d8",
+    "priority_score": 0.5771458702064898,
+    "research_mode": "team",
+    "source_exp_id": "a0dd96a5",
+    "status": "available",
+    "timestamp": "2026-06-16T12:52:43.615426+00:00",
+    "title": "Close Proofs: These conjectures continue the research cycle begun in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0398",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.154250+00:00",
+    "title": "Langlands Program: Functoriality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_0400",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.309278+00:00",
+    "title": "Category-Theoretic Neural Architectures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_0401",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.385376+00:00",
+    "title": "Certified Adversarial Robustness via Sheaf Cohomology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0416",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.588561+00:00",
+    "title": "EML Kolmogorov-Arnold Representation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0428",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.563504+00:00",
+    "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0439",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.479969+00:00",
+    "title": "Idempotent Probability: Large Deviations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
+    "domains": [
+      "Bridges",
+      "Computation"
+    ],
+    "id": "fd_0450",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.353451+00:00",
+    "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0461",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.236800+00:00",
+    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0473",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:31.219688+00:00",
+    "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects \u2014 not just numerical phenomena. Conjecture: The Lorenz attractor's topology can be characterized as the inverse limit of a specific diagram in the category of finite directed graphs. Test: compute the inverse limit and compare its Cech cohomology to the known Lorenz template. Impact: if true, chaotic dynamics become amenable to algebraic topology and category-theoretic methods.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_0484",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.326758+00:00",
+    "title": "Strange Attractors as Algebraic Objects"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0491",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.843772+00:00",
+    "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0493",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.995091+00:00",
+    "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0502",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.684855+00:00",
+    "title": "Diffusion Models as Stochastic Differential Equations"
+  },
+  {
+    "consumed_by_exp_id": "a470c2a1",
+    "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0508",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:47.125386+00:00",
+    "title": "EML Universal Approximation: Density of EML Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0509",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.201625+00:00",
+    "title": "EML Differential Algebra: Closure Properties"
+  },
+  {
+    "consumed_by_exp_id": "f0ec09b9",
+    "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0511",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:47.344784+00:00",
+    "title": "EML Number Theory: Transcendence and Algebraic Independence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0541",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.042519+00:00",
+    "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0542",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.126580+00:00",
+    "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
+    "domains": [
+      "Cryptography",
+      "Physics"
+    ],
+    "id": "fd_0543",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.214033+00:00",
+    "title": "Quantum Key Distribution: BB84 Security Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0547",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.541008+00:00",
+    "title": "Tropical Differential Equations: Power Series Solutions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prove that multi-head attention increases the rank of the attention matrix.",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_0557",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-03T22:10:08.377996+00:00",
+    "title": "ML Attention Mechanism: Formal Properties of Transformers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
+    "domains": [
+      "EML",
+      "Logic"
+    ],
+    "id": "fd_0552",
+    "priority_score": 0.5099999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.956863+00:00",
+    "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0403",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.547297+00:00",
+    "title": "Tropical Riemann-Roch Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Langlands correspondence for GL\u2082 over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "fd_0442",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.714293+00:00",
+    "title": "Langlands for GL\u2082 over Q"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "id": "fd_0443",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.798593+00:00",
+    "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the p-adic Langlands correspondence for GL\u2082(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "fd_0447",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.128786+00:00",
+    "title": "p-adic Langlands for GL\u2082(Q_p)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0470",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.975644+00:00",
+    "title": "Tropical Compactification of Moduli Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0480",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.030710+00:00",
+    "title": "Pythagorean Triple Group Structure"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that there are no non-constant polynomials f,g,h over C such that f^n + g^n = h^n for n >= 3. Show this follows from the Mason-Stothers theorem. Formalize the polynomial ABC conjecture and derive Fermat as a corollary.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0514",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.562165+00:00",
+    "title": "Fermat's Last Theorem for Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Characterize all fields over which every element is a sum of two squares (Pythagorean fields). Prove that a field is Pythagorean iff it is formally real with a unique ordering. Show that Q(i) is not Pythagorean but R is.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_0515",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.634604+00:00",
+    "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "id": "fd_0528",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:05.964661+00:00",
+    "title": "Bridge: Galois Connections Between Order Theory and Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Ax-Kochen-Ershov theorem: two henselian valued fields with elementarily equivalent residue fields and value groups are elementarily equivalent. Bridge to number theory: this implies the Q_p's are elementarily equivalent for almost all p. Prove Morley's categoricity theorem: if a countable theory is categorical in one uncountable cardinal, it is categorical in all uncountable cardinals.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "fd_0537",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.719659+00:00",
+    "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0545",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.376136+00:00",
+    "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
+    "domains": [
+      "Tropical",
+      "Geometry"
+    ],
+    "id": "fd_0548",
+    "priority_score": 0.3599999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-03T22:10:07.620386+00:00",
+    "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_0395",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:24.924994+00:00",
+    "title": "Navier-Stokes Existence and Smoothness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_0412",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.259292+00:00",
+    "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
+    "domains": [
+      "Cryptography",
+      "Logic"
+    ],
+    "id": "fd_0456",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.834642+00:00",
+    "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0465",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.568365+00:00",
+    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0467",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.732241+00:00",
+    "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
+    "domains": [
+      "Physics",
+      "Algebra"
+    ],
+    "id": "fd_0468",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.812055+00:00",
+    "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
+  },
+  {
+    "consumed_by_exp_id": "2bd9b45a",
+    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
+    "domains": [
+      "Speculative",
+      "Logic"
+    ],
+    "id": "fd_0481",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:45.101987+00:00",
+    "title": "Consciousness as Integrated Information"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_0485",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.398671+00:00",
+    "title": "Alien Number Systems: Beyond Base-N"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "fd_0556",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:08.298113+00:00",
+    "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_0409",
+    "priority_score": 0.09999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.020862+00:00",
+    "title": "Proof Strategy Mining from Deep Mathematics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Fourier transform diagonalizes the Laplacian on R^n. The Laplace-Beltrami operator on S^n is diagonalized by spherical harmonics. Stereographic projection gives a conformal map S^n to R^n that modifies the metric by a conformal factor (1+|x|^2)^2/4. Define the stereographic Fourier transform: for f in L^2(S^n), set F(f)(k) = integral over S^n of f(x) * (1+|phi(x)|^2)^{-n/2} * e^{-2 pi i phi(x) * k} d sigma(x) where phi is the stereographic projection. Conjecture: The stereographic Fourier transform is an isometry L^2(S^n) to L^2(R^n) mapping spherical harmonics Y_l^m to generalized Hermite functions with explicit radial profiles. The transform preserves eigenvalues up to a conformal correction: Delta_{S^n} Y_l^m = -l(l+n-1) Y_l^m maps to Delta_{R^n}(F[Y_l^m]) = (-l(l+n-1) + n^2/4) F[Y_l^m] plus a lower-order correction. Test: derive the transform explicitly for n=2 and verify it sends Y_1^m to Hermite functions. Prove the Plancherel identity. Impact: enables Fourier analysis on spheres via classical Fourier analysis on R^n, with applications to quantum mechanics on curved spaces and computational harmonic analysis.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_0425",
+    "priority_score": 0.09999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.310599+00:00",
+    "title": "Stereographic Fourier Analysis: Spherical Harmonics via Plane Waves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0446",
+    "priority_score": 0.09999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.050227+00:00",
+    "title": "Homotopy Type Theory as Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_0452",
+    "priority_score": 0.09999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:29.504025+00:00",
+    "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0466",
+    "priority_score": 0.09999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.651923+00:00",
+    "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0007",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.492042+00:00",
+    "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0016",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.499504+00:00",
+    "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0020",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.505215+00:00",
+    "title": "The Unreasonable Effectiveness of the Number 163"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0041",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.557538+00:00",
+    "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0048",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.581649+00:00",
+    "title": "The Aperiodic Monotile: One Shape to Tile Them All"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0063",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.643460+00:00",
+    "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Collatz conjecture (3n+1 problem) states that every positive integer eventually reaches 1 under the map T(n) = n/2 (n even) or 3n+1 (n odd). Despite being verified up to 2^68, a proof remains elusive. Conjecture: the Collatz conjecture is independent of Peano Arithmetic (PA). That is, PA can neither prove nor refute the statement 'for all n, the Collatz sequence starting at n eventually reaches 1'. This would mean the conjecture is TRUE (in the standard model) but UNPROVABLE in PA. The argument: the Collatz map is a Diophantine function that grows faster than any provably total computable function in PA. Specifically, the halting problem for Collatz (does the orbit of n reach 1?) is at least as hard as the consistency of PA, which by Godel's second incompleteness theorem is unprovable in PA. Conjecture: the Collatz conjecture is equivalent to Con(PA) over a weak base theory, meaning that if PA is consistent, then PA does not prove Collatz. Test: formalize the equivalence between Collatz and Con(PA) in Lean 4. Show that a counterexample to Collatz (an n whose orbit diverges or cycles) would imply not-Con(PA). Impact: Collatz might be the simplest true-but-unprovable statement in arithmetic \u2014 a concrete example of Godel's incompleteness.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0074",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.700907+00:00",
+    "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0096",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:30.834465+00:00",
+    "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
+    "domains": [
+      "Novelty",
+      "Geometry"
+    ],
+    "id": "fd_0128",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:31.030197+00:00",
+    "title": "Aleph-1 Surface: Geometry Between Dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a game where one player (Mortal) has finite computation and the other (Eternity) has transfinite computation. Prove that Mortal can always force at least omega rounds before losing, and that with bounded nondeterminism, Mortal can force omega-squared rounds. Connect to Infinite Time Turing Machines.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0135",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-01T12:30:31.073799+00:00",
+    "title": "Infinite Games Against Death: Immortality Strategies"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the category of chain complexes is equivalent to the derived category modulo homotopy. Show that Ext and Tor are universal delta-functors. Bridge: singular homology of a space X equals Ext^*(Z, C_*(X)) in the derived category. Prove the universal coefficient theorem as a consequence.",
+    "domains": [
+      "Bridges",
+      "Algebra"
+    ],
+    "id": "fd_0532",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-03T22:10:06.303707+00:00",
+    "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a notion of 'self-referential types' in dependent type theory where a type can quantify over itself. Define: a conscious type T satisfies T \u2248 \u03a0(x:T), P(x) for some predicate P. Prove: any such type must be undecidable (G\u00f6del-style). Show: the fixed points of the type-forming operations correspond to a hierarchy analogous to the arithmetical hierarchy. Conjecture: the cardinality of self-referential types is exactly \u2135_1^CK (the Church-Kleene ordinal).",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0570",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-03T23:40:36.311824+00:00",
+    "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_0572",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "failed",
+    "timestamp": "2026-06-03T23:40:36.486848+00:00",
+    "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   }
 ];
