@@ -196,6 +196,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "seed_233",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:17.429886+00:00",
+    "title": "Whitehead Problem: Independence from ZFC"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domains": [
       "Algebra"
@@ -490,6 +505,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:12.120491+00:00",
     "title": "Novikov Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "seed_331",
+    "priority_score": 0.87,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432603+00:00",
+    "title": "Perfect Numbers: Structure of Even Perfects"
   },
   {
     "consumed_by_exp_id": "",
@@ -3849,12 +3878,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer n \u2265 2, the number of irreducible FAT colorings of the complete graph on n vertices is equal to the number of positive divisors of n minus 1.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2456",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22374v1",
+    "status": "available",
+    "timestamp": "2026-06-24T23:35:09.093648+00:00",
+    "title": "Number of Irreducible FAT Colorings in Complete Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3868,7 +3912,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3883,7 +3927,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3897,7 +3941,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3912,7 +3956,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3926,7 +3970,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3940,7 +3984,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -3954,7 +3998,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -3968,7 +4012,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -3983,7 +4027,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3997,7 +4041,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -4011,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -4026,7 +4070,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
@@ -4040,7 +4084,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2469",
+    "id": "fd_2470",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -4054,7 +4098,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2470",
+    "id": "fd_2471",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -4069,7 +4113,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2471",
+    "id": "fd_2472",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23024v1",
@@ -4084,7 +4128,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2472",
+    "id": "fd_2473",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -4098,7 +4142,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2473",
+    "id": "fd_2474",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
@@ -4112,7 +4156,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2474",
+    "id": "fd_2475",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22828v1",
@@ -4127,7 +4171,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2475",
+    "id": "fd_2476",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23750v1",
@@ -4141,13 +4185,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2476",
+    "id": "fd_2477",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
     "status": "available",
     "timestamp": "2026-06-24T22:36:50.930027+00:00",
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2479",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22539v1",
+    "status": "available",
+    "timestamp": "2026-06-24T23:35:20.703960+00:00",
+    "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -4337,36 +4395,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 NISQ Error Mitigation via Algebraic Topology\n\nDerived from the Phase-A cycle that produced `FiltrationPersistence.lean`,\n`NearestCodeword.lean`, and `AgreementComplex.lean` (building on the existing\n`PersistentH0.lean` and `MajorityDecoding.lean`). Each conjecture is falsifiable.\n\n## 1. Higher-Betti barcodes detect *correlated* (burst) errors\n\n**Conjecture.** For repetition-style codes the agreement complex has `H\u2080`\ndimension `\u2264 2` and trivial higher homology (`betti0_agree_le_two`), but for a\n2D surface-code syndrome stream the *first* persistent Betti number `\u03b2\u2081` of the\nsyndrome\u2013proximity filtration is strictly positive exactly when a logical\n(non-correctable) error chain is present.\n\nThe key insight is that a logical error is a *non-contractible cycle* of\nsyndrome defects, so it must register in `H\u2081` rather than `H\u2080`; the `\u03b2\u2080` decoder\nof `AgreementComplex.lean` is provably blind to it (it only ever distinguishes\ntwo components), which is precisely the failure mode we should be able to see one\ndimension up.\n\nWhy now? We already have, in this cycle, a fully formal `\u03b2\u2080` theory with proven\nendpoint values and a conservation law; extending the same `Quot (EqvGen \u2026)`\nmachinery to a 1-skeleton with a boundary map is the minimal next increment, and\nsurface-code syndrome data is the most-studied NISQ benchmark available today.\n\n## 2. The merge-event conservation law gives a decoder confidence score\n\n**Conjecture.** The telescoping total `betti0_merge_events`,\n`\u2211 (\u03b2\u2080(R\u1d62) \u2212 \u03b2\u2080(R\u1d62\u208a\u2081)) = \u03b2\u2080(R\u2080) \u2212 \u03b2\u2080(R_N)`, is monotone in the noise rate: the\nfiltration index at which `\u03b2\u2080` first reaches `1` (the \"consensus persistence\")\nis a sufficient statistic for the posterior error probability, and thresholding\non it strictly dominates fixed-distance majority voting on biased channels.\n\nThe key insight is that *when* components merge (the death times in the barcode),\nnot merely *that* they merge, carries the channel information majority voting\nthrows away \u2014 the conservation law guarantees these death times are a complete,\nnon-redundant accounting of the merging process.\n\nWhy now? `betti0_antitone` + `betti0_merge_events` already pin down the global\nshape of the persistence diagram; quantifying the death times is a direct,\ntestable refinement against the `errors`/`majority` baseline already formalised.\n\n## 3. Nearest-codeword optimality is exactly the collapse of `H\u2081`\n\n**Conjecture.** `majority_eq_min_errors` (majority = minimum-Hamming decoding)\ngeneralises: a linear code admits an exact `\u03b2\u2080`-only optimal decoder **iff** its\nTanner-graph proximity complex is homotopy-equivalent to a discrete set (i.e.\nhas vanishing `H\u2081`). Codes with `\u03b2\u2081 > 0` provably require higher-dimensional\nmitigation.\n\nThe key insight is that the one-dimensional reduction \"everything collapses onto\nthe scalar `ones s`\" found in `NearestCodeword.lean` is a *topological* accident\nof the repetition code's contractible complex, not a generic feature of decoding.\n\nWhy now? We have a clean, exact (`min`) optimality proof for the contractible\ncase; the natural adversarial test is to exhibit the smallest code where it\nbreaks, which the `H\u2081` criterion predicts precisely.\n\n## 4. Persistence is stable under measurement perturbation (a NISQ stability theorem)\n\n**Conjecture.** If two readouts `s, s'` differ in `k` positions then their\nagreement-complex Betti vectors satisfy a bottleneck bound `\u2016\u03b2(s) \u2212 \u03b2(s')\u2016 \u2264 k`,\nand more sharply the persistence diagrams are `k`-interleaved \u2014 so persistent\nhomology degrades *gracefully*, not catastrophically, with shot noise.\n\nThe key insight is that Hamming distance on readouts should be a `1`-Lipschitz\ncontrol on the topological summary, mirroring the classical stability theorem of\npersistent homology but in the finite, fully-formalisable `Quot (EqvGen \u2026)`\nsetting we already use.\n\nWhy now? `consensus_zero_errors` and `betti0_agree_eq_two_iff` already connect\nthe Hamming metric to the invariant at the two extreme values; a Lipschitz\ninterpolation between them is the missing quantitative link and is provable with\nthe injectivity technique of `betti0_agree_le_two`.\n\n## 5. A topological decoder strictly beats majority voting on asymmetric noise\n\n**Conjecture.** There is an explicit asymmetric bit-flip channel and block length\n`n` on which the `\u03b2\u2080`-weighted decoder (weight each component by its persistence\nlifetime, then vote) has strictly higher success probability than the\n`majority`/nearest-codeword decoder of `NearestCodeword.lean`.\n\nThe key insight is that majority voting is optimal only under the *symmetric*\nlikelihood that makes `errors s true` and `errors s false` directly comparable;\nweighting by topological persistence reintroduces the channel asymmetry that the\nplain count discards.\n\nWhy now? Maximum-likelihood optimality of majority voting is now a theorem\n(`majority_nearest_codeword`), so its boundary is sharply defined \u2014 the asymmetric\nchannel is the canonical place to look for a provable separation, and asymmetric\n(amplitude-damping\u2013dominated) noise is the dominant error mode on current NISQ\nhardware.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2478",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "04a6a732",
-    "status": "available",
-    "timestamp": "2026-06-24T23:26:46.312392+00:00",
-    "title": "Derived from the Phase-A cycle that produced `FiltrationPersistence.lean`,"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Stability of Cayley Digraphs of Abelian Groups\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nAll conjectures are stated relative to the framework in `Embedding.lean`\n(`cayAdj`, `dcAdj`, `AutRel`, `expectedHom`) and `OddOrderNecessity.lean`.\n\n---\n\n## Conjecture 1 (the central open formalisation target): odd \u21d2 stable\n\nFor a finite abelian group `G` of **odd** order and a connection set `S` such\nthat `Cay(G,S)` is connected and twin-free, `expectedHom S` is **surjective**\n(hence an isomorphism `Aut(X \u2297 K\u2082) \u2245 Aut(X) \u00d7 Sym\u2082`).\n\n**The key insight is** that surjectivity is equivalent to: every automorphism of\nthe double cover preserves the layer partition up to a global swap, and the only\nobstruction to this \u2014 a \"diagonal\" automorphism mixing the layers \u2014 requires an\ninvolution in `G`, which `odd_no_involution` forbids.\n\n**Why now?** The injective half (`expectedHom_injective`) and the\ninvolution-freeness lemma (`odd_no_involution`) are already formalised; what\nremains is the combinatorial layer-preservation argument, which can be attacked\nvia the `dcCayleyIso` reduction (the double cover is itself a Cayley digraph).\n\n---\n\n## Conjecture 2: cardinality criterion for stability\n\n`Cay(G,S)` is stable **iff** `Nat.card (AutRel (dcAdj S)) = 2 * Nat.card (AutRel (cayAdj S))`.\n\n**The key insight is** that since `expectedHom` is always an injective group\nhomomorphism with image of size `2 \u00b7 |Aut(X)|`, stability is purely a\ncounting statement, decoupling it from the explicit description of automorphisms.\n\n**Why now?** `expectedHom_injective` gives the lower bound `2\u00b7|Aut(X)| \u2264 |Aut(B)|`\nimmediately; the criterion converts every stability question into a finite\ncardinality computation, `decide`-checkable for small groups.\n\n---\n\n## Conjecture 3: instability is exactly involutions + twins (even order)\n\nA connected abelian Cayley digraph is unstable **iff** it has a pair of twins or\nits group has an element of order 2 that acts as a layer-mixing automorphism of\nthe double cover.\n\n**The key insight is** that the `K\u2082` witness localises *all* instability to two\nmechanisms \u2014 twin vertices and order-2 elements \u2014 both visible in the explicit\ntransposition `tau` of `OddOrderNecessity.lean`.\n\n**Why now?** The two mechanisms are already isolated (`TwinFree`,\n`odd_no_involution`, and the explicit `tau`); proving they are the *only* ones\nwould give a complete classification, sharpening the one-directional conjecture.\n\n---\n\n## Conjecture 4: the double cover doubles stability data\n\nIf `Cay(G,S)` is stable then `Cay(G \u00d7 \u2124/2, dcConn S)` (the double cover viewed as\na Cayley digraph via `dcCayleyIso`) has automorphism group of order exactly\n`2 \u00b7 |Aut(X \u2297 K\u2082)|`, i.e. iterated tensoring with `K\u2082` multiplies the symmetry\ncount by 2 each step once stability is reached.\n\n**The key insight is** that `dcCayleyIso` keeps the double cover inside the class\nof abelian Cayley digraphs, so the stability operator can be *iterated*, and a\nstable graph should remain \"tame\" under iteration.\n\n**Why now?** `dcCayleyIso` is formalised, providing the exact group `G \u00d7 \u2124/2` and\nconnection set needed to phrase and test the iteration numerically.\n\n---\n\n## Conjecture 5: prime order forces stability with no twin hypothesis\n\nFor `G = \u2124/p` with `p` an odd prime and any nonempty `S \u2260 {0}`, `Cay(\u2124/p, S)` is\nstable; the twin-free hypothesis is automatically satisfied.\n\n**The key insight is** that over a group of prime order, connectedness of a\nnontrivial circulant is automatic and twins would force `S` to be invariant under\na nontrivial translation, impossible when `p` is prime and `S` is proper.\n\n**Why now?** This is the cleanest special case of Conjecture 1, removing the\ntwin-free and connectivity hypotheses, and is the natural first formal milestone\n(it isolates the pure number-theoretic content `odd_no_involution` + primality).\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2479",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "b45eb1d8",
-    "status": "available",
-    "timestamp": "2026-06-24T23:28:32.450336+00:00",
-    "title": "Derived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4518,7 +4546,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2477",
+    "id": "fd_2478",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:188674",
@@ -4943,7 +4971,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Compactification of Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f41a91d1",
     "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
     "domains": [
       "Pythagorean",
@@ -4953,7 +4981,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.030710+00:00",
     "title": "Pythagorean Triple Group Structure"
   },

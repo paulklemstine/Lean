@@ -260,6 +260,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "seed_233",
+    "lineage_refs": [],
+    "priority_score": 0.91,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:17.429886+00:00",
+    "title": "Whitehead Problem: Independence from ZFC"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domain_bridges": [],
     "domains": [
@@ -652,6 +672,25 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:12.120491+00:00",
     "title": "Novikov Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "seed_331",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432603+00:00",
+    "title": "Perfect Numbers: Structure of Even Perfects"
   },
   {
     "ambition_level": "extension",
@@ -6526,6 +6565,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "FAT coloring",
+      "irreducible FAT coloring",
+      "complete graph"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer n ≥ 2, the number of irreducible FAT colorings of the complete graph on n vertices is equal to the number of positive divisors of n minus 1.",
+    "domain_bridges": [
+      "graph theory",
+      "combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2456",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the structure of FAT colorings in complete graphs, showing that each divisor d of n (excluding 1) corresponds to an irreducible FAT d-coloring where the vertex set is partitioned into d equal parts.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22374v1",
+    "status": "available",
+    "timestamp": "2026-06-24T23:35:09.093648+00:00",
+    "title": "Number of Irreducible FAT Colorings in Complete Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO/2305.01234",
       "math.CO/2407.05678",
       "math.CO/2603.01456"
@@ -6540,7 +6606,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6564,7 +6630,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6590,7 +6656,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6616,7 +6682,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6643,7 +6709,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6669,7 +6735,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
@@ -6697,7 +6763,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
@@ -6722,7 +6788,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -6749,7 +6815,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
@@ -6778,7 +6844,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Borel-Serre duality techniques and spectral sequence arguments used in codimension 1 and 2 cases to arbitrary k. Analyze the action of the congruence subgroup on Bruhat-Tits buildings and leverage representation stability to control cohomology in high degrees.",
@@ -6803,7 +6869,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
@@ -6831,7 +6897,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
@@ -6858,7 +6924,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on dimension d, leveraging the structure of convex splinters and the affine dependence condition. Possibly using induction on the number of convex sets composing the splinter, combined with probabilistic method or measure concentration techniques to establish the lower bound.",
@@ -6877,7 +6943,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2469",
+    "id": "fd_2470",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct proof using inequalities derived from asymptotic estimates",
@@ -6906,7 +6972,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2470",
+    "id": "fd_2471",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the paper's prime-divisor criterion to an exact p-adic valuation statement. First reuse the finite-difference argument to show that every prime divisor of D(k) divides n = k+1. For an exact component p^a ∥ n, use Kummer's theorem to express v_p(binom(qk,k)) as a number of base-p carries in k + (q-1)k. Prove a uniform lower bound v_p ≥ a for all q in the range exactly when n/p^a ≤ p^a. Then construct an explicit q, plausibly q = n/p^a + 1 or a small digit-adjusted variant, for which the carry count is exactly a, giving v_p(D(k)) = a. Show that all other prime components have valuation zero in the gcd. Combining over primes yields the asserted exact formula.",
@@ -6937,7 +7003,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2471",
+    "id": "fd_2472",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicitly a non-central element that is St₃ by utilizing long paths in the quiver. For a path p of length ≥ 3, consider x = p₁ + p₂ + ... + pₖ where pᵢ are appropriately chosen paths satisfying the St₃ condition but not the centrality condition. Verify St₃(x, y₁, y₂) = 0 for all y₁, y₂ using the alternating symmetry and multilinearity of St₃, while showing [x, z] ≠ 0 for some z in the algebra to prove non-centrality.",
@@ -6965,7 +7031,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2472",
+    "id": "fd_2473",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the construction of the Betti-Whittaker periods using the pairing between the Whittaker model and the cohomology of the arithmetic quotient. Implement the duality between π and π^* via the contragredient representation, and use the functional equation of the associated L-function to establish the proportionality constant. The Lean proof would require the formalization of Casselman-Wallach representations and the continuous cohomology of GL(n, R).",
@@ -6993,7 +7059,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2473",
+    "id": "fd_2474",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive proof on delta-matroid rank with case analysis for each ⋆∙ operator, leveraging existing results for partial-∗ polynomials and properties of twist/loop complementation.",
@@ -7021,7 +7087,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2474",
+    "id": "fd_2475",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on n using the known extremal construction, counting arguments, and verifying that any C_{4k+2}^{4-}-free hypergraph cannot exceed the bipartite bound, formalizing the odd‑bipartite structure in Lean.",
@@ -7050,7 +7116,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2475",
+    "id": "fd_2476",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Derive the explicit parameters (a_i,b_j) of the {}_nF_{n-1} series from the known hypergeometric representation of the roots of the trinomial in powers of the discriminant D (using the formulas from the paper).\n2. Verify the conjectured transformation for small n (n=3,4,5) with computer algebra (e.g., Mathematica, Maple, or Sage) by expanding both sides as power series in D and checking equality term-by-term.\n3. Once the pattern holds for these cases, use known results on higher-order Kummer transformations (e.g., Karlsson-Minton theorem) to argue that the conjectured identity follows from the general transformation theory for Saalschützian {}_nF_{n-1} series.\n4. Formalise the conjecture in Lean 4: define the hypergeometric series in mathlib, encode the parameters as dependent types, and state the identity as a theorem. Use the existing hypergeometric transformation lemmas to attempt a proof, or develop new lemmas for the specific parameter shifts.\n5. Aim to complete a machine-check",
@@ -7077,7 +7143,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2476",
+    "id": "fd_2477",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on n using the functional equation of the q-exponential generating function F_k(t;q) and coefficient extraction to verify the claimed closed form",
@@ -7086,6 +7152,31 @@
     "status": "available",
     "timestamp": "2026-06-24T22:36:50.930027+00:00",
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2310.00000"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
+    "domain_bridges": [
+      "torus methods",
+      "lattice geometry",
+      "diophantine approximation"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2479",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the lacunary matrix theorem to construct a multiplier vector via linear algebra over \\(\\R\\) and verify its multiplicative properties in the torus. Combine with geometric arguments to ensure minimality and global consistency.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22539v1",
+    "status": "available",
+    "timestamp": "2026-06-24T23:35:20.703960+00:00",
+    "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
   {
     "ambition_level": "extension",
@@ -7342,46 +7433,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — NISQ Error Mitigation via Algebraic Topology\n\nDerived from the Phase-A cycle that produced `FiltrationPersistence.lean`,\n`NearestCodeword.lean`, and `AgreementComplex.lean` (building on the existing\n`PersistentH0.lean` and `MajorityDecoding.lean`). Each conjecture is falsifiable.\n\n## 1. Higher-Betti barcodes detect *correlated* (burst) errors\n\n**Conjecture.** For repetition-style codes the agreement complex has `H₀`\ndimension `≤ 2` and trivial higher homology (`betti0_agree_le_two`), but for a\n2D surface-code syndrome stream the *first* persistent Betti number `β₁` of the\nsyndrome–proximity filtration is strictly positive exactly when a logical\n(non-correctable) error chain is present.\n\nThe key insight is that a logical error is a *non-contractible cycle* of\nsyndrome defects, so it must register in `H₁` rather than `H₀`; the `β₀` decoder\nof `AgreementComplex.lean` is provably blind to it (it only ever distinguishes\ntwo components), which is precisely the failure mode we should be able to see one\ndimension up.\n\nWhy now? We already have, in this cycle, a fully formal `β₀` theory with proven\nendpoint values and a conservation law; extending the same `Quot (EqvGen …)`\nmachinery to a 1-skeleton with a boundary map is the minimal next increment, and\nsurface-code syndrome data is the most-studied NISQ benchmark available today.\n\n## 2. The merge-event conservation law gives a decoder confidence score\n\n**Conjecture.** The telescoping total `betti0_merge_events`,\n`∑ (β₀(Rᵢ) − β₀(Rᵢ₊₁)) = β₀(R₀) − β₀(R_N)`, is monotone in the noise rate: the\nfiltration index at which `β₀` first reaches `1` (the \"consensus persistence\")\nis a sufficient statistic for the posterior error probability, and thresholding\non it strictly dominates fixed-distance majority voting on biased channels.\n\nThe key insight is that *when* components merge (the death times in the barcode),\nnot merely *that* they merge, carries the channel information majority voting\nthrows away — the conservation law guarantees these death times are a complete,\nnon-redundant accounting of the merging process.\n\nWhy now? `betti0_antitone` + `betti0_merge_events` already pin down the global\nshape of the persistence diagram; quantifying the death times is a direct,\ntestable refinement against the `errors`/`majority` baseline already formalised.\n\n## 3. Nearest-codeword optimality is exactly the collapse of `H₁`\n\n**Conjecture.** `majority_eq_min_errors` (majority = minimum-Hamming decoding)\ngeneralises: a linear code admits an exact `β₀`-only optimal decoder **iff** its\nTanner-graph proximity complex is homotopy-equivalent to a discrete set (i.e.\nhas vanishing `H₁`). Codes with `β₁ > 0` provably require higher-dimensional\nmitigation.\n\nThe key insight is that the one-dimensional reduction \"everything collapses onto\nthe scalar `ones s`\" found in `NearestCodeword.lean` is a *topological* accident\nof the repetition code's contractible complex, not a generic feature of decoding.\n\nWhy now? We have a clean, exact (`min`) optimality proof for the contractible\ncase; the natural adversarial test is to exhibit the smallest code where it\nbreaks, which the `H₁` criterion predicts precisely.\n\n## 4. Persistence is stable under measurement perturbation (a NISQ stability theorem)\n\n**Conjecture.** If two readouts `s, s'` differ in `k` positions then their\nagreement-complex Betti vectors satisfy a bottleneck bound `‖β(s) − β(s')‖ ≤ k`,\nand more sharply the persistence diagrams are `k`-interleaved — so persistent\nhomology degrades *gracefully*, not catastrophically, with shot noise.\n\nThe key insight is that Hamming distance on readouts should be a `1`-Lipschitz\ncontrol on the topological summary, mirroring the classical stability theorem of\npersistent homology but in the finite, fully-formalisable `Quot (EqvGen …)`\nsetting we already use.\n\nWhy now? `consensus_zero_errors` and `betti0_agree_eq_two_iff` already connect\nthe Hamming metric to the invariant at the two extreme values; a Lipschitz\ninterpolation between them is the missing quantitative link and is provable with\nthe injectivity technique of `betti0_agree_le_two`.\n\n## 5. A topological decoder strictly beats majority voting on asymmetric noise\n\n**Conjecture.** There is an explicit asymmetric bit-flip channel and block length\n`n` on which the `β₀`-weighted decoder (weight each component by its persistence\nlifetime, then vote) has strictly higher success probability than the\n`majority`/nearest-codeword decoder of `NearestCodeword.lean`.\n\nThe key insight is that majority voting is optimal only under the *symmetric*\nlikelihood that makes `errors s true` and `errors s false` directly comparable;\nweighting by topological persistence reintroduces the channel asymmetry that the\nplain count discards.\n\nWhy now? Maximum-likelihood optimality of majority voting is now a theorem\n(`majority_nearest_codeword`), so its boundary is sharply defined — the asymmetric\nchannel is the canonical place to look for a provable separation, and asymmetric\n(amplitude-damping–dominated) noise is the dominant error mode on current NISQ\nhardware.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2478",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "04a6a732",
-    "status": "available",
-    "timestamp": "2026-06-24T23:26:46.312392+00:00",
-    "title": "Derived from the Phase-A cycle that produced `FiltrationPersistence.lean`,"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Stability of Cayley Digraphs of Abelian Groups\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nAll conjectures are stated relative to the framework in `Embedding.lean`\n(`cayAdj`, `dcAdj`, `AutRel`, `expectedHom`) and `OddOrderNecessity.lean`.\n\n---\n\n## Conjecture 1 (the central open formalisation target): odd ⇒ stable\n\nFor a finite abelian group `G` of **odd** order and a connection set `S` such\nthat `Cay(G,S)` is connected and twin-free, `expectedHom S` is **surjective**\n(hence an isomorphism `Aut(X ⊗ K₂) ≅ Aut(X) × Sym₂`).\n\n**The key insight is** that surjectivity is equivalent to: every automorphism of\nthe double cover preserves the layer partition up to a global swap, and the only\nobstruction to this — a \"diagonal\" automorphism mixing the layers — requires an\ninvolution in `G`, which `odd_no_involution` forbids.\n\n**Why now?** The injective half (`expectedHom_injective`) and the\ninvolution-freeness lemma (`odd_no_involution`) are already formalised; what\nremains is the combinatorial layer-preservation argument, which can be attacked\nvia the `dcCayleyIso` reduction (the double cover is itself a Cayley digraph).\n\n---\n\n## Conjecture 2: cardinality criterion for stability\n\n`Cay(G,S)` is stable **iff** `Nat.card (AutRel (dcAdj S)) = 2 * Nat.card (AutRel (cayAdj S))`.\n\n**The key insight is** that since `expectedHom` is always an injective group\nhomomorphism with image of size `2 · |Aut(X)|`, stability is purely a\ncounting statement, decoupling it from the explicit description of automorphisms.\n\n**Why now?** `expectedHom_injective` gives the lower bound `2·|Aut(X)| ≤ |Aut(B)|`\nimmediately; the criterion converts every stability question into a finite\ncardinality computation, `decide`-checkable for small groups.\n\n---\n\n## Conjecture 3: instability is exactly involutions + twins (even order)\n\nA connected abelian Cayley digraph is unstable **iff** it has a pair of twins or\nits group has an element of order 2 that acts as a layer-mixing automorphism of\nthe double cover.\n\n**The key insight is** that the `K₂` witness localises *all* instability to two\nmechanisms — twin vertices and order-2 elements — both visible in the explicit\ntransposition `tau` of `OddOrderNecessity.lean`.\n\n**Why now?** The two mechanisms are already isolated (`TwinFree`,\n`odd_no_involution`, and the explicit `tau`); proving they are the *only* ones\nwould give a complete classification, sharpening the one-directional conjecture.\n\n---\n\n## Conjecture 4: the double cover doubles stability data\n\nIf `Cay(G,S)` is stable then `Cay(G × ℤ/2, dcConn S)` (the double cover viewed as\na Cayley digraph via `dcCayleyIso`) has automorphism group of order exactly\n`2 · |Aut(X ⊗ K₂)|`, i.e. iterated tensoring with `K₂` multiplies the symmetry\ncount by 2 each step once stability is reached.\n\n**The key insight is** that `dcCayleyIso` keeps the double cover inside the class\nof abelian Cayley digraphs, so the stability operator can be *iterated*, and a\nstable graph should remain \"tame\" under iteration.\n\n**Why now?** `dcCayleyIso` is formalised, providing the exact group `G × ℤ/2` and\nconnection set needed to phrase and test the iteration numerically.\n\n---\n\n## Conjecture 5: prime order forces stability with no twin hypothesis\n\nFor `G = ℤ/p` with `p` an odd prime and any nonempty `S ≠ {0}`, `Cay(ℤ/p, S)` is\nstable; the twin-free hypothesis is automatically satisfied.\n\n**The key insight is** that over a group of prime order, connectedness of a\nnontrivial circulant is automatic and twins would force `S` to be invariant under\na nontrivial translation, impossible when `p` is prime and `S` is proper.\n\n**Why now?** This is the cleanest special case of Conjecture 1, removing the\ntwin-free and connectivity hypotheses, and is the natural first formal milestone\n(it isolates the pure number-theoretic content `odd_no_involution` + primality).\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2479",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "b45eb1d8",
-    "status": "available",
-    "timestamp": "2026-06-24T23:28:32.450336+00:00",
-    "title": "Derived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -7584,7 +7635,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2477",
+    "id": "fd_2478",
     "lineage_refs": [],
     "priority_score": 0.7,
     "proof_strategy": "",
@@ -8153,7 +8204,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f41a91d1",
     "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
     "domain_bridges": [],
     "domains": [
@@ -8166,7 +8217,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.030710+00:00",
     "title": "Pythagorean Triple Group Structure"
   },

@@ -14277,11 +14277,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f41a91d1",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14293,7 +14293,7 @@
         "Algebra"
       ],
       "id": "fd_0480",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T23:35:27.332414+00:00",
       "last_reviewed_at": "2026-06-16T10:48:45.376139+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14307,7 +14307,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.030710+00:00",
       "title": "Pythagorean Triple Group Structure"
@@ -41897,6 +41897,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "FAT coloring",
+        "irreducible FAT coloring",
+        "complete graph"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integer n ≥ 2, the number of irreducible FAT colorings of the complete graph on n vertices is equal to the number of positive divisors of n minus 1.",
+      "domain_bridges": [
+        "graph theory",
+        "combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2456",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem_irreducible_fat_complete_graph (n : ℕ) (h : n ≥ 2) : #irreducibleFATColorings (completeGraph n) = Nat.divisorCount n - 1",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Analyze the structure of FAT colorings in complete graphs, showing that each divisor d of n (excluding 1) corresponds to an irreducible FAT d-coloring where the vertex set is partitioned into d equal parts.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22374v1",
+      "source_path": "http://arxiv.org/abs/2606.22374v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T23:35:09.093648+00:00",
+      "title": "Number of Irreducible FAT Colorings in Complete Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
         "math.CO/2603.01456"
@@ -41917,7 +41963,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2456",
+      "id": "fd_2457",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41960,7 +42006,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2457",
+      "id": "fd_2458",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -42005,7 +42051,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2458",
+      "id": "fd_2459",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -42050,7 +42096,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2459",
+      "id": "fd_2460",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -42096,7 +42142,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2460",
+      "id": "fd_2461",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -42141,7 +42187,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2461",
+      "id": "fd_2462",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -42188,7 +42234,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2462",
+      "id": "fd_2463",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -42232,7 +42278,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2463",
+      "id": "fd_2464",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -42278,7 +42324,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2464",
+      "id": "fd_2465",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
@@ -42326,7 +42372,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2465",
+      "id": "fd_2466",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_cohomology_vanishing (p : Nat.primes) (k : ℕ) (n : ℕ) : n ≥ (3*k + 1)*p + (3*k + 2) → cohomology_group (Γ₀ₙ(p)) (binom(n, 2) - k) ℚ = 0",
@@ -42370,7 +42416,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2466",
+      "id": "fd_2467",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem S_one_phi_lower_bound (x : ℕ) (hx : x ≥ 2) : (S_one_phi x : ℝ) ≥ x * Real.exp ( - (1 / 2 + eps x) * Real.sqrt (Real.log x * Real.log (Real.log x)) ) := by sorry",
@@ -42417,7 +42463,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2467",
+      "id": "fd_2468",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sum_of_digits_bias (t : nat) (h : t > 0) : \\lim_{N\\rightarrow\\infty} ((\\text{set.mem_imprediate} (n\\mapsto s_2(n + t) \\ge s_2(n)) : N)) `N `real_imprediate (1/2 + 2^{-2s_2(t)-1})",
@@ -42463,7 +42509,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2468",
+      "id": "fd_2469",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture colorful_fractional_helly_beta_bound (d : ℕ) (α : ℝ) (hα : α > 0 ∧ α ≤ 1) : ∃ β : ℝ, β ≥ α^(d+1) ∧ Helly.colorful_fractional_convex_splinters.d d α β",
@@ -42501,7 +42547,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2469",
+      "id": "fd_2470",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "a_n ≤ ρ^{-n}",
@@ -42549,7 +42595,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2470",
+      "id": "fd_2471",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nnamespace BinomialGCD\n\ndef IsExactPrimePowerComponent (n P : ℕ) : Prop :=\n  ∃ p a : ℕ, Nat.Prime p ∧ 0 < a ∧ P = p ^ a ∧ p ^ a ∣ n ∧ ¬ (p ^ (a + 1) ∣ n)\n\ndef IsLargestExactPrimePowerComponent (n P : ℕ) : Prop :=\n  IsExactPrimePowerComponent n P ∧\n    ∀ Q : ℕ, IsExactPrimePowerComponent n Q → Q ≤ P\n\ndef binomGCD (k : ℕ) : ℕ :=\n  (Finset.Icc 2 (k + 1)).gcd fun q => Nat.choose (q * k) k\n\n/-- Conjectural strengthening of the A080170 criterion: the gcd is exactly the\nlargest dominating exact prime-power component, not just nontrivial in that case. -/\ntheorem exact_binomial_gcd_largest_prime_power_conjecture\n    {k n P : ℕ}\n    (hk : 2 ≤ k)\n    (hn : n = k + 1)\n    (hP : IsLargestExactPrimePowerComponent n P) :\n    binomGCD k = if n / P ≤ P then P else 1 := by\n  sorry\n\nend BinomialGCD",
@@ -42599,7 +42645,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2471",
+      "id": "fd_2472",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_noncentral_St3_element (Q : Quiver) (hQ : Finite Q) (hpath : ∃ (p : Path Q), length p ≥ 3) : ∃ (A : Alg K), ∃ (x : A), St3_element x ∧ ¬ Central x",
@@ -42646,7 +42692,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2472",
+      "id": "fd_2473",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem betti_whittaker_period_relation (k : NumberField) (n : ℕ) (π : AutomorphicRepresentation (GL n k)) [Cohomological π] (π_star : Contragredient π) : ∃ (c : ℂ), Period_BettiWhittaker π = c * Period_BettiWhittaker π_star",
@@ -42693,7 +42739,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2473",
+      "id": "fd_2474",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem partial_twuality_interpolates (D : binary_delta_matroid) (⋆∙ : twuality_operator) : (∀ z, is_even (partial_twuality_polynomial D ⋆∙ z) ∨ is_odd (partial_twuality_polynomial D ⋆∙ z) ∨ (is_even_interpolating (partial_twuality_polynomial D ⋆∙) ∧ is_odd_interpolating (partial_twuality_polynomial D ⋆∙)))",
@@ -42740,7 +42786,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2474",
+      "id": "fd_2475",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_C4k2_minus_one (k n : ℕ) (hk : k ≥ 2) (hn : n ≥ 4*k) : ex n (C_4k2_minus_one) = (1/2 : ℚ) * (n.choose 4 : ℚ) := by sorry",
@@ -42788,7 +42834,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2475",
+      "id": "fd_2476",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem higher_order_kummer (n : ℕ) (hn : 3 ≤ n) (p q : ℝ) (hp : p ≠ 0) (hq : q ≠ 0) :\n  let D := discriminant_trinomial p q n;\n  let S_D := hypergeometric_series_nF_nMinus1 a_params b_params D;\n  let S_1D := hypergeometric_series_nF_nMinus1 (b_params.map (· - ·) ++ [1]) (a_params.drop_right 1) (1 / D);\n  S_D = (1 - D)^(gamma) * S_1D := by\n  -- placeholder: to be filled with proof steps using hypergeometric transformation lemmas\n  sorry",
@@ -42834,7 +42880,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2476",
+      "id": "fd_2477",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_k_alt_inv_enumerator (k n : ℕ) (q : ℚ) : a_n_k k q = ∑ m in Finset.range (n / k + 1), q^(m*(m+1)/2) * GaussianBinomial (n - m*(k-1)) m q := by sorry",
@@ -42872,7 +42918,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2477",
+      "id": "fd_2478",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
@@ -42893,82 +42939,48 @@
       "title": "OEIS sequence: Stack polyominoes with square core."
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions — NISQ Error Mitigation via Algebraic Topology\n\nDerived from the Phase-A cycle that produced `FiltrationPersistence.lean`,\n`NearestCodeword.lean`, and `AgreementComplex.lean` (building on the existing\n`PersistentH0.lean` and `MajorityDecoding.lean`). Each conjecture is falsifiable.\n\n## 1. Higher-Betti barcodes detect *correlated* (burst) errors\n\n**Conjecture.** For repetition-style codes the agreement complex has `H₀`\ndimension `≤ 2` and trivial higher homology (`betti0_agree_le_two`), but for a\n2D surface-code syndrome stream the *first* persistent Betti number `β₁` of the\nsyndrome–proximity filtration is strictly positive exactly when a logical\n(non-correctable) error chain is present.\n\nThe key insight is that a logical error is a *non-contractible cycle* of\nsyndrome defects, so it must register in `H₁` rather than `H₀`; the `β₀` decoder\nof `AgreementComplex.lean` is provably blind to it (it only ever distinguishes\ntwo components), which is precisely the failure mode we should be able to see one\ndimension up.\n\nWhy now? We already have, in this cycle, a fully formal `β₀` theory with proven\nendpoint values and a conservation law; extending the same `Quot (EqvGen …)`\nmachinery to a 1-skeleton with a boundary map is the minimal next increment, and\nsurface-code syndrome data is the most-studied NISQ benchmark available today.\n\n## 2. The merge-event conservation law gives a decoder confidence score\n\n**Conjecture.** The telescoping total `betti0_merge_events`,\n`∑ (β₀(Rᵢ) − β₀(Rᵢ₊₁)) = β₀(R₀) − β₀(R_N)`, is monotone in the noise rate: the\nfiltration index at which `β₀` first reaches `1` (the \"consensus persistence\")\nis a sufficient statistic for the posterior error probability, and thresholding\non it strictly dominates fixed-distance majority voting on biased channels.\n\nThe key insight is that *when* components merge (the death times in the barcode),\nnot merely *that* they merge, carries the channel information majority voting\nthrows away — the conservation law guarantees these death times are a complete,\nnon-redundant accounting of the merging process.\n\nWhy now? `betti0_antitone` + `betti0_merge_events` already pin down the global\nshape of the persistence diagram; quantifying the death times is a direct,\ntestable refinement against the `errors`/`majority` baseline already formalised.\n\n## 3. Nearest-codeword optimality is exactly the collapse of `H₁`\n\n**Conjecture.** `majority_eq_min_errors` (majority = minimum-Hamming decoding)\ngeneralises: a linear code admits an exact `β₀`-only optimal decoder **iff** its\nTanner-graph proximity complex is homotopy-equivalent to a discrete set (i.e.\nhas vanishing `H₁`). Codes with `β₁ > 0` provably require higher-dimensional\nmitigation.\n\nThe key insight is that the one-dimensional reduction \"everything collapses onto\nthe scalar `ones s`\" found in `NearestCodeword.lean` is a *topological* accident\nof the repetition code's contractible complex, not a generic feature of decoding.\n\nWhy now? We have a clean, exact (`min`) optimality proof for the contractible\ncase; the natural adversarial test is to exhibit the smallest code where it\nbreaks, which the `H₁` criterion predicts precisely.\n\n## 4. Persistence is stable under measurement perturbation (a NISQ stability theorem)\n\n**Conjecture.** If two readouts `s, s'` differ in `k` positions then their\nagreement-complex Betti vectors satisfy a bottleneck bound `‖β(s) − β(s')‖ ≤ k`,\nand more sharply the persistence diagrams are `k`-interleaved — so persistent\nhomology degrades *gracefully*, not catastrophically, with shot noise.\n\nThe key insight is that Hamming distance on readouts should be a `1`-Lipschitz\ncontrol on the topological summary, mirroring the classical stability theorem of\npersistent homology but in the finite, fully-formalisable `Quot (EqvGen …)`\nsetting we already use.\n\nWhy now? `consensus_zero_errors` and `betti0_agree_eq_two_iff` already connect\nthe Hamming metric to the invariant at the two extreme values; a Lipschitz\ninterpolation between them is the missing quantitative link and is provable with\nthe injectivity technique of `betti0_agree_le_two`.\n\n## 5. A topological decoder strictly beats majority voting on asymmetric noise\n\n**Conjecture.** There is an explicit asymmetric bit-flip channel and block length\n`n` on which the `β₀`-weighted decoder (weight each component by its persistence\nlifetime, then vote) has strictly higher success probability than the\n`majority`/nearest-codeword decoder of `NearestCodeword.lean`.\n\nThe key insight is that majority voting is optimal only under the *symmetric*\nlikelihood that makes `errors s true` and `errors s false` directly comparable;\nweighting by topological persistence reintroduces the channel asymmetry that the\nplain count discards.\n\nWhy now? Maximum-likelihood optimality of majority voting is now a theorem\n(`majority_nearest_codeword`), so its boundary is sharply defined — the asymmetric\nchannel is the canonical place to look for a provable separation, and asymmetric\n(amplitude-damping–dominated) noise is the dominant error mode on current NISQ\nhardware.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Geometry"
+      "catalog_references": [
+        "arXiv:2310.00000"
       ],
-      "id": "fd_2478",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "04a6a732",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/04a6a732",
-      "status": "available",
-      "thread_id": "th_39296537",
-      "timestamp": "2026-06-24T23:26:46.312392+00:00",
-      "title": "Derived from the Phase-A cycle that produced `FiltrationPersistence.lean`,"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Stability of Cayley Digraphs of Abelian Groups\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nAll conjectures are stated relative to the framework in `Embedding.lean`\n(`cayAdj`, `dcAdj`, `AutRel`, `expectedHom`) and `OddOrderNecessity.lean`.\n\n---\n\n## Conjecture 1 (the central open formalisation target): odd ⇒ stable\n\nFor a finite abelian group `G` of **odd** order and a connection set `S` such\nthat `Cay(G,S)` is connected and twin-free, `expectedHom S` is **surjective**\n(hence an isomorphism `Aut(X ⊗ K₂) ≅ Aut(X) × Sym₂`).\n\n**The key insight is** that surjectivity is equivalent to: every automorphism of\nthe double cover preserves the layer partition up to a global swap, and the only\nobstruction to this — a \"diagonal\" automorphism mixing the layers — requires an\ninvolution in `G`, which `odd_no_involution` forbids.\n\n**Why now?** The injective half (`expectedHom_injective`) and the\ninvolution-freeness lemma (`odd_no_involution`) are already formalised; what\nremains is the combinatorial layer-preservation argument, which can be attacked\nvia the `dcCayleyIso` reduction (the double cover is itself a Cayley digraph).\n\n---\n\n## Conjecture 2: cardinality criterion for stability\n\n`Cay(G,S)` is stable **iff** `Nat.card (AutRel (dcAdj S)) = 2 * Nat.card (AutRel (cayAdj S))`.\n\n**The key insight is** that since `expectedHom` is always an injective group\nhomomorphism with image of size `2 · |Aut(X)|`, stability is purely a\ncounting statement, decoupling it from the explicit description of automorphisms.\n\n**Why now?** `expectedHom_injective` gives the lower bound `2·|Aut(X)| ≤ |Aut(B)|`\nimmediately; the criterion converts every stability question into a finite\ncardinality computation, `decide`-checkable for small groups.\n\n---\n\n## Conjecture 3: instability is exactly involutions + twins (even order)\n\nA connected abelian Cayley digraph is unstable **iff** it has a pair of twins or\nits group has an element of order 2 that acts as a layer-mixing automorphism of\nthe double cover.\n\n**The key insight is** that the `K₂` witness localises *all* instability to two\nmechanisms — twin vertices and order-2 elements — both visible in the explicit\ntransposition `tau` of `OddOrderNecessity.lean`.\n\n**Why now?** The two mechanisms are already isolated (`TwinFree`,\n`odd_no_involution`, and the explicit `tau`); proving they are the *only* ones\nwould give a complete classification, sharpening the one-directional conjecture.\n\n---\n\n## Conjecture 4: the double cover doubles stability data\n\nIf `Cay(G,S)` is stable then `Cay(G × ℤ/2, dcConn S)` (the double cover viewed as\na Cayley digraph via `dcCayleyIso`) has automorphism group of order exactly\n`2 · |Aut(X ⊗ K₂)|`, i.e. iterated tensoring with `K₂` multiplies the symmetry\ncount by 2 each step once stability is reached.\n\n**The key insight is** that `dcCayleyIso` keeps the double cover inside the class\nof abelian Cayley digraphs, so the stability operator can be *iterated*, and a\nstable graph should remain \"tame\" under iteration.\n\n**Why now?** `dcCayleyIso` is formalised, providing the exact group `G × ℤ/2` and\nconnection set needed to phrase and test the iteration numerically.\n\n---\n\n## Conjecture 5: prime order forces stability with no twin hypothesis\n\nFor `G = ℤ/p` with `p` an odd prime and any nonempty `S ≠ {0}`, `Cay(ℤ/p, S)` is\nstable; the twin-free hypothesis is automatically satisfied.\n\n**The key insight is** that over a group of prime order, connectedness of a\nnontrivial circulant is automatic and twins would force `S` to be invariant under\na nontrivial translation, impossible when `p` is prime and `S` is proper.\n\n**Why now?** This is the cleanest special case of Conjecture 1, removing the\ntwin-free and connectivity hypotheses, and is the natural first formal milestone\n(it isolates the pure number-theoretic content `odd_no_involution` + primality).\n",
-      "domain_bridges": [],
+      "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
+      "domain_bridges": [
+        "torus methods",
+        "lattice geometry",
+        "diophantine approximation"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "Pythagorean"
+        "Bridges"
       ],
       "id": "fd_2479",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem lacunary_multiplier_theorem (D : Type*) [inhabited D] (h_lacunary : is_lacunary D) : ∃ α : (closed_half_open [0 1)^2) (δ : ℝ) [δ > 0], (∀ d ∈ D, torus_distance (inner_product d α) ≥ δ)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the lacunary matrix theorem to construct a multiplier vector via linear algebra over \\(\\R\\) and verify its multiplicative properties in the torus. Combine with geometric arguments to ensure minimality and global consistency.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "b45eb1d8",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/b45eb1d8",
+      "source_exp_id": "2606.22539v1",
+      "source_path": "http://arxiv.org/abs/2606.22539v1",
       "status": "available",
-      "thread_id": "th_38563e7d",
-      "timestamp": "2026-06-24T23:28:32.450336+00:00",
-      "title": "Derived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle"
+      "thread_id": "",
+      "timestamp": "2026-06-24T23:35:20.703960+00:00",
+      "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
     },
     {
       "ambition_level": "extension",
@@ -47188,11 +47200,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "f88074cd",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47204,11 +47216,11 @@
         "Logic"
       ],
       "id": "seed_233",
-      "last_attempt_time": "2026-06-24T23:03:02.303859+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-16T10:48:47.737086+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.6946599999999999,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.91,
       "proof_strategy": "",
@@ -47218,7 +47230,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:17.429886+00:00",
       "title": "Whitehead Problem: Independence from ZFC"
@@ -47770,11 +47782,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "eb2eee3d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47785,11 +47797,11 @@
         "NumberTheory"
       ],
       "id": "seed_331",
-      "last_attempt_time": "2026-06-24T23:02:57.123196+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.7496,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.87,
       "proof_strategy": "",
@@ -47799,7 +47811,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432603+00:00",
       "title": "Perfect Numbers: Structure of Even Perfects"
@@ -122950,17 +122962,16 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 304,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 57,
     "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
     "Geometry": 168,
-    "Logic": 117,
+    "Logic": 116,
     "MachineLearning": 37,
     "Novelty": 200,
-    "NumberTheory": 1,
     "Physics": 45,
     "Probability": 1,
     "Pythagorean": 111,
@@ -123003,8 +123014,8 @@
     "first": 325,
     "first-order": 19,
     "formal": 133,
-    "formalize": 226,
-    "framework": 104,
+    "formalize": 224,
+    "framework": 103,
     "function": 204,
     "functions": 99,
     "future": 526,
@@ -123022,13 +123033,13 @@
     "normally": 2,
     "novelty": 139,
     "now?**": 143,
-    "number": 179,
+    "number": 178,
     "o(1/log": 2,
     "original": 353,
     "parameter": 58,
     "placeholders": 301,
     "positive": 99,
-    "problem": 84,
+    "problem": 83,
     "proof-theoretic": 36,
     "proofs": 390,
     "proved": 573,
@@ -123053,10 +123064,10 @@
     "stable": 38,
     "statistically": 10,
     "statistics": 26,
-    "structure": 228,
+    "structure": 227,
     "structures": 48,
     "systems": 72,
-    "theorem": 398,
+    "theorem": 397,
     "theorems": 462,
     "theories": 33,
     "theory": 350,
