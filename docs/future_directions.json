@@ -12565,7 +12565,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "09edd445",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12591,7 +12591,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:28.156517+00:00",
       "title": "Learning with Errors: Hardness Reductions"
@@ -15134,7 +15134,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -15150,7 +15150,7 @@
         "Physics"
       ],
       "id": "fd_0502",
-      "last_attempt_time": "2026-06-24T19:09:53.349671+00:00",
+      "last_attempt_time": "2026-06-10T06:05:09.735020+00:00",
       "last_reviewed_at": "2026-06-09T17:35:09.672546+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -38183,7 +38183,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Erdos--Ko--Rado theorem for intersecting uniform families",
         "Hilton--Milner theorem for non-trivial intersecting families",
@@ -38195,7 +38195,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9368eda6",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38210,7 +38210,7 @@
         "Bridges"
       ],
       "id": "fd_2375",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T19:56:38.720400+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Data.Finset.Basic\nimport Mathlib.Algebra.BigOperators.Fin\n\nopen scoped BigOperators\n\nabbrev IsKUniform {n : ℕ} (k : ℕ) (F : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, A.card = k\n\nabbrev IsStar {n : ℕ} (F : Finset (Finset (Fin n))) : Prop :=\n  ∃ x : Fin n, ∀ A ∈ F, x ∈ A\n\nabbrev CrossIntersecting {n : ℕ} (F G : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, ∀ B ∈ G, (A ∩ B).Nonempty\n\nnoncomputable abbrev HMbound (n k : ℕ) : ℕ :=\n  Nat.choose (n - 1) (k - 1) - Nat.choose (n - k - 1) (k - 1) + 1\n\n/-- Conjectural multilateral extension of the sharp non-trivial cross-intersection product bound. -/\ntheorem multilateral_nontrivial_cross_intersecting_product_bound\n    {n k r : ℕ}\n    (hn : 2 * k ≤ n) (hk : 3 ≤ k) (hr : 2 ≤ r)\n    (F : Fin r → Finset (Finset (Fin n)))\n    (h_uniform : ∀ i : Fin r, IsKUniform k (F i))\n    (h_nontrivial : ∀ i : Fin r, ¬ IsStar (F i))\n    (h_cross : ∀ ⦃i j : Fin r⦄, i ≠ j → CrossIntersecting (F i) (F j)) :\n    ",
       "lineage_refs": [],
@@ -38224,7 +38224,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23322v1",
       "source_path": "http://arxiv.org/abs/2606.23322v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T17:25:43.582970+00:00",
       "title": "Multilateral non-trivial cross-intersection product bound"
@@ -39445,7 +39445,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d3c0af99",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39474,7 +39474,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24326v1",
       "source_path": "http://arxiv.org/abs/2606.24326v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T02:41:49.567859+00:00",
       "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
@@ -39850,7 +39850,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "50adb4ee",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39879,7 +39879,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22825v1",
       "source_path": "http://arxiv.org/abs/2606.22825v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T08:40:38.583867+00:00",
       "title": "Necessity of Homological Condition for Spectral Radius Bound"
@@ -41558,6 +41558,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO",
+        "math.AT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For each integer n≥1 there exists a finite family C of pairwise disjoint compact (or open bounded) convex sets in ℝ^{3n} such that the space L(C) of all lines transversal to C is homeomorphic (hence homotopy equivalent) to the (n‑1)-sphere S^{n‑1}. Moreover, for any family of pairwise disjoint convex sets whose transversal space is non‑empty and whose reduced (n‑1)‑st homology is non‑zero, the transversal space is homotopy equivalent to S^{n‑1}. This refines the counterexamples to the Cheong–Goaoc–Holmsen conjecture by identifying the exact homotopy type.",
+      "domain_bridges": [
+        "Topology of configuration spaces",
+        "Convex geometry of line transversals",
+        "Computational topology"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Pythagorean"
+      ],
+      "id": "fd_2448",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem line_transversal_space_homeomorphic_sphere {n : ℕ} (hpos : 0 < n) :\n  ∃ (C : Finset (ConvexSet ℝ (Fin (3 * n)))),\n    (∀ c ∈ C, IsCompact c ∧ IsOpen c) ∧\n    (∀ {c₁ c₂}, c₁ ∈ C → c₂ ∈ C → c₁ ≠ c₂ → Disjoint c₁ c₂) ∧\n    (∃ L : TopologicalSpace,\n      L = line_transversal_space C ∧\n      Nonempty L ∧\n      Homeomorph L (Sphere (Fin n) 1))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct the family C as in Theorem 1.2 of the paper (a product of n disjoint “tube” pairs in ℝ^3). Show that the space of line transversals decomposes as a product of n copies of a circle of lines crossing a fixed pair of convex sets, and that the natural map to the unit sphere in ℝ^n given by the direction vectors of the lines is a homeomorphism onto S^{n‑1}. Use the explicit parameterization of transversals to verify continuity, bijectivity, and closedness. For the converse direction, apply homology detection: any non‑trivial reduced (n‑1)‑st homology class forces the space to be a closed (n‑1)‑manifold without boundary, and the only such manifold arising from convex transversals in the constructed dimensions is S^{n‑1}. Formalize these steps in Lean using the existing libraries for manifolds, homology, and convex sets.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23193v1",
+      "source_path": "http://arxiv.org/abs/2606.23193v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T19:51:02.889910+00:00",
+      "title": "Homotopy type of line transversal spaces for disjoint convex families"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
         "math.CO/2603.01456"
@@ -41578,7 +41624,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2448",
+      "id": "fd_2449",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41621,7 +41667,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2449",
+      "id": "fd_2450",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41666,7 +41712,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2450",
+      "id": "fd_2451",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41711,7 +41757,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2451",
+      "id": "fd_2452",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41757,7 +41803,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2452",
+      "id": "fd_2453",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -41802,7 +41848,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2453",
+      "id": "fd_2454",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -41849,7 +41895,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2454",
+      "id": "fd_2455",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -41893,7 +41939,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2455",
+      "id": "fd_2456",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -41939,7 +41985,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2456",
+      "id": "fd_2457",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
@@ -41987,7 +42033,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2457",
+      "id": "fd_2458",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_cohomology_vanishing (p : Nat.primes) (k : ℕ) (n : ℕ) : n ≥ (3*k + 1)*p + (3*k + 2) → cohomology_group (Γ₀ₙ(p)) (binom(n, 2) - k) ℚ = 0",
@@ -42031,7 +42077,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2458",
+      "id": "fd_2459",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem S_one_phi_lower_bound (x : ℕ) (hx : x ≥ 2) : (S_one_phi x : ℝ) ≥ x * Real.exp ( - (1 / 2 + eps x) * Real.sqrt (Real.log x * Real.log (Real.log x)) ) := by sorry",
@@ -42078,7 +42124,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2459",
+      "id": "fd_2460",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sum_of_digits_bias (t : nat) (h : t > 0) : \\lim_{N\\rightarrow\\infty} ((\\text{set.mem_imprediate} (n\\mapsto s_2(n + t) \\ge s_2(n)) : N)) `N `real_imprediate (1/2 + 2^{-2s_2(t)-1})",
@@ -42124,7 +42170,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2460",
+      "id": "fd_2461",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture colorful_fractional_helly_beta_bound (d : ℕ) (α : ℝ) (hα : α > 0 ∧ α ≤ 1) : ∃ β : ℝ, β ≥ α^(d+1) ∧ Helly.colorful_fractional_convex_splinters.d d α β",
@@ -42162,7 +42208,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2461",
+      "id": "fd_2462",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "a_n ≤ ρ^{-n}",
@@ -42210,7 +42256,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2462",
+      "id": "fd_2463",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nnamespace BinomialGCD\n\ndef IsExactPrimePowerComponent (n P : ℕ) : Prop :=\n  ∃ p a : ℕ, Nat.Prime p ∧ 0 < a ∧ P = p ^ a ∧ p ^ a ∣ n ∧ ¬ (p ^ (a + 1) ∣ n)\n\ndef IsLargestExactPrimePowerComponent (n P : ℕ) : Prop :=\n  IsExactPrimePowerComponent n P ∧\n    ∀ Q : ℕ, IsExactPrimePowerComponent n Q → Q ≤ P\n\ndef binomGCD (k : ℕ) : ℕ :=\n  (Finset.Icc 2 (k + 1)).gcd fun q => Nat.choose (q * k) k\n\n/-- Conjectural strengthening of the A080170 criterion: the gcd is exactly the\nlargest dominating exact prime-power component, not just nontrivial in that case. -/\ntheorem exact_binomial_gcd_largest_prime_power_conjecture\n    {k n P : ℕ}\n    (hk : 2 ≤ k)\n    (hn : n = k + 1)\n    (hP : IsLargestExactPrimePowerComponent n P) :\n    binomGCD k = if n / P ≤ P then P else 1 := by\n  sorry\n\nend BinomialGCD",
@@ -42229,6 +42275,56 @@
       "thread_id": "",
       "timestamp": "2026-06-24T19:09:47.341905+00:00",
       "title": "Exact Value of the Binomial GCD in OEIS A080170"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "MR36751",
+        "MR032689",
+        "MR1108620",
+        "irelli2025quiverspolynomialidentities",
+        "MR3712583"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any finite quiver Q containing a path of length at least 3, and the principal subalgebra KQ_{≥1}, there exists an element x ∈ KQ_{≥1} that is an St₃-element but not a central element. This conjecture asserts that the sequence of St-centers Z₂(A) ⊊ Z₃(A) is strict whenever the underlying quiver has paths of length ≥ 3, indicating that higher-order centrality genuinely provides more elements than ordinary centrality in these algebras.",
+      "domain_bridges": [
+        "Path Algebras",
+        "Standard Polynomials",
+        "Quiver Combinatorics",
+        "Center Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2464",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exists_noncentral_St3_element (Q : Quiver) (hQ : Finite Q) (hpath : ∃ (p : Path Q), length p ≥ 3) : ∃ (A : Alg K), ∃ (x : A), St3_element x ∧ ¬ Central x",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct explicitly a non-central element that is St₃ by utilizing long paths in the quiver. For a path p of length ≥ 3, consider x = p₁ + p₂ + ... + pₖ where pᵢ are appropriately chosen paths satisfying the St₃ condition but not the centrality condition. Verify St₃(x, y₁, y₂) = 0 for all y₁, y₂ using the alternating symmetry and multilinearity of St₃, while showing [x, z] ≠ 0 for some z in the algebra to prove non-centrality.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23024v1",
+      "source_path": "http://arxiv.org/abs/2606.23024v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T19:56:30.043961+00:00",
+      "title": "St₃-elements are never central in path algebras with sufficiently long paths"
     },
     {
       "ambition_level": "extension",
@@ -122329,6 +122425,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

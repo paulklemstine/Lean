@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-24T19:02:33.827489+00:00",
+  "last_updated": "2026-06-24T19:50:04.071952+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -3835,6 +3835,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-24T19:02:33.582109+00:00",
       "title": "Brocard's Problem: n! + 1 = m\u00b2"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.537,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 29,
+      "domain": "Computation",
+      "duration_seconds": -110.40019726753235,
+      "end_time": 1782321824.813343,
+      "files_integrated": 0,
+      "job_id": "09edd445",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "cross_domain": 1.0,
+        "importance": 0.7571818181818182,
+        "novelty": 0.9500000000000001,
+        "pegb_compliance": 0.5,
+        "proof_depth": 0.6745454545454544,
+        "usefulness": 0.8372727272727272
+      },
+      "quality_score": 0.4983945454545455,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782321935.2135403,
+      "strategy_count": 0,
+      "theorem_count": 19,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 19,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-24T19:50:03.507989+00:00",
+      "title": "Learning with Errors: Hardness Reductions"
     }
   ]
 }
