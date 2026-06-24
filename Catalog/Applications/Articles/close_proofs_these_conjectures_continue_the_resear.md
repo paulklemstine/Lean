@@ -1,183 +1,176 @@
-# The Fading Echo of a Linear Machine
+# When Repetition Runs Out of Room: The Quiet Law Behind Stabilizing Maps
 
-## A story told one map at a time
+## A puzzle about doing the same thing over and over
 
-Imagine a long assembly line. At each station a worker performs a single,
-fixed operation on whatever arrives, then passes the result down the line.
-The operations need not be the same from station to station — one worker
-might rotate the part, the next might flatten it, the next might project a
-shadow of it onto a wall. What happens to the *richness* of the information
-as the part travels down this line?
+Imagine you have a machine. You feed it a vector — think of it as an arrow in
+space — and it spits out another vector. The machine is *linear*: it stretches,
+rotates, shears, and squashes, but it never bends straight lines into curves and
+it always sends the origin to the origin. Mathematicians call such a machine a
+**linear endomorphism** of a vector space, and they write it as a map
+$g : V \to V$, where $V$ is the space the arrows live in.
 
-That, stripped of its industrial costume, is the question at the heart of
-this work. The "part" is a vector in a vector space $V$. Each "worker" is a
-**linear map** — an operation that respects addition and scaling. And the
-whole assembly line is an infinite *stream* of such maps,
+Now do the obvious thing: run the machine again. And again. Feed the output back
+in as input, over and over. After $n$ rounds you have applied the composite map
+$g^n = g \circ g \circ \cdots \circ g$ ($n$ times). A natural question — one that
+turns out to sit at the heart of linear algebra, dynamical systems, and even the
+analysis of computational pipelines — is this:
 
-$$f : \mathbb{N} \to (V \to V),$$
+> **What gets permanently lost, and what survives forever, as you iterate?**
 
-one linear map $f(0), f(1), f(2), \dots$ for each station $0, 1, 2, \dots$.
+Some arrows get crushed to zero. Maybe not on the first pass, but eventually:
+$g$ sends them somewhere, $g$ again sends *that* somewhere, and after enough
+rounds they collapse to the zero vector. The collection of arrows that die by
+step $n$ is called the **kernel of $g^n$**, written $\ker(g^n)$. It is the set of
+all $v$ with $g^n(v) = 0$.
 
-The surprising and satisfying punchline, which we will build up to, is that
-the information content flowing through such a line can only ever *fade or
-hold steady* — never spontaneously sharpen — and that in finite dimensions
-this fading must eventually stop, freezing into a permanent steady value.
-The stream develops a fingerprint.
+This article is about a single, beautiful fact governing those kernels — a fact
+sharp enough to be turned into an exact numerical guarantee, and clean enough to
+prove from almost nothing. Here it is in one sentence:
 
-## Composing the journey
+> **The doomed subspaces grow, but they cannot grow forever; they freeze no later
+> than the dimension of the space, and once frozen they never move again.**
 
-Before we can talk about fading, we need precise language for "what happens
-between station $i$ and station $j$."
+## The kernels can only grow
 
-Start at station $i$ and walk $n$ steps forward. The cumulative effect is the
-composition of the maps you pass through, applied in order. We call this the
-**partial composite** and write it $\mathrm{compFrom}\,f\,i\,n$. It is defined
-by the most natural recursion imaginable:
+Start with the easy half. If a vector dies by step $n$ — that is, $g^n(v) = 0$ —
+then it certainly dies by step $n+1$, because
+$$g^{n+1}(v) = g\bigl(g^n(v)\bigr) = g(0) = 0.$$
+So nothing that has already perished comes back to life. In symbols, each kernel
+is contained in the next:
+$$\ker(g^0) \subseteq \ker(g^1) \subseteq \ker(g^2) \subseteq \cdots$$
+This is an **ascending chain**: a staircase that only ever climbs. (In the formal
+development this is the lemma `ker_pow_le_succ`, and the statement that the whole
+sequence is non-decreasing is `ker_pow_mono`.)
 
-- Walking *zero* steps does nothing, so $\mathrm{compFrom}\,f\,i\,0$ is the
-  **identity map** $\mathrm{id}$ — the map that returns its input untouched.
-- Walking one more step means first doing everything up to now, then applying
-  the next worker:
-$$\mathrm{compFrom}\,f\,i\,(n+1) \;=\; f(i+n) \,\circ\, \mathrm{compFrom}\,f\,i\,n.$$
+There is a second, more structural way to see how each step is built from the
+last. A vector $v$ lies in $\ker(g^{k+1})$ exactly when $g^{k+1}(v) = 0$, which we
+can read as $g^k\bigl(g(v)\bigr) = 0$ — that is, $g(v)$ lies in $\ker(g^k)$. So the
+$(k{+}1)$-st kernel is precisely the set of arrows that $g$ pushes *into* the
+$k$-th kernel. Mathematicians call this operation a **preimage** or **comap**, and
+the identity
+$$\ker\!\bigl(g^{k+1}\bigr) = g^{-1}\!\bigl(\ker(g^k)\bigr)$$
+(formally, `ker_pow_succ_eq_comap`) is the engine of everything that follows. It
+says the entire infinite staircase is generated by a single recurrence: *to get
+the next floor, pull the current floor back through $g$.*
 
-Here $\circ$ means "do the right-hand map first, then the left." So unrolling
-the recursion gives exactly what you would expect:
-$$\mathrm{compFrom}\,f\,i\,n \;=\; f(i+n-1)\circ\cdots\circ f(i+1)\circ f(i).$$
+## Why a climbing staircase must eventually level off
 
-From this we name the real object of interest. The **transition
-endomorphism** from index $i$ to index $j$ is simply the partial composite
-that carries you the whole way:
-$$\mathrm{transEndo}\,f\,i\,j \;=\; \mathrm{compFrom}\,f\,i\,(j-i).$$
+Here is where finiteness enters and does its magic. Suppose our space $V$ has a
+finite **dimension** — call it $d = \dim V$. Dimension counts degrees of freedom:
+a line has dimension $1$, a plane dimension $2$, and so on. Every subspace of $V$
+has a dimension too, somewhere between $0$ (just the origin) and $d$ (all of $V$).
 
-(The word *endomorphism* just means "a map from a space back to itself" — the
-parts never leave $V$.) When $j \ge i$, this is the net operation performed by
-the segment of the assembly line between station $i$ and station $j$.
+Now picture the staircase of kernels climbing. Each genuine step *up* — each place
+where $\ker(g^k)$ is strictly smaller than $\ker(g^{k+1})$ — increases the
+dimension by at least $1$. But the dimension can never exceed $d$. So you cannot
+take more than $d$ genuine steps up. Somewhere among the first $d$ rounds, the
+staircase must hit a flat landing: a step $k$ where
+$$\ker\!\bigl(g^{k+1}\bigr) = \ker\!\bigl(g^k\bigr).$$
+This is a **pigeonhole argument** in disguise — there simply isn't enough vertical
+room for endless growth. In the formal development this guaranteed landing is the
+theorem `exists_ker_pow_plateau_le_finrank`: *a plateau occurs at some*
+$k \le d$.
 
-## The assembly line splits cleanly
+## And once it levels off, it stays level — forever
 
-The first thing any good bookkeeping system should do is *compose without
-contradiction*. If you travel from station $i$ to station $j$, and then from
-$j$ to $k$, the total effect had better equal traveling straight from $i$ to
-$k$. It does, and this is our first theorem.
+A skeptic might worry: maybe the staircase pauses on one landing, then resumes
+climbing later. Could the kernels go flat for a step and then jump again?
 
-> **Composition law (`transEndo_comp`).** If $i \le j \le k$, then
-> $$\mathrm{transEndo}\,f\,i\,k \;=\; \mathrm{transEndo}\,f\,j\,k \,\circ\, \mathrm{transEndo}\,f\,i\,j.$$
+No — and the reason is the recurrence we found earlier. The next kernel is
+*completely determined* by the current one through the rule "pull back through
+$g$." If two consecutive kernels are equal, then pulling either of them back
+through $g$ gives the same result, so the *following* kernel equals them too. The
+same logic then applies to the next step, and the next, in an unbroken chain of
+dominoes. A landing, once reached, propagates to infinity:
+$$\ker\!\bigl(g^{k+1}\bigr) = \ker\!\bigl(g^k\bigr)
+\quad\Longrightarrow\quad
+\ker\!\bigl(g^{k+m}\bigr) = \ker\!\bigl(g^k\bigr) \ \text{ for every } m \ge 0.$$
+This is the stabilization lemma `ker_pow_stable`. Underneath it lies an even more
+general principle worth stating on its own, because it has nothing to do with
+vector spaces at all: *any sequence defined by a fixed recurrence
+$a_{j+1} = F(a_j)$ that repeats one value automatically repeats it forever.* Once
+$a_{k+1} = a_k$, applying the same $F$ keeps reproducing $a_k$. That tiny,
+domain-agnostic observation — captured as `compFrom_const` — is the real reason
+plateaus are permanent. It is the mathematical embodiment of "if nothing changes,
+nothing changes."
 
-In words: the journey from $i$ to $k$ factors *exactly* as "first go $i \to j$,
-then go $j \to k$." This is the linear-algebra version of the obvious truth
-that an itinerary can be broken at any intermediate stop. Underneath it sits a
-purely combinatorial identity about the partial composites,
+## The sharp payoff: everything is settled by step $d$
 
-> **Additivity (`compFrom_add`).**
-> $$\mathrm{compFrom}\,f\,i\,(m+n) \;=\; \mathrm{compFrom}\,f\,(i+m)\,n \,\circ\, \mathrm{compFrom}\,f\,i\,m,$$
+Combine the two halves — *a landing happens by step $d$*, and *landings are
+permanent* — and you get a crisp, quantitative law:
 
-which says "walk $m+n$ steps" $=$ "walk $m$ steps, then walk $n$ more from where
-you landed." Proven by induction on $n$, it is the engine that drives
-everything else.
+> **For every exponent $m$ at least as large as the dimension $d = \dim V$, the
+> kernel of $g^m$ is exactly the kernel of $g^d$:**
+> $$\ker\!\bigl(g^m\bigr) = \ker\!\bigl(g^{d}\bigr) \qquad \text{whenever } m \ge d.$$
 
-## Why information can only fade
+This is the headline result, `ker_pow_eq_of_ge_finrank`. It is not a vague "things
+settle down eventually." It is a *guarantee with a deadline.* No matter how
+intricate the machine $g$, no matter how its arrows tangle and collapse, the set
+of permanently doomed vectors is fully revealed after exactly $\dim V$
+applications. Iterating further tells you nothing new about what dies.
 
-Now for the heart of the matter. We need a way to measure how much
-information a linear map preserves. The right notion is **rank**: the
-dimension of the map's image — the size of the "shadow" it casts. A map of
-high rank spreads its inputs across many independent directions; a map of low
-rank collapses them. Rank zero means everything is crushed to a single point.
+The bound is also **sharp**: there are maps for which the kernels keep growing on
+every one of the first $d$ steps, so you genuinely cannot promise stabilization
+any sooner. A classic example is the "shift" that sends one basis vector to the
+next and the last to zero. In a $d$-dimensional space, it takes exactly $d$
+applications to annihilate everything — the staircase climbs one floor at a time
+all the way to the top.
 
-Here is the key intuition. Composition can *destroy* information but never
-*create* it. If you take the output of one map and feed it into another, the
-second map can only work with what it received. It can fold, collapse, or
-faithfully relay that information — but it cannot conjure new independent
-directions out of nothing. Formally, for any linear maps $g$ and $h$,
-$$\mathrm{rank}(g \circ h) \;\le\; \mathrm{rank}(h).$$
-The composite is at most as rich as the *first* map applied.
+## A mirror image, and the structure it reveals
 
-Combine this with the composition law and a beautiful monotonicity falls out
-for free. Lengthening the assembly-line segment can only shrink its rank.
+The kernels are only half the story. Running alongside them is a *descending*
+chain: the **ranges** $\operatorname{range}(g^n)$, the subspaces of vectors that
+*survive* as genuine outputs after $n$ rounds. Where kernels grow, ranges shrink;
+where kernels measure what's lost, ranges measure what's preserved. By an exactly
+parallel argument, the ranges also freeze no later than step $d$.
 
-> **Rank is antitone (`rank_transEndo_antitone`).** If $i \le j \le k$, then
-> $$\mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,k\big) \;\le\; \mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,j\big).$$
+The two phenomena are companions, and their simultaneous freezing is the seed of
+one of linear algebra's most elegant structural results, **Fitting's Lemma**: at
+the stabilization step, the whole space splits cleanly into two non-interacting
+pieces — the part that $g$ eventually destroys (where $g$ acts *nilpotently*,
+crushing everything to zero after finitely many steps) and the part that $g$
+preserves perfectly (where $g$ acts as an *invertible* shuffle). The frozen kernel
+is the first piece; the frozen range is the second; and the dimension bound proved
+here is exactly the certificate that says "look no further than step $d$ to find
+them both."
 
-The proof is a single line of reasoning: the longer journey $i \to k$ is the
-shorter journey $i \to j$ followed by more processing, and tacking processing
-onto the *end* cannot raise the rank. The same statement holds at the level of
-partial composites:
+## Why anyone should care
 
-> **(`rank_compFrom_antitone`).** If $n \le m$, then
-> $\mathrm{rank}\big(\mathrm{compFrom}\,f\,i\,m\big) \le \mathrm{rank}\big(\mathrm{compFrom}\,f\,i\,n\big).$
+This is not a museum piece. The same staircase-that-must-level-off appears
+wherever a fixed transformation is applied repeatedly:
 
-This is the "fading echo": as the part travels further down the line, the
-information it carries about its original self can only diminish or stay
-level. An echo never gets louder.
+- **Dynamical systems.** Iterating a linear map models everything from population
+  models to discretized physics. Knowing the "transient" behavior is over by step
+  $\dim V$ tells you precisely how long to wait before the system's long-run
+  structure emerges.
+- **Computational pipelines.** Think of a deep stack of identical linear layers,
+  or a repeated update rule in numerical linear algebra. The kernel chain measures
+  what information is irrecoverably lost as data flows through; the bound says the
+  loss pattern is fixed after a known, finite depth. This is the *Computation*
+  setting that motivated the work: a stream of transition maps, and a guarantee
+  about when the accumulated map stops changing rank.
+- **Algorithm design.** The plateau index gives a stopping criterion. To compute
+  the stable kernel, you do not iterate blindly and hope; you iterate at most
+  $\dim V$ times and you are *provably* done.
+- **Pure structure theory.** As noted, this is the doorway to Fitting's Lemma and,
+  beyond it, to the classification of how linear maps decompose — the backbone of
+  Jordan normal form and the theory of modules over a principal ideal domain.
 
-## The echo must eventually settle
+## The shape of the argument
 
-A fading quantity could, in principle, fade *forever* — think of $1, \tfrac12,
-\tfrac14, \tfrac18, \dots$, which decreases at every step yet never repeats a
-value. Could the rank of our transitions behave like that, dropping a little
-at every station, never stabilizing?
+What makes this result satisfying is how little it needs. There is no heavy
+machinery, no appeal to eigenvalues or characteristic polynomials, no field
+algebraically closed or otherwise special. The entire proof rests on three plain
+observations:
 
-In a **finite-dimensional** space, no. And the reason is wonderfully simple.
-Rank is a *whole number*, and it is bounded below by $0$ and above by the
-dimension $d = \dim V$ of the whole space. A sequence of whole numbers between
-$0$ and $d$ that never increases simply cannot decrease forever — it has only
-finitely many values it could possibly take, and once it stops dropping, it
-must stay put.
+1. **Monotonicity:** dead vectors stay dead, so kernels only grow.
+2. **A recurrence:** each kernel is the pullback of the previous one, so equality
+   once means equality always.
+3. **Finiteness:** strict growth costs a dimension each time, and dimensions run
+   out by step $d$.
 
-To state this crisply we record the rank as an ordinary natural number,
-$$\mathrm{rankSeq}\,f\,i\,j \;=\; \big\lfloor \mathrm{rank}(\mathrm{transEndo}\,f\,i\,j)\big\rfloor,$$
-and prove three facts that together pin down its behaviour:
-
-> **Bounded (`rankSeq_le_finrank`).** $\mathrm{rankSeq}\,f\,i\,j \le \dim V$ always.
->
-> **Antitone (`rankSeq_zero_antitone`).** The sequence $m \mapsto \mathrm{rankSeq}\,f\,0\,m$ never increases.
->
-> **Eventually constant (`rankSeq_eventually_const`).** There is some station
-> $N$ beyond which the value never changes again:
-> $$\exists\,N,\ \forall\,m \ge N,\quad \mathrm{rankSeq}\,f\,0\,m = \mathrm{rankSeq}\,f\,0\,N.$$
-
-The last result rests on a clean, reusable order-theoretic gem worth stating
-on its own:
-
-> **Stabilization of monotone integer chains (`antitone_nat_eventually_const`).**
-> *Every* non-increasing sequence of natural numbers is eventually constant.
-
-Its proof is a small jewel: among all the values the sequence ever takes,
-there is a least one (the natural numbers are well-ordered). Once the sequence
-reaches that least value it can never go lower — there is nothing lower — and
-since it never goes up either, it is stuck there for good.
-
-## The stream's fingerprint
-
-Step back and look at what we have built. Out of an arbitrary infinite stream
-of linear maps — a wholly generic, possibly chaotic object — we have
-extracted a single, finite, non-increasing, eventually-constant sequence of
-integers: its rank profile. This sequence is an **invariant**, a fingerprint.
-It does not care about the intricate details of which map does what; it
-records only how information attenuates as it flows down the line, and the
-permanent floor it settles into.
-
-This floor has meaning. In the special case where every worker performs the
-*same* operation $g$ — a constant stream — the transition from $0$ to $m$ is
-just $g$ applied $m$ times, $g^m$. The composition law specializes to the
-familiar exponent rule $g^{m+n} = g^m \circ g^n$, and the eventual rank is the
-dimension of the so-called *generalized image* of $g$: the part of the space
-that $g$ never manages to destroy, no matter how many times it acts. This is
-the classical **Fitting core** of an operator, recovered here as a special
-case of a far more general phenomenon about arbitrary streams.
-
-## A Pythagorean coda
-
-There is a pleasing kinship between this story and the oldest theorem in
-mathematics. The Pythagorean relation $a^2 + b^2 = c^2$ is, at bottom, a
-statement about how lengths combine when you move along two perpendicular
-legs of a journey. Our composition law is its structural cousin: a statement
-about how *transformations* combine when you move along the legs of an
-abstract journey through index space. And just as the Pythagorean theorem
-gives a single number — the hypotenuse — summarizing a two-step trip, our
-rank profile gives a single eventual number summarizing an infinite one.
-
-The deeper lesson is one mathematicians return to again and again: when faced
-with something infinite and unruly, look for the quantity that can only move
-one way. Monotonicity plus boundedness is a trap from which no sequence
-escapes — it must come to rest. The fading echo of a linear machine,
-however complicated the machine, always finds its final, silent pitch.
+Three ideas — a direction, a recurrence, and a counting bound — interlock into a
+guarantee with a sharp deadline. It is a small theorem, but it is the kind of
+small theorem that the rest of the subject quietly leans on. Repetition, in a
+finite world, always runs out of room — and that is precisely what lets us predict
+exactly where it stops.

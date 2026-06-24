@@ -1,362 +1,399 @@
-# Transition Endomorphisms of an Endomorphism Stream: Composition, Rank Antitonicity, and Eventual Stabilization
+# The Fitting Kernel Bound: Sharp Stabilization of Iterated-Endomorphism Kernels in Finite Dimension
 
 **Author:** Aristotle
-**Date:** 2026-06-23
-**Domain:** Pythagorean / Finite-dimensional linear algebra
+**Date:** 2026-06-24
+**Domain:** Computation / Linear Algebra
 
 ---
 
 ## Abstract
 
-Given a sequence (a *stream*) of linear endomorphisms
-$f : \mathbb{N} \to (V \to_{\ell} V)$ of a vector space $V$ over a field $K$,
-we organize its iterated compositions into a two-index family of *transition
-endomorphisms* $\mathrm{transEndo}\,f\,i\,j$, the net operator carrying the
-state at station $i$ to the state at station $j$. We establish the foundational
-algebra of this family: a recursive partial-composite construction, an
-additivity law, and a Chasles-style composition identity
-$\mathrm{transEndo}\,f\,i\,k = \mathrm{transEndo}\,f\,j\,k \circ \mathrm{transEndo}\,f\,i\,j$
-for $i \le j \le k$. From the elementary inequality
-$\mathrm{rank}(g \circ h) \le \mathrm{rank}(h)$ we deduce that the rank of a
-transition endomorphism is antitone in the window: lengthening the segment
-cannot increase its rank. Specializing to finite-dimensional $V$, we read the
-(cardinal) rank as a natural number $\mathrm{rankSeq}\,f\,i\,j$, prove it is
-bounded by $\dim_K V$ and antitone, and conclude that the rank profile
-$m \mapsto \mathrm{rankSeq}\,f\,0\,m$ is **eventually constant**. The
-stabilization step is isolated as a reusable order-theoretic lemma: every
-antitone sequence $\mathbb{N} \to \mathbb{N}$ is eventually constant. All
-results are fully formalized and machine-checked. We discuss the constant-stream
-specialization (recovering the Fitting core), a Sylvester-type window
-subadditivity, and the genuine necessity of finite-dimensionality.
+Let $V$ be a finite-dimensional vector space over a field $K$ and let
+$g : V \to V$ be a linear endomorphism. The kernels of the iterates,
+$n \mapsto \ker(g^n)$, form an ascending chain of subspaces. We give a fully
+self-contained proof that this chain stabilizes no later than step
+$d := \dim_K V$ and is constant thereafter: $\ker(g^m) = \ker(g^d)$ for all
+$m \ge d$. The argument decomposes into three independent and elementary
+ingredients: (i) monotonicity of the kernel chain, established from the
+composition law $g^{n+1} = g \circ g^n$; (ii) a recurrence expressing each kernel
+as the preimage (comap) of its predecessor, $\ker(g^{k+1}) = g^{-1}(\ker(g^k))$,
+which upgrades a single coincidence into permanent constancy via a
+domain-agnostic constant-propagation lemma; and (iii) a pigeonhole / dimension-
+counting argument forcing a plateau within the first $d$ steps. The bound $d$ is
+sharp, witnessed by the nilpotent shift. We discuss the dual range-stabilization
+statement, the resulting Fitting decomposition, algorithmic consequences (an exact
+stopping rule for stable-kernel computation), and applications to iterated linear
+maps in dynamical systems and computational pipelines. The development is
+formally verified; all theorem names below correspond to machine-checked results.
 
 ---
 
 ## 1. Introduction
 
-A single linear endomorphism $g : V \to V$ generates, through iteration, one of
-the most studied objects in linear algebra: the descending chain of images
-$V \supseteq \mathrm{im}\,g \supseteq \mathrm{im}\,g^2 \supseteq \cdots$, whose
-stabilization underlies the Fitting decomposition and the theory of generalized
-eigenspaces. But many systems are not driven by a single repeated map. A
-non-autonomous discrete dynamical system, a layered neural network with distinct
-layers, a time-varying linear filter, or a product of a varying transfer matrix
-all apply a *different* operator at each step. The natural object is then a
-**stream** of endomorphisms,
-$$f : \mathbb{N} \to (V \to_{\ell} V), \qquad f(0), f(1), f(2), \dots,$$
-and the natural questions concern the *cumulative* operators built from
-consecutive windows of the stream.
+Iterating a fixed linear transformation is one of the most basic operations in
+mathematics, underlying linear recurrences, discrete dynamical systems, Markov-
+chain-style updates, and the stacked-layer structure of computational pipelines.
+A foundational structural question is: as we iterate $g$, what is permanently
+annihilated, and how quickly does the pattern of annihilation settle?
 
-This paper develops the elementary but foundational algebra of those cumulative
-operators — the **transition endomorphisms** — and extracts from an arbitrary
-stream a finite, monotone, eventually-constant integer invariant: its
-*transition-rank profile*. The development is deliberately minimal and
-self-contained, relying only on the standard rank inequality for composites and
-the well-ordering of $\mathbb{N}$; it builds no new Sylvester theory from
-scratch. Every statement below has been formally verified.
+The set of vectors annihilated by $g^n$ is the kernel $\ker(g^n)$. These kernels
+nest upward — once a vector dies it stays dead — yielding an ascending chain
+$$\ker(g^0) \subseteq \ker(g^1) \subseteq \ker(g^2) \subseteq \cdots.$$
+In a finite-dimensional space this chain cannot strictly increase forever, so it
+must stabilize. The contribution of this paper is the *sharp* quantitative form
+of that stabilization together with a minimal, modular proof:
 
-Throughout, $K$ is a field, $V$ is a $K$-vector space, and $V \to_{\ell} V$
-denotes the $K$-linear endomorphisms of $V$. Composition $g \circ h$ means
-"$h$ first, then $g$."
+> **Main Theorem (`ker_pow_eq_of_ge_finrank`).** For finite-dimensional $V$ and
+> any $g : V \to V$, with $d = \dim_K V$,
+> $$\ker(g^m) = \ker(g^d) \qquad \text{for every } m \ge d.$$
 
----
+This is the kernel-side counterpart of the descending range-stabilization theorem
+$\operatorname{range}(g^m) = \operatorname{range}(g^d)$ for $m \ge d$. The two are
+the twin pillars of **Fitting's Lemma**, the decomposition
+$V = \ker(g^d) \oplus \operatorname{range}(g^d)$ into a nilpotent part and an
+invertible part. We prove the kernel side independently, with no reliance on the
+range side, so as to avoid any circular dependency between the two halves of the
+Fitting theory.
 
-## 2. Definitions
+The proof is deliberately lightweight: it invokes no eigenvalues, no
+characteristic polynomial, no algebraic closure, and no special properties of the
+field $K$. It rests only on the composition law of powers, the behavior of
+kernels under composition, and the finiteness of dimension.
 
-### 2.1 Partial composites
+### 1.1 Notation and conventions
 
-The basic building block is the composite of a consecutive block of stream
-maps, defined by recursion on the block length.
-
-> **Definition 2.1 (Partial composite, `compFrom`).** For a stream
-> $f : \mathbb{N} \to (V \to_{\ell} V)$, a start index $i \in \mathbb{N}$, and a
-> length $n \in \mathbb{N}$, define $\mathrm{compFrom}\,f\,i\,n : V \to_{\ell} V$
-> by
-> $$\mathrm{compFrom}\,f\,i\,0 = \mathrm{id}_V, \qquad
-> \mathrm{compFrom}\,f\,i\,(n+1) = f(i+n) \circ \mathrm{compFrom}\,f\,i\,n.$$
-
-Unrolling the recursion gives the explicit form
-$$\mathrm{compFrom}\,f\,i\,n = f(i+n-1) \circ \cdots \circ f(i+1) \circ f(i)
-\quad (n \ge 1),$$
-the operator that applies the $n$ consecutive maps $f(i), \dots, f(i+n-1)$ in
-increasing order of index.
-
-Two immediate facts record the recursion:
-
-> **Lemma 2.2 (`compFrom_zero`).** $\mathrm{compFrom}\,f\,i\,0 = \mathrm{id}_V$.
->
-> **Lemma 2.3 (`compFrom_succ`).**
-> $\mathrm{compFrom}\,f\,i\,(n+1) = f(i+n) \circ \mathrm{compFrom}\,f\,i\,n$.
-
-Both hold by definition (`rfl`).
-
-### 2.2 Transition endomorphisms
-
-> **Definition 2.4 (Transition endomorphism, `transEndo`).** For
-> $i, j \in \mathbb{N}$,
-> $$\mathrm{transEndo}\,f\,i\,j = \mathrm{compFrom}\,f\,i\,(j - i),$$
-> where $j - i$ is truncated natural subtraction (so the family is the identity
-> whenever $j \le i$).
-
-When $j \ge i$, $\mathrm{transEndo}\,f\,i\,j$ is the net operator produced by
-the stream segment between stations $i$ and $j$:
-$$\mathrm{transEndo}\,f\,i\,j = f(j-1) \circ \cdots \circ f(i).$$
-
-### 2.3 The natural-number rank profile
-
-Recall the **rank** of a linear map $\varphi$, written $\mathrm{rank}\,\varphi$,
-is the dimension (a cardinal) of its image $\mathrm{im}\,\varphi$. Over a
-finite-dimensional space we record it as a natural number.
-
-> **Definition 2.5 (Transition-rank sequence, `rankSeq`).** For
-> finite-dimensional $V$,
-> $$\mathrm{rankSeq}\,f\,i\,j = \big(\mathrm{rank}(\mathrm{transEndo}\,f\,i\,j)\big)^{\downarrow} \in \mathbb{N},$$
-> where $(\cdot)^{\downarrow}$ denotes the cardinal-to-natural cast `Cardinal.toNat`
-> (well-defined here because the rank is finite, i.e. $< \aleph_0$).
+Throughout, $K$ is a field, $V$ a $K$-vector space, and $g : V \to V$ a
+$K$-linear endomorphism. We write $g^n$ for the $n$-fold composite, with
+$g^0 = \mathrm{id}$. For a subspace $W \le V$, $g^{-1}(W) = \{v \in V : g(v) \in W\}$
+denotes the preimage (the *comap* of $W$ along $g$). We write $\ker$ and
+$\operatorname{range}$ for the kernel and image, $\dim_K W$ for dimension, and
+$W < W'$ for strict subspace inclusion. When dimensions are needed we assume $V$
+is finite-dimensional and set $d := \dim_K V$.
 
 ---
 
-## 3. The algebra of transition endomorphisms
+## 2. The ascending kernel chain
 
-### 3.1 Additivity of partial composites
+### 2.1 Monotonicity
 
-The combinatorial engine of the theory is the way two consecutive blocks
-combine.
+**Lemma 1 (`ker_pow_le_succ`).** For every $n$,
+$\ker(g^n) \le \ker(g^{n+1})$.
 
-> **Theorem 3.1 (Additivity, `compFrom_add`).** For all $i, m, n \in \mathbb{N}$,
-> $$\mathrm{compFrom}\,f\,i\,(m+n) = \mathrm{compFrom}\,f\,(i+m)\,n \;\circ\; \mathrm{compFrom}\,f\,i\,m.$$
+*Proof sketch.* Write $g^{n+1} = g^n \circ g$ (the form $g^{n+1} = (g^n)\circ g$
+is convenient here). If $v \in \ker(g^n)$ then, using instead the form
+$g^{n+1} = g \circ g^n$, we have $g^{n+1}(v) = g(g^n(v)) = g(0) = 0$. Equivalently,
+the kernel of a composite contains the kernel of the right factor: this is the
+standard fact $\ker(h) \le \ker(f \circ h)$ applied with $h = g^n$, $f = g$. $\square$
 
-*Proof sketch.* Induct on $n$ (with $i, m$ general). For $n = 0$ both sides equal
-$\mathrm{compFrom}\,f\,i\,m$ since the right factor is the identity. For the
-inductive step, use $\mathrm{compFrom}\,f\,i\,(m + (n+1)) =
-\mathrm{compFrom}\,f\,i\,((m+n)+1) = f(i + m + n) \circ \mathrm{compFrom}\,f\,i\,(m+n)$,
-apply the inductive hypothesis to the trailing composite, and reassociate; the
-leading map $f(i+m+n)$ is precisely the $(n+1)$-st map of the block starting at
-$i + m$, so the right-hand side collapses to
-$\mathrm{compFrom}\,f\,(i+m)\,(n+1) \circ \mathrm{compFrom}\,f\,i\,m$.
-Associativity of composition closes the step. $\qquad\blacksquare$
+**Lemma 2 (`ker_pow_mono`).** The map $n \mapsto \ker(g^n)$ is monotone (non-
+decreasing) as a function $\mathbb{N} \to \mathrm{Sub}(V)$.
 
-### 3.2 The composition (Chasles) law
+*Proof sketch.* A sequence of subspaces with $a_n \le a_{n+1}$ for all $n$ is
+monotone; apply the standard "monotone from successor steps" principle to
+Lemma 1. $\square$
 
-> **Theorem 3.2 (Composition law, `transEndo_comp`).** If $i \le j \le k$, then
-> $$\mathrm{transEndo}\,f\,i\,k = \mathrm{transEndo}\,f\,j\,k \;\circ\; \mathrm{transEndo}\,f\,i\,j.$$
+### 2.2 The defining recurrence
 
-*Proof sketch.* Set $m = j - i$ and $n = k - j$. Because $i \le j \le k$, natural
-subtraction satisfies $m + n = (j-i)+(k-j) = k - i$ and $i + m = j$. Apply
-Theorem 3.1 at $(i, m, n)$:
-$$\mathrm{compFrom}\,f\,i\,(k-i) = \mathrm{compFrom}\,f\,i\,(m+n)
-= \mathrm{compFrom}\,f\,(i+m)\,n \circ \mathrm{compFrom}\,f\,i\,m
-= \mathrm{compFrom}\,f\,j\,(k-j) \circ \mathrm{compFrom}\,f\,i\,(j-i).$$
-Rewriting each partial composite as the corresponding transition endomorphism
-yields the claim. $\qquad\blacksquare$
+The structural heart of the argument is that the chain is generated by a single
+preimage recurrence.
 
-This is the Chasles/cocycle identity for the family $\{\mathrm{transEndo}\,f\,i\,j\}_{i \le j}$:
-any itinerary may be broken at an intermediate index. In categorical language,
-$\mathrm{transEndo}\,f$ is a functor from the poset $(\mathbb{N}, \le)$ to the
-monoid of endomorphisms of $V$.
+**Lemma 3 (`ker_pow_succ_eq_comap`).** For every $k$,
+$$\ker(g^{k+1}) = g^{-1}\bigl(\ker(g^k)\bigr).$$
+
+*Proof sketch.* Expand $g^{k+1} = g^k \circ g$. Then
+$v \in \ker(g^k \circ g) \iff g^k(g(v)) = 0 \iff g(v) \in \ker(g^k) \iff
+v \in g^{-1}(\ker(g^k))$. Formally this is the identity
+$\ker(f \circ h) = h^{-1}(\ker f)$ with $f = g^k$, $h = g$. $\square$
+
+This recurrence has the abstract form $a_{k+1} = F(a_k)$ with
+$F = g^{-1}(\,\cdot\,)$ acting on subspaces and $a_k = \ker(g^k)$. That abstract
+shape is exactly what makes plateaus permanent, as we now isolate.
 
 ---
 
-## 4. Rank antitonicity
+## 3. Constant propagation: why plateaus are permanent
 
-We use a single standard fact about linear maps.
+The following lemma is purely about sequences defined by a fixed self-map; it
+involves no linear algebra and is stated for an arbitrary type.
 
-> **Fact 4.1 (Rank of a composite).** For linear maps $g, h$ with $g \circ h$
-> defined, $\mathrm{rank}(g \circ h) \le \mathrm{rank}(h)$.
-> (In Mathlib: `LinearMap.rank_comp_le_right`.)
+**Lemma 4 (`compFrom_const`).** Let $\alpha$ be any type, $F : \alpha \to \alpha$,
+and $a : \mathbb{N} \to \alpha$ a sequence satisfying the recurrence
+$a_{j+1} = F(a_j)$ for all $j$. If $a_{k+1} = a_k$ for some index $k$, then
+$$a_{k+m} = a_k \qquad \text{for all } m \ge 0.$$
 
-Intuitively, $g \circ h$ acts on the image of $h$, so its image is the image of
-$g$ restricted to $\mathrm{im}\,h$, which cannot exceed $\dim(\mathrm{im}\,h) = \mathrm{rank}\,h$.
+*Proof sketch.* Induct on $m$. The base case $m = 0$ is trivial. For the inductive
+step, write $a_{k+(n+1)} = a_{(k+n)+1} = F(a_{k+n})$ by the recurrence; by the
+induction hypothesis $a_{k+n} = a_k$, so $F(a_{k+n}) = F(a_k) = a_{k+1} = a_k$,
+the last equality by hypothesis. $\square$
 
-> **Theorem 4.2 (Antitone partial composite rank, `rank_compFrom_antitone`).**
-> If $n \le m$, then
-> $$\mathrm{rank}\big(\mathrm{compFrom}\,f\,i\,m\big) \le \mathrm{rank}\big(\mathrm{compFrom}\,f\,i\,n\big).$$
+Specializing $\alpha$ to the lattice of subspaces of $V$, $F$ to the comap
+$g^{-1}(\,\cdot\,)$, and $a_k$ to $\ker(g^k)$, Lemma 3 supplies the recurrence and
+Lemma 4 yields:
 
-*Proof sketch.* Write $m = n + (m - n)$ and apply Theorem 3.1:
-$\mathrm{compFrom}\,f\,i\,m = \mathrm{compFrom}\,f\,(i+n)\,(m-n) \circ \mathrm{compFrom}\,f\,i\,n$.
-By Fact 4.1 the rank of this composite is at most the rank of its right factor
-$\mathrm{compFrom}\,f\,i\,n$. $\qquad\blacksquare$
+**Theorem 5 (`ker_pow_stable`).** If $\ker(g^{k+1}) = \ker(g^k)$ for some $k$, then
+$$\ker(g^{k+m}) = \ker(g^k) \qquad \text{for all } m \ge 0.$$
 
-> **Theorem 4.3 (Antitone transition rank, `rank_transEndo_antitone`).**
-> If $i \le j \le k$, then
-> $$\mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,k\big) \le \mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,j\big).$$
-
-*Proof sketch.* By Theorem 3.2,
-$\mathrm{transEndo}\,f\,i\,k = \mathrm{transEndo}\,f\,j\,k \circ \mathrm{transEndo}\,f\,i\,j$;
-apply Fact 4.1 with right factor $\mathrm{transEndo}\,f\,i\,j$. $\qquad\blacksquare$
-
-The principle is "processing on the far end of a segment cannot create rank."
-Note the asymmetry: it is the *right* (earlier) factor whose rank bounds the
-composite, which is why widening the window at the *upper* endpoint $k$ (while
-fixing the start $i$) is the operation that decreases rank.
+In words: *a single coincidence of consecutive kernels forces the chain to be
+constant from that point on.* No further hypotheses (not even finite dimension)
+are needed for permanence; finiteness is used only to *locate* a coincidence.
 
 ---
 
-## 5. Stabilization in finite dimensions
+## 4. Locating a plateau: the dimension bound
 
-We now assume $V$ is finite-dimensional over $K$, with $d = \dim_K V$
-(`Module.finrank K V`). The cardinal rank is then finite, so the cast in
-Definition 2.5 is faithful and order-preserving on transition endomorphisms.
+We now assume $V$ finite-dimensional, $d = \dim_K V$.
 
-> **Theorem 5.1 (Boundedness, `rankSeq_le_finrank`).** For all $i, j$,
-> $$\mathrm{rankSeq}\,f\,i\,j \le d.$$
+**Theorem 6 (`exists_ker_pow_plateau_le_finrank`).** There exists an index
+$k \le d$ with $\ker(g^{k+1}) = \ker(g^k)$.
 
-*Proof sketch.* The rank of any endomorphism is at most the dimension of its
-domain (`rank_le_domain`), i.e. $\mathrm{rank}(\mathrm{transEndo}\,f\,i\,j) \le \dim_K V$.
-Cast to $\mathbb{N}$ via the monotone `Cardinal.toNat` (legitimate as both sides
-are $< \aleph_0$); the right side becomes $\mathrm{finrank}\,K\,V = d$. $\qquad\blacksquare$
+*Proof sketch.* Suppose, for contradiction, that no such $k \le d$ exists; then
+for every $j \le d$ the inclusion of Lemma 1 is *strict*:
+$\ker(g^j) < \ker(g^{j+1})$. A strict inclusion of subspaces strictly increases
+dimension, so $\dim_K \ker(g^j) < \dim_K \ker(g^{j+1})$ for each such $j$. By
+induction this gives
+$$k \le \dim_K \ker(g^k) \qquad \text{for all } k \le d + 1,$$
+the base case being $0 \le \dim_K \ker(g^0)$ and each successor adding at least
+one dimension. Taking $k = d+1$ yields
+$d + 1 \le \dim_K \ker(g^{d+1})$. But $\ker(g^{d+1})$ is a subspace of $V$, so
+$\dim_K \ker(g^{d+1}) \le d$. Hence $d + 1 \le d$, a contradiction. $\square$
 
-> **Theorem 5.2 (Window antitonicity, `rankSeq_antitone`).** If $i \le j \le k$,
-> then $\mathrm{rankSeq}\,f\,i\,k \le \mathrm{rankSeq}\,f\,i\,j$.
-
-*Proof sketch.* Apply `Cardinal.toNat_le_toNat` to Theorem 4.3, using that the
-larger side $\mathrm{rank}(\mathrm{transEndo}\,f\,i\,j)$ is $< \aleph_0$ in finite
-dimensions. $\qquad\blacksquare$
-
-> **Corollary 5.3 (Profile antitonicity, `rankSeq_zero_antitone`).** The map
-> $m \mapsto \mathrm{rankSeq}\,f\,0\,m$ is antitone on $\mathbb{N}$.
-
-*Proof sketch.* For $j \le k$, instantiate Theorem 5.2 with $i = 0$ and
-$0 \le j \le k$. $\qquad\blacksquare$
-
-The decisive step is order-theoretic and dimension-free in statement; we isolate
-it for reuse.
-
-> **Lemma 5.4 (Stabilization of antitone integer sequences, `antitone_nat_eventually_const`).**
-> For every antitone sequence $a : \mathbb{N} \to \mathbb{N}$ there exists $N$
-> such that $a(m) = a(N)$ for all $m \ge N$.
-
-*Proof sketch.* The image $\{a(n) : n \in \mathbb{N}\} \subseteq \mathbb{N}$ is
-nonempty, and $\mathbb{N}$ is well-ordered, so the image has a least element,
-attained at some index $N$: $a(N) = \min_n a(n)$. For any $m \ge N$,
-antitonicity gives $a(m) \le a(N)$, while minimality gives $a(m) \ge a(N)$;
-hence $a(m) = a(N)$. $\qquad\blacksquare$
-
-> **Theorem 5.5 (Eventual constancy, `rankSeq_eventually_const`).** There exists
-> $N \in \mathbb{N}$ with
-> $$\mathrm{rankSeq}\,f\,0\,m = \mathrm{rankSeq}\,f\,0\,N \quad \text{for all } m \ge N.$$
-
-*Proof.* Apply Lemma 5.4 to the antitone sequence $a(m) = \mathrm{rankSeq}\,f\,0\,m$
-of Corollary 5.3. $\qquad\blacksquare$
-
-Thus every endomorphism stream over a finite-dimensional space carries a
-canonical **transition-rank profile**: a non-increasing $\mathbb{N}$-valued
-sequence, bounded by $d$, that stabilizes to a well-defined *stable rank*.
-Boundedness is what forces stabilization — Theorem 5.1 ensures the antitone
-profile cannot descend forever.
+This is a pigeonhole argument: each strict step "spends" one unit of dimension,
+and only $d$ units are available, so a non-strict step (a plateau) must occur
+within the first $d{+}1$ kernels.
 
 ---
 
-## 6. The constant-stream specialization: Fitting's core
+## 5. Main theorem: sharp stabilization
 
-The classical theory of a single operator is the special case of a *constant*
-stream $f \equiv g$.
+**Theorem 7 (Main, `ker_pow_eq_of_ge_finrank`).** For finite-dimensional $V$,
+$g : V \to V$, and any $m \ge d = \dim_K V$,
+$$\ker(g^m) = \ker(g^d).$$
 
-For $f \equiv g$, the recursion of Definition 2.1 yields
-$\mathrm{compFrom}\,f\,i\,n = g^n$, independent of $i$, and hence
-$\mathrm{transEndo}\,f\,0\,m = g^m$. The composition law (Theorem 3.2)
-specializes to the monoid exponent rule $g^{m+n} = g^m \circ g^n$, obtained here
-for free from additivity.
+*Proof sketch.* By Theorem 6 choose a plateau index $k \le d$ with
+$\ker(g^{k+1}) = \ker(g^k)$. By Theorem 5 the chain is constant from $k$ onward.
+Since both $m \ge d \ge k$ and $d \ge k$, we may write $m = k + (m-k)$ and
+$d = k + (d-k)$ and apply Theorem 5 twice:
+$$\ker(g^m) = \ker(g^k) \qquad\text{and}\qquad \ker(g^d) = \ker(g^k).$$
+Combining the two equalities gives $\ker(g^m) = \ker(g^d)$. $\square$
 
-Consequently $\mathrm{rankSeq}\,f\,0\,m = \dim_K(\mathrm{im}\,g^m)$, and Theorem
-5.5 recovers the stabilization of the descending image chain
-$\mathrm{im}\,g \supseteq \mathrm{im}\,g^2 \supseteq \cdots$. The stable value is
-$$\lim_{m\to\infty} \dim_K(\mathrm{im}\,g^m) = \dim_K \Big(\bigcap_{n} \mathrm{im}\,g^n\Big),$$
-the dimension of the **Fitting core** (generalized image) of $g$ — the largest
-$g$-invariant subspace on which $g$ acts surjectively (indeed invertibly). The
-general transition-rank profile is therefore a non-autonomous, time-varying
-generalization of the Fitting/Fitting-core stabilization phenomenon.
+### 5.1 Sharpness
+
+The bound $d$ cannot be improved in general. Let $V = K^d$ with standard basis
+$e_1, \dots, e_d$ and let $g$ be the nilpotent shift defined by $g(e_i) = e_{i-1}$
+for $i \ge 2$ and $g(e_1) = 0$. Then $\ker(g^n) = \operatorname{span}(e_1, \dots,
+e_n)$ for $0 \le n \le d$, so the chain strictly increases on every one of the
+first $d$ steps and only reaches all of $V$ at step $d$. Thus no exponent smaller
+than $d$ works for all maps, and the constant value $\ker(g^d)$ is genuinely
+needed.
 
 ---
 
-## 7. A Sylvester-type window inequality
+## 5.2 Worked examples
 
-The composition law also positions the family for the *lower* rank bound
-(Sylvester's rank inequality): for $g, h$ on a $d$-dimensional space,
-$\mathrm{rank}(g) + \mathrm{rank}(h) - d \le \mathrm{rank}(g \circ h)$. Applied to
-the factorization $\mathrm{transEndo}\,f\,i\,k = \mathrm{transEndo}\,f\,j\,k \circ \mathrm{transEndo}\,f\,i\,j$
-this gives, for $i \le j \le k$,
-$$\mathrm{rankSeq}\,f\,i\,j + \mathrm{rankSeq}\,f\,j\,k
-\;\le\; \mathrm{rankSeq}\,f\,i\,k + d,$$
-a subadditivity controlling how much rank a window can shed when split. Pairing
-this lower control with the antitone upper control of §4–§5 sandwiches the
-profile and quantifies its rate of descent. (The present development proves the
-upper, antitone half; the Sylvester lower half is recorded as future work,
-§9.4.)
+It is instructive to trace the kernel chain on concrete maps, since they exhibit
+the full range of behaviour the theorem must accommodate.
+
+**The nilpotent shift (sharp case).** Let $V = K^d$ with standard basis
+$e_1, \dots, e_d$ and $g(e_i) = e_{i-1}$, $g(e_1) = 0$. A direct computation gives
+$g^n(e_i) = e_{i-n}$ when $i > n$ and $0$ otherwise, so
+$\ker(g^n) = \operatorname{span}(e_1, \dots, e_{\min(n,d)})$ and
+$$\dim_K \ker(g^n) = \min(n, d).$$
+The chain climbs by exactly one at every step until $n = d$, where it reaches all
+of $V$, and is constant afterward. The first plateau index is precisely $k = d$,
+so the bound of Theorem 6 is attained with equality and Theorem 7 cannot be
+strengthened to any smaller exponent. This single family already certifies the
+sharpness of the entire result.
+
+**A Fitting split (early plateau).** Let $V = K^4$ and
+$g = \begin{psmallmatrix} 0&1&&\\ 0&0&&\\ &&2&0\\ &&0&3 \end{psmallmatrix}$,
+the direct sum of a $2\times 2$ nilpotent Jordan block and an invertible diagonal
+block $\operatorname{diag}(2,3)$. Here
+$\dim_K \ker(g^n) = \min(n, 2)$: the nilpotent block contributes a kernel that
+grows to dimension $2$ and freezes, while the invertible block never contributes
+any kernel at all. The chain is $0, 1, 2, 2, 2, \dots$, with first plateau at
+$k = 2 < 4 = d$. The frozen kernel $\ker(g^2) = \operatorname{span}(e_1, e_2)$ and
+the frozen range $\operatorname{range}(g^2) = \operatorname{span}(e_3, e_4)$ are
+complementary — a concrete instance of the Fitting decomposition of §6.
+
+**An invertible map (immediate plateau).** If $g$ is invertible then
+$\ker(g^n) = 0$ for all $n$, the chain is constant from the very start, and the
+plateau index is $k = 0$. Theorem 7 holds trivially. These three examples — sharp,
+intermediate, and trivial — bracket the behaviour the general theorem governs.
+
+## 6. The dual range chain and Fitting's lemma
+
+The kernel result has a mirror image for ranges. The images
+$\operatorname{range}(g^n)$ form a *descending* chain
+$$V = \operatorname{range}(g^0) \supseteq \operatorname{range}(g^1) \supseteq
+\cdots,$$
+because $\operatorname{range}(g^{n+1}) = g(\operatorname{range}(g^n)) \subseteq
+\operatorname{range}(g^n)$. By the dual dimension-counting argument it stabilizes
+no later than step $d$: $\operatorname{range}(g^m) = \operatorname{range}(g^d)$ for
+$m \ge d$. (In the wider development this is `range_pow_const_of_finrank_le`.)
+
+When both chains freeze — and Theorem 7 plus its dual show they have *both* frozen
+by step $d$ — the rank–nullity theorem forces the frozen subspaces to be
+complementary:
+$$V = \ker(g^d) \oplus \operatorname{range}(g^d).$$
+On the first summand $g$ is **nilpotent** (some power kills it, since by
+stabilization $\ker(g^d) = \ker(g^{2d})$ and $g^d$ maps $\ker(g^{2d})$ into
+$\ker(g^d)$ and then to $0$), and on the second $g$ restricts to an
+**isomorphism**. This is **Fitting's Lemma**, and Theorem 7 is precisely the
+quantitative certificate that the decomposition is available at the *explicit*
+step $d$.
+
+---
+
+## 7. Algorithmic consequences
+
+The theorem converts an *a priori* unbounded search ("iterate until the kernel
+stops growing") into a procedure with a hard, provable bound.
+
+- **Exact stopping rule.** To compute the stable kernel $\ker(g^\infty) :=
+  \bigcup_n \ker(g^n)$, it suffices to compute $\ker(g^d)$. One never needs to
+  iterate beyond $\dim_K V$ times.
+- **Early termination.** In practice the plateau often occurs well before step
+  $d$. By Theorem 5, the *first* $k$ with $\dim \ker(g^{k+1}) = \dim \ker(g^k)$ is
+  already the stabilization point, so an implementation can stop as soon as two
+  consecutive kernel dimensions agree, with a correctness guarantee.
+- **Complexity.** Each kernel can be computed by Gaussian elimination on a
+  $\dim V \times \dim V$ matrix in $O(d^3)$ field operations; at most $d$ such
+  computations are needed, giving an overall $O(d^4)$ bound for the stable kernel —
+  and typically far less when the plateau is early.
+
+The algorithms section of the accompanying package formalizes both the naive
+$d$-step computation and the early-termination variant.
 
 ---
 
 ## 8. Applications
 
-- **Non-autonomous linear dynamical systems.** For a time-varying recurrence
-  $x_{n+1} = f(n)\,x_n$, the state at time $j$ is $\mathrm{transEndo}\,f\,0\,j$
-  applied to $x_0$. The transition-rank profile measures the collapsing
-  reachable/observable dimension over time and identifies the horizon $N$ beyond
-  which no further structural collapse occurs.
+**Iterated linear dynamics.** For a discrete linear system $x_{n+1} = g(x_n)$, the
+kernel chain describes the *transient* subspace of initial states whose forward
+orbit eventually reaches $0$. Theorem 7 states the transient structure is fully
+determined after $\dim V$ steps — a precise bound on how long one must observe the
+system before its asymptotic behavior is fixed.
 
-- **Layered linear networks.** A deep network whose layers are linear maps of
-  varying shape is a finite stream; the profile tracks the information
-  bottleneck as depth increases and certifies that effective rank is monotone in
-  depth — a clean, exact statement of the "rank can only fall through layers"
-  folklore.
+**Computational pipelines.** A stack of identical linear layers (or a repeated
+linear update in numerical algorithms) accumulates the composite $g^n$. The kernel
+measures information irrecoverably lost as data flows through the depth-$n$
+pipeline. The bound shows the loss pattern is *fixed* after depth $\dim V$; deeper
+stacking destroys no new directions. This is the "constant transition stream"
+setting of the broader catalog: when the per-layer map is fixed, rank stabilizes
+sharply at $\dim V$.
 
-- **Products of varying transfer matrices.** In control and signal processing,
-  cascaded stages correspond to matrix products $A_{j-1}\cdots A_i$; the
-  composition law is the associativity bookkeeping, and the profile bounds the
-  achievable rank of any sub-cascade.
-
-- **Operator semigroups and Fitting theory.** §6 shows the framework subsumes
-  the single-operator image-chain stabilization, suggesting a uniform treatment
-  of autonomous and non-autonomous settings.
+**Structure theory.** As in §6, the result is a building block for Fitting's
+Lemma and, downstream, for the primary decomposition and Jordan normal form. The
+generality (arbitrary field, no eigenvalue hypotheses) makes it a convenient
+foundation.
 
 ---
 
-## 9. Discussion and future directions
+## 8.5 Relation to classical structure theory
 
-### 9.1 The stabilization index is bounded by $\dim_K V$
-There exists $N \le d$ with $\mathrm{rankSeq}\,f\,0\,m = \mathrm{rankSeq}\,f\,0\,N$
-for all $m \ge N$. A strictly decreasing antitone $\mathbb{N} \to \mathbb{N}$
-chain bounded by $d$ can drop at most $d$ times, so the first stabilization point
-is reached within $d$ steps rather than at an abstract well-founded minimum. With
-boundedness and antitonicity already in hand, only a quantitative refinement of
-the stabilization lemma is needed.
+The stabilization of the kernel and range chains is classical folklore, usually
+stated as part of the proof of Fitting's Lemma in textbooks on modules and
+representation theory. What is sometimes left implicit, and is made explicit and
+quantitative here, is the *sharp linear bound* $d = \dim_K V$ on the stabilization
+step, together with the clean separation of the argument into a finiteness-free
+permanence principle and a finiteness-only existence principle. The bound is the
+same constant that appears in the Cayley–Hamilton theorem (the degree of the
+characteristic polynomial) and in the theory of the minimal polynomial, and indeed
+for a nilpotent endomorphism the first plateau index coincides with the
+nilpotency index, which is at most $d$ and equals the size of the largest Jordan
+block. Our development deliberately avoids these heavier tools: it uses neither
+polynomials nor eigenvalues, only the lattice of subspaces, the comap operation,
+and dimension counting. This minimality is what allows the result to hold over an
+*arbitrary* field with no algebraic-closedness or characteristic hypotheses, and
+what makes the permanence half valid even in infinite dimension.
 
-### 9.2 The stable rank as a generalized image
-For a constant stream $f \equiv g$, the eventual value of $\mathrm{rankSeq}\,f\,0\,m$
-equals $\dim_K(\bigcap_n \mathrm{im}\,g^n)$. Since $\mathrm{transEndo}\,(\lambda\_.g)\,0\,m = g^m$
-and the descending range chain stabilizes at the Fitting core of $g$, the
-remaining work is to formalize the Fitting decomposition itself.
+The abstract constant-propagation lemma (Lemma 4) deserves emphasis as a reusable
+unit. It is the statement that a discrete orbit of a self-map that ever repeats a
+point is eventually constant from that point — a fixed-point/idempotence phenomenon
+in disguise. Phrased at this level of generality it applies verbatim to: the
+ascending kernel chain (with $F$ the comap along $g$); the descending range chain
+(with $F$ the map-forward along $g$); and transition-rank streams formed by
+composing a *fixed* family of maps. Isolating it prevents duplicated induction and
+is the structural reason the kernel and range theories can be developed without
+circularity.
 
-### 9.3 Eventual constancy fails without finite dimension
-Over an infinite-dimensional $V$ there is a stream $f$ whose cardinal rank
-$\mathrm{rank}(\mathrm{transEndo}\,f\,0\,m)$ is strictly decreasing for every $m$
-(e.g. an iterated shift on $\mathbb{N} \to_0 K$ realizes an infinite descending
-chain of subspaces). Finiteness in Theorem 5.5 is genuinely load-bearing: it
-justifies both the `toNat` cast and the bound.
+## 9. Discussion and design of the proof
 
-### 9.4 Window rank is subadditive in a Sylvester sense
-For $i \le j \le k$,
-$\mathrm{rankSeq}\,f\,i\,j + \mathrm{rankSeq}\,f\,j\,k \le \mathrm{rankSeq}\,f\,i\,k + d$,
-which is Sylvester's rank inequality applied to the factorization of §7. The
-composition law is in hand; only the rank-of-composition lower bound must be
-located or built.
+The proof is engineered for modularity. The three ingredients —
+monotonicity (§2.1), the comap recurrence with constant propagation (§2.2–§3),
+and the dimension pigeonhole (§4) — are logically independent and each is
+elementary. The constant-propagation lemma `compFrom_const` is deliberately stated
+for an *arbitrary* type and self-map, which (a) makes the permanence argument
+reusable verbatim for the dual range chain and for transition-rank streams, and
+(b) cleanly separates the "why it stays constant" content (no finiteness) from the
+"why it becomes constant" content (finiteness only). This separation is what keeps
+the kernel and range halves of Fitting's theory non-circular.
 
-### 9.5 Joint stabilization across all starting windows
-There is a single $N$ such that for every $i \le N$ the sequence
-$m \mapsto \mathrm{rankSeq}\,f\,i\,m$ is constant for $m \ge N$. Finitely many
-antitone bounded sequences (one per start index up to $N$) stabilize
-simultaneously by taking a common cutoff, building on the established window
-antitonicity.
+A subtle point worth emphasizing: permanence (Theorem 5) needs *no* finiteness
+assumption whatsoever. It holds for infinite-dimensional $V$, where it still says
+that any coincidence of consecutive kernels propagates forever; finiteness enters
+solely to *guarantee* such a coincidence exists and to bound where it occurs.
 
 ---
 
-## 10. Conclusion
+## 10. Future directions
 
-From an arbitrary stream of linear endomorphisms we have built a clean algebraic
-calculus of transition operators — additive in length, Chasles-composable in
-the window — and shown that their ranks form a bounded, antitone, and (in finite
-dimensions) eventually-constant integer signature of the stream. The argument is
-elementary, modular, and fully formalized: a recursion, one rank inequality, and
-the well-ordering of $\mathbb{N}$ suffice. The framework unifies the classical
-single-operator image-chain stabilization (the Fitting core) with the
-time-varying setting and opens onto sharper quantitative refinements via
-Sylvester's inequality.
+This cycle proved a sharp two-sided quantitative Fitting stabilization bound for a
+single endomorphism (equivalently, a constant transition stream). The sharp
+$\dim V$ bound is special to a single map and *fails* for a varying endomorphism
+stream. Three natural conjectures follow.
+
+**Conjecture 1 — Effective Fitting decomposition at the stabilization step.** For
+$d = \dim_K V$, $V = \ker(g^d) \oplus \operatorname{range}(g^d)$ as an internal
+direct sum, with $g$ nilpotent on $\ker(g^d)$ and an isomorphism on
+$\operatorname{range}(g^d)$. The key insight: at step $d$ *both* chains freeze
+simultaneously, so the frozen kernel and frozen range must be complementary — the
+stabilization bounds are exactly the certificate the decomposition needs. With
+both `range_pow_const_of_finrank_le` and `ker_pow_const_of_finrank_le` sharp, the
+only remaining step is the disjointness/spanning count via rank–nullity, now a
+finite bookkeeping argument.
+
+**Conjecture 2 — Nilpotency index equals the first range plateau.** If $g$ is
+nilpotent, its nilpotency index (least $N$ with $g^N = 0$) equals the least
+plateau index $k$ produced by the range version of Theorem 6, and this $k$ is at
+most $\dim_K V$. The key insight: for a nilpotent map the range chain strictly
+decreases until it hits $\bot$, so the *first* plateau is precisely the moment the
+range collapses to zero — i.e. the nilpotency index. This turns an existence
+statement into an exact formula.
+
+**Conjecture 3 — Stabilization for eventually-periodic streams.** For a transition
+stream $f : \mathbb{N} \to (V \to V)$ that is eventually periodic with period $p$
+(i.e. $f(n+p) = f(n)$ for $n \ge n_0$), the from-$0$ transition-rank sequence
+$m \mapsto \operatorname{rank}(\,\text{compose } f \text{ over } [0,m))$ is
+eventually periodic-constant: it stabilizes after at most $n_0 + p \cdot \dim_K V$
+steps. The key insight: on the periodic tail the composite advances by a fixed
+block map $B$ (the composite over one period), so the tail rank chain is the power
+chain of $B$ — and the sharp single-endomorphism bound of this cycle applies to
+$B$.
+
+---
+
+## 11. Conclusion
+
+We have given a minimal, self-contained, and sharp proof that the kernels of the
+powers of a finite-dimensional endomorphism stabilize by step $\dim V$ and remain
+constant thereafter. The argument is a clean interplay of a monotone direction, a
+comap recurrence whose constancy propagates by a general principle, and a
+dimension pigeonhole — three ideas locking into a guarantee with an explicit
+deadline. Together with its dual it is the quantitative backbone of Fitting's
+Lemma and a practical stopping rule for iterated-map computations.
+
+---
+
+## Appendix: index of formal results
+
+- `ker_pow_le_succ` — $\ker(g^n) \le \ker(g^{n+1})$ (Lemma 1).
+- `ker_pow_mono` — $n \mapsto \ker(g^n)$ is monotone (Lemma 2).
+- `ker_pow_succ_eq_comap` — $\ker(g^{k+1}) = g^{-1}(\ker(g^k))$ (Lemma 3).
+- `compFrom_const` — constant propagation for $a_{j+1} = F(a_j)$ (Lemma 4).
+- `ker_pow_stable` — a coincidence makes the kernel chain permanently constant
+  (Theorem 5).
+- `exists_ker_pow_plateau_le_finrank` — a plateau occurs at some $k \le \dim_K V$
+  (Theorem 6).
+- `ker_pow_eq_of_ge_finrank` — $\ker(g^m) = \ker(g^d)$ for $m \ge d$ (Theorem 7,
+  Main).

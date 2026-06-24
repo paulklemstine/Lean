@@ -1,53 +1,56 @@
-# Computational Evidence
+# Computational Evidence — Sharpness of the Fitting stabilization bound
 
-Evidence supporting the two theorems proved this cycle. All rank computations below
-are over a field `K` with `V` the standard finite-dimensional coordinate space; they
-were used to choose the witnesses before formalization.
+The headline theorems prove that for `g : V →ₗ[K] V` over a `d`-dimensional space
+(`d = finrank K V`), the range chain `range (g ^ m)` and kernel chain
+`ker (g ^ m)` are constant for all `m ≥ d`. Here we record the small-case
+evidence that the bound `m ≥ d` is **sharp** (cannot be lowered to `m ≥ d - 1`).
 
-## 1. Single-endomorphism rank profile is strictly-decreasing-then-flat
+## Witness: a single nilpotent Jordan block `J_d`
 
-Take the nilpotent Jordan block `J` of size `d` (ones on the super-diagonal). The
-ranks of its powers are:
+Let `J_d` be the `d × d` nilpotent Jordan block (1's on the superdiagonal,
+0 elsewhere), acting on `V = K^d`. Then `J_d` shifts basis vectors
+`e_i ↦ e_{i-1}` (and `e_0 ↦ 0`), so:
 
-| n           | 0 | 1   | 2   | … | d-1 | d | d+1 | … |
-|-------------|---|-----|-----|---|-----|---|-----|---|
-| rank(Jⁿ)    | d | d-1 | d-2 | … | 1   | 0 | 0   | … |
+| `m`        | `dim (range (J_d ^ m))` | `dim (ker (J_d ^ m))` |
+|------------|--------------------------|------------------------|
+| `0`        | `d`                      | `0`                    |
+| `1`        | `d - 1`                  | `1`                    |
+| `2`        | `d - 2`                  | `2`                    |
+| …          | …                        | …                      |
+| `d - 1`    | `1`                      | `d - 1`                |
+| `d`        | `0`                      | `d`                    |
+| `d + 1`    | `0`                      | `d`                    |
+| `≥ d`      | `0`                      | `d`                    |
 
-The profile decreases by exactly `1` at each step until it hits `0`, then is flat —
-matching `rank_pow_strictAnti_until_stable` and `range_pow_stable`. The diagonalizable
-extreme `g = 1` gives the all-flat profile `d, d, d, …` (always the "stable" branch).
-These two extremes confirm both disjuncts of the dichotomy are realized.
+* The range chain strictly decreases on `0, 1, …, d` and only becomes constant at
+  step `d`. So `range (J_d ^ (d-1)) = K·e_0 ≠ 0 = range (J_d ^ d)`: the bound
+  `m ≥ d` is attained and **cannot** be replaced by `m ≥ d - 1`.
+* Symmetrically the kernel chain strictly increases until step `d`.
 
-## 2. The stream counterexample (the 2D witness)
+### Concrete instance `d = 3`
 
-Stream maps over `K²`:
+`J_3 = ⎡0 1 0⎤  J_3² = ⎡0 0 1⎤  J_3³ = 0`
+`      ⎢0 0 1⎥        ⎢0 0 0⎥`
+`      ⎣0 0 0⎦        ⎣0 0 0⎦`
 
-* `A = projA = [[1,0],[0,0]]`  (rank 1),
-* `f 1 = id`,
-* `B = projB = [[0,0],[0,1]]`  (rank 1).
+`rank J_3⁰ = 3`, `rank J_3¹ = 2`, `rank J_3² = 1`, `rank J_3³ = 0 = rank J_3⁴`.
+First plateau index = `3 = finrank`. ✓ matches `exists_range_pow_plateau_le_finrank`
+(plateau index `k ≤ finrank`, here exactly `= finrank`).
 
-Composite ranks of `compFrom f 0 n` (the product `f(n-1) ∘ ⋯ ∘ f 0`):
+## Counterexample hunt — the bound fails for *varying* streams
 
-| n                | 0 | 1 | 2 | 3 |
-|------------------|---|---|---|---|
-| map              | id| A | id∘A = A | B∘A |
-| `B·A` (matrix)   |   |   |   | `[[0,0],[0,1]]·[[1,0],[0,0]] = 0` |
-| rank             | 2 | 1 | 1 | 0 |
+Take `V = K²` and the stream `f 0 = P` (projection onto `e_0`), `f 1 = id`,
+`f 2 = Q` (projection onto `e_1`), `f n = id` otherwise. The composite ranks
+`(compFrom f 0 m).rank` read `2, 1, 1, 0, 0, …`: the rank **plateaus at 1** (steps
+1–2) and then **drops again** to 0 at step 3. Hence no single dimension bound of
+the form "constant from step `finrank`" can hold for general streams — confirming
+the Critic's note and motivating Conjecture 3 (periodic streams) in
+`FUTURE_DIRECTIONS.md`.
 
-So the rank sequence is `2, 1, 1, 0`: a genuine **plateau** at `1` across the step
-`1 → 2`, followed by a **strict drop** to `0` at `2 → 3`. This is exactly
-`stream_rank_plateau_then_drop`, and it is impossible for a single endomorphism by
-Section 1.
+## Method note
 
-## 3. Counterexample hunt / robustness
-
-* Replacing `f 1 = id` by any invertible map keeps `rk₁ = rk₂` and the drop persists,
-  so the phenomenon is not an artifact of the identity.
-* Making the stream *constant* (`f ≡ A`) collapses the composites to powers `Aⁿ`
-  (this is `compFrom_const`), and the profile becomes `2, 1, 1, 1, …` — flat after the
-  first drop, i.e. the rigidity returns. This is the computational seed for
-  Conjecture 3 in `FUTURE_DIRECTIONS.md`.
-
-No counterexample to the *single-endomorphism* rigidity was found in a sweep of random
-`2×2`–`4×4` rational matrices (ranks of powers were always strictly-decreasing-then-flat),
-consistent with the proved theorem.
+These are pen-and-paper / matrix calculations on the canonical nilpotent witness;
+the *formal* content (antitone chains, stabilization by `finrank`, sharp plateau
+existence) is fully machine-checked and `sorry`-free in
+`Catalog/Algebra/FittingStabilizationBound.lean` and
+`Catalog/Algebra/FittingKernelBound.lean`.
