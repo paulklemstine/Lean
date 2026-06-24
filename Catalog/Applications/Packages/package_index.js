@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "18853638",
     "filename": "corrected_uniform_witness_bound_for_d1_uniform_fam.json",
     "pkg_num": 41,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.42325214328358207,
     "title": "The Uniform Witness Bound for (d+1)-Uniform Families with Prescribed Missing-Trace Size"
   },
   {
@@ -1198,8 +1198,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "corrected_uniform_witness_bound_for_d1_uniform_fam",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.42325214328358207,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Uniform Witness Bound for (d+1)-Uniform Families with Prescribed Missing-Trace Size"
     }

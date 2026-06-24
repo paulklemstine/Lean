@@ -1834,7 +1834,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "dd1a0b52",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1847,7 +1847,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -4487,7 +4487,7 @@
       "Mathlib.Data.Finset.Basic",
       "Mathlib.Algebra.BigOperators.Fin"
     ],
-    "consumed_by_exp_id": "9368eda6",
+    "consumed_by_exp_id": "",
     "description": "For every n,k,r with n ≥ 2k, k ≥ 3, and r ≥ 2, let (𝓕_i)_{i∈Fin r} be k-uniform families of subsets of Fin n. Assume each 𝓕_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i ≠ j, every A ∈ 𝓕_i and B ∈ 𝓕_j have A ∩ B ≠ ∅. Then the multilateral product is bounded by the Hilton--Milner value: ∏_{i∈Fin r} |𝓕_i| ≤ h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
     "domain_bridges": [
       "Represents k-uniform set families as Finset (Finset (Fin n)) in Lean 4.",
@@ -4503,7 +4503,7 @@
     "proof_strategy": "Formalize the paper's two-family theorem as a Lean lemma: for any two non-star k-uniform cross-intersecting families A,B ⊆ binom(Fin n,k), |A|*|B| ≤ h(n,k)^2. Apply this lemma to every unordered pair of distinct indices i,j ∈ Fin r. Multiplying all pairwise inequalities gives (∏ᵢ |𝓕_i|)^(r-1) ≤ (h(n,k)^r)^(r-1), since each |𝓕_i| occurs in exactly r-1 pair products. Use positivity/monotonicity of natural powers to extract the (r-1)-st root, noting r ≥ 2.",
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:25:43.582970+00:00",
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
@@ -7198,6 +7198,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from *A Sharp Generalized Uniform–Witness Bound for Families with\nPrescribed Missing–Trace Size* (`RESEARCH_PAPER.md`) and its formal companion\n`Catalog/Bridges/UniformWitnessBound.lean`.\n\nEach direction is stated so that it can be turned into a concrete Lean target.\n\n## D1. Closed form for `W*(d,s,n)` below saturation\n**Goal.** Prove `W*(2,2,n) = n-1` for all `n ≥ 2`, with the extremal families being\nexactly the spanning trees (graphs with `n-1` edges and no shattered pair); then\nfind and prove the closed form for general `d` when `s + d ≤ n`.\n**Why.** The saturation regime (`s + d > n`) is settled (Theorem A/B); the verified\ngaps `W*(2,2,n) = n-1 < C(n,1)` show a different law governs `s + d ≤ n`.\n**Falsifiable Lean target.** `theorem Wstar_2_2 (n) (h : 2 ≤ n) : UWB.Wstar 2 2 n = n - 1`.\n\n## D2. Classification of extremal families in the EKR window\n**Goal.** For `⌈(d+2)/2⌉ ≤ s ≤ d`, classify (up to `Sym(n)`) all families attaining\n`W*(d,s,n)`, testing the conjecture that they are star/tree-like liftings of the\n`d = 2` extremal graphs.\n**Why.** This is the window flagged by recent disproofs as carrying new extremal\nconstructions; turning the bound into an enumerator is the stated novelty.\n**Falsifiable Lean target.** A predicate `IsExtremal d s n F` and a theorem\ncharacterizing it, validated by `native_decide` agreement with the §3 enumerator on\nall `n ≤ 7`.\n\n## D3. Tightness threshold for Frankl–Pach\n**Goal.** Determine, for fixed `(d,s)`, the exact set of `n` for which the\nFrankl–Pach bound `C(n,d-1)` is attained (equivalently `W*(d,s,n) = C(n,d-1)`), and\nprove the boundary occurs exactly at the saturation edge `s + d = n+1`.\n**Why.** The data show tightness in saturation and strict slack just below it; the\ncrossover is a clean invariant.\n**Falsifiable Lean target.**\n`theorem fp_tight_iff (d s n) (hd : 1 ≤ d) : UWB.Wstar d s n = UWB.FP d n ↔ n < s + d`\n(to be confirmed/adjusted against the data before proving).\n\n## D4. Complete the Frankl–Pach upper bound formally\n**Goal.** Discharge `UWB.franklPach_bound` (the general `|F| ≤ C(n,d-1)` bound) in\nLean via down-compression/shifting, reusing the pigeonhole and injection lemmas in\n`Bridges.CombinatorialBridge` and `Bridges.PigeonholeInjectionBridge`.\n**Why.** It is the scalar backbone every sharp refinement sits beneath, and is the\none remaining `sorry` in the companion file.\n**Falsifiable Lean target.** the existing statement `UWB.franklPach_bound`.\n\n## D5. Multicolored / alphabet-`q` generalization\n**Goal.** Replace the `{0,1}` indicator (subset) traces by length-`d` windows over a\n`q`-letter alphabet (connecting to the subword-complexity pigeonhole of\n`Cryptography.KMerAvoidance`), and prove the analogue of Theorem A: a saturation\nthreshold beyond which every uniform family misses a trace on every `d`-window.\n**Why.** Unifies the EKR-style set-trace bound with the de Bruijn / `k`-mer\npigeonhole bound under one \"missing-trace\" invariant.\n**Falsifiable Lean target.** a `q`-ary `Wstar_q d s n` with\n`theorem noShatter_q_of_saturated` mirroring `UWB.noShatter_of_saturated`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2469",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "18853638",
+    "status": "available",
+    "timestamp": "2026-06-24T21:30:25.831444+00:00",
+    "title": "Derived from *A Sharp Generalized Uniform–Witness Bound for Families with"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -7991,26 +8011,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "226a5c12",
-    "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "id": "fd_0528",
-    "lineage_refs": [],
-    "priority_score": 0.3999999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:05.964661+00:00",
-    "title": "Bridge: Galois Connections Between Order Theory and Topology"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the Ax-Kochen-Ershov theorem: two henselian valued fields with elementarily equivalent residue fields and value groups are elementarily equivalent. Bridge to number theory: this implies the Q_p's are elementarily equivalent for almost all p. Prove Morley's categoricity theorem: if a countable theory is categorical in one uncountable cardinal, it is categorical in all uncountable cardinals.",
     "domain_bridges": [],
@@ -8231,7 +8231,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1d985141",
+    "consumed_by_exp_id": "",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincaré, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
     "domain_bridges": [],
     "domains": [
@@ -8244,7 +8244,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.020862+00:00",
     "title": "Proof Strategy Mining from Deep Mathematics"
   },

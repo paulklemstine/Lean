@@ -1375,7 +1375,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "dd1a0b52",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1385,7 +1385,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -2761,7 +2761,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
   },
   {
-    "consumed_by_exp_id": "9368eda6",
+    "consumed_by_exp_id": "",
     "description": "For every n,k,r with n \u2265 2k, k \u2265 3, and r \u2265 2, let (\ud835\udcd5_i)_{i\u2208Fin r} be k-uniform families of subsets of Fin n. Assume each \ud835\udcd5_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i \u2260 j, every A \u2208 \ud835\udcd5_i and B \u2208 \ud835\udcd5_j have A \u2229 B \u2260 \u2205. Then the multilateral product is bounded by the Hilton--Milner value: \u220f_{i\u2208Fin r} |\ud835\udcd5_i| \u2264 h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
     "domains": [
       "Bridges"
@@ -2770,7 +2770,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:25:43.582970+00:00",
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
@@ -4265,6 +4265,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from *A Sharp Generalized Uniform\u2013Witness Bound for Families with\nPrescribed Missing\u2013Trace Size* (`RESEARCH_PAPER.md`) and its formal companion\n`Catalog/Bridges/UniformWitnessBound.lean`.\n\nEach direction is stated so that it can be turned into a concrete Lean target.\n\n## D1. Closed form for `W*(d,s,n)` below saturation\n**Goal.** Prove `W*(2,2,n) = n-1` for all `n \u2265 2`, with the extremal families being\nexactly the spanning trees (graphs with `n-1` edges and no shattered pair); then\nfind and prove the closed form for general `d` when `s + d \u2264 n`.\n**Why.** The saturation regime (`s + d > n`) is settled (Theorem A/B); the verified\ngaps `W*(2,2,n) = n-1 < C(n,1)` show a different law governs `s + d \u2264 n`.\n**Falsifiable Lean target.** `theorem Wstar_2_2 (n) (h : 2 \u2264 n) : UWB.Wstar 2 2 n = n - 1`.\n\n## D2. Classification of extremal families in the EKR window\n**Goal.** For `\u2308(d+2)/2\u2309 \u2264 s \u2264 d`, classify (up to `Sym(n)`) all families attaining\n`W*(d,s,n)`, testing the conjecture that they are star/tree-like liftings of the\n`d = 2` extremal graphs.\n**Why.** This is the window flagged by recent disproofs as carrying new extremal\nconstructions; turning the bound into an enumerator is the stated novelty.\n**Falsifiable Lean target.** A predicate `IsExtremal d s n F` and a theorem\ncharacterizing it, validated by `native_decide` agreement with the \u00a73 enumerator on\nall `n \u2264 7`.\n\n## D3. Tightness threshold for Frankl\u2013Pach\n**Goal.** Determine, for fixed `(d,s)`, the exact set of `n` for which the\nFrankl\u2013Pach bound `C(n,d-1)` is attained (equivalently `W*(d,s,n) = C(n,d-1)`), and\nprove the boundary occurs exactly at the saturation edge `s + d = n+1`.\n**Why.** The data show tightness in saturation and strict slack just below it; the\ncrossover is a clean invariant.\n**Falsifiable Lean target.**\n`theorem fp_tight_iff (d s n) (hd : 1 \u2264 d) : UWB.Wstar d s n = UWB.FP d n \u2194 n < s + d`\n(to be confirmed/adjusted against the data before proving).\n\n## D4. Complete the Frankl\u2013Pach upper bound formally\n**Goal.** Discharge `UWB.franklPach_bound` (the general `|F| \u2264 C(n,d-1)` bound) in\nLean via down-compression/shifting, reusing the pigeonhole and injection lemmas in\n`Bridges.CombinatorialBridge` and `Bridges.PigeonholeInjectionBridge`.\n**Why.** It is the scalar backbone every sharp refinement sits beneath, and is the\none remaining `sorry` in the companion file.\n**Falsifiable Lean target.** the existing statement `UWB.franklPach_bound`.\n\n## D5. Multicolored / alphabet-`q` generalization\n**Goal.** Replace the `{0,1}` indicator (subset) traces by length-`d` windows over a\n`q`-letter alphabet (connecting to the subword-complexity pigeonhole of\n`Cryptography.KMerAvoidance`), and prove the analogue of Theorem A: a saturation\nthreshold beyond which every uniform family misses a trace on every `d`-window.\n**Why.** Unifies the EKR-style set-trace bound with the de Bruijn / `k`-mer\npigeonhole bound under one \"missing-trace\" invariant.\n**Falsifiable Lean target.** a `q`-ary `Wstar_q d s n` with\n`theorem noShatter_q_of_saturated` mirroring `UWB.noShatter_of_saturated`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2469",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "18853638",
+    "status": "available",
+    "timestamp": "2026-06-24T21:30:25.831444+00:00",
+    "title": "Derived from *A Sharp Generalized Uniform\u2013Witness Bound for Families with"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4858,21 +4873,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "226a5c12",
-    "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
-    "domains": [
-      "Bridges",
-      "Geometry"
-    ],
-    "id": "fd_0528",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:05.964661+00:00",
-    "title": "Bridge: Galois Connections Between Order Theory and Topology"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the Ax-Kochen-Ershov theorem: two henselian valued fields with elementarily equivalent residue fields and value groups are elementarily equivalent. Bridge to number theory: this implies the Q_p's are elementarily equivalent for almost all p. Prove Morley's categoricity theorem: if a countable theory is categorical in one uncountable cardinal, it is categorical in all uncountable cardinals.",
     "domains": [
@@ -5038,7 +5038,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "1d985141",
+    "consumed_by_exp_id": "",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
     "domains": [
       "Logic",
@@ -5048,7 +5048,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.020862+00:00",
     "title": "Proof Strategy Mining from Deep Mathematics"
   },

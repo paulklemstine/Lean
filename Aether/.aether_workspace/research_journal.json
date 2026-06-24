@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5884df3d",
-      "domain": "Combinatorics",
-      "key_insight": "# FUTURE DIRECTIONS — Phantom Topologies (Combinatorics)\n\nCycle-1/2 results live in `Catalog/Speculative/PhantomTopologies.lean`, where we proved that\non a finite carrier the topology is a *phantom* o",
-      "quality_score": 0.60834,
-      "sorry_count": 1,
-      "theorem_count": 10,
-      "timestamp": "2026-06-17T13:04:26",
-      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-    },
-    {
       "cycle_id": "46951c2e",
       "domain": "Probability",
       "key_insight": "# FUTURE DIRECTIONS — The L-Function Oracle (Probability)\n\nDerived from this cycle's verified Lean results:\n\n- `Probability/SatoTateMeasure.lean` — the Sato–Tate law is a probability measure\n  (`satoT",
@@ -2501,6 +2491,16 @@
       "theorem_count": 4,
       "timestamp": "2026-06-24T20:57:48",
       "title": "Extremal Graph Theory: Turán and Szemerédi"
+    },
+    {
+      "cycle_id": "18853638",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nDerived from *A Sharp Generalized Uniform–Witness Bound for Families with\nPrescribed Missing–Trace Size* (`RESEARCH_PAPER.md`) and its formal companion\n`Catalog/Bridges/UniformWit",
+      "quality_score": 0.42325214328358207,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-24T21:30:37",
+      "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7684399999999999
     }
   ],
-  "last_updated": "2026-06-24T20:57:48",
+  "last_updated": "2026-06-24T21:30:37",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "d6c114ef",
-        "quality": 0.6766,
-        "theorems": 100,
-        "title": "*normalization functor into the probability simplex*"
-      },
-      {
         "cycle_id": "50d5b31e",
         "quality": 0.84432,
         "theorems": 14,
@@ -3637,6 +3631,12 @@
         "quality": 0.51744,
         "theorems": 8,
         "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
+      },
+      {
+        "cycle_id": "18853638",
+        "quality": 0.42325214328358207,
+        "theorems": 12,
+        "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
       }
     ],
     "NumberTheory": [
