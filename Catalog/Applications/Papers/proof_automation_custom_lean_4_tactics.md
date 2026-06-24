@@ -1,74 +1,42 @@
-# Computational Evidence — Strong Divisibility Sequence Bridges
+# Computational Evidence
 
-All claims below were checked numerically (by hand / `#eval`) before being formalized
-in `Catalog/Bridges/StrongDivSeq*.lean`. Every formalized theorem is now machine-verified
-with 0 sorries and only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+Concise numerical checks performed (via `#eval`/`decide` in Lean) before
+formalising the three tactic-soundness files.
 
-## 1. Coprime propagation (`coprime_of_coprime`, `fib_coprime_of_coprime`)
+## File I — `tropical_simp` (min-plus distributivity)
 
-Claim: `Coprime m n ⇒ Coprime (fib m) (fib n)`.
+Distributivity `c + min a b = min (c+a) (c+b)` and its fold form
+`c + foldr min h l = foldr min (c+h) (map (c+·) l)` tested on samples:
 
-| m | n | fib m | fib n | gcd | coprime? |
-|---|---|-------|-------|-----|----------|
-| 3 | 4 | 2 | 3 | 1 | ✓ |
-| 4 | 5 | 3 | 5 | 1 | ✓ |
-| 5 | 6 | 5 | 8 | 1 | ✓ |
-| 5 | 9 | 5 | 34 | 1 | ✓ |
+| c | l            | c + foldr min 99 l | foldr min (c+99) (map (c+·) l) |
+|---|--------------|--------------------|--------------------------------|
+| 5 | [3, 1, 4]    | 6                  | 6                              |
+| 2 | [7, 7, 2]    | 4                  | 4                              |
+| 0 | []           | 99                 | 99                             |
 
-OEIS: Fibonacci numbers = A000045.
+All rows agree, matching the proved `tropical_fold_distrib`.
 
-## 2. Join sub-law (`fib_lcm_dvd`)
+## File II — `number_theory_decide`
 
-Claim: `lcm (fib m) (fib n) ∣ fib (lcm m n)`.
+* `6 ∣ n*(n+1)*(n+2)` checked for `n = 0..20`: holds in every case (products
+  `0,6,24,60,120,210,…` all divisible by 6).
+* `n^2 % 4`: for `n = 0..12` the value is `0` (n even) or `1` (n odd) — never
+  `2` or `3`, matching `sq_mod_four`.
+* Fibonacci strong divisibility `m ∣ n → fib m ∣ fib n`: spot-checked
+  `fib 3 = 2 ∣ fib 6 = 8`, `fib 4 = 3 ∣ fib 8 = 21`, `fib 5 = 5 ∣ fib 10 = 55`.
+  (OEIS A000045; the `gcd` identity `fib (gcd m n) = gcd (fib m) (fib n)` is the
+  source `Nat.fib_gcd`.)
 
-| m | n | lcm(fib) | lcm(m,n) | fib(lcm) | divides? |
-|---|---|----------|----------|----------|----------|
-| 2 | 3 | 2 | 6 | 8 | ✓ |
-| 4 | 6 | 24 | 12 | 144 | ✓ |
-| 3 | 4 | 6 | 12 | 144 | ✓ |
+## File III — `spectral_bound`
 
-Note the inequality is strict in general (e.g. `lcm(fib 4, fib 6)=24 < 144=fib 12`),
-confirming the join law is only a *divisibility*, never an equality — the structural
-asymmetry recorded in the lab notes.
+Sanity check of the row-sum eigenvalue bound on `A = ![![2, 1], ![1, 2]]`
+(eigenvalues `1, 3`): every eigenvalue modulus `≤ max row sum = 3`, with
+equality at `μ = 3`, confirming the bound `eigenvalue_norm_le_max_row_sum` is
+tight and correct. For `![![0, 2], ![2, 0]]` (eigenvalues `±2`): max row sum
+`= 2`, again tight.
 
-## 3. Product law (`fib_prod_dvd`)
+## Counterexample hunt
 
-Claim: pairwise-coprime indices ⇒ `∏ fib(g i) ∣ fib(∏ g i)`.
-
-| indices | ∏ fib | ∏ indices | fib(∏) | divides? |
-|---------|-------|-----------|--------|----------|
-| {2,3} | 1·2=2 | 6 | 8 | ✓ |
-| {3,4} | 2·3=6 | 12 | 144 | ✓ |
-| {4,5} | 3·5=15 | 20 | 6765 | ✓ (6765/15=451) |
-
-## 4. Mersenne gcd law (`mersenne_gcd_coprime`)
-
-Claim: `Coprime m n ⇒ gcd (b^m-1) (b^n-1) = b-1`.
-
-| b | m | n | b^m-1 | b^n-1 | gcd | b-1 |
-|---|---|---|-------|-------|-----|-----|
-| 2 | 2 | 3 | 3 | 7 | 1 | 1 |
-| 3 | 2 | 3 | 8 | 26 | 2 | 2 |
-| 2 | 3 | 5 | 7 | 31 | 1 | 1 |
-
-This is exactly `(mersenneSDS b).a 1 = b-1`, explaining why coprimality does **not**
-propagate for Mersenne numbers (the lattice top `1` maps to `b-1 ≠ 1`).
-
-## 5. Mersenne order embedding (`mersenne_dvd_iff`)
-
-Claim: for `b ≥ 2`, `(b^m-1) ∣ (b^n-1) ↔ m ∣ n`.
-
-| b | m | n | divides indices? | divides values? |
-|---|---|---|------------------|-----------------|
-| 2 | 2 | 6 | ✓ (2∣6) | 3∣63 ✓ |
-| 2 | 3 | 6 | ✓ | 7∣63 ✓ |
-| 2 | 4 | 6 | ✗ (4∤6) | 15∤63 ✗ |
-| 3 | 2 | 4 | ✓ | 8∣80 ✓ |
-
-Both directions agree on every sample — no counterexamples found.
-
-## Counterexample hunt summary
-
-No counterexamples were found for any formalized claim. The only "near miss" is that
-the join law and the Mersenne coprimality fail to be *equalities*; both are stated and
-proved at the correct strength (divisibility / residual `b-1`).
+No counterexamples found for any of the universal claims on the sampled ranges.
+The bounds in File III are tight (attained), so they cannot be strengthened
+without extra hypotheses (e.g. Hermitian structure — see FUTURE_DIRECTIONS #3).

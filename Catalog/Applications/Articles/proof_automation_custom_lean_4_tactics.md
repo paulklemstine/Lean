@@ -1,231 +1,198 @@
-# The Hidden Lattice Inside Fibonacci
+# The Coefficient That Counts Primes
 
-## One rule that ties number theory to the algebra of order
+## A number from Pascal's triangle that knows where the primes live
 
-Take the Fibonacci numbers — that famous parade where each term is the sum of the two before it:
+Pick a row deep inside Pascal's triangle — say row number $2n$ — and look at the
+single number sitting right in the middle. Mathematicians call it the *central
+binomial coefficient*, written $\binom{2n}{n}$. The first few values are
 
-```
-0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
-```
+$$\binom{0}{0}=1,\quad \binom{2}{1}=2,\quad \binom{4}{2}=6,\quad \binom{6}{3}=20,\quad \binom{8}{4}=70,\quad \binom{10}{5}=252.$$
 
-Most people meet them through rabbits, sunflowers, or the golden ratio. But there is a quieter,
-stranger fact about Fibonacci numbers, one that has fascinated number theorists for over a century.
-It concerns **greatest common divisors**.
+At first glance these are just the counts of how many ways you can choose $n$
+objects from $2n$. But hidden inside this innocent counting number is a secret
+census of the prime numbers. Every prime that lies strictly between $n$ and $2n$
+divides $\binom{2n}{n}$ — and divides it *exactly once*, never twice. Because of
+this, the middle of Pascal's triangle becomes a kind of prime-detector: it is big
+enough to swallow all those primes as factors, yet small enough that it cannot
+hide too many of them. Squeeze that idea hard enough and out falls one of the
+oldest quantitative facts about prime numbers: **the primes thin out, and they do
+so at a controllable rate.**
 
-Pick two positions in the sequence, say the 12th and the 8th. The greatest common divisor of those
-two Fibonacci numbers turns out to be the Fibonacci number whose position is the greatest common
-divisor of 12 and 8. In symbols:
+This article tells the story of that bridge — from a number you can compute by
+hand in Pascal's triangle to a genuine theorem about the distribution of primes.
+It is a journey across two countries of mathematics that rarely share a border:
+*combinatorics*, the art of counting arrangements, and *analytic number theory*,
+the study of how primes are spread along the number line. The traveler that
+carries us across is a 200-year-old gem called Legendre's formula.
 
-```
-gcd(F₁₂, F₈) = gcd(144, 21) = 3 = F₄ = F_gcd(12, 8).
-```
+## How many times does a prime divide a factorial?
 
-This is not a coincidence of small numbers. It is a theorem: **for all m and n,**
+The factorial $n! = 1\cdot 2\cdot 3\cdots n$ grows monstrously fast, and its prime
+factorization is a tangle. Yet there is a beautifully clean way to count how many
+times a single prime $p$ appears in it. Adrien-Marie Legendre found it around
+1808.
 
-```
-gcd(Fₘ, Fₙ) = F_gcd(m, n).
-```
+Write $n$ in base $p$ and add up its digits; call that digit sum $s_p(n)$. For
+example, in base $3$ the number $n=8$ is written $22$, so $s_3(8)=2+2=4$.
+Legendre's formula says that the exponent of $p$ in $n!$ — the number of times
+$p$ divides it, which we write $v_p(n!)$ — satisfies the strikingly simple
+identity
 
-The Fibonacci sequence *transports* greatest common divisors. The operation "take the gcd" on the
-inside (of the indices) matches "take the gcd" on the outside (of the values). The same magic
-appears in a completely different setting: the **Mersenne numbers** `bⁿ − 1` (think of 1, 3, 7, 15,
-31 for `b = 2`). There too, `gcd(bᵐ − 1, bⁿ − 1) = b^gcd(m, n) − 1`.
+$$(p-1)\cdot v_p(n!) = n - s_p(n).$$
 
-What do Fibonacci numbers and `2ⁿ − 1` have in common? Almost nothing on the surface — one is built
-from a golden-ratio recurrence, the other from raw exponentiation. The answer this work makes
-precise is: **they obey the same single rule**, and that rule alone forces a rich, predictable
-structure. The structure is not really about numbers at all. It is about *order* — about lattices.
+In words: take the number, subtract its base-$p$ digit sum, and divide by $p-1$.
+That is exactly how many factors of $p$ are buried inside $n!$. There is no
+guesswork, no estimation — it is an exact equality. This is the first theorem in
+our formal development, and everything else is built on it.
 
----
+## The central coefficient, decoded
 
-## What is a strong divisibility sequence?
+Now we apply Legendre's formula three times. The central binomial coefficient is
 
-Let us name the rule. A sequence of natural numbers `a(0), a(1), a(2), ...` is a **strong
-divisibility sequence** if it satisfies just two axioms:
+$$\binom{2n}{n} = \frac{(2n)!}{n!\,\cdot\,n!}.$$
 
-1. **It starts at zero:** `a(0) = 0`.
-2. **It transports gcd:** `gcd(a(m), a(n)) = a(gcd(m, n))` for every pair of indices `m` and `n`.
+A prime $p$ divides the top a certain number of times and the bottom a certain
+number of times; the difference is how many times $p$ divides $\binom{2n}{n}$.
+Feeding Legendre's formula into each factorial and simplifying, we obtain a clean
+"digit-sum" description of the valuation of the central coefficient:
 
-That's the whole definition. Fibonacci is one. Each Mersenne sequence `bⁿ − 1` is one. The trivial
-sequence `a(n) = n` is one (gcd of indices is literally gcd of values). And — this is the punchline —
-*everything* you can prove from those two axioms holds for **all** of them at once.
+$$(p-1)\cdot v_p\!\left(\binom{2n}{n}\right) = s_p(n) + s_p(n) - s_p(2n),$$
 
-The deepest theme of this work is that this innocent gcd rule is secretly a statement about a famous
-algebraic object: the **divisibility lattice**.
+or equivalently, dividing through,
 
----
+$$v_p\!\left(\binom{2n}{n}\right) = \frac{2\,s_p(n) - s_p(2n)}{p-1}.$$
 
-## A detour: the lattice of divisibility
+This little formula is the engine of the whole story. It converts a question
+about divisibility — *how many times does this prime go into this giant number?* —
+into a question about adding up the digits of $n$ and $2n$ in base $p$. Digit
+sums are concrete, finite, and easy to reason about. The mystery has become
+arithmetic.
 
-Forget sequences for a moment. Look at the natural numbers, but reorder them. Instead of the usual
-"less than" order, say that `x ≤ y` whenever **x divides y**. Under this order:
+## The "exactly once" miracle
 
-- `2 ≤ 6` (because 2 divides 6), but 2 and 5 are incomparable (neither divides the other).
-- The **meet** (greatest lower bound) of two numbers is their **greatest common divisor**, `gcd`.
-- The **join** (least upper bound) of two numbers is their **least common multiple**, `lcm`.
-- The number `1` is the bottom (it divides everything); `0` is the top (everything divides 0).
+Here is where the magic happens. Suppose $p$ is a prime sitting in the upper half
+of the interval, so that
 
-This is a *lattice*: a set with a well-behaved meet and join. The divisibility lattice is one of the
-most beautiful structures in elementary mathematics, because it converts arithmetic (factoring) into
-geometry (order).
+$$n < p \le 2n.$$
 
-Now reread the strong-divisibility axiom with lattice eyes. The rule
+In base $p$, the number $n$ is then a *single digit* — because $n$ is smaller
+than $p$, it is just written as "$n$" with no carrying. So $s_p(n) = n$. And
+$2n$, being between $p$ and $2p$, is written with exactly two digits: a leading
+$1$ and a remainder, giving $s_p(2n) = 1 + (2n - p)$.
 
-```
-gcd(a(m), a(n)) = a(gcd(m, n))
-```
+Plug these into the digit-sum formula:
 
-says exactly: **the map `a` carries the meet of the indices to the meet of the values.** In the
-language of order theory, `a` is a **meet-homomorphism** (an "inf-homomorphism") of the divisibility
-lattice. The gcd rule that looked like an arithmetic curiosity is really a structure-preservation
-law.
+$$(p-1)\cdot v_p\!\left(\binom{2n}{n}\right) = n + n - \bigl(1 + 2n - p\bigr) = p - 1.$$
 
-This raises an irresistible question. The lattice has *two* operations, meet and join. We know `a`
-preserves meet. **Does it preserve join?** Does `a` carry the least common multiple of the indices to
-the least common multiple of the values?
+Divide both sides by $p-1$ and you get the punchline:
 
----
+$$v_p\!\left(\binom{2n}{n}\right) = 1.$$
 
-## The asymmetry: meet is exact, join only divides
+**Every prime strictly between $n$ and $2n$ divides the central binomial
+coefficient exactly once — no more, no less.** This is the result our formal
+development calls the "valuation equals one" theorem, and it is the keystone of
+the bridge. An immediate consequence is that the *product* of all those primes
+divides $\binom{2n}{n}$:
 
-Here the story turns subtle, and beautiful. Test it on Fibonacci. Take indices 4 and 6:
+$$\left(\prod_{n < p \le 2n} p\right)\ \Big|\ \binom{2n}{n}.$$
 
-```
-lcm(F₄, F₆) = lcm(3, 8) = 24,   but   F_lcm(4,6) = F₁₂ = 144.
-```
+Because each prime appears to the first power and the primes are distinct, their
+product divides the coefficient cleanly. We have turned the central coefficient
+into a container holding every prime in the upper half-interval.
 
-These are *not* equal. So `a` does **not** preserve join exactly. But notice: 24 **divides** 144.
-The image of the lcm is always at least as divisible. This is no accident. The work proves, for every
-strong divisibility sequence, the **join sub-law**:
+## How big is the container?
 
-```
-lcm(a(m), a(n))  divides  a(lcm(m, n)).
-```
+A container's contents cannot be larger than the container itself. So if we know
+how big $\binom{2n}{n}$ is, we know how large the product of primes can be. The
+size of the central coefficient is pinned down by two complementary bounds that we
+prove formally.
 
-In lattice language: `a` is only a **join-sub-homomorphism**. The join of the images sits *below*
-(divides) the image of the join. So a strong divisibility sequence is a lopsided creature: it
-preserves meet **on the nose**, but join only **up to divisibility**. This asymmetry — exact for gcd,
-mere divisibility for lcm — is the central structural insight of the whole programme.
+The **lower bound** comes from the fact that $\binom{2n}{n}$ is the largest of the
+$2n+1$ entries in row $2n$ of Pascal's triangle, and those entries add up to
+$4^n$. Sharing $4^n$ among $2n+1$ entries, the biggest one is at least the
+average:
 
-Why the asymmetry? The meet law is *given* to us as an axiom. The join law, by contrast, has to be
-*derived*, and the only tool available is **monotonicity**: if `m` divides `n`, then `a(m)` divides
-`a(n)`. (This itself follows from the gcd axiom: if `m | n` then `gcd(m,n) = m`, so
-`gcd(a(m), a(n)) = a(m)`, meaning `a(m)` divides `a(n)`.) Monotonicity is enough to push the lcm of
-the images underneath the image of the lcm — but not enough to make them equal.
+$$4^n \le (2n+1)\binom{2n}{n}.$$
 
----
+The **upper bound** is subtler and is where we had to correct the historical
+record. A widely-quoted estimate claims $\binom{2n}{n} \le 4^n/(2\sqrt{n})$. This
+is simply false: at $n=2$ it would say $6 \le 16/(2\sqrt 2) = 5.65\ldots$, which is
+not true. The correct, provable statement is
 
-## From pairs to crowds: the finitary laws
+$$\binom{2n}{n} \le \frac{4^n}{\sqrt{2n}},$$
 
-Pairs are nice, but mathematicians want *families*. What if you take not two indices but a whole
-finite collection `g(i)` for `i` ranging over some index set? Does the picture survive?
+and indeed $4^n/(2\sqrt n)$ turns out to be a *lower* bound, not an upper one. We
+prove the correct inequality, anchored by the clean integer identity
 
-It does, and cleanly. By induction, the two laws lift to arbitrary finite families:
+$$(3n+1)\binom{2n}{n}^2 \le 16^n.$$
 
-- **Finitary meet law (exact):**
-  ```
-  gcd over i of a(g(i))  =  a( gcd over i of g(i) ).
-  ```
-  Computing the gcd of a whole bag of values `a(g(i))` is the same as feeding the gcd of all the
-  indices through `a`. Exactly equal.
+Getting this detail right matters: a single mis-stated constant can quietly
+poison every estimate downstream. Formal verification is unforgiving about such
+things, and that is precisely its value — it refuses to let a plausible-looking
+falsehood slip through.
 
-- **Finitary join sub-law (divides):**
-  ```
-  lcm over i of a(g(i))  divides  a( lcm over i of g(i) ).
-  ```
-  The lcm of the values always divides the value at the lcm of the indices.
+## Crossing the bridge: primes thin out
 
-The base cases are quietly poetic. For the empty family, the gcd is `0` (the lattice top under gcd
-on ℕ, here matched by `a(0) = 0`), and the lcm is `1` — whose image `a(1)` then divides everything,
-exactly as the sub-law demands. The two boundary values `a(0) = 0` and `a(1)` are precisely the
-hinges on which the whole induction swings.
+Now we assemble the pieces into the destination theorem. Define the *primorial*
+of $n$, written $n\#$, as the product of all primes up to $n$:
 
----
+$$n\# = \prod_{p \le n} p.$$
 
-## Coprimality and a tale of two top elements
+For example $5\# = 2\cdot 3\cdot 5 = 30$ and $10\# = 2\cdot3\cdot5\cdot7 = 210$.
+The claim — a Chebyshev-type bound first proved by this elegant route by Paul
+Erdős as a teenager — is
 
-Here is where the framework starts to *predict* things you might never have guessed.
+$$\prod_{p \le n} p < 4^n \qquad \text{for all } n \ge 1.$$
 
-Two numbers are **coprime** if their gcd is 1 — they share no prime factors. Suppose two indices `m`
-and `n` are coprime. What is `gcd(a(m), a(n))`? The meet law answers instantly:
+The proof is a graceful induction. Even numbers above $2$ are not prime, so
+$n\#$ does not change when $n$ steps from an odd number to the next even one;
+that case is free. The interesting case is an odd number $2m+1$. Split the primes
+up to $2m+1$ into two groups: those at most $m+1$, and those in the upper
+interval $(m+1,\,2m+1]$.
 
-```
-gcd(a(m), a(n)) = a(gcd(m, n)) = a(1).
-```
+For the small group, induction already gives $(m+1)\# < 4^{m+1}$.
 
-The gcd of the values collapses to a single fixed number: `a(1)`, the value of the sequence at the
-index 1. So whether coprime indices give coprime *values* hinges entirely on **one number**:
-**is `a(1) = 1`?**
+For the large group, every one of those primes divides $\binom{2m+1}{m}$ exactly
+once — the same "exactly once" miracle as before — so their product is at most
+$\binom{2m+1}{m}$, which is at most $4^m$ (it is one of two equal middle entries
+in row $2m+1$, whose total is $4^{m+\frac12}\cdot\ldots$; the clean bound is
+$\binom{2m+1}{m}\le 4^m$).
 
-- For Fibonacci, `F₁ = 1`. So coprime indices give coprime Fibonacci numbers:
-  `gcd(F₇, F₁₀) = gcd(13, 55) = 1`. The index 1, the "top" of the index lattice, maps to the value
-  1, the "top" of the value lattice. Coprimality propagates perfectly.
+Multiplying the two groups:
 
-- For Mersenne, `b¹ − 1 = b − 1`, which is *not* 1 (unless `b = 2`). So coprime indices do **not**
-  give coprime values; instead, `gcd(bᵐ − 1, bⁿ − 1) = b − 1` for coprime `m, n`. The leftover
-  `b − 1` is exactly `a(1)`. The framework doesn't just tolerate this discrepancy — it *explains*
-  it. The residual is always the image of the top element.
+$$(2m+1)\# \;<\; 4^{m+1}\cdot 4^{m} \;=\; 4^{2m+1}.$$
 
-This is the kind of unification that makes the abstraction worth it. A single condition, `a(1) = 1`,
-governs whether coprimality survives the sequence, and it does so for Fibonacci, Mersenne, and every
-other strong divisibility sequence simultaneously.
-
-The coprimality story scales up too. If `a(1) = 1` and a finite family of indices is **pairwise
-coprime** (every two of them coprime), then the corresponding values are pairwise coprime as well.
-And pairwise-coprime values whose gcds are all 1 multiply nicely: their product divides the value at
-the product of the indices,
-
-```
-product over i of a(g(i))  divides  a( product over i of g(i) ),
-```
-
-a clean "product law" that, for Fibonacci with `a(1) = 1`, recovers classical facts about products
-of Fibonacci numbers at coprime indices.
-
----
+The induction closes, and the theorem stands. From a number in Pascal's triangle,
+we have deduced that the primes up to $n$ multiply together to less than $4^n$ —
+a hard quantitative limit on how dense the primes can be.
 
 ## Why this matters
 
-It is tempting to file all this under "cute identities about Fibonacci numbers." That would miss the
-point entirely. The real content is a change of *perspective*:
+This single inequality, $\prod_{p\le n} p < 4^n$, is the beating heart of
+Chebyshev's theorem, which states that the number of primes below $x$ is
+sandwiched between two constant multiples of $x/\ln x$. It was the first real
+evidence, decades before the Prime Number Theorem was proved, that the primes
+obey a precise statistical law rather than scattering randomly. And it descends
+directly from elementary facts about binomial coefficients — no complex analysis,
+no Riemann zeta function, just digit sums and counting.
 
-**Number-theoretic facts about specific sequences are shadows of order-theoretic facts about a single
-abstract map.**
+That is the deeper lesson of the bridge. The boundaries we draw between
+"combinatorics" and "number theory," between "elementary" and "analytic," are
+conveniences, not laws of nature. A theorem about how to choose $n$ things from
+$2n$ is, when read correctly, a theorem about the architecture of the primes.
+Legendre's formula is the dictionary that translates between the two languages,
+and the central binomial coefficient is the sentence that says the same thing in
+both.
 
-Once you see that Fibonacci, Mersenne, repunits, and the identity sequence are all the *same kind of
-object* — a meet-homomorphism and join-sub-homomorphism of the divisibility lattice — you stop
-proving the same theorem over and over for each sequence. You prove it once, abstractly, and harvest
-every instance for free. The "primitive divisor" theory that took mathematicians decades to build for
-Fibonacci numbers, and separately for Mersenne numbers (the famous Zsygmondy theory), turns out to
-rest on the *two axioms* and nothing else.
+## A note on certainty
 
-This is the essence of a **bridge**: a single structural idea standing between two fields. On one
-bank, classical number theory with its gcds, lcms, and primitive divisors. On the other, order theory
-with its lattices, meets, joins, and homomorphisms. The strong divisibility sequence is the bridge,
-and walking across it converts hard, sequence-specific arithmetic into easy, universal algebra.
+Every statement in this article — Legendre's formula, the digit-sum valuation,
+the "exactly once" theorem, the corrected size bounds, and the final primorial
+inequality — has been checked down to its logical atoms. The corrected upper
+bound is a small but real example of why that checking is worth doing: an
+appealing formula that "everyone knows" turned out to be wrong by a constant, and
+only a rigorous accounting caught it. Mathematics has always prized certainty;
+here we have certainty that a machine has audited and found complete.
 
-There is also a lesson in *asymmetry*. We are trained to expect symmetry in mathematics — if meet is
-preserved, surely join is too. But here the structure is genuinely lopsided: exact for one operation,
-mere divisibility for the other. Recognizing and *quantifying* such asymmetries is often where the
-real mathematics lives. The gap between `lcm(a(m), a(n))` and `a(lcm(m, n))` is not a flaw in the
-theory; it *is* the theory. It measures precisely how far a strong divisibility sequence falls short
-of being a perfect lattice homomorphism — and for Fibonacci, that gap closes exactly when one index
-divides the other.
-
----
-
-## The takeaway
-
-Strip away the rabbits and the golden ratio, and the Fibonacci sequence reveals a skeleton made of
-pure order. The same skeleton holds up `2ⁿ − 1`, `bⁿ − 1`, and the humble counting numbers. That
-skeleton is the divisibility lattice, and the rule that animates it is a single line:
-
-```
-gcd(a(m), a(n)) = a(gcd(m, n)).
-```
-
-From that one line flow monotonicity, the exact finitary meet law, the divides-only join law,
-coprimality propagation governed by the lone number `a(1)`, and product laws for coprime indices —
-all at once, for an entire family of famous sequences. It is a small miracle of mathematical economy:
-two axioms, a whole theory, and a bridge between two worlds that looked, until you found the right
-vantage point, completely unrelated.
+The middle of Pascal's triangle has been staring at us for centuries. It turns
+out it was counting primes the whole time.
