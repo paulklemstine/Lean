@@ -11518,7 +11518,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Logic",
         "Computation"
@@ -12571,7 +12571,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Cryptography",
         "Computation"
@@ -12727,7 +12727,7 @@
       "depth_estimate": 3,
       "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Tropical",
         "Computation"
@@ -13156,7 +13156,7 @@
       "depth_estimate": 3,
       "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Bridges",
         "Computation"
@@ -13741,7 +13741,7 @@
       "depth_estimate": 3,
       "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.35,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Physics",
         "Computation"
@@ -13819,7 +13819,7 @@
       "depth_estimate": 3,
       "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.35,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Physics",
         "Computation"
@@ -14053,7 +14053,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Tropical",
         "Computation"
@@ -14481,7 +14481,7 @@
       "depth_estimate": 3,
       "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Computation"
@@ -15290,11 +15290,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "cb41e046",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15306,11 +15306,11 @@
         "Logic"
       ],
       "id": "fd_0506",
-      "last_attempt_time": "2026-06-24T01:38:06.342364+00:00",
+      "last_attempt_time": "2026-06-11T11:24:10.722523+00:00",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.789328,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "",
@@ -15320,7 +15320,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:46.975605+00:00",
       "title": "Consciousness as Integrated Information: Mathematical Foundations"
@@ -16275,7 +16275,7 @@
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Cryptography",
         "Logic"
@@ -16314,7 +16314,7 @@
       "depth_estimate": 3,
       "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16470,7 +16470,7 @@
       "depth_estimate": 3,
       "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16587,7 +16587,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Tropical",
         "Computation"
@@ -16743,7 +16743,7 @@
       "depth_estimate": 3,
       "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "EML",
         "Computation"
@@ -16899,7 +16899,7 @@
       "depth_estimate": 3,
       "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "MachineLearning",
         "Computation"
@@ -34153,7 +34153,7 @@
         "sparse-paving q-matroids to independent sets in the q-Johnson graph",
         "finite vector-space submodule lattice to graph-theoretic stable sets"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Computation"
@@ -34481,7 +34481,7 @@
         "proper color classes are independent sets, so α(G)≤2 forces every odd color class to be a singleton",
         "using Δ(G)+1 singleton color classes forces Δ(G)+1=|V(G)|, hence G is complete"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -34625,7 +34625,7 @@
         "p_adic_valuations",
         "combinatorics_on_words"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -38097,7 +38097,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "9cae63e4",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38126,7 +38126,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23398v1",
       "source_path": "http://arxiv.org/abs/2606.23398v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T16:48:35.543989+00:00",
       "title": "Cusick's Sum-of-Digits Explicit Bound"
@@ -39121,7 +39121,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "af1783d7",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -39392,6 +39392,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Maclagan-Sturmfels, Introduction to Tropical Geometry, Theorem 4.6.8: Tropical Bernstein theorem",
+        "Esterov-Gusev classification of tuples of lattice polytopes of mixed volume one",
+        "Mathlib: LinearAlgebra.FreeModule.Basic",
+        "Mathlib: Geometry.Convex.Basic",
+        "Mathlib: MeasureTheory.Measure.Lebesgue.Basic"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every full-dimensional lattice polytope P in Z^n, let Sigma_P be the tropical hypersurface given by the codimension-one skeleton of the normal fan of P, with edge-length weights. The n-fold stable self-intersection Sigma_P ∩_st ... ∩_st Sigma_P is a reduced point at the origin if and only if P is a unimodular simplex, equivalently if and only if the normalized lattice volume n! vol(P) is equal to 1.",
+      "domain_bridges": [
+        "Tropical stable intersection multiplicity is converted to mixed volume via tropical Bernstein.",
+        "The unmixed mixed volume MV(P,...,P) is the normalized lattice volume n! vol(P).",
+        "A full-dimensional lattice polytope has normalized volume one exactly when it is unimodularly equivalent to the standard simplex."
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Tropical"
+      ],
+      "id": "fd_2401",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem unmixed_reduced_tropical_bernstein_iff_unimodular_simplex\n    {n : ℕ} [Fact (0 < n)]\n    (P : LatticePolytope (Fin n → ℤ))\n    (hP : P.FullDimensional) :\n    StableIntersection.weight\n        (List.replicate n (TropicalHypersurface.ofNewtonPolytope P)) 0 = 1\n      ↔ P.IsUnimodularSimplex := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize lattice polytopes in Z^n, Euclidean volume, normalized volume, mixed volume, and the normal-fan tropical hypersurface Sigma_P. Use the tropical Bernstein theorem to identify the weight of the n-fold stable intersection of Sigma_P with MV(P,...,P). Prove algebraically from the definition of mixed volume that MV(P,...,P) = n! * vol(P). Finally prove the discrete convex-geometric lemma that a full-dimensional lattice polytope has normalized volume one iff its lattice points are exactly the vertices of an affine unimodular image of the standard simplex. Combining these equivalences gives the iff statement.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24339v1",
+      "source_path": "http://arxiv.org/abs/2606.24339v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T02:18:16.655288+00:00",
+      "title": "Unmixed Reduced Tropical Bernstein Criterion"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "ErdosProblems550",
         "EFRS1989",
         "Chvatal1977",
@@ -39413,7 +39462,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2401",
+      "id": "fd_2402",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_problem_550_for_all_trees {k : ℕ} (hk : k ≥ 2) (m : List ℕ) (hm_len : m.length = k) (hm_sorted : m.Sorted (· ≤ ·)) (hm_pos : ∀ x ∈ m, 1 ≤ x) :\n  ∀ (T : SimpleGraph ℕ) (hT : T.IsTree) (n : ℕ) (hn : T.Fintype.card = n) (hn_pos : n ≥ 1),\n    RamseyNumber T (CompleteMultipartiteGraph m) ≤ (k - 1) * (RamseyNumber T (CompleteMultipartiteGraph [m.get? 0, m.get? 1]!) - 1) + m.get? 0! := by sorry",
@@ -39459,7 +39508,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2402",
+      "id": "fd_2403",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_congruence_cohomology_linear_vanishing (i p : ℕ) (hp : Nat.Prime p) :\n    ∃ C : ℕ, ∀ n : ℕ, n ≥ C * p → \n      H^(n.choose 2 - i) (HeckeCongruenceSubgroup n p) ℚ ≅ 0 := \nby sorry",
@@ -39507,7 +39556,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2403",
+      "id": "fd_2404",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem brocard_no_more (n : ℕ) (hn : n > 7) : ¬∃ m : ℕ, (n ! + 1) = m ^ 2 :=",
@@ -39554,7 +39603,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2404",
+      "id": "fd_2405",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Analysis.LiminfLimsup\\ntheorem g_k_optimal_constants (k : ℕ) (hk : k ≥ 2) :\\n  liminf (fun n => (g_k n).toReal / Real.log n) = (3 (k - 1) / Real.log 12) ∧\\n  limsup (fun n => (g_k n).toReal / Real.log n) = ((k - 1) / Real.log 2) :=\\nbegin\\n  -- conjectural statement; proof is currently open\\n  sorry\\nend",
@@ -39601,7 +39650,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2405",
+      "id": "fd_2406",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (t m : ℕ), t ≥ 2 → m ≥ 1 → (∀ (ℓ : Fin t → Polynomial (Field ℚ)), (∀ i, ℓ i ≠ 0) → ( (LinearDependent ( (fun i ↦ (ℓ i : Polynomial (Field ℚ)) ^ m) )) ∧ (∀ (s : Finset (Fin t)), s ≠ univ → LinearIndependent ( (fun i ↦ (ℓ i : Polynomial (Field ℚ)) ^ m) | s ) ) → (dim (LinearSpan ( (fun i ↦ (ℓ i : Polynomial (Field ℚ))) ) ) ≤ (t + m - 2 : ℝ) / m )",
@@ -39626,39 +39675,49 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "Euler characteristic additivity for finite CW-complex decompositions",
+        "Multiplicativity of Euler characteristic under finite CW products",
+        "Smith normal form for rank-one integer matrices",
+        "Homotopy type of (C*)^n as the real n-torus (S^1)^n",
+        "De Concini-Procesi theory of toric arrangements"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Fitting / TransEndo research thread\n\nThis cycle proved a **sharp two-sided quantitative Fitting stabilization bound**\nfor an endomorphism `g : V →ₗ[K] V` of a finite-dimensional space:\n\n* `Catalog/Algebra/FittingStabilizationBound.lean` — the descending range chain\n  `range (g ^ m)` is constant for all `m ≥ finrank K V`\n  (`range_pow_const_of_finrank_le`), with the constant-stream corollary linking\n  this to the catalog's transition endomorphisms (`compFrom_const`,\n  `compFrom_const_rank_stable`).\n* `Catalog/Algebra/FittingKernelBound.lean` — the dual: the ascending kernel\n  chain `ker (g ^ m)` is constant for all `m ≥ finrank K V`\n  (`ker_pow_const_of_finrank_le`).\n\nThe conjectures below are derived directly from these findings and from the\nCritic's observation that the sharp `finrank` bound is special to a *single*\nendomorphism (equivalently a constant stream) and **fails** for a varying\nendomorphism stream.\n\n## Conjecture 1 — Effective Fitting decomposition at the stabilization step\nFor `d = finrank K V`, `V = ker (g ^ d) ⊕ range (g ^ d)` as internal direct sum,\nand `g` restricts to a nilpotent map on `ker (g ^ d)` and an isomorphism on\n`range (g ^ d)`.\n\n*The key insight is* that at step `d` **both** chains proved in this cycle freeze\nsimultaneously, so the frozen kernel and frozen range must be complementary —\nthe stabilization bounds are exactly the certificate the decomposition needs.\n\n*Why now?* With `range_pow_const_of_finrank_le` and `ker_pow_const_of_finrank_le`\nboth available and sharp, the only remaining step is the disjointness/spanning\ncount via rank–nullity, which is now a finite bookkeeping argument rather than an\nopen question.\n\n## Conjecture 2 — Nilpotency index equals the first range plateau\nIf `g` is nilpotent then its nilpotency index (least `N` with `g ^ N = 0`) equals\nthe least plateau index `k` produced by `exists_range_pow_plateau_le_finrank`, and\nthis `k` is at most `finrank K V`.\n\n*The key insight is* that for a nilpotent map the range chain strictly decreases\nuntil it hits `⊥`, so the *first* plateau is precisely the moment the range\ncollapses to zero — i.e. the nilpotency index.\n\n*Why now?* `exists_range_pow_plateau_le_finrank` already extracts a plateau index\nbounded by `finrank K V`; identifying it with the nilpotency index turns an\nexistence statement into an exact formula.\n\n## Conjecture 3 — Stabilization for eventually-periodic streams\nFor a transition stream `f : ℕ → V →ₗ[K] V` that is eventually periodic with\nperiod `p` (i.e. `f (n + p) = f n` for `n ≥ n₀`), the from-`0` transition-rank\nsequence `m ↦ (compFrom f 0 m).rank.toNat` is eventually *periodic-constant*: it\nstabilizes after at most `n₀ + p · finrank K V` steps.\n\n*The key insight is* that on the periodic tail the composite advances by a fixed\nblock map `B = compFrom f n₀ p`, so the tail rank chain is the power chain of `B`\n— and the sharp single-endomorphism bound of this cycle applies to `B`.\n\n*Why now?* The Critic showed the sharp bound fails for arbitrary streams; periodic\nstreams are the natural largest class where `compFrom_const`-style reduction to a\nsingle endomorphism still works, making this immediately testable.\n\n## Conjecture 4 — Sylvester-type bridge for matrix-product rank profiles\nFor a sequence of `n × n` matrices `A₀, A₁, …` over a field, the rank of the\npartial products `A_{k} ⋯ A_0` is antitone and constant from step `n`; moreover\nthe total rank drop `n - rank(A_{n-1} ⋯ A_0)` is bounded by the sum of corank's\n`∑ (n - rank A_i)`.\n\n*The key insight is* that each factor can lower the rank by at most its own\ncorank (a Sylvester rank inequality), so the cumulative drop is additive in the\nfactor coranks — refining the purely qualitative antitone result.\n\n*Why now?* The transition-endomorphism `compFrom` is exactly a matrix-product\nchain; this cycle proved the qualitative antitone/stabilization facts, so the\nquantitative additive bound is the next concrete, falsifiable target.\n",
-      "domain_bridges": [],
+      "description": "Let A be any finite parallel toric arrangement in (C*)^n, defined by nonzero rank-one integral characters and constants in C*. If n >= 2, then the Euler-Poincare characteristic of the complement M(A) is zero. Equivalently, deleting any finite family of pairwise disjoint parallel hypertori from a complex algebraic torus of dimension at least two does not change the vanishing Euler characteristic of the ambient torus.",
+      "domain_bridges": [
+        "Use Smith normal form over Z to reduce a rank-one toric arrangement to equations x_1^d = beta_i.",
+        "Identify the complement up to finite covering or homotopy as (C* \\ D) x (C*)^(n-1), where D is finite.",
+        "Apply multiplicativity of Euler characteristic and chi(C*) = 0 when n >= 2.",
+        "Translate the topological statement into a Lean formalization using an abstract EulerPoincare invariant satisfying finite-CW product and additivity properties."
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "Pythagorean"
+        "Algebra"
       ],
-      "id": "fd_2406",
+      "id": "fd_2407",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "import Mathlib\n\nnoncomputable section\n\nopen scoped BigOperators\n\n/-- Placeholder for the complement of the toric arrangement in `(C*)^n` defined by\ninteger exponent vectors `a` and nonzero constants `alpha`. -/\nconstant ToricComplement :\n  (n m : ℕ) → (Fin m → Fin n → ℤ) → (Fin m → {z : ℂ // z ≠ 0}) → Type\n\n/-- Predicate saying that the corresponding toric arrangement is parallel of rank one,\nwith no degenerate defining character. -/\nconstant ParallelRankOneToricArrangement :\n  (n m : ℕ) → (Fin m → Fin n → ℤ) → (Fin m → {z : ℂ // z ≠ 0}) → Prop\n\n/-- Euler-Poincare characteristic of a finite-CW type/model. -/\nconstant EulerPoincare : Type → ℤ\n\n/-- Conjecture: complements of parallel toric arrangements in complex tori of dimension\nat least two have vanishing Euler-Poincare characteristic. -/\ntheorem eulerPoincare_parallel_toric_complement_vanishes\n    {n m : ℕ} (hn : 2 ≤ n)\n    (a : Fin m → Fin n → ℤ) (alpha : Fin m → {z : ℂ // z ≠ 0})\n    (hpar : ParallelRankOneToricArrangement n m a al",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First show that all defining exponent vectors of a parallel rank-one arrangement are integer multiples of one primitive vector. By a GL_n(Z) monomial change of coordinates, send this primitive vector to the first coordinate. Each hypertorus is then a union of fibers of x_1^d = beta_i, so the complement is homotopy equivalent, up to a finite disjoint union/finite covering that preserves the zero conclusion, to (C* minus finitely many points) times (C*)^(n-1). Since n >= 2, the second factor contains C*, whose Euler-Poincare characteristic is zero. Multiplicativity of Euler characteristic gives chi(M(A)) = chi(C* \\ D) * chi((C*)^(n-1)) = chi(C* \\ D) * 0 = 0.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "a5fa8083",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/a5fa8083_retry1",
+      "source_exp_id": "2606.24299v1",
+      "source_path": "http://arxiv.org/abs/2606.24299v1",
       "status": "available",
-      "thread_id": "th_d6551136",
-      "timestamp": "2026-06-24T01:59:39.904424+00:00",
-      "title": "**sharp two-sided quantitative Fitting stabilization bound**"
+      "thread_id": "",
+      "timestamp": "2026-06-24T02:19:37.944210+00:00",
+      "title": "Vanishing of Euler characteristic for higher-dimensional parallel toric arrangement complements"
     },
     {
       "ambition_level": "extension",
@@ -40732,44 +40791,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle a5fa8083 (Q=0.789), which proved 7 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Complete the formalization of the quantitative Fitting stabilization bound for ascending kernel chains of linear endomorphisms. Specifically, fill all remaining `sorry` placeholders in `Catalog/Algebra/FittingKernelBound.lean` by providing rigorous Lean proofs for the plateau stability theorem, the ",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Computation"
-      ],
-      "id": "push_a5fa8083_e1ff70cc",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.889328,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "a5fa8083",
-      "source_path": "Close Proofs: These conjectures continue the research cycle begun in",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-24T01:59:48.998276+00:00",
-      "title": "Deepening: These conjectures continue the research cycle begun in"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -41427,7 +41448,7 @@
       "depth_estimate": 3,
       "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Computation"
@@ -43114,7 +43135,7 @@
       "depth_estimate": 3,
       "description": "Prove that 78557 is the smallest Sierpiński number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Computation"
@@ -43306,7 +43327,7 @@
       "depth_estimate": 3,
       "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Computation",
         "Algebra"
@@ -43460,7 +43481,7 @@
       "depth_estimate": 3,
       "description": "Resolve Kaplansky's conjectures on group rings: no zero divisors, no idempotents other than 0/1, and no nontrivial units in K[G] for torsion-free G.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Computation"
@@ -43731,7 +43752,7 @@
       "depth_estimate": 3,
       "description": "Prove that the connective constant for the self-avoiding walk on Z² equals (2+√2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Computation",
         "Algebra"
@@ -43770,7 +43791,7 @@
       "depth_estimate": 3,
       "description": "Prove that π, e, √2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Computation"
@@ -43809,7 +43830,7 @@
       "depth_estimate": 3,
       "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Computation",
         "Algebra"
@@ -43848,7 +43869,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Computation",
         "Logic"
@@ -44042,7 +44063,7 @@
       "depth_estimate": 3,
       "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Logic",
         "Computation"
@@ -44469,7 +44490,7 @@
       "depth_estimate": 3,
       "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -44498,11 +44519,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "87a5ca72",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44513,7 +44534,7 @@
         "NumberTheory"
       ],
       "id": "seed_331",
-      "last_attempt_time": "2026-06-24T01:38:17.867013+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44527,7 +44548,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432603+00:00",
       "title": "Perfect Numbers: Structure of Even Perfects"
@@ -44624,7 +44645,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES ∈ P. Construct efficient modular arithmetic tactics for Lean.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -45519,7 +45540,7 @@
       "depth_estimate": 3,
       "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation",
         "Logic"
@@ -45558,7 +45579,7 @@
       "depth_estimate": 3,
       "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation",
         "Logic"
@@ -45676,7 +45697,7 @@
       "depth_estimate": 3,
       "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Logic",
         "Computation"
@@ -45834,7 +45855,7 @@
       "depth_estimate": 3,
       "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Physics",
         "Algebra",
@@ -46033,7 +46054,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -46113,7 +46134,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Cryptography",
         "Logic",
@@ -46193,7 +46214,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Tropical",
         "Computation",
@@ -46353,7 +46374,7 @@
       "depth_estimate": 3,
       "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Computation",
@@ -46383,24 +46404,24 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "df71dd02",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
       "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Logic",
         "Computation",
         "Bridges"
       ],
       "id": "seed_379",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T02:19:43.585521+00:00",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46414,7 +46435,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432809+00:00",
       "title": "Proof Automation: Custom Lean 4 Tactics"
@@ -46433,7 +46454,7 @@
       "depth_estimate": 3,
       "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation",
         "Logic"
@@ -119681,11 +119702,11 @@
     "Algebra": 303,
     "Applications": 117,
     "Bridges": 57,
-    "Computation": 101,
+    "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
     "Geometry": 168,
-    "Logic": 117,
+    "Logic": 116,
     "MachineLearning": 37,
     "Novelty": 200,
     "Physics": 45,
@@ -119705,13 +119726,13 @@
     "codes": 13,
     "complete": 393,
     "computational": 66,
-    "compute": 100,
+    "compute": 99,
     "computed": 42,
     "condition": 100,
     "conjecture": 406,
     "connection": 56,
     "constant": 144,
-    "construct": 82,
+    "construct": 81,
     "control": 41,
     "converge": 25,
     "create": 25,
@@ -119730,8 +119751,8 @@
     "first": 325,
     "first-order": 19,
     "formal": 133,
-    "formalize": 225,
-    "framework": 104,
+    "formalize": 224,
+    "framework": 103,
     "function": 204,
     "functions": 99,
     "future": 526,
@@ -119741,7 +119762,7 @@
     "important": 309,
     "insight": 305,
     "invariants": 28,
-    "mathematical": 48,
+    "mathematical": 47,
     "matrix": 83,
     "mature": 28,
     "metric": 132,
@@ -119770,7 +119791,7 @@
     "requires": 109,
     "research": 163,
     "results": 238,
-    "rigorous": 43,
+    "rigorous": 42,
     "satisfies": 121,
     "scaling": 55,
     "significant": 16,
@@ -119786,8 +119807,8 @@
     "theorem": 397,
     "theorems": 462,
     "theories": 33,
-    "theory": 351,
-    "tononi's": 4,
+    "theory": 350,
+    "tononi's": 3,
     "topological": 91,
     "topology": 65,
     "transcendence": 3,

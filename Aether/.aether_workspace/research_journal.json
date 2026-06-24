@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fbd73212",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Single-Operator Church–Turing Thesis\n\nThis cycle established, with fully verified Lean 4 proofs (0 sorries, standard\naxioms only), the **affirmative content** of the single-o",
-      "quality_score": 0.7150400000000001,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-06-16T19:51:14",
-      "title": "EML Single Operator Church-Turing Thesis"
-    },
-    {
       "cycle_id": "1f4bbef7",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Automatic Sequences and the Zero-in-Sequence Problem\n\nThis cycle formalized the automata-theoretic core of the \"halting problem for\nautomatic sequences\": the zero-in-sequence pro",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-06-24T01:59:48",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
+    },
+    {
+      "cycle_id": "7e71ceda",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs\n\nDerived from this cycle's findings (`HamiltonianCompression.lean`,\n`HamiltonianCompressionBoundary.lean`). Each co",
+      "quality_score": 0.48598591282051284,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-24T02:14:58",
+      "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.789328
     }
   ],
-  "last_updated": "2026-06-24T01:59:48",
+  "last_updated": "2026-06-24T02:14:58",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "b3f0c15e",
-        "quality": 0.5072000000000001,
-        "theorems": 24,
-        "title": "Monodromy Compression Principle for Neural PDE Solvers"
-      },
-      {
         "cycle_id": "29017e68",
         "quality": 0.7856000000000001,
         "theorems": 28,
@@ -3761,6 +3755,12 @@
         "quality": 0.5423795180722892,
         "theorems": 9,
         "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+      },
+      {
+        "cycle_id": "7e71ceda",
+        "quality": 0.48598591282051284,
+        "theorems": 12,
+        "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
       }
     ],
     "Probability": [

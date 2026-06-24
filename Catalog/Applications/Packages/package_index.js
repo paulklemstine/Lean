@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7e71ceda",
     "filename": "hamiltonian_compression_factor_of_cubic_edge_trans.json",
     "pkg_num": 17,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.48598591282051284,
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs: A Verified Mobius-Ladder Symmetry Certificate"
   },
   {
@@ -502,8 +502,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "hamiltonian_compression_factor_of_cubic_edge_trans",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.48598591282051284,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs: A Verified Mobius-Ladder Symmetry Certificate"
     }

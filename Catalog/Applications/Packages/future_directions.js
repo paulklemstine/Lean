@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df71dd02",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -160,7 +160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -361,20 +361,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle a5fa8083 (Q=0.789), which proved 7 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Complete the formalization of the quantitative Fitting stabilization bound for ascending kernel chains of linear endomorphisms. Specifically, fill all remaining `sorry` placeholders in `Catalog/Algebra/FittingKernelBound.lean` by providing rigorous Lean proofs for the plateau stability theorem, the ",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_a5fa8083_e1ff70cc",
-    "priority_score": 0.889328,
-    "research_mode": "team",
-    "source_exp_id": "a5fa8083",
-    "status": "available",
-    "timestamp": "2026-06-24T01:59:48.998276+00:00",
-    "title": "Deepening: These conjectures continue the research cycle begun in"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
     "domains": [
       "Algebra"
@@ -521,7 +507,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "87a5ca72",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -530,7 +516,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -1463,6 +1449,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:16.410337+00:00",
     "title": "Normality of Mathematical Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "fd_0506",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.975605+00:00",
+    "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
   {
     "consumed_by_exp_id": "",
@@ -2746,7 +2747,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact first 4-uniform VC extremal value beyond Ahlswede--Khachatrian"
   },
   {
-    "consumed_by_exp_id": "9cae63e4",
+    "consumed_by_exp_id": "",
     "description": "For every integer t \u2265 1, the asymptotic density c_t of nonnegative integers n such that s\u2082(n+t) \u2265 s\u2082(n) satisfies c_t \u2265 1/2 + 2^(-(2\u00b7s\u2082(t)+1)), where s\u2082(m) denotes the number of ones in the binary expansion of m. This is the main theorem proved in the paper, resolving Cusick's conjecture with an explicit quantitative gap.",
     "domains": [
       "Pythagorean"
@@ -2755,7 +2756,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T16:48:35.543989+00:00",
     "title": "Cusick's Sum-of-Digits Explicit Bound"
   },
@@ -3122,11 +3123,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every full-dimensional lattice polytope P in Z^n, let Sigma_P be the tropical hypersurface given by the codimension-one skeleton of the normal fan of P, with edge-length weights. The n-fold stable self-intersection Sigma_P \u2229_st ... \u2229_st Sigma_P is a reduced point at the origin if and only if P is a unimodular simplex, equivalently if and only if the normalized lattice volume n! vol(P) is equal to 1.",
+    "domains": [
+      "Geometry",
+      "Tropical"
+    ],
+    "id": "fd_2401",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24339v1",
+    "status": "available",
+    "timestamp": "2026-06-24T02:18:16.655288+00:00",
+    "title": "Unmixed Reduced Tropical Bernstein Criterion"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2401",
+    "id": "fd_2402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -3141,7 +3157,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2402",
+    "id": "fd_2403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3155,7 +3171,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2403",
+    "id": "fd_2404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
@@ -3169,7 +3185,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2404",
+    "id": "fd_2405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
@@ -3184,13 +3200,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2405",
+    "id": "fd_2406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
     "status": "available",
     "timestamp": "2026-06-24T01:38:01.066930+00:00",
     "title": "Sharp dimension bound for minimal dependencies of linear-form powers in Veronese circuits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let A be any finite parallel toric arrangement in (C*)^n, defined by nonzero rank-one integral characters and constants in C*. If n >= 2, then the Euler-Poincare characteristic of the complement M(A) is zero. Equivalently, deleting any finite family of pairwise disjoint parallel hypertori from a complex algebraic torus of dimension at least two does not change the vanishing Euler characteristic of the ambient torus.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2407",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24299v1",
+    "status": "available",
+    "timestamp": "2026-06-24T02:19:37.944210+00:00",
+    "title": "Vanishing of Euler characteristic for higher-dimensional parallel toric arrangement complements"
   },
   {
     "consumed_by_exp_id": "",
@@ -3380,21 +3410,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Fitting / TransEndo research thread\n\nThis cycle proved a **sharp two-sided quantitative Fitting stabilization bound**\nfor an endomorphism `g : V \u2192\u2097[K] V` of a finite-dimensional space:\n\n* `Catalog/Algebra/FittingStabilizationBound.lean` \u2014 the descending range chain\n  `range (g ^ m)` is constant for all `m \u2265 finrank K V`\n  (`range_pow_const_of_finrank_le`), with the constant-stream corollary linking\n  this to the catalog's transition endomorphisms (`compFrom_const`,\n  `compFrom_const_rank_stable`).\n* `Catalog/Algebra/FittingKernelBound.lean` \u2014 the dual: the ascending kernel\n  chain `ker (g ^ m)` is constant for all `m \u2265 finrank K V`\n  (`ker_pow_const_of_finrank_le`).\n\nThe conjectures below are derived directly from these findings and from the\nCritic's observation that the sharp `finrank` bound is special to a *single*\nendomorphism (equivalently a constant stream) and **fails** for a varying\nendomorphism stream.\n\n## Conjecture 1 \u2014 Effective Fitting decomposition at the stabilization step\nFor `d = finrank K V`, `V = ker (g ^ d) \u2295 range (g ^ d)` as internal direct sum,\nand `g` restricts to a nilpotent map on `ker (g ^ d)` and an isomorphism on\n`range (g ^ d)`.\n\n*The key insight is* that at step `d` **both** chains proved in this cycle freeze\nsimultaneously, so the frozen kernel and frozen range must be complementary \u2014\nthe stabilization bounds are exactly the certificate the decomposition needs.\n\n*Why now?* With `range_pow_const_of_finrank_le` and `ker_pow_const_of_finrank_le`\nboth available and sharp, the only remaining step is the disjointness/spanning\ncount via rank\u2013nullity, which is now a finite bookkeeping argument rather than an\nopen question.\n\n## Conjecture 2 \u2014 Nilpotency index equals the first range plateau\nIf `g` is nilpotent then its nilpotency index (least `N` with `g ^ N = 0`) equals\nthe least plateau index `k` produced by `exists_range_pow_plateau_le_finrank`, and\nthis `k` is at most `finrank K V`.\n\n*The key insight is* that for a nilpotent map the range chain strictly decreases\nuntil it hits `\u22a5`, so the *first* plateau is precisely the moment the range\ncollapses to zero \u2014 i.e. the nilpotency index.\n\n*Why now?* `exists_range_pow_plateau_le_finrank` already extracts a plateau index\nbounded by `finrank K V`; identifying it with the nilpotency index turns an\nexistence statement into an exact formula.\n\n## Conjecture 3 \u2014 Stabilization for eventually-periodic streams\nFor a transition stream `f : \u2115 \u2192 V \u2192\u2097[K] V` that is eventually periodic with\nperiod `p` (i.e. `f (n + p) = f n` for `n \u2265 n\u2080`), the from-`0` transition-rank\nsequence `m \u21a6 (compFrom f 0 m).rank.toNat` is eventually *periodic-constant*: it\nstabilizes after at most `n\u2080 + p \u00b7 finrank K V` steps.\n\n*The key insight is* that on the periodic tail the composite advances by a fixed\nblock map `B = compFrom f n\u2080 p`, so the tail rank chain is the power chain of `B`\n\u2014 and the sharp single-endomorphism bound of this cycle applies to `B`.\n\n*Why now?* The Critic showed the sharp bound fails for arbitrary streams; periodic\nstreams are the natural largest class where `compFrom_const`-style reduction to a\nsingle endomorphism still works, making this immediately testable.\n\n## Conjecture 4 \u2014 Sylvester-type bridge for matrix-product rank profiles\nFor a sequence of `n \u00d7 n` matrices `A\u2080, A\u2081, \u2026` over a field, the rank of the\npartial products `A_{k} \u22ef A_0` is antitone and constant from step `n`; moreover\nthe total rank drop `n - rank(A_{n-1} \u22ef A_0)` is bounded by the sum of corank's\n`\u2211 (n - rank A_i)`.\n\n*The key insight is* that each factor can lower the rank by at most its own\ncorank (a Sylvester rank inequality), so the cumulative drop is additive in the\nfactor coranks \u2014 refining the purely qualitative antitone result.\n\n*Why now?* The transition-endomorphism `compFrom` is exactly a matrix-product\nchain; this cycle proved the qualitative antitone/stabilization facts, so the\nquantitative additive bound is the next concrete, falsifiable target.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2406",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "a5fa8083",
-    "status": "available",
-    "timestamp": "2026-06-24T01:59:39.904424+00:00",
-    "title": "**sharp two-sided quantitative Fitting stabilization bound**"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3512,7 +3527,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "af1783d7",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -3522,7 +3537,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
