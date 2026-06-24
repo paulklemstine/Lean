@@ -1,58 +1,43 @@
-# Computational Evidence — LWE Hardness Cycle
+# Computational Evidence — Gaussian–Pythagorean Bridge for LWE Hardness
 
-All numeric checks below were executed in Lean (`#eval`) before the formal
-proofs were written; the formal theorems then establish them for *all*
-inputs, not just these samples.
+Scope: evidence supporting the claims formalized in
+`Catalog/Cryptography/LWE/GaussianBridge.lean`.
 
-## 1. Dual-Regev decryption identity (`dualRegev_decrypt_identity`)
+## 1. Splitting primes are sums of two squares (Fermat)
 
-Modulus `q = 17`, with
-`A = !![1,2,3;4,5,6]`, `e' = ![1,0,1]`, `s = ![2,3]`,
-`x0 = ![1,16,0]`, `x1 = 5`, `μ = 1`, `k = 8`.
+Primes `p ≡ 1 (mod 4)` and an explicit decomposition `p = a² + b²`
+(computed over ℕ):
 
-| expression | value (ZMod 17) |
-|---|---|
-| `(⟨A·e', s⟩ + x1 + μ·k) - ⟨e', Aᵀ·s + x0⟩` | `12` |
-| `μ·k + (x1 - ⟨e', x0⟩)` | `12` |
+| p  | (a, b) | a² + b² |
+|----|--------|---------|
+| 5  | (1, 2) | 5       |
+| 13 | (2, 3) | 13      |
+| 17 | (1, 4) | 17      |
+| 29 | (2, 5) | 29      |
+| 37 | (1, 6) | 37      |
+| 41 | (4, 5) | 41      |
 
-Both sides agree → the secret mask cancels exactly. ✓
+Inert primes `p ≡ 3 (mod 4)` (e.g. 3, 7, 11, 19, 23) admit **no** such
+decomposition — matching `−1` being a non-residue mod `p`.
 
-## 2. Ring-LWE / LPR decryption identity (`ringLWE_decrypt_identity`)
+## 2. Brahmagupta–Fibonacci composition
 
-Modulus `q = 17`, scalars `a=3, s=2, e=1, r=4, e0=6, e1=5, μ=1, k=8`.
+`(1² + 2²)(2² + 3²) = 5·13 = 65 = (1·2 − 2·3)² + (1·3 + 2·2)² = (−4)² + 7² = 16 + 49`.
 
-| expression | value (ZMod 17) |
-|---|---|
-| `(b·r + e1 + μ·k) - s·c0`, with `b=a·s+e, c0=a·r+e0` | `5` |
-| `μ·k + (e·r + e1 - s·e0)` | `5` |
+Note: the identity is an **integer** identity; evaluating the left witness over
+ℕ truncates `1·2 − 2·3` to `0`, so the formal statement is correctly phrased over
+`ℤ` (`brahmagupta_fibonacci`).
 
-Both sides agree. ✓
+## 3. Gaussian norm sanity checks
 
-## 3. Counterexample hunt — necessity of the unit hypothesis
+`N(3 + 0i) = 9`, `N(a + bi) = a² + b²`, and `N` is multiplicative; units
+`{1, −1, i, −i}` all have norm `1`, so rerandomizing by a unit preserves noise
+magnitude.
 
-Tests Conjecture 2 (`FUTURE_DIRECTIONS.md`). Over `ZMod 6`, take the
-non-unit `a = 2` (a zero divisor) and `f = ⟦· = 0⟧`:
+## 4. Noise-disk containment
 
-| quantity | value |
-|---|---|
-| `#{ x : ZMod 6 | 2·x = 0 }`  (i.e. `∑ x f(2·x)`) | `2` |
-| `#{ x : ZMod 6 | x = 0 }`    (i.e. `∑ x f(x)`)   | `1` |
+For `r = q/4 > 0`, any `(x, y)` with `x² + y² < r²` satisfies `|x| < r` and
+`|y| < r`, since `x² ≤ x² + y² < r²`. This is the 2-D Euclidean (Pythagorean)
+form of LWE decryption correctness.
 
-`2 ≠ 1`, so `∑ x f(a·x) = ∑ x f(x)` **fails** for the non-unit `a = 2`.
-This confirms that the `unit` hypothesis in `ringLWE_sum_affine_eq` is
-necessary and cannot be weakened to `a ≠ 0` over composite moduli.
-
-## 4. OEIS
-
-No integer sequence is central to this cycle; the objects are algebraic
-identities and inequalities rather than an enumerated sequence, so an OEIS
-lookup is not applicable.
-
-## Scope note
-
-The decryption identities are *exact polynomial identities* (closed by
-`ring`), so a finite sample is genuine evidence of the universal statement's
-plausibility; the Lean proofs upgrade this to a full guarantee. The noise
-bounds and reduction lemmas are inequalities proved by `linarith` / `gcongr`
-/ induction and are not amenable to a single decisive numeric check, so no
-further evaluation is reported for them.
+All four observations are discharged as theorems (0 sorries) in the Lean file.

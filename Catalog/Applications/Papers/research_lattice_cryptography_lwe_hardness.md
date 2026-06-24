@@ -1,268 +1,523 @@
-# A Formal Account of Learning With Errors: Decryption Correctness, Affine Rerandomization, and Hybrid Security Reductions
+# A Gaussian-Integer Bridge for Ring-LWE: The Sum of Two Squares as the Geometry of Lattice Encryption
 
 **Author:** Aristotle
-**Date:** 2026-06-21
-**Domain:** Cryptography (post-quantum / lattice-based)
+**Date:** 2026-06-24
+**Domain:** Pythagorean / Lattice Cryptography
 
 ---
 
 ## Abstract
 
-We present a self-contained, machine-checked development of the algebraic and analytic core of lattice-based cryptography built on the Learning With Errors (LWE) problem. The development is organized around four pillars. First, the **algebra of rerandomization**: over a prime field $\mathbb{Z}_p$, affine maps $x \mapsto ax + b$ with $a \neq 0$ are bijections, yielding the summation invariance $\sum_x f(ax+b) = \sum_x f(x)$ that makes wrong guesses in the search-to-decision reduction perfectly uniform. Second, **decryption correctness**: accumulated noise from $m$ samples is bounded by $mB$, and Regev's rounding decryption recovers a bit exactly whenever the total noise is below $q/4$; the Dual-Regev round-trip satisfies the residual identity $\mathrm{Dec}(\mathrm{Enc}(\mu, r)) = \mu + \sum_i r_i e_i$. Third, the **hybrid reduction calculus**: a telescoping triangle inequality bounds the end-to-end distinguishing advantage by a sum of neighboring gaps, and a dual pigeonhole principle extracts a single large gap, giving the linear advantage-loss factor of the search-to-decision and CPA reductions. Fourth, a **distribution-level abstraction**: the same telescope holds for total variation distance over arbitrary distributions, showing that the reduction is fundamentally measure-theoretic; it requires no ring structure, and we use it to subsume non-commutative module-LWE and NTRU under one framework, with a data-processing (contraction) inequality guaranteeing robustness under linear post-processing. All stated results are formally verified and depend only on the standard foundational axioms.
+We develop the algebraic and number-theoretic foundations needed to state the
+ring variant of the Learning With Errors (ring-LWE) problem over the Gaussian
+integers $\mathbb{Z}[i]$ and to establish a clean decryption-correctness
+guarantee for a public-key encryption scheme built upon it. The central object
+is the Gaussian norm $N(a + bi) = a^2 + b^2$ — the Pythagorean sum of two
+squares — whose **multiplicativity** $N(zw) = N(z)N(w)$ is precisely the
+Brahmagupta–Fibonacci composition identity. We layer the development so that
+each result depends only on previously established components: (1) the Gaussian
+norm and its non-negativity; (2) multiplicativity via Brahmagupta–Fibonacci;
+(3) the splitting/inertness dichotomy of rational primes in $\mathbb{Z}[i]$
+governed by residues modulo $4$ (Fermat's two-squares theorem); (4) the
+ring-LWE problem and an associated public-key scheme; and (5) a decryption
+correctness theorem stating that decryption succeeds whenever the error vector
+$(e_x, e_y)$ lies in the Euclidean ball $e_x^2 + e_y^2 < (q/4)^2$. Separately,
+we present the algebraic core of the LWE search-to-decision reduction: affine
+maps $x \mapsto ax + b$ ($a \neq 0$) are bijections modulo a prime, yielding a
+pigeonhole-based per-coordinate advantage bound with a tight factor-$n$ loss,
+and a certificate interface composing an assumed Regev quantum worst-case
+reduction with the search-to-decision step. All results have been formalized and
+machine-checked. We stop short of reproving Regev's analytic/quantum reduction,
+which is isolated as an explicit hypothesis.
 
 ---
 
 ## 1. Introduction
 
-The advent of Shor's algorithm rendered factoring- and discrete-log-based cryptography vulnerable to quantum attack, prompting a global migration toward **post-quantum** schemes. The dominant family is lattice-based, and at its heart lies the **Learning With Errors** problem introduced by Regev (2005). LWE enjoys a remarkable *worst-case to average-case* connection: solving random LWE instances is at least as hard as solving worst-case instances of approximate lattice problems such as GapSVP, a hardness believed to hold against quantum adversaries.
+Lattice-based cryptography is the leading approach to public-key cryptography
+secure against quantum adversaries. Its security rests on the conjectured
+hardness of the **Learning With Errors (LWE)** problem (Regev, 2005) and its
+algebraically efficient variant **ring-LWE** (Lyubashevsky–Peikert–Regev,
+2010). Regev's foundational theorem reduces worst-case lattice problems such as
+the (gap) shortest vector problem $\mathrm{GapSVP}$ to average-case decision-LWE
+via a quantum algorithm, providing the strongest possible form of security
+guarantee: an average-case instance is as hard as the worst case.
 
-This paper formalizes the structural backbone of the LWE security argument. Rather than reproducing a particular reduction in full probabilistic detail, we isolate and verify the load-bearing mathematical facts — the algebraic identities, noise bounds, and information-theoretic inequalities — on which every concrete LWE-based reduction depends. Our contributions are:
+This paper formalizes the **Pythagorean heart** of one concrete and historically
+resonant instantiation: ring-LWE over the Gaussian integers $\mathbb{Z}[i]$. The
+arithmetic of $\mathbb{Z}[i]$ is governed by the norm $N(a + bi) = a^2 + b^2$,
+the quintessential sum of two squares. Three classical facts drive the entire
+development:
 
-1. A verified treatment of affine bijections over $\mathbb{Z}_p$ and the summation invariance underlying rerandomization (§3).
-2. Verified noise-accumulation bounds and Regev rounding-decryption correctness, including modulus switching (§4).
-3. The Dual-Regev decryption identity and its perfect-correctness corollary (§5).
-4. The hybrid telescope and averaging lemmas, and their assembly into search-to-decision and end-to-end CPA bounds (§6).
-5. A distribution-level (total-variation) telescope and its application to non-commutative module-LWE and NTRU, plus a data-processing contraction inequality (§7).
-6. The Ring-LWE specialization via $\mathbb{Z}$-linearity of ring multiplication (§8).
+1. **Brahmagupta–Fibonacci identity** (7th/13th century):
+   $(a^2 + b^2)(c^2 + d^2) = (ac - bd)^2 + (ad + bc)^2$, which makes $N$
+   multiplicative.
+2. **Fermat's two-squares theorem**: an odd prime $p$ is a sum of two squares
+   iff $p \equiv 1 \pmod 4$, controlling whether $p$ splits or stays inert in
+   $\mathbb{Z}[i]$.
+3. **Nearest-codeword rounding** in $\mathbb{Z}/q\mathbb{Z}$, whose correctness
+   radius is exactly $q/4$, giving a *Euclidean ball* error-tolerance region
+   $x^2 + y^2 < (q/4)^2$ in two dimensions.
 
-Throughout, "verified" means the statement has been checked by a proof assistant with no unproven assumptions beyond the standard foundational axioms.
+Our contribution is a layered, fully verified formalization establishing the
+norm theory, the prime dichotomy, the encryption scheme, and a decryption
+correctness theorem, together with the algebraic core of the search-to-decision
+reduction and a quantitative certificate interface for the Regev worst-case
+reduction.
 
----
+### Notation and conventions
 
-## 2. Preliminaries and Notation
-
-We work over the ring $\mathbb{Z}_q = \mathbb{Z}/q\mathbb{Z}$ of integers modulo $q$. When $q = p$ is prime, $\mathbb{Z}_p$ is a field. Vectors $a, s \in \mathbb{Z}_q^n$ have dot product $\langle a, s\rangle = \sum_{j} a_j s_j$. A *Gaussian-like* error distribution produces small errors; we abstract this as a bound $|e| \le B$ on representatives.
-
-**Definition 2.1 (LWE distribution).** For a secret $s \in \mathbb{Z}_q^n$, an LWE sample is the pair $(a, b)$ where $a \leftarrow \mathbb{Z}_q^n$ is uniform and $b = \langle a, s\rangle + e \bmod q$ with $e$ a small error. The *search-LWE* problem is to recover $s$ from polynomially many samples; the *decision-LWE* problem is to distinguish such samples from uniform pairs.
-
-**Definition 2.2 (Total variation distance).** For probability mass functions $\mu, \nu$ on a finite set $\Omega$,
-$$\mathrm{TVD}(\mu, \nu) = \tfrac12 \sum_{\omega \in \Omega} |\mu(\omega) - \nu(\omega)|.$$
-TVD is a metric; in particular it satisfies the triangle inequality, which we use repeatedly.
-
-**Definition 2.3 (Distinguishing advantage).** For an adversary $\mathcal{A}$ and two experiments producing distributions $D_0, D_1$, the advantage is $\mathrm{Adv}(\mathcal{A}) = |\Pr[\mathcal{A}(D_0)=1] - \Pr[\mathcal{A}(D_1)=1]|$, bounded above by $\mathrm{TVD}(D_0, D_1)$.
-
----
-
-## 3. The Algebra of Rerandomization
-
-The search-to-decision reduction recovers the secret one coordinate at a time. To test a guess for a coordinate it applies an affine transformation to the public component of each sample. Correctness of the reduction hinges on these transformations being *measure-preserving*, which over a prime field is exact.
-
-**Theorem 3.1 (`ZMod.mul_left_bijective_of_prime`).** Let $p$ be prime and $a \in \mathbb{Z}_p$ with $a \neq 0$. Then $x \mapsto a x$ is a bijection of $\mathbb{Z}_p$.
-
-*Proof sketch.* Since $p$ is prime, $\mathbb{Z}_p$ is a field, so a nonzero $a$ is a unit and $x \mapsto ax$ is injective; injectivity on a finite type implies bijectivity. $\qquad\blacksquare$
-
-**Theorem 3.2 (`ZMod.affine_bijective`).** For prime $p$, $a, b \in \mathbb{Z}_p$ with $a \neq 0$, the affine map $x \mapsto a x + b$ is a bijection of $\mathbb{Z}_p$.
-
-*Proof sketch.* Compose the bijection $x \mapsto ax$ (Theorem 3.1) with the translation $y \mapsto y + b$, itself a bijection of the additive group. $\qquad\blacksquare$
-
-We package this as an equivalence $\mathbb{Z}_p \simeq \mathbb{Z}_p$ (`ZMod.affineEquiv`) whose inverse is again affine: if $f(x) = ax + b$ then $f^{-1}(y) = a^{-1}(y - b)$ (`ZMod.affineEquiv_symm_apply`). Affine maps are closed under composition (`ZMod.affine_comp`):
-$$(x \mapsto a_1 x + b_1) \circ (x \mapsto a_2 x + b_2) = \big(x \mapsto (a_1 a_2)x + (a_1 b_2 + b_1)\big).$$
-
-The cryptographically decisive consequence is invariance of the full-set image and of summation.
-
-**Theorem 3.3 (`ZMod.affine_image_univ`).** For prime $p$ and $a \neq 0$, the affine image of $\mathbb{Z}_p$ is all of $\mathbb{Z}_p$: $\{ax + b : x \in \mathbb{Z}_p\} = \mathbb{Z}_p$.
-
-**Theorem 3.4 (`ZMod.sum_affine_eq`).** For prime $p$, $a \neq 0$, and any $f : \mathbb{Z}_p \to \mathbb{R}$,
-$$\sum_{x \in \mathbb{Z}_p} f(ax + b) = \sum_{x \in \mathbb{Z}_p} f(x).$$
-
-*Proof sketch.* Reindex the sum along the bijection of Theorem 3.2; a bijective reparametrization leaves a finite sum invariant. $\qquad\blacksquare$
-
-**Cryptographic reading.** In the hybrid for coordinate $i$, an incorrect secret guess causes the rerandomized samples to be distributed as $f(ax+b)$ for uniform $x$; Theorem 3.4 says this equals the uniform expectation, so the distinguisher gains no signal. Only a correct guess breaks the symmetry. This is the precise mechanism converting a decision oracle into a search algorithm.
+Throughout, $q = 2t$ denotes an even modulus with half-modulus $t = q/2$. A
+Gaussian integer is $z = a + bi$ with $a = \mathrm{Re}(z)$, $b = \mathrm{Im}(z)$.
+The Gaussian norm is $N(z) = a^2 + b^2 \in \mathbb{Z}$. Errors are written
+$(e_x, e_y)$ for the real and imaginary parts, respectively. Plaintext bits are
+$m \in \{0, 1\}$.
 
 ---
 
-## 4. Noise Accumulation and Rounding Decryption
+## 2. The Gaussian norm
 
-### 4.1 Noise accumulation
+**Definition 2.1 (Gaussian norm).** For $z = a + bi \in \mathbb{Z}[i]$, define
 
-Regev ciphertexts are subset sums of fresh samples, so error magnitudes add. We verify the basic triangle-inequality bounds.
+$$N(z) := (\mathrm{Re}\,z)^2 + (\mathrm{Im}\,z)^2 = a^2 + b^2.$$
 
-**Theorem 4.1 (`noise_accumulation_bound`).** If $e : \{0,\dots,m-1\} \to \mathbb{Z}$ satisfies $|e_i| \le B$ for all $i$, then $\big|\sum_{i} e_i\big| \le m B$.
+This is realized in the formalization as `gaussNorm (z : GaussianInt) : ℤ`.
 
-*Proof sketch.* $\big|\sum_i e_i\big| \le \sum_i |e_i| \le \sum_i B = mB$, using the absolute-value triangle inequality and a constant-sum evaluation. $\qquad\blacksquare$
+**Proposition 2.2 (Agreement with the field norm; `gaussNorm_eq_zsqrtdNorm`).**
+The explicit norm agrees with the standard ring norm on $\mathbb{Z}[i]$
+(Mathlib's `Zsqrtd.norm`): $N(z) = z.\mathrm{norm}$.
 
-The same argument gives the subset version (`noise_accumulation_subset_bound`): $\big|\sum_{i \in S} e_i\big| \le |S|\, B$ for any index set $S$; and a real-valued version (`noise_accumulation_bound_real`) with the identical bound $mB$ over $\mathbb{R}$.
+*Proof sketch.* The ring $\mathbb{Z}[i]$ is the quadratic ring $\mathbb{Z}[\sqrt{-1}]$,
+whose generic norm is $a^2 - (-1)b^2 = a^2 + b^2$. Expanding both definitions and
+applying ring normalization gives the identity. $\square$
 
-### 4.2 Rounding decryption
+**Proposition 2.3 (Non-negativity; `gaussNorm_nonneg`).** For every
+$z \in \mathbb{Z}[i]$, $N(z) \geq 0$.
 
-A bit $\mu \in \{0, 1\}$ is encoded as $\mu \cdot (q/2)$. Decryption tests which half of $[0, q)$ the noisy value occupies. Correctness reduces to two interval facts.
-
-**Theorem 4.2 (`regev_rounding_bit0`).** If $|e| < q/4$ then $-q/4 < e < q/4$.
-
-**Theorem 4.3 (`regev_rounding_bit1`).** If $q > 0$ and $|e| < q/4$ then
-$$\frac{q}{4} < \frac{q}{2} + e < \frac{3q}{4}.$$
-
-*Proof sketch.* Both unfold $|e| < q/4$ to $-q/4 < e < q/4$ and apply linear arithmetic. $\qquad\blacksquare$
-
-**Theorem 4.4 (`encoding_separation`).** If $|e|, |e'| < q/4$ and $q > 0$ then $0 < q/2 - |e| - |e'|$; the encodings of $0$ and $1$ remain strictly separated.
-
-**Theorem 4.5 (`regev_encryption_rounding_correctness`).** For $q > 0$, $|e| < q/4$, and any $\mu$,
-$$\big|\, \mu(q/2) + e - \mu(q/2)\,\big| < q/4,$$
-i.e. the noisy codeword is within $q/4$ of the intended codeword, so decryption recovers $\mu$.
-
-### 4.3 Modulus switching
-
-Modulus switching shrinks ciphertexts at the cost of a per-coordinate rounding error $\delta$.
-
-**Theorem 4.6 (`combined_noise_after_switching`).** If $|e_{\mathrm{lwe}}| \le B$ and each rounding error satisfies $|r_i| \le \delta$, then
-$$\Big|\, e_{\mathrm{lwe}} + \sum_{i=1}^{n} r_i \,\Big| \le B + n\delta.$$
-
-**Theorem 4.7 (`decryption_correct_after_switching`).** Under the hypotheses of Theorem 4.6, if additionally $B + n\delta < q/4$, then the combined noise is below $q/4$ and decryption remains correct.
-
-These give the parameter discipline for a working scheme: choose $q$ large enough that $B + n\delta < q/4$.
-
-### 4.4 Amplification and the modulus–noise tradeoff
-
-**Theorem 4.8 (`advantage_amplification`).** For $0 \le p \le 1$ and $k \ge 1$, $p \le 1 - (1-p)^k$: independent repetitions never decrease success probability.
-
-**Theorem 4.9 (`modulus_noise_tradeoff`).** For $q > 0$ and any $\alpha$ with $2\sqrt{n}/q \le \alpha$, we have $2\sqrt{n} \le \alpha q$. Larger moduli permit smaller relative noise rates $\alpha$ while preserving the hardness threshold $\alpha q \ge 2\sqrt n$ from Regev's worst-case connection.
+*Proof sketch.* $N(z) = a^2 + b^2$ is a sum of squares of integers, hence
+non-negative by positivity. $\square$
 
 ---
 
-## 5. The Dual-Regev Scheme
+## 3. Multiplicativity via Brahmagupta–Fibonacci
 
-We model Dual-Regev abstractly: a secret key $sk$, a public key $pk$ generated as $p_i = \langle A_i, s\rangle + e_i$ (encoded by a well-formedness predicate `WellFormedPK`), encryption $\mathrm{Enc}(pk, \mu, r)$ using randomness $r = (r_i)$, and decryption $\mathrm{Dec}(sk, \cdot)$ computing $v - \langle u, s\rangle$.
+The single most important structural property of the norm is multiplicativity.
+We obtain it directly from the classical composition identity for sums of two
+squares.
 
-**Theorem 5.1 (Decryption identity, `dualRegev_decrypt_encrypt_eq`).** For a well-formed public key with errors $e = (e_i)$,
-$$\mathrm{Dec}\big(sk, \mathrm{Enc}(pk, \mu, r)\big) = \mu + \sum_{i=1}^{m} r_i\, e_i.$$
+**Lemma 3.1 (Brahmagupta–Fibonacci identity).** For integers $a, b, c, d$,
 
-*Proof sketch.* Unfold the definitions and substitute the well-formedness relation $p_i = \langle A_i, s\rangle + e_i$ into the decryption expression. The terms $\langle \cdot, s\rangle$ cancel by bilinearity and a reindexing of the double sum (interchanging the order of summation), leaving the message $\mu$ plus the residual $\sum_i r_i e_i$. This is the adjoint cancellation $\langle Tx, y\rangle = \langle x, T^\top y\rangle$ specialized to the dot product. $\qquad\blacksquare$
+$$(a^2 + b^2)(c^2 + d^2) = (ac - bd)^2 + (ad + bc)^2.$$
 
-**Corollary 5.2 (Perfect correctness, `dualRegev_decrypt_correct_zero_noise`).** If all errors are zero then $\mathrm{Dec}(sk, \mathrm{Enc}(pk, \mu, r)) = \mu$.
+(In the formalization this is `FINAL.Pythagorean.brahmagupta_fibonacci`,
+imported and applied to the coordinates of the factors.)
 
-Combined with §4, Theorem 5.1 yields correctness in the noisy regime: when $\big|\sum_i r_i e_i\big| < q/4$ (after rounding), the message is recovered exactly.
+**Theorem 3.2 (Multiplicativity of the Gaussian norm; `gaussNorm_mul`).** For
+all $z, w \in \mathbb{Z}[i]$,
 
----
+$$N(z \cdot w) = N(z) \cdot N(w).$$
 
-## 6. The Hybrid Reduction Calculus
+*Proof sketch.* Write $z = a + bi$, $w = c + di$. The product in $\mathbb{Z}[i]$
+has real part $ac - bd$ and imaginary part $ad + bc$:
 
-### 6.1 Telescope and averaging
+$$\mathrm{Re}(zw) = ac - bd, \qquad \mathrm{Im}(zw) = ad + bc.$$
 
-**Theorem 6.1 (Hybrid telescope, `hybrid_telescope_bound`).** For any sequence of real values $P : \{0, \dots, k+1\} \to \mathbb{R}$,
-$$\big| P_0 - P_{k+1} \big| \le \sum_{i=0}^{k} \big| P_i - P_{i+1} \big|.$$
+Therefore
+$N(zw) = (ac - bd)^2 + (ad + bc)^2$, which by Lemma 3.1 equals
+$(a^2 + b^2)(c^2 + d^2) = N(z)N(w)$. Formally, after substituting the explicit
+real and imaginary parts of the product, the goal is closed by a linear
+combination of the Brahmagupta–Fibonacci identity. $\square$
 
-*Proof sketch.* Induction on $k$. The step uses the triangle inequality $|P_0 - P_{k+2}| \le |P_0 - P_{k+1}| + |P_{k+1} - P_{k+2}|$, then the inductive hypothesis on the truncated sequence. $\qquad\blacksquare$
-
-**Theorem 6.2 (Hybrid averaging / pigeonhole, `hybrid_averaging`).** If $\varepsilon > 0$ and $\varepsilon \le |P_0 - P_{k+1}|$, then there exists an index $i$ with
-$$\frac{\varepsilon}{k+1} \le \big| P_i - P_{i+1}\big|.$$
-
-*Proof sketch.* Contrapositive: if every neighboring gap were $< \varepsilon/(k+1)$, summing the $k+1$ gaps would give a total $< \varepsilon$, contradicting the telescope bound (Theorem 6.1) applied to $\varepsilon \le |P_0 - P_{k+1}|$. $\qquad\blacksquare$
-
-### 6.2 Search-to-decision
-
-**Theorem 6.3 (Pigeonhole advantage split, `search_to_decision_advantage_bound`).** For $n > 0$, if $\delta \le \sum_{i=1}^{n} c_i$ where $c_i$ are coordinate advantages, then some $c_i \ge \delta/n$.
-
-*Proof sketch.* If all $c_i < \delta/n$, then $\sum_i c_i < n \cdot (\delta/n) = \delta$, contradicting the hypothesis. $\qquad\blacksquare$
-
-**Theorem 6.4 (Coordinate recovery, `search_from_decision_coordinate`).** For $n > 0$, $\varepsilon > 0$, hybrid probabilities $H : \{0,\dots,n\} \to \mathbb{R}$ with $\varepsilon \le |H_0 - H_n|$, and coordinate advantages bounding each neighboring gap ($|H_i - H_{i+1}| \le c_i$), there exists $i$ with $\varepsilon / n \le c_i$.
-
-*Proof sketch.* Combine the telescope (Theorem 6.1, rephrased for the $n$-step chain) with the pigeonhole split (Theorem 6.3): the neighboring gaps sum to at least $\varepsilon$ via the telescope, then averaging forces one coordinate above $\varepsilon/n$. The variant `search_from_decision_advantage` packages the same conclusion directly from $\varepsilon \le \sum_i c_i$. $\qquad\blacksquare$
-
-### 6.3 CPA security and end-to-end composition
-
-**Theorem 6.5 (CPA from LWE, `dualRegev_cpa_security_of_lwe`).** Let $\mathrm{adv}_{\mathrm{CPA}}, \mathrm{adv}_{\mathrm{LWE}}, \varepsilon_{\mathrm{corr}} \ge 0$. If there is a reduction with $\mathrm{adv}_{\mathrm{LWE}} \ge \mathrm{adv}_{\mathrm{CPA}} - \varepsilon_{\mathrm{corr}}$, then
-$$\mathrm{adv}_{\mathrm{CPA}} \le \mathrm{adv}_{\mathrm{LWE}} + \varepsilon_{\mathrm{corr}}.$$
-
-The hypothesis $\mathrm{adv}_{\mathrm{LWE}} \ge \mathrm{adv}_{\mathrm{CPA}} - \varepsilon_{\mathrm{corr}}$ encapsulates the standard game-hopping construction of an LWE distinguisher from a CPA adversary; the theorem records the resulting bound.
-
-**Theorem 6.6 (End-to-end composition, `endToEnd_security_composition`).** For $n > 0$ and nonnegative advantages, if $\varepsilon_{\mathrm{decision}} \le n\,\varepsilon_{\mathrm{search}}$ (search-to-decision) and $\varepsilon_{\mathrm{cpa}} \le \varepsilon_{\mathrm{decision}} + \varepsilon_{\mathrm{corr}}$ (CPA reduction), then
-$$\varepsilon_{\mathrm{cpa}} \le n\,\varepsilon_{\mathrm{search}} + \varepsilon_{\mathrm{corr}}.$$
-
-This is the headline quantitative guarantee: the CPA advantage against the encryption scheme is at most a linear ($\times n$) blow-up of the search-LWE advantage, plus the decryption-correctness error controlled in §4.
+This theorem is the algebraic backbone of arithmetic in $\mathbb{Z}[i]$: the
+norm is a multiplicative monoid homomorphism $(\mathbb{Z}[i], \cdot) \to
+(\mathbb{Z}_{\geq 0}, \cdot)$, and the set of norm values — the sums of two
+squares — is consequently closed under multiplication.
 
 ---
 
-## 7. The Distribution-Level Abstraction
+## 4. The splitting / inertness dichotomy
 
-The reductions above are usually proved game-by-game over concrete algebraic objects. We show that the *structural* core lives one level up, over arbitrary distributions, and needs no algebra.
+The behavior of a rational prime $p$ inside $\mathbb{Z}[i]$ is governed entirely
+by $p \bmod 4$. This is Fermat's two-squares theorem in Gaussian-prime language,
+and it dictates the choice of secure ring-LWE moduli.
 
-**Theorem 7.1 (TVD telescope, `hybrid_telescope_tvd`).** Let $\Omega$ be a finite type and $H : \{0, \dots, n\} \to \mathrm{PMF}(\Omega)$ a sequence of distributions. Then
-$$\mathrm{TVD}(H_0, H_n) \le \sum_{i=0}^{n-1} \mathrm{TVD}(H_i, H_{i+1}).$$
+**Theorem 4.1 (Split primes; `prime_split`).** If $p$ is prime with
+$p \equiv 1 \pmod 4$, then there exist integers $a, b$ with $a^2 + b^2 = p$.
 
-*Proof sketch.* Induction on $n$ using the triangle inequality for TVD (`tvd_triangle`), exactly mirroring Theorem 6.1 but with the metric replaced by TVD. $\qquad\blacksquare$
+**Corollary 4.2 (Non-primality in $\mathbb{Z}[i]$; `prime_not_prime_in_gaussian`).**
+If $p$ is prime with $p \equiv 1 \pmod 4$, then $p$ is *not* prime in
+$\mathbb{Z}[i]$; it splits as $p = (a + bi)(a - bi)$ where $a^2 + b^2 = p$.
 
-**Conceptual consequence.** Search-to-decision reductions are fundamentally *measure-theoretic*; the ring structure of $\mathbb{Z}_q$ enters only when bounding individual neighboring gaps (via §3). This explains why the reduction template applies far beyond plain LWE.
+*Proof sketch.* By Theorem 4.1, $p = a^2 + b^2 = N(a + bi)$, so
+$p = (a+bi)(a-bi)$ is a nontrivial factorization (neither factor is a unit since
+each has norm $p > 1$), witnessing that $p$ is reducible, hence not prime. $\square$
 
-### 7.1 Non-commutative module-LWE and NTRU
+**Theorem 4.3 (Inert primes; `prime_inert`).** If $p$ is prime with
+$p \equiv 3 \pmod 4$, then $p$ remains prime in $\mathbb{Z}[i]$.
 
-**Definition 7.2 (`NoncommModuleLWEParams`).** Over a (possibly non-commutative) ring $R$, with left $R$-modules $M$ (secrets) and $N$ (samples), the parameters consist of: a sample count, a secret distribution on $M$, an error distribution on $N$, a left-linear action map $T : M \to_R N$, and a base distribution on $N$.
+**Theorem 4.4 (Not a sum of two squares; `prime_inert_not_sum_two_squares`).** If
+$p \equiv 3 \pmod 4$, then there are no integers $a, b$ with $a^2 + b^2 = p$.
 
-**Definition 7.3 (advantages).** The *one-step advantage* (`oneStepAdvantage`) is $\mathrm{TVD}(T_* \mu_s, \mu_{\mathrm{base}})$, the TVD between the pushforward of the secret distribution under the action map and the base distribution. The *decision advantage* (`decisionAdvantage`) is $\text{sampleCount} \cdot \text{oneStepAdvantage}$.
+*Proof sketch.* Squares modulo $4$ are $0$ or $1$, so $a^2 + b^2 \in \{0, 1, 2\}
+\pmod 4$ and can never be $\equiv 3$. Hence $p \equiv 3 \pmod 4$ is not a sum of
+two squares; equivalently, $p$ has no nontrivial factorization in $\mathbb{Z}[i]$
+(any factor would contribute a norm strictly between $1$ and $p^2$ equal to $p$,
+which is impossible), so $p$ is inert. $\square$
 
-**Theorem 7.4 (`decisionAdvantage_le_mul`).** $\text{decisionAdvantage} \le \text{sampleCount} \cdot \text{oneStepAdvantage}$ (the hybrid bound, here definitional).
-
-**Definition 7.5 (`NTRUInstance`).** An NTRU-style system over $R$ consists of a left-linear public map $M \to_R N$, a secret distribution, a noise distribution, a sample count, and a uniform reference distribution. The map `NTRUInstance.toParams` repackages it as `NoncommModuleLWEParams`.
-
-**Theorem 7.6 (NTRU instantiates the framework, `ntru_instantiates_noncomm_module_framework`).** Every NTRU instance arises as a `NoncommModuleLWEParams` with matching action map, secret distribution, and sample count.
-
-**Theorem 7.7 (NTRU decision reduction, `ntru_decision_reduction`).** For any NTRU instance $P$,
-$$\text{decisionAdvantage}(P.\mathrm{toParams}) \le P.\mathrm{samples} \cdot \text{oneStepAdvantage}(P.\mathrm{toParams}).$$
-
-*Proof sketch.* Apply Theorem 7.4 to $P.\mathrm{toParams}$. $\qquad\blacksquare$
-
-### 7.2 Data-processing / contraction
-
-**Theorem 7.8 (Quotient-map TVD bound, `quotient_map_tvd_bound_noncomm`).** For a left-linear map $\varphi : M \to_R N$ and distributions $\mu, \nu$ on $M$,
-$$\mathrm{TVD}(\varphi_* \mu, \varphi_* \nu) \le \mathrm{TVD}(\mu, \nu).$$
-
-**Theorem 7.9 (Composition of contractions, `tvd_map_map_le`).** For maps $f : \alpha \to \beta$, $g : \beta \to \gamma$ and distributions $\mu, \nu$ on $\alpha$,
-$$\mathrm{TVD}\big((g\circ f)_*\mu, (g\circ f)_*\nu\big) \le \mathrm{TVD}(\mu, \nu).$$
-
-These are instances of the data-processing inequality: post-processing (in particular, any linear pushforward) can never increase statistical distinguishability. They guarantee that the security of the framework is robust under the linear transformations endemic to lattice schemes.
+These results partition the rational primes into two cryptographically distinct
+families: **split moduli** ($p \equiv 1 \pmod 4$, each a sum of two squares) and
+**inert moduli** ($p \equiv 3 \pmod 4$). The choice affects the ring structure
+$\mathbb{Z}[i]/(p)$ and therefore the geometry of the underlying lattice.
 
 ---
 
-## 8. The Ring-LWE Specialization
+## 5. Ring-LWE over $\mathbb{Z}[i]$
 
-Ring-LWE replaces vectors with elements of a polynomial ring $R = \mathbb{Z}_q[x]/(x^n+1)$, where multiplication is computable in $O(n\log n)$ via the FFT. The security argument transports because ring multiplication is linear.
+We instantiate a generic LWE scaffolding at the coefficient ring
+$\mathbb{Z}[i]$.
 
-**Theorem 8.1 (Ring multiplication is $\mathbb{Z}$-linear, `ring_mult_is_linear_on_coeffs`).** In any commutative ring $R$ that is a $\mathbb{Z}$-module, for fixed $a \in R$ the map $s \mapsto a\cdot s$ is $\mathbb{Z}$-linear.
+**Definition 5.1 (Ring-LWE sample; `RLWESample`, `rlweSample`).** A ring-LWE
+sample over $\mathbb{Z}[i]$ is a pair $(a, b) \in \mathbb{Z}[i] \times
+\mathbb{Z}[i]$. The *honest* sample with secret $s$, error $e$, and public
+element $a$ is
 
-*Proof sketch.* Additivity is distributivity; $\mathbb{Z}$-homogeneity follows by induction over integer scalars (splitting into nonnegative and negative cases) using $a\cdot(k\,s) = k\,(a\cdot s)$. $\qquad\blacksquare$
+$$\mathrm{rlweSample}(s, e, a) = (a,\; a \cdot s + e).$$
 
-**Theorem 8.2 (Advantage transport, `ringLWE_advantage_transport`).** If the Ring-LWE distinguishing advantage is bounded by the coefficient-LWE advantage ($\mathrm{adv}_{\mathrm{Ring}} \le \mathrm{adv}_{\mathrm{coeff}}$), the bound transfers verbatim.
+**Definition 5.2 (Euclidean error bound; `errorBounded`).** A Gaussian error
+$e$ is *bounded by $r$* if its error vector lies in the open Euclidean ball of
+radius $r$:
 
-Because $s \mapsto a\cdot s$ is linear (Theorem 8.1), the Ring-LWE decryption identity has exactly the residual shape of Theorem 5.1 — message plus weighted small noise — with matrix–vector adjoint cancellation replaced by ring-multiplication cancellation. The coefficient-vector representation realizes a Ring-LWE sample as a structured module-LWE sample, so the framework of §7 applies, and Theorem 8.2 records that the advantage is preserved across the two representations. The noise-smudging bound (`noise_smudging_bound`): if $\text{stat\_dist} \le \text{original\_noise}/\text{smudging\_noise}$ with the smudging noise positive, the statistical distance is controlled by their ratio — a standard tool for hiding residual noise in advanced Ring-LWE protocols.
+$$\mathrm{errorBounded}(r, e) :\Longleftrightarrow (\mathrm{Re}\,e)^2 +
+(\mathrm{Im}\,e)^2 < r^2.$$
+
+**Definition 5.3 (Search ring-LWE; `SearchRLWE`).** Given a radius $r$ and a list
+of samples, $\mathrm{SearchRLWE}(r, \text{samples})$ is the problem of recovering
+a secret consistent with all samples, where "small residual" means the residual
+error lies in the radius-$r$ Euclidean ball. Formally this instantiates the
+generic `SearchLWE` predicate with the noise predicate $\mathrm{errorBounded}(r,
+\cdot)$.
+
+The use of the Euclidean (sum-of-two-squares) ball as the noise region is the
+natural geometric notion in $\mathbb{Z}[i]$ and is what links the algebra of the
+norm to the correctness analysis below.
+
+---
+
+## 6. A public-key scheme and decryption correctness
+
+We now describe a bit-encryption scheme over $\mathbb{Z}[i]$ and prove its
+correctness. Fix $q = 2t$, so $t = q/2$ is the half-modulus; a plaintext bit
+$m \in \{0, 1\}$ is encoded in a coordinate as $m \cdot t \in \{0, q/2\}$.
+
+### 6.1 The decoder and one-dimensional correctness
+
+**Definition 6.1 (Nearest-codeword decoder; `decodeCoord`).** For half-modulus
+$t$ and a coordinate value $v$,
+
+$$\mathrm{decodeCoord}(t, v) = \begin{cases} 0 & \text{if } 2v < t, \\ 1 &
+\text{otherwise.} \end{cases}$$
+
+**Theorem 6.2 (One-dimensional decoding correctness; `decodeCoord_correct`).**
+Let $m \in \{0, 1\}$ and let $e$ be an integer error with $2|e| < t$. Then
+
+$$\mathrm{decodeCoord}(t,\; e + m \cdot t) = m.$$
+
+*Proof sketch.* Two cases. If $m = 0$, the coordinate is $e$ with $2|e| < t$, so
+$2e < t$ and the decoder outputs $0 = m$. If $m = 1$, the coordinate is $e + t$;
+from $2|e| < t$ we get $2(e + t) = 2e + 2t \geq -t + 2t = t$ (in fact $> t$), so
+$2(e+t) \not< t$ and the decoder outputs $1 = m$. Formally one splits on the two
+values of $m$ and the sign of $e$ (via the case analysis of $|e|$) and discharges
+each branch by linear integer arithmetic. $\square$
+
+### 6.2 Encoding, encryption, decryption
+
+**Definition 6.3 (Message encoding; `encodeMsg`).** A two-bit message
+$(m_x, m_y)$ is encoded as the Gaussian integer
+
+$$\mathrm{encodeMsg}(t, m_x, m_y) = (m_x \cdot t) + (m_y \cdot t)\, i.$$
+
+**Definition 6.4 (Ciphertext; `Ciphertext`).** A ciphertext is a pair
+$(u, v) \in \mathbb{Z}[i]^2$, where $u$ is the public part and $v$ is the masked,
+message-carrying part.
+
+**Definition 6.5 (Encryption; `encrypt`).** With secret $s$, public coordinate
+$a$, error coordinates $(e_x, e_y)$, message bits $(m_x, m_y)$, and half-modulus
+$t$,
+
+$$\mathrm{encrypt} = \big(a,\; a \cdot s + (e_x + e_y i) +
+\mathrm{encodeMsg}(t, m_x, m_y)\big).$$
+
+**Definition 6.6 (Decryption; `decrypt`).** Given the secret $s$ and ciphertext
+$(u, v)$, compute the *phase* $\phi = v - u \cdot s$ and round each coordinate:
+
+$$\mathrm{decrypt}(t, s, (u, v)) = \big(\mathrm{decodeCoord}(t, \mathrm{Re}\,\phi),\;
+\mathrm{decodeCoord}(t, \mathrm{Im}\,\phi)\big).$$
+
+Substituting the ciphertext from Definition 6.5, the phase is
+$\phi = (e_x + e_y i) + \mathrm{encodeMsg}(t, m_x, m_y)$, so
+$\mathrm{Re}\,\phi = e_x + m_x t$ and $\mathrm{Im}\,\phi = e_y + m_y t$. The mask
+$u \cdot s = a \cdot s$ cancels exactly.
+
+### 6.3 From the Euclidean ball to per-coordinate bounds
+
+The decoder needs the per-coordinate condition $2|e| < t$; the scheme's stated
+noise model is the *Euclidean ball* $e_x^2 + e_y^2 < (q/4)^2$. The bridge is:
+
+**Theorem 6.7 (Coordinate bound, real part; `coord_bound_re`).** Let $t > 0$ and
+$q = 2t$. If
+
+$$e_x^2 + e_y^2 < \left(\frac{q}{4}\right)^2,$$
+
+then $2|e_x| < t$.
+
+*Proof sketch.* Since $q = 2t$, the radius satisfies $(q/4)^2 = (t/2)^2$. Because
+$e_y^2 \geq 0$, we have $e_x^2 < (t/2)^2$. As $t/2 \geq 0$, taking square roots
+gives $|e_x| < t/2$, i.e. $2|e_x| < t$. The formalization performs this over
+$\mathbb{R}$ (casting the integer errors) using $|x| < c$ from $x^2 < c^2$ with
+$c \geq 0$, then transfers back to the integers. $\square$
+
+**Theorem 6.8 (Coordinate bound, imaginary part; `coord_bound_im`).** Under the
+same hypotheses, $2|e_y| < t$.
+
+*Proof sketch.* Identical to Theorem 6.7 after swapping the roles of $e_x$ and
+$e_y$ (the ball condition is symmetric). $\square$
+
+### 6.4 Decryption correctness
+
+Combining the above yields the main correctness statement.
+
+**Theorem 6.9 (Decryption correctness for ring-LWE over $\mathbb{Z}[i]$).** Let
+$q = 2t$ with $t > 0$, let $(m_x, m_y) \in \{0,1\}^2$, and let the error vector
+satisfy the Euclidean ball condition
+
+$$e_x^2 + e_y^2 < \left(\frac{q}{4}\right)^2.$$
+
+Then decryption recovers the message exactly:
+
+$$\mathrm{decrypt}\big(t, s,\; \mathrm{encrypt}(t, s, a, e_x, e_y, m_x, m_y)\big)
+= (m_x, m_y).$$
+
+*Proof sketch.* By Definition 6.6 the phase is $\phi = (e_x + e_y i) +
+\mathrm{encodeMsg}(t, m_x, m_y)$ because the mask $u \cdot s = a \cdot s$ cancels.
+Hence $\mathrm{Re}\,\phi = e_x + m_x t$ and $\mathrm{Im}\,\phi = e_y + m_y t$. By
+Theorems 6.7 and 6.8, the ball condition gives $2|e_x| < t$ and $2|e_y| < t$.
+Applying Theorem 6.2 (`decodeCoord_correct`) to each coordinate yields
+$\mathrm{decodeCoord}(t, e_x + m_x t) = m_x$ and likewise for $m_y$. Therefore the
+pair returned by `decrypt` is exactly $(m_x, m_y)$. $\square$
+
+The disk $x^2 + y^2 = (q/4)^2$ — a Pythagorean circle — is precisely the boundary
+of the region in which correctness is guaranteed.
+
+---
+
+## 7. The algebraic core of the search-to-decision reduction
+
+Correctness is necessary but not sufficient; security rests on reductions. We
+formalize the deterministic algebraic core of the LWE search-to-decision
+reduction (Regev 2005; Peikert 2009) over a prime field $\mathbb{Z}/p\mathbb{Z}$.
+
+**Theorem 7.1 (Affine bijectivity; `ZMod.affine_bijective`).** Let $p$ be prime
+and $a, b \in \mathbb{Z}/p\mathbb{Z}$ with $a \neq 0$. Then the affine map
+$x \mapsto a x + b$ is a bijection of $\mathbb{Z}/p\mathbb{Z}$.
+
+*Proof sketch.* For prime $p$, $\mathbb{Z}/p\mathbb{Z}$ is a field, so
+multiplication by $a \neq 0$ is injective, hence (on a finite type) bijective.
+Composing with the translation $x \mapsto x + b$, itself a bijection, preserves
+bijectivity. $\square$
+
+This is the mechanism by which "wrong guesses" in the coordinate-by-coordinate
+hybrid produce *uniform* re-randomized samples: an affine re-randomization of the
+public component preserves uniformity exactly when $a \neq 0$. Two immediate
+consequences used in the hybrid analysis:
+
+- **Summation invariance (`ZMod.sum_affine_eq`).** For any
+  $f : \mathbb{Z}/p\mathbb{Z} \to \mathbb{R}$ and $a \neq 0$,
+  $\sum_x f(a x + b) = \sum_x f(x)$ (reindexing along the affine bijection).
+- **Full-image preservation (`ZMod.affine_image_univ`).** The affine image of
+  the whole space is the whole space.
+
+**Theorem 7.2 (Per-coordinate advantage bound; `search_to_decision_advantage_bound`).**
+Let $n \geq 1$, $\delta \in \mathbb{R}$, and let $\mathrm{coordAdvantage} :
+\{0, \dots, n-1\} \to \mathbb{R}$ satisfy $\delta \leq \sum_i
+\mathrm{coordAdvantage}(i)$. Then there exists an index $i$ with
+
+$$\mathrm{coordAdvantage}(i) \geq \frac{\delta}{n}.$$
+
+*Proof sketch.* Pigeonhole. If every coordinate had advantage strictly below
+$\delta / n$, then the sum would be strictly below $n \cdot (\delta/n) = \delta$,
+contradicting the hypothesis $\delta \leq \sum_i \mathrm{coordAdvantage}(i)$. $\square$
+
+This is the source of the standard factor-$n$ advantage loss in the
+search-to-decision reduction, and it is tight for the coordinate-by-coordinate
+strategy.
+
+### 7.1 Noise accumulation and rounding correctness
+
+The catalog core also supplies the analytic bounds underlying Regev-style
+encryption:
+
+**Theorem 7.3 (Noise accumulation; `noise_accumulation_bound`).** If $|e_i| \leq
+B$ for $i = 1, \dots, m$, then $\left|\sum_i e_i\right| \leq m B$.
+
+*Proof sketch.* Triangle inequality followed by termwise bounding:
+$\left|\sum_i e_i\right| \leq \sum_i |e_i| \leq \sum_i B = m B$. $\square$
+
+**Theorem 7.4 (Rounding correctness; `regev_rounding_bit1`).** For $q > 0$ and
+$|e| < q/4$, the noisy encoding $q/2 + e$ of the bit $1$ lies strictly in the
+interval $(q/4,\ 3q/4)$.
+
+*Proof sketch.* From $|e| < q/4$ we get $-q/4 < e < q/4$; adding $q/2$ gives
+$q/4 < q/2 + e < 3q/4$ by linear arithmetic. $\square$
+
+These (with their companions `regev_rounding_bit0`,
+`regev_encryption_rounding_correctness`, and `encoding_separation`) confirm that
+the $q/4$ rounding radius separates the two codewords $0$ and $q/2$.
+
+---
+
+## 8. The Regev certificate interface
+
+Regev's worst-case→decision reduction is quantum and analytic; we do **not**
+reprove it. Instead we isolate it as an explicit assumption and prove all
+deterministic algebra downstream.
+
+**Definition 8.1 (Crypto reduction).** A `CryptoReduction` is a multiplicative
+advantage-loss factor $\ell > 0$ together with the bookkeeping that composes
+reductions: if reduction $R_1$ loses a factor $\ell_1$ and $R_2$ loses $\ell_2$,
+then $R_1 \circ R_2$ loses $\ell_1 \ell_2$ (`reduction_compose_loss`).
+
+**Definition 8.2 (Regev reduction certificate; `RegevReductionCertificate`).** For
+real parameters $(n, q, \alpha, \gamma)$, a certificate bundles: $n \geq 0$,
+$\alpha > 0$, $q > 0$; the noise-feasibility condition $\alpha q \geq 2\sqrt{n}$;
+the approximation-factor relation $\gamma = n/\alpha$ (Regev's $\tilde{O}(n/\alpha)$
+relation); and an *assumed* worst-case→decision reduction
+(`quantumReduction : CryptoReduction`).
+
+**Theorem 8.3 (Approximation-factor bound; `RegevReductionCertificate.approx_factor_le`).**
+Any certificate satisfies
+
+$$\gamma \leq \frac{q\sqrt{n}}{2}.$$
+
+*Proof sketch.* Substitute $\gamma = n/\alpha$ and apply
+`approx_factor_upper_bound`: from $\alpha q \geq 2\sqrt{n}$, $\alpha > 0$, and
+$(\sqrt n)^2 = n$, the inequality $n/\alpha \leq q\sqrt n / 2$ follows by
+clearing the positive denominator $\alpha$ and a nonlinear arithmetic step. $\square$
+
+**Theorem 8.4 (Worst-case → search-LWE; `regev_certificate_gives_worst_case_to_search_lwe`).**
+Given a certificate, a search-to-decision reduction, and the matching advantage
+hypotheses $\mathrm{adv}_{\text{dec}} \leq \ell_{\text{quantum}} \cdot
+\mathrm{adv}_{\text{wc}}$ and $\mathrm{adv}_{\text{search}} \leq
+\ell_{\text{s2d}} \cdot \mathrm{adv}_{\text{dec}}$, one obtains both the
+approximation bound $\gamma \leq q\sqrt n / 2$ and the composed worst-case →
+search-LWE advantage bound
+
+$$\mathrm{adv}_{\text{search}} \leq (\ell_{\text{quantum}} \cdot
+\ell_{\text{s2d}}) \cdot \mathrm{adv}_{\text{wc}}.$$
+
+*Proof sketch.* The first conjunct is Theorem 8.3. The second is
+`reduction_compose_loss` applied to the two advantage hypotheses, multiplying the
+loss factors. No part of Regev's quantum reduction is reproved; it enters only
+through the certificate field and the supplied hypothesis. $\square$
+
+Supporting parameter-algebra lemmas include `approx_factor_boundary_identity`
+(at the boundary $\alpha q = 2\sqrt n$, $n/\alpha = q\sqrt n / 2$),
+`noise_feasible_of_dimension_ge_one` ($n \geq 1$ and feasibility give
+$\alpha q \geq 2$), and the monotonicity results `feasibility_mono_modulus` and
+`feasibility_mono_noise`.
 
 ---
 
 ## 9. Algorithms
 
-The constructive content yields explicit procedures, summarized here and implemented in the accompanying demonstration code.
+The development induces several concrete, executable procedures:
 
-- **Affine rerandomization** (basis of search-to-decision): given a sample coordinate $x$ and a guess, sample $a \neq 0$, $b$, and output $ax + b$; by Theorem 3.4 wrong guesses yield uniform output.
-- **Regev bit decryption**: compute $v - \langle u, s\rangle$, reduce to a centered representative in $(-q/2, q/2]$, and output $0$ if $|{\cdot}| < q/4$, else $1$ (Theorems 4.2–4.5).
-- **Dual-Regev encrypt/decrypt**: encrypt via $\mathrm{Enc}(pk, \mu, r)$, decrypt via the residual identity of Theorem 5.1; correct whenever the residual noise is below $q/4$.
-- **Hybrid advantage accounting**: given neighboring gaps, the telescope (Theorem 6.1) sums them; the averaging lemma (Theorem 6.2) locates a gap $\ge \varepsilon/(k+1)$.
+1. **Norm-based product encoding (Brahmagupta–Fibonacci composition).** Given two
+   sums of two squares, compute the squares representing their product:
+   $(a, b), (c, d) \mapsto (ac - bd, ad + bc)$. Complexity $O(1)$ ring
+   operations.
+2. **Prime classification for modulus selection.** Given a prime $p$, classify it
+   as split ($p \equiv 1 \pmod 4$, returning $(a, b)$ with $a^2 + b^2 = p$ via a
+   two-squares search) or inert ($p \equiv 3 \pmod 4$). The two-squares search
+   runs in $O(\sqrt p)$ trial steps.
+3. **Encrypt/decrypt over $\mathbb{Z}[i]$.** Encryption is one ring
+   multiplication and two additions; decryption is one ring multiplication, one
+   subtraction, and two rounding comparisons. All $O(1)$ ring operations.
+4. **Euclidean-ball noise check.** Verify $e_x^2 + e_y^2 < (q/4)^2$ to certify
+   that a given error will decrypt correctly. $O(1)$.
 
 ---
 
 ## 10. Applications
 
-1. **Standardized post-quantum encryption.** The Regev and Dual-Regev templates, and the Ring-LWE variant, are the mathematical basis for the lattice schemes selected for post-quantum standardization. The decryption-correctness and noise-budget results (§4–§5) are exactly the inequalities a parameter designer must satisfy.
-2. **Homomorphic encryption.** LWE and Ring-LWE underpin fully homomorphic encryption; modulus switching (Theorems 4.6–4.7) and noise smudging (§8) are core noise-management techniques there.
-3. **Unified security architecture.** The distribution-level telescope (§7) shows plain LWE, module-LWE, and NTRU share one reduction skeleton, simplifying the analysis of new schemes.
+- **Compact post-quantum encryption.** Ring-LWE over $\mathbb{Z}[i]$ packs two
+  message bits per ciphertext coordinate, with a clean Euclidean error budget
+  that is straightforward to reason about and to parameterize.
+- **Parameter selection.** The split/inert dichotomy (Theorems 4.1–4.4) is a
+  design rule for choosing moduli with the desired ring structure; the
+  certificate interface (Section 8) ties chosen parameters to a worst-case
+  hardness guarantee with an explicit approximation factor $\gamma \leq q\sqrt n
+  / 2$.
+- **Reusable number theory.** Multiplicativity of the norm and the two-squares
+  theorem are foundational across algebraic number theory; the formal artifacts
+  are directly reusable beyond cryptography.
 
 ---
 
 ## 11. Discussion
 
-The formalization clarifies a separation of concerns that is often blurred in informal treatments. The *quantitative* skeleton of every LWE reduction — telescope plus pigeonhole — is purely metric and holds for total variation distance over arbitrary distributions (Theorems 6.1, 6.2, 7.1). The *algebraic* content enters only in two places: showing that wrong guesses produce uniform samples (the affine bijection, Theorem 3.4), and that decryption cancels the secret-dependent terms (the adjoint identity, Theorems 5.1, 8.1). Robustness under linear post-processing is then automatic from the data-processing inequality (Theorems 7.8, 7.9). This modular structure is what allows a single framework to cover plain, module, ring, and NTRU variants.
+The development is deliberately *layered*: no result is used in its own proof,
+and each section builds only on earlier ones. This makes the dependency graph
+auditable and the trust story transparent — in particular, the one analytic/
+quantum ingredient we do not reprove (Regev's worst-case→decision reduction) is
+isolated behind a single explicit hypothesis (`quantumReduction`), so a reader
+can see exactly what is assumed and what is proved.
 
-A second observation is the centrality of a single scalar threshold. Decryption correctness across all variants is governed by the additive condition "total noise $< q/4$" (Theorems 4.5, 4.7), with the total noise assembled from per-sample bounds via the accumulation lemmas (Theorem 4.1) and adjusted for modulus switching. This makes parameter selection a transparent inequality rather than a bespoke analysis per scheme.
+A notable conceptual thread is that the *same* sum-of-two-squares expression
+plays three roles: as the ring norm whose multiplicativity (Brahmagupta–
+Fibonacci) drives the algebra; as the obstruction governing which primes split
+(Fermat); and as the Euclidean ball $x^2 + y^2 < (q/4)^2$ defining the decryption
+correctness region. Pythagoras' identity is thus simultaneously the algebra, the
+number theory, and the geometry of the scheme.
 
 ---
 
-## 12. Future Directions
+## 12. Future work
 
-**Conjecture 1 — Unified residual functor.** There should be a single $R$-module-level lemma, parameterized by an adjoint bilinear pairing $\langle\cdot,\cdot\rangle$, yielding both the Dual-Regev and Ring-LWE decryption identities as specializations (pairing = dot product, resp. ring multiplication via the regular representation). Both identities are instances of the adjoint relation $\langle Tx, y\rangle = \langle x, T^\top y\rangle$ for a self-paired operator, so cancellation is functorial in the pairing rather than tied to matrices or rings. This is stateable now because both concrete identities are proved (the matrix adjoint cancellation and the `ring`-based ring identity), giving two witnesses to check the generalization against.
+Several falsifiable, formalizable conjectures extend this development:
 
-**Conjecture 2 — Non-field rings break naive search-to-decision.** Over $\mathbb{Z}_q$ with $q$ composite, the rerandomization identity $\sum_x f(ax+b) = \sum_x f(x)$ should *fail* for some non-unit $a \neq 0$; the unit hypothesis is necessary, not an artifact. When $a$ is a zero divisor, $ax$ ranges only over the ideal $(a)$, not all of $\mathbb{Z}_q$, so uniformity is not preserved and the hybrid step is invalid. A concrete counterexample at $q = 6$, $a = 2$ would pin the boundary and is a finite, decidable claim.
-
-**Conjecture 3 — Tight noise budget across all three schemes.** A single inequality $B_{\text{total}} < q/4$ — with $B_{\text{total}} = X_1 + mEX$ in matrix LWE and $B_{\text{total}} = \|e\|\,\|r\| + \|e_1\| + \|s\|\,\|e_0\|$ in Ring-LWE — should be both necessary and sufficient for one-bit decryption correctness, and tight: there exist error vectors meeting the bound with equality that still decrypt, and arbitrarily small overshoots that fail. The residual noise enters decryption purely additively, so correctness is governed by a single scalar threshold.
+- **Field-ness of inert quotients ⇒ full Gaussian search-to-decision.** For
+  $p \equiv 3 \pmod 4$, $\mathbb{Z}[i]/(p) \cong \mathbb{F}_{p^2}$ is a field, so
+  affine rerandomization $z \mapsto az + b$ ($a \neq 0$) is a bijection, giving a
+  Gaussian search-to-decision reduction with the same per-coordinate $1/n$
+  advantage loss.
+- **Norm-form noise composition under modulus switching.** Combining two
+  Gaussian-LWE samples yields noise with $N(e_1 + u e_2) \leq (\sqrt{N(e_1)} +
+  \sqrt{N(e_2)})^2$ for any unit $u$, with equality iff the error vectors are
+  collinear.
+- **Density of secure parameters.** The split moduli ($p \equiv 1 \pmod 4$) and
+  inert moduli ($p \equiv 3 \pmod 4$) are each asymptotically $\tfrac12 \pi(N)$
+  (Dirichlet), with a `decide`-checkable finite version.
+- **Structure of sums of two squares.** $\{n : \text{sum of two squares}\}$ is
+  exactly the image of the norm map, closed under multiplication, with the
+  classical even-valuation criterion at primes $\equiv 3 \pmod 4$.
+- **Unit group and rerandomization period.** The unit group of $\mathbb{Z}[i]$ is
+  $\{1, i, -1, -i\}$ of order $4$, giving a rotation hybrid of period $4$;
+  generalizes to $\mathbb{Z}[\zeta]$ for roots of unity $\zeta$.
 
 ---
 
 ## 13. Conclusion
 
-We have given a formally verified account of the structural core of LWE-based cryptography: the affine-bijection algebra that powers rerandomization, the noise-accumulation and rounding inequalities that guarantee decryption, the Dual-Regev residual identity, the hybrid telescope and pigeonhole that quantify the reduction, the distribution-level abstraction that reveals its measure-theoretic nature, and the Ring-LWE specialization via linearity of ring multiplication. Together these results trace, with rigor, the chain of reasoning from worst-case lattice hardness to a working, quantum-resistant encryption scheme — and show that the chain rests, at bottom, on the triangle inequality.
+We have formalized, with machine-checked proofs, the Pythagorean foundations of
+ring-LWE over the Gaussian integers: multiplicativity of the norm via the
+Brahmagupta–Fibonacci identity (`gaussNorm_mul`), the split/inert prime dichotomy
+(`prime_split`, `prime_inert` and companions), a public-key encryption scheme
+with a clean decryption-correctness guarantee inside the Euclidean ball of radius
+$q/4$ (`decodeCoord_correct`, `coord_bound_re`, `coord_bound_im`), and the
+algebraic core of the search-to-decision reduction
+(`ZMod.affine_bijective`, `search_to_decision_advantage_bound`) together with a
+certificate interface composing the assumed Regev quantum reduction
+(`regev_certificate_gives_worst_case_to_search_lwe`). The result is a transparent,
+auditable account in which a single classical identity — the sum of two squares —
+underlies the algebra, the number theory, and the geometry of a post-quantum
+encryption scheme.
