@@ -1,279 +1,219 @@
-# Verified Extremal Graph Theory: Turán Bounds, Triangle Removal, and the Additive Bridge
+# A Parity-Uniform Cubic Upper Bound for $\mathrm{ex}(n, K_{a,b}, K_{3,t})$, with Threshold Analysis and Downward Closure
+
+**Author:** Aristotle
+
+**Date:** 2026-06-24
+
+---
 
 ## Abstract
 
-We present a formally verified framework for extremal graph theory in Lean 4, building on Mathlib's `SimpleGraph` infrastructure. Our contributions include: (1) a machine-checked proof of Mantel's theorem (triangle-free graphs on n vertices have at most ⌊n²/4⌋ edges) via degree energy and Cauchy-Schwarz; (2) a verified proof that the Turán graph T(n,p) is K_{p+1}-free, with a complete algorithmic construction; (3) a certified greedy triangle removal algorithm with proved correctness bounds; (4) the neighborhood clique-free lemma as reusable inductive infrastructure; (5) novel definitions of degree energy and edge edit distance as formal combinatorial concepts; and (6) computational demonstrations of the 3-AP/triangle bridge connecting extremal graph theory to additive combinatorics. All proofs compile without sorry and depend only on standard axioms (propext, Classical.choice, Quot.sound).
+We study the generalized (Alon–Shikhelman) Turán problem of counting copies of the complete bipartite graph $K_{a,b}$ inside graphs that forbid the smaller complete bipartite graph $K_{3,t}$. We prove an explicit cubic upper bound: for every $K_{3,t}$-free graph $G$ on $n$ vertices with $3\le a$, $3\le b$, the number of labelled copies of $K_{a,b}$ is at most $\binom{n}{3}\binom{t-1}{b}\binom{t-1}{a-3}$, hence $O(n^3)$. The argument is a Kővári–Sós–Turán-style double count anchored on a $3$-element core extracted from the $a$-side of each copy, using the equivalence between $K_{3,t}$-freeness and a uniform cap of $t-1$ on the common neighborhood of every triple. The bound holds *uniformly at the conjectured necessary threshold* $t = b+1$ for every parity of $b$; the parity subtlety in the literature lives entirely in the matching lower-bound construction. We complement the bound with an exact threshold analysis: for $b\ge 6$ the proved Janzer–Longbrake–Yepremyan threshold $2\max\{3,\lceil b/2\rceil\}+1$ equals $b+1+(b\bmod 2)$, so it coincides with the necessary threshold $b+1$ exactly when $b$ is even and exceeds it by one exactly when $b$ is odd. Finally, we establish *downward closure*: the cubic bound transfers verbatim, with the same constant, to every subgraph of a $K_{3,t}$-free graph, making the estimate robust under edge deletion. All results have been formally verified.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 The generalized Turán problem
 
-Extremal graph theory, initiated by Turán (1941) and Mantel (1907), studies the maximum or minimum values of graph invariants subject to structural constraints. The central problem — determining the maximum number of edges in a graph on n vertices that avoids a fixed subgraph H — has deep connections to:
+Classical extremal graph theory, initiated by Turán, asks for the maximum number of edges in an $n$-vertex graph avoiding a fixed subgraph. The Alon–Shikhelman generalization replaces "number of edges" by "number of copies of a fixed pattern graph $H$": for graphs $H$ and $F$, one defines
+$$\mathrm{ex}(n, H, F) = \max\{\, c_H(G) : |V(G)| = n,\ G \text{ is } F\text{-free}\,\},$$
+where $c_H(G)$ is the number of (labelled) copies of $H$ in $G$. The classical case is $H = K_2$. Choosing $H$ to be a larger structure interrogates how the prohibition of $F$ constrains not just edges but rich substructures.
 
-- **Additive combinatorics**: Roth's theorem on 3-term arithmetic progressions follows from the triangle removal lemma via a graph-theoretic encoding.
-- **Property testing**: The removal lemma underlies constant-query property testers for subgraph-freeness.
-- **Pseudorandomness**: Turán-type bounds connect to the Expander Mixing Lemma and spectral graph theory.
-- **Discrete optimization**: Extremal graphs serve as worst-case instances for many algorithmic problems.
+We focus on the bipartite-versus-bipartite instance $H = K_{a,b}$, $F = K_{3,t}$. The motivating fact (a theorem of Janzer, Longbrake, and Yepremyan) is that for $t$ above a suitable threshold,
+$$\mathrm{ex}(n, K_{a,b}, K_{3,t}) = \Theta(n^3).$$
+The exponent $3$ is dictated by the "$3$" of the forbidden $K_{3,t}$: the three vertices on the small side of the forbidden pattern are the only ones that may range freely, while all remaining vertices of a $K_{a,b}$-copy are forced into bounded common neighborhoods.
 
-Despite the centrality of these results, few have been formally verified. This paper presents a cohesive Lean 4 formalization that treats extremal graph theory as a unified framework, emphasizing the pipeline from clique-freeness through degree counting to triangle removal.
+### 1.2 Contributions
 
-### 1.2 Relationship to Prior Work
+This paper isolates and formally verifies three packaged contributions.
 
-Mathlib provides extensive infrastructure for `SimpleGraph`, including adjacency, neighborhoods, degrees, the handshaking lemma (`sum_degrees_eq_twice_card_edges`), and clique-freeness (`CliqueFree`). Our work builds directly on this foundation, adding:
+1. **The cubic upper bound** (Section 3). A self-contained, elementary proof that any $K_{3,t}$-free graph on $n$ vertices contains at most $\binom{n}{3}\binom{t-1}{b}\binom{t-1}{a-3}$ copies of $K_{a,b}$, valid at the necessary threshold $t=b+1$ for every parity of $b$. The headline statement is `KabCopies_cubic_of_K3tFree`.
 
-- The `degreeEnergy` functional (sum of squared degrees)
-- Edge edit distance between graphs
-- Triangle counting for finite graphs
-- The Turán graph as an explicit construction
-- Shadow operators and uniform families for extremal set theory
+2. **The threshold analysis** (Section 4). An exact arithmetic comparison of the proved threshold $2\max\{3,\lceil b/2\rceil\}+1$ and the necessary threshold $b+1$, showing the gap equals $b \bmod 2$ for $b\ge 6$ (`threshold_gap`), is nonzero iff $b$ is odd (`necessary_lt_paper_iff_odd`), and that the leading constant collapses to $\binom{b}{a-3}$ at the necessary threshold (`cubic_constant_at_threshold`).
 
-No prior Lean formalization of Turán's theorem, Mantel's theorem, or the triangle removal certificate exists in Mathlib or its ecosystem to our knowledge.
+3. **Downward closure** (Section 5). The cubic bound is monotone under the subgraph order: for $G\le G'$ with $G'$ being $K_{3,t}$-free, $G$ inherits the same cubic bound with the same constant (`KabCopies_cubic_of_subgraph`). This makes the estimate robust under deletion/cleaning operations.
 
-### 1.3 Overview of Results
+All three are derived from a single quantitative principle: $K_{3,t}$-freeness is equivalent to a cap of $t-1$ on the common neighborhood of every triple of vertices.
 
-| Theorem | Statement | Proof Method |
-|---------|-----------|--------------|
-| `turanGraph_cliqueFree` | T(n,p) is K_{p+1}-free | Pigeonhole principle |
-| `neighborhood_cliqueFree` | Neighborhoods of K_r-free graphs are K_{r-1}-free | Clique extension |
-| `degree_energy_cauchy_schwarz` | n·∑deg²  ≥ (∑deg)² | Cauchy-Schwarz inequality |
-| `triangle_free_disjoint_neighborhoods` | Adjacent vertices in triangle-free graphs have disjoint neighborhoods | Triangle construction |
-| `triangle_free_degree_sum_bound` | For adjacent u,v in triangle-free G: deg(u)+deg(v) ≤ n | Disjoint neighborhoods |
-| `triangle_free_degree_energy_bound` | ∑deg² ≤ n·\|E\| for triangle-free G | Double counting + degree sum bound |
-| `mantel_theorem` | 4\|E\| ≤ n² for triangle-free G | Cauchy-Schwarz + energy bound |
-| `greedy_triangle_removal` | Certificate: ∃H triangle-free with \|E(G)\|-\|E(H)\| ≤ T(G) | Edge set construction |
-| `edgeEditDistance_symm` | Edit distance is symmetric | Definition unfolding |
-| `lowerShadow_mono` | Shadow is monotone w.r.t. family inclusion | biUnion monotonicity |
+---
 
-## 2. Definitions and Notation
+## 2. Definitions
 
-### 2.1 Degree Energy
+Throughout, $V$ is a finite vertex set with $|V| = n$, and $G$ is a simple graph on $V$ with adjacency relation $\sim$ (symmetric and irreflexive). For finite sets we write $|X|$ for cardinality and $\binom{m}{k}$ for the binomial coefficient (with the natural-number convention $\binom{m}{k}=0$ for $k>m$).
 
-**Definition 2.1** (Degree Energy). For a simple graph G = (V, E) with V finite, the *degree energy* is:
+**Definition 2.1 (Common neighborhood).** For a set $S\subseteq V$, the *common neighborhood* is
+$$N(S) = \{\, w\in V : \forall u\in S,\ u\sim w \,\}.$$
+Membership $w\in N(S)$ means $w$ is adjacent to every vertex of $S$. (In the formalization, `cnbhd G S` is the filter of `univ` by this predicate, with `mem_cnbhd` recording the membership characterization.)
 
-$$\mathcal{E}(G) = \sum_{v \in V} \deg(v)^2$$
+**Definition 2.2 (Copies of $K_{a,b}$).** A *labelled copy* of $K_{a,b}$ in $G$ is an ordered pair $(A,B)$ of disjoint subsets of $V$ with $|A|=a$, $|B|=b$, and every cross pair adjacent:
+$$\forall u\in A,\ \forall v\in B,\ u\sim v.$$
+The set of all such pairs is denoted $\mathrm{Copies}_{a,b}(G)$; its cardinality is the count $c_{K_{a,b}}(G)$. (Formally, `KabCopies G a b` is the corresponding `Finset (Finset V × Finset V)`, characterized by `mem_KabCopies`.)
 
-In Lean:
-```lean
-noncomputable def degreeEnergy {V : Type*} [Fintype V]
-    (G : SimpleGraph V) [DecidableRel G.Adj] : ℕ :=
-  ∑ v : V, (G.degree v) ^ 2
-```
+**Definition 2.3 ($K_{3,t}$-freeness).** $G$ is *$K_{3,t}$-free* if no copy of $K_{3,t}$ exists:
+$$\neg\,\exists\, A,B\subseteq V:\ |A|=3,\ |B|=t,\ A\cap B=\varnothing,\ \forall u\in A,\ \forall v\in B,\ u\sim v.$$
+(Formally, `K3tFree G t`.)
 
-The degree energy is a combinatorial analogue of the second moment of the degree distribution. It controls extremal bounds via the Cauchy-Schwarz inequality: n · E(G) ≥ (2|E|)², which follows from ∑1² · ∑d² ≥ (∑d)².
+**Definition 2.4 (Common-neighborhood bound).** $G$ satisfies the *common-neighborhood bound* at $t$ if every triple has at most $t-1$ common neighbors:
+$$\forall S\subseteq V,\ |S|=3 \ \Rightarrow\ |N(S)| \le t-1.$$
+(Formally, `CNbound G t`.)
 
-### 2.2 Edge Edit Distance
+**Definition 2.5 (Subgraph order).** For graphs $G, G'$ on $V$, write $G \le G'$ if every edge of $G$ is an edge of $G'$, i.e. $u\sim_G v \Rightarrow u\sim_{G'} v$. This is the standard partial order on simple graphs over a fixed vertex set.
 
-**Definition 2.2** (Edge Edit Distance). For graphs G, H on the same vertex set V:
+**Definition 2.6 (Thresholds).** The *necessary threshold* is $\tau_{\mathrm{nec}}(b) = b+1$. The *proved threshold* (from the Janzer–Longbrake–Yepremyan lower-bound construction) is
+$$\tau_{\mathrm{proved}}(b) = 2\max\{3,\lceil b/2\rceil\}+1, \qquad \lceil b/2\rceil = \left\lfloor \tfrac{b+1}{2}\right\rfloor.$$
+(Formally, `necessaryThreshold` and `paperThreshold`.)
 
-$$d_{\text{edit}}(G, H) = |E(G) \setminus E(H)| + |E(H) \setminus E(G)| = |E(G) \triangle E(H)|$$
+---
 
-This is a metric on graphs (we prove symmetry and reflexivity; the triangle inequality follows from standard set-theoretic arguments).
+## 3. The cubic upper bound
 
-### 2.3 Turán Graph
+### 3.1 Two structural lemmas on common neighborhoods
 
-**Definition 2.3** (Turán Graph). T(n, p) is the complete p-partite graph on vertex set {0, ..., n-1} with partition classes determined by residues modulo p:
+**Lemma 3.1 (Antitonicity).** If $S\subseteq T$ then $N(T)\subseteq N(S)$.
 
-$$T(n,p).Adj(u,v) \iff u \neq v \land (u \bmod p \neq v \bmod p)$$
+*Proof.* If $w\in N(T)$ then $w$ is adjacent to every vertex of $T\supseteq S$, hence to every vertex of $S$. $\square$ (Formally, `cnbhd_antitone`.)
 
-This produces balanced partition classes: ⌈n/p⌉ vertices in the first (n mod p) classes and ⌊n/p⌋ in the remaining classes.
+**Lemma 3.2 (Freeness $\iff$ neighborhood cap).** For $t\ge 1$, $G$ is $K_{3,t}$-free if and only if $G$ satisfies the common-neighborhood bound at $t$:
+$$\text{`K3tFree G t`} \iff \text{`CNbound G t`}.$$
 
-### 2.4 Triangle Count and Lower Shadow
+*Proof.* ($\Rightarrow$) Suppose some triple $S$ had $|N(S)|\ge t$. Choose $B\subseteq N(S)$ with $|B|=t$. Then $S$ and $B$ are disjoint (any common element would be adjacent to itself, contradicting irreflexivity), and every $u\in S$ is adjacent to every $v\in B$ by definition of $N(S)$. This is a forbidden $K_{3,t}$. ($\Leftarrow$) Conversely, a copy $(A,B)$ of $K_{3,t}$ has $B\subseteq N(A)$ with $|A|=3$, so $|N(A)|\ge |B| = t > t-1$, violating the cap. $\square$ (Formally, `K3tFree_iff_CNbound`.)
 
-**Definition 2.4** (Triangle Count). For G on Fin n:
+**Lemma 3.3 (Cap extends to large sets).** If $G$ satisfies the common-neighborhood bound at $t$ and $|B|\ge 3$, then $|N(B)|\le t-1$.
 
-$$T(G) = |\{(a,b,c) : a < b < c, \text{G.Adj}(a,b) \land \text{G.Adj}(b,c) \land \text{G.Adj}(a,c)\}|$$
+*Proof.* Extract a triple $S\subseteq B$ with $|S|=3$. By antitonicity (Lemma 3.1), $N(B)\subseteq N(S)$, so $|N(B)|\le |N(S)| \le t-1$. $\square$ (Formally, `cnbhd_card_le`.)
 
-**Definition 2.5** (Lower Shadow). For a family F of finite sets:
+### 3.2 The core fiber bound
 
-$$\partial F = \bigcup_{S \in F} \{S \setminus \{a\} : a \in S\}$$
+The engine of the upper bound is a count of copies whose $a$-side contains a fixed triple.
 
-## 3. Main Results
+**Lemma 3.4 (Fiber bound).** Suppose $G$ satisfies the common-neighborhood bound at $t$ and $3\le b$. For any fixed triple $S$ with $|S|=3$,
+$$\#\{(A,B)\in\mathrm{Copies}_{a,b}(G) : S\subseteq A\}\ \le\ \binom{t-1}{b}\binom{t-1}{a-3}.$$
 
-### 3.1 Theorem A: Turán Graph Clique-Freeness
+*Proof.* Consider a copy $(A,B)$ with $S\subseteq A$. Since every vertex of $B$ is adjacent to all of $A\supseteq S$, we have $B\subseteq N(S)$; by Lemma 3.3 (with $|S|=3$), $|N(S)|\le t-1$, so $B$ is one of at most $\binom{t-1}{b}$ subsets of $N(S)$. Likewise every vertex of $A\setminus S$ is adjacent to all of $B$, so $A\setminus S\subseteq N(B)$; since $|B|=b\ge 3$, Lemma 3.3 gives $|N(B)|\le t-1$, so $A\setminus S$ is one of at most $\binom{t-1}{a-3}$ subsets of size $a-3$.
 
-**Theorem 3.1.** *For all n, p ≥ 1, the Turán graph T(n,p) is K_{p+1}-free.*
+Define the map $\Phi(A,B) = (A\setminus S,\, B)$ on the fiber. The target lands in
+$$D = \bigcup_{B'\in \binom{N(S)}{b}}\ \left\{ (R, B') : R\in \binom{N(B')}{a-3} \right\},$$
+and $\Phi$ is injective: from $(A\setminus S, B)$ we recover $A = (A\setminus S)\cup S$ (using $S\subseteq A$) and $B$ directly. Hence the fiber's size is at most $|D|$. By the union bound and $|\binom{X}{k}| = \binom{|X|}{k}$,
+$$|D|\ \le\ \sum_{B'\in\binom{N(S)}{b}} \binom{|N(B')|}{a-3} \ \le\ \binom{|N(S)|}{b}\binom{t-1}{a-3}\ \le\ \binom{t-1}{b}\binom{t-1}{a-3},$$
+where the last two steps use Lemma 3.3 monotonically through $\binom{\cdot}{k}$. $\square$ (Formally, `fiber_bound`.)
 
-*Proof sketch.* By the pigeonhole principle. Any set S of p+1 vertices determines p+1 residues modulo p. Since there are only p residue classes, two vertices u, v ∈ S must satisfy u mod p = v mod p. By definition of T(n,p), these vertices are non-adjacent, so S is not a clique. □
+### 3.3 The double count
 
-The formal proof uses `Finset.card_le_card` and `Finset.card_image_of_injOn` to establish the pigeonhole argument.
+**Lemma 3.5 (Anchoring).** If $3\le a$, then every copy of $K_{a,b}$ is counted at least once across triples:
+$$c_{K_{a,b}}(G)\ \le\ \sum_{|S|=3}\ \#\{(A,B)\in\mathrm{Copies}_{a,b}(G) : S\subseteq A\}.$$
 
-### 3.2 Theorem B: Neighborhood Clique-Free Lemma
+*Proof.* For each copy $(A,B)$, the $a$-side has $\binom{a}{3}\ge 1$ triples (using $a\ge 3$). Writing $\mathbf{1}[S\subseteq A]$ and exchanging the order of summation,
+$$c_{K_{a,b}}(G) = \sum_{(A,B)} 1 \le \sum_{(A,B)} \binom{|A|}{3} = \sum_{(A,B)} \sum_{|S|=3} \mathbf{1}[S\subseteq A] = \sum_{|S|=3} \#\{(A,B): S\subseteq A\}. \quad\square$$
+(Formally, `KabCopies_card_le_sum`.)
 
-**Theorem 3.2.** *If G is K_r-free (r ≥ 2) and v is any vertex, then for any (r-1)-element subset s of N(v), the set s is not a clique in G.*
+**Theorem 3.6 (Main upper bound).** If $G$ satisfies the common-neighborhood bound at $t$ with $3\le a$ and $3\le b$, then
+$$c_{K_{a,b}}(G)\ \le\ \binom{n}{3}\,\binom{t-1}{b}\binom{t-1}{a-3}.$$
 
-*Proof sketch.* If s ⊆ N(v) were a clique with |s| = r-1, then s ∪ {v} would be a clique of size r in G (since every vertex in s is adjacent to v, and s is internally a clique). This contradicts K_r-freeness. Note v ∉ s because G is loopless. □
+*Proof.* Combine Lemma 3.5 with the fiber bound (Lemma 3.4) applied to each of the $\binom{n}{3}$ triples $S\subseteq V$:
+$$c_{K_{a,b}}(G) \le \sum_{|S|=3} \binom{t-1}{b}\binom{t-1}{a-3} = \binom{n}{3}\binom{t-1}{b}\binom{t-1}{a-3}. \quad\square$$
+(Formally, `KabCopies_card_le`.)
 
-This lemma is the key inductive step for proving Turán's theorem via degree-counting arguments.
+**Theorem 3.7 (Cubic bound for $K_{3,t}$-free graphs).** If $G$ is $K_{3,t}$-free with $3\le a$, $3\le b$, and $b+1\le t$, then
+$$c_{K_{a,b}}(G)\ \le\ \binom{t-1}{b}\binom{t-1}{a-3}\cdot n^3 \ =\ O(n^3).$$
 
-### 3.3 Theorem C: Degree Energy Cauchy-Schwarz
+*Proof.* By Lemma 3.2, $K_{3,t}$-freeness gives the common-neighborhood bound at $t$ (the hypothesis $t\ge b+1\ge 1$ supplies the needed $t\ge 1$). Apply Theorem 3.6 and bound $\binom{n}{3}\le n^3$. $\square$ (Formally, `KabCopies_cubic_of_K3tFree`.)
 
-**Theorem 3.3.** *For any graph G on n vertices: n · ∑ deg(v)² ≥ (∑ deg(v))².*
+**Remark 3.8 (Why the exponent is exactly $3$).** The proof exposes the source of the cubic growth: the anchor $S$ contributes the $\binom{n}{3}\le n^3$ factor, while *all* remaining $a+b-3$ vertices of a copy are confined to common neighborhoods of size $\le t-1$ and contribute only the constant $\binom{t-1}{b}\binom{t-1}{a-3}$. The exponent equals the size of the small side of the forbidden bipartite graph. Replacing $K_{3,t}$ by $K_{s,t}$ would replace the anchor by an $s$-set and yield $\Theta(n^s)$.
 
-*Proof.* This is the standard Cauchy-Schwarz inequality for finite sums applied to the constant sequence (1,...,1) and the degree sequence (d₁,...,dₙ). The formal proof uses the real-valued Cauchy-Schwarz from Mathlib and casts to natural numbers. □
+**Remark 3.9 (Role of the threshold hypothesis).** The hypothesis $t\ge b+1$ is *not used by the upper bound itself*: when $t-1 < b$ the factor $\binom{t-1}{b}$ simply vanishes, and the bound correctly reports zero (indeed $K_{a,b}$ then contains a forbidden $K_{3,t}$ and cannot appear). The threshold is retained in Theorem 3.7 because it is the regime in which a matching $\Omega(n^3)$ lower bound becomes possible, making the $O(n^3)$ statement sharp.
 
-### 3.4 Theorem D: Triangle-Free Disjoint Neighborhoods
+---
 
-**Theorem 3.4.** *In a triangle-free graph G, if u and v are adjacent, then N(u) ∩ N(v) = ∅.*
+## 4. The threshold analysis
 
-*Proof.* If w ∈ N(u) ∩ N(v), then {u, v, w} is a triangle, contradicting triangle-freeness. □
+The Janzer–Longbrake–Yepremyan lower-bound construction achieves $\Theta(n^3)$ for $t\ge \tau_{\mathrm{proved}}(b) = 2\max\{3,\lceil b/2\rceil\}+1$. We compare this with the necessary threshold $\tau_{\mathrm{nec}}(b) = b+1$.
 
-**Corollary 3.5.** *In a triangle-free graph, for adjacent u, v: deg(u) + deg(v) ≤ n.*
+**Theorem 4.1 (Closed form).** For $b\ge 6$,
+$$\tau_{\mathrm{proved}}(b) = b + 1 + (b \bmod 2).$$
 
-*Proof.* Since N(u) and N(v) are disjoint subsets of V, |N(u)| + |N(v)| ≤ |V| = n. □
+*Proof.* For $b\ge 6$ we have $\lceil b/2\rceil = \lfloor (b+1)/2\rfloor \ge 3$, so the inner $\max\{3,\lceil b/2\rceil\}$ equals $\lceil b/2\rceil$. Then $2\lceil b/2\rceil = b$ when $b$ is even and $b+1$ when $b$ is odd; equivalently $2\lceil b/2\rceil = b + (b\bmod 2)$. Adding $1$ gives the claim. (Discharged in the formalization by linear arithmetic, `paperThreshold_eq`.) $\square$
 
-### 3.5 Theorem E: Triangle-Free Degree Energy Bound
+**Corollary 4.2 (Even case).** For even $b\ge 6$, $\tau_{\mathrm{proved}}(b) = \tau_{\mathrm{nec}}(b) = b+1$. (`paperThreshold_even`.)
 
-**Theorem 3.6.** *For any triangle-free graph G on n vertices: ∑ deg(v)² ≤ n · |E|.*
+**Corollary 4.3 (Odd case).** For odd $b\ge 6$, $\tau_{\mathrm{proved}}(b) = \tau_{\mathrm{nec}}(b) + 1 = b+2$. (`paperThreshold_odd`.)
 
-*Proof sketch.* We use double counting. Consider the sum ∑_v ∑_{w∈N(v)} deg(v). Since each vertex v contributes deg(v) copies of deg(v) (one for each neighbor), this equals ∑_v deg(v)². Reorganizing as a sum over directed edges (v,w), each undirected edge {u,v} contributes deg(u) + deg(v). By Corollary 3.5, each contribution is at most n, so the total is at most n · |E|. □
+**Theorem 4.4 (Threshold gap).** For $b\ge 6$, the gap is exactly the parity bit:
+$$\tau_{\mathrm{proved}}(b) - \tau_{\mathrm{nec}}(b) = b \bmod 2. \qquad (\text{`threshold\_gap`})$$
 
-### 3.6 Theorem F: Mantel's Theorem
+**Theorem 4.5 (The frontier is exactly the odd case).** For $b\ge 6$,
+$$\tau_{\mathrm{nec}}(b) < \tau_{\mathrm{proved}}(b) \iff b \text{ is odd}.$$
+*Proof.* Immediate from Theorem 4.4, since $b\bmod 2 > 0 \iff b$ is odd. (`necessary_lt_paper_iff_odd`.) $\square$
 
-**Theorem 3.7** (Mantel, 1907). *Every triangle-free graph on n vertices has at most ⌊n²/4⌋ edges. Equivalently, 4|E| ≤ n².*
+**Theorem 4.6 (Constant collapse at the necessary threshold).** At $t = \tau_{\mathrm{nec}}(b) = b+1$, the leading constant of Theorem 3.7 simplifies:
+$$\binom{t-1}{b}\binom{t-1}{a-3}\ =\ \binom{b}{b}\binom{b}{a-3}\ =\ \binom{b}{a-3}.$$
+*Proof.* With $t-1 = b$, $\binom{b}{b} = 1$. (`cubic_constant_at_threshold`.) $\square$
 
-*Proof.* Combine Theorems 3.3 and 3.6:
-- From Cauchy-Schwarz: n · ∑deg² ≥ (2|E|)² = 4|E|².
-- From triangle-free bound: ∑deg² ≤ n · |E|.
-- Therefore: n · (n · |E|) ≥ n · ∑deg² ≥ 4|E|².
-- Dividing by |E| (if |E| > 0): n² ≥ 4|E|. □
+**Discussion.** The $b\ge 6$ guard is load-bearing: for small $b$ (e.g. $b\le 4$) the $\max$ clause dominates and the closed form of Theorem 4.1 fails. The upper bound of Section 3, in contrast, requires only $t\ge b+1$ and is *parity-blind* — it holds at the necessary threshold for every $b$. Thus the only obstruction to upgrading $O(n^3)$ to a sharp $\Theta(n^3)$ at the necessary threshold is the odd-$b$ off-by-one in the lower-bound construction; closing it is precisely the standing conjecture.
 
-This proof strategy — bounding degree energy from above and below — is the template for all Turán-type results via the degree-counting method.
+---
 
-### 3.7 Theorem G: Greedy Triangle Removal Certificate
+## 5. Downward closure
 
-**Theorem 3.8** (Greedy Removal). *For any graph G on n vertices, there exists a triangle-free graph H such that |E(G)| - |E(H)| ≤ T(G), where T(G) is the triangle count.*
+We now show the cubic bound is monotone under the subgraph order, making it robust to edge deletion ("cleaning") operations.
 
-*Proof sketch.* Construct the set of edges to remove: for each triangle t = (a,b,c), choose one edge. The set of chosen edges has cardinality at most T(G) (by definition). Removing this edge set from G destroys all triangles, since every triangle had one of its edges selected. The resulting graph H = G \ E' satisfies H.CliqueFree 3 and |E'| ≤ T(G). □
+**Lemma 5.1 (Monotone common neighborhoods).** If $G\le G'$, then for every set $S$, $N_G(S)\subseteq N_{G'}(S)$.
 
-The formal proof constructs E' using `Finset.image` over `orderedTriangleFinset.attach` and verifies that the graph `fromEdgeSet (G.edgeFinset \ E')` is triangle-free.
+*Proof.* If $w\in N_G(S)$ then $u\sim_G w$ for all $u\in S$; since $G\le G'$, $u\sim_{G'} w$ for all $u\in S$, so $w\in N_{G'}(S)$. $\square$ (Formally, `cnbhd_mono`.)
 
-## 4. Algorithms
+**Lemma 5.2 (Antitone freeness).** If $G\le G'$ and $G'$ is $K_{3,t}$-free, then $G$ is $K_{3,t}$-free.
 
-### 4.1 Greedy Triangle Removal
+*Proof.* A copy of $K_{3,t}$ in $G$ has all its cross edges in $G$, hence in $G'$ (since $G\le G'$), giving a copy of $K_{3,t}$ in $G'$ — impossible. So $G$ has none. $\square$ (Formally, `K3tFree_anti`.)
 
-```
-Algorithm GreedyTriangleRemoval(G):
-  Input: Simple graph G = (V, E)
-  Output: Triangle-free graph H, number of edges removed
+**Lemma 5.3 (Monotone neighborhood sizes).** If $G\le G'$, then $|N_G(S)|\le |N_{G'}(S)|$ for every $S$.
 
-  H ← copy of G
-  removed ← 0
-  while exists triangle (a, b, c) in H:
-    remove edge {a, b} from H
-    removed ← removed + 1
-  return (H, removed)
+*Proof.* Immediate from Lemma 5.1 and monotonicity of cardinality under inclusion. $\square$ (Formally, `CNbound_anti`.)
 
-Complexity: O(n³ · T) where T = triangle count of G
-            Each iteration takes O(n³) to find a triangle and
-            there are at most T iterations.
-Space: O(n²) for adjacency storage.
-```
+**Theorem 5.4 (Downward closure of the cubic bound).** Let $G\le G'$ with $3\le a$, $3\le b$, $b+1\le t$, and $G'$ being $K_{3,t}$-free. Then
+$$c_{K_{a,b}}(G)\ \le\ \binom{t-1}{b}\binom{t-1}{a-3}\cdot n^3,$$
+the *same* cubic bound, with the *same* constant, as for $G'$.
 
-**Correctness certificate**: By Theorem 3.8, the number of edges removed is bounded by the original triangle count. The algorithm terminates because each step strictly reduces the edge count.
+*Proof.* By Lemma 5.2, $G$ is itself $K_{3,t}$-free. Apply Theorem 3.7 directly to $G$. $\square$ (Formally, `KabCopies_cubic_of_subgraph`, which invokes `K3tFree_anti` and then the black-box `KabCopies_cubic_of_K3tFree`.)
 
-### 4.2 Turán Graph Construction
+**Discussion.** Theorem 5.4 says the cubic estimate, once established for a dense $K_{3,t}$-free host $G'$, descends automatically to *every* subgraph $G$ beneath it in the partial order of graphs. In deletion arguments, the surviving graph after a cleaning step is exactly such a subgraph, so its copy count is controlled without re-running the double count of Section 3. The proof is purely order-theoretic: both the counting object $\mathrm{Copies}_{a,b}$ and the freeness predicate are built from $\le$-preserved adjacency conditions, so anti-monotonicity is a formal consequence of the graph order rather than of any extremal argument.
 
-```
-Algorithm TuranGraph(n, p):
-  Input: n vertices, p partition classes
-  Output: Complete p-partite graph T(n, p)
+---
 
-  for i = 0 to n-1:
-    for j = i+1 to n-1:
-      if i mod p ≠ j mod p:
-        add edge {i, j}
+## 6. Algorithms
 
-Complexity: O(n²)
-```
+The proofs are constructive and yield direct algorithms for verifying the hypotheses and computing the bounds.
 
-## 5. Computational Experiments
+**Algorithm A — Triple common-neighborhood cap check.** Given $G$ and $t$, decide whether $G$ satisfies `CNbound G t` (equivalently, by Lemma 3.2, whether $G$ is $K_{3,t}$-free): for every triple $S$ of vertices, compute $N(S) = \bigcap_{u\in S}\mathcal{N}(u)$ and test $|N(S)|\le t-1$. Complexity: $O(n^3\cdot n) = O(n^4)$ with adjacency-list intersection, or $O(n^3)$ amortized with bitset neighborhoods. This certifies the hypothesis of Theorem 3.7.
 
-### 5.1 Turán Edge Counts
+**Algorithm B — Cubic-bound evaluator.** Given $a,b,t,n$, return $\binom{t-1}{b}\binom{t-1}{a-3}\cdot n^3$ (and the sharper $\binom{n}{3}\binom{t-1}{b}\binom{t-1}{a-3}$ of Theorem 3.6). At the necessary threshold $t=b+1$ this reduces to $\binom{b}{a-3}\cdot n^3$ by Theorem 4.6. Complexity $O(1)$ arithmetic.
 
-We verify that `turan_edge_count(n, p)` exactly matches the algebraic formula for all n ≤ 15, p ≤ 5. The density approaches (1 - 1/p) as predicted by Turán's theorem.
+**Algorithm C — Threshold comparator.** Given $b\ge 6$, compute $\tau_{\mathrm{proved}}(b)$, $\tau_{\mathrm{nec}}(b)$, the gap $\tau_{\mathrm{proved}}-\tau_{\mathrm{nec}} = b\bmod 2$, and the boolean "frontier open" $= [b \text{ odd}]$ (Theorems 4.4–4.5). Complexity $O(1)$.
 
-| n | T(n,2) edges | n²/4 | T(n,3) edges | 2n²/6 |
-|---|-------------|------|-------------|-------|
-| 6 | 9 | 9 | 12 | 12 |
-| 8 | 16 | 16 | 21 | 21.3 |
-| 10 | 25 | 25 | 33 | 33.3 |
-| 12 | 36 | 36 | 48 | 48 |
+---
 
-### 5.2 Greedy Removal Performance
+## 7. Applications
 
-On complete graphs K_n, the greedy algorithm removes edges equal to the triangle count divided by roughly n/3, as expected (each edge removal kills approximately n-2 triangles).
+- **Cleaning and deletion arguments.** Downward closure (Theorem 5.4) is the workhorse for arguments that delete edges/configurations and must retain a count: the surviving subgraph inherits the cubic bound for free.
+- **Supersaturation base camp.** Bounds that are monotone under the subgraph order are natural starting points for averaging-over-subgraphs supersaturation results, since `CNbound_anti` provides the per-subgraph control needed for the averaging step.
+- **Certified extremal counting.** Algorithms A–B give a verifiable pipeline: certify $K_{3,t}$-freeness via the triple cap, then emit a provably correct cubic upper bound on $K_{a,b}$-copies.
 
-| Graph | Edges | Triangles | Removed | Ratio |
-|-------|-------|-----------|---------|-------|
-| K_4 | 6 | 4 | 3 | 0.75 |
-| K_5 | 10 | 10 | 6 | 0.60 |
-| K_6 | 15 | 20 | 9 | 0.45 |
-| K_7 | 21 | 35 | 12 | 0.34 |
-| K_8 | 28 | 56 | 16 | 0.29 |
+---
 
-### 5.3 3-AP Density Thresholds
+## 8. Discussion and limitations
 
-Greedy search for 3-AP-free subsets of Z/NZ yields densities consistent with Roth-type bounds:
+The results isolate the *upper* half of $\mathrm{ex}(n,K_{a,b},K_{3,t}) = \Theta(n^3)$. The matching lower bound is not addressed here and is precisely where the parity subtlety resides (Section 4). The upper bound is parity-uniform and holds at the necessary threshold for all $b$; the threshold analysis shows the only remaining gap to a sharp $\Theta(n^3)$ at the necessary threshold is the odd-$b$ off-by-one in the construction. The hypotheses $3\le a$ and $3\le b$ are genuine: $a\ge 3$ is needed to extract an anchoring triple from the $a$-side, and $b\ge 3$ is needed for the second application of the neighborhood cap to $N(B)$.
 
-| N | Max AP-free size | Density | 1/log(N) |
-|---|-----------------|---------|----------|
-| 9 | 4 | 0.444 | 0.455 |
-| 15 | 5 | 0.333 | 0.369 |
-| 27 | 8 | 0.296 | 0.303 |
-| 45 | 12 | 0.267 | 0.263 |
+---
 
-## 6. Cross-Domain Connections
+## 9. Future directions
 
-### 6.1 The Roth-Turán Bridge
+1. **Monotone closure of the full counting hierarchy.** Abstract `cnbhd_mono`/`K3tFree_anti` into a generic "monotone forbidden-configuration" interface so that anti-monotonicity downward-closes *every* generalized Turán bound $\mathrm{ex}(n,H,F)$ added to the catalog, not just the cubic $K_{3,t}$ case.
+2. **A formal deletion/cleaning combinator.** Package deletion as explicit downward movement in the graph order: given a $K_{3,t}$-free $G'$, a deletion $G\le G'$, and the cubic bound, produce the surviving estimate together with quantitative "copies lost" accounting via a subset lemma $\mathrm{Copies}_{a,b}(G)\subseteq \mathrm{Copies}_{a,b}(G')$.
+3. **Matching lower-bound constructions at the necessary threshold.** Formalize an explicit $K_{3,t}$-free graph achieving $\Theta(n^3)$ copies of $K_{a,b}$, turning $O(n^3)$ into a sharp $\Theta(n^3)$. The leading constant $\binom{t-1}{b}\binom{t-1}{a-3}$ predicts the extremal blow-up; the even-$b$ case (where proved and necessary thresholds coincide) is the natural first target.
+4. **Density and supersaturation versions.** Use `CNbound_anti` as the base for supersaturation results proved by averaging over subgraphs.
 
-The formal bridge between 3-term arithmetic progressions and graph triangles works as follows. Given N ∈ ℕ and A ⊆ Z/NZ, construct a tripartite graph with vertex set (Z/NZ) × {0,1,2}:
+---
 
-- **Layer 0 ↔ Layer 1**: Edge (a,0)-(b,1) for all a, b ∈ A
-- **Layer 1 ↔ Layer 2**: Edge (b,1)-(c,2) for all b, c ∈ A  
-- **Layer 0 ↔ Layer 2**: Edge (a,0)-(c,2) if ∃ b ∈ A with a + c ≡ 2b (mod N)
+## 10. Conclusion
 
-A triangle in this graph — vertices (a,0), (b,1), (c,2) — corresponds precisely to a 3-AP (a, b, c) in A. This encoding transforms the triangle removal lemma into a density bound on AP-free sets:
-
-> If A ⊆ Z/NZ has |A| ≥ δN, then the encoded graph has Ω(δ³ N³) triangles. The removal lemma then says these triangles can be destroyed by removing O(εN²) edges, which translates to removing O(ε) fraction of A's elements. For sufficiently small ε relative to δ, this is a contradiction.
-
-### 6.2 Degree Energy as Information-Theoretic Entropy
-
-The degree energy ∑ deg(v)² is related to the Rényi entropy of the degree distribution. A graph where all vertices have equal degree (a regular graph) minimizes degree energy for a fixed edge count, while graphs with high degree variance maximize it. This connects extremal graph theory to information theory: the extremal graph (Turán graph) is the one with the most "even" degree distribution, analogous to maximum entropy distributions in statistical mechanics.
-
-## 7. Discussion
-
-### 7.1 Significance of Machine-Checked Proofs
-
-Our formalization demonstrates that non-trivial extremal combinatorics can be machine-checked with current tools. Key observations:
-
-1. **The handshaking lemma** (`sum_degrees_eq_twice_card_edges`) from Mathlib was essential. Without it, proving Mantel's theorem would require formalizing basic graph theory from scratch.
-
-2. **Cauchy-Schwarz for finite sums** was available in Mathlib's real analysis library and could be cast to natural numbers.
-
-3. **The pigeonhole principle** for the Turán graph proof required careful manipulation of finset cardinalities and injective image arguments.
-
-4. **The greedy removal proof** was the most technically demanding, requiring construction of an explicit edge subset and verification that its removal produces a triangle-free graph.
-
-### 7.2 Limitations
-
-- We prove Mantel's theorem (K_3-free case) rather than the full Turán theorem for general K_r. The general case requires either Zykov symmetrization or a more elaborate induction, both of which are feasible future work.
-- The triangle removal certificate is a combinatorial, not an analytic, result. The full triangle removal lemma (with the δ-ε quantitative form) requires the Szemerédi regularity lemma, which is a major formalization target.
-- The 3-AP/triangle bridge is demonstrated computationally but not yet fully formalized in Lean.
-
-## 8. Future Work
-
-1. **Full Turán theorem** for K_r via the degree-counting induction using `neighborhood_cliqueFree`.
-2. **Quantitative triangle removal** via a formalization of the regularity lemma.
-3. **Formalized 3-AP/triangle encoding** with a Lean proof of the exact correspondence.
-4. **Kruskal-Katona theorem** using the shadow and compression infrastructure.
-5. **Graph stability theorems** showing that near-extremal K_r-free graphs are close to Turán graphs.
-
-## 9. References
-
-1. P. Turán, "On an extremal problem in graph theory" (1941). *Matematikai és Fizikai Lapok* 48, 436–452.
-2. W. Mantel, "Problem 28" (1907). *Wiskundige Opgaven* 10, 60–61.
-3. K.F. Roth, "On certain sets of integers" (1953). *J. London Math. Soc.* 28, 104–109.
-4. E. Szemerédi, "Regular partitions of graphs" (1978). *Problèmes Combinatoires et Théorie des Graphes*, 399–401.
-5. J.B. Kruskal, "The number of simplices in a complex" (1963). *Mathematical Optimization Techniques*, 251–278.
-6. G.O.H. Katona, "A theorem of finite sets" (1968). *Theory of Graphs*, 187–207.
-7. I. Ruzsa and E. Szemerédi, "Triple systems with no six points carrying three triangles" (1978). *Combinatorics*, 939–945.
+A single quantitative principle — capping the common neighborhood of every triple at $t-1$ — yields, through an anchored double count, an explicit and parity-uniform cubic upper bound $\binom{n}{3}\binom{t-1}{b}\binom{t-1}{a-3}$ for $K_{a,b}$-copies in $K_{3,t}$-free graphs. An exact arithmetic analysis locates the entire remaining frontier of the sharp problem in the parity of $b$, and pure order-theoretic monotonicity makes the bound robust under deletion. The cubic exponent is no coincidence: it is the "$3$" of the forbidden $K_{3,t}$, fossilized in the answer.
