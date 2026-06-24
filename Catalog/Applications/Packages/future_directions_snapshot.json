@@ -5392,7 +5392,7 @@
       "Yan and Jin",
       "Chmutov"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72ef5a59",
     "description": "This paper investigates the interpolation properties of partial-twuality polynomials defined on set systems associated with binary delta-matroids, extending existing results to all nontrivial twuals and highlighting the role of categorical structure.",
     "domain_bridges": [
       "Set Theory",
@@ -5408,7 +5408,7 @@
     "proof_strategy": "Formalization and verification using Lean 4's dependent types and induction schemes",
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T08:15:06.141089+00:00",
     "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
   },
@@ -7991,7 +7991,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "226a5c12",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domain_bridges": [],
     "domains": [
@@ -8004,7 +8004,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
