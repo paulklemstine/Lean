@@ -1,32 +1,62 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence — Agreement-Complex `β₀` and Majority Decoding
 
-Every result below is taken verbatim from the Phase-A Lean output. No result is
-stated in ARTICLE.md / RESEARCH_PAPER.md that does not appear here.
+Concise sanity checks performed before formalisation. All claims below are now
+backed by the proved theorems in this directory; this file records the
+small-case exploration that guided the statements.
 
-## File: Catalog/Logic/TopoErrorMitigation/MajorityDecoding.lean
+## 1. `betti0` of the agreement complex (small cases)
 
-| Lean name | Statement | In ARTICLE.md | In RESEARCH_PAPER.md |
-|---|---|---|---|
-| `ones` (def) | `ones (s : Fin n → Bool) : ℕ := (univ.filter (fun i => s i = true)).card` — number of `true` readouts | yes (informal) | yes (Def 1) |
-| `errors` (def) | `errors (s) (b) : ℕ := (univ.filter (fun i => s i ≠ b)).card` — Hamming weight of corruption vs true bit `b` | yes (informal) | yes (Def 2) |
-| `majority` (def) | `majority (s) : Bool := decide (2 * ones s > n)` — returns `true` iff strictly more than half of readouts are `true` | yes (informal) | yes (Def 3) |
-| `majority_decode_correct` | `2 * errors s b < n → majority s = b` | yes (main, plain language + example) | yes (Thm 1, full statement + proof sketch) |
-| `majority_decode_correct_iff` | `majority s = true ↔ 2 * errors s true < n` | yes (informal) | yes (Thm 2, full statement + proof sketch) |
-| `majority_threshold_tight` | `0 < k → ∃ s : Fin (2*k) → Bool, errors s true = k ∧ majority s ≠ true` | yes (sharpness) | yes (Thm 3, full statement + proof sketch) |
+Model `betti0 (agree s)` = number of distinct values in the readout `s`.
 
-## File: Catalog/Logic/TopoErrorMitigation/PersistentH0.lean
+| readout `s` (length `n`) | distinct values | `betti0 (agree s)` | consensus? |
+|--------------------------|-----------------|--------------------|------------|
+| `[T]`                    | {T}             | 1                  | yes        |
+| `[T,T,T]`                | {T}             | 1                  | yes        |
+| `[T,F]`                  | {T,F}           | 2                  | no         |
+| `[T,T,F]`                | {T,F}           | 2                  | no         |
+| `[F,F,F,F]`              | {F}             | 1                  | yes        |
 
-| Lean name | Statement | In ARTICLE.md | In RESEARCH_PAPER.md |
-|---|---|---|---|
-| `betti0` (def) | `betti0 (r : V→V→Prop) [Fintype (Quot (EqvGen r))] : ℕ := Fintype.card (Quot (EqvGen r))` — number of connected components | yes (informal) | yes (Def 4) |
-| `componentMap` (def) | for `r₁ ⊆ r₂`, `Quot (EqvGen r₁) → Quot (EqvGen r₂)` via `Quot.lift` + `EqvGen.mono` | yes (informal) | yes (Def 5) |
-| `componentMap_surjective` | `r₁ ⊆ r₂ → Function.Surjective (componentMap r₁ r₂ h)` | yes (informal) | yes (Lemma 1, proof sketch) |
-| `betti0_persistence` | `r₁ ⊆ r₂ → betti0 r₂ ≤ betti0 r₁` (H₀ persistence) | yes (main, plain language) | yes (Thm 4, full statement + proof sketch) |
-| `componentMap_merges` | explicit `Bool` instance witnessing two distinct `r₁`-components merging under `r₂` (non-degeneracy) | yes (informal) | yes (Thm 5 / remark) |
+Observed invariant: `1 ≤ betti0 (agree s) ≤ 2` for every nonempty readout, with
+value `1` exactly on consensus. This is exactly
+`betti0_agree_pos` / `betti0_agree_le_two` / `betti0_agree_eq_one`.
 
-## NOT claimed (guard against over-statement)
-- The iff `majority s = b ↔ 2*err < n` is FALSE for `b = false` at the tie. Only the
-  `true`-codeword iff (`majority_decode_correct_iff`) is asserted; the `false` direction is
-  only the one-sided `majority_decode_correct`.
-- No probabilistic decay rate is proved (that is Future Direction C3, stated as conjecture only).
-- No claim that topological decoding equals Hamming decoding is proved (Future Direction C1, conjecture only).
+## 2. Error-count conservation (`errors_complement`)
+
+For each readout above, `errors s true + errors s false`:
+
+| readout      | `errors true` | `errors false` | sum | `n` |
+|--------------|---------------|----------------|-----|-----|
+| `[T,T,T]`    | 0             | 3              | 3   | 3   |
+| `[T,T,F]`    | 1             | 2              | 3   | 3   |
+| `[T,F]`      | 1             | 1              | 2   | 2   |
+| `[F,F,F,F]`  | 4             | 0              | 4   | 4   |
+
+Sum always equals `n` → `errors_complement`.
+
+## 3. Nearest-codeword / majority optimality (`majority_eq_min_errors`)
+
+| readout      | `ones` | `majority` | `errors (majority)` | `min(errors T, errors F)` |
+|--------------|--------|------------|---------------------|---------------------------|
+| `[T,T,F]`    | 2      | T          | 1                   | 1                         |
+| `[T,F]`      | 1      | F (tie)    | 1                   | 1                         |
+| `[F,F,F,F]`  | 0      | F          | 0                   | 0                         |
+
+The decoded bit always attains the minimum Hamming distance, including the tie
+case `n` even with `ones = n/2` (decoder favours `false`, both distances `n/2`).
+This is `majority_nearest_codeword` / `majority_eq_min_errors`.
+
+## 4. Counterexample hunt
+
+- *Naive iff* `majority s = b ↔ 2*errors s b < n` FAILS for `b = false` at the
+  tie `[T,F]` (`2*errors false = 2 = n` yet `majority = false`). Hence the
+  one-sided / `true`-only statements in `MajorityDecoding.lean` and the `≤`/`min`
+  (not strict) formulation here.
+- *`betti0 ≤ 1` always* FAILS at `[T,F]` (`betti0 = 2`). Hence the `≤ 2` bound.
+- No counterexample found to `errors_complement`, `majority_eq_min_errors`, or
+  the `betti0 ∈ {1,2}` dictionary across all readouts of length `≤ 4`.
+
+## 5. OEIS
+
+No nontrivial integer sequence is generated; the invariants are bounded
+(`betti0 ∈ {1,2}`) or linear (`errors` sums to `n`), so an OEIS lookup is not
+informative here.
