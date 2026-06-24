@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "343c2db7",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — Fractal Number Theory of the Logarithmic Prime Image\n\nDerived from this cycle's findings in\n`Catalog/NumberTheory/PrimeFractalLength.lean`,\n`Catalog/NumberTheory/PrimeFractalRect",
-      "quality_score": 0.5248201970443349,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-17T05:42:14",
-      "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
-    },
-    {
       "cycle_id": "6fb69121",
       "domain": "Bridges",
       "key_insight": "# Future Directions — The Hodge Conjecture for Neural Networks\n\nDerived from the cycle in `NeuralHodgeConjecture.lean` and `NeuralHodgeCatalogLink.lean`,\nwhich proved:\n\n* `pl_hodge_decomposition` / `p",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-24T14:54:22",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+    },
+    {
+      "cycle_id": "72f1519b",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Degree-4 vertices in the flip graph of the m×n Miura-ori\n\nThis cycle established a rigorous combinatorial core (`Catalog/Pythagorean/MiuraFlipDegree.lean`):\nthe local degree-4 fl",
+      "quality_score": 0.5317089325931801,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-24T15:18:53",
+      "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7045299999999999
     }
   ],
-  "last_updated": "2026-06-24T14:54:22",
+  "last_updated": "2026-06-24T15:18:53",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "977dbedb",
-        "quality": 0.5267885714285714,
-        "theorems": 210,
-        "title": "This cycle attacked the conjecture of a *sharp proof-complexity phase transition"
-      },
-      {
         "cycle_id": "9f700fd5",
         "quality": 0.503482105263158,
         "theorems": 38,
@@ -3885,6 +3879,12 @@
         "quality": 0.48928166666666667,
         "theorems": 8,
         "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
+      },
+      {
+        "cycle_id": "72f1519b",
+        "quality": 0.5317089325931801,
+        "theorems": 10,
+        "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
       }
     ],
     "Shared": [
