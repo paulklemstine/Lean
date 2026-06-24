@@ -498,7 +498,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "12082da5",
     "description": "Mihailescu proved that 8 and 9 are the only consecutive perfect powers. Generalize: find all solutions to x^a - y^b = k for fixed small k. Formalize the theory of exponential Diophantine equations and Pillai's conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -510,7 +510,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:08.480584+00:00",
     "title": "Catalan's Conjecture Generalizations"
   },
@@ -4453,7 +4453,7 @@
       "2_adic_valuation_binomial_coefficients",
       "carry_propagation_binary_addition"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9cae63e4",
     "description": "For every integer t ≥ 1, the asymptotic density c_t of nonnegative integers n such that s₂(n+t) ≥ s₂(n) satisfies c_t ≥ 1/2 + 2^(-(2·s₂(t)+1)), where s₂(m) denotes the number of ones in the binary expansion of m. This is the main theorem proved in the paper, resolving Cusick's conjecture with an explicit quantitative gap.",
     "domain_bridges": [
       "probability_theory_stopped_random_walks",
@@ -4469,7 +4469,7 @@
     "proof_strategy": "The proof decomposes into four major steps amenable to separate formalization: (1) Establish the existence of the density c_t via the exact deconvolution identity that replaces the distribution of s₂(n+t)-s₂(n) with a finite stopped random-walk law over the carry blocks of t. (2) Formalize the principal subsequence ideal structure that indexes the carry block decomposition. (3) Prove the first-exit median comparison lemma for the stopped random walk, showing the median of the exit distribution is nonnegatively biased. (4) Combine the deconvolution with the median bound to derive c_t ≥ 1/2 + 2^(-(2s₂(t)+1)). Steps (1)-(2) are combinatorial and involve 2-adic carry arithmetic; step (3) is probabilistic and requires stochastic ordering arguments.",
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T16:48:35.543989+00:00",
     "title": "Cusick's Sum-of-Digits Explicit Bound"
   },
@@ -5727,7 +5727,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af1783d7",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -5740,7 +5740,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -6423,7 +6423,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c8daa509",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -6436,7 +6436,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
