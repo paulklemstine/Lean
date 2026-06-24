@@ -1,89 +1,120 @@
-# The Hidden Architecture of Approximation
+# One Exponential Neuron Is Enough: The Surprising Economy of Universal Approximation
 
-## How a New Mathematical Framework Reveals Why Some Functions Are Fundamentally Harder to Compute Than Others
+## A question hiding in plain sight
 
----
+Take a smooth curve drawn on a sheet of paper — say the silhouette of a mountain range, the price of a stock over a year, or the sound pressure of a spoken vowel. Now ask: out of what *building blocks* can you reconstruct that curve to any accuracy you like?
 
-*Imagine you're an engineer designing a neural network. You know, in principle, that any continuous function can be approximated—that's the celebrated Universal Approximation Theorem. But "in principle" is cold comfort when your network needs a billion parameters to approximate what should be a simple function. The real question isn't whether you **can** approximate; it's **how hard** it is.*
+This is the central question of approximation theory, and it is also, in disguise, the central question of modern machine learning. A neural network is nothing more than a recipe for assembling complicated functions out of a fixed menu of simple ones. When we say a network is a "universal approximator," we mean that with enough of these simple pieces, it can mimic *any* continuous behavior on a bounded region — any mountain range, any stock chart, any vowel.
 
-*A new mathematical framework—the EML Approximation Filtration—provides the first rigorous answers, revealing a hidden hierarchy of computational difficulty that has profound implications for machine learning, signal processing, and the theory of computation itself.*
+The classical answer to the question is well over a century old. In 1885 Karl Weierstrass proved that ordinary polynomials — sums of powers like $1, x, x^2, x^3, \dots$ — can approximate any continuous function on a closed interval as closely as you wish. In 1937 Marshall Stone generalized this into one of the most quietly powerful theorems in all of analysis, the **Stone–Weierstrass theorem**. It is the bedrock on which a great deal of approximation theory rests.
 
----
+This article is about a sharp, almost startlingly minimal consequence of that bedrock. We will show — and the result has been verified in full formal detail — that you do **not** need a rich library of building blocks to approximate everything. You need essentially *one good ingredient*. A single exponential "feature," followed by ordinary polynomial arithmetic, is already a universal approximator. In the language of machine learning: **one injective exponential neuron, with a polynomial read-out, can approximate any continuous function on a compact domain.**
 
-### The Complexity Landscape
+Let us unpack what that means, why it is true, and why it matters.
 
-Consider two functions: the polynomial x² + 3x + 1, and the iterated exponential exp(exp(exp(x))). Both are smooth, both are well-behaved, and both can be computed exactly. But there is a fundamental asymmetry between them that no amount of clever engineering can overcome.
+## The EML perspective: exp, multiply, log
 
-To see why, we need to think about **expression trees**—the syntactic structures that define computations. An expression tree for x² + 3x + 1 uses only addition and multiplication: basic arithmetic. But exp(exp(exp(x))) requires three nested layers of exponentiation. We call this measure the **transcendental depth**—the number of times you must pass through a transcendental operation (exponential or logarithm) from root to leaf.
+The work described here belongs to a research programme around what we call **EML closures** — function classes built by repeatedly combining a few primitives: **E**xponentiation ($x \mapsto e^x$), **M**ultiplication (and addition and scaling), and **L**ogarithm ($x \mapsto \log x$). These three operations, mixed freely, generate an enormous and flexible family of functions. They are also, not coincidentally, exactly the operations a pocket calculator or a hardware floating-point unit performs natively, and they appear everywhere in physics, statistics, and the activation functions of neural networks (the softplus function $\log(1+e^x)$ is a pure EML expression).
 
-The polynomial has transcendental depth zero. The triple exponential has transcendental depth three. And here's the key discovery: **this gap is absolute**. No matter how cleverly you rearrange a computation using only addition, multiplication, and a fixed number of exponentials, you cannot reduce the transcendental depth below a certain minimum. The exponential tower of height n requires transcendental depth *exactly* n.
+The grand question of the EML programme is: **which EML-generated function classes are universal approximators, and how complex must they be?** A naive guess is that you need the full expressive richness of the EML term algebra — all the nested combinations of exponentials, products, and logarithms — to capture every continuous function. The result at the heart of this article overturns that guess. The richness is almost entirely unnecessary. Almost all of the work is done by a single, very humble property.
 
-### A Filtration of Functions
+## The one property that does all the work: telling points apart
 
-This observation leads to what we call the **EML Approximation Filtration**—a new way of organizing all computable functions into a graded hierarchy based on their approximation complexity.
+Here is the key idea, and it is beautiful precisely because it is so simple.
 
-Think of it like geological strata. At the bottom are the simplest functions: constants and the identity. One level up are linear functions, then quadratics, then higher polynomials. But the really interesting structure emerges when we cross the boundary from algebraic to transcendental.
+Imagine you are trying to build functions that can take *different values at different points*. The most basic requirement any universal approximator must satisfy is this: for any two distinct input points $x$ and $y$, there must be **some** function in your toolkit that distinguishes them — that assigns them different outputs. If your entire toolkit always gave $x$ and $y$ the same value, you could never approximate a function that treats them differently. This property is called **separating points**.
 
-The filtration has two key parameters: **size** (how many computational nodes you need) and **tolerance** (how closely you need to approximate). As you demand higher precision, the minimum size grows—but the rate of growth differs dramatically between function classes.
+The Stone–Weierstrass theorem says something remarkable: for a *subalgebra* of continuous functions — a collection closed under addition, multiplication, and scaling by constants — separating points is not just necessary, it is **sufficient**. If your algebra can tell every pair of points apart, then it can approximate *every* continuous function on a compact domain, to any accuracy.
 
-For polynomials, the growth is gentle: a degree-n polynomial needs only about 2n + 1 nodes regardless of precision (it can be computed exactly). For smooth functions like sin(x), polynomial approximation works well, so the growth is polynomial in 1/ε. But for iterated exponentials, something remarkable happens: each additional layer of exponentiation forces an increase in complexity that cannot be absorbed by adding more nodes at the same depth.
+Stated precisely, the theorem we build on is:
 
-### The Information Bottleneck
+> **Stone–Weierstrass (subalgebra form).** Let $X$ be a compact space and let $A$ be a subalgebra of $C(X, \mathbb{R})$, the continuous real-valued functions on $X$. If $A$ separates points, then $A$ is uniformly dense in $C(X,\mathbb{R})$: for every continuous $f$ and every $\varepsilon > 0$, there is a member $g \in A$ with $\sup_{x \in X} |g(x) - f(x)| < \varepsilon$.
 
-Why does depth matter so much? The answer connects to information theory in a surprising way.
+So the entire problem of universal approximation collapses to a single question: **can my function class separate points?**
 
-Consider a computation as an information pipeline: input flows in, gets transformed layer by layer, and output flows out. Each layer can transform information, but layers that perform only algebraic operations (addition, multiplication) preserve certain structural properties. Only transcendental operations—exponentials and logarithms—can fundamentally reshape the information.
+## A single injective feature separates everything
 
-We formalized this intuition as **retained symbolic information**: if each layer preserves a fraction α of the input's structural complexity, then after l layers, only α^l of the original information survives. This geometric decay is the fundamental constraint. If a function intrinsically requires K bits of information to describe, then after l layers with contraction α, you need initial complexity at least K/α^l.
+Now comes the punchline. Separating points sounds like it might require many functions cooperating — one for this pair, another for that pair. It does not. A *single* well-chosen function suffices.
 
-This isn't just an analogy—it's a theorem. The **depth-information tradeoff** gives an exact lower bound: the initial complexity must be at least threshold/α^l to achieve a given threshold of retained information. Deeper networks contract information faster, so they need wider layers to compensate.
+A function $g$ is called **injective** if it never collapses two distinct inputs to the same output: whenever $x \neq y$, we have $g(x) \neq g(y)$. Such a function, all by itself, separates *every* pair of points. And so we obtain the cornerstone lemma:
 
-### Composition and the Algebra of Approximation
+> **Lemma (one injective generator separates points).** If a subalgebra $A \subseteq C(X,\mathbb{R})$ contains a single injective continuous function $g$, then $A$ separates points.
 
-One of the most elegant aspects of the framework is how it handles composition—what happens when you combine approximations.
+The proof is almost embarrassingly short. Pick any two distinct points $x \neq y$. Since $g$ is injective, $g(x) \neq g(y)$. Since $g$ belongs to $A$, we have exhibited a member of $A$ that distinguishes $x$ from $y$. Done. There is nothing more to it.
 
-If you can approximate f with size n and g with size m, how large does the approximation of f + g need to be? The answer: at most n + m + 1. One extra node for the addition itself, and the errors add up naturally (ε₁ + ε₂ for the sum). This is the **additive closure** property.
+Combine this with Stone–Weierstrass and you get the engine of the whole theory:
 
-But composition—plugging one function into another—behaves differently. If you substitute expression s into expression e, the depth adds: depth(e ∘ s) ≤ depth(e) + depth(s). And for k-fold self-composition (iterating a function k times), the depth grows linearly: depth(f^k) ≤ k × depth(f).
+> **Theorem (one injective generator is universal).** For a compact space $X$, the smallest subalgebra containing a single injective continuous function $g$ — that is, everything you can build from $g$ by adding, multiplying, and scaling — is uniformly dense in $C(X, \mathbb{R})$.
 
-This means that iterating a function k times multiplies its depth cost by k. A function with depth d, composed k times, has depth at most kd. And our evaluation theorem confirms that this substitution is semantically correct: the syntactic composition exactly computes the mathematical iteration.
+Read that again. *One* function, as long as it never confuses two points, generates (through pure arithmetic) a class rich enough to approximate **everything**. The expressive power was never in the *number* or *variety* of features. It was hiding in a single qualitative property: injectivity.
 
-### The Algebraic-Transcendental Dichotomy
+## Enter the exponential
 
-Perhaps the most surprising result is a clean characterization of what makes a computation "truly transcendental."
+Where does the exponential come in? The exponential function $x \mapsto e^x$ has a wonderful property: it is injective on the entire real line. It is strictly increasing, so it never takes the same value twice. Even better, injectivity *propagates* through it. If you have any injective feature $g$, then the composite $e^{g(x)}$ is still injective, because $e^x$ never undoes a distinction that $g$ has already made. Formally:
 
-We proved that an EML expression has transcendental depth zero if and only if it is **algebraic**—built entirely from constants, variables, addition, and multiplication, with no exponentials or logarithms at all. This sounds obvious, but the formal content is deeper than it appears.
+> **Lemma (the exponential preserves injectivity).** If $g : X \to \mathbb{R}$ is injective and continuous, then $x \mapsto e^{g(x)}$ is injective and continuous.
 
-The contrapositive is powerful: if a function's best EML approximation requires transcendental depth d > 0, then *every* expression computing it must use at least d nested transcendental operations. You can't simulate exponentials with more arithmetic—the gap is structural, not quantitative.
+Feeding this into the previous theorem gives the headline result:
 
-For the iterated exponential family E_n(x) = exp^n(x), we proved the exact characterization: size n + 1, depth n, transcendental depth n. These three numbers are tight—you can achieve them with the canonical construction, and you can't do better (for depth and transcendental depth, at least). The tower of exponentials is, in a precise sense, the **hardest** function at each transcendental level.
+> **Theorem (single exponential feature universal approximation).** Let $X$ be compact and let $g : X \to \mathbb{R}$ be any injective continuous feature. Then the subalgebra generated by the single exponential feature $x \mapsto e^{g(x)}$ is uniformly dense in $C(X, \mathbb{R})$. Equivalently, for every continuous $f$ and every $\varepsilon > 0$ there is a polynomial $P$ such that
+> $$\sup_{x \in X}\,\bigl|\,P\!\left(e^{g(x)}\right) - f(x)\,\bigr| < \varepsilon.$$
 
-### Implications for Machine Learning
+In the vocabulary of neural networks: a single exponential neuron $x \mapsto e^{g(x)}$, followed by a polynomial read-out layer, is a universal approximator. You do not need a wide hidden layer with thousands of distinct neurons. You need one neuron that does not collapse the input, and the freedom to take polynomial combinations of its output.
 
-These results have direct consequences for neural network design. A neural network is, abstractly, an expression tree with fixed architecture and trainable parameters. The depth of the network bounds what functions it can represent efficiently.
+## The classical face of the theorem: exponential polynomials
 
-Our framework predicts that:
+Abstractions are most convincing when they reproduce something concrete and familiar. Specialize the domain $X$ to an ordinary closed interval $[a, b]$ on the real line, and take the feature $g$ to be the simplest injective function imaginable — the identity, $g(x) = x$. The single exponential feature becomes $x \mapsto e^x$, and the polynomials in it are precisely the **exponential polynomials**:
+$$
+P(e^x) = c_0 + c_1 e^{x} + c_2 e^{2x} + \cdots + c_N e^{Nx} = \sum_{k=0}^{N} c_k\, e^{k x}.
+$$
+The theorem then states:
 
-1. **Shallow networks fail on deeply transcendental functions.** A network with transcendental depth d cannot efficiently approximate functions requiring transcendental depth > d, regardless of width.
+> **Corollary (exponential polynomials are dense on $[a,b]$).** Finite real linear combinations of the functions $e^{0\cdot x}, e^{x}, e^{2x}, e^{3x}, \dots$ are uniformly dense in $C([a,b], \mathbb{R})$. Every continuous function on a closed interval can be approximated, to any accuracy, by such an exponential polynomial.
 
-2. **Depth trades for width, but not arbitrarily.** The information bottleneck means that reducing depth by one requires increasing width by a factor of roughly 1/α. Very shallow networks need exponentially wide layers.
+This is a genuine, classical-flavored approximation theorem — a sibling of Weierstrass's polynomial theorem — and it falls out of the abstract machinery in a single line. The functions $e^{kx} = (e^x)^k$ are exactly the powers of $e^x$, so a polynomial in $e^x$ is the same thing as a linear combination of the $e^{kx}$. The substitution $u = e^x$ turns an exponential polynomial on $[a,b]$ into an ordinary polynomial on the interval $[e^a, e^b]$, and Weierstrass's original theorem does the rest.
 
-3. **The polynomial-to-EML reduction preserves cost.** Any function approximable by a degree-n polynomial is approximable by an EML expression of size O(n). This means the classical Weierstrass theorem gives EML universal approximation "for free."
+## Why injectivity is the whole game — and where it forces width
 
-### Looking Forward
+The cleanest way to appreciate a principle is to watch it fail at its boundary. On the real line, a single feature can be injective. But move to higher dimensions and something has to give.
 
-The EML Approximation Filtration opens several new research directions:
+Consider a domain in the plane, $K \subseteq \mathbb{R}^2$, and a so-called **ridge feature** $x \mapsto e^{\langle w, x\rangle}$, which depends on the input only through a single linear combination $\langle w, x \rangle = w_1 x_1 + w_2 x_2$. Such a feature is *blind* to any movement perpendicular to the direction $w$: shift the input along the line where $\langle w, x\rangle$ stays constant and the feature does not notice. Two genuinely different points get the same output. The feature is **not injective** — and by our principle, one such feature can never be universal in the plane.
 
-**Can we tighten the lower bounds?** We proved that iterExp n needs transcendental depth ≥ n by construction, but can we show that no *other* expression achieves transcendental depth less than n for the same function? This would require a true lower bound—showing that no clever algebraic rearrangement can reduce the transcendental depth.
+This is not a defect to be patched; it is a law. It explains, from first principles, *why neural networks need width*. A single ridge neuron in $n$-dimensional space collapses an entire $(n-1)$-dimensional sheet of inputs to a single value. To recover the lost directions you need more features — and a careful count shows you need at least $n$ of them, one for each coordinate, to jointly separate all points. The multivariate companion to our main theorem makes this precise: the $n$ coordinate exponential features $x \mapsto e^{x_1}, \dots, x \mapsto e^{x_n}$ together generate a dense subalgebra on any compact $K \subseteq \mathbb{R}^n$, and fewer than $n$ ridge features provably cannot.
 
-**What about intermediate functions?** Between purely algebraic functions (transDepth 0) and exponential towers (transDepth n), there's a vast landscape of functions with intermediate transcendental depth. How does sin(x), for instance, fit into this hierarchy? It requires transcendental operations, but does it need depth 1 or more?
+The slogan that emerges is crisp:
 
-**Can we compute the approximation entropy?** We defined the EML approximation entropy—the asymptotic rate of growth of description complexity—but computing it for specific functions is an open challenge. For polynomials it should be zero; for "random" continuous functions it should be infinite. But what about the interesting functions in between?
+> **Nonlinearity is supplied by a single $\exp$; width is forced by the dimension of the domain.**
 
-These questions point toward a deeper theory of computational complexity for real-valued functions—one that goes beyond the binary world of polynomial vs. exponential time and into the continuous world of analysis. The EML framework provides the language for asking these questions precisely, and the first tools for answering them.
+Depth and richness of the activation menu, so often treated as the essential magic of deep learning, turn out to be secondary. The two real resources are *one* genuinely nonlinear, non-collapsing primitive, and *enough* features to see every direction of the input.
 
-*Mathematics has long distinguished between algebraic and transcendental numbers. The EML Approximation Filtration extends this distinction to functions—and to computations themselves. In the architecture of approximation, depth is destiny.*
+## Connecting to complexity: how hard is a function to approximate?
 
----
+There is a deeper current running beneath these results. Universal approximation tells you that *some* exponential polynomial gets within $\varepsilon$ of your target $f$ — but it does not, by itself, tell you how *large* that polynomial must be. How many terms $e^{kx}$ do you need? What is the cost of accuracy?
 
-*This research was conducted using Lean 4 with the Mathlib library. All theorems described in this article have been formally verified—not by human reviewers, but by mathematical proof.*
+This is where approximation theory shakes hands with **complexity theory**. The number of building blocks required to reach accuracy $\varepsilon$ is a measure of how *intricate* the target function is — a continuous analog of Kolmogorov complexity, the length of the shortest program that generates an object. A gentle, slowly varying function needs only a few terms; a wildly oscillating one needs many. Quantitative "Jackson-type" theorems aim to bound the error of the best degree-$N$ exponential polynomial in terms of the smoothness of $f$, predicting that smoother targets are cheaper to approximate. The substitution $u = e^x$ that we used to prove density also transports the classical polynomial error estimates into the exponential world, suggesting that the cost of $\varepsilon$-accuracy scales gracefully with the inherent complexity of the function being learned.
+
+The vision behind the EML programme is that *the depth, width, and degree needed to approximate a function are not arbitrary engineering choices but reflections of the function's intrinsic complexity* — and that these relationships can be stated and proved as theorems, not merely observed in experiments.
+
+## Why this matters
+
+It is easy to read a result like "one exponential neuron is universal" as a curiosity. It is more than that. Here is why it deserves attention.
+
+**It demystifies universality.** The folklore around neural networks often attributes their power to mysterious, hard-to-pin-down properties of particular activation functions. The results here say the opposite: universality is *cheap and structural*. It requires only that your nonlinearity not collapse distinct inputs. Once you have that, ordinary arithmetic does the rest. The mystery dissolves into a one-line argument about injectivity.
+
+**It separates the two true costs.** By cleanly distinguishing the role of the nonlinearity (one $\exp$ suffices) from the role of width (forced by dimension), the theory tells architects of learning systems where to spend their resources. You are not buying expressive power by stacking exotic activations; you are buying it by ensuring your features collectively see every direction of the input.
+
+**It is exact, not approximate folklore.** Each statement above has been formalized and machine-checked in complete logical detail, with no gaps and no hidden assumptions. The chain of reasoning — Stone–Weierstrass, then "one injective generator separates points," then "exp preserves injectivity," then the exponential-polynomial corollary — is verified end to end. When we say one exponential neuron is enough, it is a theorem in the strictest possible sense.
+
+**It connects fields.** The same circle of ideas touches classical analysis (Weierstrass and Müntz density theorems), modern machine learning (universal approximation, the necessity of width), and complexity theory (how the cost of approximation reflects the complexity of the target). A single, simple principle — *separate the points and you can approximate anything* — runs through all of them.
+
+## The shape of the argument, in one breath
+
+If you remember one thing, let it be this chain:
+
+1. To approximate every continuous function on a compact domain, an algebra of functions need only **separate points** (Stone–Weierstrass).
+2. A **single injective function** separates all points at once.
+3. The **exponential** is injective and keeps any injective feature injective.
+4. Therefore **one exponential feature, plus polynomial arithmetic, approximates everything** — and on an interval this is exactly the density of exponential polynomials $\sum_k c_k e^{kx}$.
+5. In dimension $n$, a lone ridge feature *cannot* be injective, so **width equal to the dimension is forced** — explaining, from pure logic, why higher-dimensional learning needs more neurons.
+
+The economy of it is the lesson. Behind the apparent extravagance of universal approximation lies a single, frugal idea: don't lose information, and arithmetic will carry you the rest of the way.
