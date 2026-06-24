@@ -12844,7 +12844,7 @@
       "depth_estimate": 3,
       "description": "Prove the Langlands correspondence for GL₂ over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges",
         "Algebra"
@@ -12883,7 +12883,7 @@
       "depth_estimate": 3,
       "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Geometry"
@@ -13000,7 +13000,7 @@
       "depth_estimate": 3,
       "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Logic"
@@ -13039,7 +13039,7 @@
       "depth_estimate": 3,
       "description": "Formalize the p-adic Langlands correspondence for GL₂(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges",
         "Algebra"
@@ -13156,7 +13156,7 @@
       "depth_estimate": 3,
       "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Bridges",
         "Computation"
@@ -13234,7 +13234,7 @@
       "depth_estimate": 3,
       "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Bridges",
         "Logic"
@@ -13312,7 +13312,7 @@
       "depth_estimate": 3,
       "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Bridges",
         "Logic"
@@ -14783,11 +14783,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "4a138f86",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14799,7 +14799,7 @@
         "Algebra"
       ],
       "id": "fd_0493",
-      "last_attempt_time": "2026-06-24T12:16:19.234649+00:00",
+      "last_attempt_time": "2026-06-07T20:05:22.586223+00:00",
       "last_reviewed_at": "2026-06-23T23:10:48.705872+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14813,7 +14813,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "failed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.995091+00:00",
       "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
@@ -15846,7 +15846,7 @@
       "depth_estimate": 3,
       "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6000000000000001,
+      "domain_quality_penalty": -0.7000000000000001,
       "domains": [
         "Bridges",
         "Geometry"
@@ -16158,7 +16158,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.7000000000000001,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Tropical"
@@ -16197,7 +16197,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Ax-Kochen-Ershov theorem: two henselian valued fields with elementarily equivalent residue fields and value groups are elementarily equivalent. Bridge to number theory: this implies the Q_p's are elementarily equivalent for almost all p. Prove Morley's categoricity theorem: if a countable theory is categorical in one uncountable cardinal, it is categorical in all uncountable cardinals.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Algebra"
@@ -33868,7 +33868,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -34361,7 +34361,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "cs.CC",
@@ -34371,7 +34371,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "168f9c96",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34388,11 +34388,11 @@
         "Algebra"
       ],
       "id": "fd_2294",
-      "last_attempt_time": "2026-06-24T11:56:49.403755+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conformability_np_complete_fixed_alpha (k : ℕ) (hk : k ≥ 3) : NP_complete (λ G => conformable G ∧ connected G ∧ regular G ∧ odd (order G) ∧ α G = k ∧ Δ G ≥ order G / 2) := by sorry",
       "lineage_refs": [],
-      "outcome_quality": 0.68184,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Adapt the paper's reduction by constructing, for each k ≥ 3, a family of connected d-regular graphs with α(G) = k and d ≥ n/2 whose conformability encodes exact clique-packing problems in K_{k+1}-free complements. For odd k, conformable color classes map to cliques of sizes 1,3,...,k in G̅; for even k, to cliques of sizes 1,3,...,k-1. The key challenge is designing gadgets that force the correct distribution of clique sizes in any conformable coloring, generalizing the triangle-packing enforcement at k=3. A reduction from exact cover by k-sets or k-clique packing in K_{k+1}-free graphs would establish hardness.",
@@ -34402,7 +34402,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21534v1",
       "source_path": "http://arxiv.org/abs/2606.21534v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T01:48:36.909062+00:00",
       "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
@@ -34529,7 +34529,7 @@
         "score_sequences_and_characteristic_sequences",
         "multigraph_enumeration_and_restricted_sequences"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -34866,7 +34866,7 @@
         "Design theory and graph decompositions",
         "Formal finite combinatorics in Lean 4"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -35052,7 +35052,7 @@
       "domain_bridges": [
         "Combinatorics to Logic"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -35145,7 +35145,7 @@
         "Combinatorics on Words",
         "Symbolic Dynamics"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -35236,7 +35236,7 @@
         "Coding_Theory",
         "Graph_Theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Bridges"
@@ -35265,7 +35265,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "math.AG",
@@ -35289,11 +35289,11 @@
         "Geometry"
       ],
       "id": "fd_2313",
-      "last_attempt_time": "2026-06-24T12:16:23.595410+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "variable (G : Type) [LieGroup G] (P : Subgroup G) [IsParabolic P]\n\ndef schubertClusterAlgebra : ClusterAlgebra := sorry\ndef flagVarietyClusterAlgebra : ClusterAlgebra := sorry\n\nconjecture cluster_structures_isomorphic :\n    Nonempty (ClusterAlgebraIso (schubertClusterAlgebra G P) (flagVarietyClusterAlgebra G P))",
       "lineage_refs": [],
-      "outcome_quality": 0.61528,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Construct a sequence of mutations that maps the initial seed of the Schubert cell cluster structure to the initial seed of the partial flag variety cluster structure, and verify that the cluster variables and exchange relations are preserved under this transformation, thereby establishing a cluster algebra isomorphism.",
@@ -35303,7 +35303,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23474v1",
       "source_path": "http://arxiv.org/abs/2606.23474v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T06:42:43.429866+00:00",
       "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
@@ -35327,7 +35327,7 @@
         "math.CO",
         "math.NT"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -35418,7 +35418,7 @@
         "Finite Combinatorics",
         "Topological Graph Theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -36068,7 +36068,7 @@
         "Graph theory",
         "Extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -36192,7 +36192,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.Combinatorics.SimpleGraph.Basic",
         "Mathlib.Combinatorics.SimpleGraph.Connectivity",
@@ -36202,7 +36202,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "dcf70a3f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36218,7 +36218,7 @@
         "Algebra"
       ],
       "id": "fd_2333",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T13:31:41.823202+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Combinatorics.SimpleGraph.Connectivity\nimport Mathlib.LinearAlgebra.Matrix.Determinant\nimport Mathlib.Data.Matrix.Basic\n\nopen Matrix\nopen scoped BigOperators\n\nnoncomputable section\n\nvariable {V : Type*} [Fintype V] [DecidableEq V]\n\n/-- Effective-resistance matrix of a finite connected simple graph with unit resistors. -/\nconstant resistanceMatrix : SimpleGraph V → Matrix V V ℝ\n\n/-- Predicate saying that a finite simple graph is a tree. -/\nconstant IsTree : SimpleGraph V → Prop\n\n/-- Conjecture: among connected simple graphs on `n` vertices, the signed determinant\nof the resistance matrix is maximized by trees and minimized by the complete graph. -/\ntheorem resistance_det_extremal_conjecture\n    (G : SimpleGraph V) [DecidableRel G.Adj]\n    (hconn : G.Connected) (hn : 2 ≤ Fintype.card V) :\n    let n : ℕ := Fintype.card V\n    let R : Matrix V V ℝ := resistanceMatrix G\n    let Δ : ℝ := (-1 : ℝ) ^ (n - 1) * Matrix.det R\n    (((2 :",
       "lineage_refs": [],
@@ -36232,7 +36232,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21902v1",
       "source_path": "http://arxiv.org/abs/2606.21902v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T14:24:58.237232+00:00",
       "title": "Extremal signed determinant of the resistance matrix of a connected simple graph"
@@ -36817,7 +36817,7 @@
         "combinatorics on words",
         "number theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -37146,7 +37146,7 @@
         "limsup of partial quotient expressions to Lagrange constants",
         "Smith normal form to reduction of general determinant D matrices"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -37193,7 +37193,7 @@
         "Formal_power_series",
         "Linear_algebra"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -37335,7 +37335,7 @@
         "extremal combinatorics to finite cardinal minimization",
         "graph joins and disjoint unions to type-level finite graph constructions"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -37722,7 +37722,7 @@
         "p-adic obstruction heuristics",
         "smooth-number structure"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -38205,7 +38205,7 @@
         "Reduces an r-family product inequality to the two-family sharp product theorem by multiplying pairwise inequalities over unordered pairs.",
         "Connects extremal set theory with finite products and binomial coefficient arithmetic in Nat."
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -38251,7 +38251,7 @@
         "Combinatorial designs",
         "Algebraic geometry of Grassmann varieties"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -38371,7 +38371,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Erdos Problem 400",
         "Legendre formula for p-adic valuations of factorials",
@@ -38397,7 +38397,7 @@
         "Bridges"
       ],
       "id": "fd_2379",
-      "last_attempt_time": "2026-06-24T11:56:53.041545+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\nopen Filter Asymptotics\n\n/-- `factorialExcess k n` is the quantity g_k(n): the maximum of\n`sum a_i - n` over positive k-tuples whose factorial product divides `n!`.\nThis definition is intentionally left abstract in the conjecture stub. -/\nnoncomputable def factorialExcess (k n : ℕ) : ℕ := by\n  classical\n  exact 0\n\n/-- Natural-density convergence of the normalized factorial excess to the\nbinary leading constant conjectured for Erdős Problem 400. -/\ntheorem conjecture_binary_leading_constant_density_one\n    (k : ℕ) (hk : 2 ≤ k) :\n    ∀ ε : ℝ, 0 < ε →\n      Tendsto\n        (fun x : ℕ =>\n          ((Finset.Icc 1 x).filter\n              (fun n : ℕ =>\n                ε < Real.norm\n                  (((factorialExcess k n : ℝ) / Real.log (n : ℝ))\n                    - ((k : ℝ) - 1) / Real.log 2))).card : ℝ)\n            / (x : ℝ))\n        atTop\n        (𝓝 0) := by\n  sorry",
       "lineage_refs": [],
@@ -38587,7 +38587,7 @@
         "binary Cusick inequality as the b = 2 specialization",
         "stopped random-walk laws for carry propagation"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -38725,7 +38725,7 @@
         "quadratic_forms",
         "linear_algebra"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -38911,7 +38911,7 @@
         "analytic_combinatorics",
         "number_theory_divisor_sums"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -39117,11 +39117,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e1f85a79",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39133,7 +39133,7 @@
         "Novelty"
       ],
       "id": "fd_2395",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T13:31:46.123941+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -39455,7 +39455,7 @@
         "Extremal graph theory",
         "Rational densities"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Bridges"
       ],
@@ -40001,7 +40001,7 @@
         "graph connectivity",
         "extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -40169,7 +40169,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Brocard Problem (n!+1 = m^2)",
         "Brown numbers: (4,5), (5,11), (7,71)",
@@ -40194,7 +40194,7 @@
         "Pythagorean"
       ],
       "id": "fd_2418",
-      "last_attempt_time": "2026-06-24T11:56:56.851055+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem brocard_no_more (n : ℕ) (hn : n > 7) : ¬∃ m : ℕ, (n ! + 1) = m ^ 2 :=",
       "lineage_refs": [],
@@ -40632,7 +40632,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "arXiv:2305.01234",
         "GineproHull2014counting",
@@ -40641,7 +40641,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "72f1519b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40657,7 +40657,7 @@
         "Pythagorean"
       ],
       "id": "fd_2428",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T13:31:50.123853+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem degree_four_count (m n : ℕ) (hm : m ≥ 3) (hn : n ≥ 3) : count_degree_four m n = (m - 1) * (n - 1) := by sorry",
       "lineage_refs": [],
@@ -40671,7 +40671,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22614v1",
       "source_path": "http://arxiv.org/abs/2606.22614v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-24T08:42:34.928992+00:00",
       "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
@@ -41060,6 +41060,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Discrepancy for Random Linear Codes"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that a random linear code C ⊆ F_q^n of rate 1 - (1/n)log_q|B_ρ| (without the ε term) satisfies |C ∩ B| = (1 ± o(1)) * |C||B|/q^n simultaneously for all radius-ρ Hamming balls B with high probability. This extends the paper's result which requires an ε > 0 term.",
+      "domain_bridges": [
+        "Discrepancy Theory",
+        "Finite Field Codes",
+        "Probabilistic Method"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation",
+        "Pythagorean"
+      ],
+      "id": "fd_2437",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem list_decoding_exact_capacity {q : ℕ} {ρ : ℝ} [fact Prime q] [fact 0 < ρ] [fact ρ < 1] : ∀ (n : ℕ), let C : Code q n := random_linear_code q (1 - (1/n) * log_q (volume_ball ρ n)), B all radius-ρ Hamming balls, Pr [∀ B, |C ∩ B| = (1 ± o(1)) * (|C| * |B|) / q^n] ≥ 1 - o(1)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the second-moment method from the paper, removing the ε term and demonstrating that the variance still concentrates to yield the o(1) deviation bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24471v1",
+      "source_path": "http://arxiv.org/abs/2606.24471v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T13:27:56.688809+00:00",
+      "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
         "math.CO/2603.01456"
@@ -41080,7 +41125,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2437",
+      "id": "fd_2438",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41123,7 +41168,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2438",
+      "id": "fd_2439",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41168,7 +41213,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2439",
+      "id": "fd_2440",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41213,7 +41258,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2440",
+      "id": "fd_2441",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41234,160 +41279,50 @@
       "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions — Degree-normalized linked tree-cut decompositions\n\nThis cycle reduced the *degree-normalization clause* of the conjecture (exact\nstabilization along finite-degree ends, divergence along infinite-degree ends)\nto a single combinatorial property of the decomposition: **monotonicity of the\nadhesion-size sequence `n ↦ |F_{e_n}|` along each root-to-end ray**. We proved\n(0 sorries, in `SequenceLemmas.lean` and `Core.lean`):\n\n* `degreeNormalized_finite`: a nested (componental) ray stabilizes *exactly* at\n  `displayedEdgeDegree = ⨅ₙ |F_{e_n}|`;\n* `degreeNormalized_finite_minCut`: under `Linked`, the eventual value equals the\n  eventual edge **min-cut** (Menger), so `displayedEdgeDegree` is the genuine\n  edge-degree of the displayed end;\n* `degreeNormalized_infinite`: a monotone-unbounded ray diverges (`|F_{e_n}| → ∞`);\n* `degreeNormalization_dichotomy`: any eventually-monotone ray realizes exactly\n  one of the two normalization regimes.\n\nThe Critic isolated the *load-bearing* gap: oscillating sequences (`1,2,1,2,…`)\nviolate the dichotomy, so the open content of the conjecture is entirely the\nconstruction of a decomposition whose adhesion sizes are monotone along every\nend-ray. The directions below attack that gap.\n\n---\n\n## Conjecture 1 — Linkedness alone forces eventual monotonicity along nested rays\n\n**Statement.** In a *linked* rooted tree-cut decomposition of a connected locally\nfinite multigraph, for every root-to-end ray `e` the sequence `|F_{e_n}|` is\n*eventually monotone* (eventually antitone if the end has finite edge-degree,\neventually monotone increasing if infinite).\n\n**The key insight is** that linkedness pins each adhesion to the Menger min-cut of\nits side (`linked_adhesion_eq_minCut`), and min-cuts toward a fixed end can only\n\"tighten then settle\" — there is no mechanism for a strict decrease to be undone\nwithout violating the linked witness paths, which would have to reappear.\n\n**Why now?** `Core.lean` already supplies the missing top layer: once monotonicity\nis established, `degreeNormalization_dichotomy` immediately yields the full clause.\nOnly the monotonicity lemma remains, turning an analytic conjecture into a finite\nlocal statement about consecutive adhesions `F_{e_n}, F_{e_{n+1}}`.\n\n## Conjecture 2 — `displayedEdgeDegree` is a complete invariant of the end's edge-degree\n\n**Statement.** For a linked, componental decomposition that displays an end `ω`\nbijectively, `displayedEdgeDegree e` (finite case) equals the maximum number of\npairwise edge-disjoint rays converging to `ω`; in the infinite case both sides are\n`+∞`.\n\n**The key insight is** that the eventual min-cut along the ray (which we proved is\nthe stabilized adhesion size) is exactly the edge-version of Menger/Halin for ends:\nthe bottleneck separator size equals the max edge-disjoint ray packing.\n\n**Why now?** We have already proved the cut side of the equality\n(`degreeNormalized_finite_minCut`); the remaining work is the ray-packing side, a\nself-contained edge-Menger statement for which the catalog's\n`card_le_of_disjoint_crossPaths` provides one of the two inequalities.\n\n## Conjecture 3 — Stabilization index is bounded by the initial adhesion\n\n**Statement.** Along a nested ray, the stabilization threshold `N₀` of\n`degreeNormalized_finite` satisfies `N₀ ≤ |F_{e_0}| - displayedEdgeDegree`: the\nsequence can strictly decrease at most `|F_{e_0}| - d` times.\n\n**The key insight is** that an antitone `ℕ`-sequence drops by at least `1` at each\nstrict step, so the number of strict steps is bounded by the total decrease\n`|F_{e_0}| - d`, giving an *effective* (constructive) stabilization bound.\n\n**Why now?** `antitone_nat_eventually_eq_iInf` already produces *some* `N₀`; refining\nits proof to count strict descents converts an existence statement into a quantitative\none with no new graph theory required.\n\n## Conjecture 4 — Two-sided normalization for bi-infinite (double-ray) ends\n\n**Statement.** For a tree-cut decomposition indexed by `ℤ` along a double ray\nbetween two ends `ω₋, ω₊`, the adhesion sizes `|F_{e_n}|` are eventually constant in\n*both* directions, with the two limits equal to the edge-degrees of `ω₋` and `ω₊`.\n\n**The key insight is** that the `ℕ`-dichotomy applies independently to the two tails\n`n → +∞` and `n → -∞`; the only new ingredient is that a linked decomposition makes\nthe two tails monotone in *opposite* orientations.\n\n**Why now?** The `ℕ` machinery in `SequenceLemmas.lean` is orientation-agnostic and\nreuses verbatim after composing with `n ↦ -n`, so the double-ray case is one short\nlemma away from the single-ray results proved this cycle.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Logic"
+      "catalog_references": [
+        "CashmanKelley2025",
+        "Bajnok2017",
+        "TaoVu2006"
       ],
-      "id": "fd_2441",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "758d973b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/758d973b",
-      "status": "available",
-      "thread_id": "th_7e9b97a8",
-      "timestamp": "2026-06-24T12:15:11.962987+00:00",
-      "title": "This cycle reduced the *degree-normalization clause* of the conjecture (exact"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nThis cycle settled the two-colour Schur number `S(2) = 4` exactly and supplied\nthe extremal construction for the lower bound `S(3) ≥ 13`\n(`Algebra/SchurNumberTwo.lean`, `Algebra/SchurNumberThree.lean`). Below are\nfalsifiable conjectures for follow-up cycles.\n\n## Conjecture 1 — Upper bound `S(3) ≤ 13`\n**Statement.** `¬ SchurColourableR 3 14`: every three-colouring of `{1,…,14}`\ncontains a monochromatic Schur triple.\n**Plan.** Reduce to a `Fin 3`-coloured `decide`/`native_decide` search over the\n`3^13` relevant colourings (fix `c 1 = 0` by symmetry to cut the space).\nCombined with `schurColourable_three_thirteen` this proves `S(3) = 13`.\n**Falsifiable:** exhibit a sum-free three-colouring of `{1,…,14}` to refute.\n\n## Conjecture 2 — Schur ⇐ Ramsey bridge\n**Statement.** For every `r`, `SchurColourableR r (RamseyMulti r 3 - 1)` fails to\nextend: `S(r) ≤ R_r(3) - 1`, where `R_r(3)` is the `r`-colour Ramsey number for\ntriangles. Formally connect `Algebra/SchurNumber*` to the arrow relation in\n`Applications/Ramsey.lean` via the map \"colour the edge `{i,j}` by the colour of\n`|i - j|`\".\n**Falsifiable:** a Schur colouring of `{1,…,R_r(3)-1}` surviving the bridge.\n\n## Conjecture 3 — Exponential lower bound `S(r) ≥ (3^r + 1)/2`\n**Statement.** `SchurColourableR r ((3^r + 1)/2 - 1)` for all `r ≥ 1`, via the\nrecursive Schur construction (lift a colouring of `{1,…,S(r-1)}` by three shifted\ncopies). Verified small cases: `r=1 → 1`, `r=2 → 4`, `r=3 → 13`, `r=4 → 40`.\n**Falsifiable:** show the recursive construction produces a monochromatic triple\nfor some `r`.\n\n## Conjecture 4 — Weak (distinct-entry) Schur numbers\n**Statement.** Define `WS(r)` using Schur triples with `x ≠ y`. Then\n`WS(2) = 8` and `WS(3) = 23`. Formalise `WeakSchurColourable` (add `x ≠ y` to\n`IsSchurTriple`) and prove `WS(2) = 8` by the same `decide` methodology used for\n`S(2) = 4`.\n**Falsifiable:** any colouring beating these bounds.\n\n## Conjecture 5 — Diagonal Ramsey from the binomial bound\n**Statement.** Extend `Applications/Ramsey.lean`'s `arrows_recursion` to the\ndiagonal bound `Arrows (4^s) (s+1) (s+1)`, i.e. `R(s+1,s+1) ≤ 4^s`, using the\ncentral-binomial estimate `(2s).choose s ≤ 4^s`. Pair with the probabilistic\nlower bound `R(s,s) > 2^(s/2)` for a clean two-sided diagonal result.\n**Falsifiable:** a colouring of `K_{4^s}` with no monochromatic `(s+1)`-clique.\n",
-      "domain_bridges": [],
+      "description": "For any odd prime p and any integer ℓ with 1 ≤ ℓ ≤ (p-1)/2, if p > 2ℓ + 1 then the maximum size of a symmetric subset S ⊆ Z_p with 0 ∉ S and Cay(Z_p, S) containing no odd cycle C_{2ℓ+1} is exactly 2⌊(p + 28 + 12)/(2(28 + 12))⌋.",
+      "domain_bridges": [
+        "additive combinatorics",
+        "extremal graph theory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "Pythagorean"
+        "Pythagorean",
+        "Algebra"
       ],
       "id": "fd_2442",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "1670a4b8",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1670a4b8",
+      "source_exp_id": "2606.24426v1",
+      "source_path": "http://arxiv.org/abs/2606.24426v1",
       "status": "available",
-      "thread_id": "th_e13b7234",
-      "timestamp": "2026-06-24T13:10:06.638792+00:00",
-      "title": "This cycle settled the two-colour Schur number `S(2) = 4` exactly and supplied"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions — Proof Automation: Custom Lean 4 Tactics\n\nDerived from this cycle's findings (Stage 3 Analysis & Stage 4 Critique on the\n`tropical_simp`, `number_theory_decide`, `spectral_bound` tactics).\n\n## 1. A complete decision procedure for min-plus polynomial identities\n**Conjecture.** Every identity between two finite min-plus polynomial\nexpressions over `ℝ` (built from variables, constants, `+`, and `min`) is\ndecidable, and `tropical_simp` extended with a case-split engine on variable\norderings decides it.\n*The key insight is...* that `tropical_simp` currently normalises only the\ndistributive/AC structure, but the *only* remaining obstruction is the unknown\norder of operands inside each `min`; enumerating the finitely many total orders\nturns rewriting into a complete decision procedure.\n*Why now?* This cycle proved the distributive core (`scalar_foldr_min`) is sound\nand AC-normalisation works once `min_left_comm` is included — the missing piece\nis purely the order case-split, which is finite and mechanisable.\n\n## 2. Per-disc Gershgorin upgrade of `spectral_bound`\n**Conjecture.** The weak global bound `|λ| ≤ maxᵢ ∑ⱼ|Mᵢⱼ|` proved here can be\nstrengthened to the full Gershgorin statement: every eigenvalue lies in\n`⋃ᵢ {z : |z − Mᵢᵢ| ≤ ∑_{j≠i} |Mᵢⱼ|}`, and the upgraded tactic certifies\nmembership in this union.\n*The key insight is...* the same \"largest-coordinate\" index `i` used in\n`eigenvalue_rowsum_bound` already isolates the diagonal term `Mᵢᵢ vᵢ`; moving it\nto the other side of the eigen-equation yields the centered disc instead of the\norigin-centered one, with no new machinery.\n*Why now?* The argmax/triangle-inequality skeleton is already formalised and\nsound; the diagonal separation is a one-line algebraic regrouping of the\nexisting `hrow` step.\n\n## 3. `number_theory_decide` as a reflective `ZMod`-reduction tactic\n**Conjecture.** The pattern \"prove `m ∣ f(n)` for all `n` by `decide`-ing\n`∀ x : ZMod m, f(x) = 0`\" can be packaged as a single reflective tactic that,\ngiven the modulus `m` and integer polynomial `f`, automatically inserts the\n`ZMod.intCast_zmod_eq_zero_iff_dvd`/`push_cast` reduction and closes the goal.\n*The key insight is...* in this cycle the reduction chain was identical across\n`p = 5, 7` and the composite `m = 6`; only the literal modulus changed, so the\nboilerplate is fully mechanisable by elaboration over the goal's syntax.\n*Why now?* We have three independent verified instances of the exact same chain,\ngiving a reliable template to reflect; the finite check is already delegated to\n`decide`.\n\n## 4. Linking `number_theory_decide` to the Carmichael/Fibonacci catalog\n**Conjecture.** The finite-residue checker that proves `m ∣ n³ − n` generalises\nto certify the *entry-point* congruences `n ∣ Fib(rank(n))` underlying the\ncatalog's `CarmichaelProof`, replacing its `native_decide` finite range with a\ntrusted `decide`-over-`ZMod` argument for each prime power.\n*The key insight is...* Fibonacci divisibility is periodic modulo `m` (Pisano\nperiods), so each \"small case\" is a finite `ZMod` check of exactly the kind\n`number_theory_decide` performs, swapping an opaque `native_decide` for a\nkernel-checked enumeration.\n*Why now?* `CarmichaelProof.lean` already isolates a finite verified range and a\nremaining infinite tail; a periodicity-aware finite checker is the natural bridge\nbetween the two and reduces the trust surface.\n\n## 5. Soundness-by-construction meta-theorem for tactic bundles\n**Conjecture.** Any tactic defined as `first | t₁ | … | tₖ` where each `tᵢ` is a\nsound primitive is itself sound, and this can be stated and used as a reusable\nLean lemma schema certifying custom `macro`-tactics without re-auditing each one.\n*The key insight is...* all three tactics in this cycle are sound *because* they\nonly ever `apply` proved lemmas or invoke sound kernels (`decide`, `omega`);\nsoundness is compositional and should be a one-time meta-result, not re-argued\nper tactic.\n*Why now?* We now have three concrete, independently verified sound tactics that\nshare exactly this structure, providing the empirical basis to abstract the\ncommon soundness pattern.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Pythagorean"
-      ],
-      "id": "fd_2443",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "cd0ef092",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/cd0ef092",
-      "status": "available",
-      "thread_id": "th_0ef7c90c",
-      "timestamp": "2026-06-24T13:14:49.109344+00:00",
-      "title": "Derived from this cycle's findings (Stage 3 Analysis & Stage 4 Critique on the"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions — Conformability of odd-order regular graphs\n\nDerived from this cycle's findings (`ConformabilityOddOrder.lean`,\n`PerfectTrianglePacking.lean`). Each conjecture is falsifiable.\n\n## C1. The `oddCap` bound is the *exact* feasibility threshold for vertex-transitive graphs\n**Conjecture.** For a vertex-transitive `d`-regular graph `G` of odd order `n` with\n`α(G) = k`, `G` is conformable **iff** `n ≤ (d+1)·oddCap k` and `d` is even.\n*The key insight is...* that for vertex-transitive graphs the only obstructions to a\nconformable colouring are the two we already proved necessary (the odd-clique count and the\ndegree parity); transitivity removes the local irregularities that could otherwise block\nthe packing.\n*Why now?* We have the necessary direction fully formalized; the sufficiency reduces to a\ndefect-version of Baranyai-type edge/clique partitioning, which recent Mathlib `Finpartition`\ninfrastructure makes attackable.\n\n## C2. Per-`k` strict hierarchy of the packing bound\n**Conjecture.** For each fixed `k ≥ 3`, there is an infinite family of `d`-regular odd-order\ngraphs with `α = k` that are conformable but become non-conformable after deleting a single\nvertex orbit, with the transition governed exactly by crossing `n = (d+1)·oddCap k`.\n*The key insight is...* that `oddCap k` jumps by `2` only at odd `k`, so the feasibility\nfrontier is a *step function* in `k`, giving each independence number its own threshold band.\n*Why now?* `oddCap` is now a first-class, proven quantity; the step structure is visible in\nthe Computational Evidence table and can be tested family-by-family.\n\n## C3. Complement-side reformulation collapses conformability to odd-clique cover\n**Conjecture.** Conformability of an odd-order `d`-regular `G` is polynomial-time equivalent\nto deciding whether `Gᶜ` admits a partition into exactly `d+1` cliques each of **odd** size\n`≤ k`.\n*The key insight is...* that `fiber_compl_clique` already shows every conformable class is an\nodd clique of `Gᶜ`; the converse packing (built like `trianglePacking_compl_conformable`)\nturns any such partition back into a conformable colouring.\n*Why now?* Both directions of the bridge are formalized at `k = 3`; generalizing the triangle\nto an odd clique of size up to `k` is a direct structural lift.\n\n## C4. Degree-parity rigidity forces an empty-class-free spectrum\n**Conjecture.** Every conformable colouring of an odd-order `d`-regular graph uses *all*\n`d+1` colours with strictly positive (odd) class sizes; consequently `d+1 ≤ n` and the class\nsize multiset is an odd partition of `n` into exactly `d+1` parts each `≤ oddCap k`.\n*The key insight is...* that an empty class has even size `0`, which violates the parity\ncondition for odd `n`, so the colour palette can never be wasted — proven in the parity\ntheorem and now liftable to a full description of the achievable size spectra.\n*Why now?* `conformable_odd_order_even_degree` already extracts the global parity; the\nspectrum description is the natural strengthening and is checkable on small graphs.\n\n## C5. NP-completeness persists for all fixed `k ≥ 3` (the grand challenge)\n**Conjecture.** For every fixed `k ≥ 3`, Conformability restricted to connected `d`-regular\ngraphs of odd order with `α(G) = k` and `d ≥ n/2` is NP-complete, via reduction from perfect\nodd-`k`-clique packing in the complement.\n*The key insight is...* that the `oddCap`-bounded packing structure isolated here is exactly\nthe gadget budget a reduction needs: odd cliques of size up to `k` give `⌈k/2⌉` distinct\n\"weights\" to encode, enough arithmetic freedom to embed NP-hard packing for every `k ≥ 3`.\n*Why now?* The `k = 3` packing bridge is formalized; the obstruction calculus tells us the\nprecise combinatorial invariant (`oddCap k`-bounded clique partitions of `Gᶜ`) any reduction\nmust preserve, turning an open hardness program into a concrete packing-construction target.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Pythagorean"
-      ],
-      "id": "fd_2444",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "168f9c96",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/168f9c96",
-      "status": "available",
-      "thread_id": "th_c89e2cf2",
-      "timestamp": "2026-06-24T13:16:02.607814+00:00",
-      "title": "Derived from this cycle's findings (`ConformabilityOddOrder.lean`,"
+      "thread_id": "",
+      "timestamp": "2026-06-24T13:31:30.394872+00:00",
+      "title": "Odd cycle extremal conjecture for Cayley graphs over prime cyclic groups"
     },
     {
       "ambition_level": "extension",
@@ -44795,11 +44730,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7d77f583",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44811,7 +44746,7 @@
         "Computation"
       ],
       "id": "seed_208",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T13:31:37.353134+00:00",
       "last_reviewed_at": "2026-06-09T13:04:11.320190+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44825,7 +44760,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:09.067494+00:00",
       "title": "Sierpiński Numbers: Covering Systems"
@@ -46586,7 +46521,7 @@
       "depth_estimate": 3,
       "description": "Formalize quaternion algebras and their classification over number fields. Prove the isomorphism between unit quaternions and SO(3). Construct the Cayley-Dickson construction and prove properties of octonions. Apply to gimbal lock avoidance in 3D rotation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Geometry",
@@ -47924,7 +47859,7 @@
       "depth_estimate": 3,
       "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "NumberTheory",
@@ -47964,7 +47899,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Logic",
@@ -48074,11 +48009,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "cd0ef092",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48091,11 +48026,11 @@
         "Bridges"
       ],
       "id": "seed_379",
-      "last_attempt_time": "2026-06-24T11:56:45.040660+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.7045299999999999,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.92,
       "proof_strategy": "",
@@ -48105,7 +48040,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432809+00:00",
       "title": "Proof Automation: Custom Lean 4 Tactics"
@@ -121369,19 +121304,19 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 306,
+    "Algebra": 303,
     "Applications": 117,
-    "Bridges": 58,
-    "Computation": 101,
+    "Bridges": 57,
+    "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
-    "Geometry": 169,
-    "Logic": 117,
+    "Geometry": 168,
+    "Logic": 116,
     "MachineLearning": 37,
     "Novelty": 200,
     "Physics": 45,
     "Probability": 1,
-    "Pythagorean": 113,
+    "Pythagorean": 111,
     "Shared": 6,
     "Tropical": 33
   },
@@ -121399,7 +121334,7 @@
     "compute": 99,
     "computed": 42,
     "condition": 100,
-    "conjecture": 408,
+    "conjecture": 406,
     "connection": 56,
     "constant": 144,
     "construct": 81,
@@ -121408,7 +121343,7 @@
     "create": 25,
     "cryptographic": 17,
     "define": 195,
-    "degree": 56,
+    "degree": 54,
     "determined": 51,
     "directions": 531,
     "distinct": 72,
@@ -121427,7 +121362,7 @@
     "functions": 99,
     "future": 526,
     "giving": 120,
-    "graphs": 49,
+    "graphs": 47,
     "impact": 85,
     "important": 309,
     "insight": 305,
@@ -121440,13 +121375,13 @@
     "normally": 2,
     "novelty": 139,
     "now?**": 143,
-    "number": 180,
+    "number": 178,
     "o(1/log": 2,
     "original": 353,
     "parameter": 58,
     "placeholders": 301,
     "positive": 99,
-    "problem": 85,
+    "problem": 83,
     "proof-theoretic": 36,
     "proofs": 390,
     "proved": 573,
@@ -121471,8 +121406,8 @@
     "stable": 38,
     "statistically": 10,
     "statistics": 26,
-    "structure": 228,
-    "structures": 51,
+    "structure": 227,
+    "structures": 48,
     "systems": 72,
     "theorem": 397,
     "theorems": 462,
@@ -121488,8 +121423,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
