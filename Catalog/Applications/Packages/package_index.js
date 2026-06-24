@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "43854327",
     "filename": "nisq_optimized_quantum_error_mitigation_via_algebr.json",
     "pkg_num": 27,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.43844913758865245,
     "title": "Two Invariants of NISQ Error Mitigation: A Sharp Majority-Vote Threshold and the Persistence of H_0"
   },
   {
@@ -792,8 +792,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.43844913758865245,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Two Invariants of NISQ Error Mitigation: A Sharp Majority-Vote Threshold and the Persistence of H_0"
     }

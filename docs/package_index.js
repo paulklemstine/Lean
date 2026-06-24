@@ -4,11 +4,21 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-24T11:02:54Z",
+    "domain": "Logic",
+    "exp_id": "43854327",
+    "filename": "nisq_optimized_quantum_error_mitigation_via_algebr.json",
+    "pkg_num": 27,
+    "quality": "partial",
+    "quality_score": 0.43844913758865245,
+    "title": "Two Invariants of NISQ Error Mitigation: A Sharp Majority-Vote Threshold and the Persistence of H_0"
+  },
+  {
     "date": "2026-06-24T10:57:53Z",
     "domain": "Shared",
     "exp_id": "44e772b7",
     "filename": "existence_of_non_trivial_boolean_degree_one_functi.json",
-    "pkg_num": 27,
+    "pkg_num": 26,
     "quality": "partial",
     "quality_score": 0.69522,
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(4,2) via the Bruen-Drudge Midpoint"
@@ -18,7 +28,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "91104b94",
     "filename": "consciousness_as_integrated_information.json",
-    "pkg_num": 26,
+    "pkg_num": 25,
     "quality": "partial",
     "quality_score": 0.67432,
     "title": "Integrated Information (Phi): A Formally Verified Structural Core"
@@ -28,7 +38,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "f0048c68",
     "filename": "symmetric_group_generation_probability.json",
-    "pkg_num": 25,
+    "pkg_num": 24,
     "quality": "partial",
     "quality_score": 0.4162,
     "title": "The Three-Quarter Generation Ceiling for the Symmetric Group"
@@ -38,7 +48,7 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "exp_id": "bcd85103",
     "filename": "type_theory_cubical_type_theory_foundations.json",
-    "pkg_num": 24,
+    "pkg_num": 23,
     "quality": "partial",
     "quality_score": 0.63257,
     "title": "Cubical Foundations: A Set-Level Quotient Model of the Circle and Torus"
@@ -48,20 +58,10 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "1e3d4863",
     "filename": "whitehead_problem_independence_from_zfc.json",
-    "pkg_num": 23,
+    "pkg_num": 22,
     "quality": "substantial",
     "quality_score": 0.729932,
     "title": "The Whitehead Problem: The ZFC-Provable Skeleton via Projectivity and the Cyclic Obstruction"
-  },
-  {
-    "date": "2026-06-24T07:42:39Z",
-    "domain": "Pythagorean",
-    "exp_id": "67990ab1",
-    "filename": "nisq_optimized_quantum_error_mitigation_via_algebr.json",
-    "pkg_num": 22,
-    "quality": "partial",
-    "quality_score": 0.48928166666666667,
-    "title": "The Berggren Pythagorean Tree as Linear Dynamics on Euclid Generator Pairs"
   },
   {
     "date": "2026-06-24T06:45:24Z",
@@ -381,12 +381,12 @@ window.PACKAGE_DB_INDEX = {
     "title": "The GL(1) Langlands Correspondence over the Rationals: A Cyclotomic Isomorphism"
   },
   "nisq_optimized_quantum_error_mitigation_via_algebr.json": {
-    "domain": "Pythagorean",
-    "exp_id": "67990ab1",
+    "domain": "Logic",
+    "exp_id": "43854327",
     "source_exp_ids": [
       "pi_brainstorm"
     ],
-    "title": "The Berggren Pythagorean Tree as Linear Dynamics on Euclid Generator Pairs"
+    "title": "Two Invariants of NISQ Error Mitigation: A Sharp Majority-Vote Threshold and the Persistence of H_0"
   },
   "oeis_sequence_orderly_friedman_numbers_or_good_or_.json": {
     "domain": "Probability",
@@ -503,7 +503,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 90,
+      "hue": 270,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -514,7 +514,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 281,
+      "hue": 271,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -525,7 +525,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 280,
+      "hue": 90,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -536,7 +536,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 270,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -558,7 +558,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 90,
+      "hue": 271,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.6288,
@@ -569,7 +569,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 90,
+      "hue": 271,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -580,7 +580,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T08:30:51Z",
       "domain": "Computation",
-      "hue": 271,
+      "hue": 272,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
       "priority_score": 0.5811999999999999,
@@ -591,7 +591,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T11:40:38Z",
       "domain": "Probability",
-      "hue": 91,
+      "hue": 272,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
       "priority_score": 0.48476875555555554,
@@ -602,7 +602,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T15:01:50Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 271,
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
       "primary_domain": "Bridges",
       "priority_score": 0.5094479615384615,
@@ -657,7 +657,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:59:38Z",
       "domain": "Computation",
-      "hue": 275,
+      "hue": 270,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Computation",
       "priority_score": 0.789328,
@@ -668,7 +668,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T02:14:47Z",
       "domain": "Physics",
-      "hue": 90,
+      "hue": 92,
       "id": "hamiltonian_compression_factor_of_cubic_edge_trans",
       "primary_domain": "Physics",
       "priority_score": 0.48598591282051284,
@@ -679,7 +679,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T04:28:44Z",
       "domain": "Algebra",
-      "hue": 272,
+      "hue": 92,
       "id": "langlands_correspondence_gl1_case",
       "primary_domain": "Algebra",
       "priority_score": 0.57755,
@@ -701,7 +701,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T05:17:28Z",
       "domain": "Geometry",
-      "hue": 90,
+      "hue": 91,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Geometry",
       "priority_score": 0.702,
@@ -712,7 +712,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T06:14:07Z",
       "domain": "Cryptography",
-      "hue": 270,
+      "hue": 272,
       "id": "secret_sharing_shamirs_scheme_and_verifiable_varia",
       "primary_domain": "Cryptography",
       "priority_score": 0.5671600000000001,
@@ -723,24 +723,13 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T06:45:24Z",
       "domain": "Tropical",
-      "hue": 112,
+      "hue": 90,
       "id": "tropical_curves_and_chip_firing_games",
       "primary_domain": "Tropical",
       "priority_score": 0.6342000000000001,
       "quality": "partial",
       "shape": "star",
       "title": "Tropical Curves and Chip-Firing: Degree Invariance and the Canonical Genus Formula"
-    },
-    {
-      "date": "2026-06-24T07:42:39Z",
-      "domain": "Pythagorean",
-      "hue": 91,
-      "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
-      "primary_domain": "Pythagorean",
-      "priority_score": 0.48928166666666667,
-      "quality": "partial",
-      "shape": "triangular_prism",
-      "title": "The Berggren Pythagorean Tree as Linear Dynamics on Euclid Generator Pairs"
     },
     {
       "date": "2026-06-24T08:09:20Z",
@@ -756,7 +745,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T08:38:58Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 90,
       "id": "type_theory_cubical_type_theory_foundations",
       "primary_domain": "Algebra",
       "priority_score": 0.63257,
@@ -767,7 +756,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T09:33:05Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 272,
       "id": "symmetric_group_generation_probability",
       "primary_domain": "Bridges",
       "priority_score": 0.4162,
@@ -778,7 +767,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T10:35:56Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 270,
       "id": "consciousness_as_integrated_information",
       "primary_domain": "Bridges",
       "priority_score": 0.67432,
@@ -789,13 +778,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T10:57:53Z",
       "domain": "Shared",
-      "hue": 270,
+      "hue": 91,
       "id": "existence_of_non_trivial_boolean_degree_one_functi",
       "primary_domain": "Bridges",
       "priority_score": 0.69522,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(4,2) via the Bruen-Drudge Midpoint"
+    },
+    {
+      "date": "2026-06-24T11:02:54Z",
+      "domain": "Logic",
+      "hue": 91,
+      "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
+      "primary_domain": "Logic",
+      "priority_score": 0.43844913758865245,
+      "quality": "partial",
+      "shape": "star_of_david",
+      "title": "Two Invariants of NISQ Error Mitigation: A Sharp Majority-Vote Threshold and the Persistence of H_0"
     }
   ]
 };

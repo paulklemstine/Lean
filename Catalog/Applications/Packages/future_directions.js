@@ -3817,6 +3817,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from the v19a cycle on *NISQ-Optimized Quantum Error Mitigation via\nAlgebraic Topology*. This cycle established two anchors:\n\n- `MajorityDecoding.lean`: exact `n/2` correctness threshold for repetition-code\n  majority decoding, with a sharp tightness witness.\n- `PersistentH0.lean`: monotone decay of the zeroth persistent Betti number `\u03b2\u2080`\n  along a filtration (`H\u2080` persistence), with a non-degenerate merge witness.\n\nEach conjecture below is falsifiable in Lean: it can be proved, or disproved by an\nexplicit finite counterexample.\n\n## C1. Topological decoding equals Hamming-ball decoding below threshold\n\n**Conjecture.** Define the \"topological decoder\" as the dominant `\u03b2\u2080`-component\nof the proximity graph on the readout multiset at the optimal filtration\nthreshold. For the repetition code, its output equals the majority-vote output\nwhenever `2\u00b7err < n`.\n\nThe key insight is that *the largest connected component of the proximity graph is\nexactly the majority equivalence class*, so the zeroth Betti structure recovers\nthe same decision boundary as Hamming-weight counting \u2014 topology re-derives the\ncombinatorial threshold of `majority_decode_correct`.\n\nWhy now? We already have both endpoints formalised (`majority_decode_correct` and\n`betti0_persistence`); the missing link is a single lemma identifying the dominant\ncomponent with the majority class, which is within reach of the current API.\n\n## C2. Persistence monotonicity is strict iff a merge event occurs\n\n**Conjecture.** For `r\u2081 \u2286 r\u2082` on a finite vertex type, `\u03b2\u2080(r\u2082) < \u03b2\u2080(r\u2081)` if and\nonly if there exist `a, b` that are `r\u2082`-connected but not `r\u2081`-connected.\n\nThe key insight is that the `componentMap` is *non-injective exactly at a merge*,\nso the strictness of the persistence inequality is a purely relational\n(non-numeric) event detector \u2014 `componentMap_merges` is the witness for the\nforward direction.\n\nWhy now? `componentMap` and its surjectivity are already proved; characterising\nits injectivity converts the inequality `\u2264` of `betti0_persistence` into a sharp\n`<`/`=` dichotomy with no new infrastructure.\n\n## C3. Error suppression rate is governed by the longest `H\u2080` bar\n\n**Conjecture.** For independent bit-flip noise at rate `p < 1/2`, the logical\nerror probability of majority decoding decays as `\u0398(exp(-c\u00b7n))`, and the constant\n`c` is determined by the expected length of the longest `H\u2080` bar of the random\nproximity filtration.\n\nThe key insight is that *a logical failure is precisely a premature merge of the\nminority component into the majority*, so the survival time of the correct\ncomponent (its `H\u2080` bar length) controls the exponential suppression rate.\n\nWhy now? The deterministic threshold (`majority_threshold_tight`) pins the failure\nboundary; layering Mathlib's `Probability` API (Chernoff/Hoeffding) on top of the\nalready-formalised combinatorics is the natural next quantitative step.\n\n## C4. Filtration refinement never increases logical error\n\n**Conjecture.** If one proximity filtration refines another at every threshold\n(pointwise `\u2286`), then the topological decoder built from the finer filtration has\nlogical error probability no larger than that of the coarser one.\n\nThe key insight is that refinement only *delays* merge events, and by\n`betti0_persistence` delayed merges keep the correct component alive longer, so\nmonotone refinement is monotone in reliability.\n\nWhy now? This is the probabilistic shadow of `betti0_persistence`, which is\nalready a theorem; the order-theoretic backbone (relation refinement \u21d2 component\nsurjection) is in place and only needs a measure-monotonicity wrapper.\n\n## C5. A topological code-distance lower bound\n\n**Conjecture.** For a stabiliser-style repetition family, the code distance equals\n`1 + (the smallest filtration threshold at which `\u03b2\u2080` first drops below the number\nof logical codewords)`.\n\nThe key insight is that *the first `\u03b2\u2080`-drop marks the smallest error pattern that\nconfuses two codewords*, so the algebraic-topological birth/death data encodes the\nclassical code distance directly.\n\nWhy now? With `betti0` and its monotonicity formalised, the code-distance side is\nthe only remaining piece; it connects this Logic\u21c4Topology bridge to the\nCryptography/coding-theory catalog domain, opening a second cross-domain bridge.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2436",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "43854327",
+    "status": "available",
+    "timestamp": "2026-06-24T11:02:56.175721+00:00",
+    "title": "Derived from the v19a cycle on *NISQ-Optimized Quantum Error Mitigation via"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4168,21 +4183,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
-  },
-  {
-    "consumed_by_exp_id": "a470c2a1",
-    "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0508",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:47.125386+00:00",
-    "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
     "consumed_by_exp_id": "",
