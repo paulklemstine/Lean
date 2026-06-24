@@ -443,5 +443,6 @@
   "2b44c5bb": "statistical_mechanics_ising_model_phase_transition.json",
   "0dfef380": "proof_automation_custom_lean_4_tactics.json",
   "e56a1e16": "eml_universal_approximation_density_of_eml_functio.json",
-  "a5fa8083": "close_proofs_these_conjectures_continue_the_resear.json"
+  "a5fa8083": "close_proofs_these_conjectures_continue_the_resear.json",
+  "7e71ceda": "hamiltonian_compression_factor_of_cubic_edge_trans.json"
 }

@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-24T02:14:47Z",
+    "domain": "Physics",
+    "exp_id": "7e71ceda",
+    "filename": "hamiltonian_compression_factor_of_cubic_edge_trans.json",
+    "pkg_num": 17,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs: A Verified Mobius-Ladder Symmetry Certificate"
+  },
+  {
     "date": "2026-06-24T01:59:38Z",
     "domain": "Computation",
     "exp_id": "a5fa8083",
@@ -222,6 +232,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "EML Universal Approximation: Density of Exp-Log Functions on the Unit Cube"
   },
+  "hamiltonian_compression_factor_of_cubic_edge_trans.json": {
+    "domain": "Physics",
+    "exp_id": "7e71ceda",
+    "source_exp_ids": [
+      "2606.21941v1"
+    ],
+    "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs: A Verified Mobius-Ladder Symmetry Certificate"
+  },
   "idempotent_probability_large_deviations.json": {
     "domain": "Tropical",
     "exp_id": "9537a45c",
@@ -305,7 +323,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 91,
+      "hue": 275,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -316,7 +334,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 91,
+      "hue": 270,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -349,7 +367,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 275,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -360,7 +378,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 92,
+      "hue": 271,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
@@ -371,7 +389,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 91,
+      "hue": 272,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.6288,
@@ -382,7 +400,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 90,
+      "hue": 91,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -404,7 +422,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T11:40:38Z",
       "domain": "Probability",
-      "hue": 270,
+      "hue": 271,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
       "priority_score": 0.48476875555555554,
@@ -426,7 +444,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T19:25:16Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 270,
       "id": "quantum_key_distribution_bb84_security_proof",
       "primary_domain": "Cryptography",
       "priority_score": 0.49160000000000004,
@@ -448,7 +466,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:21:56Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 90,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
       "priority_score": 0.7484,
@@ -459,7 +477,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:35:46Z",
       "domain": "Tropical",
-      "hue": 92,
+      "hue": 91,
       "id": "eml_universal_approximation_density_of_eml_functio",
       "primary_domain": "Tropical",
       "priority_score": 0.86528,
@@ -477,6 +495,17 @@ window.PACKAGE_GRAPH = {
       "quality": "substantial",
       "shape": "cube",
       "title": "The Fitting Kernel Bound: Sharp Stabilization of Iterated-Endomorphism Kernels"
+    },
+    {
+      "date": "2026-06-24T02:14:47Z",
+      "domain": "Physics",
+      "hue": 271,
+      "id": "hamiltonian_compression_factor_of_cubic_edge_trans",
+      "primary_domain": "Physics",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "diamond",
+      "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs: A Verified Mobius-Ladder Symmetry Certificate"
     }
   ]
 };
