@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6fb69121",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — The Hodge Conjecture for Neural Networks\n\nDerived from the cycle in `NeuralHodgeConjecture.lean` and `NeuralHodgeCatalogLink.lean`,\nwhich proved:\n\n* `pl_hodge_decomposition` / `p",
-      "quality_score": 0.5415809756097562,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-17T06:17:59",
-      "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
-    },
-    {
       "cycle_id": "11262eec",
       "domain": "Computation",
       "key_insight": "# Future Directions — Paradoxes as Theorems (Liar, Berry, Russell, Made Consistent)\n\nDerived from the cycle whose verified results live in\n`Catalog/Logic/ParaconsistentParadox.lean` (foundations) and",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-24T15:18:53",
       "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
+    },
+    {
+      "cycle_id": "c235005e",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — T-Ideals of Acyclic Path Algebras\n\nThis cycle proved the *containment* half of the mission statement: for a finite\nacyclic quiver `Q` with longest path length `n - 1`, the symmet",
+      "quality_score": 0.5303045714285715,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-24T16:21:28",
+      "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7045299999999999
     }
   ],
-  "last_updated": "2026-06-24T15:18:53",
+  "last_updated": "2026-06-24T16:21:28",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "443cc80d",
-        "quality": 0.7460199999999999,
-        "theorems": 6,
-        "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
-      },
-      {
         "cycle_id": "bcf3395e",
         "quality": 0.4537146432932148,
         "theorems": 351,
@@ -3451,6 +3445,12 @@
         "quality": 0.702,
         "theorems": 10,
         "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+      },
+      {
+        "cycle_id": "c235005e",
+        "quality": 0.5303045714285715,
+        "theorems": 11,
+        "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
       }
     ],
     "Logic": [

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c235005e",
     "filename": "symmetrized_monomial_generates_t_ideal_in_acyclic_.json",
     "pkg_num": 33,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5303045714285715,
     "title": "The Shape of Nothing: Symmetrized Monomial Identities of Acyclic Path Algebras"
   },
   {
@@ -966,8 +966,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "symmetrized_monomial_generates_t_ideal_in_acyclic_",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5303045714285715,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "The Shape of Nothing: Symmetrized Monomial Identities of Acyclic Path Algebras"
     }
