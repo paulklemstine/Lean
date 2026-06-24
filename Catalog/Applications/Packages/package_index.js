@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cd0ef092",
     "filename": "proof_automation_custom_lean_4_tactics.json",
     "pkg_num": 29,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7045299999999999,
     "title": "Proof Automation: Sound Custom Lean 4 Tactics for Number Theory, Tropical Algebra, and Spectral Estimation"
   },
   {
@@ -850,8 +850,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7045299999999999,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Proof Automation: Sound Custom Lean 4 Tactics for Number Theory, Tropical Algebra, and Spectral Estimation"
     }

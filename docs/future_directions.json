@@ -12844,7 +12844,7 @@
       "depth_estimate": 3,
       "description": "Prove the Langlands correspondence for GL₂ over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges",
         "Algebra"
@@ -12883,7 +12883,7 @@
       "depth_estimate": 3,
       "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Geometry"
@@ -13000,7 +13000,7 @@
       "depth_estimate": 3,
       "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Logic"
@@ -13039,7 +13039,7 @@
       "depth_estimate": 3,
       "description": "Formalize the p-adic Langlands correspondence for GL₂(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges",
         "Algebra"
@@ -13156,7 +13156,7 @@
       "depth_estimate": 3,
       "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Computation"
@@ -13234,7 +13234,7 @@
       "depth_estimate": 3,
       "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Logic"
@@ -13312,7 +13312,7 @@
       "depth_estimate": 3,
       "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Logic"
@@ -15846,7 +15846,7 @@
       "depth_estimate": 3,
       "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.7000000000000001,
+      "domain_quality_penalty": -0.6000000000000001,
       "domains": [
         "Bridges",
         "Geometry"
@@ -16158,7 +16158,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.7000000000000001,
       "domains": [
         "Bridges",
         "Tropical"
@@ -16197,7 +16197,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Ax-Kochen-Ershov theorem: two henselian valued fields with elementarily equivalent residue fields and value groups are elementarily equivalent. Bridge to number theory: this implies the Q_p's are elementarily equivalent for almost all p. Prove Morley's categoricity theorem: if a countable theory is categorical in one uncountable cardinal, it is categorical in all uncountable cardinals.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Algebra"
@@ -33868,7 +33868,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -34529,7 +34529,7 @@
         "score_sequences_and_characteristic_sequences",
         "multigraph_enumeration_and_restricted_sequences"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -34866,7 +34866,7 @@
         "Design theory and graph decompositions",
         "Formal finite combinatorics in Lean 4"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -35052,7 +35052,7 @@
       "domain_bridges": [
         "Combinatorics to Logic"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -35145,7 +35145,7 @@
         "Combinatorics on Words",
         "Symbolic Dynamics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -35236,7 +35236,7 @@
         "Coding_Theory",
         "Graph_Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -35327,7 +35327,7 @@
         "math.CO",
         "math.NT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -35418,7 +35418,7 @@
         "Finite Combinatorics",
         "Topological Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -36068,7 +36068,7 @@
         "Graph theory",
         "Extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -36817,7 +36817,7 @@
         "combinatorics on words",
         "number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37146,7 +37146,7 @@
         "limsup of partial quotient expressions to Lagrange constants",
         "Smith normal form to reduction of general determinant D matrices"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37193,7 +37193,7 @@
         "Formal_power_series",
         "Linear_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37335,7 +37335,7 @@
         "extremal combinatorics to finite cardinal minimization",
         "graph joins and disjoint unions to type-level finite graph constructions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37722,7 +37722,7 @@
         "p-adic obstruction heuristics",
         "smooth-number structure"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38205,7 +38205,7 @@
         "Reduces an r-family product inequality to the two-family sharp product theorem by multiplying pairwise inequalities over unordered pairs.",
         "Connects extremal set theory with finite products and binomial coefficient arithmetic in Nat."
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38251,7 +38251,7 @@
         "Combinatorial designs",
         "Algebraic geometry of Grassmann varieties"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38587,7 +38587,7 @@
         "binary Cusick inequality as the b = 2 specialization",
         "stopped random-walk laws for carry propagation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38725,7 +38725,7 @@
         "quadratic_forms",
         "linear_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38911,7 +38911,7 @@
         "analytic_combinatorics",
         "number_theory_divisor_sums"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -39455,7 +39455,7 @@
         "Extremal graph theory",
         "Rational densities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -40001,7 +40001,7 @@
         "graph connectivity",
         "extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -41310,6 +41310,45 @@
       "thread_id": "th_e13b7234",
       "timestamp": "2026-06-24T13:10:06.638792+00:00",
       "title": "This cycle settled the two-colour Schur number `S(2) = 4` exactly and supplied"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — Proof Automation: Custom Lean 4 Tactics\n\nDerived from this cycle's findings (Stage 3 Analysis & Stage 4 Critique on the\n`tropical_simp`, `number_theory_decide`, `spectral_bound` tactics).\n\n## 1. A complete decision procedure for min-plus polynomial identities\n**Conjecture.** Every identity between two finite min-plus polynomial\nexpressions over `ℝ` (built from variables, constants, `+`, and `min`) is\ndecidable, and `tropical_simp` extended with a case-split engine on variable\norderings decides it.\n*The key insight is...* that `tropical_simp` currently normalises only the\ndistributive/AC structure, but the *only* remaining obstruction is the unknown\norder of operands inside each `min`; enumerating the finitely many total orders\nturns rewriting into a complete decision procedure.\n*Why now?* This cycle proved the distributive core (`scalar_foldr_min`) is sound\nand AC-normalisation works once `min_left_comm` is included — the missing piece\nis purely the order case-split, which is finite and mechanisable.\n\n## 2. Per-disc Gershgorin upgrade of `spectral_bound`\n**Conjecture.** The weak global bound `|λ| ≤ maxᵢ ∑ⱼ|Mᵢⱼ|` proved here can be\nstrengthened to the full Gershgorin statement: every eigenvalue lies in\n`⋃ᵢ {z : |z − Mᵢᵢ| ≤ ∑_{j≠i} |Mᵢⱼ|}`, and the upgraded tactic certifies\nmembership in this union.\n*The key insight is...* the same \"largest-coordinate\" index `i` used in\n`eigenvalue_rowsum_bound` already isolates the diagonal term `Mᵢᵢ vᵢ`; moving it\nto the other side of the eigen-equation yields the centered disc instead of the\norigin-centered one, with no new machinery.\n*Why now?* The argmax/triangle-inequality skeleton is already formalised and\nsound; the diagonal separation is a one-line algebraic regrouping of the\nexisting `hrow` step.\n\n## 3. `number_theory_decide` as a reflective `ZMod`-reduction tactic\n**Conjecture.** The pattern \"prove `m ∣ f(n)` for all `n` by `decide`-ing\n`∀ x : ZMod m, f(x) = 0`\" can be packaged as a single reflective tactic that,\ngiven the modulus `m` and integer polynomial `f`, automatically inserts the\n`ZMod.intCast_zmod_eq_zero_iff_dvd`/`push_cast` reduction and closes the goal.\n*The key insight is...* in this cycle the reduction chain was identical across\n`p = 5, 7` and the composite `m = 6`; only the literal modulus changed, so the\nboilerplate is fully mechanisable by elaboration over the goal's syntax.\n*Why now?* We have three independent verified instances of the exact same chain,\ngiving a reliable template to reflect; the finite check is already delegated to\n`decide`.\n\n## 4. Linking `number_theory_decide` to the Carmichael/Fibonacci catalog\n**Conjecture.** The finite-residue checker that proves `m ∣ n³ − n` generalises\nto certify the *entry-point* congruences `n ∣ Fib(rank(n))` underlying the\ncatalog's `CarmichaelProof`, replacing its `native_decide` finite range with a\ntrusted `decide`-over-`ZMod` argument for each prime power.\n*The key insight is...* Fibonacci divisibility is periodic modulo `m` (Pisano\nperiods), so each \"small case\" is a finite `ZMod` check of exactly the kind\n`number_theory_decide` performs, swapping an opaque `native_decide` for a\nkernel-checked enumeration.\n*Why now?* `CarmichaelProof.lean` already isolates a finite verified range and a\nremaining infinite tail; a periodicity-aware finite checker is the natural bridge\nbetween the two and reduces the trust surface.\n\n## 5. Soundness-by-construction meta-theorem for tactic bundles\n**Conjecture.** Any tactic defined as `first | t₁ | … | tₖ` where each `tᵢ` is a\nsound primitive is itself sound, and this can be stated and used as a reusable\nLean lemma schema certifying custom `macro`-tactics without re-auditing each one.\n*The key insight is...* all three tactics in this cycle are sound *because* they\nonly ever `apply` proved lemmas or invoke sound kernels (`decide`, `omega`);\nsoundness is compositional and should be a one-time meta-result, not re-argued\nper tactic.\n*Why now?* We now have three concrete, independently verified sound tactics that\nshare exactly this structure, providing the empirical basis to abstract the\ncommon soundness pattern.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2443",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "cd0ef092",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/cd0ef092",
+      "status": "available",
+      "thread_id": "th_0ef7c90c",
+      "timestamp": "2026-06-24T13:14:49.109344+00:00",
+      "title": "Derived from this cycle's findings (Stage 3 Analysis & Stage 4 Critique on the"
     },
     {
       "ambition_level": "extension",
@@ -46508,7 +46547,7 @@
       "depth_estimate": 3,
       "description": "Formalize quaternion algebras and their classification over number fields. Prove the isomorphism between unit quaternions and SO(3). Construct the Cayley-Dickson construction and prove properties of octonions. Apply to gimbal lock avoidance in 3D rotation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry",
@@ -47846,7 +47885,7 @@
       "depth_estimate": 3,
       "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "NumberTheory",
@@ -47886,7 +47925,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic",
@@ -48017,7 +48056,7 @@
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7045299999999999,
       "parent_direction": "",
       "priority_score": 0.92,
       "proof_strategy": "",
@@ -48027,7 +48066,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432809+00:00",
       "title": "Proof Automation: Custom Lean 4 Tactics"
@@ -121293,12 +121332,12 @@
   "recent_domain_counts": {
     "Algebra": 305,
     "Applications": 117,
-    "Bridges": 57,
-    "Computation": 100,
+    "Bridges": 58,
+    "Computation": 101,
     "Cryptography": 26,
     "EML": 2,
     "Geometry": 169,
-    "Logic": 116,
+    "Logic": 117,
     "MachineLearning": 37,
     "Novelty": 200,
     "Physics": 45,

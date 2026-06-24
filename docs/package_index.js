@@ -4,11 +4,21 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-24T13:14:47Z",
+    "domain": "Bridges",
+    "exp_id": "cd0ef092",
+    "filename": "proof_automation_custom_lean_4_tactics.json",
+    "pkg_num": 29,
+    "quality": "substantial",
+    "quality_score": 0.7045299999999999,
+    "title": "Proof Automation: Sound Custom Lean 4 Tactics for Number Theory, Tropical Algebra, and Spectral Estimation"
+  },
+  {
     "date": "2026-06-24T13:10:04Z",
     "domain": "Algebra",
     "exp_id": "1670a4b8",
     "filename": "ramsey_theory_bounds_and_constructions.json",
-    "pkg_num": 29,
+    "pkg_num": 28,
     "quality": "partial",
     "quality_score": 0.61528,
     "title": "Schur Numbers: The Exact Value S(2)=4 and the Extremal Lower Bound S(3)>=13"
@@ -18,7 +28,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "758d973b",
     "filename": "degree_normalized_linked_tree_cut_decompositions_f.json",
-    "pkg_num": 28,
+    "pkg_num": 27,
     "quality": "partial",
     "quality_score": 0.51744,
     "title": "Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs"
@@ -28,7 +38,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "43854327",
     "filename": "nisq_optimized_quantum_error_mitigation_via_algebr.json",
-    "pkg_num": 27,
+    "pkg_num": 26,
     "quality": "partial",
     "quality_score": 0.43844913758865245,
     "title": "Two Invariants of NISQ Error Mitigation: A Sharp Majority-Vote Threshold and the Persistence of H_0"
@@ -38,7 +48,7 @@ window.PACKAGE_INDEX = [
     "domain": "Shared",
     "exp_id": "44e772b7",
     "filename": "existence_of_non_trivial_boolean_degree_one_functi.json",
-    "pkg_num": 26,
+    "pkg_num": 25,
     "quality": "partial",
     "quality_score": 0.69522,
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(4,2) via the Bruen-Drudge Midpoint"
@@ -48,7 +58,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "91104b94",
     "filename": "consciousness_as_integrated_information.json",
-    "pkg_num": 25,
+    "pkg_num": 24,
     "quality": "partial",
     "quality_score": 0.67432,
     "title": "Integrated Information (Phi): A Formally Verified Structural Core"
@@ -58,7 +68,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "f0048c68",
     "filename": "symmetric_group_generation_probability.json",
-    "pkg_num": 24,
+    "pkg_num": 23,
     "quality": "partial",
     "quality_score": 0.4162,
     "title": "The Three-Quarter Generation Ceiling for the Symmetric Group"
@@ -68,7 +78,7 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "exp_id": "bcd85103",
     "filename": "type_theory_cubical_type_theory_foundations.json",
-    "pkg_num": 23,
+    "pkg_num": 22,
     "quality": "partial",
     "quality_score": 0.63257,
     "title": "Cubical Foundations: A Set-Level Quotient Model of the Circle and Torus"
@@ -78,7 +88,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "1e3d4863",
     "filename": "whitehead_problem_independence_from_zfc.json",
-    "pkg_num": 22,
+    "pkg_num": 21,
     "quality": "substantial",
     "quality_score": 0.729932,
     "title": "The Whitehead Problem: The ZFC-Provable Skeleton via Projectivity and the Cyclic Obstruction"
@@ -88,7 +98,7 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical",
     "exp_id": "f9dc8407",
     "filename": "tropical_curves_and_chip_firing_games.json",
-    "pkg_num": 21,
+    "pkg_num": 20,
     "quality": "partial",
     "quality_score": 0.6342000000000001,
     "title": "Tropical Curves and Chip-Firing: Degree Invariance and the Canonical Genus Formula"
@@ -98,7 +108,7 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "exp_id": "d453f6ce",
     "filename": "secret_sharing_shamirs_scheme_and_verifiable_varia.json",
-    "pkg_num": 20,
+    "pkg_num": 19,
     "quality": "partial",
     "quality_score": 0.5671600000000001,
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Feldman Variants"
@@ -108,7 +118,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "81f9ab1d",
     "filename": "eml_transseries_asymptotic_expansions_beyond_power.json",
-    "pkg_num": 19,
+    "pkg_num": 18,
     "quality": "substantial",
     "quality_score": 0.702,
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
@@ -118,7 +128,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "146bc8b0",
     "filename": "homotopy_type_theory_foundations.json",
-    "pkg_num": 18,
+    "pkg_num": 17,
     "quality": "partial",
     "quality_score": 0.48341799999999996,
     "title": "Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence"
@@ -128,7 +138,7 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "exp_id": "f39e2cb3",
     "filename": "langlands_correspondence_gl1_case.json",
-    "pkg_num": 17,
+    "pkg_num": 16,
     "quality": "partial",
     "quality_score": 0.57755,
     "title": "The GL(1) Langlands Correspondence over the Rationals: A Cyclotomic Isomorphism"
@@ -138,7 +148,7 @@ window.PACKAGE_INDEX = [
     "domain": "Physics",
     "exp_id": "7e71ceda",
     "filename": "hamiltonian_compression_factor_of_cubic_edge_trans.json",
-    "pkg_num": 16,
+    "pkg_num": 15,
     "quality": "partial",
     "quality_score": 0.48598591282051284,
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs: A Verified Mobius-Ladder Symmetry Certificate"
@@ -148,7 +158,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "a5fa8083",
     "filename": "close_proofs_these_conjectures_continue_the_resear.json",
-    "pkg_num": 15,
+    "pkg_num": 14,
     "quality": "substantial",
     "quality_score": 0.789328,
     "title": "The Fitting Kernel Bound: Sharp Stabilization of Iterated-Endomorphism Kernels"
@@ -158,20 +168,10 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical",
     "exp_id": "e56a1e16",
     "filename": "eml_universal_approximation_density_of_eml_functio.json",
-    "pkg_num": 14,
+    "pkg_num": 13,
     "quality": "substantial",
     "quality_score": 0.86528,
     "title": "EML Universal Approximation: Density of Exp-Log Functions on the Unit Cube"
-  },
-  {
-    "date": "2026-06-24T01:21:56Z",
-    "domain": "Bridges",
-    "exp_id": "0dfef380",
-    "filename": "proof_automation_custom_lean_4_tactics.json",
-    "pkg_num": 13,
-    "quality": "substantial",
-    "quality_score": 0.7484,
-    "title": "The Coefficient That Counts Primes: A Binomial \u2192 Prime-Distribution Bridge"
   },
   {
     "date": "2026-06-24T00:21:07Z",
@@ -434,11 +434,11 @@ window.PACKAGE_DB_INDEX = {
   },
   "proof_automation_custom_lean_4_tactics.json": {
     "domain": "Bridges",
-    "exp_id": "0dfef380",
+    "exp_id": "cd0ef092",
     "source_exp_ids": [
       "seed"
     ],
-    "title": "The Coefficient That Counts Primes: A Binomial \u2192 Prime-Distribution Bridge"
+    "title": "Proof Automation: Sound Custom Lean 4 Tactics for Number Theory, Tropical Algebra, and Spectral Estimation"
   },
   "quantum_key_distribution_bb84_security_proof.json": {
     "domain": "Cryptography",
@@ -539,7 +539,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 90,
+      "hue": 272,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -561,7 +561,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T04:02:19Z",
       "domain": "Cryptography",
-      "hue": 280,
+      "hue": 90,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Cryptography",
       "priority_score": 0.77,
@@ -572,7 +572,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 91,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -594,7 +594,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 90,
+      "hue": 271,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.6288,
@@ -605,7 +605,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 92,
+      "hue": 271,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -616,7 +616,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T08:30:51Z",
       "domain": "Computation",
-      "hue": 275,
+      "hue": 91,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
       "priority_score": 0.5811999999999999,
@@ -627,7 +627,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T11:40:38Z",
       "domain": "Probability",
-      "hue": 271,
+      "hue": 270,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
       "priority_score": 0.48476875555555554,
@@ -638,7 +638,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T15:01:50Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 90,
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
       "primary_domain": "Bridges",
       "priority_score": 0.5094479615384615,
@@ -660,7 +660,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T00:21:07Z",
       "domain": "Physics",
-      "hue": 270,
+      "hue": 95,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Physics",
       "priority_score": 0.6913,
@@ -669,20 +669,9 @@ window.PACKAGE_GRAPH = {
       "title": "Statistical Mechanics: The Self-Dual Critical Point of the 2D Ising Model"
     },
     {
-      "date": "2026-06-24T01:21:56Z",
-      "domain": "Bridges",
-      "hue": 270,
-      "id": "proof_automation_custom_lean_4_tactics",
-      "primary_domain": "Bridges",
-      "priority_score": 0.7484,
-      "quality": "substantial",
-      "shape": "icosahedron",
-      "title": "The Coefficient That Counts Primes: A Binomial \u2192 Prime-Distribution Bridge"
-    },
-    {
       "date": "2026-06-24T01:35:46Z",
       "domain": "Tropical",
-      "hue": 92,
+      "hue": 90,
       "id": "eml_universal_approximation_density_of_eml_functio",
       "primary_domain": "Tropical",
       "priority_score": 0.86528,
@@ -693,7 +682,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:59:38Z",
       "domain": "Computation",
-      "hue": 270,
+      "hue": 90,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Computation",
       "priority_score": 0.789328,
@@ -715,7 +704,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T04:28:44Z",
       "domain": "Algebra",
-      "hue": 271,
+      "hue": 359,
       "id": "langlands_correspondence_gl1_case",
       "primary_domain": "Algebra",
       "priority_score": 0.57755,
@@ -726,7 +715,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T04:39:42Z",
       "domain": "Geometry",
-      "hue": 271,
+      "hue": 270,
       "id": "homotopy_type_theory_foundations",
       "primary_domain": "Geometry",
       "priority_score": 0.48341799999999996,
@@ -737,7 +726,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T05:17:28Z",
       "domain": "Geometry",
-      "hue": 90,
+      "hue": 272,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Geometry",
       "priority_score": 0.702,
@@ -748,7 +737,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T06:14:07Z",
       "domain": "Cryptography",
-      "hue": 91,
+      "hue": 271,
       "id": "secret_sharing_shamirs_scheme_and_verifiable_varia",
       "primary_domain": "Cryptography",
       "priority_score": 0.5671600000000001,
@@ -770,7 +759,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T08:09:20Z",
       "domain": "Novelty",
-      "hue": 281,
+      "hue": 100,
       "id": "whitehead_problem_independence_from_zfc",
       "primary_domain": "Bridges",
       "priority_score": 0.729932,
@@ -781,7 +770,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T08:38:58Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 271,
       "id": "type_theory_cubical_type_theory_foundations",
       "primary_domain": "Algebra",
       "priority_score": 0.63257,
@@ -792,7 +781,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T09:33:05Z",
       "domain": "Novelty",
-      "hue": 100,
+      "hue": 91,
       "id": "symmetric_group_generation_probability",
       "primary_domain": "Bridges",
       "priority_score": 0.4162,
@@ -803,7 +792,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T10:35:56Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 90,
       "id": "consciousness_as_integrated_information",
       "primary_domain": "Bridges",
       "priority_score": 0.67432,
@@ -814,7 +803,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T10:57:53Z",
       "domain": "Shared",
-      "hue": 134,
+      "hue": 271,
       "id": "existence_of_non_trivial_boolean_degree_one_functi",
       "primary_domain": "Bridges",
       "priority_score": 0.69522,
@@ -825,7 +814,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T11:02:54Z",
       "domain": "Logic",
-      "hue": 92,
+      "hue": 271,
       "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
       "primary_domain": "Logic",
       "priority_score": 0.43844913758865245,
@@ -836,7 +825,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T12:15:09Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 91,
       "id": "degree_normalized_linked_tree_cut_decompositions_f",
       "primary_domain": "Bridges",
       "priority_score": 0.51744,
@@ -847,13 +836,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T13:10:04Z",
       "domain": "Algebra",
-      "hue": 359,
+      "hue": 270,
       "id": "ramsey_theory_bounds_and_constructions",
       "primary_domain": "Algebra",
       "priority_score": 0.61528,
       "quality": "partial",
       "shape": "tetrahedron",
       "title": "Schur Numbers: The Exact Value S(2)=4 and the Extremal Lower Bound S(3)>=13"
+    },
+    {
+      "date": "2026-06-24T13:14:47Z",
+      "domain": "Bridges",
+      "hue": 271,
+      "id": "proof_automation_custom_lean_4_tactics",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7045299999999999,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Proof Automation: Sound Custom Lean 4 Tactics for Number Theory, Tropical Algebra, and Spectral Estimation"
     }
   ]
 };

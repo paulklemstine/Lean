@@ -149,22 +149,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "cd0ef092",
-    "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
-    "domains": [
-      "Logic",
-      "Computation",
-      "Bridges"
-    ],
-    "id": "seed_379",
-    "priority_score": 0.92,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432809+00:00",
-    "title": "Proof Automation: Custom Lean 4 Tactics"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
@@ -3885,6 +3869,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-24T13:10:06.638792+00:00",
     "title": "This cycle settled the two-colour Schur number `S(2) = 4` exactly and supplied"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Proof Automation: Custom Lean 4 Tactics\n\nDerived from this cycle's findings (Stage 3 Analysis & Stage 4 Critique on the\n`tropical_simp`, `number_theory_decide`, `spectral_bound` tactics).\n\n## 1. A complete decision procedure for min-plus polynomial identities\n**Conjecture.** Every identity between two finite min-plus polynomial\nexpressions over `\u211d` (built from variables, constants, `+`, and `min`) is\ndecidable, and `tropical_simp` extended with a case-split engine on variable\norderings decides it.\n*The key insight is...* that `tropical_simp` currently normalises only the\ndistributive/AC structure, but the *only* remaining obstruction is the unknown\norder of operands inside each `min`; enumerating the finitely many total orders\nturns rewriting into a complete decision procedure.\n*Why now?* This cycle proved the distributive core (`scalar_foldr_min`) is sound\nand AC-normalisation works once `min_left_comm` is included \u2014 the missing piece\nis purely the order case-split, which is finite and mechanisable.\n\n## 2. Per-disc Gershgorin upgrade of `spectral_bound`\n**Conjecture.** The weak global bound `|\u03bb| \u2264 max\u1d62 \u2211\u2c7c|M\u1d62\u2c7c|` proved here can be\nstrengthened to the full Gershgorin statement: every eigenvalue lies in\n`\u22c3\u1d62 {z : |z \u2212 M\u1d62\u1d62| \u2264 \u2211_{j\u2260i} |M\u1d62\u2c7c|}`, and the upgraded tactic certifies\nmembership in this union.\n*The key insight is...* the same \"largest-coordinate\" index `i` used in\n`eigenvalue_rowsum_bound` already isolates the diagonal term `M\u1d62\u1d62 v\u1d62`; moving it\nto the other side of the eigen-equation yields the centered disc instead of the\norigin-centered one, with no new machinery.\n*Why now?* The argmax/triangle-inequality skeleton is already formalised and\nsound; the diagonal separation is a one-line algebraic regrouping of the\nexisting `hrow` step.\n\n## 3. `number_theory_decide` as a reflective `ZMod`-reduction tactic\n**Conjecture.** The pattern \"prove `m \u2223 f(n)` for all `n` by `decide`-ing\n`\u2200 x : ZMod m, f(x) = 0`\" can be packaged as a single reflective tactic that,\ngiven the modulus `m` and integer polynomial `f`, automatically inserts the\n`ZMod.intCast_zmod_eq_zero_iff_dvd`/`push_cast` reduction and closes the goal.\n*The key insight is...* in this cycle the reduction chain was identical across\n`p = 5, 7` and the composite `m = 6`; only the literal modulus changed, so the\nboilerplate is fully mechanisable by elaboration over the goal's syntax.\n*Why now?* We have three independent verified instances of the exact same chain,\ngiving a reliable template to reflect; the finite check is already delegated to\n`decide`.\n\n## 4. Linking `number_theory_decide` to the Carmichael/Fibonacci catalog\n**Conjecture.** The finite-residue checker that proves `m \u2223 n\u00b3 \u2212 n` generalises\nto certify the *entry-point* congruences `n \u2223 Fib(rank(n))` underlying the\ncatalog's `CarmichaelProof`, replacing its `native_decide` finite range with a\ntrusted `decide`-over-`ZMod` argument for each prime power.\n*The key insight is...* Fibonacci divisibility is periodic modulo `m` (Pisano\nperiods), so each \"small case\" is a finite `ZMod` check of exactly the kind\n`number_theory_decide` performs, swapping an opaque `native_decide` for a\nkernel-checked enumeration.\n*Why now?* `CarmichaelProof.lean` already isolates a finite verified range and a\nremaining infinite tail; a periodicity-aware finite checker is the natural bridge\nbetween the two and reduces the trust surface.\n\n## 5. Soundness-by-construction meta-theorem for tactic bundles\n**Conjecture.** Any tactic defined as `first | t\u2081 | \u2026 | t\u2096` where each `t\u1d62` is a\nsound primitive is itself sound, and this can be stated and used as a reusable\nLean lemma schema certifying custom `macro`-tactics without re-auditing each one.\n*The key insight is...* all three tactics in this cycle are sound *because* they\nonly ever `apply` proved lemmas or invoke sound kernels (`decide`, `omega`);\nsoundness is compositional and should be a one-time meta-result, not re-argued\nper tactic.\n*Why now?* We now have three concrete, independently verified sound tactics that\nshare exactly this structure, providing the empirical basis to abstract the\ncommon soundness pattern.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2443",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cd0ef092",
+    "status": "available",
+    "timestamp": "2026-06-24T13:14:49.109344+00:00",
+    "title": "Derived from this cycle's findings (Stage 3 Analysis & Stage 4 Critique on the"
   },
   {
     "consumed_by_exp_id": "",
