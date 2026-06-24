@@ -34079,7 +34079,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Tree-cut decomposition",
         "finite adhesion",
@@ -34110,7 +34110,7 @@
         "Pythagorean"
       ],
       "id": "fd_2288",
-      "last_attempt_time": "2026-06-24T02:58:33.324569+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nuniverse u\n\nnamespace TreeCutEnds\n\n/-- Placeholder type for a locally finite multigraph. A full formalization would replace this\nwith a bundled graph structure with parallel edges. -/\nconstant LFMultigraph : Type u -> Type u\n\nconstant Connected : {V : Type u} -> LFMultigraph V -> Prop\n\n/-- Edge-ends of a graph. -/\nconstant EdgeEnd : {V : Type u} -> LFMultigraph V -> Type u\n\n/-- Edge-degree of an end, allowed to be infinite. -/\nconstant edgeDegree : {V : Type u} -> (G : LFMultigraph V) -> EdgeEnd G -> WithTop Nat\n\n/-- A rooted tree-cut decomposition of G. -/\nconstant TreeCutDecomp : {V : Type u} -> LFMultigraph V -> Type u\n\nconstant finiteBags : {V : Type u} -> {G : LFMultigraph V} -> TreeCutDecomp G -> Prop\nconstant finiteAdhesion : {V : Type u} -> {G : LFMultigraph V} -> TreeCutDecomp G -> Prop\nconstant componental : {V : Type u} -> {G : LFMultigraph V} -> TreeCutDecomp G -> Prop\nconstant linked : {V : Type u} -> {G : LFMultigraph V} -> TreeCutDecomp G -> Prop\n\n/-- End",
       "lineage_refs": [],
@@ -39117,7 +39117,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -39133,7 +39133,7 @@
         "Novelty"
       ],
       "id": "fd_2395",
-      "last_attempt_time": "2026-06-24T02:58:29.461667+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39480,6 +39480,53 @@
       "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Erdős 1965",
+        "Kleitman 1968",
+        "Frankl et al. 2026",
+        "Shan & Zhou 2023"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For all integers n ≥ (s+1)k and a prime power q, the maximum cardinality m_q(n,k,s) of a family of k‑dimensional subspaces of an n‑dimensional vector space over 𝔽_q with no s+1 members whose sum is direct equals the larger of the two natural constructions: all k‑subspaces contained in a ((s+1)k−1)‑dimensional subspace, or all k‑subspaces intersecting a fixed s‑dimensional subspace nontrivially.",
+      "domain_bridges": [
+        "Matroid matching",
+        "High-dimensional Hoffman bound",
+        "Vector space packing designs"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2403",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem m_q_eq_max {q : Type*} [Field q] {n k s : ℕ} (h : n ≥ (s+1)*k) : m_q n k s = max (qbinom ((s+1)*k-1) k) (qbinom n k - qpow q (k*s) * qbinom (n-s) k) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Apply Lovász's matroid matching minimax theorem, a high-dimensional Hoffman bound for uniform hypergraphs, and vector-space packing-design arguments to prove the equality.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24529v1",
+      "source_path": "http://arxiv.org/abs/2606.24529v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T04:01:44.618392+00:00",
+      "title": "Exactevaluation of the vector-space Erdős Matching number m_q(n,k,s)"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -39506,7 +39553,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2403",
+      "id": "fd_2404",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_problem_550_for_all_trees {k : ℕ} (hk : k ≥ 2) (m : List ℕ) (hm_len : m.length = k) (hm_sorted : m.Sorted (· ≤ ·)) (hm_pos : ∀ x ∈ m, 1 ≤ x) :\n  ∀ (T : SimpleGraph ℕ) (hT : T.IsTree) (n : ℕ) (hn : T.Fintype.card = n) (hn_pos : n ≥ 1),\n    RamseyNumber T (CompleteMultipartiteGraph m) ≤ (k - 1) * (RamseyNumber T (CompleteMultipartiteGraph [m.get? 0, m.get? 1]!) - 1) + m.get? 0! := by sorry",
@@ -39552,7 +39599,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2404",
+      "id": "fd_2405",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_congruence_cohomology_linear_vanishing (i p : ℕ) (hp : Nat.Prime p) :\n    ∃ C : ℕ, ∀ n : ℕ, n ≥ C * p → \n      H^(n.choose 2 - i) (HeckeCongruenceSubgroup n p) ℚ ≅ 0 := \nby sorry",
@@ -39600,7 +39647,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2405",
+      "id": "fd_2406",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem brocard_no_more (n : ℕ) (hn : n > 7) : ¬∃ m : ℕ, (n ! + 1) = m ^ 2 :=",
@@ -39647,7 +39694,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2406",
+      "id": "fd_2407",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Analysis.LiminfLimsup\\ntheorem g_k_optimal_constants (k : ℕ) (hk : k ≥ 2) :\\n  liminf (fun n => (g_k n).toReal / Real.log n) = (3 (k - 1) / Real.log 12) ∧\\n  limsup (fun n => (g_k n).toReal / Real.log n) = ((k - 1) / Real.log 2) :=\\nbegin\\n  -- conjectural statement; proof is currently open\\n  sorry\\nend",
@@ -39694,7 +39741,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2407",
+      "id": "fd_2408",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (t m : ℕ), t ≥ 2 → m ≥ 1 → (∀ (ℓ : Fin t → Polynomial (Field ℚ)), (∀ i, ℓ i ≠ 0) → ( (LinearDependent ( (fun i ↦ (ℓ i : Polynomial (Field ℚ)) ^ m) )) ∧ (∀ (s : Finset (Fin t)), s ≠ univ → LinearIndependent ( (fun i ↦ (ℓ i : Polynomial (Field ℚ)) ^ m) | s ) ) → (dim (LinearSpan ( (fun i ↦ (ℓ i : Polynomial (Field ℚ))) ) ) ≤ (t + m - 2 : ℝ) / m )",
@@ -39743,7 +39790,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2408",
+      "id": "fd_2409",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nnoncomputable section\n\nopen scoped BigOperators\n\n/-- Placeholder for the complement of the toric arrangement in `(C*)^n` defined by\ninteger exponent vectors `a` and nonzero constants `alpha`. -/\nconstant ToricComplement :\n  (n m : ℕ) → (Fin m → Fin n → ℤ) → (Fin m → {z : ℂ // z ≠ 0}) → Type\n\n/-- Predicate saying that the corresponding toric arrangement is parallel of rank one,\nwith no degenerate defining character. -/\nconstant ParallelRankOneToricArrangement :\n  (n m : ℕ) → (Fin m → Fin n → ℤ) → (Fin m → {z : ℂ // z ≠ 0}) → Prop\n\n/-- Euler-Poincare characteristic of a finite-CW type/model. -/\nconstant EulerPoincare : Type → ℤ\n\n/-- Conjecture: complements of parallel toric arrangements in complex tori of dimension\nat least two have vanishing Euler-Poincare characteristic. -/\ntheorem eulerPoincare_parallel_toric_complement_vanishes\n    {n m : ℕ} (hn : 2 ≤ n)\n    (a : Fin m → Fin n → ℤ) (alpha : Fin m → {z : ℂ // z ≠ 0})\n    (hpar : ParallelRankOneToricArrangement n m a al",
@@ -39762,6 +39809,51 @@
       "thread_id": "",
       "timestamp": "2026-06-24T02:19:37.944210+00:00",
       "title": "Vanishing of Euler characteristic for higher-dimensional parallel toric arrangement complements"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Geometric Discrepancy Theory",
+        "Quasi-Monte Carlo Methods"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For tensor-product function spaces with a worst-case function h satisfying specific integrality and sparsity conditions, the information complexity for non-negative linear rules exhibits a curse of dimensionality.",
+      "domain_bridges": [
+        "Information Theory",
+        "Functional Analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "id": "fd_2410",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Theorem exponential_complexity : \nforall (d : ℝ), (ε : ℛ), (h : ℛ → ℛ → ℛ), (s : [0,1] → ℛ → ℛ → ℛ), \n  (A : ℛ > 1) → (B : ℛ > 1) → \nexists C : ℛ > 1 → \nexists (N : ℛ) → e(N, d) < ε * e(0, d) && N < C^d * (1 - 2 * ε)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a family of functions leveraging the worst-case h and s_y to show exponential lower bounds via combinatorial arguments.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24195v1",
+      "source_path": "http://arxiv.org/abs/2606.24195v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T04:05:20.240232+00:00",
+      "title": "Exponential Information Complexity in Tensor-Product Function Spaces"
     },
     {
       "ambition_level": "extension",
@@ -42553,11 +42645,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "146bc8b0",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42569,7 +42661,7 @@
         "Geometry"
       ],
       "id": "seed_040",
-      "last_attempt_time": "2026-06-24T02:58:25.241390+00:00",
+      "last_attempt_time": "2026-06-11T05:04:17.618866+00:00",
       "last_reviewed_at": "2026-06-09T13:04:08.213164+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -42583,7 +42675,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:03.446924+00:00",
       "title": "Homotopy Type Theory Foundations"
@@ -46208,7 +46300,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -46225,7 +46317,7 @@
         "Combinatorics"
       ],
       "id": "seed_373",
-      "last_attempt_time": "2026-06-24T02:58:14.942132+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:40.163741+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46288,11 +46380,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "f39e2cb3",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46305,7 +46397,7 @@
         "Bridges"
       ],
       "id": "seed_375",
-      "last_attempt_time": "2026-06-24T02:58:21.154520+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:40.163741+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46319,7 +46411,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432799+00:00",
       "title": "Langlands Correspondence: GL(1) Case"
@@ -119862,7 +119954,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

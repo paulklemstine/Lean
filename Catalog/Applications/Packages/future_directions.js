@@ -224,7 +224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory: Solvability of Polynomials"
   },
   {
-    "consumed_by_exp_id": "f39e2cb3",
+    "consumed_by_exp_id": "",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domains": [
       "Algebra",
@@ -235,7 +235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -613,7 +613,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Primes of the Form n\u00b2+1"
   },
   {
-    "consumed_by_exp_id": "146bc8b0",
+    "consumed_by_exp_id": "",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domains": [
       "Logic",
@@ -623,7 +623,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
   },
@@ -3152,11 +3152,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
+    "description": "For all integers n \u2265 (s+1)k and a prime power q, the maximum cardinality m_q(n,k,s) of a family of k\u2011dimensional subspaces of an n\u2011dimensional vector space over \ud835\udd3d_q with no s+1 members whose sum is direct equals the larger of the two natural constructions: all k\u2011subspaces contained in a ((s+1)k\u22121)\u2011dimensional subspace, or all k\u2011subspaces intersecting a fixed s\u2011dimensional subspace nontrivially.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2403",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24529v1",
+    "status": "available",
+    "timestamp": "2026-06-24T04:01:44.618392+00:00",
+    "title": "Exactevaluation of the vector-space Erd\u0151s Matching number m_q(n,k,s)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -3171,7 +3185,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2404",
+    "id": "fd_2405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3185,7 +3199,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2405",
+    "id": "fd_2406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
@@ -3199,7 +3213,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2406",
+    "id": "fd_2407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
@@ -3214,7 +3228,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2407",
+    "id": "fd_2408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -3228,13 +3242,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2408",
+    "id": "fd_2409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24299v1",
     "status": "available",
     "timestamp": "2026-06-24T02:19:37.944210+00:00",
     "title": "Vanishing of Euler characteristic for higher-dimensional parallel toric arrangement complements"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For tensor-product function spaces with a worst-case function h satisfying specific integrality and sparsity conditions, the information complexity for non-negative linear rules exhibits a curse of dimensionality.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2410",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24195v1",
+    "status": "available",
+    "timestamp": "2026-06-24T04:05:20.240232+00:00",
+    "title": "Exponential Information Complexity in Tensor-Product Function Spaces"
   },
   {
     "consumed_by_exp_id": "",
