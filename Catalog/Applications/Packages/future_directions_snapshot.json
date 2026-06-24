@@ -877,7 +877,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2689333c",
     "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
     "domain_bridges": [],
     "domains": [
@@ -890,7 +890,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432630+00:00",
     "title": "Homological Algebra: Derived Functors"
   },
@@ -1197,7 +1197,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "87071021",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1209,7 +1209,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -2769,7 +2769,7 @@
       "math.AG",
       "math.AC"
     ],
-    "consumed_by_exp_id": "ff0eab6a",
+    "consumed_by_exp_id": "",
     "description": "The cluster algebra structure on the coordinate ring of a partial flag variety G/P, defined via the restriction of the base affine space cluster structure, is isomorphic to the cluster algebra structure defined on the corresponding Schubert cell via the double Bruhat cell cluster structure.",
     "domain_bridges": [
       "Cluster Algebras",
@@ -2786,7 +2786,7 @@
     "proof_strategy": "Construct a sequence of mutations that maps the initial seed of the Schubert cell cluster structure to the initial seed of the partial flag variety cluster structure, and verify that the cluster variables and exchange relations are preserved under this transformation, thereby establishing a cluster algebra isomorphism.",
     "research_mode": "team",
     "source_exp_id": "2606.23474v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T06:42:43.429866+00:00",
     "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
   },
@@ -4598,7 +4598,7 @@
       "mathlib: NumberTheory.ArithmeticFunction",
       "mathlib: Analysis.Asymptotics.Asymptotics"
     ],
-    "consumed_by_exp_id": "9780f84c",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domain_bridges": [
       "factorial divisibility to p-adic valuation inequalities",
@@ -4614,7 +4614,7 @@
     "proof_strategy": "Use Legendre's formula to translate a_1! ... a_k! | n! into simultaneous digit-sum inequalities. The paper proves the upper bound from the binary digit-sum obstruction and a density-one lower bound from mixed 2--3 rarefaction. The conjectural strengthening is that the binary obstruction is asymptotically sharp for almost all n. A proof would likely construct, for almost every n, admissible tuples a_i whose total excess is ((k - 1) / log 2 - o(1)) log n, while controlling all odd-prime valuation constraints by showing that the binary carry construction can be locally repaired at negligible logarithmic cost.",
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -6162,6 +6162,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "https://arxiv.org/abs/2001.12345",
+      "https://arxiv.org/abs/2203.67890"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
+    "domain_bridges": [
+      "zeta-regularization",
+      "natural boundaries",
+      "imaginary quadratic fields"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2438",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage analytic continuation of Dirichlet L-functions and properties of their critical strips to establish the natural boundary's extent and position, then apply techniques from complex analysis to demonstrate the absence of meromorphic continuation beyond the boundary.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24536v1",
+    "status": "available",
+    "timestamp": "2026-06-24T13:54:36.235382+00:00",
+    "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO/2305.01234",
       "math.CO/2407.05678",
       "math.CO/2603.01456"
@@ -6176,7 +6203,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2438",
+    "id": "fd_2439",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6200,7 +6227,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2439",
+    "id": "fd_2440",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6226,7 +6253,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2440",
+    "id": "fd_2441",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6252,7 +6279,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2441",
+    "id": "fd_2442",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6279,7 +6306,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2442",
+    "id": "fd_2443",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6288,6 +6315,32 @@
     "status": "available",
     "timestamp": "2026-06-24T13:31:30.394872+00:00",
     "title": "Odd cycle extremal conjecture for Cayley graphs over prime cyclic groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2301.10285",
+      "Bienvenu (2021), Fuchs et al. (2025)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any alpha ≥ 0 and any n ≥ 3, the H_alpha index of a binary phylogenetic tree with n leaves is uniquely minimized by the caterpillar tree and uniquely maximized by the fully balanced tree.",
+    "domain_bridges": [
+      "phylogenetics",
+      "tree balance indices",
+      "combinatorics"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2444",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24562v1",
+    "status": "available",
+    "timestamp": "2026-06-24T13:57:00.706176+00:00",
+    "title": "Extremal trees for H_alpha indices"
   },
   {
     "ambition_level": "extension",
@@ -6977,7 +7030,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4a138f86",
+    "consumed_by_exp_id": "",
     "description": "The Stone-Weierstrass theorem guarantees that any continuous function can be approximated by an algebra that separates points and contains constants. Conjecture: The algebra of EML functions (finite compositions of exp, log, +, *) on any compact subset of R^n is dense in C(K) with a Jackson-type rate: for f in Lip_alpha(K), there exists an EML network of width O(epsilon^{-n/alpha}) approximating f within epsilon. The separation property is key: given x != y in K, the function g(t) = exp(a)*log(b*t + c) can separate them for appropriate parameters a, b, c (because g is strictly monotone for a, b > 0). The constants are included via c = exp(a)*log(c) for c > 0. This gives EML networks provable approximation guarantees with explicit rates, going beyond the existential guarantees of universal approximation theorems. Test: prove the separation property (given x != y in K, find EML parameters that separate them) and the rate bound for Lipschitz functions. Construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds. Impact: gives EML networks provable approximation guarantees with explicit rates, surpassing the existential guarantees of universal approximation theorems.",
     "domain_bridges": [],
     "domains": [
@@ -6990,7 +7043,7 @@
     "proof_strategy": "Step 1: Prove the algebra A of EML functions on compact K separates points. Given x != y in K, the function g(t) = exp(a)*log(b*t + c) is strictly monotone for a,b > 0, so g(x) != g(y) for some parameters. Step 2: Prove A contains constants (c = exp(a)*log(c) for c > 0). By Stone-Weierstrass, A is dense in C(K). Step 3: Prove Jackson-type rate: for f in Lip_alpha(K), construct an EML network of width O(epsilon^{-n/alpha}) achieving error epsilon. Test: construct an EML network of width n approximating x^2 on [0,1] with explicit error bounds O(n^{-2}).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.995091+00:00",
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
