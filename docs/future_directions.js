@@ -195,7 +195,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Standard Conjectures on Algebraic Cycles"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f88074cd",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
     "domains": [
       "Algebra",
@@ -205,7 +205,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:17.429886+00:00",
     "title": "Whitehead Problem: Independence from ZFC"
   },
