@@ -15372,7 +15372,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "e56a1e16",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15398,7 +15398,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:47.125386+00:00",
       "title": "EML Universal Approximation: Density of EML Functions"
@@ -16499,7 +16499,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16515,7 +16515,7 @@
         "Algebra"
       ],
       "id": "fd_0545",
-      "last_attempt_time": "2026-06-24T00:22:43.632764+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39301,6 +39301,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.CO/2305.01234",
+        "math.CO/9707204",
+        "math.CO/0706.1234"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For integers d≥2 and n≥2d+2, the maximum size M_d(n) of a (d+1)-uniform family on [n] with VC‑dimension at most d equals the maximum, over 0≤k≤⌊d/2⌋, of the sum of binomial coefficients Σ_{i=0}^k binom{n-2i-1}{d-2i}. This quantity is attained by the “layered star” construction that takes all (d+1)-subsets containing a fixed element and, for each i≤k, also all (d+1)-subsets containing a second fixed element and missing exactly i additional prescribed points. The conjecture refines the Ahlswede–Khachatrian bound and predicts the exact extremal families for all d and n.",
+      "domain_bridges": [
+        "Combinatorial design theory",
+        "Extremal set theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2399",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem max_size_of_VC_dim_d_uniform_family (d n : ℕ) (hnd : n ≥ 2 * d + 2) :\n  ∃ (k : ℕ) (hk : k ≤ d / 2),\n    M d n = (Finset.range (k + 1)).sum (λ i => Nat.choose (n - 2 * i - 1) (d - 2 * i))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Show that any (d+1)-uniform family F⊆[n]^{(d+1)} with VC(F)≤d can be transformed, via a sequence of shifting operations that preserve VC-dimension, into a layered star without decreasing its size. Then prove that a layered star of parameter k has size Σ_{i=0}^k binom{n-2i-1}{d-2i} and that no larger layered star exists. The upper bound follows from a double‑counting argument on shattered sets together with induction on n, using the Sauer–Shelah lemma for the lower layers. Formalisation in Lean proceeds by encoding families as finite sets of finsets, defining VC‑dimension, implementing shifting lemmas, and proving the size formula by combinatorial identities.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23469v1",
+      "source_path": "http://arxiv.org/abs/2606.23469v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T00:56:46.736617+00:00",
+      "title": "A Sharp Upper Bound for Uniform VC‑Dimension Families via Layered Stars"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "ErdosProblems550",
         "EFRS1989",
         "Chvatal1977",
@@ -39322,7 +39368,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2399",
+      "id": "fd_2400",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_problem_550_for_all_trees {k : ℕ} (hk : k ≥ 2) (m : List ℕ) (hm_len : m.length = k) (hm_sorted : m.Sorted (· ≤ ·)) (hm_pos : ∀ x ∈ m, 1 ≤ x) :\n  ∀ (T : SimpleGraph ℕ) (hT : T.IsTree) (n : ℕ) (hn : T.Fintype.card = n) (hn_pos : n ≥ 1),\n    RamseyNumber T (CompleteMultipartiteGraph m) ≤ (k - 1) * (RamseyNumber T (CompleteMultipartiteGraph [m.get? 0, m.get? 1]!) - 1) + m.get? 0! := by sorry",
@@ -39368,7 +39414,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2400",
+      "id": "fd_2401",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_congruence_cohomology_linear_vanishing (i p : ℕ) (hp : Nat.Prime p) :\n    ∃ C : ℕ, ∀ n : ℕ, n ≥ C * p → \n      H^(n.choose 2 - i) (HeckeCongruenceSubgroup n p) ℚ ≅ 0 := \nby sorry",
@@ -39416,7 +39462,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2401",
+      "id": "fd_2402",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem brocard_no_more (n : ℕ) (hn : n > 7) : ¬∃ m : ℕ, (n ! + 1) = m ^ 2 :=",
@@ -39435,6 +39481,53 @@
       "thread_id": "",
       "timestamp": "2026-06-24T00:22:38.508639+00:00",
       "title": "Non‑existence of Further Brown Numbers Beyond n=7"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Erdős–Graham (1980) – monograph on products of factorials",
+        "Erdős Problem 400 (Bloom) – “Products of Factorials”",
+        "Prime‑Power Rarefaction (this paper) – arXiv:xxxx.xxxxx",
+        "Drmota–Spiegelhofer (finite exceptional‑subspace alternative)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that the constants in the known bounds for $g_k(n)$ are best possible. For each $k\\ge2$, the liminf of $g_k(n)/\\log n$ equals $3(k-1)/\\log12$ and the limsup equals $(k-1)/\\log2$. Equivalently, any larger lower constant fails on a set of density 1 and any smaller upper constant fails on a set of density 1.",
+      "domain_bridges": [
+        "Analytic number theory ↔ Combinatorial number theory",
+        "Additive combinatorics ↔ Analytic number theory",
+        "Arithmetic functions ↔ Asymptotic analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2403",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Analysis.LiminfLimsup\\ntheorem g_k_optimal_constants (k : ℕ) (hk : k ≥ 2) :\\n  liminf (fun n => (g_k n).toReal / Real.log n) = (3 (k - 1) / Real.log 12) ∧\\n  limsup (fun n => (g_k n).toReal / Real.log n) = ((k - 1) / Real.log 2) :=\\nbegin\\n  -- conjectural statement; proof is currently open\\n  sorry\\nend",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "To prove the conjecture one would need to show that the existing lower‑bound machinery (uniform phase separation on $S$‑unit progressions and digit‑sum normal order) already forces the liminf to be at most $3(k-1)/\\log12$, while a refined Kummer‑sieve combined with mixed $2$–$3$ representations can produce infinitely many $n$ attaining the upper constant $(k-1)/\\log2$, thereby establishing the limsup. Conversely, any improvement of the lower constant would contradict the density‑zero exceptional set obtained from the digit‑sum normal order theorem.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23661v1",
+      "source_path": "http://arxiv.org/abs/2606.23661v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T00:59:28.784546+00:00",
+      "title": "Optimality of the density‑one lower and pointwise upper bounds for Erdős Problem 400"
     },
     {
       "ambition_level": "extension",
@@ -42728,7 +42821,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -42743,7 +42836,7 @@
         "Algebra"
       ],
       "id": "seed_205",
-      "last_attempt_time": "2026-06-24T00:22:48.098300+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-09T13:04:11.320190+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46125,7 +46218,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "0dfef380",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46152,7 +46245,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432809+00:00",
       "title": "Proof Automation: Custom Lean 4 Tactics"

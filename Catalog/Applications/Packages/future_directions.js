@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "0dfef380",
+    "consumed_by_exp_id": "",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -160,7 +160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -3094,11 +3094,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For integers d\u22652 and n\u22652d+2, the maximum size M_d(n) of a (d+1)-uniform family on [n] with VC\u2011dimension at most d equals the maximum, over 0\u2264k\u2264\u230ad/2\u230b, of the sum of binomial coefficients \u03a3_{i=0}^k binom{n-2i-1}{d-2i}. This quantity is attained by the \u201clayered star\u201d construction that takes all (d+1)-subsets containing a fixed element and, for each i\u2264k, also all (d+1)-subsets containing a second fixed element and missing exactly i additional prescribed points. The conjecture refines the Ahlswede\u2013Khachatrian bound and predicts the exact extremal families for all d and n.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2399",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23469v1",
+    "status": "available",
+    "timestamp": "2026-06-24T00:56:46.736617+00:00",
+    "title": "A Sharp Upper Bound for Uniform VC\u2011Dimension Families via Layered Stars"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2399",
+    "id": "fd_2400",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -3113,7 +3128,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2400",
+    "id": "fd_2401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3127,13 +3142,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2401",
+    "id": "fd_2402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
     "status": "available",
     "timestamp": "2026-06-24T00:22:38.508639+00:00",
     "title": "Non\u2011existence of Further Brown Numbers Beyond n=7"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the constants in the known bounds for $g_k(n)$ are best possible. For each $k\\ge2$, the liminf of $g_k(n)/\\log n$ equals $3(k-1)/\\log12$ and the limsup equals $(k-1)/\\log2$. Equivalently, any larger lower constant fails on a set of density\u00a01 and any smaller upper constant fails on a set of density\u00a01.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2403",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23661v1",
+    "status": "available",
+    "timestamp": "2026-06-24T00:59:28.784546+00:00",
+    "title": "Optimality of the density\u2011one lower and pointwise upper bounds for Erd\u0151s Problem\u202f400"
   },
   {
     "consumed_by_exp_id": "",
@@ -3676,7 +3705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "e56a1e16",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -3686,7 +3715,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
