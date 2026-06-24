@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "935bc3f6",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -284,7 +284,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Baum-Connes Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a53dd8c8",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domains": [
       "NumberTheory",
@@ -294,7 +294,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -507,7 +507,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3db423d6",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -516,7 +516,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -1252,7 +1252,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1416,7 +1416,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "failed",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432797+00:00",
     "title": "Tropical Convexity and Linear Programming"
   },
@@ -1920,6 +1920,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T07:39:04.351050+00:00",
     "title": "Helly's Theorem for Convex Splinters"
+  },
+  {
+    "consumed_by_exp_id": "5c61161b",
+    "description": "For all positive integers s' and t', there exist integers t and f such that for any graph G, vertex set A, and wall W of size at least t, either there exists a vertex set X of size at most f separating A from the branch vertices of W, or there exists a subwall W' of W of size at least t' and s' vertex-disjoint A-W'-paths ending in distinct nails of W'.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2316",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23121v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-23T08:05:12.495306+00:00",
+    "title": "Wall-Menger Theorem"
   },
   {
     "consumed_by_exp_id": "",
@@ -3675,16 +3689,30 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer m \u2265 0, the regularised Wallis product P_m defined by\nP_m = \u220f_{n=2}^\u221e exp(\u2211_{r=1}^{\u230am/2\u230b} n^{m-2r}/r) (1 - 1/n^2)^{n^m}\nsatisfies\nlog P_m = -\u2211_{r=\u230am/2\u230b+1}^\u221e (\u03b6(2r - m) - 1)/r,\nwhere \u03b6 denotes the Riemann zeta function. This provides an explicit zeta\u2011function tail for the logarithm of each product in the hierarchy.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2442",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23973v1",
+    "status": "available",
+    "timestamp": "2026-06-24T16:30:22.002983+00:00",
+    "title": "Logarithmic formula for the regularised Wallis hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "18853638",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2442",
+    "id": "fd_2443",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T10:40:45.798036+00:00",
     "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
   },
@@ -3694,7 +3722,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2443",
+    "id": "fd_2444",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3709,7 +3737,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2444",
+    "id": "fd_2445",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3723,7 +3751,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2445",
+    "id": "fd_2446",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3738,7 +3766,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2446",
+    "id": "fd_2447",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3752,7 +3780,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2447",
+    "id": "fd_2448",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3766,7 +3794,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2448",
+    "id": "fd_2449",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -3780,7 +3808,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2449",
+    "id": "fd_2450",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -3794,13 +3822,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2450",
+    "id": "fd_2451",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
     "status": "available",
     "timestamp": "2026-06-24T15:56:46.510928+00:00",
     "title": "Conjecture: The limit of average stack-sorting depth equals Defant's upper bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all primes p, natural numbers k, and n \u2265 (3k + 1)p + (3k + 2), the rational cohomology group H^{binom(n,2)-k}(\u0393_{0,n}(p); \u211a) vanishes. This extends the proven codimension 1 and 2 results to arbitrary codimension k, conjecturing a linear dependence on p with coefficient (3k + 1) and constant term (3k + 2).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2452",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23519v1",
+    "status": "available",
+    "timestamp": "2026-06-24T16:39:13.817680+00:00",
+    "title": "Generalized vanishing range for Hecke congruence subgroup cohomology"
   },
   {
     "consumed_by_exp_id": "",
@@ -3990,36 +4033,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 T-Ideals of Acyclic Path Algebras\n\nThis cycle proved the *containment* half of the mission statement: for a finite\nacyclic quiver `Q` with longest path length `n - 1`, the symmetrized monomial\n`S` and the standard polynomial `S\u2099` are polynomial identities of `\ud835\udd3dQ\u22651`\n(modelled by strictly upper triangular `n \u00d7 n` matrices `N_n`), via the chain\n\n  acyclic \u21d2 bounded path length (`AcyclicBound.length_lt_of_bounded`)\n          \u21d2 arrow ideal nilpotent of index `n` (`Matrix.prod_ofFn_strictUpper_eq_zero`)\n          \u21d2 every degree-`n` multilinear polynomial vanishes (`PI.*_strictUpper_eq_zero`).\n\nThe *generation* half \u2014 that these identities **generate** the whole T-ideal \u2014\nremains open and motivates the following.\n\n## Conjecture 1 (Degree sharpness / minimal identity)\n`N_n` satisfies **no** multilinear identity of degree `< n`; degree `n` is the\nminimal degree of an identity of `\ud835\udd3dQ\u22651` when `Q` realizes a path of length `n-1`.\n- The key insight is that the matrix-unit chain `E_{12}E_{23}\u22efE_{n-1,n} = E_{1,n}`\n  is a nonzero product of `n-1` strictly-upper matrices, certifying that any\n  degree-`(n-1)` monomial substitution can be made nonzero.\n- Why now? The `Shift k` filtration in `StrictUpperNilpotent.lean` already\n  exposes the associated-graded `J^k/J^{k+1}`, exactly the object whose nonvanishing\n  at `k = n-1` proves minimality; the witness is one explicit substitution.\n\n## Conjecture 2 (T-ideal generation, the mission's hard half)\nThe T-ideal `Id(N_n)` of polynomial identities of `N_n` is generated, as a\nT-ideal, by the single standard polynomial `S\u2099`.\n- The key insight is that nilpotency of index `n` collapses all higher identities\n  to consequences of \"any product of `n` augmentation-ideal elements is zero\",\n  and `S\u2099` is the universal multilinear witness of that collapse.\n- Why now? With `prod_ofFn_strictUpper_eq_zero` formalized, the remaining step is\n  a substitution/linearization argument inside the free algebra modulo `(S\u2099)^T`,\n  a finitely-checkable reduction in each fixed degree.\n\n## Conjecture 3 (Unsigned vs signed dichotomy)\nOn a nilpotent algebra of index `n`, the *unsigned* symmetrized monomial `S` is\nan identity, whereas on `M_k` only the *signed* standard polynomial (degree `2k`,\nAmitsur\u2013Levitzki MR36751) is. Precisely: an associative algebra satisfies the\ndegree-`n` unsigned symmetrized identity iff its augmentation ideal is nilpotent\nof index `\u2264 n`.\n- The key insight is that the sign is cancellation-driven (needed in `M_k`), but\n  in the nilpotent world each monomial is individually `0`, so signs are inert.\n- Why now? `PI.symMono_eq_zero` already isolates the abstract hypothesis\n  \"every `n`-fold product is `0`\"; the converse direction (identity \u21d2 nilpotent)\n  is a pigeonhole on monomials and is within current reach.\n\n## Conjecture 4 (Quiver-shape refinement)\nFor a general (not necessarily linear) acyclic `Q`, the minimal identity degree\nequals `1 + (longest directed path length)`, independent of the number of\nvertices or arrow multiplicities.\n- The key insight is that `AcyclicBound.r_add_length_le` shows path length, not\n  vertex count, controls nilpotency: the bound is `length \u2264 r(target) \u2212 r(source)`.\n- Why now? The topological-potential inequality is already formalized; only the\n  optimizing path (achieving the longest length) must be exhibited per quiver.\n\n## Conjecture 5 (Codimension growth)\nThe codimension sequence `c_m(N_n)` (dimension of multilinear identities of\ndegree `m` modulo consequences) is eventually polynomial in `m` of degree `n-2`,\nreflecting the `n-1` \"free\" composition slots before nilpotency forces vanishing.\n- The key insight is that the graded pieces `J^k` for `k < n` are the only\n  nonzero strata, giving a finite, combinatorially explicit basis of surviving\n  monomials governed by chains in the vertex poset.\n- Why now? The `Shift`-filtration makes each stratum `J^k/J^{k+1}` a concrete\n  span of matrix units `E_{ij}` with `j \u2212 i = k`, ready for an exact count.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2451",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c235005e",
-    "status": "available",
-    "timestamp": "2026-06-24T16:21:18.593700+00:00",
-    "title": "*containment* half of the mission statement: for a finite"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Gaussian\u2013Pythagorean Bridge for LWE Hardness\n\nThese conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`.\nEach is stated to be falsifiable and formalizable in Lean 4 / Mathlib.\n\n## C1. Field-ness of inert quotients \u21d2 full Gaussian search-to-decision\n**Conjecture.** For a prime `p \u2261 3 (mod 4)`, the quotient `\u2124[i]/(p)` is a field\nisomorphic to `\ud835\udd3d_{p\u00b2}`, and consequently the affine rerandomization map\n`z \u21a6 a\u00b7z + b` (a \u2260 0) is a bijection \u2014 giving a search-to-decision reduction for\nGaussian ring-LWE with the *same* per-coordinate `1/n` advantage loss proved in\n`search_to_decision_advantage_bound`.\n**Test.** Build the `Field (ZMod p)[X]/(X\u00b2+1)` instance from\n`neg_one_not_square_three_mod_four` and irreducibility of `X\u00b2 + 1`.\n\n## C2. Norm-form of noise composition under modulus switching\n**Conjecture.** When two Gaussian-LWE samples are combined, the resulting noise\nnorm satisfies `N(e\u2081 + u\u00b7e\u2082) \u2264 (\u221aN(e\u2081) + \u221aN(e\u2082))\u00b2` for any unit `u`, and equality\ncharacterizes collinear (real-proportional) error vectors. This is the Gaussian\nrefinement of `combined_noise_after_switching`.\n**Test.** Formalize the triangle inequality for the Gaussian norm\n(`Zsqrtd.norm` \u2218 embedding into \u2102) and the equality case.\n\n## C3. Counting splitting moduli (density of secure parameters)\n**Conjecture.** The number of primes `p \u2264 N` with `p \u2261 1 (mod 4)` (the \"split\"\nmoduli, each a sum of two squares) and the number with `p \u2261 3 (mod 4)` (the\n\"inert\" moduli) are each asymptotically `\u00bd \u00b7 \u03c0(N)` (Dirichlet). A finite,\n`decide`-checkable version: for every `N \u2264 10\u2074`, both counts lie within\n`0.1\u00b7\u03c0(N)` of `\u00bd\u00b7\u03c0(N)`.\n**Test.** A `native_decide` enumeration over a fixed range.\n\n## C4. Sum-of-two-squares is a multiplicative monoid with explicit structure\n**Conjecture.** `{ n : \u2124 | IsSumTwoSq n }` is exactly the image of the Gaussian\nnorm map, is closed under multiplication (proved: `IsSumTwoSq.mul`), and an\ninteger `n > 0` is a sum of two squares iff every prime `q \u2261 3 (mod 4)` divides\n`n` to an even power.\n**Test.** Connect `IsSumTwoSq` to `Nat.factorization` and the `q \u2261 3` valuation\nparity criterion (`ZMod.exists_sq_eq_neg_one_iff` per prime factor).\n\n## C5. Rerandomization orbit size and unit group of \u2124[i]\n**Conjecture.** The rerandomization map `z \u21a6 u\u00b7z` ranges over a unit group of\norder exactly 4 (`{1, i, \u22121, \u2212i}`), so the Gaussian \"rotation\" hybrid has period\n4; more generally for `\u2124[\u03b6]` with `\u03b6` a primitive `m`-th root the period is the\nunit-group order. Quantify how this affects the hybrid's advantage budget.\n**Test.** Prove `(GaussianInt)\u02e3 \u2243 ZMod 4` (via Mathlib's classification of units\nof `\u2124[i]`), then bound the number of distinct rerandomized samples.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2452",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f8c355ed",
-    "status": "available",
-    "timestamp": "2026-06-24T16:29:07.265346+00:00",
-    "title": "These conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`."
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4048,7 +4061,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "09edd445",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -4058,7 +4071,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -4137,7 +4150,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c904c856",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4147,7 +4160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "failed",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -4478,7 +4491,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "449dda28",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4488,7 +4501,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
