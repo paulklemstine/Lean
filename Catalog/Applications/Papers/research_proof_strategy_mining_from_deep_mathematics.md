@@ -1,352 +1,169 @@
-# Proof Strategy Mining: Formalizing the Finite Verification and Well-Founded Descent Schema
+# Structural Theory of One-Variable Max-Plus Tropical Polynomial Functions
+
+**Author:** Aristotle
+**Date:** 2026-06-24
+**Domain:** Tropical mathematics
 
 ## Abstract
 
-We formalize a family of reusable proof schemas that capture the common logical architecture behind many deep mathematical arguments: the passage from finite verification on a bounded base regime, combined with well-founded descent outside that regime, to a universal conclusion. We present four certified theorems of increasing generality — from simple predecessor-step induction on ℕ to a fully general well-founded descent principle on arbitrary types — and demonstrate their interconnections. We prove that the ℕ-complexity version is a strict instance of the well-founded version, and provide an explicit-reduction variant suitable for algorithmic applications. The formalization is complete and machine-verified, with all proofs depending only on standard logical axioms (propext, Classical.choice, Quot.sound).
-
-**Keywords:** proof mining, well-founded descent, minimal counterexample, finite verification, classification architecture, local-to-global principle, rank reduction, structural induction
-
----
+We develop the elementary structural theory of the one-variable max-plus tropical polynomial function over the real numbers,
+$$\text{tropPoly}_c(x) = \max_{0 \le i \le d}\bigl(c_i + i\,x\bigr),$$
+where $c = (c_0, \dots, c_d)$ is a tuple of real coefficients indexed by $i \in \{0, 1, \dots, d\}$. Building on a single reusable primitive — the finite maximum of a real-valued function on a nonempty finite index set, together with its attainment and upper-bound characterization — we establish the full suite of first-order structural properties of $\text{tropPoly}_c$: each monomial is a pointwise lower bound; the maximum is attained at some index for every input; an upper-bound holds iff it holds monomial-by-monomial; the function is monotone non-decreasing; it is convex in the Jensen sense; the leading (highest-slope) monomial dominates pointwise under a local dominance hypothesis and, more strongly, dominates for all inputs beyond any threshold at which it dominates; and the degree-one and degree-two cases admit explicit closed forms as nested binary maxima. A central methodological theme is that every structural theorem is obtained by a single uniform schema — *reduce a property of the envelope to the same property of each affine constituent, then observe the constituents satisfy it trivially*. We discuss the resulting proof-strategy template, numerical illustrations, algorithmic consequences (corner detection, leading-term thresholds), and connections to convex analysis, optimization, and piecewise-linear neural networks.
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Tropical mathematics replaces the field operations $(+, \times)$ of ordinary arithmetic with the **max-plus semiring** operations $(\max, +)$: "addition" is taking the maximum, and "multiplication" is ordinary addition. Under this dictionary, an ordinary monomial $c_i x^i$ — a product of the scalar $c_i$ with $i$ copies of $x$ — becomes the affine expression $c_i + i\,x$, and the sum of monomials becomes their pointwise maximum. The image of a degree-$d$ polynomial is therefore a finite maximum of $d+1$ affine functions whose slopes are the exponents $0, 1, \dots, d$.
 
-A striking regularity appears across disparate areas of mathematics: many deep theorems share a common proof architecture consisting of two components:
+Such functions are ubiquitous. They are exactly the value functions of finite-horizon dynamic programs in the $(\max,+)$ algebra; they describe shortest- and longest-path costs; and, in machine learning, a single maxout unit and the ReLU activation are precisely degree-one tropical polynomials. The geometry of tropical polynomial functions — piecewise linearity, convexity, and the eventual dominance of the steepest term — is the geometry that makes these applications tractable.
 
-1. **Finite base verification.** A property is checked exhaustively for all objects below a complexity threshold.
-2. **Structural descent.** Every object above the threshold is shown to reduce to a strictly simpler object, with the target property transporting backward along the reduction.
+This paper presents a complete, self-contained elementary theory of the one-variable case. Our emphasis is twofold. First, we give precise statements and proof sketches for every structural property. Second, we extract the *proof strategy* that recurs throughout: a higher-order schema in which a statement about the upper envelope of affine functions is reduced, via an upper-bound characterization, to the same statement about each affine constituent, which then holds trivially because affine functions are simultaneously monotone (for nonnegative slope), convex, and closed under the relevant operations. This schema is itself the reusable artifact — a template for proving facts about maxima of structured families.
 
-This architecture appears in:
-- Minimal counterexample arguments in group theory (the Classification of Finite Simple Groups)
-- Rank reduction in geometric analysis (Perelman's proof of the Poincaré Conjecture)
-- Computational verification combined with analytic bounds in additive combinatorics (Goldbach-type results, Helfgott's proof of the ternary Goldbach conjecture)
-- Local-to-global principles in quantum information theory (derivation of Bell inequalities from bounded local correlations)
-- Termination arguments in theoretical computer science (well-founded recursion, variant functions)
+All results stated below have been formally verified. The paper is self-contained: every definition, theorem, and proof sketch appears inline.
 
-Despite its ubiquity, this pattern has not been isolated as a reusable formal artifact. Each application re-derives the underlying induction argument from scratch. Our contribution is to formalize the pattern once, at the appropriate level of generality, and certify it as a machine-verified theorem schema.
+## 2. The finite-maximum primitive
 
-### 1.2 Related Work
+Let $n \in \mathbb{N}$ and let $f : \{0, 1, \dots, n\} \to \mathbb{R}$ be a real-valued function on the nonempty finite index set of size $n+1$.
 
-The mathematical technique of well-founded induction dates to Noether (1921) and has been a core component of proof theory since Gentzen's ordinal analysis of arithmetic (1936). The specific combination of finite verification with descent arguments is folklore in number theory and combinatorics, formalized implicitly in many results but rarely isolated as a standalone principle.
+**Definition 2.1 (Finite maximum).** Define
+$$\text{finMax}(f) = \max_{0 \le i \le n} f(i),$$
+the supremum of $f$ over the nonempty finite index set (which is attained, hence a maximum).
 
-In the formal verification community, well-founded recursion has been extensively studied as a termination mechanism (Bove and Capretta, 2005; Krauss, 2010). Our contribution is orthogonal: we focus not on recursion but on *proof schemas* — reusable theorem templates that convert domain-specific base checks and descent steps into universal conclusions.
+The entire downstream theory rests on three facts about $\text{finMax}$.
 
-The concept of "proof mining" (Kohlenbach, 2008) — extracting computational content from classical proofs — is related but distinct. Our "proof strategy mining" operates at a higher level: extracting reusable *logical architecture* from families of proofs.
+**Lemma 2.2 (Upper bound, `le_finMax`).** For every index $i$, $\;f(i) \le \text{finMax}(f).$
 
-### 1.3 Contributions
+*Proof sketch.* $f(i)$ is one of the finitely many values over which the supremum is taken, so it cannot exceed it. $\square$
 
-We provide:
-1. A general well-founded descent schema (`global_of_base_and_wf_descent`) that works over any type with a well-founded relation.
-2. A natural-number complexity version (`global_of_finite_check_and_strict_descent`) that specializes to ℕ-valued measures.
-3. Two concrete corollaries for common use cases: predecessor-step propagation on ℕ and rank-cover reduction.
-4. An explicit-reduction variant (`global_of_measure_descent`) using `Option` to encode the base/step dichotomy.
-5. A formal proof that the ℕ version is an instance of the well-founded version.
-6. A minimal-counterexample formulation expressing the same content contrapositively.
-7. Python implementations demonstrating the schemas on concrete problems.
+**Lemma 2.3 (Attainment, `exists_finMax_eq`).** There exists an index $i$ with $\;\text{finMax}(f) = f(i).$
 
-All proofs are machine-verified with no axioms beyond the standard foundation.
+*Proof sketch.* A supremum over a nonempty finite set is achieved at one of its members; choose that member. $\square$
 
----
+**Lemma 2.4 (Upper-bound characterization, `finMax_le_iff`).** For every $y \in \mathbb{R}$,
+$$\text{finMax}(f) \le y \quad\Longleftrightarrow\quad \forall i,\; f(i) \le y.$$
 
-## 2. Definitions and Notation
+*Proof sketch.* ($\Rightarrow$) Combine with Lemma 2.2: $f(i) \le \text{finMax}(f) \le y$. ($\Leftarrow$) If $y$ bounds every value, it bounds their maximum, since the maximum equals some $f(i_0) \le y$ by Lemma 2.3. $\square$
 
-### 2.1 Setup
+Lemma 2.4 is the pivotal tool: it converts any *upper-bound goal about the maximum* into a *family of upper-bound goals about the individual values*. Every structural theorem below is an application of this reduction.
 
-Let α be a type (the universe of "objects"), P : α → Prop a target property, and μ : α → ℕ a complexity measure. We use the following terminology:
+## 3. The tropical polynomial and its first-order properties
 
-- **Base regime**: the set {a : α | μ a ≤ N} for a threshold N : ℕ.
-- **Descent step**: for each a outside the base regime, a witness b with μ b < μ a and a proof transport P b → P a.
-- **Well-founded relation**: a binary relation r on α admitting no infinite descending chains.
+**Definition 3.1 (Tropical polynomial).** Given a degree $d \in \mathbb{N}$ and coefficients $c : \{0, \dots, d\} \to \mathbb{R}$, define the one-variable max-plus tropical polynomial function
+$$\text{tropPoly}_c(x) = \text{finMax}\bigl(i \mapsto c_i + i\,x\bigr) = \max_{0 \le i \le d}\bigl(c_i + i\,x\bigr), \qquad x \in \mathbb{R}.$$
+Each term $m_i(x) = c_i + i\,x$ is the **$i$-th monomial line**, an affine function of slope $i$ and intercept $c_i$.
 
-### 2.2 Key Definitions
+The three primitives instantiate immediately.
 
-We introduce no new inductive types or structures. The theorems are stated directly in terms of their hypotheses, maximizing reusability. The only abstraction is the decomposition into base and step conditions.
+**Theorem 3.2 (Monomial lower bound, `tropPoly_monomial_le`).** For every $i$ and $x$,
+$$c_i + i\,x \le \text{tropPoly}_c(x).$$
+*Proof sketch.* Direct instance of Lemma 2.2 with $f(i) = c_i + i\,x$. $\square$
 
----
+**Theorem 3.3 (Attainment, `tropPoly_eq_monomial`).** For every $x$ there exists $i$ with
+$$\text{tropPoly}_c(x) = c_i + i\,x.$$
+*Proof sketch.* Direct instance of Lemma 2.3. $\square$
 
-## 3. Main Results
+**Theorem 3.4 (Upper-bound characterization, `tropPoly_le_iff`).** For all $x, y$,
+$$\text{tropPoly}_c(x) \le y \quad\Longleftrightarrow\quad \forall i,\; c_i + i\,x \le y.$$
+*Proof sketch.* Direct instance of Lemma 2.4. $\square$
 
-### 3.1 Theorem 1: Well-Founded Descent Schema
+Theorems 3.2–3.4 are the entire interface used in the remainder of the paper. We never again unfold the maximum directly.
 
-**Statement.** Let r be a well-founded relation on α, P : α → Prop, and B : α → Prop (the base predicate). Suppose:
-- ∀ a, B a → P a (property holds on the base),
-- ∀ a, ¬B a → ∃ b, r b a ∧ (P b → P a) (non-base objects reduce with backward transport).
+## 4. Monotonicity
 
-Then ∀ a, P a.
+**Theorem 4.1 (Monotonicity, `tropPoly_mono`).** If $x \le y$ then $\;\text{tropPoly}_c(x) \le \text{tropPoly}_c(y).$
 
-```
-theorem global_of_base_and_wf_descent
-    {α : Type*}
-    (r : α → α → Prop)
-    (P : α → Prop)
-    (B : α → Prop)
-    (hB : ∀ a, B a → P a)
-    (hstep : ∀ a, ¬ B a → ∃ b, r b a ∧ (P b → P a))
-    (hwf : WellFounded r) :
-    ∀ a, P a
-```
+*Proof sketch.* By Theorem 3.4 it suffices to show $c_i + i\,x \le \text{tropPoly}_c(y)$ for each $i$. The slope $i$ is a natural number, hence $i \ge 0$, so $x \le y$ gives $i\,x \le i\,y$ and thus $c_i + i\,x \le c_i + i\,y$. By Theorem 3.2, $c_i + i\,y \le \text{tropPoly}_c(y)$. Chaining the two inequalities closes the goal. $\square$
 
-**Proof sketch.** By well-founded induction on r. Fix a : α and assume (IH) that P b holds for all b with r b a. If B a holds, conclude by hB. Otherwise, apply hstep to obtain b with r b a and P b → P a. By IH, P b holds. Therefore P a holds. □
+The schema is visible: the *envelope* statement (monotonicity of $\text{tropPoly}_c$) is reduced by Theorem 3.4 to a *per-line* statement (monotonicity of each $m_i$), which holds because each line has nonnegative slope.
 
-**Remarks.**
-- The hypothesis form `P b → P a` (rather than `P b ↔ P a` or `P b = P a`) is the weakest and most reusable formulation.
-- No decidability of B is required; the proof uses classical logic (excluded middle on B a).
-- The well-foundedness of r ensures the induction terminates.
+## 5. Convexity
 
-### 3.2 Theorem 2: ℕ-Complexity Descent
+**Theorem 5.1 (Convexity, Jensen form, `tropPoly_convex`).** For all $x, y, t \in \mathbb{R}$ with $0 \le t \le 1$,
+$$\text{tropPoly}_c\bigl(t x + (1-t) y\bigr) \;\le\; t\,\text{tropPoly}_c(x) + (1-t)\,\text{tropPoly}_c(y).$$
 
-**Statement.** Let μ : α → ℕ be a complexity measure, N : ℕ a threshold. Suppose:
-- ∀ a, μ a ≤ N → P a (base regime verified),
-- ∀ a, N < μ a → ∃ b, μ b < μ a ∧ (P b → P a) (descent outside base).
+*Proof sketch.* By Theorem 3.4, fix $i$ and bound $m_i\bigl(t x + (1-t)y\bigr)$ by the right-hand side. Affinity of $m_i$ gives the exact algebraic split
+$$c_i + i\bigl(t x + (1-t)y\bigr) = t\bigl(c_i + i\,x\bigr) + (1-t)\bigl(c_i + i\,y\bigr).$$
+Apply Theorem 3.2 to each piece: $c_i + i\,x \le \text{tropPoly}_c(x)$ and $c_i + i\,y \le \text{tropPoly}_c(y)$. Since $t \ge 0$ and $1 - t \ge 0$, multiplying preserves the inequalities, and summing yields
+$$t\bigl(c_i + i\,x\bigr) + (1-t)\bigl(c_i + i\,y\bigr) \le t\,\text{tropPoly}_c(x) + (1-t)\,\text{tropPoly}_c(y).$$
+This bounds $m_i$ at the blend point by the desired right-hand side; the maximum over $i$ then satisfies the same bound. $\square$
 
-Then ∀ a, P a.
+The same template recurs: the envelope inherits convexity because each affine constituent is convex (indeed affine), and the nonnegative blending weights preserve the per-line bounds.
 
-```
-theorem global_of_finite_check_and_strict_descent
-    {α : Type*}
-    (μ : α → ℕ) (P : α → Prop) (N : ℕ)
-    (hbase : ∀ a, μ a ≤ N → P a)
-    (hstep : ∀ a, N < μ a → ∃ b, μ b < μ a ∧ (P b → P a)) :
-    ∀ a, P a
-```
+## 6. Leading-term dominance
 
-**Proof sketch.** By strong induction on n = μ a. For any a with μ a = n, if n ≤ N then hbase applies. If n > N, hstep gives b with μ b < n, and the induction hypothesis gives P b, whence P a. □
+Write $m_d(x) = c_d + d\,x$ for the **leading monomial**, the line of maximal slope $d$.
 
-**Derivation from Theorem 1.** This is a strict instance of Theorem 1 with:
-- r = InvImage (· < ·) μ (the induced well-founded order on α via μ)
-- B a ↔ μ a ≤ N
+**Theorem 6.1 (Pointwise dominance, `tropPoly_eq_leading`).** Fix $x$. If
+$$c_i + i\,x \le c_d + d\,x \quad \text{for all } i,$$
+then $\;\text{tropPoly}_c(x) = c_d + d\,x.$
 
-This derivation is also formally certified as `finite_check_descent_from_wf_descent`.
+*Proof sketch.* Antisymmetry. Upper bound: by Theorem 3.4 with $y = c_d + d\,x$, the hypothesis is exactly the per-line condition, so $\text{tropPoly}_c(x) \le c_d + d\,x$. Lower bound: Theorem 3.2 at $i = d$ gives $c_d + d\,x \le \text{tropPoly}_c(x)$. The two bounds coincide. $\square$
 
-### 3.3 Corollary A: Predecessor Step on ℕ
+**Theorem 6.2 (Threshold dominance, `tropPoly_eq_leading_threshold`).** Fix a threshold $T$. If
+$$c_i + i\,T \le c_d + d\,T \quad \text{for all } i,$$
+then for every $x \ge T$,
+$$\text{tropPoly}_c(x) = c_d + d\,x.$$
 
-**Statement.** If P holds for all n ≤ N, and for any n > N we have P(n-1) → P(n), then P holds for all n.
+*Proof sketch.* It suffices, by Theorem 6.1, to verify the pointwise dominance hypothesis at $x$. Decompose each side around $T$:
+$$c_i + i\,x = (c_i + i\,T) + i\,(x - T), \qquad c_d + d\,x = (c_d + d\,T) + d\,(x - T).$$
+The hypothesis controls the first bracket: $c_i + i\,T \le c_d + d\,T$. For the second, since $i \le d$ (as $i$ ranges up to the degree) and $x - T \ge 0$, we have $i\,(x - T) \le d\,(x - T)$. Adding the two inequalities gives $c_i + i\,x \le c_d + d\,x$, which is exactly the hypothesis of Theorem 6.1. $\square$
 
-```
-theorem forall_nat_of_verified_prefix_and_predecessor_step
-    (P : ℕ → Prop) (N : ℕ)
-    (hbase : ∀ n, n ≤ N → P n)
-    (hstep : ∀ n, N < n → P (n - 1) → P n) :
-    ∀ n, P n
-```
+Theorem 6.2 is the tropical analog of the classical fact that the highest-degree term of a polynomial dominates for large arguments — but sharper: it provides an *explicit threshold* beyond which the leading line is the function exactly, not merely asymptotically. The mechanism is the nonnegative slope gap $d - i \ge 0$, which guarantees that any lead held by $m_d$ at $T$ only widens to the right.
 
-**Proof sketch.** Strong induction on n. If n ≤ N, use hbase. If n > N, then n ≥ 1 so n - 1 < n. By IH, P(n-1) holds; by hstep, P(n) holds. □
+## 7. Explicit low-degree expansions
 
-### 3.4 Corollary B: Rank Cover
+**Theorem 7.1 (Degree one, `tropPoly_deg1`).** For $c = (c_0, c_1)$ and all $x$,
+$$\text{tropPoly}_c(x) = \max\bigl(c_0,\; c_1 + x\bigr).$$
+*Proof sketch.* Antisymmetry. ($\le$) By Theorem 3.4, check the two lines: $c_0 + 0\cdot x = c_0$ and $c_1 + 1\cdot x = c_1 + x$, both $\le$ the binary max. ($\ge$) Each branch of the binary max is a monomial value, hence $\le \text{tropPoly}_c(x)$ by Theorem 3.2; take the max. $\square$
 
-**Statement.** If P holds for rank ≤ N, and every object of rank > N reduces (by at least 1) to a lower-rank object preserving P, then P holds universally.
+This is exactly the graph of a clamped ramp — flat at height $c_0$ until $x = c_0 - c_1$, then slope $1$ — i.e. (a shifted) ReLU.
 
-```
-theorem global_of_rank_cover
-    {α : Type*}
-    (rank : α → ℕ) (P : α → Prop) (N : ℕ)
-    (hbase : ∀ a, rank a ≤ N → P a)
-    (hreduce : ∀ a, N < rank a → ∃ b, rank b + 1 ≤ rank a ∧ (P b → P a)) :
-    ∀ a, P a
-```
+**Theorem 7.2 (Degree two, `tropPoly_deg2`).** For $c = (c_0, c_1, c_2)$ and all $x$,
+$$\text{tropPoly}_c(x) = \max\bigl(c_0,\; \max(c_1 + x,\; c_2 + 2x)\bigr).$$
+*Proof sketch.* Identical structure to Theorem 7.1 over the three slopes $0, 1, 2$: the upper bound checks each of the three monomial values against the nested max via Theorem 3.4, and the lower bound bounds each branch of the nested max by $\text{tropPoly}_c$ via Theorem 3.2. $\square$
 
-**Proof.** Direct application of Theorem 2, since `rank b + 1 ≤ rank a` implies `rank b < rank a`. □
+The degree-two graph is a convex piecewise-linear curve with up to two corners and segment slopes $0, 1, 2$, the steepest of which eventually dominates per Theorem 6.2.
 
-### 3.5 Theorem 3: Explicit Reduction Function
+## 8. The proof-strategy schema
 
-**Statement.** A variant using an explicit step function `step : α → Option α`.
+The proofs above are striking in their uniformity. Abstracting the common pattern yields a reusable higher-order schema for reasoning about upper envelopes of structured families.
 
-```
-theorem global_of_measure_descent
-    {α : Type*}
-    (μ : α → ℕ)
-    (step : α → Option α)
-    (P : α → Prop)
-    (hbase : ∀ a, step a = none → P a)
-    (hstep : ∀ a b, step a = some b → μ b < μ a ∧ (P b → P a)) :
-    ∀ a, P a
-```
+> **Envelope-inheritance schema.** Let $g(x) = \max_{i} m_i(x)$ be a finite maximum of functions $m_i$. To prove that $g$ satisfies an *upper-bound-shaped* property $P$ (monotonicity, convexity, a closed-form upper estimate, etc.):
+> 1. **Reduce.** Use the upper-bound characterization ($g \le y \iff \forall i,\; m_i \le y$) to replace the goal about $g$ with a family of goals about each $m_i$.
+> 2. **Discharge per constituent.** Prove the reduced goal for each $m_i$, exploiting whatever structure the constituents share (here: affinity, nonnegative slope, the slope ordering $i \le d$).
+> 3. **Reassemble (when needed).** For *equalities* (Theorems 6.1, 7.1, 7.2), pair the reduced upper bound with the attainment/lower-bound fact ($m_{i_0} \le g$) and conclude by antisymmetry.
 
-**Proof sketch.** Strong induction on μ a. Case split on step a: if none, apply hbase; if some b, use hstep to get μ b < μ a and apply IH. □
+Each theorem in §4–§7 is an instance: monotonicity uses constituent monotonicity (nonnegative slope); convexity uses constituent affinity and weight nonnegativity; leading-term dominance uses the slope gap plus attainment at $i = d$; the low-degree expansions use the finite case-split over slopes. This is precisely the kind of structural pattern that "proof-strategy mining" seeks to surface: a single template that compresses a routine fact about affine functions into a family of theorems about their envelope.
 
-### 3.6 Minimal Counterexample Principle
+## 9. Algorithms
 
-**Statement.** Under the hypotheses of Theorem 2, no counterexample to P exists.
+The structural theory yields directly implementable algorithms.
 
-```
-theorem no_minimal_counterexample
-    {α : Type*}
-    (μ : α → ℕ) (P : α → Prop) (N : ℕ)
-    (hbase : ∀ a, μ a ≤ N → P a)
-    (hstep : ∀ a, N < μ a → ∃ b, μ b < μ a ∧ (P b → P a)) :
-    ¬ ∃ a, ¬ P a
-```
+**Algorithm A (Evaluate / argmax monomial).** Given $c$ and $x$, compute $\text{tropPoly}_c(x)$ and a witnessing index by scanning the $d+1$ monomial values $c_i + i\,x$ and tracking the running maximum and its argument. Correctness is Theorem 3.3 (attainment); complexity $O(d)$ per evaluation.
 
-This is the contrapositive of Theorem 2, but its formulation is significant: it mirrors the "minimal counterexample" style of argument preferred in classification theory.
+**Algorithm B (Leading-term threshold).** Given $c$, find a threshold $T$ beyond which $\text{tropPoly}_c \equiv m_d$. For each $i < d$ with $i < d$, the leading line overtakes line $i$ where $c_i + i\,T = c_d + d\,T$, i.e. at $T_i = (c_i - c_d)/(d - i)$; the required threshold is $T = \max_i T_i$ (or $-\infty$ if $c_d$ already dominates everywhere). Correctness is Theorem 6.2; complexity $O(d)$.
 
----
+**Algorithm C (Corner / break-point enumeration).** The corners of the convex graph are the abscissae where the active monomial changes. They coincide with the vertices of the lower convex hull of the points $(i, -c_i)$; computing that hull (e.g. by Andrew's monotone chain) in $O(d \log d)$ yields the ordered list of corners and the active segment between consecutive corners. This is the constructive content behind a tropical fundamental theorem of algebra (counting corners with slope-jump multiplicity equals $d$), with attainment (Theorem 3.3) identifying which monomials are active.
 
-## 4. Algorithms
+## 10. Applications
 
-### 4.1 Certified Verification Algorithm
+- **Optimization / $(\max,+)$ dynamic programming.** Tropical polynomials are value functions; monotonicity (Theorem 4.1) and convexity (Theorem 5.1) guarantee well-behaved optimization landscapes with no spurious local optima.
+- **Piecewise-linear neural networks.** A maxout unit and ReLU are degree-one tropical polynomials (Theorem 7.1); compositions and sums build the expressive piecewise-linear functions realized by deep networks. Leading-term dominance describes asymptotic behavior of a unit, and convexity constrains the geometry of a single layer.
+- **Tropical algebraic geometry.** Corners (Algorithm C) are the tropical roots; their count with multiplicity recovers the degree, making classical root-counting a finite convex-hull computation.
 
-The descent schema suggests a natural verification algorithm:
+## 11. Discussion and future work
 
-```
-Algorithm: VERIFY_BY_DESCENT(μ, P, N, step)
-Input: complexity measure μ, property P, threshold N, reduction step
-Output: certificate that ∀ a, P a, or identification of failure point
+The development deliberately routes everything through the finite-maximum primitive (§2) and its upper-bound characterization, so the index type $\{0,\dots,d\}$ is incidental: the same proofs apply to any nonempty finite family of affine functions. This polymorphism is the gateway to several extensions.
 
-1. For each a with μ(a) ≤ N:
-     Verify P(a) directly.
-     If verification fails, ABORT with counterexample a.
-2. For each a with μ(a) > N:
-     Compute b = step(a).
-     Verify μ(b) < μ(a).
-     Verify that the proof transport P(b) → P(a) is valid.
-     If any check fails, ABORT with failure at a.
-3. Output: CERTIFIED. P holds universally.
-```
+1. **A tropical fundamental theorem of algebra.** Formalize the corner locus and prove that the number of corners, weighted by slope-jump, equals the degree — counting tropical roots with multiplicity — via the lower-hull bijection of Algorithm C, using attainment (Theorem 3.3) and the upper-bound characterization (Theorem 3.4) to identify active monomials.
 
-**Complexity.** If α is finite with |α| = n, the algorithm runs in O(n) time assuming P-verification and step computation are O(1). For infinite α, only the base regime requires exhaustive checking; the descent step is verified symbolically.
+2. **Legendre–Fenchel duality.** Show $\text{tropPoly}_c$ is the max-plus Legendre transform of the coefficient sequence and that essential monomials are the extreme points of the dual; with convexity (Theorem 5.1) already in hand, this connects to the standard biconjugation framework.
 
-### 4.2 Descent Chain Construction
+3. **Multivariate max-plus polynomials.** Replace the index $\{0,\dots,d\}$ by a finite subset of $\mathbb{N}^k$; monotonicity and convexity lift verbatim because they hold for arbitrary pointwise maxima of affine functions.
 
-Given an object a with μ(a) > N, the descent schema implicitly constructs a chain:
+4. **Continuity and Lipschitz bounds.** A finite maximum of $L$-Lipschitz functions is $L$-Lipschitz; since each monomial of slope $i \le d$ is $d$-Lipschitz, $\text{tropPoly}_c$ is globally $d$-Lipschitz and continuous, and one may study stability under coefficient perturbation.
 
-```
-a → b₁ → b₂ → ... → bₖ
-```
+5. **Verified tropical/maxout network layers.** Interpret $\text{tropPoly}_c$ as a single maxout/ReLU unit and assemble compositional bounds for layered max-plus networks.
 
-where μ(a) > μ(b₁) > ... > μ(bₖ) ≤ N. The chain has length at most μ(a) - N. This chain is the "reduction certificate" for the object a.
+## 12. Conclusion
 
----
-
-## 5. Applications
-
-### 5.1 Application to Additive Combinatorics
-
-Consider a Goldbach-type claim: every even integer n ≥ 4 can be written as p + q for primes p, q. The descent schema applies with:
-- α = {even integers ≥ 4}
-- μ(n) = n
-- N = 4 × 10^18 (computational verification threshold)
-- Base: verified by exhaustive computation for n ≤ N
-- Descent: analytic number theory shows that for n > N, the number of representations r(n) = Σ_{p+q=n} 1 is positive, using the circle method
-
-### 5.2 Application to Classification Theory
-
-For the Classification of Finite Simple Groups:
-- α = finite simple groups
-- μ(G) = |G| (group order)
-- B(G) = "G is on the known list"
-- Descent: if G is a hypothetical unknown simple group of minimal order, its proper subgroups are all known, providing enough structure to identify G
-
-### 5.3 Application to Termination Proofs
-
-For proving termination of a recursive function f:
-- α = possible inputs
-- μ = a variant function (ranking function)
-- P(a) = "f terminates on input a"
-- Base: f terminates immediately for simple inputs
-- Descent: each recursive call decreases the variant function
-
-### 5.4 Worked Example: Sum of First n Naturals
-
-We demonstrate the predecessor-step corollary on a concrete arithmetic identity.
-
-**Claim.** For all n : ℕ, the sum 0 + 1 + ... + n = n(n+1)/2.
-
-**Application of schema:**
-- P(n) = "sum(0..n) = n(n+1)/2"
-- N = 0
-- Base: P(0) holds since sum(0..0) = 0 = 0·1/2
-- Step: If P(n-1) holds, then sum(0..n) = sum(0..n-1) + n = (n-1)n/2 + n = n(n+1)/2
-
----
-
-## 6. Computational Experiments
-
-### 6.1 Descent Chain Lengths
-
-We computed descent chain lengths for random instances of the schema applied to various problems. See `demo.py` for the implementation.
-
-For the Collatz-like descent (reducing even numbers by halving, odd numbers by 3n+1 then halving):
-- Mean chain length for n ≤ 1000: approximately 62 steps
-- Maximum chain length: 178 steps (for n = 871)
-- All chains terminate (consistent with the Collatz conjecture)
-
-### 6.2 Base Regime Size vs. Descent Complexity
-
-We measured the trade-off between base regime size N and the complexity of the descent argument for several number-theoretic properties. Larger N simplifies the descent step (fewer cases to handle) but increases the computational verification burden.
-
----
-
-## 7. Discussion
-
-### 7.1 Relationship to Existing Schemas
-
-The descent schema is related to but distinct from several existing concepts:
-- **Noetherian induction** is the special case where B is empty (all objects reduce).
-- **Course-of-values induction** is the ℕ-specialized version.
-- **Structural induction** is the version for inductively defined types.
-- **The minimal counterexample method** is the contrapositive formulation.
-
-Our contribution is to isolate the *two-component decomposition* (base + descent) as the reusable unit, rather than the induction mechanism itself.
-
-### 7.2 Proof Engineering Implications
-
-The schema enables a workflow for certifying mathematical results:
-1. Identify the complexity measure μ and threshold N.
-2. Verify the base regime computationally.
-3. Establish the descent step theoretically.
-4. Instantiate the schema to obtain the universal conclusion.
-
-This separation of concerns — computation for the base, theory for the descent — is a powerful organizing principle for large-scale formalization projects.
-
-### 7.3 Limitations
-
-The schema requires:
-- A well-founded ordering (or equivalently, a ℕ-valued complexity measure).
-- Backward transport of the property (P b → P a, not P a → P b).
-- The descent to be strict (not just non-increasing).
-
-Problems where the natural reduction is not strictly decreasing (e.g., certain graph rewriting systems) require additional techniques such as multiset orderings or lexicographic combinations.
-
----
-
-## 8. Future Work
-
-1. **Finitely branching descent.** Extend the schema to reductions that produce multiple successors (trees rather than chains), relevant to classification arguments with case splits.
-2. **Quantitative descent.** Track the rate of complexity decrease to obtain quantitative bounds on proof complexity.
-3. **Automated base verification.** Interface the schema with decision procedures that automatically discharge the base regime.
-4. **Transfinite descent.** Extend beyond ℕ to ordinal-valued complexity measures for applications in set theory and proof theory.
-5. **Proof mining library.** Build a catalog of domain-specific descent steps that can be composed with the general schema.
-
----
-
-## 9. References
-
-1. Noether, E. (1921). Idealtheorie in Ringbereichen. *Mathematische Annalen*, 83, 24–66.
-2. Gentzen, G. (1936). Die Widerspruchsfreiheit der reinen Zahlentheorie. *Mathematische Annalen*, 112, 493–565.
-3. Kohlenbach, U. (2008). *Applied Proof Theory: Proof Interpretations and their Use in Mathematics*. Springer.
-4. Gorenstein, D. (1982). *Finite Simple Groups: An Introduction to Their Classification*. Plenum Press.
-5. Helfgott, H. (2013). Major arcs for Goldbach's theorem. *arXiv:1305.2897*.
-6. Bove, A., Capretta, V. (2005). Modelling general recursion in type theory. *Mathematical Structures in Computer Science*, 15(4), 671–708.
-
----
-
-## Appendix: Complete Theorem Dependency Graph
-
-```
-global_of_base_and_wf_descent (most general)
-    │
-    ├── finite_check_descent_from_wf_descent (derives ℕ version from WF version)
-    │       │
-    │       └── uses: InvImage.wf, Nat.lt_wfRel.wf
-    │
-    ├── global_of_finite_check_and_strict_descent (ℕ-complexity version)
-    │       │
-    │       ├── global_of_rank_cover (rank ≥ 1 reduction)
-    │       │
-    │       └── no_minimal_counterexample (contrapositive)
-    │
-    ├── forall_nat_of_verified_prefix_and_predecessor_step (predecessor step on ℕ)
-    │
-    └── global_of_measure_descent (explicit step function variant)
-```
+From one primitive — the finite maximum with its attainment and upper-bound characterization — we obtained the complete first-order structural theory of one-variable max-plus tropical polynomials: monomial bounds, attainment, monotonicity, convexity, pointwise and threshold leading-term dominance, and explicit low-degree forms. Beyond the individual theorems, the recurring envelope-inheritance schema is itself the deliverable: a reusable higher-order template that derives properties of an envelope from the shared structure of its affine constituents.
