@@ -1,27 +1,47 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence — Euler–Mascheroni constant, irrationality approaches
 
-This package concerns the **Euler–Mascheroni constant γ** (concept title:
-"Euler-Mascheroni Constant: Irrationality Approaches", domain: MachineLearning).
+Concise numerical support for the formal results in
+`Catalog/EulerMascheroni/Irrationality.lean` and `.../EffectiveBounds.lean`.
+`γ = 0.5772156649…`.
 
-The Lean output block pasted into the Phase A prompt was a *mismatched* file
-(a Hodge–Deligne E-polynomial file). It is unrelated to this concept and is
-**not** used here. The genuine Phase A artifacts for this cycle are the γ
-theorems explicitly named in the Phase A "Future Directions" block, which are
-the source of truth for every claim packaged below. No theorem is stated in
-the prose that is not in this ledger.
+## 1. Bracketing sequences (small cases)
 
-| Lean name | Kind | Mathematical statement | In ARTICLE.md | In RESEARCH_PAPER.md |
-|---|---|---|---|---|
-| `eulerMascheroniConstant` | def | `γ := lim_{n→∞} (H_n − log n)`, the common limit of the two monotone auxiliary sequences | yes (γ defined) | yes (Def. 1) |
-| `eulerMascheroniSeq` | def | `a_n := H_n − log(n+1)`, increasing, converging up to γ | yes (lower fence) | yes (Def. 2) |
-| `eulerMascheroniSeq'` | def | `b_n := H_n − log n`, decreasing, converging down to γ | yes (upper fence) | yes (Def. 2) |
-| `abs_harmonic_sub_log_sub_gamma_lt` | thm | `∀ n ≥ 1, |H_n − log n − γ| < 1/n` | yes (Main Thm A) | yes (Thm 1) |
-| `hasSum_gammaSeries` | thm | `HasSum (fun k => 1/k − log((k+1)/k)) γ`, a positive-term telescoping series | yes (Main Thm B) | yes (Thm 2) |
-| `irrational_of_int_linear_forms` | thm | If integers `a_n, b_n` satisfy `b_n>0`, `b_n x − a_n ≠ 0`, `|b_n x − a_n| → 0`, then `x` is irrational | yes (Main Thm C) | yes (Thm 3) |
+`seq n = H_n − log(n+1)`,  `seq' n = H_n − log n`,  with `seq n < γ < seq' n`.
 
-Honesty constraints respected:
-- γ is **not** claimed to be proved irrational (that is open). Theorem 3 is a
-  one-way *criterion*; the package presents it as the toolkit for irrationality,
-  not a proof of γ's irrationality.
-- The approximation theorem is stated as an absolute bound `< 1/n`; the sharper
-  one-sided `1/(2n)` form is listed only under Future Directions as a conjecture.
+| n | H_n (=harmonic n) | seq n | seq' n | width = log(n+1)−log n |
+|---|-------------------|-------|--------|------------------------|
+| 1 | 1       | 0.30685 | 1.00000 | 0.69315 |
+| 2 | 3/2     | 0.40546 | 0.80685 | 0.40546 |
+| 6 | 49/20   | 0.50575 | 0.65067 | 0.15415 |
+| 10| 7381/2520| 0.53107 | 0.62638 | 0.09531 |
+
+All rows satisfy `seq n < 0.57722 < seq' n`, and `width = seq' n − seq n`
+(verified symbolically by `eulerMascheroni_trap_width_eq`).  Row n=6 shows the
+Mathlib bounds `1/2 < γ < 2/3`.
+
+## 2. Convergence rate
+
+`width(n) = log(1 + 1/n) ≈ 1/n − 1/(2n²)`.  This is only **linear** decay
+(`~1/n`), far slower than the geometric rates used in the irrationality proofs of
+`e` and `ζ(3)`.  Hence the bracketing certifies `γ` to high precision but does
+**not** by itself yield irrationality — and crucially the endpoints are
+transcendental (they contain `log`), not rational, so they cannot be fed to the
+integer-linear-form engine `irrational_iff_forall_eps_linear_form`.
+
+## 3. Irrationality-engine sanity check
+
+The engine says: `x` irrational ⇔ for all `ε>0` there are integers `q≥1, p` with
+`0 < |qx − p| < ε`.  For a rational test value `x = 49/20` (denominator 20),
+no nonzero form beats `1/20`: e.g. `q=1..19` give `|qx − round| ≥ 1/20`,
+confirming the rational floor `|qx−p| ≥ 1/den` used in the backward direction.
+
+## 4. OEIS
+
+The harmonic numerators/denominators are OEIS A001008 / A002805.  No new
+integer sequence is introduced by this cycle.
+
+## 5. Counterexample hunt
+
+The engine `irrational_iff_forall_eps_linear_form` is a proven *iff* (no
+counterexample possible).  The γ-specific theorem is a faithful instantiation and
+makes no unproven universal claim about γ itself.
