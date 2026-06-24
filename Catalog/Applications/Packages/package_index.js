@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-24T13:16:01Z",
+    "domain": "Algebra",
+    "exp_id": "168f9c96",
+    "filename": "conformability_remains_np_complete_for_all_fixed_i.json",
+    "pkg_num": 30,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "The Odd-Clique Obstruction for Conformability of Odd-Order Regular Graphs"
+  },
+  {
     "date": "2026-06-24T13:14:47Z",
     "domain": "Bridges",
     "exp_id": "cd0ef092",
@@ -320,6 +330,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Fitting Kernel Bound: Sharp Stabilization of Iterated-Endomorphism Kernels"
   },
+  "conformability_remains_np_complete_for_all_fixed_i.json": {
+    "domain": "Algebra",
+    "exp_id": "168f9c96",
+    "source_exp_ids": [
+      "2606.21534v1"
+    ],
+    "title": "The Odd-Clique Obstruction for Conformability of Odd-Order Regular Graphs"
+  },
   "consciousness_as_integrated_information.json": {
     "domain": "Novelty",
     "exp_id": "91104b94",
@@ -539,7 +557,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 272,
+      "hue": 270,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -550,7 +568,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 92,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -583,7 +601,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 91,
+      "hue": 90,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
@@ -594,7 +612,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 271,
+      "hue": 92,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.6288,
@@ -605,7 +623,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 271,
+      "hue": 270,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -616,7 +634,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T08:30:51Z",
       "domain": "Computation",
-      "hue": 91,
+      "hue": 272,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
       "priority_score": 0.5811999999999999,
@@ -627,7 +645,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T11:40:38Z",
       "domain": "Probability",
-      "hue": 270,
+      "hue": 271,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
       "priority_score": 0.48476875555555554,
@@ -638,7 +656,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T15:01:50Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 272,
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
       "primary_domain": "Bridges",
       "priority_score": 0.5094479615384615,
@@ -649,7 +667,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T19:25:16Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 314,
       "id": "quantum_key_distribution_bb84_security_proof",
       "primary_domain": "Cryptography",
       "priority_score": 0.49160000000000004,
@@ -660,7 +678,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T00:21:07Z",
       "domain": "Physics",
-      "hue": 95,
+      "hue": 271,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Physics",
       "priority_score": 0.6913,
@@ -671,7 +689,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:35:46Z",
       "domain": "Tropical",
-      "hue": 90,
+      "hue": 92,
       "id": "eml_universal_approximation_density_of_eml_functio",
       "primary_domain": "Tropical",
       "priority_score": 0.86528,
@@ -682,7 +700,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:59:38Z",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Computation",
       "priority_score": 0.789328,
@@ -693,7 +711,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T02:14:47Z",
       "domain": "Physics",
-      "hue": 90,
+      "hue": 270,
       "id": "hamiltonian_compression_factor_of_cubic_edge_trans",
       "primary_domain": "Physics",
       "priority_score": 0.48598591282051284,
@@ -704,7 +722,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T04:28:44Z",
       "domain": "Algebra",
-      "hue": 359,
+      "hue": 292,
       "id": "langlands_correspondence_gl1_case",
       "primary_domain": "Algebra",
       "priority_score": 0.57755,
@@ -726,7 +744,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T05:17:28Z",
       "domain": "Geometry",
-      "hue": 272,
+      "hue": 271,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Geometry",
       "priority_score": 0.702,
@@ -737,7 +755,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T06:14:07Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 90,
       "id": "secret_sharing_shamirs_scheme_and_verifiable_varia",
       "primary_domain": "Cryptography",
       "priority_score": 0.5671600000000001,
@@ -748,7 +766,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T06:45:24Z",
       "domain": "Tropical",
-      "hue": 92,
+      "hue": 90,
       "id": "tropical_curves_and_chip_firing_games",
       "primary_domain": "Tropical",
       "priority_score": 0.6342000000000001,
@@ -759,7 +777,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T08:09:20Z",
       "domain": "Novelty",
-      "hue": 100,
+      "hue": 90,
       "id": "whitehead_problem_independence_from_zfc",
       "primary_domain": "Bridges",
       "priority_score": 0.729932,
@@ -770,7 +788,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T08:38:58Z",
       "domain": "Algebra",
-      "hue": 271,
+      "hue": 314,
       "id": "type_theory_cubical_type_theory_foundations",
       "primary_domain": "Algebra",
       "priority_score": 0.63257,
@@ -781,7 +799,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T09:33:05Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 270,
       "id": "symmetric_group_generation_probability",
       "primary_domain": "Bridges",
       "priority_score": 0.4162,
@@ -792,7 +810,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T10:35:56Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 91,
       "id": "consciousness_as_integrated_information",
       "primary_domain": "Bridges",
       "priority_score": 0.67432,
@@ -803,7 +821,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T10:57:53Z",
       "domain": "Shared",
-      "hue": 271,
+      "hue": 270,
       "id": "existence_of_non_trivial_boolean_degree_one_functi",
       "primary_domain": "Bridges",
       "priority_score": 0.69522,
@@ -814,7 +832,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T11:02:54Z",
       "domain": "Logic",
-      "hue": 271,
+      "hue": 90,
       "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
       "primary_domain": "Logic",
       "priority_score": 0.43844913758865245,
@@ -836,7 +854,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T13:10:04Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 275,
       "id": "ramsey_theory_bounds_and_constructions",
       "primary_domain": "Algebra",
       "priority_score": 0.61528,
@@ -847,13 +865,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T13:14:47Z",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 91,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
       "priority_score": 0.7045299999999999,
       "quality": "substantial",
       "shape": "icosahedron",
       "title": "Proof Automation: Sound Custom Lean 4 Tactics for Number Theory, Tropical Algebra, and Spectral Estimation"
+    },
+    {
+      "date": "2026-06-24T13:16:01Z",
+      "domain": "Algebra",
+      "hue": 270,
+      "id": "conformability_remains_np_complete_for_all_fixed_i",
+      "primary_domain": "Algebra",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "tetrahedron",
+      "title": "The Odd-Clique Obstruction for Conformability of Odd-Order Regular Graphs"
     }
   ]
 };

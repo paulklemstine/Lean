@@ -459,5 +459,6 @@
   "43854327": "nisq_optimized_quantum_error_mitigation_via_algebr.json",
   "758d973b": "degree_normalized_linked_tree_cut_decompositions_f.json",
   "1670a4b8": "ramsey_theory_bounds_and_constructions.json",
-  "cd0ef092": "proof_automation_custom_lean_4_tactics.json"
+  "cd0ef092": "proof_automation_custom_lean_4_tactics.json",
+  "168f9c96": "conformability_remains_np_complete_for_all_fixed_i.json"
 }
