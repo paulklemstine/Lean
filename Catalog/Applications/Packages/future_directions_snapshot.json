@@ -1357,7 +1357,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b21b1644",
     "description": "Prove that the connective constant for the self-avoiding walk on Z² equals (2+√2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -1370,7 +1370,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
   },
@@ -1834,7 +1834,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "dd1a0b52",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1847,7 +1847,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -2795,7 +2795,7 @@
     "catalog_references": [
       "DrmotaKauersSpiegelhofer2016"
     ],
-    "consumed_by_exp_id": "a83f4fe5",
+    "consumed_by_exp_id": "",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->∞} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domain_bridges": [
       "math.CO",
@@ -2810,7 +2810,7 @@
     "proof_strategy": "exact deconvolution replaced by finite stopped random-walk law and first-exit median analysis",
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -4487,7 +4487,7 @@
       "Mathlib.Data.Finset.Basic",
       "Mathlib.Algebra.BigOperators.Fin"
     ],
-    "consumed_by_exp_id": "9368eda6",
+    "consumed_by_exp_id": "",
     "description": "For every n,k,r with n ≥ 2k, k ≥ 3, and r ≥ 2, let (𝓕_i)_{i∈Fin r} be k-uniform families of subsets of Fin n. Assume each 𝓕_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i ≠ j, every A ∈ 𝓕_i and B ∈ 𝓕_j have A ∩ B ≠ ∅. Then the multilateral product is bounded by the Hilton--Milner value: ∏_{i∈Fin r} |𝓕_i| ≤ h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
     "domain_bridges": [
       "Represents k-uniform set families as Finset (Finset (Fin n)) in Lean 4.",
@@ -4503,7 +4503,7 @@
     "proof_strategy": "Formalize the paper's two-family theorem as a Lean lemma: for any two non-star k-uniform cross-intersecting families A,B ⊆ binom(Fin n,k), |A|*|B| ≤ h(n,k)^2. Apply this lemma to every unordered pair of distinct indices i,j ∈ Fin r. Multiplying all pairwise inequalities gives (∏ᵢ |𝓕_i|)^(r-1) ≤ (h(n,k)^r)^(r-1), since each |𝓕_i| occurs in exactly r-1 pair products. Use positivity/monotonicity of natural powers to extract the (r-1)-st root, noting r ≥ 2.",
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:25:43.582970+00:00",
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
@@ -5075,7 +5075,7 @@
       "math.CO",
       "math.RA"
     ],
-    "consumed_by_exp_id": "0c7e5800",
+    "consumed_by_exp_id": "",
     "description": "For the full flag variety GL_{n+1}/ℂ B, let w ∈ S_{n+1} index the Schubert cell X_w^o. The cluster algebra structure on ℂ[X_w^o] (coming from the reduced expression of the longest element in the Weyl group modulo the stabilizer of w) is of finite type if and only if w is a Grassmannian permutation (i.e., w has at most one descent).",
     "domain_bridges": [
       "cluster algebras",
@@ -5092,7 +5092,7 @@
     "proof_strategy": "Show that the exchange matrix associated to a reduced word for w is mutation-equivalent to a Cartesian product of type A_{k_i} cluster algebras exactly when the corresponding permutation has at most one descent, using the correspondence between reduced words and pipe dreams, and applying known classification of finite type cluster algebras via Dynkin diagrams. Conversely, if w has ≥2 descents, exhibit a mutable vertex whose mutation creates a cycle of length >2, preventing finite type.",
     "research_mode": "team",
     "source_exp_id": "2606.23474v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T00:22:07.112237+00:00",
     "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
   },
@@ -6265,7 +6265,7 @@
       "Brualdi and Quinn Massey (conjectured)",
       "arXiv:2304.12345 (current paper)"
     ],
-    "consumed_by_exp_id": "18853638",
+    "consumed_by_exp_id": "",
     "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies χ'_s(G) ≤ Δ_A Δ_B, where Δ_A and Δ_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 Δ_A Δ_B for sufficiently large products.",
     "domain_bridges": [
       "Graph Theory",
@@ -6282,7 +6282,7 @@
     "proof_strategy": "The conjecture can be approached via probabilistic methods combined with sparse neighborhood analysis, similar to techniques used in prior improvements of the Erdős-Nesetrýl conjecture. Key steps include constructing an induced matching decomposition that respects the product bound Δ_A Δ_B and leveraging the bipartite structure to minimize color conflicts.",
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T17:05:28.615107+00:00",
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
   },
@@ -6441,6 +6441,29 @@
     "title": "Conjecture on Externally Supported Independence Number"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Parry",
+      "Ito-Takahashi"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For rational β = p/q, the natural extension has finite domain bridges.",
+    "domain_bridges": "finite",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_2450",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive counterexample based on known results",
+    "research_mode": "team",
+    "source_exp_id": "2606.23097v1",
+    "status": "available",
+    "timestamp": "2026-06-24T20:58:20.101200+00:00",
+    "title": "Domain Finiteness"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO/2305.01234",
@@ -6457,7 +6480,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2450",
+    "id": "fd_2451",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6481,7 +6504,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2451",
+    "id": "fd_2452",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6507,7 +6530,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6533,7 +6556,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6560,7 +6583,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6586,7 +6609,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2455",
+    "id": "fd_2456",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
@@ -6614,7 +6637,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
@@ -6639,7 +6662,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -6666,7 +6689,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
@@ -6695,7 +6718,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Borel-Serre duality techniques and spectral sequence arguments used in codimension 1 and 2 cases to arbitrary k. Analyze the action of the congruence subgroup on Bruhat-Tits buildings and leverage representation stability to control cohomology in high degrees.",
@@ -6720,7 +6743,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
@@ -6748,7 +6771,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
@@ -6775,7 +6798,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on dimension d, leveraging the structure of convex splinters and the affine dependence condition. Possibly using induction on the number of convex sets composing the splinter, combined with probabilistic method or measure concentration techniques to establish the lower bound.",
@@ -6794,7 +6817,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct proof using inequalities derived from asymptotic estimates",
@@ -6823,7 +6846,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the paper's prime-divisor criterion to an exact p-adic valuation statement. First reuse the finite-difference argument to show that every prime divisor of D(k) divides n = k+1. For an exact component p^a ∥ n, use Kummer's theorem to express v_p(binom(qk,k)) as a number of base-p carries in k + (q-1)k. Prove a uniform lower bound v_p ≥ a for all q in the range exactly when n/p^a ≤ p^a. Then construct an explicit q, plausibly q = n/p^a + 1 or a small digit-adjusted variant, for which the carry count is exactly a, giving v_p(D(k)) = a. Show that all other prime components have valuation zero in the gcd. Combining over primes yields the asserted exact formula.",
@@ -6854,7 +6877,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicitly a non-central element that is St₃ by utilizing long paths in the quiver. For a path p of length ≥ 3, consider x = p₁ + p₂ + ... + pₖ where pᵢ are appropriately chosen paths satisfying the St₃ condition but not the centrality condition. Verify St₃(x, y₁, y₂) = 0 for all y₁, y₂ using the alternating symmetry and multilinearity of St₃, while showing [x, z] ≠ 0 for some z in the algebra to prove non-centrality.",
@@ -6882,7 +6905,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the construction of the Betti-Whittaker periods using the pairing between the Whittaker model and the cohomology of the arithmetic quotient. Implement the duality between π and π^* via the contragredient representation, and use the functional equation of the associated L-function to establish the proportionality constant. The Lean proof would require the formalization of Casselman-Wallach representations and the continuous cohomology of GL(n, R).",
@@ -6891,6 +6914,34 @@
     "status": "available",
     "timestamp": "2026-06-24T20:34:32.678693+00:00",
     "title": "Relation between Betti-Whittaker Periods for Contragredient Cohomological Representations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "YanJin2024",
+      "ZhaoYan2023",
+      "GrossMansourTucker2021",
+      "ChunMoffattNobleRueckriemen2019"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every binary delta-matroid D and partial-twuality operator ⋆∙ ∈ {×, ∗×, ×∗, ∗×∗∗}, the partial-∙ polynomial ^∂w_D^{⋆∙}(z) is either even, odd, or both even-interpolating and odd-interpolating.",
+    "domain_bridges": [
+      "Twuality operators",
+      "Interpolative properties",
+      "Delta-matroid structure"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2468",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductive proof on delta-matroid rank with case analysis for each ⋆∙ operator, leveraging existing results for partial-∗ polynomials and properties of twist/loop complementation.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22888v1",
+    "status": "available",
+    "timestamp": "2026-06-24T21:09:29.440062+00:00",
+    "title": "Intersection-Property of Partial-∙ Polynomials for Binary Delta-Matroids"
   },
   {
     "ambition_level": "extension",
@@ -7304,7 +7355,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c7ae3fab",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -7317,7 +7368,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -7600,7 +7651,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6ddef5de",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domain_bridges": [],
     "domains": [
@@ -7613,7 +7664,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -8180,7 +8231,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1d985141",
+    "consumed_by_exp_id": "",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincaré, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
     "domain_bridges": [],
     "domains": [
@@ -8193,7 +8244,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.020862+00:00",
     "title": "Proof Strategy Mining from Deep Mathematics"
   },

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5a434903",
     "filename": "extremal_graph_theory_turn_and_szemerdi.json",
     "pkg_num": 40,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.333456,
     "title": "Counting Without Crowding: A Parity-Uniform Cubic Bound for ex(n, K_{a,b}, K_{3,t})"
   },
   {
@@ -1169,8 +1169,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "extremal_graph_theory_turn_and_szemerdi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.333456,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Counting Without Crowding: A Parity-Uniform Cubic Bound for ex(n, K_{a,b}, K_{3,t})"
     }

@@ -11547,11 +11547,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "1d985141",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11563,7 +11563,7 @@
         "Algebra"
       ],
       "id": "fd_0409",
-      "last_attempt_time": "2026-06-24T20:34:48.199762+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-16T10:48:45.376139+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11577,7 +11577,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:26.020862+00:00",
       "title": "Proof Strategy Mining from Deep Mathematics"
@@ -15138,7 +15138,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "6ddef5de",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15164,7 +15164,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:46.684855+00:00",
       "title": "Diffusion Models as Stochastic Differential Equations"
@@ -35318,7 +35318,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "a83f4fe5",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35346,7 +35346,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23398v1",
       "source_path": "http://arxiv.org/abs/2606.23398v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T07:09:34.216269+00:00",
       "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
@@ -38195,7 +38195,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "9368eda6",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38224,7 +38224,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23322v1",
       "source_path": "http://arxiv.org/abs/2606.23322v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T17:25:43.582970+00:00",
       "title": "Multilateral non-trivial cross-intersection product bound"
@@ -39117,11 +39117,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c7ae3fab",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39133,7 +39133,7 @@
         "Novelty"
       ],
       "id": "fd_2395",
-      "last_attempt_time": "2026-06-24T20:34:43.285535+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -39260,7 +39260,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "0c7e5800",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39290,7 +39290,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23474v1",
       "source_path": "http://arxiv.org/abs/2606.23474v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T00:22:07.112237+00:00",
       "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
@@ -41333,7 +41333,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "18853638",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41363,7 +41363,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23824v1",
       "source_path": "http://arxiv.org/abs/2606.23824v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T17:05:28.615107+00:00",
       "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
@@ -41637,6 +41637,48 @@
       "title": "Conjecture on Externally Supported Independence Number"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Parry",
+        "Ito-Takahashi"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: For rational β = p/q, the natural extension has finite domain bridges.",
+      "domain_bridges": "finite",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Bridges"
+      ],
+      "id": "fd_2450",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Group theory over finite fields",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Constructive counterexample based on known results",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23097v1",
+      "source_path": "http://arxiv.org/abs/2606.23097v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T20:58:20.101200+00:00",
+      "title": "Domain Finiteness"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -41662,7 +41704,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2450",
+      "id": "fd_2451",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41705,7 +41747,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2451",
+      "id": "fd_2452",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41750,7 +41792,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2452",
+      "id": "fd_2453",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41795,7 +41837,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2453",
+      "id": "fd_2454",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41841,7 +41883,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2454",
+      "id": "fd_2455",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -41886,7 +41928,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2455",
+      "id": "fd_2456",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -41933,7 +41975,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2456",
+      "id": "fd_2457",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -41977,7 +42019,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2457",
+      "id": "fd_2458",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -42023,7 +42065,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2458",
+      "id": "fd_2459",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
@@ -42071,7 +42113,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2459",
+      "id": "fd_2460",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_cohomology_vanishing (p : Nat.primes) (k : ℕ) (n : ℕ) : n ≥ (3*k + 1)*p + (3*k + 2) → cohomology_group (Γ₀ₙ(p)) (binom(n, 2) - k) ℚ = 0",
@@ -42115,7 +42157,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2460",
+      "id": "fd_2461",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem S_one_phi_lower_bound (x : ℕ) (hx : x ≥ 2) : (S_one_phi x : ℝ) ≥ x * Real.exp ( - (1 / 2 + eps x) * Real.sqrt (Real.log x * Real.log (Real.log x)) ) := by sorry",
@@ -42162,7 +42204,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2461",
+      "id": "fd_2462",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sum_of_digits_bias (t : nat) (h : t > 0) : \\lim_{N\\rightarrow\\infty} ((\\text{set.mem_imprediate} (n\\mapsto s_2(n + t) \\ge s_2(n)) : N)) `N `real_imprediate (1/2 + 2^{-2s_2(t)-1})",
@@ -42208,7 +42250,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2462",
+      "id": "fd_2463",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture colorful_fractional_helly_beta_bound (d : ℕ) (α : ℝ) (hα : α > 0 ∧ α ≤ 1) : ∃ β : ℝ, β ≥ α^(d+1) ∧ Helly.colorful_fractional_convex_splinters.d d α β",
@@ -42246,7 +42288,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2463",
+      "id": "fd_2464",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "a_n ≤ ρ^{-n}",
@@ -42294,7 +42336,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2464",
+      "id": "fd_2465",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nnamespace BinomialGCD\n\ndef IsExactPrimePowerComponent (n P : ℕ) : Prop :=\n  ∃ p a : ℕ, Nat.Prime p ∧ 0 < a ∧ P = p ^ a ∧ p ^ a ∣ n ∧ ¬ (p ^ (a + 1) ∣ n)\n\ndef IsLargestExactPrimePowerComponent (n P : ℕ) : Prop :=\n  IsExactPrimePowerComponent n P ∧\n    ∀ Q : ℕ, IsExactPrimePowerComponent n Q → Q ≤ P\n\ndef binomGCD (k : ℕ) : ℕ :=\n  (Finset.Icc 2 (k + 1)).gcd fun q => Nat.choose (q * k) k\n\n/-- Conjectural strengthening of the A080170 criterion: the gcd is exactly the\nlargest dominating exact prime-power component, not just nontrivial in that case. -/\ntheorem exact_binomial_gcd_largest_prime_power_conjecture\n    {k n P : ℕ}\n    (hk : 2 ≤ k)\n    (hn : n = k + 1)\n    (hP : IsLargestExactPrimePowerComponent n P) :\n    binomGCD k = if n / P ≤ P then P else 1 := by\n  sorry\n\nend BinomialGCD",
@@ -42344,7 +42386,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2465",
+      "id": "fd_2466",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_noncentral_St3_element (Q : Quiver) (hQ : Finite Q) (hpath : ∃ (p : Path Q), length p ≥ 3) : ∃ (A : Alg K), ∃ (x : A), St3_element x ∧ ¬ Central x",
@@ -42391,7 +42433,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2466",
+      "id": "fd_2467",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem betti_whittaker_period_relation (k : NumberField) (n : ℕ) (π : AutomorphicRepresentation (GL n k)) [Cohomological π] (π_star : Contragredient π) : ∃ (c : ℂ), Period_BettiWhittaker π = c * Period_BettiWhittaker π_star",
@@ -42410,6 +42452,53 @@
       "thread_id": "",
       "timestamp": "2026-06-24T20:34:32.678693+00:00",
       "title": "Relation between Betti-Whittaker Periods for Contragredient Cohomological Representations"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "YanJin2024",
+        "ZhaoYan2023",
+        "GrossMansourTucker2021",
+        "ChunMoffattNobleRueckriemen2019"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every binary delta-matroid D and partial-twuality operator ⋆∙ ∈ {×, ∗×, ×∗, ∗×∗∗}, the partial-∙ polynomial ^∂w_D^{⋆∙}(z) is either even, odd, or both even-interpolating and odd-interpolating.",
+      "domain_bridges": [
+        "Twuality operators",
+        "Interpolative properties",
+        "Delta-matroid structure"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2468",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem partial_twuality_interpolates (D : binary_delta_matroid) (⋆∙ : twuality_operator) : (∀ z, is_even (partial_twuality_polynomial D ⋆∙ z) ∨ is_odd (partial_twuality_polynomial D ⋆∙ z) ∨ (is_even_interpolating (partial_twuality_polynomial D ⋆∙) ∧ is_odd_interpolating (partial_twuality_polynomial D ⋆∙)))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Inductive proof on delta-matroid rank with case analysis for each ⋆∙ operator, leveraging existing results for partial-∗ polynomials and properties of twist/loop complementation.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22888v1",
+      "source_path": "http://arxiv.org/abs/2606.22888v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T21:09:29.440062+00:00",
+      "title": "Intersection-Property of Partial-∙ Polynomials for Binary Delta-Matroids"
     },
     {
       "ambition_level": "extension",
@@ -46434,11 +46523,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "b21b1644",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46450,7 +46539,7 @@
         "Algebra"
       ],
       "id": "seed_225",
-      "last_attempt_time": "2026-06-10T06:52:00.844713+00:00",
+      "last_attempt_time": "2026-06-24T21:09:34.959364+00:00",
       "last_reviewed_at": "2026-06-09T13:04:08.213164+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46464,7 +46553,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:12.561612+00:00",
       "title": "Self-Avoiding Walk: Connective Constant"
@@ -48145,11 +48234,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "dd1a0b52",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48161,7 +48250,7 @@
         "Probability"
       ],
       "id": "seed_355",
-      "last_attempt_time": "2026-06-24T20:34:38.594891+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -48175,7 +48264,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432742+00:00",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"

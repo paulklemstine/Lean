@@ -1018,7 +1018,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Sun-Sun Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b21b1644",
     "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Computation",
@@ -1028,7 +1028,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
   },
@@ -1375,7 +1375,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "dd1a0b52",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1385,7 +1385,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -1894,7 +1894,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
   },
   {
-    "consumed_by_exp_id": "a83f4fe5",
+    "consumed_by_exp_id": "",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domains": [
       "Bridges"
@@ -1903,7 +1903,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -2761,7 +2761,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
   },
   {
-    "consumed_by_exp_id": "9368eda6",
+    "consumed_by_exp_id": "",
     "description": "For every n,k,r with n \u2265 2k, k \u2265 3, and r \u2265 2, let (\ud835\udcd5_i)_{i\u2208Fin r} be k-uniform families of subsets of Fin n. Assume each \ud835\udcd5_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i \u2260 j, every A \u2208 \ud835\udcd5_i and B \u2208 \ud835\udcd5_j have A \u2229 B \u2260 \u2205. Then the multilateral product is bounded by the Hilton--Milner value: \u220f_{i\u2208Fin r} |\ud835\udcd5_i| \u2264 h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
     "domains": [
       "Bridges"
@@ -2770,7 +2770,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:25:43.582970+00:00",
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
@@ -3064,7 +3064,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Girth bounds minimum distance of bipartite graph codes"
   },
   {
-    "consumed_by_exp_id": "0c7e5800",
+    "consumed_by_exp_id": "",
     "description": "For the full flag variety GL_{n+1}/\u2102 B, let w \u2208 S_{n+1} index the Schubert cell X_w^o. The cluster algebra structure on \u2102[X_w^o] (coming from the reduced expression of the longest element in the Weyl group modulo the stabilizer of w) is of finite type if and only if w is a Grassmannian permutation (i.e., w has at most one descent).",
     "domains": [
       "Algebra",
@@ -3074,7 +3074,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T00:22:07.112237+00:00",
     "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
   },
@@ -3702,7 +3702,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Logarithmic formula for the regularised Wallis hierarchy"
   },
   {
-    "consumed_by_exp_id": "18853638",
+    "consumed_by_exp_id": "",
     "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies \u03c7'_s(G) \u2264 \u0394_A \u0394_B, where \u0394_A and \u0394_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 \u0394_A \u0394_B for sufficiently large products.",
     "domains": [
       "Pythagorean",
@@ -3712,7 +3712,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T17:05:28.615107+00:00",
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
   },
@@ -3805,12 +3805,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For rational \u03b2 = p/q, the natural extension has finite domain bridges.",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_2450",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23097v1",
+    "status": "available",
+    "timestamp": "2026-06-24T20:58:20.101200+00:00",
+    "title": "Domain Finiteness"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2450",
+    "id": "fd_2451",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3824,7 +3839,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2451",
+    "id": "fd_2452",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3839,7 +3854,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3853,7 +3868,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3868,7 +3883,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3882,7 +3897,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2455",
+    "id": "fd_2456",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3896,7 +3911,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -3910,7 +3925,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -3924,7 +3939,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -3939,7 +3954,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3953,7 +3968,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -3967,7 +3982,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -3982,7 +3997,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
@@ -3996,7 +4011,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -4010,7 +4025,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -4025,7 +4040,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23024v1",
@@ -4040,13 +4055,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
     "status": "available",
     "timestamp": "2026-06-24T20:34:32.678693+00:00",
     "title": "Relation between Betti-Whittaker Periods for Contragredient Cohomological Representations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every binary delta-matroid D and partial-twuality operator \u22c6\u2219 \u2208 {\u00d7, \u2217\u00d7, \u00d7\u2217, \u2217\u00d7\u2217\u2217}, the partial-\u2219 polynomial ^\u2202w_D^{\u22c6\u2219}(z) is either even, odd, or both even-interpolating and odd-interpolating.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2468",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22888v1",
+    "status": "available",
+    "timestamp": "2026-06-24T21:09:29.440062+00:00",
+    "title": "Intersection-Property of Partial-\u2219 Polynomials for Binary Delta-Matroids"
   },
   {
     "consumed_by_exp_id": "",
@@ -4353,7 +4382,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "c7ae3fab",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4363,7 +4392,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -4574,7 +4603,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "6ddef5de",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -4584,7 +4613,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -5009,7 +5038,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "1d985141",
+    "consumed_by_exp_id": "",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
     "domains": [
       "Logic",
@@ -5019,7 +5048,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.020862+00:00",
     "title": "Proof Strategy Mining from Deep Mathematics"
   },

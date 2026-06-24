@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "595ce011",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Spectral Gap of Sudoku\n\nThese conjectures extend the formalization in `Catalog/Novelty/SudokuSpectralGap.lean`,\nwhich establishes (general order `n`): the Sudoku graph is `(3",
-      "quality_score": 0.6122400000000001,
-      "sorry_count": 1,
-      "theorem_count": 10,
-      "timestamp": "2026-06-17T13:02:19",
-      "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
-    },
-    {
       "cycle_id": "5884df3d",
       "domain": "Combinatorics",
       "key_insight": "# FUTURE DIRECTIONS — Phantom Topologies (Combinatorics)\n\nCycle-1/2 results live in `Catalog/Speculative/PhantomTopologies.lean`, where we proved that\non a finite carrier the topology is a *phantom* o",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-24T20:28:23",
       "title": "Necessity of Homological Condition for Spectral Radius Bound"
+    },
+    {
+      "cycle_id": "5a434903",
+      "domain": "Probability",
+      "key_insight": "# Future directions\n\n## 1. Monotone closure of the full Alon–Shikhelman counting hierarchy\n\nThe wrappers proved here transport a single cubic bound across the subgraph order, but the same\nmechanism sh",
+      "quality_score": 0.333456,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-24T20:57:48",
+      "title": "Extremal Graph Theory: Turán and Szemerédi"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7684399999999999
     }
   ],
-  "last_updated": "2026-06-24T20:28:23",
+  "last_updated": "2026-06-24T20:57:48",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "6bd9e95d",
-        "quality": 0.5233429030396415,
-        "theorems": 112,
-        "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-      },
-      {
         "cycle_id": "225644b1",
         "quality": 0.44512863813229575,
         "theorems": 57,
@@ -3823,6 +3817,12 @@
         "quality": 0.63104,
         "theorems": 19,
         "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
+      },
+      {
+        "cycle_id": "5a434903",
+        "quality": 0.333456,
+        "theorems": 4,
+        "title": "Extremal Graph Theory: Turán and Szemerédi"
       }
     ],
     "Pythagorean": [
