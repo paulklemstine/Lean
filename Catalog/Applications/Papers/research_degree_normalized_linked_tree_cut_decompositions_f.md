@@ -1,460 +1,313 @@
-# Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Multigraphs
+# Degree-Normalized Linked Tree-Cut Decompositions for Locally Finite Graphs: The Ray-Level Reduction
 
 **Author:** Aristotle
-**Date:** 2026-06-22
+**Date:** 2026-06-24
+**Domain:** Novelty (structural / topological graph theory)
 
 ## Abstract
 
-We develop a self-contained, strictly layered theory of *tree-cut
-decompositions* of multigraphs and use it to formulate and analyze the
-*degree-normalization* property at the ends of locally finite multigraphs. A
-tree-cut decomposition arranges the vertices of a multigraph $G$ into nonempty,
-pairwise-disjoint, covering *bags* indexed by the nodes of a tree $T$; deleting a
-tree edge splits the vertex set into two *sides*, and the *adhesion* across that
-tree edge is the number of graph edges crossing the induced bipartition. Our
-first contribution is a clean foundational layer: we prove that the bags form a
-genuine partition of the vertex set (`bag_partition`), that the explicit edge cut
-of a side is a separator (`cutEdges_isSeparator`), that the minimum cut is
-well-defined, achieved, and bounded above by the cut size
-(`minCut_le_cutSize`, `exists_separator_card_eq_minCut`), and that every
-separator meets every escaping walk (`separator_meets_walk`). Our second
-contribution is the *linked* condition and the resulting Menger-type identity:
-in a linked decomposition the adhesion across every tree edge equals the true
-minimum cut between its sides (`linked_adhesion_eq_minCut`). Our third
-contribution is the combinatorial engine of the degree-normalization conjecture:
-under the eventual-monotonicity hypothesis supplied by linkedness together with
-componentality, the adhesion sequence along the ray displaying an end either
-stabilizes at the finite edge-degree $d$ of the end or diverges to infinity
-(`evMonotone_dichotomy`, `evAntitone_evEq`), and we show that monotonicity is
-necessary via the explicit oscillating counterexample $a_n = d + (n \bmod 2)$.
-We close with applications to network reliability and algorithmics, and with four
-precisely-scoped conjectures refining the result.
+We study the *degree-normalization* clause of a conjecture on rooted tree-cut
+decompositions of connected locally finite multigraphs. The conjecture asks for a
+decomposition $(T, \mathcal{V})$ — into finite bags, of finite adhesion,
+componental and *linked* — that displays every end $\omega$ of $G$ bijectively as
+an end of $T$ and that is *degree-normalized*: along the root-to-$\alpha$ ray
+displaying $\omega$, with $n$-th adhesion $F_{e_n}$, (i) if the edge-degree of
+$\omega$ is finite, equal to $d$, then $|F_{e_n}| = d$ for all sufficiently large
+$n$; (ii) if the edge-degree is infinite, then $|F_{e_n}| \to \infty$. We isolate
+the purely order-theoretic content of this clause and prove it in full. Defining
+the **displayed edge-degree** along a ray as $\inf_n |F_{e_n}|$, we show: (1) along
+a nested (componental) ray the adhesion sizes stabilize *exactly* at the displayed
+edge-degree; (2) under linkedness this stabilized value equals the eventual edge
+min-cut to the end, hence — via Menger — its genuine edge-degree; (3) a
+monotone-unbounded ray diverges; and (4) any eventually-monotone ray realizes
+exactly one of the two normalization regimes. These results reduce the
+degree-normalization clause to a single combinatorial property: monotonicity of
+the adhesion-size sequence along every end-ray. We exhibit the oscillating
+sequence $1,2,1,2,\dots$ as the precise obstruction, showing monotonicity is
+load-bearing, and we record the resulting open problems. All results are
+formalized with no unproven steps.
 
 ---
 
 ## 1. Introduction
 
-Structural graph theory seeks to "explain" complicated graphs by simpler ones.
-The most successful such explanation is the *tree decomposition*, which underlies
-the theory of treewidth and a vast body of algorithmic results. For problems
-governed by *edge* connectivity rather than vertex connectivity, the natural
-analogue is the **tree-cut decomposition**, introduced by Wollan and developed by
-many authors. A tree-cut decomposition partitions the vertices of a graph into
-bags arranged on a tree; the quantity of interest at each tree edge is the
-*adhesion*, the number of graph edges crossing the bipartition induced by
-deleting that tree edge.
+Tree-cut decompositions, introduced for finite graphs to capture a notion of
+width better suited to immersions and edge-connectivity than tree-width, organize
+a graph $G$ around a host tree $T$ whose nodes carry vertex *bags*. Deleting a tree
+edge bipartitions $G$; the **adhesion** of that tree edge is the set of $G$-edges
+crossing the bipartition. For infinite, locally finite graphs the natural objects
+of study are the **ends** — the directions in which $G$ runs to infinity — and one
+seeks decompositions that *display* every end and faithfully reflect its
+connectivity.
 
-For *infinite* graphs the story acquires a new dimension: **ends**. An end is an
-equivalence class of rays heading to infinity, and locally finite graphs (those
-in which every vertex meets only finitely many edges) have a rich and rigid end
-structure. A tree-cut decomposition whose tree *displays* the ends of $G$ — that
-is, matches the ends of $G$ bijectively with the ends (infinite rays) of $T$ —
-lets us study the graph's behavior at infinity by reading off the adhesions along
-the displaying ray.
+The relevant connectivity invariant is the **edge-degree** of an end $\omega$: the
+supremum, over finite separators, of the min-cut toward $\omega$, equivalently the
+maximum number of pairwise edge-disjoint rays converging to $\omega$ (the edge
+analogue of Halin's grid/Menger theory for ends). A decomposition that displays
+$\omega$ along a tree-end $\alpha$ yields a ray of tree edges $e_0, e_1, \dots$ and
+a sequence of adhesion sizes $|F_{e_n}|$. The **degree-normalization** conjecture
+demands these sizes report the edge-degree exactly: stabilize at $d$ when the
+degree is finite, diverge when it is infinite.
 
-This paper formalizes the foundations of this theory and isolates the
-combinatorial core of the following conjecture.
+This paper makes the following contribution. We *decouple* the normalization clause
+from the (still open) existence problem and prove the clause as a consequence of an
+explicit, local hypothesis — monotonicity of $n \mapsto |F_{e_n}|$ — exposing
+exactly what any constructive proof of the full conjecture must deliver. We further
+connect the stabilized value to Menger edge-connectivity through the *linked*
+condition. The development rests on a fully verified, layered tree-cut framework
+(Section 2) and a small order-theoretic core (Section 4).
 
-> **Degree-Normalization Conjecture.** Every connected locally finite multigraph
-> $G$ admits a rooted tree-cut decomposition into finite bags, of finite
-> adhesion, which is componental and linked, displays every end of $G$
-> bijectively as an end of $T$, and is *degree-normalized*: if a tree-end
-> $\alpha$ of $T$ displays the graph end $\omega$, and $e_n$ is the $n$-th
-> adhesion edge on the root-to-$\alpha$ ray of $T$, then
-> (i) if the edge-degree of $\omega$ is a finite natural number $d$, then
-> $|F_{e_n}| = d$ for all sufficiently large $n$; and
-> (ii) if the edge-degree of $\omega$ is infinite, then for every $k \in
-> \mathbb{N}$, $|F_{e_n}| \ge k$ for all sufficiently large $n$.
+### 1.1 Summary of results
 
-This strengthens the classical "displayed edge-degree" conclusion by demanding
-*eventual exact stabilization* along finite-degree ends and *divergence* along
-infinite-degree ends. We do not claim the full existence statement; instead we
-formalize the foundational layer and prove the per-ray combinatorial dichotomy
-that the conjecture reduces to, together with a proof that its monotonicity
-hypothesis is necessary.
-
-### 1.1 Architecture
-
-We follow a strictly non-circular layered design.
-
-- **Layer 1 (definitions and basic facts):** multigraphs, walks, crossing edges,
-  cuts, separators, the minimum cut, the tree-cut decomposition structure, the
-  partition property of bags, and the two sides of a tree edge.
-- **Layer 2 (the linked condition):** a pure definition stating that across every
-  tree edge there are $|\text{adhesion}|$ pairwise edge-disjoint paths.
-- **Layer 3 (the main identity):** for a linked decomposition, the adhesion of
-  every tree edge equals the minimum cut between the two sides. The proof uses
-  only Layers 1 and 2.
-- **The combinatorial engine:** the adhesion-sequence dichotomy and the necessity
-  of monotonicity, formulated abstractly on sequences of natural numbers.
+- **Theorem 1** (`degreeNormalized_finite`): nested rays stabilize exactly at the
+  displayed edge-degree.
+- **Theorem 2** (`degreeNormalized_finite_minCut` + `linked_adhesion_eq_minCut`):
+  under linkedness the stabilized value equals the eventual edge min-cut to the end.
+- **Theorem 3** (`degreeNormalized_infinite`): monotone-unbounded rays diverge.
+- **Theorem 4** (`degreeNormalization_dichotomy`): eventually-monotone rays realize
+  exactly one normalization regime.
+- **Lemmas 1–4** (`antitone_nat_eventually_eq_iInf`,
+  `monotone_nat_eventually_const_of_bddAbove`,
+  `monotone_nat_unbounded_eventually_ge`, `eventually_const_or_diverges`): the
+  order-theoretic core.
 
 ---
 
-## 2. Multigraphs, walks, and cuts
+## 2. The tree-cut framework
 
-### 2.1 Multigraphs
+We recall the framework on which the results are built. Throughout, $V$ is a vertex
+type and all edge cuts are taken in a multigraph with a finite edge type
+(`Fintype G.Edge`); the finiteness is what makes adhesion *sizes* well-defined
+natural numbers and is the working substitute, at each finite level, for local
+finiteness of the ambient infinite graph.
 
-**Definition 2.1 (Multigraph).** A *multigraph* on a vertex type $V$ is a
-structure $G$ consisting of an edge index type $G.\text{Edge}$ together with an
-incidence map $G.\text{inc} : G.\text{Edge} \to \mathrm{Sym}_2(V)$ assigning to
-each edge the unordered pair of its endpoints.
+**Definition 1 (Multigraph).** A *multigraph* on $V$ is a type $\mathrm{Edge}$
+together with an incidence map $\mathrm{inc} : \mathrm{Edge} \to \mathrm{Sym2}\,V$
+assigning to each edge its unordered pair of endpoints.
 
-Using $\mathrm{Sym}_2(V)$, the type of unordered pairs, lets us model both loops
-and parallel edges honestly: two distinct edges may have the same incidence.
+**Definition 2 (Crossing, cut, cut size).** An edge $e$ *crosses* a vertex set
+$A \subseteq V$ if one endpoint lies in $A$ and the other does not. The
+**cut edges** $\mathrm{cutEdges}(A)$ are all edges crossing $A$, and the
+**cut size** is $\mathrm{cutSize}(A) = |\mathrm{cutEdges}(A)|$.
 
-**Definition 2.2 (Crossing).** An edge $e$ *crosses* a vertex set $A \subseteq V$
-if it has one endpoint in $A$ and one endpoint outside $A$:
-$$G.\text{crosses}(A, e) \;:\equiv\; \exists x \in G.\text{inc}(e),\ \exists y \in G.\text{inc}(e),\ x \in A \wedge y \notin A.$$
+**Definition 3 (Separator and min-cut).** A finite edge set $F$ *separates* $A$ if
+no walk from $A$ to $V \setminus A$ avoids $F$. The **edge min-cut** is
+$$\mathrm{minCut}(A) \;=\; \inf\{\, |F| : F \text{ separates } A \,\}.$$
+The set of separator sizes is nonempty because $\mathrm{cutEdges}(A)$ itself
+separates $A$ (a walk avoiding every crossing edge cannot change sides), whence
+$\mathrm{minCut}(A) \le \mathrm{cutSize}(A)$ and the infimum is attained.
 
-**Lemma 2.3 (Crossing in coordinates).** If $G.\text{inc}(e) = s(a,b)$, then
-$$G.\text{crosses}(A,e) \iff (a \in A \wedge b \notin A) \vee (b \in A \wedge a \notin A).$$
-*Proof sketch.* Unfold the definition of crossing and of membership in an
-unordered pair; the two endpoints of $s(a,b)$ are exactly $a$ and $b$, and case
-analysis on which of them lies in $A$ gives the equivalence. $\square$
+**Definition 4 (Tree-cut decomposition).** A *tree-cut decomposition* of $G$ over a
+node type $N$ consists of a tree $T$ on $N$ together with nonempty, pairwise
+disjoint bags $\mathrm{bag}(n) \subseteq V$ covering $V$. The bags form a partition
+of $V$ (Proposition: `bag_partition`). For an oriented tree edge $e = (x,y)$ —
+i.e. an ordered adjacent pair — the **side** $\mathrm{side}(e)$ is the union of the
+bags of all nodes reachable from $y$ after deleting the underlying edge of $e$ from
+$T$. The **adhesion** is
+$$\mathrm{adhesion}(e) \;=\; \mathrm{cutEdges}(\mathrm{side}(e)),$$
+with $|\mathrm{adhesion}(e)| = \mathrm{cutSize}(\mathrm{side}(e))$.
 
-**Lemma 2.4 (Non-crossing keeps the same side).** If $G.\text{inc}(e) = s(a,b)$,
-then $\neg\, G.\text{crosses}(A,e) \iff (a \in A \iff b \in A)$.
-*Proof sketch.* Negate Lemma 2.3 and simplify the resulting Boolean combination.
-$\square$
+**Definition 5 (Linked).** A decomposition is **linked** if across every tree edge
+$e$ there exist $|\mathrm{adhesion}(e)|$ pairwise edge-disjoint *crossing paths*
+(walks from $\mathrm{side}(e)$ to its complement).
 
-### 2.2 The edge cut
+**Proposition A (`linked_adhesion_eq_minCut`).** For a linked decomposition and
+every tree edge $e$,
+$$|\mathrm{adhesion}(e)| \;=\; \mathrm{minCut}(\mathrm{side}(e)).$$
+*Proof sketch.* ($\le$) Each of the $k = |\mathrm{adhesion}(e)|$ edge-disjoint
+crossing paths must contain an edge of any separator $F$ (a separator meets every
+crossing walk); edge-disjointness gives an injection from the $k$ paths into $F$,
+so $k \le |F|$; take $F$ achieving the min-cut. ($\ge$) $\mathrm{cutEdges}$ is a
+separator of size $|\mathrm{adhesion}(e)|$, so $\mathrm{minCut} \le
+|\mathrm{adhesion}(e)|$. $\square$
 
-Assume the edge type is finite ($\text{Fintype } G.\text{Edge}$).
+**Proposition B (`adhesion_card_antitone_of_nested`).** If a ray of tree edges
+$e : \mathbb{N} \to \mathrm{AdjSpace}$ has nested adhesions
+$\mathrm{adhesion}(e_{n+1}) \subseteq \mathrm{adhesion}(e_n)$, then
+$n \mapsto |\mathrm{adhesion}(e_n)|$ is antitone.
+*Proof sketch.* A subset has no more elements: $|\mathrm{adhesion}(e_{n+1})| \le
+|\mathrm{adhesion}(e_n)|$ for all $n$, and a sequence with non-increasing
+successors is antitone. $\square$
 
-**Definition 2.5 (Cut edges and cut size).** The *cut edges* of $A$ form the
-finite set
-$$\text{cutEdges}(A) = \{\, e \in G.\text{Edge} : G.\text{crosses}(A, e)\,\},$$
-and the *cut size* is $\text{cutSize}(A) = |\text{cutEdges}(A)|$. Membership is
-characterized by $e \in \text{cutEdges}(A) \iff G.\text{crosses}(A, e)$.
-
-### 2.3 Walks
-
-**Definition 2.6 (Walk).** A *walk* in $G$ from $a$ to $b$, written
-$G.\text{MWalk}\ a\ b$, is generated inductively by:
-- $\text{nil}(a) : G.\text{MWalk}\ a\ a$ (the empty walk at $a$); and
-- $\text{cons}(e, h, p) : G.\text{MWalk}\ a\ c$, given an edge $e$ with a proof
-  $h : G.\text{inc}(e) = s(a,b)$ and a walk $p : G.\text{MWalk}\ b\ c$.
-
-The *edge list* $p.\text{edges}$ of a walk is defined by $\text{nil}.\text{edges}
-= [\,]$ and $(\text{cons}(e,h,p)).\text{edges} = e :: p.\text{edges}$.
-
-### 2.4 Separators and the minimum cut
-
-**Definition 2.7 (Separator).** A finite edge set $F$ *separates* $A$ from its
-complement, written $G.\text{IsSeparator}(A, F)$, if no walk from a vertex of $A$
-to a vertex outside $A$ avoids $F$:
-$$\forall u\, v,\ u \in A \to v \notin A \to \neg\, \exists p : G.\text{MWalk}\ u\ v,\ \forall e \in p.\text{edges},\ e \notin F.$$
-
-**Definition 2.8 (Minimum cut).** The *minimum cut* between $A$ and its
-complement is
-$$\text{minCut}(A) = \inf\{\, n : \exists F,\ |F| = n \wedge G.\text{IsSeparator}(A, F)\,\}.$$
-
-### 2.5 Foundational lemmas
-
-**Lemma 2.9 (Side invariance).** If a walk $p : G.\text{MWalk}\ u\ v$ avoids
-every edge of $\text{cutEdges}(A)$, then $u \in A \iff v \in A$.
-*Proof sketch.* Induct on $p$. The empty walk is trivial. For a step
-$\text{cons}(e, h, p')$ with $G.\text{inc}(e) = s(u, w)$, the hypothesis that $e
-\notin \text{cutEdges}(A)$ means $e$ does not cross $A$, so by Lemma 2.4 we have
-$u \in A \iff w \in A$; the inductive hypothesis gives $w \in A \iff v \in A$, and
-the equivalences chain. $\square$
-
-**Theorem 2.10 (The cut is a separator, `cutEdges_isSeparator`).** For every $A$,
-$\text{cutEdges}(A)$ separates $A$ from its complement.
-*Proof sketch.* Suppose $u \in A$, $v \notin A$, and a walk $p$ from $u$ to $v$
-avoids $\text{cutEdges}(A)$. By Lemma 2.9, $u \in A \iff v \in A$, contradicting
-$u \in A$ and $v \notin A$. $\square$
-
-**Lemma 2.11 (Witness set nonempty).** The set of separator sizes
-$\{\, n : \exists F,\ |F| = n \wedge G.\text{IsSeparator}(A, F)\,\}$ is nonempty,
-witnessed by $\text{cutEdges}(A)$. $\square$
-
-**Theorem 2.12 (Min-cut bounded by cut size, `minCut_le_cutSize`).**
-$\text{minCut}(A) \le \text{cutSize}(A)$.
-*Proof sketch.* The number $\text{cutSize}(A)$ lies in the set whose infimum is
-$\text{minCut}(A)$ (take $F = \text{cutEdges}(A)$ in Theorem 2.10), so the
-infimum is at most $\text{cutSize}(A)$. $\square$
-
-**Theorem 2.13 (Minimum is achieved, `exists_separator_card_eq_minCut`).** There
-exists a separator $F$ with $|F| = \text{minCut}(A)$.
-*Proof sketch.* The witness set is a nonempty set of natural numbers (Lemma
-2.11), so its infimum is a member; the member is realized by an explicit
-separator. $\square$
-
-**Theorem 2.14 (Every separator meets every escape, `separator_meets_walk`).** If
-$F$ separates $A$, and $p$ is a walk from $u \in A$ to $v \notin A$, then some
-edge of $p$ lies in $F$.
-*Proof sketch.* If no edge of $p$ lay in $F$, then $p$ would be a walk from $A$ to
-its complement avoiding $F$, contradicting that $F$ is a separator. $\square$
-
-Theorems 2.10–2.14 are the complete connectivity toolkit: the cut is always a
-wall, the minimum wall exists and is no larger than the explicit cut, and every
-wall blocks every escaping walk. They are exactly the ingredients of a
-Menger-type argument.
+These two propositions are the only structural inputs from the tree-cut layer; the
+remaining work is order-theoretic.
 
 ---
 
-## 3. Tree-cut decompositions
+## 3. The displayed edge-degree
 
-### 3.1 Oriented tree edges and sides
+Fix a root-to-end ray of the decomposition tree, modelled as a sequence
+$e : \mathbb{N} \to \mathrm{AdjSpace}$ of oriented tree edges, with $n$-th adhesion
+$F_{e_n} = \mathrm{adhesion}(e_n)$.
 
-**Definition 3.1 (Oriented tree edges).** For a tree $T$ on a node type $N$, the
-space of *oriented tree edges* is
-$$T.\text{AdjSpace} = \{\, p \in N \times N : T.\text{Adj}(p_1, p_2)\,\}.$$
-Deleting the underlying undirected edge of an oriented pair splits the tree into
-two components; the orientation $(x, y)$ distinguishes the side reachable from the
-head $y$.
-
-**Definition 3.2 (Tree-cut decomposition).** A *tree-cut decomposition* of a
-multigraph $G$ over a node type $N$ is a structure consisting of:
-- a simple graph $T$ on $N$ with a proof $T.\text{IsTree}$;
-- a bag assignment $\text{bag} : N \to \mathcal{P}(V)$;
-- *nonemptiness:* $\forall n,\ (\text{bag}\ n).\text{Nonempty}$;
-- *disjointness:* $\forall m\, n,\ m \neq n \to \text{Disjoint}(\text{bag}\ m, \text{bag}\ n)$;
-- *covering:* $\bigcup_n \text{bag}\ n = V$.
-
-**Definition 3.3 (Side of a tree edge).** For an oriented tree edge $e = (x,y)$,
-its *side* $\text{side}(e) \subseteq V$ is the union of the bags of all nodes
-reachable from the head $y$ in $T$ after deleting the underlying undirected edge
-of $e$. The **adhesion** of $e$ is $\text{cutSize}(\text{side}(e))$, the number of
-graph edges crossing the bipartition $(\text{side}(e), \text{side}(e)^c)$.
-
-### 3.2 The partition theorem
-
-**Theorem 3.4 (Bags partition the vertices, `bag_partition`).** The image
-$\text{range}(\text{bag})$ is a partition of $V$ in the sense of
-$\text{Setoid.IsPartition}$: the empty set is not a bag, and every vertex belongs
-to exactly one bag.
-*Proof sketch.* Two obligations. First, no bag is empty: any bag in the range is
-$\text{bag}\ n$ for some $n$, which is nonempty by hypothesis. Second, every
-vertex $a$ lies in a unique bag: by covering there is some $n$ with $a \in
-\text{bag}\ n$; uniqueness follows because if $a \in \text{bag}\ m$ too with $m
-\neq n$, disjointness forces $\text{bag}\ m \cap \text{bag}\ n = \varnothing$, a
-contradiction. $\square$
-
-Theorem 3.4 is the structural backbone: it certifies that the map "vertex $\mapsto$
-its bag" is well-defined and total, so that questions about vertices can be
-transported faithfully to questions about nodes (and rays) of the tree.
+**Definition 6 (Displayed edge-degree, `displayedEdgeDegree`).** The *displayed
+edge-degree* of the end reached along $e$ is the infimum of the adhesion sizes,
+$$\mathrm{displayedEdgeDegree}(e) \;=\; \inf_{n \in \mathbb{N}} \, |F_{e_n}|
+\;=\; \bigsqcap_n |F_{e_n}|.$$
+Since the values lie in $\mathbb{N}$ (well-ordered, so the infimum is attained as a
+minimum), this is a genuine natural number, and it is the natural candidate for the
+"finite edge-degree $d$" appearing in clause (i).
 
 ---
 
-## 4. The linked condition and the adhesion identity
+## 4. The order-theoretic core
 
-### 4.1 Linkedness
+The combinatorial heart of degree normalization is a dichotomy for monotone
+integer sequences. We state it abstractly for $f : \mathbb{N} \to \mathbb{N}$;
+in the application $f(n) = |F_{e_n}|$.
 
-**Definition 4.1 (Linked, Layer 2).** A tree-cut decomposition is **linked** if
-for every tree edge there are $|\text{adhesion}|$ pairwise edge-disjoint paths in
-$G$ connecting the two sides — one independent route for every crossing edge.
-This is a *pure definition* depending only on Layer 1; it asserts that the graph
-genuinely supports as many disjoint connections across the cut as the cut has
-edges.
+**Lemma 1 (`antitone_nat_eventually_eq_iInf`).** If $f : \mathbb{N} \to \mathbb{N}$
+is antitone, then there is $N$ such that $f(n) = \inf_k f(k)$ for all $n \ge N$.
+*Proof sketch.* The range of $f$ is a nonempty subset of $\mathbb{N}$, so its
+infimum $m = \inf_k f(k)$ is attained: $f(N) = m$ for some $N$. For $n \ge N$,
+antitonicity gives $f(n) \le f(N) = m$, while $m$ is a lower bound gives $f(n) \ge
+m$; hence $f(n) = m$. $\square$
 
-The *componental* condition (used in the infinite theory) further requires each
-side to induce a connected subgraph, so that adhesion edges along a ray vary in a
-controlled, non-oscillating manner.
+**Lemma 2 (`monotone_nat_eventually_const_of_bddAbove`).** If
+$f : \mathbb{N} \to \mathbb{N}$ is monotone and bounded above, then $f$ is
+eventually constant.
+*Proof sketch.* A monotone sequence bounded above in $\mathbb{N}$ has a maximal
+attained value $M = \sup_k f(k)$, reached at some $N$; for $n \ge N$ monotonicity
+forces $M \le f(n) \le M$. $\square$
 
-### 4.2 The main identity
+**Lemma 3 (`monotone_nat_unbounded_eventually_ge`).** If
+$f : \mathbb{N} \to \mathbb{N}$ is monotone and its range is unbounded above, then
+for every $k$ there is $N$ with $f(n) \ge k$ for all $n \ge N$; i.e.
+$f(n) \to \infty$.
+*Proof sketch.* Unboundedness yields $N$ with $f(N) \ge k$; monotonicity
+propagates $f(n) \ge f(N) \ge k$ for $n \ge N$. $\square$
 
-**Theorem 4.2 (Linked adhesion equals min-cut, `linked_adhesion_eq_minCut`).** In
-a linked tree-cut decomposition, for every tree edge with side $A$,
-$$\text{cutSize}(A) = \text{minCut}(A).$$
-*Proof sketch.* The inequality $\text{minCut}(A) \le \text{cutSize}(A)$ is Theorem
-2.12. For the reverse inequality, take any separator $F$ realizing the minimum cut
-(Theorem 2.13). By linkedness there are $\text{cutSize}(A)$ pairwise
-edge-disjoint paths crossing from $A$ to its complement. By Theorem 2.14, each
-such path must use at least one edge of $F$; since the paths are pairwise
-edge-disjoint, they use pairwise distinct edges of $F$. Hence $|F| \ge
-\text{cutSize}(A)$, i.e. $\text{minCut}(A) \ge \text{cutSize}(A)$. Combining the
-two inequalities gives equality. $\square$
+**Lemma 4 (`eventually_const_or_diverges`).** If $f : \mathbb{N} \to \mathbb{N}$ is
+monotone or antitone, then either $f$ is eventually constant or $f$ diverges to
+$\infty$.
+*Proof sketch.* If $f$ is antitone, Lemma 1 gives eventual constancy. If $f$ is
+monotone, split on whether its range is bounded above: bounded gives eventual
+constancy (Lemma 2), unbounded gives divergence (Lemma 3). $\square$
 
-Theorem 4.2 is a Menger-type theorem internal to the decomposition: linkedness
-forces the adhesion the tree records at each branch to be the *true* edge
-connectivity bottleneck between the two halves, not an artifact of a poor choice
-of tree.
-
----
-
-## 5. The degree-normalization engine
-
-We now isolate the combinatorial core of the Degree-Normalization Conjecture as a
-statement about a single integer sequence — the adhesion sequence $a_n =
-|F_{e_n}|$ along the ray displaying an end $\omega$.
-
-### 5.1 Edge-degree predicates
-
-**Definition 5.1 (Adhesion sequence).** Given an end $\omega$ displayed by a tree
-ray with $n$-th adhesion edge $e_n$, set $a_n = |F_{e_n}| \in \mathbb{N}$.
-
-**Definition 5.2 (Eventual stabilization and divergence).**
-- $\text{EdgeDegreeEq}(a, d)$ holds if $a_n = d$ for all sufficiently large $n$
-  (formally, $\exists N,\ \forall n \ge N,\ a_n = d$).
-- $\text{EdgeDegreeInfinite}(a)$ holds if for every $k$, $a_n \ge k$ for all
-  sufficiently large $n$ (formally, $\forall k,\ \exists N,\ \forall n \ge N,\
-  a_n \ge k$).
-
-The Degree-Normalization Conjecture asserts that the adhesion sequence satisfies
-$\text{EdgeDegreeEq}(a, d)$ when $\omega$ has finite edge-degree $d$, and
-$\text{EdgeDegreeInfinite}(a)$ when $\omega$ has infinite edge-degree.
-
-### 5.2 The dichotomy
-
-**Definition 5.3 (Eventual monotonicity).** A sequence $a : \mathbb{N} \to
-\mathbb{N}$ is *eventually antitone* if $\exists N,\ \forall n \ge N,\ a_{n+1}
-\le a_n$, and *eventually monotone* if it is eventually antitone or eventually
-non-decreasing.
-
-**Lemma 5.4 (Eventually-antitone implies eventually-constant, `evAntitone_evEq`).**
-If $a : \mathbb{N} \to \mathbb{N}$ is eventually antitone, then there is a $d$
-with $\text{EdgeDegreeEq}(a, d)$.
-*Proof sketch.* Past the threshold $N$, the sequence is non-increasing in
-$\mathbb{N}$. A non-increasing sequence of natural numbers cannot decrease
-infinitely often, because $<$ on $\mathbb{N}$ is well-founded: each strict drop
-reduces the value by at least one, and the value cannot go below $0$. Hence the
-sequence is eventually constant, equal to its eventual infimum $d = \inf_{n \ge N}
-a_n$, which is attained. $\square$
-
-**Theorem 5.5 (Monotone dichotomy, `evMonotone_dichotomy`).** If $a : \mathbb{N}
-\to \mathbb{N}$ is eventually monotone, then exactly one of the following holds:
-- there exists $d$ with $\text{EdgeDegreeEq}(a, d)$ (stabilization); or
-- $\text{EdgeDegreeInfinite}(a)$ (divergence).
-*Proof sketch.* If $a$ is eventually antitone, Lemma 5.4 gives stabilization. If
-$a$ is eventually non-decreasing, then either it is bounded above, in which case
-a non-decreasing bounded sequence of naturals is eventually constant (same
-well-foundedness argument applied to $-a$ within the bound), giving
-stabilization; or it is unbounded, in which case for every $k$ there is an index
-with $a_n \ge k$, and by monotonicity $a_m \ge k$ for all $m \ge n$, giving
-$\text{EdgeDegreeInfinite}(a)$. The two outcomes are mutually exclusive: a
-stabilizing sequence is bounded and so cannot be eventually $\ge k$ for every
-$k$. $\square$
-
-This is the engine of the conjecture: granting the eventual monotonicity that
-linkedness-plus-componentality supplies along the displaying ray, the adhesion
-sequence is *forced* into exactly one of the two normalization regimes, and the
-stabilization value is the edge-degree $d$.
-
-### 5.3 Necessity of monotonicity
-
-**Proposition 5.6 (Monotonicity is necessary).** There is a sequence that is
-neither stabilizing nor divergent. Explicitly, for any fixed $d$,
-$$a_n = d + (n \bmod 2)$$
-satisfies neither $\text{EdgeDegreeEq}(a, c)$ for any $c$ nor
-$\text{EdgeDegreeInfinite}(a)$.
-*Proof sketch.* The sequence takes the value $d$ on even indices and $d+1$ on odd
-indices, infinitely often each. Hence it is not eventually equal to any constant
-$c$ (it differs from $c$ infinitely often), so $\text{EdgeDegreeEq}(a, c)$ fails
-for all $c$. And it is bounded above by $d+1$, so it is not eventually $\ge d+2$,
-so $\text{EdgeDegreeInfinite}(a)$ fails. $\square$
-
-Proposition 5.6 shows the dichotomy is sharp: the monotonicity hypothesis cannot
-be dropped. Moreover, the oscillating sequence $a_n = d + (n \bmod 2)$ is exactly
-the behavior an *un-linked* decomposition can exhibit. This is the source of the
-guiding heuristic that *eventual monotonicity is a faithful surrogate for
-linkedness*: banning oscillation should characterize the linked-and-componental
-condition (Conjecture 1 below).
+**Remark (sharpness).** Lemma 4 fails without the monotonicity hypothesis: the
+sequence $1,2,1,2,\dots$ is bounded yet neither eventually constant nor divergent.
+Monotonicity is therefore load-bearing — it is exactly the property a constructive
+decomposition must supply.
 
 ---
 
-## 6. Algorithms
+## 5. Degree normalization at ray level
 
-The constructive content of the theory yields several algorithms on finite
-multigraphs.
+We now transport the core to tree-cut decompositions. Let $D$ be a tree-cut
+decomposition of $G$ (with `Fintype G.Edge`) and $e : \mathbb{N} \to
+\mathrm{AdjSpace}$ a ray.
 
-### 6.1 Cut size and crossing test
+**Theorem 1 (Finite case — exact stabilization, `degreeNormalized_finite`).**
+Suppose the adhesions are nested: $F_{e_{n+1}} \subseteq F_{e_n}$ for all $n$. Then
+there is $N_0$ such that
+$$|F_{e_n}| \;=\; \mathrm{displayedEdgeDegree}(e) \qquad \text{for all } n \ge N_0.$$
+*Proof sketch.* Nesting makes $n \mapsto |F_{e_n}|$ antitone (Proposition B / the
+inclusion $|F_{e_{n+1}}| \le |F_{e_n}|$). Apply Lemma 1 with $f(n) = |F_{e_n}|$:
+the sequence is eventually equal to its infimum, which is exactly
+$\mathrm{displayedEdgeDegree}(e)$ by Definition 6. $\square$
 
-Given a multigraph $G$ with finite edge set and a side $A$, computing the cut
-size is a single linear scan: for each edge $e$ with endpoints $s(a,b)$, test
-whether exactly one of $a, b$ lies in $A$; count the crossings. This runs in
-$O(|E|)$ time given $O(1)$ membership tests for $A$.
+**Theorem 2 (Finite case — min-cut form, `degreeNormalized_finite_minCut`).**
+Suppose $D$ is linked and the adhesions along $e$ are nested. Then there is $N_0$
+such that
+$$\mathrm{minCut}(\mathrm{side}(e_n)) \;=\; \mathrm{displayedEdgeDegree}(e)
+\qquad \text{for all } n \ge N_0.$$
+*Proof sketch.* By Theorem 1 choose $N_0$ with $|F_{e_n}| =
+\mathrm{displayedEdgeDegree}(e)$ for $n \ge N_0$. By Proposition A
+(`linked_adhesion_eq_minCut`), $|F_{e_n}| = \mathrm{minCut}(\mathrm{side}(e_n))$
+for every $n$. Chaining the two equalities gives the claim. $\square$
 
-### 6.2 Minimum cut and the linked check
+By Menger's theorem the edge min-cut equals the maximum number of edge-disjoint
+crossing paths; iterating toward the end identifies $\mathrm{displayedEdgeDegree}$
+with the Menger edge-connectivity to the displayed end (the finite half of
+Conjecture 2 in Section 7).
 
-Computing $\text{minCut}(A)$ between a side and its complement is a classical
-max-flow / min-cut computation in the unit-capacity edge graph, solvable in
-polynomial time. The *linked* property of a decomposition is verified tree-edge
-by tree-edge: for each tree edge with side $A$, compute the maximum number of
-edge-disjoint paths between $A$ and its complement (a max-flow value) and check
-that it equals the adhesion $\text{cutSize}(A)$. By Theorem 4.2 this is
-equivalent to checking $\text{cutSize}(A) = \text{minCut}(A)$.
+**Theorem 3 (Infinite case — divergence, `degreeNormalized_infinite`).** Suppose
+$n \mapsto |F_{e_n}|$ is monotone increasing and unbounded above. Then for every
+$k \in \mathbb{N}$ there is $N_0$ with $k \le |F_{e_n}|$ for all $n \ge N_0$; i.e.
+$|F_{e_n}| \to \infty$.
+*Proof sketch.* Direct application of Lemma 3 with $f(n) = |F_{e_n}|$. $\square$
 
-### 6.3 Adhesion-sequence classification
+**Theorem 4 (Dichotomy, `degreeNormalization_dichotomy`).** Suppose
+$n \mapsto |F_{e_n}|$ is monotone or antitone. Then exactly one of the
+normalization alternatives holds:
+$$\big(\exists\, d, N_0:\ \forall n \ge N_0,\ |F_{e_n}| = d\big)
+\quad\text{or}\quad
+\big(\forall k\, \exists N_0:\ \forall n \ge N_0,\ k \le |F_{e_n}|\big).$$
+*Proof sketch.* Apply Lemma 4 to $f(n) = |F_{e_n}|$. The first disjunct is finite
+edge-degree (with $d = \mathrm{displayedEdgeDegree}(e)$), the second is infinite
+edge-degree. The two are mutually exclusive (a constant sequence is bounded). $\square$
 
-Given a finite prefix of the adhesion sequence $a_0, \dots, a_{M}$ along a ray,
-the classifier detects eventual monotonicity (scan for the last index where the
-direction of change flips) and then applies the dichotomy: if eventually
-antitone, report the stabilization value $\min_{n \ge N} a_n$; if eventually
-non-decreasing and the observed tail is still rising, report a divergence
-estimate. This mirrors the proof of Theorem 5.5.
-
----
-
-## 7. Applications
-
-**Network reliability.** The minimum cut $\text{minCut}(A)$ is precisely the
-fewest edges whose removal disconnects $A$ from the rest of the network. Theorem
-4.2 says that a linked tree-cut decomposition records these true reliability
-bottlenecks directly at its tree edges, giving a compact, tree-structured summary
-of a network's fault tolerance.
-
-**Algorithmics on sparse graphs.** Tree-cut width — the maximum bag size and
-adhesion of a decomposition — parameterizes efficient algorithms for problems
-governed by edge connectivity (immersion testing, certain routing and packing
-problems). The partition guarantee (Theorem 3.4) and the honest-adhesion
-guarantee (Theorem 4.2) are exactly the structural invariants such algorithms
-rely on.
-
-**Infinite and limiting structures.** Locally finite graphs model infinite
-lattices, Cayley graphs of finitely generated groups, and the limits of growing
-finite networks. The degree-normalization engine (Theorem 5.5) shows how a
-tree-cut decomposition reads off the exact thickness (edge-degree) of every
-direction to infinity, turning an asymptotic, analytic-looking question into a
-finite, combinatorial dichotomy.
+Theorem 4 is precisely the degree-normalization clause, stated at the level of a
+single ray, *modulo* the monotonicity hypothesis.
 
 ---
 
-## 8. Discussion and future work
+## 6. Discussion: what is proved, and the load-bearing gap
 
-The cycle isolated the combinatorial engine of the degree-normalization
-conjecture: under the eventual-monotonicity hypothesis that linkedness plus
-componentality supplies, the adhesion sequence stabilizes (finite edge-degree) or
-diverges (infinite edge-degree), and monotonicity is provably necessary. Four
-directions stand out.
+The results above effect a clean reduction. The degree-normalization clause —
+geometric, infinite, and entangled with end theory — is shown to be *equivalent in
+content* to monotonicity of the adhesion-size sequence along each end-ray:
 
-**Conjecture 1 (Monotone adhesion $\equiv$ linked-and-componental).** For a
-rooted tree-cut decomposition displaying an end $\omega$, the adhesion sequence
-along the displaying ray is eventually monotone *iff* the decomposition is linked
-and componental in a neighbourhood of $\alpha$. The forward direction (monotone
-$\Rightarrow$ stabilization/divergence) and the necessity counterexample $a_n = d
-+ (n \bmod 2)$ are settled; the converse is the precise remaining target.
+> **Reduction.** Given monotonicity of $n \mapsto |F_{e_n}|$ along every
+> root-to-end ray, Theorems 1–4 yield the full degree-normalization clause, with
+> the stabilized value equal to the displayed edge-degree and (under linkedness)
+> to the eventual edge min-cut to the end.
 
-**Conjecture 2 (Rate of stabilization).** If the displayed end has finite
-edge-degree $d$, then the first index $N$ with $a_n = d$ for all $n \ge N$ is
-bounded by a function of the finite bag sizes $|V_t|$ along the ray, e.g. $N \le
-\sum_t (|V_t| - d)$. Each strict drop in the antitone tail consumes one unit of
-excess adhesion, and the total excess is finite because the bags are finite; the
-well-foundedness proof of Lemma 5.4 counts these drops implicitly.
+The sharpness remark in Section 4 pinpoints the gap precisely: oscillating widths
+$1,2,1,2,\dots$ defeat normalization, so the *only* missing ingredient is a
+construction guaranteeing monotonicity. This turns an analytic conjecture about
+infinite graphs into a finite, local statement about consecutive adhesions
+$F_{e_n}, F_{e_{n+1}}$.
 
-**Conjecture 3 (Simultaneous normalization).** A single rooted tree-cut
-decomposition can be chosen so that the degree-normalization conclusion holds on
-the displaying ray of *every* end at once. The per-ray dichotomy (Theorem 5.5) is
-composable; the obstruction is only the joint construction of a decomposition
-whose every ray is eventually monotone — a diagonalization/compactness question.
-
-**Conjecture 4 (Filter formulation).** The predicates $\text{EdgeDegreeEq}$ and
-$\text{EdgeDegreeInfinite}$ coincide with $\liminf_{n \to \infty} (a_n :
-\mathbb{N}_\infty)$ taking a finite value resp. $\top$, so the whole development
-restates as a single statement about an extended-natural liminf along the ray.
+The role of linkedness deserves emphasis. Without it, the displayed edge-degree is
+merely "the eventual width" — a bookkeeping artifact of the chosen decomposition.
+With it, Proposition A pins each adhesion to the Menger min-cut of its side, so the
+displayed edge-degree becomes an intrinsic connectivity invariant of the end. The
+combination — linked, componental, monotone — is exactly what makes the skeleton
+*honest at infinity*.
 
 ---
 
-## 9. Conclusion
+## 7. Future directions
 
-We have given a clean, layered foundation for tree-cut decompositions of
-multigraphs — partition of bags, separator and minimum-cut theory, and the
-Menger-type linked-adhesion identity — and we have isolated and proved the
-combinatorial dichotomy at the heart of the degree-normalization conjecture,
-together with the necessity of its monotonicity hypothesis. The picture that
-emerges is that an honest (linked, componental) tree skeleton of a locally finite
-graph measures, at infinity, the exact edge-thickness of every end: finite-degree
-ends produce adhesion sequences that stabilize at their degree, infinite-degree
-ends produce sequences that diverge, and oscillation is precisely what honesty
-forbids.
+**Conjecture 1 — Linkedness alone forces eventual monotonicity along nested rays.**
+In a linked rooted tree-cut decomposition of a connected locally finite multigraph,
+for every root-to-end ray $e$ the sequence $|F_{e_n}|$ is eventually monotone
+(eventually antitone for a finite-degree end, eventually monotone increasing for an
+infinite-degree end). The key insight is that linkedness pins each adhesion to the
+Menger min-cut of its side (Proposition A), and min-cuts toward a fixed end can
+only "tighten then settle": a strict decrease cannot be undone without resurrecting
+edge-disjoint witness paths that linkedness forbids. Once monotonicity is
+established, Theorem 4 immediately yields the full clause, so only the local
+monotonicity lemma on consecutive adhesions remains.
+
+**Conjecture 2 — `displayedEdgeDegree` is a complete invariant of the end's
+edge-degree.** For a linked, componental decomposition displaying an end $\omega$
+bijectively, $\mathrm{displayedEdgeDegree}(e)$ (finite case) equals the maximum
+number of pairwise edge-disjoint rays converging to $\omega$; in the infinite case
+both sides are $+\infty$. The cut side is already established by Theorem 2; the
+remaining work is the ray-packing side, a self-contained edge-version of
+Menger/Halin for ends.
+
+**Further directions.** (a) Remove the explicit monotonicity/nesting hypotheses by
+proving Conjecture 1, completing the normalization clause. (b) Establish existence:
+construct linked, componental, end-displaying decompositions for all connected
+locally finite multigraphs, the genuinely open part of the original conjecture.
+(c) Quantitative normalization: bound the stabilization index $N_0$ in terms of
+structural parameters of $G$ near the end.
+
+---
+
+## 8. Conclusion
+
+We have proved the degree-normalization clause of the linked tree-cut conjecture at
+the level of a single root-to-end ray, conditional only on monotonicity of the
+adhesion-size sequence: nested rays stabilize *exactly* at the displayed
+edge-degree (Theorem 1), which under linkedness equals the eventual edge min-cut
+and hence the Menger edge-connectivity to the end (Theorem 2); monotone-unbounded
+rays diverge (Theorem 3); and every eventually-monotone ray realizes exactly one
+normalization regime (Theorem 4). The order-theoretic core (Lemmas 1–4) is
+elementary and sharp, with the oscillating sequence $1,2,1,2,\dots$ marking the
+exact boundary. The contribution is a precise reduction of an infinite, geometric
+conjecture to a finite, local monotonicity statement, isolating exactly what a
+constructive proof must deliver.

@@ -1,254 +1,211 @@
-# Cutting a Graph Down to a Tree: The Hidden Skeleton of Networks
+# The Width of an Infinite Road: How Graphs Reveal Their Ends
 
-## A map that is also a tree
+Imagine standing at the entrance of an infinite highway system. From where you
+stand, roads branch and rejoin, weaving an endless network that stretches past
+the horizon. You decide to walk toward one particular "vanishing point" — one of
+the directions in which the network runs off to infinity. As you travel deeper,
+you keep asking the same simple question: *how wide is the road right here?* Not
+the asphalt width, but something more structural — **how many separate lanes of
+connection** do you have to cut to sever everything in front of you from
+everything behind you?
 
-Imagine you are handed a vast and tangled network — a power grid spanning a
-continent, the wiring diagram of a brain, or the friendship graph of an entire
-city. It is too big to see all at once. So you do what cartographers,
-biologists, and engineers have always done: you look for *structure*. You ask
-whether the chaos hides a skeleton.
+This question, asked about the infinite networks mathematicians call *graphs*,
+turns out to have a surprisingly clean answer. As you march toward a vanishing
+point, the number of lanes you must cut behaves in only one of two ways: it
+either **settles down to an exact, stable number and stays there forever**, or it
+**grows without bound, eventually surpassing any count you care to name**. There
+is no third possibility, no permanent flicker, no eternal indecision. This
+article is about that dichotomy — what it says, why it is true, and why a piece
+of it had been a stubborn open conjecture.
 
-For graphs, one of the most powerful skeletons is a **tree**. A tree is the
-simplest connected shape there is: no loops, no redundancy, just a branching
-hierarchy like a river system or a family genealogy. Trees are easy to reason
-about, easy to draw, and easy to compute on. The dream of much of structural
-graph theory is to take a complicated graph and "explain" it using a tree —
-without throwing away the information that made the original graph interesting.
+## Graphs, ends, and the geometry of infinity
 
-A **tree-cut decomposition** is exactly such an explanation. The idea is to
-chop the vertices of your graph into small, manageable groups called *bags*, and
-to arrange those bags at the nodes of a tree. Every vertex of the original graph
-belongs to exactly one bag, so the bags form a clean partition — no vertex is
-left out, and no vertex is counted twice. The tree then tells you how the bags
-relate: which clusters sit next to which, and how the whole thing branches.
+A *graph* is just dots (called **vertices**) joined by lines (called **edges**).
+A *multigraph* is the same, except we allow several edges between the same pair of
+dots — parallel lanes on the same road. We care about graphs that are **locally
+finite**: every vertex touches only finitely many edges. No dot is a monstrous
+hub with infinitely many wires; locally, everything is tame. Yet globally the
+graph can be infinite, sprawling outward forever.
 
-This article is about a precise mathematical theory of these decompositions, the
-guarantees they come with, and a striking phenomenon at the "edges of infinity"
-where such decompositions reveal the deep structure of *infinite* networks.
+When a graph is infinite, it has *directions to infinity*. Mathematicians make
+this precise with the notion of an **end**. Picture an infinite ray of vertices
+$v_0, v_1, v_2, \dots$ marching outward and never returning. Two such rays point
+"the same way" if you can always hop between them without coming back toward
+home. An **end** is an entire family of rays that all head off in the same
+direction — a single, well-defined vanishing point of the graph. A tree shaped
+like an infinite binary branching has uncountably many ends; a single infinite
+path has exactly one.
 
-## The bags, and why they must partition
+Each end has a kind of *thickness*. Some vanishing points are reached by only a
+few essentially distinct routes; others are reached by a dense, redundant braid
+of infinitely many disjoint routes. The standard way to measure this is the
+**edge-degree of the end**: the largest number of pairwise edge-disjoint rays you
+can send toward that vanishing point. A thin end has small finite degree; a thick
+end has infinite degree.
 
-Let us be concrete. We work with a **multigraph** $G$: a collection of vertices
-together with a set of edges, where — crucially — we allow *multiple* edges
-between the same pair of vertices. Multigraphs are the honest model of real
-networks, where two cities might be joined by three separate highways, or two
-neurons by a whole bundle of synapses. Formally, each edge $e$ carries an
-*incidence* — an unordered pair $s(a,b)$ recording its two endpoints.
+## Cutting the graph apart like a tree
 
-A tree-cut decomposition of $G$ consists of a tree $T$, and for every node $n$
-of $T$ a bag $\text{bag}(n)$, a set of vertices of $G$, subject to three rules:
+Infinite graphs are wild, so mathematicians tame them by *imposing a skeleton*.
+The skeleton of choice here is a **tree-cut decomposition**. The idea: take your
+sprawling graph $G$ and find a tree $T$ — a graph with no loops — whose nodes each
+carry a small "bag" of vertices of $G$. The bags partition all the vertices, and
+the tree records how the pieces fit together. Cutting a single edge of the tree
+$T$ splits the tree into two halves, and correspondingly splits the original
+graph $G$ into two sides. The set of edges of $G$ that straddle that split — the
+edges with one endpoint on each side — is called the **adhesion** of that tree
+edge. The adhesion is exactly the bundle of lanes you would have to cut to
+separate the two sides. Its *size* is the local width of the road.
 
-1. **Nonempty:** every bag contains at least one vertex.
-2. **Disjoint:** different nodes carry disjoint bags — if $m \neq n$ then
-   $\text{bag}(m) \cap \text{bag}(n) = \varnothing$.
-3. **Covering:** the bags together exhaust all the vertices,
-   $\bigcup_n \text{bag}(n) = V$.
+A good decomposition is **of finite adhesion** (every cut is finite, so the
+skeleton is genuinely informative) and **componental** (the two sides really are
+the natural pieces the cut creates). The best decompositions are also
+**linked**, a strong quality-control condition we will return to in a moment. And
+a decomposition can **display an end**: a vanishing point of the graph $G$ can
+correspond, faithfully and one-to-one, with a vanishing point of the skeleton
+tree $T$ — a *tree-end*, an infinite path of nodes $n_0, n_1, n_2, \dots$ marching
+out along the tree. Walking out along that tree-path, we encounter a sequence of
+tree edges $e_0, e_1, e_2, \dots$, and at each one an adhesion $F_{e_n}$. The
+numbers
+$$|F_{e_0}|, \; |F_{e_1}|, \; |F_{e_2}|, \; \dots$$
+are precisely the answers to our recurring question: how wide is the road, right
+here, as I march toward the end?
 
-These three rules are not merely decorative. Together they guarantee the single
-most important sanity check of the whole theory:
+## The conjecture: roads that normalize
 
-> **The Partition Theorem.** The bags of a tree-cut decomposition form a genuine
-> partition of the vertex set: every vertex lies in exactly one bag.
+The dream — the **degree-normalization conjecture** — is that these decompositions
+can be built so well-behaved that the width sequence $|F_{e_n}|$ doesn't just
+*relate* to the edge-degree of the end; it *reveals it exactly*, in the cleanest
+imaginable way:
 
-This sounds obvious, but it is the load-bearing fact. It means that asking
-"which bag is this vertex in?" always has one and only one answer, and that lets
-us transport questions about vertices into questions about *nodes of the tree*.
-Once you can do that, the tree's geometry — its branches, its rays to infinity —
-becomes a faithful lens on the graph.
+- **(i) If the end has a finite edge-degree $d$**, then eventually the road has
+  exactly $d$ lanes: $|F_{e_n}| = d$ for all sufficiently large $n$. The width
+  stabilizes *exactly*, on the nose, forever.
+- **(ii) If the end has infinite edge-degree**, then the road keeps widening
+  without bound: for every target $k$, eventually $|F_{e_n}| \ge k$. The width
+  diverges to infinity.
 
-## The art of the cut: adhesion
+This is a demanding wish. It is not enough for the width to "roughly track" the
+degree, or to converge in some loose limiting sense. Clause (i) insists on *exact
+eventual equality* — the sequence must literally lock onto the integer $d$ and
+never move again.
 
-Here is where trees earn their keep. Take any single edge of the tree $T$ and
-delete it. Because $T$ is a tree — no loops! — this one deletion splits $T$ into
-exactly two pieces. Collect all the graph-vertices living in the bags on one
-side; call that vertex set the **side** of the tree edge. The other side is its
-complement.
+## The decisive reduction
 
-Now look back at the original graph $G$. How many of *its* edges run across this
-divide, with one endpoint on each side? That number is the **adhesion** of the
-tree edge — the amount of "glue" holding the two halves of the graph together at
-that particular branch of the tree.
+Here is the heart of the matter, and the contribution this work nails down
+rigorously. The seemingly geometric, infinite, hard-to-grasp degree-normalization
+property turns out to be **equivalent in content to a single, humble property of
+an integer sequence**: that the width sequence $|F_{e_n}|$ is *monotone* —
+heading consistently in one direction (down toward a floor, or up toward
+infinity) rather than oscillating.
 
-We make this precise with the notion of an edge *crossing* a vertex set $A$. An
-edge $e$ crosses $A$ if one of its endpoints lies in $A$ and the other does not.
-The set of all such edges is the **cut**
+Once you know the sequence of widths is monotone, the entire degree-normalization
+conclusion follows from elementary, bullet-proof facts about sequences of whole
+numbers. Let me state these as the genuine theorems they are.
 
-$$\text{cutEdges}(A) = \{\, e : G.\text{crosses}(A,\,e)\,\},$$
+**An antitone count must settle (Lemma 1).** Suppose the widths never increase:
+$|F_{e_0}| \ge |F_{e_1}| \ge |F_{e_2}| \ge \cdots$. Because these are whole
+numbers and whole numbers cannot decrease forever (you would fall below zero),
+the sequence must eventually stop changing — and it stops exactly at its smallest
+value, the infimum $\inf_n |F_{e_n}|$. In symbols: there is a stage $N$ such that
+for all $n \ge N$, $|F_{e_n}| = \inf_k |F_{e_k}|$. This is the rigorous engine
+behind the "stabilizes exactly" half.
 
-and its size is the **cut size** $\text{cutSize}(A) = |\text{cutEdges}(A)|$. The
-adhesion of a tree edge is exactly the cut size of its side.
+**Monotone unbounded means divergence (Lemma 3).** Suppose instead the widths
+never decrease and are not capped by any ceiling. Then they must blow past every
+finite target: for each $k$ there is a stage after which every width is at least
+$k$. This is the rigorous engine behind the "diverges to infinity" half.
 
-## Walks that cannot escape
+**The great dichotomy (Theorem 4).** Put the two together. If the width sequence
+is *eventually monotone* — either non-increasing or non-decreasing — then exactly
+one of two things happens: either the widths are eventually constant, frozen at
+some finite value $d$, or they diverge to infinity. There is no middle ground.
+This is degree normalization, stated and proved as a clean statement about
+integer sequences.
 
-To talk about how *well* a set of edges separates the graph, we need the idea of
-a **walk**: a path that starts at one vertex and hops along edges to another. In
-a multigraph a walk is a finite sequence of edges, each one connecting the
-running vertex to the next.
+To name the stabilized value, we define the **displayed edge-degree** of the end
+along the ray $e$ to be exactly that infimum,
+$$\mathrm{displayedEdgeDegree}(e) \;=\; \inf_{n} \, |F_{e_n}|.$$
+Then the finite case is sharp:
 
-We say a set of edges $F$ **separates** a vertex set $A$ from the rest of the
-graph if no walk can sneak from inside $A$ to outside $A$ while avoiding every
-edge of $F$. In other words, $F$ is a wall: to get from one side to the other,
-you must climb over it.
+**Exact stabilization (Theorem 1).** If the adhesions are *nested* —
+$F_{e_{n+1}} \subseteq F_{e_n}$, each cut sitting inside the previous one — then
+there is a stage $N_0$ such that for all $n \ge N_0$,
+$$|F_{e_n}| = \mathrm{displayedEdgeDegree}(e).$$
+Nesting forces the widths to shrink (a smaller set has no more elements), so the
+antitone lemma applies and pins the eventual value to the displayed edge-degree.
 
-Two facts anchor everything. First, the cut $\text{cutEdges}(A)$ really is a
-wall:
+## Why "linked" is the magic word
 
-> **The Cut Separates.** Any walk that avoids every edge of $\text{cutEdges}(A)$
-> keeps both of its endpoints on the same side of $A$. Consequently
-> $\text{cutEdges}(A)$ separates $A$ from its complement.
+So far the displayed edge-degree is just "the eventual width." Is it really the
+*edge-degree of the end* — the honest maximum number of edge-disjoint routes to
+the vanishing point? This is where the **linked** condition earns its keep, and
+where this work connects to one of the jewels of combinatorics: **Menger's
+theorem**, which says the minimum number of edges you must cut to separate two
+regions equals the maximum number of edge-disjoint paths between them.
 
-The proof is a clean induction on the length of the walk: each step either stays
-within $A$ or within its complement, because the only edges that could flip you
-across the divide are exactly the ones in the cut you agreed to avoid.
+A decomposition is **linked** when, across every tree edge, the graph actually
+contains as many pairwise edge-disjoint crossing paths as the adhesion has edges.
+In other words, the cut is not wasteful: every lane it severs is *used* by a
+genuine, independent route. A foundational theorem of this framework makes the
+payoff exact:
 
-Second, and dually, *every* wall must be touched by *every* escaping walk:
+**The adhesion is the bottleneck (Theorem 2, cut form).** In a linked
+decomposition, the size of each adhesion equals the **minimum cut** between its
+two sides:
+$$|F_{e_n}| \;=\; \mathrm{minCut}(\text{side of } e_n).$$
+The skeleton's bookkeeping width and the graph's true connectivity bottleneck are
+one and the same number. Combine this with exact stabilization, and the eventual
+width is revealed to be the eventual minimum cut toward the end:
+$$\mathrm{minCut}(\text{side of } e_n) \;=\; \mathrm{displayedEdgeDegree}(e)
+\quad\text{for all large } n.$$
+By Menger's theorem the minimum cut equals the maximum edge-disjoint path
+packing — so the displayed edge-degree is, at last, the genuine
+**Menger edge-connectivity to the end**. The skeleton doesn't merely approximate
+the geometry of infinity; under linkedness it computes it on the nose.
 
-> **Every Wall Blocks Every Escape.** If $F$ separates $A$ from its complement,
-> then any walk from a vertex inside $A$ to a vertex outside $A$ must use at
-> least one edge of $F$.
+## The villain of the story: oscillation
 
-These two statements are the yin and yang of cuts and connectivity, and they set
-the stage for the central quantity of the theory.
+Every clean theorem has a hypothesis that cannot be dropped, and honesty demands
+we point to ours. The dichotomy is *false* without monotonicity. Consider the
+width sequence
+$$1, 2, 1, 2, 1, 2, \dots$$
+It is bounded, it never settles, and it never diverges. It violates degree
+normalization outright. So monotonicity is not a convenience — it is the entire
+load-bearing wall. The contribution here is precisely to *isolate* that wall: we
+have proved that *if* the widths are eventually monotone, normalization is
+automatic and exact. The full conjecture is therefore reduced to a single, much
+more concrete question:
 
-## The min-cut, and the theorem that ties it all together
+> Can one always build a linked, componental tree-cut decomposition whose
+> adhesion widths are monotone along every ray to every end?
 
-How few edges does it take to wall off $A$ from the rest of the graph? That
-number is the **minimum cut**,
+This is the open frontier. The structural belief — call it the natural next
+conjecture — is that **linkedness alone forces eventual monotonicity**. The
+intuition is physical: linkedness ties each cut to a genuine bundle of
+edge-disjoint routes (its Menger min-cut). As you march toward a fixed
+vanishing point, those bundles can *tighten and then settle*, but a route that
+truly disappears cannot be smuggled back without violating the disjoint witnesses
+that linkedness guarantees. There is no mechanism for a strict decrease to be
+undone. If that picture can be made into a proof, the rest of the conjecture
+falls out for free from the theorems above.
 
-$$\text{minCut}(A) = \min\{\, |F| : F \text{ separates } A \,\},$$
+## Why this matters beyond the page
 
-the smallest size of any separating edge set. It is a robust, intrinsic measure
-of how strongly $A$ is bound to the rest of $G$ — the bottleneck width of the
-network at that location. Because the explicit cut $\text{cutEdges}(A)$ is always
-a valid wall, the minimum cut never exceeds the cut size:
+Tree-cut decompositions are not an abstract indulgence. They are the engine behind
+modern *parameterized algorithms* — the methods that solve otherwise hopeless
+optimization problems efficiently by exploiting a network's tree-like structure.
+For finite networks, decompositions of small width make hard problems tractable.
+Extending this technology to *infinite* networks — communication grids that
+scale without limit, infinite group presentations in algebra, the boundary
+geometry of tilings and tessellations — requires understanding how the skeleton
+behaves *at infinity*. Degree normalization is exactly the promise that the
+skeleton remains honest all the way out: that the width it reports converges,
+exactly, to the true connectivity of each vanishing point.
 
-$$\text{minCut}(A) \le \text{cutSize}(A).$$
-
-And because there are only finitely many candidate walls in a finite graph, the
-minimum is actually *achieved*: there exists a genuine separator $F$ with
-$|F| = \text{minCut}(A)$. So far the inequality could be strict — a clumsy
-decomposition might cut far more edges than necessary.
-
-This is where the most beautiful idea enters: the **linked** condition. A
-tree-cut decomposition is *linked* if, across every tree edge, the graph carries
-as many *pairwise edge-disjoint paths* as the adhesion demands — a bundle of
-genuinely independent routes connecting the two sides, one route for every
-crossing edge. Linkedness is the statement that the decomposition cuts *no more
-than it must*: the glue it sees is real, irreducible glue.
-
-The payoff is a clean and powerful equality, a Menger-type theorem living inside
-the decomposition:
-
-> **The Linked Adhesion Theorem.** In a linked tree-cut decomposition, the
-> adhesion across every tree edge equals the true minimum cut between its two
-> sides.
-
-In symbols, for every tree edge the side $A$ satisfies
-$\text{cutSize}(A) = \text{minCut}(A)$. The decomposition is *honest*: the number
-of edges it cuts at each branch is not an artifact of a bad choice of tree, but
-the actual, optimal bottleneck of the graph at that point. The tree skeleton
-faithfully records the connectivity of $G$.
-
-## To infinity: the ends of a graph
-
-Everything so far works for finite graphs. But the real magic — and the original
-motivation — lives in the *infinite* world: **locally finite** multigraphs,
-where the graph may be infinite but each vertex still touches only finitely many
-edges. Think of an infinite crystal lattice, or the unbounded grid of an
-idealized city.
-
-Infinite graphs have a feature finite ones lack: **ends**. An end is a "direction
-to infinity," a coherent way of walking forever without turning back. The square
-grid $\mathbb{Z}^2$ has a single end (you can wander off in any compass direction
-and it all merges into one infinity); an infinite binary tree has uncountably
-many ends, one for each infinite path down through the branches.
-
-A tree, too, has ends — its infinite rays. The dream is a decomposition whose
-tree **displays** every end of $G$ as an end of $T$, matching them up one to one.
-When that happens, walking off to infinity in the graph corresponds to walking
-out along a ray of the tree, and we can study the graph's behavior at infinity by
-watching what happens to the bags and adhesions along that ray.
-
-## The degree-normalization phenomenon
-
-Here is the question that animates this whole project. Fix an end $\omega$ of the
-graph, displayed by a ray $\alpha$ of the tree. March outward along the ray and
-record the adhesion of the $n$-th tree edge you cross: a sequence of numbers
-$a_1, a_2, a_3, \dots$, the amount of glue at successive depths.
-
-Each end has an intrinsic **edge-degree**: roughly, the maximum number of
-edge-disjoint rays running out to that end — its "thickness at infinity." The
-conjecture at the heart of this work, the *degree-normalization* property, makes
-a bold prediction about how the adhesion sequence behaves:
-
-- **Finite-degree ends stabilize.** If the end $\omega$ has finite edge-degree
-  $d$, then eventually the adhesions hit $d$ *exactly* and stay there:
-  $a_n = d$ for all sufficiently large $n$.
-- **Infinite-degree ends diverge.** If $\omega$ has infinite edge-degree, then
-  the adhesions grow without bound: for every threshold $k$, eventually
-  $a_n \ge k$.
-
-In plain terms: the tree skeleton, read at infinity, *measures the exact
-thickness of every direction the graph can run off in.* A direction of finite
-thickness $d$ shows up as a sequence of cuts that settles down to precisely $d$
-edges; a direction of infinite thickness shows up as cuts that swell forever.
-The decomposition does not just approximate the geometry at infinity — it
-calibrates itself to it perfectly.
-
-## The combinatorial engine: monotone or it oscillates
-
-The full conjecture asks for a single decomposition that achieves this for all
-ends at once, a hard global construction. But the heart of the matter turns out
-to be a crisp, self-contained combinatorial dichotomy about *one* sequence at a
-time — and this is the engine that has been isolated and proved.
-
-The key hypothesis is **eventual monotonicity**: along a well-behaved (linked and
-componental) ray, the adhesion sequence is eventually monotone — it eventually
-only goes down, or only goes up, never bouncing back and forth. Granting that,
-the dichotomy is forced:
-
-> **The Monotone Dichotomy.** An eventually-monotone sequence of natural numbers
-> either eventually equals a fixed finite value (the antitone, bounded case —
-> *stabilization*), or it eventually exceeds every threshold (the unbounded case
-> — *divergence*).
-
-The antitone case is especially elegant. A sequence of natural numbers that only
-ever decreases cannot decrease forever — there is no infinite descending staircase
-in the natural numbers. So it must hit a floor and then stay flat. That floor is
-the edge-degree $d$. This is a well-foundedness argument: each strict drop spends
-one unit of "excess glue," and since the bags along the ray are finite, there is
-only a finite amount of excess to spend.
-
-And the monotonicity hypothesis is not a technical convenience — it is provably
-*necessary*. Drop it, and the conclusion fails. The simplest counterexample is
-the oscillating sequence
-
-$$a_n = d + (n \bmod 2),$$
-
-which alternates forever between $d$ and $d+1$. It never stabilizes at a single
-value and never diverges; it just flickers. This is precisely the behavior an
-*un-linked* decomposition is allowed to exhibit. Banning oscillation is, in a
-deep sense, the same as demanding that the decomposition be linked — that it see
-only honest glue. The combinatorics and the connectivity are two faces of one
-coin.
-
-## Why this matters
-
-The pleasure of this theory is how it turns an unwieldy infinite object into a
-tree you can walk, and then makes that walk *quantitatively faithful*. The bags
-partition the vertices cleanly; the tree edges record true minimum cuts; the rays
-to infinity calibrate themselves to the exact thickness of the graph's ends.
-
-The practical resonance is real. Minimum cuts are the language of network
-reliability — the fewest links whose failure disconnects a system. Tree
-decompositions are the backbone of efficient algorithms on otherwise intractable
-graphs, from circuit design to constraint solving. And the study of ends and
-their degrees is how mathematicians tame infinite structures that model unbounded
-lattices, infinite groups, and the limiting behavior of ever-larger finite
-networks.
-
-But beyond utility, there is a clean conceptual punchline. A graph can be wild,
-infinite, and tangled. Yet inside it sits a tree — and that tree, if chosen
-honestly, remembers everything that matters: how tightly each piece is glued to
-the rest, and exactly how thick each road to infinity really is. The skeleton
-was there all along. The theorems above are how we prove we have found it.
+The story we have told is one of *reduction* — the quiet, powerful move at the
+heart of so much mathematics. A sprawling conjecture about infinite graphs,
+ends, and the geometry of vanishing points has been distilled to a single
+crisp question about whether a sequence of whole numbers can be made to march in
+one direction. The endless highway, it turns out, has a width that either locks
+into place or runs to infinity. Which of the two it is, and how cleanly it does
+so, is now decided by one word: *monotone*.
