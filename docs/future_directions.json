@@ -14238,7 +14238,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -14254,7 +14254,7 @@
         "MachineLearning"
       ],
       "id": "fd_0479",
-      "last_attempt_time": "2026-06-23T05:49:06.134813+00:00",
+      "last_attempt_time": "2026-06-24T15:28:12.934990+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -14268,7 +14268,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:44.957997+00:00",
       "title": "EML Universal Approximation"
@@ -16772,11 +16772,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "449dda28",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16788,7 +16788,7 @@
         "Logic"
       ],
       "id": "fd_0552",
-      "last_attempt_time": "2026-06-07T22:40:42.374910+00:00",
+      "last_attempt_time": "2026-06-24T15:28:04.693123+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16802,7 +16802,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.956863+00:00",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
@@ -35633,7 +35633,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Amitsur-Levitzki Theorem (MR36751)",
         "Irelli et al. (irelli2025quiverspolynomialidentities)"
@@ -35655,11 +35655,11 @@
         "Algebra"
       ],
       "id": "fd_2321",
-      "last_attempt_time": "2026-06-24T15:00:29.830168+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:40.163741+00:00",
       "lean_theorem_stub": "Theorem: For acyclic Q with path length n-1, ∩_{a,b,c} <S(x₁,...,x_n)> = ∩_{a,b,c} <x₁...x_n>.",
       "lineage_refs": [],
-      "outcome_quality": 0.5317089325931801,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Show that S vanishes on the T-ideal and that every element of the T-ideal is a scalar multiple of S.",
@@ -35669,7 +35669,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23024v1",
       "source_path": "http://arxiv.org/abs/2606.23024v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T10:17:17.086233+00:00",
       "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
@@ -39117,11 +39117,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d91fa32b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39133,7 +39133,7 @@
         "Novelty"
       ],
       "id": "fd_2395",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:28:21.120105+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -41188,6 +41188,52 @@
       "title": "Reduction Condition for Reduced Points"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "https://arxiv.org/abs/2305.01234",
+        "https://arxiv.org/abs/2201.03265",
+        "https://arxiv.org/abs/2110.04867"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecturally extend the known finiteness result for minor-closed classes with limiting density above a threshold to the setting of arbitrary density bounds. Specifically, for any rational number \\(\\delta < \\frac{3}{2}\\), we propose that the set of \\subseteq\\-minimal minor-closed classes with density \\(>\\delta\\) is finite. This refines the formulaic finiteness result to all density thresholds in the interval \\([0, \\frac{3}{2})\\), building on the structural properties of minor-closed classes and their limiting densities.",
+      "domain_bridges": [
+        "Minor-closed graph classes",
+        "Graph density classification",
+        "Formal proof systems"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2440",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem finite_obstructions (delta: Q) [rational.denominator_bounded delta 1 1] [rational.lt_delta (Rational.of_rat 3 2)] : finite { G : Type | G.is_minor_closed & G.limiting_density > delta }",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adaptation of the framework from [1] by parametrizing reductions for arbitrary density thresholds, then formalizing the topology of \\(\\mathbb{Q} \\cap [0, \\frac{3}{2})\\) in Lean 4 using rational number types and real number approximations.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24326v1",
+      "source_path": "http://arxiv.org/abs/2606.24326v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T15:23:10.637513+00:00",
+      "title": "Finite Obstructions for Minor-Closed Classes with Bounded Limiting Density"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -41213,7 +41259,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2440",
+      "id": "fd_2441",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41256,7 +41302,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2441",
+      "id": "fd_2442",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41301,7 +41347,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2442",
+      "id": "fd_2443",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41346,7 +41392,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2443",
+      "id": "fd_2444",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41392,7 +41438,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2444",
+      "id": "fd_2445",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -41437,7 +41483,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2445",
+      "id": "fd_2446",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -41484,7 +41530,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2446",
+      "id": "fd_2447",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -41509,39 +41555,44 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "math.NA (Numerical Analysis)",
+        "math.NT (Number Theory - related to discrepancy sequences)"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Degree-4 vertices in the flip graph of the m×n Miura-ori\n\nThis cycle established a rigorous combinatorial core (`Catalog/Pythagorean/MiuraFlipDegree.lean`):\nthe local degree-4 flat-foldable origami vertex has exactly 4 valid MV assignments\n(`card_genericValid`, `mountains_of_genericValid`), and the *independent-vertex*\nreconfiguration / flip graph is the Boolean hypercube `Q_d`, which is `d`-regular\n(`flipGraph_degree`, hence `flipGraph_degree_four`), bipartite\n(`flipGraph_adj_parity`), connected (`flipGraph_connected`), with `2^d` vertices\nand `d·2^{d-1}` edges (`flipGraph_card_verts`, `flipGraph_card_edges`).\n\nThe open frontier is the *coupled* regime, where shared creases of the real\nm×n Miura-ori break the product structure. The following conjectures are bold,\nprecise, and testable (each is stated so it can be falsified by a finite `#eval`\nsearch before any proof attempt).\n\n## Conjecture 1 (Degree-4 vertices are non-generic in the coupled flip graph)\nModel the m×n Miura-ori flip graph `F(m,n)` with nodes = globally valid MV\nassignments and edges = single *vertex flips* (negate all four creases at one\ninterior vertex) that preserve global validity. **Conjecture:** for `m,n ≥ 3`,\n`F(m,n)` is *not* regular, and the set of degree-4 nodes is non-empty and forms a\nproper, identifiable subset characterized by a local boundary pattern (exactly 4\ninterior vertices are independently flippable). Falsifiable: enumerate `F(3,3)`\nand check whether any node has degree exactly 4.\n\n## Conjecture 2 (Hypercube-subgraph dichotomy)\nThe coupled flip graph `F(m,n)` embeds as an isometric subgraph of a hypercube\n`Q_{N}` (a *partial cube*), where `N` is the number of interior vertices.\n**Conjecture:** `F(m,n)` is always a partial cube, and its isometric dimension\nequals the number of \"free\" creases. This would make every flip-graph distance\nequal to a Hamming distance and force `F(m,n)` to be bipartite (generalizing\n`flipGraph_adj_parity`).\n\n## Conjecture 3 (Connectivity / mixing of the coupled space)\nGeneralize `flipGraph_connected`: **Conjecture:** for all `m,n ≥ 1` the coupled\nflip graph `F(m,n)` is connected — any valid MV assignment can be transformed into\nany other by a sequence of validity-preserving vertex flips. A quantitative\nrefinement: its diameter is `Θ(mn)`. (Cereceda-style mixing.)\n\n## Conjecture 4 (Exact regular-degree spectrum)\nDefine `δ(m,n)` = the multiset of vertex degrees of `F(m,n)`. **Conjecture:**\n`min δ(m,n) = 4` for all `m,n ≥ 2`, i.e. *every* valid configuration has at least\n4 independently flippable interior vertices, with equality achieved exactly at the\n\"all-mountain-frame\" configurations. This pins the title phenomenon: degree-4\nnodes are the minimum-degree (most rigid) configurations.\n\n## Conjecture 5 (Counting via the flip graph)\nLet `C(m,n) = |V(F(m,n))|` be the Ginepro–Hull MV-assignment count. **Conjecture:**\n`C(m,n)` satisfies a linear transfer-matrix recurrence in `n` (fixed `m`) whose\ncharacteristic polynomial has degree `2^{m-1}`, and the per-node average flip-graph\ndegree is asymptotically `c·mn` for an explicit constant `c`. Falsifiable: compute\n`C(m,n)` for small `m,n`, fit a recurrence, and cross-check against OEIS.\n",
-      "domain_bridges": [],
+      "description": "There exists a function space F_d associated with periodic L_p-discrepancy where the worst-case integration error equals the discrepancy, and non-negative linear rules require exponential point counts to achieve ε-accuracy, confirming the curse of dimensionality.",
+      "domain_bridges": [
+        "Discrepancy Theory ↔ Function Space Approximation",
+        "Tensor-product Structure ↔ Curse of Dimensionality"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Pythagorean",
-        "Algebra"
+        "Computation"
       ],
-      "id": "fd_2447",
+      "id": "fd_2448",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "72f1519b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/72f1519b",
+      "source_exp_id": "2606.24195v1",
+      "source_path": "http://arxiv.org/abs/2606.24195v1",
       "status": "available",
-      "thread_id": "th_6f96da51",
-      "timestamp": "2026-06-24T15:18:44.784211+00:00",
-      "title": "Rigorous combinatorial core (`Catalog/Pythagorean/Miura"
+      "thread_id": "",
+      "timestamp": "2026-06-24T15:27:55.505425+00:00",
+      "title": "Exponential Information Complexity Lower Bound for Periodic L_p-Discrepancy via Duality Framework"
     },
     {
       "ambition_level": "extension",
@@ -46498,11 +46549,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ceeb135f",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46514,7 +46565,7 @@
         "NumberTheory"
       ],
       "id": "seed_335",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:28:08.340623+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46528,7 +46579,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432611+00:00",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
@@ -46537,11 +46588,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a53dd8c8",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46553,7 +46604,7 @@
         "Algebra"
       ],
       "id": "seed_336",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:28:00.827583+00:00",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46567,7 +46618,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432613+00:00",
       "title": "ABC Conjecture: Consequences and Partial Results"
@@ -47868,7 +47919,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -47885,7 +47936,7 @@
         "Computation"
       ],
       "id": "seed_370",
-      "last_attempt_time": "2026-06-24T15:00:36.905412+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:27.240087+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -55679,7 +55730,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -55694,7 +55745,7 @@
         "Combinatorics"
       ],
       "id": "sorry_fill_a0dd96a5_00b573d8",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T15:28:17.062450+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -55708,7 +55759,7 @@
       "research_mode": "team",
       "source_exp_id": "a0dd96a5",
       "source_path": "These conjectures continue the research cycle begun in",
-      "status": "available",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-16T12:52:43.615426+00:00",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
@@ -121523,7 +121574,7 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 304,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 57,
     "Computation": 100,
@@ -121642,7 +121693,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
