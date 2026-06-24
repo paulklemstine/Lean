@@ -1,347 +1,352 @@
-# A Synthetic HoTT Fragment in Lean 4: Identity Systems, Pushout Surrogates, and Computational Transport
+# Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence in a Proof-Irrelevant Setting
+
+**Author:** Aristotle
+**Date:** 2026-06-24
+**Domain:** Geometry (Homotopy Type Theory)
 
 ## Abstract
 
-We formalize a synthetic fragment of Homotopy Type Theory (HoTT) within Lean 4's standard dependent type theory, without cubical kernel modifications or axiom postulation. Our framework introduces data-carrying `Contractible` types, bespoke `Equiv'` equivalences, and a novel `IdentitySystem` structure that packages the data for the fundamental theorem of identity types. We prove four groups of deep structural theorems: (1) the fundamental theorem of identity types, yielding full equivalences `(a₀ = a) ≃' R(a)` from contractible total spaces; (2) a provable univalence principle for the universe of h-propositions; (3) a quotient-based pushout construction with verified universal property; and (4) transport of decidable equality, finiteness, and contractibility along equivalences. These results demonstrate that core HoTT reasoning patterns — encode-decode methods, transport principles, and higher-inductive-type-style universal properties — can be made mathematically productive in standard Lean 4, providing a reusable toolkit for formalized mathematics.
+We develop core fragments of Homotopy Type Theory (HoTT) — identity types, higher
+inductive types, and univalence — inside a dependently typed proof system whose
+built-in propositional equality is *proof-irrelevant*, i.e. whose identity types are
+subsingletons. Three results anchor the development. First, we prove the
+**fundamental theorem of identity types**: for a pointed family $B$ over $(A,a)$ with
+$b : B(a)$, the canonical transport map $\mathrm{encode}_x : (a = x) \to B(x)$ is a
+fiberwise equivalence (in the contractible-fibers sense) **iff** the total space
+$\sum_x B(x)$ is contractible. Second, we realize the simplest **higher inductive
+type**, the propositional truncation $\|A\|$, as a quotient by the total relation,
+prove that it is a mere proposition (the path constructor), establish its recursion
+and dependent induction principles, prove its idempotence on propositions, and prove
+that it commutes with binary products: $\|A \times B\| \simeq \|A\| \times \|B\|$.
+Third, we analyze the **univalence axiom**: we show that, in the proof-irrelevant
+setting, bundled univalence data is *inconsistent* (a contradiction is derivable from
+the two distinct self-equivalences of $\mathrm{Bool}$), while univalence
+*nevertheless holds* when restricted to the universe of propositions, where it is
+realized by the canonical map $\mathrm{idToEquiv}$ and underwritten by propositional
+extensionality. The overarching theme is that a proof-irrelevant system behaves as the
+*0-truncated shadow* of a univalent universe: HoTT theorems either collapse to short
+arguments (when they are invariant under 0-truncation) or fail globally while
+surviving on propositions. All results are formalized and machine-checked.
 
 ## 1. Introduction
 
-### 1.1 Motivation
-
-Homotopy Type Theory (HoTT) reinterprets Martin-Löf's identity types as paths in a space, yielding a synthetic approach to homotopy theory within dependent type theory. Its central innovations — the univalence axiom, higher inductive types, and the interpretation of types as spaces at various truncation levels — have generated substantial interest in both foundations and computer science.
-
-However, full HoTT requires either axiom postulation (as in the HoTT book's approach) or specialized proof assistant kernels (as in Cubical Agda or cooltt). Lean 4, one of the most actively developed proof assistants, uses a standard intensional type theory kernel that does not natively support cubical operations or the univalence axiom.
-
-This raises a natural question: **how much of HoTT can be recovered as provable theorems, rather than axioms, within standard Lean 4?**
-
-### 1.2 Contributions
-
-We identify a formal fragment of HoTT that is:
-- **Provable** in standard Lean 4 (no axioms beyond `propext`, `Quot.sound`, and `Classical.choice`)
-- **Mathematically substantive** (the fundamental theorem, univalence surrogates, universal properties)
-- **Computationally meaningful** (transport of decidable equality, finiteness, decision procedures)
-- **Practically reusable** (definitions and theorems organized for downstream use)
-
-Our specific contributions are:
-
-1. **Identity System formalization** (§3): A structure `IdentitySystem` packaging the data for the fundamental theorem, and its proof: contractible total spaces yield equivalences between identity types and arbitrary families.
-
-2. **HProp univalence** (§4): A provable univalence principle for the universe `HProp'` of propositions, exploiting Lean's propositional extensionality.
-
-3. **Pushout HIT surrogate** (§5): A quotient-based pushout construction with formally verified recursion and uniqueness (universal property).
-
-4. **Computational transport** (§6): Theorems showing that equivalences preserve decidable equality, finiteness, and contractibility — the constructive content of the univalence principle.
-
-### 1.3 Relationship to Prior Work
-
-Our development builds on and extends the catalog theorems in the project repository:
-
-- **`fundamental_theorem_subsingleton`** (Logic.HoTT.FundamentalTheorem): proves that fibers of a contractible total space are subsingletons. Our `identity_system_equiv_path` upgrades this from proof-irrelevance to full equivalence.
-
-- **`uniform_likelihood_identity`** (Logic.AdvancedTheorems): demonstrates identity-preservation under uniform Bayesian updates. Our `hprop_univalence` provides the general structural principle: identity in the proposition universe is characterized by logical equivalence.
-
-- **`fundamental_theorem_oracle'`** (Computation.Oracles.OmniscientOracle): concerns transfer of oracle-decidable structure. Our transport theorems (`equiv_transports_decidableEq`, `equiv_transports_fintype`) make the general principle explicit.
-
-## 2. Foundations
-
-### 2.1 Contractible Types
-
-We define contractibility as a data-carrying structure rather than a mere proposition:
-
-```
-structure Contractible (X : Sort u) where
-  center : X
-  contr : ∀ y : X, y = center
-```
-
-This is deliberately not `Prop`-valued: the center and the contraction paths are extractable data, enabling constructive reasoning. We prove:
-
-- **`contractible_subsingleton`**: Any contractible type is a subsingleton.
-- **`contractible_based_paths`**: The based path space `Σ' x, a₀ = x` is contractible with center `(a₀, rfl)`.
-
-### 2.2 Equivalences
-
-We define `Equiv'` as a bespoke equivalence structure:
-
-```
-structure Equiv' (α : Sort u) (β : Sort v) where
-  toFun : α → β
-  invFun : β → α
-  left_inv : ∀ x, invFun (toFun x) = x
-  right_inv : ∀ y, toFun (invFun y) = y
-```
-
-with identity, symmetry, and transitivity (composition). We also provide bridges `Equiv'.toEquiv` and `Equiv'.ofEquiv` connecting to Mathlib's `Equiv` type.
-
-### 2.3 Identity Systems
-
-The central new definition:
-
-```
-structure IdentitySystem (A : Sort u) (a₀ : A) (R : A → Sort v) where
-  rflR : R a₀
-  contr_total : Contractible (Σ' a : A, R a)
-  center_eq : contr_total.center = ⟨a₀, rflR⟩
-```
-
-An identity system packages the data for the encode-decode method: a family `R` with a reflexivity witness at a base point and contractibility of the total space.
-
-## 3. The Fundamental Theorem of Identity Types
-
-### 3.1 Statement
-
-```
-noncomputable theorem identity_system_equiv_path
-    {A : Sort u} {a₀ : A} {R : A → Sort v}
-    (S : IdentitySystem A a₀ R) :
-    ∀ a : A, Equiv' (a₀ = a) (R a)
-```
-
-### 3.2 Proof Sketch
-
-The proof constructs an equivalence with explicit forward and inverse maps:
-
-**Encode map** (`idSystemEncode`): Given `p : a₀ = a`, transport `S.rflR : R a₀` along `p` to obtain `R a`. This is simply `p ▸ S.rflR`.
-
-**Decode map** (`idSystemDecode`): Given `r : R a`, we need `a₀ = a`. By contractibility, both `⟨a₀, S.rflR⟩` and `⟨a, r⟩` in `Σ' a, R a` are equal to the center. Using `center_eq`, we get `⟨a₀, S.rflR⟩ = ⟨a, r⟩`, and project via `congrArg PSigma.fst`.
-
-**Left inverse** (`decode ∘ encode = id`): At `p = rfl`, `encode(rfl) = S.rflR`, and `decode(S.rflR)` constructs the sigma equality `⟨a₀, S.rflR⟩ = ⟨a₀, S.rflR⟩` via contractibility, which projects to `rfl`. This uses `idSystemDecode_rflR`, proved by observing that the constructed sigma path is reflexivity (via `grind`).
-
-**Right inverse** (`encode ∘ decode = id`): For any `r : R a`, `encode(decode(r))` is some element of `R a`, and by `fiber_subsingleton_of_contractible`, all elements of `R a` are equal (since the total space is contractible). Thus `encode(decode(r)) = r`.
-
-### 3.3 Key Lemma: Fiber Subsingleton
-
-```
-theorem fiber_subsingleton_of_contractible
-    {A : Sort u} {R : A → Sort v}
-    (hc : Contractible (Σ' a, R a)) :
-    ∀ (a : A) (r₁ r₂ : R a), r₁ = r₂
-```
-
-Proof: Both `⟨a, r₁⟩` and `⟨a, r₂⟩` equal `hc.center`, so they equal each other. Since the first components are identical (`a = a`), the second components must be equal by dependent equality (`HEq` → `Eq`).
-
-### 3.4 Significance
-
-This theorem is the operational core of encode-decode methods in HoTT. It shows that *any* family with a reflexivity witness and contractible total space is equivalent to the identity family. This provides a reusable engine for:
-- Characterizing identity types of algebraic structures (e.g., equality of pairs is pair of equalities)
-- Proving equivalences by constructing identity systems
-- Reducing path-space computations to computations in concrete families
-
-## 4. Univalence for Propositions
-
-### 4.1 The HProp Universe
-
-```
-structure HProp' where
-  carrier : Prop
-
-def HPropEquiv (P Q : HProp') : Prop := P.carrier ↔ Q.carrier
-```
-
-### 4.2 Theorem: Provable Univalence
-
-```
-theorem hprop_univalence_iff :
-    ∀ P Q : HProp', (P = Q) ↔ HPropEquiv P Q
-```
-
-**Proof of forward direction** (`P = Q → P.carrier ↔ Q.carrier`): Substitute and use `Iff.rfl`.
-
-**Proof of backward direction** (`P.carrier ↔ Q.carrier → P = Q`): By `propext`, `P.carrier ↔ Q.carrier` implies `P.carrier = Q.carrier`. By structure extensionality for `HProp'` (which has a single field), `P = Q`.
-
-### 4.3 Why Full Univalence Fails
-
-Full univalence — `(A ≃ B) → (A = B)` for all types — is not provable in Lean 4's kernel. The obstruction is that Lean's type theory has a proof-relevant universe `Type u` where identity is intensional: two types can be equivalent without being definitionally or propositionally equal.
-
-Our surrogate identifies a mathematically meaningful subuniverse (propositions) where univalence holds as a theorem. This approach — proving univalence in restricted contexts — is arguably more informative than postulating it globally: it reveals exactly where the principle is forced by the type theory's internal structure.
-
-## 5. Pushout as HIT Surrogate
-
-### 5.1 Construction
-
-Given a span `B ←f— A —g→ C`, we define:
-
-```
-inductive PushoutRel (f : A → B) (g : A → C) : B ⊕ C → B ⊕ C → Prop
-  | glue : ∀ a, PushoutRel f g (Sum.inl (f a)) (Sum.inr (g a))
-  | refl : ∀ x, PushoutRel f g x x
-  | symm : ...
-  | trans : ...
-
-def Pushout (f : A → B) (g : A → C) : Type u := Quot (PushoutRel f g)
-```
-
-### 5.2 Recursion Principle
-
-```
-def pushout_rec (iB : B → X) (iC : C → X)
-    (comm : ∀ a, iB (f a) = iC (g a)) : Pushout f g → X
-```
-
-with computation rules `pushout_rec_inl` and `pushout_rec_inr` (both definitional equalities).
-
-### 5.3 Universal Property
-
-```
-theorem pushout_rec_unique
-    (f : A → B) (g : A → C) (iB : B → X) (iC : C → X)
-    (comm : ∀ a, iB (f a) = iC (g a)) :
-    ∃! h : Pushout f g → X,
-      (∀ b, h (Pushout.inl b) = iB b) ∧
-      (∀ c, h (Pushout.inr c) = iC c)
-```
-
-**Proof:** Existence follows from `pushout_rec`. Uniqueness: let `h` satisfy both conditions. By `Quot.ind`, it suffices to show `h` and `pushout_rec iB iC comm` agree on `Sum.inl b` and `Sum.inr c`, which follows from the boundary conditions.
-
-### 5.4 Why This Matters
-
-Higher inductive types in HoTT are characterized by their recursion/induction principles and universal properties. Our quotient-based pushout captures precisely this data for the 1-dimensional case. The `glue` constructor plays the role of the path constructor in a HIT, and the universal property ensures the construction has the correct categorical semantics.
-
-### 5.5 Functoriality
-
-We also define `pushout_map`: a commutative square of spans induces a map of pushouts. This is the beginning of a functorial framework for pushout-based constructions.
-
-## 6. Computational Transport
-
-### 6.1 Transport of Decidable Equality
-
-```
-noncomputable def equiv_transports_decidableEq
-    (e : Equiv' α β) [DecidableEq α] : DecidableEq β :=
-  fun b₁ b₂ =>
-    if h : e.invFun b₁ = e.invFun b₂
-    then isTrue (by rw [← e.right_inv b₁, ← e.right_inv b₂, h])
-    else isFalse (fun heq => h (by rw [heq]))
-```
-
-The decision procedure is explicit: pull back to `α`, decide there, push the answer forward. The correctness relies on the equivalence laws.
-
-### 6.2 Transport of Finiteness
-
-```
-noncomputable def equiv_transports_fintype
-    (e : Equiv' α β) [Fintype α] : Fintype β :=
-  Fintype.ofEquiv α e.toEquiv
-```
-
-This leverages the bridge to Mathlib's `Equiv` type.
-
-### 6.3 Transport of Contractibility
-
-```
-noncomputable def equiv_preserves_contractible
-    (e : Equiv' X Y) (h : Contractible X) : Contractible Y where
-  center := e.toFun h.center
-  contr := fun y => by rw [← e.right_inv y]; congr 1; exact h.contr (e.invFun y)
-```
-
-### 6.4 Contractibility of Pi Types
-
-```
-noncomputable def contractible_pi
-    (_hA : Contractible A) (hB : ∀ a, Contractible (B a)) :
-    Contractible ((a : A) → B a) where
-  center := fun a => (hB a).center
-  contr := fun f => by funext a; exact (hB a).contr (f a)
-```
-
-This shows that contractibility composes through dependent function spaces: the center function sends each `a` to the center of `B a`, and every other function is pointwise equal to it.
-
-### 6.5 Computational Significance
-
-These theorems demonstrate that the HoTT framework has genuine computational content:
-
-- **`equiv_transports_decidableEq`**: You can write a decision procedure once and get it for all equivalent types automatically.
-- **`equiv_transports_fintype`**: Finiteness is representation-independent.
-- **`equiv_preserves_contractible`**: Contractibility (uniqueness of solutions) is preserved under equivalence.
-- **`contractible_pi`**: Function spaces inherit contractibility compositionally.
-
-This is the constructive face of univalence: mathematical structure is portable across equivalences.
-
-## 7. Computational Experiments
-
-### 7.1 Pushout Cardinality
-
-We computationally test the conjecture that for injective span legs, `|Pushout(f,g)| = |B| + |C| - |A|`.
-
-| Span | |A| | |B| | |C| | Expected | Actual | Match? |
-|------|-----|-----|-----|----------|--------|--------|
-| Simple overlap | 2 | 3 | 3 | 4 | 4 | ✓ |
-| Single glue | 1 | 2 | 2 | 3 | 3 | ✓ |
-| Disjoint union | 0 | 2 | 3 | 5 | 5 | ✓ |
-| Full identification | 3 | 3 | 3 | 3 | 3 | ✓ |
-| Distinct ranges | 2 | 4 | 3 | 5 | 5 | ✓ |
-
-For non-injective legs, the formula fails: `|A|=3, |B|=2, |C|=2` with `f(a) = a mod 2, g(a) = a mod 2` gives `|B|+|C|-|A| = 1` but `|Pushout| = 2`.
-
-### 7.2 Equivalence Transport
-
-We verify transport of decidable equality along the equivalence `Bool ≃ {0,1}`:
-- `0 = 0`: decides True ✓
-- `0 = 1`: decides False ✓
-- `1 = 1`: decides True ✓
-
-### 7.3 Identity System Verification
-
-For the discrete identity system on `{0,1,2}` with base point `0` and `R(a) = (a = 0)`:
-- Total space `Σ a, R(a) = {(0, True)}`: contractible ✓
-- Center `(0, True)` matches base point ✓
-- Valid identity system ✓
-
-For the non-example with `R(a) = True` for all `a`:
-- Total space has 3 elements: NOT contractible ✓
-
-## 8. Discussion
-
-### 8.1 Limitations
-
-Our framework operates within standard Lean 4, which imposes several limitations compared to cubical type theory:
-
-1. **No computational univalence for all types**: We prove univalence only for `HProp'`. The full principle requires cubical operations (`transp`, `hcomp`) in the kernel.
-
-2. **No path constructors in HITs**: Our pushout uses quotients, which provide the right universal property but lack the computational behavior of cubical path constructors (e.g., `transport` along `glue` doesn't compute by reduction).
-
-3. **Classical axioms**: Some proofs use `Classical.choice`, making them non-constructive. The core definitions and many transport theorems avoid this.
-
-### 8.2 Comparison with Existing Approaches
-
-| Feature | Our Framework | Cubical Agda | HoTT Book (axiomatic) |
-|---------|--------------|--------------|----------------------|
-| Univalence | Provable for `Prop` | Provable for all | Axiom |
-| HITs | Quotient surrogates | Native | Axiom |
-| Computation | Standard reduction | Cubical reduction | None (axiom blocks) |
-| Proof assistant | Lean 4 (standard) | Agda (cubical) | Various |
-| Mathlib access | Full | Limited | N/A |
-
-### 8.3 Why This Approach Is Valuable
-
-Despite the limitations, our approach has distinct advantages:
-
-1. **Interoperability**: Full access to Mathlib's 200,000+ theorem library.
-2. **Practical usability**: Standard Lean tactics, no cubical learning curve.
-3. **Provable foundations**: No axioms beyond Lean's standard ones.
-4. **Computational transport**: Explicit, constructive transfer of algorithmic structure.
-
-## 9. Future Work
-
-1. **Truncation levels**: Formalize the full n-type hierarchy using `IdentitySystem` iteratively.
-2. **Higher pushouts**: Build iterated pushout constructions for cell complexes.
-3. **Algebraic transport**: Prove that equivalences preserve algebraic laws (monoid, group, ring structure).
-4. **Modalities**: Formalize modalities (truncation, localization) as endofunctors with specific properties.
-5. **Applications**: Use the pushout construction for formal verification of data integration protocols.
-
-## 10. Conclusion
-
-We have demonstrated that a substantial fragment of HoTT — identity systems, univalence for propositions, quotient-based higher inductive types, and computational transport — can be formalized as provable theorems in standard Lean 4. The resulting toolkit is mathematically substantive, computationally meaningful, and practically reusable. It provides a foundation for HoTT-style reasoning in Lean without waiting for cubical kernel infrastructure, and it bridges foundational type theory with concrete algorithmic applications through explicit transport of computational structure along equivalences.
-
-## References
-
-1. The Univalent Foundations Program. *Homotopy Type Theory: Univalent Foundations of Mathematics*. Institute for Advanced Study, 2013.
-
-2. C. Cohen, T. Coquand, S. Huber, A. Mörtberg. "Cubical Type Theory: A Constructive Interpretation of the Univalence Axiom." *TYPES 2015*, LIPIcs vol. 69, 2018.
-
-3. A. Voevodsky. "An experimental library of formalized mathematics based on the univalent foundations." *Mathematical Structures in Computer Science*, 25(5):1278–1294, 2015.
-
-4. E. Rijke. *Introduction to Homotopy Type Theory*. Cambridge University Press (forthcoming). Draft available at arXiv:2212.11082.
-
-5. L. de Moura, S. Ullrich. "The Lean 4 Theorem Prover and Programming Language." *CADE-28*, LNAI 12699, 2021.
+Homotopy Type Theory interprets the identity type $a = b$ of Martin-Löf type theory
+as a *path space*: a type whose elements are identifications of $a$ with $b$, and
+whose own identity types encode higher identifications, ad infinitum. Under this
+interpretation, types are $\infty$-groupoids, functions are functors, and logical
+constructions acquire geometric meaning. Three ingredients give the theory its
+modern shape:
+
+1. the **fundamental theorem of identity types**, which characterizes path spaces via
+   contractibility of total spaces;
+2. **higher inductive types (HITs)**, which freely generate types from point and path
+   constructors; and
+3. the **univalence axiom**, which identifies equivalence of types with equality of
+   types.
+
+This paper formalizes representative results for each ingredient and, crucially,
+records what changes when the ambient system's equality is *proof-irrelevant* — when
+each identity type $a = x$ is a `Subsingleton`. We refer to this as the **0-truncated
+shadow** of HoTT. Our central empirical finding is a trichotomy: (i) statements
+invariant under 0-truncation become *short* (the fundamental theorem); (ii) the
+propositional-truncation HIT is fully realizable, with its genuinely higher content
+isolated in a single lemma; and (iii) univalence becomes *globally inconsistent* yet
+*survives on propositions*.
+
+### 1.1 Conventions
+
+We work with `Sort`-polymorphic definitions so that identity-type domains (which, in
+this system, live in the lowest universe `Prop = Sort 0`) are admissible. Dependent
+pairs are written $\sum' x, B\,x$ (the `PSigma` total space). The reflexivity path is
+$\mathrm{refl}$, and transport of $u : B(a)$ along $p : a = x$ is written $p_*(u)$.
+
+## 2. Identity types and the fundamental theorem
+
+### 2.1 Contractibility, fibers, equivalences
+
+**Definition 1 (Contractibility).** A type $A$ is *contractible*, $\mathrm{IsContr}(A)$,
+if it is equipped with a *center* $c : A$ and a *contraction* $\prod_{x:A} (c = x)$.
+Contractible types are the $(-2)$-truncated types: "uniquely inhabited."
+
+**Definition 2 (Fiber).** For $f : A \to B$ and $y : B$, the (homotopy) *fiber* is
+$$\mathrm{Fiber}(f, y) \;:=\; \sum' x : A,\; f(x) = y.$$
+
+**Definition 3 (Equivalence).** A map $f : A \to B$ is an *equivalence*,
+$\mathrm{IsEquiv}(f)$, if every fiber is contractible:
+$\prod_{y:B} \mathrm{IsContr}(\mathrm{Fiber}(f,y))$. This is the *contractible-fibers*
+formulation, chosen because it is a mere proposition and composes cleanly.
+
+**Lemma 1 (Contractible ⇒ subsingleton).** If $\mathrm{IsContr}(A)$ then
+$\prod_{x,y:A} (x = y)$.
+*Proof.* Given $x, y$, rewrite both along the contraction at the center: $x = c = y$.
+∎ (`IsContr.subsingleton`)
+
+### 2.2 Based path spaces are contractible
+
+**Theorem 1 (Based path spaces are contractible).** For any $a : A$,
+$$\mathrm{IsContr}\Big(\textstyle\sum' y : A,\; a = y\Big),$$
+with center $(a, \mathrm{refl})$. (`singleton_isContr`)
+
+*Proof.* The center is $(a, \mathrm{refl})$. For the contraction, take an arbitrary
+pair $(y, p)$ with $p : a = y$ and perform path induction (case analysis) on $p$;
+the only case is $p = \mathrm{refl}$, $y = a$, where the goal $(a, \mathrm{refl}) =
+(a, \mathrm{refl})$ holds by reflexivity. ∎
+
+This is the *singleton contractibility* lemma — the cornerstone of identity-type
+theory — and its proof is a single application of path induction.
+
+### 2.3 The transport (encoding) map
+
+**Definition 4 (Encode / transport).** For a family $B : A \to \mathrm{Sort}$, a base
+point $a : A$, and $b : B(a)$, define
+$$\mathrm{encode}_x : (a = x) \to B(x), \qquad \mathrm{encode}_x(p) := p_*(b).$$
+(`encode`)
+
+### 2.4 The fundamental theorem
+
+**Theorem 2 (Fundamental Theorem of Identity Types).** Let $B : A \to \mathrm{Sort}$,
+$a : A$, $b : B(a)$. Then
+$$\Big(\prod_{x:A} \mathrm{IsEquiv}(\mathrm{encode}_x)\Big) \;\Longleftrightarrow\;
+\mathrm{IsContr}\Big(\textstyle\sum' x : A,\; B(x)\Big).$$
+(`fundamental_identity_forward`, `fundamental_identity_backward`)
+
+*Proof sketch (⇒, forward).* Assume each $\mathrm{encode}_x$ is an equivalence.
+Propose $(a, b)$ as the center of $\sum' x, B(x)$. For an arbitrary $(x, u)$, the
+fiber of $\mathrm{encode}_x$ over $u$ is contractible, hence inhabited: there is a
+path $p : a = x$ with $\mathrm{encode}_x(p) = p_*(b) = u$. Path-induct on $p$ (so
+$x = a$, $p = \mathrm{refl}$), and the witness equation collapses $u$ to $b$;
+therefore $(x, u) = (a, b)$. Thus $(a,b)$ is a center. Only *inhabitedness* of fibers
+(surjectivity) is used. ∎
+
+*Proof sketch (⇐, backward).* Assume $\sum' x, B(x)$ is contractible; by Lemma 1 it is
+a subsingleton. Fix $x$ and a target $u : B(x)$; we must show
+$\mathrm{Fiber}(\mathrm{encode}_x, u)$ is contractible. Subsingleton-ness gives
+$(a, b) = (x, u)$ in the total space; projecting, we obtain $a = x$ and (after
+substituting) a heterogeneous identification of $b$ with $u$, yielding an element of
+the fiber, namely $(\mathrm{refl}, e)$ for the appropriate $e$. Contractibility of the
+fiber is then immediate: the fiber is a `PSigma` of two proof-irrelevant components
+($a = x$ and an equality in $B(x)$), so any two of its elements are equal and the
+exhibited element is a center. ∎
+
+**Remark (the collapse).** In a proof-irrelevant ambient system the proof requires no
+transport-coherence bookkeeping: each direction reduces to *inhabitedness of fibers*
+plus *subsingleton-ness*. This is the "set-level shadow" of the fundamental theorem.
+The higher-dimensional content of the genuine HoTT statement is precisely what is
+discarded by 0-truncation.
+
+**Corollary 1.** For the lifted identity family $x \mapsto \mathrm{PLift}(a = x)$ with
+base point $\langle \mathrm{refl}\rangle$, the transport map $\mathrm{encode}_x$ is a
+fiberwise equivalence. (`isEquiv_encode_of_isContr`)
+*Proof.* Apply Theorem 2 (⇐), whose hypothesis — contractibility of
+$\sum' x, \mathrm{PLift}(a=x)$ — follows from Theorem 1 (up to the trivial lift). ∎
+
+## 3. Higher inductive types: propositional truncation
+
+### 3.1 Construction
+
+**Definition 5 (Propositional truncation).** For $A : \mathrm{Sort}\,u$, define the
+*propositional truncation*
+$$\|A\| \;:=\; \mathrm{Quot}\,(\lambda\, \_\,\_.\ \top),$$
+the quotient of $A$ by the *total* relation. Write $\mathrm{mk} : A \to \|A\|$ for the
+point constructor (the quotient projection). (`Trunc`, `mk`)
+
+The path constructor — "any two elements are identified" — is not assumed; it is
+*derived* from the totality of the relation via the quotient's soundness principle
+($\mathrm{Quot.sound}$ applied to the trivial witness $\mathrm{trivial} : \top$).
+
+### 3.2 The path constructor as a theorem
+
+**Theorem 3 ($\|A\|$ is a mere proposition).** For all $x, y : \|A\|$, $x = y$.
+(`Trunc.isProp`)
+
+*Proof sketch.* By quotient induction ($\mathrm{Quot.ind}$) reduce $x$ and $y$ to
+point-images $\mathrm{mk}(a)$ and $\mathrm{mk}(b)$. Since the defining relation is
+total, $\mathrm{Quot.sound}$ on the witness $\mathrm{trivial}$ yields
+$\mathrm{mk}(a) = \mathrm{mk}(b)$. ∎
+
+This is the genuinely HIT-flavored fact: it fails for a bare quotient unless the
+relation is total, and its proof *is* the path constructor.
+
+### 3.3 Universal property
+
+**Theorem 4 (Recursion and induction).** Let $P$ be a proposition (a `Subsingleton`).
+(i) *Recursion:* for any $f : A \to P$ there is a map $\mathrm{lift}\,f : \|A\| \to P$
+with $\mathrm{lift}\,f\,(\mathrm{mk}\,a) = f\,a$ (`Trunc.lift`, `Trunc.lift_mk`).
+(ii) *Induction:* for any family $P : \|A\| \to \mathrm{Prop}$ with each $P(t)$ a
+proposition, to prove $\prod_{t} P(t)$ it suffices to prove $\prod_{a} P(\mathrm{mk}\,a)$
+(`Trunc.ind`).
+
+*Proof sketch.* For (i), $f$ respects the total relation automatically because the
+target $P$ is a subsingleton: $f\,a = f\,b$ by $\mathrm{Subsingleton.elim}$. Hence
+$\mathrm{Quot.lift}$ applies, and the computation rule $\mathrm{lift}\,f\,(\mathrm{mk}\,a)
+= f\,a$ holds definitionally. (ii) follows from $\mathrm{Quot.ind}$ together with
+subsingleton-ness of each $P(t)$. ∎
+
+The universal property exhibits $\|{-}\|$ as left adjoint to the inclusion of
+propositions into types: $\|A\| \to P$ is naturally equivalent to $A \to P$ for $P$ a
+proposition.
+
+### 3.4 Idempotence and product preservation
+
+**Theorem 5 (Idempotence on propositions).** If $A$ is a proposition, then
+$\mathrm{mk} : A \to \|A\|$ is an equivalence; equivalently $\|A\| \simeq A$.
+(`Trunc.equivOfIsProp`)
+*Proof sketch.* Define the inverse by $\mathrm{lift}(\mathrm{id}_A) : \|A\| \to A$
+(legitimate because $A$ is itself a proposition). The round-trips hold by
+$\mathrm{lift\_mk}$ in one direction and by $\mathrm{isProp}$ in the other. ∎
+
+**Theorem 6 (Truncation preserves binary products).**
+$$\|A \times B\| \;\simeq\; \|A\| \times \|B\|.$$
+(`Trunc.prod_equiv`)
+*Proof sketch.* Forward: $\mathrm{lift}$ the map $(a,b) \mapsto (\mathrm{mk}\,a,
+\mathrm{mk}\,b)$ — valid since $\|A\|\times\|B\|$ is a proposition (a product of
+propositions). Backward: given $(s,t) : \|A\|\times\|B\|$, eliminate $s$ and then $t$
+through the truncation (nested $\mathrm{Trunc.lift}$/$\mathrm{ind}$), recovering points
+$a, b$ and returning $\mathrm{mk}(a,b)$; this is well defined because the target
+$\|A\times B\|$ is a proposition. The two composites are equal by $\mathrm{isProp}$ on
+each side. ∎
+
+The backward map is the first construction requiring the recursor in an essential,
+*iterated* way: two independently truncated witnesses must be recombined into a single
+truncated pair.
+
+## 4. Univalence: global failure and propositional survival
+
+### 4.1 The canonical map and bundled data
+
+**Definition 6 (idToEquiv and UnivalenceData).** For types $A, B$ there is a canonical
+map
+$$\mathrm{idToEquiv} : (A = B) \to (A \simeq B),$$
+sending $\mathrm{refl}$ to the identity equivalence (transport along a type equality).
+*Univalence data* ($\mathrm{UnivalenceData}$) bundles $\mathrm{idToEquiv}$ together
+with the data witnessing that it is an equivalence (an inverse with round-trip laws).
+(`idToEquiv`, `UnivalenceData`)
+
+**Definition 7 (The Bool obstruction).** Let $\mathrm{negEquiv} : \mathrm{Bool} \simeq
+\mathrm{Bool}$ be the equivalence given by Boolean negation $\mathrm{not}$
+(self-inverse). It is distinct from the identity equivalence:
+$\mathrm{negEquiv} \neq \mathrm{Equiv.refl}$, since they disagree on $\mathrm{true}$.
+(`negEquiv`)
+
+### 4.2 Global inconsistency
+
+**Theorem 7 (Univalence is inconsistent in the proof-irrelevant setting).** From
+$\mathrm{UnivalenceData}$ one derives $\bot$. (`UnivalenceData.not_inhabited`)
+
+*Proof sketch.* Suppose $\mathrm{idToEquiv}$ admits an inverse $g$. Apply $g$ to the two
+distinct self-equivalences $\mathrm{Equiv.refl}$ and $\mathrm{negEquiv}$ of
+$\mathrm{Bool}$, obtaining two identifications $\mathrm{Bool} = \mathrm{Bool}$. Because
+ambient equality is proof-irrelevant, those two identifications are *equal*; applying
+$\mathrm{idToEquiv}$ and using the round-trip law $g$ is a section of, we conclude
+$\mathrm{Equiv.refl} = \mathrm{negEquiv}$, contradicting Definition 7. ∎
+
+**Interpretation.** The contradiction is powered by a *non-subsingleton equivalence
+type*: $\mathrm{Bool} \simeq \mathrm{Bool}$ has at least two elements, while
+$\mathrm{Bool} = \mathrm{Bool}$ has exactly one. Univalence demands a proof-relevant
+identity type; $\mathrm{Bool}$, with $|\mathrm{Bool} \simeq \mathrm{Bool}| = 2$, is the
+minimal witness that proof-irrelevance forbids it.
+
+### 4.3 Survival on propositions
+
+**Theorem 8 (Univalence on propositions).** Restricted to the universe of
+propositions, identity and equivalence coincide: for propositions $P, Q$,
+$$(P = Q) \;\simeq\; (P \simeq Q),$$
+and this equivalence is realized by $\mathrm{idToEquiv}$. (`propUnivalence`,
+`propUnivalence_idToEquiv`)
+
+*Proof sketch.* For propositions, an equivalence $P \simeq Q$ is the same data as a
+logical equivalence $P \leftrightarrow Q$ (both directions, with round-trips automatic
+by subsingleton-ness). Propositional extensionality ($\mathrm{propext}$) turns
+$P \leftrightarrow Q$ into $P = Q$, providing the inverse to $\mathrm{idToEquiv}$. The
+round-trip laws hold because $P = Q$ is a subsingleton and equivalences of
+propositions are determined by their underlying implications. ∎
+
+**Interpretation.** The obstruction of §4.2 vanishes precisely because a proposition
+has no nontrivial self-equivalence ($|P \simeq P| \le 1$). Thus the propositional
+fragment is exactly the largest sub-universe on which $\mathrm{idToEquiv}$ is an
+equivalence in a proof-irrelevant foundation.
+
+## 5. Algorithms
+
+The constructions above induce decision/transformation procedures on *finite* models,
+where contractibility, equivalence, and truncation become concrete computations.
+
+**Algorithm A (Fiberwise-equivalence ⇔ contractible-total-space checker).** Given a
+finite base type $A$, a finite family $B(\cdot)$, a base point $a$, and $b : B(a)$,
+the algorithm (i) builds each fiber of $\mathrm{encode}_x$ and tests contractibility
+(exactly one element), and (ii) tests contractibility of $\sum_x B(x)$, then verifies
+the two verdicts agree — a finite instance of Theorem 2. Complexity
+$O\big(\sum_x |a = x|\cdot|B(x)|\big)$.
+
+**Algorithm B (Propositional-truncation product oracle).** Given finite $A, B$,
+compute $\|A\times B\|$ and $\|A\|\times\|B\|$ as Booleans (inhabited?) and verify the
+equivalence of Theorem 6: $A\times B$ is inhabited iff both $A$ and $B$ are. Complexity
+$O(1)$ after inhabitation tests.
+
+**Algorithm C (Univalence-obstruction detector).** Given a finite type $T$, enumerate
+$\mathrm{Aut}(T) = (T \simeq T)$ and compare $|\mathrm{Aut}(T)|$ with the number of
+self-identifications available in a proof-irrelevant identity type (always $1$). The
+obstruction of Theorem 7 is present iff $|\mathrm{Aut}(T)| > 1$; the minimal such $T$
+is $\mathrm{Bool}$ with $|\mathrm{Aut}(\mathrm{Bool})| = 2$. Complexity $O(|T|!\cdot|T|)$
+for the naive automorphism enumeration.
+
+## 6. Applications
+
+- **Path-space computations.** Theorem 2 is the standard device for characterizing the
+  identity type of an inductive or higher-inductive type by exhibiting a contractible
+  total space — e.g. encode–decode arguments computing loop spaces.
+- **Hiding witnesses (the existential modality).** Theorem 3–6 make $\|{-}\|$ a usable
+  propositional-existence modality: $\|A\|$ records *that* $A$ is inhabited while
+  forgetting *which* element, and Theorem 6 lets such existence statements be combined
+  componentwise.
+- **Foundational diagnostics.** Theorems 7–8 quantify exactly where a proof-irrelevant
+  foundation can and cannot host univalence, guiding the design of reflective
+  proposition-subuniverses.
+
+## 7. Discussion: the 0-truncated-shadow principle
+
+The three developments fit a single template. A proof-irrelevant foundation is the
+*0-truncated shadow* of a univalent universe: every identity type is a subsingleton.
+Consequently:
+
+- A HoTT theorem that is *invariant under 0-truncation* (its content survives flattening
+  of path spaces) becomes provable by a short argument — exemplified by the fundamental
+  theorem, whose two directions reduce to inhabitedness and subsingleton-ness.
+- A HIT whose universal property targets propositions is *fully realizable* via quotient
+  by the appropriate relation; its higher content concentrates in a single lemma
+  (here, $\mathrm{isProp}$).
+- A principle that *requires proof-relevance* (univalence) fails globally but persists
+  exactly on the flat — propositional — part of the universe.
+
+This delineates a precise frontier between what proof-irrelevant systems get "for free"
+and what genuinely demands higher-dimensional foundations.
+
+## 8. Future work
+
+See the "Future Directions" appendix for three falsifiable conjectures:
+(1) truncation level controls which HoTT theorems collapse, via finer quotient
+encodings of $n$-truncation; (2) the Bool obstruction is the *unique minimal* witness
+of non-univalence, formalizable through $|\mathrm{Aut}(T)|$; and (3) propositional
+univalence extends to a reflective subuniverse of $h$-propositions that is the largest
+sub-universe satisfying univalence.
+
+## Appendix: index of formalized results
+
+| Name | Statement |
+|---|---|
+| `IsContr`, `Fiber`, `IsEquiv` | contractibility, homotopy fiber, contractible-fibers equivalence |
+| `IsContr.subsingleton` | contractible ⇒ subsingleton |
+| `singleton_isContr` | based path space $\sum' y, a=y$ is contractible |
+| `encode` | transport map $(a=x) \to B(x)$ |
+| `fundamental_identity_forward` | fiberwise equiv ⇒ contractible total space |
+| `fundamental_identity_backward` | contractible total space ⇒ fiberwise equiv |
+| `isEquiv_encode_of_isContr` | corollary for the lifted identity family |
+| `Trunc`, `mk` | propositional truncation via `Quot` of total relation |
+| `Trunc.isProp` | $\|A\|$ is a mere proposition |
+| `Trunc.lift`, `Trunc.lift_mk`, `Trunc.ind` | recursor, computation rule, dependent eliminator |
+| `Trunc.equivOfIsProp` | idempotence on propositions |
+| `Trunc.prod_equiv` | $\|A\times B\| \simeq \|A\|\times\|B\|$ |
+| `idToEquiv`, `UnivalenceData` | canonical $A=B \to A\simeq B$ and its bundling |
+| `negEquiv` | the nontrivial self-equivalence of `Bool` |
+| `UnivalenceData.not_inhabited` | univalence data ⇒ ⊥ (proof-irrelevant setting) |
+| `propUnivalence`, `propUnivalence_idToEquiv` | univalence holds on propositions |
