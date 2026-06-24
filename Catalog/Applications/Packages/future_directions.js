@@ -1018,7 +1018,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Sun-Sun Primes"
   },
   {
-    "consumed_by_exp_id": "b21b1644",
+    "consumed_by_exp_id": "",
     "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Computation",
@@ -1028,7 +1028,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
   },
@@ -3236,7 +3236,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "GeneralizedPeriod Relation for Betti-Whittaker Periods and Contragredient Representations of GL(n)"
   },
   {
-    "consumed_by_exp_id": "72ef5a59",
+    "consumed_by_exp_id": "",
     "description": "This paper investigates the interpolation properties of partial-twuality polynomials defined on set systems associated with binary delta-matroids, extending existing results to all nontrivial twuals and highlighting the role of categorical structure.",
     "domains": [
       "Algebra"
@@ -3245,7 +3245,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T08:15:06.141089+00:00",
     "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
   },
@@ -3820,12 +3820,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: Let P be a connected polymatroid on a finite ground set E. For any element e \u2208 E that is neither a loop (f({e})=0) nor a coloop (f(E)\u2212f(E\\{e}) = f({e})), both the deletion P\u2212e and the contraction P/e are connected polymatroids. This would strengthen Hall's 2013 result which guarantees only two elements with at least one connected minor.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2451",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22819v1",
+    "status": "available",
+    "timestamp": "2026-06-24T21:36:52.673574+00:00",
+    "title": "Both deletion and contraction of a non-loop non-coloop element preserve connectivity in connected polymatroids"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2451",
+    "id": "fd_2452",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3839,7 +3854,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3854,7 +3869,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3868,7 +3883,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3883,7 +3898,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2455",
+    "id": "fd_2456",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3897,7 +3912,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3911,7 +3926,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -3925,7 +3940,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -3939,7 +3954,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -3954,7 +3969,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3968,7 +3983,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -3982,7 +3997,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -3997,7 +4012,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
@@ -4011,7 +4026,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -4025,7 +4040,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -4040,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23024v1",
@@ -4055,7 +4070,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -4069,13 +4084,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
     "status": "available",
     "timestamp": "2026-06-24T21:09:29.440062+00:00",
     "title": "Intersection-Property of Partial-\u2219 Polynomials for Binary Delta-Matroids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers k \u2265 2 and sufficiently large n, the maximum number of edges in a C_{4k+2}^{4-}-free 4\u2011uniform hypergraph on n vertices is exactly half of the total possible 4\u2011subsets, i.e., ex(n, C_{4k+2}^{4-}) = (1/2)\u00b7\\binom{n}{4}.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2470",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22828v1",
+    "status": "available",
+    "timestamp": "2026-06-24T21:37:07.819069+00:00",
+    "title": "Tur\u00e1n density of 4\u2011uniform tight cycles minus one edge equals 1/2"
   },
   {
     "consumed_by_exp_id": "",
@@ -4265,21 +4294,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nDerived from *A Sharp Generalized Uniform\u2013Witness Bound for Families with\nPrescribed Missing\u2013Trace Size* (`RESEARCH_PAPER.md`) and its formal companion\n`Catalog/Bridges/UniformWitnessBound.lean`.\n\nEach direction is stated so that it can be turned into a concrete Lean target.\n\n## D1. Closed form for `W*(d,s,n)` below saturation\n**Goal.** Prove `W*(2,2,n) = n-1` for all `n \u2265 2`, with the extremal families being\nexactly the spanning trees (graphs with `n-1` edges and no shattered pair); then\nfind and prove the closed form for general `d` when `s + d \u2264 n`.\n**Why.** The saturation regime (`s + d > n`) is settled (Theorem A/B); the verified\ngaps `W*(2,2,n) = n-1 < C(n,1)` show a different law governs `s + d \u2264 n`.\n**Falsifiable Lean target.** `theorem Wstar_2_2 (n) (h : 2 \u2264 n) : UWB.Wstar 2 2 n = n - 1`.\n\n## D2. Classification of extremal families in the EKR window\n**Goal.** For `\u2308(d+2)/2\u2309 \u2264 s \u2264 d`, classify (up to `Sym(n)`) all families attaining\n`W*(d,s,n)`, testing the conjecture that they are star/tree-like liftings of the\n`d = 2` extremal graphs.\n**Why.** This is the window flagged by recent disproofs as carrying new extremal\nconstructions; turning the bound into an enumerator is the stated novelty.\n**Falsifiable Lean target.** A predicate `IsExtremal d s n F` and a theorem\ncharacterizing it, validated by `native_decide` agreement with the \u00a73 enumerator on\nall `n \u2264 7`.\n\n## D3. Tightness threshold for Frankl\u2013Pach\n**Goal.** Determine, for fixed `(d,s)`, the exact set of `n` for which the\nFrankl\u2013Pach bound `C(n,d-1)` is attained (equivalently `W*(d,s,n) = C(n,d-1)`), and\nprove the boundary occurs exactly at the saturation edge `s + d = n+1`.\n**Why.** The data show tightness in saturation and strict slack just below it; the\ncrossover is a clean invariant.\n**Falsifiable Lean target.**\n`theorem fp_tight_iff (d s n) (hd : 1 \u2264 d) : UWB.Wstar d s n = UWB.FP d n \u2194 n < s + d`\n(to be confirmed/adjusted against the data before proving).\n\n## D4. Complete the Frankl\u2013Pach upper bound formally\n**Goal.** Discharge `UWB.franklPach_bound` (the general `|F| \u2264 C(n,d-1)` bound) in\nLean via down-compression/shifting, reusing the pigeonhole and injection lemmas in\n`Bridges.CombinatorialBridge` and `Bridges.PigeonholeInjectionBridge`.\n**Why.** It is the scalar backbone every sharp refinement sits beneath, and is the\none remaining `sorry` in the companion file.\n**Falsifiable Lean target.** the existing statement `UWB.franklPach_bound`.\n\n## D5. Multicolored / alphabet-`q` generalization\n**Goal.** Replace the `{0,1}` indicator (subset) traces by length-`d` windows over a\n`q`-letter alphabet (connecting to the subword-complexity pigeonhole of\n`Cryptography.KMerAvoidance`), and prove the analogue of Theorem A: a saturation\nthreshold beyond which every uniform family misses a trace on every `d`-window.\n**Why.** Unifies the EKR-style set-trace bound with the de Bruijn / `k`-mer\npigeonhole bound under one \"missing-trace\" invariant.\n**Falsifiable Lean target.** a `q`-ary `Wstar_q d s n` with\n`theorem noShatter_q_of_saturated` mirroring `UWB.noShatter_of_saturated`.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2469",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "18853638",
-    "status": "available",
-    "timestamp": "2026-06-24T21:30:25.831444+00:00",
-    "title": "Derived from *A Sharp Generalized Uniform\u2013Witness Bound for Families with"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4353,7 +4367,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7242c7d6",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -4363,7 +4377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -4397,7 +4411,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "c7ae3fab",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4407,7 +4421,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -4871,6 +4885,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:47.634604+00:00",
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
+    "domains": [
+      "Bridges",
+      "Geometry"
+    ],
+    "id": "fd_0528",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:05.964661+00:00",
+    "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
   {
     "consumed_by_exp_id": "",

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6ddef5de",
     "filename": "diffusion_models_as_stochastic_differential_equati.json",
     "pkg_num": 42,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.66248,
     "title": "Diffusion Models as Stochastic Differential Equations: The Deterministic Moment Backbone of the Variance-Preserving Ornstein-Uhlenbeck Process"
   },
   {
@@ -1227,8 +1227,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "diffusion_models_as_stochastic_differential_equati",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.66248,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Diffusion Models as Stochastic Differential Equations: The Deterministic Moment Backbone of the Variance-Preserving Ornstein-Uhlenbeck Process"
     }
