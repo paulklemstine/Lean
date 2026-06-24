@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ab2bf6f4",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — CSS Codes as Cohomology\n\nThis cycle established the dictionary **CSS code = homology of an `F₂`-chain\ncomplex** (`Core.lean`), *refuted* the hypercube conjecture for the 1-skelet",
-      "quality_score": 0.5330519163763068,
-      "sorry_count": 0,
-      "theorem_count": 32,
-      "timestamp": "2026-06-17T14:16:07",
-      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
-    },
-    {
       "cycle_id": "8e98f715",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Transreal Arithmetic & the Wheel Collapse\n\nDerived from this cycle's verified findings in\n`Catalog/Algebra/Transreal/{Basic,RingFails,Wheel,TropicalBridge}.lean`.\n\nCycle summary",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-24T21:36:22",
       "title": "Diffusion Models as Stochastic Differential Equations"
+    },
+    {
+      "cycle_id": "72ef5a59",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Partial-Twuality Polynomials in Binary Delta-Matroids\n\nDerived from the Stage 3/4 findings of this research cycle (formalised in\n`Twist.lean`, `Interpolation.lean`, `Examples.lea",
+      "quality_score": 0.6934400000000001,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-24T22:33:13",
+      "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7684399999999999
     }
   ],
-  "last_updated": "2026-06-24T21:36:22",
+  "last_updated": "2026-06-24T22:33:13",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "77489d34",
-        "quality": 0.5406000000000001,
-        "theorems": 0,
-        "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-      },
-      {
         "cycle_id": "0d2b0b43",
         "quality": 0.5115800000000001,
         "theorems": 128,
@@ -4009,6 +4003,12 @@
         "quality": 0.86528,
         "theorems": 20,
         "title": "EML Universal Approximation: Density of EML Functions"
+      },
+      {
+        "cycle_id": "72ef5a59",
+        "quality": 0.6934400000000001,
+        "theorems": 13,
+        "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
       }
     ]
   }

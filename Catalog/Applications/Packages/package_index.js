@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "72ef5a59",
     "filename": "interpolation_of_partial_twuality_polynomials_in_b.json",
     "pkg_num": 43,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6934400000000001,
     "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
   },
   {
@@ -1256,8 +1256,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "interpolation_of_partial_twuality_polynomials_in_b",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6934400000000001,
+      "quality": "partial",
       "shape": "star",
       "title": "Interpolation of Partial-Twuality Polynomials in Binary Delta-Matroids"
     }
