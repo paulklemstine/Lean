@@ -1451,7 +1451,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Normality of Mathematical Constants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb41e046",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
     "domains": [
       "Computation",
@@ -1461,7 +1461,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.975605+00:00",
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
@@ -2487,7 +2487,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Row Sum Fibonacci Property of Pascal-like Riordan Array"
   },
   {
-    "consumed_by_exp_id": "7e71ceda",
+    "consumed_by_exp_id": "",
     "description": "Every Hamiltonian connected cubic edge-transitive graph \u0393 has Hamiltonian compression factor \u03ba(\u0393) \u2265 2, i.e., it admits a 2-symmetric Hamiltonian cycle: there exists a Hamiltonian cycle C and an automorphism g of order 2 such that g acts on C as a rotation by |V(\u0393)|/2 positions. This is supported by exhaustive computation on all such graphs up to 10,000 vertices, where every Hamiltonian cubic edge-transitive graph was found to have \u03ba \u2265 2.",
     "domains": [
       "Physics"
@@ -2496,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21941v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T13:48:00.738680+00:00",
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
@@ -3109,11 +3109,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a connected signed graph \u03a3 and a non-isolated vertex v, the inequality \u03bb\u2081(\u03a3) \u2264 \u221a(\u03bb\u2081\u00b2(\u03a3\u2212v) + 2d(v) \u2212 1) holds, with equality if and only if \u03a3 is a signed star with v as the center or \u03a3 is a signed complete graph.",
+    "domains": [
+      "Physics"
+    ],
+    "id": "fd_2400",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23584v1",
+    "status": "available",
+    "timestamp": "2026-06-24T01:36:45.202062+00:00",
+    "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2400",
+    "id": "fd_2401",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -3128,7 +3142,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2401",
+    "id": "fd_2402",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3142,7 +3156,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2402",
+    "id": "fd_2403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
@@ -3156,13 +3170,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2403",
+    "id": "fd_2404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
     "status": "available",
     "timestamp": "2026-06-24T00:59:28.784546+00:00",
     "title": "Optimality of the density\u2011one lower and pointwise upper bounds for Erd\u0151s Problem\u202f400"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all integers t \u2265 2 and m \u2265 1, if nonzero linear forms \u2113\u2081,\u2026,\u2113_t over a field of characteristic zero have m-th powers \u2113\u2081^m,\u2026,\u2113_t^m that are minimally linearly dependent, then dim Span{\u2113\u2081,\u2026,\u2113_t} \u2264 (t + m - 2)/m, with equality if and only if the linear forms are linearly dependent in a way that their supports form a rational normal curve in the Veronese embedding.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2405",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24349v1",
+    "status": "available",
+    "timestamp": "2026-06-24T01:38:01.066930+00:00",
+    "title": "Sharp dimension bound for minimal dependencies of linear-form powers in Veronese circuits"
   },
   {
     "consumed_by_exp_id": "",
@@ -3349,21 +3378,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Proof Automation: Custom Lean 4 Tactics\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle (`TropicalSimp.lean`, `NumberTheoryDecide.lean`, `SpectralBound.lean`).\n\n## 1. A confluent, terminating `tropical_simp` normal form\n**Conjecture.** The min-plus rewrite system underlying `tropical_simp`\n(scalar distributivity + idempotent commutative monoid laws of `min`) is\nconfluent and terminating, so every min-plus expression has a *unique* normal\nform: a single `min` over affine monomials with no repeated exponents.\n**The key insight is** that min-plus distributivity pushes every `+` past every\n`min`, after which idempotency (`min_self`) deduplicates monomials \u2014 exactly the\ncanonicalisation already proved for tropical polynomials in `Tropical/Core`.\n**Why now?** This cycle proved the distributive backbone (`tropical_fold_distrib`,\n`tropical_inf'_distrib`); a termination measure (multiset of `+`-depths) is now\nwithin reach and would turn `tropical_simp` into a decision procedure for\nmin-plus equality.\n\n## 2. `number_theory_decide` as a residue-class reflection tactic\n**Conjecture.** Every universally-quantified statement of the form\n`\u2200 n, P (n % m)` with `P` decidable is provably equivalent to the finite check\n`\u2200 r < m, P r`, and this reduction can be automated soundly.\n**The key insight is** that `n % m` ranges over exactly `{0, \u2026, m-1}`, so the\nunbounded universal collapses to a `decide`-able finite disjunction \u2014 the same\nparity move used in `sq_mod_four`, generalised from `m = 2,4` to arbitrary `m`.\n**Why now?** `sq_mod_four` showed the two-case instance; lifting it to a\n`Fin m`-indexed reflection lemma would let `number_theory_decide` settle a whole\nclass of Catalog quadratic-residue and divisibility facts in one line.\n\n## 3. Column-sum and symmetric-matrix sharpenings of `spectral_bound`\n**Conjecture.** For Hermitian `A`, the eigenvalue bound\n`\u2016\u03bc\u2016 \u2264 \u2a06 i, \u2211 j \u2016A i j\u2016` can be strengthened to a two-sided real interval\n`[\u03bb_min, \u03bb_max]` contained in the union of Gershgorin discs, with the discs\ncentred on real diagonal entries.\n**The key insight is** that Hermitian matrices have real spectra and equal row /\ncolumn sums for the modulus, so the existential `eigenvalue_norm_le_row_sum`\nbecomes a genuine interval localisation rather than a modulus bound.\n**Why now?** This cycle established the modulus bound from Gershgorin; Mathlib\nalready carries the spectral theorem for Hermitian matrices, so the interval\nrefinement only needs to glue the two existing results.\n\n## 4. Tropical eigenvalue (max-plus) bridge to `spectral_bound`\n**Conjecture.** The tropical (min-plus) eigenvalue of a square matrix \u2014 the\nminimum cycle mean \u2014 admits a Gershgorin-style localisation\n`\u03bb_trop \u2265 \u2a05 i, A i i` analogous to `eigenvalue_norm_le_max_row_sum`.\n**The key insight is** that min-plus matrix powers compute shortest paths, so the\ntropical eigenvalue is a min over cycle means, and the diagonal entries are the\nlength-1 cycles bounding it \u2014 directly reusing `tropical_inf'_distrib`.\n**Why now?** With both a verified min-plus distributive calculus (File I) and a\nverified classical spectral bound (File III) in hand, the max-plus eigenvalue is\nthe natural bridge object unifying the two automation themes.\n\n## 5. A unified soundness meta-theorem for `simp`-set tactics\n**Conjecture.** Any tactic defined as `simp only [L]` for a list `L` of proved\nequational lemmas is sound by construction, and this can be packaged as a\nreusable Lean attribute that certifies new domain tactics automatically.\n**The key insight is** that soundness of such tactics is *not* a per-tactic\ntheorem but a corollary of `simp` emitting kernel-checked terms \u2014 so the audit\nreduces to checking each member of `L` is a `theorem`, which is mechanisable.\n**Why now?** All three tactics in this cycle share the identical soundness\nargument; abstracting it would let the Catalog add domain tactics with a single\ncertified template instead of bespoke soundness prose.\n",
-    "domains": [
-      "Tropical",
-      "Logic"
-    ],
-    "id": "fd_2404",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0dfef380",
-    "status": "available",
-    "timestamp": "2026-06-24T01:21:59.076442+00:00",
-    "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
   },
   {
     "consumed_by_exp_id": "",
