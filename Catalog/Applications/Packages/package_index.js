@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "44e772b7",
     "filename": "existence_of_non_trivial_boolean_degree_one_functi.json",
     "pkg_num": 27,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.69522,
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(4,2) via the Bruen-Drudge Midpoint"
   },
   {
@@ -792,8 +792,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "existence_of_non_trivial_boolean_degree_one_functi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.69522,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(4,2) via the Bruen-Drudge Midpoint"
     }

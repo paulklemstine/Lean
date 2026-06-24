@@ -1599,7 +1599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hochschild homology isomorphism between asymptotic and classical Hecke algebras for inner forms of GL_n"
   },
   {
-    "consumed_by_exp_id": "d135fcbe",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k \u2265 3, the Conformability problem is NP-complete when restricted to connected d-regular graphs G of odd order n with independence number \u03b1(G) = k and maximum degree d \u2265 n/2. The paper establishes this for k = 3 by reduction from perfect triangle packing in K\u2084-free graphs. The conjecture asserts that hardness persists for all larger independence numbers, where the complement graph has clique number k and conformable color classes correspond to cliques of odd size up to k in the complement, requiring richer packing structures to encode NP-hard problems.",
     "domains": [
       "Pythagorean",
@@ -1609,7 +1609,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21534v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T01:48:36.909062+00:00",
     "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
   },
@@ -2285,7 +2285,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree-One Triviality of Grassmann Schemes $J_q(n,2)$ for $n \\ge q+2$"
   },
   {
-    "consumed_by_exp_id": "f8155d9b",
+    "consumed_by_exp_id": "",
     "description": "The number of binary 2-binomial equivalence classes of words of length n over the alphabet {0,1} equals the n-th cake number, i.e., (n^3 + 5n + 6) / 6 = \u2211_{r=0}^{3} C(n,r). This is the identity established by Rigo\u2013Salimov and given geometric explanation in the paper via hyperplane arrangements.",
     "domains": [
       "Geometry"
@@ -2294,7 +2294,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T08:33:50.471570+00:00",
     "title": "Binary 2-binomial class count equals the cake number"
   },
@@ -3802,6 +3802,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Boolean Degree One Functions on `J_q(n,2)`\n\nDerived from the Stage 3 / Stage 4 findings of this cycle (see the Lab Notes in\n`Catalog/Shared/GrassmannJq2LineCounts.lean` and\n`Catalog/Shared/CameronLieblerNonTrivial.lean`).\n\n## C1. The non-trivial window is non-empty exactly when `q \u2265 3`\n**Conjecture.** For the Grassmann scheme `J_q(4,2)`, a non-trivial Boolean degree one\nfunction (Cameron\u2013Liebler parameter `2 < x < q^2-1`) exists **iff** `q \u2265 3`, and never for\n`q = 2`.\n*The key insight is...* that the trivial window `{0,1,2} \u222a {q\u00b2-1,q\u00b2,q\u00b2+1}` already\nexhausts all parameters `0..q\u00b2+1` precisely when `q\u00b2 + 1 \u2264 5`, i.e. `q \u2264 2`; for `q \u2265 3`\nthe integer interval `(2, q\u00b2-1)` is non-empty and the self-complementary midpoint\n`(q\u00b2+1)/2` sits inside it.\n*Why now?* We have already proved `bdParam_range` (the midpoint is inside the window for\nodd `q \u2265 3`); the remaining content is the `q = 2` impossibility, a finite check on the\n130-vs-35 line geometry that is within reach of a `decide`-style enumeration.\n\n## C2. Every self-complementary Boolean degree one function has even line-count\n**Conjecture.** If a Boolean degree one function on `J_q(4,2)` equals its own complement\n(parameter `x = (q\u00b2+1)/2`), then `q` is odd and its support has exactly\n`(q\u00b2+1)(q\u00b2+q+1)/2` lines.\n*The key insight is...* that self-complementarity forces `2x = q\u00b2+1`, which is solvable in\nintegers **only** for odd `q`; this is the proved lemma `bdParam_two_mul` read as an\nobstruction.\n*Why now?* The integrality obstruction is already formalised; turning it into a clean\n\"no self-complementary Boolean degree one function exists for even `q`\" statement only\nneeds the size bookkeeping in `clSize_complement_total`, which is done.\n\n## C3. Parameter rigidity: the trivial six are the only \"stable\" parameters\n**Conjecture.** The set `{0,1,2,q\u00b2-1,q\u00b2,q\u00b2+1}` is the unique maximal subset of\n`{0,\u2026,q\u00b2+1}` closed under complementation `x \u21a6 q\u00b2+1-x` **and** realised for *all* `q \u2265 2`;\nevery other realised parameter (e.g. `(q\u00b2+1)/2`) is `q`-specific.\n*The key insight is...* that triviality is exactly \"realisability uniform in `q`\"\n(point-pencils and plane-pencils exist for every `q`), whereas non-trivial classes appear\nsporadically per `q`, as the Bruen\u2013Drudge midpoint demonstrates.\n*Why now?* `complement_of_trivial` already proves closure of the trivial set under\ncomplementation; the uniform-realisability half is a clean statement to attack next.\n\n## C4. `q`-Krawtchouk eigenvalue bridge to the Hamming scheme\n**Conjecture.** The \"degree one\" condition for `J_q(n,2)` is governed by the first\n`q`-Krawtchouk polynomial in the same way the binary Krawtchouk `K_1(x;n) = n - 2x`\ngoverns the Hamming scheme `H(n,2)` (cf. `Catalog/Physics/QuantumMacWilliams/Krawtchouk.lean`).\nConcretely, the second-largest eigenvalue of the Grassmann graph is a `q`-analogue of\n`n - 2x`, and Boolean degree one functions are its `{0,1}`-eigenvectors.\n*The key insight is...* that both schemes are P-polynomial, so \"degree one\" is uniformly\n\"supported on `V_0 \u2295 V_1`\", and the only difference between the Johnson/Hamming and\nGrassmann cases is `q`-deformation of the Krawtchouk kernel.\n*Why now?* The Hamming-scheme Krawtchouk machinery is already in the catalog; defining its\n`q`-analogue and matching eigenvalues would create a genuine cross-domain bridge\n(Physics \u2194 Shared) and put the Cameron\u2013Liebler parameter on a spectral footing.\n\n## C5. The even-`q` gap is a *different* construction, not an absence\n**Conjecture.** For even `q \u2265 4`, non-trivial Boolean degree one functions on `J_q(4,2)`\nstill exist but never at the midpoint `(q\u00b2+1)/2`; their parameters are characterised by a\nmodular condition `x(x-1) \u2261 0 (mod something(q))` rather than by self-complementarity.\n*The key insight is...* that the *even* Bruen\u2013Drudge midpoint fails the integrality\nobstruction (`bdParam_two_mul` needs `q` odd), so the even case is forced onto a distinct\narithmetic locus \u2014 exactly where Gavrilyuk\u2013Mogilnykh (2014) build their `PG(n,4)`\nexamples.\n*Why now?* We have isolated *why* the odd construction cannot be reused for even `q` (a\nproved integrality failure), which sharply delimits where to search for the even-case\nconstructions.\n",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2435",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "44e772b7",
+    "status": "available",
+    "timestamp": "2026-06-24T10:57:55.299565+00:00",
+    "title": "Derived from the Stage 3 / Stage 4 findings of this cycle (see the Lab Notes in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4558,21 +4573,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.812055+00:00",
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
-  },
-  {
-    "consumed_by_exp_id": "2bd9b45a",
-    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
-    "domains": [
-      "Speculative",
-      "Logic"
-    ],
-    "id": "fd_0481",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.101987+00:00",
-    "title": "Consciousness as Integrated Information"
   },
   {
     "consumed_by_exp_id": "",
