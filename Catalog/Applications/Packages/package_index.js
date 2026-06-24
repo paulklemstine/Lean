@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-24T01:35:46Z",
+    "domain": "Tropical",
+    "exp_id": "e56a1e16",
+    "filename": "eml_universal_approximation_density_of_eml_functio.json",
+    "pkg_num": 16,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "EML Universal Approximation: Density of Exp-Log Functions on the Unit Cube"
+  },
+  {
     "date": "2026-06-24T01:21:56Z",
     "domain": "Bridges",
     "exp_id": "0dfef380",
@@ -204,6 +214,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "EML Transseries: A Hahn-Series Field and the Asymptotic Comparison Theorem"
   },
+  "eml_universal_approximation_density_of_eml_functio.json": {
+    "domain": "Tropical",
+    "exp_id": "e56a1e16",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "EML Universal Approximation: Density of Exp-Log Functions on the Unit Cube"
+  },
   "idempotent_probability_large_deviations.json": {
     "domain": "Tropical",
     "exp_id": "9537a45c",
@@ -287,7 +305,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 91,
+      "hue": 271,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -298,7 +316,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:40:46Z",
       "domain": "Cryptography",
-      "hue": 270,
+      "hue": 91,
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
       "primary_domain": "Cryptography",
       "priority_score": null,
@@ -309,7 +327,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:43:47Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 134,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
       "priority_score": 0.46096,
@@ -331,7 +349,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 100,
+      "hue": 272,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -364,7 +382,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 270,
+      "hue": 271,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.6288,
@@ -375,7 +393,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 271,
+      "hue": 272,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -386,7 +404,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T08:30:51Z",
       "domain": "Computation",
-      "hue": 89,
+      "hue": 271,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
       "priority_score": 0.5811999999999999,
@@ -397,7 +415,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T11:40:38Z",
       "domain": "Probability",
-      "hue": 275,
+      "hue": 90,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
       "priority_score": 0.48476875555555554,
@@ -408,7 +426,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T15:01:50Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 275,
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
       "primary_domain": "Bridges",
       "priority_score": 0.5094479615384615,
@@ -419,7 +437,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T19:25:16Z",
       "domain": "Cryptography",
-      "hue": 272,
+      "hue": 91,
       "id": "quantum_key_distribution_bb84_security_proof",
       "primary_domain": "Cryptography",
       "priority_score": 0.49160000000000004,
@@ -430,7 +448,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T00:21:07Z",
       "domain": "Physics",
-      "hue": 270,
+      "hue": 90,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Physics",
       "priority_score": 0.6913,
@@ -441,13 +459,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:21:56Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 92,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
       "priority_score": 0.7484,
       "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Coefficient That Counts Primes: A Binomial \u2192 Prime-Distribution Bridge"
+    },
+    {
+      "date": "2026-06-24T01:35:46Z",
+      "domain": "Tropical",
+      "hue": 90,
+      "id": "eml_universal_approximation_density_of_eml_functio",
+      "primary_domain": "Tropical",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "star",
+      "title": "EML Universal Approximation: Density of Exp-Log Functions on the Unit Cube"
     }
   ]
 };

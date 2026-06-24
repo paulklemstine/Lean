@@ -7,7 +7,7 @@
       "primary_domain": "Tropical",
       "shape": "star",
       "date": "2026-06-22T21:20:57Z",
-      "hue": 91
+      "hue": 271
     },
     {
       "id": "primality_testing_miller_rabin_and_aks_formalizati",
@@ -16,7 +16,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T01:40:46Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T01:43:47Z",
-      "hue": 90
+      "hue": 134
     },
     {
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T05:45:49Z",
-      "hue": 100
+      "hue": 272
     },
     {
       "id": "close_proofs_these_conjectures_continue_the_resear",
@@ -70,7 +70,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-23T07:35:17Z",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "attention_mechanisms_mathematical_properties",
@@ -79,7 +79,7 @@
       "primary_domain": "MachineLearning",
       "shape": "sphere_rings",
       "date": "2026-06-23T07:38:24Z",
-      "hue": 271
+      "hue": 272
     },
     {
       "id": "sierpiski_numbers_covering_systems",
@@ -88,7 +88,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-23T08:30:51Z",
-      "hue": 89
+      "hue": 271
     },
     {
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
@@ -97,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T11:40:38Z",
-      "hue": 275
+      "hue": 90
     },
     {
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
@@ -106,7 +106,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-23T15:01:50Z",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "quantum_key_distribution_bb84_security_proof",
@@ -115,7 +115,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-23T19:25:16Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "statistical_mechanics_ising_model_phase_transition",
@@ -124,7 +124,7 @@
       "primary_domain": "Physics",
       "shape": "diamond",
       "date": "2026-06-24T00:21:07Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "proof_automation_custom_lean_4_tactics",
@@ -133,7 +133,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-24T01:21:56Z",
-      "hue": 91
+      "hue": 92
+    },
+    {
+      "id": "eml_universal_approximation_density_of_eml_functio",
+      "title": "EML Universal Approximation: Density of Exp-Log Functions on the Unit Cube",
+      "domain": "Tropical",
+      "primary_domain": "Tropical",
+      "shape": "star",
+      "date": "2026-06-24T01:35:46Z",
+      "hue": 90
     }
   ],
   "edges": [],

@@ -1,69 +1,40 @@
-# Computational Evidence — Shallow EML Approximation Rates
+# Computational Evidence — Finite-Family Log-Sum-Exp Rate `τ·log n`
 
-This note collects the small-case numerical evidence that motivated the formal
-theorems in `EML/SoftplusRate.lean` and `EML/ShallowDensity.lean`.
+This evidence supports `EMLFinsetLSE.abs_lse_sub_max_le`:
+`|τ·log(∑ exp(fᵢ/τ)) − maxᵢ fᵢ| ≤ τ·log(card s)`.
 
-## 1. The softplus→ReLU sandwich
+## 1. Small-case calculations (constant inputs, the extremal case)
 
-Define `softplus β x = log(1 + exp(β x)) / β` and `relu x = max(x, 0)`.
-The formal claim is the two-sided, **x-uniform** bound
+When all `n` inputs equal `c`, `lse = τ·log(n·exp(c/τ)) = c + τ·log n`, so the
+gap `lse − max = τ·log n` exactly — the bound is attained.
 
-    relu x ≤ softplus β x ≤ relu x + log 2 / β,   for β > 0.
+| n | τ   | predicted bound `τ·log n` | actual gap (constant input) |
+|---|-----|---------------------------|-----------------------------|
+| 1 | 1.0 | 0.0000                    | 0.0000                      |
+| 2 | 1.0 | 0.6931                    | 0.6931                      |
+| 3 | 1.0 | 1.0986                    | 1.0986                      |
+| 4 | 0.5 | 0.6931                    | 0.6931                      |
+| 8 | 0.25| 0.5199                    | 0.5199                      |
 
-Sampled values of `softplus β x − relu x` (should lie in `[0, log2/β]`,
-`log 2 ≈ 0.693147`):
+## 2. Non-extremal inputs stay strictly below the bound
 
-| β  | log2/β  | x=−5      | x=−1      | x=0       | x=1       | x=5       |
-|----|---------|-----------|-----------|-----------|-----------|-----------|
-| 1  | 0.69315 | 0.006715  | 0.313262  | 0.693147  | 0.313262  | 0.006715  |
-| 2  | 0.34657 | 0.0000227 | 0.063283  | 0.346574  | 0.063283  | 0.0000227 |
-| 5  | 0.13863 | ~7e-11    | 0.001815  | 0.138629  | 0.001815  | ~7e-11    |
-| 10 | 0.06931 | ~2e-21    | 0.0000227 | 0.069315  | 0.0000227 | ~2e-21    |
+For `f = (0, 1, 2)` (spread out), `τ = 1`: `lse = log(1+e+e²) ≈ 2.4076`,
+`max = 2`, gap `≈ 0.4076 < log 3 ≈ 1.0986`. The further apart the inputs, the
+smaller the gap — consistent with saturation only at coincident inputs
+(Future Direction 1).
 
-Observations confirmed by the table:
-* The gap is **always non-negative** (softplus dominates relu).  ✔ `softplus_ge_relu`
-* The gap **never exceeds `log2/β`**, attaining it exactly at `x = 0`
-  (`softplus β 0 = log 2 / β`, `relu 0 = 0`).  ✔ `softplus_le_relu_add` (sharp)
-* The gap is symmetric in `x` and decays away from the kink, but the worst case
-  controls the uniform error, giving the clean rate `log2/β`. ✔ `abs_softplus_sub_relu_le`
+## 3. Counterexample hunt
 
-## 2. Sharpness of the constant `log 2`
+Tested the lower bound `max ≤ lse` and the upper bound `lse ≤ max + τ·log n`
+across random families (varying `n ≤ 12`, `τ ∈ {0.1,…,2}`, values in `[-5,5]`).
+No violation found; both bounds held in every sample, matching the formal proof.
 
-At `x = 0` the gap equals `log2/β` for every β, so the constant `log 2` in the
-upper bound cannot be improved by any smaller absolute constant. This rules out a
-"better than O(1/β)" uniform rate for the single softplus unit and explains why
-the depth-2 EML primitive caps out at `O(1/β)`.
+## 4. Dequantization limit
 
-## 3. Shallow-network aggregate error
+Fixing inputs and shrinking `τ`, the gap `τ·log n → 0`, so `lse → max`. This is
+the quantitative content of `exists_temp_approx`: pick `τ = ε/(log n + 1)`.
 
-For a width-`N` shallow net `Σ cᵢ relu(aᵢx+bᵢ)` vs `Σ cᵢ softplus β (aᵢx+bᵢ)`,
-the triangle inequality predicts uniform error `≤ (Σ|cᵢ|)·log2/β`. Random test
-(N=4, cᵢ∈{1,−2,0.5,3}, aᵢ,bᵢ random, 1000 sample points):
-
-    Σ|cᵢ| = 6.5,  predicted bound (β=10) = 6.5·0.069315 = 0.4506
-    observed max error over samples ≈ 0.221  ≤ 0.4506   ✔ `shallow_approx`
-
-The bound is conservative (it sums worst cases that do not all occur at the same
-`x`), but it is *valid for every x* — exactly what the uniform theorem asserts.
-
-## 4. Density of polynomials in `exp` on [0,1]
-
-`exp` is injective on `[0,1]`, so `{exp(x)}` separates points and the generated
-subalgebra (polynomials in `exp`) is dense (Stone–Weierstrass). Spot check:
-approximating `f(x) = x` on a 11-point grid of `[0,1]` by least-squares fits in
-`span{1, e^x, e^{2x}, e^{3x}}`:
-
-    degree-1 (1, e^x):        max residual ≈ 0.0091
-    degree-2 (…, e^{2x}):     max residual ≈ 0.00042
-    degree-3 (…, e^{3x}):     max residual ≈ 0.0000155
-
-Residuals shrink rapidly with the number of `exp`-powers, consistent with
-`exp_subalgebra_dense_on_Icc`.
-
-## OEIS
-No integer sequence arises; the objects are real-analytic, so an OEIS search is
-not applicable.
-
-## Conclusion
-All four numerical experiments are consistent with the formally proved theorems,
-and experiment (2) confirms the `log 2` constant is sharp.
+## Note on OEIS
+No integer sequence is intrinsic to this continuous-analysis result; the only
+discrete parameter is the width `n`, entering through `log n`. No OEIS lookup
+applies.
