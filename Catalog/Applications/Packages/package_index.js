@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "50adb4ee",
     "filename": "necessity_of_homological_condition_for_spectral_ra.json",
     "pkg_num": 39,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.49653899999999995,
     "title": "Necessity of a Homological Condition for an Extremal Spectral-Radius Bound: The Cone Mechanism"
   },
   {
@@ -1140,8 +1140,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "necessity_of_homological_condition_for_spectral_ra",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.49653899999999995,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Necessity of a Homological Condition for an Extremal Spectral-Radius Bound: The Cone Mechanism"
     }
