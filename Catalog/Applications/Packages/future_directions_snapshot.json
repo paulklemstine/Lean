@@ -917,7 +917,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a434903",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -929,7 +929,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
@@ -2795,7 +2795,7 @@
     "catalog_references": [
       "DrmotaKauersSpiegelhofer2016"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a83f4fe5",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->∞} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domain_bridges": [
       "math.CO",
@@ -2810,7 +2810,7 @@
     "proof_strategy": "exact deconvolution replaced by finite stopped random-walk law and first-exit median analysis",
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -5075,7 +5075,7 @@
       "math.CO",
       "math.RA"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c7e5800",
     "description": "For the full flag variety GL_{n+1}/ℂ B, let w ∈ S_{n+1} index the Schubert cell X_w^o. The cluster algebra structure on ℂ[X_w^o] (coming from the reduced expression of the longest element in the Weyl group modulo the stabilizer of w) is of finite type if and only if w is a Grassmannian permutation (i.e., w has at most one descent).",
     "domain_bridges": [
       "cluster algebras",
@@ -5092,7 +5092,7 @@
     "proof_strategy": "Show that the exchange matrix associated to a reduced word for w is mutation-equivalent to a Cartesian product of type A_{k_i} cluster algebras exactly when the corresponding permutation has at most one descent, using the correspondence between reduced words and pipe dreams, and applying known classification of finite type cluster algebras via Dynkin diagrams. Conversely, if w has ≥2 descents, exhibit a mutable vertex whose mutation creates a cycle of length >2, preventing finite type.",
     "research_mode": "team",
     "source_exp_id": "2606.23474v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T00:22:07.112237+00:00",
     "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
   },
@@ -5184,7 +5184,7 @@
     "catalog_references": [
       "Diestel2010Book"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3c0af99",
     "description": "Every ⊆-minimal minor-closed graph class with limiting density greater than some δ < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class 𝒢, there exists a graph H such that 𝒢 = excl({H}).",
     "domain_bridges": [
       "Graph minors",
@@ -5200,7 +5200,7 @@
     "proof_strategy": "Leverage the Robertson-Seymour theorem on finite forbidden minors and the paper's classification of minimal classes to show that the minimal sets of forbidden graphs for these classes must be singletons.",
     "research_mode": "team",
     "source_exp_id": "2606.24326v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T02:41:49.567859+00:00",
     "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
   },
@@ -5418,7 +5418,7 @@
       "math.CO",
       "math.SP"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50adb4ee",
     "description": "If a pure r-dimensional complex K achieves the spectral radius bound q_{r-1}(K) = tn - (t-1)(r+1), then all links of (r-t)-dimensional faces must have trivial reduced homology H_t(lk_K(σ), R) = 0.",
     "domain_bridges": [
       "Algebraic Topology",
@@ -5434,7 +5434,7 @@
     "proof_strategy": "Construct a complex violating the homological condition and compute its spectral radius to test equality. Formalize homological and spectral invariants in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T08:40:38.583867+00:00",
     "title": "Necessity of Homological Condition for Spectral Radius Bound"
   },
@@ -6265,7 +6265,7 @@
       "Brualdi and Quinn Massey (conjectured)",
       "arXiv:2304.12345 (current paper)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18853638",
     "description": "For any bipartite graph G with partite sets A and B, the strong chromatic index satisfies χ'_s(G) ≤ Δ_A Δ_B, where Δ_A and Δ_B are the maximum degrees in each partition. This conjecture posits that the product of the maximum degrees in each partition forms an upper bound for the strong chromatic index, improving upon the current best-known bound of 1.676 Δ_A Δ_B for sufficiently large products.",
     "domain_bridges": [
       "Graph Theory",
@@ -6282,7 +6282,7 @@
     "proof_strategy": "The conjecture can be approached via probabilistic methods combined with sparse neighborhood analysis, similar to techniques used in prior improvements of the Erdős-Nesetrýl conjecture. Key steps include constructing an induced matching decomposition that respects the product bound Δ_A Δ_B and leveraging the bipartite structure to minimize color conflicts.",
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T17:05:28.615107+00:00",
     "title": "Brualdi-Quinn Massey Strong Chromatic Index Conjecture for Bipartite Graphs"
   },
@@ -7080,7 +7080,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "09edd445",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domain_bridges": [],
     "domains": [
@@ -7093,7 +7093,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -7199,7 +7199,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "173cb117",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -7212,7 +7212,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
