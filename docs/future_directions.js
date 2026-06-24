@@ -1526,7 +1526,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No HF-MDR Ziegler pairs with at most nine lines"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "758d973b",
     "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
     "domains": [
       "Pythagorean"
@@ -1535,7 +1535,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20452v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T01:38:47.066128+00:00",
     "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
   },
@@ -1599,7 +1599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hochschild homology isomorphism between asymptotic and classical Hecke algebras for inner forms of GL_n"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d135fcbe",
     "description": "For every fixed integer k \u2265 3, the Conformability problem is NP-complete when restricted to connected d-regular graphs G of odd order n with independence number \u03b1(G) = k and maximum degree d \u2265 n/2. The paper establishes this for k = 3 by reduction from perfect triangle packing in K\u2084-free graphs. The conjecture asserts that hardness persists for all larger independence numbers, where the complement graph has clique number k and conformable color classes correspond to cliques of odd size up to k in the complement, requiring richer packing structures to encode NP-hard problems.",
     "domains": [
       "Pythagorean",
@@ -1609,7 +1609,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21534v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T01:48:36.909062+00:00",
     "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
   },
@@ -2283,20 +2283,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T08:05:42.947857+00:00",
     "title": "Degree-One Triviality of Grassmann Schemes $J_q(n,2)$ for $n \\ge q+2$"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The number of binary 2-binomial equivalence classes of words of length n over the alphabet {0,1} equals the n-th cake number, i.e., (n^3 + 5n + 6) / 6 = \u2211_{r=0}^{3} C(n,r). This is the identity established by Rigo\u2013Salimov and given geometric explanation in the paper via hyperplane arrangements.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_2341",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23426v1",
-    "status": "available",
-    "timestamp": "2026-06-23T08:33:50.471570+00:00",
-    "title": "Binary 2-binomial class count equals the cake number"
   },
   {
     "consumed_by_exp_id": "",
@@ -3601,18 +3587,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The current best asymptotic lower bound is g(r) \u2265 (61/20 - o(1))r \u2248 3.05r. We conjecture that the true asymptotic constant is at least 3.1, i.e., for every \u03b5 > 0, there exists r\u2080 such that for all r \u2265 r\u2080, g(r) \u2265 (3.1 - \u03b5)r.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2434",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24878v1",
+    "status": "available",
+    "timestamp": "2026-06-24T11:12:26.282616+00:00",
+    "title": "Asymptotic Lower Bound Improvement for Erd\u0151s-Lov\u00e1sz Function"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2434",
+    "id": "fd_2435",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
     "status": "available",
     "timestamp": "2026-06-24T10:40:45.798036+00:00",
     "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every finite poset P of size n and width w \u2265 2, the number of strict alternating cycles satisfies s_w(P) \u2264 4\u00b7(w\u22121)!\u00b7(n(n+w)/(2w^2))^w.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2436",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24877v1",
+    "status": "available",
+    "timestamp": "2026-06-24T11:12:45.893373+00:00",
+    "title": "Upper bound on the number of strict alternating cycles in posets of bounded width"
   },
   {
     "consumed_by_exp_id": "",
@@ -3802,36 +3816,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Boolean Degree One Functions on `J_q(n,2)`\n\nDerived from the Stage 3 / Stage 4 findings of this cycle (see the Lab Notes in\n`Catalog/Shared/GrassmannJq2LineCounts.lean` and\n`Catalog/Shared/CameronLieblerNonTrivial.lean`).\n\n## C1. The non-trivial window is non-empty exactly when `q \u2265 3`\n**Conjecture.** For the Grassmann scheme `J_q(4,2)`, a non-trivial Boolean degree one\nfunction (Cameron\u2013Liebler parameter `2 < x < q^2-1`) exists **iff** `q \u2265 3`, and never for\n`q = 2`.\n*The key insight is...* that the trivial window `{0,1,2} \u222a {q\u00b2-1,q\u00b2,q\u00b2+1}` already\nexhausts all parameters `0..q\u00b2+1` precisely when `q\u00b2 + 1 \u2264 5`, i.e. `q \u2264 2`; for `q \u2265 3`\nthe integer interval `(2, q\u00b2-1)` is non-empty and the self-complementary midpoint\n`(q\u00b2+1)/2` sits inside it.\n*Why now?* We have already proved `bdParam_range` (the midpoint is inside the window for\nodd `q \u2265 3`); the remaining content is the `q = 2` impossibility, a finite check on the\n130-vs-35 line geometry that is within reach of a `decide`-style enumeration.\n\n## C2. Every self-complementary Boolean degree one function has even line-count\n**Conjecture.** If a Boolean degree one function on `J_q(4,2)` equals its own complement\n(parameter `x = (q\u00b2+1)/2`), then `q` is odd and its support has exactly\n`(q\u00b2+1)(q\u00b2+q+1)/2` lines.\n*The key insight is...* that self-complementarity forces `2x = q\u00b2+1`, which is solvable in\nintegers **only** for odd `q`; this is the proved lemma `bdParam_two_mul` read as an\nobstruction.\n*Why now?* The integrality obstruction is already formalised; turning it into a clean\n\"no self-complementary Boolean degree one function exists for even `q`\" statement only\nneeds the size bookkeeping in `clSize_complement_total`, which is done.\n\n## C3. Parameter rigidity: the trivial six are the only \"stable\" parameters\n**Conjecture.** The set `{0,1,2,q\u00b2-1,q\u00b2,q\u00b2+1}` is the unique maximal subset of\n`{0,\u2026,q\u00b2+1}` closed under complementation `x \u21a6 q\u00b2+1-x` **and** realised for *all* `q \u2265 2`;\nevery other realised parameter (e.g. `(q\u00b2+1)/2`) is `q`-specific.\n*The key insight is...* that triviality is exactly \"realisability uniform in `q`\"\n(point-pencils and plane-pencils exist for every `q`), whereas non-trivial classes appear\nsporadically per `q`, as the Bruen\u2013Drudge midpoint demonstrates.\n*Why now?* `complement_of_trivial` already proves closure of the trivial set under\ncomplementation; the uniform-realisability half is a clean statement to attack next.\n\n## C4. `q`-Krawtchouk eigenvalue bridge to the Hamming scheme\n**Conjecture.** The \"degree one\" condition for `J_q(n,2)` is governed by the first\n`q`-Krawtchouk polynomial in the same way the binary Krawtchouk `K_1(x;n) = n - 2x`\ngoverns the Hamming scheme `H(n,2)` (cf. `Catalog/Physics/QuantumMacWilliams/Krawtchouk.lean`).\nConcretely, the second-largest eigenvalue of the Grassmann graph is a `q`-analogue of\n`n - 2x`, and Boolean degree one functions are its `{0,1}`-eigenvectors.\n*The key insight is...* that both schemes are P-polynomial, so \"degree one\" is uniformly\n\"supported on `V_0 \u2295 V_1`\", and the only difference between the Johnson/Hamming and\nGrassmann cases is `q`-deformation of the Krawtchouk kernel.\n*Why now?* The Hamming-scheme Krawtchouk machinery is already in the catalog; defining its\n`q`-analogue and matching eigenvalues would create a genuine cross-domain bridge\n(Physics \u2194 Shared) and put the Cameron\u2013Liebler parameter on a spectral footing.\n\n## C5. The even-`q` gap is a *different* construction, not an absence\n**Conjecture.** For even `q \u2265 4`, non-trivial Boolean degree one functions on `J_q(4,2)`\nstill exist but never at the midpoint `(q\u00b2+1)/2`; their parameters are characterised by a\nmodular condition `x(x-1) \u2261 0 (mod something(q))` rather than by self-complementarity.\n*The key insight is...* that the *even* Bruen\u2013Drudge midpoint fails the integrality\nobstruction (`bdParam_two_mul` needs `q` odd), so the even case is forced onto a distinct\narithmetic locus \u2014 exactly where Gavrilyuk\u2013Mogilnykh (2014) build their `PG(n,4)`\nexamples.\n*Why now?* We have isolated *why* the odd construction cannot be reused for even `q` (a\nproved integrality failure), which sharply delimits where to search for the even-case\nconstructions.\n",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_2435",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "44e772b7",
-    "status": "available",
-    "timestamp": "2026-06-24T10:57:55.299565+00:00",
-    "title": "Derived from the Stage 3 / Stage 4 findings of this cycle (see the Lab Notes in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nDerived from the v19a cycle on *NISQ-Optimized Quantum Error Mitigation via\nAlgebraic Topology*. This cycle established two anchors:\n\n- `MajorityDecoding.lean`: exact `n/2` correctness threshold for repetition-code\n  majority decoding, with a sharp tightness witness.\n- `PersistentH0.lean`: monotone decay of the zeroth persistent Betti number `\u03b2\u2080`\n  along a filtration (`H\u2080` persistence), with a non-degenerate merge witness.\n\nEach conjecture below is falsifiable in Lean: it can be proved, or disproved by an\nexplicit finite counterexample.\n\n## C1. Topological decoding equals Hamming-ball decoding below threshold\n\n**Conjecture.** Define the \"topological decoder\" as the dominant `\u03b2\u2080`-component\nof the proximity graph on the readout multiset at the optimal filtration\nthreshold. For the repetition code, its output equals the majority-vote output\nwhenever `2\u00b7err < n`.\n\nThe key insight is that *the largest connected component of the proximity graph is\nexactly the majority equivalence class*, so the zeroth Betti structure recovers\nthe same decision boundary as Hamming-weight counting \u2014 topology re-derives the\ncombinatorial threshold of `majority_decode_correct`.\n\nWhy now? We already have both endpoints formalised (`majority_decode_correct` and\n`betti0_persistence`); the missing link is a single lemma identifying the dominant\ncomponent with the majority class, which is within reach of the current API.\n\n## C2. Persistence monotonicity is strict iff a merge event occurs\n\n**Conjecture.** For `r\u2081 \u2286 r\u2082` on a finite vertex type, `\u03b2\u2080(r\u2082) < \u03b2\u2080(r\u2081)` if and\nonly if there exist `a, b` that are `r\u2082`-connected but not `r\u2081`-connected.\n\nThe key insight is that the `componentMap` is *non-injective exactly at a merge*,\nso the strictness of the persistence inequality is a purely relational\n(non-numeric) event detector \u2014 `componentMap_merges` is the witness for the\nforward direction.\n\nWhy now? `componentMap` and its surjectivity are already proved; characterising\nits injectivity converts the inequality `\u2264` of `betti0_persistence` into a sharp\n`<`/`=` dichotomy with no new infrastructure.\n\n## C3. Error suppression rate is governed by the longest `H\u2080` bar\n\n**Conjecture.** For independent bit-flip noise at rate `p < 1/2`, the logical\nerror probability of majority decoding decays as `\u0398(exp(-c\u00b7n))`, and the constant\n`c` is determined by the expected length of the longest `H\u2080` bar of the random\nproximity filtration.\n\nThe key insight is that *a logical failure is precisely a premature merge of the\nminority component into the majority*, so the survival time of the correct\ncomponent (its `H\u2080` bar length) controls the exponential suppression rate.\n\nWhy now? The deterministic threshold (`majority_threshold_tight`) pins the failure\nboundary; layering Mathlib's `Probability` API (Chernoff/Hoeffding) on top of the\nalready-formalised combinatorics is the natural next quantitative step.\n\n## C4. Filtration refinement never increases logical error\n\n**Conjecture.** If one proximity filtration refines another at every threshold\n(pointwise `\u2286`), then the topological decoder built from the finer filtration has\nlogical error probability no larger than that of the coarser one.\n\nThe key insight is that refinement only *delays* merge events, and by\n`betti0_persistence` delayed merges keep the correct component alive longer, so\nmonotone refinement is monotone in reliability.\n\nWhy now? This is the probabilistic shadow of `betti0_persistence`, which is\nalready a theorem; the order-theoretic backbone (relation refinement \u21d2 component\nsurjection) is in place and only needs a measure-monotonicity wrapper.\n\n## C5. A topological code-distance lower bound\n\n**Conjecture.** For a stabiliser-style repetition family, the code distance equals\n`1 + (the smallest filtration threshold at which `\u03b2\u2080` first drops below the number\nof logical codewords)`.\n\nThe key insight is that *the first `\u03b2\u2080`-drop marks the smallest error pattern that\nconfuses two codewords*, so the algebraic-topological birth/death data encodes the\nclassical code distance directly.\n\nWhy now? With `betti0` and its monotonicity formalised, the code-distance side is\nthe only remaining piece; it connects this Logic\u21c4Topology bridge to the\nCryptography/coding-theory catalog domain, opening a second cross-domain bridge.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2436",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "43854327",
-    "status": "available",
-    "timestamp": "2026-06-24T11:02:56.175721+00:00",
-    "title": "Derived from the v19a cycle on *NISQ-Optimized Quantum Error Mitigation via"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3949,7 +3933,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c891ac10",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -3959,7 +3943,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -4183,6 +4167,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
+  },
+  {
+    "consumed_by_exp_id": "a470c2a1",
+    "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0508",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:47.125386+00:00",
+    "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
     "consumed_by_exp_id": "",
@@ -4573,6 +4572,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.812055+00:00",
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
+  },
+  {
+    "consumed_by_exp_id": "2bd9b45a",
+    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
+    "domains": [
+      "Speculative",
+      "Logic"
+    ],
+    "id": "fd_0481",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T21:01:45.101987+00:00",
+    "title": "Consciousness as Integrated Information"
   },
   {
     "consumed_by_exp_id": "",
