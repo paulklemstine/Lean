@@ -361,6 +361,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle a5fa8083 (Q=0.789), which proved 7 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Complete the formalization of the quantitative Fitting stabilization bound for ascending kernel chains of linear endomorphisms. Specifically, fill all remaining `sorry` placeholders in `Catalog/Algebra/FittingKernelBound.lean` by providing rigorous Lean proofs for the plateau stability theorem, the ",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_a5fa8083_e1ff70cc",
+    "priority_score": 0.889328,
+    "research_mode": "team",
+    "source_exp_id": "a5fa8083",
+    "status": "available",
+    "timestamp": "2026-06-24T01:59:48.998276+00:00",
+    "title": "Deepening: These conjectures continue the research cycle begun in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
     "domains": [
       "Algebra"
@@ -374,7 +388,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Odd Perfect Numbers"
   },
   {
-    "consumed_by_exp_id": "12082da5",
+    "consumed_by_exp_id": "",
     "description": "Mihailescu proved that 8 and 9 are the only consecutive perfect powers. Generalize: find all solutions to x^a - y^b = k for fixed small k. Formalize the theory of exponential Diophantine equations and Pillai's conjecture.",
     "domains": [
       "Algebra"
@@ -383,7 +397,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:08.480584+00:00",
     "title": "Catalan's Conjecture Generalizations"
   },
@@ -1449,21 +1463,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:16.410337+00:00",
     "title": "Normality of Mathematical Constants"
-  },
-  {
-    "consumed_by_exp_id": "cb41e046",
-    "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
-    "domains": [
-      "Computation",
-      "Logic"
-    ],
-    "id": "fd_0506",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:46.975605+00:00",
-    "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
   {
     "consumed_by_exp_id": "",
@@ -3381,6 +3380,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Fitting / TransEndo research thread\n\nThis cycle proved a **sharp two-sided quantitative Fitting stabilization bound**\nfor an endomorphism `g : V \u2192\u2097[K] V` of a finite-dimensional space:\n\n* `Catalog/Algebra/FittingStabilizationBound.lean` \u2014 the descending range chain\n  `range (g ^ m)` is constant for all `m \u2265 finrank K V`\n  (`range_pow_const_of_finrank_le`), with the constant-stream corollary linking\n  this to the catalog's transition endomorphisms (`compFrom_const`,\n  `compFrom_const_rank_stable`).\n* `Catalog/Algebra/FittingKernelBound.lean` \u2014 the dual: the ascending kernel\n  chain `ker (g ^ m)` is constant for all `m \u2265 finrank K V`\n  (`ker_pow_const_of_finrank_le`).\n\nThe conjectures below are derived directly from these findings and from the\nCritic's observation that the sharp `finrank` bound is special to a *single*\nendomorphism (equivalently a constant stream) and **fails** for a varying\nendomorphism stream.\n\n## Conjecture 1 \u2014 Effective Fitting decomposition at the stabilization step\nFor `d = finrank K V`, `V = ker (g ^ d) \u2295 range (g ^ d)` as internal direct sum,\nand `g` restricts to a nilpotent map on `ker (g ^ d)` and an isomorphism on\n`range (g ^ d)`.\n\n*The key insight is* that at step `d` **both** chains proved in this cycle freeze\nsimultaneously, so the frozen kernel and frozen range must be complementary \u2014\nthe stabilization bounds are exactly the certificate the decomposition needs.\n\n*Why now?* With `range_pow_const_of_finrank_le` and `ker_pow_const_of_finrank_le`\nboth available and sharp, the only remaining step is the disjointness/spanning\ncount via rank\u2013nullity, which is now a finite bookkeeping argument rather than an\nopen question.\n\n## Conjecture 2 \u2014 Nilpotency index equals the first range plateau\nIf `g` is nilpotent then its nilpotency index (least `N` with `g ^ N = 0`) equals\nthe least plateau index `k` produced by `exists_range_pow_plateau_le_finrank`, and\nthis `k` is at most `finrank K V`.\n\n*The key insight is* that for a nilpotent map the range chain strictly decreases\nuntil it hits `\u22a5`, so the *first* plateau is precisely the moment the range\ncollapses to zero \u2014 i.e. the nilpotency index.\n\n*Why now?* `exists_range_pow_plateau_le_finrank` already extracts a plateau index\nbounded by `finrank K V`; identifying it with the nilpotency index turns an\nexistence statement into an exact formula.\n\n## Conjecture 3 \u2014 Stabilization for eventually-periodic streams\nFor a transition stream `f : \u2115 \u2192 V \u2192\u2097[K] V` that is eventually periodic with\nperiod `p` (i.e. `f (n + p) = f n` for `n \u2265 n\u2080`), the from-`0` transition-rank\nsequence `m \u21a6 (compFrom f 0 m).rank.toNat` is eventually *periodic-constant*: it\nstabilizes after at most `n\u2080 + p \u00b7 finrank K V` steps.\n\n*The key insight is* that on the periodic tail the composite advances by a fixed\nblock map `B = compFrom f n\u2080 p`, so the tail rank chain is the power chain of `B`\n\u2014 and the sharp single-endomorphism bound of this cycle applies to `B`.\n\n*Why now?* The Critic showed the sharp bound fails for arbitrary streams; periodic\nstreams are the natural largest class where `compFrom_const`-style reduction to a\nsingle endomorphism still works, making this immediately testable.\n\n## Conjecture 4 \u2014 Sylvester-type bridge for matrix-product rank profiles\nFor a sequence of `n \u00d7 n` matrices `A\u2080, A\u2081, \u2026` over a field, the rank of the\npartial products `A_{k} \u22ef A_0` is antitone and constant from step `n`; moreover\nthe total rank drop `n - rank(A_{n-1} \u22ef A_0)` is bounded by the sum of corank's\n`\u2211 (n - rank A_i)`.\n\n*The key insight is* that each factor can lower the rank by at most its own\ncorank (a Sylvester rank inequality), so the cumulative drop is additive in the\nfactor coranks \u2014 refining the purely qualitative antitone result.\n\n*Why now?* The transition-endomorphism `compFrom` is exactly a matrix-product\nchain; this cycle proved the qualitative antitone/stabilization facts, so the\nquantitative additive bound is the next concrete, falsifiable target.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2406",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a5fa8083",
+    "status": "available",
+    "timestamp": "2026-06-24T01:59:39.904424+00:00",
+    "title": "**sharp two-sided quantitative Fitting stabilization bound**"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4019,7 +4033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "c8daa509",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -4029,7 +4043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },

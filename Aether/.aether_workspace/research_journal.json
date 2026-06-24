@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "bc66959c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Boltzmann Bridge IX: the Interleaving Metric is *Geodesic*\n\n## Synthesis\n\n`Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes the\npersistence-stability arc's metric s",
-      "quality_score": 0.7748660869565218,
-      "sorry_count": 5,
-      "theorem_count": 69,
-      "timestamp": "2026-06-14T16:17:29",
-      "title": "`Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes the"
-    },
-    {
       "cycle_id": "d5286918",
       "domain": "Applications",
       "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Seventh Cycle\n\n## Synthesis\n\nThe sixth cycle (`Speculative/AutoResearch/HodgeMessagePassingEnergy.lean`) lifted the\nfifth cycle's *pointwise* con",
@@ -499,19 +489,19 @@
       "theorem_count": 20,
       "timestamp": "2026-06-24T01:35:56",
       "title": "EML Universal Approximation: Density of EML Functions"
+    },
+    {
+      "cycle_id": "a5fa8083",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Fitting / TransEndo research thread\n\nThis cycle proved a **sharp two-sided quantitative Fitting stabilization bound**\nfor an endomorphism `g : V →ₗ[K] V` of a finite-dimensional",
+      "quality_score": 0.789328,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-24T01:59:48",
+      "title": "Close Proofs: These conjectures continue the research cycle begun in"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c2c261ee",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Special Functions (Gamma, Zeta, Hypergeometric)\n\nDerived from the verified results in `GammaEML.lean`, `ZetaEML.lean`, and\n`HypergeometricEML.lean`. Each conjecture is falsif",
-      "quality_score": 0.42100000000000004,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-16T19:50:37",
-      "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
-    },
     {
       "cycle_id": "fbd73212",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-06-24T01:35:56",
       "title": "EML Universal Approximation: Density of EML Functions"
+    },
+    {
+      "cycle_id": "a5fa8083",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Fitting / TransEndo research thread\n\nThis cycle proved a **sharp two-sided quantitative Fitting stabilization bound**\nfor an endomorphism `g : V →ₗ[K] V` of a finite-dimensional",
+      "quality_score": 0.789328,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-24T01:59:48",
+      "title": "Close Proofs: These conjectures continue the research cycle begun in"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "c50363b9",
-      "domain": "Tropical",
-      "name": "tdlp_recover_oneByOne",
-      "quality": 0.723184
-    },
-    {
-      "cycle_id": "c50363b9",
-      "domain": "Tropical",
-      "name": "tropScalarAdd_add",
-      "quality": 0.723184
-    },
-    {
-      "cycle_id": "35a8dda5",
-      "domain": "Cryptography",
-      "name": "restrict_self",
-      "quality": 0.74408
-    },
     {
       "cycle_id": "35a8dda5",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "coordCM_apply",
       "quality": 0.86528
+    },
+    {
+      "cycle_id": "a5fa8083",
+      "domain": "Computation",
+      "name": "ker_pow_le_succ",
+      "quality": 0.789328
+    },
+    {
+      "cycle_id": "a5fa8083",
+      "domain": "Computation",
+      "name": "ker_pow_mono",
+      "quality": 0.789328
+    },
+    {
+      "cycle_id": "a5fa8083",
+      "domain": "Computation",
+      "name": "ker_pow_succ_eq_comap",
+      "quality": 0.789328
     }
   ],
-  "last_updated": "2026-06-24T01:35:56",
+  "last_updated": "2026-06-24T01:59:48",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "11262eec",
-        "quality": 0.5355679086538463,
-        "theorems": 36,
-        "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-      },
-      {
         "cycle_id": "6493a7ff",
         "quality": 0.5668,
         "theorems": 43,
@@ -3327,6 +3321,12 @@
         "quality": 0.44580200000000003,
         "theorems": 6,
         "title": "Langlands Program: Functoriality"
+      },
+      {
+        "cycle_id": "a5fa8083",
+        "quality": 0.789328,
+        "theorems": 7,
+        "title": "Close Proofs: These conjectures continue the research cycle begun in"
       }
     ],
     "Cryptography": [

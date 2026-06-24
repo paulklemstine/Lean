@@ -4,11 +4,21 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-24T01:59:38Z",
+    "domain": "Computation",
+    "exp_id": "a5fa8083",
+    "filename": "close_proofs_these_conjectures_continue_the_resear.json",
+    "pkg_num": 16,
+    "quality": "substantial",
+    "quality_score": 0.789328,
+    "title": "The Fitting Kernel Bound: Sharp Stabilization of Iterated-Endomorphism Kernels"
+  },
+  {
     "date": "2026-06-24T01:35:46Z",
     "domain": "Tropical",
     "exp_id": "e56a1e16",
     "filename": "eml_universal_approximation_density_of_eml_functio.json",
-    "pkg_num": 16,
+    "pkg_num": 15,
     "quality": "substantial",
     "quality_score": 0.86528,
     "title": "EML Universal Approximation: Density of Exp-Log Functions on the Unit Cube"
@@ -18,7 +28,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "0dfef380",
     "filename": "proof_automation_custom_lean_4_tactics.json",
-    "pkg_num": 15,
+    "pkg_num": 14,
     "quality": "substantial",
     "quality_score": 0.7484,
     "title": "The Coefficient That Counts Primes: A Binomial \u2192 Prime-Distribution Bridge"
@@ -28,7 +38,7 @@ window.PACKAGE_INDEX = [
     "domain": "Physics",
     "exp_id": "2b44c5bb",
     "filename": "statistical_mechanics_ising_model_phase_transition.json",
-    "pkg_num": 14,
+    "pkg_num": 13,
     "quality": "partial",
     "quality_score": 0.6913,
     "title": "Statistical Mechanics: The Self-Dual Critical Point of the 2D Ising Model"
@@ -38,7 +48,7 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "exp_id": "5a2118a3",
     "filename": "quantum_key_distribution_bb84_security_proof.json",
-    "pkg_num": 13,
+    "pkg_num": 12,
     "quality": "partial",
     "quality_score": 0.49160000000000004,
     "title": "Quantum Key Distribution: A Formally Verified BB84 Security Proof"
@@ -48,7 +58,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "0de5396c",
     "filename": "rucker_gnarl_and_continuous_valued_cellular_automa.json",
-    "pkg_num": 12,
+    "pkg_num": 11,
     "quality": "partial",
     "quality_score": 0.5094479615384615,
     "title": "The Knife-Edge of Chaos: Continuous-Valued Cellular Automata, the Diffusion Threshold, and Rucker's Gnarl"
@@ -58,7 +68,7 @@ window.PACKAGE_INDEX = [
     "domain": "Probability",
     "exp_id": "57fbcb2f",
     "filename": "oeis_sequence_orderly_friedman_numbers_or_good_or_.json",
-    "pkg_num": 11,
+    "pkg_num": 10,
     "quality": "partial",
     "quality_score": 0.48476875555555554,
     "title": "Orderly Friedman Numbers: A Formal Theory of Digit Expressions in Reading Order"
@@ -68,7 +78,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "07255b71",
     "filename": "sierpiski_numbers_covering_systems.json",
-    "pkg_num": 10,
+    "pkg_num": 9,
     "quality": "partial",
     "quality_score": 0.5811999999999999,
     "title": "Sierpinski Numbers via Covering Systems: A Certificate Framework"
@@ -78,7 +88,7 @@ window.PACKAGE_INDEX = [
     "domain": "MachineLearning",
     "exp_id": "62850b85",
     "filename": "attention_mechanisms_mathematical_properties.json",
-    "pkg_num": 9,
+    "pkg_num": 8,
     "quality": "partial",
     "quality_score": 0.4446527272727273,
     "title": "Convex-Hull Confinement and Log-Partition Bounds for Softmax Self-Attention"
@@ -88,7 +98,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "d1c9c6b9",
     "filename": "sperners_lemma_implies_nash_equilibria_combinatori.json",
-    "pkg_num": 8,
+    "pkg_num": 7,
     "quality": "partial",
     "quality_score": 0.6288,
     "title": "Sperner's Lemma Implies Brouwer & Nash: Combinatorial Fixed Points in Game Theory"
@@ -98,20 +108,10 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "54153a72",
     "filename": "convex_geometry_brunn_minkowski_theory.json",
-    "pkg_num": 7,
+    "pkg_num": 6,
     "quality": "partial",
     "quality_score": 0.56159,
     "title": "Convex Geometry: The One-Dimensional Brunn\u2013Minkowski Inequality"
-  },
-  {
-    "date": "2026-06-23T06:39:56Z",
-    "domain": "Pythagorean",
-    "exp_id": "3db2ad68",
-    "filename": "close_proofs_these_conjectures_continue_the_resear.json",
-    "pkg_num": 6,
-    "quality": "partial",
-    "quality_score": 0.3935206787878788,
-    "title": "Transition Endomorphisms of an Endomorphism Stream: Composition Law and Rank Stabilization"
   },
   {
     "date": "2026-06-23T05:45:49Z",
@@ -183,12 +183,12 @@ window.PACKAGE_DB_INDEX = {
     "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
   },
   "close_proofs_these_conjectures_continue_the_resear.json": {
-    "domain": "Pythagorean",
-    "exp_id": "3db2ad68",
+    "domain": "Computation",
+    "exp_id": "a5fa8083",
     "source_exp_ids": [
       "a0dd96a5"
     ],
-    "title": "Transition Endomorphisms of an Endomorphism Stream: Composition Law and Rank Stabilization"
+    "title": "The Fitting Kernel Bound: Sharp Stabilization of Iterated-Endomorphism Kernels"
   },
   "convex_geometry_brunn_minkowski_theory.json": {
     "domain": "Geometry",
@@ -305,7 +305,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-22T21:20:57Z",
       "domain": "Tropical",
-      "hue": 271,
+      "hue": 91,
       "id": "idempotent_probability_large_deviations",
       "primary_domain": "Tropical",
       "priority_score": 0.7829999999999999,
@@ -327,7 +327,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T01:43:47Z",
       "domain": "Applications",
-      "hue": 134,
+      "hue": 91,
       "id": "eml_transseries_asymptotic_expansions_beyond_power",
       "primary_domain": "Bridges",
       "priority_score": 0.46096,
@@ -349,7 +349,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T05:45:49Z",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 270,
       "id": "bridge_galois_connections_between_order_theory_and",
       "primary_domain": "Bridges",
       "priority_score": 0.47904,
@@ -358,20 +358,9 @@ window.PACKAGE_GRAPH = {
       "title": "Bridge: Galois Connections, Knaster-Tarski Fixed-Point Lattices, and the Zariski Topology"
     },
     {
-      "date": "2026-06-23T06:39:56Z",
-      "domain": "Pythagorean",
-      "hue": 270,
-      "id": "close_proofs_these_conjectures_continue_the_resear",
-      "primary_domain": "Pythagorean",
-      "priority_score": 0.3935206787878788,
-      "quality": "partial",
-      "shape": "triangular_prism",
-      "title": "Transition Endomorphisms of an Endomorphism Stream: Composition Law and Rank Stabilization"
-    },
-    {
       "date": "2026-06-23T07:31:52Z",
       "domain": "Geometry",
-      "hue": 91,
+      "hue": 92,
       "id": "convex_geometry_brunn_minkowski_theory",
       "primary_domain": "Geometry",
       "priority_score": 0.56159,
@@ -382,7 +371,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:35:17Z",
       "domain": "Geometry",
-      "hue": 271,
+      "hue": 91,
       "id": "sperners_lemma_implies_nash_equilibria_combinatori",
       "primary_domain": "Geometry",
       "priority_score": 0.6288,
@@ -393,7 +382,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T07:38:24Z",
       "domain": "MachineLearning",
-      "hue": 272,
+      "hue": 90,
       "id": "attention_mechanisms_mathematical_properties",
       "primary_domain": "MachineLearning",
       "priority_score": 0.4446527272727273,
@@ -404,7 +393,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T08:30:51Z",
       "domain": "Computation",
-      "hue": 271,
+      "hue": 91,
       "id": "sierpiski_numbers_covering_systems",
       "primary_domain": "Computation",
       "priority_score": 0.5811999999999999,
@@ -415,7 +404,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T11:40:38Z",
       "domain": "Probability",
-      "hue": 90,
+      "hue": 270,
       "id": "oeis_sequence_orderly_friedman_numbers_or_good_or_",
       "primary_domain": "Bridges",
       "priority_score": 0.48476875555555554,
@@ -426,7 +415,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T15:01:50Z",
       "domain": "Novelty",
-      "hue": 275,
+      "hue": 270,
       "id": "rucker_gnarl_and_continuous_valued_cellular_automa",
       "primary_domain": "Bridges",
       "priority_score": 0.5094479615384615,
@@ -437,7 +426,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-23T19:25:16Z",
       "domain": "Cryptography",
-      "hue": 91,
+      "hue": 271,
       "id": "quantum_key_distribution_bb84_security_proof",
       "primary_domain": "Cryptography",
       "priority_score": 0.49160000000000004,
@@ -448,7 +437,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T00:21:07Z",
       "domain": "Physics",
-      "hue": 90,
+      "hue": 92,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Physics",
       "priority_score": 0.6913,
@@ -459,7 +448,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:21:56Z",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 270,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
       "priority_score": 0.7484,
@@ -470,13 +459,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-24T01:35:46Z",
       "domain": "Tropical",
-      "hue": 90,
+      "hue": 92,
       "id": "eml_universal_approximation_density_of_eml_functio",
       "primary_domain": "Tropical",
       "priority_score": 0.86528,
       "quality": "substantial",
       "shape": "star",
       "title": "EML Universal Approximation: Density of Exp-Log Functions on the Unit Cube"
+    },
+    {
+      "date": "2026-06-24T01:59:38Z",
+      "domain": "Computation",
+      "hue": 90,
+      "id": "close_proofs_these_conjectures_continue_the_resear",
+      "primary_domain": "Computation",
+      "priority_score": 0.789328,
+      "quality": "substantial",
+      "shape": "cube",
+      "title": "The Fitting Kernel Bound: Sharp Stabilization of Iterated-Endomorphism Kernels"
     }
   ]
 };
