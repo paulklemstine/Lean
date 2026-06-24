@@ -5261,6 +5261,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT",
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer k ≥ 1, let t = 2^k. Then the limit c_t = 1/2 + 2^{-2s_2(t)-1}, where s_2(t) is the binary sum-of-digits function. This conjecture asserts that the explicit lower bound provided in the paper is tight for all powers of two.",
+    "domain_bridges": [
+      "Analytic Number Theory",
+      "Combinatorial Number Theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2404",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjecture can be approached by analyzing the stopped random-walk structure for t = 2^k, leveraging the symmetry in binary representations of n and n+2^k. Key steps would involve characterizing the first-exit probabilities for principal subsequence ideals and verifying that the median property achieves the lower bound exactly.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-24T04:55:09.073513+00:00",
+    "title": "Tightness of the lower bound for powers of two in Cusick's sum-of-digits conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "ErdosProblems550",
       "EFRS1989",
       "Chvatal1977",
@@ -5276,7 +5301,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2404",
+    "id": "fd_2405",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to adapt the off-Turán embedding and compactness-rounding arguments to eliminate the dependence on n₀. Alternatively, perform a systematic case analysis for small n using structural properties of trees and known exact Ramsey numbers for small complete multipartite graphs.",
@@ -5303,7 +5328,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2405",
+    "id": "fd_2406",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a uniform linear bound by inducting on the codimension $i$, utilizing Borel-Serre duality to relate high-degree cohomology to low-degree homology, and carefully controlling the $p$-torsion dependencies in the spectral sequence of the complex of apartments.",
@@ -5332,7 +5357,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2406",
+    "id": "fd_2407",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a combination of modular arithmetic to rule out congruence classes mod small primes, p‑adic valuation to show that n! + 1 cannot be a square when n exceeds 7, and LLL lattice reduction to bound possible m via approximations of sqrt(n!+1). The strategy involves proving that for any n > 7, there exists a prime p > 7 such that v_p(n!) is odd, which forces n! + 1 to be congruent to 1 mod p but not a quadratic residue modulo p. This approach would be formalized by iteratively eliminating admissible n using explicit bounds from the Chebyshev theta function and explicit factorial bounds, culminating in a contradiction for each n > 7.",
@@ -5360,7 +5385,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2407",
+    "id": "fd_2408",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To prove the conjecture one would need to show that the existing lower‑bound machinery (uniform phase separation on $S$‑unit progressions and digit‑sum normal order) already forces the liminf to be at most $3(k-1)/\\log12$, while a refined Kummer‑sieve combined with mixed $2$–$3$ representations can produce infinitely many $n$ attaining the upper constant $(k-1)/\\log2$, thereby establishing the limsup. Conversely, any improvement of the lower constant would contradict the density‑zero exceptional set obtained from the digit‑sum normal order theorem.",
@@ -5388,7 +5413,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2408",
+    "id": "fd_2409",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage coding-theoretic translation where the coefficient row space of the powers is the m-th Schur power of the coefficient code, then apply the Schur-product Kneser theorem of Mirandola and Zémor to derive the dimension bound.",
@@ -5418,7 +5443,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2409",
+    "id": "fd_2410",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First show that all defining exponent vectors of a parallel rank-one arrangement are integer multiples of one primitive vector. By a GL_n(Z) monomial change of coordinates, send this primitive vector to the first coordinate. Each hypertorus is then a union of fibers of x_1^d = beta_i, so the complement is homotopy equivalent, up to a finite disjoint union/finite covering that preserves the zero conclusion, to (C* minus finitely many points) times (C*)^(n-1). Since n >= 2, the second factor contains C*, whose Euler-Poincare characteristic is zero. Multiplicativity of Euler characteristic gives chi(M(A)) = chi(C* \\ D) * chi((C*)^(n-1)) = chi(C* \\ D) * 0 = 0.",
@@ -5444,7 +5469,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2410",
+    "id": "fd_2411",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of functions leveraging the worst-case h and s_y to show exponential lower bounds via combinatorial arguments.",
@@ -5709,26 +5734,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — GL(1) Langlands correspondence\n\nDerived from this cycle's findings: the cyclotomic GL(1) correspondence is realizable as an\n*explicit group isomorphism* `DirichletCharacter ℂ n ≃* (Gal(ℚ(ζₙ)/ℚ) →* ℂˣ)`\n(`LanglandsGL1.langlandsGL1`), with arithmetic shadow `φ(n)`\n(`card_galois_reps_eq_totient`) and a CRT-driven local–global factorization\n(`HeckeFactorization.heckeFactorization`).\n\n## Conjecture 1 — Conductor-graded refinement of the correspondence\n\nUnder `langlandsGL1`, a Dirichlet character of conductor exactly `d ∣ n` maps to a Galois\nrepresentation that factors through `Gal(ℚ(ζ_d)/ℚ)` (i.e. is trivial on `Gal(ℚ(ζₙ)/ℚ(ζ_d))`),\ngiving a *graded* isomorphism indexed by conductor.\n\n- The key insight is... that the correspondence is not just a bijection of groups but is\n  compatible with the filtration by conductor, so the bijection restricts to each conductor\n  stratum and the inclusion `ℚ(ζ_d) ⊆ ℚ(ζₙ)` becomes inflation of representations.\n- Why now? We already have the unconditional iso over ℚ and the CRT factorization\n  (`heckeFactorization`); Mathlib's `DirichletCharacter.conductor` and the cyclotomic tower\n  `IsCyclotomicExtension` instances make the stratification statable and checkable today.\n\n## Conjecture 2 — L-functions match across the correspondence\n\nFor a Dirichlet character `χ` and its Galois counterpart `ρ = langlandsGL1 χ`, the Dirichlet\nL-function `L(s, χ)` equals the Artin L-function `L(s, ρ)` term by term as Euler products.\n\n- The key insight is... that the *local* CRT factorization established here\n  (`heckeFactorization`) is exactly the place-by-place decomposition that makes the two Euler\n  products agree factor by factor, reducing global equality to a per-prime statement.\n- Why now? The group isomorphism is in hand, so the analytic comparison is the only missing\n  ingredient; Mathlib's `LSeries` / `DirichletCharacter` L-function development gives a target\n  to match the Galois side against.\n\n## Conjecture 3 — Functoriality of the count under the cyclotomic tower\n\nThe totient counts assemble into an exact statement: the natural restriction map\n`(Gal(ℚ(ζₘₙ)/ℚ) →* ℂˣ) → (Gal(ℚ(ζₘ)/ℚ) →* ℂˣ)` is surjective with kernel of order `φ(mn)/φ(m)`,\nmirroring the surjection `(ℤ/mnℤ)ˣ ↠ (ℤ/mℤ)ˣ`.\n\n- The key insight is... that `card_galois_reps_eq_totient` upgrades from a cardinality identity\n  to an exact sequence once the tower maps are made explicit, encoding how Hecke characters lift\n  along the cyclotomic tower.\n- Why now? Both endpoints are formalized (`card_galois_reps_eq_totient`), and the unit-group\n  surjection `(ℤ/mnℤ)ˣ ↠ (ℤ/mℤ)ˣ` used in `unitsCRT` is precisely the map to dualize.\n\n## Conjecture 4 — Real-place / sign data is invisible at GL(1) over ℚ\n\nEvery finite-order Hecke character of `ℚ` is determined by its restriction to `(ℤ/nℤ)ˣ`\ntogether with a single sign at the archimedean place, and the GL(1) correspondence is a\nbijection onto Galois characters once that sign (parity, `χ(-1) = ±1`) is recorded.\n\n- The key insight is... that the only archimedean datum at GL(1) over ℚ is the parity\n  `χ(-1)`, so the \"infinite place\" contributes exactly one bit, matching even/odd Dirichlet\n  characters to representations distinguished by complex conjugation.\n- Why now? `MulChar` already exposes `χ(-1)`, and our isomorphism makes the even/odd split a\n  decidable invariant transported to the Galois side, so the refined bijection is checkable.\n\n## Conjecture 5 — Beyond ℚ: ray class characters for imaginary quadratic fields\n\nThe same composite (`autEquivPow`-style reciprocity) ∘ (`mulEquivToUnitHom`) realizes the\nGL(1) correspondence for any abelian extension with a computable Galois-to-ray-class iso,\nstarting with imaginary quadratic fields where CM theory supplies the analogue of `autEquivPow`.\n\n- The key insight is... that the only field-specific input to our proof is the reciprocity\n  isomorphism `Gal ≃* (class/unit group)`; everything downstream (`precompMulEquiv`,\n  `homProdEquiv`, the totient count) is formal and field-agnostic.\n- Why now? The ℚ proof isolates exactly the one arithmetic black box that must be supplied per\n  field, turning \"do CFT for K\" into \"produce one `MulEquiv`\", a sharply scoped target.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2411",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f39e2cb3",
-    "status": "available",
-    "timestamp": "2026-06-24T04:28:46.104001+00:00",
-    "title": "Derived from this cycle's findings: the cyclotomic GL(1) correspondence is reali"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -5743,26 +5748,6 @@
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For feedforward ReLU networks trained on natural image datasets, the Betti numbers (especially β₁ and β₂) of the Vietoris‑Rips complex built from activation vectors at any hidden layer are negatively correlated with the network's test error; i.e., higher topological complexity of the representation manifold predicts better generalization. Test: Train a diverse set of architectures (varying depth, width, skip connections) on CIFAR‑10 and ImageNet subsets, compute persistence diagrams for activations at multiple layers across many random seeds, quantify β₁,β₂, and measure Pearson/Spearman correlation with test accuracy; the conjecture is refuted if no statistically significant negative correlation is observed across >95% of configurations. Impact: Provides a computable, geometry‑based predictor of generalization that could guide architecture design, early‑stopping criteria, and pruning strategies without relying on validation sets.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "fd_2412",
-    "lineage_refs": [],
-    "priority_score": 0.7159166666666668,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-24T04:31:52.813350+00:00",
-    "title": "Topological Signatures of Deep Network Representations"
   },
   {
     "ambition_level": "extension",
@@ -5941,25 +5926,6 @@
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle f39e2cb3 (Q=0.578) proved 6 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations cor",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "sorry_fill_f39e2cb3_6a5959da",
-    "lineage_refs": [],
-    "priority_score": 0.62755,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f39e2cb3",
-    "status": "available",
-    "timestamp": "2026-06-24T04:32:03.493253+00:00",
-    "title": "Close Proofs: Langlands Correspondence: GL(1) Case"
   },
   {
     "ambition_level": "extension",
@@ -6781,7 +6747,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb67589f",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domain_bridges": [],
     "domains": [
@@ -6794,7 +6760,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },

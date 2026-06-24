@@ -3166,11 +3166,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
+    "description": "For every integer k \u2265 1, let t = 2^k. Then the limit c_t = 1/2 + 2^{-2s_2(t)-1}, where s_2(t) is the binary sum-of-digits function. This conjecture asserts that the explicit lower bound provided in the paper is tight for all powers of two.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2404",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-24T04:55:09.073513+00:00",
+    "title": "Tightness of the lower bound for powers of two in Cusick's sum-of-digits conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -3185,7 +3199,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2405",
+    "id": "fd_2406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3199,7 +3213,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2406",
+    "id": "fd_2407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
@@ -3213,7 +3227,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2407",
+    "id": "fd_2408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
@@ -3228,7 +3242,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2408",
+    "id": "fd_2409",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -3242,7 +3256,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2409",
+    "id": "fd_2410",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24299v1",
@@ -3257,7 +3271,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2410",
+    "id": "fd_2411",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -3453,21 +3467,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 GL(1) Langlands correspondence\n\nDerived from this cycle's findings: the cyclotomic GL(1) correspondence is realizable as an\n*explicit group isomorphism* `DirichletCharacter \u2102 n \u2243* (Gal(\u211a(\u03b6\u2099)/\u211a) \u2192* \u2102\u02e3)`\n(`LanglandsGL1.langlandsGL1`), with arithmetic shadow `\u03c6(n)`\n(`card_galois_reps_eq_totient`) and a CRT-driven local\u2013global factorization\n(`HeckeFactorization.heckeFactorization`).\n\n## Conjecture 1 \u2014 Conductor-graded refinement of the correspondence\n\nUnder `langlandsGL1`, a Dirichlet character of conductor exactly `d \u2223 n` maps to a Galois\nrepresentation that factors through `Gal(\u211a(\u03b6_d)/\u211a)` (i.e. is trivial on `Gal(\u211a(\u03b6\u2099)/\u211a(\u03b6_d))`),\ngiving a *graded* isomorphism indexed by conductor.\n\n- The key insight is... that the correspondence is not just a bijection of groups but is\n  compatible with the filtration by conductor, so the bijection restricts to each conductor\n  stratum and the inclusion `\u211a(\u03b6_d) \u2286 \u211a(\u03b6\u2099)` becomes inflation of representations.\n- Why now? We already have the unconditional iso over \u211a and the CRT factorization\n  (`heckeFactorization`); Mathlib's `DirichletCharacter.conductor` and the cyclotomic tower\n  `IsCyclotomicExtension` instances make the stratification statable and checkable today.\n\n## Conjecture 2 \u2014 L-functions match across the correspondence\n\nFor a Dirichlet character `\u03c7` and its Galois counterpart `\u03c1 = langlandsGL1 \u03c7`, the Dirichlet\nL-function `L(s, \u03c7)` equals the Artin L-function `L(s, \u03c1)` term by term as Euler products.\n\n- The key insight is... that the *local* CRT factorization established here\n  (`heckeFactorization`) is exactly the place-by-place decomposition that makes the two Euler\n  products agree factor by factor, reducing global equality to a per-prime statement.\n- Why now? The group isomorphism is in hand, so the analytic comparison is the only missing\n  ingredient; Mathlib's `LSeries` / `DirichletCharacter` L-function development gives a target\n  to match the Galois side against.\n\n## Conjecture 3 \u2014 Functoriality of the count under the cyclotomic tower\n\nThe totient counts assemble into an exact statement: the natural restriction map\n`(Gal(\u211a(\u03b6\u2098\u2099)/\u211a) \u2192* \u2102\u02e3) \u2192 (Gal(\u211a(\u03b6\u2098)/\u211a) \u2192* \u2102\u02e3)` is surjective with kernel of order `\u03c6(mn)/\u03c6(m)`,\nmirroring the surjection `(\u2124/mn\u2124)\u02e3 \u21a0 (\u2124/m\u2124)\u02e3`.\n\n- The key insight is... that `card_galois_reps_eq_totient` upgrades from a cardinality identity\n  to an exact sequence once the tower maps are made explicit, encoding how Hecke characters lift\n  along the cyclotomic tower.\n- Why now? Both endpoints are formalized (`card_galois_reps_eq_totient`), and the unit-group\n  surjection `(\u2124/mn\u2124)\u02e3 \u21a0 (\u2124/m\u2124)\u02e3` used in `unitsCRT` is precisely the map to dualize.\n\n## Conjecture 4 \u2014 Real-place / sign data is invisible at GL(1) over \u211a\n\nEvery finite-order Hecke character of `\u211a` is determined by its restriction to `(\u2124/n\u2124)\u02e3`\ntogether with a single sign at the archimedean place, and the GL(1) correspondence is a\nbijection onto Galois characters once that sign (parity, `\u03c7(-1) = \u00b11`) is recorded.\n\n- The key insight is... that the only archimedean datum at GL(1) over \u211a is the parity\n  `\u03c7(-1)`, so the \"infinite place\" contributes exactly one bit, matching even/odd Dirichlet\n  characters to representations distinguished by complex conjugation.\n- Why now? `MulChar` already exposes `\u03c7(-1)`, and our isomorphism makes the even/odd split a\n  decidable invariant transported to the Galois side, so the refined bijection is checkable.\n\n## Conjecture 5 \u2014 Beyond \u211a: ray class characters for imaginary quadratic fields\n\nThe same composite (`autEquivPow`-style reciprocity) \u2218 (`mulEquivToUnitHom`) realizes the\nGL(1) correspondence for any abelian extension with a computable Galois-to-ray-class iso,\nstarting with imaginary quadratic fields where CM theory supplies the analogue of `autEquivPow`.\n\n- The key insight is... that the only field-specific input to our proof is the reciprocity\n  isomorphism `Gal \u2243* (class/unit group)`; everything downstream (`precompMulEquiv`,\n  `homProdEquiv`, the totient count) is formal and field-agnostic.\n- Why now? The \u211a proof isolates exactly the one arithmetic black box that must be supplied per\n  field, turning \"do CFT for K\" into \"produce one `MulEquiv`\", a sharply scoped target.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2411",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f39e2cb3",
-    "status": "available",
-    "timestamp": "2026-06-24T04:28:46.104001+00:00",
-    "title": "Derived from this cycle's findings: the cyclotomic GL(1) correspondence is reali"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3479,21 +3478,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For feedforward ReLU networks trained on natural image datasets, the Betti numbers (especially \u03b2\u2081 and \u03b2\u2082) of the Vietoris\u2011Rips complex built from activation vectors at any hidden layer are negatively correlated with the network's test error; i.e., higher topological complexity of the representation manifold predicts better generalization. Test: Train a diverse set of architectures (varying depth, width, skip connections) on CIFAR\u201110 and ImageNet subsets, compute persistence diagrams for activations at multiple layers across many random seeds, quantify \u03b2\u2081,\u03b2\u2082, and measure Pearson/Spearman correlation with test accuracy; the conjecture is refuted if no statistically significant negative correlation is observed across >95% of configurations. Impact: Provides a computable, geometry\u2011based predictor of generalization that could guide architecture design, early\u2011stopping criteria, and pruning strategies without relying on validation sets.",
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "fd_2412",
-    "priority_score": 0.7159166666666668,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-24T04:31:52.813350+00:00",
-    "title": "Topological Signatures of Deep Network Representations"
   },
   {
     "consumed_by_exp_id": "",
@@ -3627,20 +3611,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle f39e2cb3 (Q=0.578) proved 6 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations cor",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "sorry_fill_f39e2cb3_6a5959da",
-    "priority_score": 0.62755,
-    "research_mode": "team",
-    "source_exp_id": "f39e2cb3",
-    "status": "available",
-    "timestamp": "2026-06-24T04:32:03.493253+00:00",
-    "title": "Close Proofs: Langlands Correspondence: GL(1) Case"
   },
   {
     "consumed_by_exp_id": "",
@@ -4255,7 +4225,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eb67589f",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domains": [
       "Speculative",
@@ -4265,7 +4235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },

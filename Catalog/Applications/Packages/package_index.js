@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "146bc8b0",
     "filename": "homotopy_type_theory_foundations.json",
     "pkg_num": 19,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.48341799999999996,
     "title": "Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence"
   },
   {
@@ -560,8 +560,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "homotopy_type_theory_foundations",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.48341799999999996,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Homotopy Type Theory Foundations: Identity Types, Higher Inductive Types, and the Boundary of Univalence"
     }
