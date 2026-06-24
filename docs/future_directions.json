@@ -34402,7 +34402,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21534v1",
       "source_path": "http://arxiv.org/abs/2606.21534v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T01:48:36.909062+00:00",
       "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
@@ -35265,7 +35265,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.AG",
@@ -35273,7 +35273,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ff0eab6a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35289,7 +35289,7 @@
         "Geometry"
       ],
       "id": "fd_2313",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T12:16:23.595410+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "variable (G : Type) [LieGroup G] (P : Subgroup G) [IsParabolic P]\n\ndef schubertClusterAlgebra : ClusterAlgebra := sorry\ndef flagVarietyClusterAlgebra : ClusterAlgebra := sorry\n\nconjecture cluster_structures_isomorphic :\n    Nonempty (ClusterAlgebraIso (schubertClusterAlgebra G P) (flagVarietyClusterAlgebra G P))",
       "lineage_refs": [],
@@ -35303,7 +35303,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23474v1",
       "source_path": "http://arxiv.org/abs/2606.23474v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T06:42:43.429866+00:00",
       "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
@@ -46894,7 +46894,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "1670a4b8",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46919,7 +46919,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432688+00:00",
       "title": "Ramsey Theory: Bounds and Constructions"
@@ -121371,6 +121371,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
