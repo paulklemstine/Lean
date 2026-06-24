@@ -1,198 +1,210 @@
-# The Coefficient That Counts Primes
+# Tactics: The Tireless Apprentices of Mathematical Proof
 
-## A number from Pascal's triangle that knows where the primes live
+## A machine that never gets bored
 
-Pick a row deep inside Pascal's triangle — say row number $2n$ — and look at the
-single number sitting right in the middle. Mathematicians call it the *central
-binomial coefficient*, written $\binom{2n}{n}$. The first few values are
+Every working mathematician knows the feeling. You are deep inside a proof, the
+real ideas are humming, and then you hit a wall of *bookkeeping*: a dozen tiny
+cases that must each be checked, a sum that must be rearranged, an inequality
+that just needs grinding out. None of it is hard. All of it is tedious. And one
+slip — a forgotten case, a sign error — can quietly poison the whole argument.
 
-$$\binom{0}{0}=1,\quad \binom{2}{1}=2,\quad \binom{4}{2}=6,\quad \binom{6}{3}=20,\quad \binom{8}{4}=70,\quad \binom{10}{5}=252.$$
+This is exactly the kind of labor a machine should do. Not the inspiration, but
+the perspiration. The trick is to package a recurring pattern of reasoning into
+a single, reusable command — a *tactic* — that performs the drudgery
+automatically and, crucially, performs it *correctly* every single time.
 
-At first glance these are just the counts of how many ways you can choose $n$
-objects from $2n$. But hidden inside this innocent counting number is a secret
-census of the prime numbers. Every prime that lies strictly between $n$ and $2n$
-divides $\binom{2n}{n}$ — and divides it *exactly once*, never twice. Because of
-this, the middle of Pascal's triangle becomes a kind of prime-detector: it is big
-enough to swallow all those primes as factors, yet small enough that it cannot
-hide too many of them. Squeeze that idea hard enough and out falls one of the
-oldest quantitative facts about prime numbers: **the primes thin out, and they do
-so at a controllable rate.**
+This article tells the story of three such apprentices, each designed for a
+different corner of mathematics: one for number theory, one for the strange
+"min-plus" algebra called the tropical semiring, and one for estimating the
+eigenvalues of a matrix. Each one automates a chore that mathematicians do by
+hand thousands of times. And each one comes with a guarantee that it can never
+lie to you.
 
-This article tells the story of that bridge — from a number you can compute by
-hand in Pascal's triangle to a genuine theorem about the distribution of primes.
-It is a journey across two countries of mathematics that rarely share a border:
-*combinatorics*, the art of counting arrangements, and *analytic number theory*,
-the study of how primes are spread along the number line. The traveler that
-carries us across is a 200-year-old gem called Legendre's formula.
+That guarantee is the heart of the matter, so let us start there.
 
-## How many times does a prime divide a factorial?
+## What it means for an apprentice to be honest
 
-The factorial $n! = 1\cdot 2\cdot 3\cdots n$ grows monstrously fast, and its prime
-factorization is a tangle. Yet there is a beautifully clean way to count how many
-times a single prime $p$ appears in it. Adrien-Marie Legendre found it around
-1808.
+A tactic is, roughly, a little program that transforms one mathematical goal
+into another, or finishes it off entirely. The danger is obvious: a buggy tactic
+could "prove" something false, and a false theorem at the foundation can topple
+an entire edifice. So before we celebrate convenience, we demand *soundness* — a
+promise that the tactic only ever closes goals that are genuinely true.
 
-Write $n$ in base $p$ and add up its digits; call that digit sum $s_p(n)$. For
-example, in base $3$ the number $n=8$ is written $22$, so $s_3(8)=2+2=4$.
-Legendre's formula says that the exponent of $p$ in $n!$ — the number of times
-$p$ divides it, which we write $v_p(n!)$ — satisfies the strikingly simple
-identity
+There are two clean ways to keep that promise, and our three apprentices
+illustrate both.
 
-$$(p-1)\cdot v_p(n!) = n - s_p(n).$$
+The first way is to build the tactic out of pieces that are *already* known to
+be honest, so the whole inherits their honesty. The second way is to prove, once
+and for all, a single load-bearing theorem — a *soundness certificate* — and
+then have the tactic do nothing but invoke that theorem. The first style is like
+assembling a tool from trusted parts; the second is like stamping a tool with a
+certified safety rating. We will meet one of each.
 
-In words: take the number, subtract its base-$p$ digit sum, and divide by $p-1$.
-That is exactly how many factors of $p$ are buried inside $n!$. There is no
-guesswork, no estimation — it is an exact equality. This is the first theorem in
-our formal development, and everything else is built on it.
+## Apprentice One: the finite-case checker
 
-## The central coefficient, decoded
+The first apprentice is called `number_theory_decide`, and its philosophy is
+disarmingly simple. An enormous number of statements in elementary number theory
+ultimately reduce to checking *finitely many cases*. Is 97 prime? Check the
+candidate divisors. Does some pattern hold for every remainder modulo 6? Check
+all six remainders. These are exactly the moments where a human's attention
+flags and errors creep in — and exactly where a machine excels.
 
-Now we apply Legendre's formula three times. The central binomial coefficient is
+So `number_theory_decide` is built as a *disjunction of trusted finishers*. In
+plain terms, it tries, in order, a handful of well-established decision
+procedures: an arithmetic solver for linear facts about integers; a brute-force
+evaluator for decidable propositions; a normalizer for numerical equalities and
+inequalities; and, when the goal ranges over a finite type, a routine that
+splits into every case and checks each one. Because each of those four
+ingredients is itself sound, *any* goal the apprentice closes was already
+provable by an honest method. Honesty is inherited for free.
 
-$$\binom{2n}{n} = \frac{(2n)!}{n!\,\cdot\,n!}.$$
+But here is the subtle and beautiful point. On its own, a finite-case checker is
+not very impressive — it can only handle finite things. The real power emerges
+when it is paired with a *reduction*: a mathematical maneuver that turns an
+infinite problem into a finite one. The apprentice supplies the muscle; the
+mathematician supplies the cleverness of the reduction. Three classic examples
+show this partnership in action.
 
-A prime $p$ divides the top a certain number of times and the bottom a certain
-number of times; the difference is how many times $p$ divides $\binom{2n}{n}$.
-Feeding Legendre's formula into each factorial and simplifying, we obtain a clean
-"digit-sum" description of the valuation of the central coefficient:
+**Example 1: exponential growth outruns squares.** Consider the claim that
+$n^2 < 2^n$ for every integer $n \ge 5$. (Check the boundary: $5^2 = 25 < 32 =
+2^5$. It works, and the gap only widens.) This is an *infinite* statement — it
+must hold for all $n$ — so no finite check can settle it directly. The reduction
+here is *mathematical induction*. You prove the base case at $n = 5$, then show
+that whenever the inequality holds for some $k$, it must also hold for $k+1$. The
+inductive step is genuine algebra: from $k^2 < 2^k$ one argues
+$$(k+1)^2 \le k^2 + k^2 < 2^k + 2^k = 2^{k+1},$$
+using that $(k+1)^2 \le 2k^2$ once $k$ is large enough. That step needs a real
+inequality solver, not a finite check. But the *base interval* — the small
+values where the pattern first takes hold — is precisely where the finite-case
+checker shines. The division of labor is exact: induction tames the infinity,
+and the apprentice mops up the finitely many starting cases.
 
-$$(p-1)\cdot v_p\!\left(\binom{2n}{n}\right) = s_p(n) + s_p(n) - s_p(2n),$$
+**Example 2: Fermat's Little Theorem, in miniature.** A jewel of number theory
+says that if $p$ is a prime, then $p$ divides $n^p - n$ for *every* integer $n$.
+For $p = 5$ this means $5 \mid n^5 - n$; for $p = 7$, $7 \mid n^7 - n$. Again the
+statement is infinite — it quantifies over all integers $n$. The reduction this
+time is *modular arithmetic*: divisibility by $p$ is the same as vanishing in the
+finite world of remainders modulo $p$, a system with exactly $p$ elements. In
+that finite world, the claim becomes the crisp identity $x^p = x$ for every one
+of the $p$ residues — and *that* is a finite check the apprentice dispatches
+instantly. The infinite collapses to the finite the moment you pass to
+remainders.
 
-or equivalently, dividing through,
+**Example 3: a composite modulus.** The very same trick is not limited to
+primes. The fact that $6 \mid n^3 - n$ for every integer $n$ — a favorite of
+competition mathematics, since $n^3 - n = (n-1)n(n+1)$ is a product of three
+consecutive integers — follows by checking the identity $x^3 = x$ across the six
+remainders modulo 6. One reduction, one finite check, done.
 
-$$v_p\!\left(\binom{2n}{n}\right) = \frac{2\,s_p(n) - s_p(2n)}{p-1}.$$
+The lesson of the first apprentice is a manifesto: **automate the boredom, not
+the insight.** The finite check is the only part a machine should own; choosing
+the right reduction — induction here, remainders there — remains the
+mathematician's art.
 
-This little formula is the engine of the whole story. It converts a question
-about divisibility — *how many times does this prime go into this giant number?* —
-into a question about adding up the digits of $n$ and $2n$ in base $p$. Digit
-sums are concrete, finite, and easy to reason about. The mystery has become
-arithmetic.
+## Apprentice Two: the rearranger for min-plus algebra
 
-## The "exactly once" miracle
+The second apprentice lives in a stranger country. In ordinary arithmetic we add
+and multiply. In *tropical* (or *min-plus*) arithmetic, we replace addition with
+*taking the minimum* and replace multiplication with *ordinary addition*. It
+sounds like a parlor trick, but this algebra is the secret language of shortest
+paths, scheduling, optimization, and even certain neural networks: the cost of
+the cheapest route is a giant min-of-sums, which is to say a tropical polynomial.
 
-Here is where the magic happens. Suppose $p$ is a prime sitting in the upper half
-of the interval, so that
+In this world the familiar distributive law $a \cdot (b + c) = a\cdot b + a \cdot
+c$ becomes
+$$c + \min(a, b) = \min(c + a,\; c + b).$$
+Read it slowly: adding a fixed cost $c$ to the cheaper of two options is the same
+as adding $c$ to each and then choosing the cheaper. Obvious once you see it —
+and used constantly. The second apprentice, `tropical_simp`, exists to apply this
+law, and the laws that the minimum is *associative* and *commutative*
+($\min(a,b) = \min(b,a)$ and the order of a nested minimum does not matter),
+over and over until an expression is in a clean canonical form.
 
-$$n < p \le 2n.$$
+The mathematical core that makes this honest is a distributivity lemma — call it
+the *scalar-fold law*. It says that pushing a constant $c$ inside a whole
+*chain* of minimums distributes onto every term at once:
+$$c + \min(a_1, a_2, \ldots, a_k) = \min(c + a_1,\; c + a_2,\; \ldots,\; c + a_k).$$
+Proving this once, rigorously, certifies that the apprentice's central rewrite
+never changes the value of an expression. The remaining cleanup — flattening
+nested minimums and sorting their operands into a standard order — rests on the
+plain associativity and commutativity of $\min$, including the "left-commutative"
+shuffle $\min(a, \min(b, c)) = \min(b, \min(a, c))$ that lets you slide any
+operand to the front. Together these turn a tangled min-plus expression into a
+tidy, comparable normal form, automatically.
 
-In base $p$, the number $n$ is then a *single digit* — because $n$ is smaller
-than $p$, it is just written as "$n$" with no carrying. So $s_p(n) = n$. And
-$2n$, being between $p$ and $2p$, is written with exactly two digits: a leading
-$1$ and a remainder, giving $s_p(2n) = 1 + (2n - p)$.
+There is an honest boundary worth naming. As built, `tropical_simp` normalizes
+the *algebraic* structure — the distribution and the shuffling — but it does not
+yet resolve the *order* of unknown operands inside a minimum. When you write
+$\min(x, y)$ with $x$ and $y$ symbolic, the machine cannot know which is smaller
+without more information. Closing that last gap — by enumerating the finitely
+many possible orderings — would turn the rearranger into a complete decision
+procedure for min-plus polynomial identities. That is the natural next chapter,
+and the groundwork is already laid.
 
-Plug these into the digit-sum formula:
+## Apprentice Three: the eigenvalue appraiser
 
-$$(p-1)\cdot v_p\!\left(\binom{2n}{n}\right) = n + n - \bigl(1 + 2n - p\bigr) = p - 1.$$
+The third apprentice tackles a question from linear algebra that echoes through
+physics, engineering, and data science: *how big can the eigenvalues of a matrix
+be?* Eigenvalues govern whether a vibrating structure resonates, whether an
+iterative algorithm converges, whether a dynamical system is stable. Pinning down
+their magnitude is a daily need — and there is a wonderfully cheap way to bound
+it without computing the eigenvalues at all.
 
-Divide both sides by $p-1$ and you get the punchline:
+The idea is a cousin of a classical result called Gershgorin's theorem. Look at
+each row of your matrix and add up the *absolute values* of its entries; call
+that the row's *absolute row sum*. The claim is that every eigenvalue, in
+magnitude, is no larger than the biggest absolute row sum in the whole matrix.
+The third apprentice, `spectral_bound`, certifies exactly this estimate.
 
-$$v_p\!\left(\binom{2n}{n}\right) = 1.$$
+Why is it true? The argument is a small gem, and it is the apprentice's
+soundness certificate. Suppose $\lambda$ is an eigenvalue with eigenvector $v$,
+meaning $Mv = \lambda v$ and $v$ is not the zero vector. Among the coordinates of
+$v$, pick the one that is largest in absolute value; call its index $i$. Because
+$v$ is nonzero, this largest coordinate $|v_i|$ is strictly positive — a fact the
+proof genuinely relies on. Now write out the $i$-th line of the equation $Mv =
+\lambda v$:
+$$\lambda v_i = \sum_j M_{ij}\, v_j.$$
+Take absolute values and apply the triangle inequality:
+$$|\lambda|\,|v_i| = \Big|\sum_j M_{ij} v_j\Big| \le \sum_j |M_{ij}|\,|v_j|
+\le \Big(\sum_j |M_{ij}|\Big)|v_i|,$$
+where the last step uses that $|v_j| \le |v_i|$ for every $j$, since $i$ was
+chosen to maximize it. Finally divide by the strictly positive number $|v_i|$ to
+conclude
+$$|\lambda| \le \sum_j |M_{ij}| \le B,$$
+where $B$ is any agreed-upon bound on all the absolute row sums. The certificate
+is proved.
 
-**Every prime strictly between $n$ and $2n$ divides the central binomial
-coefficient exactly once — no more, no less.** This is the result our formal
-development calls the "valuation equals one" theorem, and it is the keystone of
-the bridge. An immediate consequence is that the *product* of all those primes
-divides $\binom{2n}{n}$:
+Notice how the structure mirrors apprentice one: a single, carefully proved
+theorem — here the "largest-coordinate" row-sum bound — is the entire source of
+trust, and the tactic does nothing but invoke it. To see it in action, take a
+concrete $2 \times 2$ matrix; its absolute row sums are easy to add up, and
+`spectral_bound` immediately certifies that both eigenvalue magnitudes fall below
+that maximum, with a clean corollary controlling the spectral radius.
 
-$$\left(\prod_{n < p \le 2n} p\right)\ \Big|\ \binom{2n}{n}.$$
+Here too there is an honest limitation, openly flagged. This is the *weak*
+Gershgorin bound: a single disc centered at the origin, large enough to contain
+every eigenvalue. The full Gershgorin theorem is sharper — it confines the
+eigenvalues to a *union* of smaller discs, one per row, each centered at that
+row's diagonal entry. Remarkably, the very same "largest-coordinate" argument
+yields the sharper version with only a small algebraic regrouping: move the
+diagonal term $M_{ii} v_i$ to the other side before taking absolute values, and
+the origin-centered disc becomes a disc centered at $M_{ii}$. The apprentice is
+ready to be upgraded.
 
-Because each prime appears to the first power and the primes are distinct, their
-product divides the coefficient cleanly. We have turned the central coefficient
-into a container holding every prime in the upper half-interval.
+## The shape of the idea
 
-## How big is the container?
+Step back and the three apprentices rhyme. Each isolates a *mechanical* step —
+checking finite cases, applying an algebraic law, invoking one inequality — and
+makes that step both effortless and trustworthy. Each draws a sharp line between
+the part a machine should own and the part a human must still supply: the
+reduction, the formulation, the choice of strategy. And each carries its honesty
+on its sleeve, whether inherited from trusted parts or stamped by a single
+certified theorem.
 
-A container's contents cannot be larger than the container itself. So if we know
-how big $\binom{2n}{n}$ is, we know how large the product of primes can be. The
-size of the central coefficient is pinned down by two complementary bounds that we
-prove formally.
+This is, quietly, a model for how mathematics and machines can collaborate. Not
+the machine replacing the mathematician, and not the mathematician drowning in
+clerical work, but a partnership in which the boring-but-error-prone is delegated
+to a tireless, honest apprentice — freeing human attention for the only thing it
+was ever good at: having ideas.
 
-The **lower bound** comes from the fact that $\binom{2n}{n}$ is the largest of the
-$2n+1$ entries in row $2n$ of Pascal's triangle, and those entries add up to
-$4^n$. Sharing $4^n$ among $2n+1$ entries, the biggest one is at least the
-average:
-
-$$4^n \le (2n+1)\binom{2n}{n}.$$
-
-The **upper bound** is subtler and is where we had to correct the historical
-record. A widely-quoted estimate claims $\binom{2n}{n} \le 4^n/(2\sqrt{n})$. This
-is simply false: at $n=2$ it would say $6 \le 16/(2\sqrt 2) = 5.65\ldots$, which is
-not true. The correct, provable statement is
-
-$$\binom{2n}{n} \le \frac{4^n}{\sqrt{2n}},$$
-
-and indeed $4^n/(2\sqrt n)$ turns out to be a *lower* bound, not an upper one. We
-prove the correct inequality, anchored by the clean integer identity
-
-$$(3n+1)\binom{2n}{n}^2 \le 16^n.$$
-
-Getting this detail right matters: a single mis-stated constant can quietly
-poison every estimate downstream. Formal verification is unforgiving about such
-things, and that is precisely its value — it refuses to let a plausible-looking
-falsehood slip through.
-
-## Crossing the bridge: primes thin out
-
-Now we assemble the pieces into the destination theorem. Define the *primorial*
-of $n$, written $n\#$, as the product of all primes up to $n$:
-
-$$n\# = \prod_{p \le n} p.$$
-
-For example $5\# = 2\cdot 3\cdot 5 = 30$ and $10\# = 2\cdot3\cdot5\cdot7 = 210$.
-The claim — a Chebyshev-type bound first proved by this elegant route by Paul
-Erdős as a teenager — is
-
-$$\prod_{p \le n} p < 4^n \qquad \text{for all } n \ge 1.$$
-
-The proof is a graceful induction. Even numbers above $2$ are not prime, so
-$n\#$ does not change when $n$ steps from an odd number to the next even one;
-that case is free. The interesting case is an odd number $2m+1$. Split the primes
-up to $2m+1$ into two groups: those at most $m+1$, and those in the upper
-interval $(m+1,\,2m+1]$.
-
-For the small group, induction already gives $(m+1)\# < 4^{m+1}$.
-
-For the large group, every one of those primes divides $\binom{2m+1}{m}$ exactly
-once — the same "exactly once" miracle as before — so their product is at most
-$\binom{2m+1}{m}$, which is at most $4^m$ (it is one of two equal middle entries
-in row $2m+1$, whose total is $4^{m+\frac12}\cdot\ldots$; the clean bound is
-$\binom{2m+1}{m}\le 4^m$).
-
-Multiplying the two groups:
-
-$$(2m+1)\# \;<\; 4^{m+1}\cdot 4^{m} \;=\; 4^{2m+1}.$$
-
-The induction closes, and the theorem stands. From a number in Pascal's triangle,
-we have deduced that the primes up to $n$ multiply together to less than $4^n$ —
-a hard quantitative limit on how dense the primes can be.
-
-## Why this matters
-
-This single inequality, $\prod_{p\le n} p < 4^n$, is the beating heart of
-Chebyshev's theorem, which states that the number of primes below $x$ is
-sandwiched between two constant multiples of $x/\ln x$. It was the first real
-evidence, decades before the Prime Number Theorem was proved, that the primes
-obey a precise statistical law rather than scattering randomly. And it descends
-directly from elementary facts about binomial coefficients — no complex analysis,
-no Riemann zeta function, just digit sums and counting.
-
-That is the deeper lesson of the bridge. The boundaries we draw between
-"combinatorics" and "number theory," between "elementary" and "analytic," are
-conveniences, not laws of nature. A theorem about how to choose $n$ things from
-$2n$ is, when read correctly, a theorem about the architecture of the primes.
-Legendre's formula is the dictionary that translates between the two languages,
-and the central binomial coefficient is the sentence that says the same thing in
-both.
-
-## A note on certainty
-
-Every statement in this article — Legendre's formula, the digit-sum valuation,
-the "exactly once" theorem, the corrected size bounds, and the final primorial
-inequality — has been checked down to its logical atoms. The corrected upper
-bound is a small but real example of why that checking is worth doing: an
-appealing formula that "everyone knows" turned out to be wrong by a constant, and
-only a rigorous accounting caught it. Mathematics has always prized certainty;
-here we have certainty that a machine has audited and found complete.
-
-The middle of Pascal's triangle has been staring at us for centuries. It turns
-out it was counting primes the whole time.
+The drudgery, at last, has somewhere to go.

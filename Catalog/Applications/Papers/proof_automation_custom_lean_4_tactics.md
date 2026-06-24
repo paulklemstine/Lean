@@ -1,42 +1,55 @@
-# Computational Evidence
+# Computational Evidence — Proof Automation: Custom Lean 4 Tactics
 
-Concise numerical checks performed (via `#eval`/`decide` in Lean) before
-formalising the three tactic-soundness files.
+Pre-proof computational landscape for the three tactics
+(`tropical_simp`, `number_theory_decide`, `spectral_bound`).
 
-## File I — `tropical_simp` (min-plus distributivity)
+## 1. `tropical_simp` (min-plus distributivity)
 
-Distributivity `c + min a b = min (c+a) (c+b)` and its fold form
-`c + foldr min h l = foldr min (c+h) (map (c+·) l)` tested on samples:
+Small-case check of the scalar-distribution law `c + min b c = min (c+b) (c+c)`
+and the list form `c + foldr min d l = foldr min (c+d) (map (c+·) l)`:
 
-| c | l            | c + foldr min 99 l | foldr min (c+99) (map (c+·) l) |
-|---|--------------|--------------------|--------------------------------|
-| 5 | [3, 1, 4]    | 6                  | 6                              |
-| 2 | [7, 7, 2]    | 4                  | 4                              |
-| 0 | []           | 99                 | 99                             |
+| `c` | `l`            | `c + foldr min d l` | `foldr min (c+d) (map (c+·) l)` |
+|-----|----------------|---------------------|---------------------------------|
+| 2   | `[3, 1, 4]`    | `2 + 1 = 3`         | `min(5, min(3, min(6, 2+d)))`=3 |
+| -1  | `[0, 5]`       | `-1 + 0 = -1`       | `min(-1, min(4, -1+d))` = -1    |
+| 10  | `[]`           | `10 + d`            | `10 + d`                        |
 
-All rows agree, matching the proved `tropical_fold_distrib`.
+All instances agree → the identity is plausible for all lists; confirmed by the
+inductive proof `scalar_foldr_min`.  Observed failure during experimentation:
+AC-normalisation of nested `min` needs `min_left_comm`; without it `simp` stalls
+on re-bracketed trees.
 
-## File II — `number_theory_decide`
+## 2. `number_theory_decide` (finite cases)
 
-* `6 ∣ n*(n+1)*(n+2)` checked for `n = 0..20`: holds in every case (products
-  `0,6,24,60,120,210,…` all divisible by 6).
-* `n^2 % 4`: for `n = 0..12` the value is `0` (n even) or `1` (n odd) — never
-  `2` or `3`, matching `sq_mod_four`.
-* Fibonacci strong divisibility `m ∣ n → fib m ∣ fib n`: spot-checked
-  `fib 3 = 2 ∣ fib 6 = 8`, `fib 4 = 3 ∣ fib 8 = 21`, `fib 5 = 5 ∣ fib 10 = 55`.
-  (OEIS A000045; the `gcd` identity `fib (gcd m n) = gcd (fib m) (fib n)` is the
-  source `Nat.fib_gcd`.)
+* `n² < 2ⁿ`: false for `n ∈ {2,3,4}` (4<4 false, 9<8 false, 16<16 false),
+  flips true at `n = 5` (25 < 32) and stays true — so the correct hypothesis is
+  `n ≥ 5`, matching `two_pow_gt_sq`.  (n=0: 0<1 ✓, n=1: 1<2 ✓ are incidental.)
+* Fermat / Carmichael residue scan `nᵖ ≡ n (mod m)` over a full residue system:
+  - `m = 5, p = 5`: holds for all `x ∈ ZMod 5` → `5 ∣ n⁵ − n`.
+  - `m = 7, p = 7`: holds for all `x ∈ ZMod 7` → `7 ∣ n⁷ − n`.
+  - `m = 6, p = 3`: `x³ − x = 0` for all `x ∈ ZMod 6` → `6 ∣ n³ − n`.
+  - Counterexample hunt: `m = 4, p = 3` gives `2³ − 2 = 6 ≡ 2 ≠ 0 (mod 4)`, so
+    `4 ∤ n³ − n` in general — confirms the modulus matters and the tactic
+    correctly *fails* (does not prove) the false instance.
 
-## File III — `spectral_bound`
+## 3. `spectral_bound` (eigenvalue magnitude)
 
-Sanity check of the row-sum eigenvalue bound on `A = ![![2, 1], ![1, 2]]`
-(eigenvalues `1, 3`): every eigenvalue modulus `≤ max row sum = 3`, with
-equality at `μ = 3`, confirming the bound `eigenvalue_norm_le_max_row_sum` is
-tight and correct. For `![![0, 2], ![2, 0]]` (eigenvalues `±2`): max row sum
-`= 2`, again tight.
+Row-sum (∞-norm) bound `|λ| ≤ maxᵢ ∑ⱼ |Mᵢⱼ|` checked on explicit matrices:
 
-## Counterexample hunt
+| Matrix                   | row sums | bound | actual eigenvalues | `|λ| ≤ bound`? |
+|--------------------------|----------|-------|--------------------|----------------|
+| `[[1,2],[0,3]]`          | 3, 3     | 3     | 1, 3               | yes (3 ≤ 3)    |
+| `[[2,0],[0,-2]]`         | 2, 2     | 2     | 2, −2              | yes (tight)    |
+| `[[0,1],[1,0]]`          | 1, 1     | 1     | 1, −1              | yes (tight)    |
+| `[[5,0],[0,1]]`          | 5, 1     | 5     | 5, 1               | yes            |
 
-No counterexamples found for any of the universal claims on the sampled ranges.
-The bounds in File III are tight (attained), so they cannot be strengthened
-without extra hypotheses (e.g. Hermitian structure — see FUTURE_DIRECTIONS #3).
+No counterexample found; the bound is tight on symmetric/diagonal cases.  This
+motivated phrasing the certificate with an abstract bound `B ≥ ∑ⱼ|Mᵢⱼ|` so the
+maximum instantiates `B`, avoiding `Finset.sup'` bookkeeping in the proof.
+
+## Verdict
+
+All three computational landscapes are consistent with the conjectured laws and
+exposed the exact hypotheses needed (`n ≥ 5`; modulus = exponent or `6 | n³−n`;
+abstract row-sum bound).  Proceeded to formal proof; all main theorems compile
+with `0` sorries and only `propext / Classical.choice / Quot.sound`.

@@ -1,359 +1,367 @@
-# A Combinatorics–Number-Theory Bridge: From the Central Binomial Coefficient to Chebyshev-Type Prime Bounds
-
-**Author:** Aristotle
-**Date:** 2026-06-24
-**Domain:** Bridges (Combinatorics ⟷ Analytic Number Theory)
+# Sound Custom Tactics for Number Theory, Tropical Algebra, and Spectral Estimation
 
 ## Abstract
 
-We present a fully formalized account of the classical bridge, due in this
-elementary form to Paul Erdős, that derives a Chebyshev-type upper bound on the
-product of primes from the arithmetic of the central binomial coefficient
-$\binom{2n}{n}$. The development is organized as a chain of theorems that crosses
-from enumerative combinatorics into analytic number theory. Its load-bearing
-results are: (i) Legendre's formula in digit-sum form,
-$(p-1)\,v_p(n!) = n - s_p(n)$; (ii) the induced digit-sum formula for the
-valuation of the central binomial coefficient,
-$(p-1)\,v_p\!\binom{2n}{n} = 2\,s_p(n) - s_p(2n)$; (iii) the exactness theorem
-that every prime $p$ with $n < p \le 2n$ satisfies $v_p\!\binom{2n}{n} = 1$, and
-hence $\prod_{n<p\le 2n} p \mid \binom{2n}{n}$; (iv) matching size bounds
-$4^n \le (2n+1)\binom{2n}{n}$ and $\binom{2n}{n} \le 4^n/\sqrt{2n}$; and (v) the
-destination theorem $\prod_{p\le n} p < 4^n$ for $n \ge 1$. We additionally
-document and correct a false upper bound, $\binom{2n}{n} \le 4^n/(2\sqrt n)$,
-which appears in the informal brief but fails already at $n=2$. The corrected
-bound $\binom{2n}{n} \le 4^n/\sqrt{2n}$ is the one we prove and use. All results
-have been mechanically verified.
+We present three custom proof-automation tactics, together with machine-checked
+soundness guarantees, addressing three recurring families of proof obligations:
+finite-case number theory, min-plus (tropical) simplification, and eigenvalue
+magnitude estimation. The first tactic, `number_theory_decide`, is a disjunction
+of individually sound primitive procedures; its soundness is therefore inherited
+structurally, and we demonstrate its role as the load-bearing *finite checker*
+inside genuine induction and modular-reduction arguments — proving
+$n^2 < 2^n$ for $n \ge 5$, the Fermat-style congruences $p \mid n^p - n$ for
+$p \in \{5,7\}$, and the composite-modulus fact $6 \mid n^3 - n$. The second
+tactic, `tropical_simp`, normalizes min-plus expressions; its correctness rests
+on a distributivity (scalar-fold) lemma together with the associativity and
+commutativity of the minimum. The third tactic, `spectral_bound`, discharges
+eigenvalue magnitude goals; its soundness is a weak Gershgorin row-sum bound that
+we prove from first principles via the classical largest-coordinate argument. For
+each tactic we delineate precisely which step is mechanizable and which step
+encodes irreducible mathematical insight, and we record the honest scope and
+limitations of each. The unifying thesis is that a finite or single-inequality
+*core* becomes powerful exactly when paired with a *reduction principle* —
+induction, quotient to a finite ring, or selection of an extremal coordinate.
 
-**Keywords:** central binomial coefficient, Legendre's formula, $p$-adic
-valuation, primorial, Chebyshev bound, Erdős, digit sum, prime distribution.
+**Keywords.** proof automation, custom tactics, soundness, finite-case
+decision, Fermat's little theorem, modular reduction, tropical semiring, min-plus
+algebra, Gershgorin bound, eigenvalue estimation.
 
 ---
 
 ## 1. Introduction
 
-The distribution of prime numbers is the central object of analytic number
-theory. The Prime Number Theorem, $\pi(x) \sim x/\ln x$, is its crown jewel, but
-it required nineteenth-century complex analysis to prove. Decades earlier,
-Chebyshev established the weaker but already profound statement that there exist
-positive constants $c_1, c_2$ with
+Formal proof developments accumulate a long tail of routine obligations:
+finite case splits, algebraic normalizations, and standard estimates. Each is
+individually trivial yet collectively expensive, and each is a site where manual
+proof is error-prone. Encapsulating such patterns into reusable *tactics* is the
+standard remedy, but it raises an immediate concern: a tactic that closes a false
+goal is worse than no tactic at all, because it silently corrupts the soundness
+of everything built on top of it.
 
-$$c_1 \frac{x}{\ln x} \le \pi(x) \le c_2 \frac{x}{\ln x}$$
+This paper studies three tactics under a strict discipline: every tactic must
+come with a soundness guarantee, and we must be explicit about which proof steps
+the tactic genuinely automates versus which steps it merely *finishes* after a
+human-supplied reduction. We argue, through worked theorems, that the value of a
+narrow automatic core is realized precisely when it is composed with a reduction
+principle that converts an infinite or structurally complex statement into the
+core's domain.
 
-for all large $x$. The engine behind the upper half of Chebyshev's bound is a
-purely *combinatorial* inequality controlling the **primorial**
+The three tactics are:
 
-$$n\# := \prod_{p \le n} p,$$
+1. **`number_theory_decide`** — a finite-case checker for number theory,
+   built as a disjunction of sound primitives.
+2. **`tropical_simp`** — a normalizer for min-plus (tropical) expressions,
+   founded on a distributivity lemma.
+3. **`spectral_bound`** — an eigenvalue magnitude estimator, founded on a
+   Gershgorin-type row-sum certificate.
 
-namely $n\# < 4^n$. Remarkably, this inequality can be proved without any
-analysis at all: it follows from elementary divisibility properties of the
-**central binomial coefficient** $\binom{2n}{n}$. This route was popularized by
-Erdős, who discovered a version of it as a young man, and it remains a textbook
-showcase of how combinatorics and number theory inform one another.
+### 1.1 Two soundness disciplines
 
-This paper records a complete, machine-checked formalization of that bridge. Our
-contribution is threefold. First, we give a self-contained chain of theorems with
-proof sketches, so that the entire argument can be followed from a single
-document. Second, we make the *digit-sum* structure explicit at every step:
-Legendre's formula and its consequence for $\binom{2n}{n}$ are stated and proved
-in terms of base-$p$ digit sums $s_p(\cdot)$, which is both the cleanest form for
-mechanization and the most transparent for human readers. Third, we correct a
-quantitative error in the informal source material: the upper bound
-$\binom{2n}{n} \le 4^n/(2\sqrt n)$ is false, and we replace it with the correct
-$\binom{2n}{n} \le 4^n/\sqrt{2n}$.
+We distinguish two routes to a sound tactic.
 
-### 1.1 Notation
-
-Throughout, $p$ denotes a prime and $n$ a natural number.
-
-- $v_p(m)$ is the **$p$-adic valuation** of $m$: the exponent of $p$ in the prime
-  factorization of $m$. Formally $v_p(m) = m.\mathrm{factorization}(p)$.
-- $s_p(m)$ is the **base-$p$ digit sum** of $m$: the sum of the digits of $m$
-  written in base $p$.
-- $\binom{2n}{n}$ is the **central binomial coefficient**, denoted in the
-  formalization by `central_binom n`.
-- $n\# = \prod_{p\le n} p$ is the **primorial**, denoted `prime_product_below n`.
-- $\binom{a}{b}$ is the usual binomial coefficient $\frac{a!}{b!(a-b)!}$.
-
-The two definitions agree with their Mathlib counterparts: `central_binom n`
-equals `Nat.centralBinom n`, and `prime_product_below n` equals `primorial n`.
+- **Inherited soundness (compositional).** If a tactic is a combinator over
+  sub-tactics each of which is sound, the composite is sound. `number_theory_decide`
+  follows this route.
+- **Certified soundness (reflective certificate).** If a tactic applies a single
+  proved theorem to the goal, it is sound provided that theorem is true and the
+  application is type-correct. `spectral_bound` follows this route via the lemma
+  `eigenvalue_rowsum_bound`. `tropical_simp` is intermediate: it is a rewrite
+  system whose rewrite rules are individually proved equalities.
 
 ---
 
-## 2. Definitions
+## 2. The `number_theory_decide` tactic
 
-**Definition 2.1 ($p$-adic valuation).** For natural numbers $n$ and a prime $p$,
-$$v_p(n) := \text{(exponent of } p \text{ in the prime factorization of } n).$$
-By convention $v_p(0) = 0$ in this representation. The valuation is completely
-additive on nonzero arguments: $v_p(ab) = v_p(a) + v_p(b)$ for $a, b \ne 0$.
+### 2.1 Definition
 
-**Definition 2.2 (Central binomial coefficient).**
-$$\binom{2n}{n} = \frac{(2n)!}{n!\,n!}.$$
-Equivalently $\binom{2n}{n}$ is the largest entry in row $2n$ of Pascal's
-triangle.
+The tactic is a left-biased disjunction of four sound finishers, tried in order:
 
-**Definition 2.3 (Base-$p$ digit sum).** Writing $n = \sum_{i\ge 0} d_i\,p^i$ with
-$0 \le d_i < p$, the digit sum is $s_p(n) = \sum_i d_i$.
+```
+number_theory_decide :=
+  first
+    | omega                              -- linear integer/nat arithmetic
+    | decide                             -- decidable propositions by evaluation
+    | norm_num                           -- numeric (in)equalities, primality
+    | (intro x; fin_cases x <;> decide)  -- exhaust a finite type, decide each
+```
 
-**Definition 2.4 (Primorial).**
-$$n\# = \prod_{\substack{p \le n \\ p \text{ prime}}} p.$$
+**Proposition 2.1 (Soundness, inherited).** Each branch is a sound tactic:
+`omega` is a complete and sound decision procedure for linear arithmetic over
+$\mathbb{Z}$ and $\mathbb{N}$; `decide` reduces a `Decidable` proposition to its
+Boolean evaluation, which is sound by the correctness of the `Decidable`
+instance; `norm_num` is a verified numeric normalizer; and the
+`fin_cases`/`decide` branch reduces a goal over a finite type to finitely many
+decidable subgoals. A first-success combinator over sound tactics is sound. ∎
+
+The tactic therefore *cannot* close a false goal. Its limitation is dual to its
+soundness: each branch only handles *finite* or *decidable* content. The
+mathematical interest lies entirely in the reductions that bring genuine theorems
+into that finite domain.
+
+### 2.2 Reduction by induction: exponential dominance
+
+**Theorem 2.2 (`two_pow_gt_sq`).** For every natural number $n \ge 5$,
+$$n^2 < 2^n.$$
+
+*Proof sketch.* Induct on $n$.
+
+- *Base interval.* For $n < 5$ the hypothesis $5 \le n$ is contradictory, and the
+  case $n = 5$ gives $25 < 32$; both are finite facts discharged by
+  `number_theory_decide` (via `interval_cases`).
+- *Inductive step.* Assume $k^2 < 2^k$ with $k \ge 5$. Then
+  $$(k+1)^2 \le k^2 + k^2 < 2^k + 2^k = 2^{k+1},$$
+  where $(k+1)^2 \le 2k^2$ holds for $k \ge 5$ (indeed for $k \ge 3$) by a
+  quadratic inequality `nlinarith` closes, and the strict middle inequality is
+  the induction hypothesis added to itself. The final equality is `ring`.
+
+The inductive step is *not* a finite check and is the load-bearing mathematical
+content; `number_theory_decide` is confined to the base interval. ∎
+
+This theorem demonstrates the canonical pairing **induction + finite base**: the
+reduction (induction) tames the universally quantified $n$, and the automatic
+core handles only the finitely many starting values.
+
+### 2.3 Reduction by quotient: Fermat-style congruences
+
+The second reduction passes from divisibility over $\mathbb{Z}$ to vanishing in
+the finite ring $\mathbb{Z}/m\mathbb{Z}$ (written `ZMod m`). The bridge is the
+standard equivalence
+$$(a : \mathbb{Z}/m\mathbb{Z}) = 0 \iff m \mid a \qquad
+(\texttt{ZMod.intCast\_zmod\_eq\_zero\_iff\_dvd}).$$
+
+**Theorem 2.3 (`fermat_little_five`).** For every integer $n$,
+$$5 \mid n^5 - n.$$
+
+*Proof sketch.* It suffices to show $(n^5 - n : \mathbb{Z}/5\mathbb{Z}) = 0$. By
+the ring-homomorphism property of the cast (`push_cast`), this equals
+$\bar n^5 - \bar n$ where $\bar n$ is the image of $n$. The finite identity
+$$\forall x \in \mathbb{Z}/5\mathbb{Z},\quad x^5 - x = 0$$
+is checked by `number_theory_decide` exhausting the five residues. Transporting
+back through `ZMod.intCast_zmod_eq_zero_iff_dvd` yields the divisibility. ∎
+
+**Theorem 2.4 (`fermat_little_seven`).** For every integer $n$, $7 \mid n^7 - n$.
+*Proof sketch.* Identical to Theorem 2.3 with modulus $7$; the finite check
+$\forall x \in \mathbb{Z}/7\mathbb{Z},\ x^7 - x = 0$ exhausts seven residues. ∎
+
+**Theorem 2.5 (`cube_sub_self_six`).** For every integer $n$, $6 \mid n^3 - n$.
+
+*Proof sketch.* The modulus need not be prime. Reduce to
+$\forall x \in \mathbb{Z}/6\mathbb{Z},\ x^3 - x = 0$, a six-case finite check.
+(Conceptually, $n^3 - n = (n-1)n(n+1)$ is a product of three consecutive
+integers, hence divisible by $2$ and $3$, hence by $6$; the finite check
+certifies this without the factorization.) ∎
+
+The reusable chain is identical across $p = 5, 7$ and $m = 6$:
+$$\texttt{ZMod.intCast\_zmod\_eq\_zero\_iff\_dvd} \ \to\ \texttt{push\_cast}
+\ \to\ \texttt{decide (finite residues)}.$$
+Only the literal modulus changes — strong evidence that the boilerplate is
+mechanizable by a future reflective tactic (Section 7).
+
+### 2.4 Soundness sanity checks
+
+Two finite facts confirm the tactic discharges *true* goals only: `Nat.Prime 97`
+(closed by the `norm_num` branch) and $n^2 \le 9$ for $n < 4$ (closed by
+`interval_cases` then the finite branch). No false instance can be closed, by
+Proposition 2.1.
 
 ---
 
-## 3. Main Results
+## 3. The `tropical_simp` tactic
 
-We state the results in dependency order and give proof sketches. Full mechanical
-proofs underlie each statement.
+### 3.1 The min-plus setting
 
-### 3.1 Legendre's formula (digit form)
+The tropical (min-plus) semiring replaces addition by $\min$ and multiplication
+by $+$. Tropical "polynomials" are thus finite expressions built from variables
+and constants using $\min$ and $+$; they model shortest-path costs, scheduling
+optima, and piecewise-linear (e.g. ReLU-network) value functions. `tropical_simp`
+normalizes such expressions.
 
-**Theorem 3.1 (`legendre_factorial_digit`).** For a prime $p$ and any $n$,
-$$(p-1)\,v_p(n!) = n - s_p(n).$$
+### 3.2 The distributivity (scalar-fold) lemma
 
-*Proof sketch.* The exponent of $p$ in $n!$ is, by the classical counting
-argument (de Polignac/Legendre),
-$$v_p(n!) = \sum_{i\ge 1} \left\lfloor \frac{n}{p^i} \right\rfloor.$$
-Writing $n = \sum_i d_i p^i$ and using
-$\lfloor n/p^j \rfloor = \sum_{i\ge j} d_i p^{i-j}$, a telescoping computation
-gives $\sum_{i\ge1}\lfloor n/p^i\rfloor = \frac{n - s_p(n)}{p-1}$, because each
-digit $d_i$ contributes $d_i(p^{i-1}+\cdots+1) = d_i\frac{p^i-1}{p-1}$. Multiplying
-by $p-1$ yields the stated identity. In the formalization this is obtained
-directly from the library identity relating $v_p(n!)$ to the digit sum. $\square$
+The single substantive correctness fact is that tropical multiplication (ordinary
+$+$) distributes over tropical addition ($\min$):
+$$c + \min(a, b) = \min(c + a,\; c + b).$$
 
-### 3.2 Valuation of the central binomial coefficient
+**Lemma 3.1 (`scalar_foldr_min`, distributive core).** For a constant $c$, an
+initial value $e$, and a finite list $[a_1, \ldots, a_k]$,
+$$c + \operatorname{foldr}\min\, e\, [a_1,\ldots,a_k]
+  = \operatorname{foldr}\min\,(c + e)\,[c + a_1,\ldots,c + a_k],$$
+equivalently
+$$c + \min(a_1, \ldots, a_k, e) = \min(c + a_1, \ldots, c + a_k, c + e).$$
 
-**Theorem 3.2 (`legendre_central_binom_digit`).** For a prime $p$,
-$$(p-1)\,v_p\!\left(\binom{2n}{n}\right) = s_p(n) + s_p(n) - s_p(2n).$$
+*Proof sketch.* Induction on the list. The empty case is the identity
+$c + e = c + e$. For the cons case, $c + \min(a_1, t) = \min(c + a_1, c + t)$ by
+the binary distributive law above, and $c + t$ is rewritten by the induction
+hypothesis. ∎
 
-*Proof sketch.* Start from the exact factorial identity
-$$\binom{2n}{n}\cdot n!\cdot n! = (2n)!,$$
-which holds because $\binom{2n}{n} = \frac{(2n)!}{n!(2n-n)!}$ and $2n-n=n$. Taking
-$p$-adic valuations and using complete additivity,
-$$v_p((2n)!) = v_p\!\binom{2n}{n} + 2\,v_p(n!).$$
-Multiply through by $(p-1)$ and substitute Legendre's formula (Theorem 3.1) for
-each factorial term:
-$$(p-1)v_p\!\binom{2n}{n} = \bigl(2n - s_p(2n)\bigr) - 2\bigl(n - s_p(n)\bigr) = 2\,s_p(n) - s_p(2n).$$
-Care is required with truncated natural-number subtraction; the formalization
-manages this using $s_p(2n) \le 2n$ and $s_p(n) \le n$ to justify each step.
-$\square$
+Lemma 3.1 certifies that the central rewrite of `tropical_simp` — pushing an
+additive constant across an entire $\min$-chain — preserves value.
 
-**Theorem 3.3 (`vp_central_binom_div`, divided form).** For a prime $p$,
-$$v_p\!\left(\binom{2n}{n}\right) = \frac{2\,s_p(n) - s_p(2n)}{p-1}.$$
+### 3.3 Associative–commutative normalization
 
-*Proof sketch.* Divide Theorem 3.2 by $p-1 > 0$ (valid since $p \ge 2$). The
-division is exact in $\mathbb{N}$ because the left side is $(p-1)$ times an
-integer. $\square$
+Beyond distribution, `tropical_simp` flattens nested minima and canonically
+orders operands using the semilattice laws of $\min$:
+$$\min(a,b) = \min(b,a) \quad(\text{commutativity}),$$
+$$\min(\min(a,b),c) = \min(a,\min(b,c)) \quad(\text{associativity}),$$
+$$\min(a,\min(b,c)) = \min(b,\min(a,c)) \quad(\text{left-commutativity, } \texttt{min\_left\_comm}).$$
+The left-commutativity law is the crucial addition that allows any operand to be
+permuted to the front, so that AC-normalization terminates in a canonical order.
 
-### 3.3 The exactness theorem
+**Proposition 3.2 (Soundness of `tropical_simp`).** Every rewrite rule the
+tactic applies is a proved equality (Lemma 3.1 and the three semilattice laws),
+so the normalized expression is provably equal to the original; hence the tactic
+never changes truth value. ∎
 
-**Theorem 3.4 (`vp_central_binom_eq_one`).** Let $p$ be prime with $n < p \le 2n$.
+### 3.4 Scope and limitation
+
+`tropical_simp` normalizes the *algebraic* structure (distribution + AC
+reordering) but does not resolve the *order* of symbolic operands inside a
+$\min$. Thus $\min(x,y)$ with $x,y$ unknown is left as a canonical but unresolved
+form. Completing the procedure requires a finite case-split over the possible
+total orders of the operands; this is the natural extension to a complete
+decision procedure for min-plus polynomial identities (Section 7).
+
+---
+
+## 4. The `spectral_bound` tactic
+
+### 4.1 Definition and certificate
+
+`spectral_bound` discharges goals of the form "the magnitude of an eigenvalue is
+at most $B$" by applying a single proved theorem.
+
+**Theorem 4.1 (`eigenvalue_rowsum_bound`, soundness certificate).** Let $M$ be a
+real $n \times n$ matrix ($n \ge 1$), let $v \in \mathbb{R}^n$ with $v \ne 0$,
+and suppose
+$$M v = \lambda v \qquad\text{and}\qquad \forall i,\ \sum_{j} |M_{ij}| \le B.$$
 Then
-$$v_p\!\left(\binom{2n}{n}\right) = 1.$$
+$$|\lambda| \le B.$$
 
-*Proof sketch.* Since $0 < n < p$, the number $n$ is a single base-$p$ digit, so
-$s_p(n) = n$ (the digit list of $n$ in base $p$ is $[n]$; this is the auxiliary
-lemma `digits_of_pos_lt`). Since $p \le 2n < 2p$, the number $2n$ has exactly two
-base-$p$ digits: a leading $1$ (because $\lfloor 2n/p\rfloor = 1$) and remainder
-$2n - p$ (because $2n \bmod p = 2n - p$). Hence $s_p(2n) = 1 + (2n - p)$.
-Substituting into Theorem 3.3,
-$$v_p\!\binom{2n}{n} = \frac{2n - \bigl(1 + 2n - p\bigr)}{p-1} = \frac{p-1}{p-1} = 1.$$
-$\square$
+*Proof sketch.* Since the index set is finite and nonempty, choose $i$ maximizing
+$|v_i|$ (`Finite.exists_max`). As $v \ne 0$, $|v_i| > 0$ (`abs_pos`). The $i$-th
+component of $Mv = \lambda v$ reads
+$$\lambda v_i = \sum_j M_{ij} v_j.$$
+Taking absolute values and using the triangle inequality and $|v_j| \le |v_i|$:
+$$|\lambda|\,|v_i| = \Big|\sum_j M_{ij} v_j\Big|
+\le \sum_j |M_{ij}|\,|v_j|
+\le \Big(\sum_j |M_{ij}|\Big)\,|v_i|
+\le B\,|v_i|.$$
+Cancelling the strictly positive factor $|v_i|$ (`le_of_mul_le_mul_right`) gives
+$|\lambda| \le B$. ∎
 
-**Corollary 3.5 (`prime_dvd_central_binom`).** If $p$ is prime and
-$n < p \le 2n$, then $p \mid \binom{2n}{n}$.
+**Proposition 4.2 (Soundness of `spectral_bound`).** The tactic does nothing but
+apply Theorem 4.1 to the goal after supplying the eigen-equation, the
+nonvanishing of $v$, and a row-sum bound $B$. Soundness is therefore exactly the
+truth of Theorem 4.1. ∎
 
-*Proof sketch.* By Theorem 3.4 the factorization exponent of $p$ in
-$\binom{2n}{n}$ is $1 \ge 1$, and a positive valuation is equivalent to
-divisibility (the coefficient is nonzero since $n \le 2n$). $\square$
+The hypothesis $v \ne 0$ is load-bearing: a zero "eigenvector" would admit any
+$\lambda$, and the proof uses $v \ne 0$ precisely at `abs_pos`. Abstracting the
+bound to a hypothesis $B$ with $\forall i, \sum_j |M_{ij}| \le B$ (rather than
+hard-coding $\max_i \sum_j |M_{ij}|$) avoids `Finset.sup'` bookkeeping while
+losing no generality, since the maximum instantiates $B$.
 
-**Corollary 3.6 (`prod_primes_Ioc_dvd_central_binom`).**
-$$\left(\prod_{\substack{n < p \le 2n \\ p\text{ prime}}} p\right)\ \Big|\ \binom{2n}{n}.$$
+### 4.2 Worked example and corollary
 
-*Proof sketch.* The primes in $(n, 2n]$ are distinct, hence pairwise coprime, and
-each divides $\binom{2n}{n}$ by Corollary 3.5. A product of pairwise-coprime
-divisors of $m$ divides $m$. $\square$
+For a concrete $2 \times 2$ matrix, the absolute row sums are immediate, their
+maximum instantiates $B$, and `spectral_bound` certifies that both eigenvalue
+magnitudes are $\le B$. A spectral-radius/trace-style corollary follows: the
+spectral radius $\rho(M) = \max |\lambda|$ is bounded by the maximum absolute row
+sum, which in turn controls trace-based quantities.
 
-### 3.4 Size of the central binomial coefficient
+### 4.3 Scope and limitation
 
-**Theorem 3.7 (`central_binom_lower`).**
-$$4^n \le (2n+1)\binom{2n}{n}.$$
-
-*Proof sketch.* Row $2n$ of Pascal's triangle has $2n+1$ entries summing to
-$2^{2n} = 4^n$. The central entry $\binom{2n}{n}$ is the maximum of these, so the
-sum is at most $(2n+1)\binom{2n}{n}$. $\square$
-
-**Theorem 3.8 (`central_binom_sq_le`).**
-$$(3n+1)\binom{2n}{n}^2 \le 16^n.$$
-
-*Proof sketch.* This is a clean integer inequality that strengthens the naive
-$\binom{2n}{n}^2 \le 16^n$ by the factor $3n+1$. It follows from a Vandermonde /
-convexity estimate on the squared central coefficient and is the integer kernel
-from which the real-analytic upper bound is extracted. $\square$
-
-**Theorem 3.9 (`central_binom_upper`, corrected bound).**
-$$\binom{2n}{n} \le \frac{4^n}{\sqrt{2n}}.$$
-
-*Proof sketch.* From Theorem 3.8, $\binom{2n}{n}^2 \le 16^n/(3n+1) \le 16^n/(2n)$
-for $n \ge 1$ (since $3n + 1 \ge 2n$). Taking real square roots,
-$\binom{2n}{n} \le 4^n/\sqrt{2n}$. $\square$
-
-**Remark 3.10 (a corrected error).** The informal brief states the upper bound
-$\binom{2n}{n} \le 4^n/(2\sqrt n)$. This is **false**: at $n = 2$ it reads
-$6 \le 16/(2\sqrt 2) = 5.657\ldots$, a contradiction. In fact $4^n/(2\sqrt n)$ is a
-*lower* bound for $\binom{2n}{n}$. The correct and provable upper bound is
-$\binom{2n}{n} \le 4^n/\sqrt{2n}$, which we adopt as Theorem 3.9. Note
-$\sqrt{2n} = \sqrt 2 \cdot \sqrt n$, so the corrected bound is larger than the
-erroneous one by exactly the factor $\sqrt 2$ — precisely the gap that makes the
-true statement hold.
-
-### 3.5 The destination: a Chebyshev-type primorial bound
-
-**Theorem 3.11 (`chebyshev_primorial`).** For all $n \ge 1$,
-$$\prod_{p \le n} p < 4^n, \qquad \text{i.e. } n\# < 4^n.$$
-
-*Proof sketch.* Strong induction on $n$, following Erdős.
-
-- **Base cases.** $1\# = 1 < 4$ and $2\# = 2 < 16$.
-- **Even step ($n = 2m$, $m\ge 2$).** The number $2m$ is not prime, so
-  $(2m)\# = (2m-1)\#$. By the induction hypothesis
-  $(2m-1)\# < 4^{2m-1} < 4^{2m}$.
-- **Odd step ($n = 2m+1$).** Partition the primes $p \le 2m+1$ into those with
-  $p \le m+1$ and those with $m+1 < p \le 2m+1$:
-  $$(2m+1)\# = (m+1)\# \cdot \!\!\prod_{m+1 < p \le 2m+1}\!\! p.$$
-  By the induction hypothesis $(m+1)\# < 4^{m+1}$. For the second factor, each
-  prime in $(m+1, 2m+1]$ divides $\binom{2m+1}{m}$ (the same exactness mechanism
-  as Corollary 3.5, with the roles played by $m$ and $2m+1$), so their product
-  divides and is therefore at most $\binom{2m+1}{m} \le 4^m$ (one of the two equal
-  central entries of the odd row $2m+1$, whose total row sum is $4^{m}\cdot 2$, so
-  each is $\le 4^m$). Multiplying,
-  $$(2m+1)\# < 4^{m+1}\cdot 4^m = 4^{2m+1}.$$
-
-The induction closes. $\square$
-
----
-
-## 4. The Bridge, Conceptually
-
-The logical skeleton of the development is a directed chain that begins in
-combinatorics and ends in number theory:
-
-$$\underbrace{\text{Legendre's formula}}_{\text{3.1}}
-\;\Rightarrow\;
-\underbrace{v_p\!\binom{2n}{n}\text{ digit formula}}_{\text{3.2--3.3}}
-\;\Rightarrow\;
-\underbrace{v_p = 1 \text{ on } (n,2n]}_{\text{3.4--3.6}}
-\;\Rightarrow\;
-\underbrace{\text{size bounds}}_{\text{3.7--3.9}}
-\;\Rightarrow\;
-\underbrace{n\# < 4^n}_{\text{3.11}}.$$
-
-Two ideas do the heavy lifting. The first is *arithmetization via digit sums*:
-Legendre's formula converts the analytic-looking quantity $v_p$ into a finite,
-combinatorial digit computation. The second is *the container principle*: because
-each prime in the upper half-interval appears to the first power, the central
-coefficient acts as a multiplicative container whose size bounds the prime
-product. The interplay — combinatorial size estimate on one side, number-theoretic
-divisibility on the other — is what turns a fact about Pascal's triangle into a
-fact about primes.
+This is the *weak* Gershgorin bound — a single disc centered at the origin
+containing the entire spectrum — not the full per-row union of discs. The full
+statement,
+$$\operatorname{spec}(M) \subseteq \bigcup_i \Big\{ z : |z - M_{ii}| \le
+\sum_{j \ne i} |M_{ij}| \Big\},$$
+follows from the *same* largest-coordinate argument by moving the diagonal term
+$M_{ii} v_i$ to the other side before bounding (Section 7).
 
 ---
 
 ## 5. Algorithms
 
-The formalization is constructive enough to yield concrete algorithms.
+### 5.1 Finite modular-reduction checker
 
-### 5.1 Valuation of $\binom{2n}{n}$ via digit sums
+Underlying Theorems 2.3–2.5 is the algorithm: to decide $m \mid f(n)$ for all
+$n \in \mathbb{Z}$ where $f$ is an integer polynomial, evaluate $f$ over all $m$
+residues modulo $m$ and confirm each result is $0 \bmod m$. Complexity is
+$O(m \cdot \deg f)$ modular operations — independent of $n$.
 
-Given a prime $p$ and an index $n$, Theorem 3.3 computes the valuation without
-ever factoring the enormous coefficient:
+### 5.2 Tropical normalization
 
-1. Compute $s_p(n)$ and $s_p(2n)$ by repeated division by $p$.
-2. Return $(2\,s_p(n) - s_p(2n)) / (p-1)$.
+Given a min-plus expression tree, repeatedly (i) distribute additive constants
+over $\min$ via Lemma 3.1, (ii) flatten nested $\min$ nodes by associativity,
+(iii) sort operands by a fixed total order on subterms using commutativity and
+left-commutativity. The result is a canonical $\min$ of $+$-terms. Each rewrite
+strictly decreases a termination measure (constant-depth then operand
+disorder).
 
-This runs in $O(\log_p n)$ arithmetic operations, exponentially faster than
-factoring $\binom{2n}{n}$ directly.
+### 5.3 Row-sum spectral bound
 
-### 5.2 Primes dividing $\binom{2n}{n}$ exactly once
-
-By Theorem 3.4 these are exactly the primes in $(n, 2n]$, which can be enumerated
-by a sieve in $O(n \log\log n)$ time. Their product is a divisor of
-$\binom{2n}{n}$ and a lower bound certificate for it.
-
-### 5.3 Verifying the primorial bound
-
-For any target $N$, one verifies $n\# < 4^n$ for all $n \le N$ by a single linear
-sweep, accumulating the primorial and comparing against $4^n$ at each step.
+Given $M$, compute $r_i = \sum_j |M_{ij}|$ for each row and return
+$B = \max_i r_i$. By Theorem 4.1 every eigenvalue satisfies $|\lambda| \le B$.
+Complexity $O(n^2)$, with no eigen-decomposition required.
 
 ---
 
 ## 6. Applications
 
-- **Chebyshev's theorem.** Combining $n\# < 4^n$ with a lower bound from the same
-  central-coefficient analysis yields $\pi(x) = \Theta(x/\ln x)$, the qualitative
-  shape of the Prime Number Theorem, by entirely elementary means.
-- **Bertrand's postulate.** The same valuation analysis of $\binom{2n}{n}$,
-  pushed slightly further, gives Erdős's proof that there is always a prime
-  between $n$ and $2n$. The exactness theorem (3.4) is the shared kernel.
-- **Effective bounds.** Because every constant in the chain is explicit, the
-  development produces fully effective (non-asymptotic) bounds suitable for
-  certified computation.
-- **Pedagogy of bridges.** The development is a compact case study of how a single
-  classical formula (Legendre's) can serve as a translation device between two
-  subjects, a template reusable across the catalog of cross-domain bridges.
+- **Competition and elementary number theory.** The modular-reduction pattern
+  certifies a wide family of "for all $n$, $m \mid f(n)$" statements (Fermat-type
+  congruences, periodicity mod $m$, polynomial congruences) with a uniform,
+  trusted finite check.
+- **Optimization and piecewise-linear models.** `tropical_simp` canonicalizes
+  shortest-path and scheduling cost expressions, and the value functions of
+  min-plus / ReLU-style networks, enabling identity checking and simplification.
+- **Numerical stability and dynamics.** `spectral_bound` provides cheap a priori
+  eigenvalue bounds for convergence of iterative methods, stability of linear
+  dynamical systems, and conditioning estimates — all in $O(n^2)$ without
+  computing eigenvalues.
 
 ---
 
-## 7. Discussion
+## 7. Discussion and future work
 
-The most instructive episode in the formalization was Remark 3.10. The informal
-brief confidently asserted $\binom{2n}{n}\le 4^n/(2\sqrt n)$, a bound that *looks*
-right — it has the correct shape and the famous $4^n$ — yet is off by a factor of
-$\sqrt2$ and fails at the very first nontrivial value $n=2$. A mechanized
-development cannot proceed past such a falsehood; it forced the correct bound
-$\binom{2n}{n}\le 4^n/\sqrt{2n}$ to the surface. This is the quiet, daily value of
-formalization: not the proof of deep new theorems, but the relentless auditing of
-the "obvious."
+The three tactics share a structural moral: a **narrow automatic core** (finite
+check, value-preserving rewrite, single inequality) becomes broadly useful only
+when paired with a **reduction principle** (induction, quotient to a finite ring,
+selection of an extremal coordinate). The reduction is the mathematical insight;
+the core is the mechanizable residue. Honest scoping is part of the contribution:
+each tactic's limitation is stated, and in each case the limitation points at a
+concrete, tractable upgrade.
 
-A second point worth emphasizing is the role of natural-number subtraction. The
-digit-sum identities (Theorems 3.1–3.3) involve differences like $n - s_p(n)$ and
-$2 s_p(n) - s_p(2n)$ that are only meaningful because the subtrahends are provably
-no larger than the minuends ($s_p(n) \le n$, and $s_p(2n) \le 2\,s_p(n)$ on the
-relevant range). In informal mathematics these inequalities are invisible; in a
-formal setting they are load-bearing side conditions that must be discharged.
+1. **Complete decision for min-plus identities.** Extend `tropical_simp` with a
+   case-split over the finitely many total orders of operands inside each $\min$,
+   turning value-preserving normalization into a complete decision procedure for
+   min-plus polynomial identities over $\mathbb{R}$.
 
----
+2. **Per-disc Gershgorin upgrade.** Strengthen `eigenvalue_rowsum_bound` to the
+   full Gershgorin union of discs by regrouping the diagonal term in the existing
+   largest-coordinate argument — a one-line algebraic change to the certificate.
 
-## 8. Future Directions
+3. **Reflective `ZMod`-reduction tactic.** Package the identical chain
+   `ZMod.intCast_zmod_eq_zero_iff_dvd → push_cast → decide` as a single
+   reflective tactic parameterized by modulus $m$ and polynomial $f$, eliminating
+   the per-instance boilerplate observed across $p = 5, 7$ and $m = 6$.
 
-The broader research cycle that produced this development also explored custom
-proof-automation tactics for the catalog (min-plus simplification, finite
-residue-class decision procedures, and spectral-bound estimators). The forward
-program includes:
-
-1. **A confluent, terminating normal form for min-plus ("tropical")
-   simplification**, turning the distributive backbone already proved into a
-   genuine decision procedure for min-plus equality.
-2. **Residue-class reflection for number-theoretic facts**, reducing each
-   statement of the form "$\forall n,\, P(n \bmod m)$" to a finite check over
-   $r < m$, generalizing the parity arguments used for quadratic residues.
-3. **Two-sided spectral interval localization** for Hermitian matrices,
-   strengthening modulus-based Gershgorin bounds to genuine eigenvalue intervals.
-4. **A tropical (max-plus) eigenvalue bridge**, localizing the minimum cycle mean
-   of a matrix via its diagonal entries, in analogy with Gershgorin's theorem.
-
-Within the present binomial–prime bridge specifically, natural extensions are: a
-formal proof of Bertrand's postulate reusing Theorem 3.4; the matching lower
-primorial bound to close the loop to full Chebyshev; and an effective bound on
-$\pi(x)$ with explicit constants extracted from the chain.
+4. **Catalog integration.** Generalize the finite-residue checker to certify
+   entry-point congruences $n \mid \mathrm{Fib}(\mathrm{rank}(n))$ underlying
+   Carmichael/Fibonacci results, replacing range-based `native_decide` with a
+   trusted `decide`-over-`ZMod` argument per prime power.
 
 ---
 
-## 9. Conclusion
+## 8. Conclusion
 
-We have formalized, with proof sketches presented inline, the elementary bridge
-from the central binomial coefficient to a Chebyshev-type prime bound. The path
-runs through Legendre's digit-sum formula, the exact valuation of
-$\binom{2n}{n}$, the "divides exactly once" theorem for primes in $(n,2n]$, and
-matching size bounds, culminating in $\prod_{p\le n} p < 4^n$. Along the way we
-corrected a stated but false upper bound. The development illustrates, in
-miniature, how counting and primality are two readings of one underlying
-arithmetic.
+We have presented three sound, reusable proof-automation tactics together with
+explicit soundness arguments and worked theorems. `number_theory_decide`
+inherits soundness compositionally and serves as the finite checker inside
+induction (`two_pow_gt_sq`) and modular reduction (`fermat_little_five`,
+`fermat_little_seven`, `cube_sub_self_six`). `tropical_simp` is a value-preserving
+normalizer certified by the distributive scalar-fold lemma plus semilattice laws.
+`spectral_bound` is certified by the weak Gershgorin row-sum bound
+`eigenvalue_rowsum_bound`. In every case we separated the mechanizable core from
+the human-supplied reduction and recorded honest limitations alongside their
+upgrade paths.
