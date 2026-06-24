@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "935bc3f6",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -6311,6 +6311,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "GroupPermanent",
+      "YoungDiagram",
+      "WolstenholmePrime"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any partition λ of N, let G_λ denote the abelian p-group associated with λ. Then the number Nu(Per(G_λ)) of distinct monomials in the group permanent satisfies: Nu(Per(G_λ)) ≡ 1 (mod p^k) where k = 3 if p is a Wolstenholme prime and k = 2 otherwise, for all primes p ≥ 5 and all partitions λ with |λ| = N ≥ p. This extends the known result for cyclic p-groups to all abelian p-groups classified by partitions.",
+    "domain_bridges": [
+      "NumberTheory",
+      "RepresentationTheory",
+      "Combinatorics"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2445",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the explicit formula for Nu(Per(G_λ)) in terms of partial column sums of Young diagrams, apply Lucas's theorem on binomial coefficients modulo prime powers, and leverage the characterization of Wolstenholme primes via the congruence (2p-1 choose p-1) ≡ 1 (mod p³). The proof would proceed by induction on the partition structure and analysis of the φ_G(d) terms in the summation formula.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23765v1",
+    "status": "available",
+    "timestamp": "2026-06-24T17:54:35.379551+00:00",
+    "title": "Congruence Properties of Group Permanents for Abelian p-Groups and Wolstenholme Primes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO/2305.01234",
       "math.CO/2407.05678",
       "math.CO/2603.01456"
@@ -6325,7 +6353,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2445",
+    "id": "fd_2446",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6349,7 +6377,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2446",
+    "id": "fd_2447",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6375,7 +6403,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2447",
+    "id": "fd_2448",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6401,7 +6429,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2448",
+    "id": "fd_2449",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6428,7 +6456,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2449",
+    "id": "fd_2450",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6454,7 +6482,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2450",
+    "id": "fd_2451",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
@@ -6482,7 +6510,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2451",
+    "id": "fd_2452",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
@@ -6507,7 +6535,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -6534,7 +6562,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
@@ -6563,7 +6591,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Borel-Serre duality techniques and spectral sequence arguments used in codimension 1 and 2 cases to arbitrary k. Analyze the action of the congruence subgroup on Bruhat-Tits buildings and leverage representation stability to control cohomology in high degrees.",
@@ -6588,7 +6616,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2455",
+    "id": "fd_2456",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
@@ -6616,7 +6644,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
@@ -6625,6 +6653,33 @@
     "status": "available",
     "timestamp": "2026-06-24T17:30:07.652508+00:00",
     "title": "Strict Positivity of the Binary Sum-of-Digits Bias for All Integers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Helly's theorem",
+      "Colorful Helly theorem",
+      "Fractional Helly theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any d ≥ 1 and α ∈ (0,1], the beta function β(α,d) in the colorful and fractional Helly theorem for convex splinters in ℝᵈ satisfies β(α,d) ≥ α^(d+1). This conjecture posits a specific functional dependence of β on α and d, strengthening the existential result of the paper to a quantitative lower bound.",
+    "domain_bridges": [
+      "Convex geometry",
+      "Combinatorial topology"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2458",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductive argument on dimension d, leveraging the structure of convex splinters and the affine dependence condition. Possibly using induction on the number of convex sets composing the splinter, combined with probabilistic method or measure concentration techniques to establish the lower bound.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23437v1",
+    "status": "available",
+    "timestamp": "2026-06-24T17:58:21.103250+00:00",
+    "title": "Lower Bound on Beta Function for Colorful and Fractional Helly's Theorem on Convex Splinters"
   },
   {
     "ambition_level": "extension",

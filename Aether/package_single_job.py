@@ -81,7 +81,7 @@ def _find_artifacts(directory: Path) -> Dict[str, List[Path]]:
             result["package_jsons"].append(src)
         elif name == "prompt.md":
             result["prompt"].append(src)
-        elif name.endswith(".lean") and name != "main.lean":
+        elif name.endswith(".lean"):
             result["lean"].append(src)
         elif name.endswith(".py"):
             result["python"].append(src)
