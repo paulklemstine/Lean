@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "64791022",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -149,7 +149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cd0ef092",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -160,7 +160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -1526,7 +1526,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "No HF-MDR Ziegler pairs with at most nine lines"
   },
   {
-    "consumed_by_exp_id": "758d973b",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
     "domains": [
       "Pythagorean"
@@ -1535,7 +1535,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20452v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T01:38:47.066128+00:00",
     "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
   },
@@ -1599,7 +1599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hochschild homology isomorphism between asymptotic and classical Hecke algebras for inner forms of GL_n"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "168f9c96",
     "description": "For every fixed integer k \u2265 3, the Conformability problem is NP-complete when restricted to connected d-regular graphs G of odd order n with independence number \u03b1(G) = k and maximum degree d \u2265 n/2. The paper establishes this for k = 3 by reduction from perfect triangle packing in K\u2084-free graphs. The conjecture asserts that hardness persists for all larger independence numbers, where the complement graph has clique number k and conformable color classes correspond to cliques of odd size up to k in the complement, requiring richer packing structures to encode NP-hard problems.",
     "domains": [
       "Pythagorean",
@@ -1609,7 +1609,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21534v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T01:48:36.909062+00:00",
     "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
   },
@@ -2817,7 +2817,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "S-optimal Tanner graphs have no binary codewords of weight at most s"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9780f84c",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domains": [
       "Bridges"
@@ -2826,7 +2826,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -3353,7 +3353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Linear Vanishing Bound for Hecke Congruence Subgroup Cohomology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71e0f12b",
     "description": "Conjecture: For every natural number n > 7, the equation n! + 1 = m^2 has no integer solution m. In other words, the only solutions to the Brocard problem are the three known Brown pairs (4,5), (5,11), and (7,71).",
     "domains": [
       "Pythagorean"
@@ -3362,7 +3362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T00:22:38.508639+00:00",
     "title": "Non\u2011existence of Further Brown Numbers Beyond n=7"
   },
@@ -3615,12 +3615,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A precise, falsifiable conjecture linking the density parameters \u03b1 and \u03b2 of vertical and horizontal stripes in aperiodic Wang tile families to a Diophantine condition on pairs of quadratic irrationals.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2436",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24693v1",
+    "status": "available",
+    "timestamp": "2026-06-24T11:55:24.898021+00:00",
+    "title": "Sufficient condition for non-periodicity of awaited set of Wang tiles"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2436",
+    "id": "fd_2437",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3634,7 +3648,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2437",
+    "id": "fd_2438",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3649,13 +3663,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2438",
+    "id": "fd_2439",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
     "status": "available",
     "timestamp": "2026-06-24T11:36:11.076325+00:00",
     "title": "Scalar curvature formula for incidence-algebra nilpotent Lie algebras"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For RSA modulus n=p*q with primes p>q, if the private exponent d satisfies d < n^{(1+\u03b4)/2} and a \u03b4-fraction of the most significant bits of p+q is known, then the modulus n can be factored using a modified Wiener's continued fraction attack.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2440",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24717v1",
+    "status": "available",
+    "timestamp": "2026-06-24T11:56:42.011405+00:00",
+    "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
   },
   {
     "consumed_by_exp_id": "",
@@ -4198,7 +4226,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "a470c2a1",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -4208,7 +4236,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
@@ -4226,21 +4254,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:47.201625+00:00",
     "title": "EML Differential Algebra: Closure Properties"
-  },
-  {
-    "consumed_by_exp_id": "f0ec09b9",
-    "description": "Prove that specific EML numbers (like exp(exp(1)) + log(2)) are transcendental over Q. Formalize Schanuel's conjecture for EML functions and prove conditional results: if Schanuel's conjecture holds, then the class of EML numbers equals the class of EL numbers.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0511",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:47.344784+00:00",
-    "title": "EML Number Theory: Transcendence and Algebraic Independence"
   },
   {
     "consumed_by_exp_id": "",
@@ -4601,21 +4614,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.812055+00:00",
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
-  },
-  {
-    "consumed_by_exp_id": "2bd9b45a",
-    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
-    "domains": [
-      "Speculative",
-      "Logic"
-    ],
-    "id": "fd_0481",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.101987+00:00",
-    "title": "Consciousness as Integrated Information"
   },
   {
     "consumed_by_exp_id": "",

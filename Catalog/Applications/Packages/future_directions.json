@@ -14346,7 +14346,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:45.101987+00:00",
       "title": "Consciousness as Integrated Information"
@@ -15372,7 +15372,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "a470c2a1",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15398,7 +15398,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:47.125386+00:00",
       "title": "EML Universal Approximation: Density of EML Functions"
@@ -15515,7 +15515,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:47.344784+00:00",
       "title": "EML Number Theory: Transcendence and Algebraic Independence"
@@ -34093,7 +34093,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "758d973b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34124,7 +34124,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.20452v1",
       "source_path": "http://arxiv.org/abs/2606.20452v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T01:38:47.066128+00:00",
       "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
@@ -34361,7 +34361,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "cs.CC",
@@ -34371,7 +34371,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "168f9c96",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34388,7 +34388,7 @@
         "Algebra"
       ],
       "id": "fd_2294",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T11:56:49.403755+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conformability_np_complete_fixed_alpha (k : ℕ) (hk : k ≥ 3) : NP_complete (λ G => conformable G ∧ connected G ∧ regular G ∧ odd (order G) ∧ α G = k ∧ Δ G ≥ order G / 2) := by sorry",
       "lineage_refs": [],
@@ -34402,7 +34402,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21534v1",
       "source_path": "http://arxiv.org/abs/2606.21534v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T01:48:36.909062+00:00",
       "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
@@ -38371,7 +38371,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Erdos Problem 400",
         "Legendre formula for p-adic valuations of factorials",
@@ -38382,7 +38382,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "9780f84c",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38397,7 +38397,7 @@
         "Bridges"
       ],
       "id": "fd_2379",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T11:56:53.041545+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\nopen Filter Asymptotics\n\n/-- `factorialExcess k n` is the quantity g_k(n): the maximum of\n`sum a_i - n` over positive k-tuples whose factorial product divides `n!`.\nThis definition is intentionally left abstract in the conjecture stub. -/\nnoncomputable def factorialExcess (k n : ℕ) : ℕ := by\n  classical\n  exact 0\n\n/-- Natural-density convergence of the normalized factorial excess to the\nbinary leading constant conjectured for Erdős Problem 400. -/\ntheorem conjecture_binary_leading_constant_density_one\n    (k : ℕ) (hk : 2 ≤ k) :\n    ∀ ε : ℝ, 0 < ε →\n      Tendsto\n        (fun x : ℕ =>\n          ((Finset.Icc 1 x).filter\n              (fun n : ℕ =>\n                ε < Real.norm\n                  (((factorialExcess k n : ℝ) / Real.log (n : ℝ))\n                    - ((k : ℝ) - 1) / Real.log 2))).card : ℝ)\n            / (x : ℝ))\n        atTop\n        (𝓝 0) := by\n  sorry",
       "lineage_refs": [],
@@ -38411,7 +38411,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23661v1",
       "source_path": "http://arxiv.org/abs/2606.23661v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T18:54:10.361464+00:00",
       "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
@@ -40169,7 +40169,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Brocard Problem (n!+1 = m^2)",
         "Brown numbers: (4,5), (5,11), (7,71)",
@@ -40178,7 +40178,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "71e0f12b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -40194,7 +40194,7 @@
         "Pythagorean"
       ],
       "id": "fd_2418",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T11:56:56.851055+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem brocard_no_more (n : ℕ) (hn : n > 7) : ¬∃ m : ℕ, (n ! + 1) = m ^ 2 :=",
       "lineage_refs": [],
@@ -40208,7 +40208,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23485v1",
       "source_path": "http://arxiv.org/abs/2606.23485v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-24T00:22:38.508639+00:00",
       "title": "Non‑existence of Further Brown Numbers Beyond n=7"
@@ -41016,6 +41016,50 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "zbMATH07421483"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "A precise, falsifiable conjecture linking the density parameters α and β of vertical and horizontal stripes in aperiodic Wang tile families to a Diophantine condition on pairs of quadratic irrationals.",
+      "domain_bridges": [
+        "number theory",
+        "dynamic systems",
+        "computability"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2436",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Introduction to Diophantine problems solvable via short proofs and bounded search spaces",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Constructive Diophantine argument via scaling and scaling-free constructions",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24693v1",
+      "source_path": "http://arxiv.org/abs/2606.24693v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T11:55:24.898021+00:00",
+      "title": "Sufficient condition for non-periodicity of awaited set of Wang tiles"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
         "math.CO/2603.01456"
@@ -41036,7 +41080,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2436",
+      "id": "fd_2437",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41079,7 +41123,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2437",
+      "id": "fd_2438",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41124,7 +41168,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2438",
+      "id": "fd_2439",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41143,6 +41187,51 @@
       "thread_id": "",
       "timestamp": "2026-06-24T11:36:11.076325+00:00",
       "title": "Scalar curvature formula for incidence-algebra nilpotent Lie algebras"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Wiener's 1990 attack",
+        "Continued fractions in cryptanalysis"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For RSA modulus n=p*q with primes p>q, if the private exponent d satisfies d < n^{(1+δ)/2} and a δ-fraction of the most significant bits of p+q is known, then the modulus n can be factored using a modified Wiener's continued fraction attack.",
+      "domain_bridges": [
+        "Number theory",
+        "Cryptanalysis",
+        "Computational complexity"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2440",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24717v1",
+      "source_path": "http://arxiv.org/abs/2606.24717v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T11:56:42.011405+00:00",
+      "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
     },
     {
       "ambition_level": "extension",
@@ -45832,7 +45921,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "64791022",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -45857,7 +45946,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432595+00:00",
       "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
@@ -46762,7 +46851,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -46777,7 +46866,7 @@
         "Combinatorics"
       ],
       "id": "seed_352",
-      "last_attempt_time": "2026-06-24T11:36:19.259968+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47829,11 +47918,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cd0ef092",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47846,7 +47935,7 @@
         "Bridges"
       ],
       "id": "seed_379",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T11:56:45.040660+00:00",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -47860,7 +47949,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432809+00:00",
       "title": "Proof Automation: Custom Lean 4 Tactics"
@@ -121243,6 +121332,9 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
+    "cross_domain_bridge",
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
