@@ -5208,6 +5208,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Diestel2010Book"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every ⊆-minimal minor-closed graph class with limiting density greater than some δ < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class 𝒢, there exists a graph H such that 𝒢 = excl({H}).",
+    "domain_bridges": [
+      "Graph minors",
+      "Extremal graph theory",
+      "Rational densities"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2402",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the Robertson-Seymour theorem on finite forbidden minors and the paper's classification of minimal classes to show that the minimal sets of forbidden graphs for these classes must be singletons.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24326v1",
+    "status": "available",
+    "timestamp": "2026-06-24T02:41:49.567859+00:00",
+    "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "ErdosProblems550",
       "EFRS1989",
       "Chvatal1977",
@@ -5223,7 +5248,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2402",
+    "id": "fd_2403",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to adapt the off-Turán embedding and compactness-rounding arguments to eliminate the dependence on n₀. Alternatively, perform a systematic case analysis for small n using structural properties of trees and known exact Ramsey numbers for small complete multipartite graphs.",
@@ -5250,7 +5275,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2403",
+    "id": "fd_2404",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish a uniform linear bound by inducting on the codimension $i$, utilizing Borel-Serre duality to relate high-degree cohomology to low-degree homology, and carefully controlling the $p$-torsion dependencies in the spectral sequence of the complex of apartments.",
@@ -5279,7 +5304,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2404",
+    "id": "fd_2405",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use a combination of modular arithmetic to rule out congruence classes mod small primes, p‑adic valuation to show that n! + 1 cannot be a square when n exceeds 7, and LLL lattice reduction to bound possible m via approximations of sqrt(n!+1). The strategy involves proving that for any n > 7, there exists a prime p > 7 such that v_p(n!) is odd, which forces n! + 1 to be congruent to 1 mod p but not a quadratic residue modulo p. This approach would be formalized by iteratively eliminating admissible n using explicit bounds from the Chebyshev theta function and explicit factorial bounds, culminating in a contradiction for each n > 7.",
@@ -5307,7 +5332,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2405",
+    "id": "fd_2406",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "To prove the conjecture one would need to show that the existing lower‑bound machinery (uniform phase separation on $S$‑unit progressions and digit‑sum normal order) already forces the liminf to be at most $3(k-1)/\\log12$, while a refined Kummer‑sieve combined with mixed $2$–$3$ representations can produce infinitely many $n$ attaining the upper constant $(k-1)/\\log2$, thereby establishing the limsup. Conversely, any improvement of the lower constant would contradict the density‑zero exceptional set obtained from the digit‑sum normal order theorem.",
@@ -5335,7 +5360,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2406",
+    "id": "fd_2407",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage coding-theoretic translation where the coefficient row space of the powers is the m-th Schur power of the coefficient code, then apply the Schur-product Kneser theorem of Mirandola and Zémor to derive the dimension bound.",
@@ -5365,7 +5390,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2407",
+    "id": "fd_2408",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First show that all defining exponent vectors of a parallel rank-one arrangement are integer multiples of one primitive vector. By a GL_n(Z) monomial change of coordinates, send this primitive vector to the first coordinate. Each hypertorus is then a union of fibers of x_1^d = beta_i, so the complement is homotopy equivalent, up to a finite disjoint union/finite covering that preserves the zero conclusion, to (C* minus finitely many points) times (C*)^(n-1). Since n >= 2, the second factor contains C*, whose Euler-Poincare characteristic is zero. Multiplicativity of Euler characteristic gives chi(M(A)) = chi(C* \\ D) * chi((C*)^(n-1)) = chi(C* \\ D) * 0 = 0.",

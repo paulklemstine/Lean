@@ -16772,7 +16772,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -16788,7 +16788,7 @@
         "Logic"
       ],
       "id": "fd_0552",
-      "last_attempt_time": "2026-06-24T02:19:54.290346+00:00",
+      "last_attempt_time": "2026-06-07T22:40:42.374910+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39441,6 +39441,50 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Diestel2010Book"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Every ⊆-minimal minor-closed graph class with limiting density greater than some δ < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class 𝒢, there exists a graph H such that 𝒢 = excl({H}).",
+      "domain_bridges": [
+        "Graph minors",
+        "Extremal graph theory",
+        "Rational densities"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2402",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem minimal_class_single_forbidden (δ : ℝ) (hδ : δ < 3 / 2) : ∃ (𝒢 : GraphClass) (H : Graph), 𝒢 = excl {H} ∧ minimal_strictly_above_density δ 𝒢",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Leverage the Robertson-Seymour theorem on finite forbidden minors and the paper's classification of minimal classes to show that the minimal sets of forbidden graphs for these classes must be singletons.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24326v1",
+      "source_path": "http://arxiv.org/abs/2606.24326v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T02:41:49.567859+00:00",
+      "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "ErdosProblems550",
         "EFRS1989",
         "Chvatal1977",
@@ -39462,7 +39506,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2402",
+      "id": "fd_2403",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_problem_550_for_all_trees {k : ℕ} (hk : k ≥ 2) (m : List ℕ) (hm_len : m.length = k) (hm_sorted : m.Sorted (· ≤ ·)) (hm_pos : ∀ x ∈ m, 1 ≤ x) :\n  ∀ (T : SimpleGraph ℕ) (hT : T.IsTree) (n : ℕ) (hn : T.Fintype.card = n) (hn_pos : n ≥ 1),\n    RamseyNumber T (CompleteMultipartiteGraph m) ≤ (k - 1) * (RamseyNumber T (CompleteMultipartiteGraph [m.get? 0, m.get? 1]!) - 1) + m.get? 0! := by sorry",
@@ -39508,7 +39552,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2403",
+      "id": "fd_2404",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_congruence_cohomology_linear_vanishing (i p : ℕ) (hp : Nat.Prime p) :\n    ∃ C : ℕ, ∀ n : ℕ, n ≥ C * p → \n      H^(n.choose 2 - i) (HeckeCongruenceSubgroup n p) ℚ ≅ 0 := \nby sorry",
@@ -39556,7 +39600,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2404",
+      "id": "fd_2405",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem brocard_no_more (n : ℕ) (hn : n > 7) : ¬∃ m : ℕ, (n ! + 1) = m ^ 2 :=",
@@ -39603,7 +39647,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2405",
+      "id": "fd_2406",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Analysis.LiminfLimsup\\ntheorem g_k_optimal_constants (k : ℕ) (hk : k ≥ 2) :\\n  liminf (fun n => (g_k n).toReal / Real.log n) = (3 (k - 1) / Real.log 12) ∧\\n  limsup (fun n => (g_k n).toReal / Real.log n) = ((k - 1) / Real.log 2) :=\\nbegin\\n  -- conjectural statement; proof is currently open\\n  sorry\\nend",
@@ -39650,7 +39694,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2406",
+      "id": "fd_2407",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (t m : ℕ), t ≥ 2 → m ≥ 1 → (∀ (ℓ : Fin t → Polynomial (Field ℚ)), (∀ i, ℓ i ≠ 0) → ( (LinearDependent ( (fun i ↦ (ℓ i : Polynomial (Field ℚ)) ^ m) )) ∧ (∀ (s : Finset (Fin t)), s ≠ univ → LinearIndependent ( (fun i ↦ (ℓ i : Polynomial (Field ℚ)) ^ m) | s ) ) → (dim (LinearSpan ( (fun i ↦ (ℓ i : Polynomial (Field ℚ))) ) ) ≤ (t + m - 2 : ℝ) / m )",
@@ -39699,7 +39743,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2407",
+      "id": "fd_2408",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nnoncomputable section\n\nopen scoped BigOperators\n\n/-- Placeholder for the complement of the toric arrangement in `(C*)^n` defined by\ninteger exponent vectors `a` and nonzero constants `alpha`. -/\nconstant ToricComplement :\n  (n m : ℕ) → (Fin m → Fin n → ℤ) → (Fin m → {z : ℂ // z ≠ 0}) → Type\n\n/-- Predicate saying that the corresponding toric arrangement is parallel of rank one,\nwith no degenerate defining character. -/\nconstant ParallelRankOneToricArrangement :\n  (n m : ℕ) → (Fin m → Fin n → ℤ) → (Fin m → {z : ℂ // z ≠ 0}) → Prop\n\n/-- Euler-Poincare characteristic of a finite-CW type/model. -/\nconstant EulerPoincare : Type → ℤ\n\n/-- Conjecture: complements of parallel toric arrangements in complex tori of dimension\nat least two have vanishing Euler-Poincare characteristic. -/\ntheorem eulerPoincare_parallel_toric_complement_vanishes\n    {n m : ℕ} (hn : 2 ≤ n)\n    (a : Fin m → Fin n → ℤ) (alpha : Fin m → {z : ℂ // z ≠ 0})\n    (hpar : ParallelRankOneToricArrangement n m a al",
@@ -43049,7 +43093,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -43064,7 +43108,7 @@
         "Algebra"
       ],
       "id": "seed_206",
-      "last_attempt_time": "2026-06-24T02:19:48.423826+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-16T10:48:52.128685+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -46404,7 +46448,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -46421,7 +46465,7 @@
         "Bridges"
       ],
       "id": "seed_379",
-      "last_attempt_time": "2026-06-24T02:19:43.585521+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],

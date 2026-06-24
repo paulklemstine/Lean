@@ -3138,11 +3138,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every \u2286-minimal minor-closed graph class with limiting density greater than some \u03b4 < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class \ud835\udca2, there exists a graph H such that \ud835\udca2 = excl({H}).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2402",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24326v1",
+    "status": "available",
+    "timestamp": "2026-06-24T02:41:49.567859+00:00",
+    "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The main theorem of the paper proves that for fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 \u2026 \u2264 m_k, there exists n\u2080 = n\u2080(m\u2081,\u2026,m_k) such that for every n \u2265 n\u2080 and every n-vertex tree T, R(T, K_{m\u2081,\u2026,m_k}) \u2264 (k-1)(R(T, K_{m\u2081,m\u2082}) - 1) + m\u2081. We conjecture that the 'sufficiently large' condition can be removed entirely: the inequality holds for all trees T (i.e., for all n \u2265 1).",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2402",
+    "id": "fd_2403",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -3157,7 +3171,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2403",
+    "id": "fd_2404",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3171,7 +3185,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2404",
+    "id": "fd_2405",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
@@ -3185,7 +3199,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2405",
+    "id": "fd_2406",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
@@ -3200,7 +3214,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2406",
+    "id": "fd_2407",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -3214,7 +3228,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2407",
+    "id": "fd_2408",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24299v1",
