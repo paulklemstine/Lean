@@ -11547,11 +11547,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "1d985141",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11563,7 +11563,7 @@
         "Algebra"
       ],
       "id": "fd_0409",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T20:34:48.199762+00:00",
       "last_reviewed_at": "2026-06-16T10:48:45.376139+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11577,7 +11577,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:26.020862+00:00",
       "title": "Proof Strategy Mining from Deep Mathematics"
@@ -15138,7 +15138,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "6ddef5de",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -15164,7 +15164,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:46.684855+00:00",
       "title": "Diffusion Models as Stochastic Differential Equations"
@@ -35318,7 +35318,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a83f4fe5",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35346,7 +35346,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23398v1",
       "source_path": "http://arxiv.org/abs/2606.23398v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T07:09:34.216269+00:00",
       "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
@@ -38183,7 +38183,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Erdos--Ko--Rado theorem for intersecting uniform families",
         "Hilton--Milner theorem for non-trivial intersecting families",
@@ -38210,11 +38210,11 @@
         "Bridges"
       ],
       "id": "fd_2375",
-      "last_attempt_time": "2026-06-24T19:56:38.720400+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Data.Finset.Basic\nimport Mathlib.Algebra.BigOperators.Fin\n\nopen scoped BigOperators\n\nabbrev IsKUniform {n : ℕ} (k : ℕ) (F : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, A.card = k\n\nabbrev IsStar {n : ℕ} (F : Finset (Finset (Fin n))) : Prop :=\n  ∃ x : Fin n, ∀ A ∈ F, x ∈ A\n\nabbrev CrossIntersecting {n : ℕ} (F G : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, ∀ B ∈ G, (A ∩ B).Nonempty\n\nnoncomputable abbrev HMbound (n k : ℕ) : ℕ :=\n  Nat.choose (n - 1) (k - 1) - Nat.choose (n - k - 1) (k - 1) + 1\n\n/-- Conjectural multilateral extension of the sharp non-trivial cross-intersection product bound. -/\ntheorem multilateral_nontrivial_cross_intersecting_product_bound\n    {n k r : ℕ}\n    (hn : 2 * k ≤ n) (hk : 3 ≤ k) (hr : 2 ≤ r)\n    (F : Fin r → Finset (Finset (Fin n)))\n    (h_uniform : ∀ i : Fin r, IsKUniform k (F i))\n    (h_nontrivial : ∀ i : Fin r, ¬ IsStar (F i))\n    (h_cross : ∀ ⦃i j : Fin r⦄, i ≠ j → CrossIntersecting (F i) (F j)) :\n    ",
       "lineage_refs": [],
-      "outcome_quality": 0.63104,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Formalize the paper's two-family theorem as a Lean lemma: for any two non-star k-uniform cross-intersecting families A,B ⊆ binom(Fin n,k), |A|*|B| ≤ h(n,k)^2. Apply this lemma to every unordered pair of distinct indices i,j ∈ Fin r. Multiplying all pairwise inequalities gives (∏ᵢ |𝓕_i|)^(r-1) ≤ (h(n,k)^r)^(r-1), since each |𝓕_i| occurs in exactly r-1 pair products. Use positivity/monotonicity of natural powers to extract the (r-1)-st root, noting r ≥ 2.",
@@ -38224,7 +38224,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23322v1",
       "source_path": "http://arxiv.org/abs/2606.23322v1",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T17:25:43.582970+00:00",
       "title": "Multilateral non-trivial cross-intersection product bound"
@@ -39117,11 +39117,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c7ae3fab",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39133,7 +39133,7 @@
         "Novelty"
       ],
       "id": "fd_2395",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T20:34:43.285535+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -41603,6 +41603,44 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any graph G, the externally supported independence number α_es(G) satisfies α_es(G) + 1 ≥ α(G), where α(G) is the standard independence number.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2449",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem alpha_es_plus_one_ge_alpha (G : Type u) [Graph G] : α_es G + 1 ≥ α G := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof could proceed by considering any independent set B and showing that its externally supported subset must have size at least α(G) -1. Alternatively, by induction on the number of vertices, leveraging the recursive properties of graphs and the definitions of ESI-sets.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22972v1",
+      "source_path": "http://arxiv.org/abs/2606.22972v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-24T20:34:16.450064+00:00",
+      "title": "Conjecture on Externally Supported Independence Number"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO/2305.01234",
         "math.CO/2407.05678",
@@ -41624,7 +41662,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2449",
+      "id": "fd_2450",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_bound (d s n : ℕ) (h_d : 2 ≤ d) (h_s : s ≤ d) (h_n : n ≥ 2 * (d + 1))\n  (F : Finset (Finset (Fin n)))\n  (hF_unif : ∀ f ∈ F, f.card = d + 1)\n  (h_missing : ∀ f ∈ F, ∃ B ⊆ f, B.card = s ∧ B ∉ (F.image (fun g => g ∩ f))) :\n  F.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) :=\nby\n  -- proof goes here",
@@ -41667,7 +41705,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2450",
+      "id": "fd_2451",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
@@ -41712,7 +41750,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2451",
+      "id": "fd_2452",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem scalar_curvature_eq (S : FiniteTAOS) : ricci_scalar (L S) = - (comparable_pairs S) / (dim (L S)) := by sorry",
@@ -41757,7 +41795,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2452",
+      "id": "fd_2453",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rsa_partial_pq_bits_factor (n p q d e : ℕ) (δ : ℝ) [Fact (0 < δ ∧ δ ≤ 1)] (h_n : n = p * q) (h_prime_p : prime p) (h_prime_q : prime q) (h_p_gt_q : p > q) (h_p_lt_2q : p < 2*q) (h_d_bound : d < n^(ℝ/(2:ℝ)*(1 + δ))) (h_partial_bits : ∃ (m k : ℕ), m < n ∧ |(p + q) - m| ≤ n^(1-δ) ∧ ∃ (t : ℕ), m = (p + q).toArray.take (⌊(p + q).bitLen * δ⌋).cast * 2^t) (h_ed : e * d ≡ 1 (φ n)) : ∃ (k : ℕ) (cf : continued_fraction.ℚ), cf.denominator = k ∧ ∃ (φₙ : ℕ), φₙ = n - (p + q) + 1 ∧ k ∣ φₙ ∧ n = p * q",
@@ -41803,7 +41841,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2453",
+      "id": "fd_2454",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem ex_CayOddCycle {p : ℕ} (hp : Nat.Prime p) (ℓ : ℕ) (h28 : 28 ≤ p) (h2l : 2 ≤ 28) (hℓ' : ℓ ≤ (p - 1) / 2) (hℓ' : ℓ ≤ (p - 1) / 2) : ∀ (S : Finset ℤ) (hS : S = Finset.Icc 0 (p - 1)) (hS_symm : ∀ a ∈ S, -a ∈ S) (h0 : 0 ∉ S), (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ) ↔ (S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) ∧ S.card = 2 * Nat.floor ((p + 28 + 12) / (2 * 28)) := by sorry",
@@ -41848,7 +41886,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2454",
+      "id": "fd_2455",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem h_alpha_extremal {α : ℝ} (hα_pos : α ≥ 0) (n : ℕ) (n_ge_3 : n ≥ 3) : ∃! (T_min : PhyloTree n), H_alpha T_min = min (H_alpha '' PhyloTrees n) ∧ IsCaterpillar T_min ∧ ∃! (T_max : PhyloTree n), H_alpha T_max = max (H_alpha '' PhyloTrees n) ∧ IsFullyBalanced T_max",
@@ -41895,7 +41933,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2455",
+      "id": "fd_2456",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem asymptotic_minimal_additive_code_length (q : ℕ) (h : ℕ) (hq : Fact (Nat.Prime q)) (h2 : h ≥ 2) : Filter.Tendsto (fun k : ℕ => (min_additive_code_length q h k : ℝ) / k) Filter.atTop (nhds (h * (q^h - 1) / (q - 1))) := by sorry",
@@ -41939,7 +41977,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2456",
+      "id": "fd_2457",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem periodic_Lp_discrepancy_curse (p : ℕ) (d ε : ℝ) (hd : d ≥ 1) (εd : 0 < ε ∧ ε ≤ 1/2) : ∃ (C : ℝ), C > 1 ∧ N_iit_qmc ε d ≥ C^d * (1 - 2*ε)",
@@ -41985,7 +42023,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2457",
+      "id": "fd_2458",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stack_sorting_limit_value : (limit (n : ℕ) (D_n / n) = (3/5) * (7 - 8 * Real.log 2)) := by sorry",
@@ -42033,7 +42071,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2458",
+      "id": "fd_2459",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_cohomology_vanishing (p : Nat.primes) (k : ℕ) (n : ℕ) : n ≥ (3*k + 1)*p + (3*k + 2) → cohomology_group (Γ₀ₙ(p)) (binom(n, 2) - k) ℚ = 0",
@@ -42077,7 +42115,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2459",
+      "id": "fd_2460",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem S_one_phi_lower_bound (x : ℕ) (hx : x ≥ 2) : (S_one_phi x : ℝ) ≥ x * Real.exp ( - (1 / 2 + eps x) * Real.sqrt (Real.log x * Real.log (Real.log x)) ) := by sorry",
@@ -42124,7 +42162,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2460",
+      "id": "fd_2461",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sum_of_digits_bias (t : nat) (h : t > 0) : \\lim_{N\\rightarrow\\infty} ((\\text{set.mem_imprediate} (n\\mapsto s_2(n + t) \\ge s_2(n)) : N)) `N `real_imprediate (1/2 + 2^{-2s_2(t)-1})",
@@ -42170,7 +42208,7 @@
         "Pythagorean",
         "Geometry"
       ],
-      "id": "fd_2461",
+      "id": "fd_2462",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture colorful_fractional_helly_beta_bound (d : ℕ) (α : ℝ) (hα : α > 0 ∧ α ≤ 1) : ∃ β : ℝ, β ≥ α^(d+1) ∧ Helly.colorful_fractional_convex_splinters.d d α β",
@@ -42208,7 +42246,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2462",
+      "id": "fd_2463",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "a_n ≤ ρ^{-n}",
@@ -42256,7 +42294,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2463",
+      "id": "fd_2464",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nnamespace BinomialGCD\n\ndef IsExactPrimePowerComponent (n P : ℕ) : Prop :=\n  ∃ p a : ℕ, Nat.Prime p ∧ 0 < a ∧ P = p ^ a ∧ p ^ a ∣ n ∧ ¬ (p ^ (a + 1) ∣ n)\n\ndef IsLargestExactPrimePowerComponent (n P : ℕ) : Prop :=\n  IsExactPrimePowerComponent n P ∧\n    ∀ Q : ℕ, IsExactPrimePowerComponent n Q → Q ≤ P\n\ndef binomGCD (k : ℕ) : ℕ :=\n  (Finset.Icc 2 (k + 1)).gcd fun q => Nat.choose (q * k) k\n\n/-- Conjectural strengthening of the A080170 criterion: the gcd is exactly the\nlargest dominating exact prime-power component, not just nontrivial in that case. -/\ntheorem exact_binomial_gcd_largest_prime_power_conjecture\n    {k n P : ℕ}\n    (hk : 2 ≤ k)\n    (hn : n = k + 1)\n    (hP : IsLargestExactPrimePowerComponent n P) :\n    binomGCD k = if n / P ≤ P then P else 1 := by\n  sorry\n\nend BinomialGCD",
@@ -42306,7 +42344,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2464",
+      "id": "fd_2465",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_noncentral_St3_element (Q : Quiver) (hQ : Finite Q) (hpath : ∃ (p : Path Q), length p ≥ 3) : ∃ (A : Alg K), ∃ (x : A), St3_element x ∧ ¬ Central x",
@@ -42331,78 +42369,47 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions — Minor-Closed Classes Below Density 3/2\n\nDerived from this cycle's findings (`OrderFramework.lean`, `ForestDensity.lean`,\n`MinorModel.lean`).  Each conjecture is bold, falsifiable, and stated so a future\nAristotle cycle can attack it directly.\n\n## C1. Transitivity of the branch-set minor relation\n\n**Conjecture.** `IsMinor` (from `MinorModel.lean`) is transitive, hence a\n`Preorder` (in fact a `PartialOrder` up to isomorphism), so `SimpleGraph` graphs\nform a legitimate instance of the `OrderFramework` abstraction.\n\n*The key insight is...* that composing two branch-set models routes each\n`H`-edge through a `G`-path inside a branch set, so the composite branch set of a\ntop-level vertex is the **union of the branch sets of the middle graph that it\ncovers**, and connectivity is preserved because the realising edges of the middle\nlayer glue the unioned pieces together.\n\n*Why now?* `isMinor_refl` and `isMinor_of_le` are already formalised; transitivity\nis the single remaining preorder law, and Mathlib's `SimpleGraph.Connected` /\n`induce` API is now rich enough to express the gluing argument.\n\n## C2. Forests are exactly the K₃-minor-free graphs\n\n**Conjecture.** Under the (contraction) minor order, the forest class equals\n`excl {K₃}`; equivalently `obstructions (acyclicClass) = {K₃}`, so forests are a\nsingle-excluded-minor class in the *true* minor order, not merely the subgraph\norder.\n\n*The key insight is...* that any cycle contracts to `K₃`, and conversely a\n`K₃`-minor forces a cycle; so \"acyclic\" and \"`K₃`-minor-free\" are the same\npredicate once contraction is available.\n\n*Why now?* `acyclicClass_minorClosed` already gives subgraph-closure, and\n`obstructions_excl_singleton` reduces the goal to identifying the unique minimal\nnon-forest as `K₃` — a finite, checkable obstruction.\n\n## C3. Limiting density is attained as a supremum, not a maximum\n\n**Conjecture.** For the forest class, `limitingDensity = 1` but no member attains\ndensity `1`; more generally every ⊆-minimal minor-closed class strictly below\n`3/2` has limiting density `1` and is `excl {H}` for a single `H`.\n\n*The key insight is...* that below `3/2` the only \"growth mode\" available is a\nsingle spanning-tree-like skeleton plus bounded local decoration, which forces\nthe density supremum to the integer/half-integer value `1` and the obstruction\nset to be a singleton.\n\n*Why now?* The proved bound `(n−1)/n < 1` with `(n−1)/n → 1` already exhibits the\nsup-not-max phenomenon for forests; generalising needs only a uniform edge bound\nper class, which the `OrderFramework` obstruction machinery can carry.\n\n## C4. Well-quasi-ordering ⇒ finite obstruction sets below 3/2\n\n**Conjecture.** Restricted to classes of limiting density `< 3/2`, the minor order\nis a well-quasi-order, so every such minor-closed class has a **finite** set of\nforbidden minors; combined with C3, that finite set is a singleton.\n\n*The key insight is...* that `WellFoundedLT` (already an explicit hypothesis of\n`minorClosed_excl_obstructions`) upgrades to full WQO in the sparse density\nregime, because bounded average degree caps the structural complexity of\nantichains.\n\n*Why now?* The framework already proves \"minor-closed `=` excl of obstructions\"\nunder `WellFoundedLT`; the missing ingredient is purely the WQO/antichain bound,\nisolatable as a standalone density lemma.\n\n## C5. A density gap below 3/2 (no classes between 1 and 3/2)\n\n**Conjecture.** There is **no** ⊆-minimal minor-closed class with limiting density\nstrictly between `1` and `3/2`: the set of achievable limiting densities has a gap\n`(1, 3/2)`.\n\n*The key insight is...* that adding any structure beyond a forest (a second\nindependent cycle per component) already pushes the limiting density to `3/2`\n(the `K₄`/series–parallel regime), so densities cannot land inside the open\ninterval `(1, 3/2)`.\n\n*Why now?* `ComputationalEvidence.md` tabulates exactly this gap (forests at `1`,\nseries–parallel at `2`, `K₄` at `3/2`), turning the gap into a concrete, testable\nfinite-case search over small obstruction graphs.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
+      "catalog_references": [
+        "arXiv:math.NT",
+        "arXiv:math.RT"
       ],
-      "id": "fd_2465",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "d3c0af99",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d3c0af99",
-      "status": "available",
-      "thread_id": "th_494a4491",
-      "timestamp": "2026-06-24T20:19:24.729807+00:00",
-      "title": "Derived from this cycle's findings (`OrderFramework.lean`, `ForestDensity.lean`,"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Homological Necessity for Spectral Bounds\n\nDerived from this cycle's findings (formalized in `Core.lean`, `ConeAcyclic.lean`,\n`LinkRigidity.lean`): cones/apices force the reduced Euler characteristic of a\ncomplex to vanish, and the spectral bound `q = tn − (t−1)(r+1)` factors as\n`(t−1)(n−r−1) + n`, with the relevant link living in codimension `t`.\n\n## C1. Full homological necessity (not just the Euler shadow)\n**Conjecture.** If a pure `r`-complex `K` saturates `q_{r-1}(K) = tn − (t−1)(r+1)`,\nthen `H̃_i(lk_K σ; ℝ) = 0` for *all* `i` and every `(r−t)`-face `σ`, not merely\n`χ̃ = 0`.\n- **The key insight is** that saturation of the second-largest eigenvalue bound is\n  a *rank* condition on the up-down Laplacian, and rank deficiency localizes to\n  links as exactness of the simplicial boundary, i.e. genuine acyclicity rather\n  than the alternating-sum cancellation we proved.\n- **Why now?** We have a verified, reusable `ASC`/`link` framework with the\n  apex-involution lemma; adding a Lean simplicial chain complex over `ℝ` and a\n  cone contraction `∂s + s∂ = id` upgrades `reducedEuler = 0` to `H̃ = 0`.\n\n## C2. Apex detection is the obstruction\n**Conjecture.** A finite complex has `χ̃ = 0` *robustly* (i.e. `χ̃ = 0` for it and\nevery induced subcomplex on a vertex subset) **iff** it admits an apex on each such\nsubset.\n- **The key insight is** that the only parity-stable, locally checkable certificate\n  of `χ̃ = 0` is the toggle involution `F ↦ F △ {w}`, which exists exactly when `w`\n  is an apex.\n- **Why now?** `ASC.reducedEuler_eq_zero_of_apex` gives one direction; the converse\n  is a finite search amenable to `decide`/`Fintype` enumeration over small vertex\n  sets, giving immediate computational falsifiability.\n\n## C3. Sharpness of the codimension `t`\n**Conjecture.** Under saturation, the *first* non-vanishing reduced homology of a\nlink occurs in degree exactly `t−1`, and `t` is the smallest shift for which the\nnecessity statement holds; for shifts `< t` some link is non-acyclic.\n- **The key insight is** that `link_facet_codim` pins the link of an `(r−t)`-face to\n  dimension `t−1`, so degree `t` is the *boundary* degree where homology can first\n  be forced to die.\n- **Why now?** The codimension bookkeeping is already formal (`link_facet_codim`),\n  so the degree-counting half of the conjecture is within reach; only the\n  extremal-construction half needs new combinatorics.\n\n## C4. Quantitative defect ⇒ Betti bound\n**Conjecture.** If `q_{r-1}(K) = tn − (t−1)(r+1) − δ` with defect `δ > 0`, then\n`Σ_σ dim H̃_t(lk_K σ; ℝ) ≤ c(r,t)·δ` for an explicit constant `c(r,t)`.\n- **The key insight is** that the eigenvalue gap is a *continuous* proxy for total\n  homological mass, so a small spectral defect can only support a small amount of\n  homology — turning a 0/1 necessity into a Lipschitz estimate.\n- **Why now?** With `qBound_succ_n`/`qBound_succ_r` we already have the exact\n  discrete derivatives of the bound, the natural seed for a defect-vs-Betti\n  inequality.\n\n## C5. Tropical/spectral bridge\n**Conjecture.** The same `tn − (t−1)(r+1)` extremal profile governs the tropical\neigenvalue of the link's weighted adjacency operator, so acyclicity is detectable\npurely tropically (min-plus), bypassing real spectra.\n- **The key insight is** that the factorization `q = (t−1)(n−r−1) + n` is a\n  min-plus-linear functional of `(n, r)`, suggesting the extremizers are tropical\n  vertices of a polytope of admissible f-vectors.\n- **Why now?** The catalog already contains a `Tropical` library; bridging it to\n  `SpectralLinkHomology` would be a genuinely cross-domain (`math.CO` × `math.SP`)\n  result using existing infrastructure.\n",
-      "domain_bridges": [],
+      "description": "Given a number field k and a cohomological automorphic representation π of GL_n(A_k) with a corresponding coefficient system F_π, there exists a precise proportionality relation between the Betti-Whittaker period P(π) and the period P(π^*) of its contragredient representation π^*, specifically relating them via a period factor involving the L-values and the volume of the relevant arithmetic quotients, independent of the regularity assumptions previously required by Chen.",
+      "domain_bridges": [
+        "Representation Theory of GL(n)",
+        "Cohomology of Arithmetic Groups",
+        "L-functions",
+        "Adelic Analysis"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
-        "Geometry"
+        "Pythagorean"
       ],
       "id": "fd_2466",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem betti_whittaker_period_relation (k : NumberField) (n : ℕ) (π : AutomorphicRepresentation (GL n k)) [Cohomological π] (π_star : Contragredient π) : ∃ (c : ℂ), Period_BettiWhittaker π = c * Period_BettiWhittaker π_star",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the construction of the Betti-Whittaker periods using the pairing between the Whittaker model and the cohomology of the arithmetic quotient. Implement the duality between π and π^* via the contragredient representation, and use the functional equation of the associated L-function to establish the proportionality constant. The Lean proof would require the formalization of Casselman-Wallach representations and the continuous cohomology of GL(n, R).",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "50adb4ee",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/50adb4ee",
+      "source_exp_id": "2606.23171v1",
+      "source_path": "http://arxiv.org/abs/2606.23171v1",
       "status": "available",
-      "thread_id": "th_87c400d6",
-      "timestamp": "2026-06-24T20:28:11.323896+00:00",
-      "title": "Derived from this cycle's findings (formalized in `Core.lean`, `ConeAcyclic.lean"
+      "thread_id": "",
+      "timestamp": "2026-06-24T20:34:32.678693+00:00",
+      "title": "Relation between Betti-Whittaker Periods for Contragredient Cohomological Representations"
     },
     {
       "ambition_level": "extension",
@@ -48138,11 +48145,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "dd1a0b52",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48154,7 +48161,7 @@
         "Probability"
       ],
       "id": "seed_355",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-24T20:34:38.594891+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -48168,7 +48175,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432742+00:00",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
@@ -122386,7 +122393,7 @@
   "recent_domain_counts": {
     "Algebra": 303,
     "Applications": 117,
-    "Bridges": 58,
+    "Bridges": 57,
     "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
@@ -122503,7 +122510,6 @@
     "zombies": 3
   },
   "selection_log": [
-    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",

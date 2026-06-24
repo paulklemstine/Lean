@@ -1375,7 +1375,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dd1a0b52",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1385,7 +1385,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -1894,7 +1894,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a83f4fe5",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domains": [
       "Bridges"
@@ -1903,7 +1903,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -2759,6 +2759,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T17:07:33.678816+00:00",
     "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
+  },
+  {
+    "consumed_by_exp_id": "9368eda6",
+    "description": "For every n,k,r with n \u2265 2k, k \u2265 3, and r \u2265 2, let (\ud835\udcd5_i)_{i\u2208Fin r} be k-uniform families of subsets of Fin n. Assume each \ud835\udcd5_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i \u2260 j, every A \u2208 \ud835\udcd5_i and B \u2208 \ud835\udcd5_j have A \u2229 B \u2260 \u2205. Then the multilateral product is bounded by the Hilton--Milner value: \u220f_{i\u2208Fin r} |\ud835\udcd5_i| \u2264 h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2375",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23322v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-23T17:25:43.582970+00:00",
+    "title": "Multilateral non-trivial cross-intersection product bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -3777,12 +3791,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any graph G, the externally supported independence number \u03b1_es(G) satisfies \u03b1_es(G) + 1 \u2265 \u03b1(G), where \u03b1(G) is the standard independence number.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2449",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22972v1",
+    "status": "available",
+    "timestamp": "2026-06-24T20:34:16.450064+00:00",
+    "title": "Conjecture on Externally Supported Independence Number"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2449",
+    "id": "fd_2450",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3796,7 +3824,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2450",
+    "id": "fd_2451",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3811,7 +3839,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2451",
+    "id": "fd_2452",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3825,7 +3853,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2452",
+    "id": "fd_2453",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3840,7 +3868,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2453",
+    "id": "fd_2454",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3854,7 +3882,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2454",
+    "id": "fd_2455",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3868,7 +3896,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2455",
+    "id": "fd_2456",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -3882,7 +3910,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2456",
+    "id": "fd_2457",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -3896,7 +3924,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -3911,7 +3939,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -3925,7 +3953,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -3939,7 +3967,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -3954,7 +3982,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
@@ -3968,7 +3996,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -3982,7 +4010,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -3997,13 +4025,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23024v1",
     "status": "available",
     "timestamp": "2026-06-24T19:56:30.043961+00:00",
     "title": "St\u2083-elements are never central in path algebras with sufficiently long paths"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Given a number field k and a cohomological automorphic representation \u03c0 of GL_n(A_k) with a corresponding coefficient system F_\u03c0, there exists a precise proportionality relation between the Betti-Whittaker period P(\u03c0) and the period P(\u03c0^*) of its contragredient representation \u03c0^*, specifically relating them via a period factor involving the L-values and the volume of the relevant arithmetic quotients, independent of the regularity assumptions previously required by Chen.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2466",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23171v1",
+    "status": "available",
+    "timestamp": "2026-06-24T20:34:32.678693+00:00",
+    "title": "Relation between Betti-Whittaker Periods for Contragredient Cohomological Representations"
   },
   {
     "consumed_by_exp_id": "",
@@ -4193,36 +4236,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Minor-Closed Classes Below Density 3/2\n\nDerived from this cycle's findings (`OrderFramework.lean`, `ForestDensity.lean`,\n`MinorModel.lean`).  Each conjecture is bold, falsifiable, and stated so a future\nAristotle cycle can attack it directly.\n\n## C1. Transitivity of the branch-set minor relation\n\n**Conjecture.** `IsMinor` (from `MinorModel.lean`) is transitive, hence a\n`Preorder` (in fact a `PartialOrder` up to isomorphism), so `SimpleGraph` graphs\nform a legitimate instance of the `OrderFramework` abstraction.\n\n*The key insight is...* that composing two branch-set models routes each\n`H`-edge through a `G`-path inside a branch set, so the composite branch set of a\ntop-level vertex is the **union of the branch sets of the middle graph that it\ncovers**, and connectivity is preserved because the realising edges of the middle\nlayer glue the unioned pieces together.\n\n*Why now?* `isMinor_refl` and `isMinor_of_le` are already formalised; transitivity\nis the single remaining preorder law, and Mathlib's `SimpleGraph.Connected` /\n`induce` API is now rich enough to express the gluing argument.\n\n## C2. Forests are exactly the K\u2083-minor-free graphs\n\n**Conjecture.** Under the (contraction) minor order, the forest class equals\n`excl {K\u2083}`; equivalently `obstructions (acyclicClass) = {K\u2083}`, so forests are a\nsingle-excluded-minor class in the *true* minor order, not merely the subgraph\norder.\n\n*The key insight is...* that any cycle contracts to `K\u2083`, and conversely a\n`K\u2083`-minor forces a cycle; so \"acyclic\" and \"`K\u2083`-minor-free\" are the same\npredicate once contraction is available.\n\n*Why now?* `acyclicClass_minorClosed` already gives subgraph-closure, and\n`obstructions_excl_singleton` reduces the goal to identifying the unique minimal\nnon-forest as `K\u2083` \u2014 a finite, checkable obstruction.\n\n## C3. Limiting density is attained as a supremum, not a maximum\n\n**Conjecture.** For the forest class, `limitingDensity = 1` but no member attains\ndensity `1`; more generally every \u2286-minimal minor-closed class strictly below\n`3/2` has limiting density `1` and is `excl {H}` for a single `H`.\n\n*The key insight is...* that below `3/2` the only \"growth mode\" available is a\nsingle spanning-tree-like skeleton plus bounded local decoration, which forces\nthe density supremum to the integer/half-integer value `1` and the obstruction\nset to be a singleton.\n\n*Why now?* The proved bound `(n\u22121)/n < 1` with `(n\u22121)/n \u2192 1` already exhibits the\nsup-not-max phenomenon for forests; generalising needs only a uniform edge bound\nper class, which the `OrderFramework` obstruction machinery can carry.\n\n## C4. Well-quasi-ordering \u21d2 finite obstruction sets below 3/2\n\n**Conjecture.** Restricted to classes of limiting density `< 3/2`, the minor order\nis a well-quasi-order, so every such minor-closed class has a **finite** set of\nforbidden minors; combined with C3, that finite set is a singleton.\n\n*The key insight is...* that `WellFoundedLT` (already an explicit hypothesis of\n`minorClosed_excl_obstructions`) upgrades to full WQO in the sparse density\nregime, because bounded average degree caps the structural complexity of\nantichains.\n\n*Why now?* The framework already proves \"minor-closed `=` excl of obstructions\"\nunder `WellFoundedLT`; the missing ingredient is purely the WQO/antichain bound,\nisolatable as a standalone density lemma.\n\n## C5. A density gap below 3/2 (no classes between 1 and 3/2)\n\n**Conjecture.** There is **no** \u2286-minimal minor-closed class with limiting density\nstrictly between `1` and `3/2`: the set of achievable limiting densities has a gap\n`(1, 3/2)`.\n\n*The key insight is...* that adding any structure beyond a forest (a second\nindependent cycle per component) already pushes the limiting density to `3/2`\n(the `K\u2084`/series\u2013parallel regime), so densities cannot land inside the open\ninterval `(1, 3/2)`.\n\n*Why now?* `ComputationalEvidence.md` tabulates exactly this gap (forests at `1`,\nseries\u2013parallel at `2`, `K\u2084` at `3/2`), turning the gap into a concrete, testable\nfinite-case search over small obstruction graphs.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2465",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d3c0af99",
-    "status": "available",
-    "timestamp": "2026-06-24T20:19:24.729807+00:00",
-    "title": "Derived from this cycle's findings (`OrderFramework.lean`, `ForestDensity.lean`,"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Homological Necessity for Spectral Bounds\n\nDerived from this cycle's findings (formalized in `Core.lean`, `ConeAcyclic.lean`,\n`LinkRigidity.lean`): cones/apices force the reduced Euler characteristic of a\ncomplex to vanish, and the spectral bound `q = tn \u2212 (t\u22121)(r+1)` factors as\n`(t\u22121)(n\u2212r\u22121) + n`, with the relevant link living in codimension `t`.\n\n## C1. Full homological necessity (not just the Euler shadow)\n**Conjecture.** If a pure `r`-complex `K` saturates `q_{r-1}(K) = tn \u2212 (t\u22121)(r+1)`,\nthen `H\u0303_i(lk_K \u03c3; \u211d) = 0` for *all* `i` and every `(r\u2212t)`-face `\u03c3`, not merely\n`\u03c7\u0303 = 0`.\n- **The key insight is** that saturation of the second-largest eigenvalue bound is\n  a *rank* condition on the up-down Laplacian, and rank deficiency localizes to\n  links as exactness of the simplicial boundary, i.e. genuine acyclicity rather\n  than the alternating-sum cancellation we proved.\n- **Why now?** We have a verified, reusable `ASC`/`link` framework with the\n  apex-involution lemma; adding a Lean simplicial chain complex over `\u211d` and a\n  cone contraction `\u2202s + s\u2202 = id` upgrades `reducedEuler = 0` to `H\u0303 = 0`.\n\n## C2. Apex detection is the obstruction\n**Conjecture.** A finite complex has `\u03c7\u0303 = 0` *robustly* (i.e. `\u03c7\u0303 = 0` for it and\nevery induced subcomplex on a vertex subset) **iff** it admits an apex on each such\nsubset.\n- **The key insight is** that the only parity-stable, locally checkable certificate\n  of `\u03c7\u0303 = 0` is the toggle involution `F \u21a6 F \u25b3 {w}`, which exists exactly when `w`\n  is an apex.\n- **Why now?** `ASC.reducedEuler_eq_zero_of_apex` gives one direction; the converse\n  is a finite search amenable to `decide`/`Fintype` enumeration over small vertex\n  sets, giving immediate computational falsifiability.\n\n## C3. Sharpness of the codimension `t`\n**Conjecture.** Under saturation, the *first* non-vanishing reduced homology of a\nlink occurs in degree exactly `t\u22121`, and `t` is the smallest shift for which the\nnecessity statement holds; for shifts `< t` some link is non-acyclic.\n- **The key insight is** that `link_facet_codim` pins the link of an `(r\u2212t)`-face to\n  dimension `t\u22121`, so degree `t` is the *boundary* degree where homology can first\n  be forced to die.\n- **Why now?** The codimension bookkeeping is already formal (`link_facet_codim`),\n  so the degree-counting half of the conjecture is within reach; only the\n  extremal-construction half needs new combinatorics.\n\n## C4. Quantitative defect \u21d2 Betti bound\n**Conjecture.** If `q_{r-1}(K) = tn \u2212 (t\u22121)(r+1) \u2212 \u03b4` with defect `\u03b4 > 0`, then\n`\u03a3_\u03c3 dim H\u0303_t(lk_K \u03c3; \u211d) \u2264 c(r,t)\u00b7\u03b4` for an explicit constant `c(r,t)`.\n- **The key insight is** that the eigenvalue gap is a *continuous* proxy for total\n  homological mass, so a small spectral defect can only support a small amount of\n  homology \u2014 turning a 0/1 necessity into a Lipschitz estimate.\n- **Why now?** With `qBound_succ_n`/`qBound_succ_r` we already have the exact\n  discrete derivatives of the bound, the natural seed for a defect-vs-Betti\n  inequality.\n\n## C5. Tropical/spectral bridge\n**Conjecture.** The same `tn \u2212 (t\u22121)(r+1)` extremal profile governs the tropical\neigenvalue of the link's weighted adjacency operator, so acyclicity is detectable\npurely tropically (min-plus), bypassing real spectra.\n- **The key insight is** that the factorization `q = (t\u22121)(n\u2212r\u22121) + n` is a\n  min-plus-linear functional of `(n, r)`, suggesting the extremizers are tropical\n  vertices of a polytope of admissible f-vectors.\n- **Why now?** The catalog already contains a `Tropical` library; bridging it to\n  `SpectralLinkHomology` would be a genuinely cross-domain (`math.CO` \u00d7 `math.SP`)\n  result using existing infrastructure.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2466",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "50adb4ee",
-    "status": "available",
-    "timestamp": "2026-06-24T20:28:11.323896+00:00",
-    "title": "Derived from this cycle's findings (formalized in `Core.lean`, `ConeAcyclic.lean"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4340,7 +4353,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c7ae3fab",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4350,7 +4363,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -4561,7 +4574,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6ddef5de",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -4571,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -4996,7 +5009,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1d985141",
     "description": "Reverse-engineer proof strategies from deep results (FLT, Poincar\u00e9, classification of finite simple groups) and extract reusable structural patterns as higher-order proof schemata.",
     "domains": [
       "Logic",
@@ -5006,7 +5019,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.020862+00:00",
     "title": "Proof Strategy Mining from Deep Mathematics"
   },
