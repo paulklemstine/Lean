@@ -198,7 +198,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "df71dd02",
+    "consumed_by_exp_id": "",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domain_bridges": [],
     "domains": [
@@ -212,7 +212,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -498,7 +498,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "12082da5",
+    "consumed_by_exp_id": "",
     "description": "Mihailescu proved that 8 and 9 are the only consecutive perfect powers. Generalize: find all solutions to x^a - y^b = k for fixed small k. Formalize the theory of exponential Diophantine equations and Pillai's conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -510,7 +510,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:08.480584+00:00",
     "title": "Catalan's Conjecture Generalizations"
   },
@@ -998,7 +998,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f9dc8407",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1012,7 +1012,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -1754,7 +1754,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1e9b0496",
+    "consumed_by_exp_id": "",
     "description": "Determine all integer solutions to n! + 1 = m². Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
     "domain_bridges": [],
     "domains": [
@@ -1766,7 +1766,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:08.676107+00:00",
     "title": "Brocard's Problem: n! + 1 = m²"
   },
@@ -2084,7 +2084,7 @@
       "locally finite graph",
       "Main theorem: every graph admits a linked componental finite-adhesion rooted tree-cut decomposition displaying all undominated edge-ends"
     ],
-    "consumed_by_exp_id": "68f4985d",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Every connected locally finite multigraph G admits a rooted tree-cut decomposition (T,V) into finite bags, of finite adhesion, which is componental and linked, displays every end of G bijectively as an end of T, and is degree-normalized as follows. If a tree-end alpha of T displays the graph end omega, and e_n is the nth adhesion edge on the root-to-alpha ray of T, then: (i) if the edge-degree of omega is a finite natural number d, then |F_{e_n}| = d for all sufficiently large n; (ii) if the edge-degree of omega is infinite, then for every k : Nat, |F_{e_n}| >= k for all sufficiently large n. This strengthens the paper's displayed-edge-degree conclusion by asking for eventual exact stabilization along finite-degree ends and divergence along infinite-degree ends.",
     "domain_bridges": [
       "Menger-type edge-disjoint path linkage conditions",
@@ -2102,7 +2102,7 @@
     "proof_strategy": "Start from the linked componental finite-adhesion decomposition given by the paper for locally finite graphs. Refine the construction along each displayed tree ray by choosing nested finite edge-cuts that are minimal representatives of the corresponding end whenever the end has finite edge-degree, using edge-Menger to maintain linkedness after contractions/refinements. For infinite-degree ends, diagonalize over k and choose the nth sufficiently far cut to have size at least k, again preserving componentality by taking the end-side component and preserving linkedness via the minimum-cut characterization of the linked condition. The main technical point is a simultaneous refinement argument over all tree rays that does not destroy previously normalized adhesion values.",
     "research_mode": "team",
     "source_exp_id": "2606.20452v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T01:38:47.066128+00:00",
     "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
   },
@@ -5709,6 +5709,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — GL(1) Langlands correspondence\n\nDerived from this cycle's findings: the cyclotomic GL(1) correspondence is realizable as an\n*explicit group isomorphism* `DirichletCharacter ℂ n ≃* (Gal(ℚ(ζₙ)/ℚ) →* ℂˣ)`\n(`LanglandsGL1.langlandsGL1`), with arithmetic shadow `φ(n)`\n(`card_galois_reps_eq_totient`) and a CRT-driven local–global factorization\n(`HeckeFactorization.heckeFactorization`).\n\n## Conjecture 1 — Conductor-graded refinement of the correspondence\n\nUnder `langlandsGL1`, a Dirichlet character of conductor exactly `d ∣ n` maps to a Galois\nrepresentation that factors through `Gal(ℚ(ζ_d)/ℚ)` (i.e. is trivial on `Gal(ℚ(ζₙ)/ℚ(ζ_d))`),\ngiving a *graded* isomorphism indexed by conductor.\n\n- The key insight is... that the correspondence is not just a bijection of groups but is\n  compatible with the filtration by conductor, so the bijection restricts to each conductor\n  stratum and the inclusion `ℚ(ζ_d) ⊆ ℚ(ζₙ)` becomes inflation of representations.\n- Why now? We already have the unconditional iso over ℚ and the CRT factorization\n  (`heckeFactorization`); Mathlib's `DirichletCharacter.conductor` and the cyclotomic tower\n  `IsCyclotomicExtension` instances make the stratification statable and checkable today.\n\n## Conjecture 2 — L-functions match across the correspondence\n\nFor a Dirichlet character `χ` and its Galois counterpart `ρ = langlandsGL1 χ`, the Dirichlet\nL-function `L(s, χ)` equals the Artin L-function `L(s, ρ)` term by term as Euler products.\n\n- The key insight is... that the *local* CRT factorization established here\n  (`heckeFactorization`) is exactly the place-by-place decomposition that makes the two Euler\n  products agree factor by factor, reducing global equality to a per-prime statement.\n- Why now? The group isomorphism is in hand, so the analytic comparison is the only missing\n  ingredient; Mathlib's `LSeries` / `DirichletCharacter` L-function development gives a target\n  to match the Galois side against.\n\n## Conjecture 3 — Functoriality of the count under the cyclotomic tower\n\nThe totient counts assemble into an exact statement: the natural restriction map\n`(Gal(ℚ(ζₘₙ)/ℚ) →* ℂˣ) → (Gal(ℚ(ζₘ)/ℚ) →* ℂˣ)` is surjective with kernel of order `φ(mn)/φ(m)`,\nmirroring the surjection `(ℤ/mnℤ)ˣ ↠ (ℤ/mℤ)ˣ`.\n\n- The key insight is... that `card_galois_reps_eq_totient` upgrades from a cardinality identity\n  to an exact sequence once the tower maps are made explicit, encoding how Hecke characters lift\n  along the cyclotomic tower.\n- Why now? Both endpoints are formalized (`card_galois_reps_eq_totient`), and the unit-group\n  surjection `(ℤ/mnℤ)ˣ ↠ (ℤ/mℤ)ˣ` used in `unitsCRT` is precisely the map to dualize.\n\n## Conjecture 4 — Real-place / sign data is invisible at GL(1) over ℚ\n\nEvery finite-order Hecke character of `ℚ` is determined by its restriction to `(ℤ/nℤ)ˣ`\ntogether with a single sign at the archimedean place, and the GL(1) correspondence is a\nbijection onto Galois characters once that sign (parity, `χ(-1) = ±1`) is recorded.\n\n- The key insight is... that the only archimedean datum at GL(1) over ℚ is the parity\n  `χ(-1)`, so the \"infinite place\" contributes exactly one bit, matching even/odd Dirichlet\n  characters to representations distinguished by complex conjugation.\n- Why now? `MulChar` already exposes `χ(-1)`, and our isomorphism makes the even/odd split a\n  decidable invariant transported to the Galois side, so the refined bijection is checkable.\n\n## Conjecture 5 — Beyond ℚ: ray class characters for imaginary quadratic fields\n\nThe same composite (`autEquivPow`-style reciprocity) ∘ (`mulEquivToUnitHom`) realizes the\nGL(1) correspondence for any abelian extension with a computable Galois-to-ray-class iso,\nstarting with imaginary quadratic fields where CM theory supplies the analogue of `autEquivPow`.\n\n- The key insight is... that the only field-specific input to our proof is the reciprocity\n  isomorphism `Gal ≃* (class/unit group)`; everything downstream (`precompMulEquiv`,\n  `homProdEquiv`, the totient count) is formal and field-agnostic.\n- Why now? The ℚ proof isolates exactly the one arithmetic black box that must be supplied per\n  field, turning \"do CFT for K\" into \"produce one `MulEquiv`\", a sharply scoped target.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2411",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f39e2cb3",
+    "status": "available",
+    "timestamp": "2026-06-24T04:28:46.104001+00:00",
+    "title": "Derived from this cycle's findings: the cyclotomic GL(1) correspondence is reali"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -5723,6 +5743,26 @@
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For feedforward ReLU networks trained on natural image datasets, the Betti numbers (especially β₁ and β₂) of the Vietoris‑Rips complex built from activation vectors at any hidden layer are negatively correlated with the network's test error; i.e., higher topological complexity of the representation manifold predicts better generalization. Test: Train a diverse set of architectures (varying depth, width, skip connections) on CIFAR‑10 and ImageNet subsets, compute persistence diagrams for activations at multiple layers across many random seeds, quantify β₁,β₂, and measure Pearson/Spearman correlation with test accuracy; the conjecture is refuted if no statistically significant negative correlation is observed across >95% of configurations. Impact: Provides a computable, geometry‑based predictor of generalization that could guide architecture design, early‑stopping criteria, and pruning strategies without relying on validation sets.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning",
+      "Computation"
+    ],
+    "id": "fd_2412",
+    "lineage_refs": [],
+    "priority_score": 0.7159166666666668,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-24T04:31:52.813350+00:00",
+    "title": "Topological Signatures of Deep Network Representations"
   },
   {
     "ambition_level": "extension",
@@ -5866,7 +5906,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1ff3ae49",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domain_bridges": [],
     "domains": [
@@ -5879,7 +5919,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -5901,6 +5941,25 @@
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle f39e2cb3 (Q=0.578) proved 6 theorems in NumberTheory but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations cor",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_f39e2cb3_6a5959da",
+    "lineage_refs": [],
+    "priority_score": 0.62755,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f39e2cb3",
+    "status": "available",
+    "timestamp": "2026-06-24T04:32:03.493253+00:00",
+    "title": "Close Proofs: Langlands Correspondence: GL(1) Case"
   },
   {
     "ambition_level": "extension",
@@ -6342,7 +6401,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "81f9ab1d",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -6355,7 +6414,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },

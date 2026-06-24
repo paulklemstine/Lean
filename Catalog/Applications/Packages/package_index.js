@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f39e2cb3",
     "filename": "langlands_correspondence_gl1_case.json",
     "pkg_num": 18,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.57755,
     "title": "The GL(1) Langlands Correspondence over the Rationals: A Cyclotomic Isomorphism"
   },
   {
@@ -531,8 +531,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "langlands_correspondence_gl1_case",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.57755,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "The GL(1) Langlands Correspondence over the Rationals: A Cyclotomic Isomorphism"
     }

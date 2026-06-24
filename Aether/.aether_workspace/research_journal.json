@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1f4bbef7",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Automatic Sequences and the Zero-in-Sequence Problem\n\nThis cycle formalized the automata-theoretic core of the \"halting problem for\nautomatic sequences\": the zero-in-sequence pro",
-      "quality_score": 0.712,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-06-16T20:27:30",
-      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
-    },
-    {
       "cycle_id": "c1948da4",
       "domain": "Shared",
       "key_insight": "# Future Directions — Cellular Automata at the Ordinals\n\nDerived from the verified results in\n`Catalog/Shared/TransfiniteCellularAutomata.lean` and\n`Catalog/Shared/TransfiniteCAGardenOrdinalBridge.lea",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-06-24T02:14:58",
       "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
+    },
+    {
+      "cycle_id": "f39e2cb3",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — GL(1) Langlands correspondence\n\nDerived from this cycle's findings: the cyclotomic GL(1) correspondence is realizable as an\n*explicit group isomorphism* `DirichletCharacter ℂ n ≃",
+      "quality_score": 0.57755,
+      "sorry_count": 1,
+      "theorem_count": 6,
+      "timestamp": "2026-06-24T04:32:03",
+      "title": "Langlands Correspondence: GL(1) Case"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.789328
     }
   ],
-  "last_updated": "2026-06-24T02:14:58",
+  "last_updated": "2026-06-24T04:32:03",
   "open_questions": [
-    {
-      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
-      "cycle_id": "a64f762c",
-      "domain": "Bridges",
-      "sorry_count": 3,
-      "timestamp": "2026-06-15T06:54:21"
-    },
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
       "cycle_id": "a37014f1",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 2,
       "timestamp": "2026-06-21T22:16:39"
+    },
+    {
+      "context": "contains no `sorry`.  Corner case: `m = 0` or `k = 0` — handled because `unitsCRT` only needs",
+      "cycle_id": "f39e2cb3",
+      "domain": "NumberTheory",
+      "sorry_count": 1,
+      "timestamp": "2026-06-24T04:32:03"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "856aa6ac",
-        "quality": 0.4037273333333333,
-        "theorems": 3,
-        "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-      },
-      {
         "cycle_id": "f6a45eec",
         "quality": 0.4949979545454546,
         "theorems": 35,
@@ -3699,6 +3693,12 @@
         "quality": 0.3216371714285714,
         "theorems": 3,
         "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theo"
+      },
+      {
+        "cycle_id": "f39e2cb3",
+        "quality": 0.57755,
+        "theorems": 6,
+        "title": "Langlands Correspondence: GL(1) Case"
       }
     ],
     "Physics": [
