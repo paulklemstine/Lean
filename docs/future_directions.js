@@ -4005,6 +4005,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Gaussian\u2013Pythagorean Bridge for LWE Hardness\n\nThese conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`.\nEach is stated to be falsifiable and formalizable in Lean 4 / Mathlib.\n\n## C1. Field-ness of inert quotients \u21d2 full Gaussian search-to-decision\n**Conjecture.** For a prime `p \u2261 3 (mod 4)`, the quotient `\u2124[i]/(p)` is a field\nisomorphic to `\ud835\udd3d_{p\u00b2}`, and consequently the affine rerandomization map\n`z \u21a6 a\u00b7z + b` (a \u2260 0) is a bijection \u2014 giving a search-to-decision reduction for\nGaussian ring-LWE with the *same* per-coordinate `1/n` advantage loss proved in\n`search_to_decision_advantage_bound`.\n**Test.** Build the `Field (ZMod p)[X]/(X\u00b2+1)` instance from\n`neg_one_not_square_three_mod_four` and irreducibility of `X\u00b2 + 1`.\n\n## C2. Norm-form of noise composition under modulus switching\n**Conjecture.** When two Gaussian-LWE samples are combined, the resulting noise\nnorm satisfies `N(e\u2081 + u\u00b7e\u2082) \u2264 (\u221aN(e\u2081) + \u221aN(e\u2082))\u00b2` for any unit `u`, and equality\ncharacterizes collinear (real-proportional) error vectors. This is the Gaussian\nrefinement of `combined_noise_after_switching`.\n**Test.** Formalize the triangle inequality for the Gaussian norm\n(`Zsqrtd.norm` \u2218 embedding into \u2102) and the equality case.\n\n## C3. Counting splitting moduli (density of secure parameters)\n**Conjecture.** The number of primes `p \u2264 N` with `p \u2261 1 (mod 4)` (the \"split\"\nmoduli, each a sum of two squares) and the number with `p \u2261 3 (mod 4)` (the\n\"inert\" moduli) are each asymptotically `\u00bd \u00b7 \u03c0(N)` (Dirichlet). A finite,\n`decide`-checkable version: for every `N \u2264 10\u2074`, both counts lie within\n`0.1\u00b7\u03c0(N)` of `\u00bd\u00b7\u03c0(N)`.\n**Test.** A `native_decide` enumeration over a fixed range.\n\n## C4. Sum-of-two-squares is a multiplicative monoid with explicit structure\n**Conjecture.** `{ n : \u2124 | IsSumTwoSq n }` is exactly the image of the Gaussian\nnorm map, is closed under multiplication (proved: `IsSumTwoSq.mul`), and an\ninteger `n > 0` is a sum of two squares iff every prime `q \u2261 3 (mod 4)` divides\n`n` to an even power.\n**Test.** Connect `IsSumTwoSq` to `Nat.factorization` and the `q \u2261 3` valuation\nparity criterion (`ZMod.exists_sq_eq_neg_one_iff` per prime factor).\n\n## C5. Rerandomization orbit size and unit group of \u2124[i]\n**Conjecture.** The rerandomization map `z \u21a6 u\u00b7z` ranges over a unit group of\norder exactly 4 (`{1, i, \u22121, \u2212i}`), so the Gaussian \"rotation\" hybrid has period\n4; more generally for `\u2124[\u03b6]` with `\u03b6` a primitive `m`-th root the period is the\nunit-group order. Quantify how this affects the hybrid's advantage budget.\n**Test.** Prove `(GaussianInt)\u02e3 \u2243 ZMod 4` (via Mathlib's classification of units\nof `\u2124[i]`), then bound the number of distinct rerandomized samples.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2452",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f8c355ed",
+    "status": "available",
+    "timestamp": "2026-06-24T16:29:07.265346+00:00",
+    "title": "These conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`."
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4122,7 +4137,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "d91fa32b",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4132,7 +4147,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },

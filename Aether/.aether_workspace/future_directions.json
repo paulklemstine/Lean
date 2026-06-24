@@ -14287,7 +14287,7 @@
       "depth_estimate": 3,
       "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -15612,7 +15612,7 @@
       "depth_estimate": 3,
       "description": "Prove that there are no non-constant polynomials f,g,h over C such that f^n + g^n = h^n for n >= 3. Show this follows from the Mason-Stothers theorem. Formalize the polynomial ABC conjecture and derive Fermat as a corollary.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -15651,7 +15651,7 @@
       "depth_estimate": 3,
       "description": "Characterize all fields over which every element is a sum of two squares (Pythagorean fields). Prove that a field is Pythagorean iff it is formally real with a unique ordering. Show that Q(i) is not Pythagorean but R is.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -33829,7 +33829,7 @@
         "polytope skeletons to Cayley-type graphs on symmetric groups",
         "clique-face obstructions to quadratic generation of toric ideals"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -34001,7 +34001,7 @@
         "Extends the paper's weighted K4-free triangle-discounted cut result to the next clique size K5.",
         "Connects Sudakov-type bipartization bounds with edge weights determined by local clique membership."
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34050,7 +34050,7 @@
         "Hilbert functions versus graded Betti tables of minimal free resolutions",
         "minimal Jacobian syzygy degree as the initial degree of the logarithmic derivation module"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34105,7 +34105,7 @@
         "withTop Nat formulation of finite versus infinite edge-degree",
         "rooted tree rays as sequences indexed by Nat"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -34200,7 +34200,7 @@
         "The explicit polynomials G(p,1) and G(p,q) encode rectangular decompositions of labels modulo p and q.",
         "Nonnegative polynomial factorization over ℕ can be reduced to uniqueness of factorization over ℤ plus evaluation at x=1."
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -34248,7 +34248,7 @@
         "terminal cycle length to projective multiplicative order modulo p",
         "extremal cycle length to Artin-type primitive root phenomena"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34287,7 +34287,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Primality Testing (AKS & Miller–Rabin)\n\nDerived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`.\nEach conjecture is bold, falsifiable, and accompanied by the decisive insight and\na \"why now?\" justification.\n\n## 1. Introspective-base AKS bound\n\n**Conjecture.** There is an explicit polynomial bound `B(n)` (polylog in `n`)\nsuch that: `n` is prime iff `(X + a)^n = X^n + a` in `(ZMod n)[X] / (X^r - 1)`\nfor all `1 ≤ a ≤ B(n)`, where `r = O((log n)^c)`. Formalizing this turns the\nsingle-base criterion `aks_criterion` into the full deterministic\npolynomial-time AKS algorithm.\n\nThe key insight is... the proven exact criterion `aks_criterion` already isolates\nthe obstruction (the inner coefficient `C(n,q)`); the remaining work is purely\nthe cyclotomic *order/coprime-base counting* that bounds how many bases are\nneeded once one quotients by `X^r - 1`.\n\n**Why now?** With the freshman's-dream equivalence fully formalized (0 sorries)\nand `not_dvd_choose_prime_dvd` in hand, the algebraic core is settled; the\noutstanding piece is a self-contained counting argument that Mathlib's\ncyclotomic and `orderOf` API can now support.\n\n## 2. Monier–Rabin 1/4 error bound\n\n**Conjecture.** For every odd composite `n > 9`, the number of Miller–Rabin\nnon-witnesses in `(ZMod n)ˣ` is at most `φ(n)/4`. Equivalently, the soundness\ntheorem `miller_rabin_sound` has a quantitative converse: composites have many\nwitnesses.\n\nThe key insight is... `sqrt_one_in_ZMod_prime` fails modulo a composite (there\nare ≥ 4 square roots of `1` by CRT), and the strong-liar set is contained in a\nproper subgroup of `(ZMod n)ˣ`; bounding that subgroup's index by `4` is the\nwhole game.\n\n**Why now?** Soundness (the easy half) is verified; Mathlib's `ZMod.unitsEquiv`\nCRT decomposition and subgroup-index lemmas make the proper-subgroup counting\ntractable for the first time in this codebase.\n\n## 3. AKS strictly dominates Fermat on every Carmichael number\n\n**Conjecture.** For *every* Carmichael number `n` (not just `561`), the Fermat\ncongruence holds for all bases yet the AKS identity fails for some base coprime\nto `n`; moreover the failing base can be taken to be the least prime factor's\nco-factor. This generalizes `carmichael_561_fools_fermat_not_aks` to the entire\nfamily A002997.\n\nThe key insight is... `aks_identity_imp_fermat` shows AKS ⇒ Fermat, and\n`aks_criterion` shows AKS ⇔ primality, so AKS-failure is automatic for any\ncomposite; the new content is identifying a *coprime* failing base uniformly via\nKorselt's structure (`n` squarefree, `(p-1) ∣ (n-1)`).\n\n**Why now?** The separation is already proved at `561` with a reusable mechanism\n(contrapositive of `aks_criterion`); only Korselt's criterion needs to be\nformalized to make the argument uniform over A002997.\n\n## 4. Carmichael numbers are exactly the Fermat-universal composites\n\n**Conjecture.** A composite `n` satisfies `∀ a, a^n ≡ a (mod n)` iff `n` is\nsquarefree and `(p-1) ∣ (n-1)` for every prime `p ∣ n` (Korselt's criterion),\nand these are exactly the composites on which the Fermat test never detects\ncompositeness.\n\nThe key insight is... the universal Fermat congruence decomposes via CRT into\nper-prime-power conditions, and `a^n ≡ a` modulo `p^k` for all `a` forces\n`k = 1` and `(p-1) ∣ (n-1)` through the cyclic structure of `(ZMod p)ˣ`.\n\n**Why now?** Our `native_decide` evidence already confirms the family begins\n`561, 1105` (A002997); a structural Korselt proof would replace finite checks by\na general theorem and feed directly into Direction 3.\n\n## 5. A `ZMod`-native fast modular-exponentiation tactic with a correctness theorem\n\n**Conjecture.** A `csimp`-backed binary modular-exponentiation routine computes\n`a^e mod n` with a kernel-checked correctness lemma `powMod a e n = a^e % n`,\nfast enough to discharge Miller–Rabin / AKS instances by `decide` rather than\n`native_decide`, removing the `Lean.ofReduceBool` dependency from results like\n`carmichael_561_fools_fermat_not_aks`.\n\nThe key insight is... square-and-multiply is a fold over the binary digits of the\nexponent; its correctness is a clean induction, and a `@[csimp]` replacement\nkeeps the kernel in charge (no `@[implemented_by]` trust gap).\n\n**Why now?** The only non-`propext`/`Classical`/`Quot` axiom in this cycle is the\ncompiler-trust `Lean.ofReduceBool` from `native_decide`; a verified `powMod`\nwould let the Carmichael witness be checked by the kernel alone.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34332,7 +34332,7 @@
         "homological_algebra",
         "p_adic_representation_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -34382,7 +34382,7 @@
         "graph_coloring_parity_constraints",
         "clique_packings_in_complements"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34481,7 +34481,7 @@
         "proper color classes are independent sets, so α(G)≤2 forces every odd color class to be a singleton",
         "using Δ(G)+1 singleton color classes forces Δ(G)+1=|V(G)|, hence G is complete"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -34529,7 +34529,7 @@
         "score_sequences_and_characteristic_sequences",
         "multigraph_enumeration_and_restricted_sequences"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -34625,7 +34625,7 @@
         "p_adic_valuations",
         "combinatorics_on_words"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -34672,7 +34672,7 @@
         "combinatorial inequalities",
         "shifting techniques"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34719,7 +34719,7 @@
         "number_theory_divisor_sums",
         "formal_power_series_coefficient_extraction"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -34765,7 +34765,7 @@
         "matroid theory",
         "algebraic combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34911,7 +34911,7 @@
         "intersection_lattices -> average_kernel_enumeration",
         "combinatorial_invariance -> arithmetic_equivalence"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -34960,7 +34960,7 @@
         "finite graph connectivity formalization in Lean 4",
         "edge-deletion complements of Hamiltonian structures"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -35559,7 +35559,7 @@
         "Connects Hermitian matrix models for Bianchi groups to explicit integral quadratic forms",
         "Provides a Lean-checkable arithmetic invariant underlying the congruence-level phenomena in the automorphism groups"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -35742,7 +35742,7 @@
         "p_adic_Hodge_theory",
         "purity_theorems"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -35788,7 +35788,7 @@
         "Matroid_theory",
         "Submodular_optimization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -35835,7 +35835,7 @@
         "statistical physics",
         "extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -35883,7 +35883,7 @@
         "Legendre-symbol Toeplitz matrices to determinant identities",
         "finite linear algebra and principal minor reductions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -35974,7 +35974,7 @@
         "Galois modules",
         "p-adic analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36022,7 +36022,7 @@
         "Cartesian graph products and layer-by-layer simulation arguments",
         "Classical zero forcing product bounds adapted to fractional multi-neighbor forcing"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -36115,7 +36115,7 @@
         "Markov_endomorphism_matrices",
         "zeta_functions_over_F1"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -36212,7 +36212,7 @@
         "Kirchhoff spanning tree theory ↔ determinant inequalities",
         "effective resistance metrics ↔ Loewner order on graph Laplacians"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36258,7 +36258,7 @@
         "Combinatorics",
         "Finite Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -36350,7 +36350,7 @@
         "graph_theory",
         "order_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36396,7 +36396,7 @@
         "Borel-Serre duality",
         "Steinberg modules"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Geometry"
@@ -36445,7 +36445,7 @@
         "set_theory/finiteness",
         "combinatorics/counting"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36492,7 +36492,7 @@
         "Algebraic Topology",
         "Convex Geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -36539,7 +36539,7 @@
         "Finite_geometry",
         "Representation_theory_of_GL_n_F_q"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -36630,7 +36630,7 @@
         "Prime factorization",
         "Formal verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -36678,7 +36678,7 @@
         "Cayley-type kernels",
         "extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -36724,7 +36724,7 @@
         "Model theory of groups",
         "Graph theory in algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36771,7 +36771,7 @@
         "independent_sets",
         "dominating_sets"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -36861,7 +36861,7 @@
         "Additive Combinatorics",
         "Finite Geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -36958,7 +36958,7 @@
         "spectral_graph_theory--sampling_algorithms",
         "johnson_scheme_harmonic_analysis--reversible_markov_chains"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -37051,7 +37051,7 @@
         "Equitable partitions",
         "Algebraic graph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -37097,7 +37097,7 @@
         "Perfect Matchings",
         "Connectivity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -37287,7 +37287,7 @@
         "Infinite-volume partition functions as limits of finite truncations",
         "Geometric tail bounds formalized using normed-field estimates and Tendsto"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -37380,7 +37380,7 @@
         "Analysis",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -37428,7 +37428,7 @@
         "indicial tropical corner locus ↔ leading-term cancellation in algebraic ODEs",
         "simple initial root ↔ Newton-Hensel lifting for formal differential equations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -37478,7 +37478,7 @@
         "overlap units and Stark units -> explicit generators in ray class fields",
         "finite projective unit groups modulo f -> field degree excess"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -37525,7 +37525,7 @@
         "math.CO/hypergraph_compactness",
         "math.CO/stability_methods"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -37770,7 +37770,7 @@
         "additive_combinatorics",
         "ergodic_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -37914,7 +37914,7 @@
         "structural_graph_theory",
         "min_max_theorems_in_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -37960,7 +37960,7 @@
         "Arithmetic Groups",
         "Group Cohomology"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -38010,7 +38010,7 @@
         "GHP diagonal parametrization to parity of prime supports",
         "Euler totient equality problem to elementary divisibility"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -38059,7 +38059,7 @@
         "Reduce the upper bound M_3(8) ≤ 40 to a finite Boolean unsatisfiability certificate over the 70 possible 4-edges.",
         "Prove the lower bound by giving an explicit 40-edge certificate and checking non-shattering in Lean."
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -38107,7 +38107,7 @@
         "combinatorics_on_words_binary_strings",
         "p_adic_analysis_valuations"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -38343,7 +38343,7 @@
         "small-set expansion -> Tanner-code minimum distance",
         "finite bipartite graph combinatorics -> parity-check linear codes over ZMod 2"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -38441,7 +38441,7 @@
         "The Hecke congruence condition can be encoded as the stabilizer of a line in F_p^n, linking arithmetic subgroups of SL_n(Z) to finite projective geometry over F_p.",
         "A Lean formalization would bridge group cohomology, integer matrix groups, finite-index subgroups, and rational vector-space vanishing."
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -38491,7 +38491,7 @@
         "Perron-Frobenius comparison with the unsigned adjacency matrix",
         "switching equivalence of signed graphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Physics"
@@ -38633,7 +38633,7 @@
         "flag_algebras",
         "variational_calculus_on_graphons"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -38680,7 +38680,7 @@
         "grid_minor_theory",
         "path_packing_and_separation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -38818,7 +38818,7 @@
         "Combinatorics",
         "Formal Verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "MachineLearning"
@@ -38864,7 +38864,7 @@
         "GraphTheory↔MeasureTheory",
         "Algebra↔Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -39121,7 +39121,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d91fa32b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39147,7 +39147,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "failed",
       "thread_id": "",
       "timestamp": "2026-06-23T23:12:45.568532+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
@@ -39176,7 +39176,7 @@
         "explicit_cft",
         "lattice_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -39316,7 +39316,7 @@
         "Combinatorial design theory",
         "Extremal set theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -39502,7 +39502,7 @@
         "High-dimensional Hoffman bound",
         "Vector space packing designs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -39546,7 +39546,7 @@
         "Analytic Number Theory",
         "Combinatorial Number Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -39588,7 +39588,7 @@
         "association schemes",
         "spectral graph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -39722,7 +39722,7 @@
         "grid-wall combinatorics to vertex-disjoint linkage formalization",
         "structural graph theory to Lean finite combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -39903,7 +39903,7 @@
       "depth_estimate": 3,
       "description": "We conjecture that for all integers $k \\ge 2$ and $n \\ge 0$, letting $m = \\lfloor n/k \\rfloor$ and $r = n - mk$, the inversion enumerator $a_n^{(k)}(q)$ of permutations whose descent set is exactly $\\{i : k \\mid i\\}$ satisfies the product formula\n$$ a_n^{(k)}(q) = q^{\\binom{m}{2}\\,k + \\binom{r}{2}} \\; \\prod_{j=0}^{m-1} \\begin{bmatrix} n - jk \\\\ k \\end{bmatrix}_q \\; \\cdot \\; \\begin{bmatrix} n - mk \\\\ r \\end{bmatrix}_q, $$\nwhere $\\begin{bmatrix} a \\\\ b \\end{bmatrix}_q$ denotes the Gaussian (or $q$-) binomial coefficient.  This identity extends the analytic derivation of the generating function $F_k(t;q)$ given in the paper and can be verified computationally for many small $k$, $n$, and $q$ (e.g., $q=2,3$).  It is proposed as a new combinatorial closed form for the $q$-inversion enumerator of $k$-alternating permutations.",
       "domain_bridges": "Generating functions, q-series, Gaussian binomial coefficients, permutation descent sets",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -40001,7 +40001,7 @@
         "graph connectivity",
         "extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -40047,7 +40047,7 @@
         "harmonic Maass forms",
         "modular forms"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -40140,7 +40140,7 @@
         "Homological Algebra",
         "Geometric Group Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Pythagorean"
@@ -40189,7 +40189,7 @@
         "p‑adic valuation theory",
         "Lattice basis reduction (LLL)"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -40236,7 +40236,7 @@
         "Additive combinatorics ↔ Analytic number theory",
         "Arithmetic functions ↔ Asymptotic analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -40282,7 +40282,7 @@
         "Schur-product Kneser theorem",
         "combinatorial geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -40422,7 +40422,7 @@
         "enumerative combinatorics",
         "formal verification"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -40467,7 +40467,7 @@
         "combinatorics on words",
         "representation theory of algebras"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -40512,7 +40512,7 @@
         "graph_theory",
         "independence"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -40557,7 +40557,7 @@
         "Finite field Fourier analysis ↔ Euclidean additive combinatorics",
         "Restriction estimates ↔ Λ(p) sets"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -40603,7 +40603,7 @@
         "Lean4",
         "Mathlib.Combinatorics.Matroid"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -40652,7 +40652,7 @@
         "Manhattan distance on grid graphs",
         "Lipschitz functions on grid graphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -40698,7 +40698,7 @@
         "extremal_graph_theory",
         "large_deviation_principles"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -40748,7 +40748,7 @@
         "Commutative algebra over Z_p[[T]] converts finiteness of X(N_infty) into vanishing of the Lambda-rank and boundedness of finite-layer p-class groups.",
         "Decomposition theory of p-adic primes in N_infty/k controls the transition maps between finite-level class groups."
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -40794,7 +40794,7 @@
         "matrix_theory",
         "spectral_graph_theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -40840,7 +40840,7 @@
         "Finite geometry and simplex encodings",
         "SAT‑based verification in Lean"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -40888,7 +40888,7 @@
         "hypergraph regularity",
         "convex-geometric compression"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -40936,7 +40936,7 @@
         "Probabilistic method",
         "Edge-colouring of hypergraphs"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -41030,7 +41030,7 @@
         "dynamic systems",
         "computability"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -41074,7 +41074,7 @@
         "Finite Field Codes",
         "Probabilistic Method"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -41120,7 +41120,7 @@
         "natural boundaries",
         "imaginary quadratic fields"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -41253,7 +41253,7 @@
         "ArXiv preprint database",
         "mathematical physics research"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -41299,7 +41299,7 @@
         "Lean4/Mathlib combinatorics.set_family",
         "Lean4/Mathlib data.nat.choose"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Logic"
@@ -41343,7 +41343,7 @@
         "order_dimension",
         "hypergraph_coloring"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -41387,7 +41387,7 @@
         "math.CO",
         "math.RA"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -41433,7 +41433,7 @@
         "Cryptanalysis",
         "Computational complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -41478,7 +41478,7 @@
         "additive combinatorics",
         "extremal graph theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Algebra"
@@ -41571,7 +41571,7 @@
         "finite_geometry",
         "additive_combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -41661,7 +41661,7 @@
         "stack-sorting algorithms",
         "asymptotic analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean"
       ],
@@ -41699,7 +41699,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — T-Ideals of Acyclic Path Algebras\n\nThis cycle proved the *containment* half of the mission statement: for a finite\nacyclic quiver `Q` with longest path length `n - 1`, the symmetrized monomial\n`S` and the standard polynomial `Sₙ` are polynomial identities of `𝔽Q≥1`\n(modelled by strictly upper triangular `n × n` matrices `N_n`), via the chain\n\n  acyclic ⇒ bounded path length (`AcyclicBound.length_lt_of_bounded`)\n          ⇒ arrow ideal nilpotent of index `n` (`Matrix.prod_ofFn_strictUpper_eq_zero`)\n          ⇒ every degree-`n` multilinear polynomial vanishes (`PI.*_strictUpper_eq_zero`).\n\nThe *generation* half — that these identities **generate** the whole T-ideal —\nremains open and motivates the following.\n\n## Conjecture 1 (Degree sharpness / minimal identity)\n`N_n` satisfies **no** multilinear identity of degree `< n`; degree `n` is the\nminimal degree of an identity of `𝔽Q≥1` when `Q` realizes a path of length `n-1`.\n- The key insight is that the matrix-unit chain `E_{12}E_{23}⋯E_{n-1,n} = E_{1,n}`\n  is a nonzero product of `n-1` strictly-upper matrices, certifying that any\n  degree-`(n-1)` monomial substitution can be made nonzero.\n- Why now? The `Shift k` filtration in `StrictUpperNilpotent.lean` already\n  exposes the associated-graded `J^k/J^{k+1}`, exactly the object whose nonvanishing\n  at `k = n-1` proves minimality; the witness is one explicit substitution.\n\n## Conjecture 2 (T-ideal generation, the mission's hard half)\nThe T-ideal `Id(N_n)` of polynomial identities of `N_n` is generated, as a\nT-ideal, by the single standard polynomial `Sₙ`.\n- The key insight is that nilpotency of index `n` collapses all higher identities\n  to consequences of \"any product of `n` augmentation-ideal elements is zero\",\n  and `Sₙ` is the universal multilinear witness of that collapse.\n- Why now? With `prod_ofFn_strictUpper_eq_zero` formalized, the remaining step is\n  a substitution/linearization argument inside the free algebra modulo `(Sₙ)^T`,\n  a finitely-checkable reduction in each fixed degree.\n\n## Conjecture 3 (Unsigned vs signed dichotomy)\nOn a nilpotent algebra of index `n`, the *unsigned* symmetrized monomial `S` is\nan identity, whereas on `M_k` only the *signed* standard polynomial (degree `2k`,\nAmitsur–Levitzki MR36751) is. Precisely: an associative algebra satisfies the\ndegree-`n` unsigned symmetrized identity iff its augmentation ideal is nilpotent\nof index `≤ n`.\n- The key insight is that the sign is cancellation-driven (needed in `M_k`), but\n  in the nilpotent world each monomial is individually `0`, so signs are inert.\n- Why now? `PI.symMono_eq_zero` already isolates the abstract hypothesis\n  \"every `n`-fold product is `0`\"; the converse direction (identity ⇒ nilpotent)\n  is a pigeonhole on monomials and is within current reach.\n\n## Conjecture 4 (Quiver-shape refinement)\nFor a general (not necessarily linear) acyclic `Q`, the minimal identity degree\nequals `1 + (longest directed path length)`, independent of the number of\nvertices or arrow multiplicities.\n- The key insight is that `AcyclicBound.r_add_length_le` shows path length, not\n  vertex count, controls nilpotency: the bound is `length ≤ r(target) − r(source)`.\n- Why now? The topological-potential inequality is already formalized; only the\n  optimizing path (achieving the longest length) must be exhibited per quiver.\n\n## Conjecture 5 (Codimension growth)\nThe codimension sequence `c_m(N_n)` (dimension of multilinear identities of\ndegree `m` modulo consequences) is eventually polynomial in `m` of degree `n-2`,\nreflecting the `n-1` \"free\" composition slots before nilpotency forces vanishing.\n- The key insight is that the graded pieces `J^k` for `k < n` are the only\n  nonzero strata, giving a finite, combinatorially explicit basis of surviving\n  monomials governed by chains in the vertex poset.\n- Why now? The `Shift`-filtration makes each stratum `J^k/J^{k+1}` a concrete\n  span of matrix units `E_{ij}` with `j − i = k`, ready for an exact count.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -41738,7 +41738,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Gaussian–Pythagorean Bridge for LWE Hardness\n\nThese conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`.\nEach is stated to be falsifiable and formalizable in Lean 4 / Mathlib.\n\n## C1. Field-ness of inert quotients ⇒ full Gaussian search-to-decision\n**Conjecture.** For a prime `p ≡ 3 (mod 4)`, the quotient `ℤ[i]/(p)` is a field\nisomorphic to `𝔽_{p²}`, and consequently the affine rerandomization map\n`z ↦ a·z + b` (a ≠ 0) is a bijection — giving a search-to-decision reduction for\nGaussian ring-LWE with the *same* per-coordinate `1/n` advantage loss proved in\n`search_to_decision_advantage_bound`.\n**Test.** Build the `Field (ZMod p)[X]/(X²+1)` instance from\n`neg_one_not_square_three_mod_four` and irreducibility of `X² + 1`.\n\n## C2. Norm-form of noise composition under modulus switching\n**Conjecture.** When two Gaussian-LWE samples are combined, the resulting noise\nnorm satisfies `N(e₁ + u·e₂) ≤ (√N(e₁) + √N(e₂))²` for any unit `u`, and equality\ncharacterizes collinear (real-proportional) error vectors. This is the Gaussian\nrefinement of `combined_noise_after_switching`.\n**Test.** Formalize the triangle inequality for the Gaussian norm\n(`Zsqrtd.norm` ∘ embedding into ℂ) and the equality case.\n\n## C3. Counting splitting moduli (density of secure parameters)\n**Conjecture.** The number of primes `p ≤ N` with `p ≡ 1 (mod 4)` (the \"split\"\nmoduli, each a sum of two squares) and the number with `p ≡ 3 (mod 4)` (the\n\"inert\" moduli) are each asymptotically `½ · π(N)` (Dirichlet). A finite,\n`decide`-checkable version: for every `N ≤ 10⁴`, both counts lie within\n`0.1·π(N)` of `½·π(N)`.\n**Test.** A `native_decide` enumeration over a fixed range.\n\n## C4. Sum-of-two-squares is a multiplicative monoid with explicit structure\n**Conjecture.** `{ n : ℤ | IsSumTwoSq n }` is exactly the image of the Gaussian\nnorm map, is closed under multiplication (proved: `IsSumTwoSq.mul`), and an\ninteger `n > 0` is a sum of two squares iff every prime `q ≡ 3 (mod 4)` divides\n`n` to an even power.\n**Test.** Connect `IsSumTwoSq` to `Nat.factorization` and the `q ≡ 3` valuation\nparity criterion (`ZMod.exists_sq_eq_neg_one_iff` per prime factor).\n\n## C5. Rerandomization orbit size and unit group of ℤ[i]\n**Conjecture.** The rerandomization map `z ↦ u·z` ranges over a unit group of\norder exactly 4 (`{1, i, −1, −i}`), so the Gaussian \"rotation\" hybrid has period\n4; more generally for `ℤ[ζ]` with `ζ` a primitive `m`-th root the period is the\nunit-group order. Quantify how this affects the hybrid's advantage budget.\n**Test.** Prove `(GaussianInt)ˣ ≃ ZMod 4` (via Mathlib's classification of units\nof `ℤ[i]`), then bound the number of distinct rerandomized samples.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"

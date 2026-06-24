@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f8c355ed",
     "filename": "lattice_cryptography_lwe_hardness.json",
     "pkg_num": 34,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7276800000000001,
     "title": "Lattice Cryptography: A Gaussian-Integer (Pythagorean) Bridge for Ring-LWE Hardness and Correctness"
   },
   {
@@ -995,8 +995,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "lattice_cryptography_lwe_hardness",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7276800000000001,
+      "quality": "substantial",
       "shape": "triangular_prism",
       "title": "Lattice Cryptography: A Gaussian-Integer (Pythagorean) Bridge for Ring-LWE Hardness and Correctness"
     }

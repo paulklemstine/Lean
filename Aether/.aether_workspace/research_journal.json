@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "79dd61d7",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Eckmann–Hilton Bridge (Homotopy & Path-Spaces cycle)\n\n## Synthesis\n\nThis cycle delivered `Catalog/Speculative/AutoResearch/EckmannHiltonMonoid.lean`, a\n`sorry`-free file that",
-      "quality_score": 0.7172923076923078,
-      "sorry_count": 2,
-      "theorem_count": 26,
-      "timestamp": "2026-06-14T18:01:16",
-      "title": "Close Proofs: This cycle delivered `Catalog/Bridges/ApparitionOrderBridge.lean`, a s"
-    },
-    {
       "cycle_id": "d6769d5d",
       "domain": "Applications",
       "key_insight": "# Future Directions — Boltzmann Bridge IX: Representation & Edge-Realization\n\n## Synthesis\n\n`Applications/BoltzmannBridge/InterleavingRepresentation.lean` (Bridge IX) takes\nthe metric theory of persis",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-24T13:14:57",
       "title": "Proof Automation: Custom Lean 4 Tactics"
+    },
+    {
+      "cycle_id": "f8c355ed",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Gaussian–Pythagorean Bridge for LWE Hardness\n\nThese conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`.\nEach is stated to be falsifiable and formalizable in L",
+      "quality_score": 0.7276800000000001,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-06-24T16:29:16",
+      "title": "Lattice Cryptography: LWE Hardness"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "11262eec",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Paradoxes as Theorems (Liar, Berry, Russell, Made Consistent)\n\nDerived from the cycle whose verified results live in\n`Catalog/Logic/ParaconsistentParadox.lean` (foundations) and",
-      "quality_score": 0.5355679086538463,
-      "sorry_count": 0,
-      "theorem_count": 36,
-      "timestamp": "2026-06-17T07:31:29",
-      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
-    },
     {
       "cycle_id": "728f60d4",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-06-24T16:21:28",
       "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
+    },
+    {
+      "cycle_id": "f8c355ed",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Gaussian–Pythagorean Bridge for LWE Hardness\n\nThese conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`.\nEach is stated to be falsifiable and formalizable in L",
+      "quality_score": 0.7276800000000001,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-06-24T16:29:16",
+      "title": "Lattice Cryptography: LWE Hardness"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5e9b4daa",
-      "domain": "Cryptography",
-      "name": "residual_eq_tropEigSeq",
-      "quality": 0.79384
-    },
-    {
-      "cycle_id": "5e9b4daa",
-      "domain": "Cryptography",
-      "name": "that",
-      "quality": 0.79384
-    },
-    {
-      "cycle_id": "972d4c89",
-      "domain": "Applications",
-      "name": "Arrows",
-      "quality": 0.8524
-    },
     {
       "cycle_id": "972d4c89",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "via",
       "quality": 0.7045299999999999
+    },
+    {
+      "cycle_id": "f8c355ed",
+      "domain": "Pythagorean",
+      "name": "gaussNorm_eq_zsqrtdNorm",
+      "quality": 0.7276800000000001
+    },
+    {
+      "cycle_id": "f8c355ed",
+      "domain": "Pythagorean",
+      "name": "gaussNorm_nonneg",
+      "quality": 0.7276800000000001
+    },
+    {
+      "cycle_id": "f8c355ed",
+      "domain": "Pythagorean",
+      "name": "gaussNorm_mul",
+      "quality": 0.7276800000000001
     }
   ],
-  "last_updated": "2026-06-24T16:21:28",
+  "last_updated": "2026-06-24T16:29:16",
   "open_questions": [
     {
       "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "9f700fd5",
-        "quality": 0.503482105263158,
-        "theorems": 38,
-        "title": "Tropical Gravitational Lensing for Integer Factorization"
-      },
-      {
         "cycle_id": "9afcaae7",
         "quality": 0.345538,
         "theorems": 8,
@@ -3885,6 +3879,12 @@
         "quality": 0.5317089325931801,
         "theorems": 10,
         "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
+      },
+      {
+        "cycle_id": "f8c355ed",
+        "quality": 0.7276800000000001,
+        "theorems": 23,
+        "title": "Lattice Cryptography: LWE Hardness"
       }
     ],
     "Shared": [
