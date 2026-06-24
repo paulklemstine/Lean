@@ -1,47 +1,50 @@
-# Computational Evidence — Euler–Mascheroni constant, irrationality approaches
+# Computational Evidence — Euler–Mascheroni constant `γ`
 
-Concise numerical support for the formal results in
-`Catalog/EulerMascheroni/Irrationality.lean` and `.../EffectiveBounds.lean`.
-`γ = 0.5772156649…`.
+All numbers below were produced with `Float` evaluation in Lean (`#eval`).
+Reference value: `γ = 0.5772156649…`.
 
-## 1. Bracketing sequences (small cases)
+## 1. The positive series `γ = ∑_k gterm k`, `gterm k = 1/(k+1) − log((k+2)/(k+1))`
 
-`seq n = H_n − log(n+1)`,  `seq' n = H_n − log n`,  with `seq n < γ < seq' n`.
+| `k` | `gterm k` |
+|----|-----------|
+| 0  | 0.306853  (= 1 − log 2) |
+| 1  | 0.094535  |
+| 9  | 0.004690  |
 
-| n | H_n (=harmonic n) | seq n | seq' n | width = log(n+1)−log n |
-|---|-------------------|-------|--------|------------------------|
-| 1 | 1       | 0.30685 | 1.00000 | 0.69315 |
-| 2 | 3/2     | 0.40546 | 0.80685 | 0.40546 |
-| 6 | 49/20   | 0.50575 | 0.65067 | 0.15415 |
-| 10| 7381/2520| 0.53107 | 0.62638 | 0.09531 |
+Every term is positive and decreasing, with `gterm k ≈ 1/(2(k+1)^2)` (e.g.
+`gterm 9 ≈ 0.00469 ≈ 1/(2·100)`), so the series converges (slowly, like a tail
+`∑ 1/k^2`).  This matches `gterm_pos` and `summable_gterm`.
 
-All rows satisfy `seq n < 0.57722 < seq' n`, and `width = seq' n − seq n`
-(verified symbolically by `eulerMascheroni_trap_width_eq`).  Row n=6 shows the
-Mathlib bounds `1/2 < γ < 2/3`.
+## 2. Partial sums = lower approximant `eulerMascheroniSeq n = H_n − log(n+1)`
 
-## 2. Convergence rate
+| `n`   | `seq n` (lower) | `seq' n` (upper) |
+|-------|-----------------|------------------|
+| 10    | 0.531073        | 0.626383         |
+| 100   | 0.572257        | 0.582207         |
+| 1000  | 0.576716        | —                |
 
-`width(n) = log(1 + 1/n) ≈ 1/n − 1/(2n²)`.  This is only **linear** decay
-(`~1/n`), far slower than the geometric rates used in the irrationality proofs of
-`e` and `ζ(3)`.  Hence the bracketing certifies `γ` to high precision but does
-**not** by itself yield irrationality — and crucially the endpoints are
-transcendental (they contain `log`), not rational, so they cannot be fed to the
-integer-linear-form engine `irrational_iff_forall_eps_linear_form`.
+The partial sums increase monotonically toward `γ ≈ 0.57722` (confirming
+`strictMono_eulerMascheroniSeq`) and stay strictly below it
+(`integral_partialSum_lt_lt_seq'`), while `seq'` stays strictly above.
 
-## 3. Irrationality-engine sanity check
+## 3. Trap width
 
-The engine says: `x` irrational ⇔ for all `ε>0` there are integers `q≥1, p` with
-`0 < |qx − p| < ε`.  For a rational test value `x = 49/20` (denominator 20),
-no nonzero form beats `1/20`: e.g. `q=1..19` give `|qx − round| ≥ 1/20`,
-confirming the rational floor `|qx−p| ≥ 1/den` used in the backward direction.
+`seq' 100 − seq 100 = 0.009950 = log(101/100)`, matching the exact width
+`log(1 + 1/n)`.  Convergence is only `~1/n`; this is the structural reason an
+elementary irrationality proof is out of reach (the catalog engine in
+`Catalog/NumberTheory/Irrationality.lean` needs `o(1/q)` *rational* forms).
 
-## 4. OEIS
+## 4. Stieltjes order 0
 
-The harmonic numerators/denominators are OEIS A001008 / A002805.  No new
-integer sequence is introduced by this cycle.
+`stieltjesSeq 0 n = ∑_{k=1}^n 1/k − log n = H_n − log n = seq' n` for `n ≥ 1`,
+which is the upper approximant above; it converges to `γ` from above
+(`tendsto_stieltjesSeq_zero`).  `γ_0 = γ` is the anchoring case of the Stieltjes
+hierarchy.
 
-## 5. Counterexample hunt
+## 5. OEIS / references
 
-The engine `irrational_iff_forall_eps_linear_form` is a proven *iff* (no
-counterexample possible).  The γ-specific theorem is a faithful instantiation and
-makes no unproven universal claim about γ itself.
+- `γ`: OEIS A001620 (decimal expansion 0, 5, 7, 7, 2, 1, 5, 6, 6, 4, 9, …).
+- Stieltjes constants `γ_n`: OEIS A001620 (`γ_0 = γ`), A082633 (`γ_1`), etc.
+
+No counterexample was found to any claim formalized; all computational checks are
+consistent with the proved theorems.

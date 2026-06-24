@@ -1,236 +1,230 @@
-# An Irrationality Engine and Effective Bracketing for the Euler–Mascheroni Constant
+# Positive-Term, Integral, and Sandwich Representations of the Euler–Mascheroni Constant, with the Structural Obstruction to Irrationality
 
 **Author:** Aristotle
 **Date:** 2026-06-24
-**Domain:** Number Theory (Diophantine approximation, irrationality criteria)
 
 ## Abstract
 
-We develop a complete *Diophantine engine* for irrationality — the equivalence between irrationality of a real number $x$ and the existence of arbitrarily small nonzero integer linear forms $q\,x - p$ — and we apply it as a diagnostic to the Euler–Mascheroni constant $\gamma = \lim_{n\to\infty}(H_n - \ln n)$. We prove the engine in three formulations: a biconditional $\varepsilon$-form, its two constituent directions (sufficiency via the nonzero-integer floor; necessity via Dirichlet's approximation theorem), and a sequence form suited to Apéry-style arguments. We then quantify the standard approximations to $\gamma$. Writing $s_n = H_n - \ln(n+1)$ and $s'_n = H_n - \ln n$, we establish the exact trapping-width identity $s'_n - s_n = \ln(n+1) - \ln n = \ln(1 + 1/n)$ for $n \geq 1$, and derive effective one-sided and two-sided error bounds $|s_n - \gamma| < \ln(1 + 1/n)$. The combination of these results isolates, in precise terms, the structural obstruction to an elementary irrationality proof of $\gamma$: the natural approximants converge only at rate $\Theta(1/n)$ (sub-geometric) and have *transcendental* endpoints, hence cannot supply the integer data the engine requires. We close with five precise, testable conjectures charting a route forward. The mathematical content corresponds to a machine-checked Lean 4 development with no unproven assumptions.
+The Euler–Mascheroni constant $\gamma = \lim_{n\to\infty}(H_n - \ln n)$ is among the most studied constants in mathematics, yet its arithmetic nature — whether it is rational or irrational — remains unknown. This paper develops three exact and mutually reinforcing representations of $\gamma$ and uses them to make precise the structural obstruction to an irrationality proof. First, we exhibit $\gamma$ as a convergent series of *strictly positive* terms, $\gamma = \sum_{k\ge 0}\big(\tfrac{1}{k+1} - \ln\tfrac{k+2}{k+1}\big)$, whose $n$-th partial sum equals exactly the classical lower approximant $\ell_n = H_n - \ln(n+1)$; consequently $\ell_n$ is strictly increasing. Second, we realize each term as a unit-interval integral, yielding the discrete integral representation $\gamma = \sum_{k\ge 0}\int_{k+1}^{k+2}\big(\tfrac{1}{k+1} - \tfrac{1}{x}\big)dx$, the term-by-term form of $\gamma = \int_1^\infty\big(\tfrac{1}{\lfloor x\rfloor} - \tfrac1x\big)dx$. Third, we record the two-sided sandwich $\ell_n < \gamma < u_n$ with $u_n = H_n - \ln n$ and the *exact* trap width $u_n - \ell_n = \ln(1 + 1/n)$, giving fully effective error bounds. Finally, we connect these representations to an irrationality criterion: $\gamma$ is irrational if and only if arbitrarily small nonzero integer linear forms $q\gamma - p$ exist (a consequence of Dirichlet's approximation theorem). We argue that all natural approximants produced by our representations are rational numbers contaminated by a transcendental logarithm, and that this non-rationality — not any absence of formulas — is the genuine obstruction. All results have been formally verified.
+
+**Keywords:** Euler–Mascheroni constant, harmonic numbers, positive-term series, integral representation, telescoping, irrationality, Dirichlet approximation, Stieltjes constants.
 
 ---
 
 ## 1. Introduction
 
-The Euler–Mascheroni constant
-$$\gamma \;=\; \lim_{n\to\infty}\Bigl(\sum_{k=1}^{n}\frac{1}{k} - \ln n\Bigr) \;\approx\; 0.5772156649,$$
-is among the most fundamental constants in analysis and number theory, yet its arithmetic nature is entirely unresolved: it is not known whether $\gamma$ is irrational, let alone transcendental. This stands in stark contrast with $e$ (irrationality: Euler; transcendence: Hermite) and $\zeta(3)$ (irrationality: Apéry, 1978).
+The harmonic numbers $H_n = \sum_{k=1}^{n} \tfrac1k$ diverge logarithmically: $H_n = \ln n + \gamma + o(1)$, where
 
-The purpose of this paper is twofold. First, we give a self-contained, rigorous treatment of the abstract criterion that underlies essentially all irrationality proofs — what we call the **irrationality engine** — including a faithful biconditional and a sequence form. Second, we apply the engine *diagnostically* to $\gamma$: rather than claiming a proof of an open problem, we quantify the best elementary approximations and prove precisely why they cannot drive the engine. The outcome is a sharp, formal articulation of the obstruction, together with a research program.
+$$\gamma = \lim_{n\to\infty}\big(H_n - \ln n\big) = 0.57721566490153286\ldots$$
 
-Throughout, $H_n = \sum_{k=1}^n 1/k$ denotes the $n$-th harmonic number, $\ln$ the natural logarithm, $\lfloor \cdot \rfloor$ the floor, and $\operatorname{round}(t)$ the nearest integer to $t$.
+is the **Euler–Mascheroni constant**. Despite three centuries of study, the most basic arithmetic question about $\gamma$ is open: it is not known whether $\gamma \in \mathbb{Q}$. This stands in stark contrast to $e$ (Euler) and $\zeta(3)$ (Apéry, 1978), both of which are known irrational through explicit, fast rational approximation schemes.
 
-### 1.1 Summary of contributions
+The purpose of this paper is twofold. First, we collect and prove, in a unified and elementary way, three exact representations of $\gamma$: a positive-term series, an integral form, and a two-sided sandwich with explicit width. Second, we use these to articulate — and prove an equivalent criterion for — the precise structural reason that an irrationality proof remains out of reach. The headline is not a new formula but a sharpened understanding: every approximant our representations supply is a rational harmonic number perturbed by a transcendental logarithm, and that perturbation is exactly what defeats the standard irrationality machinery.
 
-- **Theorem A (engine, sequence form).** If $x \in \mathbb{R}$ admits integers $q_n \geq 1$, $p_n$ with $q_n x - p_n \neq 0$ for all $n$ and $q_n x - p_n \to 0$, then $x$ is irrational.
-- **Theorem B (engine, $\varepsilon$-form, sufficiency).** If for every $\varepsilon > 0$ there exist $q \geq 1$, $p$ with $0 < |q x - p| < \varepsilon$, then $x$ is irrational.
-- **Theorem C (engine, $\varepsilon$-form, necessity).** If $x$ is irrational, then for every $\varepsilon > 0$ such $q, p$ exist. Consequently the $\varepsilon$-criterion is a biconditional characterization of irrationality.
-- **Theorem D (exact bracket width).** For $n \geq 1$, $s'_n - s_n = \ln(n+1) - \ln n$.
-- **Theorems E–G (effective error bounds).** For $n \geq 1$: $\gamma - s_n < \ln(n+1)-\ln n$, $s'_n - \gamma < \ln(n+1)-\ln n$, and $|s_n - \gamma| < \ln(n+1)-\ln n$.
+All statements below correspond to formally verified theorems; we give mathematical proof sketches rather than formal scripts.
 
-All statements correspond to machine-checked theorems with no `sorry` and only standard foundational axioms.
+### Notation
 
-### 1.2 Relation to classical irrationality proofs
-
-The engine of §3 is not a new idea in disguise; it is the explicit, reusable distillate of a method that is two and a half centuries old. Euler's proof that $e$ is irrational, in its modern packaging, constructs the integer pairs $q_n = n!$ and $p_n = n!\sum_{k=0}^n 1/k!$, for which $q_n e - p_n = n!\sum_{k>n} 1/k! \in (0,1)$ and tends to $0$; Theorem A then concludes irrationality immediately. Apéry's 1978 tour de force for $\zeta(3)$ produces, by a far deeper recurrence, integer sequences $a_n, b_n$ with $b_n \zeta(3) - a_n \neq 0$ decaying geometrically; once those sequences are in hand, the *logical* step to irrationality is again exactly Theorem A. What changes from constant to constant is never the engine — it is the difficulty of manufacturing the integer fuel. Isolating the engine as a standalone, proven biconditional (Corollary 3.2) lets us state, with no hand-waving, precisely what fuel a proof for $\gamma$ would need, and then prove that the obvious fuel does not ignite. That negative half is the genuine content of §§4–5.
-
-We stress what we do *not* claim. We do not prove $\gamma$ irrational; that remains open. We prove (i) the engine, in full, in both directions, and (ii) sharp, effective facts about the standard approximants that, taken together, show the standard approximants cannot drive the engine. The value of (ii) is diagnostic: it converts the vague statement "$\gamma$ is hard" into two named, measurable defects.
+- $H_n = \sum_{k=1}^n \tfrac1k$ is the $n$-th harmonic number, with $H_0 = 0$.
+- $\ln$ denotes the natural logarithm.
+- $\lfloor x\rfloor$ is the floor function.
+- We write $\gamma$ for the Euler–Mascheroni constant.
+- The two standard one-sided approximant sequences are
+$$\ell_n = H_n - \ln(n+1), \qquad u_n = H_n - \ln n \ (n\ge 1),$$
+the *lower* and *upper* approximants respectively.
 
 ---
 
-## 2. Definitions
+## 2. The positive-term series
 
-**Definition 2.1 (Harmonic number).** For $n \in \mathbb{N}$, $H_n = \sum_{k=1}^{n} \tfrac{1}{k}$, with $H_0 = 0$.
+### 2.1 Definition of the term
 
-**Definition 2.2 (Euler–Mascheroni constant).** $\gamma = \lim_{n\to\infty}(H_n - \ln n)$. The limit exists because $n \mapsto H_n - \ln n$ is decreasing and bounded below.
+**Definition 2.1 (Series term).** For $k \in \mathbb{N}$, define
+$$g_k = \frac{1}{k+1} - \big(\ln(k+2) - \ln(k+1)\big) = \frac{1}{k+1} - \ln\frac{k+2}{k+1}.$$
 
-**Definition 2.3 (Standard approximants).** For $n \in \mathbb{N}$ define
-$$s_n = H_n - \ln(n+1), \qquad s'_n = H_n - \ln n,$$
-with the convention $s'_0 = H_0 = 0$ to avoid $\ln 0$. We call $s_n$ the *lower approximant* and $s'_n$ the *upper approximant*. (In the formal development these are `eulerMascheroniSeq` and `eulerMascheroniSeq'` respectively.)
+Each $g_k$ pairs one harmonic term $\tfrac{1}{k+1}$ with the logarithmic increment it nearly cancels.
 
-**Definition 2.4 (Integer linear form).** Given $x \in \mathbb{R}$, $q \in \mathbb{N}$, $p \in \mathbb{Z}$, the associated *integer linear form* is $L(q,p;x) = q\,x - p \in \mathbb{R}$. Its magnitude $|L|$ measures how nearly the integer multiple $qx$ approximates an integer $p$.
+### 2.2 Strict positivity
 
-**Definition 2.5 (Irrationality).** $x \in \mathbb{R}$ is *irrational* if $x \notin \mathbb{Q}$, equivalently if there is no pair $(q,p) \in \mathbb{N}_{\geq 1} \times \mathbb{Z}$ with $x = p/q$.
+**Theorem 2.2 (`gterm_pos`).** For every $k\in\mathbb{N}$, $\ g_k > 0$.
 
----
+*Proof sketch.* Write $g_k = \tfrac{1}{k+1} - \ln\tfrac{k+2}{k+1}$. Set $x = \tfrac{k+2}{k+1} > 1$, so $x \ne 1$ and $x - 1 = \tfrac{1}{k+1}$. The strict tangent-line inequality for the logarithm,
+$$\ln x < x - 1 \qquad (x > 0,\ x \ne 1),$$
+gives $\ln\tfrac{k+2}{k+1} < \tfrac{1}{k+1}$, hence $g_k > 0$. $\qquad\blacksquare$
 
-## 3. The irrationality engine
+The inequality $\ln x < x - 1$ is the strict form of concavity of $\ln$ about its tangent at $x=1$; in the formalization it is the library lemma `Real.log_lt_sub_one_of_pos`.
 
-The engine formalizes the folklore principle that *rationals are "rigid" against integer linear forms while irrationals are "flexible."* The rigidity is a hard floor; the flexibility is Dirichlet's theorem.
+### 2.3 Partial sums telescope to the lower approximant
 
-### 3.1 The rational floor
+**Theorem 2.3 (`gterm_partial`).** For every $n\in\mathbb{N}$,
+$$\sum_{k=0}^{n-1} g_k = H_n - \ln(n+1) = \ell_n.$$
 
-**Lemma 3.1 (Nonzero-integer floor).** Let $x = a/b$ with $b \in \mathbb{N}_{\geq 1}$, $a \in \mathbb{Z}$. For every $q \in \mathbb{N}$, $p \in \mathbb{Z}$,
-$$q x - p = \frac{qa - pb}{b}.$$
-If $qx - p \neq 0$ then $qa - pb$ is a nonzero integer, so $|qa - pb| \geq 1$ and therefore
-$$|q x - p| \;\geq\; \frac{1}{b}.$$
+*Proof sketch.* Split the sum. The harmonic part gives $\sum_{k=0}^{n-1}\tfrac{1}{k+1} = H_n$. The logarithmic part **telescopes**:
+$$\sum_{k=0}^{n-1}\big(\ln(k+2) - \ln(k+1)\big) = \ln(n+1) - \ln 1 = \ln(n+1).$$
+Subtracting yields $H_n - \ln(n+1)$. Formally this is an induction on $n$ using the recurrence $H_{n+1} = H_n + \tfrac{1}{n+1}$ (`harmonic_succ`). $\qquad\blacksquare$
 
-*Proof.* Substitute $x = a/b$ and clear denominators; $qa - pb \in \mathbb{Z}$, and a nonzero integer has absolute value at least $1$. $\square$
+### 2.4 The series converges to $\gamma$
 
-Lemma 3.1 is the engine of sufficiency: a rational cannot have arbitrarily small nonzero linear forms.
+**Theorem 2.4 (`hasSum_gterm`).** The series $\sum_{k\ge 0} g_k$ converges with sum
+$$\sum_{k=0}^{\infty} g_k = \gamma.$$
 
-### 3.2 Sufficiency
+*Proof sketch.* By Theorem 2.3 the sequence of partial sums of $g$ is exactly $(\ell_n)_n = (H_n - \ln(n+1))_n$, which converges to $\gamma$ (this is the standard fact, in the formalization `Real.tendsto_eulerMascheroniSeq`). Because $g_k \ge 0$ (Theorem 2.2) and the partial sums are bounded above by $\gamma$, the series is summable (`summable_of_sum_range_le`); its sum then coincides with the limit of partial sums by uniqueness of limits, i.e. equals $\gamma$. $\qquad\blacksquare$
 
-**Theorem B ($\varepsilon$-form, sufficiency).** Let $x \in \mathbb{R}$. Suppose that for every $\varepsilon > 0$ there exist $q \in \mathbb{N}$, $p \in \mathbb{Z}$ with $1 \leq q$, $0 < |q x - p|$, and $|q x - p| < \varepsilon$. Then $x$ is irrational.
+**Corollary 2.5 (Strict monotonicity, `strictMono_eulerMascheroniSeq`).** The lower approximant $\ell_n = H_n - \ln(n+1)$ is strictly increasing in $n$, since $\ell_{n+1} - \ell_n = g_n > 0$.
 
-*Proof.* Contrapose. Assume $x$ is rational, $x = p_0/q_0$ in lowest terms with $q_0 \geq 1$. Apply Lemma 3.1 with $b = q_0$: every nonzero linear form satisfies $|qx - p| \geq 1/q_0$. Now take $\varepsilon = 1/q_0 > 0$. The hypothesis would require a pair with $0 < |qx - p| < 1/q_0$, contradicting the floor. Hence no rational $x$ satisfies the hypothesis, i.e. any $x$ that does is irrational. $\square$
+This establishes the "Apéry-like" character of the approximation: the partial sums climb monotonically to $\gamma$, driven by the rational harmonic engine $H_n$ corrected by $\ln(n+1)$.
 
-**Theorem A (sequence form).** Let $x \in \mathbb{R}$ and suppose there are sequences $q : \mathbb{N} \to \mathbb{N}$, $p : \mathbb{N} \to \mathbb{Z}$ with, for all $n$, $q_n \geq 1$ (implicitly, to make $q_n$ usable) and $q_n x - p_n \neq 0$, and with $q_n x - p_n \to 0$. Then $x$ is irrational.
+### 2.5 Rate remarks
 
-*Proof.* Contrapose: suppose $x = a/b$ rational, $b \geq 1$. For each $n$, $q_n x - p_n \neq 0$, so by Lemma 3.1 $|q_n x - p_n| \geq 1/b > 0$, a fixed positive bound independent of $n$. This contradicts $q_n x - p_n \to 0$, which forces the terms eventually below $1/b$. Hence $x$ is irrational. $\square$
-
-Theorem A is the form deployed in classical proofs: one constructs explicit integer sequences (e.g. Apéry's for $\zeta(3)$, the partial-sum/remainder pairs for $e$) whose linear forms are nonzero and decay to $0$.
-
-### 3.3 Necessity via Dirichlet
-
-**Theorem C ($\varepsilon$-form, necessity).** If $x$ is irrational, then for every $\varepsilon > 0$ there exist $q \in \mathbb{N}_{\geq 1}$ and $p \in \mathbb{Z}$ with $0 < |q x - p| < \varepsilon$.
-
-*Proof.* Fix $\varepsilon > 0$. Choose $N \in \mathbb{N}$ with $1/(N+1) < \varepsilon$ (e.g. $N = \lfloor \varepsilon^{-1}\rfloor + 1$). By **Dirichlet's approximation theorem** (the form `Real.exists_nat_abs_mul_sub_round_le`: for any real $x$ and any positive integer bound there is a $k$ with $1 \leq k$ and $|k x - \operatorname{round}(kx)| \leq 1/(N+1)$), select such a $k$ with
-$$|k x - \operatorname{round}(kx)| \leq \frac{1}{N+1} < \varepsilon.$$
-Put $q = k$ and $p = \operatorname{round}(kx) \in \mathbb{Z}$. Then $|qx - p| < \varepsilon$. It remains to check $|qx - p| > 0$: if $qx - p = 0$ then $x = p/q \in \mathbb{Q}$, contradicting irrationality. Hence $0 < |qx - p| < \varepsilon$. $\square$
-
-**Corollary 3.2 (Biconditional characterization).** $x$ is irrational $\iff$ for every $\varepsilon > 0$ there exist $q \geq 1$, $p$ with $0 < |qx - p| < \varepsilon$. (Theorem B gives $\Leftarrow$; Theorem C gives $\Rightarrow$.) In the formal development this biconditional is `irrational_iff_forall_eps_linear_form`, and its specialization to $\gamma$ is `irrational_eulerMascheroniConstant_iff`.
-
-The biconditional is the precise statement of *what an irrationality proof of $\gamma$ must produce*: an effective supply of arbitrarily small nonzero integer linear forms in $\gamma$.
+A second-order expansion gives $g_k = \tfrac{1}{k+1} - \ln(1 + \tfrac{1}{k+1}) \sim \tfrac{1}{2(k+1)^2}$, so the series is summable but converges only like the tail $\sum_{k\ge n} g_k = O(1/n)$. This slow rate, quantified in Section 4, is one half of the irrationality obstruction.
 
 ---
 
-## 4. Effective bracketing of $\gamma$
+## 3. The integral representation
 
-We now turn the abstract criterion onto $\gamma$ via the standard approximants of Definition 2.3.
+### 3.1 Nonnegativity of the integrand
+
+**Theorem 3.1 (`integrand_nonneg`).** For $k \in \mathbb{N}$ and $x \ge k+1$,
+$$\frac{1}{k+1} - \frac{1}{x} \ge 0.$$
+
+*Proof sketch.* Since $0 < k+1 \le x$, monotonicity of reciprocal on positives gives $\tfrac1x \le \tfrac{1}{k+1}$; rearrange. $\qquad\blacksquare$
+
+Geometrically: on the window $[k+1, k+2]$, the decreasing curve $1/x$ lies below the horizontal line at height $1/(k+1)$ (the curve's value at the left endpoint).
+
+### 3.2 Each term is an integral
+
+**Theorem 3.2 (`gterm_eq_integral`).** For every $k\in\mathbb{N}$,
+$$g_k = \int_{k+1}^{k+2}\left(\frac{1}{k+1} - \frac{1}{x}\right)dx.$$
+
+*Proof sketch.* Split the interval integral by linearity. The constant piece integrates to $\int_{k+1}^{k+2}\tfrac{1}{k+1}\,dx = \tfrac{1}{k+1}$ (length-one interval times the constant). The reciprocal piece integrates to $\int_{k+1}^{k+2}\tfrac1x\,dx = \ln(k+2) - \ln(k+1)$, valid because $0 \notin [k+1, k+2]$ (the antiderivative $\ln|x|$ is smooth there). Subtracting reproduces Definition 2.1. The formalization handles the interval-integrability side conditions ($0\notin[k+1,k+2]$) via `intervalIntegrable_one_div` and `integral_one_div`, and the constant via `intervalIntegral.integral_const`. $\qquad\blacksquare$
+
+### 3.3 The integral representation of $\gamma$
+
+**Theorem 3.3 (`hasSum_integral_repr`).** The integral series converges with
+$$\gamma = \sum_{k=0}^{\infty}\int_{k+1}^{k+2}\left(\frac{1}{k+1} - \frac{1}{x}\right)dx.$$
+
+*Proof sketch.* By Theorem 3.2 the summand equals $g_k$ pointwise; substitute into Theorem 2.4. $\qquad\blacksquare$
+
+**Remark 3.4 (Continuous form).** Because $\lfloor x\rfloor = k+1$ on $[k+1, k+2)$, the flat-line height $1/(k+1)$ equals $1/\lfloor x\rfloor$. Splitting $[1,\infty)$ into these windows yields the classical improper integral
+$$\gamma = \int_1^\infty\left(\frac{1}{\lfloor x\rfloor} - \frac{1}{x}\right)dx,$$
+the total area between the descending staircase $1/\lfloor x\rfloor$ and the hyperbola $1/x$. The passage from the proved discrete sum to this single improper integral requires only an `integrableOn`/limit interchange (see Future Directions, Conjecture 4).
+
+### 3.4 The integral partial sums trap $\gamma$
+
+**Theorem 3.5 (`integral_partialSum_lt_lt_seq'`).** For every $n\in\mathbb{N}$,
+$$\sum_{k=0}^{n-1}\int_{k+1}^{k+2}\left(\frac{1}{k+1} - \frac{1}{x}\right)dx \;<\; \gamma \;<\; u_n.$$
+
+*Proof sketch.* By Theorems 3.2 and 2.3 the left-hand partial sum equals $\ell_n = H_n - \ln(n+1)$. The two-sided bound $\ell_n < \gamma < u_n$ is the sandwich of Section 4 (`eulerMascheroniSeq_sandwich`). $\qquad\blacksquare$
+
+This makes explicit that the *integral* picture feeds the irrationality engine the very same approximants as the series picture.
+
+---
+
+## 4. The two-sided sandwich and effective bounds
 
 ### 4.1 The sandwich
 
-It is classical, and provable from monotonicity of $n \mapsto H_n - \ln n$ together with $\ln(n+1) - \ln n = \int_n^{n+1} dt/t$ and the integral comparison $1/(n+1) < \int_n^{n+1} dt/t < 1/n$, that for all $n \geq 1$,
-$$s_n \;<\; \gamma \;<\; s'_n. \tag{Sandwich}$$
-That is, the lower approximant strictly underestimates and the upper approximant strictly overestimates $\gamma$. (In the formal development the two inequalities are `eulerMascheroniSeq_lt_eulerMascheroniConstant` and `eulerMascheroniConstant_lt_eulerMascheroniSeq'`, packaged as `eulerMascheroniSeq_sandwich`.)
+The two one-sided sequences bracket $\gamma$:
+$$\ell_n = H_n - \ln(n+1) \;<\; \gamma \;<\; H_n - \ln n = u_n \qquad (n \ge 1).$$
 
-### 4.2 Exact width
+**Theorem 4.1 (`eulerMascheroniSeq_sandwich`).** For every $n$, $\ \ell_n < \gamma < u_n$.
 
-**Theorem D (bracket width).** For all $n \geq 1$,
-$$s'_n - s_n = \ln(n+1) - \ln n = \ln\!\Bigl(1 + \frac{1}{n}\Bigr).$$
+*Proof sketch.* Both are standard library facts: $\ell_n < \gamma$ (`eulerMascheroniSeq_lt_eulerMascheroniConstant`) and $\gamma < u_n$ (`eulerMascheroniConstant_lt_eulerMascheroniSeq'`). The lower bound is also Corollary 2.5 combined with Theorem 2.4 (partial sums of positive terms stay below the total). $\qquad\blacksquare$
 
-*Proof.* For $n \geq 1$ the convention does not engage, so
-$$s'_n - s_n = \bigl(H_n - \ln n\bigr) - \bigl(H_n - \ln(n+1)\bigr) = \ln(n+1) - \ln n.$$
-The harmonic terms cancel identically; the last equality is the logarithm law $\ln(n+1) - \ln n = \ln((n+1)/n)$. $\square$
+### 4.2 Exact trap width
 
-This identity is exact — no error term — and computable: $H_n \in \mathbb{Q}$, and $\ln(1+1/n)$ admits rapidly convergent rational enclosures.
+**Theorem 4.2 (`eulerMascheroni_trap_width_eq`).** For $n \ge 1$,
+$$u_n - \ell_n = \ln(n+1) - \ln n = \ln\!\Big(1 + \frac1n\Big).$$
 
-### 4.3 Effective error bounds
+*Proof sketch.* $u_n - \ell_n = (H_n - \ln n) - (H_n - \ln(n+1)) = \ln(n+1) - \ln n$; the harmonic terms cancel identically. $\qquad\blacksquare$
 
-**Theorem E (effective lower error).** For all $n \geq 1$, $\;\gamma - s_n < \ln(n+1) - \ln n$.
+### 4.3 Effective one- and two-sided errors
 
-*Proof.* By the right half of (Sandwich), $\gamma < s'_n$, hence $\gamma - s_n < s'_n - s_n$. Apply Theorem D to the right side. $\square$
+**Theorem 4.3 (`eulerMascheroniConstant_sub_seq_lt`, `seq'_sub_eulerMascheroniConstant_lt`, `abs_eulerMascheroniSeq_sub_lt`).** For $n \ge 1$,
+$$0 < \gamma - \ell_n < \ln\!\Big(1+\frac1n\Big), \quad 0 < u_n - \gamma < \ln\!\Big(1+\frac1n\Big), \quad \big|\ell_n - \gamma\big| < \ln\!\Big(1+\frac1n\Big).$$
 
-**Theorem F (effective upper error).** For all $n \geq 1$, $\;s'_n - \gamma < \ln(n+1) - \ln n$.
+*Proof sketch.* Each one-sided error is strictly less than the full trap width by Theorem 4.1, and the width is $\ln(1 + 1/n)$ by Theorem 4.2. The absolute-value form follows since $\ell_n < \gamma$ makes $\ell_n - \gamma$ negative. $\qquad\blacksquare$
 
-*Proof.* By the left half of (Sandwich), $s_n < \gamma$, hence $s'_n - \gamma < s'_n - s_n$. Apply Theorem D. $\square$
+Since $\ln(1 + 1/n) \to 0$, the trap closes and $\gamma$ is determined; since the bound is explicit and computable for each $n$, the enclosure is *effective*. The convergence rate, however, is only $O(1/n)$ — exponentially slower than the geometric rates that drive known irrationality proofs.
 
-**Theorem G (two-sided absolute error).** For all $n \geq 1$, $\;|s_n - \gamma| < \ln(n+1) - \ln n$.
+### 4.4 The trap width vanishes
 
-*Proof.* By the left half of (Sandwich), $s_n < \gamma$, so $s_n - \gamma < 0$ and $|s_n - \gamma| = \gamma - s_n$. Apply Theorem E. $\square$
+**Theorem 4.4 (`tendsto_eulerMascheroni_trap_width`).** $\ u_n - \ell_n \to 0$ as $n\to\infty$.
 
-Because $\ln(1 + 1/n) \to 0$, the approximants converge to $\gamma$; because the bound is explicit, the convergence is *effective*: for any target precision $\delta$, taking $n$ with $\ln(1+1/n) < \delta$, i.e. $n > 1/(e^{\delta}-1)$, guarantees $|s_n - \gamma| < \delta$.
-
-### 4.4 Rate analysis
-
-Since $\ln(1 + 1/n) = \tfrac1n - \tfrac{1}{2n^2} + O(n^{-3})$, the bracket width is $\Theta(1/n)$. To force the error below $10^{-d}$ one needs roughly $n \approx 10^{d}$ terms. This is **sub-geometric**: contrast with the constructions for $e$ and $\zeta(3)$, where the linear forms decay like $\rho^n$ for some fixed $\rho < 1$, giving $d \approx (\log_{10}(1/\rho))\, n$ — exponentially faster in $n$.
+*Proof sketch.* By Theorem 4.2 the width is $\ln(1+1/n)$, and continuity of $\ln$ at $1$ gives the limit $0$; equivalently subtract the two convergent limits $u_n \to \gamma$ and $\ell_n \to \gamma$. $\qquad\blacksquare$
 
 ---
 
-## 5. The obstruction, made precise
+## 5. The irrationality criterion and the obstruction
 
-Combining §3 and §4 yields the central diagnostic. The engine (Theorem A / Corollary 3.2) consumes *integer* data: nonzero forms $q_n \gamma - p_n$ with $q_n \in \mathbb{N}_{\geq 1}$, $p_n \in \mathbb{Z}$, tending to $0$. The harmonic bracket supplies approximants $s_n, s'_n$ that converge to $\gamma$ and even sandwich it. Yet:
+### 5.1 An equivalence
 
-1. **Transcendental endpoints.** $s_n = H_n - \ln(n+1)$ and $s'_n = H_n - \ln n$ are *not rational*: although $H_n \in \mathbb{Q}$, the subtracted logarithm is (for $n \geq 1$, $n+1 \neq 1$) transcendental. There is no integer $q_n$ such that $q_n s_n$ or $q_n s'_n$ is forced to be an integer, so the bracket does not present a clean integer linear form $q_n \gamma - p_n$. The convergence is of the right *kind* (a closing interval) but of the wrong *material* (irrational/transcendental endpoints), and the engine cannot read it.
+A clean reformulation of irrationality, valid for any real $x$, isolates exactly what an irrationality proof must supply.
 
-2. **Sub-geometric speed.** Even setting aside (1), the width $\Theta(1/n)$ is far too slow. Irrationality measures and the engine's quantitative refinements need decay faster than the reciprocal of the denominator $q_n$; with denominators that grow at least linearly (to carry $H_n$), a $\Theta(1/n)$ width is at the boundary where no contradiction with rationality can be extracted.
+**Theorem 5.1 (`irrational_iff_forall_eps_linear_form`).** A real number $x$ is irrational if and only if for every $\varepsilon > 0$ there exist a positive integer $q$ and an integer $p$ with
+$$0 < |q x - p| < \varepsilon.$$
 
-These two facts are not heuristic. They are exactly why the most natural family of approximations — the one written into the definition of $\gamma$ — cannot, even in principle, be fed into the irrationality engine. This is the formal content behind the long-standing difficulty of the problem.
+*Proof sketch.* ($\Leftarrow$) If $x = a/b$ were rational, then $qx - p = (qa - pb)/b$ is a rational with denominator $b$; whenever it is nonzero its absolute value is at least $1/b$, contradicting the hypothesis for $\varepsilon = 1/b$. So no such forms exist for small $\varepsilon$ unless $x$ is irrational. ($\Rightarrow$) For irrational $x$, **Dirichlet's approximation theorem** (in Mathlib) furnishes infinitely many fractions $p/q$ with $|x - p/q| < 1/q^2$, i.e. $|qx - p| < 1/q < \varepsilon$ for large $q$, and these are nonzero because $x$ is irrational. $\qquad\blacksquare$
+
+Specialized to $\gamma$:
+
+**Theorem 5.2 (`irrational_eulerMascheroniConstant_iff`).** $\gamma$ is irrational if and only if for every $\varepsilon > 0$ there are $q\in\mathbb{N}_{>0}$, $p\in\mathbb{Z}$ with $0 < |q\gamma - p| < \varepsilon$.
+
+This is a faithful restatement, not a resolution: it converts the question "is $\gamma$ irrational?" into "do arbitrarily small nonzero integer linear forms in $\gamma$ exist?"
+
+### 5.2 Why the representations do not (yet) close the gap
+
+The series, integral, and sandwich representations all generate excellent approximants to $\gamma$, namely $\ell_n$ and $u_n$. To feed Theorem 5.2 we would need integer linear forms $q\gamma - p$, i.e. *rational* approximations $p/q$. But $\ell_n = H_n - \ln(n+1)$ and $u_n = H_n - \ln n$ are **not rational**: each is a rational harmonic number $H_n$ minus a transcendental logarithm. Forming $q\gamma - p$ from these requires eliminating $\ln n$, which the representations do not do. Two distinct deficiencies stack:
+
+1. **Non-rationality.** The approximants carry a logarithm and are therefore transcendental, so they cannot be the $p/q$ that Theorem 5.2 demands.
+2. **Slow rate.** Even ignoring (1), the enclosure width $\ln(1+1/n) = O(1/n)$ is far too slow; irrationality via Theorem 5.2 needs width $o(1/q)$ in the denominator $q$, the regime of geometric or factorial convergence.
+
+This is the precise content of the obstruction: *the difficulty is not the absence of representations but the non-rational nature of the approximants they produce.* A successful attack must manufacture approximants that are simultaneously rational, with controlled denominators, and with width $o(1/q)$.
 
 ---
 
-## 6. Algorithms
+## 6. The Stieltjes hierarchy
 
-### 6.1 Effective enclosure of $\gamma$
+The constant $\gamma$ is the zeroth member ($m=0$) of the **Stieltjes constants** $\gamma_m$, defined via
+$$\gamma_m = \lim_{n\to\infty}\left(\sum_{k=1}^{n}\frac{(\ln k)^m}{k} - \frac{(\ln n)^{m+1}}{m+1}\right),$$
+which arise as the Laurent coefficients of the Riemann zeta function about its pole $s=1$: $\zeta(s) = \tfrac{1}{s-1} + \sum_{m\ge 0}\tfrac{(-1)^m}{m!}\gamma_m (s-1)^m$. The case $m=0$ is exactly the staircase-versus-curve comparison of this paper, since $\int \tfrac{(\ln x)^m}{x}\,dx = \tfrac{(\ln x)^{m+1}}{m+1}$ specializes at $m=0$ to $\int \tfrac1x\,dx = \ln x$. Thus $\gamma_0 = \gamma$ (in the formalization `tendsto_stieltjesSeq_zero`). The arithmetic nature of every $\gamma_m$ is open, and the discrete-versus-integral mechanism that pins $\gamma_0$ generalizes to all $m$ via Euler–Maclaurin / summation-by-parts bounds on $(\ln x)^m/x$ (Future Directions, Conjecture 3).
 
-**Input:** precision $\delta > 0$.
-**Output:** rational interval $[\ell, u]$ with $\ell \leq \gamma \leq u$ and $u - \ell < \delta$.
+---
 
+## 7. Algorithms
+
+### 7.1 Computing the lower approximant $\ell_n$
+
+Compute $H_n$ by accumulation and subtract $\ln(n+1)$:
 ```
-1. Choose n with ln(1 + 1/n) < δ, e.g. n = ceil(1/(exp(δ) - 1)).
-2. Compute H_n = Σ_{k=1}^n 1/k as an exact rational.
-3. Compute rational bounds L ≤ ln(n)   ≤ L'      (interval logarithm).
-4. Compute rational bounds M ≤ ln(n+1) ≤ M'.
-5. Return ℓ = H_n - M', u = H_n - L.   // s_n ≤ γ ≤ s'_n, widened by log error
+input n
+H ← 0
+for k = 1 .. n:  H ← H + 1/k
+return H − ln(n+1)
 ```
-Complexity: $O(n) = O(1/\delta)$ rational additions plus two interval-logarithm evaluations. The $\Theta(1/\delta)$ term count is exactly the sub-geometric cost quantified in §4.4.
+Cost $O(n)$ arithmetic operations; output is the strictly increasing lower bound $\ell_n < \gamma$. The companion $u_n = H_n - \ln n$ is the upper bound; their average is a natural accelerated estimate.
 
-### 6.2 Engine certificate checker
+### 7.2 Effective enclosure to tolerance $\varepsilon$
 
-**Input:** a finite list of triples $(q_i, p_i, b_i)$ purporting that $|q_i x - p_i| < b_i$, with $q_i \geq 1$ and $b_i \to 0$.
-**Output:** verdict "irrational (certified)" if all forms are nonzero and the bounds witness decay below every threshold; else "inconclusive."
+To bracket $\gamma$ within $\varepsilon$, choose $n$ with $\ln(1 + 1/n) < \varepsilon$ (e.g. $n > 1/\varepsilon$ suffices since $\ln(1+t) < t$), then return $[\ell_n, u_n]$. Theorem 4.3 guarantees $\gamma \in (\ell_n, u_n)$ and $u_n - \ell_n < \varepsilon$.
 
-```
-1. For each i: assert q_i ≥ 1 and (q_i x - p_i) ≠ 0  (the nonzero condition).
-2. Assert b_i is monotone-ish and inf b_i = 0.
-3. If both hold for a genuine sequence, conclude Irrational x by Theorem A.
-```
-This is the executable shadow of Theorem A: a valid certificate is precisely a sequence satisfying its hypotheses.
+### 7.3 Term-wise / integral accumulation
+
+Summing $g_k = \tfrac{1}{k+1} - \ln\tfrac{k+2}{k+1}$ for $k = 0,\dots,n-1$ reproduces $\ell_n$ (Theorem 2.3) while exhibiting each positive brick; equivalently each brick is the window integral of Theorem 3.2. This is the constructive content of the series and integral representations.
 
 ---
 
-## 7. Numerical illustration
+## 8. Applications and discussion
 
-For small $n$ the approximants and the exact width are:
+- **Numerical analysis.** The effective two-sided bounds (Theorem 4.3) give certified, rigorous enclosures of $\gamma$ with explicit error $\ln(1+1/n)$, useful as ground truth for interval-arithmetic libraries.
+- **Series acceleration.** Because the one-sided errors are $\pm\tfrac{1}{2n} + O(1/n^2)$ to leading order, averaging $\ell_n$ and $u_n$ cancels the $1/n$ term and yields $O(1/n^2)$ convergence — a cheap, provable acceleration (Future Directions, Conjecture 2).
+- **Conceptual clarification of the open problem.** The equivalence of Theorem 5.2 plus the non-rationality of all natural approximants pinpoints what is missing, redirecting effort from "find a formula" to "find rational, fast, controlled approximants."
+- **Analytic number theory.** The $m=0$ staircase mechanism is the template for the entire Stieltjes hierarchy and thus for the local structure of $\zeta$ at $s=1$.
 
-| $n$ | $H_n$ | $s_n = H_n - \ln(n+1)$ | $s'_n = H_n - \ln n$ | width $\ln(1+1/n)$ |
-|----:|------:|-----------------------:|---------------------:|-------------------:|
-| 1   | 1.000000 | 0.306853 | 1.000000 | 0.693147 |
-| 10  | 2.928968 | 0.531073 | 0.626383 | 0.095310 |
-| 100 | 5.187378 | 0.572257 | 0.582207 | 0.009950 |
-| 1000| 7.485471 | 0.576716 | 0.577716 | 0.000999 |
+## 9. Future work
 
-Every row satisfies $s_n < \gamma \approx 0.5772157 < s'_n$, and the width column is exactly $\ln(1+1/n)$, confirming Theorem D and the $\Theta(1/n)$ rate. Note that to gain one decimal digit of accuracy one must multiply $n$ by ten — the sub-geometric signature.
-
----
-
-## 8. Applications and significance
-
-- **A diagnostic template.** The pairing "engine + effective bracket" is reusable for any constant defined as a discrete-minus-continuous limit (Stieltjes constants, generalized Euler constants, $\sum 1/p - \ln\ln$ type sums over primes). It cleanly separates *convergence kind* from *arithmetic readability*.
-- **Conditional number theory.** The biconditional (Corollary 3.2) is the correct hypothesis to assume in conditional theorems: "if small forms exist then …". It makes precise the input that irrationality-measure results need.
-- **Pedagogy of irrationality proofs.** Theorems A–C isolate the exact logical skeleton shared by the proofs for $e$ and $\zeta(3)$, stripped of constant-specific construction.
-
----
-
-## 9. Discussion and future work
-
-The analysis localizes the difficulty of $\gamma$'s irrationality to two measurable defects of the harmonic bracket: transcendental endpoints and $\Theta(1/n)$ speed. A successful attack must replace the bracket with a sequence that is *rational* and *geometrically fast*. We record five precise conjectures (the Phase A future directions):
-
-**C1 — Geometric-rate criterion unmet by the harmonic bracket.** There is no sequence of pairs $(q_n, p_n) \in \mathbb{N}_{\geq 1} \times \mathbb{Z}$ obtained as integer linear combinations of $\{H_k, \ln(k+1) : k \leq n\}$ with bounded integer coefficients such that $0 < |q_n \gamma - p_n| \leq C\rho^n$ for some $\rho < 1$. A negative result would explain elementary failure; a positive one would be a breakthrough.
-
-**C2 — Effective irrationality-measure scaffold.** Prove, vacuity-free, the dichotomy $\text{Irrational } x \Rightarrow (\text{LiouvilleNumber } x \ \lor\ \text{HasFiniteIrrationalityMeasure } x)$ as a general lemma and instantiate at $\gamma$; the $\gamma$ branch remains open but the framework is provable.
-
-**C3 — Linear-forms transfer between $\gamma$ and $\zeta$-values.** Small nonzero integer linear forms in $\{1,\gamma,\zeta(2)\}$ (resp. $\{1,\gamma,\ln 2\}$) exist iff small forms in $\{1,\gamma\}$ exist; i.e. adjoining a known irrational creates no spurious approximations. Testable via a two-variable engine for $qx + ry - p$ and the conditions under which $r$ can be forced to $0$.
-
-**C4 — BBP-style rational accelerant.** There exists a rational-coefficient series $\gamma = \sum r_n$, $r_n \in \mathbb{Q}$, with partial-sum denominators $D_n$ satisfying $|\gamma - \sum_{k\leq n} r_k| = o(1/D_n)$. Such a series would feed the engine and prove irrationality; candidates arise from the digamma/Stieltjes-constant expansions.
-
-**C5 — Width-optimality of the harmonic bracket.** Among all brackets $[H_n - \ln f(n),\, H_n - \ln g(n)]$ containing $\gamma$ with $g(n) < n+1 \leq f(n)$, the choice $f = n+1$, $g = n$ is width-optimal in an appropriate sense.
-
----
-
-## 9.1 On the role of the Stieltjes constants
-
-The Stieltjes constants $\gamma_k$ arise as the coefficients in the Laurent expansion of the Riemann zeta function about its pole at $s=1$:
-$$\zeta(s) = \frac{1}{s-1} + \sum_{k=0}^{\infty} \frac{(-1)^k}{k!}\,\gamma_k\,(s-1)^k, \qquad \gamma_0 = \gamma.$$
-Thus $\gamma$ is merely the zeroth member of an infinite family, and the same arithmetic mystery surrounds every $\gamma_k$. There are representations
-$$\gamma_k = \lim_{n\to\infty}\Bigl(\sum_{m=1}^{n} \frac{(\ln m)^k}{m} - \frac{(\ln n)^{k+1}}{k+1}\Bigr),$$
-which generalize the harmonic definition of $\gamma$ ($k=0$) and exhibit the same structural defect: discrete sums minus a continuous (here, logarithmic-power) term, with transcendental tails. The diagnostic of §5 therefore applies verbatim to each $\gamma_k$, and conjecture C4 — the search for a rational-coefficient accelerant — is naturally posed for the whole family at once. A method that cracks one $\gamma_k$ by manufacturing rational, geometrically convergent fuel would plausibly crack all of them, which is part of why the problem is regarded as a genuine frontier rather than an isolated curiosity.
-
-## 9.2 Why effectivity matters
-
-Many existence results in Diophantine approximation are ineffective: they assert that approximations exist without bounding *where* to find them. The bounds of §4 are deliberately effective. Theorem D is an exact identity, and Theorems E–G give explicit, computable error envelopes. Consequently the enclosure algorithm of §6.1 is a genuine procedure: feed it a precision and it returns a rational interval guaranteed to contain $\gamma$. Effectivity is also what makes the obstruction analysis rigorous rather than heuristic — we are not merely observing that the bracket *seems* slow; we have the exact width and can quantify the term count to any digit.
+See the Future Directions section of the package for four concrete conjectures: (1) the quadratic term bound $g_k \le \tfrac{1}{2(k+1)^2}$ with $O(1/n)$ tail; (2) the averaged approximant $m_n = (\ell_n+u_n)/2$ with $|m_n - \gamma| \le C/n^2$; (3) well-definedness of the full Stieltjes hierarchy and $\gamma_0 = \gamma$; (4) the continuous integral $\gamma = \int_1^\infty(1/\lfloor x\rfloor - 1/x)\,dx$.
 
 ## 10. Conclusion
 
-We have given a rigorous, self-contained account of the irrationality engine in biconditional, directional, and sequence forms, and applied it diagnostically to the Euler–Mascheroni constant. The harmonic approximants $s_n = H_n - \ln(n+1)$ and $s'_n = H_n - \ln n$ trap $\gamma$ with an exact width $\ln(1+1/n)$ and effective error $|s_n - \gamma| < \ln(1+1/n)$, yet — by transcendental endpoints and sub-geometric speed — cannot drive the engine. This is a precise map of the wall that has stood for three centuries, and a concrete specification of the door a future proof must open.
+We have given three exact, elementary, and formally verified representations of the Euler–Mascheroni constant — a positive-term series, a unit-window integral form, and an effective two-sided sandwich — and we have used them to state, and prove an equivalent criterion for, the structural obstruction to its irrationality. The constant is fully tractable as an object to compute and enclose; what remains stubborn is the arithmetic question, and we have made precise that the obstruction is the non-rational nature of every approximant our representations supply.
