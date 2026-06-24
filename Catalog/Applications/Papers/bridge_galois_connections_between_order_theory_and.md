@@ -1,26 +1,20 @@
-# THEOREM TRACE (internal anti-hallucination ledger)
+# Skip Justification — Computational Evidence Stage
 
-Source: `Catalog/Bridges/GaloisLatticeZariskiBridge.lean`
-(namespace `GaloisLatticeZariskiBridge`).
+The results in this cycle are **universally quantified structural theorems** about
+arbitrary Galois connections between (pre)ordered sets and the upper-set
+(Alexandrov) topology. They contain no numeric sequences, no finite search space,
+and no parametrized family whose first instances could be tabulated:
 
-Every claim in ARTICLE.md and RESEARCH_PAPER.md must map to one of these.
+- `galois_specializes_iff`, `l_continuous`, `u_continuous` quantify over *all*
+  Galois connections on *all* preorders with the upper-set topology.
+- `galoisFixedPointEquiv`, `closure_lfp_eq_bot_closure`, and
+  `kernel_gfp_eq_top_kernel` quantify over *all* complete lattices.
 
-| Lean name | Mathematical statement | In ARTICLE | In PAPER |
-|---|---|---|---|
-| `le_closure` | For a Galois connection `l ⊣ u`, `a ≤ u (l a)` (closure is extensive) | "closure only grows" | Prop. (extensive) |
-| `closure_idem` | `u (l (u (l a))) = u (l a)` (closure is idempotent) | "closing twice = closing once" | Prop. (idempotent) |
-| `Fix gc` | `{x : α // u (l x) = x}`, the fixed points of `u ∘ l` | "stable elements" | Def. Fix |
-| `closed_sInf` | If all `x ∈ S` satisfy `u (l x) = x`, then `u (l (sInf S)) = sInf S` | "intersection of closed is closed" | Lemma (meet-closed) |
-| `instInfSet` | `Fix gc` has an `InfSet`: `sInf S` is the ambient infimum | — | Def. inf on Fix |
-| `coe_sInf` | `(sInf S : α) = sInf (val '' S)` | — | (coercion lemma) |
-| `isGLB_sInf` | `IsGLB S (sInf S)` in `Fix gc` | "greatest lower bound" | Lemma (GLB) |
-| `instCompleteLattice` | **Theorem A**: `Fix gc` is a `CompleteLattice` | main theorem A | Theorem A |
-| `closure_le_iff` | `u (l a) ≤ x ↔ a ≤ x` for closed `x` | "universal property" | Lemma (adjoint UMP) |
-| `coe_sSup` | `(sSup S : α) = u (l (sSup (val '' S)))` (join = re-closed ambient join) | "join must be re-closed" | Prop. (join formula) |
-| `zariski_adjunction` | `I ≤ vanishingIdeal S ↔ S ⊆ zeroLocus I` | "the dictionary flips" | Theorem B (adjunction) |
-| `zariski_galoisConnection` | `GaloisConnection (zeroLocus) (vanishingIdeal)` into `(Set (Spec R))ᵒᵈ` | "V and I are adjoint" | Theorem B |
-| `vanishingIdeal_eq_iInf` | `vanishingIdeal S = ⨅ p ∈ S, p.asIdeal` | "intersection of primes" | (formula) |
-| `zariski_closure_eq_radical` | `vanishingIdeal (zeroLocus I) = I.radical` | "closure = radical" | Theorem B (radical) |
-| `zariski_fixedPoint_iff_radical` | `vanishingIdeal (zeroLocus I) = I ↔ I.IsRadical` | "fixed points = radical ideals" | Corollary |
+There is therefore no meaningful "small-case calculation", OEIS sequence, or
+finite counterexample sample to report: a single counterexample would already be
+a logical disproof, and the theorems are proved in full generality with `0`
+sorries (verified: axioms reduce to `propext`, `Classical.choice`, `Quot.sound`).
 
-No theorem appears in prose that is not in this table.
+The closest thing to a computational check — that the abstract `IsUpperSet`
+hypotheses are inhabited — is discharged structurally by Mathlib's
+`Topology.WithUpperSet` model, so the statements are non-vacuous.

@@ -1,337 +1,440 @@
-# A Galois-Theoretic Bridge: Knaster–Tarski Fixed-Point Lattices and the Zariski Topology
+# Galois Connections as a Bridge Between Order Theory and Topology: Fixed Points, Closure Systems, and the Zariski Spectrum
 
 **Author:** Aristotle
-**Date:** 2026-06-23
-**Domain:** Bridges (Order Theory, Topology, Commutative Algebra)
+**Date:** 2026-06-24
 
 ## Abstract
 
-We develop, from first principles, the order-theoretic core that links Galois
-connections to both fixed-point theory and algebraic geometry. We prove two
-main results. **Theorem A** is a Knaster–Tarski theorem tailored to Galois
-connections: given a Galois connection $l \dashv u$ between complete lattices
-$\alpha$ and $\beta$, the set of fixed points of the induced closure operator
-$c = u \circ l$, namely $\mathrm{Fix} = \{x \in \alpha : u(l(x)) = x\}$, is a
-complete lattice. We construct this structure without invoking any pre-existing
-fixed-point theorem: meets are inherited from $\alpha$ (the infimum of closed
-elements is closed), joins are the closure of the ambient join, and the entire
-complete-lattice structure is assembled from the infimum via the standard
-order-theoretic builder. **Theorem B** instantiates the abstract machine in
-commutative algebra: for a commutative ring $R$, the pair
-$(\mathrm{zeroLocus}, \mathrm{vanishingIdeal})$ is an antitone Galois connection
-between the ideals of $R$ and the subsets of the prime spectrum
-$\mathrm{Spec}\,R$; its closure operator is the radical of an ideal; and its
-fixed points are exactly the radical ideals — the closed sets of the Zariski
-topology in algebraic disguise. The two theorems combine to exhibit the lattice
-of radical ideals (equivalently, the Zariski-closed subsets of
-$\mathrm{Spec}\,R$) as a complete lattice arising purely from an adjunction.
+A Galois connection between two complete lattices is a pair of monotone maps
+$l : \alpha \to \beta$, $u : \beta \to \alpha$ satisfying the defining
+adjunction $l(a) \le b \iff a \le u(b)$. We develop, from this single
+bi-implication and *without invoking the Knaster–Tarski fixed-point
+theorem*, the complete fixed-point theory attached to such a connection. We
+introduce the closure operator $\operatorname{cl} = u \circ l$ on $\alpha$
+and the kernel operator $\operatorname{ker} = l \circ u$ on $\beta$, prove
+that they are genuine closure and interior operators, and establish the
+**fundamental fixed-point correspondence**: an order isomorphism between the
+closed elements $\{a : u(l(a)) = a\}$ of $\alpha$ and the coclosed elements
+$\{b : l(u(b)) = b\}$ of $\beta$. We then show that the closed elements form
+a complete lattice (and dually for the coclosed elements), constructing all
+infima and suprema explicitly from the closure-system structure rather than
+from an external fixed-point principle. As a corollary we recover the
+Knaster–Tarski conclusion for the closure operator, with closed-form extreme
+fixed points $u(l(\bot))$ and $l(u(\top))$. Finally we explain how the
+construction bridges order theory and topology: the closed elements of any
+Galois connection satisfy the closed-set axioms, and in the canonical
+example of ideals versus zero sets this recovers the Zariski topology on
+$\operatorname{Spec}(R)$. All results have been formalized and machine-checked.
+
+**Keywords:** Galois connection, closure operator, kernel operator, complete
+lattice, fixed point, Knaster–Tarski, order isomorphism, Zariski topology,
+formal concept analysis, abstract interpretation.
+
+---
 
 ## 1. Introduction
 
-A *Galois connection* is the order-theoretic distillation of adjunction: two
-order-preserving maps between posets that are universally compatible with the
-order. The notion abstracts the original Galois correspondence between
-subgroups and intermediate fields, but its reach is far broader. Galois
-connections govern closure operators in topology, consequence operators in
-logic, abstract interpretation in program analysis, formal concept analysis in
-data mining, and the algebra–geometry dictionary at the foundation of
-algebraic geometry.
+The notion of a Galois connection abstracts the relationship discovered by
+Évariste Galois between subfields of a field extension and subgroups of its
+automorphism group. Stripped to its order-theoretic core, a Galois
+connection is an adjunction between two partially ordered sets, and it
+captures with surprising economy the recurring mathematical pattern of a
+*best two-sided approximation* between two structures. Galois connections
+appear, often unrecognized as the same object, in logic (syntax vs.
+semantics), in data analysis (formal concept analysis), in static program
+analysis (abstract interpretation), and in algebraic geometry (ideals vs.
+varieties).
 
-This paper isolates the precise sense in which Galois connections *manufacture*
-order-theoretic and topological structure, and verifies the resulting claims
-formally. We answer two questions:
+This paper has two goals. First, to give a clean, self-contained
+development of the fixed-point theory of a Galois connection between
+complete lattices that is *deliberately independent* of the Knaster–Tarski
+theorem, deriving completeness of the lattice of closed elements purely from
+closure-system structure. Second, to make explicit the bridge from this
+order-theoretic core to topology, culminating in the observation that the
+Zariski topology on the prime spectrum of a commutative ring is an instance
+of the construction.
 
-1. *What is the structure of the fixed points of the closure operator induced
-   by a Galois connection?* (Answer: a complete lattice — Theorem A.)
-2. *How does the Zariski topology on a prime spectrum arise as an instance of
-   this machinery?* (Answer: as the fixed-point side of the
-   $\mathrm{zeroLocus}/\mathrm{vanishingIdeal}$ Galois connection, whose closure
-   is the radical — Theorem B.)
+The development is fully formal. Every theorem stated below corresponds to a
+machine-checked result; we give mathematical proof sketches here and name the
+corresponding formal statements where helpful.
 
-Both results are formalized; the prose below states each theorem with its full
-mathematical content and a proof sketch faithful to the formal development.
+### 1.1 Contributions
 
-## 2. Preliminaries and definitions
+1. Direct proofs, from the defining bi-implication alone, of monotonicity of
+   both adjoints, the unit/counit inequalities, and the triangle identities
+   (`le_u_l`, `l_u_le`, `monotone_l`, `monotone_u`, `u_l_u`, `l_u_l`).
+2. A verification that $\operatorname{cl} = u\circ l$ is a closure operator
+   and $\operatorname{ker} = l \circ u$ an interior operator
+   (`cl_extensive`, `cl_monotone`, `cl_idem`, `ker_contracting`,
+   `ker_monotone`, `ker_idem`).
+3. The fundamental fixed-point correspondence as an explicit order
+   isomorphism (`fixedPointOrderIso`).
+4. Completeness of the lattice of closed elements via closure-system
+   structure, with explicit greatest lower bounds and least upper bounds
+   (`closed_sInf_closed`, `closed_isGreatestLB`, `closed_isLeastUB`,
+   `Closed.completeLattice`), avoiding Knaster–Tarski.
+5. The topological bridge: closed elements satisfy the closed-set axioms,
+   recovering the Zariski topology as the canonical example.
 
-### 2.1 Posets and complete lattices
+---
 
-A **partially ordered set** (poset) is a set with a reflexive, antisymmetric,
-transitive relation $\le$. A **complete lattice** is a poset in which every
-subset $S$ has an infimum $\bigsqcap S$ (greatest lower bound) and a supremum
-$\bigsqcup S$ (least upper bound). In a complete lattice the existence of all
-infima already forces the existence of all suprema, via
-$\bigsqcup S = \bigsqcap \{ y : \forall x \in S,\, x \le y\}$; this fact is the
-basis of the standard builder `completeLatticeOfInf`, which constructs a
-complete-lattice structure from a proof that a designated $\mathrm{Inf}$
-operation always yields the greatest lower bound.
+## 2. Preliminaries
+
+### 2.1 Partial orders and complete lattices
+
+A **partial order** on a set $\alpha$ is a relation $\le$ that is reflexive,
+transitive, and antisymmetric. A **complete lattice** is a partial order in
+which every subset $S \subseteq \alpha$ has a least upper bound $\bigvee S$
+(supremum, denoted `sSup` in the formalization) and a greatest lower bound
+$\bigwedge S$ (infimum, `sInf`). In particular it has a top element
+$\top = \bigvee \alpha$ and a bottom element $\bot = \bigwedge \alpha$.
+
+Throughout, $\alpha$ and $\beta$ are complete lattices.
 
 ### 2.2 Galois connections
 
-Let $\alpha$, $\beta$ be posets and $l : \alpha \to \beta$, $u : \beta \to
-\alpha$ maps. The pair $(l,u)$ is a **(monotone) Galois connection**, written
-$l \dashv u$, if for all $a \in \alpha$, $b \in \beta$:
+**Definition 2.1 (Galois connection).** Maps $l : \alpha \to \beta$ and
+$u : \beta \to \alpha$ form a *Galois connection*, written $l \dashv u$, if
+for all $a \in \alpha$ and $b \in \beta$,
+$$l(a) \le b \quad\Longleftrightarrow\quad a \le u(b). \tag{GC}$$
+We call $l$ the **lower adjoint** and $u$ the **upper adjoint**. (This is the
+monotone form of a Galois connection; the antitone "Galois correspondence"
+of classical Galois theory is recovered by reversing the order on one side.)
 
-$$ l(a) \le b \iff a \le u(b). \tag{GC} $$
+The single equivalence (GC) is the only hypothesis used in Sections 3–5.
 
-We call $l$ the *lower adjoint* and $u$ the *upper adjoint*. Standard
-consequences (all used below):
+---
 
-- **Monotonicity.** Both $l$ and $u$ are order-preserving.
-- **Unit and counit.** $a \le u(l(a))$ and $l(u(b)) \le b$ for all $a, b$.
-- **Triangle / absorption.** $u(l(u(b))) = u(b)$ and $l(u(l(a))) = l(a)$.
+## 3. Consequences of the adjunction
 
-An **antitone** Galois connection between posets $\alpha$ and $\beta$ is a
-monotone Galois connection between $\alpha$ and the order-dual $\beta^{op}$; it
-satisfies $a \le u(b) \iff b \le l(a)$ with both maps order-*reversing*.
+We collect the standard properties, each proved *directly* from (GC).
 
-### 2.3 The induced closure operator
+**Lemma 3.1 (Unit, `le_u_l`).** For all $a$, $\;a \le u(l(a))$.
 
-Given $l \dashv u$, define $c := u \circ l : \alpha \to \alpha$. Then $c$ is a
-**closure operator**:
+*Proof.* Apply (GC) with $b = l(a)$ to the tautology $l(a) \le l(a)$. ∎
 
-- **(Extensive)** `le_closure`: for all $a$, $a \le u(l(a))$.
-- **(Idempotent)** `closure_idem`: for all $a$, $u(l(u(l(a)))) = u(l(a))$.
-- **(Monotone)** $c$ is order-preserving, being a composite of monotone maps.
+**Lemma 3.2 (Counit, `l_u_le`).** For all $b$, $\;l(u(b)) \le b$.
 
-An element $x$ is **closed** (a **fixed point**) if $c(x) = x$, i.e.
-$u(l(x)) = x$. We write
+*Proof.* Apply (GC) with $a = u(b)$ to the tautology $u(b) \le u(b)$. ∎
 
-$$ \mathrm{Fix}(gc) := \{ x \in \alpha : u(l(x)) = x \}, $$
+**Lemma 3.3 (Monotonicity, `monotone_l`, `monotone_u`).** Both $l$ and $u$
+are monotone.
 
-ordered as a subposet of $\alpha$.
+*Proof.* If $a \le a'$ then $a \le a' \le u(l(a'))$ by Lemma 3.1, so by (GC)
+$l(a) \le l(a')$. Dually, if $b \le b'$ then $l(u(b)) \le b \le b'$ by
+Lemma 3.2, so by (GC) $u(b) \le u(b')$. ∎
 
-## 3. Theorem A: a Knaster–Tarski theorem for Galois connections
+**Lemma 3.4 (Triangle identities, `u_l_u`, `l_u_l`).** For all $a, b$,
+$$u(l(u(b))) = u(b), \qquad l(u(l(a))) = l(a).$$
 
-> **Theorem A.** *Let $\alpha$ and $\beta$ be complete lattices and let
-> $l \dashv u$ be a Galois connection between them. Then $\mathrm{Fix}(gc)$ is a
-> complete lattice.*
+*Proof.* For the first: $u(l(u(b))) \le u(b)$ by monotonicity of $u$ applied
+to Lemma 3.2, and $u(b) \le u(l(u(b)))$ by Lemma 3.1; antisymmetry concludes.
+The second is dual. ∎
 
-The proof is constructive and uses only the adjunction axiom (GC), the
-order-theoretic consequences of §2.2, and the builder `completeLatticeOfInf`.
-We highlight the three structural lemmas.
+### 3.1 Closure and kernel operators
 
-### 3.1 Meets: the infimum of closed elements is closed
+**Definition 3.5.** Define $\operatorname{cl} : \alpha \to \alpha$ by
+$\operatorname{cl}(a) = u(l(a))$ and $\operatorname{ker} : \beta \to \beta$
+by $\operatorname{ker}(b) = l(u(b))$. (Formal names: `cl`, `ker`, with
+defining `simp` lemmas `cl_apply`, `ker_apply`.)
 
-> **Lemma 3.1** (`closed_sInf`). *Let $S \subseteq \alpha$ with $u(l(x)) = x$
-> for every $x \in S$. Then $u(l(\bigsqcap S)) = \bigsqcap S$.*
+**Theorem 3.6 (Closure operator, `cl_extensive`, `cl_monotone`, `cl_idem`).**
+The map $\operatorname{cl}$ is a closure operator:
+$$a \le \operatorname{cl}(a), \qquad a \le a' \Rightarrow
+\operatorname{cl}(a) \le \operatorname{cl}(a'), \qquad
+\operatorname{cl}(\operatorname{cl}(a)) = \operatorname{cl}(a).$$
 
-*Proof sketch.* By extensivity (`le_closure`), $\bigsqcap S \le u(l(\bigsqcap
-S))$. For the reverse inequality, it suffices to show $u(l(\bigsqcap S)) \le x$
-for each $x \in S$. Fix $x \in S$. Since $\bigsqcap S \le x$, monotonicity of
-$l$ then $u$ gives $u(l(\bigsqcap S)) \le u(l(x)) = x$, using the hypothesis
-that $x$ is closed. As $x$ ranges over $S$, the greatest-lower-bound property
-yields $u(l(\bigsqcap S)) \le \bigsqcap S$. Antisymmetry finishes. $\qquad\square$
+*Proof.* Extensivity is Lemma 3.1. Monotonicity is the composite of
+Lemma 3.3 applied twice. Idempotence is the first triangle identity
+(Lemma 3.4) at $b = l(a)$: $\operatorname{cl}(\operatorname{cl}(a)) =
+u(l(u(l(a)))) = u(l(a)) = \operatorname{cl}(a)$. ∎
 
-Consequently $\mathrm{Fix}(gc)$ carries an $\mathrm{Inf}$ operation defined by
-$\bigsqcap_{\mathrm{Fix}} S = \bigsqcap (\iota[S])$, the ambient infimum of the
-underlying elements (formalized as `instInfSet`, with the coercion lemma
-`coe_sInf`).
+**Theorem 3.7 (Interior operator, `ker_contracting`, `ker_monotone`,
+`ker_idem`).** The map $\operatorname{ker}$ is an interior (kernel) operator:
+$$\operatorname{ker}(b) \le b, \qquad b \le b' \Rightarrow
+\operatorname{ker}(b) \le \operatorname{ker}(b'), \qquad
+\operatorname{ker}(\operatorname{ker}(b)) = \operatorname{ker}(b).$$
 
-### 3.2 The ambient infimum is the greatest lower bound in $\mathrm{Fix}$
+*Proof.* Dual to Theorem 3.6, using Lemma 3.2 and the second triangle
+identity. ∎
 
-> **Lemma 3.2** (`isGLB_sInf`). *For every $S \subseteq \mathrm{Fix}(gc)$, the
-> element $\bigsqcap_{\mathrm{Fix}} S$ is the greatest lower bound of $S$ in
-> $\mathrm{Fix}(gc)$.*
+---
 
-*Proof sketch.* Lower bound: each member of $S$ dominates the ambient infimum
-of $\iota[S]$, by $\bigsqcap$-below. Greatest: any closed lower bound $t$ of
-$S$ satisfies $\iota(t) \le \iota(x)$ for all $x \in S$, hence $\iota(t) \le
-\bigsqcap(\iota[S])$ by the universal property of $\bigsqcap$ in $\alpha$; this
-is exactly $t \le \bigsqcap_{\mathrm{Fix}} S$. $\qquad\square$
+## 4. The fundamental fixed-point correspondence
 
-### 3.3 Assembling the complete lattice
+**Definition 4.1 (Closed and coclosed elements).** An element $a \in \alpha$
+is **closed** if $u(l(a)) = a$. An element $b \in \beta$ is **coclosed** if
+$l(u(b)) = b$. Write
+$$\mathrm{Closed}(l,u) = \{a \in \alpha : u(l(a)) = a\}, \qquad
+\mathrm{Coclosed}(l,u) = \{b \in \beta : l(u(b)) = b\},$$
+each carrying the order inherited from $\alpha$, resp. $\beta$. (Formal
+names: `Closed`, `Coclosed`.)
 
-Applying `completeLatticeOfInf` to Lemma 3.2 yields a `CompleteLattice`
-structure on $\mathrm{Fix}(gc)$ (formalized as the instance
-`instCompleteLattice`). This proves Theorem A. Notably, *no* external
-fixed-point theorem is used; the construction is from the adjunction axioms
-alone.
+By extensivity/idempotence the closed elements are exactly the image
+$u(\beta) = \{u(b) : b \in \beta\}$, and the coclosed elements are exactly
+$l(\alpha)$.
 
-### 3.4 The join is the re-closed ambient join
+**Theorem 4.2 (Fixed-point correspondence, `fixedPointOrderIso`).** The
+assignments $a \mapsto l(a)$ and $b \mapsto u(b)$ are mutually inverse,
+order-preserving and order-reflecting bijections between $\mathrm{Closed}(l,u)$
+and $\mathrm{Coclosed}(l,u)$. Hence
+$$\mathrm{Closed}(l,u) \;\cong\; \mathrm{Coclosed}(l,u)$$
+as ordered sets (an order isomorphism).
 
-The supremum in $\mathrm{Fix}(gc)$ is *not* the ambient supremum in general,
-because joins of closed elements need not be closed. The correct formula is the
-closure of the ambient join.
+*Proof.* If $a$ is closed then $l(a)$ is coclosed: $l(u(l(a))) = l(a)$ by the
+second triangle identity. Symmetrically $u$ maps coclosed elements to closed
+elements. The round trips are the defining equalities: for closed $a$,
+$u(l(a)) = a$; for coclosed $b$, $l(u(b)) = b$. So the maps are mutually
+inverse bijections. They preserve order by Lemma 3.3. They reflect order:
+if $l(a) \le l(a')$ for closed $a, a'$ then applying $u$ and using closedness
+gives $a = u(l(a)) \le u(l(a')) = a'$. Thus the bijection and its inverse are
+both monotone, i.e. it is an order isomorphism. ∎
 
-> **Proposition 3.3** (`coe_sSup`). *For $S \subseteq \mathrm{Fix}(gc)$,*
-> $$ \iota\!\left(\textstyle\bigsqcup_{\mathrm{Fix}} S\right) \;=\; u\!\left(l\left(\textstyle\bigsqcup (\iota[S])\right)\right). $$
+Theorem 4.2 is the abstract form of several classical "fundamental theorems
+of Galois-type dualities," including the basic theorem of formal concept
+analysis (Section 6.2) and the fundamental theorem of Galois theory in its
+order-theoretic guise.
 
-*Proof sketch.* Write $w := u(l(\bigsqcup(\iota[S])))$. First, $w$ is closed by
-idempotence (`closure_idem`), so $\langle w \rangle \in \mathrm{Fix}(gc)$. We
-show $\langle w \rangle$ is the least upper bound of $S$:
-- **Upper bound.** For $x \in S$, $\iota(x) \le \bigsqcup(\iota[S]) \le
-  u(l(\bigsqcup(\iota[S]))) = w$ by below-$\bigsqcup$ and extensivity.
-- **Least.** If $\langle t \rangle \in \mathrm{Fix}(gc)$ is an upper bound of
-  $S$, then $\bigsqcup(\iota[S]) \le t$, so monotonicity of $u \circ l$ gives
-  $w \le u(l(t)) = t$ since $t$ is closed.
+---
 
-Hence $\bigsqcup_{\mathrm{Fix}} S = \langle w\rangle$, and the supremum from
-`completeLatticeOfInf` agrees with this least upper bound by uniqueness.
-$\qquad\square$
+## 5. The lattice of closed elements
 
-The proof of the "least" half repeatedly invokes the **universal property of
-the closure**:
+We now show that $\mathrm{Closed}(l,u)$ is a complete lattice, building all
+operations explicitly and *without* the Knaster–Tarski theorem. The dual
+statements hold for $\mathrm{Coclosed}(l,u)$.
 
-> **Lemma 3.4** (`closure_le_iff`). *For closed $x \in \mathrm{Fix}(gc)$ and any
-> $a \in \alpha$,* $\; u(l(a)) \le \iota(x) \iff a \le \iota(x).$
+**Lemma 5.1 (Infima of closed elements are closed, `closed_sInf_closed`).**
+If $S \subseteq \alpha$ consists of closed elements, then $\bigwedge S$ is
+closed: $u(l(\bigwedge S)) = \bigwedge S$.
 
-*Proof sketch.* ($\Rightarrow$) $a \le u(l(a)) \le \iota(x)$ by extensivity.
-($\Leftarrow$) $u(l(a)) \le u(l(\iota(x))) = \iota(x)$ by monotonicity and
-closedness of $x$. $\qquad\square$
+*Proof.* By extensivity, $\bigwedge S \le u(l(\bigwedge S))$. For the reverse
+inequality it suffices to show $u(l(\bigwedge S)) \le x$ for every $x \in S$.
+Indeed, since $\bigwedge S \le x$ and $u, l$ are monotone,
+$u(l(\bigwedge S)) \le u(l(x)) = x$, the last equality because $x$ is closed.
+Taking the infimum over $x \in S$ gives $u(l(\bigwedge S)) \le \bigwedge S$,
+and antisymmetry concludes. ∎
 
-Lemma 3.4 says $c(a)$ is the *least* closed element above $a$; this is the
-defining feature of a closure and the reason $\mathrm{Fix}(gc)$ is a *reflective*
-subposet of $\alpha$.
+**Theorem 5.2 (Greatest closed lower bound, `closed_isGreatestLB`).** For a
+family $S$ of closed elements, $\bigwedge S$ is closed, is a lower bound of
+$S$, and is the greatest closed lower bound: if $c$ is closed and
+$c \le a$ for all $a \in S$, then $c \le \bigwedge S$.
 
-## 4. Theorem B: the Zariski topology from a Galois connection
+*Proof.* Closedness is Lemma 5.1; the rest is the universal property of the
+ambient infimum. ∎
 
-We now instantiate the machinery in commutative algebra. Fix a commutative ring
-$R$.
+**Theorem 5.3 (Least closed upper bound, `closed_isLeastUB`).** For a family
+$S$ of closed elements, the element $u(l(\bigvee S)) = \operatorname{cl}(\bigvee S)$
+is closed, is an upper bound of $S$, and is the least closed upper bound: if
+$c$ is closed and $a \le c$ for all $a \in S$, then $u(l(\bigvee S)) \le c$.
 
-### 4.1 The objects
+*Proof.* Closedness is idempotence (Theorem 3.6). For each $a \in S$,
+$a \le \bigvee S \le u(l(\bigvee S))$ by extensivity, so it is an upper
+bound. If $c$ is a closed upper bound then $\bigvee S \le c$, hence by
+monotonicity $u(l(\bigvee S)) \le u(l(c)) = c$. ∎
 
-- $\mathrm{Ideal}\,R$: the complete lattice of ideals of $R$, ordered by
-  inclusion, with meet $\bigcap$ and join the ideal generated by the union.
-- $\mathrm{Spec}\,R$: the **prime spectrum**, the set of prime ideals of $R$.
-  Each point $p$ has an underlying ideal $p.\mathrm{asIdeal}$.
-- For an ideal $I$, the **zero locus**
-  $V(I) = \mathrm{zeroLocus}(I) = \{ p \in \mathrm{Spec}\,R : I \subseteq p \}$.
-- For a set of points $S \subseteq \mathrm{Spec}\,R$, the **vanishing ideal**
-  $\mathrm{vanishingIdeal}(S) = \bigcap_{p \in S} p.\mathrm{asIdeal}$.
+**Theorem 5.4 (Completeness, `Closed.completeLattice`).** With infimum of a
+family $T$ of closed elements given by the ambient infimum and supremum given
+by $\operatorname{cl}(\bigvee T)$, the closed elements
+$\mathrm{Closed}(l,u)$ form a complete lattice. Dually, $\mathrm{Coclosed}(l,u)$
+is a complete lattice with inherited suprema and infima computed by
+$\operatorname{ker}$.
 
-> **Lemma 4.1** (`vanishingIdeal_eq_iInf`). *For $S \subseteq \mathrm{Spec}\,R$,*
-> $$ \mathrm{vanishingIdeal}(S) = \bigsqcap_{p \in S} p.\mathrm{asIdeal}. $$
+*Proof.* By Lemma 5.1 the closed elements are closed under arbitrary ambient
+infima; this provides an `InfSet` structure that produces genuine greatest
+lower bounds (Theorem 5.2). A complete lattice can be built from arbitrary
+infima alone (the standard `completeLatticeOfInf` construction), with suprema
+recovered as the infimum of the set of upper bounds; Theorem 5.3 identifies
+that supremum concretely as $\operatorname{cl}(\bigvee T)$. The dual argument,
+using the kernel operator, handles the coclosed elements. ∎
 
-This identifies the upper adjoint as an intersection of primes, the algebraic
-counterpart of "functions vanishing on all of $S$."
+**Remark 5.5 (Independence from Knaster–Tarski).** The proof of Theorem 5.4
+uses only the closure-system facts "infima are closed" and "the least closed
+upper bound is the closure of the ambient supremum." Neither statement
+mentions the adjoint pair *per se*, and no fixed-point theorem is invoked.
+This makes the development non-circular and reusable for arbitrary closure
+operators (see Section 7).
 
-### 4.2 The adjunction
+### 5.1 Recovering Knaster–Tarski
 
-> **Theorem B (adjunction form)** (`zariski_adjunction`,
-> `zariski_galoisConnection`). *For every ideal $I$ and every set of points
-> $S \subseteq \mathrm{Spec}\,R$,*
-> $$ I \le \mathrm{vanishingIdeal}(S) \iff S \subseteq \mathrm{zeroLocus}(I). $$
-> *Equivalently, $(\mathrm{zeroLocus}, \mathrm{vanishingIdeal})$ is a Galois
-> connection between $\mathrm{Ideal}\,R$ and $(\mathrm{Set}\,(\mathrm{Spec}\,R))^{op}$.*
+The Knaster–Tarski theorem asserts that a monotone self-map $f$ of a complete
+lattice has a complete lattice of fixed points, with extreme fixed points
+$\mathrm{lfp}(f)$ and $\mathrm{gfp}(f)$.
 
-*Proof sketch.* Both sides assert the same membership condition: every
-generator of $I$ lies in every prime of $S$. Unwinding the definitions,
-$I \subseteq \mathrm{vanishingIdeal}(S)$ means $I \subseteq p$ for all $p \in
-S$, which is precisely $S \subseteq \{ p : I \subseteq p\} =
-\mathrm{zeroLocus}(I)$. The order on the spectrum side must be reversed (hence
-$(\cdot)^{op}$), reflecting that $\mathrm{zeroLocus}$ is *antitone*: larger
-ideals cut out smaller loci. $\qquad\square$
+**Corollary 5.6.** The closure operator $\operatorname{cl} = u \circ l$ is a
+monotone self-map of $\alpha$ whose fixed points are exactly the closed
+elements. By Theorem 5.4 these form a complete lattice; thus we recover the
+fixed-point part of Knaster–Tarski for $\operatorname{cl}$. Moreover the
+extreme fixed points have closed forms: the least fixed point of
+$\operatorname{cl}$ is
+$$\mathrm{lfp}(\operatorname{cl}) = u(l(\bot)),$$
+and the greatest fixed point of $\operatorname{ker}$ is
+$$\mathrm{gfp}(\operatorname{ker}) = l(u(\top)).$$
 
-Because $\mathrm{Ideal}\,R$ and $(\mathrm{Set}\,(\mathrm{Spec}\,R))^{op}$ are
-complete lattices, Theorem A applies verbatim: the fixed points of the induced
-closure operator form a complete lattice.
+*Proof sketch.* The fixed points of $\operatorname{cl}$ are by definition the
+closed elements, and Theorem 5.4 makes them a complete lattice. The least
+closed element is the least closed upper bound of the empty family, which by
+Theorem 5.3 is $\operatorname{cl}(\bigvee \varnothing) = \operatorname{cl}(\bot)
+= u(l(\bot))$. Dually for the kernel. ∎
 
-### 4.3 The closure operator is the radical
+---
 
-> **Theorem B (closure form)** (`zariski_closure_eq_radical`). *For every ideal
-> $I$,*
-> $$ \mathrm{vanishingIdeal}(\mathrm{zeroLocus}(I)) = \sqrt{I}, $$
-> *where $\sqrt{I} = \{ r \in R : \exists n,\ r^n \in I\}$ is the radical of $I$.*
+## 6. The bridge to topology
 
-*Proof sketch.* By definition $\mathrm{vanishingIdeal}(\mathrm{zeroLocus}(I))$
-is the intersection of all primes containing $I$. A standard result (the
-prime-avoidance / Krull characterization of the radical) identifies the
-intersection of all primes above $I$ with $\sqrt{I}$. Thus the round trip
-$u \circ l$ on the algebra side is exactly the radical operator. $\qquad\square$
+### 6.1 Closure systems are topologies of closed sets
 
-### 4.4 Fixed points are the radical ideals
+Recall that the closed sets of a topological space are precisely a family of
+subsets that contains the whole space, is closed under arbitrary
+intersections, and is closed under finite unions. Compare with the closed
+elements of a Galois connection on the powerset lattice of a set $X$ (ordered
+by inclusion, with $\bigvee = \bigcup$, $\bigwedge = \bigcap$):
 
-> **Corollary 4.2** (`zariski_fixedPoint_iff_radical`). *For every ideal $I$,*
-> $$ \mathrm{vanishingIdeal}(\mathrm{zeroLocus}(I)) = I \iff I \text{ is radical}. $$
+- the top element $X$ is closed (it is $u(l(X))$ up to the unit/counit, in
+  fact $X$ is always closed because nothing exceeds it);
+- arbitrary intersections of closed sets are closed (Lemma 5.1);
+- finite unions of closed sets are closed *when the closure operator is
+  topological*, i.e. additive on finite joins.
 
-*Proof sketch.* By Theorem B (closure form), the left side equals
-$\sqrt{I} = I$. If $\sqrt{I} = I$ then $I$ is radical by definition; conversely
-a radical ideal equals its own radical. $\qquad\square$
+Thus every Galois connection on a powerset whose closure operator preserves
+finite joins induces a genuine topology, whose closed sets are exactly the
+closed elements, and under which both adjoints are continuous (preimages of
+closed sets are closed, by monotonicity and the triangle identities). More
+generally, the closed elements of *any* Galois connection form a complete
+lattice (Theorem 5.4) that serves as an abstract lattice of "closed sets,"
+giving a point-free topology.
 
-### 4.5 Synthesis
+### 6.2 The canonical example: the Zariski topology on $\operatorname{Spec}(R)$
 
-Combining Theorem A with Theorem B yields the structural payoff: the fixed
-points of the Zariski Galois connection — the **radical ideals** of $R$ — form
-a complete lattice. Through the antitone adjunction, this complete lattice is
-the (order-reversed) lattice of **Zariski-closed subsets** of $\mathrm{Spec}\,R$.
-The Zariski topology's closed sets are thus exhibited not as an ad hoc
-definition but as the fixed-point side of an adjunction, with the radical as the
-closure operator. Meets of radical ideals are ordinary intersections (Lemma
-3.1), while joins are *re-closed*: the join of radical ideals $I, J$ is
-$\sqrt{I + J}$, the radical of their sum (Proposition 3.3), mirroring that the
-union of Zariski-closed sets is closed but the intersection of closed sets on
-the spectrum corresponds to the radical of the sum on the algebra side.
+Let $R$ be a commutative ring and $\operatorname{Spec}(R)$ the set of its
+prime ideals. Order the subsets of $\operatorname{Spec}(R)$ by inclusion and
+the ideals of $R$ by *reverse* inclusion, so that both sides are complete
+lattices in the orientation needed for a monotone connection. Define
+$$u(Y) = \bigcap_{\mathfrak{p}\in Y} \mathfrak{p}
+\quad(\text{the ideal of functions vanishing on } Y), \qquad
+l(I) = V(I) = \{\mathfrak{p} : I \subseteq \mathfrak{p}\}
+\quad(\text{the zero set of } I).$$
+Then $l \dashv u$ is a Galois connection. The closed elements on the
+geometric side are exactly the sets of the form $V(I)$ — the **Zariski-closed
+sets** — and Lemma 5.1 (intersections are closed) together with the algebraic
+identity $V(I) \cup V(J) = V(IJ)$ (finite unions are closed) and
+$V(0) = \operatorname{Spec}(R)$ (the whole space is closed) verifies the
+closed-set axioms. Therefore the **Zariski topology** is *induced* by this
+Galois connection; it is not an extra structure.
 
-## 5. Algorithms
+The closure operator $u \circ l$ sends a set of primes to its Zariski
+closure, and the fixed-point correspondence (Theorem 4.2) restricts to the
+classical dictionary between Zariski-closed subsets and radical ideals
+(Hilbert's Nullstellensatz being the statement that, over an algebraically
+closed field, the closed elements on the algebraic side are precisely the
+radical ideals). This is the precise sense in which the present
+order-theoretic core *bridges* to algebraic geometry: the foundational
+topology of schemes is an instance of Theorem 4.2 and Theorem 5.4.
 
-The theory is effective on computable rings such as $\mathbb{Z}$ and
-$k[x]$ for a computable field $k$. We describe the algorithms realized in the
-accompanying code.
+---
 
-**(A) Closure / radical round trip.** Given a finitely generated ideal $I$ of a
-PID (e.g. $\mathbb{Z}$ or $k[x]$), compute a generator $g$ (gcd of
-generators), factor $g$ into irreducibles, and return the squarefree part; this
-generator generates $\sqrt{I}$. The round trip $I \mapsto \sqrt{I}$ models
-$u \circ l$, and an ideal is a fixed point iff its generator is squarefree
-(Corollary 4.2).
+## 7. Worked examples
 
-**(B) Fixed-point lattice operations.** On radical ideals of a PID represented
-by squarefree generators, the meet (Lemma 3.1) is $\gcd$ — already squarefree —
-and the join (Proposition 3.3) is the *re-closed* sum: $\sqrt{\langle a, b
-\rangle} = \langle \mathrm{sqfree}(\gcd(a,b)) \rangle$ since
-$\langle a,b\rangle = \langle \gcd(a,b)\rangle$ in a PID. The algorithm verifies
-that the naive join (sum) may fail to be a fixed point and that re-closure
-repairs it.
+The abstract theory is best appreciated through small, fully computable
+instances. The three examples below are all realized in the accompanying
+numerical demonstration, where every claimed equality is checked by exhaustive
+enumeration over finite lattices.
 
-**(C) Zariski closure on a sample spectrum.** Given a finite list of prime
-points of $k[x]$ (i.e. roots $a$, standing for the primes $(x-a)$), compute
-$V(\cdot)$ and $\mathrm{vanishingIdeal}(\cdot)$ on a polynomial ideal and verify
-the adjunction $I \le \mathrm{vanishingIdeal}(S) \iff S \subseteq V(I)$
-numerically (Theorem B).
+### 7.1 A divisor-closure closure system
 
-## 6. Applications
+Let $U = \{1,2,3,4,6,12\}$ and order its subsets by inclusion, a complete
+lattice with $\bigvee = \bigcup$ and $\bigwedge = \bigcap$. Define
+$l(X) = \bigcup_{n \in X}\{d \in U : d \mid n\}$ (close under divisors) and let
+$u(Y) = \{n \in Y : \text{every divisor of } n \text{ in } U \text{ lies in } Y\}$.
+Then $l \dashv u$ is a Galois connection on the subset lattice, verified by
+checking the bi-implication on all $2^{6}\cdot 2^{6}$ pairs. The closure
+operator $\operatorname{cl} = u\circ l$ sends a set to its downward divisor
+closure. Its fixed points are exactly the divisor-closed subsets; there are
+ten of them, and they include $\varnothing$, $\{1\}$, $\{1,2\}$, $\{1,3\}$,
+$\{1,2,3\}$, and $\{1,2,4\}$. The extreme fixed points predicted by
+Corollary 5.6 are $\operatorname{lfp}(\operatorname{cl}) = u(l(\bot)) =
+\varnothing$ and $\operatorname{gfp}(\operatorname{ker}) = l(u(\top)) = U$.
+For two closed sets the meet is the ordinary intersection (e.g.
+$\{1\}\wedge\{1,2\} = \{1\}$, closed) and the join is the closure of the union,
+as in Theorem 5.3.
 
-- **Algebraic geometry.** Theorem B is the structural foundation of the
-  ideal–variety dictionary: radical ideals $\leftrightarrow$ Zariski-closed
-  sets. The complete-lattice structure (Theorem A) underlies the lattice of
-  closed subschemes.
-- **Abstract interpretation.** A Galois connection between concrete and
-  abstract program states yields a closure whose fixed points are the
-  *representable* abstract properties; Theorem A guarantees these form a
-  complete lattice, the domain on which static analyzers compute.
-- **Formal concept analysis.** For a relation between objects and attributes,
-  $(\mathrm{extent}, \mathrm{intent})$ is a Galois connection; its fixed points
-  are the *formal concepts*, and Theorem A is the basic theorem that they form a
-  complete lattice (the concept lattice).
-- **Logic.** Consequence operators are closures of Galois connections between
-  theories and their models; fixed points are deductively closed theories.
+### 7.2 A formal context and its concept lattice
 
-## 7. Discussion
+Take objects $G = \{1,2,3,4\}$ and attributes
+$M = \{\text{even},\text{prime},\text{square},\text{gt2}\}$ with the evident
+incidence. The derivation operators $l(X) = \{m : \forall g\in X,\ gIm\}$ and
+$u(Y) = \{g : \forall m\in Y,\ gIm\}$ form the FCA Galois connection. Its
+closed extents (fixed points of $u\circ l$), paired with their intents, are the
+formal concepts:
+$$\varnothing \mid M,\quad \{2\}\mid\{\text{even},\text{prime}\},\quad
+\{3\}\mid\{\text{prime},\text{gt2}\},\quad \{4\}\mid\{\text{even},\text{square},\text{gt2}\},$$
+$$\{1,4\}\mid\{\text{square}\},\quad \{2,3\}\mid\{\text{prime}\},\quad
+\{2,4\}\mid\{\text{even}\},\quad \{3,4\}\mid\{\text{gt2}\},\quad G\mid\varnothing.$$
+The round trip $u(l(X)) = X$ holds for every extent, an instance of
+Theorem 4.2: extents and intents are order-isomorphic.
 
-The two theorems illustrate a methodological point: a single, minimal
-order-theoretic hypothesis (a Galois connection between complete lattices)
-produces both a robust structural conclusion (a complete lattice of fixed
-points) and, upon instantiation, a concrete and historically important
-construction (the Zariski topology via the radical). The "join is the re-closed
-join" phenomenon (Proposition 3.3) is the crux: it explains uniformly why
-unions of varieties are varieties on the geometry side while sums of radical
-ideals must be re-radicalized on the algebra side.
+### 7.3 A finite Zariski caricature
 
-## 8. Future directions
+Let the "points" be $\{0,1,2,3,4\}$ and the "polynomials" be
+$x,\ x-1,\ x(x-1),\ (x-2)(x-3),\ 0$. With $u(S)$ the set of polynomials
+vanishing on $S$ and $l(F)$ the common zero set, the closure
+$\operatorname{cl} = l\circ u$ is the Zariski closure. Of the $2^5 = 32$
+subsets, exactly six are closed: $\varnothing$, $\{0\}$, $\{1\}$, $\{0,1\}$,
+$\{2,3\}$, and the whole space. These are closed under intersection and
+include the total space, confirming the closed-set axioms of Section 6.
 
-See the dedicated future-directions section accompanying this package, which
-proposes (1) bicontinuity and openness of adjoints in Alexandrov topologies,
-(2) a characterization of when the fixed-point lattice is a *frame* (iff the
-closure is a nucleus), (3) uniqueness of the Zariski topology as the topology
-whose closure equals the Galois closure, and (4) a complete-lattice
-anti-isomorphism between radical ideals and Zariski-closed sets.
+## 8. Applications and discussion
 
-## 9. Conclusion
+**Formal concept analysis.** A formal context $(G, M, I)$ — objects $G$,
+attributes $M$, incidence $I \subseteq G \times M$ — induces a Galois
+connection between subsets of $G$ and subsets of $M$ via the derivation
+operators. The closed elements are exactly the *formal concepts*, and
+Theorem 4.2 is the "basic theorem of formal concept analysis," with
+Theorem 5.4 supplying the concept lattice.
 
-We have formalized a Knaster–Tarski theorem for Galois connections (Theorem A:
-the fixed points form a complete lattice, with inherited meets and re-closed
-joins) and shown it specializes to the Zariski topology (Theorem B: the
-$\mathrm{zeroLocus}/\mathrm{vanishingIdeal}$ adjunction has the radical as its
-closure, with radical ideals as fixed points). Together they bridge order
-theory, topology, and commutative algebra through the single unifying lens of
-adjunction.
+**Abstract interpretation.** In static program analysis a Galois connection
+$l \dashv u$ relates concrete and abstract domains; $u \circ l$ measures the
+precision lost by abstraction. The best abstract transformer of a concrete
+function $f$ is $l \circ f \circ u$, and the most precise inductive invariant
+is the least fixed point identified in Corollary 5.6. The non-circular
+fixed-point core proved here is exactly what a verified analyzer needs.
+
+**Logic.** The syntax–semantics adjunction (axiom sets vs. model classes)
+makes closed theories the closed elements; Theorem 4.2 is the Galois duality
+between deductively closed theories and definable model classes.
+
+**Why the non-circular route matters.** Many developments derive completeness
+of the closed lattice as a corollary of Knaster–Tarski applied to
+$u \circ l$. By instead deriving completeness from closure-system structure
+(Remark 5.5), we obtain a result that (i) does not depend on a separate
+fixed-point theorem, (ii) immediately generalizes to arbitrary closure
+operators not arising from an adjunction, and (iii) yields explicit witnesses
+for all infima and suprema.
+
+---
+
+## 9. Future work
+
+A natural refactoring expresses Theorem 5.4 as a corollary of a single
+generic result about closure/interior operators, recovering the Galois case
+by feeding in the connection's closure operator. The closed/coclosed
+correspondence specializes to a fully verified concept lattice in formal
+concept analysis, and to soundness and best-abstraction results in abstract
+interpretation, where the least fixed point $u(l(\bot))$ is the most precise
+invariant. Finally, since a Galois connection is a monotone adjunction
+between posets-as-categories, the entire development lifts to the
+category-theoretic setting where closed elements are algebras for the induced
+monad and coclosed elements are coalgebras for the comonad.
+
+---
+
+## 10. Conclusion
+
+From the single bi-implication $l(a) \le b \iff a \le u(b)$ we have derived,
+constructively and without circular appeal to Knaster–Tarski, the full
+fixed-point theory of a Galois connection: monotonicity, the unit/counit and
+triangle identities, the closure and kernel operators, the order isomorphism
+between closed and coclosed elements, and the completeness of the closed
+lattice with explicit suprema and infima. We then identified the bridge to
+topology, showing that the closed elements always satisfy the closed-set
+axioms and that the Zariski topology on $\operatorname{Spec}(R)$ is the
+canonical instance. The Galois connection thereby unifies order theory,
+fixed-point theory, and topology under one elementary adjunction.
