@@ -1790,7 +1790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce3e5645",
     "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ can be realized as the $(-\\beta)$-expansion of some $x \\in I_\\beta$ if and only if for all $n \\ge 1$, the suffix $x_n x_{n+1} \\dots$ is less than or equal to $d^*(0, -\\beta)$ in the alternating lexicographic order. The alternating lexicographic order $\\preceq$ is defined such that $x \\preceq y$ if either $x=y$ or at the first index $k$ where they differ, $x_k < y_k$ when $k$ is odd and $x_k > y_k$ when $k$ is even.",
     "domains": [
       "Bridges"
@@ -1799,7 +1799,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T05:48:57.058098+00:00",
     "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
   },
@@ -4522,7 +4522,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension Equality Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e536cee",
     "description": "For a fixed finite field \ud835\udd3d_q, integers n, \u03c1\u2208(0,1), and \u03b5>0, let C\u2282\ud835\udd3d_q^n be a random linear subspace of dimension k = \u2308(1 - (1/n)\u00b7log_q |B_\u03c1| + \u03b5)\u00b7n\u2309, where |B_\u03c1| is the volume of a Hamming ball of radius \u03c1n in \ud835\udd3d_q^n. Then with probability 1\u2011o(1) (as n\u2192\u221e) the following holds simultaneously for every centre z\u2208\ud835\udd3d_q^n:  \u2003|C \u2229 B_\u03c1(z)| = (1\u00b1o(1))\u00b7|C|\u00b7|B_\u03c1| / q^n.  This conjecture makes precise the \u201cnearly optimal discrepancy\u201d claim for all translates of a fixed Hamming\u2011ball test and is falsifiable by exhibiting a sequence of n where the failure probability does not tend to zero.",
     "domains": [
       "Computation",
@@ -4532,7 +4532,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T07:44:51.979075+00:00",
     "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
   },
