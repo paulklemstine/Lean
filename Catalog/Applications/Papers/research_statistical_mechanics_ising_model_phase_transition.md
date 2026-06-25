@@ -1,225 +1,466 @@
-# The Self-Dual Critical Point of the Two-Dimensional Ising Model: A Formal Treatment of $\beta_c = \tfrac{1}{2}\log(1+\sqrt{2})$
+# The One-Dimensional Ising Model: Exact Partition Function, Thermodynamic Limit, and the Rigorous Absence of a Phase Transition
 
 **Author:** Aristotle
 
-**Date:** 2026-06-23
+**Date:** 2026-06-25
 
-**Domain:** Probability / Statistical Mechanics
+**Domain:** Statistical Mechanics / Probability
 
 ---
 
 ## Abstract
 
-The two-dimensional Ising model on the square lattice exhibits a continuous phase transition separating a low-temperature ferromagnetically ordered phase from a high-temperature disordered phase. The exact location of this transition is one of the central results of equilibrium statistical mechanics. We give a self-contained, rigorous account of the *critical inverse temperature*
-
-$$\beta_c = \tfrac{1}{2}\log\!\left(1 + \sqrt{2}\right) \approx 0.4406868,$$
-
-equivalently the critical temperature $T_c = 2/\log(1+\sqrt2) \approx 2.2691853$, characterized by the **Kramers–Wannier self-duality fixed-point condition** $\sinh(2\beta) = 1$. We establish four core facts and their supporting algebraic identities: (i) the reciprocal identity $(1+\sqrt2)^{-1} = \sqrt2 - 1$; (ii) the *critical value* statement $\sinh(2\beta_c) = 1$; (iii) the *uniqueness* statement that any positive $\beta$ solving $\sinh(2\beta) = 1$ equals $\beta_c$; and (iv) the *fixed-point characterization* that for $\beta > 0$, the squared condition $\sinh(2\beta)^2 = 1$ holds if and only if $\beta = \beta_c$. We additionally record the reciprocity $T_c \cdot \beta_c = 1$ and the positivity $\beta_c > 0$. The arguments rest only on elementary properties of the hyperbolic sine — its analytic form, strict monotonicity, and sign on the positive axis — illustrating how the deep statistical-mechanical content of the duality is, at the level of the critical point, captured by a single transcendental equation. We frame the result physically (Boltzmann weights, the Peierls argument for the existence of a transition, and the duality map relating high and low temperature), give complete proof sketches, present numerical demonstrations, and outline a program for formalizing the full duality and finite-volume partition function.
+We give a complete, first-principles treatment of the one-dimensional Ising model
+with free (open) boundary conditions, working directly from the sum over spin
+configurations rather than from any postulated transfer-operator formalism. We
+prove an exact closed form for the partition function,
+$Z_n = 2\,(2\cosh(\beta J))^{n}$, for a chain of $n$ bonds at inverse temperature
+$\beta$ and nearest-neighbor coupling $J$. The proof is a genuine induction over
+chain length, built on the observation that summing a single boundary spin yields
+the transfer-matrix eigenvalue $2\cosh(\beta J)$ independently of its neighbor — a
+consequence of the parity of $\cosh$. From the closed form we establish the
+existence of the thermodynamic limit of the free energy density,
+$\frac{1}{n+1}\log Z_n \to \log(2\cosh(\beta J))$, and we prove that this limiting
+free energy density is $C^\infty$ (indeed real-analytic) on all of $\mathbb{R}$.
+Smoothness at every temperature is precisely the rigorous statement that the 1D
+Ising model exhibits **no phase transition** at any positive temperature. We
+contextualize the result against the two-dimensional model, whose Onsager critical
+temperature $T_c = 2J/\big(k_B\ln(1+\sqrt 2)\big)$ marks a genuine singularity,
+and we discuss the transfer-matrix, correlation, and mean-field extensions that
+sharpen the dichotomy between dimensions. All results are stated with full
+mathematical detail and accompanied by proof sketches.
 
 ---
 
 ## 1. Introduction
 
-The Ising model is the canonical lattice model of cooperative phenomena. Introduced by Wilhelm Lenz and studied in one dimension by Ernst Ising, it assigns to each site of a lattice a binary spin $\sigma_i \in \{-1, +1\}$ and weights configurations by an energy that rewards aligned neighbors. Despite its simplicity it captures the essence of a ferromagnetic phase transition and serves as the prototype for the modern theory of critical phenomena and universality.
+The Ising model, introduced by Lenz and studied by Ising in his 1925
+dissertation, is the canonical lattice model of cooperative behavior. Spins
+$\sigma_i \in \{+1, -1\}$ occupy the sites of a graph and interact
+ferromagnetically with their nearest neighbors. Despite its disarming simplicity,
+the model encodes the central drama of statistical mechanics: the competition
+between energetic order and entropic disorder, and the possibility of a sharp
+**phase transition** between an ordered (magnetized) and a disordered
+(paramagnetic) regime.
 
-In two dimensions on the square lattice, the model is exactly solvable. Lars Onsager's 1944 solution computed the free energy in closed form and revealed a logarithmic divergence of the specific heat at a sharp critical temperature. The *location* of that temperature, however, can be pinned down by a more elementary and structurally illuminating route: the duality discovered by Kramers and Wannier in 1941, which relates the model at inverse temperature $\beta$ to the model at a *dual* inverse temperature $\beta^*$ with hot and cold interchanged. Granting that the model has a single transition, that transition must occur at the unique *self-dual* point, and the self-duality condition reduces to the transcendental equation
+A phase transition is identified mathematically with a loss of analyticity of the
+free energy density in the thermodynamic limit. The fundamental question for any
+Ising geometry is therefore: *is the limiting free energy density a smooth
+function of temperature, or does it develop a singularity?*
 
-$$\sinh(2\beta) = 1. \tag{$\star$}$$
+In one dimension the answer is negative — there is no transition at positive
+temperature — a fact discovered by Ising himself. In two dimensions the answer is
+affirmative, as Onsager's celebrated 1944 exact solution showed, with a transition
+at $T_c = 2J/\big(k_B\ln(1+\sqrt 2)\big)$. The gulf between these two outcomes,
+produced by the same local interaction on lattices differing only in
+dimension, is one of the most instructive phenomena in mathematical physics.
 
-This paper provides a rigorous, self-contained treatment of the constant defined by $(\star)$. We isolate the purely analytic core of the argument — that $(\star)$ has a unique solution, given in closed form by $\beta_c = \tfrac12\log(1+\sqrt2)$ — and prove it, along with the natural variants involving the squared duality condition and the critical temperature. We are deliberate about which facts are statistical-mechanical inputs (the existence and uniqueness of the phase transition, and the form of the duality relation) and which are theorems we prove here (the solution and characterization of $(\star)$).
+This paper provides a rigorous, self-contained derivation of the 1D result. Our
+emphasis is on deriving everything from the raw configuration sum, so that the
+transfer-matrix eigenvalue $2\cosh(\beta J)$ *emerges* from the combinatorics
+rather than being imposed. We then read off the no-transition theorem as a
+statement about the smoothness of $\log(2\cosh(\beta J))$.
 
-### 1.1 Notation and conventions
+### Summary of contributions
 
-We work over the real numbers $\mathbb{R}$. The hyperbolic sine is
-
-$$\sinh(x) = \frac{e^x - e^{-x}}{2},$$
-
-with the standard logarithm $\log$ and principal square root $\sqrt{\cdot}$. We adopt natural units in which the nearest-neighbor coupling $J$ and Boltzmann constant $k_B$ are set to $1$, so that $\beta = 1/T$. All "temperatures" are dimensionless.
-
----
-
-## 2. Physical setting
-
-### 2.1 The model
-
-Let $\Lambda$ be a finite subset of the square lattice $\mathbb{Z}^2$ (for definiteness, an $m \times n$ torus). A *configuration* is a map $\sigma : \Lambda \to \{-1, +1\}$. The (ferromagnetic, zero-field) **Hamiltonian** is
-
-$$H(\sigma) = -\sum_{\langle i, j\rangle} \sigma_i \sigma_j,$$
-
-where $\langle i, j \rangle$ ranges over nearest-neighbor pairs. Aligned pairs contribute $-1$ (favorable), anti-aligned pairs contribute $+1$.
-
-The **Gibbs (Boltzmann) measure** at inverse temperature $\beta > 0$ assigns to each configuration the probability
-
-$$P_\beta(\sigma) = \frac{1}{Z(\beta)}\, e^{-\beta H(\sigma)}, \qquad Z(\beta) = \sum_{\sigma} e^{-\beta H(\sigma)},$$
-
-with $Z(\beta)$ the **partition function**. The order parameter is the magnetization $m(\beta) = \lim_{\Lambda \uparrow \mathbb{Z}^2} \langle \sigma_0 \rangle_\beta$ (with $+$ boundary conditions); it is positive in the ordered phase and zero in the disordered phase.
-
-### 2.2 Existence of a transition: the Peierls argument
-
-That the 2D model has a genuinely ordered phase at large $\beta$ is the content of the Peierls argument. A configuration deviating from the all-$+$ ground state is organized into **contours**: closed domain walls on the dual lattice separating $+$ and $-$ regions. A contour of length $L$ is suppressed by a Boltzmann factor $e^{-2\beta L}$, while the number of contours of length $L$ surrounding a fixed site grows only like $C^L$ for a fixed constant $C$. For $\beta$ large enough that $e^{-2\beta} C < 1$, the summed probability that a given site is encircled by some contour is strictly less than $\tfrac12$, so $\langle \sigma_0 \rangle_\beta > 0$: spontaneous magnetization survives. This establishes the *existence* of a low-temperature ordered phase, hence of a critical $\beta_c$ separating it from the high-temperature disordered phase. (By contrast, in one dimension the analogous contours are point defects whose entropy always defeats their energy cost, and no transition occurs.)
-
-### 2.3 Kramers–Wannier duality and the self-dual point
-
-The high-temperature expansion of $Z(\beta)$ organizes the partition function as a sum over *even subgraphs* (closed loops) of $\Lambda$, weighted by powers of $\tanh\beta$. The low-temperature expansion organizes it as a sum over *contours* on the dual lattice, weighted by powers of $e^{-2\beta}$. On the square lattice these two expansions have the same combinatorial structure, and matching them yields the **duality relation** between $\beta$ and a dual inverse temperature $\beta^*$,
-
-$$\sinh(2\beta)\,\sinh(2\beta^*) = 1, \tag{KW}$$
-
-under which $Z(\beta)$ and $Z(\beta^*)$ are proportional up to an explicit smooth prefactor. The map $\beta \mapsto \beta^*$ is a strictly order-reversing involution of $(0,\infty)$: large $\beta$ (cold, ordered) corresponds to small $\beta^*$ (hot, disordered).
-
-Because the smooth prefactor cannot create a singularity, any non-analyticity of the free energy at $\beta$ must be mirrored at $\beta^*$. If the model has exactly one transition, it cannot be split between two distinct dual temperatures; it must sit at the unique **self-dual** point $\beta = \beta^*$. Setting $\beta^* = \beta$ in (KW) gives
-
-$$\sinh(2\beta)^2 = 1, \qquad\text{i.e. for } \beta > 0,\quad \sinh(2\beta) = 1, \tag{$\star$}$$
-
-the equation whose solution is the subject of this paper.
-
-> **Scope.** The existence of a single transition and the derivation of (KW) are statistical-mechanical inputs (sketched above and listed as future formalization targets in §8). The contribution formalized here is the rigorous solution and characterization of the self-dual equation $(\star)$ and the closed form of the resulting constant.
+- **Theorem (exact partition function).** $Z_n = 2\,(2\cosh(\beta J))^n$, proved
+  by induction on chain length (`Zfree_closed`).
+- **Lemma (transfer recursion).** $Z_{n+1} = (2\cosh(\beta J))\, Z_n$
+  (`Zfree_succ`), resting on the boundary-spin sum lemma `sum_bool_exp`.
+- **Theorem (thermodynamic limit).**
+  $\frac{1}{n+1}\log Z_n \to \log(2\cosh(\beta J))$ (`free_energy_density_limit`).
+- **Theorem (no phase transition).** $\beta \mapsto \log(2\cosh(\beta J))$ is
+  $C^\infty$ on all of $\mathbb{R}$ (`free_energy_smooth`).
 
 ---
 
-## 3. Definitions
+## 2. Definitions and setup
 
-We fix the two protagonists.
+### 2.1 Spins and configurations
 
-**Definition 3.1 (Critical inverse temperature).**
-$$\beta_c := \tfrac{1}{2}\log\!\left(1 + \sqrt{2}\right).$$
+We index a chain of $n+1$ sites by $\{0, 1, \dots, n\}$, formally the finite type
+$\mathrm{Fin}(n+1)$. To exploit the two-valued nature of a spin we represent a
+configuration as a Boolean assignment
 
-**Definition 3.2 (Critical temperature).**
-$$T_c := \frac{2}{\log\!\left(1 + \sqrt{2}\right)}.$$
+$$s : \mathrm{Fin}(n+1) \to \{\mathrm{true}, \mathrm{false}\},$$
 
-Numerically, $\log(1+\sqrt2) = \log(2.41421356\ldots) = 0.88137358\ldots$, so $\beta_c = 0.44068679\ldots$ and $T_c = 2.26918531\ldots$.
+and convert to physical spin values via the **spin map**
 
----
+$$\mathrm{sp}(b) = \begin{cases} +1 & b = \mathrm{true},\\ -1 & b = \mathrm{false}.\end{cases}$$
 
-## 4. Main results
+There are exactly $2^{n+1}$ configurations.
 
-We state the results in the order in which they build on one another. Each is accompanied by a proof sketch; full details are elementary and appear in §5.
+### 2.2 Energy, Boltzmann weight, and partition function
 
-**Lemma 4.1 (Reciprocal identity).**
-$$(1 + \sqrt{2})^{-1} = \sqrt{2} - 1.$$
+With inverse temperature $\beta$ and ferromagnetic coupling $J$, the
+nearest-neighbor, zero-field energy of a configuration is
+$E(s) = -J\sum_{i=0}^{n-1}\mathrm{sp}(s_i)\,\mathrm{sp}(s_{i+1})$, and its
+Boltzmann weight $e^{-\beta E(s)}$ factorizes over the $n$ bonds of the open chain:
 
-*Sketch.* Since $\sqrt2\cdot\sqrt2 = 2$, we have $(\sqrt2 - 1)(1 + \sqrt2) = \sqrt2 + 2 - 1 - \sqrt2 = 1$. Hence $\sqrt2 - 1$ is the multiplicative inverse of $1 + \sqrt2$. $\qquad\blacksquare$
+$$W(s) = \prod_{i=0}^{n-1} \exp\!\big(\beta J \,\mathrm{sp}(s_i)\,\mathrm{sp}(s_{i+1})\big).$$
 
-**Theorem 4.2 (Critical value: the self-dual point solves $(\star)$).**
-$$\sinh(2\beta_c) = 1.$$
+The **free-boundary partition function** is the sum of these weights over all
+configurations:
 
-*Sketch.* By Definition 3.1, $2\beta_c = \log(1+\sqrt2)$. Using the identity $\sinh(\log x) = \tfrac12(x - x^{-1})$ valid for $x > 0$ (which follows from $e^{\log x} = x$ and $e^{-\log x} = x^{-1}$), with $x = 1 + \sqrt2 > 0$,
+$$\boxed{\;Z_n(\beta, J) \;=\; \sum_{s : \mathrm{Fin}(n+1) \to \mathrm{Bool}}\;
+   \prod_{i : \mathrm{Fin}\,n} \exp\!\big(\beta J\, \mathrm{sp}(s_{i})\,\mathrm{sp}(s_{i+1})\big).\;}$$
 
-$$\sinh(2\beta_c) = \tfrac12\Big( (1+\sqrt2) - (1+\sqrt2)^{-1}\Big) = \tfrac12\Big( (1+\sqrt2) - (\sqrt2 - 1)\Big) = \tfrac12 \cdot 2 = 1,$$
+Here a chain of $n+1$ sites has $n$ bonds; the product runs over the $n$ edges and
+the sum runs over all $2^{n+1}$ Boolean assignments. We write $Z_n$ for
+$Z_n(\beta, J)$ when the parameters are clear.
 
-where the middle step is Lemma 4.1. $\qquad\blacksquare$
+### 2.3 Free energy density
 
-**Theorem 4.3 (Uniqueness).** If $\beta > 0$ and $\sinh(2\beta) = 1$, then $\beta = \beta_c$.
+The **free energy density** (free energy per site, in units absorbing $-1/\beta$)
+is
 
-*Sketch.* By Theorem 4.2, $\sinh(2\beta) = 1 = \sinh(2\beta_c)$. The function $\sinh$ is strictly increasing on all of $\mathbb{R}$ (its derivative $\cosh \geq 1 > 0$), hence injective; therefore $2\beta = 2\beta_c$, giving $\beta = \beta_c$. (Notably the hypothesis $\beta > 0$ is not needed for the conclusion, since injectivity is global; we retain it because it is the physically meaningful regime.) $\qquad\blacksquare$
+$$f_n(\beta, J) = \frac{1}{n+1}\log Z_n(\beta, J),$$
 
-**Theorem 4.4 (Positivity).** $\beta_c > 0$.
-
-*Sketch.* Since $\sqrt2 > 0$, we have $1 + \sqrt2 > 1$, and the logarithm is positive on $(1, \infty)$, so $\log(1+\sqrt2) > 0$. Multiplying by $\tfrac12 > 0$ preserves positivity. $\qquad\blacksquare$
-
-**Theorem 4.5 (Reciprocity of $T_c$ and $\beta_c$).**
-$$T_c \cdot \beta_c = 1.$$
-
-*Sketch.* Write $L = \log(1+\sqrt2)$, which is nonzero by Theorem 4.4. Then $T_c \cdot \beta_c = \frac{2}{L}\cdot\frac{L}{2} = 1$. $\qquad\blacksquare$
-
-**Theorem 4.6 (Self-duality fixed-point characterization).** For $\beta > 0$,
-$$\sinh(2\beta)^2 = 1 \iff \beta = \beta_c.$$
-
-*Sketch.* ($\Leftarrow$) If $\beta = \beta_c$ then $\sinh(2\beta) = 1$ by Theorem 4.2, so its square is $1$. ($\Rightarrow$) For $\beta > 0$ we have $2\beta > 0$, and $\sinh$ is strictly positive on $(0,\infty)$ (it vanishes at $0$ and is increasing), so $\sinh(2\beta) > 0$. From $\sinh(2\beta)^2 = 1$ and positivity we get $\sinh(2\beta) = 1$ (the root $-1$ is excluded), and Theorem 4.3 yields $\beta = \beta_c$. $\qquad\blacksquare$
-
-Theorem 4.6 is the precise sense in which "critical" and "self-dual" coincide: among physical inverse temperatures, the self-duality equation $(\star)$ singles out exactly one point, and it is $\beta_c$.
+and we study its limit as $n \to \infty$.
 
 ---
 
-## 5. Proofs in detail
+## 3. The transfer-matrix mechanism from first principles
 
-### 5.1 The reciprocal identity (Lemma 4.1)
+The technical heart of the exact solution is that a single boundary spin can be
+summed out to produce a factor independent of the neighboring spin.
 
-We claim $(\sqrt2 - 1)(1 + \sqrt2) = 1$. Expanding,
-$$(\sqrt2 - 1)(1 + \sqrt2) = \sqrt2 \cdot 1 + \sqrt2 \cdot \sqrt2 - 1 - \sqrt2 = \sqrt2 + 2 - 1 - \sqrt2 = 1,$$
-using $\sqrt2 \cdot \sqrt2 = 2$. A real number with a left inverse in a field is invertible with that inverse, so $(1 + \sqrt2)^{-1} = \sqrt2 - 1$. $\blacksquare$
+### 3.1 Parity of the hyperbolic cosine
 
-### 5.2 The critical value (Theorem 4.2)
+**Lemma 1 (`cosh_mul_sp`).** *For every $c \in \mathbb{R}$ and every spin
+$b \in \{\mathrm{true}, \mathrm{false}\}$,*
+$$\cosh(c \cdot \mathrm{sp}(b)) = \cosh(c).$$
 
-From Definition 3.1, $2\beta_c = 2 \cdot \tfrac12 \log(1+\sqrt2) = \log(1+\sqrt2)$. Put $x = 1 + \sqrt2$; then $x > 0$, so $\log x$ is defined and
-$$\sinh(\log x) = \frac{e^{\log x} - e^{-\log x}}{2} = \frac{x - x^{-1}}{2}.$$
-By Lemma 4.1, $x^{-1} = \sqrt2 - 1$, hence
-$$\sinh(2\beta_c) = \frac{(1+\sqrt2) - (\sqrt2 - 1)}{2} = \frac{2}{2} = 1. \qquad \blacksquare$$
+*Proof sketch.* If $b = \mathrm{true}$ then $\mathrm{sp}(b) = 1$ and the claim is
+trivial. If $b = \mathrm{false}$ then $\mathrm{sp}(b) = -1$ and the claim is the
+evenness of $\cosh$: $\cosh(-c) = \cosh(c)$. $\qquad\blacksquare$
 
-### 5.3 Uniqueness (Theorem 4.3)
+### 3.2 Summing a boundary spin
 
-The derivative of $\sinh$ is $\cosh$, and $\cosh(x) \geq 1$ for all $x$, so $\sinh$ is strictly increasing and therefore injective on $\mathbb{R}$. Given $\sinh(2\beta) = 1$, Theorem 4.2 lets us write $\sinh(2\beta) = \sinh(2\beta_c)$. Injectivity gives $2\beta = 2\beta_c$, so $\beta = \beta_c$. $\blacksquare$
+**Lemma 2 (`sum_bool_exp`).** *For every $c \in \mathbb{R}$ and every fixed
+neighbor spin $b' \in \{\mathrm{true}, \mathrm{false}\}$,*
+$$\sum_{b \in \{\mathrm{true}, \mathrm{false}\}} \exp\!\big(c\, \mathrm{sp}(b)\, \mathrm{sp}(b')\big) = 2\cosh(c).$$
+*In particular the right-hand side does not depend on $b'$.*
 
-### 5.4 Positivity and reciprocity (Theorems 4.4, 4.5)
+*Proof sketch.* Expand the two-element Boolean sum and use
+$\cosh(x) = \tfrac12(e^x + e^{-x})$. With $b'$ fixed, the two terms are
+$e^{c\,\mathrm{sp}(b')}$ and $e^{-c\,\mathrm{sp}(b')}$, whose sum is
+$2\cosh(c\,\mathrm{sp}(b')) = 2\cosh(c)$ by Lemma 1. Both cases
+$b' = \mathrm{true}, \mathrm{false}$ give the same value, confirming independence
+of the neighbor. $\qquad\blacksquare$
 
-Because $\sqrt2 > 0$ we have $1 + \sqrt2 > 1$; the logarithm is strictly increasing with $\log 1 = 0$, so $\log(1+\sqrt2) > 0$, and $\beta_c = \tfrac12\log(1+\sqrt2) > 0$. For reciprocity, set $L = \log(1+\sqrt2) \neq 0$; then $T_c\,\beta_c = (2/L)(L/2) = 1$. $\blacksquare$
+This independence is the precise reason the recursion has a *constant* multiplier
+and hence the model is exactly solvable.
 
-### 5.5 Fixed-point characterization (Theorem 4.6)
+### 3.3 Factorization of the weight under prepending a spin
 
-($\Leftarrow$) Immediate from Theorem 4.2 by squaring. ($\Rightarrow$) Assume $\beta > 0$ and $\sinh(2\beta)^2 = 1$. Since $2\beta > 0$ and $\sinh$ is positive on the positive axis, $s := \sinh(2\beta) > 0$. From $s^2 = 1$ and $s > 0$ we conclude $s = 1$. Theorem 4.3 then gives $\beta = \beta_c$. $\blacksquare$
+To run an induction that peels off site $0$, we record how the Boltzmann weight
+behaves when a spin $b$ is prepended to a configuration $t$ of the shorter chain.
+Write $\mathrm{cons}(b, t)$ for the configuration on $\mathrm{Fin}(n+2)$ obtained
+by placing $b$ at site $0$ and shifting $t$ into sites $1, \dots, n+1$.
+
+**Lemma 3 (`weight_cons`).** *For all $\beta, J$, all $n$, all spins $b$, and all
+$t : \mathrm{Fin}(n+1) \to \mathrm{Bool}$,*
+$$\prod_{i : \mathrm{Fin}(n+1)} \exp\!\big(\beta J\,\mathrm{sp}(\mathrm{cons}(b,t)_i)\,\mathrm{sp}(\mathrm{cons}(b,t)_{i+1})\big)
+= \exp\!\big(\beta J\,\mathrm{sp}(b)\,\mathrm{sp}(t_0)\big)\;\prod_{i : \mathrm{Fin}\,n} \exp\!\big(\beta J\,\mathrm{sp}(t_i)\,\mathrm{sp}(t_{i+1})\big).$$
+
+*Proof sketch.* Split the product over $\mathrm{Fin}(n+2)$ edges into the first
+edge (between sites $0$ and $1$) and the rest. The first edge connects the new
+spin $b$ with $t_0$, giving the factor $\exp(\beta J\,\mathrm{sp}(b)\,\mathrm{sp}(t_0))$.
+The remaining edges, after re-indexing, are exactly the $n$ bonds of $t$, because
+$\mathrm{cons}(b,t)$ agrees with $t$ on the shifted sites. $\qquad\blacksquare$
+
+### 3.4 The transfer recursion
+
+**Lemma 4 (`Zfree_succ`).** *For all $\beta, J$ and all $n$,*
+$$Z_{n+1}(\beta, J) = \big(2\cosh(\beta J)\big)\, Z_n(\beta, J).$$
+
+*Proof sketch.* Reindex the configuration sum over $\mathrm{Fin}(n+2)$ by the
+equivalence $\mathrm{Bool} \times (\mathrm{Fin}(n+1) \to \mathrm{Bool}) \cong
+(\mathrm{Fin}(n+2) \to \mathrm{Bool})$ that splits off the first spin $b$ from the
+tail $t$. Apply Lemma 3 to factor the weight as
+$\exp(\beta J\,\mathrm{sp}(b)\,\mathrm{sp}(t_0))\cdot W(t)$. Summing over $b$ first,
+Lemma 2 turns the leading factor into the constant $2\cosh(\beta J)$, which pulls
+out of the sum over $t$, leaving exactly $Z_n$. $\qquad\blacksquare$
 
 ---
 
-## 6. Algorithms
+## 4. Exact partition function and positivity
 
-The constant $\beta_c$ and the surrounding structure are eminently computable. We record three algorithms used in the demonstrations of §7.
+### 4.1 Base case
 
-### 6.1 Closed-form evaluation of $\beta_c$ and $T_c$
+**Lemma 5 (`Zfree_zero`).** $Z_0(\beta, J) = 2.$
 
-The most direct computation evaluates the closed forms of Definitions 3.1–3.2 in floating point and verifies the defining identity $\sinh(2\beta_c) = 1$ to machine precision. Complexity is $O(1)$.
+*Proof sketch.* A chain of zero bonds is a single site with two spin states and an
+empty product of bond weights (each empty product equals $1$); summing over the
+two states gives $2$. $\qquad\blacksquare$
 
-### 6.2 Root-finding cross-check via bisection
+### 4.2 Closed form
 
-To corroborate the closed form *without* using it, one can solve $(\star)$ numerically. The function $f(\beta) = \sinh(2\beta) - 1$ is continuous and strictly increasing, with $f(0) = -1 < 0$ and $f(1) = \sinh(2) - 1 > 0$, so a unique root lies in $(0,1)$. Bisection converges linearly, halving the bracket each step; $n$ steps yield an absolute error below $2^{-n}$. The recovered root agrees with $\tfrac12\log(1+\sqrt2)$.
+**Theorem 6 (`Zfree_closed`).** *For all $\beta, J \in \mathbb{R}$ and all
+$n \in \mathbb{N}$,*
+$$\boxed{\,Z_n(\beta, J) = 2\,\big(2\cosh(\beta J)\big)^n.\,}$$
 
-### 6.3 Duality involution and its fixed point
+*Proof sketch.* Induct on $n$. The base case $n = 0$ is Lemma 5:
+$Z_0 = 2 = 2\,(2\cosh(\beta J))^0$. For the inductive step, Lemma 4 gives
+$Z_{n+1} = (2\cosh(\beta J))\,Z_n = (2\cosh(\beta J))\cdot 2(2\cosh(\beta J))^n
+= 2(2\cosh(\beta J))^{n+1}$. $\qquad\blacksquare$
 
-Given the relation (KW), the dual map is $\beta^*(\beta) = \tfrac12\,\operatorname{arcsinh}\!\big(1/\sinh(2\beta)\big)$. Iterating or directly solving $\beta^*(\beta) = \beta$ recovers the self-dual point. Verifying that $\beta^*(\beta^*(\beta)) = \beta$ (involutivity) and that $\beta^*(\beta_c) = \beta_c$ (the fixed point) provides an independent structural check.
+This single identity replaces a sum over $2^{n+1}$ terms by one elementary
+expression, valid at every temperature and every chain length.
+
+### 4.3 Positivity
+
+**Theorem 7 (`Zfree_pos`).** *For all $\beta, J$ and all $n$,
+$Z_n(\beta, J) > 0$.*
+
+*Proof sketch.* By Theorem 6, $Z_n = 2(2\cosh(\beta J))^n$. Since $\cosh > 0$
+everywhere, the base $2\cosh(\beta J)$ is positive, its $n$-th power is positive,
+and twice it is positive. (Equivalently, the partition function is a finite sum of
+strictly positive Boltzmann weights.) Positivity is what makes $\log Z_n$
+well-defined for every parameter value. $\qquad\blacksquare$
 
 ---
 
-## 7. Numerical demonstrations
+## 5. The thermodynamic limit
 
-The accompanying `demo.py` performs the following, all to high precision:
+**Theorem 8 (`free_energy_density_limit`).** *For all $\beta, J \in \mathbb{R}$,*
+$$\lim_{n\to\infty} \frac{1}{n+1}\log Z_n(\beta, J) = \log\!\big(2\cosh(\beta J)\big).$$
 
-1. **Closed-form values.** Computes $\beta_c = 0.4406867935\ldots$ and $T_c = 2.2691853142\ldots$ and confirms $\beta_c = 1/T_c$ (Theorem 4.5).
-2. **The defining identity.** Evaluates $\sinh(2\beta_c)$ and finds $1$ to within machine epsilon (Theorem 4.2), and $\sinh(2\beta_c)^2 = 1$ (Theorem 4.6).
-3. **Reciprocal identity.** Verifies $(1+\sqrt2)^{-1} = \sqrt2 - 1$ numerically (Lemma 4.1).
-4. **Uniqueness by bisection.** Solves $\sinh(2\beta) = 1$ on $(0,1)$ by bisection and matches the closed form (Theorems 4.3, 6.2).
-5. **Duality involution.** Confirms $\beta^* \circ \beta^* = \mathrm{id}$ on samples and that $\beta_c$ is the unique fixed point (§6.3).
-6. **Monotone uniqueness.** Tabulates $\sinh(2\beta)$ to exhibit strict monotonicity, illustrating why the solution is unique.
+*Proof sketch.* Set $L = \log(2\cosh(\beta J))$, which is well-defined because
+$2\cosh(\beta J) > 0$. Using Theorem 6 and $\log(ab) = \log a + \log b$,
+$\log(x^n) = n\log x$, we decompose, for each $n$,
+$$\frac{1}{n+1}\log Z_n = \frac{1}{n+1}\log 2 + \frac{n}{n+1}\,L.$$
+As $n \to \infty$, the first term tends to $0$ (it is $\log 2$ times $1/(n+1) \to 0$)
+and the coefficient $n/(n+1) \to 1$, so the second term tends to $L$. Summing the
+two limits gives $L$. $\qquad\blacksquare$
+
+The boundary term $\frac{1}{n+1}\log 2$ is the only finite-size correction; it
+encodes the leftover, weakly-constrained boundary spin and is irrelevant in the
+bulk. The limit $\log(2\cosh(\beta J))$ is the genuine bulk free energy density of
+the infinite chain.
 
 ---
 
-## 8. Applications and significance
+## 6. The main result: absence of a phase transition
 
-**Universality and benchmarking.** The 2D Ising critical point is the reference standard for the study of critical phenomena. Its exact value calibrates Monte Carlo simulations, finite-size scaling analyses, and series-expansion estimates; any numerical method for the model is validated against $T_c = 2.2691853\ldots$.
+**Theorem 9 (`free_energy_smooth`).** *For every fixed $J \in \mathbb{R}$, the
+limiting free energy density*
+$$f(\beta) = \log\!\big(2\cosh(\beta J)\big)$$
+*is $C^\infty$ (infinitely differentiable, indeed real-analytic) on all of
+$\mathbb{R}$.*
 
-**Mapping to other systems.** Through the lattice-gas correspondence ($\sigma_i = 2n_i - 1$ with occupation $n_i \in \{0,1\}$), the Ising transition is the same critical point as the liquid–vapor transition and as phase separation in binary alloys. The single constant governs the onset of order in this entire universality class.
+*Proof sketch.* The map $\beta \mapsto \beta J$ is linear, hence smooth.
+Composition with $\cosh$, which is smooth (real-analytic) everywhere, gives a
+smooth function $\beta \mapsto \cosh(\beta J)$. This function is strictly positive
+everywhere (Lemma 1 region: $\cosh > 0$), so it stays inside the domain where
+$\log$ is smooth. Composition of smooth maps is smooth; multiplying the argument
+by the constant $2$ does not affect smoothness. Therefore
+$f(\beta) = \log(2\cosh(\beta J))$ is $C^\infty$ on all of $\mathbb{R}$.
+$\qquad\blacksquare$
 
-**Dualities as a paradigm.** Kramers–Wannier duality is the historical seed of a vast modern subject. Order/disorder duality, the recognition that a self-dual point pins a transition, and the general philosophy of relating a theory at strong coupling to a (possibly different) theory at weak coupling all trace to this example. The self-dual equation $(\star)$ is the simplest nontrivial instance of "the critical point is the fixed point of a duality."
+### 6.1 Interpretation
+
+A phase transition is, by definition, a point of non-analyticity of the
+thermodynamic free energy density as a function of an external control parameter,
+here the inverse temperature $\beta$. Theorem 9 asserts that $f(\beta)$ has **no
+such point**: it is smooth, with all derivatives existing, for every real $\beta$,
+in particular for every positive temperature $T = 1/(k_B\beta) > 0$. Hence the 1D
+Ising model has no phase transition at any positive temperature.
+
+The mechanism is transparent: the dominant transfer eigenvalue $2\cosh(\beta J)$
+is a strictly positive, real-analytic function of $\beta$ that never vanishes and
+never collides with a competing eigenvalue at finite $\beta$. The logarithm of
+such a function is analytic, so the free energy cannot be singular. A genuine
+transition would require the dominant eigenvalue to become degenerate (cross
+another eigenvalue) at some finite $\beta$; in 1D nearest-neighbor with free
+boundaries this never happens.
+
+### 6.2 Physical reading via domain walls
+
+The smoothness can be understood physically through the cost of disorder. Starting
+from a fully ordered chain, a domain of flipped spins is bounded in 1D by exactly
+two unhappy bonds, an energy cost of $4J$ *independent of the domain size*. There
+are $\sim n$ places to insert such a wall, so the entropic gain ($\sim \log n$)
+always overwhelms the fixed energy cost at any positive temperature. Order is
+therefore destroyed for all $T > 0$, consistent with the analytic free energy.
+
+---
+
+## 7. Algorithms
+
+The exact solution yields trivial, numerically stable algorithms; we record them
+for completeness and for the accompanying demonstrations.
+
+### 7.1 Exact partition function (closed form)
+
+**Input:** $\beta, J \in \mathbb{R}$, $n \in \mathbb{N}$.
+**Output:** $Z_n = 2(2\cosh(\beta J))^n$.
+
+```
+function Z_closed(beta, J, n):
+    return 2 * (2 * cosh(beta * J)) ** n
+```
+
+Complexity: $O(1)$ arithmetic operations (plus the cost of one $\cosh$ and one
+power). This is the entire computational content of the model.
+
+### 7.2 Brute-force partition function (validation)
+
+**Input:** $\beta, J$, $n$.
+**Output:** $Z_n$ by direct summation over all $2^{n+1}$ configurations.
+
+```
+function Z_bruteforce(beta, J, n):
+    total = 0
+    for each s in {-1, +1}^(n+1):
+        w = 1
+        for i in 0 .. n-1:
+            w = w * exp(beta * J * s[i] * s[i+1])
+        total = total + w
+    return total
+```
+
+Complexity: $O(n \cdot 2^{n+1})$. Used only to validate the closed form on small
+chains; it agrees with $Z_{\text{closed}}$ to machine precision.
+
+### 7.3 Transfer-matrix evaluation
+
+**Input:** $\beta, J$, $n$.
+**Output:** $Z_n$ via the $2\times 2$ transfer matrix
+$T = \begin{pmatrix} e^{\beta J} & e^{-\beta J}\\ e^{-\beta J} & e^{\beta J}\end{pmatrix}$.
+
+```
+function Z_transfer(beta, J, n):
+    T = [[exp(bJ), exp(-bJ)], [exp(-bJ), exp(bJ)]]
+    v = [1, 1]                      # free boundary: sum over end spins
+    for k in 1 .. n:
+        v = T @ v
+    return sum(v)
+```
+
+The eigenvalues of $T$ are $\lambda_+ = 2\cosh(\beta J)$ and
+$\lambda_- = 2\sinh(\beta J)$; the free-boundary sum reproduces
+$Z_n = 2(2\cosh(\beta J))^n$, while the periodic chain gives
+$Z^{\text{per}}_n = \lambda_+^n + \lambda_-^n = (2\cosh\beta J)^n + (2\sinh\beta J)^n$.
+
+---
+
+## 8. Applications and context
+
+### 8.1 The two-dimensional contrast: Onsager
+
+The 1D result acquires its full meaning only beside the 2D one. On the square
+lattice, Onsager (1944) showed that the free energy density develops a genuine
+singularity at the critical temperature
+
+$$T_c = \frac{2J}{k_B \ln(1+\sqrt 2)} \approx \frac{2.269\,J}{k_B},$$
+
+where the heat capacity diverges logarithmically and spontaneous magnetization
+appears below $T_c$. The Peierls argument explains *why*: in 2D the boundary of a
+disordered droplet is a closed contour whose energy cost grows with its perimeter,
+so large droplets are exponentially suppressed and long-range order survives at low
+temperature. The decisive difference from 1D is purely geometric — the cost of a
+domain wall scales with system size in 2D but is constant in 1D.
+
+### 8.2 Correlations and correlation length
+
+For the open 1D chain the two-point function is exactly
+$\langle \sigma_0 \sigma_r \rangle = (\tanh\beta J)^r$, so connected correlations
+decay exponentially with rate $-\log\tanh\beta J$. The associated correlation
+length $\xi(\beta) = 1/\log(\coth\beta J)$ is finite for all $\beta < \infty$ and
+diverges only as $\beta \to \infty$ ($T \to 0$): criticality in 1D lives at zero
+temperature.
+
+### 8.3 Methodological reach
+
+The transfer-matrix principle — replacing an extended sum by repeated
+multiplication by a small operator — is ubiquitous: it is the discrete ancestor of
+the Feynman path integral, the engine of the forward–backward algorithm for hidden
+Markov models, and a standard tool in the numerical renormalization group and
+tensor-network methods. The 1D Ising chain is the cleanest place to see the idea in
+its entirety.
 
 ---
 
 ## 9. Discussion
 
-The treatment here deliberately separates two layers. The *physical* layer — existence and uniqueness of the transition (Peierls) and the duality relation (KW) — supplies the reason the critical point coincides with the self-dual point. The *analytic* layer — solving $(\star)$ — is what we have made fully rigorous: the closed form $\beta_c = \tfrac12\log(1+\sqrt2)$, its uniqueness via strict monotonicity of $\sinh$, the positivity of $\sinh$ on $(0,\infty)$ that promotes $\sinh^2 = 1$ to $\sinh = 1$, and the reciprocity $T_c \beta_c = 1$. A pleasant feature is how little machinery the analytic layer requires: the entire qualitative picture of the duality (it swaps hot and cold and has a single self-dual point) is encoded in three elementary properties of $\sinh$ on $(0,\infty)$ — positivity, strict monotonicity, and surjectivity onto $(0,\infty)$ — so the constant can be characterized with no statistical mechanics at all.
+The results above form a tight logical package. The closed form (Theorem 6) is the
+single source from which the thermodynamic limit (Theorem 8) and the no-transition
+theorem (Theorem 9) flow by elementary analysis. The conceptual payoff is the
+identification of the precise object whose analyticity governs the physics: the
+dominant transfer eigenvalue $2\cosh(\beta J)$. Its strict positivity and
+real-analyticity, with no finite-$\beta$ degeneracy, *is* the absence of a phase
+transition.
 
-A subtle but important point is that uniqueness does not actually require restricting to $\beta > 0$: because $\sinh$ is globally injective, $\sinh(2\beta) = 1$ has a unique real solution regardless of sign. The positivity hypothesis is retained because $\beta = 1/T$ is physically positive and because the squared characterization (Theorem 4.6) genuinely needs $\beta > 0$ to exclude the spurious branch $\sinh(2\beta) = -1$.
+It is worth stressing what is and is not claimed. We do **not** claim the 1D model
+is featureless: it has a perfectly sensible energy, entropy, and a smooth Schottky
+peak in its heat capacity. What it lacks is a *singularity* — a point of
+non-analyticity — and that absence is exactly Theorem 9. The model orders only in
+the strict $T \to 0$ limit, which is a boundary of parameter space rather than an
+interior critical point.
 
 ---
 
 ## 10. Future directions
 
-The following program builds directly on the formalized self-dual point, ordered from most accessible to most ambitious.
+This research cycle established, fully formally, the exact solution of the
+one-dimensional Ising model and the rigorous sense in which it has no phase
+transition at any positive temperature, via the open-chain configuration sum:
+$Z_n = 2(2\cosh\beta J)^n$, the free-energy-density limit
+$\frac{1}{n+1}\log Z_n \to \log(2\cosh\beta J)$, and $C^\infty$-smoothness of the
+limiting free energy in $\beta$. A companion periodic-chain treatment via the
+transfer matrix yields the spectral decomposition $T^n = \lambda_+^n P_+ +
+\lambda_-^n P_-$, the exact $Z^{\text{per}}_n = (2\cosh)^n + (2\sinh)^n$, the same
+bulk free energy, and a spectral gap $g = \log(\coth\beta J) > 0$ for all
+$\beta, J > 0$ with $g \to 0$ only as $\beta \to \infty$ (criticality at $T=0$).
+The following are precise, testable targets for follow-up.
 
-**1. Formalize the duality map and its involutive structure.** Define the dual inverse temperature $\beta^*(\beta)$ implicitly through $\sinh(2\beta)\sinh(2\beta^*) = 1$, prove it is well defined for $\beta > 0$, and show $\beta \mapsto \beta^*$ is a continuous, strictly order-reversing involution of $(0,\infty)$ whose unique fixed point is exactly $\beta_c$. The qualitative picture of the duality — swapping high and low temperature with a single self-dual point — is captured by elementary properties of $\sinh$ on $(0,\infty)$ (positivity, strict monotonicity, range $(0,\infty)$), so the map can be built and characterized directly on top of the present results $\sinh(2\beta_c)=1$, uniqueness, and positivity/monotonicity of $\sinh$.
+**Conjecture 1 (Transfer trace = configuration sum; the missing bridge).** For the
+periodic chain, the transfer-matrix trace equals the cyclic configuration sum:
+$\mathrm{trace}(T^n) = \sum_{s : \mathrm{Fin}\,n \to \mathrm{Bool}} \prod_i
+\exp(\beta J\,\mathrm{sp}(s_i)\,\mathrm{sp}(s_{i+1}))$ with $i+1$ taken cyclically.
+More generally, for any $M : \mathrm{Matrix}\,\iota\,\iota\,\mathbb{R}$,
+$\mathrm{trace}(M^n) = \sum_{s : \mathrm{Fin}\,n \to \iota} \prod_i M(s_i, s_{i+1})$.
+This closed-walk expansion is the one ingredient currently *defined* rather than
+*derived*; proving it would make the periodic result as combinatorially grounded as
+the open-chain result.
 
-**2. Connect to the dual-temperature parametrization $\tanh\beta^* = e^{-2\beta}$.** Many references state the duality in the equivalent low/high-temperature form $\tanh(\beta^*) = \exp(-2\beta)$ (or $e^{-2\beta^*} = \tanh\beta$) rather than through $\sinh$. Formalize the equivalence of these parametrizations and re-derive the self-dual point from the $\tanh$ form as an independent cross-check. The $\sinh$ relation and the $\tanh$/exponential relation are two coordinates on the same one-parameter family of dualities, related by standard hyperbolic identities, so proving their equivalence is a purely analytic exercise that strengthens confidence in the constant.
+**Conjecture 2 (Exponential decay of correlations / finite correlation length).**
+For the open chain the two-point function is exactly
+$\langle\sigma_0\sigma_r\rangle = (\tanh\beta J)^r$, so connected correlations
+decay exactly exponentially with rate $-\log\tanh\beta J = g$ (the spectral gap).
+Hence there is no long-range order for any $\beta < \infty$. Testable refinement:
+the correlation length $\xi(\beta) = 1/g(\beta) = 1/\log(\coth\beta J)$ satisfies
+$\xi(\beta) \sim \tfrac12 e^{2\beta J}$ as $\beta \to \infty$.
 
-**3. Build the finite-volume partition function and prove the Kramers–Wannier relation.** Define the Ising Hamiltonian and partition function on an $m\times n$ torus and prove the duality $Z(\beta) \propto Z(\beta^*)$ via the high-temperature (loop) and low-temperature (contour) expansions, thereby *deriving* relation (KW) that this work currently takes as motivation. Duality is a combinatorial bijection between even subgraphs of the lattice and domain-wall configurations of its planar dual, so the analytic constant $\beta_c$ becomes a corollary of a finite, fully discrete counting identity. With the self-dual point already formalized as the target, the combinatorics can be developed with a precise goal and validated against the known fixed point at every step.
+**Conjecture 3 (Internal energy and heat capacity are bounded and smooth).**
+Define $u(\beta) = -\tfrac{d}{d\beta}[\log(2\cosh\beta J)] = -J\tanh(\beta J)$
+(energy per site) and $c(\beta) = du/d\beta$. Then $u$ and $c$ are real-analytic on
+all of $\mathbb{R}$, $c(\beta) \ge 0$, and $c$ has a single smooth (Schottky)
+maximum but no divergence — the hallmark distinguishing 1D (no transition) from 2D
+(a log-divergent $c$ at $T_c$). Target: formalize $u, c$ and prove analyticity plus
+the global bound.
+
+**Conjecture 4 (Mean-field / Curie–Weiss transition as a contrast).** The
+mean-field (Curie–Weiss) self-consistency $m = \tanh(\beta(Jzm + h))$ at $h=0$ has
+$m=0$ as its only solution iff $\beta Jz \le 1$, and a nonzero solution iff
+$\beta Jz > 1$. Hence the mean-field free energy is non-analytic at
+$\beta_c = 1/(Jz)$: a genuine, formalizable phase transition. This isolates *why*
+dimensionality and the transfer-matrix gap matter: the 1D gap never closes at
+finite $\beta$, but the mean-field fixed-point structure bifurcates.
 
 ---
 
 ## 11. Conclusion
 
-We have given a rigorous, self-contained account of the two-dimensional Ising model's critical point, centered on the self-duality fixed-point equation $\sinh(2\beta) = 1$. The solution is the closed-form constant $\beta_c = \tfrac12\log(1+\sqrt2)$, equivalently $T_c = 2/\log(1+\sqrt2)$, and it is the *unique* positive solution. We proved the supporting reciprocal identity $(1+\sqrt2)^{-1} = \sqrt2 - 1$, the critical value $\sinh(2\beta_c) = 1$, uniqueness via global strict monotonicity of $\sinh$, positivity of $\beta_c$, the reciprocity $T_c\beta_c = 1$, and the if-and-only-if characterization of the self-dual point through $\sinh(2\beta)^2 = 1$. Beyond its intrinsic elegance, the result is the calibration constant for an entire universality class and the simplest instance of the principle that a self-dual point locates a phase transition.
+We have derived, from the raw configuration sum, the exact partition function of
+the one-dimensional Ising model, $Z_n = 2(2\cosh\beta J)^n$; established the
+thermodynamic limit of its free energy density,
+$\frac{1}{n+1}\log Z_n \to \log(2\cosh\beta J)$; and proved that this limiting free
+energy is infinitely differentiable on all of $\mathbb{R}$. The last statement is
+the rigorous form of the classical fact that the 1D Ising model has no phase
+transition at any positive temperature. The result, simple as it is, draws a clean
+line: order in a system of locally agreeing agents is not guaranteed by the local
+rule alone but by the dimension of the space they inhabit. One dimension is too
+small; two, as Onsager showed, is just big enough.

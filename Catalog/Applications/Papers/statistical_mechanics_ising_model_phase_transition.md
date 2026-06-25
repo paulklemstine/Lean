@@ -1,59 +1,58 @@
-# Computational Evidence — 2D Ising Model Phase Transition
+# Computational Evidence — 1D Ising Partition Function
 
-Concise numerical evidence supporting the formalized theorems.
+Small-case checks done by direct enumeration of the `2^(n+1)` spin
+configurations of the open chain (`Zfree`) and comparison with the closed form
+`2 (2 cosh βJ)ⁿ`, plus the periodic ring trace `Zper = (2cosh)ⁿ + (2sinh)ⁿ`.
 
-## 1. Onsager critical point (Kramers–Wannier self-duality)
+## Open chain (free boundary), `Zfree β J n`
 
-Self-duality condition: `sinh(2β_c) = 1`.
+Take `J = 1`. Let `c = cosh β`, `s = sinh β`.
 
-- `β_c = (1/2) log(1+√2) = 0.5 · 0.8813735870… = 0.4406867935…`
-- `T_c = 2 / log(1+√2) = 2 / 0.8813735870… = 2.2691853142…`
-- Check: `sinh(log(1+√2))`. With `1+√2 = 2.4142135624`, `(1+√2)⁻¹ = √2−1 = 0.4142135624`,
-  so `sinh = ((1+√2) − (√2−1))/2 = 2/2 = 1.0` ✔ (exact).
-- Uniqueness: `sinh` is strictly increasing, so `β_c` is the unique solution — confirmed
-  numerically by bisection on `sinh(2β)−1`.
+| n (bonds) | sites | brute-force sum (over 2^(n+1) configs)      | closed form `2(2c)ⁿ` |
+|-----------|-------|---------------------------------------------|----------------------|
+| 0         | 1     | `Σ_{σ₀} 1 = 2`                              | `2`                  |
+| 1         | 2     | `e^{β}+e^{-β}+e^{-β}+e^{β} = 4 cosh β`      | `2(2c) = 4c`         |
+| 2         | 3     | `8 cosh²β` (8 configs, expand)              | `2(2c)² = 8c²`       |
+| 3         | 4     | `16 cosh³β`                                 | `2(2c)³ = 16c³`      |
 
-These match the standard Onsager value `T_c ≈ 2.269 J/k_B`.
+The `n=1` case spelled out: configs `(++),(+-),(-+),(--)` give weights
+`e^{β}, e^{-β}, e^{-β}, e^{β}`, summing to `2e^{β}+2e^{-β}=4 cosh β`. ✓
 
-## 2. Transfer matrix (periodic 1D chain), small cases
+## Ring (periodic), `Zper β 1 n = trace(Tⁿ) = (2c)ⁿ + (2s)ⁿ`
 
-Transfer matrix `V = [[e^{β}, e^{−β}], [e^{−β}, e^{β}]]`.
-Partition function `Z_N = Tr(V^N) = (2cosh β)^N + (2 sinh β)^N` (eigenvalues `2cosh β`, `2 sinh β`).
+| n | trace(Tⁿ)                | closed form           |
+|---|--------------------------|-----------------------|
+| 1 | `tr T = 2 e^{β}? ` no: `tr T = 2 cosh? ` → `2c + ... ` see note | `(2c)+(2s)` = `2e^{β}` |
+| 2 | `tr T² = (2c)²+(2s)²`     | `4c²+4s²`             |
+| 3 | `(2c)³+(2s)³`             | `8c³+8s³`             |
 
-Direct enumeration vs. trace, `β = 0.5`:
+Note `n=1`: `(2c)+(2s) = 2(cosh β+sinh β) = 2 e^{β}`, matching `tr T = exp(β)+exp(β)`?
+Actually `tr T = T₀₀+T₁₁ = e^{β}+e^{β} = 2e^{β} = 2(c+s)`. ✓
 
-| N | brute-force `∑_σ e^{β ∑ s_i s_{i+1}}` | `Tr(V^N)` |
-|---|---------------------------------------|-----------|
-| 1 | `2 e^{0.5}` = 3.2974          | `2cosh.5 + 2sinh.5` = 3.2974 |
-| 2 | `2 e^{1} + 2 e^{-1}` = 6.5947 | `(2cosh.5)²+(2sinh.5)²` = 6.5947 |
-| 3 | 14.49…                       | 14.49… |
+## Free energy density and the absence of a transition
 
-Brute force and `Tr(V^N)` agree — matching `ising_partition_eq_trace`.
-(Note: our Lean `isingInteraction` uses the cyclic sum over `Fin (N+1)`, i.e. an
-`(N+1)`-site ring, and the theorem is `Z = Tr(V^{N+1})`.)
+`f(β) := (1/N) log Z_N → log(2 cosh β)` for both boundary conditions. Sampling:
 
-## 3. Peierls argument — contour series threshold
+| β   | log(2 cosh β) | derivative −J tanh β (energy/site) |
+|-----|---------------|-------------------------------------|
+| 0.5 | 0.8133…       | −0.4621…                            |
+| 1.0 | 1.4338…       | −0.7616…                            |
+| 2.0 | 2.7536…       | −0.9640…                            |
 
-Contour ratio `r = 3 e^{−2β}`; bad-event weight `S(β) = ∑_{L≥1} r^L = r/(1−r)`.
+`log(2 cosh β)` and all its derivatives are finite and continuous for every real
+`β` (cosh > 0 everywhere) — **no singularity at any temperature**, so no phase
+transition in 1D. This is exactly `free_energy_smooth` (proved, `C^∞`).
 
-`S(β) < 1/2 ⟺ 3r < 1 ⟺ r < 1/3 ⟺ e^{−2β} < 1/9 ⟺ β > log 3 = 1.0986…`
+## Spectral gap (correlation length) sample, `g = log(coth β)`
 
-| β        | r = 3e^{−2β} | S(β)=r/(1−r) | < 1/2 ? |
-|----------|--------------|--------------|---------|
-| 0.4407 (=β_c) | 1.240   | (r>1, diverges) | no |
-| 0.55     | 0.999        | ~ huge       | no |
-| 1.0986 (=log3) | 0.3333 | 0.5000       | boundary |
-| 1.20     | 0.2725       | 0.3746       | yes ✔ |
-| 1.50     | 0.1494       | 0.1757       | yes ✔ |
+| β   | coth β   | g = log(coth β) | ξ = 1/g |
+|-----|----------|------------------|---------|
+| 0.5 | 2.1640   | 0.7719           | 1.296   |
+| 1.0 | 1.3130   | 0.2722           | 3.673   |
+| 2.0 | 1.0373   | 0.0366           | 27.3    |
 
-So the Peierls *sufficient* threshold is `β > log 3 ≈ 1.0986`, comfortably above
-`β_c ≈ 0.4407`: the 3^L counting bound is generous, so Peierls certifies order only
-deep in the ordered phase. Confirms `isingBetaC_lt_peierls_threshold` and
-`peierls_phase_transition`.
+`g > 0` for all finite `β` and `g → 0` (so `ξ → ∞`) only as `β → ∞` — matching
+`spectral_gap_pos` and `spectral_gap_tendsto_zero` (both proved).
 
-## 4. Counterexample hunt
-
-- `sinh(2β)=1` having a second positive root: none found (strict monotonicity). ✔
-- `Tr(V^N) ≠ Z_N` for `N ≤ 6`, several `β`: no discrepancy. ✔
-- Ising ground-state energy `≠ −(N+1)` for `N ≤ 8` by enumeration: none; the aligned
-  state always achieves `−(N+1)`. ✔ (matches `ising_groundEnergy_eq_tropical`).
+All closed forms above are *proved* in `IsingChain1D.lean` /
+`IsingChainPeriodic.lean`; the table values are consistency spot-checks.
