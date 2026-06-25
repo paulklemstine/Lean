@@ -438,7 +438,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d47e9c74",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domain_bridges": [],
     "domains": [
@@ -452,7 +452,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
@@ -1336,7 +1336,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c880eb36",
     "description": "Prove that the connective constant for the self-avoiding walk on Z² equals (2+√2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -1349,7 +1349,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
   },
@@ -1874,7 +1874,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7ae59772",
     "description": "Prove that π, e, √2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
     "domain_bridges": [],
     "domains": [
@@ -1887,7 +1887,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.410337+00:00",
     "title": "Normality of Mathematical Constants"
   },
@@ -3404,7 +3404,7 @@
       "math.AT",
       "math.NT"
     ],
-    "consumed_by_exp_id": "4d606bfb",
+    "consumed_by_exp_id": "",
     "description": "For any prime p and integer i ≥ 1, the codimension-i rational cohomology of the Hecke congruence subgroup Γ_{0,n}(p) vanishes for n ≥ (3i+1)p + (3i+2). Specifically, H^{n(n-1)/2 - i}(Γ_{0,n}(p); ℚ) = 0. This extrapolates the paper's results for i=1 (n ≥ 4p+5) and i=2 (n ≥ 7p+8) to arbitrary codimensions.",
     "domain_bridges": [
       "Cohomology of arithmetic groups",
@@ -3421,7 +3421,7 @@
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T06:21:54.373451+00:00",
     "title": "Codimension-i Vanishing Conjecture for Hecke Congruence Subgroups"
   },
@@ -4607,7 +4607,7 @@
       "Mathlib.Analysis.InnerProductSpace.PiL2",
       "Mathlib.Data.Matrix.Basic"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21cf80bb",
     "description": "Let Σ be a finite connected signed simple graph, let v be a non-isolated vertex, and let ρ(Σ) denote the spectral radius of its signed adjacency matrix. The paper proves ρ(Σ)^2 ≤ ρ(Σ - v)^2 + 2 d(v) - 1. Conjecture: equality holds if and only if either the underlying unsigned graph is a star and v is a pendant vertex, or the underlying unsigned graph is complete and the signing is balanced or antibalanced.",
     "domain_bridges": [
       "signed graphs as symmetric real matrices",
@@ -4625,7 +4625,7 @@
     "proof_strategy": "First formalize signed simple graphs as symmetric {−1,0,1}-valued adjacency matrices over a finite vertex type, with deletion as principal submatrix restriction. Prove the vertex-deletion inequality using the block-matrix spectral-radius lemma from the paper. For equality, trace equality through the block estimate and through |A(Σ)| ≤ A(G). Show that equality forces the underlying unsigned graph to be one of the unsigned extremal cases of Sun-Das: a star with v pendant or a complete graph. In the star case every signing is switching-equivalent on a tree, so equality follows. In the complete case, prove that a signed complete graph on n vertices has spectral radius n−1 exactly when its signing is balanced or antibalanced, equivalently switching-equivalent to the all-positive or all-negative complete graph.",
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:55:02.130931+00:00",
     "title": "Equality cases for signed vertex-deletion spectral-radius bound"
   },
@@ -4830,7 +4830,7 @@
       "MR0025715",
       "MR2483235"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "701dddb6",
     "description": "Let (a_k)_{k ≥ 1} be the Pólya tree enumeration sequence with ordinary generating function A(z) = Σ_{k≥1} a_k z^k satisfying A(z) = z·exp(A(z))·Φ(z) where Φ(z) = exp(Σ_{i≥2} A(z^i)/i). Define ω_k = Σ_{d|k} d·a_d. Then a_1 = 1 and for all k ≥ 2, a_k = (1/(k-1))·Σ_{j=1}^{k-1} a_j·ω_{k-j}.",
     "domain_bridges": [
       "formal_power_series",
@@ -4846,7 +4846,7 @@
     "proof_strategy": "Define Pólya trees via the functional equation A(z) = z·exp(A(z))·Φ(z) as a formal power series. Differentiate both sides to obtain z·A'(z) = A(z)·(1 + Σ_{i≥1} z^i·A'(z^i)). Extract the coefficient of z^k on both sides. The inner sum Σ_{i≥1} z^i·A'(z^i) has coefficient [z^k] = Σ_{d|k} d·a_d = ω_k by collecting terms where i·j = k with j indexing powers of A'. The left side gives k·a_k and the right side gives a_k + Σ_{j=1}^{k-1} a_j·ω_{k-j}, yielding the recurrence after rearrangement.",
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:42:09.482956+00:00",
     "title": "Pólya tree coefficient recurrence formula"
   },
@@ -9038,7 +9038,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "364ec557",
     "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
     "domain_bridges": [],
     "domains": [
@@ -9051,7 +9051,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.201625+00:00",
     "title": "EML Differential Algebra: Closure Properties"
   },
@@ -9118,7 +9118,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1afe5cb7",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domain_bridges": [],
     "domains": [
@@ -9131,7 +9131,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },

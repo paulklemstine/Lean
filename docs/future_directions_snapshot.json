@@ -358,7 +358,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fd9c2f63",
+    "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -371,7 +371,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -438,7 +438,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d47e9c74",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domain_bridges": [],
     "domains": [
@@ -452,7 +452,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
@@ -1257,7 +1257,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e57ac8fb",
+    "consumed_by_exp_id": "",
     "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
     "domain_bridges": [],
     "domains": [
@@ -1271,7 +1271,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432807+00:00",
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
   },
@@ -1336,7 +1336,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c880eb36",
     "description": "Prove that the connective constant for the self-avoiding walk on Z² equals (2+√2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -1349,7 +1349,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
   },
@@ -1874,7 +1874,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7ae59772",
     "description": "Prove that π, e, √2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
     "domain_bridges": [],
     "domains": [
@@ -1887,7 +1887,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.410337+00:00",
     "title": "Normality of Mathematical Constants"
   },
@@ -3404,7 +3404,7 @@
       "math.AT",
       "math.NT"
     ],
-    "consumed_by_exp_id": "4d606bfb",
+    "consumed_by_exp_id": "",
     "description": "For any prime p and integer i ≥ 1, the codimension-i rational cohomology of the Hecke congruence subgroup Γ_{0,n}(p) vanishes for n ≥ (3i+1)p + (3i+2). Specifically, H^{n(n-1)/2 - i}(Γ_{0,n}(p); ℚ) = 0. This extrapolates the paper's results for i=1 (n ≥ 4p+5) and i=2 (n ≥ 7p+8) to arbitrary codimensions.",
     "domain_bridges": [
       "Cohomology of arithmetic groups",
@@ -3421,7 +3421,7 @@
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T06:21:54.373451+00:00",
     "title": "Codimension-i Vanishing Conjecture for Hecke Congruence Subgroups"
   },
@@ -4607,7 +4607,7 @@
       "Mathlib.Analysis.InnerProductSpace.PiL2",
       "Mathlib.Data.Matrix.Basic"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21cf80bb",
     "description": "Let Σ be a finite connected signed simple graph, let v be a non-isolated vertex, and let ρ(Σ) denote the spectral radius of its signed adjacency matrix. The paper proves ρ(Σ)^2 ≤ ρ(Σ - v)^2 + 2 d(v) - 1. Conjecture: equality holds if and only if either the underlying unsigned graph is a star and v is a pendant vertex, or the underlying unsigned graph is complete and the signing is balanced or antibalanced.",
     "domain_bridges": [
       "signed graphs as symmetric real matrices",
@@ -4625,7 +4625,7 @@
     "proof_strategy": "First formalize signed simple graphs as symmetric {−1,0,1}-valued adjacency matrices over a finite vertex type, with deletion as principal submatrix restriction. Prove the vertex-deletion inequality using the block-matrix spectral-radius lemma from the paper. For equality, trace equality through the block estimate and through |A(Σ)| ≤ A(G). Show that equality forces the underlying unsigned graph to be one of the unsigned extremal cases of Sun-Das: a star with v pendant or a complete graph. In the star case every signing is switching-equivalent on a tree, so equality follows. In the complete case, prove that a signed complete graph on n vertices has spectral radius n−1 exactly when its signing is balanced or antibalanced, equivalently switching-equivalent to the all-positive or all-negative complete graph.",
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:55:02.130931+00:00",
     "title": "Equality cases for signed vertex-deletion spectral-radius bound"
   },
@@ -4830,7 +4830,7 @@
       "MR0025715",
       "MR2483235"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "701dddb6",
     "description": "Let (a_k)_{k ≥ 1} be the Pólya tree enumeration sequence with ordinary generating function A(z) = Σ_{k≥1} a_k z^k satisfying A(z) = z·exp(A(z))·Φ(z) where Φ(z) = exp(Σ_{i≥2} A(z^i)/i). Define ω_k = Σ_{d|k} d·a_d. Then a_1 = 1 and for all k ≥ 2, a_k = (1/(k-1))·Σ_{j=1}^{k-1} a_j·ω_{k-j}.",
     "domain_bridges": [
       "formal_power_series",
@@ -4846,7 +4846,7 @@
     "proof_strategy": "Define Pólya trees via the functional equation A(z) = z·exp(A(z))·Φ(z) as a formal power series. Differentiate both sides to obtain z·A'(z) = A(z)·(1 + Σ_{i≥1} z^i·A'(z^i)). Extract the coefficient of z^k on both sides. The inner sum Σ_{i≥1} z^i·A'(z^i) has coefficient [z^k] = Σ_{d|k} d·a_d = ω_k by collecting terms where i·j = k with j indexing powers of A'. The left side gives k·a_k and the right side gives a_k + Σ_{j=1}^{k-1} a_j·ω_{k-j}, yielding the recurrence after rearrangement.",
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:42:09.482956+00:00",
     "title": "Pólya tree coefficient recurrence formula"
   },
@@ -7078,7 +7078,7 @@
       "q-exponential generating functions",
       "descent set"
     ],
-    "consumed_by_exp_id": "f8f4b2b3",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer k≥2 and n≥0, the polynomial a_n^{(k)}(q) equals the finite sum ∑_{m=0}^{⌊n/k⌋} q^{m(m+1)/2} * GaussianBinomial(n - m(k-1), m)_q where GaussianBinomial(n,m)_q denotes the q-binomial coefficient",
     "domain_bridges": [
       "analytic combinatorics",
@@ -7093,7 +7093,7 @@
     "proof_strategy": "Induction on n using the functional equation of the q-exponential generating function F_k(t;q) and coefficient extraction to verify the claimed closed form",
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T22:36:50.930027+00:00",
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
@@ -7476,7 +7476,7 @@
       "Mathlib.Data.Rat.Basic",
       "Mathlib.Tactic.Linarith"
     ],
-    "consumed_by_exp_id": "188ac175",
+    "consumed_by_exp_id": "",
     "description": "Let qc(n) be the largest k < n such that every placement of k mutually non-attacking queens on an n × n board can be completed to a full n-queens configuration. Conjecture: there is an absolute integer N such that for every n ≥ N, qc(n) ≤ floor(n/5), equivalently 5 * qc(n) ≤ n. This sharpens the paper's asymptotic upper bound qc(n) ≤ 0.216n to the rational density 0.2.",
     "domain_bridges": [
       "Model an n-queens partial configuration as an independent set in the queen-attack graph on Fin n × Fin n.",
@@ -7493,7 +7493,7 @@
     "proof_strategy": "Formalize the board, attack lines, partial configurations, completions, and qc(n). Prove the weighting obstruction theorem in Lean: if the unattacked squares of Q are covered by rational weights on rows, columns, and diagonals with total weight strictly less than n - |Q|, then Q is non-completable. Then construct, for all sufficiently large n, an explicit parametric partial configuration Q_n of at most floor(n/5) non-attacking queens together with a rational line-weighting certificate covering all squares not attacked by Q_n and having total weight < n - |Q_n|. The remaining proof obligations should be finite interval-membership and affine rational inequality checks, discharged by normalization and linarith.",
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T09:17:44.772184+00:00",
     "title": "Asymptotic one-fifth upper bound for the n-queens completion threshold"
   },
@@ -8262,7 +8262,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2529",
+    "id": "fd_2530",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit $q$-series transforming objects and verify convergence using the Farkas–Hintikka system.",
@@ -8371,7 +8371,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e653644d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -8384,7 +8384,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -8779,7 +8779,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "26e8a5ea",
+    "consumed_by_exp_id": "",
     "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
     "domain_bridges": [],
     "domains": [
@@ -8792,7 +8792,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.309278+00:00",
     "title": "Category-Theoretic Neural Architectures"
   },
@@ -8819,7 +8819,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5a8b6896",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domain_bridges": [],
     "domains": [
@@ -8832,7 +8832,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -9118,7 +9118,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1afe5cb7",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domain_bridges": [],
     "domains": [
@@ -9131,7 +9131,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },

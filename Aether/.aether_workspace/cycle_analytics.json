@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T14:47:22.271002+00:00",
+  "last_updated": "2026-06-25T15:38:06.605513+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -6749,6 +6749,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T14:47:21.682283+00:00",
       "title": "Brocard-Ramanujan Triangular Classification"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3909,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 37,
+      "domain": "Applications",
+      "duration_seconds": -337.2739214897156,
+      "end_time": 1782401543.6473947,
+      "files_integrated": 0,
+      "job_id": "364ec557",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.83,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 1.0,
+        "composite": 0.6704,
+        "cross_domain": 0.85,
+        "grade": "substantial",
+        "importance": 0.5023,
+        "novelty": 0.95,
+        "proof_depth": 0.3104,
+        "usefulness": 0.5802
+      },
+      "quality_score": 0.5001599999999999,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782401880.9213161,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T15:38:06.335215+00:00",
+      "title": "EML Differential Algebra: Closure Properties"
     }
   ]
 }

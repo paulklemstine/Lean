@@ -269,7 +269,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Baum-Connes Conjecture"
   },
   {
-    "consumed_by_exp_id": "fd9c2f63",
+    "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domains": [
       "NumberTheory",
@@ -279,7 +279,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -329,7 +329,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolution of Singularities in Positive Characteristic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d47e9c74",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domains": [
       "Cryptography",
@@ -340,7 +340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
@@ -943,7 +943,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
   {
-    "consumed_by_exp_id": "e57ac8fb",
+    "consumed_by_exp_id": "",
     "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
     "domains": [
       "Algebra",
@@ -954,7 +954,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432807+00:00",
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
   },
@@ -1002,7 +1002,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Sun-Sun Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c880eb36",
     "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Computation",
@@ -1012,7 +1012,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
   },
@@ -1405,7 +1405,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sensitivity Conjecture Extensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7ae59772",
     "description": "Prove that \u03c0, e, \u221a2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
     "domains": [
       "Algebra",
@@ -1415,7 +1415,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.410337+00:00",
     "title": "Normality of Mathematical Constants"
   },
@@ -2209,7 +2209,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the Erd\u0151s 550 Upper Bound for Tree-Multipartite Ramsey Numbers"
   },
   {
-    "consumed_by_exp_id": "4d606bfb",
+    "consumed_by_exp_id": "",
     "description": "For any prime p and integer i \u2265 1, the codimension-i rational cohomology of the Hecke congruence subgroup \u0393_{0,n}(p) vanishes for n \u2265 (3i+1)p + (3i+2). Specifically, H^{n(n-1)/2 - i}(\u0393_{0,n}(p); \u211a) = 0. This extrapolates the paper's results for i=1 (n \u2265 4p+5) and i=2 (n \u2265 7p+8) to arbitrary codimensions.",
     "domains": [
       "Pythagorean",
@@ -2219,7 +2219,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T06:21:54.373451+00:00",
     "title": "Codimension-i Vanishing Conjecture for Hecke Congruence Subgroups"
   },
@@ -2815,7 +2815,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Codimension-three rational cohomology of Hecke congruence subgroups vanishes in a linear stable range"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21cf80bb",
     "description": "Let \u03a3 be a finite connected signed simple graph, let v be a non-isolated vertex, and let \u03c1(\u03a3) denote the spectral radius of its signed adjacency matrix. The paper proves \u03c1(\u03a3)^2 \u2264 \u03c1(\u03a3 - v)^2 + 2 d(v) - 1. Conjecture: equality holds if and only if either the underlying unsigned graph is a star and v is a pendant vertex, or the underlying unsigned graph is complete and the signing is balanced or antibalanced.",
     "domains": [
       "Pythagorean",
@@ -2825,7 +2825,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T18:55:02.130931+00:00",
     "title": "Equality cases for signed vertex-deletion spectral-radius bound"
   },
@@ -2930,7 +2930,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sidorenko Property for Two\u2011Sided Correlation Kernels on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "701dddb6",
     "description": "Let (a_k)_{k \u2265 1} be the P\u00f3lya tree enumeration sequence with ordinary generating function A(z) = \u03a3_{k\u22651} a_k z^k satisfying A(z) = z\u00b7exp(A(z))\u00b7\u03a6(z) where \u03a6(z) = exp(\u03a3_{i\u22652} A(z^i)/i). Define \u03c9_k = \u03a3_{d|k} d\u00b7a_d. Then a_1 = 1 and for all k \u2265 2, a_k = (1/(k-1))\u00b7\u03a3_{j=1}^{k-1} a_j\u00b7\u03c9_{k-j}.",
     "domains": [
       "Bridges"
@@ -2939,7 +2939,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T21:42:09.482956+00:00",
     "title": "P\u00f3lya tree coefficient recurrence formula"
   },
@@ -4147,7 +4147,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Higher-order Kummer transformation for trinomial root series"
   },
   {
-    "consumed_by_exp_id": "f8f4b2b3",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer k\u22652 and n\u22650, the polynomial a_n^{(k)}(q) equals the finite sum \u2211_{m=0}^{\u230an/k\u230b} q^{m(m+1)/2} * GaussianBinomial(n - m(k-1), m)_q where GaussianBinomial(n,m)_q denotes the q-binomial coefficient",
     "domains": [
       "Pythagorean"
@@ -4156,7 +4156,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T22:36:50.930027+00:00",
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
@@ -4363,7 +4363,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive-characteristic Veronese circuit bound with p-adic digit weight"
   },
   {
-    "consumed_by_exp_id": "188ac175",
+    "consumed_by_exp_id": "",
     "description": "Let qc(n) be the largest k < n such that every placement of k mutually non-attacking queens on an n \u00d7 n board can be completed to a full n-queens configuration. Conjecture: there is an absolute integer N such that for every n \u2265 N, qc(n) \u2264 floor(n/5), equivalently 5 * qc(n) \u2264 n. This sharpens the paper's asymptotic upper bound qc(n) \u2264 0.216n to the rational density 0.2.",
     "domains": [
       "Pythagorean"
@@ -4372,7 +4372,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T09:17:44.772184+00:00",
     "title": "Asymptotic one-fifth upper bound for the n-queens completion threshold"
   },
@@ -4787,7 +4787,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2529",
+    "id": "fd_2530",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -4867,7 +4867,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "e653644d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -4877,7 +4877,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -5170,7 +5170,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Program: Functoriality"
   },
   {
-    "consumed_by_exp_id": "26e8a5ea",
+    "consumed_by_exp_id": "",
     "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
     "domains": [
       "MachineLearning",
@@ -5180,7 +5180,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.309278+00:00",
     "title": "Category-Theoretic Neural Architectures"
   },
@@ -5200,7 +5200,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
-    "consumed_by_exp_id": "5a8b6896",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -5210,7 +5210,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -5424,7 +5424,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1afe5cb7",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -5434,7 +5434,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
