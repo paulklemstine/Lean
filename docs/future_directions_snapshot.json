@@ -81,7 +81,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e20c7594",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domain_bridges": [],
     "domains": [
@@ -94,7 +94,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:16.980012+00:00",
     "title": "Natural Proofs Barrier: Formalization"
   },
@@ -837,7 +837,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "292d0525",
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
     "domains": [
@@ -850,7 +850,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -2431,7 +2431,7 @@
       "MR0025715",
       "MR2483235"
     ],
-    "consumed_by_exp_id": "bd1f81a7",
+    "consumed_by_exp_id": "",
     "description": "Let $a_k$ denote the number of Pólya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the Pólya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
     "domain_bridges": [
       "analytic_combinatorics",
@@ -2447,7 +2447,7 @@
     "proof_strategy": "Define the OGF A(z) via the Pólya functional equation A(z) = z·exp(A(z))·Φ(z) where Φ(z) = exp(∑_{i≥2} A(z^i)/i). Take the logarithmic derivative to obtain zA'(z) = A(z)(1 + ∑_{i≥1} z^i A'(z^i)). Extract the coefficient of z^k on both sides: the left side gives k·a_k; the right side gives a_k + ∑_{j=1}^{k-1} a_j·ω_{k-j}, where ω_k arises from the identity [z^k]∑_{i≥1} z^i A'(z^i) = ∑_{d|k} d·a_d. Rearranging yields the recurrence. The Lean formalization should first establish the coefficient extraction identity for the divisor sum, then apply it to the differentiated functional equation.",
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T05:17:21.927856+00:00",
     "title": "Pólya tree coefficient divisor-sum recurrence"
   },
@@ -4190,7 +4190,7 @@
       "Nat.even_iff",
       "Nat.odd_iff"
     ],
-    "consumed_by_exp_id": "fb5aee47",
+    "consumed_by_exp_id": "",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n ≥ 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domain_bridges": [
       "factorial Diophantine equations",
@@ -4208,7 +4208,7 @@
     "proof_strategy": "Formalize the triangular equivalence lemma: for n ≥ 4, n! + 1 = m^2 iff there exists y such that y*(y+1)/2 = n!/8 and m = 2*y + 1. Then attempt to prove the classification by combining modular exclusions for residue classes of n with factorial divisibility facts and higher-power congruence obstructions. The conjecture is suitable for Lean because it can be stated entirely over Nat using factorials, squares, divisibility by 8, and triangular numbers.",
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -5662,7 +5662,7 @@
       "Mathlib.Combinatorics.Additive.Set",
       "Mathlib.Data.Fintype.Card"
     ],
-    "consumed_by_exp_id": "6f3341b0",
+    "consumed_by_exp_id": "",
     "description": "Formulate a precise conjecture stating that the endpoint Fourier restriction inequality for the three‑dimensional paraboloid over a prime field 𝔽ₚ (with –1 non‑square) holds if and only if the set of integer lattice points on the Euclidean paraboloid  \\(\\{(x,y,z)\\in\\mathbb Z^3 : z = x^2 + y^2\\}\\) is a Λ(3) set. This makes the qualitative observation in the paper into a bidirectional, falsifiable statement that can be expressed in the language of finite‑field harmonic analysis and additive combinatorics, and thus be formalised in Lean 4.",
     "domain_bridges": [
       "Finite field Fourier analysis ↔ Euclidean additive combinatorics",
@@ -5678,7 +5678,7 @@
     "proof_strategy": "1. Formalise the finite‑field paraboloid \\(P_3 \\subset \\mathbb F_p^3\\) and the associated extension operator \\(E f(x) = p^{-2}\\sum_{\\xi\\in P_3} f(\\xi) e_p(x\\cdot\\xi)\\). 2. Define the endpoint restriction constant \\(R^*(2\\to 3)\\) and express the conjectured bound \\(R^*(2\\to 3) \\le C\\) uniformly in \\(p\\). 3. Formalise the Euclidean set \\(\\Lambda = \\{(m,n,m^2+n^2) : m,n\\in\\mathbb Z\\}\\) and the Λ(3) property: there exists \\(C'\\) such that for every finitely supported sequence \\(a_\\lambda\\), \\(\\big\\|\\sum_{\\lambda\\in\\Lambda} a_\\lambda e^{2\\pi i \\lambda\\cdot x}\\big\\|_{L^3(\\mathbb T^3)} \\le C' \\|a\\|_{\\ell^2}\\). 4. Prove the “if” direction by adapting the argument in the paper: assume the endpoint restriction estimate, lift functions from \\(\\mathbb Z/p\\mathbb Z\\) to \\(\\mathbb Z\\) via the natural embedding, and use Plancherel and orthogonality to obtain the Λ(3) inequality. 5. For the “only‑if” direction, assume \\(\\Lambda\\) is a Λ(3) set; construct test functions on \\(\\mathbb F_p^3\\) by reductio",
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T07:47:01.901499+00:00",
     "title": "Equivalence between the finite‑field endpoint restriction estimate for the 3‑dimensional paraboloid and the Λ(3) property of the integer lattice paraboloid"
   },
@@ -6585,7 +6585,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "f1dcc123",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every finite poset P of size n and width w ≥ 2, the number of strict alternating cycles satisfies s_w(P) ≤ 4·(w−1)!·(n(n+w)/(2w^2))^w.",
     "domain_bridges": [
       "order_dimension",
@@ -6600,7 +6600,7 @@
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T11:12:45.893373+00:00",
     "title": "Upper bound on the number of strict alternating cycles in posets of bounded width"
   },
@@ -7122,7 +7122,7 @@
     "catalog_references": [
       "arXiv:2310.00000"
     ],
-    "consumed_by_exp_id": "80847fe0",
+    "consumed_by_exp_id": "",
     "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
     "domain_bridges": [
       "torus methods",
@@ -7138,7 +7138,7 @@
     "proof_strategy": "Use the lacunary matrix theorem to construct a multiplier vector via linear algebra over \\(\\R\\) and verify its multiplicative properties in the torus. Combine with geometric arguments to ensure minimality and global consistency.",
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T23:35:20.703960+00:00",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
@@ -7605,6 +7605,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "ErdosSarkozy1992"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all integers k ≥ 3 and n ≥ 1, the minimal N = g_k(n) satisfies g_k(n) ≥ ⌈((k-1)/(k-2))^n⌉.",
+    "domain_bridges": [
+      "additive combinatorics",
+      "extremal set theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2505",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "combinatorial counting argument using ternary grid bandwidth",
+    "research_mode": "team",
+    "source_exp_id": "2606.24139v1",
+    "status": "available",
+    "timestamp": "2026-06-25T11:11:19.428461+00:00",
+    "title": "Exponential Lower Bound for g_k(n) Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "OEIS A287616",
       "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
       "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -7619,7 +7643,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2505",
+    "id": "fd_2506",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
@@ -7644,7 +7668,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2506",
+    "id": "fd_2507",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on $n$, leveraging the irreducibility of $f^2$ and a new function measuring 'complexity' in $\\mathbb{Q}(i)$ due to the absence of linear ordering. The base case $n=2$ is given. For the inductive step, analyze the factorization of $f^{n+1} = f^n \\circ f$ using the Galois action on preimages and the tree structure of iterations, adapting techniques from \\cite{evstb} to handle the two-dimensional nature of $\\mathbb{Q}(i)$.",
@@ -7668,7 +7692,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2507",
+    "id": "fd_2508",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the proof of Theorem 1.2(ii) by tracking the exact loss when applying Kahn's small-codegree edge-colouring theorem and the degree‑peeling process, aiming to convert the o(1) term into a uniform additive bound of 4.",
@@ -7692,7 +7716,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use shifting/compression to transform an extremal family into a left‑compressed form while preserving the missing‑trace condition. Analyze the possible traces on a fixed (d+1)-set and apply Kleitman’s theorem on intersecting families to bound the number of sets containing a given subset. Perform an induction on n, considering whether a particular element appears in all sets or not. Show that any family attaining the bound must be isomorphic to the explicit construction: take all (d+1)-sets containing a fixed d‑set, together with all (d+1)-sets that avoid a fixed (2(d+1−s)+2)-set and contain a specific (2s−d−2)-subset of its complement.",
@@ -7719,7 +7743,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Hochster's formula to express \\(\\beta_{i,i+\\nu+1}(G)\\) as the dimension of reduced homology of induced subcomplexes of the independence complex. Show that for any subset W of vertices, the only possible non‑vanishing reduced homology occurs in dimension \\(\\nu\\) and only when W contains exactly one vertex from each non‑trivial clique block together with any subset of the a isolated vertices. This yields a non‑zero Betti number in homological degree \\(\\nu+1\\) and no Betti numbers with j-i > \\(\\nu+1\\). The forward inequality \\(\\reg(G) \\ge \\nu+1\\) follows from exhibiting such a subset; the reverse inequality follows from a combinatorial analysis of the join decomposition \\(\\ind(G) \\cong \\Delta_a * \\bigast_{r=1}^m \\Delta_{b_r}\\) where \\(\\Delta_{b_r}\\) is a simplex on \\(b_r\\) vertices (contractible) and the only contribution to higher homology comes from the discrete pieces coming from blocks with \\(b_r\\ge2\\). Formalising the join‑homology lemma and the coefficient extraction in Lean wil",
@@ -7743,7 +7767,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2510",
+    "id": "fd_2511",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structure of the weight enumerator, harmonic designs, and connection to the projective plane of order 3 to show any such code must have an automorphism group isomorphic to PGL(3,3):2, hence equivalent.",
@@ -7765,7 +7789,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2511",
+    "id": "fd_2512",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "algebraic construction",
@@ -7792,7 +7816,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2512",
+    "id": "fd_2513",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the second‑moment method on the random process that adds basis vectors to C one by one. Show that for any fixed centre z the indicator of membership in B_ρ(z) is a Fourier‑pseudorandom test; bound its Fourier coefficients using Weil‑type exponential sum estimates over 𝔽_q. Apply a union bound over the q^n possible centres together with a Chernoff‑type concentration inequality for hypergeometric draws to obtain the simultaneous guarantee. Formalisation in Lean proceeds by developing finite‑field linear algebra, hypergeometric tail bounds, and a library for Fourier analysis on 𝔽_q^n.",
@@ -7825,7 +7849,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2513",
+    "id": "fd_2514",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper combines Lovász's minimax theorem for matroid matchings, a high-dimensional Hoffman bound for uniform hypergraphs, and packing-design arguments in vector spaces. For Lean formalization, one would first develop the theory of Gaussian binomial coefficients, subspace lattices, and direct sums in finite vector spaces. The known cases (k=2, n=(s+1)k, large n) could be formalized incrementally, leveraging matroid libraries and linear algebra over finite fields.",
@@ -7855,7 +7879,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2514",
+    "id": "fd_2515",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Generalize the construction in the paper from the floor(k/2)-2 shift parameter to a three-block or two-scale block encoding. The existing proof converts a 3-coloring witnessing s_3(t) > N into a red/blue coloring of k-subsets with no monochromatic (k+1)-set, where t is roughly k/2. The conjectural improvement would partition the k positions into three interacting zones and encode the local shift obstruction using majority/stability rules so that every candidate monochromatic (k+1)-set yields a forbidden shifted pattern of length floor(2k/3)-3. A Lean formalization would avoid asymptotics: define the finite colorings, the obstruction predicate, and prove that the transformed coloring contains no red or blue clique of size k+1.",
@@ -7885,7 +7909,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2515",
+    "id": "fd_2516",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the c=1 Wang--Yee identity as an equality of formal power series over ℤ, where (-1)^(k-1) * (T_{R,S,k} * A_{R,S} - 1) is represented by an explicit multiple sum with manifestly nonnegative coefficients. Then observe that A_{R,S}^{c-1} has nonnegative integer coefficients because it is the generating function for (c-1)-colored partitions into allowed residue classes. The conjectured series factors as A_{R,S}^{c-1} * ((-1)^(k-1) * (T_{R,S,k} * A_{R,S} - 1)), so coefficientwise nonnegativity follows from closure of nonnegative integer sequences under Cauchy product.",
@@ -7908,7 +7932,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2516",
+    "id": "fd_2517",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the tensor‑product construction of Theorem 1: define the d‑dimensional worst‑case function h_d = ∏_{i=1}^d h(x_i) and the spline products s_y = ∏_{i=1}^d s_{y_i}(x_i). Using the properties A = inf_y I(h)/I(s_y) > 1 and B = inf_y ||h||_1/||s_y||_1 > 1, show that any non‑negative linear rule must incur an error at least (min(A,B))^d times the initial error, which yields the exponential lower bound on the information complexity.",
@@ -7917,6 +7941,34 @@
     "status": "available",
     "timestamp": "2026-06-25T10:52:18.858858+00:00",
     "title": "Exponential lower bound for non‑negative QMC integration in high dimensions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.KT",
+      "math.AT",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any field F of characteristic zero, the natural map from the weight‑3 component PolyL₃(F) of the Goncharov Lie coalgebra to the indecomposable quotient of the third‑filtered algebraic K‑theory group K₅^{(3)}(F)⊗ℚ is an isomorphism of ℚ‑vector spaces, intertwining the Lie cobracket with the boundary map in Goncharov’s polylogarithmic complex of weight 3.",
+    "domain_bridges": [
+      "motivic cohomology",
+      "polylogarithms",
+      "Lie coalgebras"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2518",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Use the Steinberg module presentation of PolyL_*(F) to identify PolyL₃(F) as the ℚ‑vector space generated by the symbols Li₃(a) and Li_{2,1}(a,b) subject to the weight‑3 functional equations of the trilogarithm.\n2. Construct a regulator map r: PolyL₃(F) → K₅^{(3)}(F)⊗ℚ via the Beilinson regulator on motivic cohomology H³_𝓜(F, ℚ(3)) and the identification of K₅^{(3)}(F)⊗ℚ with a quotient of this motivic cohomology.\n3. Show r is injective by comparing weight filtrations and using the fact that the kernel would give a non‑trivial relation among polylogarithms contradicting Zagier’s conjecture (proved for number fields by Goncharov–Levin).\n4. Prove surjectivity by computing dimensions: Borel’s theorem gives rank K₅^{(3)}(F)⊗ℚ = r₂(F) (the number of complex places), while the weight‑3 polylogarithmic complex has the same dimension via the known basis of Bloch‑Suslin relations; the equality of dimensions follows from the Borel regulator calculation.\n5. Verify that r respects the Lie cobra",
+    "research_mode": "team",
+    "source_exp_id": "2606.23863v1",
+    "status": "available",
+    "timestamp": "2026-06-25T11:11:42.242502+00:00",
+    "title": "Isomorphism between the weight‑3 Goncharov Lie coalgebra and the indecomposable part of K₅^{(3)}(F)⊗ℚ"
   },
   {
     "ambition_level": "extension",
@@ -8191,7 +8243,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8e01626",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domain_bridges": [],
     "domains": [
@@ -8204,7 +8256,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
@@ -9044,7 +9096,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4237ac67",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -9057,7 +9109,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },

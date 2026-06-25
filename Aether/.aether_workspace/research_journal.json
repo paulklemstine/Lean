@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6c118cd3",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Strong Divisibility Sequence Bridges\n\nThis cycle established the **lattice-theoretic** side of the strong-divisibility-sequence\n(`StrongDivSeq`) programme, complementing the exis",
-      "quality_score": 0.4716,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-06-18T21:05:56",
-      "title": "Proof Automation: Custom Lean 4 Tactics"
-    },
-    {
       "cycle_id": "fb1d7cfa",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\nThese build directly on the abstract engine in\n`Catalog/Geometry/JonesTemperleyLiebBraid4.lean`.\n\n## 1. Explicit Fibonacci / Jones `k = 5` path-model matrices\n\nInstantiate the abs",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-06-25T08:52:40",
       "title": "Diffusion Models as Stochastic Differential Equations"
+    },
+    {
+      "cycle_id": "854c699d",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\nThe following directions build on the component-kernel theorem\n(`specModSig_eq_card_components`) and its corollaries. Each is phrased so that\nthe next concrete formalization step",
+      "quality_score": 0.64162,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-25T11:11:04",
+      "title": "Spectral Modular Signatures of Formal Proof Difficulty"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8125600000000002
     }
   ],
-  "last_updated": "2026-06-25T08:52:40",
+  "last_updated": "2026-06-25T11:11:04",
   "open_questions": [
     {
       "context": "`appendCode_card`) proved `sorry`-free for arbitrary lengths; `hamming ⊕ hamming`",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "6d018212",
-        "quality": 0.5091087694974004,
-        "theorems": 222,
-        "title": "Randomly piercing algebraic sets and its implications"
-      },
-      {
         "cycle_id": "43fe3cd5",
         "quality": 0.37623999999999996,
         "theorems": 10,
@@ -3327,6 +3321,12 @@
         "quality": 0.7545600000000001,
         "theorems": 734,
         "title": "Alien Number Systems: Beyond Base-N"
+      },
+      {
+        "cycle_id": "854c699d",
+        "quality": 0.64162,
+        "theorems": 10,
+        "title": "Spectral Modular Signatures of Formal Proof Difficulty"
       }
     ],
     "Cryptography": [

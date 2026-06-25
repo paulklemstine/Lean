@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "854c699d",
     "filename": "spectral_modular_signatures_of_formal_proof_diffic.json",
     "pkg_num": 55,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.64162,
     "title": "Spectral Modular Signatures of Finite Graphs: The Component-Kernel Theorem"
   },
   {
@@ -1604,8 +1604,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "spectral_modular_signatures_of_formal_proof_diffic",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.64162,
+      "quality": "partial",
       "shape": "cube",
       "title": "Spectral Modular Signatures of Finite Graphs: The Component-Kernel Theorem"
     }

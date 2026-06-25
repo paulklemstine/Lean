@@ -16499,11 +16499,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "4237ac67",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16515,11 +16515,11 @@
         "Algebra"
       ],
       "id": "fd_0545",
-      "last_attempt_time": "2026-06-25T10:52:29.123847+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.64162,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.3999999999999999,
       "proof_strategy": "",
@@ -16529,7 +16529,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.376136+00:00",
       "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
@@ -34701,7 +34701,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [
         "MR1577579",
         "MR0025715",
@@ -34709,7 +34709,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "bd1f81a7",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34724,7 +34724,7 @@
         "Pythagorean"
       ],
       "id": "fd_2301",
-      "last_attempt_time": "2026-06-25T10:52:44.127366+00:00",
+      "last_attempt_time": "2026-06-23T15:32:42.673135+00:00",
       "last_reviewed_at": "2026-06-25T03:41:55.238483+00:00",
       "lean_theorem_stub": "theorem polya_tree_coeff_recurrence (k : ℕ) (hk : k ≥ 2) : polya_tree_count k = (1 / (k - 1)) * ∑ j in Finset.range k, polya_tree_count j * omega (k - j) := by\n  sorry",
       "lineage_refs": [],
@@ -34738,7 +34738,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23439v1",
       "source_path": "http://arxiv.org/abs/2606.23439v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T05:17:21.927856+00:00",
       "title": "Pólya tree coefficient divisor-sum recurrence"
@@ -37698,7 +37698,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Nat.factorial",
         "Nat.sqrt",
@@ -37710,7 +37710,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "fb5aee47",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37727,7 +37727,7 @@
         "Bridges"
       ],
       "id": "fd_2365",
-      "last_attempt_time": "2026-06-25T10:52:33.280132+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen Nat\n\n/-- Triangular form of the Brocard-Ramanujan conjecture: the only `n` such that\n`n! / 8` is triangular are `4`, `5`, and `7`. -/\ntheorem brocard_triangular_classification\n    (n y : Nat)\n    (hn : 4 ≤ n)\n    (htri : y * (y + 1) / 2 = n.factorial / 8) :\n    n = 4 ∨ n = 5 ∨ n = 7 := by\n  sorry\n\n/-- Equivalent Brown-number formulation. -/\ntheorem brocard_brown_number_classification\n    (n m : Nat)\n    (h : n.factorial + 1 = m ^ 2) :\n    (n = 4 ∧ m = 5) ∨ (n = 5 ∧ m = 11) ∨ (n = 7 ∧ m = 71) := by\n  sorry",
       "lineage_refs": [],
@@ -37741,7 +37741,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23485v1",
       "source_path": "http://arxiv.org/abs/2606.23485v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T16:30:05.276546+00:00",
       "title": "Brocard-Ramanujan Triangular Classification"
@@ -42168,13 +42168,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "f1dcc123",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42188,7 +42188,7 @@
         "Pythagorean"
       ],
       "id": "fd_2462",
-      "last_attempt_time": "2026-06-25T10:52:36.960070+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:40:40.605952+00:00",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
       "lineage_refs": [],
@@ -42202,7 +42202,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24877v1",
       "source_path": "http://arxiv.org/abs/2606.24877v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T11:12:45.893373+00:00",
       "title": "Upper bound on the number of strict alternating cycles in posets of bounded width"
@@ -43123,13 +43123,13 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "arXiv:2310.00000"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "80847fe0",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43144,7 +43144,7 @@
         "Bridges"
       ],
       "id": "fd_2483",
-      "last_attempt_time": "2026-06-25T10:52:47.958890+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lacunary_multiplier_theorem (D : Type*) [inhabited D] (h_lacunary : is_lacunary D) : ∃ α : (closed_half_open [0 1)^2) (δ : ℝ) [δ > 0], (∀ d ∈ D, torus_distance (inner_product d α) ≥ δ)",
       "lineage_refs": [],
@@ -43158,7 +43158,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22539v1",
       "source_path": "http://arxiv.org/abs/2606.22539v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T23:35:20.703960+00:00",
       "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
@@ -43344,11 +43344,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f8e01626",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43360,7 +43360,7 @@
         "Algebra"
       ],
       "id": "fd_2488",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T11:11:46.925362+00:00",
       "last_reviewed_at": "2026-06-25T03:40:40.605952+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43374,7 +43374,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-25T03:28:36.279962+00:00",
       "title": "Spectral Modular Signatures of Formal Proof Difficulty"
@@ -44108,6 +44108,49 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "ErdosSarkozy1992"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that for all integers k ≥ 3 and n ≥ 1, the minimal N = g_k(n) satisfies g_k(n) ≥ ⌈((k-1)/(k-2))^n⌉.",
+      "domain_bridges": [
+        "additive combinatorics",
+        "extremal set theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2505",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem g_k_n_lower_bound (k n : ℕ) (hk : 3 ≤ k) : (g_k n : ℝ) ≥ ((k-1 : ℝ)/(k-2 : ℝ))^n := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "combinatorial counting argument using ternary grid bandwidth",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24139v1",
+      "source_path": "http://arxiv.org/abs/2606.24139v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T11:11:19.428461+00:00",
+      "title": "Exponential Lower Bound for g_k(n) Conjecture"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "OEIS A287616",
         "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
         "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -44128,7 +44171,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2505",
+      "id": "fd_2506",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -44172,7 +44215,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2506",
+      "id": "fd_2507",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -44215,7 +44258,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2507",
+      "id": "fd_2508",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -44258,7 +44301,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2508",
+      "id": "fd_2509",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
@@ -44304,7 +44347,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2509",
+      "id": "fd_2510",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularity_MMsplit (a : ℕ) (b : List ℕ) (hb : ∀ r ∈ b, 1 ≤ r) :\n  let G := MM a b\n  let ν := (b.filter (· ≥ 2)).length\n  reg (edgeIdeal G) = ν + 1 :=\nby\n  -- proof goes here",
@@ -44347,7 +44390,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2510",
+      "id": "fd_2511",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem self_dual_code_26_uniqueness : ∀ (C D : Code), (C.is_self_dual ∧ C.length = 26 ∧ C.min_weight = 6) → (D.is_self_dual ∧ D.length = 26 ∧ D.min_weight = 6) → ∃ (perm : Fin 26 → Fin 26), perm • C = D",
@@ -44388,7 +44431,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2511",
+      "id": "fd_2512",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "dimension theorem for Lie algebras",
@@ -44434,7 +44477,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2512",
+      "id": "fd_2513",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem random_linear_code_discrepancy (q : ℕ) [Fact (Nat.Prime q)] (n ρ : ℕ) (hρ : ρ ≤ n) (ε : ℝ) (hε : 0 < ε) :\n  ∀ᵉ (C : subspace (fin n) (zmod q)),\n    (∃ k, C.dimension = k ∧ k = ⌈(1 - (1 / n) * real.log (ball_volume q n ρ) + ε) * n⌉) →\n    (∀ z : (fin n → zmod q),\n      let B := hamming_ball q n ρ z in\n      let expected := (C.card * B.card : ℝ) / (q ^ n) in\n      (C.card ∩ B.card : ℝ) =ᵐ[ℙ] (1 ± o 1) * expected))",
@@ -44486,7 +44529,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2513",
+      "id": "fd_2514",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_erdos_matching_conjecture {q : ℕ} (hq : Nat.Prime q) (n k s : ℕ) (hn : n ≥ (s + 1) * k) :\n  m_q q n k s = max (gaussian_binomial (gaussian_binomial q ((s + 1) * k - 1) k)\n                                     (gaussian_binomial q n k - q ^ (k * s) * gaussian_binomial q (n - s) k) :=\n  sorry\n\n-- Where:\n-- m_q q n k s := maximum cardinality of a family of k-dim subspaces of (ZMod q)^n\n--   with no s+1 members having a direct sum\n-- gaussian_binomial q n k := [n choose k]_q = ∏_{i=0}^{k-1} (q^{n-i} - 1)/(q^{i+1} - 1)\n-- max_binomial a b := max a b",
@@ -44535,7 +44578,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2514",
+      "id": "fd_2515",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace HypergraphRamsey\n\n/-- `ramseyNumber k s m` is the least N such that every red/blue coloring of\n    the k-subsets of `[N]` has a red s-set or a blue m-set. -/\nconstant ramseyNumber : ℕ → ℕ → ℕ → ℕ\n\n/-- `shiftNumber3 t` is the 3-color shift number s_3(t). -/\nconstant shiftNumber3 : ℕ → ℕ\n\n/-- Conjecture: the paper's `1/2` coefficient can be improved to `2/3`. -/\ntheorem ramsey_diag_gt_shift_two_thirds\n    (k : ℕ) (hk : 9 ≤ k) :\n    shiftNumber3 ((2 * k) / 3 - 3) < ramseyNumber k (k + 1) (k + 1) := by\n  sorry\n\nend HypergraphRamsey",
@@ -44584,7 +44627,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2515",
+      "id": "fd_2516",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\n/-- `jacobiA R S` is the formal power series\n    1 / ((q^S;q^R)_∞ (q^(R-S);q^R)_∞ (q^R;q^R)_∞). -/\nconstant jacobiA : ℕ → ℕ → PowerSeries ℤ\n\n/-- `truncJacobi R S k` is the finite bilateral sum\n    ∑_{j=-k+1}^{k} (-1)^j q^(R*j*(j-1)/2 + S*j). -/\nconstant truncJacobi : ℕ → ℕ → ℕ → PowerSeries ℤ\n\n/-- Coefficient of q^n in\n    (-1)^(k-1) * (T_{R,S,k} * A_{R,S}^c - A_{R,S}^{c-1}). -/\nnoncomputable def coloredTruncJacobiCoeff\n    (R S k c n : ℕ) : ℤ :=\n  PowerSeries.coeff ℤ n\n    ((((-1 : ℤ) ^ (k - 1)) •\n      (truncJacobi R S k * (jacobiA R S) ^ c - (jacobiA R S) ^ (c - 1))))\n\nconjecture colored_truncated_jacobi_coeff_nonneg\n    (R S k c n : ℕ)\n    (hk : 1 ≤ k) (hc : 1 ≤ c)\n    (hS : 1 ≤ S) (hSR : 2 * S ≤ R)\n    (hn : 1 ≤ n) :\n  0 ≤ coloredTruncJacobiCoeff R S k c n",
@@ -44626,7 +44669,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2516",
+      "id": "fd_2517",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem curse_of_dimensionality {d : ℕ} (hAssum : Assumptions d) (ε : ℝ) (hε : 0 < ε) (hεbound : ε ≤ 1/2) : info_complexity_plus d ε ≥ (min (A B) : ℝ) ^ d := by sorry",
@@ -44651,39 +44694,47 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "math.KT",
+        "math.AT",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions\n\nThe following directions build on the component-kernel theorem\n(`specModSig_eq_card_components`) and its corollaries. Each is phrased so that\nthe next concrete formalization step is clear.\n\n## 1. Connect the locally constant kernel to an explicit combinatorial Laplacian\n\nThe natural next theorem identifies `harmonicKernel G` with the kernel of the\ncombinatorial graph Laplacian `L = D - A`, where `A` is the adjacency matrix and\n`D` the degree matrix, both as `Matrix V V ℝ`. One would define `L`, show\n`f ∈ ker (L.mulVec) ↔ f ∈ harmonicKernel G` (using that the quadratic form\n`fᵀ L f = ∑_{u ~ v} (f u - f v)²` vanishes iff `f` is constant across edges), and\nthen read off `nullity L = number of components` as a corollary of the present\nresult. **The key insight is** that the harmonic kernel is already exactly the\nkernel of the Laplacian, so the matrix statement is a re-encoding rather than a\nnew theorem, and the spectral language becomes literally true. *Why now?* Mathlib\nnow has a mature `Matrix`, `mulVec`, and quadratic-form API, so the bridge from\nthe coordinate-free kernel to the matrix nullity is a finite, well-scoped task\nrather than an open-ended development.\n\n## 2. Extend from graphs to dependency hypergraphs and sheaves\n\nReal proof-dependency structures are not simple graphs: a lemma typically depends\non several others simultaneously, which is naturally a hypergraph, and the data\nattached to each declaration (its statement, its imports) suggests a cellular\nsheaf rather than a bare incidence relation. One would replace `SimpleGraph` by a\nhypergraph or by a sheaf on a poset, define the analogous \"sections constant\nacross hyperedges\" submodule, and seek a component/cohomology count. **The key\ninsight is** that the locally constant kernel is the degree-zero sheaf cohomology\nof the constant sheaf, so the graph theorem is the `H⁰` shadow of a sheaf-theoretic\nstatement that also exposes higher invariants `Hⁱ`. *Why now?* Formalized sheaf\nand homological-algebra infrastructure has matured enough in Mathlib that the\nzeroth-cohomology base case can be stated and matched against the present theorem,\ngiving a verified anchor for the higher theory.\n\n## 3. Compute signatures from exported Lean dependency DAGs\n\nThe invariant is only useful if it can be evaluated on real corpora. One would\ntake the dependency DAG that Lean already exposes (via the import graph and\n`#print axioms`-style traversal), symmetrize it to a `SimpleGraph` on the finite\nset of declarations, and compute `specModSig` by `decide`/`native_decide` on the\ncomponent count. **The key insight is** that `specModSig G = Fintype.card\nG.ConnectedComponent` turns an abstract dimension into a directly computable\ninteger, so the signature of an actual library becomes a number one can print and\ntrack. *Why now?* The `importGraph` tooling and reflective access to a project's\ndeclarations already ship with the toolchain, so the pipeline from a real Lean\nproject to a verified component count requires only glue code, not new metatheory.\n\n## 4. Compare the component signature with proof-compression metrics\n\nA guiding question is whether the component structure of a dependency graph\ncorrelates with how compressible the corresponding proofs are (term size after\n`whnf`, after `simp` normalization, or after de Bruijn sharing). One would\ninstrument a corpus, record both `specModSig` (and its refinements) and a\ncompression metric per module, and study the relationship empirically while\nkeeping the *definitions* of both quantities formal and verified. **The key\ninsight is** that the component signature gives a rigorously defined, isomorphism-\ninvariant `x`-axis (`specModSig_iso` guarantees presentation-independence) against\nwhich any compression metric can be honestly plotted. *Why now?* With the\nsignature both formalized and computable (directions 1 and 3), the comparison can\nbe done without circularity or hand-waving, and modern proof-mining datasets are\nlarge enough to make the correlation, if any, statistically meaningful — while we\nstress that no such asymptotic relationship is claimed by the present file.\n\n## 5. Formalize a reusable quotient-component API for spectral graph theory\n\nThe proofs here repeatedly use the same small toolkit: surjectivity of\n`connectedComponentMk`, the equivalence between subsingleton-of-components and\npreconnectedness, and the lift/pullback adjunction for component functions. These\ndeserve to be packaged as a standalone, well-documented API so that future\nspectral results do not re-derive them. **The key insight is** that almost every\n\"count the components\" argument factors through the single linear equivalence\n`harmonicKernelEquiv`, so exposing that equivalence and its naturality is the\nhighest-leverage piece of reusable infrastructure. *Why now?* Mathlib's\n`SimpleGraph.ConnectedComponent` API is stable but currently lacks the\nlinear-algebraic layer, so contributing the harmonic-kernel equivalence fills a\nconcrete gap and immediately serves any downstream spectral-graph development.\n",
-      "domain_bridges": [],
+      "description": "Conjecture: For any field F of characteristic zero, the natural map from the weight‑3 component PolyL₃(F) of the Goncharov Lie coalgebra to the indecomposable quotient of the third‑filtered algebraic K‑theory group K₅^{(3)}(F)⊗ℚ is an isomorphism of ℚ‑vector spaces, intertwining the Lie cobracket with the boundary map in Goncharov’s polylogarithmic complex of weight 3.",
+      "domain_bridges": [
+        "motivic cohomology",
+        "polylogarithms",
+        "Lie coalgebras"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
-        "Logic"
+        "Pythagorean"
       ],
-      "id": "fd_2517",
+      "id": "fd_2518",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem goncharov_weight_three_indecomposable_K_theory {F : Type*} [Field F] [Fact (CharP F = 0)] : (PolyL F 3 : Module ℚ) ≃ indecomposable_part (K_theory F 5 3) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "1. Use the Steinberg module presentation of PolyL_*(F) to identify PolyL₃(F) as the ℚ‑vector space generated by the symbols Li₃(a) and Li_{2,1}(a,b) subject to the weight‑3 functional equations of the trilogarithm.\n2. Construct a regulator map r: PolyL₃(F) → K₅^{(3)}(F)⊗ℚ via the Beilinson regulator on motivic cohomology H³_𝓜(F, ℚ(3)) and the identification of K₅^{(3)}(F)⊗ℚ with a quotient of this motivic cohomology.\n3. Show r is injective by comparing weight filtrations and using the fact that the kernel would give a non‑trivial relation among polylogarithms contradicting Zagier’s conjecture (proved for number fields by Goncharov–Levin).\n4. Prove surjectivity by computing dimensions: Borel’s theorem gives rank K₅^{(3)}(F)⊗ℚ = r₂(F) (the number of complex places), while the weight‑3 polylogarithmic complex has the same dimension via the known basis of Bloch‑Suslin relations; the equality of dimensions follows from the Borel regulator calculation.\n5. Verify that r respects the Lie cobra",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "854c699d",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/854c699d_retry1",
+      "source_exp_id": "2606.23863v1",
+      "source_path": "http://arxiv.org/abs/2606.23863v1",
       "status": "available",
-      "thread_id": "th_c17cfc78",
-      "timestamp": "2026-06-25T11:10:56.043392+00:00",
-      "title": "The following directions build on the component-kernel theorem"
+      "thread_id": "",
+      "timestamp": "2026-06-25T11:11:42.242502+00:00",
+      "title": "Isomorphism between the weight‑3 Goncharov Lie coalgebra and the indecomposable part of K₅^{(3)}(F)⊗ℚ"
     },
     {
       "ambition_level": "extension",
@@ -48863,11 +48914,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "e20c7594",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48879,7 +48930,7 @@
         "Logic"
       ],
       "id": "seed_231",
-      "last_attempt_time": "2026-06-25T10:52:24.229452+00:00",
+      "last_attempt_time": "2026-06-11T15:57:07.016475+00:00",
       "last_reviewed_at": "2026-06-09T15:03:13.623660+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -48893,7 +48944,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:16.980012+00:00",
       "title": "Natural Proofs Barrier: Formalization"
@@ -49600,11 +49651,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "292d0525",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -49616,7 +49667,7 @@
         "Algebra"
       ],
       "id": "seed_333",
-      "last_attempt_time": "2026-06-25T10:52:40.374249+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:28:04.161589+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -49630,7 +49681,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432607+00:00",
       "title": "Quadratic Reciprocity: Five Proofs Formalized"
@@ -124779,7 +124830,7 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 304,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 57,
     "Computation": 100,
@@ -124793,7 +124844,7 @@
     "Probability": 1,
     "Pythagorean": 111,
     "Shared": 6,
-    "Tropical": 34
+    "Tropical": 33
   },
   "recent_theme_keywords": {
     "`sorry`": 356,
@@ -124831,7 +124882,7 @@
     "first": 325,
     "first-order": 19,
     "formal": 133,
-    "formalize": 225,
+    "formalize": 224,
     "framework": 103,
     "function": 204,
     "functions": 99,
@@ -124843,7 +124894,7 @@
     "insight": 305,
     "invariants": 28,
     "mathematical": 47,
-    "matrix": 84,
+    "matrix": 83,
     "mature": 28,
     "metric": 132,
     "natural": 196,
@@ -124884,7 +124935,7 @@
     "structure": 227,
     "structures": 48,
     "systems": 72,
-    "theorem": 398,
+    "theorem": 397,
     "theorems": 462,
     "theories": 33,
     "theory": 350,
@@ -124892,7 +124943,7 @@
     "topological": 91,
     "topology": 65,
     "transcendence": 3,
-    "tropical": 114,
+    "tropical": 113,
     "universality": 53,
     "whether": 50,
     "zombies": 3

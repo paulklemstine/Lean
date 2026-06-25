@@ -62,7 +62,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
   {
-    "consumed_by_exp_id": "e20c7594",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domains": [
       "Computation",
@@ -72,7 +72,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:16.980012+00:00",
     "title": "Natural Proofs Barrier: Formalization"
   },
@@ -628,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "292d0525",
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domains": [
       "NumberTheory",
@@ -638,7 +638,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -1702,7 +1702,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
   },
   {
-    "consumed_by_exp_id": "bd1f81a7",
+    "consumed_by_exp_id": "",
     "description": "Let $a_k$ denote the number of P\u00f3lya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the P\u00f3lya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
     "domains": [
       "Pythagorean"
@@ -1711,7 +1711,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T05:17:21.927856+00:00",
     "title": "P\u00f3lya tree coefficient divisor-sum recurrence"
   },
@@ -2616,7 +2616,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite-type classification for Grassmannian partial-flag seeds"
   },
   {
-    "consumed_by_exp_id": "fb5aee47",
+    "consumed_by_exp_id": "",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n \u2265 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domains": [
       "Bridges"
@@ -2625,7 +2625,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -3379,7 +3379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ESI_lower_bound_conjecture"
   },
   {
-    "consumed_by_exp_id": "6f3341b0",
+    "consumed_by_exp_id": "",
     "description": "Formulate a precise conjecture stating that the endpoint Fourier restriction inequality for the three\u2011dimensional paraboloid over a prime field \ud835\udd3d\u209a (with \u20131 non\u2011square) holds if and only if the set of integer lattice points on the Euclidean paraboloid  \\(\\{(x,y,z)\\in\\mathbb Z^3 : z = x^2 + y^2\\}\\) is a \u039b(3) set. This makes the qualitative observation in the paper into a bidirectional, falsifiable statement that can be expressed in the language of finite\u2011field harmonic analysis and additive combinatorics, and thus be formalised in Lean 4.",
     "domains": [
       "Pythagorean",
@@ -3389,7 +3389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T07:47:01.901499+00:00",
     "title": "Equivalence between the finite\u2011field endpoint restriction estimate for the 3\u2011dimensional paraboloid and the \u039b(3) property of the integer lattice paraboloid"
   },
@@ -3889,7 +3889,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
   },
   {
-    "consumed_by_exp_id": "f1dcc123",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every finite poset P of size n and width w \u2265 2, the number of strict alternating cycles satisfies s_w(P) \u2264 4\u00b7(w\u22121)!\u00b7(n(n+w)/(2w^2))^w.",
     "domains": [
       "Pythagorean"
@@ -3898,7 +3898,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T11:12:45.893373+00:00",
     "title": "Upper bound on the number of strict alternating cycles in posets of bounded width"
   },
@@ -4176,7 +4176,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
   {
-    "consumed_by_exp_id": "80847fe0",
+    "consumed_by_exp_id": "",
     "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
     "domains": [
       "Bridges"
@@ -4185,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T23:35:20.703960+00:00",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
@@ -4437,11 +4437,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for all integers k \u2265 3 and n \u2265 1, the minimal N = g_k(n) satisfies g_k(n) \u2265 \u2308((k-1)/(k-2))^n\u2309.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2505",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24139v1",
+    "status": "available",
+    "timestamp": "2026-06-25T11:11:19.428461+00:00",
+    "title": "Exponential Lower Bound for g_k(n) Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2505",
+    "id": "fd_2506",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4455,7 +4469,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2506",
+    "id": "fd_2507",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4469,7 +4483,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2507",
+    "id": "fd_2508",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4483,7 +4497,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -4498,7 +4512,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24822v1",
@@ -4512,7 +4526,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2510",
+    "id": "fd_2511",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24573v1",
@@ -4527,7 +4541,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2511",
+    "id": "fd_2512",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -4542,7 +4556,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2512",
+    "id": "fd_2513",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
@@ -4556,7 +4570,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2513",
+    "id": "fd_2514",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -4570,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2514",
+    "id": "fd_2515",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -4585,7 +4599,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2515",
+    "id": "fd_2516",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24243v1",
@@ -4600,13 +4614,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2516",
+    "id": "fd_2517",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
     "status": "available",
     "timestamp": "2026-06-25T10:52:18.858858+00:00",
     "title": "Exponential lower bound for non\u2011negative QMC integration in high dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any field F of characteristic zero, the natural map from the weight\u20113 component PolyL\u2083(F) of the Goncharov Lie coalgebra to the indecomposable quotient of the third\u2011filtered algebraic K\u2011theory group K\u2085^{(3)}(F)\u2297\u211a is an isomorphism of \u211a\u2011vector spaces, intertwining the Lie cobracket with the boundary map in Goncharov\u2019s polylogarithmic complex of weight\u00a03.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2518",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23863v1",
+    "status": "available",
+    "timestamp": "2026-06-25T11:11:42.242502+00:00",
+    "title": "Isomorphism between the weight\u20113 Goncharov Lie coalgebra and the indecomposable part of K\u2085^{(3)}(F)\u2297\u211a"
   },
   {
     "consumed_by_exp_id": "",
@@ -4809,7 +4838,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8e01626",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domains": [
       "Novelty",
@@ -4819,7 +4848,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
@@ -5447,7 +5476,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "4237ac67",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -5457,7 +5486,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
