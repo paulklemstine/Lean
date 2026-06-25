@@ -1,51 +1,4 @@
 // Aether — Package Loading & Rendering
-
-window.renderMarkdownWithMath = function(markdown) {
-    if (!markdown) return '';
-    const mathBlocks = [];
-    let counter = 0;
-    
-    let text = markdown;
-
-    // Display math: $$ ... $$
-    text = text.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
-        const id = `MATHBLOCKDISPLAY${counter++}MATHBLOCK`;
-        mathBlocks.push({ id, content: match });
-        return id;
-    });
-
-    // Display math: \[ ... \]
-    text = text.replace(/\\\[([\s\S]+?)\\\]/g, (match) => {
-        const id = `MATHBLOCKDISPLAY${counter++}MATHBLOCK`;
-        mathBlocks.push({ id, content: match });
-        return id;
-    });
-
-    // Inline math: \( ... \)
-    text = text.replace(/\\\(([\s\S]+?)\\\)/g, (match) => {
-        const id = `MATHBLOCKINLINE${counter++}MATHBLOCK`;
-        mathBlocks.push({ id, content: match });
-        return id;
-    });
-
-    // Inline math: $ ... $
-    text = text.replace(/\$([^$]+?)\$/g, (match, inner) => {
-        if (inner.includes('\n\n')) return match;
-        const id = `MATHBLOCKINLINE${counter++}MATHBLOCK`;
-        mathBlocks.push({ id, content: match });
-        return id;
-    });
-
-    let html = marked.parse(text);
-
-    // Restore math blocks
-    mathBlocks.forEach(block => {
-        html = html.replace(block.id, () => block.content);
-    });
-
-    return html;
-};
-
 document.addEventListener('DOMContentLoaded', () => {
     const welcomeScreen = document.getElementById('welcome-screen');
     const packageView = document.getElementById('package-view');
@@ -231,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Article
         const articleDiv = document.getElementById('content-article');
         if (data.article) {
-            articleDiv.innerHTML = window.renderMarkdownWithMath(data.article);
+            articleDiv.innerHTML = marked.parse(data.article);
         } else {
             articleDiv.innerHTML = '<p style="color:var(--text-muted)">No article provided.</p>';
         }
@@ -239,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Paper
         const paperDiv = document.getElementById('content-paper');
         if (data.research_paper) {
-            paperDiv.innerHTML = window.renderMarkdownWithMath(data.research_paper);
+            paperDiv.innerHTML = marked.parse(data.research_paper);
         } else {
             paperDiv.innerHTML = '<p style="color:var(--text-muted)">No research paper provided.</p>';
         }
@@ -829,7 +782,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let explanationHtml = '';
                 const desc = (item.description || item.explanation || '').replace(/\\n/g, '\n');
                 if (desc.trim()) {
-                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main); white-space: pre-line;">${window.renderMarkdownWithMath(desc)}</div>`;
+                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main); white-space: pre-line;">${marked.parse(desc)}</div>`;
                 }
 
                 // Check what code fields we have
@@ -990,7 +943,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const narrativeDiv = document.getElementById('content-directions-narrative');
         const fd = pkgData.future_directions;
         if (fd && typeof fd === 'string' && fd.length > 50 && !fd.endsWith('.md')) {
-            narrativeDiv.innerHTML = window.renderMarkdownWithMath(fd);
+            narrativeDiv.innerHTML = marked.parse(fd);
         } else {
             narrativeDiv.innerHTML = '<p style="color:var(--text-muted)">No future directions narrative for this package.</p>';
         }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6f9401e1",
-      "domain": "NumberTheory",
-      "key_insight": "# FUTURE DIRECTIONS — Valuation-Depth → Tropical Functor\n\nThis document collects bold, falsifiable conjectures arising from the deepening cycle\nrecorded in:\n\n* `Catalog/Bridges/ValuationDepthTropicalF",
-      "quality_score": 0.72651,
-      "sorry_count": 1,
-      "theorem_count": 17,
-      "timestamp": "2026-06-16T04:13:04",
-      "title": "Deepening: Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFuncto"
-    },
-    {
       "cycle_id": "29017e68",
       "domain": "Physics",
       "key_insight": "# FUTURE_DIRECTIONS — Rips Filtrations ↔ Tropical Valuation Objects\n\nCycle output. This cycle formalized, in Lean 4 (0 sorries, only the standard\n`propext`/`Classical.choice`/`Quot.sound` axioms), the",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-06-25T18:22:22",
       "title": "Langlands Correspondence: GL(1) Case"
+    },
+    {
+      "cycle_id": "ab9c78a7",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Extremal Graph Theory (Turán / Kruskal–Katona / Removal / Roth)\n\nDerived from this cycle's findings. The cycle added two compiling, sorry-free Lean files:\n\n* `KruskalKatonaGraphB",
+      "quality_score": 0.72533,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-25T18:50:27",
+      "title": "Extremal Graph Theory: Turán and Szemerédi"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c9ad0581",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n## 1. From eigenvectors to arbitrary secret vectors\n\nThe current boundary analysis assumes the secret vector is an exact tropical\neigenvector of the public matrix. Real protocols",
-      "quality_score": 0.829866,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-19T09:36:53",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
     {
       "cycle_id": "54f377a3",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 8,
       "timestamp": "2026-06-25T18:22:22",
       "title": "Langlands Correspondence: GL(1) Case"
+    },
+    {
+      "cycle_id": "ab9c78a7",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Extremal Graph Theory (Turán / Kruskal–Katona / Removal / Roth)\n\nDerived from this cycle's findings. The cycle added two compiling, sorry-free Lean files:\n\n* `KruskalKatonaGraphB",
+      "quality_score": 0.72533,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-25T18:50:27",
+      "title": "Extremal Graph Theory: Turán and Szemerédi"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cb79327f",
-      "domain": "Cryptography",
-      "name": "mov_reduction",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "cb79327f",
-      "domain": "Cryptography",
-      "name": "mov_recovers_dlog",
-      "quality": 0.77
-    },
-    {
-      "cycle_id": "0dfef380",
-      "domain": "Bridges",
-      "name": "central_binom_eq",
-      "quality": 0.7484
-    },
     {
       "cycle_id": "0dfef380",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "card_galois_group_eq_to",
       "quality": 0.7235799999999999
+    },
+    {
+      "cycle_id": "ab9c78a7",
+      "domain": "Novelty",
+      "name": "lives",
+      "quality": 0.72533
+    },
+    {
+      "cycle_id": "ab9c78a7",
+      "domain": "Novelty",
+      "name": "triangles_sized",
+      "quality": 0.72533
+    },
+    {
+      "cycle_id": "ab9c78a7",
+      "domain": "Novelty",
+      "name": "shadow_triangles_subset_edges",
+      "quality": 0.72533
     }
   ],
-  "last_updated": "2026-06-25T18:22:22",
+  "last_updated": "2026-06-25T18:50:27",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "91104b94",
-        "quality": 0.67432,
-        "theorems": 18,
-        "title": "Consciousness as Integrated Information"
-      },
-      {
         "cycle_id": "758d973b",
         "quality": 0.51744,
         "theorems": 8,
@@ -3637,6 +3631,12 @@
         "quality": 0.7235799999999999,
         "theorems": 8,
         "title": "Langlands Correspondence: GL(1) Case"
+      },
+      {
+        "cycle_id": "ab9c78a7",
+        "quality": 0.72533,
+        "theorems": 8,
+        "title": "Extremal Graph Theory: Turán and Szemerédi"
       }
     ],
     "NumberTheory": [

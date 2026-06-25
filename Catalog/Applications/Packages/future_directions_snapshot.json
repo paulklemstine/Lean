@@ -958,7 +958,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e8e485b",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -972,7 +972,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -3024,7 +3024,7 @@
       "Polymatroid_connectivity",
       "Slice_projections"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e8c93c85",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domain_bridges": [
       "Matroid_theory",
@@ -3040,7 +3040,7 @@
     "proof_strategy": "Assume for contradiction that there exist indices $j < k < l$ such that the $j$-th and $l$-th slice-projections are connected, but the $k$-th is disconnected. Use the submodularity of the polymatroid rank function and the lattice of flats to demonstrate that if $P^{(k)}$ is disconnected by a partition $(A, B)$, then either $P^{(j)}$ or $P^{(l)}$ must also be disconnected by a related partition, contradicting the initial assumption.",
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -3106,7 +3106,7 @@
       "math.CO/ramsey_theory",
       "math.CO/combinatorial_lines"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6be1a63",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex Δ(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) ≥ 22 and HJ(4,2) ≥ 14.",
     "domain_bridges": [
       "combinatorics",
@@ -3122,7 +3122,7 @@
     "proof_strategy": "Formalize coordinate-symmetric colorings as functions on letter-count vectors (elements of the discrete simplex). Define corner tuples as the image of combinatorial lines under the letter-count map. The forward direction follows from the fact that a monochromatic line projects to a monochromatic corner tuple. The reverse direction uses the symmetry: if a corner tuple is monochromatic, the corresponding line (reconstructed by assigning active coordinates to the varying letter and fixed coordinates according to the count vector) is monochromatic in the original coloring by symmetry. The key invariant is that symmetric colorings factor through the letter-count projection.",
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -6466,7 +6466,7 @@
       "Vertex operator algebras and symmetric functions",
       "Pfaffian Giambelli formulas"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1e8d4ba",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_λ^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition λ = (λ₁, λ₂, ..., λ_k) with λ₁ > λ₂ > ... > λ_k ≥ 0, the formula takes the form s_λ^Q(t) = Pf[Y_{λ_i - i + j}(t) + Y_{λ_j - j + i}(t)]_{1≤i<j≤k} · vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domain_bridges": [
       "Vertex operator methods in symmetric function theory",
@@ -6482,7 +6482,7 @@
     "proof_strategy": "Formalize the operator construction in Lean 4, prove the Clifford algebra relation [Y_m(t), Y_n(t)]₊ = 2(-1)^mδ_{m,-n}, then establish the Pfaffian determinant formula using standard Pfaffian identities and the operator product expansion, verifying the t=0 specialization recovers the classical Schur Q-function identity.",
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -8478,6 +8478,59 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "MossPedersen2026",
+      "Conjecture 5.7",
+      "Conjecture B.25"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every even integer n ≥ 4, there exists a maximal standard social decision frame whose incoherence index (the length of the shortest perfectly balanced sequence of majority or tie sets) equals n. This would strengthen the known result that incoherence indices are unbounded by showing that every sufficiently large even number is actually attained.",
+    "domain_bridges": [
+      "combinatorics",
+      "vector spaces over ℚ",
+      "social choice theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2540",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use an algebraic construction based on orthogonal vectors in ℚ^d to encode voting blocs. For a given even n=2k+2, build a family of half-sized subsets corresponding to vectors with pairwise zero dot product, then extend to a maximal frame by adding complementary choices for all remaining subsets of size n/2. Verify that any perfectly balanced sequence of majority/tie sets must have length at least n, and exhibit a sequence of length exactly n, establishing the incoherence index.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25954v1",
+    "status": "available",
+    "timestamp": "2026-06-25T18:50:55.115611+00:00",
+    "title": "Realization of all even incoherence indices ≥4 by maximal standard frames"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2210.12345",
+      "Brown–Erdős–Sós conjecture",
+      "Keevash–Long 2023"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integers r ≥ 3 and k ≥ 3 there exist arbitrarily large linear r‑uniform hypergraphs on n vertices with edge count just below the bound given in Theorem 1 that contain no ((r‑2)k+3, k)‑configuration. In other words, the density threshold in Theorem 1 is sharp up to lower‑order terms.",
+    "domain_bridges": [
+      "Extremal Graph Theory",
+      "Additive Combinatorics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2541",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit families of linear r‑uniform hypergraphs (e.g. using finite projective planes, affine geometries, or suitable random constructions) whose edge count meets the bound in Theorem 1 minus an arbitrarily small ε. Prove combinatorially that these hypergraphs avoid any ((r‑2)k+3, k)‑configuration by analysing intersection patterns of edges and counting arguments. The construction should show that any attempt to exceed this edge count would force the existence of the forbidden configuration, thereby proving the bound in Theorem 1 is tight.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T18:51:30.410771+00:00",
+    "title": "Optimality of the Density Threshold for Linear r‑Uniform Hypergraphs"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -8691,7 +8744,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "199a5960",
     "description": "Prove that for every integer n ≥ 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
     "domain_bridges": [],
     "domains": [
@@ -8703,7 +8756,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erdős–Straus Conjecture"
   },
@@ -9282,7 +9335,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f516403",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -9295,7 +9348,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

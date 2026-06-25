@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ab9c78a7",
     "filename": "extremal_graph_theory_turn_and_szemerdi.json",
     "pkg_num": 60,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.72533,
     "title": "Extremal Graph Theory: Turan, Kruskal-Katona, Triangle Removal, and Roth"
   },
   {
@@ -1749,8 +1749,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "extremal_graph_theory_turn_and_szemerdi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.72533,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Extremal Graph Theory: Turan, Kruskal-Katona, Triangle Removal, and Roth"
     }
