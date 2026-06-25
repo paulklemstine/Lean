@@ -4338,6 +4338,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every k >= 1 and every n >= 2*k + 1, there exists a maximal standard social decision frame on exactly 2*n voters whose shortest perfectly balanced majority obstruction has length exactly 2*k + 2. Equivalently, the sparse infinite sequence of universe sizes supplied by the geometric construction can be filled in: once the half-size n is at least 2*k + 1, every larger even electorate size supports a maximal standard frame with incoherence index 2*k + 2.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2491",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25954v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:15:17.784537+00:00",
+    "title": "Cofinite realization of every even incoherence index by maximal standard frames"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2491",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:16:08.696484+00:00",
+    "title": "Triangular + second pentagonal + second nonagonal universality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

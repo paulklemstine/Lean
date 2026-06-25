@@ -7404,6 +7404,62 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Moss--Pedersen coherence criterion for measurable strict-majority frames",
+      "Conjecture 5.7 of Moss--Pedersen, resolved negatively by unbounded incoherence index",
+      "Conjecture B.25 middle-layer family from Moss--Pedersen",
+      "Mathlib: Finset, Fintype, List.countP, finite Boolean cubes"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every k >= 1 and every n >= 2*k + 1, there exists a maximal standard social decision frame on exactly 2*n voters whose shortest perfectly balanced majority obstruction has length exactly 2*k + 2. Equivalently, the sparse infinite sequence of universe sizes supplied by the geometric construction can be filled in: once the half-size n is at least 2*k + 1, every larger even electorate size supports a maximal standard frame with incoherence index 2*k + 2.",
+    "domain_bridges": [
+      "zero-sum sequences in the middle layer of the Boolean cube",
+      "oriented matroids and antipodal orientations",
+      "finite additive measure representation of qualitative probability",
+      "hypergraph discrepancy and balanced block designs"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2491",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Start from the paper's construction at the base size 2*(2*k+1). To pass from n to n+1, add one complementary pair of new voters whose membership profiles across the distinguished obstruction blocks are complementary (k+1)-subsets of the 2*k+2 obstruction positions), so the existing obstruction remains perfectly balanced and all distinguished blocks remain half-sized. Then orient all newly created middle-layer complementary pairs by a rational lexicographic perturbation extending the original separating functional. The key finite-avoidance lemma is that the perturbation can be chosen outside the finite union of hyperplanes corresponding to balanced majority sequences of length <= 2*k; hence no shorter obstruction is introduced. Iterating gives all n >= 2*k+1.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25954v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:15:17.784537+00:00",
+    "title": "Cofinite realization of every even incoherence index by maximal standard frames"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "OEIS A287616",
+      "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
+      "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
+    "domain_bridges": [
+      "polygonal numbers to constrained representations by diagonal ternary quadratic forms",
+      "elementary Nat arithmetic to integral quadratic forms with congruence side conditions",
+      "computer-assisted finite descent certificates to Lean 4 formalization"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2491",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:16:08.696484+00:00",
+    "title": "Triangular + second pentagonal + second nonagonal universality"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
