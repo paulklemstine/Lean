@@ -4366,6 +4366,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer parameters \\(a,b,c,d\\) with \\(a,b,c,d\\ge 0\\) and any base \\(q\\) with \\(|q|<1\\), define the rank\u2011four Nahm sum\n\\[\\Phi_{a,b,c,d}(q) \\;:=\\; \\sum_{i,j,k,l\\ge 0}\\frac{q^{\\frac12(i^2+aj^2+bk^2+cl^2)-ij-jk-kl-dj+ek+fl}}{(q;q)_i\\,(q;q)_j\\,(q;q)_k\\,(q;q)_l} .\\]\nThe conjecture asserts that when the coefficient matrix of the quadratic form is positive\u2011definite and the linear terms satisfy a certain balance condition (namely \\(e=\\frac{a+b}{2}\\) and \\(f=\\frac{b+c}{2}\\)), the sum collapses to a simple product of Euler functions:\n\\[\\Phi_{a,b,c,d}(q) \\;=\\; C_{a,b,c,d}\\, q^{\\kappa_{a,b,c,d}}\\,\\frac{J_{m}^{\\,s}}{J_{1}^{\\,t}},\\]\nwhere \\(J_m = (q^m; q^m)_\\infty\\), the exponent \\(\\kappa_{a,b,c,d}\\) and the constants \\(C_{a,b,c,d}, m, s, t\\) are explicit rational functions of \\(a,b,c,d\\). This family contains the four identities proved in the paper as the special cases\n\\((a,b,c,d) = (1,0,0,2), (0,2,2,2), (1,0,0,1), (2,2,2,2)\\).\n\n**Conjecture (Precise Form).** Let \\(A=\\begin{pmatrix}1 & -\\frac12 & 0 & -\\frac12\\\\ -\\frac12 & 1 & -\\frac12 & -\\frac12\\\\ 0 & -\\frac12 & 1 & -\\frac12\\\\ -\\frac12 & -\\frac12 & -\\frac12 & 1\\end{pmatrix}\\). For any integer vector \\(\\mathbf{u}=(u_1,u_2,u_3,u_4)\\) with \\(u_i\\ge 0\\) define\n\\[\\Phi_{\\mathbf{u}}(q) = \\sum_{i,j,k,l\\ge 0} \\frac{q^{\\frac12\\,(i,j,k,l)A(i,j,k,l)^T + \\mathbf{u}\\cdot(i,j,k,l)}}{(q;q)_i (q;q)_j (q;q)_k (q;q)_l}.\\]\nThen\n\\[\\Phi_{\\mathbf{u}}(q) = 2^{\\alpha(\\mathbf{u})}\\, q^{\\beta(\\mathbf{u})}\\, \\frac{J_{2}^{\\, \\gamma(\\mathbf{u})}}{J_{1}^{\\, \\delta(\\mathbf{u})}},\\]\nwhere the integer\u2011valued functions \\(\\alpha,\\beta,\\gamma,\\delta\\) are given by\n\\[\\alpha(\\mathbf{u}) = u_1+u_2+u_3+u_4 - 2,\\quad \\beta(\\mathbf{u}) = -\\frac{\\lVert\\mathbf{u}\\rVert_1}{2},\\]\n\\[\\gamma(\\mathbf{u}) = 6 - \\frac{\\lVert\\mathbf{u}\\rVert_1}{2},\\quad \\delta(\\mathbf{u}) = 6 - \\frac{\\lVert\\mathbf{u}\\rVert_1}{2}.\\]\nIn particular, for \\(\\mathbf{u} = (0,0,0,0)\\) we recover the first identity of Theorem\u202f1, and for \\(\\mathbf{u} = (2,2,2,2)\\) we recover Theorem\u202f2.\n\n**Why this is falsifiable.** The statement gives an explicit closed\u2011form product for each \\(\\Phi_{\\mathbf{u}}\\). One can compute coefficients of the series expansion of both sides for any concrete \\(\\mathbf{u}\\) (e.g., using SageMath or Mathematica) and check equality up to a high order in \\(q\\). A single counter\u2011example disproves the conjecture.\n\n**Domain**: Number Theory (q\u2011series, modular forms) and Combinatorics.\n\n**Catalog references**: [Cao\u2011Wang 2025, Conjecture\u202f3.2], [Cao\u2011Wang 2025, Conjecture\u202f3.4], [Andrews\u2011Berndt 2005, q\u2011series identities].\n\n**Domain bridges**: Connects the theory of Nahm sums (modular q\u2011hypergeometric series) with the classical theory of theta functions and Euler products.\n\n**Ambition level**: \"extension\" \u2013 it extends the proven four identities to an infinite family.\n\n**Proof strategy**: Use the Bailey\u2011pair / Bailey\u2011chain machinery to transform the multi\u2011sum into a product. The quadratic form matrix \\(A\\) is unimodular, enabling a change of variables that separates the sum",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2492",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25866v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:33:11.850404+00:00",
+    "title": "Generalized Rank\u2011Four Nahm Sum Identity with Quadratic Form Parameter"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
