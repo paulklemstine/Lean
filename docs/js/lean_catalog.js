@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (catalogLink) catalogLink.classList.remove('active');
     };
 
-    function showLeanCatalog() {
+    async function showLeanCatalog() {
         if (welcomeScreen) welcomeScreen.classList.add('hidden');
         if (packageView) packageView.classList.add('hidden');
         if (directionsView) directionsView.classList.add('hidden');
@@ -35,8 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('#package-list li').forEach(li => li.classList.remove('active'));
         }
 
-        buildCatalogData();
-        renderCatalog();
+        if (allLeanFiles.length === 0) {
+            await buildCatalogData();
+        } else {
+            renderCatalog();
+        }
     }
 
     catalogLink.addEventListener('click', (e) => {
@@ -44,43 +47,55 @@ document.addEventListener('DOMContentLoaded', () => {
         showLeanCatalog();
     });
 
-    function buildCatalogData() {
+    async function buildCatalogData() {
         if (!window.PACKAGE_INDEX) return;
         
         allLeanFiles = [];
         theoremIndex = {};
         const domains = new Set();
+        
+        if (catalogContent) {
+            catalogContent.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted);">Loading Lean proof catalog...</div>';
+        }
 
-        window.PACKAGE_INDEX.forEach(pkg => {
-            if (pkg.domain) domains.add(pkg.domain);
+        const promises = window.PACKAGE_INDEX.map(pkgMeta => {
+            if (pkgMeta.domain) domains.add(pkgMeta.domain);
             
-            if (pkg.lean_proofs && pkg.lean_proofs.length > 0) {
-                pkg.lean_proofs.forEach(proof => {
-                    const fileObj = {
-                        pkg: pkg,
-                        file: proof.file,
-                        name: proof.name,
-                        code: proof.code,
-                        domain: pkg.domain,
-                        theorems: []
-                    };
-                    
-                    // Extract theorem names from code for hyperlinking
-                    const lines = proof.code.split('\n');
-                    const declRegex = /^(?:theorem|lemma|def|example)\s+([a-zA-Z0-9_]+)/;
-                    lines.forEach(line => {
-                        const match = line.match(declRegex);
-                        if (match && match[1]) {
-                            const thmName = match[1];
-                            fileObj.theorems.push(thmName);
-                            theoremIndex[thmName] = fileObj;
-                        }
-                    });
-                    
-                    allLeanFiles.push(fileObj);
-                });
-            }
+            const filename = pkgMeta.filename || (pkgMeta.exp_id + '.package.json');
+            return fetch(`Packages/${filename}`)
+                .then(res => res.json())
+                .then(pkg => {
+                    if (pkg.lean_proofs && pkg.lean_proofs.length > 0) {
+                        pkg.lean_proofs.forEach(proof => {
+                            const fileObj = {
+                                pkg: pkgMeta,
+                                file: proof.file,
+                                name: proof.name,
+                                code: proof.code,
+                                domain: pkgMeta.domain,
+                                theorems: []
+                            };
+                            
+                            // Extract theorem names from code for hyperlinking
+                            const lines = proof.code.split('\n');
+                            const declRegex = /^(?:theorem|lemma|def|example)\s+([a-zA-Z0-9_]+)/;
+                            lines.forEach(line => {
+                                const match = line.match(declRegex);
+                                if (match && match[1]) {
+                                    const thmName = match[1];
+                                    fileObj.theorems.push(thmName);
+                                    theoremIndex[thmName] = fileObj;
+                                }
+                            });
+                            
+                            allLeanFiles.push(fileObj);
+                        });
+                    }
+                })
+                .catch(err => console.error("Error loading package", pkgMeta.exp_id, err));
         });
+
+        await Promise.all(promises);
 
         // Update domain filter
         if (domainFilter && domainFilter.options.length <= 1) {
@@ -91,7 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 domainFilter.appendChild(opt);
             });
         }
+        
+        renderCatalog();
     }
+        
+
 
     function renderCatalog() {
         if (!catalogContent) return;
