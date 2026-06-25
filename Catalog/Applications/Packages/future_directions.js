@@ -195,7 +195,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Standard Conjectures on Algebraic Cycles"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f88074cd",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
     "domains": [
       "Algebra",
@@ -205,7 +205,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:17.429886+00:00",
     "title": "Whitehead Problem: Independence from ZFC"
   },
@@ -3936,12 +3936,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_\u03bb^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition \u03bb = (\u03bb\u2081, \u03bb\u2082, ..., \u03bb_k) with \u03bb\u2081 > \u03bb\u2082 > ... > \u03bb_k \u2265 0, the formula takes the form s_\u03bb^Q(t) = Pf[Y_{\u03bb_i - i + j}(t) + Y_{\u03bb_j - j + i}(t)]_{1\u2264i<j\u2264k} \u00b7 vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2460",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22058v1",
+    "status": "available",
+    "timestamp": "2026-06-25T02:07:55.532399+00:00",
+    "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3955,7 +3969,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3970,7 +3984,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3984,7 +3998,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3999,7 +4013,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -4013,7 +4027,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -4027,7 +4041,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -4041,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -4055,7 +4069,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -4070,7 +4084,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2469",
+    "id": "fd_2470",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -4084,7 +4098,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2470",
+    "id": "fd_2471",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -4098,7 +4112,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2471",
+    "id": "fd_2472",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -4113,7 +4127,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2472",
+    "id": "fd_2473",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
@@ -4127,7 +4141,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2473",
+    "id": "fd_2474",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -4141,7 +4155,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2474",
+    "id": "fd_2475",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -4156,7 +4170,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2475",
+    "id": "fd_2476",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23024v1",
@@ -4171,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2476",
+    "id": "fd_2477",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -4185,7 +4199,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2477",
+    "id": "fd_2478",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
@@ -4199,7 +4213,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2478",
+    "id": "fd_2479",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22828v1",
@@ -4214,7 +4228,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2479",
+    "id": "fd_2480",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23750v1",
@@ -4228,7 +4242,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2480",
+    "id": "fd_2481",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -4242,7 +4256,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2482",
+    "id": "fd_2483",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
@@ -4257,7 +4271,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2483",
+    "id": "fd_2484",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22010v1",
@@ -4272,13 +4286,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2484",
+    "id": "fd_2485",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22221v1",
     "status": "available",
     "timestamp": "2026-06-25T01:32:08.689584+00:00",
     "title": "Conjecture on Multiplicative Structure of Affine Panmagic Permutations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For an integer matrix M with nonzero determinant and relatively prime entries, the ratio spectrum of Lagrange constants under linear fractional transformations is precisely the closed interval [1/|det M|, |det M|].",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2486",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22229v1",
+    "status": "available",
+    "timestamp": "2026-06-25T02:08:18.320309+00:00",
+    "title": "Ratio Spectrum of Lagrange Constants Under Linear Fractional Transformations"
   },
   {
     "consumed_by_exp_id": "",
@@ -4468,21 +4496,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe following are concrete follow-up directions building on the Airy\nexponential\u2013polynomial obstruction (`no_airyCoeff_eq_X_mul` and\n`no_nonzero_expPoly_solves_airy`).\n\n## 1. General second-order operators `f'' + a f' + b f = 0`\n\nReplace the Airy right-hand side `x\u00b7f` by an arbitrary polynomial linear ODE\n`f'' = (b\u00b7f + a\u00b7f')` and characterize exactly which `q\u00b7exp(p)` solve it.\n\nThe key insight is that the same factor-out-`exp(p)` reduction turns any such\nequation into a single polynomial identity in `q`, `p` and their derivatives, so\nthe solvable cases are governed by a finite degree-matching system rather than\nanalysis.\n\n**Why now?** The four-term identity and the degree-comparison engine are already\nformalized here, so extending the right-hand side only changes the target\npolynomial `X\u00b7q` to another explicit polynomial, reusing the existing\ninfrastructure verbatim.\n\n## 2. Higher-order Airy-type equations `f^{(n)} = x\u00b7f`\n\nStudy obstructions to `q\u00b7exp(p)` solutions of `f^{(n)} = x f` for `n \u2265 3`.\n\nThe key insight is that the `n`-th derivative of `q\u00b7exp(p)` again factors as\n`(coeff_n q p)\u00b7exp(p)` where `coeff_n` is a universal differential polynomial,\nand its leading term remains `q\u00b7(p')^n`, so a parity/degree obstruction\ngeneralizes once the recursion `coeff_{n+1} = coeff_n' + coeff_n\u00b7p'` is set up.\n\n**Why now?** `second_deriv_expPoly` already exhibits exactly the\n`coeff' + coeff\u00b7p'` recursion step; iterating it is a structural induction that\nthe present derivative-formula lemmas make immediate.\n\n## 3. Complex and entire-function versions\n\nLift the obstruction from `\u211d[X]` to `\u2102[X]` and then to genuine transcendental\nprefactors, asking whether any entire `g` with controlled growth gives\n`g\u00b7exp(p)` solving Airy.\n\nThe key insight is that over `\u2102` the cancellation of `exp(p)` still holds\n(it never vanishes) and `Polynomial.funext` over the infinite field `\u2102`\ntransports the algebraic identity unchanged, isolating exactly where polynomiality\nof the prefactor is essential.\n\n**Why now?** Every analytic step here (`hasDerivAt_polyExp`, the positivity-free\nnonvanishing of `exp`, and extensionality over an infinite domain) is stated in a\nform that already generalizes to `\u2102`, so only the field instance changes.\n\n## 4. Effective classification of `q\u00b7exp(p)` closed-form solutions\n\nTurn the obstruction into a decision procedure: given a polynomial ODE, decide\nand *construct* all `q\u00b7exp(p)` solutions, connecting to the Risch/Kovacic\nalgorithms for Liouvillian solutions.\n\nThe key insight is that matching `airyCoeff q p` against a target polynomial is a\nfinite system of polynomial equations in the coefficients of `q` and `p`, hence\ndecidable, so existence of closed-form solutions becomes a computable check.\n\n**Why now?** The reduction to a single polynomial identity is already mechanized,\ngiving a precise, machine-checked specification that a constructive solver can be\nverified against.\n\n## 5. Spectral / WKB interpretation of the parity obstruction\n\nInterpret the \"degree is always `deg q + even`\" phenomenon as the formal-series\nshadow of the WKB asymptotics of Airy functions, whose exponents scale like\n`x^{3/2}` and are therefore never attainable by a polynomial phase `p`.\n\nThe key insight is that the impossibility of `2\u00b7deg(p') = 1` is the algebraic\nfingerprint of the half-integer WKB exponent, so the discrete parity obstruction\nencodes a continuous asymptotic fact.\n\n**Why now?** With the exact degree formula `deg q + 2\u00b7deg p'` proved, the link to\nthe non-polynomial `3/2`-power growth can be stated precisely and explored without\nre-deriving the algebraic core.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2485",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7242c7d6",
-    "status": "available",
-    "timestamp": "2026-06-25T01:58:20.780458+00:00",
-    "title": "The following are concrete follow-up directions building on the Airy"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4571,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b56e200f",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -4581,7 +4594,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -4598,6 +4611,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+  },
+  {
+    "consumed_by_exp_id": "857e55ef",
+    "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
+    "domains": [
+      "Algebra",
+      "Novelty"
+    ],
+    "id": "fd_2395",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-23T23:12:45.568532+00:00",
+    "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
   {
     "consumed_by_exp_id": "",
@@ -4619,7 +4647,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2481",
+    "id": "fd_2482",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:188674",
@@ -4954,7 +4982,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19167f96",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4964,7 +4992,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -4999,7 +5027,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for GL\u2082 over Q"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2334b3c5",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domains": [
       "Bridges",
@@ -5009,7 +5037,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.798593+00:00",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },

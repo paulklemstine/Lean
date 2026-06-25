@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T01:31:44.601904+00:00",
+  "last_updated": "2026-06-25T02:04:42.149610+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -4782,6 +4782,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T01:31:41.281640+00:00",
       "title": "Quadratic irrational density in the ratio spectrum"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3082,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 51,
+      "domain": "Applications",
+      "duration_seconds": 1590.55016040802,
+      "end_time": 1782352193.2788413,
+      "files_integrated": 6,
+      "job_id": "7242c7d6",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.34,
+        "applications": 0.74,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 1.0,
+        "composite": 0.5082,
+        "cross_domain": 0.7,
+        "grade": "substantial",
+        "importance": 0.2744,
+        "novelty": 0.71,
+        "proof_depth": 0.0876,
+        "usefulness": 0.3938
+      },
+      "quality_score": 0.6932800000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782350602.7286808,
+      "strategy_count": 0,
+      "theorem_count": 6,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T02:04:41.640625+00:00",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ]
 }

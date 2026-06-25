@@ -259,7 +259,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f88074cd",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
     "domain_bridges": [],
     "domains": [
@@ -272,7 +272,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:17.429886+00:00",
     "title": "Whitehead Problem: Independence from ZFC"
   },
@@ -6669,6 +6669,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Greaves--Jing--Zhu operator construction",
+      "Schur Q-functions and strict partitions",
+      "Vertex operator algebras and symmetric functions",
+      "Pfaffian Giambelli formulas"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_λ^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition λ = (λ₁, λ₂, ..., λ_k) with λ₁ > λ₂ > ... > λ_k ≥ 0, the formula takes the form s_λ^Q(t) = Pf[Y_{λ_i - i + j}(t) + Y_{λ_j - j + i}(t)]_{1≤i<j≤k} · vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
+    "domain_bridges": [
+      "Vertex operator methods in symmetric function theory",
+      "Clifford algebra representations and spin characters",
+      "Combinatorial formulas for strict partition symmetric functions"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2460",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the operator construction in Lean 4, prove the Clifford algebra relation [Y_m(t), Y_n(t)]₊ = 2(-1)^mδ_{m,-n}, then establish the Pfaffian determinant formula using standard Pfaffian identities and the operator product expansion, verifying the t=0 specialization recovers the classical Schur Q-function identity.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22058v1",
+    "status": "available",
+    "timestamp": "2026-06-25T02:07:55.532399+00:00",
+    "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO/2305.01234",
       "math.CO/2407.05678",
       "math.CO/2603.01456"
@@ -6683,7 +6711,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6707,7 +6735,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6733,7 +6761,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6759,7 +6787,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6786,7 +6814,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6812,7 +6840,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
@@ -6840,7 +6868,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
@@ -6865,7 +6893,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -6892,7 +6920,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
@@ -6921,7 +6949,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2469",
+    "id": "fd_2470",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Borel-Serre duality techniques and spectral sequence arguments used in codimension 1 and 2 cases to arbitrary k. Analyze the action of the congruence subgroup on Bruhat-Tits buildings and leverage representation stability to control cohomology in high degrees.",
@@ -6946,7 +6974,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2470",
+    "id": "fd_2471",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
@@ -6974,7 +7002,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2471",
+    "id": "fd_2472",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
@@ -7001,7 +7029,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2472",
+    "id": "fd_2473",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on dimension d, leveraging the structure of convex splinters and the affine dependence condition. Possibly using induction on the number of convex sets composing the splinter, combined with probabilistic method or measure concentration techniques to establish the lower bound.",
@@ -7020,7 +7048,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2473",
+    "id": "fd_2474",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct proof using inequalities derived from asymptotic estimates",
@@ -7049,7 +7077,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2474",
+    "id": "fd_2475",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the paper's prime-divisor criterion to an exact p-adic valuation statement. First reuse the finite-difference argument to show that every prime divisor of D(k) divides n = k+1. For an exact component p^a ∥ n, use Kummer's theorem to express v_p(binom(qk,k)) as a number of base-p carries in k + (q-1)k. Prove a uniform lower bound v_p ≥ a for all q in the range exactly when n/p^a ≤ p^a. Then construct an explicit q, plausibly q = n/p^a + 1 or a small digit-adjusted variant, for which the carry count is exactly a, giving v_p(D(k)) = a. Show that all other prime components have valuation zero in the gcd. Combining over primes yields the asserted exact formula.",
@@ -7080,7 +7108,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2475",
+    "id": "fd_2476",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicitly a non-central element that is St₃ by utilizing long paths in the quiver. For a path p of length ≥ 3, consider x = p₁ + p₂ + ... + pₖ where pᵢ are appropriately chosen paths satisfying the St₃ condition but not the centrality condition. Verify St₃(x, y₁, y₂) = 0 for all y₁, y₂ using the alternating symmetry and multilinearity of St₃, while showing [x, z] ≠ 0 for some z in the algebra to prove non-centrality.",
@@ -7108,7 +7136,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2476",
+    "id": "fd_2477",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the construction of the Betti-Whittaker periods using the pairing between the Whittaker model and the cohomology of the arithmetic quotient. Implement the duality between π and π^* via the contragredient representation, and use the functional equation of the associated L-function to establish the proportionality constant. The Lean proof would require the formalization of Casselman-Wallach representations and the continuous cohomology of GL(n, R).",
@@ -7136,7 +7164,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2477",
+    "id": "fd_2478",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive proof on delta-matroid rank with case analysis for each ⋆∙ operator, leveraging existing results for partial-∗ polynomials and properties of twist/loop complementation.",
@@ -7164,7 +7192,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2478",
+    "id": "fd_2479",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on n using the known extremal construction, counting arguments, and verifying that any C_{4k+2}^{4-}-free hypergraph cannot exceed the bipartite bound, formalizing the odd‑bipartite structure in Lean.",
@@ -7193,7 +7221,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2479",
+    "id": "fd_2480",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Derive the explicit parameters (a_i,b_j) of the {}_nF_{n-1} series from the known hypergeometric representation of the roots of the trinomial in powers of the discriminant D (using the formulas from the paper).\n2. Verify the conjectured transformation for small n (n=3,4,5) with computer algebra (e.g., Mathematica, Maple, or Sage) by expanding both sides as power series in D and checking equality term-by-term.\n3. Once the pattern holds for these cases, use known results on higher-order Kummer transformations (e.g., Karlsson-Minton theorem) to argue that the conjectured identity follows from the general transformation theory for Saalschützian {}_nF_{n-1} series.\n4. Formalise the conjecture in Lean 4: define the hypergeometric series in mathlib, encode the parameters as dependent types, and state the identity as a theorem. Use the existing hypergeometric transformation lemmas to attempt a proof, or develop new lemmas for the specific parameter shifts.\n5. Aim to complete a machine-check",
@@ -7220,7 +7248,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2480",
+    "id": "fd_2481",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on n using the functional equation of the q-exponential generating function F_k(t;q) and coefficient extraction to verify the claimed closed form",
@@ -7245,7 +7273,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2482",
+    "id": "fd_2483",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the lacunary matrix theorem to construct a multiplier vector via linear algebra over \\(\\R\\) and verify its multiplicative properties in the torus. Combine with geometric arguments to ensure minimality and global consistency.",
@@ -7272,7 +7300,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2483",
+    "id": "fd_2484",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compare the trace formula from Cuntz-Krieger K-theory with the alternating sum of Betti numbers. Show that for q=1, the Frobenius traces ε_i^{π_i(1)} reduce to the Betti number contributions.",
@@ -7299,7 +7327,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2484",
+    "id": "fd_2485",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Verify closure under composition by algebraic manipulation of affine formulas and compare with known group-theoretic subgroup criteria; test with computational enumeration for small odd n.",
@@ -7308,6 +7336,33 @@
     "status": "available",
     "timestamp": "2026-06-25T01:32:08.689584+00:00",
     "title": "Conjecture on Multiplicative Structure of Affine Panmagic Permutations"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Lagarias and Shallit (2015)",
+      "Cusick and Mendès (2010)",
+      "Raney (1973)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For an integer matrix M with nonzero determinant and relatively prime entries, the ratio spectrum of Lagrange constants under linear fractional transformations is precisely the closed interval [1/|det M|, |det M|].",
+    "domain_bridges": [
+      "Linear Fractional Transformations",
+      "Lagrange Constants",
+      "Badly Approximable Numbers"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2486",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply Smith normal form to establish bounds on the Lagrange constant of a badly approximable number after applying a linear fractional transformation.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22229v1",
+    "status": "available",
+    "timestamp": "2026-06-25T02:08:18.320309+00:00",
+    "title": "Ratio Spectrum of Lagrange Constants Under Linear Fractional Transformations"
   },
   {
     "ambition_level": "extension",
@@ -7564,26 +7619,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe following are concrete follow-up directions building on the Airy\nexponential–polynomial obstruction (`no_airyCoeff_eq_X_mul` and\n`no_nonzero_expPoly_solves_airy`).\n\n## 1. General second-order operators `f'' + a f' + b f = 0`\n\nReplace the Airy right-hand side `x·f` by an arbitrary polynomial linear ODE\n`f'' = (b·f + a·f')` and characterize exactly which `q·exp(p)` solve it.\n\nThe key insight is that the same factor-out-`exp(p)` reduction turns any such\nequation into a single polynomial identity in `q`, `p` and their derivatives, so\nthe solvable cases are governed by a finite degree-matching system rather than\nanalysis.\n\n**Why now?** The four-term identity and the degree-comparison engine are already\nformalized here, so extending the right-hand side only changes the target\npolynomial `X·q` to another explicit polynomial, reusing the existing\ninfrastructure verbatim.\n\n## 2. Higher-order Airy-type equations `f^{(n)} = x·f`\n\nStudy obstructions to `q·exp(p)` solutions of `f^{(n)} = x f` for `n ≥ 3`.\n\nThe key insight is that the `n`-th derivative of `q·exp(p)` again factors as\n`(coeff_n q p)·exp(p)` where `coeff_n` is a universal differential polynomial,\nand its leading term remains `q·(p')^n`, so a parity/degree obstruction\ngeneralizes once the recursion `coeff_{n+1} = coeff_n' + coeff_n·p'` is set up.\n\n**Why now?** `second_deriv_expPoly` already exhibits exactly the\n`coeff' + coeff·p'` recursion step; iterating it is a structural induction that\nthe present derivative-formula lemmas make immediate.\n\n## 3. Complex and entire-function versions\n\nLift the obstruction from `ℝ[X]` to `ℂ[X]` and then to genuine transcendental\nprefactors, asking whether any entire `g` with controlled growth gives\n`g·exp(p)` solving Airy.\n\nThe key insight is that over `ℂ` the cancellation of `exp(p)` still holds\n(it never vanishes) and `Polynomial.funext` over the infinite field `ℂ`\ntransports the algebraic identity unchanged, isolating exactly where polynomiality\nof the prefactor is essential.\n\n**Why now?** Every analytic step here (`hasDerivAt_polyExp`, the positivity-free\nnonvanishing of `exp`, and extensionality over an infinite domain) is stated in a\nform that already generalizes to `ℂ`, so only the field instance changes.\n\n## 4. Effective classification of `q·exp(p)` closed-form solutions\n\nTurn the obstruction into a decision procedure: given a polynomial ODE, decide\nand *construct* all `q·exp(p)` solutions, connecting to the Risch/Kovacic\nalgorithms for Liouvillian solutions.\n\nThe key insight is that matching `airyCoeff q p` against a target polynomial is a\nfinite system of polynomial equations in the coefficients of `q` and `p`, hence\ndecidable, so existence of closed-form solutions becomes a computable check.\n\n**Why now?** The reduction to a single polynomial identity is already mechanized,\ngiving a precise, machine-checked specification that a constructive solver can be\nverified against.\n\n## 5. Spectral / WKB interpretation of the parity obstruction\n\nInterpret the \"degree is always `deg q + even`\" phenomenon as the formal-series\nshadow of the WKB asymptotics of Airy functions, whose exponents scale like\n`x^{3/2}` and are therefore never attainable by a polynomial phase `p`.\n\nThe key insight is that the impossibility of `2·deg(p') = 1` is the algebraic\nfingerprint of the half-integer WKB exponent, so the discrete parity obstruction\nencodes a continuous asymptotic fact.\n\n**Why now?** With the exact degree formula `deg q + 2·deg p'` proved, the link to\nthe non-polynomial `3/2`-power growth can be stated precisely and explored without\nre-deriving the algebraic core.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2485",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7242c7d6",
-    "status": "available",
-    "timestamp": "2026-06-25T01:58:20.780458+00:00",
-    "title": "The following are concrete follow-up directions building on the Airy"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -7702,7 +7737,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b56e200f",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domain_bridges": [],
     "domains": [
@@ -7715,7 +7750,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -7737,6 +7772,26 @@
     "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "857e55ef",
+    "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Novelty"
+    ],
+    "id": "fd_2395",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-23T23:12:45.568532+00:00",
+    "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
   {
     "ambition_level": "extension",
@@ -7766,7 +7821,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2481",
+    "id": "fd_2482",
     "lineage_refs": [],
     "priority_score": 0.7,
     "proof_strategy": "",
@@ -8215,7 +8270,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "19167f96",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domain_bridges": [],
     "domains": [
@@ -8228,7 +8283,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -8275,7 +8330,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2334b3c5",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domain_bridges": [],
     "domains": [
@@ -8288,7 +8343,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.798593+00:00",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
