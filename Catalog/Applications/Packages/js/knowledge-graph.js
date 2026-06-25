@@ -1803,6 +1803,32 @@
             }, 900);
         }
 
+        window.unfadeWelcome = function() {
+            welcomeFaded = false;
+            const overlay = welcomeScreen.querySelector('.welcome-overlay');
+            const content = welcomeScreen.querySelector('.welcome-content');
+            const footer = welcomeScreen.querySelector('.welcome-footer');
+            if (overlay) {
+                overlay.style.display = '';
+                // force reflow
+                void overlay.offsetWidth;
+                overlay.style.transition = 'opacity 0.5s ease-in';
+                overlay.style.opacity = '1';
+            }
+            if (content) {
+                content.style.display = '';
+                void content.offsetWidth;
+                content.style.transition = 'opacity 0.5s ease-in';
+                content.style.opacity = '1';
+            }
+            if (footer) {
+                footer.style.display = '';
+                void footer.offsetWidth;
+                footer.style.transition = 'opacity 0.5s ease-in';
+                footer.style.opacity = '1';
+            }
+        };
+
         // ─── Interaction ───
         function findNodeAt(sx, sy) {
             let closest = null, closestDist = Infinity;
