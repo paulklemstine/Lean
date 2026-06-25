@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-25T03:08:43Z",
+    "domain": "General",
+    "exp_id": "",
+    "filename": "catalog_tree.json",
+    "pkg_num": 51,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Untitled Research"
+  },
+  {
     "date": "2026-06-25T01:58:18Z",
     "domain": "Applications",
     "exp_id": "7242c7d6",
@@ -537,6 +547,12 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Brocard's Problem n! + 1 = m^2: A Borel-Cantelli Finiteness Theorem"
+  },
+  "catalog_tree.json": {
+    "domain": "General",
+    "exp_id": "",
+    "source_exp_ids": [],
+    "title": "Untitled Research"
   },
   "close_proofs_these_conjectures_continue_the_resear.json": {
     "domain": "Computation",
