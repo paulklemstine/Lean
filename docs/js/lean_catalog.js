@@ -65,8 +65,44 @@ document.addEventListener('DOMContentLoaded', () => {
             return fetch(`${filename}`)
                 .then(res => res.json())
                 .then(pkg => {
-                    if (Array.isArray(pkg.lean_proofs) && pkg.lean_proofs.length > 0) {
-                        pkg.lean_proofs.forEach(proof => {
+                    let leanFiles = [];
+                    if (pkg.lean_proofs) {
+                        if (typeof pkg.lean_proofs === 'string') {
+                            const lp = pkg.lean_proofs;
+                            if (lp.length > 50 && !lp.endsWith('.lean')) {
+                                const parts = lp.split(/-- (?:NEW_FILE|DIFF): (.+?)\n/);
+                                if (parts.length > 1) {
+                                    for (let i = 1; i < parts.length; i += 2) {
+                                        const name = parts[i].trim();
+                                        const code = (i + 1 < parts.length) ? parts[i + 1].trim() : '';
+                                        if (code) leanFiles.push({ file: name, name: name.split('/').pop(), code: code });
+                                    }
+                                } else {
+                                    const slug = (pkg.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
+                                    leanFiles.push({ file: slug + '.lean', name: slug + '.lean', code: lp });
+                                }
+                            }
+                        } else if (Array.isArray(pkg.lean_proofs)) {
+                            for (const entry of pkg.lean_proofs) {
+                                if (typeof entry === 'string') {
+                                    if (entry.length > 50 && !entry.endsWith('.lean')) {
+                                        const slug = (pkg.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
+                                        leanFiles.push({ file: slug + '.lean', name: slug + '.lean', code: entry });
+                                    }
+                                } else if (typeof entry === 'object' && entry !== null) {
+                                    const fname = entry.file || entry.name || 'Proof.lean';
+                                    const basename = fname.split('/').pop();
+                                    const code = (entry.code && entry.code.trim()) ? entry.code : (entry.content && entry.content.trim()) ? entry.content : null;
+                                    if (code) {
+                                        leanFiles.push({ file: fname, name: basename, code: code });
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (leanFiles.length > 0) {
+                        leanFiles.forEach(proof => {
                             const fileObj = {
                                 pkg: pkgMeta,
                                 file: proof.file,
