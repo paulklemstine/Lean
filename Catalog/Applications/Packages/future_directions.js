@@ -628,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "292d0525",
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domains": [
       "NumberTheory",
@@ -638,7 +638,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -1702,7 +1702,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
   },
   {
-    "consumed_by_exp_id": "bd1f81a7",
+    "consumed_by_exp_id": "",
     "description": "Let $a_k$ denote the number of P\u00f3lya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the P\u00f3lya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
     "domains": [
       "Pythagorean"
@@ -1711,7 +1711,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T05:17:21.927856+00:00",
     "title": "P\u00f3lya tree coefficient divisor-sum recurrence"
   },
@@ -4466,11 +4466,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
+    "description": "The upper bound S_1^\u03c6(x) \u226a x exp{-(1/2 - o(1))\u221a(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^\u03c6(x) \u2265 C x exp{-(1/2 + o(1))\u221a(log x log_2 x)} for all sufficiently large x.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2507",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23681v1",
+    "status": "available",
+    "timestamp": "2026-06-25T12:13:32.061938+00:00",
+    "title": "Tightness of the unit-shift bound for Euler's totient function"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2508",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4484,7 +4498,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4498,7 +4512,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4512,7 +4526,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2510",
+    "id": "fd_2511",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -4527,7 +4541,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2511",
+    "id": "fd_2512",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24822v1",
@@ -4541,7 +4555,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2512",
+    "id": "fd_2513",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24573v1",
@@ -4556,7 +4570,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2513",
+    "id": "fd_2514",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -4571,7 +4585,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2514",
+    "id": "fd_2515",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
@@ -4585,7 +4599,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2515",
+    "id": "fd_2516",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -4599,7 +4613,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2516",
+    "id": "fd_2517",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -4614,7 +4628,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2517",
+    "id": "fd_2518",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24243v1",
@@ -4629,7 +4643,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2518",
+    "id": "fd_2519",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -4644,7 +4658,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2519",
+    "id": "fd_2520",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23863v1",
@@ -4658,13 +4672,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2520",
+    "id": "fd_2521",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
     "status": "available",
     "timestamp": "2026-06-25T11:33:16.478948+00:00",
     "title": "Improved asymptotic bound for the strong chromatic index of bipartite graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let D_n be the average stack-sorting depth over all permutations in S_n under West's stack-sorting map. The conjecture is that the unprimed averages satisfy the same type of finite monotonicity suggested by the paper's primed lower-bound sequence: for every n \u2265 1, D_n/(n+1) \u2264 D_{n+1}/(n+2). This is a concrete finite inequality at each n and can be falsified by exact enumeration of stack-sorting depths.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2522",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24110v1",
+    "status": "available",
+    "timestamp": "2026-06-25T12:14:38.692167+00:00",
+    "title": "Shift-normalized monotonicity of the average stack-sorting depth"
   },
   {
     "consumed_by_exp_id": "",
