@@ -1,114 +1,260 @@
-# The Function That Swallowed Mathematics
+# The Algebra That Knows Its Own Derivative
 
-## How a Single Operation Captures All of Calculus — and Where It Breaks
+## A small world of functions that is closed under calculus
 
-Imagine you're an alien mathematician, arriving on Earth with no knowledge of our mathematical traditions. You find two strange operations — the exponential function, which turns addition into multiplication, and the logarithm, which reverses it. These two functions have been the workhorses of science since Napier invented logarithms in 1614, four centuries of separate treatment.
+Imagine a workshop with only six tools. With them you can build an
+astonishing range of machines — but never anything outside what those
+six tools allow. The marvel is not the range; it is the *guarantee*.
+Whatever you assemble, you know in advance exactly how it will behave,
+because the tools constrain it.
 
-Now imagine someone tells you: *there's a single operation that does both jobs.*
+This article is about such a workshop, but for functions instead of
+machines. The six tools are:
 
-That operation is called **EML**, defined by a deceptively simple formula:
+1. dialing in a **constant** number,
+2. the **identity** function $x \mapsto x$,
+3. **adding** two functions,
+4. **multiplying** two functions,
+5. **negating** a function, and
+6. wrapping a function inside the **exponential** $e^{(\cdot)}$.
 
-> eml(x, y) = eˣ − ln(y)
+Starting from constants and the variable $x$, and applying these
+operations any finite number of times, you generate a family of
+functions. We call them the **log-free EML functions** — "EML" standing
+for *exponential–multiplication–linear*. They are exactly the
+**exponential polynomials**: polynomials in $x$ and in exponentials of
+polynomials.
 
-It looks almost trivial. Just subtraction between an exponential and a logarithm. But this formula contains a mathematical universe.
+A few examples to fix the picture:
 
-## One Operation to Rule Them All
+$$
+3x^2 - 5, \qquad e^x, \qquad x\,e^{x} + 7, \qquad e^{x^2}, \qquad
+e^{\,e^{x} + x} - x\,e^{-x}.
+$$
 
-Set the second argument to 1, and since ln(1) = 0, you get eml(x, 1) = eˣ — pure exponential growth. Set the first argument to 0, and since e⁰ = 1, you get eml(0, y) = 1 − ln(y), which means ln(y) = 1 − eml(0, y) — the logarithm springs out from the same formula.
+Each of these is built by a finite recipe from the six tools. None of
+them involves division, logarithms, sines, or square roots. The class
+looks modest. The surprise is how much structure it secretly carries.
 
-This is like discovering that addition and subtraction are really the same operation viewed from different angles. The EML function unifies the two most important transcendental functions in mathematics into a single primitive.
+## The central claim: this world is closed under calculus
 
-But the real surprise isn't the unification. It's what happens when you start doing calculus with it.
+Here is the headline. **The log-free EML functions form a differential
+algebra.** Unpacking that phrase:
 
-## The Self-Referential Miracle
+- **Algebra:** the family is closed under addition, multiplication, and
+  scaling by real numbers. Add two EML functions and you get an EML
+  function; multiply them and you stay inside; multiply by $\sqrt{2}$ and
+  you never leave.
+- **Differential:** the family is closed under *differentiation*. Take
+  the derivative of any EML function, and the result is again an EML
+  function — no exceptions, no escape.
 
-Here's the question that launched a research program: if you take the derivative of an EML expression, do you get another EML expression?
+The second point is the beautiful one. Calculus, which so often drags you
+out of a tidy family of functions, here keeps you safely inside. Where
+$1/x$ comes from differentiating $\ln x$ and drags you into rational
+functions, every EML function differentiates to another EML function.
+The workshop is closed under the operation of "finding the slope."
 
-Think about what this question means. When you differentiate eˣ, you get eˣ back — beautiful self-reference. When you differentiate ln(x), you get 1/x — not a logarithm at all, but a simple algebraic function. These are different behaviors from two different functions.
+And there is a third, subtler kind of closure: **composition**. If you
+take one EML function and feed it into another — substitute $g(x)$
+wherever the variable appears in $f$ — the composite $f(g(x))$ is again
+EML. The family is closed under chaining functions together.
 
-But with EML, something remarkable happens. Consider a function built by plugging two varying expressions f(t) and g(t) into the EML slots:
+## Why this is not obvious
 
-> F(t) = eml(f(t), g(t)) = exp(f(t)) − ln(g(t))
+It would be easy to assume all of this is automatic. It is not. Consider
+what happens with neighboring families.
 
-What's its derivative? The chain rule gives:
+- The **polynomials** are closed under $+$, $\times$, and $d/dx$, but the
+  moment you allow $e^x$ they are not enough.
+- The **rational functions** $p(x)/q(x)$ are closed under differentiation,
+  but they fail the moment you exponentiate: $e^{x}$ is not a ratio of
+  polynomials.
+- The **elementary functions** of a first calculus course (allowing
+  division, logarithms, and roots) *are* closed under differentiation —
+  but they are a far larger, far wilder class, and proving anything
+  rigorous about all of them is genuinely hard.
 
-> F'(t) = f'(t) · exp(f(t)) − g'(t) / g(t)
+The log-free EML functions sit in a sweet spot: rich enough to contain
+$e^{x^2}$ and $x\,e^x + 1$, small enough that every closure property can
+be proved cleanly and completely. They are the smallest natural family
+containing $x$, the constants, and the exponential, and closed under the
+arithmetic of functions.
 
-Look at that formula. The exp(f(t)) term is just eml(f(t), 1). The g'(t)/g(t) term is a ratio of functions. Everything in the derivative is built from multiplication, division, and EML itself. **The derivative of an EML expression is always another EML expression.**
+## The trick: separate the *recipe* from the *function*
 
-This property has a name: *differential closure*. The class of EML functions forms what mathematicians call a **differential algebra** — a self-contained world where differentiation never escapes.
+The cleanest way to understand why EML functions behave so well is to
+stop thinking about the functions themselves and think instead about
+their **recipes**.
 
-## Building the Tower
+A recipe is a finite formula tree. Its leaves are constants or the symbol
+$X$; its internal nodes are the operations $+$, $\times$, negation, and
+$\exp$. For example, the recipe for $x\,e^{x}+7$ is
 
-The implications cascade. If first derivatives stay in the EML world, what about second derivatives? The second derivative of the "diagonal" function eml(z, z) = eᶻ − ln(z) is:
+$$
+\text{add}\big(\,\text{mul}(X,\ \exp(X)),\ \text{const}(7)\,\big).
+$$
 
-> First derivative: eᶻ − 1/z
-> Second derivative: eᶻ + 1/z²
+This is pure syntax — a tree of symbols, with no calculus in it yet. We
+then give each recipe a *meaning*: a rule that turns the tree into an
+actual function $\mathbb{R} \to \mathbb{R}$. The constant node $c$ means
+"the function always equal to $c$"; the $X$ node means "the function
+$x \mapsto x$"; the $\text{add}$ node means "add the meanings of the two
+sub-recipes"; and so on, with the $\exp$ node meaning "exponentiate the
+meaning of the sub-recipe." A function is **EML** precisely when *some*
+recipe evaluates to it.
 
-Both are EML-expressible. And this pattern continues to all orders. You can differentiate as many times as you want, and you never leave the EML universe.
+Now comes the magic. Differentiation, which is an analytic operation on
+functions, can be mirrored by a purely *mechanical rewriting of recipes*.
+Define a syntactic operator $D$ that walks a recipe tree and rewrites it
+according to the rules every calculus student knows:
 
-This creates what we call the **depth hierarchy**. Assign each function a "transcendence depth" — how many layers of exponentials and logarithms are nested inside each other. The function x² has depth 0 (it's algebraic). The function eˣ has depth 1. The function exp(exp(x)) has depth 2.
+$$
+D(\text{const } c) = 0, \quad D(X) = 1, \quad
+D(a+b) = D a + D b,
+$$
+$$
+D(a\cdot b) = D a \cdot b + a \cdot D b
+\ \text{(product rule)}, \quad
+D(\exp a) = D a \cdot \exp a \ \text{(chain rule)}.
+$$
 
-The depth preservation theorem says: **differentiation never increases the transcendence depth.** When you differentiate exp(f(x)), you get f'(x) · exp(f(x)), which has the same depth as exp(f(x)). When you differentiate ln(f(x)), you get f'(x)/f(x), which actually *decreases* the depth by one.
+$D$ takes a recipe and produces another recipe. It never leaves the
+syntax. And the key theorem says: **the meaning of $D(t)$ is exactly the
+derivative of the meaning of $t$.** Symbolically, for every recipe $t$
+and every point $x$,
 
-This is surprising. You might expect that applying calculus operations to complex functions makes them more complex. Instead, differentiation respects the complexity hierarchy perfectly.
+$$
+\frac{d}{dx}\,\big(\text{meaning of } t\big)(x)
+= \big(\text{meaning of } D t\big)(x).
+$$
 
-## The Leibniz Rule and the Algebra of Derivations
+Because $D$ produces a recipe, and recipes always denote EML functions,
+the derivative of an EML function is automatically EML. Closure under
+differentiation is no longer a delicate analytic fact to be checked case
+by case; it is a one-line consequence of the fact that the symbolic
+operator $D$ stays inside the syntax.
 
-There's a deeper algebraic structure at work. The German mathematician Gottfried Leibniz discovered in the 1680s that the derivative of a product follows a beautiful rule:
+The same trick handles composition. There is a syntactic substitution
+operation: take the recipe for $f$, and wherever the symbol $X$ appears,
+plug in the entire recipe for $g$. Call the result the composite recipe.
+A short induction shows its meaning is exactly $x \mapsto f(g(x))$. Again,
+because the output is a recipe, the composite is automatically EML.
 
-> (f · g)' = f' · g + f · g'
+This separation — syntax on one side, meaning on the other, linked by a
+correctness theorem — is the engine that makes every closure property
+fall out cleanly.
 
-This "Leibniz rule" means that differentiation is what algebraists call a *derivation* — a linear operation satisfying this product rule. The EML differential closure theorem shows that the Leibniz rule, when applied to EML functions, keeps everything inside the EML class.
+## Everything is smooth
 
-Why? Because the right-hand side f'g + fg' involves only multiplication and addition of EML functions, and the class is closed under both. This isn't a coincidence. It's the structural reason why differential closure works: the derivative is built from exactly the operations that the class already contains.
+There is a bonus prize. Every EML function is **infinitely
+differentiable** — smooth, with no corners, kinks, or jumps anywhere on
+the real line. You can differentiate it once, twice, a thousand times,
+and it remains a well-behaved EML function each time.
 
-## The Inverse Function Connection
+The proof, once more, follows the recipe structure. Constants and the
+identity are smooth. Sums, products, and negations of smooth functions
+are smooth. And the exponential of a smooth function is smooth. Since
+every EML function is assembled from these by a finite recipe, every EML
+function is smooth by induction on the recipe. The result: the EML world
+is not just closed under calculus, it is a world of perfectly tame,
+perpetually differentiable functions.
 
-If f is an EML function with nonzero derivative, what about its inverse function f⁻¹? The inverse function theorem tells us that (f⁻¹)'(y) = 1/f'(f⁻¹(y)).
+## What the family is *not*: the boundaries of the workshop
 
-This formula involves only division and composition — both operations that preserve the EML class. So if f⁻¹ is itself an EML function (and many important ones are: log is the inverse of exp, for instance), then its derivative is automatically EML-expressible.
+A good way to appreciate a structure is to map its edges — the places
+where, if you push, you fall out.
 
-This connects to a profound question in mathematics: which functions have "elementary" inverses? The EML framework gives us a precise language to ask and answer this question.
+**It is a ring, but not a field.** You can add, subtract, and multiply
+EML functions freely. But you cannot always *divide*. The function
+$x \mapsto 1/x$ is not EML: there is no finite recipe over our six tools
+that produces it. Division genuinely escapes the workshop. So the EML
+functions form a *commutative differential ring*, not a differential
+field — they have addition and multiplication with all the usual laws,
+but reciprocals can lead outside.
 
-## Where the Magic Breaks: Integration
+**It is closed under differentiation, but only partly under
+integration.** This is the most tantalizing boundary. Differentiation
+never leaves the family. Integration sometimes does. The cleanest witness
+is the function $e^{x^2}$. It is plainly EML — it is the exponential of
+the EML function $x^2$. Yet its antiderivative is the famous error
+function,
 
-Differentiation is well-behaved. Integration is wild.
+$$
+\int_0^x e^{t^2}\,dt,
+$$
 
-Consider the function exp(exp(x)). It's clearly EML-expressible — it's just exp composed with exp, depth 2 in our hierarchy. Its derivative, exp(x)·exp(exp(x)), is also EML-expressible.
+which is *not* an EML function. There is no finite recipe over our six
+tools whose derivative equals $e^{x^2}$. Closure under integration fails,
+and it fails for a deep reason: integration is the *inverse* of the
+syntactic derivative $D$, and $D$ is not "onto." Some EML functions are
+nobody's derivative within the family. This is a baby version of a
+celebrated nineteenth-century discovery by Liouville, that "elementary"
+antiderivatives do not always exist — and here it lives entirely inside a
+clean, finite world of recipes.
 
-But what about its *antiderivative* — the function F such that F'(x) = exp(exp(x))? This is one of the great negative results of 19th-century mathematics: **no such elementary function exists.** The integral of exp(exp(x)) requires new, non-elementary functions.
+**It is closed under composition, but not under functional inverse.**
+You can chain EML functions, but you cannot always *undo* one and stay
+inside. The cube map $x \mapsto x^3$ is EML and is a perfect one-to-one
+correspondence of the real line with itself. Its inverse is the cube root
+$x \mapsto x^{1/3}$ — which is not EML (indeed it is not even
+differentiable at the origin, while every EML function is smooth
+everywhere). So inverting an EML bijection can throw you out of the
+family. The obstruction is exactly that the derivative $3x^2$ vanishes at
+$x=0$: a stationary point that the smooth EML world cannot reconcile with
+a smooth inverse.
 
-This asymmetry — differentiation always closes, integration sometimes escapes — is one of the deepest phenomena in analysis. The French mathematician Joseph Liouville proved in the 1830s that certain elementary functions have no elementary antiderivatives. Our work confirms that this obstruction persists in the EML framework: the EML differential algebra is closed going "down" (differentiation) but not "up" (integration).
+These three boundaries — no division, partial integration, no inverses —
+are not failures. They are the precise shape of the family, the contour
+lines that tell you exactly where its rich internal structure ends.
 
-## The Iterated Exponential Tower
+## Why anyone should care
 
-One of the most elegant consequences of EML closure is about iterated exponentials. Define the tower:
+This little algebra is a microcosm of a grand theme in mathematics:
+**which operations keep you inside a family of objects, and which ones
+break out.** That theme runs through Galois theory (which polynomial
+roots can be reached by radicals?), through differential Galois theory
+(which integrals can be expressed in closed form?), and through the
+modern theory of computation (which functions can a given machine
+compute?).
 
-> exp¹(x) = eˣ
-> exp²(x) = exp(eˣ) = e^(eˣ)
-> exp³(x) = exp(exp(eˣ)) = e^(e^(eˣ))
+Exponential polynomials, the EML functions, are not an abstract toy. They
+are the natural language of:
 
-We prove that expⁿ(x) is EML-expressible for every n. Moreover, each derivative is EML-expressible at the same depth level. The EML framework handles these rapidly-growing functions — each of which grows faster than any polynomial, any exponential, any tower of exponentials below it — with the same uniform machinery.
+- **growth and decay**, where everything is built from $e^{kx}$ — radioactive
+  decay, compound interest, population models, and the impulse responses
+  of linear systems;
+- **probability**, where the Gaussian bell curve $e^{-x^2/2}$ and its
+  relatives are exponential polynomials, and where the failure of $e^{x^2}$
+  to have an elementary integral is exactly why the normal distribution's
+  cumulative function has no closed form;
+- **signal processing and differential equations**, where solutions to
+  constant-coefficient linear systems are precisely sums of terms
+  $x^k e^{\lambda x}$ — all EML.
 
-## Why It Matters
+The fact that this family is *closed under differentiation* is what makes
+symbolic differentiation engines fast and exact on it: the answer is
+always representable, so the machine never has to approximate or give up.
+The fact that it is *not closed under integration* is what makes symbolic
+integration genuinely hard, and why software must sometimes answer "no
+elementary form exists."
 
-The EML differential algebra isn't just an intellectual curiosity. It provides a *canonical normal form* for elementary calculus. Any computation involving exponentials and logarithms can be re-expressed in terms of a single primitive. This has practical implications:
+## The takeaway
 
-**Computer algebra**: Instead of implementing separate rules for exp and log differentiation, a system needs only the EML chain rule. One rule replaces many.
+We started with six humble tools and ended with a self-contained universe
+of functions: closed under addition, multiplication, scaling,
+composition, and — most elegantly — differentiation, with every member
+guaranteed smooth. We then walked its perimeter and found three sharp
+cliffs: no division, no general integration, no functional inverses.
 
-**Neural networks**: Modern architectures use exponentials (softmax, sigmoid) and logarithms (log-likelihood) extensively. The EML framework suggests these can be unified into a single computational primitive, potentially simplifying both hardware and software.
+The deep lesson is methodological. By turning functions into *recipes* —
+finite trees of symbols — and proving that calculus on functions matches
+a mechanical rewriting of recipes, we converted analytic theorems into
+combinatorial certainties. Smoothness, the correctness of the derivative,
+the correctness of composition, and the closure of the whole family all
+followed from a single idea: keep the operation inside the syntax, and
+the function will take care of itself.
 
-**Mathematical physics**: Many physical quantities involve combinations of exponentials and logarithms — entropy, free energy, partition functions. The EML viewpoint reveals hidden structure in these formulas.
-
-## The Road Ahead
-
-Several tantalizing questions remain open. Can the EML depth hierarchy be extended to capture hyperexponential functions beyond any finite tower? Is there a "tropical" version of the EML differential algebra, where addition becomes minimum and multiplication becomes addition?
-
-Perhaps most ambitiously: the EML operator eml(x, y) = eˣ − ln(y) lives at the boundary between the additive world (eˣ turns addition into multiplication) and the multiplicative world (ln turns multiplication into addition). Could there be a deeper algebraic structure — a "bridge" — that explains why this particular combination has such remarkable closure properties?
-
-The answers may reshape how we think about the relationship between algebra and analysis, between the discrete and the continuous, between the operations we compute with and the mathematics those operations describe.
-
----
-
-*The EML differential algebra was developed through a combination of mathematical reasoning and machine-verified proofs. All theorems described in this article have been formally verified.*
+It is a small algebra. But it knows its own derivative. And in
+mathematics, an object that contains the rules for its own change is
+about as close to alive as a definition ever gets.
