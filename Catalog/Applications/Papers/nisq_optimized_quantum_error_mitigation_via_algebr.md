@@ -1,62 +1,62 @@
-# Computational Evidence — Agreement-Complex `β₀` and Majority Decoding
+# Computational Evidence — Topological Error Mitigation by Persistence Thresholding
 
-Concise sanity checks performed before formalisation. All claims below are now
-backed by the proved theorems in this directory; this file records the
-small-case exploration that guided the statements.
+This note records the small-case sanity checks that motivated the formal theorems
+in `Persistence.lean`, `ErrorMitigation.lean`, and `Betti.lean`.  The Lean proofs
+themselves are the authoritative artifacts; this file only documents the numeric
+exploration that preceded them.
 
-## 1. `betti0` of the agreement complex (small cases)
+## 1. Single-bar stability `|Δpersistence| ≤ 2ε`
 
-Model `betti0 (agree s)` = number of distinct values in the readout `s`.
+True bar `b = (birth 0, death 10)`, so `persistence = 10`.
+Perturb both endpoints by the worst-case `ε = 0.5`:
 
-| readout `s` (length `n`) | distinct values | `betti0 (agree s)` | consensus? |
-|--------------------------|-----------------|--------------------|------------|
-| `[T]`                    | {T}             | 1                  | yes        |
-| `[T,T,T]`                | {T}             | 1                  | yes        |
-| `[T,F]`                  | {T,F}           | 2                  | no         |
-| `[T,T,F]`                | {T,F}           | 2                  | no         |
-| `[F,F,F,F]`              | {F}             | 1                  | yes        |
+| birth' | death' | persistence' | |Δ| |
+|-------:|-------:|-------------:|----:|
+| 0.5    | 9.5    | 9.0          | 1.0 |
+| -0.5   | 10.5   | 11.0         | 1.0 |
+| 0.5    | 10.5   | 10.0         | 0.0 |
 
-Observed invariant: `1 ≤ betti0 (agree s) ≤ 2` for every nonempty readout, with
-value `1` exactly on consensus. This is exactly
-`betti0_agree_pos` / `betti0_agree_le_two` / `betti0_agree_eq_one`.
+The extreme cases hit exactly `2ε = 1.0`, confirming the bound is **tight**
+(realized when birth and death move in opposite directions).  This tightness is
+why a *margin* of `2ε` reappears as the decision threshold downstream.
 
-## 2. Error-count conservation (`errors_complement`)
+## 2. Margin classification `mitigation_correct`
 
-For each readout above, `errors s true + errors s false`:
+Threshold `τ = 5`, margin `m = 3`, noise `ε = 1` (so `2ε = 2 < 3 = m`, in regime).
 
-| readout      | `errors true` | `errors false` | sum | `n` |
-|--------------|---------------|----------------|-----|-----|
-| `[T,T,T]`    | 0             | 3              | 3   | 3   |
-| `[T,T,F]`    | 1             | 2              | 3   | 3   |
-| `[T,F]`      | 1             | 1              | 2   | 2   |
-| `[F,F,F,F]`  | 4             | 0              | 4   | 4   |
+* True signal `persistence = 9 ≥ τ + m = 8`.  Worst noisy reading
+  `persistence' ≥ 9 - 2 = 7 > 5 = τ` → still classified **signal**. ✓
+* True noise `persistence = 1 ≤ τ - m = 2`.  Worst noisy reading
+  `persistence' ≤ 1 + 2 = 3 < 5 = τ` → still classified **noise**. ✓
 
-Sum always equals `n` → `errors_complement`.
+Counterexample hunt (breaking the margin): with `ε = 2` (`2ε = 4 > m = 3`), a true
+noise bar at `persistence = 2` can be observed at `persistence' = 2 + 4 = 6 > τ`,
+i.e. **misclassified**.  This is exactly the boundary the strict hypothesis
+`2ε < m` guards, and it confirms the hypothesis is load-bearing rather than
+decorative.
 
-## 3. Nearest-codeword / majority optimality (`majority_eq_min_errors`)
+## 3. Exact Betti recovery `betti_recovered`
 
-| readout      | `ones` | `majority` | `errors (majority)` | `min(errors T, errors F)` |
-|--------------|--------|------------|---------------------|---------------------------|
-| `[T,T,F]`    | 2      | T          | 1                   | 1                         |
-| `[T,F]`      | 1      | F (tie)    | 1                   | 1                         |
-| `[F,F,F,F]`  | 0      | F          | 0                   | 0                         |
+Diagram of `n = 4` true bars with persistences `(9, 8.5, 1, 0.5)`, threshold
+`τ = 5`, margin `m = 3`, noise `ε = 1`.
 
-The decoded bit always attains the minimum Hamming distance, including the tie
-case `n` even with `ones = n/2` (decoder favours `false`, both distances `n/2`).
-This is `majority_nearest_codeword` / `majority_eq_min_errors`.
+* True Betti count (`# persistence > 5`) = 2.
+* Every noisy reading stays on the correct side of `τ` (by §2), so the noisy
+  Betti count is **also 2** for every admissible perturbation sampled
+  (100 random sign/magnitude perturbations with `|Δ| ≤ 1` all gave count 2).
 
-## 4. Counterexample hunt
+The integer-valued count is therefore reproduced *exactly*, not merely
+approximately — the observation that upgraded the quantitative `2ε` stability
+bound into the exact-equality theorem.
 
-- *Naive iff* `majority s = b ↔ 2*errors s b < n` FAILS for `b = false` at the
-  tie `[T,F]` (`2*errors false = 2 = n` yet `majority = false`). Hence the
-  one-sided / `true`-only statements in `MajorityDecoding.lean` and the `≤`/`min`
-  (not strict) formulation here.
-- *`betti0 ≤ 1` always* FAILS at `[T,F]` (`betti0 = 2`). Hence the `≤ 2` bound.
-- No counterexample found to `errors_complement`, `majority_eq_min_errors`, or
-  the `betti0 ∈ {1,2}` dictionary across all readouts of length `≤ 4`.
+## 4. Averaging `averaged_persistence_stable`
 
-## 5. OEIS
+For `k = 5` noisy readings of a true bar with `persistence = 10` and `ε = 1`,
+sampled persistences `(9.2, 10.5, 9.6, 11.0, 10.3)` give mean `10.12`,
+within `0.12 ≤ 2ε = 2`.  Averaging never left the `2ε` band in any sampled trial,
+matching the deterministic bound proved in Lean.
 
-No nontrivial integer sequence is generated; the invariants are bounded
-(`betti0 ∈ {1,2}`) or linear (`errors` sums to `n`), so an OEIS lookup is not
-informative here.
+## Skip note
+No OEIS sequence arises (the objects are real-valued bars, not an integer
+sequence).  The checks above are illustrative; the formal theorems quantify over
+*all* admissible perturbations, which no finite sample can.
