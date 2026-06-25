@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return fetch(`${filename}`)
                 .then(res => res.json())
                 .then(pkg => {
-                    if (pkg.lean_proofs && pkg.lean_proofs.length > 0) {
+                    if (Array.isArray(pkg.lean_proofs) && pkg.lean_proofs.length > 0) {
                         pkg.lean_proofs.forEach(proof => {
                             const fileObj = {
                                 pkg: pkgMeta,

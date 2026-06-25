@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T14:27:34.764847+00:00",
+  "last_updated": "2026-06-25T14:47:22.271002+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -6706,6 +6706,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T14:27:34.467300+00:00",
       "title": "Primality Testing: Miller-Rabin and AKS Formalization"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2593,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 29,
+      "domain": "Novelty",
+      "duration_seconds": 1438.0835590362549,
+      "end_time": 1782398740.5498354,
+      "files_integrated": 6,
+      "job_id": "fb5aee47",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v15",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v15",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.62,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.4513,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.2653,
+        "novelty": 0.68,
+        "proof_depth": 0.0875,
+        "usefulness": 0.2938
+      },
+      "quality_score": 0.30151606086956523,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782397302.4662764,
+      "strategy_count": 0,
+      "theorem_count": 5,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T14:47:21.682283+00:00",
+      "title": "Brocard-Ramanujan Triangular Classification"
     }
   ]
 }

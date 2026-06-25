@@ -658,7 +658,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "95bbad27",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -667,7 +667,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -4739,6 +4739,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjecture posits that their approach's proof aligns with the Four Color Theorem's universality for planar graphs.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_2527",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25988v1",
+    "status": "available",
+    "timestamp": "2026-06-25T14:49:35.971740+00:00",
+    "title": "Equivalence of Their Method and Four Color Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the algebraic structure of the generalized Verschiebung degree under Frobenius pullback in moduli spaces of vector bundles, aiming to confirm its polynomiality through explicit coefficient analysis.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2528",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26070v1",
+    "status": "available",
+    "timestamp": "2026-06-25T14:50:42.256570+00:00",
+    "title": "Polynomiality of the Generalized Verschiebung Degree"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -4922,21 +4951,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese are freeform research directions building on the unconditional square\nobstruction for factorials proved in\n`Catalog/NumberTheory/FactorialNotSquare.lean`.\n\n## 1. Bounded computational certificates for Brown numbers\n\nReplace the (open) full Brown-number classification `n! + 1 = m\u00b2` \u27fa `n \u2208 {4, 5, 7}`\nwith a *checked, bounded* statement: there are no Brown numbers in a verified range\n`8 \u2264 n \u2264 N`, packaged as a reusable certificate parameterized by `N`, together with a\nmachine-checked reduction that turns any future bound into a Lean theorem.\n\nThe key insight is that, while the full classification is open, every *finite* window\nis decidable and the obstruction `p \u2264 n < 2p` lets us prune the search by testing only\nprime-interval residues instead of brute-forcing square roots.\n\n**Why now?** The catalog already verifies `8 \u2264 n \u2264 50` by `interval_cases`; promoting\nthis to a parameterized certificate with valuation-based pruning makes much larger\nranges feasible and gives a clean, extensible artifact instead of a one-off check.\n\n## 2. Pell recurrences for square\u2013triangular numbers\n\nFormalize the classical theory of numbers that are simultaneously square and triangular\n(`0, 1, 36, 1225, 41616, \u2026`) via the Pell equation `x\u00b2 - 2y\u00b2 = 1` and the linear\nrecurrence `a\u2096\u208a\u2081 = 34a\u2096 \u2212 a\u2096\u208b\u2081 + 2`, then connect it to the factorial classification\nproved here.\n\nThe key insight is that square\u2013triangular numbers are exactly the images of Pell\nsolutions, so a single recurrence generates them all and turns existence questions into\nsolvable second-order linear recurrences over `\u2124`.\n\n**Why now?** Our `IsTriangular` predicate and the square obstruction already pin down\nthe factorial intersection to `n \u2264 1`; building the general Pell machinery next gives\nthe surrounding context and reusable lemmas (`Pell`-style) that Mathlib still lacks in\nthis exact figurate form.\n\n## 3. Cataloging factorial figurate obstructions via prime intervals\n\nGeneralize `prime_sq_not_dvd_factorial` into a library of obstructions showing that, for\n`n` large enough, `n!` is never a perfect `k`-th power, never a nontrivial figurate\nnumber (pentagonal, hexagonal, \u2026), and never of various other rigid shapes.\n\nThe key insight is that a Bertrand-type prime in `(n/2, n]` occurs to exact multiplicity\none in `n!`, so any property forcing all prime multiplicities to be `\u2265 2` (perfect\npowers) or to satisfy congruence constraints (figurate forms) is immediately violated.\n\n**Why now?** The single-prime-interval argument is already isolated and proved here;\nabstracting \"exact multiplicity one\" into a reusable lemma converts a one-off result\ninto a uniform method for a whole family of impossibility theorems.\n\n## 4. Reusable Mathlib lemmas about exact prime occurrence in factorials\n\nContribute a polished, general lemma `factorization_factorial_eq_one_of_lt_two_mul`\n(and companions) stating that a prime `p` with `p \u2264 n < 2p` satisfies\n`(n!).factorization p = 1`, plus convenient corollaries phrased with `Squarefree`,\n`emultiplicity`, and `Nat.Prime.pow_dvd_iff_le_factorization`.\n\nThe key insight is that Legendre's formula collapses to its first term precisely on the\ninterval `(n/2, n]`, giving an off-the-shelf \"exact valuation\" lemma that downstream\nproofs can apply without re-deriving the truncation each time.\n\n**Why now?** Our proof re-derives this truncation inline; extracting it as a named,\ngeneral lemma (ideally upstreamed) removes duplicated reasoning across the obstruction\nresults above and is a small, well-scoped Mathlib contribution.\n\n## 5. Strengthening squareness to higher powers and `n! / c`\n\nExtend `factorial_not_square_of_two_le` to: for `n \u2265 2`, `n!` is not a perfect `k`-th\npower for any `k \u2265 2`, and study which scaled factorials `n!/c` (such as the geometric\n`n!/8` appearing in the triangular bridge) can be squares.\n\nThe key insight is that the same exact-multiplicity-one prime obstructs *all* exponents\n`k \u2265 2` at once, while scaling by a fixed `c` only shifts finitely many valuations, so\nthe obstruction survives for all sufficiently large `n`.\n\n**Why now?** With the squareness case fully formalized and non-circular, the higher-power\nand scaled variants are immediate generalizations that reuse the existing prime-interval\nlemma and round out the catalog's figurate-number story.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2527",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "fb5aee47",
-    "status": "available",
-    "timestamp": "2026-06-25T14:46:03.662899+00:00",
-    "title": "These are freeform research directions building on the unconditional square"
   },
   {
     "consumed_by_exp_id": "",
@@ -5127,6 +5141,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Program: Functoriality"
   },
   {
+    "consumed_by_exp_id": "26e8a5ea",
+    "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_0400",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:25.309278+00:00",
+    "title": "Category-Theoretic Neural Architectures"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
     "domains": [
@@ -5306,7 +5335,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "364ec557",
     "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
     "domains": [
       "EML",
@@ -5316,7 +5345,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.201625+00:00",
     "title": "EML Differential Algebra: Closure Properties"
   },
