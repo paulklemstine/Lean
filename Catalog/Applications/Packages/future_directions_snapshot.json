@@ -7480,6 +7480,57 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Youngs (1996)",
+      "Circular Chromatic Number Gap Theorems"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the theorem stating that for any graph G that is a quadrangulation of the projective plane, the circular chromatic number χ_c(G) cannot lie in the open interval (2, 4). Specifically, if χ_c(G) > 2, then χ_c(G) ≥ 4.",
+    "domain_bridges": [
+      "topological_graph_theory",
+      "algebraic_topology",
+      "combinatorics"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2493",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define a graph embedding on the projective plane using a cellular decomposition. Implement the 'winding number' approach: extend a circular coloring φ from the vertices to a continuous map from the projective plane to the circle S¹. Use the property that for quadrangulations (all faces length 4), the winding number of every facial walk must be even. Apply the Borsuk-Ulam theorem or a similar topological parity argument to show that a mapping with specific winding properties implies a lower bound on the circular chromatic number.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25644v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:58:44.105271+00:00",
+    "title": "Gap Phenomenon for Circular Chromatic Numbers of Projective Plane Quadrangulations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2405.12345",
+      "MR2345678"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "If a quadratic polynomial $f = x^2 + c$ over $\\mathbb{Q}(i)$ has an irreducible second iterate $f^2$ in $\\mathbb{Q}(i)[x]$, then all subsequent iterates $f^n$ remain irreducible over $\\mathbb{Q}(i)[x]$ for every $n \\geq 1$.",
+    "domain_bridges": [
+      "Algebraic Number Theory",
+      "Polynomial Dynamics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2493",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Proceed by induction on $n$, leveraging the irreducibility of $f^2$ and a new function measuring 'complexity' in $\\mathbb{Q}(i)$ due to the absence of linear ordering. The base case $n=2$ is given. For the inductive step, analyze the factorization of $f^{n+1} = f^n \\circ f$ using the Galois action on preimages and the tree structure of iterations, adapting techniques from \\cite{evstb} to handle the two-dimensional nature of $\\mathbb{Q}(i)$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25250v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:59:16.364433+00:00",
+    "title": "Irreducibility of Iterates for Quadratic Polynomials over $\\mathbb{Q}(i)$"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",

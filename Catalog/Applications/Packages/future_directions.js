@@ -4381,6 +4381,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the theorem stating that for any graph G that is a quadrangulation of the projective plane, the circular chromatic number \u03c7_c(G) cannot lie in the open interval (2, 4). Specifically, if \u03c7_c(G) > 2, then \u03c7_c(G) \u2265 4.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2493",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25644v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:58:44.105271+00:00",
+    "title": "Gap Phenomenon for Circular Chromatic Numbers of Projective Plane Quadrangulations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If a quadratic polynomial $f = x^2 + c$ over $\\mathbb{Q}(i)$ has an irreducible second iterate $f^2$ in $\\mathbb{Q}(i)[x]$, then all subsequent iterates $f^n$ remain irreducible over $\\mathbb{Q}(i)[x]$ for every $n \\geq 1$.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2493",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25250v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:59:16.364433+00:00",
+    "title": "Irreducibility of Iterates for Quadratic Polynomials over $\\mathbb{Q}(i)$"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
