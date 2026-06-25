@@ -29,7 +29,7 @@ def main():
     archive_docs_viz = archive_dir / "docs_visualizations"
     archive_docs_viz.mkdir(parents=True, exist_ok=True)
     
-    excluded_files = {"index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json"}
+    excluded_files = {"index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json", "catalog_tree.json"}
     
     # 1. Archive from Catalog/Applications/Packages/
     json_files = glob.glob(str(packages_dir / "*.json"))
