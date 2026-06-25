@@ -1376,7 +1376,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "506f0bb6",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domain_bridges": [],
     "domains": [
@@ -1389,7 +1389,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -4190,7 +4190,7 @@
       "Nat.even_iff",
       "Nat.odd_iff"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eee0a16a",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n ≥ 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domain_bridges": [
       "factorial Diophantine equations",
@@ -4208,7 +4208,7 @@
     "proof_strategy": "Formalize the triangular equivalence lemma: for n ≥ 4, n! + 1 = m^2 iff there exists y such that y*(y+1)/2 = n!/8 and m = 2*y + 1. Then attempt to prove the classification by combining modular exclusions for residue classes of n with factorial divisibility facts and higher-power congruence obstructions. The conjecture is suitable for Lean because it can be stated entirely over Nat using factorials, squares, divisibility by 8, and triangular numbers.",
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -7880,7 +7880,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1450e57",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domain_bridges": [],
     "domains": [
@@ -7893,7 +7893,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
@@ -8353,7 +8353,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "73a5599a",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domain_bridges": [],
     "domains": [
@@ -8366,7 +8366,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -8913,7 +8913,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "506609b8",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domain_bridges": [],
     "domains": [
@@ -8926,7 +8926,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
