@@ -1,87 +1,265 @@
-# Counting Without Crowding: How Forbidden Patterns Tame a Graph
+# When Counting Forces Structure: A Tour Through Extremal Graph Theory
 
-## A party problem that never gets old
+Imagine you are designing a social network. You have $n$ people, and you draw a
+line between any two who are friends. You want the network to be *busy* — lots
+of friendships — but you also want to forbid a certain awkward pattern: maybe no
+three people who are all mutually friends (no "triangle"), or no larger tight
+clique of $r$ people who all know each other. How many friendships can you
+possibly allow before such a forbidden pattern is unavoidable?
 
-Imagine a vast social network — a million people, each pair either acquainted or not. A sociologist wants to count the *tightly knit cliques* of a particular shape inside it. Not triangles, not random clusters, but a very specific committee structure: three organizers, each of whom personally knows every one of a fixed panel of, say, five advisors. How many such committees can possibly exist?
+This deceptively simple question is the beating heart of **extremal graph
+theory**, one of the most beautiful corners of modern combinatorics. Its central
+insight is almost philosophical: *if a structure is large enough, it cannot
+avoid having structure*. Pile on enough edges and a triangle appears whether you
+like it or not. Pile on enough numbers and an arithmetic progression appears.
+Abundance breeds order.
 
-If the network is allowed to be arbitrarily dense, the answer is boring: pack everyone together and the count explodes. The interesting science begins the moment we forbid one kind of structure. Suppose no three people in the whole network ever share a panel of $t$ common acquaintances — a "no-three-share-$t$-friends" rule. How much does this single prohibition constrain the total number of committees of *every other* shape?
+This article tells the story of four landmark results that make this slogan
+precise — Turán's theorem, Mantel's theorem, the Kruskal–Katona theorem, and
+the triangle removal lemma — and shows how they link together to prove one of
+the crown jewels of additive combinatorics: **Roth's theorem** on arithmetic
+progressions. Along the way we'll meet a surprising bridge that connects
+counting cliques in graphs to counting subsets of a set, and another that ties
+edge-counting to the famous "party problem" of Ramsey theory.
 
-This is the heart of **extremal graph theory**: the study of how forbidding one local pattern forces global scarcity. The surprising answer in the case we study here is sharp and clean. Forbidding the small bipartite pattern $K_{3,t}$ — three vertices jointly adjacent to $t$ others — caps the number of copies of the much larger bipartite pattern $K_{a,b}$ at roughly $n^3$, where $n$ is the number of people. Not $n^4$, not $n^5$, but exactly cubic growth, no matter how large $a$ and $b$ are. The "3" in $n^3$ is not an accident of the proof. It is the literal "3" inside $K_{3,t}$, fossilized in the answer.
+---
 
-## The cast of characters
+## Part I: Turán's Ceiling
 
-Let us fix vocabulary, because precision is where the beauty lives.
+Let's start with the simplest version of our question. A **triangle** is three
+people who are all mutually friends. How many friendships can a triangle-free
+network of $n$ people have?
 
-A **graph** $G$ is a set of $n$ vertices (people) together with a symmetric, irreflexive adjacency relation (acquaintance). The **complete bipartite graph** $K_{a,b}$ is the pattern consisting of two disjoint groups, one of size $a$ and one of size $b$, with *every* cross pair between the groups adjacent and no constraint within either group. A **copy of $K_{a,b}$** inside $G$ is a labelled pair $(A,B)$ of disjoint vertex sets with $|A|=a$, $|B|=b$, such that every $u\in A$ is adjacent to every $v\in B$.
+The answer, discovered by Willhelm Mantel in 1907, is elegant: at most
+$n^2/4$. And the bound is achieved exactly — split your $n$ people into two
+equal groups and let everyone in one group befriend everyone in the other, but
+nobody within their own group. This "complete bipartite" arrangement has
+$\lfloor n/2 \rfloor \cdot \lceil n/2 \rceil \approx n^2/4$ edges and not a single
+triangle, because any triangle would need two of its vertices in the same group.
 
-The forbidden pattern is $K_{3,t}$: three vertices on one side, $t$ on the other, all cross edges present. We say $G$ is **$K_{3,t}$-free** if no such configuration exists anywhere inside it:
-$$\neg\,\exists\, A,B:\ |A|=3,\ |B|=t,\ A\cap B=\varnothing,\ \forall u\in A,\ \forall v\in B,\ u\sim v.$$
+**Mantel's theorem.** *A triangle-free graph on $n$ vertices has at most $n^2/4$
+edges:*
+$$ e(G) \le \frac{n^2}{4}. $$
 
-The quantity we want to understand is the **generalized Turán number**
-$$\mathrm{ex}(n, K_{a,b}, K_{3,t}) = \max\{\,\#\text{ copies of } K_{a,b} \text{ in } G : G \text{ has } n \text{ vertices and is } K_{3,t}\text{-free}\,\}.$$
-This is the Alon–Shikhelman generalization of the classical Turán problem, which asked only about *edges* (copies of $K_{1,1}$). Here we count copies of a large structure inside a graph that avoids a small one. The main result is that this maximum grows like $n^3$.
+In our formalization this appears as the result `mantel_real`, with a clean
+integer companion `mantel_nat` stating the equivalent $4\,e(G) \le n^2$, avoiding
+any rounding subtleties.
 
-## The one idea that makes it work: common neighborhoods
+Mantel's theorem is the first case of a much grander result. Instead of
+forbidding triangles ($K_3$, the complete graph on $3$ vertices), forbid the
+complete graph $K_{r+1}$ on $r+1$ vertices — a clique of $r+1$ mutual friends.
+In 1941 Pál Turán found the exact maximum number of edges.
 
-Every deep counting argument in this corner of mathematics rests on a single, almost childishly simple observation. For a set $S$ of vertices, its **common neighborhood** is the set of vertices adjacent to *all* of them:
-$$N(S) = \{\,w : \forall u\in S,\ u\sim w\,\}.$$
+**Turán's theorem.** *A graph on $n$ vertices containing no clique $K_{r+1}$ has
+at most*
+$$ e(G) \le \left(1 - \frac{1}{r}\right)\frac{n^2}{2} $$
+*edges.*
 
-Two facts about common neighborhoods drive everything.
+The extremal example generalizes the bipartite construction: split the $n$
+vertices into $r$ nearly-equal groups and join every pair of vertices in
+*different* groups. This "Turán graph" contains no $K_{r+1}$ because a clique can
+use at most one vertex per group. Setting $r = 2$ recovers Mantel's $n^2/4$.
 
-First, **common neighborhoods shrink as you demand more**. If you enlarge the set $S$, you impose more adjacency requirements, so fewer vertices can satisfy all of them. Formally, if $S\subseteq T$ then $N(T)\subseteq N(S)$. Antitone — the bigger the demand, the smaller the supply.
+Our formalization captures Turán's theorem in two flavours. The integer form
+`turan_edge_bound_nat` states the rearranged inequality
+$$ 2r \cdot e(G) \le (r-1)\, n^2, $$
+which sidesteps division entirely and is the cleanest object to manipulate. The
+real density form `turan_edge_bound_real` then upgrades this to the textbook
+$\left(1 - \tfrac{1}{r}\right) n^2/2$. The translation between them hides a subtle
+trap: with whole-number subtraction, $r - 1$ misbehaves when $r = 0$, so the
+proof quietly rewrites $r$ as $m + 1$ to keep the arithmetic honest.
 
-Second — and this is where the prohibition bites — **being $K_{3,t}$-free is exactly the same as capping every triple's common neighborhood at $t-1$**. If some three vertices $S$ had $t$ common neighbors, those three plus those $t$ would form a forbidden $K_{3,t}$. Conversely, a forbidden $K_{3,t}$ is precisely a triple with $t$ common neighbors. So the abstract prohibition translates into a hard, quantitative ceiling:
-$$\text{$G$ is $K_{3,t}$-free} \iff \forall S,\ |S|=3 \Rightarrow |N(S)| \le t-1.$$
-This equivalence (call it the *common-neighborhood reformulation*) is the bridge between a logical statement ("no such pattern exists") and an arithmetical one ("this number is at most $t-1$"). Once you have a number to push around, you can count.
+### A bridge to the party problem
 
-A small but useful refinement: because common neighborhoods are antitone, the cap extends from triples to *any* set of size at least three. A set $B$ with $|B|\ge 3$ contains a triple $S$, and $N(B)\subseteq N(S)$, so $|N(B)|\le t-1$ too. Demanding adjacency to three or more people already pins you inside a bounded pool.
+Here is where the story takes its first surprising turn. Turán's theorem caps
+the number of edges. Ramsey theory, by contrast, guarantees that certain
+patterns *must* appear. The most famous Ramsey fact is the "theorem on
+friends and strangers": **among any six people, there are always three mutual
+friends or three mutual strangers.** In symbols, $R(3,3) = 6$.
 
-## The double count: anchoring on a triple
+Now combine the two viewpoints. Take a triangle-free network on at least six
+people. Mantel says it has few edges (at most $n^2/4$). But Ramsey says that
+among any six people there are three mutual friends *or* three mutual strangers
+— and since there are no three mutual friends, there must be three mutual
+*strangers*. In graph language: the **complement** of the network contains a
+triangle.
 
-Now we count copies of $K_{a,b}$. The strategy is the oldest trick in combinatorics — count the same thing two ways — executed with a clever choice of *anchor*.
+This is the content of `mantel_ramsey_bridge`: on at least six vertices, a
+triangle-free graph $G$ simultaneously obeys Mantel's edge bound *and* forces a
+triangle into its complement $G^c$. Extremal theory caps one side; Ramsey theory
+fills the other. The same six people, seen through two lenses, tell a complete
+story.
 
-Here is the picture. Take any copy $(A,B)$ of $K_{a,b}$. The side $A$ has $a\ge 3$ vertices, so it contains at least one triple $S\subseteq A$. We are going to organize all copies by which triple sits inside their $A$-side.
+---
 
-**Step 1 — the fiber bound.** Fix one triple $S$. How many copies $(A,B)$ can have $S\subseteq A$? Every vertex of $B$ is adjacent to all of $A$, hence to all of $S$, so $B\subseteq N(S)$. The ceiling says $|N(S)|\le t-1$, so $B$ is a $b$-subset of a pool of size at most $t-1$: at most $\binom{t-1}{b}$ choices. Having chosen $B$, every vertex of $A\setminus S$ is adjacent to all of $B$, so $A\setminus S\subseteq N(B)$; since $|B|=b\ge 3$, the ceiling applies again and $|N(B)|\le t-1$, giving at most $\binom{t-1}{a-3}$ choices for the remaining $a-3$ vertices. The map $(A,B)\mapsto (A\setminus S,\, B)$ is injective on this family, so
-$$\#\{\text{copies with } S\subseteq A\}\ \le\ \binom{t-1}{b}\binom{t-1}{a-3}.$$
-A constant. Independent of $n$. That is the entire miracle, compressed into one inequality.
+## Part II: Shadows — From Cliques to Edges
 
-**Step 2 — sum over anchors.** Every copy is counted at least once across all triples $S$, because its $A$-side contains at least $\binom{a}{3}\ge 1$ triples. Summing the fiber bound over all $\binom{n}{3}$ triples of the whole graph:
-$$\#\text{ copies of } K_{a,b}\ \le\ \binom{n}{3}\,\binom{t-1}{b}\binom{t-1}{a-3}.$$
-And since $\binom{n}{3}\le n^3$, this is
-$$\boxed{\ \#\text{ copies of } K_{a,b}\ \le\ \binom{t-1}{b}\binom{t-1}{a-3}\cdot n^3\ } $$
-a clean cubic bound. The leading constant depends only on the three small parameters $a$, $b$, $t$ — never on the size of the network. This is the main theorem.
+Our second landmark, the **Kruskal–Katona theorem**, lives at first glance in a
+different universe: the world of *set systems*. But it turns out to speak
+directly about graphs, and the translation is one of the most satisfying in the
+subject.
 
-Notice what the proof reveals about *why* the exponent is three. The three vertices of the anchor $S$ are the only "free" vertices; every other vertex of the copy — all $a+b-3$ of them — is forced into a bounded common neighborhood and contributes only a constant factor. The exponent counts the vertices that escape the ceiling, and the ceiling is a property of triples. Change the forbidden pattern from $K_{3,t}$ to $K_{s,t}$ and the exponent would change to $s$. The shape of the prohibition dictates the shape of the answer.
+Picture a family $\mathcal{A}$ of sets, all of the same size $r$. Its **shadow**,
+written $\partial \mathcal{A}$, is the collection of all sets you can make by
+deleting a single element from a member of $\mathcal{A}$. For instance, the
+shadow of $\{1,2,3\}$ contains $\{1,2\}$, $\{1,3\}$, and $\{2,3\}$. The
+Kruskal–Katona theorem answers: if $\mathcal{A}$ is large, how small can its
+shadow be? You can't have many $r$-sets sharing only a few $(r-1)$-subsets.
 
-## The threshold: a story about parity
+**Kruskal–Katona (shadow lower bound).** *If $\mathcal{A}$ is a family of
+$r$-element subsets with at least $\binom{k}{r}$ members, then its shadow has at
+least $\binom{k}{r-1}$ members:*
+$$ |\mathcal{A}| \ge \binom{k}{r} \;\Longrightarrow\; |\partial \mathcal{A}| \ge \binom{k}{r-1}. $$
 
-There is a subtle question hiding in plain sight: *how large must $t$ be for any of this to be non-trivial?* If $t$ is tiny, $\binom{t-1}{b}=0$ and the bound says there are zero copies — true but uninteresting, because $K_{a,b}$ itself contains a $K_{3,t}$ and cannot appear at all. The arithmetic only becomes meaningful once $t$ is large enough that a $K_{a,b}$ can coexist with $K_{3,t}$-freeness. The natural cutoff is the **necessary threshold** $t = b+1$: any smaller and a single $K_{a,b}$ already hides a forbidden $K_{3,t}$.
+The extremal families are the "colex-initial" ones — and the cleanest example is
+simply *all subsets of a fixed $k$-element set*. This is the form we package as
+`kk_shadow_lower`. We also prove a structural companion, `kk_iterated_shadow_nonempty`:
+a large enough $r$-uniform family has the property that its shadow, the shadow of
+its shadow, and so on, never die out — the chain of shadows descends all the way
+to the empty set.
 
-At exactly this threshold, something elegant happens to the leading constant. With $t-1 = b$, the factor $\binom{t-1}{b} = \binom{b}{b} = 1$ collapses, and the whole constant simplifies to
-$$\binom{t-1}{b}\binom{t-1}{a-3}\ \longrightarrow\ \binom{b}{a-3}.$$
-The bound becomes as lean as possible.
+### The geometric heart
 
-The deeper story concerns the gap between what is *provable by current heavy machinery* and what is *conjecturally necessary*. The state-of-the-art lower-bound construction (a theorem of Janzer–Longbrake–Yepremyan) guarantees the matching $\Theta(n^3)$ growth only when $t$ is at least the **proved threshold** $2\max\{3,\lceil b/2\rceil\}+1$. For $b\ge 6$ this expression simplifies, by a one-line parity computation, to
-$$2\max\{3,\lceil b/2\rceil\}+1 = b + 1 + (b \bmod 2).$$
-Compare this to the necessary threshold $b+1$. The two coincide **exactly when $b$ is even** — the proved bound already lands on the necessary one. When $b$ is **odd**, the proved threshold overshoots by precisely one. The entire remaining frontier of the problem is this single off-by-one, governed by nothing more than the parity of $b$:
-$$\text{necessary threshold} < \text{proved threshold} \iff b \text{ is odd}.$$
-A whole research conjecture distilled to a question about even versus odd. The upper bound proved here, by contrast, is *parity-blind*: it holds at the necessary threshold for every $b$, even or odd. The asymmetry between the easy upper direction and the delicate lower direction is exactly where the mathematics is still alive.
+Now watch the magic. In any graph, a **triangle is a set of three vertices**, and
+an **edge is a set of two vertices**. What happens when you delete one vertex
+from a triangle? You get an edge — and not just any pair, but a genuine edge of
+the graph, because all three pairs in a triangle are connected.
 
-## Why deletion never breaks the bound
+This means: **the shadow of the family of triangles sits inside the family of
+edges.** We capture this as `shadow_triangles_subset_edges`. It is a one-line
+structural truth with enormous consequences, because now Kruskal–Katona applies.
 
-A final, very practical virtue of this kind of theorem is its **robustness under deletion**. Suppose you have a $K_{3,t}$-free network and you start removing edges — perhaps modelling unreliable connections, or a "cleaning" step that strips away rare configurations. Does the cubic bound survive?
+Feed the family of triangles ($3$-element cliques) into the shadow bound. If a
+graph has at least $\binom{k}{3}$ triangles, Kruskal–Katona guarantees its
+triangle-shadow has at least $\binom{k}{2}$ members. And since that shadow is
+contained in the edges, the graph must have at least $\binom{k}{2}$ edges.
 
-It does, and the reason is structural rather than computational. Removing edges only *shrinks* common neighborhoods: if $G$ is a subgraph of $G'$ (written $G\le G'$), then $N_G(S)\subseteq N_{G'}(S)$ for every set $S$. Three consequences cascade from this:
+**Kruskal–Katona for graphs.** *A graph on $n$ vertices with at least
+$\binom{k}{3}$ triangles (where $3 \le k \le n$) has at least $\binom{k}{2}$
+edges:*
+$$ \#\{\text{triangles}\} \ge \binom{k}{3} \;\Longrightarrow\; \#\{\text{edges}\} \ge \binom{k}{2}. $$
 
-- **Freeness is inherited downward.** A subgraph of a $K_{3,t}$-free graph is itself $K_{3,t}$-free — you cannot create a forbidden pattern by deleting edges.
-- **The ceiling can only fall.** Common-neighborhood sizes are monotone: $|N_G(S)|\le |N_{G'}(S)|$.
-- **The whole bound transfers.** If $G\le G'$ and $G'$ is $K_{3,t}$-free (at the threshold $t\ge b+1$), then $G$ obeys the *same* cubic bound $\binom{t-1}{b}\binom{t-1}{a-3}\cdot n^3$ — with the identical constant.
+This is `card_edgeFinset_ge_of_triangles` (with an intermediate clique-counting
+version `card_cliqueFinset_two_ge_of_triangles` and a bookkeeping lemma
+`card_cliqueFinset_two_eq_edgeFinset` confirming that "$2$-cliques" really are
+edges). The slogan: **many triangles force many edges.** A network can't be rich
+in tight little triangles while staying sparse overall — abundance of small
+structure forces abundance of the building blocks.
 
-This is *downward closure*: the cubic estimate, proved once for the dense extremal graph, is automatically true for every subgraph living beneath it in the partial order of graphs. In the language of deletion arguments, the surviving graph after any cleaning step is guaranteed to inherit the count — you never have to re-run the hard double-count. The expensive theorem is proved at the top of the order and rains down on everything below.
+---
 
-## The bigger picture
+## Part III: The Removal Lemma and the Magic of Regularity
 
-What makes this little corner of mathematics so satisfying is how a single quantitative idea — *cap the common neighborhood of a triple* — propagates through every layer of the theory. It turns a logical prohibition into a number; the number feeds a double count; the double count yields a cubic law; the cubic law's constant collapses at the natural threshold; the threshold's only mystery is a parity gap; and the entire result, once proved, is stable under deletion by sheer monotonicity.
+Our third act introduces the most powerful tool in the modern combinatorial
+arsenal, and the engine that drives everything toward Roth's theorem: the
+**triangle removal lemma**.
 
-Extremal graph theory is, at bottom, the science of how local rules become global laws. Forbid three people from ever sharing too many friends, and you have — whether you intended to or not — limited the number of every committee in the network to grow no faster than the cube of its population. The crowd polices itself, and the proof fits on a page.
+Its statement sounds almost too good to be true. Suppose a graph has *very few*
+triangles — not zero, but a tiny fraction of what's possible. Then you can make
+it completely triangle-free by deleting only a tiny fraction of its edges.
+
+**Triangle removal lemma.** *For every $\varepsilon > 0$ there is a $\delta > 0$
+such that every graph on $n$ vertices with fewer than $\delta n^3$ triangles can
+be made triangle-free by deleting fewer than $\varepsilon n^2$ edges.*
+
+We package this as `triangle_removal_lemma`. Why is this remarkable? Because the
+number of triangles ($\sim n^3$) and the number of edges ($\sim n^2$) live on
+completely different scales. The lemma says that "few triangles" (a
+*cubic*-scale condition) translates into "few edges to delete" (a
+*quadratic*-scale conclusion). Squeezing out a cubic number of triangles costs
+only a quadratic number of edge deletions.
+
+The proof — far beyond what we restate here — rests on **Szemerédi's regularity
+lemma**, perhaps the single most influential result in extremal combinatorics.
+Roughly, it says any large graph can be partitioned into a bounded number of
+pieces so that the connections between almost every pair of pieces look
+*pseudorandom*. Once a graph is carved into these well-behaved chunks, counting
+triangles becomes a matter of probability, and the removal lemma follows.
+
+It is often more useful to flip the lemma around. The contrapositive,
+`not_farFromTriangleFree_of_few_triangles`, says: a graph that is *far* from
+triangle-free (you'd need to delete $\ge \varepsilon n^2$ edges) must contain a
+*cubic* number of triangles, at least $\delta n^3$. Combining this with the fact
+that being far from triangle-free guarantees many triangle copies yields a sharp
+**dichotomy**, `triangle_count_dichotomy`:
+
+> **Every graph either has cubically many triangles, or is edge-close to
+> triangle-free.** There is no middle ground.
+
+A graph can't hover in between — it is either triangle-rich or essentially
+triangle-free. This all-or-nothing behavior is exactly the leverage needed for
+the final act.
+
+---
+
+## Part IV: Roth's Theorem — Order in the Integers
+
+We arrive at the destination. Forget graphs for a moment and think about plain
+numbers. A **3-term arithmetic progression** is three numbers equally spaced,
+like $4, 7, 10$ or $a, b, c$ with $a + c = 2b$. A set of integers is
+"3AP-free" if it contains no such triple.
+
+How large can a 3AP-free subset of $\{0, 1, \dots, N-1\}$ be? You can certainly
+get a positive fraction — clever constructions reach about $N / e^{c\sqrt{\log N}}$.
+But can you keep a *constant* fraction, say $1\%$ of all the numbers, while
+avoiding every arithmetic progression, no matter how large $N$ grows?
+
+Klaus Roth proved in 1953 that you cannot. This won him the Fields Medal.
+
+**Roth's theorem.** *The largest 3AP-free subset of $\{0, 1, \dots, N-1\}$ has
+size $o(N)$ — a vanishing fraction as $N \to \infty$.*
+
+Writing $r_3(N)$ for that largest size, we package the density statement as
+`rothNumberNat_density_tendsto_zero`:
+$$ \frac{r_3(N)}{N} \longrightarrow 0. $$
+
+How does triangle-counting prove a fact about numbers? Through a gorgeous
+translation. Given a set $A$ of integers, one builds a graph whose triangles
+correspond exactly to 3-term arithmetic progressions in $A$. A 3AP-free set
+yields a graph with very few triangles. The removal lemma then says you can
+delete few edges to kill all triangles — but a counting argument shows the
+"trivial" progressions (where $a=b=c$) already form too many triangles to
+remove cheaply. Contradiction, unless $A$ was small to begin with. The dichotomy
+of Part III becomes the dichotomy between a set being sparse and a set being
+arithmetically structured.
+
+The truly useful form of Roth's theorem is qualitative, and we capture it as
+`exists_threeAP_of_freq_dense`:
+
+> **Any set of natural numbers whose density stays bounded below by a positive
+> constant — infinitely often — must contain a genuine 3-term arithmetic
+> progression.**
+
+In other words, you cannot maintain even $1\%$ density forever without
+accidentally creating three equally-spaced numbers. Structure is inescapable.
+The proof is a clean contradiction: density "frequently $\ge c$" collides with
+Roth's "eventually $\le c/2$" upper bound at a single value of $N$, and the two
+inequalities cannot both hold.
+
+---
+
+## The Grand Arc
+
+Step back and admire the architecture. Four classical theorems, each a gem in
+its own right, assemble into a single tower:
+
+- **Turán and Mantel** establish the prototype: forbidding a small pattern caps
+  the number of edges, and the cap is achieved by a beautifully symmetric
+  construction.
+- **Kruskal–Katona** reveals that counting cliques is really counting subsets,
+  and that small structure (triangles) forces large structure (edges) through
+  the geometry of shadows.
+- **The triangle removal lemma**, powered by Szemerédi regularity, delivers the
+  all-or-nothing dichotomy: triangle-rich or triangle-free, nothing in between.
+- **Roth's theorem** cashes everything in, proving that the integers themselves
+  cannot escape arithmetic structure once they are dense enough.
+
+The unifying message echoes across every level: **largeness forces structure.**
+Whether you are counting friendships in a network, subsets of a set, triangles
+in a graph, or numbers in a progression, the same law applies. Cross a threshold
+of abundance and order appears, unbidden and unavoidable.
+
+This is the quiet wonder of extremal combinatorics. It does not merely describe
+what *can* happen; it pins down, exactly and provably, what *must*. And in a
+mathematical world that can feel boundlessly free, there is something deeply
+reassuring about discovering its hard, unbreakable limits.

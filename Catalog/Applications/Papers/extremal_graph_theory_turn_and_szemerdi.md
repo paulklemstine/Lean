@@ -1,52 +1,50 @@
-# Computational Evidence — Extremal Graph Theory (Turán, Roth, Kruskal–Katona)
+# Computational Evidence — Kruskal–Katona graph bridge & triangle removal
 
-Concise numerical sanity checks for the formalized claims. These motivated the exact
-statements proved in the three `.lean` files; the Lean proofs (0 sorries) are the
-authoritative verification.
+Concise evidence for the two claims formalized this cycle.
 
-## 1. Mantel / Turán edge bound `e(G) ≤ (1 - 1/r)·n²/2`
+## 1. Bridge: "many triangles ⇒ many edges" (`card_edgeFinset_ge_of_triangles`)
 
-The bound is `2·r·e(G) ≤ (r-1)·n²` (integer form `turan_edge_bound_nat`).
+Claim: a graph on `Fin n` with `≥ C(k,3)` triangles has `≥ C(k,2)` edges (for `3 ≤ k ≤ n`).
 
-Triangle-free (`r = 2`) extremal graphs are complete bipartite `K_{⌊n/2⌋,⌈n/2⌉}`:
+The extremal witness is the complete graph `K_k`, which has **exactly** `C(k,3)` triangles and
+`C(k,2)` edges, so the bound is tight. Table of `(k, C(k,3), C(k,2))` computed in Lean
+(`#eval (List.range 9).map (fun k => (k, k.choose 3, k.choose 2))`):
 
-| n | ⌊n²/4⌋ (Mantel max) | e(K_{⌊n/2⌋,⌈n/2⌉}) |
-|---|---------------------|--------------------|
-| 2 | 1                   | 1                  |
-| 3 | 2                   | 2                  |
-| 4 | 4                   | 4                  |
-| 5 | 6                   | 6                  |
-| 6 | 9                   | 9                  |
+| k | triangles C(k,3) | edges C(k,2) |
+|---|------------------|--------------|
+| 2 | 0  | 1  |
+| 3 | 1  | 3  |
+| 4 | 4  | 6  |
+| 5 | 10 | 10 |
+| 6 | 20 | 15 |
+| 7 | 35 | 21 |
+| 8 | 56 | 28 |
 
-Matches `mantel_nat`/`mantel_real` (`e ≤ n²/4`) with equality at the balanced bipartite graph.
+Sanity checks of the *threshold logic* (the contrapositive: few edges ⇒ few triangles):
+- A graph with `< C(k,2)` edges has `< C(k,3)` triangles. E.g. with `4` triangles one needs
+  `≥ C(4,2)=6` edges; indeed `K_4` (the only graph with exactly `4` triangles up to isolated
+  vertices) has `6` edges.
+- The shadow inclusion `∂(triangles) ⊆ edges` is checked structurally (deleting any vertex of a
+  triangle yields an edge), so the inequality is not merely numerical: it is a genuine set
+  inclusion, then quantified by Kruskal–Katona.
 
-For `r = 3` (`K_4`-free), `(1 - 1/3)·n²/2 = n²/3`: n = 6 ⇒ bound 12, achieved by the
-complete tripartite `K_{2,2,2}` with 12 edges. Consistent.
+Counterexample hunt: none expected, and none found — Kruskal–Katona is a theorem and the witness
+`K_k` matches both binomials simultaneously (row `k=5`: `10 = 10`), confirming tightness rather
+than slack.
 
-## 2. Roth numbers `rothNumberNat N` (largest 3AP-free subset of {0,…,N-1})
+## 2. Triangle removal dichotomy (`triangle_count_dichotomy`)
 
-OEIS A065825 (max size of 3AP-free subset of {1,…,n}); first terms:
-`1, 2, 2, 3, 4, 4, 4, 4, 5, 5, …`. The density `rothNumberNat N / N` is
-`1, 1, 0.67, 0.75, 0.8, 0.67, …` and provably → 0 (`rothNumberNat_density_tendsto_zero`).
+Claim: for any `ε`, every finite graph either has `≥ triangleRemovalBound ε · n³` triangles, or can
+be made triangle-free by deleting `< ε · n²` edges.
 
-Counterexample hunt for `exists_threeAP_of_freq_dense`: any A with frequent density ≥ c > 0
-must contain a 3-AP. Sampling A = even numbers (density 1/2): contains 0,2,4 (a 3-AP), as
-predicted. A = {n : popcount even} (Thue–Morse-ish, density 1/2): still contains 3-APs,
-consistent with the theorem (no positive-density 3AP-free set exists).
+`triangleRemovalBound ε > 0` for `ε > 0` (`triangleRemovalBound_pos`), so the threshold is a
+genuine positive cubic. The dichotomy is exhaustive by construction (`by_cases` on the threshold),
+so no counterexample is possible; the content is that the "few triangles" branch yields an explicit
+sparse triangle-free subgraph via `triangle_removal`.
 
-## 3. Kruskal–Katona shadow bounds
+## Why no heavier computation
 
-For `𝒜 = ` all `r`-subsets of `{0,…,k-1}` (size `k.choose r`), the `i`-th shadow is all
-`(r-i)`-subsets, of size `k.choose (r-i)` — the equality case of
-`kruskal_katona_lovasz_form`.
-
-| k | r | #𝒜 = C(k,r) | #∂𝒜 = C(k,r-1) |
-|---|---|-------------|-----------------|
-| 4 | 2 | 6           | 4               |
-| 5 | 3 | 10          | 10              |
-| 6 | 3 | 20          | 15              |
-
-The shadow is nonempty in all rows and stays nonempty through `∂^[r]` (reaching the empty
-layer, `C(k,0)=1`), matching `kk_iterated_shadow_nonempty`.
-
-All tables are small finite checks; the universal statements are proved in Lean.
+The two results are sharp consequences of theorems already in Mathlib (`kruskal_katona_lovasz_form`,
+`triangle_removal`); the decisive content is the *structural* shadow inclusion and the *cast-aligned*
+contradiction, both of which are verified by the Lean proofs themselves rather than by enumeration.
+Small-case binomial data above suffices to confirm tightness of the bridge.
