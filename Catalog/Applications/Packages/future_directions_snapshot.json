@@ -2431,7 +2431,7 @@
       "MR0025715",
       "MR2483235"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e0c8bd91",
     "description": "Let $a_k$ denote the number of Pólya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the Pólya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
     "domain_bridges": [
       "analytic_combinatorics",
@@ -2447,7 +2447,7 @@
     "proof_strategy": "Define the OGF A(z) via the Pólya functional equation A(z) = z·exp(A(z))·Φ(z) where Φ(z) = exp(∑_{i≥2} A(z^i)/i). Take the logarithmic derivative to obtain zA'(z) = A(z)(1 + ∑_{i≥1} z^i A'(z^i)). Extract the coefficient of z^k on both sides: the left side gives k·a_k; the right side gives a_k + ∑_{j=1}^{k-1} a_j·ω_{k-j}, where ω_k arises from the identity [z^k]∑_{i≥1} z^i A'(z^i) = ∑_{d|k} d·a_d. Rearranging yields the recurrence. The Lean formalization should first establish the coefficient extraction identity for the divisor sum, then apply it to the differentiated functional equation.",
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T05:17:21.927856+00:00",
     "title": "Pólya tree coefficient divisor-sum recurrence"
   },
@@ -9519,7 +9519,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f7490cc",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -9532,7 +9532,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
