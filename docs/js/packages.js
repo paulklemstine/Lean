@@ -125,6 +125,49 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    function escapeHtml(unsafe) {
+        return (unsafe || '')
+             .replace(/&/g, "&amp;")
+             .replace(/</g, "&lt;")
+             .replace(/>/g, "&gt;")
+             .replace(/"/g, "&quot;")
+             .replace(/'/g, "&#039;");
+    }
+
+    function parseMarkdownSafe(text) {
+        if (!text) return '';
+        const placeholders = [];
+        // Extract $$...$$
+        text = text.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
+            placeholders.push(match);
+            return `%%%MATH_BLOCK_${placeholders.length - 1}%%%`;
+        });
+        // Extract \[...\]
+        text = text.replace(/\\\[([\s\S]*?)\\\]/g, (match) => {
+            placeholders.push(match);
+            return `%%%MATH_BLOCK_${placeholders.length - 1}%%%`;
+        });
+        // Extract \(...\)
+        text = text.replace(/\\\(([\s\S]*?)\\\)/g, (match) => {
+            placeholders.push(match);
+            return `%%%MATH_BLOCK_${placeholders.length - 1}%%%`;
+        });
+        // Extract $...$
+        text = text.replace(/\$((?:\\.|[^$\\])+)\$/g, (match) => {
+            placeholders.push(match);
+            return `%%%MATH_BLOCK_${placeholders.length - 1}%%%`;
+        });
+
+        let html = marked.parse(text);
+
+        // Restore math blocks safely
+        placeholders.forEach((math, i) => {
+            html = html.replace(`%%%MATH_BLOCK_${i}%%%`, () => escapeHtml(math));
+        });
+
+        return html;
+    }
+
     function renderPackage(data, filename) {
         document.getElementById('pkg-title').textContent = data.title || 'Untitled Research';
         document.getElementById('pkg-domain').textContent = data.domain || 'General';
@@ -184,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Article
         const articleDiv = document.getElementById('content-article');
         if (data.article) {
-            articleDiv.innerHTML = marked.parse(data.article);
+            articleDiv.innerHTML = parseMarkdownSafe(data.article);
         } else {
             articleDiv.innerHTML = '<p style="color:var(--text-muted)">No article provided.</p>';
         }
@@ -192,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Paper
         const paperDiv = document.getElementById('content-paper');
         if (data.research_paper) {
-            paperDiv.innerHTML = marked.parse(data.research_paper);
+            paperDiv.innerHTML = parseMarkdownSafe(data.research_paper);
         } else {
             paperDiv.innerHTML = '<p style="color:var(--text-muted)">No research paper provided.</p>';
         }
@@ -779,7 +822,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let explanationHtml = '';
                 const desc = (item.description || item.explanation || '').replace(/\\n/g, '\n');
                 if (desc.trim()) {
-                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main); white-space: pre-line;">${marked.parse(desc)}</div>`;
+                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main); white-space: pre-line;">${parseMarkdownSafe(desc)}</div>`;
                 }
 
                 // Check what code fields we have
@@ -940,7 +983,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const narrativeDiv = document.getElementById('content-directions-narrative');
         const fd = pkgData.future_directions;
         if (fd && typeof fd === 'string' && fd.length > 50 && !fd.endsWith('.md')) {
-            narrativeDiv.innerHTML = marked.parse(fd);
+            narrativeDiv.innerHTML = parseMarkdownSafe(fd);
         } else {
             narrativeDiv.innerHTML = '<p style="color:var(--text-muted)">No future directions narrative for this package.</p>';
         }
