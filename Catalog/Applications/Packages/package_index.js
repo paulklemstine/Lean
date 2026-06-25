@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ff8131d4",
     "filename": "minimal_minor_closed_classes_below_32_have_single_.json",
     "pkg_num": 52,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4658475833333334,
     "title": "Minimal Minor-Closed Classes Below Density 3/2 Have Single Forbidden Minors"
   },
   {
@@ -1517,8 +1517,8 @@ window.PACKAGE_GRAPH = {
       "hue": 292,
       "id": "minimal_minor_closed_classes_below_32_have_single_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4658475833333334,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Minimal Minor-Closed Classes Below Density 3/2 Have Single Forbidden Minors"
     }

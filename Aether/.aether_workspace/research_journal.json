@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "15e84b40",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThe most immediate extension is to upgrade `PartialSection` from a flat index set to a genuine presheaf on a poset or a topological space, so that restriction is functorial and th",
-      "quality_score": 0.5413687224669603,
-      "sorry_count": 0,
-      "theorem_count": 109,
-      "timestamp": "2026-06-18T07:02:49",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
-    {
       "cycle_id": "0d2b0b43",
       "domain": "Tropical",
       "key_insight": "# Future Directions — Tropical Curve Counting / Gromov–Witten Invariants\n\nThis cycle established (in `Core.lean`, 0 sorries):\n\n* the balancing/determinant identity making tropical **vertex multiplicit",
@@ -2501,6 +2491,16 @@
       "theorem_count": 3,
       "timestamp": "2026-06-25T05:24:17",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
+    },
+    {
+      "cycle_id": "ff8131d4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Single Forbidden Minors Below Density 3/2\n\nDerived from this cycle's findings (`SingleForbiddenMinorLattice.lean`,\n`BoundedDegreeBelowThreshold.lean`) and building on the catalog",
+      "quality_score": 0.4658475833333334,
+      "sorry_count": 2,
+      "theorem_count": 20,
+      "timestamp": "2026-06-25T07:04:33",
+      "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7545600000000001
     }
   ],
-  "last_updated": "2026-06-25T05:24:17",
+  "last_updated": "2026-06-25T07:04:33",
   "open_questions": [
-    {
-      "context": "Result:  Formalised and proved sorry-free.  `mpStep_add`/`mpStep_smul` (linearity),; Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
-      "cycle_id": "9f700fd5",
-      "domain": "Pythagorean",
-      "sorry_count": 2,
-      "timestamp": "2026-06-15T10:03:01"
-    },
     {
       "context": "`appendCode_card`) proved `sorry`-free for arbitrary lengths; `hamming ⊕ hamming`",
       "cycle_id": "2086db82",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 4,
       "timestamp": "2026-06-25T03:46:44"
+    },
+    {
+      "context": "Main results (all 0-sorry):; Main new results (all 0-sorry):",
+      "cycle_id": "ff8131d4",
+      "domain": "Novelty",
+      "sorry_count": 2,
+      "timestamp": "2026-06-25T07:04:33"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a4a5a639",
-        "quality": 0.3493306711864407,
-        "theorems": 12,
-        "title": "Rucker 'Gnarl' and Continuous-Valued Cellular Automata"
-      },
-      {
         "cycle_id": "1e3d4863",
         "quality": 0.729932,
         "theorems": 3,
@@ -3637,6 +3631,12 @@
         "quality": 0.886574,
         "theorems": 3,
         "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
+      },
+      {
+        "cycle_id": "ff8131d4",
+        "quality": 0.4658475833333334,
+        "theorems": 20,
+        "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
       }
     ],
     "NumberTheory": [

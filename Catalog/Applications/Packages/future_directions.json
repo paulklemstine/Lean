@@ -16464,7 +16464,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "e930d2ca",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16490,7 +16490,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.295536+00:00",
       "title": "Code-Based Cryptography: McEliece from Goppa Codes"
@@ -37698,7 +37698,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Nat.factorial",
         "Nat.sqrt",
@@ -37710,7 +37710,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "eee0a16a",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37727,7 +37727,7 @@
         "Bridges"
       ],
       "id": "fd_2365",
-      "last_attempt_time": "2026-06-25T06:42:54.721746+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen Nat\n\n/-- Triangular form of the Brocard-Ramanujan conjecture: the only `n` such that\n`n! / 8` is triangular are `4`, `5`, and `7`. -/\ntheorem brocard_triangular_classification\n    (n y : Nat)\n    (hn : 4 ≤ n)\n    (htri : y * (y + 1) / 2 = n.factorial / 8) :\n    n = 4 ∨ n = 5 ∨ n = 7 := by\n  sorry\n\n/-- Equivalent Brown-number formulation. -/\ntheorem brocard_brown_number_classification\n    (n m : Nat)\n    (h : n.factorial + 1 = m ^ 2) :\n    (n = 4 ∧ m = 5) ∨ (n = 5 ∧ m = 11) ∨ (n = 7 ∧ m = 71) := by\n  sorry",
       "lineage_refs": [],
@@ -37741,7 +37741,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23485v1",
       "source_path": "http://arxiv.org/abs/2606.23485v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T16:30:05.276546+00:00",
       "title": "Brocard-Ramanujan Triangular Classification"
@@ -39260,7 +39260,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "1311df1d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39290,7 +39290,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23474v1",
       "source_path": "http://arxiv.org/abs/2606.23474v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T00:22:07.112237+00:00",
       "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
@@ -43348,7 +43348,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "6d6e5d02",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43374,7 +43374,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T03:28:36.279962+00:00",
       "title": "Spectral Modular Signatures of Formal Proof Difficulty"
@@ -43772,6 +43772,55 @@
       "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Hegedus bound for single-distance binary codes",
+        "Hadamard matrix conjecture",
+        "Mathlib.Data.Finset.Card",
+        "Mathlib.Data.Fintype.Card",
+        "Mathlib.LinearAlgebra.Matrix.DotProduct"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every positive integer n, there exists a family of n+1 subsets of Fin n whose pairwise symmetric-difference distances are all (n+1)/2 if and only if n = 1 or n ≡ 3 mod 4. Equivalently, the exceptional case lambda = (n+1)/2 in Hegedus's bound is attained exactly in the Hadamard orders.",
+      "domain_bridges": [
+        "binary set systems ↔ signed characteristic vectors",
+        "constant Hamming distance codes ↔ Gram matrices",
+        "extremal equidistant codes ↔ Hadamard matrices"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2498",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Finset.Card\nimport Mathlib.Data.Fintype.Card\n\nopen Finset\n\nnoncomputable section\n\ndef hammingDistFinset {n : ℕ} (A B : Finset (Fin n)) : ℕ :=\n  (A \\ B).card + (B \\ A).card\n\n/-- Hadamard-conjecture form of the exceptional binary case of Hegedus's bound. -/\ntheorem binary_exceptional_equidistant_iff_hadamard_divisibility\n    (n : ℕ) (hn : 0 < n) :\n    (∃ F : Fin (n + 1) → Finset (Fin n),\n        Function.Injective F ∧\n        ∀ i j : Fin (n + 1), i ≠ j →\n          hammingDistFinset (F i) (F j) = (n + 1) / 2)\n      ↔ n = 1 ∨ n % 4 = 3 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Show equivalence with the classical Hadamard conjecture. Given such a family, convert each subset to its signed characteristic vector in {±1}^n; pairwise distance (n+1)/2 gives pairwise inner product -1, and appending an all-one coordinate yields n+1 mutually orthogonal {±1}-rows, i.e. a Hadamard matrix of order n+1. Conversely, from a normalized Hadamard matrix of order n+1, delete the all-one column and convert signs back to subsets. The necessity n=1 or n≡3 mod 4 follows from the standard Hadamard determinant/parity obstruction; the sufficiency is exactly the Hadamard conjecture.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24624v1",
+      "source_path": "http://arxiv.org/abs/2606.24624v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T07:06:11.878161+00:00",
+      "title": "Hadamard-tightness conjecture for the exceptional binary Hegedus bound"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -43797,7 +43846,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2498",
+      "id": "fd_2499",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -43841,7 +43890,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2499",
+      "id": "fd_2500",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -43884,7 +43933,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2500",
+      "id": "fd_2501",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -43927,7 +43976,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2501",
+      "id": "fd_2502",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
@@ -43973,7 +44022,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2502",
+      "id": "fd_2503",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularity_MMsplit (a : ℕ) (b : List ℕ) (hb : ∀ r ∈ b, 1 ≤ r) :\n  let G := MM a b\n  let ν := (b.filter (· ≥ 2)).length\n  reg (edgeIdeal G) = ν + 1 :=\nby\n  -- proof goes here",
@@ -44016,7 +44065,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2503",
+      "id": "fd_2504",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem self_dual_code_26_uniqueness : ∀ (C D : Code), (C.is_self_dual ∧ C.length = 26 ∧ C.min_weight = 6) → (D.is_self_dual ∧ D.length = 26 ∧ D.min_weight = 6) → ∃ (perm : Fin 26 → Fin 26), perm • C = D",
@@ -44035,6 +44084,47 @@
       "thread_id": "",
       "timestamp": "2026-06-25T06:42:49.211274+00:00",
       "title": "Uniqueness of the Binary Self-Dual [26,13,6] Code up to Equivalence"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:1209.0207"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The dimension of the nilpotent Lie algebra constructed from a finite acyclic quiver with n edges equals n.",
+      "domain_bridges": "nilpotent",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2505",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "dimension theorem for Lie algebras",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "algebraic construction",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24569v1",
+      "source_path": "http://arxiv.org/abs/2606.24569v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T07:06:55.988854+00:00",
+      "title": "Dimension Equality Conjecture"
     },
     {
       "ambition_level": "extension",
@@ -49696,7 +49786,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "86eb345e",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -49721,7 +49811,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432688+00:00",
       "title": "Ramsey Theory: Bounds and Constructions"
@@ -50046,7 +50136,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "91e64198",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -50072,7 +50162,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432769+00:00",
       "title": "Lambda Calculus: Church-Rosser and Normalization"
@@ -50160,11 +50250,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f9bfeca7",
+      "consumed_by_exp_id": "ef874ad4",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -50177,7 +50267,7 @@
         "Analysis"
       ],
       "id": "seed_364",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T07:06:58.198496+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -50483,7 +50573,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "9c36d38e",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -50510,7 +50600,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432794+00:00",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"

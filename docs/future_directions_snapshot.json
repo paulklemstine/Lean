@@ -716,7 +716,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f9bfeca7",
+    "consumed_by_exp_id": "ef874ad4",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domain_bridges": [],
     "domains": [
@@ -1196,7 +1196,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "86eb345e",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1208,7 +1208,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1256,7 +1256,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9c36d38e",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -1270,7 +1270,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1436,7 +1436,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "91e64198",
+    "consumed_by_exp_id": "",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
     "domain_bridges": [],
     "domains": [
@@ -1449,7 +1449,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -4190,7 +4190,7 @@
       "Nat.even_iff",
       "Nat.odd_iff"
     ],
-    "consumed_by_exp_id": "eee0a16a",
+    "consumed_by_exp_id": "",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n ≥ 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domain_bridges": [
       "factorial Diophantine equations",
@@ -4208,7 +4208,7 @@
     "proof_strategy": "Formalize the triangular equivalence lemma: for n ≥ 4, n! + 1 = m^2 iff there exists y such that y*(y+1)/2 = n!/8 and m = 2*y + 1. Then attempt to prove the classification by combining modular exclusions for residue classes of n with factorial divisibility facts and higher-power congruence obstructions. The conjecture is suitable for Lean because it can be stated entirely over Nat using factorials, squares, divisibility by 8, and triangular numbers.",
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -5017,7 +5017,7 @@
       "math.CO",
       "math.RA"
     ],
-    "consumed_by_exp_id": "1311df1d",
+    "consumed_by_exp_id": "",
     "description": "For the full flag variety GL_{n+1}/ℂ B, let w ∈ S_{n+1} index the Schubert cell X_w^o. The cluster algebra structure on ℂ[X_w^o] (coming from the reduced expression of the longest element in the Weyl group modulo the stabilizer of w) is of finite type if and only if w is a Grassmannian permutation (i.e., w has at most one descent).",
     "domain_bridges": [
       "cluster algebras",
@@ -5034,7 +5034,7 @@
     "proof_strategy": "Show that the exchange matrix associated to a reduced word for w is mutation-equivalent to a Cartesian product of type A_{k_i} cluster algebras exactly when the corresponding permutation has at most one descent, using the correspondence between reduced words and pipe dreams, and applying known classification of finite type cluster algebras via Dynkin diagrams. Conversely, if w has ≥2 descents, exhibit a mutable vertex whose mutation creates a cycle of length >2, preventing finite type.",
     "research_mode": "team",
     "source_exp_id": "2606.23474v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T00:22:07.112237+00:00",
     "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
   },
@@ -7405,6 +7405,36 @@
     "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Hegedus bound for single-distance binary codes",
+      "Hadamard matrix conjecture",
+      "Mathlib.Data.Finset.Card",
+      "Mathlib.Data.Fintype.Card",
+      "Mathlib.LinearAlgebra.Matrix.DotProduct"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer n, there exists a family of n+1 subsets of Fin n whose pairwise symmetric-difference distances are all (n+1)/2 if and only if n = 1 or n ≡ 3 mod 4. Equivalently, the exceptional case lambda = (n+1)/2 in Hegedus's bound is attained exactly in the Hadamard orders.",
+    "domain_bridges": [
+      "binary set systems ↔ signed characteristic vectors",
+      "constant Hamming distance codes ↔ Gram matrices",
+      "extremal equidistant codes ↔ Hadamard matrices"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2498",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show equivalence with the classical Hadamard conjecture. Given such a family, convert each subset to its signed characteristic vector in {±1}^n; pairwise distance (n+1)/2 gives pairwise inner product -1, and appending an all-one coordinate yields n+1 mutually orthogonal {±1}-rows, i.e. a Hadamard matrix of order n+1. Conversely, from a normalized Hadamard matrix of order n+1, delete the all-one column and convert signs back to subsets. The necessity n=1 or n≡3 mod 4 follows from the standard Hadamard determinant/parity obstruction; the sufficiency is exactly the Hadamard conjecture.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24624v1",
+    "status": "available",
+    "timestamp": "2026-06-25T07:06:11.878161+00:00",
+    "title": "Hadamard-tightness conjecture for the exceptional binary Hegedus bound"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "OEIS A287616",
@@ -7421,7 +7451,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2498",
+    "id": "fd_2499",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
@@ -7446,7 +7476,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2499",
+    "id": "fd_2500",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on $n$, leveraging the irreducibility of $f^2$ and a new function measuring 'complexity' in $\\mathbb{Q}(i)$ due to the absence of linear ordering. The base case $n=2$ is given. For the inductive step, analyze the factorization of $f^{n+1} = f^n \\circ f$ using the Galois action on preimages and the tree structure of iterations, adapting techniques from \\cite{evstb} to handle the two-dimensional nature of $\\mathbb{Q}(i)$.",
@@ -7470,7 +7500,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2500",
+    "id": "fd_2501",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the proof of Theorem 1.2(ii) by tracking the exact loss when applying Kahn's small-codegree edge-colouring theorem and the degree‑peeling process, aiming to convert the o(1) term into a uniform additive bound of 4.",
@@ -7494,7 +7524,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2501",
+    "id": "fd_2502",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use shifting/compression to transform an extremal family into a left‑compressed form while preserving the missing‑trace condition. Analyze the possible traces on a fixed (d+1)-set and apply Kleitman’s theorem on intersecting families to bound the number of sets containing a given subset. Perform an induction on n, considering whether a particular element appears in all sets or not. Show that any family attaining the bound must be isomorphic to the explicit construction: take all (d+1)-sets containing a fixed d‑set, together with all (d+1)-sets that avoid a fixed (2(d+1−s)+2)-set and contain a specific (2s−d−2)-subset of its complement.",
@@ -7521,7 +7551,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2502",
+    "id": "fd_2503",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Hochster's formula to express \\(\\beta_{i,i+\\nu+1}(G)\\) as the dimension of reduced homology of induced subcomplexes of the independence complex. Show that for any subset W of vertices, the only possible non‑vanishing reduced homology occurs in dimension \\(\\nu\\) and only when W contains exactly one vertex from each non‑trivial clique block together with any subset of the a isolated vertices. This yields a non‑zero Betti number in homological degree \\(\\nu+1\\) and no Betti numbers with j-i > \\(\\nu+1\\). The forward inequality \\(\\reg(G) \\ge \\nu+1\\) follows from exhibiting such a subset; the reverse inequality follows from a combinatorial analysis of the join decomposition \\(\\ind(G) \\cong \\Delta_a * \\bigast_{r=1}^m \\Delta_{b_r}\\) where \\(\\Delta_{b_r}\\) is a simplex on \\(b_r\\) vertices (contractible) and the only contribution to higher homology comes from the discrete pieces coming from blocks with \\(b_r\\ge2\\). Formalising the join‑homology lemma and the coefficient extraction in Lean wil",
@@ -7545,7 +7575,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2503",
+    "id": "fd_2504",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structure of the weight enumerator, harmonic designs, and connection to the projective plane of order 3 to show any such code must have an automorphism group isomorphic to PGL(3,3):2, hence equivalent.",
@@ -7554,6 +7584,28 @@
     "status": "available",
     "timestamp": "2026-06-25T06:42:49.211274+00:00",
     "title": "Uniqueness of the Binary Self-Dual [26,13,6] Code up to Equivalence"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:1209.0207"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The dimension of the nilpotent Lie algebra constructed from a finite acyclic quiver with n edges equals n.",
+    "domain_bridges": "nilpotent",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2505",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "algebraic construction",
+    "research_mode": "team",
+    "source_exp_id": "2606.24569v1",
+    "status": "available",
+    "timestamp": "2026-06-25T07:06:55.988854+00:00",
+    "title": "Dimension Equality Conjecture"
   },
   {
     "ambition_level": "extension",
@@ -7828,7 +7880,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6d6e5d02",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domain_bridges": [],
     "domains": [
@@ -7841,7 +7893,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
@@ -7908,7 +7960,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e930d2ca",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domain_bridges": [],
     "domains": [
@@ -7921,7 +7973,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
