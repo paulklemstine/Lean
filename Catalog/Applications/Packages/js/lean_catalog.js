@@ -215,12 +215,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Open details automatically if there is a search filter, or if it's the root level
                     const openAttr = (filterText || filterDomain || depth === 0) ? 'open' : '';
                     res += `
-                        <details ${openAttr} style="margin-left: ${isRoot ? 0 : 12}px; margin-bottom: 4px;">
-                            <summary style="cursor: pointer; font-weight: 600; padding: 4px 0; color: var(--text-color); font-size: 14px; user-select: none; display: flex; align-items: center;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; color: var(--accent-color);"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <details ${openAttr} style="margin-left: ${isRoot ? 0 : 12}px; margin-bottom: 2px;">
+                            <summary style="cursor: pointer; font-weight: 500; padding: 4px 0; color: var(--text-color); font-size: 14px; user-select: none; display: flex; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; flex-shrink: 0; color: var(--accent-color);"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                                 <span>${child.name}</span>
                             </summary>
-                            <div style="border-left: 1px solid var(--border-color); padding-left: 4px; margin-top: 4px;">
+                            <div style="border-left: 1px solid var(--border-color); padding-left: 6px; margin-top: 2px; margin-left: 7px;">
                                 ${renderTree(child, depth + 1)}
                             </div>
                         </details>
@@ -229,9 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const f = child.fileObj;
                     const idx = child.idx;
                     res += `
-                        <div class="lean-file-card" data-idx="${idx}" style="margin-left: ${isRoot ? 0 : 12}px; padding: 4px 0; margin-bottom: 4px; cursor: pointer; transition: all 0.2s; opacity: 0.8;">
-                            <div class="lean-file-card-title" style="font-weight: 600; font-family: var(--font-mono); font-size: 13px; word-break: break-all; color: var(--text-color); display: flex; align-items: flex-start; transition: color 0.2s;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px; margin-right: 6px; flex-shrink: 0; color: inherit;"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                        <div class="lean-file-card" data-idx="${idx}" style="margin-left: ${isRoot ? 0 : 12}px; padding: 4px 0; margin-bottom: 2px; cursor: pointer; transition: opacity 0.2s; opacity: 0.85;">
+                            <div class="lean-file-card-title" style="font-weight: 400; font-size: 14px; word-break: break-all; color: var(--text-color); display: flex; align-items: center; transition: color 0.2s;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; flex-shrink: 0; color: inherit;"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                                 <span>${f.name}</span>
                             </div>
                         </div>

@@ -92,9 +92,26 @@
     "result_research_paper": null,
     "result_algorithms": null,
     "result_json_package": null,
-    "quality_score": 0.0,
-    "quality_assessment": null,
-    "quality_detail": null,
+    "quality_score": 0.64748,
+    "quality_assessment": {
+      "quality": "partial",
+      "should_retry": true,
+      "retry_strategy": "The proof is circular (a theorem uses itself in its own proof). Fix the circular dependency.",
+      "confidence": 0.9,
+      "analysis": "Heuristic: detected circular proof."
+    },
+    "quality_detail": {
+      "proof_depth": 0.171375,
+      "novelty": 0.89,
+      "cross_domain": 0.95,
+      "artifact_richness": 0.5,
+      "actionability": 0.5,
+      "importance": 0.3869625,
+      "usefulness": 0.5606875,
+      "applications": 0.77,
+      "catalog_anchoring": 0.5,
+      "pegb_compliance": 0.25
+    },
     "specialized_critic_scores": null,
     "sorry_count": 0,
     "theorem_count": 17,
@@ -111,7 +128,14 @@
     "source_exp_ids": [
       "seed"
     ],
-    "adversarial_result": null,
+    "adversarial_result": {
+      "adjudicated_score": 0.4964,
+      "primary_composite": 0.5703,
+      "adversarial_composite": 0.4225,
+      "tiebreaker_composite": null,
+      "agreement": "agree",
+      "delta": 0.1478
+    },
     "decomposition_depth": 0,
     "prompt_version": "v19",
     "phase": "A",
