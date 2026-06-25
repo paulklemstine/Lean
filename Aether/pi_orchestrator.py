@@ -795,7 +795,8 @@ class PiAgentOrchestrator:
                 "which are provided in this project. Please perform Phase B: write the ARTICLE.md and "
                 "RESEARCH_PAPER.md explaining the verified mathematics in these files, and bundle everything "
                 "into a valid PACKAGE.json research package (with all schema fields populated: demos, algorithms, "
-                "visualizations, interactive_demos, lean_proofs, future_directions, etc.)."
+                "visualizations, interactive_demos, lean_proofs, future_directions, etc.). "
+                "CRITICAL: You must create AT LEAST 3 (but more is allowed) of every category: interactive_demos (Interactive html), visualizations, algorithms, and python demos (demos)."
             )
             
             # 3. Submit and wait
