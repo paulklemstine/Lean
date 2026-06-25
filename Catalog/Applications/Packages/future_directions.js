@@ -195,7 +195,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Standard Conjectures on Algebraic Cycles"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f88074cd",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
     "domains": [
       "Algebra",
@@ -205,7 +205,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:17.429886+00:00",
     "title": "Whitehead Problem: Independence from ZFC"
   },
@@ -688,7 +688,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e805dd4",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -697,7 +697,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -3907,12 +3907,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any finite simple graph G, let Z(G) denote its standard zero forcing number and TZF(G) its transmission zero forcing number as defined in the paper. We conjecture that TZF(G) \u2264 Z(G) for all graphs. Moreover, equality holds for all trees.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2458",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22246v1",
+    "status": "available",
+    "timestamp": "2026-06-25T00:51:34.043435+00:00",
+    "title": "Transmission zero forcing number is bounded above by the classical zero forcing number"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3926,7 +3940,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3941,7 +3955,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3955,7 +3969,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3970,7 +3984,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3984,7 +3998,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3998,7 +4012,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -4012,7 +4026,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -4026,7 +4040,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -4041,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -4055,7 +4069,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -4069,7 +4083,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2469",
+    "id": "fd_2470",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -4084,7 +4098,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2470",
+    "id": "fd_2471",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
@@ -4098,7 +4112,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2471",
+    "id": "fd_2472",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -4112,7 +4126,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2472",
+    "id": "fd_2473",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -4127,7 +4141,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2473",
+    "id": "fd_2474",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23024v1",
@@ -4142,7 +4156,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2474",
+    "id": "fd_2475",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -4156,7 +4170,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2475",
+    "id": "fd_2476",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
@@ -4170,7 +4184,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2476",
+    "id": "fd_2477",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22828v1",
@@ -4185,7 +4199,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2477",
+    "id": "fd_2478",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23750v1",
@@ -4199,7 +4213,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2478",
+    "id": "fd_2479",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -4213,13 +4227,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2480",
+    "id": "fd_2481",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
     "status": "available",
     "timestamp": "2026-06-24T23:35:20.703960+00:00",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any projective variety V over the field with one element F\u2081, the cardinality |V(F\u2081)| equals the Euler characteristic \u03c7(V(C)) of V over the complex numbers, i.e., |V(F\u2081)| = \u03a3_{i=0}^{2n} (-1)^i dim H^i(V(C), \u211a).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2482",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22010v1",
+    "status": "available",
+    "timestamp": "2026-06-25T00:52:44.061628+00:00",
+    "title": "Euler Characteristic Conjecture for Varieties over F_1"
   },
   {
     "consumed_by_exp_id": "",
@@ -4409,21 +4438,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nFollow-up conjectures from the cycle that produced\n`Catalog/Computation/RankOfApparitionSDS.lean` (abstract rank-of-apparition theory\nfor strong divisibility sequences, generalizing the Fibonacci entry-point machinery\nin `CarmichaelComposite.lean` and `Applications/RankOfApparition.lean`).\n\n## Conjecture 1 \u2014 Rank is multiplicative-coprime-additive\nFor a strong divisibility sequence `a` and coprime targets `d, e` (each appearing),\nthe joint appearance set `{n | d*e \u2223 a n}` is governed by `lcm`:\n`rank a (d) hex_d` and `rank a (e) hex_e` are coprime-ish so that\n`(d \u2223 a n \u2227 e \u2223 a n) \u2194 Nat.lcm (rank a d) (rank a e) \u2223 n`.\n**Testable:** already provable from `dvd_iff_rank_dvd` applied twice plus\n`Nat.lcm_dvd_iff`; formalize as `rank_lcm` and specialize to `rank a (d*e)` when\n`gcd (a\u00b7) splits`.\n\n## Conjecture 2 \u2014 Rank of a prime power\nFor Fibonacci (and any SDS with a \"law of apparition\"), if `p` is prime with\n`rank Nat.fib p = r`, then for `e \u2265 1`, `rank Nat.fib (p^e) = p^(e-1) * r`\nunless a Wall\u2013Sun\u2013Sun-type exception holds. **Testable** computationally for\n`p \u2264 50`, `e \u2264 4`; the abstract skeleton needs only a `p`-adic valuation bound\n`v_p (a (p^(e-1) r))`.\n\n## Conjecture 3 \u2014 Pisano period divides a multiple of the rank\nThe Pisano period `\u03c0(m)` (period of `Nat.fib` mod `m`) satisfies\n`rank Nat.fib m \u2223 \u03c0(m)` and `\u03c0(m) / rank Nat.fib m \u2208 {1, 2, 4}`.\n**Testable:** enumerate `m \u2264 200`; tabulate the ratio. Formalizing the divisibility\n`rank \u2223 \u03c0` is a clean next target reusing `dvd_iff_rank_dvd`.\n\n## Conjecture 4 \u2014 Carmichael via abstract SDS primitivity\nGeneralize `fib_carmichael` (every `F n`, `n \u2265 13`, has a primitive prime divisor)\nto abstract SDS: any SDS `a` with strict growth `a n \u2265 2^n` and a uniform bound on\n`\u220f_{d|n, d<n} a d` has a primitive prime divisor for all `n` beyond an explicit\nthreshold. **Testable:** the `removePrimesOf` / `fibCoprimePart` machinery in\n`CarmichaelComposite.lean` is already sequence-agnostic; refactor it to take an\narbitrary SDS and reprove the large-`n` bound.\n\n## Conjecture 5 \u2014 Appearance-set semigroup characterization\nFor an SDS `a`, the family of appearance sets `{ {n | d \u2223 a n} : d \u2208 image a }`,\nordered by reverse inclusion, is isomorphic to the divisor lattice of indices via\n`d \u21a6 rank a d`. **Testable:** `appearance_set_eq` already shows each set is a\n`rank`-multiple set; conjecture that `d \u2223 e` (in the value monoid) corresponds to\n`rank a d \u2223 rank a e`, giving a lattice embedding.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2481",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c37a84a2",
-    "status": "available",
-    "timestamp": "2026-06-25T00:45:38.832058+00:00",
-    "title": "Follow-up conjectures from the cycle that produced"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4497,7 +4511,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7242c7d6",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -4507,7 +4521,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -4541,7 +4555,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02cd648b",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4551,7 +4565,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -4575,7 +4589,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2479",
+    "id": "fd_2480",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:188674",
@@ -5000,7 +5014,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Compactification of Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f41a91d1",
     "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
     "domains": [
       "Pythagorean",
@@ -5010,7 +5024,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.030710+00:00",
     "title": "Pythagorean Triple Group Structure"
   },
@@ -5195,7 +5209,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f25c8810",
     "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
     "domains": [
       "Algebra",
@@ -5205,7 +5219,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.398671+00:00",
     "title": "Alien Number Systems: Beyond Base-N"
   },

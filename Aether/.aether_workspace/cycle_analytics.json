@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-24T23:32:00.751983+00:00",
+  "last_updated": "2026-06-25T00:50:38.690655+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -4552,6 +4552,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-24T23:32:00.421234+00:00",
       "title": "Bridge: Galois Connections Between Order Theory and Topology"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3884,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 52,
+      "domain": "Computation",
+      "duration_seconds": 2561.642675638199,
+      "end_time": 1782347762.2745743,
+      "files_integrated": 6,
+      "job_id": "c37a84a2",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v15",
+      "phase_b_prompt_version": "v2",
+      "phase_b_skipped": false,
+      "prompt_version": "v15",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.38,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.4784,
+        "cross_domain": 0.1,
+        "grade": "partial",
+        "importance": 0.5125,
+        "novelty": 0.5,
+        "proof_depth": 0.5178,
+        "usefulness": 0.3089
+      },
+      "quality_score": 0.5709080000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782345200.6318986,
+      "strategy_count": 0,
+      "theorem_count": 1,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 1,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T00:50:38.266307+00:00",
+      "title": "Close Proofs: These conjectures continue the research cycle begun in"
     }
   ]
 }
