@@ -42084,7 +42084,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d1e8d4ba",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42113,7 +42113,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22058v1",
       "source_path": "http://arxiv.org/abs/2606.22058v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-25T02:07:55.532399+00:00",
       "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
