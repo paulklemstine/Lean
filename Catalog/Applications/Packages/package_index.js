@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "73a5599a",
     "filename": "diffusion_models_as_stochastic_differential_equati.json",
     "pkg_num": 54,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.69548,
     "title": "Diffusion Models as Stochastic Differential Equations: Exact Fokker\u2013Planck Dynamics for the Ornstein\u2013Uhlenbeck Process"
   },
   {
@@ -1575,8 +1575,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "diffusion_models_as_stochastic_differential_equati",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.69548,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Diffusion Models as Stochastic Differential Equations: Exact Fokker\u2013Planck Dynamics for the Ornstein\u2013Uhlenbeck Process"
     }

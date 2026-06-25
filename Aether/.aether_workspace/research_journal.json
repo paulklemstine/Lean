@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f6a45eec",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Euler–Mascheroni constant\n\nDerived from the Stage 3/4 findings in `SeriesRepresentation.lean` and\n`Approximation.lean`. Each conjecture is falsifiable and ready for a next cycle.",
-      "quality_score": 0.4949979545454546,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-06-18T17:05:47",
-      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
-    },
-    {
       "cycle_id": "6c118cd3",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Strong Divisibility Sequence Bridges\n\nThis cycle established the **lattice-theoretic** side of the strong-divisibility-sequence\n(`StrongDivSeq`) programme, complementing the exis",
@@ -2501,6 +2491,16 @@
       "theorem_count": 22,
       "timestamp": "2026-06-25T08:43:24",
       "title": "Statistical Mechanics: Ising Model Phase Transition"
+    },
+    {
+      "cycle_id": "73a5599a",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Diffusion Models as Stochastic Differential Equations\n\nDerived from this cycle's verified results (`OUProcess.lean`,\n`FokkerPlanck.lean`, `ReverseTime.lean`), which establish, wi",
+      "quality_score": 0.69548,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-25T08:52:40",
+      "title": "Diffusion Models as Stochastic Differential Equations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8125600000000002
     }
   ],
-  "last_updated": "2026-06-25T08:43:24",
+  "last_updated": "2026-06-25T08:52:40",
   "open_questions": [
     {
       "context": "`appendCode_card`) proved `sorry`-free for arbitrary lengths; `hamming ⊕ hamming`",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "1d465e25",
-        "quality": 0.79908,
-        "theorems": 87,
-        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-      },
-      {
         "cycle_id": "34ce1554",
         "quality": 0.5018846575342466,
         "theorems": 143,
@@ -3451,6 +3445,12 @@
         "quality": 0.42575842352941173,
         "theorems": 9,
         "title": "Brocard-Ramanujan Triangular Classification"
+      },
+      {
+        "cycle_id": "73a5599a",
+        "quality": 0.69548,
+        "theorems": 17,
+        "title": "Diffusion Models as Stochastic Differential Equations"
       }
     ],
     "Logic": [
