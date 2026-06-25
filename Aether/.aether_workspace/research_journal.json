@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b53ecc44",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Kakeya: Known Cases and Bounds\n\nDerived from this cycle's findings (the combinatorial \"bush\" engine\n`card_biUnion_lower`, the sharp planar finite-field bound\n`finite_field_kakeya",
-      "quality_score": 0.43941381818181824,
-      "sorry_count": 0,
-      "theorem_count": 18,
-      "timestamp": "2026-06-19T07:50:56",
-      "title": "Kakeya Conjecture: Known Cases and Bounds"
-    },
-    {
       "cycle_id": "3d9b7416",
       "domain": "Algebra",
       "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nDerived from this cycle's findings in `Catalog/Algebra/SheafImputationAlgebra.lean`\n(gluing is an idempotent monoid / band; sheaf condition ⇔ pa",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-06-25T17:40:06",
       "title": "Normality of Mathematical Constants"
+    },
+    {
+      "cycle_id": "364ec557",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Differential Algebra\n\nBold, falsifiable conjectures derived from this cycle (formalised results live in\n`EMLDifferentialAlgebra.lean` and `EMLDifferentialCorollaries.lean`).",
+      "quality_score": 0.57649,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-25T18:18:51",
+      "title": "EML Differential Algebra: Closure Properties"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7357199999999999
     }
   ],
-  "last_updated": "2026-06-25T17:40:06",
+  "last_updated": "2026-06-25T18:18:51",
   "open_questions": [
     {
       "context": "",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "d168a656",
-        "quality": 0.5556197063805759,
-        "theorems": 311,
-        "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
-      },
-      {
         "cycle_id": "3d0b9aaa",
         "quality": 0.49636883468834697,
         "theorems": 18,
@@ -3141,6 +3135,12 @@
         "quality": 0.45636596791938716,
         "theorems": 734,
         "title": "Extremal Graph Theory: Turán and Szemerédi"
+      },
+      {
+        "cycle_id": "364ec557",
+        "quality": 0.57649,
+        "theorems": 13,
+        "title": "EML Differential Algebra: Closure Properties"
       }
     ],
     "Bridges": [

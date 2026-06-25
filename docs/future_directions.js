@@ -2006,21 +2006,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
-    "consumed_by_exp_id": "e8c93c85",
-    "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2324",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22819v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T11:20:57.671444+00:00",
-    "title": "Interval Property for Connected Slice-Projections of Polymatroids"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer k\u22653 there exists a critical edge density \u03b3_k\u2208(0,1) such that for all sufficiently large n, any graph on n vertices with edge density at least \u03b3_k that contains no induced copy of K_{1,k} is \u03b5 n^2-close (in edit distance) to the complement of a complete (k\u22121)-partite graph whose part sizes differ by at most o(n) from the balanced partition n/(k\u22121).",
     "domains": [
@@ -5056,6 +5041,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Differential Algebra\n\nBold, falsifiable conjectures derived from this cycle (formalised results live in\n`EMLDifferentialAlgebra.lean` and `EMLDifferentialCorollaries.lean`). Throughout,\n**EML** = the log-free fragment (exponential polynomials): the smallest class of\n`\u211d \u2192 \u211d` containing `x` and constants and closed under `+`, `\u00d7`, `exp`.\n\nThis cycle established: EML is a commutative differential **ring** (closed under\n`+`, `\u00d7`, `\u2218`, `d/dx`), but **not** a field (`x\u207b\u00b9, log \u2209 EML`), **not** closed\nunder functional inverse (`x\u00b3` has no EML left inverse), and only *partially*\nclosed under integration. The conjectures below push on each boundary.\n\n## C1. EML is not closed under integration (the Liouville boundary)\n\n**Conjecture.** `exp(x\u00b2) \u2208 EML` but there is **no** EML term `g` with\n`HasDerivAt g.eval (exp(x\u00b2)) x` for all `x`; i.e. `\u00ac HasEMLPrimitive (fun x => exp(x\u00b2))`.\n\n*The key insight is* that `HasEMLPrimitive` is exactly the image of the syntactic\nderivation `D`, so non-closure under integration is the statement that `D` is\n**not surjective** onto EML \u2014 a differential-Galois / Liouville obstruction\nphrased purely as the non-surjectivity of a syntactic operator on an inductive\ntype.\n\n*Why now?* The forward dynamics (`isEML_iteratedDeriv`) and the linear structure\nof `HasEMLPrimitive` are now formal, so the missing piece is exactly an\nalgebraic-independence input (\"`erf` is transcendental over the exp-polynomials\").\nLiouville's theorem is within reach of current Mathlib differential-field\nmachinery, making `exp(x\u00b2)` a concrete, self-contained first formal target.\n\n## C2. EML inverses exist iff the derivative never vanishes\n\n**Conjecture.** For an EML function `f` that is strictly monotone with `f' x \u2260 0`\nfor all `x` and `f` surjective, the inverse `f\u207b\u00b9` is again EML **iff** `f` is, up\nto affine change, `x \u21a6 a\u00b7x + b` or `x \u21a6 c\u00b7exp(a x)+b` shapes \u2014 and in particular\nthe *only* EML self-bijections of `\u211d` with EML inverse are the affine maps.\n\n*The key insight is* that `no_eml_left_inverse_cube` already isolates the\nobstruction (a critical point of `f'`), so the residual question is a rigidity\nstatement: among exp-polynomials, vanishing-free derivative plus EML inverse\nforces affine-or-exponential normal form via growth-rate matching.\n\n*Why now?* We have both halves of the diagnostic \u2014 `EML \u2286 differentiable` and the\ncritical-point obstruction \u2014 so the conjecture reduces to classifying\nexp-polynomials whose functional inverse is again an exp-polynomial, a finite\ncase analysis on leading exponential terms.\n\n## C3. The differential transcendence degree of EML is infinite\n\n**Conjecture.** The tower `x \u227a exp(x) \u227a exp(exp(x)) \u227a \u2026` is differentially\nalgebraically independent over `\u211d`; consequently EML has no finite set of\ngenerators as a differential ring.\n\n*The key insight is* that each new `exp` layer strictly increases the\n\"exp-log depth\" invariant (already present as `elDepth` in the term algebra), and\na derivative never increases that depth \u2014 so depth is a differential invariant\nthat no finite generating set can exhaust.\n\n*Why now?* `hasDerivAt_eval` shows `D` realises the analytic derivative without\nraising `elDepth`, turning a hard transcendence statement into a monotonicity\nargument about a computable syntactic invariant.\n\n## C4. EML is closed under composition but composition strictly grows depth\n\n**Conjecture.** Composition closure (`isEML_comp`) is *depth-increasing*: there is\nno global bound `B` such that every EML function representable with `elDepth \u2264 B`\nis closed under composition; precisely, `elDepth (t.subst s) = elDepth t + elDepth s`\nwhen both are exp-active, and this is sharp.\n\n*The key insight is* that `subst` distributes over the syntax, so composition adds\nexponential depths additively \u2014 composition cannot be \"flattened\", unlike the\npolynomial part where products keep depth `0`.\n\n*Why now?* `eval_subst` gives the semantic correctness of `subst` for free, so the\nremaining claim is a purely syntactic equation about the `elDepth` recursion,\ncheckable by structural induction with no analysis.\n\n## C5. A Picard\u2013Vessiot view: EML ODE-solvability is obstructed at critical points\n\n**Conjecture.** A first-order ODE `y' = f(x)\u00b7y` with `f \u2208 EML` has an EML solution\n**iff** `f \u2208 HasEMLPrimitive`-image (i.e. `f` has an EML primitive `F`, giving\n`y = exp(F)`); when `f` lacks an EML primitive (e.g. `f(x) = 2x`, primitive `x\u00b2`,\n*does* work, but `f(x)=exp(x\u00b2)` does not), no EML solution exists.\n\n*The key insight is* that the exponential-integrating-factor solution `exp(\u222bf)`\nties ODE-solvability in EML directly to the integration boundary C1 \u2014 solvability\nis governed by the **same** non-surjectivity of `D`.\n\n*Why now?* `hasEMLPrimitive_*` lemmas and `isEML_exp` already assemble the\n`exp(\u222bf)` candidate constructively; the only gap is C1's Liouville input, so C1\nand C5 stand or fall together and can be attacked as one program.\n",
+    "domains": [
+      "Algebra",
+      "Applications"
+    ],
+    "id": "fd_2538",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "364ec557",
+    "status": "available",
+    "timestamp": "2026-06-25T18:18:40.538130+00:00",
+    "title": "Bold, falsifiable conjectures derived from this cycle (formalised results live i"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5437,7 +5437,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
-    "consumed_by_exp_id": "364ec557",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
     "domains": [
       "EML",
@@ -5447,7 +5447,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.201625+00:00",
     "title": "EML Differential Algebra: Closure Properties"
   },
@@ -5482,7 +5482,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "4f516403",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -5492,7 +5492,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
