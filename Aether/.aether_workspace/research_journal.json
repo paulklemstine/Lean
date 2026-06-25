@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fb1d7cfa",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\nThese build directly on the abstract engine in\n`Catalog/Geometry/JonesTemperleyLiebBraid4.lean`.\n\n## 1. Explicit Fibonacci / Jones `k = 5` path-model matrices\n\nInstantiate the abs",
-      "quality_score": 0.536,
-      "sorry_count": 0,
-      "theorem_count": 137,
-      "timestamp": "2026-06-18T22:08:24",
-      "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-    },
-    {
       "cycle_id": "9afcaae7",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions\n\nBuilding on the deterministic empirical spectral CDF substrate in\n`MachineLearning/EmpiricalSpectrumCDF.lean`, we outline original directions for\nextending the theory. Each is del",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-25T11:11:04",
       "title": "Spectral Modular Signatures of Formal Proof Difficulty"
+    },
+    {
+      "cycle_id": "292d0525",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Quadratic Reciprocity, multiple proofs\n\n**Menu category declaration.** This cycle serves the *cross-domain bridge*\ncategory: every result welds **number theory** (Legendre symbol",
+      "quality_score": 0.54302,
+      "sorry_count": 2,
+      "theorem_count": 10,
+      "timestamp": "2026-06-25T12:36:46",
+      "title": "Quadratic Reciprocity: Five Proofs Formalized"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8125600000000002
     }
   ],
-  "last_updated": "2026-06-25T11:11:04",
+  "last_updated": "2026-06-25T12:36:46",
   "open_questions": [
-    {
-      "context": "`appendCode_card`) proved `sorry`-free for arbitrary lengths; `hamming ⊕ hamming`",
-      "cycle_id": "2086db82",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-06-15T11:51:06"
-    },
     {
       "context": "",
       "cycle_id": "049cc9b2",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 2,
       "timestamp": "2026-06-25T07:04:33"
+    },
+    {
+      "context": "derivation is `sorry`-free.; CRITIQUE.  We confirm by axiom audit that the proof is `sorry`-free, and we expose",
+      "cycle_id": "292d0525",
+      "domain": "NumberTheory",
+      "sorry_count": 2,
+      "timestamp": "2026-06-25T12:36:46"
     }
   ],
   "research_threads": {
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "a449aa2a",
-        "quality": 0.39323663366336636,
-        "theorems": 62,
-        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-      },
-      {
         "cycle_id": "89bf180f",
         "quality": 0.4910402434782609,
         "theorems": 115,
@@ -3699,6 +3693,12 @@
         "quality": 0.6807300000000001,
         "theorems": 13,
         "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+      },
+      {
+        "cycle_id": "292d0525",
+        "quality": 0.54302,
+        "theorems": 10,
+        "title": "Quadratic Reciprocity: Five Proofs Formalized"
       }
     ],
     "Physics": [

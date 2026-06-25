@@ -81,7 +81,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e20c7594",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domain_bridges": [],
     "domains": [
@@ -94,7 +94,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:16.980012+00:00",
     "title": "Natural Proofs Barrier: Formalization"
   },
@@ -978,7 +978,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "553630de",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -992,7 +992,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -4190,7 +4190,7 @@
       "Nat.even_iff",
       "Nat.odd_iff"
     ],
-    "consumed_by_exp_id": "fb5aee47",
+    "consumed_by_exp_id": "",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n ≥ 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domain_bridges": [
       "factorial Diophantine equations",
@@ -4208,7 +4208,7 @@
     "proof_strategy": "Formalize the triangular equivalence lemma: for n ≥ 4, n! + 1 = m^2 iff there exists y such that y*(y+1)/2 = n!/8 and m = 2*y + 1. Then attempt to prove the classification by combining modular exclusions for residue classes of n with factorial divisibility facts and higher-power congruence obstructions. The conjecture is suitable for Lean because it can be stated entirely over Nat using factorials, squares, divisibility by 8, and triangular numbers.",
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -6585,7 +6585,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "f1dcc123",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every finite poset P of size n and width w ≥ 2, the number of strict alternating cycles satisfies s_w(P) ≤ 4·(w−1)!·(n(n+w)/(2w^2))^w.",
     "domain_bridges": [
       "order_dimension",
@@ -6600,7 +6600,7 @@
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T11:12:45.893373+00:00",
     "title": "Upper bound on the number of strict alternating cycles in posets of bounded width"
   },
@@ -8332,6 +8332,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Quadratic Reciprocity, multiple proofs\n\n**Menu category declaration.** This cycle serves the *cross-domain bridge*\ncategory: every result welds **number theory** (Legendre symbols, quadratic\ncharacters) to a second domain — **lattice-point geometry** (`Eisenstein.lean`)\nand the **algebra of finite fields / cyclotomy** (`GaussSum.lean`). The\nsupplementary laws (`Supplementary.lean`) bridge character theory and elementary\ncongruence arithmetic.\n\n## What this cycle established (verified, 0 sorries)\n\n* `Eisenstein.quadratic_reciprocity` — the Law of Quadratic Reciprocity derived\n  **directly from Eisenstein's lattice-point counting** (`ZMod.eisenstein_lemma`\n  + `ZMod.sum_mul_div_add_sum_mul_div_eq_mul`). Mathlib contains these geometric\n  inputs but never assembles reciprocity from them; this file closes that gap.\n* `GaussSum.quadratic_reciprocity` — the same law via the **quadratic Gauss-sum /\n  finite-field** mechanism (`quadraticChar_odd_prime`, the field-theoretic shadow\n  of `gaussSum_sq` and `Char.card_pow_card`). An independent proof object.\n* The two **supplementary laws** in explicit congruence form:\n  `(-1/p)` controlled by `p mod 4`, `(2/p)` by `p mod 8`, in both residue and\n  nonresidue directions.\n\nThe two reciprocity proofs use *disjoint* mechanisms (geometry vs. Frobenius on\ncharacters), confirming the classical claim that the law admits fundamentally\ndifferent derivations.\n\n## Bold, testable conjectures derived from this cycle\n\n### 1. A fully formalized Zolotarev (permutation-sign) proof of reciprocity\n**Conjecture.** `legendreSym p a` equals the sign of the permutation `x ↦ a·x`\nof `ZMod p`, and quadratic reciprocity follows by comparing two such signs on\n`ZMod (p·q)` via the CRT isomorphism.\n*The key insight is...* that the Legendre symbol is secretly a **permutation\nparity**, so reciprocity becomes a statement about the sign of a single linear\nmap under a change of basis (`ZMod (pq) ≃ ZMod p × ZMod q`).\n*Why now?* Mathlib already has `Equiv.Perm.sign`, the CRT ring isomorphism\n`ZMod.chineseRemainder`, and `ZMod.gauss_lemma`; the missing glue (`legendreSym =\nsign of multiplication`) is a finite, `Fintype`-level computation now within reach.\n\n### 2. Reciprocity as an Artin-reciprocity special case\n**Conjecture.** The Gauss-sum proof in `GaussSum.lean` is the degree-2 shadow of\nArtin reciprocity for the quadratic subfield `ℚ(√(±p)) ⊆ ℚ(ζ_p)`; a formal\n`IsCyclotomicExtension`-based development reproduces `GaussSum.quadratic_reciprocity`\nas the splitting law of `q` in that subfield.\n*The key insight is...* that `χ₄(p)·p` being a square mod `q` is exactly the\ncondition for `q` to split in `ℚ(√(χ₄(p)·p))`, i.e. a Frobenius/Artin-symbol\nstatement.\n*Why now?* Mathlib's `IsCyclotomicExtension` and `NumberField` machinery have\nmatured enough to state the quadratic subfield and its Frobenius explicitly, even\nif full Artin reciprocity is still absent.\n\n### 3. Jacobi-symbol reciprocity proved *independently* of the prime case\n**Conjecture.** Eisenstein's lattice count generalizes verbatim to coprime odd\n`a, b`, yielding `jacobiSym.quadratic_reciprocity` *without* reducing to primes.\n*The key insight is...* that the rectangle-splitting identity\n`sum_mul_div_add_sum_mul_div_eq_mul` only uses `gcd(a,b)=1`, not primality, so the\nlattice proof should lift directly to the Jacobi symbol.\n*Why now?* The Jacobi symbol and its multiplicativity are already in Mathlib, so\nthe only new content is re-running the lattice bijection with a coprimality\nhypothesis in place of primality.\n\n### 4. Quantitative bias in the lattice-count exponent\n**Conjecture.** For random distinct odd primes `p, q < N`, the Eisenstein exponent\n`∑⌊xq/p⌋ mod 2` is equidistributed, and its correlation with `p,q mod 4` is\nexactly the reciprocity sign — a measurable, falsifiable statistical fingerprint.\n*The key insight is...* that reciprocity forces a *deterministic* parity coupling\non an otherwise pseudorandom lattice count.\n*Why now?* The exponent is fully computable in Lean (`#eval`), so the statistical\nclaim can be checked at scale and then formalized as an exact identity.\n\n### 5. A unified \"sign cocycle\" abstracting all three proofs\n**Conjecture.** Eisenstein, Gauss-sum, and Zolotarev proofs are three evaluations\nof one `ZMod 2`-valued 2-cocycle on the primes; reciprocity is its symmetry.\n*The key insight is...* that each proof computes the *same* parity through a\ndifferent functor (geometry, Galois action, permutation parity), so they must\nagree by a single cohomological identity.\n*Why now?* With two of the three mechanisms already formalized here, the common\nabstraction can be stated and the agreement proved as a Lean `theorem` rather than\na heuristic analogy.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2523",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "292d0525",
+    "status": "available",
+    "timestamp": "2026-06-25T12:36:37.931553+00:00",
+    "title": "**Menu category declaration.** This cycle serves the *cross-domain bridge*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -8350,7 +8370,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f8e01626",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domain_bridges": [],
     "domains": [
@@ -8363,7 +8383,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
@@ -8562,6 +8582,25 @@
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 292d0525 (Q=0.543) proved 10 theorems in NumberTheory but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Pr",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "sorry_fill_292d0525_9ebe4278",
+    "lineage_refs": [],
+    "priority_score": 0.59302,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "292d0525",
+    "status": "available",
+    "timestamp": "2026-06-25T12:36:46.310589+00:00",
+    "title": "Close Proofs: Quadratic Reciprocity: Five Proofs Formalized"
   },
   {
     "ambition_level": "extension",
@@ -9203,7 +9242,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4237ac67",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -9216,7 +9255,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },

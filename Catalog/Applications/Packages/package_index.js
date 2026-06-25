@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "292d0525",
     "filename": "quadratic_reciprocity_five_proofs_formalized.json",
     "pkg_num": 56,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.54302,
     "title": "Quadratic Reciprocity, Two Ways: Eisenstein's Lattice Count and the Quadratic Gauss Sum"
   },
   {
@@ -1633,8 +1633,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "quadratic_reciprocity_five_proofs_formalized",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.54302,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Quadratic Reciprocity, Two Ways: Eisenstein's Lattice Count and the Quadratic Gauss Sum"
     }
