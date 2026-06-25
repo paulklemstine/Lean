@@ -1,57 +1,63 @@
-# Computational Evidence — Minor-Closed Classes Below Density 3/2
+# Theorem Trace (internal anti-hallucination ledger)
 
-All numbers below were computed in Lean (`#eval` over `ℚ`) and feed directly into
-the formal theorems in this directory.
+Every result below is taken verbatim from the Phase A Lean output. No theorem is
+stated in ARTICLE.md / RESEARCH_PAPER.md that does not appear here.
 
-## 1. The 3/2 threshold is the density of K₄
+## OrderFramework.lean (namespace `MinorTheory`, order `α` with `≤` = "is a minor of")
 
-| graph        | edges            | vertices | density `|E|/|V|` |
-|--------------|------------------|----------|-------------------|
-| K₃ (triangle)| `C(3,2) = 3`     | 3        | `1`               |
-| K₄           | `C(4,2) = 6`     | 4        | **`3/2`**         |
+| Lean name | Mathematical statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `MinorClosed` (def) | `C` downward closed: `x ≤ y → y ∈ C → x ∈ C` | yes | yes |
+| `excl` (def) | `excl S = {x | ∀ s ∈ S, ¬ s ≤ x}` | yes | yes |
+| `mem_excl` | membership unfolding of `excl` | — | yes |
+| `excl_minorClosed` | `excl S` is minor-closed | yes | yes |
+| `excl_anti` | `S ⊆ T → excl T ⊆ excl S` | — | yes |
+| `minorClosed_univ` | `univ` is minor-closed | — | yes |
+| `minorClosed_empty` | `∅` is minor-closed | — | yes |
+| `MinorClosed.sInter` | intersection of minor-closed is minor-closed | — | yes |
+| `MinorClosed.sUnion` | union of minor-closed is minor-closed | — | yes |
+| `obstructions` (def) | `{m | m ∉ C ∧ ∀ x < m, x ∈ C}` | yes | yes |
+| `SingleExcludedMinor` (def) | `∃ H, C = excl {H}` | yes | yes |
+| `subset_excl_obstructions` | `MinorClosed C → C ⊆ excl (obstructions C)` | — | yes |
+| `excl_obstructions_subset` | (WF) `excl (obstructions C) ⊆ C` | — | yes |
+| `minorClosed_excl_obstructions` | (WF) `MinorClosed C → C = excl (obstructions C)` | yes | yes |
+| `obstructions_excl_singleton` | (PO) `obstructions (excl {H}) = {H}` | yes | yes |
+| `singleExcludedMinor_iff_obstructions_singleton` | (PO+WF) `SingleExcludedMinor C ↔ ∃ H, obstructions C = {H}` | yes | yes |
 
-So `3/2` is exactly the edge density of `K₄`.  This is why the mission's
-threshold `δ < 3/2` is natural: it sits strictly *below* the first complete
-graph whose density reaches `3/2`.
+## ForestDensity.lean (namespace `MinorTheory.ForestDensity`, order = subgraph order on `SimpleGraph V`)
 
-## 2. Forest (tree) densities approach 1 from below
+| Lean name | Mathematical statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `acyclicClass` (def) | `{G | G.IsAcyclic}` | yes | yes |
+| `acyclicClass_minorClosed` | forests are minor-closed (subgraph order) | yes | yes |
+| `edgeDensity` (def) | `|E| / |V| : ℚ`, `0` if `V` empty | yes | yes |
+| `IsAcyclic.card_edgeSet_add_one_le` | nonempty forest: `|E| + 1 ≤ |V|` | yes | yes |
+| `IsTree.edgeDensity_lt_one` | tree: density `< 1` | yes | yes |
+| `acyclic_edgeDensity_lt_threshold` | forest: density `< 3/2` | yes | yes |
+| `acyclicClass_below_threshold` | whole forest class below `3/2` | yes | yes |
 
-A tree on `n` vertices has exactly `n − 1` edges, density `(n−1)/n`:
+## BoundedDegreeBelowThreshold.lean (namespace `MinorTheory.Novelty.BoundedDegree`, subgraph order)
 
-```
-(n-1)/n  for n = 2,3,4,10,100  =  1/2, 2/3, 3/4, 9/10, 99/100  →  1
-```
+| Lean name | Mathematical statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `MinorClosed` (def) | local copy: downward closed under `≤` on `SimpleGraph V` | yes | yes |
+| `edgeDensity` (def) | `|E| / |V| : ℚ` | yes | yes |
+| `boundedDegreeClass` (def) | `{G | G.maxDegree ≤ d}` | yes | yes |
+| `maxDegree_mono` | `G ≤ G' → G.maxDegree ≤ G'.maxDegree` | yes | yes |
+| `boundedDegreeClass_minorClosed` | `{G | maxDegree ≤ d}` minor-closed | yes | yes |
+| `edgeFinset_card_le_of_maxDegree_two` | `maxDegree ≤ 2 → |E| ≤ |V|` | yes | yes |
+| `maxDegree_two_edgeDensity_lt` | `maxDegree ≤ 2 → density < 3/2` | yes | yes |
+| `boundedDegreeTwoClass_below_threshold` | whole degree-≤2 class below `3/2` | yes | yes |
 
-Hence the limiting density of the forest class is `1`, and `1 < 3/2`.  Every
-individual forest has density `< 1` (proved: `IsTree.edgeDensity_lt_one`,
-`acyclic_edgeDensity_lt_threshold`).
+## SingleForbiddenMinorLattice.lean (partial header only — truncated in source)
 
-## 3. Landscape of small minor-closed classes by limiting density
+| Lean name | Status |
+|---|---|
+| `minorIdeal G` (def) | principal down-set `↓G = {x | x ≤ G}` — header confirmed |
+| `excl_singleton_eq_sUnion_avoiding` | named in lab notes / future directions as proved this cycle (largest class avoiding `H`) — referenced narratively, not as a headline key_result |
+| `obstructions_antichain` | named in lab notes / future directions as proved this cycle — referenced narratively, not as a headline key_result |
 
-| class                              | forbidden minor | limiting density | below 3/2? |
-|------------------------------------|-----------------|------------------|------------|
-| forests                            | `K₃`            | `1`              | yes        |
-| graphs with ≤1 cycle per component | —               | `1`              | yes        |
-| series–parallel (no `K₄` minor)    | `K₄`            | `2` (sup)        | no         |
-| planar                             | `K₅`, `K_{3,3}` | `3`              | no         |
-
-The interval of *achievable* limiting densities below `3/2` is, in the
-literature, very sparse: the forest class (`density 1`) is the prototypical
-⊆-minimal minor-closed class strictly below `3/2`, and it is characterised by a
-single excluded minor `K₃`.  This is the concrete shadow of the abstract
-`singleExcludedMinor_iff_obstructions_singleton`.
-
-## 4. Counterexample hunt
-
-* Could a minor-closed class below `3/2` need *two* incomparable obstructions?
-  The abstract theorem shows this is equivalent to its obstruction set not being
-  a singleton.  No small counterexample to *single*-obstruction was found among
-  the density-`< 3/2` classes enumerated above; all are `excl {H}` for a single
-  `H` (e.g. forests `= excl {K₃}` as minors).  This is consistent with — and
-  motivates — the grand conjecture.
-
-## 5. Sanity checks that fed the proofs
-
-* `connected_top` ⇒ every nonempty graph extends a forest to a spanning tree,
-  giving the edge bound `|E| + 1 ≤ |V|` (`IsAcyclic.card_edgeSet_add_one_le`).
-* Empty graph: density `0/0 = 0 < 3/2` in `ℚ` (handled explicitly).
+Headline `key_results` (all fully confirmed full proofs):
+`singleExcludedMinor_iff_obstructions_singleton`, `minorClosed_excl_obstructions`,
+`acyclicClass_below_threshold`, `boundedDegreeClass_minorClosed`,
+`maxDegree_two_edgeDensity_lt`.

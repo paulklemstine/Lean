@@ -1,257 +1,245 @@
-# The Loneliest Forbidden Shape: How One Graph Can Define a Whole Universe
+# One Graph to Forbid Them All: The Hunt for Single Obstructions Below Density 3/2
 
-## A puzzle about what you are *not* allowed to draw
+## A children's game with a deep secret
 
-Imagine you are handed a box of dots and a spool of string, and asked to
-connect the dots however you like. The only rule of the game is a prohibition:
-"You may draw anything at all, *as long as* a certain forbidden shape never
-appears." The forbidden shape is not forbidden in the literal, pixel-by-pixel
-sense — it is forbidden as a *pattern*, a ghost that might be hiding inside your
-drawing even if you never traced it on purpose.
+Imagine you are handed a box of toy networks — dots connected by lines, what
+mathematicians call *graphs*. You are asked to sort them into two piles by a
+single rule: "throw away any network that contains a triangle." Easy enough. But
+now notice something subtle. If a network has no triangle, then *shrinking* it —
+deleting a dot, erasing a line, or fusing two connected dots into one — can never
+*create* a triangle. The property "triangle-free" is preserved as you simplify.
 
-This is the world of **minor-closed graph classes**, one of the deepest and most
-beautiful corners of modern combinatorics. A *graph* is just a set of vertices
-(dots) joined by edges (strings). A *minor* of a graph is any smaller graph you
-can find inside it by three legal moves: deleting an edge, deleting a vertex, or
-*contracting* an edge — squishing its two endpoints together into a single dot.
-A class of graphs is **minor-closed** if, whenever a graph belongs to the class,
-all of its minors do too. Minor-closed classes are everywhere: planar graphs
-(those you can draw on paper without crossings), graphs that embed on a doughnut,
-graphs of bounded genus, and many more.
+Families of networks that survive simplification like this are called
+**minor-closed classes**, and they are one of the crown jewels of modern
+combinatorics. The word "minor" is the technical name for "a smaller network you
+can obtain by deleting and shrinking." A class is *minor-closed* when, whenever a
+network belongs to it, every smaller network you can carve out of it belongs too.
 
-The astonishing fact — the Robertson–Seymour Graph Minor Theorem, one of the
-crowning achievements of twentieth-century mathematics — is that *every*
-minor-closed class can be described by a **finite** list of forbidden minors.
-Planar graphs, for instance, are exactly the graphs that contain neither the
-complete graph $K_5$ (five dots all joined) nor the utility graph $K_{3,3}$
-(three houses, three utilities, every house joined to every utility) as a minor.
-Two forbidden shapes, and the entire infinite universe of planar graphs is
-pinned down.
+Planar networks — those you can draw on paper without lines crossing — form a
+minor-closed class. So do forests (networks with no cycles), networks that fit on
+a doughnut, networks of bounded "tree-width," and countless others. These classes
+are everywhere in computer science, where they delineate exactly the problems that
+go from impossibly hard to efficiently solvable.
 
-But here is a subtler and more delicate question. Sometimes a single forbidden
-shape suffices. When does *one* graph — a single, lonely forbidden minor —
-suffice to carve out an entire minor-closed class? And is there a *reason*,
-hidden in the geometry of how dense graphs can be, that forces this loneliness?
+This article is about a beautiful organizing principle for such classes, and about
+a sharp numerical frontier — the number **3/2** — beyond which the wild diversity
+of minor-closed classes suddenly tames into something almost rigidly simple. Every
+claim below corresponds to a fully machine-checked theorem.
 
-This article tells the story of one clean, fully verified instance of that
-phenomenon, and the framework around it. The hero is the humblest graph of all:
-the **forest**.
+## Forbidden patterns: the Robertson–Seymour philosophy
 
-## Density: how crowded can a drawing get?
+Here is the first miracle. Take *any* minor-closed class. It turns out you can
+always describe it by a list of "forbidden patterns" — a set of networks none of
+which is allowed to appear as a minor. Planar networks, for instance, are exactly
+the networks that forbid two specific patterns (the complete network on five dots,
+$K_5$, and the "three houses, three utilities" network $K_{3,3}$). Forests are
+exactly the networks that forbid every cycle.
 
-To understand the answer, we need one more idea: **edge density**. If a graph
-has $V$ vertices and $E$ edges, its edge density is simply
+We can make this precise. Given a set $S$ of networks, define the class
 
-$$\rho = \frac{E}{V},$$
+$$\mathrm{excl}(S) = \{\, x \mid \text{no member of } S \text{ is a minor of } x \,\}.$$
 
-the number of edges per vertex. (When there are no vertices at all, we declare
-the density to be $0$ by convention, sidestepping the awkward division by zero.)
-Density measures how *crowded* a graph is. A sparse graph — a few strings among
-many dots — has low density. A dense graph, where almost every pair of dots is
-joined, has high density approaching $V/2$.
+In words: $\mathrm{excl}(S)$ is everything that avoids all the patterns in $S$.
+The first basic fact is that this is *always* a legitimate minor-closed class —
+if you avoid a pattern, anything smaller still avoids it:
 
-For an entire minor-closed *class*, we care about the **limiting density**: as
-the graphs in the class grow larger and larger, what is the supremum of densities
-they can reach? This single number turns out to be a remarkably powerful
-fingerprint of the class. And there is a magic threshold lurking near
+> **Excluding a pattern keeps you closed.** For every set $S$, the class
+> $\mathrm{excl}(S)$ is minor-closed.
 
-$$\delta = \frac{3}{2}.$$
+The deeper fact runs in reverse. Suppose we agree that the minor relation is
+*well-founded* — meaning you cannot shrink a network forever; every downward
+chain eventually bottoms out. (For finite networks this is automatic.) Then every
+minor-closed class is itself an exclusion class, and we can even say *which*
+patterns to forbid. The right list is the set of **minimal obstructions**: the
+networks that are *not* in the class, but all of whose proper minors *are*. These
+are the smallest possible "first offenders."
 
-The guiding conjecture of this research program is striking in its simplicity:
+$$\mathrm{obstructions}(C) = \{\, m \mid m \notin C \text{ and every } x < m \text{ lies in } C \,\}.$$
 
-> **Every $\subseteq$-minimal minor-closed class whose limiting density stays
-> below some $\delta < 3/2$ can be described by excluding a *single* graph as a
-> minor.**
+> **Every minor-closed class is an exclusion class.** If $C$ is minor-closed (over
+> a well-founded minor order), then $C = \mathrm{excl}(\mathrm{obstructions}(C))$.
 
-In symbols: for such a class $\mathcal{G}$, there exists one graph $H$ with
-$\mathcal{G} = \mathrm{excl}\{H\}$, the class of all graphs avoiding $H$ as a
-minor. Below the $3/2$ barrier, forbidden shapes travel alone.
+This is the easy, order-theoretic heart of the celebrated Robertson–Seymour
+program. The hard part of their work proves that this obstruction list is always
+*finite*; what we capture here, with complete rigor, is the cleaner structural
+skeleton: a minor-closed class and its set of minimal obstructions are two faces
+of the same coin.
 
-## Forests: the prototype below the barrier
+## The simplest possible classes: one forbidden pattern
 
-Why $3/2$, and what lives below it? The cleanest inhabitant of this rarefied
-zone is the class of **forests** — graphs with no cycles at all. A forest is a
-disjoint collection of *trees*, and a tree is the most economical way to connect
-a set of dots: just enough strings to hold everything together, never one more.
+Now we can ask a sharp question. Some classes need long lists of forbidden
+patterns. Others need very few. What is the *simplest* kind of minor-closed class?
 
-Forests have a famous and elementary property. A tree on $n$ vertices has
-*exactly* $n - 1$ edges. Remove an edge and the tree falls into two pieces; add
-an edge and you create a cycle. This razor's-edge balance — connected but
-acyclic — is what makes trees the skeleton of so much of mathematics and computer
-science, from family trees to file systems to the spanning networks that route
-electricity and data.
+The answer: a class characterized by **a single forbidden minor** — one pattern
+$H$ such that the class is exactly $\mathrm{excl}(\{H\})$. The triangle-free
+example we started with is precisely $\mathrm{excl}(\{\triangle\})$. These
+single-pattern classes are the atoms of the theory, and they have a crisp
+signature. Forbidding one pattern $H$ produces a class whose *only* minimal
+obstruction is $H$ itself:
 
-A forest, being a union of trees (plus possibly some isolated dots), can only
-have *fewer* edges than a tree on the same vertices. So for any non-empty forest
-on $V$ vertices with $E$ edges,
+> **One pattern, one obstruction.** The minimal obstructions of $\mathrm{excl}(\{H\})$
+> are exactly $\{H\}$.
 
-$$E + 1 \le V.$$
+And the converse holds too, giving a perfect dictionary between the two notions:
 
-This single inequality is the quantitative heart of everything that follows. It
-says a forest is *guaranteed* to be missing at least one edge compared to a tree,
-and a tree is already maximally frugal.
+> **The single-forbidden-minor dictionary.** A minor-closed class is described by
+> a single forbidden pattern *if and only if* its set of minimal obstructions is a
+> single network.
 
-What does the inequality do to density? Divide through:
+This is the conceptual centerpiece. "Being defined by one rule" and "having one
+smallest offender" are literally the same condition. To check whether a complicated
+class has a clean one-line description, you no longer have to guess the rule — you
+just count its minimal obstructions and ask whether there is exactly one.
 
-$$\rho = \frac{E}{V} \le \frac{V - 1}{V} = 1 - \frac{1}{V} < 1.$$
+## Enter density: a numerical thermometer
 
-Every forest, no matter how large, has edge density **strictly less than 1**. As
-forests grow, their density creeps upward — $\tfrac{0}{1}, \tfrac{1}{2},
-\tfrac{2}{3}, \tfrac{3}{4}, \ldots$ — approaching $1$ but never reaching it. The
-limiting density of the forest class is exactly $1$, a value attained only in the
-limit and never by any actual member. (A tree on a million vertices has density
-$0.999999$; you can get as close to $1$ as you like, but no finite forest ever
-touches it.)
+So far everything is combinatorial. Now we introduce a number that measures how
+"heavy" a network is: its **edge density**, the ratio of lines to dots,
 
-And since $1 < 3/2$, forests live comfortably, strictly, below the magic
-threshold:
+$$\rho(G) = \frac{|\text{edges of } G|}{|\text{dots of } G|}.$$
 
-$$\rho < 1 < \frac{3}{2}.$$
+A sparse network like a path has density just under $1$. A dense network like a
+complete graph has density growing without bound. For a whole class of networks we
+track its *limiting density* — how heavy its members are allowed to get as they
+grow large.
 
-This is exactly the regime the conjecture is about. The forest class is the
-prototypical $\subseteq$-minimal minor-closed class below $3/2$. And — this is
-the punchline the whole framework points toward — forests *are* a single-excluded
-minor class. The lone forbidden shape is the **triangle** $K_3$: a graph is a
-forest precisely when it contains no triangle as a minor. Why a triangle? Because
-*any* cycle, no matter how long, can be contracted down to a triangle by
-squishing its edges together; and conversely, a triangle minor can only come from
-a cycle. "Acyclic" and "triangle-minor-free" are two names for the same property.
-Forests are $\mathrm{excl}\{K_3\}$.
+The number $3/2$ marks a remarkable phase boundary. By a classical bookkeeping
+identity — every edge has two endpoints, so the degrees of all dots add up to
+twice the number of edges — a density of $3/2$ corresponds to an *average degree
+of $3$*. Below that line, networks are forced to be genuinely thin: most dots have
+only one or two neighbors. The mission behind this work is a striking conjecture:
 
-## Building the argument, brick by verified brick
+> **The 3/2 conjecture.** Every minimal minor-closed class whose limiting density
+> stays above some fixed $\delta < 3/2$ can be defined by a *single* forbidden
+> minor.
 
-What makes this story more than a pleasant anecdote is that every step has been
-made *completely rigorous* — pinned down with no hand-waving, no "clearly," no
-gaps. Let us walk through the architecture of the argument as it was actually
-established.
+In other words, just below the magic threshold $3/2$, the messy world of
+minor-closed classes collapses into the simplest possible kind — the
+single-pattern atoms. This article reports two concrete, fully verified pillars of
+that program, populating the region below $3/2$ with explicit, structurally
+different families.
 
-**Step 1: Forests really are minor-closed.** The first thing to check is that the
-class of forests is closed under the legal moves. If $G$ is a forest and $H$ is
-obtained from $G$ by deleting things, then $H$ is still a forest — you cannot
-*create* a cycle by removing edges or vertices. Formally, acyclicity is preserved
-when passing to a subgraph: if $H \le G$ (meaning $H$ sits inside $G$) and $G$ is
-acyclic, then $H$ is acyclic. This is the closure law, and it is what entitles us
-to call forests a minor-closed class in the first place.
+## Pillar one: forests live below the line
 
-**Step 2: The forest edge bound.** Next comes the inequality $E + 1 \le V$ for
-any non-empty finite forest. The proof is a small gem. Take your forest $G$. It
-sits inside the *complete graph* on the same vertices (the graph where every pair
-is joined), which is certainly connected. A general principle says: any acyclic
-subgraph of a connected graph can be *extended* to a **spanning tree** — a tree
-that reaches every vertex. So enlarge $G$ to a spanning tree $F$ with $G \le F$.
-The tree $F$ has exactly $V - 1$ edges, and since $G$ is contained in $F$, it has
-at most as many, so $E \le V - 1$, i.e. $E + 1 \le V$. The forest borrows the
-tree's perfect edge count and can only do with less.
+The first inhabitant is the most classical sparse family of all — **forests**, the
+networks with no cycles. A forest can be enormous, but it can never close a loop.
 
-**Step 3: Trees have density below 1.** For a tree specifically, the edge count
-is exactly $V - 1$, so its density is exactly $(V-1)/V$, which is strictly less
-than $1$. This is the boundary case that the whole class presses against.
+A foundational counting fact about forests is that a non-empty forest on $|V|$ dots
+has at most $|V| - 1$ edges; equivalently,
 
-**Step 4: Every forest is below 3/2.** Combining the edge bound with simple
-arithmetic gives the headline density statement: every finite forest has edge
-density strictly less than $3/2$. The empty-graph corner case (no vertices) is
-handled gracefully by the convention that its density is $0$, which is of course
-below $3/2$ as well.
+$$|E| + 1 \le |V|.$$
 
-**Step 5: The whole class is below the threshold.** Quantifying over every member
-of the forest class, *all* of them have density below $3/2$ simultaneously. The
-forest class, as a whole, lives below the barrier. This is the concrete
-realization of the research mission: a genuine, non-trivial minor-closed class,
-strictly below $3/2$, with a known single forbidden minor.
+A tree (a connected forest) achieves equality, $|E| + 1 = |V|$, which immediately
+pins its density strictly below $1$. The same bound carries to every forest:
 
-## What *is* a minor, really?
+> **Forests are sparse.** Every finite forest has edge density strictly below
+> $3/2$ (indeed, strictly below $1$).
 
-Behind the scenes, there is a question of how to even *define* the minor relation
-precisely enough to reason about it without error. The classical and most useful
-definition uses **branch sets**.
+And crucially, the forest family is minor-closed in the relevant sense: any
+subgraph of an acyclic network is acyclic, so deleting parts of a forest can never
+manufacture a cycle. Forests thus form a bona fide minor-closed class sitting
+comfortably below the $3/2$ line, with limiting density exactly $1$. They are the
+prototypical citizen of the region the conjecture is about.
 
-To say that $H$ is a minor of $G$, you must produce, for each vertex of $H$, a
-non-empty "blob" of vertices in $G$ — its **branch set** — subject to three
-conditions:
+## Pillar two: a second, richer witness — bounded degree
 
-1. **Disjointness.** Different vertices of $H$ get disjoint blobs; no vertex of
-   $G$ does double duty.
-2. **Connectivity.** Each blob is *connected* inside $G$ — it hangs together as a
-   single piece, so that contracting it makes sense (you can squish a connected
-   blob down to a single point).
-3. **Edge lifting.** Whenever two vertices are joined by an edge in $H$, there
-   must be an actual edge of $G$ running between their two blobs, witnessing that
-   connection.
+Forests are the *acyclic* extreme. The natural worry is that everything below
+$3/2$ might just be "forests in disguise." The second pillar dispels that worry by
+exhibiting a structurally *different* family that still lives below the line: the
+networks of **maximum degree at most $2$**.
 
-If such a system of branch sets exists, then contracting each blob to a point and
-cleaning up recovers $H$ — so $H$ is a minor of $G$. This "branch decomposition"
-view turns the somewhat dynamic process of deleting and contracting into a single
-static certificate, which is exactly what you want when you need to *prove* things.
+A network in which every dot touches at most two lines is, by an elementary
+classification, a disjoint union of **paths and cycles** — nothing more
+complicated can occur. Unlike forests, these networks are allowed to contain
+cycles, and arbitrarily many of them. Yet they remain thin. The same handshaking
+identity does the work: if every dot has degree at most $2$, then the degrees sum
+to at most $2|V|$, and since they also sum to $2|E|$, we get
 
-Two foundational facts anchor this definition. First, **reflexivity**: every
-graph is a minor of itself. The certificate is the simplest imaginable — make
-each vertex its own singleton blob $\{w\}$. Each singleton is trivially non-empty,
-trivially connected (a one-point graph hangs together for free), trivially
-disjoint from the others, and every edge lifts to itself. Second, **subgraph
-refinement**: if $H$ is a subgraph of $G$ — literally sitting inside it — then
-$H$ is a minor of $G$. Again the singleton blobs do the work. This second fact is
-the bridge that justifies studying forests through the *subgraph* lens as a
-faithful approximation of the full minor order: subgraph containment is a special
-case of minorhood, so a class closed under the full minor relation is in
-particular closed under taking subgraphs.
+$$2|E| = \sum_v \deg(v) \le 2|V| \quad\Longrightarrow\quad |E| \le |V|.$$
 
-## Why the 3/2 barrier matters
+Therefore the density never exceeds $1$:
 
-Step back and admire the shape of the result. We have a *threshold phenomenon* —
-a sharp number, $3/2$, below which the combinatorial world is rigid and orderly
-(one forbidden minor per class) and above which, presumably, it becomes wild
-(many forbidden minors, complicated structure). Thresholds like this are the
-fingerprints of deep structure. They appear throughout mathematics and the
-sciences: phase transitions in physics, where water abruptly becomes ice;
-critical thresholds in random graphs, where a giant connected component
-suddenly crystallizes; the dividing lines in computational complexity between
-easy and hard problems.
+> **Bounded-degree networks are sparse.** Every finite network of maximum degree
+> at most $2$ has edge density strictly below $3/2$ (indeed at most $1$).
 
-The intuition behind $3/2$ is that below this density, a graph has almost no room
-to be complicated. The only way to grow while staying below $3/2$ is to lay down
-a single spanning skeleton — a tree-like backbone — and then add only a bounded
-amount of local decoration. There simply isn't enough "edge budget" to create the
-rich, branching variety that would demand multiple independent forbidden shapes.
-Scarcity enforces simplicity. The forest class, sitting at density limit exactly
-$1$, is the purest example: its skeleton *is* the whole graph, and its single
-forbidden minor is the triangle.
+This family is also minor-closed in the subgraph sense, for a simple monotonicity
+reason: deleting lines can only *lower* the degree of every dot, so the maximum
+degree can only go down.
 
-## The road ahead
+> **Degree is monotone.** If $G$ is a subgraph of $G'$, then the maximum degree of
+> $G$ is at most the maximum degree of $G'$. Consequently the class of networks of
+> maximum degree at most any fixed bound $d$ is minor-closed.
 
-This verified core opens onto a landscape of bold conjectures, each one a
-falsifiable challenge.
+Here is the punchline that makes this a genuinely new witness rather than a
+restatement of the forest result. A cycle on $n$ dots, $C_n$, has exactly $n$ dots
+and $n$ edges, so $|E| = |V|$ — the bound $|E| \le |V|$ is *tight*. Cycles have
+maximum degree $2$ but they are *not* forests. So the bounded-degree family is
+strictly larger than the forest family while remaining below $3/2$. The region
+below the threshold is not a one-family desert; it is populated by structurally
+distinct, single-parameter constrained families — exactly the landscape in which
+the single-forbidden-minor phenomenon is conjectured to reign.
 
-The first is to show that the branch-set minor relation is **transitive**: a
-minor of a minor is a minor. The certificate would compose two branch
-decompositions by routing each edge of the top graph through a path inside a
-blob — gluing the layers together into a single valid decomposition. Once
-transitivity is in hand, graphs form a genuine partial order under minorhood, and
-the abstract framework snaps fully into place.
+## Why two different witnesses matter
 
-The second is to prove, in the *full* contraction-based minor order, that forests
-are *exactly* the triangle-free-minor graphs — that the obstruction set of the
-forest class is the singleton $\{K_3\}$, confirming the lone-forbidden-shape
-phenomenon in its strongest form.
+Picture the line at density $3/2$ as a coastline. The conjecture says that all the
+"minimal" land just inland from this coast is made of the same simple bedrock —
+single-pattern classes. To trust such a sweeping claim you want to see that the
+inland territory is *real* and *varied*, not a single artificial outcropping. The
+two pillars do exactly this:
 
-The third is to establish that limiting density is attained as a **supremum, not
-a maximum** — that forests approach density $1$ without ever reaching it, and
-that this "sup-not-max" behavior is universal for minimal classes below $3/2$,
-each pinned to an integer-or-half-integer limiting density.
+- **Forests** show the *acyclic* corner of the territory, density floor $1$.
+- **Bounded-degree-$2$ graphs** show a *cyclic* corner — same density floor $1$,
+  yet containing every cycle, which no forest can.
 
-The fourth, and most sweeping, is to prove that the minor order is a
-**well-quasi-order** when restricted to classes below $3/2$ — guaranteeing that
-every such class has a *finite* forbidden set, which combined with the previous
-conjectures collapses to a single forbidden minor.
+Two qualitatively different families, both provably below $3/2$, both genuinely
+minor-closed. Together with the order-theoretic dictionary — "single forbidden
+minor" equals "single minimal obstruction" — they reduce the grand conjecture to a
+pair of crisp, falsifiable sub-questions:
 
-## The beauty of one
+1. *Largeness from density.* Does staying above $\delta$ near $3/2$ force a class
+   to swallow the entire bounded-degree-$2$ family (all paths and cycles) as a
+   floor?
+2. *Maximality forces a singleton.* Among the proper classes avoiding a fixed
+   pattern, the largest one is $\mathrm{excl}(\{H\})$ — does *being* such a maximal
+   avoider force the minimal-obstruction antichain to collapse to a single graph?
 
-There is something quietly profound about a mathematical universe defined by a
-single prohibition. We are used to thinking of complexity as requiring
-complicated rules. Here, the opposite holds: in the sparse regime below $3/2$, an
-entire infinite family of graphs — all the forests in the world, of every size
-and shape — is captured by forbidding one small triangle. The triangle is the
-seed of every cycle, and to ban cycles is simply to ban it.
+If both hold, a minimal class above the density floor must be a maximal avoider,
+and maximal avoiders have a single obstruction — which is exactly a single
+forbidden minor. The whole edifice is assembled from finite combinatorics and the
+well-foundedness of the minor order, with no appeal to deep structure theory.
 
-The forest, the simplest interesting graph, turns out to be the perfect witness
-to a deep structural law: below a sharp density threshold, forbidden shapes are
-lonely. One graph, excluded, is enough to define a world.
+## A worked miniature
+
+Let us make the dictionary tangible. Take the class of triangle-free networks,
+$\mathrm{excl}(\{K_3\})$, where $K_3$ is the triangle. Its only minimal
+obstruction is $K_3$ itself: a triangle is not triangle-free, but every proper
+minor of a triangle (an edge, two edges, a path) *is* triangle-free. So the
+obstruction set is the single network $\{K_3\}$ — and by the dictionary, the class
+is genuinely a single-forbidden-minor class. Conversely, if someone hands you a
+mysterious minor-closed class and you discover it has two incomparable smallest
+offenders, you know *for certain* it cannot be captured by any one forbidden
+pattern.
+
+Now overlay the density picture. The triangle-free networks are *not* below
+$3/2$ — they can be very dense (think of complete bipartite graphs). But the
+forest class $\mathrm{excl}(\{\text{all cycles}\})$ and the bounded-degree-$2$
+class both *are*. The conjecture predicts that as we slide minimal classes toward
+the $3/2$ coast, each one must ultimately wear a single forbidden-minor badge — and
+the two pillars guarantee there is a rich, non-trivial coastline for that
+prediction to govern.
+
+## The view from here
+
+What makes this story satisfying is the interplay of two completely different kinds
+of mathematics. On one side, pure order theory: the lattice of minor-closed
+classes, the perfect duality between forbidden patterns and minimal obstructions,
+the well-foundedness that lets us always find a smallest offender. On the other,
+hands-on combinatorics: handshaking identities, degree counts, the humble
+observation that a cycle has as many edges as dots.
+
+The number $3/2$ is where these two worlds meet. It is the precise altitude at
+which sparseness becomes so severe that the only minimal minor-closed classes left
+standing are the simplest imaginable — each one definable by forbidding a single
+graph. We have planted two flags firmly in that territory and reduced the summit to
+two clean, attackable conjectures. The single forbidden minor, it seems, really may
+be one graph to forbid them all.
