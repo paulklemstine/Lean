@@ -958,7 +958,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2e8e485b",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -972,7 +972,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -3024,7 +3024,7 @@
       "Polymatroid_connectivity",
       "Slice_projections"
     ],
-    "consumed_by_exp_id": "e8c93c85",
+    "consumed_by_exp_id": "",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domain_bridges": [
       "Matroid_theory",
@@ -3040,7 +3040,7 @@
     "proof_strategy": "Assume for contradiction that there exist indices $j < k < l$ such that the $j$-th and $l$-th slice-projections are connected, but the $k$-th is disconnected. Use the submodularity of the polymatroid rank function and the lattice of flats to demonstrate that if $P^{(k)}$ is disconnected by a partition $(A, B)$, then either $P^{(j)}$ or $P^{(l)}$ must also be disconnected by a related partition, contradicting the initial assumption.",
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -3106,7 +3106,7 @@
       "math.CO/ramsey_theory",
       "math.CO/combinatorial_lines"
     ],
-    "consumed_by_exp_id": "d6be1a63",
+    "consumed_by_exp_id": "",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex Δ(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) ≥ 22 and HJ(4,2) ≥ 14.",
     "domain_bridges": [
       "combinatorics",
@@ -3122,7 +3122,7 @@
     "proof_strategy": "Formalize coordinate-symmetric colorings as functions on letter-count vectors (elements of the discrete simplex). Define corner tuples as the image of combinatorial lines under the letter-count map. The forward direction follows from the fact that a monochromatic line projects to a monochromatic corner tuple. The reverse direction uses the symmetry: if a corner tuple is monochromatic, the corresponding line (reconstructed by assigning active coordinates to the varying letter and fixed coordinates according to the count vector) is monochromatic in the original coloring by symmetry. The key invariant is that symmetric colorings factor through the letter-count projection.",
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -8691,7 +8691,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "199a5960",
+    "consumed_by_exp_id": "",
     "description": "Prove that for every integer n ≥ 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
     "domain_bridges": [],
     "domains": [
@@ -8703,7 +8703,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erdős–Straus Conjecture"
   },
@@ -9282,7 +9282,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4f516403",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -9295,7 +9295,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
