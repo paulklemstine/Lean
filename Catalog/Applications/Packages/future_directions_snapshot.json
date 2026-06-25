@@ -1813,7 +1813,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f3b6d67a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1826,7 +1826,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -2647,7 +2647,7 @@
       "math.DS",
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce3e5645",
     "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ can be realized as the $(-\\beta)$-expansion of some $x \\in I_\\beta$ if and only if for all $n \\ge 1$, the suffix $x_n x_{n+1} \\dots$ is less than or equal to $d^*(0, -\\beta)$ in the alternating lexicographic order. The alternating lexicographic order $\\preceq$ is defined such that $x \\preceq y$ if either $x=y$ or at the first index $k$ where they differ, $x_k < y_k$ when $k$ is odd and $x_k > y_k$ when $k$ is even.",
     "domain_bridges": [
       "Combinatorics on Words",
@@ -2662,7 +2662,7 @@
     "proof_strategy": "Define the alternating lexicographic order on infinite sequences, the $(-\\beta)$-transformation $T_{-\\beta}$, and the sequence $d^*(0, -\\beta)$. Prove that the shift space defined by this order condition is invariant and corresponds exactly to the admissible sequences of the $(-\\beta)$-transformation, mirroring Parry's proof for positive $\\beta$-expansions.",
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T05:48:57.058098+00:00",
     "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
   },
@@ -8846,7 +8846,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2553",
+    "id": "fd_2554",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a family of hypergraphs achieving the threshold edge count minus one while avoiding the forbidden configuration, or prove non-existence via contradiction. This requires detailed combinatorial analysis of linear hypergraph structures and their edge distributions.",
@@ -8855,6 +8855,59 @@
     "status": "available",
     "timestamp": "2026-06-25T21:40:29.052604+00:00",
     "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2606.23853",
+      "MossPedersen2026"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k ≥ 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
+    "domain_bridges": [
+      "finite measure theory",
+      "logic",
+      "social choice theory"
+    ],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_2555",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct explicit maximal frames with increasing incoherence indices via orthogonal half-spaces in rational vector spaces, then show all shorter obstructions are excluded",
+    "research_mode": "team",
+    "source_exp_id": "2606.25954v1",
+    "status": "available",
+    "timestamp": "2026-06-25T22:09:21.864984+00:00",
+    "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "A Simple Counting Argument for Dense Linear Hypergraphs (arXiv:2408.06542)",
+      "Santos and Tyomkyn, On the Brown-Erdős-Sós problem for linear hypergraphs (arXiv:2408.06542)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that any linear 3-uniform hypergraph on n vertices with linear density at least 4/9 + o(1) contains a (7,4)-configuration (i.e., 4 edges spanning at most 7 vertices). It is conjectured that this bound is asymptotically tight: for every ε > 0, there exist arbitrarily large linear 3-uniform hypergraphs with linear density at least 4/9 - ε that avoid (7,4)-configurations. This would mean the constant 4/9 cannot be improved in general.",
+    "domain_bridges": [
+      "hypergraph theory",
+      "extremal combinatorics",
+      "Brown-Erdős-Sós problem",
+      "probabilistic method"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2556",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the probabilistic method (e.g., random linear hypergraph constructions) or algebraic constructions (e.g., finite geometry) to exhibit linear 3-uniform hypergraphs with density approaching 4/9 from below that contain no (7,4)-configurations. Alternatively, adapt known constructions for linear hypergraphs avoiding dense configurations, such as those derived from projective planes or product constructions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T22:19:20.957986+00:00",
+    "title": "Asymptotic Tightness of the 4/9 Density Threshold for (7,4)-Configurations in Linear Triple Systems"
   },
   {
     "ambition_level": "extension",

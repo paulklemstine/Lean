@@ -1359,7 +1359,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "f3b6d67a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1369,7 +1369,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -1804,7 +1804,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce3e5645",
     "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ can be realized as the $(-\\beta)$-expansion of some $x \\in I_\\beta$ if and only if for all $n \\ge 1$, the suffix $x_n x_{n+1} \\dots$ is less than or equal to $d^*(0, -\\beta)$ in the alternating lexicographic order. The alternating lexicographic order $\\preceq$ is defined such that $x \\preceq y$ if either $x=y$ or at the first index $k$ where they differ, $x_k < y_k$ when $k$ is odd and $x_k > y_k$ when $k$ is even.",
     "domains": [
       "Bridges"
@@ -1813,7 +1813,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T05:48:57.058098+00:00",
     "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
   },
@@ -5091,13 +5091,41 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2553",
+    "id": "fd_2554",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
     "status": "available",
     "timestamp": "2026-06-25T21:40:29.052604+00:00",
     "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k \u2265 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_2555",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25954v1",
+    "status": "available",
+    "timestamp": "2026-06-25T22:09:21.864984+00:00",
+    "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that any linear 3-uniform hypergraph on n vertices with linear density at least 4/9 + o(1) contains a (7,4)-configuration (i.e., 4 edges spanning at most 7 vertices). It is conjectured that this bound is asymptotically tight: for every \u03b5 > 0, there exist arbitrarily large linear 3-uniform hypergraphs with linear density at least 4/9 - \u03b5 that avoid (7,4)-configurations. This would mean the constant 4/9 cannot be improved in general.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2556",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T22:19:20.957986+00:00",
+    "title": "Asymptotic Tightness of the 4/9 Density Threshold for (7,4)-Configurations in Linear Triple Systems"
   },
   {
     "consumed_by_exp_id": "",

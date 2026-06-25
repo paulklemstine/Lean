@@ -35129,14 +35129,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.DS",
         "math.NT"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "ce3e5645",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35150,7 +35150,7 @@
         "Bridges"
       ],
       "id": "fd_2310",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T22:19:29.560779+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nvariable {α : Type*} [LT α]\n\n-- Alternating lexicographic order\ndef altLexLE (s t : Nat → α) : Prop :=\n  s = t ∨ ∃ k : ℕ, (∀ i < k, s i = t i) ∧ (\n    (k % 2 = 1 ∧ s k < t k) ∨ (k % 2 = 0 ∧ t k < s k))\n\ndef is_admissible_neg_beta (β : ℝ) (hβ : β > 1) (seq : Nat → ℕ) : Prop :=\n  ∀ n : ℕ, altLexLE (fun i => seq (n + i)) (d_star_zero_neg β hβ)\n\ntheorem ito_sadahiro_admissibility (β : ℝ) (hβ : β > 1) (seq : Nat → ℕ) :\n    (∃ x : ℝ, x ∈ I β ∧ neg_beta_expansion β x = seq) ↔ is_admissible_neg_beta β hβ seq :=\n  sorry",
       "lineage_refs": [],
@@ -35164,7 +35164,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23097v1",
       "source_path": "http://arxiv.org/abs/2606.23097v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T05:48:57.058098+00:00",
       "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
@@ -46380,7 +46380,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2553",
+      "id": "fd_2554",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_bound (r k n : ℕ) (hr : 3 ≤ r) (hk : 3 ≤ k) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r n), linear H ∧ count_edges H = (k-2)/(r^2*((r-2)*(k-2)+1))*n^2 + n/r - 1 ∧ ¬contains_k_edges_spanning_le (r-2)*k+3 H",
@@ -46399,6 +46399,97 @@
       "thread_id": "",
       "timestamp": "2026-06-25T21:40:29.052604+00:00",
       "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2606.23853",
+        "MossPedersen2026"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k ≥ 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
+      "domain_bridges": [
+        "finite measure theory",
+        "logic",
+        "social choice theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Logic"
+      ],
+      "id": "fd_2555",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct explicit maximal frames with increasing incoherence indices via orthogonal half-spaces in rational vector spaces, then show all shorter obstructions are excluded",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25954v1",
+      "source_path": "http://arxiv.org/abs/2606.25954v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T22:09:21.864984+00:00",
+      "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "A Simple Counting Argument for Dense Linear Hypergraphs (arXiv:2408.06542)",
+        "Santos and Tyomkyn, On the Brown-Erdős-Sós problem for linear hypergraphs (arXiv:2408.06542)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that any linear 3-uniform hypergraph on n vertices with linear density at least 4/9 + o(1) contains a (7,4)-configuration (i.e., 4 edges spanning at most 7 vertices). It is conjectured that this bound is asymptotically tight: for every ε > 0, there exist arbitrarily large linear 3-uniform hypergraphs with linear density at least 4/9 - ε that avoid (7,4)-configurations. This would mean the constant 4/9 cannot be improved in general.",
+      "domain_bridges": [
+        "hypergraph theory",
+        "extremal combinatorics",
+        "Brown-Erdős-Sós problem",
+        "probabilistic method"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2556",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem conjecture_tightness_4_9 :\n  ∀ ε : ℝ, ε > 0 → ∀ N : ℕ, ∃ (n : ℕ) (H : Finset (Finset ℕ)),\n    n ≥ N ∧\n    (∀ e ∈ H, e.card = 3) ∧\n    (∀ e₁ ∈ H, ∀ e₂ ∈ H, e₁ ≠ e₂ → (e₁ ∩ e₂).card ≤ 1) ∧\n    (H.card : ℝ) ≥ (4/9 - ε) * (n.choose 2 : ℝ) / 3 ∧\n    ¬ (∃ (E : Finset (Finset ℕ)), E ⊆ H ∧ E.card = 4 ∧ (E.biUnion id).card ≤ 7) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the probabilistic method (e.g., random linear hypergraph constructions) or algebraic constructions (e.g., finite geometry) to exhibit linear 3-uniform hypergraphs with density approaching 4/9 from below that contain no (7,4)-configurations. Alternatively, adapt known constructions for linear hypergraphs avoiding dense configurations, such as those derived from projective planes or product constructions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25931v1",
+      "source_path": "http://arxiv.org/abs/2606.25931v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T22:19:20.957986+00:00",
+      "title": "Asymptotic Tightness of the 4/9 Density Threshold for (7,4)-Configurations in Linear Triple Systems"
     },
     {
       "ambition_level": "extension",
@@ -52176,7 +52267,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f3b6d67a",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -52202,7 +52293,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432742+00:00",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
