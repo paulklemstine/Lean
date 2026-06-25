@@ -4393,11 +4393,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For n \u2265 2 define X_n(v) = \u2211_{k=0}^{\u230an/2\u230b} (-1)^k n! / ((n - 2k)! k!) v^k and its reciprocal polynomial Y_n(q) = q^{\u230an/2\u230b} X_n(1/q). Conjecture: every root of Y_n is real, positive, and simple, and if \u03bb_n is the largest real root of Y_n, then \u03bb_n < \u03bb_{n+1} for all n \u2265 2. Equivalently, for the orchard denominator D_l(v)=\u220f_{j=2}^l X_j(v), the exponential growth constant determined by the smallest positive zero of D_l is always \u03bb_l, the largest reciprocal root of the final factor X_l.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2502",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24325v1",
+    "status": "available",
+    "timestamp": "2026-06-25T09:35:11.820921+00:00",
+    "title": "Dominant Orchard Denominator Root Comes from the Last Complete-Graph Matching Factor"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2502",
+    "id": "fd_2503",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4411,7 +4425,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2503",
+    "id": "fd_2504",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4425,7 +4439,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2504",
+    "id": "fd_2505",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4439,7 +4453,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2505",
+    "id": "fd_2506",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -4454,7 +4468,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2506",
+    "id": "fd_2507",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24822v1",
@@ -4468,7 +4482,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2507",
+    "id": "fd_2508",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24573v1",
@@ -4483,7 +4497,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -4498,7 +4512,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
@@ -4512,7 +4526,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2510",
+    "id": "fd_2511",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -4526,7 +4540,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2511",
+    "id": "fd_2512",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",

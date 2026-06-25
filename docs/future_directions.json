@@ -40540,7 +40540,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Mathlib.Analysis.Fourier.FiniteField",
         "Mathlib.Combinatorics.Additive.Set",
@@ -40563,7 +40563,7 @@
         "Algebra"
       ],
       "id": "fd_2426",
-      "last_attempt_time": "2026-06-25T09:18:37.224386+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem restriction_endpoint_eq_lambda3 (p : ℕ) [Fact (Nat.Prime p)] (h₁ : ¬IsSquare (-1 : ZMod p)) :\n  (∀ f : (Finset (Fin (p) × Fin (p) × Fin (p))) → ℂ,\n    ‖(fun x ↦ (p : ℂ)⁻² * ∑ ξ in paraboloid3 p, f ξ * expMap (x • ξ))‖_{L^3 (Fin (p) × Fin (p) × Fin (p))} ≤ C₁ * ‖f‖_{ℓ^2})\n  ↔\n  (∀ a : (Finset (ℤ × ℤ)) → ℂ,\n    ‖∑ λ in paraboloid_lattice, a λ * Complex.exp (2 * π * Complex.I * (λ.1 * x.1 + λ.2 * x.2 + λ.3 * x.3))‖_{L^3 (𝕋^3)} ≤ C₂ * ‖a‖_{ℓ^2}) :=\nby\n  -- proof to be filled in\n  admit",
       "lineage_refs": [],
@@ -43966,6 +43966,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Complete graph matching polynomial",
+        "Hermite polynomial real-rootedness and largest-zero monotonicity",
+        "Orchard-network denominator D_l(v)=∏_{j=2}^l X_j(v)",
+        "Mathlib: Polynomial.roots, Polynomial.map, Finset.prod"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For n ≥ 2 define X_n(v) = ∑_{k=0}^{⌊n/2⌋} (-1)^k n! / ((n - 2k)! k!) v^k and its reciprocal polynomial Y_n(q) = q^{⌊n/2⌋} X_n(1/q). Conjecture: every root of Y_n is real, positive, and simple, and if λ_n is the largest real root of Y_n, then λ_n < λ_{n+1} for all n ≥ 2. Equivalently, for the orchard denominator D_l(v)=∏_{j=2}^l X_j(v), the exponential growth constant determined by the smallest positive zero of D_l is always λ_l, the largest reciprocal root of the final factor X_l.",
+      "domain_bridges": [
+        "phylogenetic network enumeration to matching polynomials",
+        "orchard-network asymptotics to extremal zeros of orthogonal polynomials",
+        "complete graph matchings to reciprocal spectral growth constants"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2502",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nopen Polynomial Finset\n\nnoncomputable section\n\n/-- The polynomial X_n(v) = Σ_k (-1)^k n! / ((n-2k)! k!) v^k. -/\ndef orchardX (n : ℕ) : Polynomial ℝ :=\n  ∑ k in Finset.range (n / 2 + 1),\n    (((-1 : ℝ) ^ k) * (Nat.factorial n : ℝ) /\n      ((Nat.factorial (n - 2 * k) : ℝ) * (Nat.factorial k : ℝ))) •\n      (Polynomial.X : Polynomial ℝ) ^ k\n\n/-- Reciprocal polynomial Y_n(q) = q^{⌊n/2⌋} X_n(1/q). -/\ndef orchardY (n : ℕ) : Polynomial ℝ :=\n  ∑ k in Finset.range (n / 2 + 1),\n    (((-1 : ℝ) ^ k) * (Nat.factorial n : ℝ) /\n      ((Nat.factorial (n - 2 * k) : ℝ) * (Nat.factorial k : ℝ))) •\n      (Polynomial.X : Polynomial ℝ) ^ (n / 2 - k)\n\n/-- `LargestRoot p a` says that `a` is the largest real root of `p`. -/\ndef LargestRoot (p : Polynomial ℝ) (a : ℝ) : Prop :=\n  p.eval a = 0 ∧ ∀ b : ℝ, p.eval b = 0 → b ≤ a\n\n/-- Conjecture: the dominant reciprocal zero is strictly increasing with the number of leaves. -/\ntheorem orchardY_roots_positive_simple_and_largestRoot_strictMono :\n    (∀ n ",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Identify X_n with a rescaled matching polynomial of K_n, equivalently with a specialization of the Hermite polynomial. Use the Heilmann--Lieb real-rootedness theorem or the standard Hermite-polynomial zero theorem to prove that Y_n has only positive simple roots. Then use the strict interlacing of consecutive Hermite zeros to show that the largest reciprocal root λ_n is strictly increasing in n. Finally, observe that the roots of D_l are the union of the roots of the X_j factors, so monotonicity implies that the dominant reciprocal root of D_l is λ_l.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24325v1",
+      "source_path": "http://arxiv.org/abs/2606.24325v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T09:35:11.820921+00:00",
+      "title": "Dominant Orchard Denominator Root Comes from the Last Complete-Graph Matching Factor"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "OEIS A287616",
         "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
         "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -43986,7 +44033,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2502",
+      "id": "fd_2503",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -44030,7 +44077,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2503",
+      "id": "fd_2504",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -44073,7 +44120,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2504",
+      "id": "fd_2505",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -44116,7 +44163,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2505",
+      "id": "fd_2506",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
@@ -44162,7 +44209,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2506",
+      "id": "fd_2507",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularity_MMsplit (a : ℕ) (b : List ℕ) (hb : ∀ r ∈ b, 1 ≤ r) :\n  let G := MM a b\n  let ν := (b.filter (· ≥ 2)).length\n  reg (edgeIdeal G) = ν + 1 :=\nby\n  -- proof goes here",
@@ -44205,7 +44252,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2507",
+      "id": "fd_2508",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem self_dual_code_26_uniqueness : ∀ (C D : Code), (C.is_self_dual ∧ C.length = 26 ∧ C.min_weight = 6) → (D.is_self_dual ∧ D.length = 26 ∧ D.min_weight = 6) → ∃ (perm : Fin 26 → Fin 26), perm • C = D",
@@ -44246,7 +44293,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2508",
+      "id": "fd_2509",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "dimension theorem for Lie algebras",
@@ -44292,7 +44339,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2509",
+      "id": "fd_2510",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem random_linear_code_discrepancy (q : ℕ) [Fact (Nat.Prime q)] (n ρ : ℕ) (hρ : ρ ≤ n) (ε : ℝ) (hε : 0 < ε) :\n  ∀ᵉ (C : subspace (fin n) (zmod q)),\n    (∃ k, C.dimension = k ∧ k = ⌈(1 - (1 / n) * real.log (ball_volume q n ρ) + ε) * n⌉) →\n    (∀ z : (fin n → zmod q),\n      let B := hamming_ball q n ρ z in\n      let expected := (C.card * B.card : ℝ) / (q ^ n) in\n      (C.card ∩ B.card : ℝ) =ᵐ[ℙ] (1 ± o 1) * expected))",
@@ -44344,7 +44391,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2510",
+      "id": "fd_2511",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_erdos_matching_conjecture {q : ℕ} (hq : Nat.Prime q) (n k s : ℕ) (hn : n ≥ (s + 1) * k) :\n  m_q q n k s = max (gaussian_binomial (gaussian_binomial q ((s + 1) * k - 1) k)\n                                     (gaussian_binomial q n k - q ^ (k * s) * gaussian_binomial q (n - s) k) :=\n  sorry\n\n-- Where:\n-- m_q q n k s := maximum cardinality of a family of k-dim subspaces of (ZMod q)^n\n--   with no s+1 members having a direct sum\n-- gaussian_binomial q n k := [n choose k]_q = ∏_{i=0}^{k-1} (q^{n-i} - 1)/(q^{i+1} - 1)\n-- max_binomial a b := max a b",
@@ -44393,7 +44440,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2511",
+      "id": "fd_2512",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace HypergraphRamsey\n\n/-- `ramseyNumber k s m` is the least N such that every red/blue coloring of\n    the k-subsets of `[N]` has a red s-set or a blue m-set. -/\nconstant ramseyNumber : ℕ → ℕ → ℕ → ℕ\n\n/-- `shiftNumber3 t` is the 3-color shift number s_3(t). -/\nconstant shiftNumber3 : ℕ → ℕ\n\n/-- Conjecture: the paper's `1/2` coefficient can be improved to `2/3`. -/\ntheorem ramsey_diag_gt_shift_two_thirds\n    (k : ℕ) (hk : 9 ≤ k) :\n    shiftNumber3 ((2 * k) / 3 - 3) < ramseyNumber k (k + 1) (k + 1) := by\n  sorry\n\nend HypergraphRamsey",
