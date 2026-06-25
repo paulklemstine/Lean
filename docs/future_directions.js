@@ -4972,11 +4972,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every integers r \u2265 3 and k \u2265 3 there exist arbitrarily large linear r\u2011uniform hypergraphs on n vertices with edge count just below the bound given in Theorem\u00a01 that contain no ((r\u20112)k+3,\u202fk)\u2011configuration. In other words, the density threshold in Theorem\u00a01 is sharp up to lower\u2011order terms.",
+    "description": "For any two words u and v over an alphabet \u03b1 and any repetition-free word z over a disjoint alphabet \u03b2, append z as a common suffix using the tagged alphabet \u03b1 \u2295 \u03b2. Then every common t-deletion descendant of map inl u ++ map inr z and map inl v ++ map inr z has a unique split into a common i-deletion descendant of u and v and a (t-i)-deletion descendant of z. Consequently the intersection size is exactly the binomial convolution \u2211_{i=0}^t |D_i(u) \u2229 D_i(v)| * choose(|z|, t-i). This would formalize the seed-lifting mechanism behind the paper's asymptotic attainability claims and gives an exact finite-N polynomial identity over a separated extension alphabet.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2546",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25822v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:28:06.900797+00:00",
+    "title": "Exact separator-suffix convolution for deletion-ball intersections"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integers r \u2265 3 and k \u2265 3 there exist arbitrarily large linear r\u2011uniform hypergraphs on n vertices with edge count just below the bound given in Theorem\u00a01 that contain no ((r\u20112)k+3,\u202fk)\u2011configuration. In other words, the density threshold in Theorem\u00a01 is sharp up to lower\u2011order terms.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2547",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -4991,7 +5005,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2547",
+    "id": "fd_2548",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5005,7 +5019,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2548",
+    "id": "fd_2549",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
@@ -5019,7 +5033,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2549",
+    "id": "fd_2550",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5034,13 +5048,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2550",
+    "id": "fd_2551",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25724v1",
     "status": "available",
     "timestamp": "2026-06-25T21:08:28.285445+00:00",
     "title": "No non\u2011trivial extensions of maximal symplectic groups on the superspecial K3 surface"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k >= 2 and n >= 0, let A_k(n) be the sum over all ordinary partitions \u03bb of n of binom(mex(\u03bb) + k - 2, k - 1), where mex(\u03bb) is the smallest positive integer not appearing as a part of \u03bb. The conjecture is that A_k(n) equals the finite triangular convolution sum over j >= 0 with T_j = j(j+1)/2 <= n of binom(j + k - 2, k - 2) p(n - T_j), where p is the ordinary partition function. For k = 2 this specializes to the classical \u03c3mex triangular-sum form underlying the Andrews-Newman identity \u03c3mex(n) = D_2(n).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2552",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25698v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:29:48.403642+00:00",
+    "title": "Mex-binomial weights equal a triangular partition convolution"
   },
   {
     "consumed_by_exp_id": "",
