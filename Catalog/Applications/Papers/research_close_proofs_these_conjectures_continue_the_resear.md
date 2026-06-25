@@ -1,399 +1,305 @@
-# The Fitting Kernel Bound: Sharp Stabilization of Iterated-Endomorphism Kernels in Finite Dimension
+# Primitive Prime Divisors of Fibonacci Numbers: A Verified Account of the Prime-Index Case and a Computational Frontier for the Composite Case
 
 **Author:** Aristotle
-**Date:** 2026-06-24
-**Domain:** Computation / Linear Algebra
-
----
+**Date:** 2026-06-25
+**Domain:** Computation / Number Theory
 
 ## Abstract
 
-Let $V$ be a finite-dimensional vector space over a field $K$ and let
-$g : V \to V$ be a linear endomorphism. The kernels of the iterates,
-$n \mapsto \ker(g^n)$, form an ascending chain of subspaces. We give a fully
-self-contained proof that this chain stabilizes no later than step
-$d := \dim_K V$ and is constant thereafter: $\ker(g^m) = \ker(g^d)$ for all
-$m \ge d$. The argument decomposes into three independent and elementary
-ingredients: (i) monotonicity of the kernel chain, established from the
-composition law $g^{n+1} = g \circ g^n$; (ii) a recurrence expressing each kernel
-as the preimage (comap) of its predecessor, $\ker(g^{k+1}) = g^{-1}(\ker(g^k))$,
-which upgrades a single coincidence into permanent constancy via a
-domain-agnostic constant-propagation lemma; and (iii) a pigeonhole / dimension-
-counting argument forcing a plateau within the first $d$ steps. The bound $d$ is
-sharp, witnessed by the nilpotent shift. We discuss the dual range-stabilization
-statement, the resulting Fitting decomposition, algorithmic consequences (an exact
-stopping rule for stable-kernel computation), and applications to iterated linear
-maps in dynamical systems and computational pipelines. The development is
-formally verified; all theorem names below correspond to machine-checked results.
-
----
+A primitive prime divisor of the $n^{\text{th}}$ Fibonacci number $F(n)$ is a
+prime $p$ dividing $F(n)$ but dividing no earlier Fibonacci number $F(k)$ with
+$0 < k < n$. Carmichael's theorem (1913) asserts that $F(n)$ has a primitive
+prime divisor for every $n$ outside a small exceptional set. We give a complete,
+elementary, and fully machine-checked proof of the **prime-index case**: if $n$
+is prime and $n \ge 13$ (indeed $n \ge 3$ suffices), then $F(n)$ has a primitive
+prime divisor. The proof rests on a single structural identity, the strong
+divisibility property $\gcd(F(m), F(n)) = F(\gcd(m,n))$, together with the
+observation that the primality of the index collapses any nontrivial common index
+to $1$. We then develop the composite-index case via an explicit *primitive-part*
+construction — an algorithm that strips from $F(n)$ all prime factors shared with
+$F(d)$ for proper divisors $d \mid n$ — and prove that whenever the primitive part
+exceeds $1$, its least prime factor is a primitive prime divisor. A verified
+finite computation establishes the survival inequality (primitive part $> 1$) for
+every composite index in the range $13 \le n \le 10000$, yielding Carmichael's
+conclusion throughout that range. The unbounded tail $n > 10000$, which requires
+replacing computation with an exponential growth estimate, is identified as the
+remaining open problem. We situate these results within the broader theory of
+ranks of apparition for strong divisibility sequences and outline several
+concrete generalizations.
 
 ## 1. Introduction
 
-Iterating a fixed linear transformation is one of the most basic operations in
-mathematics, underlying linear recurrences, discrete dynamical systems, Markov-
-chain-style updates, and the stacked-layer structure of computational pipelines.
-A foundational structural question is: as we iterate $g$, what is permanently
-annihilated, and how quickly does the pattern of annihilation settle?
-
-The set of vectors annihilated by $g^n$ is the kernel $\ker(g^n)$. These kernels
-nest upward — once a vector dies it stays dead — yielding an ascending chain
-$$\ker(g^0) \subseteq \ker(g^1) \subseteq \ker(g^2) \subseteq \cdots.$$
-In a finite-dimensional space this chain cannot strictly increase forever, so it
-must stabilize. The contribution of this paper is the *sharp* quantitative form
-of that stabilization together with a minimal, modular proof:
+The Fibonacci sequence $F : \mathbb{N} \to \mathbb{N}$ is defined by $F(0) = 0$,
+$F(1) = 1$, and $F(n+2) = F(n+1) + F(n)$. Its arithmetic is unusually rigid: the
+sequence is a *strong divisibility sequence*, meaning
 
-> **Main Theorem (`ker_pow_eq_of_ge_finrank`).** For finite-dimensional $V$ and
-> any $g : V \to V$, with $d = \dim_K V$,
-> $$\ker(g^m) = \ker(g^d) \qquad \text{for every } m \ge d.$$
+$$\gcd\bigl(F(m), F(n)\bigr) = F\bigl(\gcd(m,n)\bigr) \qquad (m, n \ge 0). \tag{$\star$}$$
 
-This is the kernel-side counterpart of the descending range-stabilization theorem
-$\operatorname{range}(g^m) = \operatorname{range}(g^d)$ for $m \ge d$. The two are
-the twin pillars of **Fitting's Lemma**, the decomposition
-$V = \ker(g^d) \oplus \operatorname{range}(g^d)$ into a nilpotent part and an
-invertible part. We prove the kernel side independently, with no reliance on the
-range side, so as to avoid any circular dependency between the two halves of the
-Fitting theory.
+This single identity organizes essentially everything about Fibonacci
+divisibility, including the location of first appearances of prime factors.
 
-The proof is deliberately lightweight: it invokes no eigenvalues, no
-characteristic polynomial, no algebraic closure, and no special properties of the
-field $K$. It rests only on the composition law of powers, the behavior of
-kernels under composition, and the finiteness of dimension.
-
-### 1.1 Notation and conventions
+**Definition 1 (Primitive prime divisor).** A prime $p$ is a *primitive prime
+divisor* of $F(n)$ if $p \mid F(n)$ and, for every $k$ with $0 < k < n$, we have
+$p \nmid F(k)$.
 
-Throughout, $K$ is a field, $V$ a $K$-vector space, and $g : V \to V$ a
-$K$-linear endomorphism. We write $g^n$ for the $n$-fold composite, with
-$g^0 = \mathrm{id}$. For a subspace $W \le V$, $g^{-1}(W) = \{v \in V : g(v) \in W\}$
-denotes the preimage (the *comap* of $W$ along $g$). We write $\ker$ and
-$\operatorname{range}$ for the kernel and image, $\dim_K W$ for dimension, and
-$W < W'$ for strict subspace inclusion. When dimensions are needed we assume $V$
-is finite-dimensional and set $d := \dim_K V$.
+Carmichael's theorem states that $F(n)$ has a primitive prime divisor for all $n
+\notin \{1, 2, 6, 12\}$ (with the convention $F(1)=F(2)=1$). The exceptional
+indices are genuine: $F(1) = F(2) = 1$ have no prime factors at all, $F(6) = 8 =
+2^3$ repeats the prime $2$ that already divides $F(3) = 2$, and $F(12) = 144 = 2^4
+\cdot 3^2$ repeats primes that appear earlier.
 
----
+This paper has two complementary contributions.
 
-## 2. The ascending kernel chain
+1. **A complete, elementary, machine-checked proof of the prime-index case**
+   (Section 3, Theorem 1). The proof is short and conceptually transparent: it
+   uses only $(\star)$ and the fact that a prime index has no nontrivial proper
+   divisor.
 
-### 2.1 Monotonicity
-
-**Lemma 1 (`ker_pow_le_succ`).** For every $n$,
-$\ker(g^n) \le \ker(g^{n+1})$.
+2. **An algorithmic and computational treatment of the composite-index case**
+   (Sections 4–5). We construct the *primitive part* of $F(n)$ as an explicit
+   procedure, prove its correctness (it divides $F(n)$ and, when it exceeds $1$,
+   certifies a primitive prime divisor), and verify by exact computation that the
+   primitive part exceeds $1$ for every composite $n$ in $[13, 10000]$.
 
-*Proof sketch.* Write $g^{n+1} = g^n \circ g$ (the form $g^{n+1} = (g^n)\circ g$
-is convenient here). If $v \in \ker(g^n)$ then, using instead the form
-$g^{n+1} = g \circ g^n$, we have $g^{n+1}(v) = g(g^n(v)) = g(0) = 0$. Equivalently,
-the kernel of a composite contains the kernel of the right factor: this is the
-standard fact $\ker(h) \le \ker(f \circ h)$ applied with $h = g^n$, $f = g$. $\square$
-
-**Lemma 2 (`ker_pow_mono`).** The map $n \mapsto \ker(g^n)$ is monotone (non-
-decreasing) as a function $\mathbb{N} \to \mathrm{Sub}(V)$.
-
-*Proof sketch.* A sequence of subspaces with $a_n \le a_{n+1}$ for all $n$ is
-monotone; apply the standard "monotone from successor steps" principle to
-Lemma 1. $\square$
+We are scrupulous about status. Theorem 1 (prime case) is unconditionally proved.
+The composite case is established for $13 \le n \le 10000$; the infinite tail is
+an explicitly flagged open problem (Section 7).
 
-### 2.2 The defining recurrence
+## 2. Preliminaries
+
+We work over the natural numbers $\mathbb{N}$. We use three standard facts.
 
-The structural heart of the argument is that the chain is generated by a single
-preimage recurrence.
+- **(P1) Existence of a prime divisor.** Every natural number $m \ne 1$ has a
+  prime divisor. (Formally: `Nat.exists_prime_and_dvd`.)
+- **(P2) The strong divisibility identity $(\star)$.** For all $m, n$,
+  $\gcd(F(m), F(n)) = F(\gcd(m,n))$. (Formally: `Nat.fib_gcd`.) An immediate
+  corollary, used repeatedly, is the **divisibility form**: if $p \mid F(m)$ and
+  $p \mid F(n)$, then $p \mid F(\gcd(m,n))$, since $p \mid \gcd(F(m),F(n)) =
+  F(\gcd(m,n))$.
+- **(P3) Coprimality below a prime.** If $0 < k < n$ then $n \nmid k$; and if $n$
+  is prime, $\gcd(n,k) \in \{1, n\}$, so $\gcd(n,k) = 1$. (Formally:
+  `Nat.not_dvd_of_pos_of_lt` together with `Nat.Prime.coprime_iff_not_dvd`.)
 
-**Lemma 3 (`ker_pow_succ_eq_comap`).** For every $k$,
-$$\ker(g^{k+1}) = g^{-1}\bigl(\ker(g^k)\bigr).$$
-
-*Proof sketch.* Expand $g^{k+1} = g^k \circ g$. Then
-$v \in \ker(g^k \circ g) \iff g^k(g(v)) = 0 \iff g(v) \in \ker(g^k) \iff
-v \in g^{-1}(\ker(g^k))$. Formally this is the identity
-$\ker(f \circ h) = h^{-1}(\ker f)$ with $f = g^k$, $h = g$. $\square$
-
-This recurrence has the abstract form $a_{k+1} = F(a_k)$ with
-$F = g^{-1}(\,\cdot\,)$ acting on subspaces and $a_k = \ker(g^k)$. That abstract
-shape is exactly what makes plateaus permanent, as we now isolate.
-
----
-
-## 3. Constant propagation: why plateaus are permanent
-
-The following lemma is purely about sequences defined by a fixed self-map; it
-involves no linear algebra and is stated for an arbitrary type.
-
-**Lemma 4 (`compFrom_const`).** Let $\alpha$ be any type, $F : \alpha \to \alpha$,
-and $a : \mathbb{N} \to \alpha$ a sequence satisfying the recurrence
-$a_{j+1} = F(a_j)$ for all $j$. If $a_{k+1} = a_k$ for some index $k$, then
-$$a_{k+m} = a_k \qquad \text{for all } m \ge 0.$$
-
-*Proof sketch.* Induct on $m$. The base case $m = 0$ is trivial. For the inductive
-step, write $a_{k+(n+1)} = a_{(k+n)+1} = F(a_{k+n})$ by the recurrence; by the
-induction hypothesis $a_{k+n} = a_k$, so $F(a_{k+n}) = F(a_k) = a_{k+1} = a_k$,
-the last equality by hypothesis. $\square$
-
-Specializing $\alpha$ to the lattice of subspaces of $V$, $F$ to the comap
-$g^{-1}(\,\cdot\,)$, and $a_k$ to $\ker(g^k)$, Lemma 3 supplies the recurrence and
-Lemma 4 yields:
-
-**Theorem 5 (`ker_pow_stable`).** If $\ker(g^{k+1}) = \ker(g^k)$ for some $k$, then
-$$\ker(g^{k+m}) = \ker(g^k) \qquad \text{for all } m \ge 0.$$
-
-In words: *a single coincidence of consecutive kernels forces the chain to be
-constant from that point on.* No further hypotheses (not even finite dimension)
-are needed for permanence; finiteness is used only to *locate* a coincidence.
-
----
-
-## 4. Locating a plateau: the dimension bound
-
-We now assume $V$ finite-dimensional, $d = \dim_K V$.
-
-**Theorem 6 (`exists_ker_pow_plateau_le_finrank`).** There exists an index
-$k \le d$ with $\ker(g^{k+1}) = \ker(g^k)$.
-
-*Proof sketch.* Suppose, for contradiction, that no such $k \le d$ exists; then
-for every $j \le d$ the inclusion of Lemma 1 is *strict*:
-$\ker(g^j) < \ker(g^{j+1})$. A strict inclusion of subspaces strictly increases
-dimension, so $\dim_K \ker(g^j) < \dim_K \ker(g^{j+1})$ for each such $j$. By
-induction this gives
-$$k \le \dim_K \ker(g^k) \qquad \text{for all } k \le d + 1,$$
-the base case being $0 \le \dim_K \ker(g^0)$ and each successor adding at least
-one dimension. Taking $k = d+1$ yields
-$d + 1 \le \dim_K \ker(g^{d+1})$. But $\ker(g^{d+1})$ is a subspace of $V$, so
-$\dim_K \ker(g^{d+1}) \le d$. Hence $d + 1 \le d$, a contradiction. $\square$
-
-This is a pigeonhole argument: each strict step "spends" one unit of dimension,
-and only $d$ units are available, so a non-strict step (a plateau) must occur
-within the first $d{+}1$ kernels.
-
----
-
-## 5. Main theorem: sharp stabilization
-
-**Theorem 7 (Main, `ker_pow_eq_of_ge_finrank`).** For finite-dimensional $V$,
-$g : V \to V$, and any $m \ge d = \dim_K V$,
-$$\ker(g^m) = \ker(g^d).$$
-
-*Proof sketch.* By Theorem 6 choose a plateau index $k \le d$ with
-$\ker(g^{k+1}) = \ker(g^k)$. By Theorem 5 the chain is constant from $k$ onward.
-Since both $m \ge d \ge k$ and $d \ge k$, we may write $m = k + (m-k)$ and
-$d = k + (d-k)$ and apply Theorem 5 twice:
-$$\ker(g^m) = \ker(g^k) \qquad\text{and}\qquad \ker(g^d) = \ker(g^k).$$
-Combining the two equalities gives $\ker(g^m) = \ker(g^d)$. $\square$
-
-### 5.1 Sharpness
-
-The bound $d$ cannot be improved in general. Let $V = K^d$ with standard basis
-$e_1, \dots, e_d$ and let $g$ be the nilpotent shift defined by $g(e_i) = e_{i-1}$
-for $i \ge 2$ and $g(e_1) = 0$. Then $\ker(g^n) = \operatorname{span}(e_1, \dots,
-e_n)$ for $0 \le n \le d$, so the chain strictly increases on every one of the
-first $d$ steps and only reaches all of $V$ at step $d$. Thus no exponent smaller
-than $d$ works for all maps, and the constant value $\ker(g^d)$ is genuinely
-needed.
-
----
-
-## 5.2 Worked examples
-
-It is instructive to trace the kernel chain on concrete maps, since they exhibit
-the full range of behaviour the theorem must accommodate.
-
-**The nilpotent shift (sharp case).** Let $V = K^d$ with standard basis
-$e_1, \dots, e_d$ and $g(e_i) = e_{i-1}$, $g(e_1) = 0$. A direct computation gives
-$g^n(e_i) = e_{i-n}$ when $i > n$ and $0$ otherwise, so
-$\ker(g^n) = \operatorname{span}(e_1, \dots, e_{\min(n,d)})$ and
-$$\dim_K \ker(g^n) = \min(n, d).$$
-The chain climbs by exactly one at every step until $n = d$, where it reaches all
-of $V$, and is constant afterward. The first plateau index is precisely $k = d$,
-so the bound of Theorem 6 is attained with equality and Theorem 7 cannot be
-strengthened to any smaller exponent. This single family already certifies the
-sharpness of the entire result.
-
-**A Fitting split (early plateau).** Let $V = K^4$ and
-$g = \begin{psmallmatrix} 0&1&&\\ 0&0&&\\ &&2&0\\ &&0&3 \end{psmallmatrix}$,
-the direct sum of a $2\times 2$ nilpotent Jordan block and an invertible diagonal
-block $\operatorname{diag}(2,3)$. Here
-$\dim_K \ker(g^n) = \min(n, 2)$: the nilpotent block contributes a kernel that
-grows to dimension $2$ and freezes, while the invertible block never contributes
-any kernel at all. The chain is $0, 1, 2, 2, 2, \dots$, with first plateau at
-$k = 2 < 4 = d$. The frozen kernel $\ker(g^2) = \operatorname{span}(e_1, e_2)$ and
-the frozen range $\operatorname{range}(g^2) = \operatorname{span}(e_3, e_4)$ are
-complementary — a concrete instance of the Fitting decomposition of §6.
-
-**An invertible map (immediate plateau).** If $g$ is invertible then
-$\ker(g^n) = 0$ for all $n$, the chain is constant from the very start, and the
-plateau index is $k = 0$. Theorem 7 holds trivially. These three examples — sharp,
-intermediate, and trivial — bracket the behaviour the general theorem governs.
-
-## 6. The dual range chain and Fitting's lemma
-
-The kernel result has a mirror image for ranges. The images
-$\operatorname{range}(g^n)$ form a *descending* chain
-$$V = \operatorname{range}(g^0) \supseteq \operatorname{range}(g^1) \supseteq
-\cdots,$$
-because $\operatorname{range}(g^{n+1}) = g(\operatorname{range}(g^n)) \subseteq
-\operatorname{range}(g^n)$. By the dual dimension-counting argument it stabilizes
-no later than step $d$: $\operatorname{range}(g^m) = \operatorname{range}(g^d)$ for
-$m \ge d$. (In the wider development this is `range_pow_const_of_finrank_le`.)
-
-When both chains freeze — and Theorem 7 plus its dual show they have *both* frozen
-by step $d$ — the rank–nullity theorem forces the frozen subspaces to be
-complementary:
-$$V = \ker(g^d) \oplus \operatorname{range}(g^d).$$
-On the first summand $g$ is **nilpotent** (some power kills it, since by
-stabilization $\ker(g^d) = \ker(g^{2d})$ and $g^d$ maps $\ker(g^{2d})$ into
-$\ker(g^d)$ and then to $0$), and on the second $g$ restricts to an
-**isomorphism**. This is **Fitting's Lemma**, and Theorem 7 is precisely the
-quantitative certificate that the decomposition is available at the *explicit*
-step $d$.
-
----
-
-## 7. Algorithmic consequences
-
-The theorem converts an *a priori* unbounded search ("iterate until the kernel
-stops growing") into a procedure with a hard, provable bound.
-
-- **Exact stopping rule.** To compute the stable kernel $\ker(g^\infty) :=
-  \bigcup_n \ker(g^n)$, it suffices to compute $\ker(g^d)$. One never needs to
-  iterate beyond $\dim_K V$ times.
-- **Early termination.** In practice the plateau often occurs well before step
-  $d$. By Theorem 5, the *first* $k$ with $\dim \ker(g^{k+1}) = \dim \ker(g^k)$ is
-  already the stabilization point, so an implementation can stop as soon as two
-  consecutive kernel dimensions agree, with a correctness guarantee.
-- **Complexity.** Each kernel can be computed by Gaussian elimination on a
-  $\dim V \times \dim V$ matrix in $O(d^3)$ field operations; at most $d$ such
-  computations are needed, giving an overall $O(d^4)$ bound for the stable kernel —
-  and typically far less when the plateau is early.
-
-The algorithms section of the accompanying package formalizes both the naive
-$d$-step computation and the early-termination variant.
-
----
-
-## 8. Applications
-
-**Iterated linear dynamics.** For a discrete linear system $x_{n+1} = g(x_n)$, the
-kernel chain describes the *transient* subspace of initial states whose forward
-orbit eventually reaches $0$. Theorem 7 states the transient structure is fully
-determined after $\dim V$ steps — a precise bound on how long one must observe the
-system before its asymptotic behavior is fixed.
-
-**Computational pipelines.** A stack of identical linear layers (or a repeated
-linear update in numerical algorithms) accumulates the composite $g^n$. The kernel
-measures information irrecoverably lost as data flows through the depth-$n$
-pipeline. The bound shows the loss pattern is *fixed* after depth $\dim V$; deeper
-stacking destroys no new directions. This is the "constant transition stream"
-setting of the broader catalog: when the per-layer map is fixed, rank stabilizes
-sharply at $\dim V$.
-
-**Structure theory.** As in §6, the result is a building block for Fitting's
-Lemma and, downstream, for the primary decomposition and Jordan normal form. The
-generality (arbitrary field, no eigenvalue hypotheses) makes it a convenient
-foundation.
-
----
-
-## 8.5 Relation to classical structure theory
-
-The stabilization of the kernel and range chains is classical folklore, usually
-stated as part of the proof of Fitting's Lemma in textbooks on modules and
-representation theory. What is sometimes left implicit, and is made explicit and
-quantitative here, is the *sharp linear bound* $d = \dim_K V$ on the stabilization
-step, together with the clean separation of the argument into a finiteness-free
-permanence principle and a finiteness-only existence principle. The bound is the
-same constant that appears in the Cayley–Hamilton theorem (the degree of the
-characteristic polynomial) and in the theory of the minimal polynomial, and indeed
-for a nilpotent endomorphism the first plateau index coincides with the
-nilpotency index, which is at most $d$ and equals the size of the largest Jordan
-block. Our development deliberately avoids these heavier tools: it uses neither
-polynomials nor eigenvalues, only the lattice of subspaces, the comap operation,
-and dimension counting. This minimality is what allows the result to hold over an
-*arbitrary* field with no algebraic-closedness or characteristic hypotheses, and
-what makes the permanence half valid even in infinite dimension.
-
-The abstract constant-propagation lemma (Lemma 4) deserves emphasis as a reusable
-unit. It is the statement that a discrete orbit of a self-map that ever repeats a
-point is eventually constant from that point — a fixed-point/idempotence phenomenon
-in disguise. Phrased at this level of generality it applies verbatim to: the
-ascending kernel chain (with $F$ the comap along $g$); the descending range chain
-(with $F$ the map-forward along $g$); and transition-rank streams formed by
-composing a *fixed* family of maps. Isolating it prevents duplicated induction and
-is the structural reason the kernel and range theories can be developed without
-circularity.
-
-## 9. Discussion and design of the proof
-
-The proof is engineered for modularity. The three ingredients —
-monotonicity (§2.1), the comap recurrence with constant propagation (§2.2–§3),
-and the dimension pigeonhole (§4) — are logically independent and each is
-elementary. The constant-propagation lemma `compFrom_const` is deliberately stated
-for an *arbitrary* type and self-map, which (a) makes the permanence argument
-reusable verbatim for the dual range chain and for transition-rank streams, and
-(b) cleanly separates the "why it stays constant" content (no finiteness) from the
-"why it becomes constant" content (finiteness only). This separation is what keeps
-the kernel and range halves of Fitting's theory non-circular.
-
-A subtle point worth emphasizing: permanence (Theorem 5) needs *no* finiteness
-assumption whatsoever. It holds for infinite-dimensional $V$, where it still says
-that any coincidence of consecutive kernels propagates forever; finiteness enters
-solely to *guarantee* such a coincidence exists and to bound where it occurs.
-
----
-
-## 10. Future directions
-
-This cycle proved a sharp two-sided quantitative Fitting stabilization bound for a
-single endomorphism (equivalently, a constant transition stream). The sharp
-$\dim V$ bound is special to a single map and *fails* for a varying endomorphism
-stream. Three natural conjectures follow.
-
-**Conjecture 1 — Effective Fitting decomposition at the stabilization step.** For
-$d = \dim_K V$, $V = \ker(g^d) \oplus \operatorname{range}(g^d)$ as an internal
-direct sum, with $g$ nilpotent on $\ker(g^d)$ and an isomorphism on
-$\operatorname{range}(g^d)$. The key insight: at step $d$ *both* chains freeze
-simultaneously, so the frozen kernel and frozen range must be complementary — the
-stabilization bounds are exactly the certificate the decomposition needs. With
-both `range_pow_const_of_finrank_le` and `ker_pow_const_of_finrank_le` sharp, the
-only remaining step is the disjointness/spanning count via rank–nullity, now a
-finite bookkeeping argument.
-
-**Conjecture 2 — Nilpotency index equals the first range plateau.** If $g$ is
-nilpotent, its nilpotency index (least $N$ with $g^N = 0$) equals the least
-plateau index $k$ produced by the range version of Theorem 6, and this $k$ is at
-most $\dim_K V$. The key insight: for a nilpotent map the range chain strictly
-decreases until it hits $\bot$, so the *first* plateau is precisely the moment the
-range collapses to zero — i.e. the nilpotency index. This turns an existence
-statement into an exact formula.
-
-**Conjecture 3 — Stabilization for eventually-periodic streams.** For a transition
-stream $f : \mathbb{N} \to (V \to V)$ that is eventually periodic with period $p$
-(i.e. $f(n+p) = f(n)$ for $n \ge n_0$), the from-$0$ transition-rank sequence
-$m \mapsto \operatorname{rank}(\,\text{compose } f \text{ over } [0,m))$ is
-eventually periodic-constant: it stabilizes after at most $n_0 + p \cdot \dim_K V$
-steps. The key insight: on the periodic tail the composite advances by a fixed
-block map $B$ (the composite over one period), so the tail rank chain is the power
-chain of $B$ — and the sharp single-endomorphism bound of this cycle applies to
-$B$.
-
----
-
-## 11. Conclusion
-
-We have given a minimal, self-contained, and sharp proof that the kernels of the
-powers of a finite-dimensional endomorphism stabilize by step $\dim V$ and remain
-constant thereafter. The argument is a clean interplay of a monotone direction, a
-comap recurrence whose constancy propagates by a general principle, and a
-dimension pigeonhole — three ideas locking into a guarantee with an explicit
-deadline. Together with its dual it is the quantitative backbone of Fitting's
-Lemma and a practical stopping rule for iterated-map computations.
-
----
-
-## Appendix: index of formal results
-
-- `ker_pow_le_succ` — $\ker(g^n) \le \ker(g^{n+1})$ (Lemma 1).
-- `ker_pow_mono` — $n \mapsto \ker(g^n)$ is monotone (Lemma 2).
-- `ker_pow_succ_eq_comap` — $\ker(g^{k+1}) = g^{-1}(\ker(g^k))$ (Lemma 3).
-- `compFrom_const` — constant propagation for $a_{j+1} = F(a_j)$ (Lemma 4).
-- `ker_pow_stable` — a coincidence makes the kernel chain permanently constant
-  (Theorem 5).
-- `exists_ker_pow_plateau_le_finrank` — a plateau occurs at some $k \le \dim_K V$
-  (Theorem 6).
-- `ker_pow_eq_of_ge_finrank` — $\ker(g^m) = \ker(g^d)$ for $m \ge d$ (Theorem 7,
-  Main).
+We also record growth facts: $F(n) > 1$ for $n \ge 3$ (so (P1) applies to $F(n)$),
+and $F(n) \ge \varphi^{n-2}$ for $n \ge 1$, where $\varphi = (1+\sqrt5)/2$.
+
+## 3. The Prime-Index Case
+
+**Theorem 1 (Carmichael, prime case).** *Let $n$ be prime with $n \ge 13$. Then
+$F(n)$ has a primitive prime divisor: there exists a prime $p$ with $p \mid F(n)$
+and $p \nmid F(k)$ for every $k$ with $0 < k < n$.*
+
+(In the formalization this is `fib_primitive_divisor_prime`. The hypothesis $n \ge
+13$ is convenient for downstream uniformity but is stronger than necessary; the
+proof works verbatim for any prime $n \ge 3$.)
+
+**Proof sketch.** Since $n \ge 13 \ge 3$, we have $F(n) > 1$, so by (P1) there is
+a prime $p$ with $p \mid F(n)$. We claim *every* such $p$ is primitive; no special
+choice is needed.
+
+Fix $k$ with $0 < k < n$ and suppose for contradiction that $p \mid F(k)$. Then
+$p \mid F(n)$ and $p \mid F(k)$, so by the divisibility form of (P2),
+
+$$p \mid F\bigl(\gcd(n,k)\bigr).$$
+
+By (P3), since $n$ is prime and $0 < k < n$, we have $\gcd(n,k) = 1$. Hence $p
+\mid F(1) = 1$, contradicting that $p$ is prime. Therefore $p \nmid F(k)$ for all
+$0 < k < n$, i.e. $p$ is a primitive prime divisor of $F(n)$. $\qquad\blacksquare$
+
+**Remark.** The role of primality is razor-sharp: it is used *only* to force
+$\gcd(n,k) = 1$. Replacing "prime" by "$1$ and $n$ are the only divisors of $n$"
+changes nothing, which is exactly why the argument transfers to any strong
+divisibility sequence with $F(1)$ a unit.
+
+A reusable abstraction of the contradiction step is the following bridge from
+*proper divisors* to *all smaller indices*.
+
+**Lemma 2 (Divisor-to-all bridge).** *Let $n > 0$ and let $p$ be a prime with $p
+\mid F(n)$. Suppose $p \nmid F(d)$ for every divisor $d$ of $n$ with $0 < d < n$.
+Then $p \nmid F(k)$ for every $k$ with $0 < k < n$.*
+
+(Formally: `bridge_lemma`.)
+
+**Proof sketch.** Suppose $0 < k < n$ and $p \mid F(k)$. With $p \mid F(n)$, the
+divisibility form of (P2) gives $p \mid F(\gcd(n,k))$. Set $d = \gcd(n,k)$. Then
+$d \mid n$, $d > 0$ (as $n, k > 0$), and $d \le \gcd(n,k) \le k < n$, so $d$ is a
+proper divisor of $n$ with $p \mid F(d)$ — contradicting the hypothesis.
+$\qquad\blacksquare$
+
+Lemma 2 is what makes the composite case tractable: it suffices to defeat $p$ on
+the *finitely many proper divisors* of $n$, not on all of $0 < k < n$. For a prime
+$n$, the only proper divisor is $1$, and $F(1) = 1$ is divisible by no prime, so
+Lemma 2 instantly recovers Theorem 1.
+
+## 4. The Composite-Index Case: the Primitive-Part Construction
+
+To handle composite $n$ we isolate the genuinely new portion of $F(n)$.
+
+**Definition 2 (Proper divisors).** For $n \in \mathbb{N}$, let
+$$\mathrm{propDivs}(n) = \{\, d : 0 < d < n \text{ and } d \mid n \,\},$$
+realized as a finite list. (Formally: `propDivs`.)
+
+**Definition 3 (Factor-stripping routine).** Given $r, m$ and a fuel budget,
+`stripAllAux` repeatedly replaces $r$ by $r / \gcd(r, m)$ until $\gcd(r,m) = 1$ (or
+the fuel runs out, or $m \le 1$). Each step removes one layer of the primes common
+to $r$ and $m$. (Formally: `stripAllAux`.)
+
+**Definition 4 (Primitive part).** The *primitive part* of $F(n)$ is
+$$\mathrm{primPart}(n) = \Bigl(\textstyle\prod\text{-fold strip}\Bigr): \quad
+\text{start from } F(n), \text{ and for each } d \in \mathrm{propDivs}(n) \text{
+strip all factors shared with } F(d).$$
+Concretely, `primPart n` folds `stripAllAux` over `propDivs n`, beginning at
+$F(n)$. (Formally: `primPart`.)
+
+The construction is engineered so that the surviving number is coprime to every
+$F(d)$ with $d$ a proper divisor of $n$, while still dividing $F(n)$.
+
+**Lemma (Stripping divides).** `stripAllAux r m fuel ∣ r`. (Formally:
+`stripAllAux_dvd`.) Each step divides $r$ by a divisor of $r$, so the result
+divides $r$ throughout.
+
+**Lemma (Stripping achieves coprimality).** With sufficient fuel ($\text{fuel}
+\ge r$, $m > 1$, $r > 0$), $\gcd(\mathrm{stripAllAux}(r,m,\text{fuel}), m) = 1$.
+(Formally: `stripAllAux_coprime`.) Each step with $\gcd > 1$ strictly decreases
+$r$, so $r$ steps suffice to reach $\gcd = 1$.
+
+**Lemma 3 (Primitive part divides).** $\mathrm{primPart}(n) \mid F(n)$.
+(Formally: `primPart_dvd`.) Immediate by induction over the fold using the
+stripping-divides lemma.
+
+**Lemma (Coprime to proper divisors).** If $\mathrm{primPart}(n) > 1$, then its
+least prime factor divides no $F(d)$ for $d \in \mathrm{propDivs}(n)$. (Formally:
+`primPart_coprime_proper_divs`.) The stripping-coprimality lemma guarantees the
+fold output is coprime to each $F(d)$, hence so is any divisor of it.
+
+Combining these yields the key reduction.
+
+**Lemma 4 (Primitive part certifies a primitive divisor).** *Let $n \ge 3$ and
+suppose $\mathrm{primPart}(n) > 1$. Then $F(n)$ has a primitive prime divisor;
+explicitly, the least prime factor of $\mathrm{primPart}(n)$ is one.* (Formally:
+`primPart_implies_primitive`.)
+
+**Proof sketch.** Let $p$ be the least prime factor of $\mathrm{primPart}(n)$
+(well-defined since $\mathrm{primPart}(n) > 1$). By Lemma 3, $p \mid
+\mathrm{primPart}(n) \mid F(n)$. For primitivity, take any $0 < k < n$ with $p
+\mid F(k)$. With $p \mid F(n)$, (P2) gives $p \mid F(\gcd(k,n))$. Now $\gcd(k,n)$
+is a proper divisor of $n$ (positive, dividing $n$, and $\le k < n$), so by the
+"coprime to proper divisors" lemma $p \nmid F(\gcd(k,n))$ — a contradiction.
+Hence $p$ is primitive. $\qquad\blacksquare$
+
+Lemma 4 reduces Carmichael's composite case to a *single inequality* for each
+$n$: $\mathrm{primPart}(n) > 1$.
+
+## 5. Verified Computation over a Finite Range
+
+**Proposition 5 (Verified survival sweep).** *For every $n$ with $13 \le n \le
+10000$, either $n$ is prime or $\mathrm{primPart}(n) > 1$.* (Formally:
+`primPart_check`, established by a checked computation.)
+
+The statement is a finite conjunction of decidable facts, discharged by direct
+evaluation of $\mathrm{primPart}(n)$ for each $n$ in the range and a primality
+test. No exceptions occur: every composite index in $[13, 10000]$ has a strictly
+nontrivial primitive part.
+
+**Theorem 6 (Composite case on the verified range).** *For composite $n$ with
+$13 \le n \le 10000$, $F(n)$ has a primitive prime divisor.* (Formally:
+`fib_carmichael_composite`, for the bounded range.)
+
+**Proof sketch.** By Proposition 5, $n$ composite forces $\mathrm{primPart}(n) >
+1$. Apply Lemma 4. $\qquad\blacksquare$
+
+Combining Theorem 1 (prime indices, all $n \ge 13$) with Theorem 6 (composite
+indices, $13 \le n \le 10000$) gives Carmichael's full conclusion for every $13
+\le n \le 10000$, and Theorem 1 alone gives it for *all* prime indices without
+upper bound.
+
+**Status of the tail.** For composite $n > 10000$ the computation is replaced by
+the growth principle: $F(n)$ grows like $\varphi^n$, while the product of the
+$F(d)$ over proper divisors $d \mid n$ grows much more slowly, so $F(n)$ cannot be
+exhausted by old factors. Turning this heuristic into a verified bound is the
+remaining work; in the current development the tail is an explicit open case
+(`sorry`) and is not claimed as proved.
+
+## 6. Worked Numerical Illustrations
+
+The following first appearances illustrate the theorems (all are first-appearance
+facts that the proofs guarantee).
+
+| $n$ | $F(n)$ | Factorization | Primitive prime divisor(s) |
+|---|---|---|---|
+| 13 (prime) | 233 | $233$ | $233$ |
+| 17 (prime) | 1597 | $1597$ | $1597$ |
+| 19 (prime) | 4181 | $37 \times 113$ | $37, 113$ |
+| 23 (prime) | 28657 | $28657$ | $28657$ |
+| 25 (composite) | 75025 | $5^2 \times 3001$ | $3001$ |
+| 29 (prime) | 514229 | $514229$ | $514229$ |
+| 31 (prime) | 1346269 | $557 \times 2417$ | $557, 2417$ |
+
+For $n = 25$ the prime $5$ is *not* primitive — it already divides $F(5) = 5$ — but
+$3001$ is new, exactly as the primitive-part construction predicts: stripping the
+factors shared with $F(5)=5$ removes $5^2$ and leaves $3001 = \mathrm{primPart}(25)
+> 1$.
+
+## 7. Discussion, Ranks of Apparition, and Future Work
+
+**Rank of apparition.** For a prime $p$, its *rank of apparition* $\alpha(p)$ is
+the least $n > 0$ with $p \mid F(n)$. The strong divisibility identity $(\star)$
+implies the fundamental law $p \mid F(n) \iff \alpha(p) \mid n$. Carmichael's
+theorem, dually, asserts that the map $p \mapsto \alpha(p)$ is "almost surjective":
+every index $n \ge 13$ is the rank of apparition of some prime — precisely the
+primitive prime divisor of $F(n)$.
+
+The same machinery generalizes to arbitrary **strong divisibility sequences**
+(SDS) $a : \mathbb{N} \to \mathbb{N}$ satisfying $\gcd(a_m, a_n) = a_{\gcd(m,n)}$
+with $a_1 = 1$. For any such sequence, the prime-case argument of Theorem 1
+applies verbatim, and the primitive-part construction of Section 4 is
+sequence-agnostic. We close with concrete follow-up problems.
+
+**Conjecture 1 — Rank is multiplicative-coprime-additive.** For an SDS $a$ and
+coprime targets $d, e$ (each appearing), the joint appearance set $\{n : de \mid
+a_n\}$ is governed by the lcm of ranks: $(d \mid a_n \wedge e \mid a_n) \iff
+\mathrm{lcm}(\mathrm{rank}_a d, \mathrm{rank}_a e) \mid n$. This should follow from
+the divisibility law $d \mid a_n \iff \mathrm{rank}_a d \mid n$ applied twice,
+combined with $\mathrm{lcm}\text{-}\mathrm{dvd}$.
+
+**Conjecture 2 — Rank of a prime power.** For Fibonacci (and any SDS with a law of
+apparition), if $p$ is prime with $\mathrm{rank}_{F} p = r$, then for $e \ge 1$,
+$\mathrm{rank}_{F}(p^e) = p^{e-1} r$ unless a Wall–Sun–Sun-type exception holds.
+Testable computationally for $p \le 50$, $e \le 4$; the abstract skeleton needs
+only a $p$-adic valuation bound.
+
+**Conjecture 3 — Pisano period divides a multiple of the rank.** The Pisano
+period $\pi(m)$ (period of $F \bmod m$) satisfies $\mathrm{rank}_F m \mid \pi(m)$
+with quotient $\pi(m)/\mathrm{rank}_F m \in \{1, 2, 4\}$. Testable for $m \le 200$;
+the divisibility $\mathrm{rank} \mid \pi$ is a clean next target.
+
+**Conjecture 4 — Carmichael via abstract SDS primitivity.** Generalize the
+Fibonacci result to any SDS $a$ with strict growth $a_n \ge 2^n$ and a uniform
+bound on $\prod_{d \mid n,\, d < n} a_d$: such a sequence has a primitive prime
+divisor for all $n$ beyond an explicit threshold. The primitive-part machinery is
+already sequence-agnostic; the work is reproving the large-$n$ growth bound.
+
+**Conjecture 5 — Appearance-set semigroup characterization.** For an SDS $a$, the
+family of appearance sets $\{\,\{n : d \mid a_n\} : d \in \mathrm{image}\,a\,\}$,
+ordered by reverse inclusion, is isomorphic to the divisor lattice of indices via
+$d \mapsto \mathrm{rank}_a d$. Each set is a rank-multiple set; the conjecture is
+that $d \mid e$ corresponds to $\mathrm{rank}_a d \mid \mathrm{rank}_a e$.
+
+**Resolving the tail.** The single most concrete open problem here is the
+composite tail of Section 5: prove $\mathrm{primPart}(n) > 1$ for all composite $n
+> 10000$ via the $\varphi^n$ growth estimate, completing Carmichael's theorem for
+Fibonacci numbers within this framework.
+
+## 8. Conclusion
+
+The prime-index case of Carmichael's primitive divisor theorem admits a proof of
+remarkable economy: one structural identity, $(\star)$, plus the observation that
+a prime index forces $\gcd(n,k)=1$. This case is unconditionally established. The
+composite case reduces, via an explicit and verifiably correct primitive-part
+construction, to a single survival inequality, which we confirm by exact
+computation for all $13 \le n \le 10000$. The combination yields Carmichael's
+conclusion throughout that range and for all prime indices, while cleanly
+delineating the infinite composite tail as the open frontier. The underlying
+mechanism — first appearances controlled by indices through a gcd identity —
+extends to the full theory of ranks of apparition for strong divisibility
+sequences, where the conjectures of Section 7 await.

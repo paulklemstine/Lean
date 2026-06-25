@@ -1,56 +1,41 @@
-# Computational Evidence — Sharpness of the Fitting stabilization bound
+# Theorem Trace (internal anti-hallucination record)
 
-The headline theorems prove that for `g : V →ₗ[K] V` over a `d`-dimensional space
-(`d = finrank K V`), the range chain `range (g ^ m)` and kernel chain
-`ker (g ^ m)` are constant for all `m ≥ d`. Here we record the small-case
-evidence that the bound `m ≥ d` is **sharp** (cannot be lowered to `m ≥ d - 1`).
+Every claim in `ARTICLE.md` and `RESEARCH_PAPER.md` must map to a real Lean
+declaration in the Phase A output. This file lists each declaration, its
+mathematical content, and where it is used in the prose.
 
-## Witness: a single nilpotent Jordan block `J_d`
+## From `Catalog/Shared/CarmichaelHelper.lean`
 
-Let `J_d` be the `d × d` nilpotent Jordan block (1's on the superdiagonal,
-0 elsewhere), acting on `V = K^d`. Then `J_d` shifts basis vectors
-`e_i ↦ e_{i-1}` (and `e_0 ↦ 0`), so:
+| Lean name | Mathematical statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `fib_primitive_divisor_prime` | For prime `n ≥ 13`, there is a prime `p` with `p ∣ F(n)` and `p ∤ F(k)` for all `0 < k < n`. | Yes (main theorem, plain language + example F(13)=233) | Yes (Theorem 1, full statement + proof sketch) |
 
-| `m`        | `dim (range (J_d ^ m))` | `dim (ker (J_d ^ m))` |
-|------------|--------------------------|------------------------|
-| `0`        | `d`                      | `0`                    |
-| `1`        | `d - 1`                  | `1`                    |
-| `2`        | `d - 2`                  | `2`                    |
-| …          | …                        | …                      |
-| `d - 1`    | `1`                      | `d - 1`                |
-| `d`        | `0`                      | `d`                    |
-| `d + 1`    | `0`                      | `d`                    |
-| `≥ d`      | `0`                      | `d`                    |
+## From `Catalog/Shared/CarmichaelProof.lean`
 
-* The range chain strictly decreases on `0, 1, …, d` and only becomes constant at
-  step `d`. So `range (J_d ^ (d-1)) = K·e_0 ≠ 0 = range (J_d ^ d)`: the bound
-  `m ≥ d` is attained and **cannot** be replaced by `m ≥ d - 1`.
-* Symmetrically the kernel chain strictly increases until step `d`.
+| Lean name | Mathematical statement | In ARTICLE | In PAPER |
+|---|---|---|---|
+| `bridge_lemma` | If `p ∣ F(n)` and `p ∤ F(d)` for every proper divisor `d` of `n`, then `p ∤ F(k)` for every `0 < k < n`. | Yes (the "divisor-to-all" step, prose) | Yes (Lemma 2) |
+| `stripAllAux` (def) | Bounded-fuel routine repeatedly dividing `r` by `gcd(r, m)` to remove all prime factors shared with `m`. | Implicit (algorithm prose) | Yes (Definition, algorithm) |
+| `propDivs` (def) | List of proper divisors `d` of `n` with `0 < d < n`. | Implicit | Yes (Definition) |
+| `primPart` (def) | Primitive part of `F(n)`: start from `F(n)`, strip all factors shared with `F(d)` for each proper divisor `d`. | Yes (prose) | Yes (Definition) |
+| `stripAllAux_dvd` | `stripAllAux r m fuel ∣ r`. | No | Yes (Lemma) |
+| `stripAllAux_coprime` | With enough fuel, `gcd(stripAllAux r m fuel, m) = 1`. | No | Yes (Lemma) |
+| `primPart_dvd` | `primPart n ∣ F(n)`. | Yes (prose) | Yes (Lemma 3) |
+| `primPart_coprime_proper_divs` | If `primPart n > 1`, its least prime factor divides no `F(d)` for proper divisor `d`. | No | Yes (Lemma) |
+| `primPart_implies_primitive` | For `n ≥ 3` with `primPart n > 1`, `F(n)` has a primitive prime divisor. | Yes (prose) | Yes (Lemma 4) |
+| `primPart_check` | For every `n ∈ [13, 10000]`, either `n` is prime or `primPart n > 1` (verified by computation). | Yes (the computational sweep) | Yes (Proposition 5) |
+| `fib_carmichael_composite` | For composite `n` with `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor; the unbounded tail is stated but left open. | Yes (status note) | Yes (Theorem 6 + honest status) |
 
-### Concrete instance `d = 3`
+## Key external identity used (Mathlib)
 
-`J_3 = ⎡0 1 0⎤  J_3² = ⎡0 0 1⎤  J_3³ = 0`
-`      ⎢0 0 1⎥        ⎢0 0 0⎥`
-`      ⎣0 0 0⎦        ⎣0 0 0⎦`
+| Lean name | Statement |
+|---|---|
+| `Nat.fib_gcd` | `F(gcd m n) = gcd(F m, F n)`. |
+| `Nat.exists_prime_and_dvd` | Any `m ≠ 1` has a prime divisor. |
+| `Nat.not_dvd_of_pos_of_lt` | If `0 < k < n` then `¬ n ∣ k`. |
 
-`rank J_3⁰ = 3`, `rank J_3¹ = 2`, `rank J_3² = 1`, `rank J_3³ = 0 = rank J_3⁴`.
-First plateau index = `3 = finrank`. ✓ matches `exists_range_pow_plateau_le_finrank`
-(plateau index `k ≤ finrank`, here exactly `= finrank`).
-
-## Counterexample hunt — the bound fails for *varying* streams
-
-Take `V = K²` and the stream `f 0 = P` (projection onto `e_0`), `f 1 = id`,
-`f 2 = Q` (projection onto `e_1`), `f n = id` otherwise. The composite ranks
-`(compFrom f 0 m).rank` read `2, 1, 1, 0, 0, …`: the rank **plateaus at 1** (steps
-1–2) and then **drops again** to 0 at step 3. Hence no single dimension bound of
-the form "constant from step `finrank`" can hold for general streams — confirming
-the Critic's note and motivating Conjecture 3 (periodic streams) in
-`FUTURE_DIRECTIONS.md`.
-
-## Method note
-
-These are pen-and-paper / matrix calculations on the canonical nilpotent witness;
-the *formal* content (antitone chains, stabilization by `finrank`, sharp plateau
-existence) is fully machine-checked and `sorry`-free in
-`Catalog/Algebra/FittingStabilizationBound.lean` and
-`Catalog/Algebra/FittingKernelBound.lean`.
+## Honesty note
+`fib_primitive_divisor_prime` is fully proved. The composite case is
+verified by computation for `13 ≤ n ≤ 10000` (`primPart_check`,
+`fib_carmichael_composite`); the infinite tail `n > 10000` remains an open
+`sorry` in the source and is reported as such — never as completed.
