@@ -994,6 +994,11 @@
           "path": "Catalog/Computation/EastinKnill.lean"
         },
         {
+          "name": "FactorialNumberSystem.lean",
+          "type": "file",
+          "path": "Catalog/Computation/FactorialNumberSystem.lean"
+        },
+        {
           "name": "LandauerLowerBound.lean",
           "type": "file",
           "path": "Catalog/Computation/LandauerLowerBound.lean"
@@ -3295,6 +3300,11 @@
           "path": "Catalog/Tropical/WallpaperRhythm.lean"
         }
       ]
+    },
+    {
+      "name": "Main.lean",
+      "type": "file",
+      "path": "Catalog/Main.lean"
     }
   ]
 }
