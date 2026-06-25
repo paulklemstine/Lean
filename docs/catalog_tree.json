@@ -199,6 +199,27 @@
           ]
         },
         {
+          "name": "ExtremalGraph",
+          "type": "directory",
+          "children": [
+            {
+              "name": "KruskalKatona.lean",
+              "type": "file",
+              "path": "Catalog/Applications/ExtremalGraph/KruskalKatona.lean"
+            },
+            {
+              "name": "Roth.lean",
+              "type": "file",
+              "path": "Catalog/Applications/ExtremalGraph/Roth.lean"
+            },
+            {
+              "name": "Turan.lean",
+              "type": "file",
+              "path": "Catalog/Applications/ExtremalGraph/Turan.lean"
+            }
+          ]
+        },
+        {
           "name": "HoTT",
           "type": "directory",
           "children": [
@@ -3274,11 +3295,6 @@
           "path": "Catalog/Tropical/WallpaperRhythm.lean"
         }
       ]
-    },
-    {
-      "name": "Main.lean",
-      "type": "file",
-      "path": "Catalog/Main.lean"
     }
   ]
 }

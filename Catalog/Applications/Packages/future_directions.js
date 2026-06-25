@@ -195,7 +195,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Standard Conjectures on Algebraic Cycles"
   },
   {
-    "consumed_by_exp_id": "f88074cd",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
     "domains": [
       "Algebra",
@@ -205,7 +205,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:17.429886+00:00",
     "title": "Whitehead Problem: Independence from ZFC"
   },
@@ -643,7 +643,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "06e1b030",
+    "consumed_by_exp_id": "",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domains": [
       "NumberTheory",
@@ -653,7 +653,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -4395,7 +4395,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
-    "consumed_by_exp_id": "1ad07afa",
+    "consumed_by_exp_id": "",
     "description": "Formalize Frankl's conjecture and prove it for families of size \u2264 50 (Bo\u0161njak-Markovi\u0107). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domains": [
       "Combinatorics",
@@ -4405,7 +4405,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
@@ -4496,6 +4496,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Extremal Graph Theory (Tur\u00e1n \u00b7 Roth \u00b7 Kruskal\u2013Katona)\n\nDerived from this cycle's findings (see the `-- !-- Lab Notes -- !--` blocks in\n`Turan.lean`, `Roth.lean`, `KruskalKatona.lean`). Each conjecture is bold, falsifiable,\nand stated so it can be attacked directly in Lean on top of the lemmas just proved.\n\n## C1. Stability for Tur\u00e1n/Mantel (uniqueness of the extremal graph, quantitative)\n**Conjecture.** If a triangle-free graph on `n` vertices has `e(G) \u2265 n\u00b2/4 - t`, then `G`\ncan be made complete bipartite by adding/removing at most `O(t)` edges.\n*The key insight is...* the gap `n\u00b2/4 - e(G)` in `mantel_nat` already measures distance to\nthe unique extremal graph, so the integer slack term is the natural stability parameter.\n*Why now?* Mathlib's `isTuranMaximal_iff_nonempty_iso_turanGraph` gives the exact extremal\nisomorphism; combining it with the proved slack-bound `turan_edge_bound_nat` makes a\nquantitative stability statement reachable without re-deriving Tur\u00e1n.\n\n## C2. The extremal\u2013Ramsey bridge generalizes to all `K_{r+1}`\n**Conjecture.** For every `r \u2265 2` there is `N(r)` such that on `\u2265 N(r)` vertices any\n`K_{r+1}`-free graph `G` simultaneously satisfies the Tur\u00e1n bound *and* forces a `K_{r+1}`\nin `G\u1d9c`; moreover `N(2) = 6` is the value supplied by `mantel_ramsey_bridge`.\n*The key insight is...* `R(r+1, r+1)` is exactly the threshold past which one of the two\ncolour classes must contain the forbidden clique, so the extremal bound and the Ramsey\nnumber are two readings of the same colouring.\n*Why now?* The catalog's `RamseyTheory.Arrows` recursion (`arrows_binomial_bound`) provides\nexplicit Ramsey upper bounds, and the proved `turan_edge_bound_nat` provides the matching\nextremal side, so a uniform-`r` bridge is a finite assembly away.\n\n## C3. Quantitative Roth from the proved density-zero limit\n**Conjecture.** Every `A \u2286 \u2115` with upper density `\u03b4 > 0` contains a 3-AP within its first\n`exp(exp(C/\u03b4))` elements, with the constant extractable from `rothNumberNat_isLittleO_id`.\n*The key insight is...* `exists_threeAP_of_freq_dense` already converts the asymptotic\n`o(N)` bound into a concrete finite witness; tracking the `cornersTheoremBound` quantitatively\nturns \"some large N\" into an explicit, computable N.\n*Why now?* The corners-theorem proof in Mathlib carries an explicit (if huge) bound, so the\nqualitative theorem proved here can be refined to an effective one by instrumenting the same\nfilter argument.\n\n## C4. Kruskal\u2013Katona \u21d2 a Sperner-type antichain bound in `Fin n`\n**Conjecture.** Any antichain in `2^{Fin n}` whose members all lie in two adjacent layers\n`r-1, r` has size at most `C(n, \u230an/2\u230b)`, provable by feeding `kk_shadow_lower` into a layer\ndouble-count.\n*The key insight is...* a shadow lower bound is exactly the local LYM inequality in disguise,\nand `kk_shadow_lower` (`C(k,r-1) \u2264 #\u2202\ud835\udc9c`) is the per-layer input that LYM needs.\n*Why now?* With the single-shadow bound now formalized, the only missing piece is the\nnormalization `#\ud835\udc9c / C(n,r) + #\u2202\ud835\udc9c / C(n,r-1) \u2265 1`, a short arithmetic step.\n\n## C5. Nonempty iterated shadows \u21d2 explicit chains of subsets\n**Conjecture.** A large `r`-uniform family (`#\ud835\udc9c \u2265 C(k,r)`) contains a maximal chain\n`\u2205 = B_0 \u2282 B_1 \u2282 \u2026 \u2282 B_r` with `B_r \u2208 \ud835\udc9c` and each `B_i \u2208 \u2202^[r-i] \ud835\udc9c`.\n*The key insight is...* `kk_iterated_shadow_nonempty` guarantees each layer of the shadow\nchain is inhabited, so a chain can be selected greedily from the top down.\n*Why now?* The nonemptiness of every iterated shadow is now a theorem; turning a sequence of\nnonempty layers into a single nested chain is a constructive selection argument well within\nreach.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2487",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3e805dd4",
+    "status": "available",
+    "timestamp": "2026-06-25T03:27:44.297698+00:00",
+    "title": "Derived from this cycle's findings (see the `-- !-- Lab Notes -- !--` blocks in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4507,6 +4522,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_2488",
+    "priority_score": 0.7158260869565218,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-25T03:28:36.279962+00:00",
+    "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
   {
     "consumed_by_exp_id": "",
@@ -4584,7 +4614,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
-    "consumed_by_exp_id": "b56e200f",
+    "consumed_by_exp_id": "",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -4594,7 +4624,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -4613,7 +4643,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "857e55ef",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4623,7 +4653,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -4982,7 +5012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "19167f96",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4992,9 +5022,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 3e805dd4 (Q=0.456) proved 734 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_3e805dd4_28e65f06",
+    "priority_score": 0.5063659679193871,
+    "research_mode": "team",
+    "source_exp_id": "3e805dd4",
+    "status": "available",
+    "timestamp": "2026-06-25T03:28:42.967154+00:00",
+    "title": "Close Proofs: Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
   {
     "consumed_by_exp_id": "",
@@ -5027,7 +5071,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for GL\u2082 over Q"
   },
   {
-    "consumed_by_exp_id": "2334b3c5",
+    "consumed_by_exp_id": "",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domains": [
       "Bridges",
@@ -5037,7 +5081,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.798593+00:00",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },

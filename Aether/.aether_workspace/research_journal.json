@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "880250ea",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Split Geometry (Impossible Geometries cycle)\n\nThis cycle studied the \"Split Geometry\" metric on `ℝ²`,\n`ds² = dx²/cosh²y + cosh²x·dy²`, and **refuted** the headline conjecture tha",
-      "quality_score": 0.40832662857142854,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-18T00:32:11",
-      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-    },
-    {
       "cycle_id": "6e109ffd",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — The Spectral Gap of Sudoku\n\nDerived from this cycle's findings on the order-`n` Sudoku constraint graph\n`sudokuGraph n` (file `Computation/SudokuConstraintGraph.lean`). This cycl",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-25T01:58:31",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "3e805dd4",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Extremal Graph Theory (Turán · Roth · Kruskal–Katona)\n\nDerived from this cycle's findings (see the `-- !-- Lab Notes -- !--` blocks in\n`Turan.lean`, `Roth.lean`, `KruskalKatona.l",
+      "quality_score": 0.45636596791938716,
+      "sorry_count": 4,
+      "theorem_count": 734,
+      "timestamp": "2026-06-25T03:28:42",
+      "title": "Extremal Graph Theory: Turán and Szemerédi"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.708
     }
   ],
-  "last_updated": "2026-06-25T01:58:31",
+  "last_updated": "2026-06-25T03:28:42",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "94b6b70d",
-      "domain": "Probability",
-      "sorry_count": 1,
-      "timestamp": "2026-06-15T09:03:16"
-    },
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
       "cycle_id": "b221d007",
@@ -3016,6 +3009,13 @@
       "domain": "Tropical",
       "sorry_count": 1,
       "timestamp": "2026-06-24T22:34:09"
+    },
+    {
+      "context": "",
+      "cycle_id": "3e805dd4",
+      "domain": "Applications",
+      "sorry_count": 4,
+      "timestamp": "2026-06-25T03:28:42"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ddfbd83f",
-        "quality": 0.63352,
-        "theorems": 247,
-        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-      },
-      {
         "cycle_id": "d168a656",
         "quality": 0.5556197063805759,
         "theorems": 311,
@@ -3141,6 +3135,12 @@
         "quality": 0.6932800000000001,
         "theorems": 6,
         "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+      },
+      {
+        "cycle_id": "3e805dd4",
+        "quality": 0.45636596791938716,
+        "theorems": 734,
+        "title": "Extremal Graph Theory: Turán and Szemerédi"
       }
     ],
     "Bridges": [

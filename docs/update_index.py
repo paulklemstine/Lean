@@ -345,9 +345,6 @@ window.PACKAGE_DB_INDEX = {json.dumps(package_db_index, indent=2, sort_keys=True
     # Write future research directions to separate file (lazy-loaded)
     append_future_directions(script_dir, os.path.join(script_dir, "future_directions.js"))
 
-    # Generate Catalog tree JSON
-    generate_catalog_tree(catalog_root, os.path.join(script_dir, "catalog_tree.json"))
-
     # Ensure .nojekyll exists for GitHub Pages
     nojekyll_path = os.path.join(script_dir, ".nojekyll")
     if not os.path.exists(nojekyll_path):
@@ -576,64 +573,6 @@ window.FUTURE_DIRECTIONS = {json.dumps(display_dirs, indent=2, sort_keys=True)};
         f.write(fd_js)
 
     print(f"Wrote FUTURE_DIRECTIONS to future_directions.js ({len(display_dirs)} directions)")
-
-
-def generate_catalog_tree(catalog_root, out_path):
-    """Walk the Catalog directory and generate a hierarchical JSON tree."""
-    catalog_dir = os.path.join(catalog_root, "Catalog")
-    if not os.path.exists(catalog_dir):
-        print(f"Catalog directory not found at {catalog_dir}")
-        return
-        
-    def build_tree(current_path):
-        tree = []
-        try:
-            items = sorted(os.listdir(current_path))
-        except PermissionError:
-            return tree
-            
-        dirs = []
-        files = []
-        
-        for item in items:
-            if item.startswith('.'):
-                continue
-            # Skip retry directories
-            if "retry" in item.lower():
-                continue
-                
-            full_path = os.path.join(current_path, item)
-            rel_path = os.path.relpath(full_path, catalog_root)
-            # Normalize path for web URLs
-            rel_path = rel_path.replace(os.sep, '/')
-            
-            if os.path.isdir(full_path):
-                children = build_tree(full_path)
-                if children: # Only add non-empty directories
-                    dirs.append({
-                        "name": item,
-                        "type": "directory",
-                        "children": children
-                    })
-            elif os.path.isfile(full_path) and item.endswith('.lean'):
-                files.append({
-                    "name": item,
-                    "type": "file",
-                    "path": rel_path
-                })
-        
-        # Return directories first, then files
-        return dirs + files
-        
-    tree = {
-        "name": "Catalog",
-        "type": "directory",
-        "children": build_tree(catalog_dir)
-    }
-    
-    with open(out_path, 'w', encoding='utf-8') as f:
-        json.dump(tree, f, indent=2)
-    print(f"Generated catalog_tree.json")
 
 
 if __name__ == "__main__":
