@@ -240,7 +240,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Correspondence: GL(1) Case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4093c9b0",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
       "Physics",
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.909349+00:00",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
@@ -1404,7 +1404,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c053e0c9",
     "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
     "domains": [
       "Logic",
@@ -1414,7 +1414,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432759+00:00",
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
@@ -2775,7 +2775,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cusick's Sum-of-Digits Explicit Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b6772842",
     "description": "Let G be a simple graph on n vertices with m edges, and define N(S_{2,1},G)=\u2211_v d(v)(d(v)-1)(n-1-d(v)). If 8m \u2264 n(n-1), then N(S_{2,1},G) is maximized by the quasi-clique Q(n,m): writing m = binom(q,2)+r with 0 \u2264 r < q, Q(n,m) consists of a K_q, one additional vertex adjacent to exactly r vertices of the clique, and all remaining vertices isolated. Equivalently, the asymptotic low-density upper branch proved in the paper admits an exact finite-n strengthening throughout the range \u03b2 \u2264 1/4.",
     "domains": [
       "Algebra"
@@ -2784,7 +2784,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:07:33.678816+00:00",
     "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
   },
@@ -3136,7 +3136,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4d578ae",
     "description": "For every full-dimensional lattice polytope P in Z^n, let Sigma_P be the tropical hypersurface given by the codimension-one skeleton of the normal fan of P, with edge-length weights. The n-fold stable self-intersection Sigma_P \u2229_st ... \u2229_st Sigma_P is a reduced point at the origin if and only if P is a unimodular simplex, equivalently if and only if the normalized lattice volume n! vol(P) is equal to 1.",
     "domains": [
       "Geometry",
@@ -3146,7 +3146,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24339v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T02:18:16.655288+00:00",
     "title": "Unmixed Reduced Tropical Bernstein Criterion"
   },
@@ -3179,7 +3179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exactevaluation of the vector-space Erd\u0151s Matching number m_q(n,k,s)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97d45a04",
     "description": "For every integer k \u2265 1, let t = 2^k. Then the limit c_t = 1/2 + 2^{-2s_2(t)-1}, where s_2(t) is the binary sum-of-digits function. This conjecture asserts that the explicit lower bound provided in the paper is tight for all powers of two.",
     "domains": [
       "Pythagorean"
@@ -3188,7 +3188,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T04:55:09.073513+00:00",
     "title": "Tightness of the lower bound for powers of two in Cusick's sum-of-digits conjecture"
   },
@@ -3249,7 +3249,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Linear one-set wall-Menger bound for elementary walls"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4ab1c862",
     "description": "For a broad class of cohomological automorphic representations \u03c0 of GL(n), the Betti-Whittaker periods associated with \u03c0 and its contragredient representation \u03c0^\u2228 satisfy a functional equation involving special values of L-functions, generalizing Chen's result without regularity assumptions.",
     "domains": [
       "Algebra",
@@ -3259,7 +3259,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T07:44:52.667456+00:00",
     "title": "GeneralizedPeriod Relation for Betti-Whittaker Periods and Contragredient Representations of GL(n)"
   },
@@ -4552,7 +4552,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "051409ce",
     "description": "Conjecture: The tropicalization of the n-qubit stabilizer state variety in the Grassmannian Gr(2^n, 2^n) yields a balanced polyhedral fan of dimension n(n+1)/2 whose maximal cones are in bijection with Clifford group orbits, and the tropical Pl\u00fccker relations restrict to the monogamy of entanglement inequalities (e.g., Coffman-Kundu-Wootters) on each cone. Test: For n=3,4, compute the tropical variety using numerical tropical algebraic geometry (e.g., via polymake or gfan) and verify: (1) cone count matches known Clifford orbit counts (1075 for n=3), (2) each cone's defining inequalities match the facet description of the corresponding entanglement polytope, (3) the tropical Hopf algebra structure induced by the stabilizer formalism's coalgebra yields a tropical quantum group classifying SLOCC classes. Impact: Establishes tropical geometry as a complete combinatorial invariant for stabilizer entanglement, provides polytime algorithms for entanglement classification via tropical membership tests, and constructs tropical quantum groups as new algebraic structures for quantum information.",
     "domains": [
       "Tropical",
@@ -4562,7 +4562,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7156190476190477,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:38.144414+00:00",
     "title": "Tropical Geometry of Stabilizer States: Entanglement Classification via Polyhedr"
   },
@@ -4671,7 +4671,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7ca7bb8c",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4681,7 +4681,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
