@@ -96,12 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const openAttr = (node.name === 'Catalog' || isOpen) ? 'open' : '';
 
             return `
-                <details ${openAttr} style="margin-bottom: 4px;">
-                    <summary style="cursor: pointer; font-weight: 600; color: var(--text-color); padding: 4px; user-select: none; font-size: 14px; border-radius: 4px; transition: background 0.1s;">
-                        <svg style="vertical-align: middle; margin-right: 6px; color: var(--accent-color);" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <details ${openAttr} style="margin-bottom: 6px;">
+                    <summary class="lean-folder-item" style="cursor: pointer; font-weight: 600; color: var(--text-color); padding: 6px 8px; user-select: none; font-size: 14px; border-radius: 4px; transition: background 0.2s; background: rgba(0, 0, 0, 0.1); border: 1px solid transparent;">
+                        <svg style="vertical-align: middle; margin-right: 8px; color: var(--accent-color);" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                         ${node.name}
                     </summary>
-                    <div style="margin-left: 20px; margin-top: 4px; border-left: 1px solid var(--border-color); padding-left: 8px;">
+                    <div style="margin-left: 12px; margin-top: 4px; border-left: 2px solid rgba(255, 255, 255, 0.05); padding-left: 8px;">
                         ${childrenHtml}
                     </div>
                 </details>

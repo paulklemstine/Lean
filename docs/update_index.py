@@ -592,6 +592,9 @@ def generate_catalog_tree(catalog_root, out_path):
         except PermissionError:
             return tree
             
+        dirs = []
+        files = []
+        
         for item in items:
             if item.startswith('.'):
                 continue
@@ -607,18 +610,20 @@ def generate_catalog_tree(catalog_root, out_path):
             if os.path.isdir(full_path):
                 children = build_tree(full_path)
                 if children: # Only add non-empty directories
-                    tree.append({
+                    dirs.append({
                         "name": item,
                         "type": "directory",
                         "children": children
                     })
             elif os.path.isfile(full_path) and item.endswith('.lean'):
-                tree.append({
+                files.append({
                     "name": item,
                     "type": "file",
                     "path": rel_path
                 })
-        return tree
+        
+        # Return directories first, then files
+        return dirs + files
         
     tree = {
         "name": "Catalog",

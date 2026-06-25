@@ -7,16 +7,6 @@
       "type": "directory",
       "children": [
         {
-          "name": "ConformabilityOddOrder.lean",
-          "type": "file",
-          "path": "Catalog/Algebra/ConformabilityOddOrder.lean"
-        },
-        {
-          "name": "PerfectTrianglePacking.lean",
-          "type": "file",
-          "path": "Catalog/Algebra/PerfectTrianglePacking.lean"
-        },
-        {
           "name": "ProofSpectra",
           "type": "directory",
           "children": [
@@ -26,6 +16,16 @@
               "path": "Catalog/Algebra/ProofSpectra/Core.lean"
             }
           ]
+        },
+        {
+          "name": "ConformabilityOddOrder.lean",
+          "type": "file",
+          "path": "Catalog/Algebra/ConformabilityOddOrder.lean"
+        },
+        {
+          "name": "PerfectTrianglePacking.lean",
+          "type": "file",
+          "path": "Catalog/Algebra/PerfectTrianglePacking.lean"
         },
         {
           "name": "SchurNumberThree.lean",
@@ -48,11 +48,6 @@
       "name": "Applications",
       "type": "directory",
       "children": [
-        {
-          "name": "ApproxLipschitz.lean",
-          "type": "file",
-          "path": "Catalog/Applications/ApproxLipschitz.lean"
-        },
         {
           "name": "BSD",
           "type": "directory",
@@ -177,11 +172,6 @@
           ]
         },
         {
-          "name": "CombinatorialSpecies.lean",
-          "type": "file",
-          "path": "Catalog/Applications/CombinatorialSpecies.lean"
-        },
-        {
           "name": "Consciousness",
           "type": "directory",
           "children": [
@@ -191,26 +181,6 @@
               "path": "Catalog/Applications/Consciousness/IntegratedInformation.lean"
             }
           ]
-        },
-        {
-          "name": "CrystallographicRhythm.lean",
-          "type": "file",
-          "path": "Catalog/Applications/CrystallographicRhythm.lean"
-        },
-        {
-          "name": "CusickCarryReformulation.lean",
-          "type": "file",
-          "path": "Catalog/Applications/CusickCarryReformulation.lean"
-        },
-        {
-          "name": "CusickDensityWitness.lean",
-          "type": "file",
-          "path": "Catalog/Applications/CusickDensityWitness.lean"
-        },
-        {
-          "name": "CusickSumOfDigits.lean",
-          "type": "file",
-          "path": "Catalog/Applications/CusickSumOfDigits.lean"
         },
         {
           "name": "DreamtimeAlgebra",
@@ -227,66 +197,6 @@
               "path": "Catalog/Applications/DreamtimeAlgebra/Theorems.lean"
             }
           ]
-        },
-        {
-          "name": "EMLTermAlgebra.lean",
-          "type": "file",
-          "path": "Catalog/Applications/EMLTermAlgebra.lean"
-        },
-        {
-          "name": "EnergyLandscape.lean",
-          "type": "file",
-          "path": "Catalog/Applications/EnergyLandscape.lean"
-        },
-        {
-          "name": "FibApparitionExistence.lean",
-          "type": "file",
-          "path": "Catalog/Applications/FibApparitionExistence.lean"
-        },
-        {
-          "name": "FibonacciApparitionLattice.lean",
-          "type": "file",
-          "path": "Catalog/Applications/FibonacciApparitionLattice.lean"
-        },
-        {
-          "name": "FibonacciEntryPointMultiplicative.lean",
-          "type": "file",
-          "path": "Catalog/Applications/FibonacciEntryPointMultiplicative.lean"
-        },
-        {
-          "name": "FibonacciEntryPoints.lean",
-          "type": "file",
-          "path": "Catalog/Applications/FibonacciEntryPoints.lean"
-        },
-        {
-          "name": "FibonacciLucasBridge.lean",
-          "type": "file",
-          "path": "Catalog/Applications/FibonacciLucasBridge.lean"
-        },
-        {
-          "name": "FibonacciMatrix.lean",
-          "type": "file",
-          "path": "Catalog/Applications/FibonacciMatrix.lean"
-        },
-        {
-          "name": "FibonacciPisanoRepresentation.lean",
-          "type": "file",
-          "path": "Catalog/Applications/FibonacciPisanoRepresentation.lean"
-        },
-        {
-          "name": "FibonacciPrimitiveDivisors.lean",
-          "type": "file",
-          "path": "Catalog/Applications/FibonacciPrimitiveDivisors.lean"
-        },
-        {
-          "name": "GilbertVarshamov.lean",
-          "type": "file",
-          "path": "Catalog/Applications/GilbertVarshamov.lean"
-        },
-        {
-          "name": "HausdorffNovelty.lean",
-          "type": "file",
-          "path": "Catalog/Applications/HausdorffNovelty.lean"
         },
         {
           "name": "HoTT",
@@ -314,21 +224,6 @@
               "path": "Catalog/Applications/HypergraphRamsey/TowerGrowth.lean"
             }
           ]
-        },
-        {
-          "name": "Jones.lean",
-          "type": "file",
-          "path": "Catalog/Applications/Jones.lean"
-        },
-        {
-          "name": "Maximals.lean",
-          "type": "file",
-          "path": "Catalog/Applications/Maximals.lean"
-        },
-        {
-          "name": "NoveltyRegions.lean",
-          "type": "file",
-          "path": "Catalog/Applications/NoveltyRegions.lean"
         },
         {
           "name": "PoincareData",
@@ -363,16 +258,6 @@
           ]
         },
         {
-          "name": "ProofDensitySpace.lean",
-          "type": "file",
-          "path": "Catalog/Applications/ProofDensitySpace.lean"
-        },
-        {
-          "name": "ProteinFoldingMST.lean",
-          "type": "file",
-          "path": "Catalog/Applications/ProteinFoldingMST.lean"
-        },
-        {
           "name": "QuasiSymmetric",
           "type": "directory",
           "children": [
@@ -382,26 +267,6 @@
               "path": "Catalog/Applications/QuasiSymmetric/Maps.lean"
             }
           ]
-        },
-        {
-          "name": "Ramsey.lean",
-          "type": "file",
-          "path": "Catalog/Applications/Ramsey.lean"
-        },
-        {
-          "name": "RankLatticeMorphism.lean",
-          "type": "file",
-          "path": "Catalog/Applications/RankLatticeMorphism.lean"
-        },
-        {
-          "name": "RankOfApparition.lean",
-          "type": "file",
-          "path": "Catalog/Applications/RankOfApparition.lean"
-        },
-        {
-          "name": "SingletonBound.lean",
-          "type": "file",
-          "path": "Catalog/Applications/SingletonBound.lean"
         },
         {
           "name": "SmoothPoincare",
@@ -470,6 +335,141 @@
           ]
         },
         {
+          "name": "ApproxLipschitz.lean",
+          "type": "file",
+          "path": "Catalog/Applications/ApproxLipschitz.lean"
+        },
+        {
+          "name": "CombinatorialSpecies.lean",
+          "type": "file",
+          "path": "Catalog/Applications/CombinatorialSpecies.lean"
+        },
+        {
+          "name": "CrystallographicRhythm.lean",
+          "type": "file",
+          "path": "Catalog/Applications/CrystallographicRhythm.lean"
+        },
+        {
+          "name": "CusickCarryReformulation.lean",
+          "type": "file",
+          "path": "Catalog/Applications/CusickCarryReformulation.lean"
+        },
+        {
+          "name": "CusickDensityWitness.lean",
+          "type": "file",
+          "path": "Catalog/Applications/CusickDensityWitness.lean"
+        },
+        {
+          "name": "CusickSumOfDigits.lean",
+          "type": "file",
+          "path": "Catalog/Applications/CusickSumOfDigits.lean"
+        },
+        {
+          "name": "EMLTermAlgebra.lean",
+          "type": "file",
+          "path": "Catalog/Applications/EMLTermAlgebra.lean"
+        },
+        {
+          "name": "EnergyLandscape.lean",
+          "type": "file",
+          "path": "Catalog/Applications/EnergyLandscape.lean"
+        },
+        {
+          "name": "FibApparitionExistence.lean",
+          "type": "file",
+          "path": "Catalog/Applications/FibApparitionExistence.lean"
+        },
+        {
+          "name": "FibonacciApparitionLattice.lean",
+          "type": "file",
+          "path": "Catalog/Applications/FibonacciApparitionLattice.lean"
+        },
+        {
+          "name": "FibonacciEntryPointMultiplicative.lean",
+          "type": "file",
+          "path": "Catalog/Applications/FibonacciEntryPointMultiplicative.lean"
+        },
+        {
+          "name": "FibonacciEntryPoints.lean",
+          "type": "file",
+          "path": "Catalog/Applications/FibonacciEntryPoints.lean"
+        },
+        {
+          "name": "FibonacciLucasBridge.lean",
+          "type": "file",
+          "path": "Catalog/Applications/FibonacciLucasBridge.lean"
+        },
+        {
+          "name": "FibonacciMatrix.lean",
+          "type": "file",
+          "path": "Catalog/Applications/FibonacciMatrix.lean"
+        },
+        {
+          "name": "FibonacciPisanoRepresentation.lean",
+          "type": "file",
+          "path": "Catalog/Applications/FibonacciPisanoRepresentation.lean"
+        },
+        {
+          "name": "FibonacciPrimitiveDivisors.lean",
+          "type": "file",
+          "path": "Catalog/Applications/FibonacciPrimitiveDivisors.lean"
+        },
+        {
+          "name": "GilbertVarshamov.lean",
+          "type": "file",
+          "path": "Catalog/Applications/GilbertVarshamov.lean"
+        },
+        {
+          "name": "HausdorffNovelty.lean",
+          "type": "file",
+          "path": "Catalog/Applications/HausdorffNovelty.lean"
+        },
+        {
+          "name": "Jones.lean",
+          "type": "file",
+          "path": "Catalog/Applications/Jones.lean"
+        },
+        {
+          "name": "Maximals.lean",
+          "type": "file",
+          "path": "Catalog/Applications/Maximals.lean"
+        },
+        {
+          "name": "NoveltyRegions.lean",
+          "type": "file",
+          "path": "Catalog/Applications/NoveltyRegions.lean"
+        },
+        {
+          "name": "ProofDensitySpace.lean",
+          "type": "file",
+          "path": "Catalog/Applications/ProofDensitySpace.lean"
+        },
+        {
+          "name": "ProteinFoldingMST.lean",
+          "type": "file",
+          "path": "Catalog/Applications/ProteinFoldingMST.lean"
+        },
+        {
+          "name": "Ramsey.lean",
+          "type": "file",
+          "path": "Catalog/Applications/Ramsey.lean"
+        },
+        {
+          "name": "RankLatticeMorphism.lean",
+          "type": "file",
+          "path": "Catalog/Applications/RankLatticeMorphism.lean"
+        },
+        {
+          "name": "RankOfApparition.lean",
+          "type": "file",
+          "path": "Catalog/Applications/RankOfApparition.lean"
+        },
+        {
+          "name": "SingletonBound.lean",
+          "type": "file",
+          "path": "Catalog/Applications/SingletonBound.lean"
+        },
+        {
           "name": "SpeciesAnalyticBridge.lean",
           "type": "file",
           "path": "Catalog/Applications/SpeciesAnalyticBridge.lean"
@@ -530,6 +530,72 @@
       "name": "Bridges",
       "type": "directory",
       "children": [
+        {
+          "name": "Pythagorean",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Sp4HeckeComparison.lean",
+              "type": "file",
+              "path": "Catalog/Bridges/Pythagorean/Sp4HeckeComparison.lean"
+            }
+          ]
+        },
+        {
+          "name": "QuotientOrbitCompression",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Core.lean",
+              "type": "file",
+              "path": "Catalog/Bridges/QuotientOrbitCompression/Core.lean"
+            }
+          ]
+        },
+        {
+          "name": "ReedSolomonKeyEquation",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Basic.lean",
+              "type": "file",
+              "path": "Catalog/Bridges/ReedSolomonKeyEquation/Basic.lean"
+            }
+          ]
+        },
+        {
+          "name": "TreeCut",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Decomposition.lean",
+              "type": "file",
+              "path": "Catalog/Bridges/TreeCut/Decomposition.lean"
+            }
+          ]
+        },
+        {
+          "name": "UniversalComplexity",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Core.lean",
+              "type": "file",
+              "path": "Catalog/Bridges/UniversalComplexity/Core.lean"
+            }
+          ]
+        },
+        {
+          "name": "ValuationSkeletonDuality",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Core.lean",
+              "type": "file",
+              "path": "Catalog/Bridges/ValuationSkeletonDuality/Core.lean"
+            }
+          ]
+        },
         {
           "name": "AlgebraEMLBridge.lean",
           "type": "file",
@@ -721,42 +787,9 @@
           "path": "Catalog/Bridges/PolynomialBridge.lean"
         },
         {
-          "name": "Pythagorean",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Sp4HeckeComparison.lean",
-              "type": "file",
-              "path": "Catalog/Bridges/Pythagorean/Sp4HeckeComparison.lean"
-            }
-          ]
-        },
-        {
-          "name": "QuotientOrbitCompression",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Core.lean",
-              "type": "file",
-              "path": "Catalog/Bridges/QuotientOrbitCompression/Core.lean"
-            }
-          ]
-        },
-        {
           "name": "RecursiveCriticalPairSaturation.lean",
           "type": "file",
           "path": "Catalog/Bridges/RecursiveCriticalPairSaturation.lean"
-        },
-        {
-          "name": "ReedSolomonKeyEquation",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Basic.lean",
-              "type": "file",
-              "path": "Catalog/Bridges/ReedSolomonKeyEquation/Basic.lean"
-            }
-          ]
         },
         {
           "name": "ResNetRobustnessBridge.lean",
@@ -844,47 +877,14 @@
           "path": "Catalog/Bridges/TranscendentalDerivativeBridge.lean"
         },
         {
-          "name": "TreeCut",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Decomposition.lean",
-              "type": "file",
-              "path": "Catalog/Bridges/TreeCut/Decomposition.lean"
-            }
-          ]
-        },
-        {
           "name": "TropicalSimpTactic.lean",
           "type": "file",
           "path": "Catalog/Bridges/TropicalSimpTactic.lean"
         },
         {
-          "name": "UniversalComplexity",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Core.lean",
-              "type": "file",
-              "path": "Catalog/Bridges/UniversalComplexity/Core.lean"
-            }
-          ]
-        },
-        {
           "name": "VCCompactness.lean",
           "type": "file",
           "path": "Catalog/Bridges/VCCompactness.lean"
-        },
-        {
-          "name": "ValuationSkeletonDuality",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Core.lean",
-              "type": "file",
-              "path": "Catalog/Bridges/ValuationSkeletonDuality/Core.lean"
-            }
-          ]
         },
         {
           "name": "WellFoundedInductionBridge.lean",
@@ -915,16 +915,6 @@
       "type": "directory",
       "children": [
         {
-          "name": "Bifurcation.lean",
-          "type": "file",
-          "path": "Catalog/Computation/Bifurcation.lean"
-        },
-        {
-          "name": "EastinKnill.lean",
-          "type": "file",
-          "path": "Catalog/Computation/EastinKnill.lean"
-        },
-        {
           "name": "IIT",
           "type": "directory",
           "children": [
@@ -947,11 +937,6 @@
           ]
         },
         {
-          "name": "LandauerLowerBound.lean",
-          "type": "file",
-          "path": "Catalog/Computation/LandauerLowerBound.lean"
-        },
-        {
           "name": "Langlands",
           "type": "directory",
           "children": [
@@ -971,6 +956,43 @@
               "path": "Catalog/Computation/Langlands/TropicalSymSquareTransfer.lean"
             }
           ]
+        },
+        {
+          "name": "TreeMetric",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Basic.lean",
+              "type": "file",
+              "path": "Catalog/Computation/TreeMetric/Basic.lean"
+            }
+          ]
+        },
+        {
+          "name": "TropicalLife",
+          "type": "directory",
+          "children": [
+            {
+              "name": "RectStillLife.lean",
+              "type": "file",
+              "path": "Catalog/Computation/TropicalLife/RectStillLife.lean"
+            }
+          ]
+        },
+        {
+          "name": "Bifurcation.lean",
+          "type": "file",
+          "path": "Catalog/Computation/Bifurcation.lean"
+        },
+        {
+          "name": "EastinKnill.lean",
+          "type": "file",
+          "path": "Catalog/Computation/EastinKnill.lean"
+        },
+        {
+          "name": "LandauerLowerBound.lean",
+          "type": "file",
+          "path": "Catalog/Computation/LandauerLowerBound.lean"
         },
         {
           "name": "ListColoringChordal.lean",
@@ -1011,28 +1033,6 @@
           "name": "Theorems.lean",
           "type": "file",
           "path": "Catalog/Computation/Theorems.lean"
-        },
-        {
-          "name": "TreeMetric",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Basic.lean",
-              "type": "file",
-              "path": "Catalog/Computation/TreeMetric/Basic.lean"
-            }
-          ]
-        },
-        {
-          "name": "TropicalLife",
-          "type": "directory",
-          "children": [
-            {
-              "name": "RectStillLife.lean",
-              "type": "file",
-              "path": "Catalog/Computation/TropicalLife/RectStillLife.lean"
-            }
-          ]
         }
       ]
     },
@@ -1040,11 +1040,6 @@
       "name": "Cryptography",
       "type": "directory",
       "children": [
-        {
-          "name": "AffineSigmaExtraction.lean",
-          "type": "file",
-          "path": "Catalog/Cryptography/AffineSigmaExtraction.lean"
-        },
         {
           "name": "BB84",
           "type": "directory",
@@ -1065,6 +1060,33 @@
               "path": "Catalog/Cryptography/BB84/Protocol.lean"
             }
           ]
+        },
+        {
+          "name": "LWE",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SearchDecisionCore.lean",
+              "type": "file",
+              "path": "Catalog/Cryptography/LWE/SearchDecisionCore.lean"
+            }
+          ]
+        },
+        {
+          "name": "PoincareThreshold",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Defs.lean",
+              "type": "file",
+              "path": "Catalog/Cryptography/PoincareThreshold/Defs.lean"
+            }
+          ]
+        },
+        {
+          "name": "AffineSigmaExtraction.lean",
+          "type": "file",
+          "path": "Catalog/Cryptography/AffineSigmaExtraction.lean"
         },
         {
           "name": "BiOrderSeparation.lean",
@@ -1127,17 +1149,6 @@
           "path": "Catalog/Cryptography/KyberCompress.lean"
         },
         {
-          "name": "LWE",
-          "type": "directory",
-          "children": [
-            {
-              "name": "SearchDecisionCore.lean",
-              "type": "file",
-              "path": "Catalog/Cryptography/LWE/SearchDecisionCore.lean"
-            }
-          ]
-        },
-        {
           "name": "MerkleDamgard.lean",
           "type": "file",
           "path": "Catalog/Cryptography/MerkleDamgard.lean"
@@ -1151,17 +1162,6 @@
           "name": "NoetherianCertification.lean",
           "type": "file",
           "path": "Catalog/Cryptography/NoetherianCertification.lean"
-        },
-        {
-          "name": "PoincareThreshold",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Defs.lean",
-              "type": "file",
-              "path": "Catalog/Cryptography/PoincareThreshold/Defs.lean"
-            }
-          ]
         },
         {
           "name": "ProductCollisions.lean",
@@ -1204,6 +1204,27 @@
       "name": "EML",
       "type": "directory",
       "children": [
+        {
+          "name": "Transseries",
+          "type": "directory",
+          "children": [
+            {
+              "name": "AsymptoticComparison.lean",
+              "type": "file",
+              "path": "Catalog/EML/Transseries/AsymptoticComparison.lean"
+            },
+            {
+              "name": "CatalogBridge.lean",
+              "type": "file",
+              "path": "Catalog/EML/Transseries/CatalogBridge.lean"
+            },
+            {
+              "name": "Field.lean",
+              "type": "file",
+              "path": "Catalog/EML/Transseries/Field.lean"
+            }
+          ]
+        },
         {
           "name": "ANRApproximation.lean",
           "type": "file",
@@ -1268,27 +1289,6 @@
           "name": "StoneWeierstrassApprox.lean",
           "type": "file",
           "path": "Catalog/EML/StoneWeierstrassApprox.lean"
-        },
-        {
-          "name": "Transseries",
-          "type": "directory",
-          "children": [
-            {
-              "name": "AsymptoticComparison.lean",
-              "type": "file",
-              "path": "Catalog/EML/Transseries/AsymptoticComparison.lean"
-            },
-            {
-              "name": "CatalogBridge.lean",
-              "type": "file",
-              "path": "Catalog/EML/Transseries/CatalogBridge.lean"
-            },
-            {
-              "name": "Field.lean",
-              "type": "file",
-              "path": "Catalog/EML/Transseries/Field.lean"
-            }
-          ]
         }
       ]
     },
@@ -1296,31 +1296,6 @@
       "name": "Geometry",
       "type": "directory",
       "children": [
-        {
-          "name": "Benford.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/Benford.lean"
-        },
-        {
-          "name": "CategoricalTower.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/CategoricalTower.lean"
-        },
-        {
-          "name": "Contractions.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/Contractions.lean"
-        },
-        {
-          "name": "Convergence.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/Convergence.lean"
-        },
-        {
-          "name": "DiscreteGaussBonnet.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/DiscreteGaussBonnet.lean"
-        },
         {
           "name": "DreamLogic",
           "type": "directory",
@@ -1333,11 +1308,6 @@
           ]
         },
         {
-          "name": "Endomorphisms.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/Endomorphisms.lean"
-        },
-        {
           "name": "ErdosSzekeres",
           "type": "directory",
           "children": [
@@ -1347,41 +1317,6 @@
               "path": "Catalog/Geometry/ErdosSzekeres/CupCapBound.lean"
             }
           ]
-        },
-        {
-          "name": "FiniteContraction.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/FiniteContraction.lean"
-        },
-        {
-          "name": "FlagComplex.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/FlagComplex.lean"
-        },
-        {
-          "name": "GenusFormula.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/GenusFormula.lean"
-        },
-        {
-          "name": "GeomStream.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/GeomStream.lean"
-        },
-        {
-          "name": "HadwigerConjecture.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/HadwigerConjecture.lean"
-        },
-        {
-          "name": "HamiltonianBridge.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/HamiltonianBridge.lean"
-        },
-        {
-          "name": "HappyEnd.lean",
-          "type": "file",
-          "path": "Catalog/Geometry/HappyEnd.lean"
         },
         {
           "name": "HodgeTheory",
@@ -1465,6 +1400,98 @@
           ]
         },
         {
+          "name": "PosetTwinWidth",
+          "type": "directory",
+          "children": [
+            {
+              "name": "LinearBound.lean",
+              "type": "file",
+              "path": "Catalog/Geometry/PosetTwinWidth/LinearBound.lean"
+            }
+          ]
+        },
+        {
+          "name": "QuiverPathAlgebra",
+          "type": "directory",
+          "children": [
+            {
+              "name": "AcyclicBound.lean",
+              "type": "file",
+              "path": "Catalog/Geometry/QuiverPathAlgebra/AcyclicBound.lean"
+            },
+            {
+              "name": "StrictUpperNilpotent.lean",
+              "type": "file",
+              "path": "Catalog/Geometry/QuiverPathAlgebra/StrictUpperNilpotent.lean"
+            }
+          ]
+        },
+        {
+          "name": "Benford.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/Benford.lean"
+        },
+        {
+          "name": "CategoricalTower.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/CategoricalTower.lean"
+        },
+        {
+          "name": "Contractions.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/Contractions.lean"
+        },
+        {
+          "name": "Convergence.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/Convergence.lean"
+        },
+        {
+          "name": "DiscreteGaussBonnet.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/DiscreteGaussBonnet.lean"
+        },
+        {
+          "name": "Endomorphisms.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/Endomorphisms.lean"
+        },
+        {
+          "name": "FiniteContraction.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/FiniteContraction.lean"
+        },
+        {
+          "name": "FlagComplex.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/FlagComplex.lean"
+        },
+        {
+          "name": "GenusFormula.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/GenusFormula.lean"
+        },
+        {
+          "name": "GeomStream.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/GeomStream.lean"
+        },
+        {
+          "name": "HadwigerConjecture.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/HadwigerConjecture.lean"
+        },
+        {
+          "name": "HamiltonianBridge.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/HamiltonianBridge.lean"
+        },
+        {
+          "name": "HappyEnd.lean",
+          "type": "file",
+          "path": "Catalog/Geometry/HappyEnd.lean"
+        },
+        {
           "name": "MedianVertexTree.lean",
           "type": "file",
           "path": "Catalog/Geometry/MedianVertexTree.lean"
@@ -1485,36 +1512,9 @@
           "path": "Catalog/Geometry/OvalArrangement.lean"
         },
         {
-          "name": "PosetTwinWidth",
-          "type": "directory",
-          "children": [
-            {
-              "name": "LinearBound.lean",
-              "type": "file",
-              "path": "Catalog/Geometry/PosetTwinWidth/LinearBound.lean"
-            }
-          ]
-        },
-        {
           "name": "PrimewisePersistence.lean",
           "type": "file",
           "path": "Catalog/Geometry/PrimewisePersistence.lean"
-        },
-        {
-          "name": "QuiverPathAlgebra",
-          "type": "directory",
-          "children": [
-            {
-              "name": "AcyclicBound.lean",
-              "type": "file",
-              "path": "Catalog/Geometry/QuiverPathAlgebra/AcyclicBound.lean"
-            },
-            {
-              "name": "StrictUpperNilpotent.lean",
-              "type": "file",
-              "path": "Catalog/Geometry/QuiverPathAlgebra/StrictUpperNilpotent.lean"
-            }
-          ]
         },
         {
           "name": "WillmoreEnergy.lean",
@@ -1528,36 +1528,6 @@
       "type": "directory",
       "children": [
         {
-          "name": "ApproxRamseyDegree.lean",
-          "type": "file",
-          "path": "Catalog/Logic/ApproxRamseyDegree.lean"
-        },
-        {
-          "name": "Bisection.lean",
-          "type": "file",
-          "path": "Catalog/Logic/Bisection.lean"
-        },
-        {
-          "name": "Bohm.lean",
-          "type": "file",
-          "path": "Catalog/Logic/Bohm.lean"
-        },
-        {
-          "name": "ChainInvariants.lean",
-          "type": "file",
-          "path": "Catalog/Logic/ChainInvariants.lean"
-        },
-        {
-          "name": "CircuitComplexityBarriers.lean",
-          "type": "file",
-          "path": "Catalog/Logic/CircuitComplexityBarriers.lean"
-        },
-        {
-          "name": "Defs.lean",
-          "type": "file",
-          "path": "Catalog/Logic/Defs.lean"
-        },
-        {
           "name": "DreamLogic",
           "type": "directory",
           "children": [
@@ -1567,36 +1537,6 @@
               "path": "Catalog/Logic/DreamLogic/BernalBD.lean"
             }
           ]
-        },
-        {
-          "name": "Freivalds.lean",
-          "type": "file",
-          "path": "Catalog/Logic/Freivalds.lean"
-        },
-        {
-          "name": "GLKripke.lean",
-          "type": "file",
-          "path": "Catalog/Logic/GLKripke.lean"
-        },
-        {
-          "name": "GLRankStratification.lean",
-          "type": "file",
-          "path": "Catalog/Logic/GLRankStratification.lean"
-        },
-        {
-          "name": "GLRankmatch.lean",
-          "type": "file",
-          "path": "Catalog/Logic/GLRankmatch.lean"
-        },
-        {
-          "name": "GaleStewartCore.lean",
-          "type": "file",
-          "path": "Catalog/Logic/GaleStewartCore.lean"
-        },
-        {
-          "name": "GuardedTrace.lean",
-          "type": "file",
-          "path": "Catalog/Logic/GuardedTrace.lean"
         },
         {
           "name": "HoTT",
@@ -1610,36 +1550,6 @@
           ]
         },
         {
-          "name": "JarzynskiLandauer.lean",
-          "type": "file",
-          "path": "Catalog/Logic/JarzynskiLandauer.lean"
-        },
-        {
-          "name": "NormalizationSimplexFunctor.lean",
-          "type": "file",
-          "path": "Catalog/Logic/NormalizationSimplexFunctor.lean"
-        },
-        {
-          "name": "ParadoxSelfSoundness.lean",
-          "type": "file",
-          "path": "Catalog/Logic/ParadoxSelfSoundness.lean"
-        },
-        {
-          "name": "ProjectiveFraisseInvLimit.lean",
-          "type": "file",
-          "path": "Catalog/Logic/ProjectiveFraisseInvLimit.lean"
-        },
-        {
-          "name": "ProofSystemCollapse.lean",
-          "type": "file",
-          "path": "Catalog/Logic/ProofSystemCollapse.lean"
-        },
-        {
-          "name": "PvsNPFoundations.lean",
-          "type": "file",
-          "path": "Catalog/Logic/PvsNPFoundations.lean"
-        },
-        {
           "name": "StrangeLoops",
           "type": "directory",
           "children": [
@@ -1649,16 +1559,6 @@
               "path": "Catalog/Logic/StrangeLoops/Core.lean"
             }
           ]
-        },
-        {
-          "name": "StronglyCriticalOrdinals.lean",
-          "type": "file",
-          "path": "Catalog/Logic/StronglyCriticalOrdinals.lean"
-        },
-        {
-          "name": "Suspension.lean",
-          "type": "file",
-          "path": "Catalog/Logic/Suspension.lean"
         },
         {
           "name": "TopoErrorMitigation",
@@ -1692,6 +1592,106 @@
           ]
         },
         {
+          "name": "ApproxRamseyDegree.lean",
+          "type": "file",
+          "path": "Catalog/Logic/ApproxRamseyDegree.lean"
+        },
+        {
+          "name": "Bisection.lean",
+          "type": "file",
+          "path": "Catalog/Logic/Bisection.lean"
+        },
+        {
+          "name": "Bohm.lean",
+          "type": "file",
+          "path": "Catalog/Logic/Bohm.lean"
+        },
+        {
+          "name": "ChainInvariants.lean",
+          "type": "file",
+          "path": "Catalog/Logic/ChainInvariants.lean"
+        },
+        {
+          "name": "CircuitComplexityBarriers.lean",
+          "type": "file",
+          "path": "Catalog/Logic/CircuitComplexityBarriers.lean"
+        },
+        {
+          "name": "Defs.lean",
+          "type": "file",
+          "path": "Catalog/Logic/Defs.lean"
+        },
+        {
+          "name": "Freivalds.lean",
+          "type": "file",
+          "path": "Catalog/Logic/Freivalds.lean"
+        },
+        {
+          "name": "GLKripke.lean",
+          "type": "file",
+          "path": "Catalog/Logic/GLKripke.lean"
+        },
+        {
+          "name": "GLRankStratification.lean",
+          "type": "file",
+          "path": "Catalog/Logic/GLRankStratification.lean"
+        },
+        {
+          "name": "GLRankmatch.lean",
+          "type": "file",
+          "path": "Catalog/Logic/GLRankmatch.lean"
+        },
+        {
+          "name": "GaleStewartCore.lean",
+          "type": "file",
+          "path": "Catalog/Logic/GaleStewartCore.lean"
+        },
+        {
+          "name": "GuardedTrace.lean",
+          "type": "file",
+          "path": "Catalog/Logic/GuardedTrace.lean"
+        },
+        {
+          "name": "JarzynskiLandauer.lean",
+          "type": "file",
+          "path": "Catalog/Logic/JarzynskiLandauer.lean"
+        },
+        {
+          "name": "NormalizationSimplexFunctor.lean",
+          "type": "file",
+          "path": "Catalog/Logic/NormalizationSimplexFunctor.lean"
+        },
+        {
+          "name": "ParadoxSelfSoundness.lean",
+          "type": "file",
+          "path": "Catalog/Logic/ParadoxSelfSoundness.lean"
+        },
+        {
+          "name": "ProjectiveFraisseInvLimit.lean",
+          "type": "file",
+          "path": "Catalog/Logic/ProjectiveFraisseInvLimit.lean"
+        },
+        {
+          "name": "ProofSystemCollapse.lean",
+          "type": "file",
+          "path": "Catalog/Logic/ProofSystemCollapse.lean"
+        },
+        {
+          "name": "PvsNPFoundations.lean",
+          "type": "file",
+          "path": "Catalog/Logic/PvsNPFoundations.lean"
+        },
+        {
+          "name": "StronglyCriticalOrdinals.lean",
+          "type": "file",
+          "path": "Catalog/Logic/StronglyCriticalOrdinals.lean"
+        },
+        {
+          "name": "Suspension.lean",
+          "type": "file",
+          "path": "Catalog/Logic/Suspension.lean"
+        },
+        {
           "name": "TransfiniteRefinement.lean",
           "type": "file",
           "path": "Catalog/Logic/TransfiniteRefinement.lean"
@@ -1712,11 +1712,6 @@
       "name": "MachineLearning",
       "type": "directory",
       "children": [
-        {
-          "name": "ABCTriple.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/ABCTriple.lean"
-        },
         {
           "name": "AdelicSync",
           "type": "directory",
@@ -1751,36 +1746,6 @@
           ]
         },
         {
-          "name": "BernoulliMeasure.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/BernoulliMeasure.lean"
-        },
-        {
-          "name": "CASpacetimeAperiodicity.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/CASpacetimeAperiodicity.lean"
-        },
-        {
-          "name": "CNFRealizability.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/CNFRealizability.lean"
-        },
-        {
-          "name": "CRT.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/CRT.lean"
-        },
-        {
-          "name": "CechComplex.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/CechComplex.lean"
-        },
-        {
-          "name": "CharCorrelation.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/CharCorrelation.lean"
-        },
-        {
           "name": "ChromaticPolynomial",
           "type": "directory",
           "children": [
@@ -1790,31 +1755,6 @@
               "path": "Catalog/MachineLearning/ChromaticPolynomial/Basic.lean"
             }
           ]
-        },
-        {
-          "name": "ClosureTheoreticML.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/ClosureTheoreticML.lean"
-        },
-        {
-          "name": "CoeffRestriction.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/CoeffRestriction.lean"
-        },
-        {
-          "name": "Compositionality.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/Compositionality.lean"
-        },
-        {
-          "name": "Consequences.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/Consequences.lean"
-        },
-        {
-          "name": "Cycles.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/Cycles.lean"
         },
         {
           "name": "DepthHierarchy",
@@ -1860,16 +1800,6 @@
           ]
         },
         {
-          "name": "Evaluation.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/Evaluation.lean"
-        },
-        {
-          "name": "FactoredBellmanResidual.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/FactoredBellmanResidual.lean"
-        },
-        {
           "name": "FixedPoint",
           "type": "directory",
           "children": [
@@ -1886,16 +1816,6 @@
           ]
         },
         {
-          "name": "Foundations.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/Foundations.lean"
-        },
-        {
-          "name": "FredholmAlternative.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/FredholmAlternative.lean"
-        },
-        {
           "name": "FunctorialEntropy",
           "type": "directory",
           "children": [
@@ -1907,11 +1827,6 @@
           ]
         },
         {
-          "name": "GCDPeriodicity.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/GCDPeriodicity.lean"
-        },
-        {
           "name": "GapAutomaton",
           "type": "directory",
           "children": [
@@ -1921,21 +1836,6 @@
               "path": "Catalog/MachineLearning/GapAutomaton/Core.lean"
             }
           ]
-        },
-        {
-          "name": "Gaussian.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/Gaussian.lean"
-        },
-        {
-          "name": "GenTuranThreshold.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/GenTuranThreshold.lean"
-        },
-        {
-          "name": "GrowthEstimate.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/GrowthEstimate.lean"
         },
         {
           "name": "HilbertHotelPrimes",
@@ -1965,11 +1865,6 @@
           ]
         },
         {
-          "name": "LocalGlobalGeometry.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/LocalGlobalGeometry.lean"
-        },
-        {
           "name": "MahlerMeasure",
           "type": "directory",
           "children": [
@@ -1979,26 +1874,6 @@
               "path": "Catalog/MachineLearning/MahlerMeasure/Defs.lean"
             }
           ]
-        },
-        {
-          "name": "ModPSpectralFingerprint.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/ModPSpectralFingerprint.lean"
-        },
-        {
-          "name": "ModelShrinkage.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/ModelShrinkage.lean"
-        },
-        {
-          "name": "MotivicPersistence.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/MotivicPersistence.lean"
-        },
-        {
-          "name": "MulticlassMargin.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/MulticlassMargin.lean"
         },
         {
           "name": "NavierStokes",
@@ -2072,11 +1947,6 @@
           ]
         },
         {
-          "name": "ResNetLipschitz.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/ResNetLipschitz.lean"
-        },
-        {
           "name": "SelfImproving",
           "type": "directory",
           "children": [
@@ -2097,21 +1967,6 @@
               "path": "Catalog/MachineLearning/SpectralSelfAdjoint/Basic.lean"
             }
           ]
-        },
-        {
-          "name": "Stability.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/Stability.lean"
-        },
-        {
-          "name": "SurvivorSieve.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/SurvivorSieve.lean"
-        },
-        {
-          "name": "TreeIndependenceKStar.lean",
-          "type": "file",
-          "path": "Catalog/MachineLearning/TreeIndependenceKStar.lean"
         },
         {
           "name": "TropicalDistributed",
@@ -2147,6 +2002,162 @@
           ]
         },
         {
+          "name": "UniversalApproximation",
+          "type": "directory",
+          "children": [
+            {
+              "name": "QuantitativeBoundsCore.lean",
+              "type": "file",
+              "path": "Catalog/MachineLearning/UniversalApproximation/QuantitativeBoundsCore.lean"
+            }
+          ]
+        },
+        {
+          "name": "ABCTriple.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/ABCTriple.lean"
+        },
+        {
+          "name": "BernoulliMeasure.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/BernoulliMeasure.lean"
+        },
+        {
+          "name": "CASpacetimeAperiodicity.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/CASpacetimeAperiodicity.lean"
+        },
+        {
+          "name": "CNFRealizability.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/CNFRealizability.lean"
+        },
+        {
+          "name": "CRT.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/CRT.lean"
+        },
+        {
+          "name": "CechComplex.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/CechComplex.lean"
+        },
+        {
+          "name": "CharCorrelation.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/CharCorrelation.lean"
+        },
+        {
+          "name": "ClosureTheoreticML.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/ClosureTheoreticML.lean"
+        },
+        {
+          "name": "CoeffRestriction.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/CoeffRestriction.lean"
+        },
+        {
+          "name": "Compositionality.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/Compositionality.lean"
+        },
+        {
+          "name": "Consequences.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/Consequences.lean"
+        },
+        {
+          "name": "Cycles.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/Cycles.lean"
+        },
+        {
+          "name": "Evaluation.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/Evaluation.lean"
+        },
+        {
+          "name": "FactoredBellmanResidual.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/FactoredBellmanResidual.lean"
+        },
+        {
+          "name": "Foundations.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/Foundations.lean"
+        },
+        {
+          "name": "FredholmAlternative.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/FredholmAlternative.lean"
+        },
+        {
+          "name": "GCDPeriodicity.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/GCDPeriodicity.lean"
+        },
+        {
+          "name": "Gaussian.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/Gaussian.lean"
+        },
+        {
+          "name": "GenTuranThreshold.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/GenTuranThreshold.lean"
+        },
+        {
+          "name": "GrowthEstimate.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/GrowthEstimate.lean"
+        },
+        {
+          "name": "LocalGlobalGeometry.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/LocalGlobalGeometry.lean"
+        },
+        {
+          "name": "ModPSpectralFingerprint.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/ModPSpectralFingerprint.lean"
+        },
+        {
+          "name": "ModelShrinkage.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/ModelShrinkage.lean"
+        },
+        {
+          "name": "MotivicPersistence.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/MotivicPersistence.lean"
+        },
+        {
+          "name": "MulticlassMargin.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/MulticlassMargin.lean"
+        },
+        {
+          "name": "ResNetLipschitz.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/ResNetLipschitz.lean"
+        },
+        {
+          "name": "Stability.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/Stability.lean"
+        },
+        {
+          "name": "SurvivorSieve.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/SurvivorSieve.lean"
+        },
+        {
+          "name": "TreeIndependenceKStar.lean",
+          "type": "file",
+          "path": "Catalog/MachineLearning/TreeIndependenceKStar.lean"
+        },
+        {
           "name": "TropicalReLUBridge.lean",
           "type": "file",
           "path": "Catalog/MachineLearning/TropicalReLUBridge.lean"
@@ -2160,24 +2171,8 @@
           "name": "UniqueOddExponent.lean",
           "type": "file",
           "path": "Catalog/MachineLearning/UniqueOddExponent.lean"
-        },
-        {
-          "name": "UniversalApproximation",
-          "type": "directory",
-          "children": [
-            {
-              "name": "QuantitativeBoundsCore.lean",
-              "type": "file",
-              "path": "Catalog/MachineLearning/UniversalApproximation/QuantitativeBoundsCore.lean"
-            }
-          ]
         }
       ]
-    },
-    {
-      "name": "Main.lean",
-      "type": "file",
-      "path": "Catalog/Main.lean"
     },
     {
       "name": "Novelty",
@@ -2260,6 +2255,17 @@
       "type": "directory",
       "children": [
         {
+          "name": "Langlands",
+          "type": "directory",
+          "children": [
+            {
+              "name": "HeckeFactorization.lean",
+              "type": "file",
+              "path": "Catalog/NumberTheory/Langlands/HeckeFactorization.lean"
+            }
+          ]
+        },
+        {
           "name": "EffectiveBounds.lean",
           "type": "file",
           "path": "Catalog/NumberTheory/EffectiveBounds.lean"
@@ -2273,17 +2279,6 @@
           "name": "Irrationality.lean",
           "type": "file",
           "path": "Catalog/NumberTheory/Irrationality.lean"
-        },
-        {
-          "name": "Langlands",
-          "type": "directory",
-          "children": [
-            {
-              "name": "HeckeFactorization.lean",
-              "type": "file",
-              "path": "Catalog/NumberTheory/Langlands/HeckeFactorization.lean"
-            }
-          ]
         },
         {
           "name": "PotentialGames.lean",
@@ -2302,16 +2297,6 @@
       "type": "directory",
       "children": [
         {
-          "name": "AngularMomentum.lean",
-          "type": "file",
-          "path": "Catalog/Physics/AngularMomentum.lean"
-        },
-        {
-          "name": "Bridge.lean",
-          "type": "file",
-          "path": "Catalog/Physics/Bridge.lean"
-        },
-        {
           "name": "CategoricalPhysics",
           "type": "directory",
           "children": [
@@ -2321,6 +2306,54 @@
               "path": "Catalog/Physics/CategoricalPhysics/Theorems.lean"
             }
           ]
+        },
+        {
+          "name": "ProofPhaseTransitions",
+          "type": "directory",
+          "children": [
+            {
+              "name": "RandomKSAT.lean",
+              "type": "file",
+              "path": "Catalog/Physics/ProofPhaseTransitions/RandomKSAT.lean"
+            }
+          ]
+        },
+        {
+          "name": "QuantumMacWilliams",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Krawtchouk.lean",
+              "type": "file",
+              "path": "Catalog/Physics/QuantumMacWilliams/Krawtchouk.lean"
+            }
+          ]
+        },
+        {
+          "name": "SpectralLinkHomology",
+          "type": "directory",
+          "children": [
+            {
+              "name": "ConeAcyclic.lean",
+              "type": "file",
+              "path": "Catalog/Physics/SpectralLinkHomology/ConeAcyclic.lean"
+            },
+            {
+              "name": "LinkRigidity.lean",
+              "type": "file",
+              "path": "Catalog/Physics/SpectralLinkHomology/LinkRigidity.lean"
+            }
+          ]
+        },
+        {
+          "name": "AngularMomentum.lean",
+          "type": "file",
+          "path": "Catalog/Physics/AngularMomentum.lean"
+        },
+        {
+          "name": "Bridge.lean",
+          "type": "file",
+          "path": "Catalog/Physics/Bridge.lean"
         },
         {
           "name": "CechContextualityCore.lean",
@@ -2368,47 +2401,9 @@
           "path": "Catalog/Physics/LongTimeMetastability.lean"
         },
         {
-          "name": "ProofPhaseTransitions",
-          "type": "directory",
-          "children": [
-            {
-              "name": "RandomKSAT.lean",
-              "type": "file",
-              "path": "Catalog/Physics/ProofPhaseTransitions/RandomKSAT.lean"
-            }
-          ]
-        },
-        {
-          "name": "QuantumMacWilliams",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Krawtchouk.lean",
-              "type": "file",
-              "path": "Catalog/Physics/QuantumMacWilliams/Krawtchouk.lean"
-            }
-          ]
-        },
-        {
           "name": "ReflectionPositivityMassGap.lean",
           "type": "file",
           "path": "Catalog/Physics/ReflectionPositivityMassGap.lean"
-        },
-        {
-          "name": "SpectralLinkHomology",
-          "type": "directory",
-          "children": [
-            {
-              "name": "ConeAcyclic.lean",
-              "type": "file",
-              "path": "Catalog/Physics/SpectralLinkHomology/ConeAcyclic.lean"
-            },
-            {
-              "name": "LinkRigidity.lean",
-              "type": "file",
-              "path": "Catalog/Physics/SpectralLinkHomology/LinkRigidity.lean"
-            }
-          ]
         },
         {
           "name": "StabilizerBounds.lean",
@@ -2478,46 +2473,6 @@
       "type": "directory",
       "children": [
         {
-          "name": "AbstractRewriteAlgebra.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/AbstractRewriteAlgebra.lean"
-        },
-        {
-          "name": "AdelicPersistentHomology.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/AdelicPersistentHomology.lean"
-        },
-        {
-          "name": "ArithmeticTDAPipeline.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/ArithmeticTDAPipeline.lean"
-        },
-        {
-          "name": "AssignmentGapExtension.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/AssignmentGapExtension.lean"
-        },
-        {
-          "name": "AsymptoticCompactness.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/AsymptoticCompactness.lean"
-        },
-        {
-          "name": "BerggrenCompleteness.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/BerggrenCompleteness.lean"
-        },
-        {
-          "name": "CRTBottleneck.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/CRTBottleneck.lean"
-        },
-        {
-          "name": "CausalLoops.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/CausalLoops.lean"
-        },
-        {
           "name": "CayleyExpander",
           "type": "directory",
           "children": [
@@ -2537,21 +2492,6 @@
               "path": "Catalog/Pythagorean/CayleyExpander/SL2Generation.lean"
             }
           ]
-        },
-        {
-          "name": "CircleMethodDensity.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/CircleMethodDensity.lean"
-        },
-        {
-          "name": "ConjugationProductCover.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/ConjugationProductCover.lean"
-        },
-        {
-          "name": "ContinuousRenormFlow.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/ContinuousRenormFlow.lean"
         },
         {
           "name": "CurvatureFlow",
@@ -2576,16 +2516,6 @@
           ]
         },
         {
-          "name": "Duality.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/Duality.lean"
-        },
-        {
-          "name": "FermionicPlucker.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/FermionicPlucker.lean"
-        },
-        {
           "name": "Frameworks",
           "type": "directory",
           "children": [
@@ -2595,21 +2525,6 @@
               "path": "Catalog/Pythagorean/Frameworks/Foundations.lean"
             }
           ]
-        },
-        {
-          "name": "FunctorialLocalization.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/FunctorialLocalization.lean"
-        },
-        {
-          "name": "GL2SpectralGap.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/GL2SpectralGap.lean"
-        },
-        {
-          "name": "GaussianPythagorean.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/GaussianPythagorean.lean"
         },
         {
           "name": "GrowthRankCompleteness",
@@ -2623,26 +2538,6 @@
           ]
         },
         {
-          "name": "HelfgottSL2.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/HelfgottSL2.lean"
-        },
-        {
-          "name": "HessianDescent.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/HessianDescent.lean"
-        },
-        {
-          "name": "HigherOrderCompletion.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/HigherOrderCompletion.lean"
-        },
-        {
-          "name": "KTupleMoebiusInversion.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/KTupleMoebiusInversion.lean"
-        },
-        {
           "name": "LorentzianPermutohedra",
           "type": "directory",
           "children": [
@@ -2652,31 +2547,6 @@
               "path": "Catalog/Pythagorean/LorentzianPermutohedra/EhrhartSeries.lean"
             }
           ]
-        },
-        {
-          "name": "LorentzianRecognitionComplete.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/LorentzianRecognitionComplete.lean"
-        },
-        {
-          "name": "MiuraFlipDegree.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/MiuraFlipDegree.lean"
-        },
-        {
-          "name": "NewtonEntropyHierarchy.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/NewtonEntropyHierarchy.lean"
-        },
-        {
-          "name": "PrimeSplitting.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/PrimeSplitting.lean"
-        },
-        {
-          "name": "PrimewiseTorsionStability.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/PrimewiseTorsionStability.lean"
         },
         {
           "name": "ProbeComplexity",
@@ -2695,31 +2565,6 @@
           ]
         },
         {
-          "name": "ProofTheoreticOrdinalsEpsilon.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/ProofTheoreticOrdinalsEpsilon.lean"
-        },
-        {
-          "name": "QuantumRungeLenz.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/QuantumRungeLenz.lean"
-        },
-        {
-          "name": "QuotientClosure.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/QuotientClosure.lean"
-        },
-        {
-          "name": "ReflectionPositivity.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/ReflectionPositivity.lean"
-        },
-        {
-          "name": "RepulsiveInfoGeometry.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/RepulsiveInfoGeometry.lean"
-        },
-        {
           "name": "SNFObstruction",
           "type": "directory",
           "children": [
@@ -2731,21 +2576,6 @@
           ]
         },
         {
-          "name": "SemidirectUniversality.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/SemidirectUniversality.lean"
-        },
-        {
-          "name": "Sp2nExpansion.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/Sp2nExpansion.lean"
-        },
-        {
-          "name": "StrongNormBisimulation.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/StrongNormBisimulation.lean"
-        },
-        {
           "name": "TateThesis",
           "type": "directory",
           "children": [
@@ -2755,11 +2585,6 @@
               "path": "Catalog/Pythagorean/TateThesis/Defs.lean"
             }
           ]
-        },
-        {
-          "name": "TensorExtractionOptimality.lean",
-          "type": "file",
-          "path": "Catalog/Pythagorean/TensorExtractionOptimality.lean"
         },
         {
           "name": "TropicalAction",
@@ -2805,6 +2630,176 @@
           ]
         },
         {
+          "name": "AbstractRewriteAlgebra.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/AbstractRewriteAlgebra.lean"
+        },
+        {
+          "name": "AdelicPersistentHomology.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/AdelicPersistentHomology.lean"
+        },
+        {
+          "name": "ArithmeticTDAPipeline.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/ArithmeticTDAPipeline.lean"
+        },
+        {
+          "name": "AssignmentGapExtension.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/AssignmentGapExtension.lean"
+        },
+        {
+          "name": "AsymptoticCompactness.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/AsymptoticCompactness.lean"
+        },
+        {
+          "name": "BerggrenCompleteness.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/BerggrenCompleteness.lean"
+        },
+        {
+          "name": "CRTBottleneck.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/CRTBottleneck.lean"
+        },
+        {
+          "name": "CausalLoops.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/CausalLoops.lean"
+        },
+        {
+          "name": "CircleMethodDensity.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/CircleMethodDensity.lean"
+        },
+        {
+          "name": "ConjugationProductCover.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/ConjugationProductCover.lean"
+        },
+        {
+          "name": "ContinuousRenormFlow.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/ContinuousRenormFlow.lean"
+        },
+        {
+          "name": "Duality.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/Duality.lean"
+        },
+        {
+          "name": "FermionicPlucker.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/FermionicPlucker.lean"
+        },
+        {
+          "name": "FunctorialLocalization.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/FunctorialLocalization.lean"
+        },
+        {
+          "name": "GL2SpectralGap.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/GL2SpectralGap.lean"
+        },
+        {
+          "name": "GaussianPythagorean.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/GaussianPythagorean.lean"
+        },
+        {
+          "name": "HelfgottSL2.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/HelfgottSL2.lean"
+        },
+        {
+          "name": "HessianDescent.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/HessianDescent.lean"
+        },
+        {
+          "name": "HigherOrderCompletion.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/HigherOrderCompletion.lean"
+        },
+        {
+          "name": "KTupleMoebiusInversion.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/KTupleMoebiusInversion.lean"
+        },
+        {
+          "name": "LorentzianRecognitionComplete.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/LorentzianRecognitionComplete.lean"
+        },
+        {
+          "name": "MiuraFlipDegree.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/MiuraFlipDegree.lean"
+        },
+        {
+          "name": "NewtonEntropyHierarchy.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/NewtonEntropyHierarchy.lean"
+        },
+        {
+          "name": "PrimeSplitting.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/PrimeSplitting.lean"
+        },
+        {
+          "name": "PrimewiseTorsionStability.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/PrimewiseTorsionStability.lean"
+        },
+        {
+          "name": "ProofTheoreticOrdinalsEpsilon.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/ProofTheoreticOrdinalsEpsilon.lean"
+        },
+        {
+          "name": "QuantumRungeLenz.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/QuantumRungeLenz.lean"
+        },
+        {
+          "name": "QuotientClosure.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/QuotientClosure.lean"
+        },
+        {
+          "name": "ReflectionPositivity.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/ReflectionPositivity.lean"
+        },
+        {
+          "name": "RepulsiveInfoGeometry.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/RepulsiveInfoGeometry.lean"
+        },
+        {
+          "name": "SemidirectUniversality.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/SemidirectUniversality.lean"
+        },
+        {
+          "name": "Sp2nExpansion.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/Sp2nExpansion.lean"
+        },
+        {
+          "name": "StrongNormBisimulation.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/StrongNormBisimulation.lean"
+        },
+        {
+          "name": "TensorExtractionOptimality.lean",
+          "type": "file",
+          "path": "Catalog/Pythagorean/TensorExtractionOptimality.lean"
+        },
+        {
           "name": "UniversalSupportTutte.lean",
           "type": "file",
           "path": "Catalog/Pythagorean/UniversalSupportTutte.lean"
@@ -2821,16 +2816,6 @@
       "type": "directory",
       "children": [
         {
-          "name": "CarmichaelProof.lean",
-          "type": "file",
-          "path": "Catalog/Shared/CarmichaelProof.lean"
-        },
-        {
-          "name": "RegisterGraphColoring.lean",
-          "type": "file",
-          "path": "Catalog/Shared/RegisterGraphColoring.lean"
-        },
-        {
           "name": "ReverseMath",
           "type": "directory",
           "children": [
@@ -2840,6 +2825,16 @@
               "path": "Catalog/Shared/ReverseMath/Implications.lean"
             }
           ]
+        },
+        {
+          "name": "CarmichaelProof.lean",
+          "type": "file",
+          "path": "Catalog/Shared/CarmichaelProof.lean"
+        },
+        {
+          "name": "RegisterGraphColoring.lean",
+          "type": "file",
+          "path": "Catalog/Shared/RegisterGraphColoring.lean"
         },
         {
           "name": "SelbergClassCensus.lean",
@@ -2880,6 +2875,227 @@
       "type": "directory",
       "children": [
         {
+          "name": "Applications",
+          "type": "directory",
+          "children": [
+            {
+              "name": "TropicalEquivalenceInvariance.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/Applications/TropicalEquivalenceInvariance.lean"
+            }
+          ]
+        },
+        {
+          "name": "ArithmeticUniversality",
+          "type": "directory",
+          "children": [
+            {
+              "name": "TropicalMorse.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/ArithmeticUniversality/TropicalMorse.lean"
+            }
+          ]
+        },
+        {
+          "name": "Core",
+          "type": "directory",
+          "children": [
+            {
+              "name": "TropicalPolynomials.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/Core/TropicalPolynomials.lean"
+            },
+            {
+              "name": "TropicalSemiringProperties.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/Core/TropicalSemiringProperties.lean"
+            }
+          ]
+        },
+        {
+          "name": "DeltaMatroid",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Examples.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/DeltaMatroid/Examples.lean"
+            },
+            {
+              "name": "Interpolation.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/DeltaMatroid/Interpolation.lean"
+            },
+            {
+              "name": "Twist.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/DeltaMatroid/Twist.lean"
+            }
+          ]
+        },
+        {
+          "name": "FourierAnalysis",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Core.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/FourierAnalysis/Core.lean"
+            }
+          ]
+        },
+        {
+          "name": "HodgeDecomposition",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Defs.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/HodgeDecomposition/Defs.lean"
+            }
+          ]
+        },
+        {
+          "name": "HodgeTheory",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Foundations.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/HodgeTheory/Foundations.lean"
+            }
+          ]
+        },
+        {
+          "name": "IdempotentSemiring",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Defs.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/IdempotentSemiring/Defs.lean"
+            }
+          ]
+        },
+        {
+          "name": "Langlands",
+          "type": "directory",
+          "children": [
+            {
+              "name": "SatakeIsomorphism.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/Langlands/SatakeIsomorphism.lean"
+            },
+            {
+              "name": "TropicalSatakeGL3.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/Langlands/TropicalSatakeGL3.lean"
+            }
+          ]
+        },
+        {
+          "name": "MeasureTheory",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Basic.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/MeasureTheory/Basic.lean"
+            },
+            {
+              "name": "DualityGap.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/MeasureTheory/DualityGap.lean"
+            },
+            {
+              "name": "LargeDeviations.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/MeasureTheory/LargeDeviations.lean"
+            }
+          ]
+        },
+        {
+          "name": "MultiInvariant",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Core.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/MultiInvariant/Core.lean"
+            }
+          ]
+        },
+        {
+          "name": "NeuralNetworks",
+          "type": "directory",
+          "children": [
+            {
+              "name": "NDimLogSumExp.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/NeuralNetworks/NDimLogSumExp.lean"
+            },
+            {
+              "name": "SoftMaxConvergence.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/NeuralNetworks/SoftMaxConvergence.lean"
+            },
+            {
+              "name": "TropicalDegreeRobustness.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/NeuralNetworks/TropicalDegreeRobustness.lean"
+            },
+            {
+              "name": "TropicalSemiringHom.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/NeuralNetworks/TropicalSemiringHom.lean"
+            }
+          ]
+        },
+        {
+          "name": "PerformanceEnvelope",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Core.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/PerformanceEnvelope/Core.lean"
+            }
+          ]
+        },
+        {
+          "name": "PersistentHomology",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Theorems.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/PersistentHomology/Theorems.lean"
+            }
+          ]
+        },
+        {
+          "name": "StatisticalMechanics",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Basic.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/StatisticalMechanics/Basic.lean"
+            }
+          ]
+        },
+        {
+          "name": "SymbolicDynamics",
+          "type": "directory",
+          "children": [
+            {
+              "name": "Core.lean",
+              "type": "file",
+              "path": "Catalog/Tropical/SymbolicDynamics/Core.lean"
+            }
+          ]
+        },
+        {
           "name": "ACCanonical.lean",
           "type": "file",
           "path": "Catalog/Tropical/ACCanonical.lean"
@@ -2900,31 +3116,9 @@
           "path": "Catalog/Tropical/AmplitudeAmplification.lean"
         },
         {
-          "name": "Applications",
-          "type": "directory",
-          "children": [
-            {
-              "name": "TropicalEquivalenceInvariance.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/Applications/TropicalEquivalenceInvariance.lean"
-            }
-          ]
-        },
-        {
           "name": "Applications.lean",
           "type": "file",
           "path": "Catalog/Tropical/Applications.lean"
-        },
-        {
-          "name": "ArithmeticUniversality",
-          "type": "directory",
-          "children": [
-            {
-              "name": "TropicalMorse.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/ArithmeticUniversality/TropicalMorse.lean"
-            }
-          ]
         },
         {
           "name": "CertifiedCanonicalization.lean",
@@ -2952,46 +3146,9 @@
           "path": "Catalog/Tropical/ContinuousComparison.lean"
         },
         {
-          "name": "Core",
-          "type": "directory",
-          "children": [
-            {
-              "name": "TropicalPolynomials.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/Core/TropicalPolynomials.lean"
-            },
-            {
-              "name": "TropicalSemiringProperties.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/Core/TropicalSemiringProperties.lean"
-            }
-          ]
-        },
-        {
           "name": "CyclotomicKnotSpectra.lean",
           "type": "file",
           "path": "Catalog/Tropical/CyclotomicKnotSpectra.lean"
-        },
-        {
-          "name": "DeltaMatroid",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Examples.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/DeltaMatroid/Examples.lean"
-            },
-            {
-              "name": "Interpolation.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/DeltaMatroid/Interpolation.lean"
-            },
-            {
-              "name": "Twist.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/DeltaMatroid/Twist.lean"
-            }
-          ]
         },
         {
           "name": "DiffConstraints.lean",
@@ -3029,17 +3186,6 @@
           "path": "Catalog/Tropical/FiberEntropy.lean"
         },
         {
-          "name": "FourierAnalysis",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Core.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/FourierAnalysis/Core.lean"
-            }
-          ]
-        },
-        {
           "name": "GL3_ReconstructionFromRank2LeviProfiles.lean",
           "type": "file",
           "path": "Catalog/Tropical/GL3_ReconstructionFromRank2LeviProfiles.lean"
@@ -3055,42 +3201,9 @@
           "path": "Catalog/Tropical/GumbelFoundations.lean"
         },
         {
-          "name": "HodgeDecomposition",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Defs.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/HodgeDecomposition/Defs.lean"
-            }
-          ]
-        },
-        {
-          "name": "HodgeTheory",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Foundations.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/HodgeTheory/Foundations.lean"
-            }
-          ]
-        },
-        {
           "name": "HorizonStability.lean",
           "type": "file",
           "path": "Catalog/Tropical/HorizonStability.lean"
-        },
-        {
-          "name": "IdempotentSemiring",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Defs.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/IdempotentSemiring/Defs.lean"
-            }
-          ]
         },
         {
           "name": "LSEConvexity.lean",
@@ -3098,46 +3211,9 @@
           "path": "Catalog/Tropical/LSEConvexity.lean"
         },
         {
-          "name": "Langlands",
-          "type": "directory",
-          "children": [
-            {
-              "name": "SatakeIsomorphism.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/Langlands/SatakeIsomorphism.lean"
-            },
-            {
-              "name": "TropicalSatakeGL3.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/Langlands/TropicalSatakeGL3.lean"
-            }
-          ]
-        },
-        {
           "name": "LowRankAttack.lean",
           "type": "file",
           "path": "Catalog/Tropical/LowRankAttack.lean"
-        },
-        {
-          "name": "MeasureTheory",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Basic.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/MeasureTheory/Basic.lean"
-            },
-            {
-              "name": "DualityGap.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/MeasureTheory/DualityGap.lean"
-            },
-            {
-              "name": "LargeDeviations.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/MeasureTheory/LargeDeviations.lean"
-            }
-          ]
         },
         {
           "name": "MinPlusAlgebra.lean",
@@ -3155,73 +3231,14 @@
           "path": "Catalog/Tropical/MixingTheory.lean"
         },
         {
-          "name": "MultiInvariant",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Core.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/MultiInvariant/Core.lean"
-            }
-          ]
-        },
-        {
           "name": "MutualInformation.lean",
           "type": "file",
           "path": "Catalog/Tropical/MutualInformation.lean"
         },
         {
-          "name": "NeuralNetworks",
-          "type": "directory",
-          "children": [
-            {
-              "name": "NDimLogSumExp.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/NeuralNetworks/NDimLogSumExp.lean"
-            },
-            {
-              "name": "SoftMaxConvergence.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/NeuralNetworks/SoftMaxConvergence.lean"
-            },
-            {
-              "name": "TropicalDegreeRobustness.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/NeuralNetworks/TropicalDegreeRobustness.lean"
-            },
-            {
-              "name": "TropicalSemiringHom.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/NeuralNetworks/TropicalSemiringHom.lean"
-            }
-          ]
-        },
-        {
           "name": "PRGSecurity.lean",
           "type": "file",
           "path": "Catalog/Tropical/PRGSecurity.lean"
-        },
-        {
-          "name": "PerformanceEnvelope",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Core.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/PerformanceEnvelope/Core.lean"
-            }
-          ]
-        },
-        {
-          "name": "PersistentHomology",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Theorems.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/PersistentHomology/Theorems.lean"
-            }
-          ]
         },
         {
           "name": "PolynomialBridge.lean",
@@ -3264,28 +3281,6 @@
           "path": "Catalog/Tropical/SpectralCausality.lean"
         },
         {
-          "name": "StatisticalMechanics",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Basic.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/StatisticalMechanics/Basic.lean"
-            }
-          ]
-        },
-        {
-          "name": "SymbolicDynamics",
-          "type": "directory",
-          "children": [
-            {
-              "name": "Core.lean",
-              "type": "file",
-              "path": "Catalog/Tropical/SymbolicDynamics/Core.lean"
-            }
-          ]
-        },
-        {
           "name": "VoiceLeading.lean",
           "type": "file",
           "path": "Catalog/Tropical/VoiceLeading.lean"
@@ -3296,6 +3291,11 @@
           "path": "Catalog/Tropical/WallpaperRhythm.lean"
         }
       ]
+    },
+    {
+      "name": "Main.lean",
+      "type": "file",
+      "path": "Catalog/Main.lean"
     }
   ]
 }
