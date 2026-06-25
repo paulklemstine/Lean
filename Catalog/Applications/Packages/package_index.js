@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7ca7bb8c",
     "filename": "nisq_optimized_quantum_error_mitigation_via_algebr.json",
     "pkg_num": 52,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.886574,
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology: Exact Betti-Count Recovery from Noisy Barcodes"
   },
   {
@@ -1517,8 +1517,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "nisq_optimized_quantum_error_mitigation_via_algebr",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.886574,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology: Exact Betti-Count Recovery from Noisy Barcodes"
     }

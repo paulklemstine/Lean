@@ -240,7 +240,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Correspondence: GL(1) Case"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4093c9b0",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
       "Physics",
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.909349+00:00",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
@@ -1404,7 +1404,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c053e0c9",
     "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
     "domains": [
       "Logic",
@@ -1414,7 +1414,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432759+00:00",
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
@@ -2974,7 +2974,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Binary 2-binomial equivalence class count equals cake number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d3eea85",
     "description": "The original theorem characterizes $D(k) = \\gcd_{2\\leq q\\leq k+1} \\binom{qk}{k} = 1$ based on the largest prime-power component of $n=k+1$. We propose a generalization: For fixed $k \\geq 2$ and a step size $s \\geq 1$, define $D(k, s) = \\gcd_{j=1}^{\\lfloor (k+1)/s \\rfloor} \\binom{(js)k}{k}$. The conjecture is that $D(k, s) = 1$ if and only if for every prime power $p^a \\parallel n=k+1$, the condition $n/p^a > p^a$ is modified by a factor dependent on $s$, specifically involving the p-adic valuation of $s$.",
     "domains": [
       "Pythagorean",
@@ -2984,7 +2984,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T22:28:01.614691+00:00",
     "title": "Generalization of the Binomial GCD Criterion for Arithmetic Progressions of Upper Indices"
   },
@@ -3136,7 +3136,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4d578ae",
     "description": "For every full-dimensional lattice polytope P in Z^n, let Sigma_P be the tropical hypersurface given by the codimension-one skeleton of the normal fan of P, with edge-length weights. The n-fold stable self-intersection Sigma_P \u2229_st ... \u2229_st Sigma_P is a reduced point at the origin if and only if P is a unimodular simplex, equivalently if and only if the normalized lattice volume n! vol(P) is equal to 1.",
     "domains": [
       "Geometry",
@@ -3146,7 +3146,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24339v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T02:18:16.655288+00:00",
     "title": "Unmixed Reduced Tropical Bernstein Criterion"
   },
@@ -3179,7 +3179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exactevaluation of the vector-space Erd\u0151s Matching number m_q(n,k,s)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97d45a04",
     "description": "For every integer k \u2265 1, let t = 2^k. Then the limit c_t = 1/2 + 2^{-2s_2(t)-1}, where s_2(t) is the binary sum-of-digits function. This conjecture asserts that the explicit lower bound provided in the paper is tight for all powers of two.",
     "domains": [
       "Pythagorean"
@@ -3188,7 +3188,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T04:55:09.073513+00:00",
     "title": "Tightness of the lower bound for powers of two in Cusick's sum-of-digits conjecture"
   },
@@ -4366,11 +4366,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for any fixed alphabet size b\u22652, the largest family C\u2286[b]^k in which every pair of distinct vectors yields a bipartite graph containing a cycle has size at most N_b(k), the number of good vectors defined by prescribed block sizes, and that this bound is attained for all sufficiently large k (in particular when k\u2261-1 (mod b)).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2494",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25055v1",
+    "status": "available",
+    "timestamp": "2026-06-25T05:24:56.704027+00:00",
+    "title": "Maximum size of cycle-containing families of vectors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2494",
+    "id": "fd_2495",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4384,13 +4398,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2495",
+    "id": "fd_2496",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
     "status": "available",
     "timestamp": "2026-06-25T04:59:16.364433+00:00",
     "title": "Irreducibility of Iterates for Quadratic Polynomials over $\\mathbb{Q}(i)$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every integer r \u2265 20, the Erd\u0151s\u2013Lov\u00e1sz cover number function satisfies g(r) \u2265 \u230a61r/20\u230b \u2212 4. This strengthens the asymptotic bound g(r) \u2265 (61/20 \u2212 o(1))r by providing an explicit additive constant, making the statement falsifiable for each specific r.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2497",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24878v1",
+    "status": "available",
+    "timestamp": "2026-06-25T05:25:15.555654+00:00",
+    "title": "Conjectured additive refinement of the 61/20 lower bound for g(r)"
   },
   {
     "consumed_by_exp_id": "",
@@ -4608,7 +4636,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "051409ce",
     "description": "Conjecture: The tropicalization of the n-qubit stabilizer state variety in the Grassmannian Gr(2^n, 2^n) yields a balanced polyhedral fan of dimension n(n+1)/2 whose maximal cones are in bijection with Clifford group orbits, and the tropical Pl\u00fccker relations restrict to the monogamy of entanglement inequalities (e.g., Coffman-Kundu-Wootters) on each cone. Test: For n=3,4, compute the tropical variety using numerical tropical algebraic geometry (e.g., via polymake or gfan) and verify: (1) cone count matches known Clifford orbit counts (1075 for n=3), (2) each cone's defining inequalities match the facet description of the corresponding entanglement polytope, (3) the tropical Hopf algebra structure induced by the stabilizer formalism's coalgebra yields a tropical quantum group classifying SLOCC classes. Impact: Establishes tropical geometry as a complete combinatorial invariant for stabilizer entanglement, provides polytime algorithms for entanglement classification via tropical membership tests, and constructs tropical quantum groups as new algebraic structures for quantum information.",
     "domains": [
       "Tropical",
@@ -4618,7 +4646,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7156190476190477,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:38.144414+00:00",
     "title": "Tropical Geometry of Stabilizer States: Entanglement Classification via Polyhedr"
   },
@@ -4668,7 +4696,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e930d2ca",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -4678,7 +4706,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -4725,21 +4753,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
-  },
-  {
-    "consumed_by_exp_id": "7ca7bb8c",
-    "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
-    "domains": [
-      "Algebra",
-      "Novelty"
-    ],
-    "id": "fd_2395",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T23:12:45.568532+00:00",
-    "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
   {
     "consumed_by_exp_id": "",
