@@ -43344,7 +43344,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -43360,7 +43360,7 @@
         "Algebra"
       ],
       "id": "fd_2488",
-      "last_attempt_time": "2026-06-25T11:11:46.925362+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:40:40.605952+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44146,6 +44146,52 @@
       "title": "Exponential Lower Bound for g_k(n) Conjecture"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Zas81",
+        "Gerards",
+        "Funk15"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every odd prime 𝑝 the class of biased graphs that admit a 𝑍ₚ‑gain labelling is minor‑closed and its only excluded minors are the balanced‑cycle–free graph (𝑝+1)K₂, the balanced triangle ±K₃ and the unbalanced 4‑cycle –K₄. In other words, a biased graph 𝔾 is 𝑍ₚ‑gainable iff it contains none of these three minors.",
+      "domain_bridges": [
+        "finite group theory",
+        "combinatorial topology"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2506",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem biased_graph_gainable_Zp_iff_no_excluded_minors {p : ℕ} [hp : Fact p.Prime] (G : BiasedGraph) :\n  G.gainableOver (ZMod p) ↔\n    ¬∃ H : BiasedGraph,\n      H.isMinorOf G ∧\n      (H ≅ (p+1) • K₂ ∨ H ≅ ±K₃ ∨ H ≅ -K₄)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the theory of partial groups developed in the paper to show that if a biased graph contains a minor isomorphic to (p+1)K₂ it cannot be 𝑍ₚ‑gainable. Conversely, show that any 𝑍ₚ‑gainable graph is forced to avoid the three excluded minors by reduction to the cases 𝑝=2 and 𝑝=3 and by an induction on 𝑝 using the fact that any 𝑍ₚ‑gainable graph is also 𝑍₂‑ and 𝑍₃‑gainable. The key step is to prove that every 𝑍ₚ‑gainable biased graph simultaneously satisfies the 𝑍₂‑ and 𝑍₃‑excluded minor conditions, hence satisfies the 𝑝‑excluded minor condition.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23826v1",
+      "source_path": "http://arxiv.org/abs/2606.23826v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T11:31:35.982720+00:00",
+      "title": "Excluded minors for bias graphs gainable over cyclic groups 𝑍ₚ"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -44171,7 +44217,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2506",
+      "id": "fd_2507",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -44215,7 +44261,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2507",
+      "id": "fd_2508",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -44258,7 +44304,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2508",
+      "id": "fd_2509",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -44301,7 +44347,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2509",
+      "id": "fd_2510",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
@@ -44347,7 +44393,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2510",
+      "id": "fd_2511",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularity_MMsplit (a : ℕ) (b : List ℕ) (hb : ∀ r ∈ b, 1 ≤ r) :\n  let G := MM a b\n  let ν := (b.filter (· ≥ 2)).length\n  reg (edgeIdeal G) = ν + 1 :=\nby\n  -- proof goes here",
@@ -44390,7 +44436,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2511",
+      "id": "fd_2512",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem self_dual_code_26_uniqueness : ∀ (C D : Code), (C.is_self_dual ∧ C.length = 26 ∧ C.min_weight = 6) → (D.is_self_dual ∧ D.length = 26 ∧ D.min_weight = 6) → ∃ (perm : Fin 26 → Fin 26), perm • C = D",
@@ -44431,7 +44477,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2512",
+      "id": "fd_2513",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "dimension theorem for Lie algebras",
@@ -44477,7 +44523,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2513",
+      "id": "fd_2514",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem random_linear_code_discrepancy (q : ℕ) [Fact (Nat.Prime q)] (n ρ : ℕ) (hρ : ρ ≤ n) (ε : ℝ) (hε : 0 < ε) :\n  ∀ᵉ (C : subspace (fin n) (zmod q)),\n    (∃ k, C.dimension = k ∧ k = ⌈(1 - (1 / n) * real.log (ball_volume q n ρ) + ε) * n⌉) →\n    (∀ z : (fin n → zmod q),\n      let B := hamming_ball q n ρ z in\n      let expected := (C.card * B.card : ℝ) / (q ^ n) in\n      (C.card ∩ B.card : ℝ) =ᵐ[ℙ] (1 ± o 1) * expected))",
@@ -44529,7 +44575,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2514",
+      "id": "fd_2515",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_erdos_matching_conjecture {q : ℕ} (hq : Nat.Prime q) (n k s : ℕ) (hn : n ≥ (s + 1) * k) :\n  m_q q n k s = max (gaussian_binomial (gaussian_binomial q ((s + 1) * k - 1) k)\n                                     (gaussian_binomial q n k - q ^ (k * s) * gaussian_binomial q (n - s) k) :=\n  sorry\n\n-- Where:\n-- m_q q n k s := maximum cardinality of a family of k-dim subspaces of (ZMod q)^n\n--   with no s+1 members having a direct sum\n-- gaussian_binomial q n k := [n choose k]_q = ∏_{i=0}^{k-1} (q^{n-i} - 1)/(q^{i+1} - 1)\n-- max_binomial a b := max a b",
@@ -44578,7 +44624,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2515",
+      "id": "fd_2516",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace HypergraphRamsey\n\n/-- `ramseyNumber k s m` is the least N such that every red/blue coloring of\n    the k-subsets of `[N]` has a red s-set or a blue m-set. -/\nconstant ramseyNumber : ℕ → ℕ → ℕ → ℕ\n\n/-- `shiftNumber3 t` is the 3-color shift number s_3(t). -/\nconstant shiftNumber3 : ℕ → ℕ\n\n/-- Conjecture: the paper's `1/2` coefficient can be improved to `2/3`. -/\ntheorem ramsey_diag_gt_shift_two_thirds\n    (k : ℕ) (hk : 9 ≤ k) :\n    shiftNumber3 ((2 * k) / 3 - 3) < ramseyNumber k (k + 1) (k + 1) := by\n  sorry\n\nend HypergraphRamsey",
@@ -44627,7 +44673,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2516",
+      "id": "fd_2517",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\n/-- `jacobiA R S` is the formal power series\n    1 / ((q^S;q^R)_∞ (q^(R-S);q^R)_∞ (q^R;q^R)_∞). -/\nconstant jacobiA : ℕ → ℕ → PowerSeries ℤ\n\n/-- `truncJacobi R S k` is the finite bilateral sum\n    ∑_{j=-k+1}^{k} (-1)^j q^(R*j*(j-1)/2 + S*j). -/\nconstant truncJacobi : ℕ → ℕ → ℕ → PowerSeries ℤ\n\n/-- Coefficient of q^n in\n    (-1)^(k-1) * (T_{R,S,k} * A_{R,S}^c - A_{R,S}^{c-1}). -/\nnoncomputable def coloredTruncJacobiCoeff\n    (R S k c n : ℕ) : ℤ :=\n  PowerSeries.coeff ℤ n\n    ((((-1 : ℤ) ^ (k - 1)) •\n      (truncJacobi R S k * (jacobiA R S) ^ c - (jacobiA R S) ^ (c - 1))))\n\nconjecture colored_truncated_jacobi_coeff_nonneg\n    (R S k c n : ℕ)\n    (hk : 1 ≤ k) (hc : 1 ≤ c)\n    (hS : 1 ≤ S) (hSR : 2 * S ≤ R)\n    (hn : 1 ≤ n) :\n  0 ≤ coloredTruncJacobiCoeff R S k c n",
@@ -44669,7 +44715,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2517",
+      "id": "fd_2518",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem curse_of_dimensionality {d : ℕ} (hAssum : Assumptions d) (ε : ℝ) (hε : 0 < ε) (hεbound : ε ≤ 1/2) : info_complexity_plus d ε ≥ (min (A B) : ℝ) ^ d := by sorry",
@@ -44716,7 +44762,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2518",
+      "id": "fd_2519",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem goncharov_weight_three_indecomposable_K_theory {F : Type*} [Field F] [Fact (CharP F = 0)] : (PolyL F 3 : Module ℚ) ≃ indecomposable_part (K_theory F 5 3) := by sorry",
@@ -44735,6 +44781,50 @@
       "thread_id": "",
       "timestamp": "2026-06-25T11:11:42.242502+00:00",
       "title": "Isomorphism between the weight‑3 Goncharov Lie coalgebra and the indecomposable part of K₅^{(3)}(F)⊗ℚ"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO:05C15"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: For any finite simple bipartite graph G with partite sets A and B, let Δ_A = max_{a∈A} deg_G(a) and Δ_B = max_{b∈B} deg_G(b). If Δ_A·Δ_B ≥ 1000 then the strong chromatic index satisfies χ'_s(G) ≤ ⌊(5/3)·Δ_A·Δ_B⌋. This would improve the current bound of 1.676·Δ_A·Δ_B for sufficiently large product and is sharp up to constant factor.",
+      "domain_bridges": [
+        "Extremal combinatorics",
+        "Probabilistic method",
+        "Lovász local lemma"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2520",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem strong_chromatic_index_bipartite_bound {V : Type*} [DecidableEq V] (G : SimpleGraph V) (hBip : Bipartite G A B) (hLarge : (maxDegreeOnSide G A) * (maxDegreeOnSide G B) ≥ 1000) : strongChromaticIndex G ≤ (5 : ℝ)/3 * ((maxDegreeOnSide G A : ℝ) * (maxDegreeOnSide G B : ℝ)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use a random edge‑coloring with (5/3)·Δ_A·Δ_B colors, then apply the Lovász local lemma to eliminate conflicts. Refine the dependency analysis by exploiting the bipartite structure to bound the number of edges at distance ≤2 from a given edge by (5/3)·Δ_A·Δ_B - 1, and use a discharging argument to handle the case when Δ_A·Δ_B is just above the threshold.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23824v1",
+      "source_path": "http://arxiv.org/abs/2606.23824v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T11:33:16.478948+00:00",
+      "title": "Improved asymptotic bound for the strong chromatic index of bipartite graphs"
     },
     {
       "ambition_level": "extension",

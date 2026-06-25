@@ -4451,11 +4451,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every odd prime \ud835\udc5d the class of biased graphs that admit a \ud835\udc4d\u209a\u2011gain labelling is minor\u2011closed and its only excluded minors are the balanced\u2011cycle\u2013free graph (\ud835\udc5d+1)K\u2082, the balanced triangle \u00b1K\u2083 and the unbalanced 4\u2011cycle \u2013K\u2084. In other words, a biased graph \ud835\udd3e is \ud835\udc4d\u209a\u2011gainable iff it contains none of these three minors.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2506",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23826v1",
+    "status": "available",
+    "timestamp": "2026-06-25T11:31:35.982720+00:00",
+    "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2506",
+    "id": "fd_2507",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4469,7 +4484,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2507",
+    "id": "fd_2508",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4483,7 +4498,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4497,7 +4512,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -4512,7 +4527,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2510",
+    "id": "fd_2511",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24822v1",
@@ -4526,7 +4541,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2511",
+    "id": "fd_2512",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24573v1",
@@ -4541,7 +4556,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2512",
+    "id": "fd_2513",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -4556,7 +4571,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2513",
+    "id": "fd_2514",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
@@ -4570,7 +4585,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2514",
+    "id": "fd_2515",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -4584,7 +4599,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2515",
+    "id": "fd_2516",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -4599,7 +4614,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2516",
+    "id": "fd_2517",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24243v1",
@@ -4614,7 +4629,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2517",
+    "id": "fd_2518",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -4629,13 +4644,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2518",
+    "id": "fd_2519",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23863v1",
     "status": "available",
     "timestamp": "2026-06-25T11:11:42.242502+00:00",
     "title": "Isomorphism between the weight\u20113 Goncharov Lie coalgebra and the indecomposable part of K\u2085^{(3)}(F)\u2297\u211a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite simple bipartite graph G with partite sets A and B, let \u0394_A = max_{a\u2208A} deg_G(a) and \u0394_B = max_{b\u2208B} deg_G(b). If \u0394_A\u00b7\u0394_B \u2265 1000 then the strong chromatic index satisfies \u03c7'_s(G) \u2264 \u230a(5/3)\u00b7\u0394_A\u00b7\u0394_B\u230b. This would improve the current bound of 1.676\u00b7\u0394_A\u00b7\u0394_B for sufficiently large product and is sharp up to constant factor.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2520",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23824v1",
+    "status": "available",
+    "timestamp": "2026-06-25T11:33:16.478948+00:00",
+    "title": "Improved asymptotic bound for the strong chromatic index of bipartite graphs"
   },
   {
     "consumed_by_exp_id": "",
