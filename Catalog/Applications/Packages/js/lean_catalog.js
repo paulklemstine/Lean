@@ -101,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
 
+                    console.log(`[lean_catalog] Fetched ${filename}, leanFiles extracted: ${leanFiles.length}, type of lean_proofs: ${typeof pkg.lean_proofs}`);
+                    
                     if (leanFiles.length > 0) {
                         leanFiles.forEach(proof => {
                             const fileObj = {
@@ -132,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         await Promise.all(promises);
+        console.log(`[lean_catalog] Finished building catalog data. allLeanFiles length: ${allLeanFiles.length}`);
 
         // Update domain filter
         if (domainFilter && domainFilter.options.length <= 1) {
