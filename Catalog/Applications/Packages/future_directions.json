@@ -44013,6 +44013,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Mathlib.Data.ZMod.Basic",
+        "Mathlib.LinearAlgebra.FiniteDimensional",
+        "Mathlib.LinearAlgebra.ProjectiveSpace",
+        "Mathlib.LinearAlgebra.Dimension.Finrank",
+        "Mathlib.Data.Finset.Card"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
+      "domain_bridges": [
+        "minimal linear codes ↔ strong blocking sets",
+        "h=1 additive codes ↔ ordinary linear codes",
+        "binary projective systems ↔ submodules of (ZMod 2)^3"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Bridges"
+      ],
+      "id": "fd_2503",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nabbrev FanoField := ZMod 2\nabbrev FanoVec := Fin 3 → FanoField\n\ndef IsFanoPoint (P : Submodule FanoField FanoVec) : Prop :=\n  Module.finrank FanoField P = 1\n\ndef IsFanoLine (L : Submodule FanoField FanoVec) : Prop :=\n  Module.finrank FanoField L = 2\n\ndef FanoStrongBlocking (S : Finset (Submodule FanoField FanoVec)) : Prop :=\n  (∀ P ∈ S, IsFanoPoint P) ∧\n  ∀ L : Submodule FanoField FanoVec,\n    IsFanoLine L →\n      Submodule.span FanoField\n        ({v : FanoVec | ∃ P ∈ S, P ≤ L ∧ v ∈ P} : Set FanoVec) = L\n\ntheorem fano_strongBlocking_iff_six_le_card\n    (S : Finset (Submodule FanoField FanoVec))\n    (hS : ∀ P ∈ S, IsFanoPoint P) :\n    FanoStrongBlocking S ↔ 6 ≤ S.card := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Represent points of PG(2,2) as 1-dimensional submodules of V = (ZMod 2)^3 and lines as 2-dimensional submodules. In the Fano plane every line has exactly 3 points and any two distinct points determine a unique line. A set S is strong blocking exactly when every line contains at least two points of S. If S is strong blocking, its complement cannot contain two points, since those two points would determine a line meeting S in only one point; hence |S| ≥ 6. Conversely, if |S| ≥ 6, every line misses at most one point, so it contains at least two points of S and therefore its intersection with S spans the line.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24262v1",
+      "source_path": "http://arxiv.org/abs/2606.24262v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T10:08:51.465617+00:00",
+      "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "OEIS A287616",
         "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
         "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -44033,7 +44082,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2503",
+      "id": "fd_2504",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -44077,7 +44126,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2504",
+      "id": "fd_2505",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -44120,7 +44169,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2505",
+      "id": "fd_2506",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -44163,7 +44212,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2506",
+      "id": "fd_2507",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
@@ -44209,7 +44258,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2507",
+      "id": "fd_2508",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularity_MMsplit (a : ℕ) (b : List ℕ) (hb : ∀ r ∈ b, 1 ≤ r) :\n  let G := MM a b\n  let ν := (b.filter (· ≥ 2)).length\n  reg (edgeIdeal G) = ν + 1 :=\nby\n  -- proof goes here",
@@ -44252,7 +44301,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2508",
+      "id": "fd_2509",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem self_dual_code_26_uniqueness : ∀ (C D : Code), (C.is_self_dual ∧ C.length = 26 ∧ C.min_weight = 6) → (D.is_self_dual ∧ D.length = 26 ∧ D.min_weight = 6) → ∃ (perm : Fin 26 → Fin 26), perm • C = D",
@@ -44293,7 +44342,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2509",
+      "id": "fd_2510",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "dimension theorem for Lie algebras",
@@ -44339,7 +44388,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2510",
+      "id": "fd_2511",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem random_linear_code_discrepancy (q : ℕ) [Fact (Nat.Prime q)] (n ρ : ℕ) (hρ : ρ ≤ n) (ε : ℝ) (hε : 0 < ε) :\n  ∀ᵉ (C : subspace (fin n) (zmod q)),\n    (∃ k, C.dimension = k ∧ k = ⌈(1 - (1 / n) * real.log (ball_volume q n ρ) + ε) * n⌉) →\n    (∀ z : (fin n → zmod q),\n      let B := hamming_ball q n ρ z in\n      let expected := (C.card * B.card : ℝ) / (q ^ n) in\n      (C.card ∩ B.card : ℝ) =ᵐ[ℙ] (1 ± o 1) * expected))",
@@ -44391,7 +44440,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2511",
+      "id": "fd_2512",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_erdos_matching_conjecture {q : ℕ} (hq : Nat.Prime q) (n k s : ℕ) (hn : n ≥ (s + 1) * k) :\n  m_q q n k s = max (gaussian_binomial (gaussian_binomial q ((s + 1) * k - 1) k)\n                                     (gaussian_binomial q n k - q ^ (k * s) * gaussian_binomial q (n - s) k) :=\n  sorry\n\n-- Where:\n-- m_q q n k s := maximum cardinality of a family of k-dim subspaces of (ZMod q)^n\n--   with no s+1 members having a direct sum\n-- gaussian_binomial q n k := [n choose k]_q = ∏_{i=0}^{k-1} (q^{n-i} - 1)/(q^{i+1} - 1)\n-- max_binomial a b := max a b",
@@ -44440,7 +44489,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2512",
+      "id": "fd_2513",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace HypergraphRamsey\n\n/-- `ramseyNumber k s m` is the least N such that every red/blue coloring of\n    the k-subsets of `[N]` has a red s-set or a blue m-set. -/\nconstant ramseyNumber : ℕ → ℕ → ℕ → ℕ\n\n/-- `shiftNumber3 t` is the 3-color shift number s_3(t). -/\nconstant shiftNumber3 : ℕ → ℕ\n\n/-- Conjecture: the paper's `1/2` coefficient can be improved to `2/3`. -/\ntheorem ramsey_diag_gt_shift_two_thirds\n    (k : ℕ) (hk : 9 ≤ k) :\n    shiftNumber3 ((2 * k) / 3 - 3) < ramseyNumber k (k + 1) (k + 1) := by\n  sorry\n\nend HypergraphRamsey",
@@ -44459,6 +44508,55 @@
       "thread_id": "",
       "timestamp": "2026-06-25T09:18:32.163392+00:00",
       "title": "Two-thirds shift-number lower bound for diagonal hypergraph Ramsey numbers"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Jacobi triple product identity",
+        "Andrews--Merca truncated pentagonal number theorem",
+        "Wang--Yee bilateral truncated Jacobi triple product identities, Theorems 1.1 and 1.2",
+        "q-Pochhammer symbols and Gaussian binomial coefficients",
+        "Lean/mathlib formal power series and integer partitions"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let R,S,k,c be positive integers with 1 ≤ S and 2S ≤ R. Define A_{R,S}(q) = 1 / ((q^S;q^R)_∞ (q^{R-S};q^R)_∞ (q^R;q^R)_∞) and T_{R,S,k}(q) = ∑_{j=-k+1}^{k} (-1)^j q^{R*j*(j-1)/2 + S*j}. Conjecture: for every n ≥ 1, the coefficient of q^n in (-1)^(k-1) * (T_{R,S,k}(q) * A_{R,S}(q)^c - A_{R,S}(q)^(c-1)) is a nonnegative integer. Equivalently, the known Wang--Yee positivity for c=1 persists after convolution with the generating function for (c-1)-colored partitions into parts congruent to 0, S, or R-S modulo R.",
+      "domain_bridges": [
+        "q-series coefficient positivity to colored partition enumeration",
+        "bilateral truncated theta sums to formal power series identities",
+        "minimal-excludant partition statistics to computable coefficient predicates in Lean"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2514",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\n/-- `jacobiA R S` is the formal power series\n    1 / ((q^S;q^R)_∞ (q^(R-S);q^R)_∞ (q^R;q^R)_∞). -/\nconstant jacobiA : ℕ → ℕ → PowerSeries ℤ\n\n/-- `truncJacobi R S k` is the finite bilateral sum\n    ∑_{j=-k+1}^{k} (-1)^j q^(R*j*(j-1)/2 + S*j). -/\nconstant truncJacobi : ℕ → ℕ → ℕ → PowerSeries ℤ\n\n/-- Coefficient of q^n in\n    (-1)^(k-1) * (T_{R,S,k} * A_{R,S}^c - A_{R,S}^{c-1}). -/\nnoncomputable def coloredTruncJacobiCoeff\n    (R S k c n : ℕ) : ℤ :=\n  PowerSeries.coeff ℤ n\n    ((((-1 : ℤ) ^ (k - 1)) •\n      (truncJacobi R S k * (jacobiA R S) ^ c - (jacobiA R S) ^ (c - 1))))\n\nconjecture colored_truncated_jacobi_coeff_nonneg\n    (R S k c n : ℕ)\n    (hk : 1 ≤ k) (hc : 1 ≤ c)\n    (hS : 1 ≤ S) (hSR : 2 * S ≤ R)\n    (hn : 1 ≤ n) :\n  0 ≤ coloredTruncJacobiCoeff R S k c n",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "First formalize the c=1 Wang--Yee identity as an equality of formal power series over ℤ, where (-1)^(k-1) * (T_{R,S,k} * A_{R,S} - 1) is represented by an explicit multiple sum with manifestly nonnegative coefficients. Then observe that A_{R,S}^{c-1} has nonnegative integer coefficients because it is the generating function for (c-1)-colored partitions into allowed residue classes. The conjectured series factors as A_{R,S}^{c-1} * ((-1)^(k-1) * (T_{R,S,k} * A_{R,S} - 1)), so coefficientwise nonnegativity follows from closure of nonnegative integer sequences under Cauchy product.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24243v1",
+      "source_path": "http://arxiv.org/abs/2606.24243v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T10:10:36.166476+00:00",
+      "title": "Colored positivity for the bilateral truncated Jacobi triple product after removing the constant term"
     },
     {
       "ambition_level": "extension",

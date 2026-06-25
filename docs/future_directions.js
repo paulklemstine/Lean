@@ -4407,11 +4407,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
+    "domains": [
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "fd_2503",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24262v1",
+    "status": "available",
+    "timestamp": "2026-06-25T10:08:51.465617+00:00",
+    "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2503",
+    "id": "fd_2504",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4425,7 +4440,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2504",
+    "id": "fd_2505",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4439,7 +4454,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2505",
+    "id": "fd_2506",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4453,7 +4468,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2506",
+    "id": "fd_2507",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -4468,7 +4483,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2507",
+    "id": "fd_2508",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24822v1",
@@ -4482,7 +4497,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24573v1",
@@ -4497,7 +4512,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -4512,7 +4527,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2510",
+    "id": "fd_2511",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
@@ -4526,7 +4541,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2511",
+    "id": "fd_2512",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -4540,13 +4555,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2512",
+    "id": "fd_2513",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
     "status": "available",
     "timestamp": "2026-06-25T09:18:32.163392+00:00",
     "title": "Two-thirds shift-number lower bound for diagonal hypergraph Ramsey numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let R,S,k,c be positive integers with 1 \u2264 S and 2S \u2264 R. Define A_{R,S}(q) = 1 / ((q^S;q^R)_\u221e (q^{R-S};q^R)_\u221e (q^R;q^R)_\u221e) and T_{R,S,k}(q) = \u2211_{j=-k+1}^{k} (-1)^j q^{R*j*(j-1)/2 + S*j}. Conjecture: for every n \u2265 1, the coefficient of q^n in (-1)^(k-1) * (T_{R,S,k}(q) * A_{R,S}(q)^c - A_{R,S}(q)^(c-1)) is a nonnegative integer. Equivalently, the known Wang--Yee positivity for c=1 persists after convolution with the generating function for (c-1)-colored partitions into parts congruent to 0, S, or R-S modulo R.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2514",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24243v1",
+    "status": "available",
+    "timestamp": "2026-06-25T10:10:36.166476+00:00",
+    "title": "Colored positivity for the bilateral truncated Jacobi triple product after removing the constant term"
   },
   {
     "consumed_by_exp_id": "",

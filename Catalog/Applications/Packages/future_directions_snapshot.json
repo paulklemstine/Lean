@@ -7548,6 +7548,36 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.Data.ZMod.Basic",
+      "Mathlib.LinearAlgebra.FiniteDimensional",
+      "Mathlib.LinearAlgebra.ProjectiveSpace",
+      "Mathlib.LinearAlgebra.Dimension.Finrank",
+      "Mathlib.Data.Finset.Card"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "In the h=1 specialization of additive strong blocking sets, i.e. ordinary strong blocking sets in PG(2,2), a finite set S of projective points is strong blocking if and only if it contains at least 6 of the 7 points. Equivalently, the shortest nondegenerate minimal binary linear code of dimension 3 has length 6 under the projective-system correspondence.",
+    "domain_bridges": [
+      "minimal linear codes ↔ strong blocking sets",
+      "h=1 additive codes ↔ ordinary linear codes",
+      "binary projective systems ↔ submodules of (ZMod 2)^3"
+    ],
+    "domains": [
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "fd_2503",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Represent points of PG(2,2) as 1-dimensional submodules of V = (ZMod 2)^3 and lines as 2-dimensional submodules. In the Fano plane every line has exactly 3 points and any two distinct points determine a unique line. A set S is strong blocking exactly when every line contains at least two points of S. If S is strong blocking, its complement cannot contain two points, since those two points would determine a line meeting S in only one point; hence |S| ≥ 6. Conversely, if |S| ≥ 6, every line misses at most one point, so it contains at least two points of S and therefore its intersection with S spans the line.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24262v1",
+    "status": "available",
+    "timestamp": "2026-06-25T10:08:51.465617+00:00",
+    "title": "Fano-plane threshold for additive strong blocking sets in the h=1 case"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "OEIS A287616",
       "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
       "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -7562,7 +7592,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2503",
+    "id": "fd_2504",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
@@ -7587,7 +7617,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2504",
+    "id": "fd_2505",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on $n$, leveraging the irreducibility of $f^2$ and a new function measuring 'complexity' in $\\mathbb{Q}(i)$ due to the absence of linear ordering. The base case $n=2$ is given. For the inductive step, analyze the factorization of $f^{n+1} = f^n \\circ f$ using the Galois action on preimages and the tree structure of iterations, adapting techniques from \\cite{evstb} to handle the two-dimensional nature of $\\mathbb{Q}(i)$.",
@@ -7611,7 +7641,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2505",
+    "id": "fd_2506",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the proof of Theorem 1.2(ii) by tracking the exact loss when applying Kahn's small-codegree edge-colouring theorem and the degree‑peeling process, aiming to convert the o(1) term into a uniform additive bound of 4.",
@@ -7635,7 +7665,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2506",
+    "id": "fd_2507",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use shifting/compression to transform an extremal family into a left‑compressed form while preserving the missing‑trace condition. Analyze the possible traces on a fixed (d+1)-set and apply Kleitman’s theorem on intersecting families to bound the number of sets containing a given subset. Perform an induction on n, considering whether a particular element appears in all sets or not. Show that any family attaining the bound must be isomorphic to the explicit construction: take all (d+1)-sets containing a fixed d‑set, together with all (d+1)-sets that avoid a fixed (2(d+1−s)+2)-set and contain a specific (2s−d−2)-subset of its complement.",
@@ -7662,7 +7692,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2507",
+    "id": "fd_2508",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Hochster's formula to express \\(\\beta_{i,i+\\nu+1}(G)\\) as the dimension of reduced homology of induced subcomplexes of the independence complex. Show that for any subset W of vertices, the only possible non‑vanishing reduced homology occurs in dimension \\(\\nu\\) and only when W contains exactly one vertex from each non‑trivial clique block together with any subset of the a isolated vertices. This yields a non‑zero Betti number in homological degree \\(\\nu+1\\) and no Betti numbers with j-i > \\(\\nu+1\\). The forward inequality \\(\\reg(G) \\ge \\nu+1\\) follows from exhibiting such a subset; the reverse inequality follows from a combinatorial analysis of the join decomposition \\(\\ind(G) \\cong \\Delta_a * \\bigast_{r=1}^m \\Delta_{b_r}\\) where \\(\\Delta_{b_r}\\) is a simplex on \\(b_r\\) vertices (contractible) and the only contribution to higher homology comes from the discrete pieces coming from blocks with \\(b_r\\ge2\\). Formalising the join‑homology lemma and the coefficient extraction in Lean wil",
@@ -7686,7 +7716,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structure of the weight enumerator, harmonic designs, and connection to the projective plane of order 3 to show any such code must have an automorphism group isomorphic to PGL(3,3):2, hence equivalent.",
@@ -7708,7 +7738,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "algebraic construction",
@@ -7735,7 +7765,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2510",
+    "id": "fd_2511",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the second‑moment method on the random process that adds basis vectors to C one by one. Show that for any fixed centre z the indicator of membership in B_ρ(z) is a Fourier‑pseudorandom test; bound its Fourier coefficients using Weil‑type exponential sum estimates over 𝔽_q. Apply a union bound over the q^n possible centres together with a Chernoff‑type concentration inequality for hypergeometric draws to obtain the simultaneous guarantee. Formalisation in Lean proceeds by developing finite‑field linear algebra, hypergeometric tail bounds, and a library for Fourier analysis on 𝔽_q^n.",
@@ -7768,7 +7798,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2511",
+    "id": "fd_2512",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper combines Lovász's minimax theorem for matroid matchings, a high-dimensional Hoffman bound for uniform hypergraphs, and packing-design arguments in vector spaces. For Lean formalization, one would first develop the theory of Gaussian binomial coefficients, subspace lattices, and direct sums in finite vector spaces. The known cases (k=2, n=(s+1)k, large n) could be formalized incrementally, leveraging matroid libraries and linear algebra over finite fields.",
@@ -7798,7 +7828,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2512",
+    "id": "fd_2513",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Generalize the construction in the paper from the floor(k/2)-2 shift parameter to a three-block or two-scale block encoding. The existing proof converts a 3-coloring witnessing s_3(t) > N into a red/blue coloring of k-subsets with no monochromatic (k+1)-set, where t is roughly k/2. The conjectural improvement would partition the k positions into three interacting zones and encode the local shift obstruction using majority/stability rules so that every candidate monochromatic (k+1)-set yields a forbidden shifted pattern of length floor(2k/3)-3. A Lean formalization would avoid asymptotics: define the finite colorings, the obstruction predicate, and prove that the transformed coloring contains no red or blue clique of size k+1.",
@@ -7807,6 +7837,36 @@
     "status": "available",
     "timestamp": "2026-06-25T09:18:32.163392+00:00",
     "title": "Two-thirds shift-number lower bound for diagonal hypergraph Ramsey numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Jacobi triple product identity",
+      "Andrews--Merca truncated pentagonal number theorem",
+      "Wang--Yee bilateral truncated Jacobi triple product identities, Theorems 1.1 and 1.2",
+      "q-Pochhammer symbols and Gaussian binomial coefficients",
+      "Lean/mathlib formal power series and integer partitions"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let R,S,k,c be positive integers with 1 ≤ S and 2S ≤ R. Define A_{R,S}(q) = 1 / ((q^S;q^R)_∞ (q^{R-S};q^R)_∞ (q^R;q^R)_∞) and T_{R,S,k}(q) = ∑_{j=-k+1}^{k} (-1)^j q^{R*j*(j-1)/2 + S*j}. Conjecture: for every n ≥ 1, the coefficient of q^n in (-1)^(k-1) * (T_{R,S,k}(q) * A_{R,S}(q)^c - A_{R,S}(q)^(c-1)) is a nonnegative integer. Equivalently, the known Wang--Yee positivity for c=1 persists after convolution with the generating function for (c-1)-colored partitions into parts congruent to 0, S, or R-S modulo R.",
+    "domain_bridges": [
+      "q-series coefficient positivity to colored partition enumeration",
+      "bilateral truncated theta sums to formal power series identities",
+      "minimal-excludant partition statistics to computable coefficient predicates in Lean"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2514",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "First formalize the c=1 Wang--Yee identity as an equality of formal power series over ℤ, where (-1)^(k-1) * (T_{R,S,k} * A_{R,S} - 1) is represented by an explicit multiple sum with manifestly nonnegative coefficients. Then observe that A_{R,S}^{c-1} has nonnegative integer coefficients because it is the generating function for (c-1)-colored partitions into allowed residue classes. The conjectured series factors as A_{R,S}^{c-1} * ((-1)^(k-1) * (T_{R,S,k} * A_{R,S} - 1)), so coefficientwise nonnegativity follows from closure of nonnegative integer sequences under Cauchy product.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24243v1",
+    "status": "available",
+    "timestamp": "2026-06-25T10:10:36.166476+00:00",
+    "title": "Colored positivity for the bilateral truncated Jacobi triple product after removing the constant term"
   },
   {
     "ambition_level": "extension",
