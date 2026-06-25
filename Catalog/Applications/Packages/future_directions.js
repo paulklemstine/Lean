@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2993e46",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Groups of Spheres: Low-Dimensional"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2479b03a",
     "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
     "domains": [
       "Physics",
@@ -428,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432770+00:00",
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "506f0bb6",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -4707,7 +4707,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a1450e57",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domains": [
       "Novelty",
@@ -4717,7 +4717,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
@@ -5420,7 +5420,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "31b020d8",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -5430,7 +5430,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
@@ -5480,7 +5480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "506609b8",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domains": [
       "MachineLearning",
@@ -5490,7 +5490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
