@@ -4927,17 +4927,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the polynomial R_g(t) defined in the main theorem, when expressed as R_g(t) = \u03a3_{j=0}^{g-1} a_j\u00b7t^j, each coefficient a_j \u2208 \u211a has a specific closed-form expression involving generalized Catalan numbers and Bernoulli numbers. Specifically, a_j = ((-1)^j \u00b7 B_{2j} \u00b7 C_{g,j})/(2j)! \u00b7 2^{4j-g} where C_{g,j} is the j-th generalized Catalan coefficient arising from the Laurent expansion of csc^(2g-2)(z), and this formula yields R_g(t) with rational coefficients that satisfy the integrality condition: 2^g \u00b7 R_g(p^2) \u2208 \u2124 for all primes p.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2542",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26070v1",
+    "status": "available",
+    "timestamp": "2026-06-25T19:42:44.972578+00:00",
+    "title": "Explicit Rational Coefficients of Generalized Verschiebung Degree Polynomial"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every integers r \u2265 3 and k \u2265 3 there exist arbitrarily large linear r\u2011uniform hypergraphs on n vertices with edge count just below the bound given in Theorem\u00a01 that contain no ((r\u20112)k+3,\u202fk)\u2011configuration. In other words, the density threshold in Theorem\u00a01 is sharp up to lower\u2011order terms.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2542",
+    "id": "fd_2543",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
     "status": "available",
     "timestamp": "2026-06-25T18:51:30.410771+00:00",
     "title": "Optimality of the Density Threshold for Linear r\u2011Uniform Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that there exists a deterministic algorithm solving the Global Label Min-Cut (GLMC) problem on any undirected graph with n vertices and p labels in time O((np)^{C\u00b7log n / log log n}) for some absolute constant C.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2544",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25875v1",
+    "status": "available",
+    "timestamp": "2026-06-25T19:43:32.279494+00:00",
+    "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
   {
     "consumed_by_exp_id": "",

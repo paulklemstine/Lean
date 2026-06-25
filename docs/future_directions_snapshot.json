@@ -8531,6 +8531,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "AlgebraicGeometry.ModuliCurves",
+      "NumberTheory.BernoulliNumbers",
+      "Combinatorics.CatalanNumbers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the polynomial R_g(t) defined in the main theorem, when expressed as R_g(t) = Σ_{j=0}^{g-1} a_j·t^j, each coefficient a_j ∈ ℚ has a specific closed-form expression involving generalized Catalan numbers and Bernoulli numbers. Specifically, a_j = ((-1)^j · B_{2j} · C_{g,j})/(2j)! · 2^{4j-g} where C_{g,j} is the j-th generalized Catalan coefficient arising from the Laurent expansion of csc^(2g-2)(z), and this formula yields R_g(t) with rational coefficients that satisfy the integrality condition: 2^g · R_g(p^2) ∈ ℤ for all primes p.",
+    "domain_bridges": [
+      "AlgebraicGeometry",
+      "Combinatorics",
+      "NumberTheory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2542",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1) Formalize the Laurent expansion of csc^(2g-2)(z) and extract coefficients C_{g,j} = [z^{-2j}]csc^(2g-2)(z). 2) Prove that these coefficients satisfy the generalized Catalan number recurrence relation, making them computable integers. 3) Establish the closed-form expression for a_j using Bernoulli number theory and the explicit csc expansion. 4) Verify the integrality condition by showing 2^g · R_g(t) ∈ ℤ[t] through Bernoulli number divisibility properties. 5) Implement algorithmic computation of R_g(t) for small g values to verify against known cases (g=2,3).",
+    "research_mode": "team",
+    "source_exp_id": "2606.26070v1",
+    "status": "available",
+    "timestamp": "2026-06-25T19:42:44.972578+00:00",
+    "title": "Explicit Rational Coefficients of Generalized Verschiebung Degree Polynomial"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "arXiv:2210.12345",
       "Brown–Erdős–Sós conjecture",
       "Keevash–Long 2023"
@@ -8544,7 +8572,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2542",
+    "id": "fd_2543",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit families of linear r‑uniform hypergraphs (e.g. using finite projective planes, affine geometries, or suitable random constructions) whose edge count meets the bound in Theorem 1 minus an arbitrarily small ε. Prove combinatorially that these hypergraphs avoid any ((r‑2)k+3, k)‑configuration by analysing intersection patterns of edges and counting arguments. The construction should show that any attempt to exceed this edge count would force the existence of the forbidden configuration, thereby proving the bound in Theorem 1 is tight.",
@@ -8553,6 +8581,33 @@
     "status": "available",
     "timestamp": "2026-06-25T18:51:30.410771+00:00",
     "title": "Optimality of the Density Threshold for Linear r‑Uniform Hypergraphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "https://arxiv.org/abs/2309.14753",
+      "https://doi.org/10.1038/s41586-021-03890-9"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that there exists a deterministic algorithm solving the Global Label Min-Cut (GLMC) problem on any undirected graph with n vertices and p labels in time O((np)^{C·log n / log log n}) for some absolute constant C.",
+    "domain_bridges": [
+      "graph_theory",
+      "hypergraph_connectivity",
+      "parameterized_complexity"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2544",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The conjectured upper bound can be approached by extending the partition‑lattice dynamic programming techniques used for hypergraph min‑cut.  One would encode the connectivity of the union of label graphs as lattice elements and propagate partial solutions using fast zeta transforms on the lattice.  By carefully arranging the recursion depth to be O(log n / log log n) and applying a logarithmic‑depth divide‑and‑conquer on the label set, the total number of DP states can be bounded by (np)^{O(log n / log log n)}.  A full formal proof would involve defining the lattice, proving its size bound, and showing that the DP recurrence respects the GLMC objective.  The crux is to avoid an exponential blow‑up in the number of subsets of labels by exploiting the lattice’s Möbius inversion to compute union‑connectivity in quasi‑linear time per layer.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25875v1",
+    "status": "available",
+    "timestamp": "2026-06-25T19:43:32.279494+00:00",
+    "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
   {
     "ambition_level": "extension",
