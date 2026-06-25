@@ -13224,7 +13224,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -13240,7 +13240,7 @@
         "Logic"
       ],
       "id": "fd_0452",
-      "last_attempt_time": "2026-06-25T12:40:24.400391+00:00",
+      "last_attempt_time": "2026-06-10T05:58:37.554772+00:00",
       "last_reviewed_at": "2026-06-09T15:03:10.049285+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -34701,7 +34701,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [
         "MR1577579",
         "MR0025715",
@@ -34724,7 +34724,7 @@
         "Pythagorean"
       ],
       "id": "fd_2301",
-      "last_attempt_time": "2026-06-25T12:40:28.843601+00:00",
+      "last_attempt_time": "2026-06-23T15:32:42.673135+00:00",
       "last_reviewed_at": "2026-06-25T03:41:55.238483+00:00",
       "lean_theorem_stub": "theorem polya_tree_coeff_recurrence (k : ℕ) (hk : k ≥ 2) : polya_tree_count k = (1 / (k - 1)) * ∑ j in Finset.range k, polya_tree_count j * omega (k - j) := by\n  sorry",
       "lineage_refs": [],
@@ -43129,7 +43129,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "80847fe0",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43158,7 +43158,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22539v1",
       "source_path": "http://arxiv.org/abs/2606.22539v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T23:35:20.703960+00:00",
       "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
@@ -43344,7 +43344,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -43360,7 +43360,7 @@
         "Algebra"
       ],
       "id": "fd_2488",
-      "last_attempt_time": "2026-06-25T12:40:32.696289+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:40:40.605952+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -44290,6 +44290,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "ErdosProblems550",
+        "Chvatal1977",
+        "EFRS1989"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any tree T on n vertices and any complete tripartite graph K_{m_1,m_2,m_3} with 1 ≤ m_1 ≤ m_2 ≤ m_3, the Ramsey number R(T, K_{m_1,m_2,m_3}) equals 2(R(T, K_{m_1,m_2}) - 1) + m_1 for all sufficiently large n. This conjecture specifically tests whether the general bound in the paper becomes an exact equality for the k=3 case.",
+      "domain_bridges": [
+        "Ramsey Theory",
+        "Extremal Graph Theory",
+        "Tree Structures"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2509",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem tree_tripartite_ramsey_exact (T : SimpleGraph) (n m1 m2 m3 : ℕ) [Tree T] [Vs T = n] (h : 1 ≤ m1 ∧ m1 ≤ m2 ∧ m2 ≤ m3) (h_n : large_enough n m1 m2 m3) : RamseyNumber.eq (T, KTripartite m1 m2 m3) = 2 * (RamseyNumber.eq (T, KBipartite m1 m2) - 1) + m1",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct explicit red-blue colorings of K_N for N = 2(R(T, K_{m_1,m_2}) - 1) + m_1 - 1 to show they avoid both a red T and blue K_{m_1,m_2,m_3}, thereby proving the lower bound matches the upper bound from the main theorem.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23659v1",
+      "source_path": "http://arxiv.org/abs/2606.23659v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T12:57:20.450102+00:00",
+      "title": "Exact Ramsey Numbers for Trees vs Tripartite Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "OEIS A287616",
         "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
         "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -44310,7 +44357,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2509",
+      "id": "fd_2510",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -44354,7 +44401,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2510",
+      "id": "fd_2511",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -44397,7 +44444,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2511",
+      "id": "fd_2512",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -44440,7 +44487,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2512",
+      "id": "fd_2513",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
@@ -44486,7 +44533,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2513",
+      "id": "fd_2514",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularity_MMsplit (a : ℕ) (b : List ℕ) (hb : ∀ r ∈ b, 1 ≤ r) :\n  let G := MM a b\n  let ν := (b.filter (· ≥ 2)).length\n  reg (edgeIdeal G) = ν + 1 :=\nby\n  -- proof goes here",
@@ -44529,7 +44576,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2514",
+      "id": "fd_2515",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem self_dual_code_26_uniqueness : ∀ (C D : Code), (C.is_self_dual ∧ C.length = 26 ∧ C.min_weight = 6) → (D.is_self_dual ∧ D.length = 26 ∧ D.min_weight = 6) → ∃ (perm : Fin 26 → Fin 26), perm • C = D",
@@ -44570,7 +44617,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2515",
+      "id": "fd_2516",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "dimension theorem for Lie algebras",
@@ -44616,7 +44663,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2516",
+      "id": "fd_2517",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem random_linear_code_discrepancy (q : ℕ) [Fact (Nat.Prime q)] (n ρ : ℕ) (hρ : ρ ≤ n) (ε : ℝ) (hε : 0 < ε) :\n  ∀ᵉ (C : subspace (fin n) (zmod q)),\n    (∃ k, C.dimension = k ∧ k = ⌈(1 - (1 / n) * real.log (ball_volume q n ρ) + ε) * n⌉) →\n    (∀ z : (fin n → zmod q),\n      let B := hamming_ball q n ρ z in\n      let expected := (C.card * B.card : ℝ) / (q ^ n) in\n      (C.card ∩ B.card : ℝ) =ᵐ[ℙ] (1 ± o 1) * expected))",
@@ -44668,7 +44715,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2517",
+      "id": "fd_2518",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_erdos_matching_conjecture {q : ℕ} (hq : Nat.Prime q) (n k s : ℕ) (hn : n ≥ (s + 1) * k) :\n  m_q q n k s = max (gaussian_binomial (gaussian_binomial q ((s + 1) * k - 1) k)\n                                     (gaussian_binomial q n k - q ^ (k * s) * gaussian_binomial q (n - s) k) :=\n  sorry\n\n-- Where:\n-- m_q q n k s := maximum cardinality of a family of k-dim subspaces of (ZMod q)^n\n--   with no s+1 members having a direct sum\n-- gaussian_binomial q n k := [n choose k]_q = ∏_{i=0}^{k-1} (q^{n-i} - 1)/(q^{i+1} - 1)\n-- max_binomial a b := max a b",
@@ -44717,7 +44764,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2518",
+      "id": "fd_2519",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace HypergraphRamsey\n\n/-- `ramseyNumber k s m` is the least N such that every red/blue coloring of\n    the k-subsets of `[N]` has a red s-set or a blue m-set. -/\nconstant ramseyNumber : ℕ → ℕ → ℕ → ℕ\n\n/-- `shiftNumber3 t` is the 3-color shift number s_3(t). -/\nconstant shiftNumber3 : ℕ → ℕ\n\n/-- Conjecture: the paper's `1/2` coefficient can be improved to `2/3`. -/\ntheorem ramsey_diag_gt_shift_two_thirds\n    (k : ℕ) (hk : 9 ≤ k) :\n    shiftNumber3 ((2 * k) / 3 - 3) < ramseyNumber k (k + 1) (k + 1) := by\n  sorry\n\nend HypergraphRamsey",
@@ -44766,7 +44813,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2519",
+      "id": "fd_2520",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\n/-- `jacobiA R S` is the formal power series\n    1 / ((q^S;q^R)_∞ (q^(R-S);q^R)_∞ (q^R;q^R)_∞). -/\nconstant jacobiA : ℕ → ℕ → PowerSeries ℤ\n\n/-- `truncJacobi R S k` is the finite bilateral sum\n    ∑_{j=-k+1}^{k} (-1)^j q^(R*j*(j-1)/2 + S*j). -/\nconstant truncJacobi : ℕ → ℕ → ℕ → PowerSeries ℤ\n\n/-- Coefficient of q^n in\n    (-1)^(k-1) * (T_{R,S,k} * A_{R,S}^c - A_{R,S}^{c-1}). -/\nnoncomputable def coloredTruncJacobiCoeff\n    (R S k c n : ℕ) : ℤ :=\n  PowerSeries.coeff ℤ n\n    ((((-1 : ℤ) ^ (k - 1)) •\n      (truncJacobi R S k * (jacobiA R S) ^ c - (jacobiA R S) ^ (c - 1))))\n\nconjecture colored_truncated_jacobi_coeff_nonneg\n    (R S k c n : ℕ)\n    (hk : 1 ≤ k) (hc : 1 ≤ c)\n    (hS : 1 ≤ S) (hSR : 2 * S ≤ R)\n    (hn : 1 ≤ n) :\n  0 ≤ coloredTruncJacobiCoeff R S k c n",
@@ -44808,7 +44855,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2520",
+      "id": "fd_2521",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem curse_of_dimensionality {d : ℕ} (hAssum : Assumptions d) (ε : ℝ) (hε : 0 < ε) (hεbound : ε ≤ 1/2) : info_complexity_plus d ε ≥ (min (A B) : ℝ) ^ d := by sorry",
@@ -44855,7 +44902,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2521",
+      "id": "fd_2522",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem goncharov_weight_three_indecomposable_K_theory {F : Type*} [Field F] [Fact (CharP F = 0)] : (PolyL F 3 : Module ℚ) ≃ indecomposable_part (K_theory F 5 3) := by sorry",
@@ -44899,7 +44946,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2522",
+      "id": "fd_2523",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem strong_chromatic_index_bipartite_bound {V : Type*} [DecidableEq V] (G : SimpleGraph V) (hBip : Bipartite G A B) (hLarge : (maxDegreeOnSide G A) * (maxDegreeOnSide G B) ≥ 1000) : strongChromaticIndex G ≤ (5 : ℝ)/3 * ((maxDegreeOnSide G A : ℝ) * (maxDegreeOnSide G B : ℝ)) := by sorry",
@@ -44946,7 +44993,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2523",
+      "id": "fd_2524",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\nnamespace StackSorting\n\n/-- West's stack-sorting map on permutations of `Fin n`. -/\nnoncomputable def stackSort (n : ℕ) : Equiv.Perm (Fin n) → Equiv.Perm (Fin n) := by\n  classical\n  exact fun π => π   -- placeholder for the formal West map\n\n/-- Stack-sorting depth: the least number of iterations needed to reach identity. -/\nnoncomputable def stackDepth (n : ℕ) (π : Equiv.Perm (Fin n)) : ℕ := by\n  classical\n  exact 0             -- placeholder for `Nat.find` over iterates of `stackSort n`\n\n/-- Average stack-sorting depth over `S_n`, as a rational number. -/\nnoncomputable def avgDepth (n : ℕ) : ℚ := by\n  classical\n  exact ((∑ π : Equiv.Perm (Fin n), (stackDepth n π : ℚ)) / (Nat.factorial n : ℚ))\n\n/-- Conjecture: the shifted normalized unprimed average depths are monotone. -/\ntheorem conjecture_shift_normalized_avgDepth_monotone\n    (n : ℕ) (hn : 1 ≤ n) :\n    avgDepth n / ((n + 1 : ℕ) : ℚ) ≤\n      avgDepth (n + 1) / ((n + 2 : ℕ) : ℚ) := by\n  sorry",
@@ -44993,7 +45040,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2524",
+      "id": "fd_2525",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularised_wallis_even_closed_form (k : ℕ) :\n  let P : ℝ := ∏' n : ℕ, (Real.exp (1 / (n : ℝ) ^ (2 * k - 1))) * (1 - (1 / (n : ℝ) ^ 2)) ^ (n : ℝ) ^ (2 * k)\n  P = Real.exp ( (1/2) * Real.log Real.pi\n                - ∑ j in Finset.range k, (Nat.choose (2*k) (2*j+1) * bernoulli (2*j+2) / (2*j+2)) * harmonic (2*k - 2*j - 1)\n                + ∑ j in Finset.range k, (Nat.choose (2*k) (2*j+2) * (zeta (2*j+3) / (2*j+3))) ) :=\nby\n  sorry",
@@ -49967,11 +50014,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a4d45ca2",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -49983,7 +50030,7 @@
         "Computation"
       ],
       "id": "seed_334",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T12:57:27.277928+00:00",
       "last_reviewed_at": "2026-06-25T03:41:55.238483+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -49997,7 +50044,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432609+00:00",
       "title": "Primality Testing: Miller-Rabin and AKS Formalization"
@@ -51696,7 +51743,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -51713,7 +51760,7 @@
         "Cryptography"
       ],
       "id": "seed_378",
-      "last_attempt_time": "2026-06-25T12:40:36.309879+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:27.240087+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -59225,7 +59272,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -59240,7 +59287,7 @@
         "Combinatorics"
       ],
       "id": "sorry_fill_a0dd96a5_00b573d8",
-      "last_attempt_time": "2026-06-25T12:40:16.558249+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],

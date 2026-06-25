@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T12:39:05.821814+00:00",
+  "last_updated": "2026-06-25T12:56:20.164770+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -6491,6 +6491,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T12:39:05.593282+00:00",
       "title": "P\u00f3lya tree coefficient divisor-sum recurrence"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4162,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 33,
+      "domain": "Novelty",
+      "duration_seconds": -224.47983288764954,
+      "end_time": 1782386848.9975061,
+      "files_integrated": 0,
+      "job_id": "80847fe0",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v15",
+      "phase_b_skipped": false,
+      "prompt_version": "v15",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "cross_domain": 0.9,
+        "importance": 0.44778181818181817,
+        "novelty": 0.9500000000000001,
+        "pegb_compliance": 0.25,
+        "proof_depth": 0.23254545454545453,
+        "usefulness": 0.5662727272727273
+      },
+      "quality_score": 0.4240705454545455,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782387073.477339,
+      "strategy_count": 0,
+      "theorem_count": 11,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 11,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T12:56:19.865971+00:00",
+      "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
     }
   ]
 }
