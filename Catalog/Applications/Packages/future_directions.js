@@ -224,7 +224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory: Solvability of Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb2780d5",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domains": [
       "Algebra",
@@ -235,7 +235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -477,7 +477,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "6fa82f5b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -486,7 +486,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -2930,20 +2930,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sidorenko Property for Two\u2011Sided Correlation Kernels on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "701dddb6",
-    "description": "Let (a_k)_{k \u2265 1} be the P\u00f3lya tree enumeration sequence with ordinary generating function A(z) = \u03a3_{k\u22651} a_k z^k satisfying A(z) = z\u00b7exp(A(z))\u00b7\u03a6(z) where \u03a6(z) = exp(\u03a3_{i\u22652} A(z^i)/i). Define \u03c9_k = \u03a3_{d|k} d\u00b7a_d. Then a_1 = 1 and for all k \u2265 2, a_k = (1/(k-1))\u00b7\u03a3_{j=1}^{k-1} a_j\u00b7\u03c9_{k-j}.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2390",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23439v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T21:42:09.482956+00:00",
-    "title": "P\u00f3lya tree coefficient recurrence formula"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For a number field k with r\u2081 real and r\u2082 complex places, let b = r\u2081\u00b7\u230an\u00b2/4\u230b + r\u2082\u00b7n(n-1)/2. For any cohomological generic representation \u03c0 in R_\u03b5^{coge,\u221e} of GL(n,k_\u221e) with coefficient system F_\u03c0 and quadratic character \u03b5: \u03c0\u2080(k_\u221e\u00d7) \u2192 \u2102\u00d7, the Betti-Whittaker period of the contragredient \u03c0\u2228 in degree b satisfies P^b(\u03c0\u2228, F_{\u03c0\u2228}, \u03b5) = \u03b5(disc(k))^b \u00b7 P^b(\u03c0, F_\u03c0, \u03b5), where disc(k) is viewed as an element of \u03c0\u2080(k_\u221e\u00d7) via the determinant identification \u03c0\u2080(k_\u221e\u00d7) \u2245 \u03c0\u2080(GL_n(k_\u221e)).",
     "domains": [
@@ -4811,7 +4797,7 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture that every outerplanar graph admits a conflict\u2011free coloring with at most three colors. This extends the known four\u2011color conflict\u2011free bound for planar graphs and would yield a tight bound for the outerplanar subclass.",
+    "description": "All non-trivial zeros of the scattering determinant \u03c6(s) associated to congruence characters of congruence subgroups of SL\u2082(\u2124) lie on the critical line Re(s) = 1/2. This conjecture, if true, would imply that the prime geodesic theorem for congruence subgroups holds with exponent 1/2 + \u03b5, improving upon the proven exponent 25/36 + \u03b5. The conjecture is falsifiable by exhibiting any zero \u03c1 with |Re(\u03c1) - 1/2| > \u03b4 for some explicit \u03b4 > 0.",
     "domains": [
       "Pythagorean",
       "Algebra"
@@ -4819,10 +4805,39 @@ window.FUTURE_DIRECTIONS = [
     "id": "fd_2532",
     "priority_score": 0.8,
     "research_mode": "team",
+    "source_exp_id": "2606.25903v1",
+    "status": "available",
+    "timestamp": "2026-06-25T16:34:10.115341+00:00",
+    "title": "Scattering Determinant Critical Line Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that every outerplanar graph admits a conflict\u2011free coloring with at most three colors. This extends the known four\u2011color conflict\u2011free bound for planar graphs and would yield a tight bound for the outerplanar subclass.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2533",
+    "priority_score": 0.8,
+    "research_mode": "team",
     "source_exp_id": "2606.25988v1",
     "status": "available",
     "timestamp": "2026-06-25T16:12:58.691211+00:00",
     "title": "Conflict-Free Coloring of Outerplanar Graphs with Three Colors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every integer n \u2265 2, any collection of mutually orthogonal Italian squares of order n contains at most n\u20111 squares, and this bound is attained exactly when n is a prime power.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2534",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25884v1",
+    "status": "available",
+    "timestamp": "2026-06-25T16:34:26.097340+00:00",
+    "title": "Maximum size of pairwise orthogonal Italian squares is n\u20111 for prime powers"
   },
   {
     "consumed_by_exp_id": "",

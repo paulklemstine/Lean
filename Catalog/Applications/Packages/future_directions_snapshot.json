@@ -298,7 +298,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb2780d5",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domain_bridges": [],
     "domains": [
@@ -312,7 +312,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -636,7 +636,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6fa82f5b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -648,7 +648,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -4824,33 +4824,6 @@
     "title": "Sidorenko Property for Two‑Sided Correlation Kernels on Finite Groups"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "MR1577579",
-      "MR0025715",
-      "MR2483235"
-    ],
-    "consumed_by_exp_id": "701dddb6",
-    "description": "Let (a_k)_{k ≥ 1} be the Pólya tree enumeration sequence with ordinary generating function A(z) = Σ_{k≥1} a_k z^k satisfying A(z) = z·exp(A(z))·Φ(z) where Φ(z) = exp(Σ_{i≥2} A(z^i)/i). Define ω_k = Σ_{d|k} d·a_d. Then a_1 = 1 and for all k ≥ 2, a_k = (1/(k-1))·Σ_{j=1}^{k-1} a_j·ω_{k-j}.",
-    "domain_bridges": [
-      "formal_power_series",
-      "analytic_combinatorics",
-      "number_theory_divisor_sums"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2390",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Define Pólya trees via the functional equation A(z) = z·exp(A(z))·Φ(z) as a formal power series. Differentiate both sides to obtain z·A'(z) = A(z)·(1 + Σ_{i≥1} z^i·A'(z^i)). Extract the coefficient of z^k on both sides. The inner sum Σ_{i≥1} z^i·A'(z^i) has coefficient [z^k] = Σ_{d|k} d·a_d = ω_k by collecting terms where i·j = k with j indexing powers of A'. The left side gives k·a_k and the right side gives a_k + Σ_{j=1}^{k-1} a_j·ω_{k-j}, yielding the recurrence after rearrangement.",
-    "research_mode": "team",
-    "source_exp_id": "2606.23439v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T21:42:09.482956+00:00",
-    "title": "Pólya tree coefficient recurrence formula"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "math.RT",
@@ -8297,6 +8270,35 @@
     "title": "Every Nonnegative Integer Is a Sum of a Triangular, First Pentagonal, and First Heptagonal Number"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Iwaniec1984",
+      "hejhal2",
+      "luosarnak",
+      "Soundararajan_2013"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "All non-trivial zeros of the scattering determinant φ(s) associated to congruence characters of congruence subgroups of SL₂(ℤ) lie on the critical line Re(s) = 1/2. This conjecture, if true, would imply that the prime geodesic theorem for congruence subgroups holds with exponent 1/2 + ε, improving upon the proven exponent 25/36 + ε. The conjecture is falsifiable by exhibiting any zero ρ with |Re(ρ) - 1/2| > δ for some explicit δ > 0.",
+    "domain_bridges": [
+      "L-function theory",
+      "automorphic forms",
+      "analytic number theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2532",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the conjecture by proving that the scattering determinant φ(s) satisfies a functional equation relating φ(s) and φ(1-s), and then applying techniques from the theory of automorphic L-functions to show all non-trivial zeros lie on the critical line. Counterexamples would involve computing the zeros numerically to sufficient precision and verifying their real parts differ from 1/2.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25903v1",
+    "status": "available",
+    "timestamp": "2026-06-25T16:34:10.115341+00:00",
+    "title": "Scattering Determinant Critical Line Conjecture"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "arXiv:2210.000?? (presented paper)",
@@ -8312,7 +8314,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2532",
+    "id": "fd_2533",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on the number of vertices and the fact that outerplanar graphs are 2‑degenerate. Remove a vertex of degree ≤2, apply the induction hypothesis to obtain a 3‑color conflict‑free coloring of the remaining graph, then extend the coloring to the removed vertex by recoloring at most a bounded number of neighbors. A discharging argument guarantees that the recoloring step never requires a fourth color.",
@@ -8321,6 +8323,32 @@
     "status": "available",
     "timestamp": "2026-06-25T16:12:58.691211+00:00",
     "title": "Conflict-Free Coloring of Outerplanar Graphs with Three Colors"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Brualdi & Dahl 2018",
+      "VanLint & Wilson 1992"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every integer n ≥ 2, any collection of mutually orthogonal Italian squares of order n contains at most n‑1 squares, and this bound is attained exactly when n is a prime power.",
+    "domain_bridges": [
+      "Latin squares",
+      "Alternating sign matrices",
+      "Finite geometry"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2534",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish an upper bound via double counting of symbol occurrences and use finite field constructions to exhibit n‑1 orthogonal squares when n is a prime power; then formalize the combinatorial arguments in Lean using existing libraries for finite fields and finite sets.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25884v1",
+    "status": "available",
+    "timestamp": "2026-06-25T16:34:26.097340+00:00",
+    "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
   },
   {
     "ambition_level": "extension",

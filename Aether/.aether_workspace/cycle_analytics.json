@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T16:10:12.834338+00:00",
+  "last_updated": "2026-06-25T16:30:37.077524+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -6835,6 +6835,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T16:10:12.451138+00:00",
       "title": "EML Differential Algebra: Closure Properties"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5145,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Bridges",
+      "duration_seconds": 1120.6052112579346,
+      "end_time": 1782404930.8531015,
+      "files_integrated": 7,
+      "job_id": "701dddb6",
+      "outcome_quality": 0.78684,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v2",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.7295,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.6393,
+        "novelty": 0.77,
+        "proof_depth": 0.5832,
+        "usefulness": 0.7666
+      },
+      "quality_score": 0.78684,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782403810.2478902,
+      "strategy_count": 0,
+      "theorem_count": 6,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 6,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T16:30:36.812533+00:00",
+      "title": "P\u00f3lya tree coefficient recurrence formula"
     }
   ]
 }

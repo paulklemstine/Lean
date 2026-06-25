@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "701dddb6",
     "filename": "plya_tree_coefficient_recurrence_formula.json",
     "pkg_num": 58,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.78684,
     "title": "P\u00f3lya Tree Coefficient Recurrence: A Divisor Bridge"
   },
   {
@@ -1691,8 +1691,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "plya_tree_coefficient_recurrence_formula",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.78684,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "P\u00f3lya Tree Coefficient Recurrence: A Divisor Bridge"
     }
