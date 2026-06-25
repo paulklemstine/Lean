@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "c2993e46",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Groups of Spheres: Low-Dimensional"
   },
   {
-    "consumed_by_exp_id": "2479b03a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
     "domains": [
       "Physics",
@@ -428,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432770+00:00",
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
@@ -537,7 +537,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "ef874ad4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -548,7 +548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "506f0bb6",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -4364,11 +4364,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let K be an algebraically closed field of characteristic p > 0, let m > 0, and let s_p(m) be the sum of the base-p digits of m. If nonzero linear forms ell_1,...,ell_t have m-th powers ell_1^m,...,ell_t^m forming a linear circuit in Sym^m(V^*), then s_p(m) * dim_K Span{ell_1,...,ell_t} <= t + s_p(m) - 2. This conjecture says that in positive characteristic the sharp characteristic-zero constant m should be replaced by the Frobenius-effective weight s_p(m). It is falsifiable by exhibiting a circuit violating the displayed inequality.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2500",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24349v1",
+    "status": "available",
+    "timestamp": "2026-06-25T08:13:31.785376+00:00",
+    "title": "Positive-characteristic Veronese circuit bound with p-adic digit weight"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2500",
+    "id": "fd_2501",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4382,7 +4397,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2501",
+    "id": "fd_2502",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4396,7 +4411,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2502",
+    "id": "fd_2503",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4410,7 +4425,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2503",
+    "id": "fd_2504",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -4425,7 +4440,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2504",
+    "id": "fd_2505",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24822v1",
@@ -4439,7 +4454,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2505",
+    "id": "fd_2506",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24573v1",
@@ -4454,7 +4469,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2506",
+    "id": "fd_2507",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -4469,13 +4484,27 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2507",
+    "id": "fd_2508",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
     "status": "available",
     "timestamp": "2026-06-25T07:44:51.979075+00:00",
     "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any prime power q and integers n \u2265 k \u2265 1, s \u2265 1 with n \u2265 (s+1)k, let m_q(n,k,s) be the maximum size of a family of k-dimensional subspaces of \ud835\udd3d_q^n containing no s+1 members with a direct sum. The conjecture states that m_q(n,k,s) equals the maximum of two explicit constructions: all k-subspaces contained in a fixed ((s+1)k-1)-dimensional subspace, or all k-subspaces intersecting a fixed s-dimensional subspace nontrivially. This is the q-analogue of the Erd\u0151s Matching Conjecture (proven for k=2, n=(s+1)k, and large n, but open in general).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2509",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24529v1",
+    "status": "available",
+    "timestamp": "2026-06-25T08:18:46.345580+00:00",
+    "title": "Vector-Space Erd\u0151s Matching Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -4678,7 +4707,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "a1450e57",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domains": [
       "Novelty",
@@ -4688,7 +4717,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
@@ -4897,7 +4926,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e364ad63",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -4907,7 +4936,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -5031,7 +5060,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
   },
   {
-    "consumed_by_exp_id": "73a5599a",
+    "consumed_by_exp_id": "",
     "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
     "domains": [
       "MachineLearning",
@@ -5041,7 +5070,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.684855+00:00",
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
@@ -5391,7 +5420,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "31b020d8",
+    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -5401,7 +5430,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
@@ -5451,7 +5480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "506609b8",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domains": [
       "MachineLearning",
@@ -5461,7 +5490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },

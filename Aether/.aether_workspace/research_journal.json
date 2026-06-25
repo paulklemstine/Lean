@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d6f5cc61",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Quantum Random Walks on Cayley Graphs\n\nFollow-up conjectures arising from this cycle. The cycle proved (in\n`Catalog/Computation/QuantumWalkCayleySpectrum.lean`) the exact charact",
-      "quality_score": 0.36854137254901964,
-      "sorry_count": 0,
-      "theorem_count": 186,
-      "timestamp": "2026-06-18T09:04:59",
-      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
-    },
-    {
       "cycle_id": "5ddac85b",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Spectral Universality of LLM Weight Matrices\n\nThis cycle established the deterministic algebraic skeleton of random-matrix\nphase transitions for weight matrices: the Marchenko–Pa",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-25T07:43:02",
       "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
+    },
+    {
+      "cycle_id": "eee0a16a",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Brocard–Ramanujan Triangular Classification\n\nDerived from this cycle's findings (the geometric equivalence\n`n!/8 triangular ⟺ n!+1 square`, the general test `t triangular ⟺ 8t+1",
+      "quality_score": 0.42575842352941173,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-25T08:11:59",
+      "title": "Brocard-Ramanujan Triangular Classification"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8125600000000002
     }
   ],
-  "last_updated": "2026-06-25T07:43:02",
+  "last_updated": "2026-06-25T08:11:59",
   "open_questions": [
     {
       "context": "`appendCode_card`) proved `sorry`-free for arbitrary lengths; `hamming ⊕ hamming`",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "dafb1f8b",
-        "quality": 0.397447,
-        "theorems": 120,
-        "title": "Linear twin-width bound for finite posets of bounded width"
-      },
-      {
         "cycle_id": "1d465e25",
         "quality": 0.79908,
         "theorems": 87,
@@ -3451,6 +3445,12 @@
         "quality": 0.8125600000000002,
         "theorems": 15,
         "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
+      },
+      {
+        "cycle_id": "eee0a16a",
+        "quality": 0.42575842352941173,
+        "theorems": 9,
+        "title": "Brocard-Ramanujan Triangular Classification"
       }
     ],
     "Logic": [

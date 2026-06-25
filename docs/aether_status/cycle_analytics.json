@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T07:43:04.461295+00:00",
+  "last_updated": "2026-06-25T08:12:01.026690+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -5699,6 +5699,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T07:43:04.204570+00:00",
       "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4069,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 9,
+      "domain": "Geometry",
+      "duration_seconds": 2048.6751317977905,
+      "end_time": 1782374421.8309672,
+      "files_integrated": 7,
+      "job_id": "eee0a16a",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.5919,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.3563,
+        "novelty": 0.71,
+        "proof_depth": 0.2047,
+        "usefulness": 0.5524
+      },
+      "quality_score": 0.42575842352941173,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782372373.1558354,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 9,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T08:12:00.783571+00:00",
+      "title": "Brocard-Ramanujan Triangular Classification"
     }
   ]
 }

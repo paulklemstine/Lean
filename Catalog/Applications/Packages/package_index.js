@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "eee0a16a",
     "filename": "brocard_ramanujan_triangular_classification.json",
     "pkg_num": 54,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.42575842352941173,
     "title": "Brocard-Ramanujan Triangular Classification"
   },
   {
@@ -1575,8 +1575,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "brocard_ramanujan_triangular_classification",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.42575842352941173,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Brocard-Ramanujan Triangular Classification"
     }
