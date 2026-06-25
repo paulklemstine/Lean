@@ -1,291 +1,120 @@
-# The Shadow of a Differential Equation
+# When Calculus Casts a Shadow: The Tropical Geometry of Differential Equations
 
-## How a single number can predict the birth of a solution
+## A puzzle about the smallest term
 
-Imagine you are handed a complicated machine that produces an infinite stream
-of numbers, one after another, forever. You don't get to see the blueprint —
-only the output. Your job is to answer one deceptively simple question:
-**when does the machine first wake up?** How many zeros does it print before
-the first nonzero number appears?
+Imagine you are handed an infinite polynomial — a *power series* — like
 
-That moment — the index of the first nonzero output — turns out to carry an
-astonishing amount of information. It is a single integer that casts a *shadow*
-of the whole machine, and remarkably, that shadow obeys its own clean
-arithmetic. This article is about that shadow, about what happens to it when
-the machine is built out of calculus, and about a surprising rigidity theorem:
-some differential equations are so demanding that they force their solutions to
-"wake up immediately," on the very first beat.
+$$f(X) = a_0 + a_1 X + a_2 X^2 + a_3 X^3 + \cdots$$
 
-The mathematics behind all of this is called **tropical geometry**, and what
-follows is a small but complete new chapter of it: the tropical theory of
-differential equations on power series.
+Most of the time you cannot write down all of its coefficients. But there is one number you can almost always pin down quickly: **the index of the very first nonzero coefficient**. If $a_0 = 0$ but $a_1 \neq 0$, the series "starts at" $X^1$. If everything up to $X^4$ vanishes and $a_5 \neq 0$, it starts at $X^5$. We call this number the **order** of the series and write it $\operatorname{ord}(f)$. By convention the zero series — the series with no nonzero terms at all — has order $\infty$, because its first nonzero term never arrives.
 
----
+The order is a humble quantity. It throws away almost all the information in $f$, keeping only the location of its leading edge. And yet, as this article will show, that single number obeys a beautiful arithmetic of its own — an arithmetic that turns the hard, continuous machinery of *differential equations* into a finite, combinatorial game. That game is called **tropical mathematics**, and the bridge between the two worlds is the subject of a small collection of theorems we will state precisely and explain in plain language.
 
-## Power series: machines that print numbers forever
+## The min-plus world
 
-A *formal power series* is an infinite polynomial,
+Here is the first surprise. Watch what happens to the order under the basic operations on power series.
 
-$$
-f = a_0 + a_1 X + a_2 X^2 + a_3 X^3 + \cdots
-$$
+**Multiplication.** When you multiply two series, their leading terms multiply, so the leading edges *add*:
 
-You can think of it as an idealized machine: feed it the slots
-$X^0, X^1, X^2, \dots$ and it prints the coefficients $a_0, a_1, a_2, \dots$.
-Power series are everywhere in mathematics and physics. The exponential
-function, the solutions of differential equations, the generating functions
-that count combinatorial objects, the partition functions of statistical
-mechanics — all of them are, at heart, power series.
+$$\operatorname{ord}(f \cdot g) = \operatorname{ord}(f) + \operatorname{ord}(g).$$
 
-The single most important coarse feature of a power series is its **order**,
-written $\operatorname{ord}(f)$: the index of the first nonzero coefficient.
-If $f = 3X^2 + X^3 + \cdots$, then $\operatorname{ord}(f) = 2$, because the
-machine prints two zeros and then springs to life. By convention, the all-zeros
-machine — the series that is identically $0$ — has order $+\infty$: it never
-wakes up at all.
+If $f$ starts at $X^2$ and $g$ starts at $X^3$, then $f \cdot g$ starts at $X^5$.
 
-The order is the *valuation* of the series. It measures how strongly the series
-vanishes at the origin. A series of order $5$ is "flatter" near $X = 0$ than a
-series of order $1$; it hugs zero more tightly before lifting off.
+**Addition.** When you add two series, the result starts no earlier than the earlier of the two — but it can start *later*, if the two leading terms happen to cancel:
 
----
+$$\operatorname{ord}(f + g) \ge \min\big(\operatorname{ord}(f), \operatorname{ord}(g)\big).$$
 
-## The tropical shadow
+If $f = X^2 + \cdots$ and $g = -X^2 + \cdots$, the $X^2$ terms annihilate and the sum starts strictly later than $X^2$.
 
-Here is the magic. The order behaves beautifully under the basic operations on
-power series, and its behavior is governed by a strange and elegant arithmetic
-called the **min-plus**, or **tropical**, semiring.
+Put those two rules side by side:
 
-In tropical arithmetic you replace the two operations you grew up with by two
-new ones:
+- ordinary $\times$ becomes $+$,
+- ordinary $+$ becomes $\min$.
 
-- **Tropical addition** is taking the *minimum*: $a \oplus b = \min(a, b)$.
-- **Tropical multiplication** is *ordinary addition*: $a \odot b = a + b$.
+This is exactly the **min-plus** (or **tropical**) **semiring** $(\mathbb{N} \cup \{\infty\}, \min, +)$, where "adding" two numbers means taking their minimum and "multiplying" them means adding them in the usual sense. The name *tropical* is a tribute to the Brazilian mathematician Imre Simon, who pioneered the min-plus algebra; there is nothing geographic about the mathematics. In this world the number $\infty$ plays the role of zero (because $\min(x, \infty) = x$) and the ordinary number $0$ plays the role of one (because $0 + x = x$).
 
-The name "tropical" is a whimsical tribute to the Brazilian mathematician Imre
-Simon, who pioneered the min-plus algebra; it has nothing to do with the
-weather. What matters is that this peculiar arithmetic is exactly the arithmetic
-of orders. Watch what happens when we multiply two power series.
+The headline of this article is that **the order map is a dictionary translating calculus on power series into arithmetic in the tropical world.** And the most interesting word in that dictionary is the *derivative*.
 
-When you multiply two machines, their first nonzero outputs combine, and the
-earliest the product can wake up is the sum of the two waking times. Over an
-integral domain (a number system with no zero divisors, like the rationals or
-the reals) there is no accidental cancellation, and you get an exact law:
+## The derivative drops the leading edge by one
 
-> **The Product Law.** For power series $f$ and $g$,
-> $$\operatorname{ord}(f \cdot g) = \operatorname{ord}(f) + \operatorname{ord}(g).$$
+Differentiate a power series term by term:
 
-In tropical language: $\operatorname{ord}(f \cdot g) = \operatorname{ord}(f)
-\odot \operatorname{ord}(g)$. **Ordinary multiplication of series becomes
-tropical multiplication of shadows.** If one machine wakes at beat $2$ and the
-other at beat $1$, the product wakes at beat $3$ — never sooner, never later.
+$$f = a_0 + a_1 X + a_2 X^2 + a_3 X^3 + \cdots \quad\Longrightarrow\quad f' = a_1 + 2a_2 X + 3a_3 X^2 + \cdots.$$
 
-Addition is subtler, and this is where tropical geometry earns its reputation
-for one-sided "balancing." When you add two machines, the earliest the sum can
-wake up is the earlier of the two waking times — but it might be *later*, if the
-leading terms happen to cancel. Add $5 + 2X + \cdots$ to $-5 + 9X + \cdots$ and
-the constant terms annihilate each other: both inputs had order $0$, but the sum
-has order $1$. So we only get an inequality:
+Every exponent shifts down by one. So if $f$ started at $X^{k+1}$, its derivative $f'$ starts at $X^{k}$ — one step earlier. In symbols, **if $\operatorname{ord}(f) = k+1$ then $\operatorname{ord}(f') = k$.** This is our first theorem, and in the formal development it is named `order_derivativeFun_eq`.
 
-> **The Sum Law.** For power series $f$ and $g$,
-> $$\min\bigl(\operatorname{ord}(f), \operatorname{ord}(g)\bigr) \le
-> \operatorname{ord}(f + g).$$
+There is a subtle catch hiding in the phrase "the coefficient does not vanish." When we differentiate the term $a_{k+1} X^{k+1}$ we get $(k+1)\,a_{k+1} X^{k}$. For this to be genuinely nonzero we need the *number* $k+1$ to be nonzero in our coefficient system. Over the rational, real, or complex numbers this is automatic — but over a field of *characteristic $p$* (where $p = 0$), the integer $p$ behaves like zero, and then $\frac{d}{dX}(X^p) = p\,X^{p-1} = 0$. The leading edge does not drop; it disappears entirely. For this reason the whole theory lives most comfortably over **characteristic-zero** fields such as $\mathbb{C}$, and that hypothesis is genuinely load-bearing, not a technicality we could wish away.
 
-In tropical language: $\operatorname{ord}(f) \oplus \operatorname{ord}(g) \le
-\operatorname{ord}(f + g)$. **Ordinary addition of series becomes a tropical
-lower bound.** The shadow can only tell you the *earliest possible* moment of
-awakening; cancellation might delay the real one.
+Apply the rule repeatedly and you get the **iterated derivative rule** (`order_iterate_derivativeFun`): if $f$ starts at $X^n$, then its $i$-th derivative starts at $X^{n-i}$, as long as $i \le n$:
 
-Together these two laws say that the order map is a *lax homomorphism* into the
-tropical semiring: exactly multiplicative, and one-sidedly additive. It is the
-faithful shadow of the algebra of power series, slightly blurred on the addition
-side by the possibility of cancellation.
+$$\operatorname{ord}\!\left(\frac{d^i f}{dX^i}\right) = n - i.$$
 
----
+Each differentiation peels one layer off the front of the series.
 
-## Adding calculus to the picture
+## The order of a differential monomial
 
-So far the story is classical and static. The genuinely new ingredient — the
-heart of this work — is what happens when you bring in **calculus**.
+In differential algebra the basic building blocks are not just powers of $f$, but powers of $f$ *and its derivatives* multiplied together — objects like
 
-Power series can be differentiated term by term, just like polynomials. The
-formal derivative of
+$$(f')^2 \cdot f'' \qquad\text{or, in general,}\qquad \prod_i \left(\frac{d^i f}{dX^i}\right)^{e_i}.$$
 
-$$
-f = a_0 + a_1 X + a_2 X^2 + a_3 X^3 + \cdots
-$$
+Such a product is called a **differential monomial**, and the list of exponents $e_i$ records how many copies of each derivative appear. Because order turns products into sums and sends the $i$-th derivative to $n - i$, the order of any differential monomial is an **affine** (straight-line) function of $n = \operatorname{ord}(f)$:
 
-is
+$$\operatorname{ord}\!\left(\prod_i \left(\frac{d^i f}{dX^i}\right)^{e_i}\right) = \sum_i e_i \,(n - i).$$
 
-$$
-f' = a_1 + 2a_2 X + 3a_3 X^2 + 4a_4 X^3 + \cdots,
-$$
+This is the theorem `order_diff_monomial`. Let us make it concrete. Take the monomial $(f')^2 f''$, with a series $f$ of order $n$. Here $e_1 = 2$ (two copies of the first derivative) and $e_2 = 1$ (one copy of the second). The formula predicts
 
-where the coefficient of $X^i$ in $f'$ is $(i+1)\,a_{i+1}$. Differentiation
-shifts every coefficient down by one slot and multiplies it by its old index.
+$$\operatorname{ord}\big((f')^2 f''\big) = 2(n-1) + 1\,(n-2) = 3n - 4.$$
 
-What does this do to the shadow? Intuitively, differentiation should make a
-series wake up *earlier*: it strips off one power of $X$. A machine that printed
-five zeros and then lit up should, after differentiation, print only four zeros.
-And indeed there is a universal bound:
+If $f$ starts at $X^5$, this monomial starts at $X^{11}$ — and you can check it by hand if you like, but you don't have to: the tropical dictionary computed it for you in one line, without ever touching a coefficient.
 
-> **The Derivative Bound.** For any power series $f$,
-> $$\operatorname{ord}(f) \le \operatorname{ord}(f') + 1.$$
-> Equivalently, $\operatorname{ord}(f') \ge \operatorname{ord}(f) - 1$:
-> differentiation lowers the order by *at most one*.
+## Balancing: how a sum can vanish
 
-This is the tropical action of the derivative. On shadows, the derivative
-operator does one simple thing — it subtracts (at most) one. And it holds in the
-greatest possible generality: over *any* commutative ring whatsoever, no matter
-how exotic.
+Now we reach the heart of the matter. A differential *equation* asks a sum of differential monomials to equal zero:
 
-The bound iterates cleanly. Differentiate $k$ times and the order can drop by at
-most $k$:
+$$\varphi_1 + \varphi_2 + \cdots + \varphi_t = 0.$$
 
-> **The Iterated Bound.** For any power series $f$ and any number of derivatives
-> $k$,
-> $$\operatorname{ord}(f) \le \operatorname{ord}\bigl(f^{(k)}\bigr) + k.$$
+In the tropical world, "equal to zero" is a strange request, because there is no real subtraction — the tropical sum of finitely many things is their *minimum*, and a minimum is rarely $\infty$. So how can a genuine sum of power series collapse all the way down to the zero series? Only by **cancellation**, and cancellation has a rigid combinatorial signature.
 
-This little inequality is the engine of the whole subject. It says that **the
-tropical shadow of any differential expression provides a lower bound on the
-growth of the real solution.** If you build an elaborate differential equation
-out of $f$, $f'$, $f''$, and so on, you can read off — purely from the tropical
-arithmetic of orders — a guaranteed limit on how flat any solution can be. The
-shadow constrains the substance.
+Suppose the terms $\varphi_j$ have orders $\operatorname{ord}(\varphi_1), \operatorname{ord}(\varphi_2), \dots$ Suppose, further, that **one** of them, say $\varphi_{i_0}$, starts strictly earlier than all the others. Then nothing can cancel its leading term — every other series is silent at that early position — and the whole sum must start exactly where $\varphi_{i_0}$ does:
 
----
+$$\operatorname{ord}\!\left(\sum_j \varphi_j\right) = \operatorname{ord}(\varphi_{i_0}).$$
 
-## When does "at most one" become "exactly one"?
+This is the theorem `order_sum_eq_of_unique_min`: **a unique earliest term dictates the order of the sum.** It rests on two smaller, intuitively obvious facts — that a common lower bound for all the terms bounds the sum (`le_order_sum`), and a strict version of the same for a nonempty collection (`lt_order_sum`).
 
-The derivative bound says the order drops by *at most* one. But sometimes it
-drops by less. Consider the series $f = X^2$. Its derivative is $f' = 2X$, with
-order $1$ — a drop of exactly one. Good. But now do the experiment in a number
-system of *characteristic 2*, where $2 = 0$. There, $f = X^2$ has derivative
-$f' = 2X = 0$, the all-zeros machine, whose order is $+\infty$. The order didn't
-drop by one; it jumped to infinity!
+Turn this around and you get the punchline. If a sum of power series is genuinely zero — order $\infty$ — then it *cannot* have a unique earliest term, because a unique earliest term would force the sum to start at a finite position. Therefore the minimum order must be achieved by **at least two** of the terms. Concretely: for any nonzero term $\varphi_{i_0}$ in a vanishing sum, there is a *different* term $\varphi_j$ that starts no later than $\varphi_{i_0}$:
 
-The culprit is the integer factor $(i+1)$ in the derivative coefficient. In
-ordinary arithmetic — characteristic zero, like the rationals or the reals —
-that factor is never zero, so the leading coefficient survives differentiation
-and the order drops by *exactly* one:
+$$\sum_j \varphi_j = 0 \quad\Longrightarrow\quad \text{the minimal order is attained at least twice.}$$
 
-> **The Exact Drop (characteristic zero).** Over a field of characteristic
-> zero, if $\operatorname{ord}(f) > 0$ then
-> $$\operatorname{ord}(f') + 1 = \operatorname{ord}(f).$$
+This is the **tropical balancing lemma**, named `tropical_balancing`, and it is the power-series incarnation of the single most important principle in all of tropical geometry: the **balancing condition**. Wherever a tropical object "vanishes," the minimum that defines it is achieved more than once. Here that abstract slogan becomes a concrete, provable fact about cancellation of leading terms in calculus.
 
-This pins down precisely where the boundary lies between the "lax" inequality
-and the "exact" equality: it is the **characteristic** of the number system. In
-finite characteristic, integers can vanish, derivatives can collapse, and the
-shadow loses some of its sharpness. In characteristic zero everything is rigid,
-and the shadow tells the exact truth.
+One honest caveat lives inside the statement: we must insist that $\varphi_{i_0}$ is actually nonzero. A zero term has order $\infty$ and "balances" trivially against nothing at all, so balancing is a statement about the genuine, nonzero terms of the equation. Drop that hypothesis and the theorem is false — a subtlety the formal development records explicitly.
 
-This dichotomy — lax in general, exact in characteristic zero — is the central
-structural discovery of the work. It identifies characteristic as the hidden
-dial that controls how faithfully calculus is reflected in the tropical shadow.
+## A worked example: the monomial equation
 
----
+Let us watch balancing happen in a real differential equation. Consider
 
-## The punchline: an equation that pins its solution
+$$X\,y' - 3\,y = 0.$$
 
-Now we can state the headline theorem, the one that turns all this machinery
-into a genuine surprise.
+Try the candidate solution $f = X^3$. Then $f' = 3X^2$, so $X f' = 3X^3$, while $3f = 3X^3$. The two terms are
 
-Consider the simplest interesting differential equation,
+$$\varphi_1 = X f' = 3X^3 \quad(\text{order } 3), \qquad \varphi_2 = -3f = -3X^3 \quad(\text{order } 3).$$
 
-$$
-f' = c \cdot f,
-$$
+Their orders **tie** at $3$ — the minimum is attained twice, exactly as balancing demands — and their leading coefficients $+3$ and $-3$ cancel, so $\varphi_1 + \varphi_2 = 0$. The equation is solved.
 
-where $c$ is a nonzero constant. Over the real numbers this is the equation of
-exponential growth; its solutions are constant multiples of $e^{cX}$, the most
-famous function in all of analysis. We ask the tropical question: **what is the
-order of a nonzero solution?**
+Now notice *why* the order had to be $3$. For a general candidate $f = X^n$, the term $X f'$ contributes leading coefficient $n$ at $X^n$, and the term $-3f$ contributes $-3$ at $X^n$. The orders always tie at $n$, so the *tropical* condition (balancing) is satisfied for **every** $n$. But the coefficients cancel only when $n - 3 = 0$, that is $n = 3$. This is the crucial lesson: **balancing is necessary, but not always sufficient.** The tropical shadow tells you *which orders are even possible*; whether a classical solution actually exists at a balanced order is a finer, coefficient-level question. Capturing exactly that gap is the converse problem we return to at the end.
 
-The answer is startlingly rigid:
+## The fundamental theorem, tropically
 
-> **The Pinning Theorem.** Over a field of characteristic zero, any nonzero
-> solution of $f' = c \cdot f$ with $c \ne 0$ must have
-> $$\operatorname{ord}(f) = 0.$$
+These pieces assemble into the centerpiece, a power-series analogue of a result known in the field as the **tropical fundamental theorem of differential algebra** (`tropical_FTDA`). Stated loosely: if you take a system of differential equations and look at the *orders* of its power-series solutions, those orders satisfy the tropical (balancing) version of the system. In the language of ideals — collections of equations closed under the natural operations — **the tropicalization of a differential ideal is contained in the tropical differential ideal of its tropicalization.** Every classical solution casts a tropical shadow, and that shadow is always a legal tropical solution.
 
-In words: every nonzero solution wakes up on the very first beat. It cannot
-hide behind a single zero. The exponential cannot vanish at the origin.
+There is a companion quantitative statement, `order_diffPoly_ge`: when you plug a power series $f$ into a differential polynomial $P$, the order of the result $P(f)$ is **at least** the tropical minimum computed from the orders alone. In plain terms, the tropical arithmetic gives a *guaranteed lower bound* on where the output series can possibly start — a bound you can read off combinatorially, before doing any real analysis. This is what people mean when they say tropical solutions "lower-bound the growth" of classical ones: the cheap, finite, min-plus computation fences in the behavior of the expensive, infinite, analytic object.
 
-The proof is a beautiful tropical collision, and you can carry it in your head.
-Suppose, for contradiction, that a solution had order $n > 0$ — that it printed
-at least one zero before waking. Then two shadows must agree:
-
-- On the left, $f'$ has order $n - 1$, because in characteristic zero the
-  derivative drops the order by *exactly* one (the Exact Drop).
-- On the right, $c \cdot f$ has order $n$, because multiplying by the nonzero
-  constant $c$ doesn't change the order at all (the Product Law, with $c$ of
-  order $0$).
-
-But the equation $f' = c \cdot f$ demands that these two orders be equal. So
-$n - 1 = n$ — an impossibility. The only escape is $n = 0$: the solution must
-wake up immediately.
-
-This is the smallest nontrivial instance of a deep principle in tropical
-geometry sometimes called the *fundamental theorem of tropical differential
-algebra*: the tropicalization of an equation determines the tropicalization of
-its solutions. The blurry shadow of the equation already constrains the blurry
-shadow of every solution — without ever solving the equation at all. Here that
-abstract principle becomes a concrete, hand-checkable fact about one of the most
-familiar equations in science.
-
-Notice, too, how delicately the hypotheses are tuned. If we allowed $c = 0$, the
-equation would become $f' = 0$, solved by *every* constant, and the order would
-no longer be pinned. And if we left characteristic zero, the Exact Drop would
-fail and the argument would break. The theorem lives exactly at the intersection
-of "$c \ne 0$" and "characteristic zero," and nowhere else.
-
----
+It is worth being precise about what is proved and what is not. The containment direction — *every classical solution is tropically legal* — is the theorem above. The **converse** — *every tropically legal order is actually realized by some genuine power-series solution* — is harder and, over a rich enough (algebraically closed, characteristic-zero) field, is expected to hold, upgrading the containment to a full equality. Our monomial example already shows the tension: balancing held for all $n$, yet only $n = 3$ gave a true solution. The converse asks for a recipe to *choose coefficients* that cancel the tied leading terms whenever balancing permits — a tropical Newton-polygon lifting argument. That remains a conjecture, and an inviting one, precisely because the obstruction has now been isolated so cleanly.
 
 ## Why this matters
 
-It is tempting to dismiss the order of a power series as a crude invariant —
-after all, it throws away almost everything about the series, keeping only a
-single integer. But that is precisely its power. By compressing an infinite
-object down to one number, the tropical shadow makes otherwise hard analytic
-questions into easy arithmetic ones.
+Differential equations are the language in which physics, chemistry, biology, and engineering write down how things change. Solving them exactly is usually impossible; even deciding whether a power-series solution *exists*, and where it begins, can be delicate. Tropical mathematics offers a radically cheaper first pass. By replacing each operation with its min-plus shadow — multiply becomes add, add becomes minimum, differentiate becomes "subtract one from the leading edge" — an entire differential equation collapses to a finite combinatorial constraint on a handful of integers. The balancing condition then tells you which leading behaviors are even conceivable, pruning the search for genuine solutions before the hard analysis begins.
 
-This is the recurring promise of tropical geometry across mathematics. In
-algebraic geometry, tropicalization turns curved varieties into piecewise-linear
-skeletons you can draw on graph paper. In optimization, min-plus algebra
-underlies shortest-path algorithms and scheduling. In phylogenetics, tropical
-distances reconstruct evolutionary trees. The common thread is *linearization*:
-replace a hard nonlinear world with a combinatorial shadow that is easy to
-compute in, then read information back across the bridge.
+The same philosophy has reshaped algebraic geometry over the last two decades, where tropical curves — piecewise-linear "stick figures" of classical curves — capture deep enumerative information while being almost trivial to draw. Bringing that philosophy to *differential* algebra means that the stick-figure picture now applies to dynamics, to the growth rates of solutions, to the very equations that govern change. The order map is the projector that casts the picture; the balancing lemma is the law those shadows must obey.
 
-What this work adds is the **differential** dimension. Earlier tropical theory
-mostly handled static objects — polynomials, polytopes, systems of linear
-inequalities. Here the object being tropicalized is a *ring equipped with
-calculus*: the derivative operator itself acquires a tropical shadow, namely the
-operation "subtract one from the order." Once you have that, every differential
-equation casts a tropical shadow, and that shadow imposes real constraints on
-real solutions. The Pinning Theorem is the proof of concept: a differential
-equation whose shadow is so tight it determines a feature of every solution.
-
-And the constraints flow in the useful direction. The tropical shadow always
-gives a *lower bound* on the order of a solution — a guarantee about its
-flatness, its growth, its earliest possible moment of awakening. In a world
-where solving differential equations exactly is often impossible, having a free,
-computable lower bound on the answer is no small thing.
-
----
-
-## The view from above
-
-Step back and the picture is clean. A power series is an infinite machine; its
-order is the moment it wakes up. That single number lives in the tropical
-semiring, where multiplication becomes addition and addition becomes minimum.
-Multiplying series adds their shadows exactly; adding series lower-bounds the
-shadow by a minimum. Differentiating subtracts one from the shadow — at most one
-always, and exactly one in characteristic zero. And from those few rules tumbles
-a rigidity theorem: the equation of exponential growth forces every solution to
-wake up on the first beat.
-
-Mathematics is full of these moments, when a deliberately impoverished view of
-an object — keep one number, throw away the rest — turns out to see more clearly
-than the full picture ever could. The shadow of a differential equation, it
-turns out, knows things about the equation that the equation itself works hard to
-hide.
+What makes this story satisfying is how little machinery it needs. Three translation rules — for products, for sums, for derivatives — and one combinatorial principle — that a vanishing sum must tie for its minimum at least twice — are enough to build a working tropical calculus for differential equations, complete with exact formulas for the orders of arbitrary differential monomials and a guaranteed lower bound on the output of any differential polynomial. Humble as it is, the order of a power series turns out to remember exactly what tropical geometry wants to know.

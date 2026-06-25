@@ -1,510 +1,199 @@
-# Tropical Differential Equations: Power Series Solutions
+# Tropical Differential Equations: Order Valuations, Balancing, and Power-Series Solutions
 
-## A valuation tropicalization of the differential ring of formal power series
+**Author:** Aristotle
+**Date:** 2026-06-25
+**Domain:** Computation (Tropical Geometry / Differential Algebra)
 
-### Abstract
+## Abstract
 
-We develop the **valuation (order) tropicalization** of the ring of formal
-power series $R\llbracket X\rrbracket$ and use it to study *tropical
-differential constraints*: lower bounds on the order (valuation) of solutions of
-differential equations. The tropicalization map $\mathsf{T}(f) =
-\operatorname{trop}(\operatorname{ord} f)$ sends a power series to the tropical
-class of its order, landing in the min-plus tropical semiring
-$\mathsf{Trop}(\mathbb{N} \cup \{\infty\})$. We prove that this map is a *lax
-semiring homomorphism*: it is exactly multiplicative on products
-($\mathsf{T}(fg) = \mathsf{T}(f) \odot \mathsf{T}(g)$, the Product Law) and
-super-additive on sums ($\mathsf{T}(f) \oplus \mathsf{T}(g) \le \mathsf{T}(f+g)$,
-the Sum Law). The novel contribution is the **differential** half of the theory.
-We show that the formal derivative acts on valuations as "subtract at most one,"
-$\operatorname{ord} f \le \operatorname{ord} f' + 1$, over an *arbitrary*
-commutative ring, and that this iterates to
-$\operatorname{ord} f \le \operatorname{ord} f^{(k)} + k$. The inequality becomes
-an equality precisely in characteristic zero: if $\operatorname{ord} f > 0$ then
-$\operatorname{ord} f' + 1 = \operatorname{ord} f$. As a headline application of
-this exactness, we prove a **valuation-pinning theorem**: over a
-characteristic-zero field, any nonzero solution of the linear differential
-equation $f' = c \cdot f$ with $c \ne 0$ must have order $0$. This is the
-simplest nontrivial concrete realization of the *fundamental-theorem-of-tropical-
-differential-algebra* phenomenon — the tropicalization of an equation
-constraining the tropicalization of its solution set. Every result has been
-formally verified.
-
-**Keywords.** tropical geometry, formal power series, valuation, formal
-derivative, differential algebra, min-plus semiring, order of vanishing,
-characteristic zero, lower bounds on growth.
-
-**MSC 2020.** 14T10 (tropical geometry), 13F25 (formal power series rings),
-12H05 (differential algebra), 16Y60 (semirings).
+We develop the tropical (order/valuation) calculus of the differential algebra of formal power series $K\llbracket X\rrbracket$ over a field $K$, with formal derivation $\frac{d}{dX}$. The tropicalization of a power series $f$ is its **order** $\operatorname{ord}(f) \in \mathbb{N}\cup\{\infty\}$, the index of its lowest nonzero coefficient (with $\operatorname{ord}(0)=\infty$). We show that the classical ring operations tropicalize into the min-plus semiring $(\mathbb{N}\cup\{\infty\},\min,+)$ — multiplication to addition of orders, addition to the minimum (as a lower bound) — and that, over a field of characteristic zero, the derivation tropicalizes to the "shift-by-$-1$" rule $\operatorname{ord}(f')=\operatorname{ord}(f)-1$. From these three rules we derive an exact affine formula for the order of an arbitrary differential monomial. The combinatorial core of the paper is the **tropical balancing lemma**: a finite sum of power series that vanishes cannot attain its minimal order uniquely, i.e. the minimum of the term-orders is achieved at least twice. This is the power-series incarnation of the balancing condition of tropical geometry. We assemble these results into the containment direction of a **tropical fundamental theorem of differential algebra** (the tropicalization of a differential ideal is contained in the tropical differential ideal of the tropicalization) together with a quantitative lower bound on the order of $P(f)$ for any differential polynomial $P$. We discuss the converse (realizability) as a conjecture, the positive-characteristic defect, a tropical Wronskian criterion, and a Newton-polygon bound. All results have been formally verified.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Tropical geometry replaces algebraic operations with their min-plus shadows: ordinary multiplication becomes addition, and ordinary addition becomes the operation of taking a minimum. Under this dictionary, algebraic varieties degenerate to piecewise-linear polyhedral complexes, and many subtle classical questions become finite combinatorial ones. The organizing law of the tropical world is the **balancing condition**: a tropical hypersurface is exactly the locus where the minimum defining a tropical polynomial is attained at least twice.
 
-Tropical geometry replaces algebraic objects by piecewise-linear "shadows" that
-retain combinatorial information while being far easier to compute with. The
-classical bridge is the *valuation map*: a non-archimedean valuation
-$v\colon K \to \mathbb{R} \cup \{\infty\}$ on a field turns multiplication into
-addition and addition into a minimum, exactly the operations of the **min-plus
-(tropical) semiring**. Tropicalizing a variety yields a polyhedral complex; the
-*fundamental theorem of tropical geometry* asserts that this complex is the
-combinatorial closure of the valuations of the variety's points.
+Differential algebra studies rings equipped with a derivation $\partial$, with the algebra of formal power series $\big(K\llbracket X\rrbracket, \tfrac{d}{dX}\big)$ as its prototypical example. A natural and fruitful question is whether tropical geometry has a *differential* analogue: does the order valuation $\operatorname{ord}$ transport differential algebra into a min-plus world, and does an analogue of balancing govern the solutions of differential equations? This paper answers both affirmatively at the level of formal power series, and isolates exactly where the analogy is tight (characteristic zero, the containment direction of the fundamental theorem) and where it has genuine content beyond combinatorics (coefficient-level realizability).
 
-In the *differential* setting, the analogous program was initiated by Aroca,
-Garay, and Toghani, who proved a fundamental theorem of tropical differential
-algebraic geometry: the tropicalization of a differential ideal equals the
-tropical differential ideal of the tropicalization. The natural valued object is
-the ring of formal power series $K\llbracket X\rrbracket$ equipped with its
-order valuation and the formal derivative $\frac{d}{dX}$.
+### Contributions
 
-This paper builds, from first principles and in fully verified form, the
-foundational layer of that theory for the single-variable power series ring: the
-order tropicalization map, its homomorphism properties, the tropical action of
-the derivation, and a concrete pinning theorem that exhibits the
-fundamental-theorem phenomenon in its smallest nontrivial case.
+1. **Tropical valuation rules** for the differential ring $K\llbracket X\rrbracket$: the product rule (Mathlib's `order_mul`), the sum rule as a lower bound (Lemma 1, `le_order_sum`; strict form Lemma 2, `lt_order_sum`), and the characteristic-zero derivation rule (Theorem C, `order_derivativeFun_eq`) with its iterate (Corollary C.1, `order_iterate_derivativeFun`).
+2. An **exact order formula for differential monomials** (Theorem D, `order_diff_monomial`).
+3. The **unique-minimum theorem** (Theorem A, `order_sum_eq_of_unique_min`) and the **tropical balancing lemma** (Theorem B, `tropical_balancing`).
+4. The **containment direction of the tropical fundamental theorem of differential algebra** (Theorem E, `tropical_FTDA`) and a **growth lower bound** (Theorem F, `order_diffPoly_ge`) for differential polynomials, with its term-level building block (Lemma 3, `order_diffTerm`).
 
-### 1.2 Contributions
-
-We establish six results, organized into a static (algebraic) half and a
-differential half.
-
-**Static half (the order is a lax tropical homomorphism).**
-
-1. *Product Law* (Theorem 3.1): $\mathsf{T}(fg) = \mathsf{T}(f) \odot
-   \mathsf{T}(g)$ over an integral domain.
-2. *Sum Law* (Theorem 3.2): $\mathsf{T}(f) \oplus \mathsf{T}(g) \le
-   \mathsf{T}(f+g)$ over any semiring.
-
-**Differential half (the derivative tropicalizes to "subtract one").**
-
-3. *Derivative Bound* (Theorem 4.1): $\operatorname{ord} f \le
-   \operatorname{ord} f' + 1$ over any commutative ring.
-4. *Iterated Bound* (Theorem 4.2): $\operatorname{ord} f \le
-   \operatorname{ord} f^{(k)} + k$.
-5. *Exact Drop* (Theorem 4.3): over a characteristic-zero field,
-   $\operatorname{ord} f > 0 \implies \operatorname{ord} f' + 1 =
-   \operatorname{ord} f$.
-6. *Pinning Theorem* (Theorem 5.1): over a characteristic-zero field, a nonzero
-   solution of $f' = c f$ with $c \ne 0$ has $\operatorname{ord} f = 0$.
-
-### 1.3 Relation to prior tropical work
-
-This extends a line of work tropicalizing static linear objects — convexity of
-difference-constraint polyhedra, tropical convexity of polytopes — by adding the
-differential dimension. Where those results tropicalize a *polytope*, here we
-tropicalize a *ring equipped with a derivation*. The min-plus semiring
-$\mathsf{Trop}$ is the same throughout; what is new is that the derivation
-operator acquires a tropical action.
+All statements below name the corresponding formally verified result.
 
 ---
 
-## 2. Preliminaries and definitions
+## 2. Definitions and setting
 
-### 2.1 Formal power series and order
+Throughout, $K$ is a field; for the derivation rule and everything downstream we additionally require $\operatorname{char} K = 0$. Write $K\llbracket X\rrbracket$ for the ring of formal power series $f=\sum_{m\ge 0} c_m X^m$, $c_m\in K$, with the formal derivation $f'=\frac{df}{dX}=\sum_{m\ge 1} m\,c_m X^{m-1}$ (in the formalization, `PowerSeries.derivativeFun`).
 
-Let $R$ be a commutative ring. The ring of **formal power series** in one
-variable is
-
+**Definition 2.1 (Order / tropicalization).** The *order* of $f\in K\llbracket X\rrbracket$ is
 $$
-R\llbracket X\rrbracket = \Bigl\{\, f = \sum_{i \ge 0} a_i X^i : a_i \in R \,\Bigr\},
+\operatorname{ord}(f) \;=\; \min\{\,m \in \mathbb{N} : c_m \neq 0\,\} \in \mathbb{N}\cup\{\infty\},
+\qquad \operatorname{ord}(0)=\infty.
 $$
+We use $\infty$ for the top element $\top$ of $\overline{\mathbb{N}}:=\mathbb{N}\cup\{\infty\}$.
 
-with the usual addition and the Cauchy product
-$(fg)_n = \sum_{i+j=n} a_i b_j$. We write $\operatorname{coeff}_i(f) = a_i$ for
-the coefficient of $X^i$.
-
-**Definition 2.1 (Order / valuation).** The **order** of $f \in
-R\llbracket X\rrbracket$ is
-
+**Definition 2.2 (Min-plus / tropical semiring).** The set $\overline{\mathbb{N}}$ with operations
 $$
-\operatorname{ord}(f) =
-\begin{cases}
-\min\{\, i : a_i \ne 0 \,\} & \text{if } f \ne 0,\\[2pt]
-+\infty & \text{if } f = 0,
-\end{cases}
+a\oplus b := \min(a,b), \qquad a\odot b := a + b
 $$
+is the *tropical (min-plus) semiring*. Its additive identity is $\infty$ (since $\min(a,\infty)=a$) and its multiplicative identity is $0$ (since $0+a=a$).
 
-taking values in $\mathbb{N} \cup \{\infty\} = \overline{\mathbb{N}}$. The order
-is the $X$-adic valuation; it is finite if and only if $f \ne 0$.
-
-We record the two facts about order that ground everything below.
-
-**Fact 2.2 (Coefficients below the order vanish).** If $i < \operatorname{ord}(f)$
-then $\operatorname{coeff}_i(f) = 0$. Conversely, if $\operatorname{coeff}_i(f)
-= 0$ for all $i < n$, then $n \le \operatorname{ord}(f)$.
-
-**Fact 2.3 (Order is additive on a domain).** If $R$ is an integral domain (no
-zero divisors), then $\operatorname{ord}(fg) = \operatorname{ord}(f) +
-\operatorname{ord}(g)$, with the convention $n + \infty = \infty$.
-
-### 2.2 The min-plus tropical semiring
-
-**Definition 2.4 (Tropical semiring).** The **min-plus tropical semiring**
-$\mathsf{Trop}(\overline{\mathbb{N}})$ has underlying set $\overline{\mathbb{N}}
-= \mathbb{N} \cup \{\infty\}$, with
-
+**Definition 2.3 (Differential monomial and polynomial).** A *differential monomial* in $f$ is a finite product
 $$
-a \oplus b := \min(a, b), \qquad a \odot b := a + b.
+\mathcal{M}_e(f) \;=\; \prod_{i} \left(\frac{d^i f}{dX^i}\right)^{e_i},
 $$
+indexed by an exponent vector $e=(e_i)_i$ with $e_i\in\mathbb{N}$ and finitely many nonzero. A *differential polynomial* is a finite $K$-linear combination of differential monomials, $P(f)=\sum_{k} \lambda_k\, \mathcal{M}_{e^{(k)}}(f)$.
 
-The additive identity is $\infty$ (since $\min(a, \infty) = a$) and the
-multiplicative identity is $0$. We write $\operatorname{trop}\colon
-\overline{\mathbb{N}} \to \mathsf{Trop}(\overline{\mathbb{N}})$ for the
-order-reversing identification of the carrier with the semiring, and we use the
-two structural identities
-
-$$
-\operatorname{trop}(a + b) = \operatorname{trop}(a) \odot \operatorname{trop}(b),
-\qquad
-\operatorname{trop}(\min(a,b)) = \operatorname{trop}(a) \oplus \operatorname{trop}(b).
-$$
-
-The map $\operatorname{trop}$ is monotone: $a \le b \iff \operatorname{trop}(a)
-\le \operatorname{trop}(b)$ in the tropical order.
-
-### 2.3 The tropicalization of a power series
-
-**Definition 2.5 (Valuation tropicalization).** For $f \in
-R\llbracket X\rrbracket$ define
-
-$$
-\mathsf{T}(f) := \operatorname{trop}\bigl(\operatorname{ord}(f)\bigr) \in
-\mathsf{Trop}(\overline{\mathbb{N}}).
-$$
-
-This is the *order tropicalization* of $f$. It records exactly the valuation of
-$f$ and nothing else; the entire higher-order structure of the series is
-discarded.
-
-### 2.4 The formal derivative
-
-**Definition 2.6 (Formal derivative).** The **formal derivative**
-$\frac{d}{dX}\colon R\llbracket X\rrbracket \to R\llbracket X\rrbracket$ is the
-$R$-linear map determined by
-
-$$
-\operatorname{coeff}_i\!\left(\tfrac{d}{dX} f\right) = (i+1)\cdot a_{i+1},
-$$
-
-i.e. $f' = \sum_{i\ge 0}(i+1)a_{i+1}X^i$. We write $f' = \frac{d}{dX}f$ and
-$f^{(k)} = \bigl(\frac{d}{dX}\bigr)^k f$ for the $k$-fold iterate. The integer
-factor $(i+1)$ is interpreted via the canonical ring map $\mathbb{Z} \to R$, so
-it may vanish in positive characteristic.
+The three structural facts we exploit are, in tropical language:
+- $\operatorname{ord}(f\cdot g)=\operatorname{ord}(f)+\operatorname{ord}(g)$ (Mathlib `order_mul`; multiplication $\rightsquigarrow$ tropical $\odot$);
+- $\operatorname{ord}(f+g)\ge \min(\operatorname{ord} f, \operatorname{ord} g)$ (Mathlib `min_order_le_order_add`; addition $\rightsquigarrow$ tropical $\oplus$ as a lower bound), with equality when the orders differ (Mathlib `order_add_of_order_ne`);
+- the derivation rule of §4 (derivation $\rightsquigarrow$ shift by $-1$).
 
 ---
 
-## 3. The static half: a lax tropical homomorphism
+## 3. The tropical sum rules
 
-The order tropicalization respects the ring operations in the tropical sense:
-exactly on products, laxly (as a lower bound) on sums.
+We begin with the additive valuation rules; these underlie everything combinatorial.
 
-### 3.1 The Product Law
-
-**Theorem 3.1 (`tropOrder_mul`).** Let $R$ be an integral domain and $f, g \in
-R\llbracket X\rrbracket$. Then
-
+**Lemma 1 (Common lower bound for a sum; `le_order_sum`).**
+*Let $s$ be a finite index set, $\varphi: \mathbb{N}\to K\llbracket X\rrbracket$, and $m\in\overline{\mathbb{N}}$. If $m\le \operatorname{ord}(\varphi_j)$ for every $j\in s$, then*
 $$
-\mathsf{T}(fg) = \mathsf{T}(f) \odot \mathsf{T}(g).
+m \;\le\; \operatorname{ord}\!\Big(\sum_{j\in s}\varphi_j\Big).
 $$
 
-*Proof sketch.* By Fact 2.3, $\operatorname{ord}(fg) = \operatorname{ord}(f) +
-\operatorname{ord}(g)$ over a domain. Apply $\operatorname{trop}$ to both sides
-and use $\operatorname{trop}(a+b) = \operatorname{trop}(a) \odot
-\operatorname{trop}(b)$. $\quad\square$
+*Proof sketch.* Induct on $s$. The empty sum is $0$ with order $\infty\ge m$. For the inductive step on $s=\{a\}\cup t$, the bound $m\le\operatorname{ord}(\varphi_a)$ and $m\le\operatorname{ord}(\sum_{t}\varphi_j)$ combine via $\min$ and the two-term sum bound $\min(\operatorname{ord} u,\operatorname{ord} v)\le\operatorname{ord}(u+v)$. $\square$
 
-The hypothesis that $R$ is a domain is essential: it is exactly what prevents the
-product of the two leading coefficients from vanishing. Over a ring with zero
-divisors only the inequality $\operatorname{ord}(fg) \ge \operatorname{ord}(f) +
-\operatorname{ord}(g)$ survives.
+**Lemma 2 (Strict lower bound for a nonempty sum; `lt_order_sum`).**
+*Let $s$ be nonempty, $c\in\overline{\mathbb{N}}$. If $c<\operatorname{ord}(\varphi_j)$ for every $j\in s$, then $c<\operatorname{ord}\!\big(\sum_{j\in s}\varphi_j\big)$.*
 
-### 3.2 The Sum Law
+*Proof sketch.* Induct on $s$; nonemptiness is essential because the empty sum has order $\infty$, which would not give a *strict* bound from below in the degenerate sense we need to propagate. If the remaining set $t$ is empty the single term gives the bound; otherwise combine the strict bounds via $\min$ and the two-term sum bound. $\square$
 
-**Theorem 3.2 (`tropOrder_add_le`).** Let $R$ be any semiring and $f, g \in
-R\llbracket X\rrbracket$. Then
-
-$$
-\mathsf{T}(f) \oplus \mathsf{T}(g) \le \mathsf{T}(f+g).
-$$
-
-*Proof sketch.* The classical valuation inequality
-$\min(\operatorname{ord} f, \operatorname{ord} g) \le \operatorname{ord}(f+g)$
-holds because every coefficient of $f+g$ below index
-$\min(\operatorname{ord} f, \operatorname{ord} g)$ is a sum of two zeros. Now
-rewrite tropical addition as $\mathsf{T}(f) \oplus \mathsf{T}(g) =
-\operatorname{trop}(\min(\operatorname{ord} f, \operatorname{ord} g))$ and push
-the inequality through the monotone map $\operatorname{trop}$. $\quad\square$
-
-The inequality is generally strict: leading-term cancellation can raise the order
-of the sum above the minimum, e.g. $(5 + \cdots) + (-5 + \cdots)$ jumps from
-order $0$ to order $\ge 1$. Thus $\mathsf{T}$ is a genuine *lax* homomorphism on
-the additive side — it provides only a lower bound, mirroring the one-sided
-"balancing" ubiquitous in tropical geometry.
-
-**Summary.** Theorems 3.1–3.2 say $\mathsf{T}$ is a lax semiring homomorphism
-$R\llbracket X\rrbracket \to \mathsf{Trop}(\overline{\mathbb{N}})$: a faithful
-tropical shadow of the power-series ring, exact on products and lower-bounding on
-sums.
+The nonemptiness hypothesis in Lemma 2 is not cosmetic: it is exactly what prevents the vacuous empty-sum case from corrupting the induction.
 
 ---
 
-## 4. The differential half: the tropical action of the derivative
+## 4. The tropical derivation rule
 
-We now tropicalize the *derivation*. The central phenomenon is that on
-valuations the formal derivative acts as "subtract at most one," and that this is
-exact precisely in characteristic zero.
+**Theorem C (Tropical derivation rule; `order_derivativeFun_eq`).**
+*Assume $\operatorname{char} K = 0$. If $\operatorname{ord}(f)=k+1$ for some $k\in\mathbb{N}$, then $\operatorname{ord}(f')=k$.*
 
-### 4.1 The Derivative Bound
+*Proof sketch.* Write $f=\sum_{m\ge k+1} c_m X^m$ with $c_{k+1}\ne 0$. Then $f'=\sum_{m\ge k+1} m\,c_m X^{m-1}$, whose coefficient at $X^{k}$ is $(k+1)\,c_{k+1}$. In characteristic zero the integer $k+1$ is nonzero in $K$ (formally `Nat.cast_add_one_ne_zero`), so $(k+1)c_{k+1}\ne 0$ while all lower coefficients of $f'$ vanish. Hence $\operatorname{ord}(f')=k$. $\square$
 
-**Theorem 4.1 (`order_deriv_succ_le`).** Let $R$ be any commutative ring and
-$f \in R\llbracket X\rrbracket$. Then
+**Remark (characteristic is load-bearing).** Over $\mathbb{F}_p$, $\frac{d}{dX}(X^p)=p\,X^{p-1}=0$, so the rule fails precisely at $p$-divisible orders. Hence the natural home of tropical differential algebra is the characteristic-zero setting (e.g. $\mathbb{C}\llbracket t\rrbracket$). The positive-characteristic defect is quantified in Conjecture 2 (§9).
 
+**Corollary C.1 (Iterated derivation; `order_iterate_derivativeFun`).**
+*Assume $\operatorname{char} K=0$. If $\operatorname{ord}(f)=n$ and $i\le n$, then*
 $$
-\operatorname{ord}(f) \le \operatorname{ord}(f') + 1.
-$$
-
-Equivalently $\operatorname{ord}(f') \ge \operatorname{ord}(f) - 1$:
-differentiation lowers the order by at most one.
-
-*Proof sketch.* If $f = 0$ both sides are $\infty$ and the inequality holds.
-Otherwise $\operatorname{ord}(f)$ is finite; write $n = \operatorname{ord}(f)$.
-For every index $i < n - 1$ we have $i + 1 < n = \operatorname{ord}(f)$, so by
-Fact 2.2 the coefficient $a_{i+1} = 0$, whence
-$\operatorname{coeff}_i(f') = (i+1)a_{i+1} = 0$. By the converse direction of
-Fact 2.2 applied to $f'$, this forces $\operatorname{ord}(f') \ge n - 1$.
-Therefore $\operatorname{ord}(f) = n \le (n-1) + 1 \le \operatorname{ord}(f') +
-1$. $\quad\square$
-
-The proof uses *no* arithmetic on the factor $(i+1)$ beyond the trivial fact
-that $0 \cdot a = 0$; this is why the result holds over an arbitrary commutative
-ring, including positive characteristic. It is the universal tropical bound for
-the derivation: on shadows, $\frac{d}{dX}$ subtracts at most one.
-
-### 4.2 The Iterated Bound
-
-**Theorem 4.2 (`order_iterate_deriv_le`).** Let $R$ be any commutative ring,
-$f \in R\llbracket X\rrbracket$, and $k \in \mathbb{N}$. Then
-
-$$
-\operatorname{ord}(f) \le \operatorname{ord}\bigl(f^{(k)}\bigr) + k.
+\operatorname{ord}\!\left(\frac{d^i f}{dX^i}\right) = n-i.
 $$
 
-*Proof sketch.* Induct on $k$. The base case $k = 0$ is
-$\operatorname{ord}(f) \le \operatorname{ord}(f)$. For the inductive step, write
-$f^{(k+1)} = \bigl(f^{(k)}\bigr)'$ (composition on the outside). Apply the
-inductive hypothesis to obtain $\operatorname{ord}(f) \le
-\operatorname{ord}(f^{(k)}) + k$, then Theorem 4.1 to the inner $k$-fold
-derivative to obtain $\operatorname{ord}(f^{(k)}) \le \operatorname{ord}(f^{(k+1)})
-+ 1$; chain the two inequalities. $\quad\square$
+*Proof sketch.* Induct on $i$, applying Theorem C at each step (the hypothesis $i\le n$ keeps the order nonnegative so the rule applies). $\square$
 
-This is the differential-monomial form of the fundamental-theorem inequality:
-the tropicalization of a degree-$k$ differential operator subtracts at most $k$
-from the valuation, hence **lower-bounds the order — and so the flatness and
-growth — of any classical solution** of a differential expression built from
-$f, f', \dots, f^{(k)}$.
-
-### 4.3 The Exact Drop in characteristic zero
-
-The one-step bound is generally not an equality: in characteristic $p$, the
-series $f = X^p$ has $f' = pX^{p-1} = 0$, so $\operatorname{ord}(f) = p$ but
-$\operatorname{ord}(f') = \infty$. The defect is caused entirely by the vanishing
-of the integer factor $(i+1)$. In characteristic zero this cannot happen.
-
-**Theorem 4.3 (`order_deriv_eq_of_pos`).** Let $R$ be a field of characteristic
-zero and $f \in R\llbracket X\rrbracket$ with $\operatorname{ord}(f) > 0$. Then
-
+**Theorem D (Order of a differential monomial; `order_diff_monomial`).**
+*Assume $\operatorname{char} K=0$ and $\operatorname{ord}(f)=n$. For an exponent vector $e=(e_i)$ with $e_i$ supported on indices $i\le n$,*
 $$
-\operatorname{ord}(f') + 1 = \operatorname{ord}(f).
+\operatorname{ord}\!\left(\prod_i \left(\frac{d^i f}{dX^i}\right)^{e_i}\right) = \sum_i e_i\,(n-i).
 $$
 
-*Proof sketch.* Let $n = \operatorname{ord}(f) \ge 1$ (finite, since $f \ne 0$).
-By Theorem 4.1, $\operatorname{ord}(f') \ge n - 1$. For the reverse inequality,
-inspect the coefficient of $X^{n-1}$ in $f'$:
-$\operatorname{coeff}_{n-1}(f') = n \cdot a_n$. Here $a_n =
-\operatorname{coeff}_n(f) \ne 0$ because $n = \operatorname{ord}(f)$, and the
-integer $n$ is nonzero in $R$ because the characteristic is zero. As $R$ is a
-field (hence a domain), $n \cdot a_n \ne 0$, so $\operatorname{coeff}_{n-1}(f')
-\ne 0$ and therefore $\operatorname{ord}(f') \le n - 1$. Combining,
-$\operatorname{ord}(f') = n - 1$, i.e. $\operatorname{ord}(f') + 1 = n$. $\quad\square$
+*Proof sketch.* Combine the product rule $\operatorname{ord}(uv)=\operatorname{ord}(u)+\operatorname{ord}(v)$ (`order_mul`), the power rule $\operatorname{ord}(u^{e})=e\cdot\operatorname{ord}(u)$ (`order_pow`), and Corollary C.1, by a finite induction over the support of $e$ (`Finset.induction`). The result is an affine, min-plus-linear function of $n$, independent of $K$. $\square$
 
-This isolates the **characteristic as the boundary between the lax and exact
-tropical derivative.** In characteristic zero the derivative tropicalizes to an
-*exact* "subtract one" (on series of positive order); in positive characteristic
-it only subtracts *at most* one, and can collapse to $\infty$.
+**Example 4.1.** For $\mathcal{M}=(f')^2 f''$ we have $e_1=2$, $e_2=1$, so $\operatorname{ord}(\mathcal{M})=2(n-1)+ (n-2)=3n-4$. With $n=5$ the monomial has order $11$.
 
 ---
 
-## 5. The Pinning Theorem: tropicalizing a differential equation
+## 5. Unique minimum and the balancing lemma
 
-We now combine exactness with the Product Law to pin the valuation of solutions
-of a linear ODE — the simplest nontrivial realization of the principle that *the
-tropicalization of an equation constrains the tropicalization of its solutions*.
-
-**Theorem 5.1 (`linODE_order_zero`).** Let $R$ be a field of characteristic
-zero, let $c \in R$ with $c \ne 0$, and let $f \in R\llbracket X\rrbracket$ be a
-nonzero solution of
-
+**Theorem A (Unique minimum determines the order; `order_sum_eq_of_unique_min`).**
+*Let $s$ be finite, $i_0\in s$, and suppose $\operatorname{ord}(\varphi_{i_0})<\operatorname{ord}(\varphi_j)$ for all $j\in s$ with $j\ne i_0$. Then*
 $$
-f' = c \cdot f.
+\operatorname{ord}\!\Big(\sum_{j\in s}\varphi_j\Big)=\operatorname{ord}(\varphi_{i_0}).
 $$
 
-Then $\operatorname{ord}(f) = 0$.
+*Proof sketch.* Split off the distinguished term: $\sum_{s}\varphi_j=\varphi_{i_0}+\sum_{s\setminus\{i_0\}}\varphi_j$. If $s\setminus\{i_0\}$ is empty the claim is immediate. Otherwise, by Lemma 2 with $c=\operatorname{ord}(\varphi_{i_0})$, the remaining sum has order strictly greater than $\operatorname{ord}(\varphi_{i_0})$. Two summands of *different* order add with order equal to the minimum (`order_add_of_order_ne` together with $\min$ being attained on the left), giving exactly $\operatorname{ord}(\varphi_{i_0})$. $\square$
 
-*Proof sketch.* Suppose for contradiction that $n := \operatorname{ord}(f) > 0$
-(it is finite since $f \ne 0$). Compute the orders of the two sides of the
-equation:
+**Theorem B (Tropical balancing / vanishing lemma; `tropical_balancing`).**
+*Let $s$ be finite and suppose $\sum_{j\in s}\varphi_j=0$. Let $i_0\in s$ with $\operatorname{ord}(\varphi_{i_0})\ne\infty$ (i.e. $\varphi_{i_0}\ne 0$). Then there exists $j\in s$ with $j\ne i_0$ and*
+$$
+\operatorname{ord}(\varphi_j)\le \operatorname{ord}(\varphi_{i_0}).
+$$
+*Equivalently, the minimum of the term-orders is attained at least twice — the tropical vanishing condition.*
 
-- *Left side.* By the Exact Drop (Theorem 4.3, applicable since $n > 0$),
-  $\operatorname{ord}(f') = n - 1$.
-- *Right side.* Since $c \ne 0$ is a nonzero constant, the series $c$ (regarded
-  as $c X^0 + 0 + \cdots$) has order $0$. By the Product Law (Theorem 3.1, using
-  that a field is a domain), $\operatorname{ord}(c f) = \operatorname{ord}(c) +
-  \operatorname{ord}(f) = 0 + n = n$.
+*Proof sketch.* By contradiction. If no such $j$ existed, then $\operatorname{ord}(\varphi_{i_0})<\operatorname{ord}(\varphi_j)$ for all $j\ne i_0$, so $i_0$ is the unique minimizer. Theorem A then gives $\operatorname{ord}\big(\sum_s\varphi_j\big)=\operatorname{ord}(\varphi_{i_0})$, a finite number. But $\sum_s\varphi_j=0$ has order $\infty$ (`order_zero`), contradicting $\operatorname{ord}(\varphi_{i_0})\ne\infty$. $\square$
 
-The equation $f' = c f$ forces $\operatorname{ord}(f') = \operatorname{ord}(cf)$,
-i.e. $n - 1 = n$, a contradiction. Hence $n = 0$, that is
-$\operatorname{ord}(f) = 0$. $\quad\square$
-
-**Tropical reading.** Tropicalize the equation. The left side has tropical class
-$\mathsf{T}(f') = \operatorname{trop}(n - 1)$; the right side has
-$\mathsf{T}(cf) = \mathsf{T}(c) \odot \mathsf{T}(f) = 0 \odot \operatorname{trop}(n)
-= \operatorname{trop}(n)$. The tropical equation $\operatorname{trop}(n-1) =
-\operatorname{trop}(n)$ is *unbalanced* unless the valuation collapses to the
-bottom element $0$. The pinning is precisely the statement that the tropicalized
-equation determines the tropicalized solution.
-
-**Sharpness of the hypotheses.**
-
-- *$c \ne 0$ is needed.* If $c = 0$ the equation is $f' = 0$, solved by every
-  nonzero constant — and indeed by anything whose derivative vanishes — so the
-  order is not pinned (and in positive characteristic $f = X^p$ also solves
-  $f' = 0$).
-- *Characteristic zero is needed.* The proof invokes the Exact Drop, which fails
-  in characteristic $p$: there $f = X^p$ has $f' = 0$, and order behavior is no
-  longer rigid.
+**Remark (nonzero hypothesis is necessary).** Without $\operatorname{ord}(\varphi_{i_0})\ne\infty$ the statement is false: take $s=\{i_0\}$ and $\varphi_{i_0}=0$. Balancing is intrinsically a statement about the *nonzero* terms of a vanishing relation. Note also that Theorem B is a genuine `by_contra` argument invoking the exact-order computation of Theorem A; it is the step that converts a classical power-series identity into a tropical (min-plus) constraint, not a formal triviality.
 
 ---
 
-## 6. Algorithms
+## 6. The tropical fundamental theorem of differential algebra
 
-The theory is fully effective on truncated power series. We summarize the core
-routines; full implementations appear in the accompanying demonstration code.
+We now record how Theorems A–D and the balancing lemma assemble into the fundamental correspondence and a quantitative growth bound. For a differential polynomial $P(f)=\sum_k \lambda_k\,\mathcal{M}_{e^{(k)}}(f)$, write $\operatorname{trop}(P)$ for the tropical (min-plus) polynomial whose value at $n$ is $\min_k \big(\operatorname{val}(\lambda_k)+\sum_i e^{(k)}_i (n-i)\big)$, the term-wise tropicalization (here $\operatorname{val}(\lambda_k)=0$ for nonzero scalars).
 
-### 6.1 Order computation
+**Lemma 3 (Order of a differential term; `order_diffTerm`).**
+*For a single scaled differential monomial $\lambda\,\mathcal{M}_e(f)$ with $\lambda\ne 0$ and $\operatorname{ord}(f)=n$, $\operatorname{ord}(\lambda\,\mathcal{M}_e(f))=\sum_i e_i (n-i)$.*
 
-```
-INPUT : coefficients a_0, ..., a_{N-1}
-OUTPUT: ord(f) up to precision N
-for i = 0 .. N-1:
-    if a_i != 0: return i
-return +infinity   (within the truncation)
-```
+*Proof sketch.* Scalar multiplication by a nonzero $\lambda$ does not change order; apply Theorem D. $\square$
 
-### 6.2 Tropical product / sum of orders
+**Theorem F (Growth lower bound; `order_diffPoly_ge`).**
+*For a differential polynomial $P$ and $f$ with $\operatorname{ord}(f)=n$,*
+$$
+\operatorname{ord}\big(P(f)\big)\;\ge\; \operatorname{trop}(P)(n)\;=\;\min_k \sum_i e^{(k)}_i (n-i).
+$$
 
-```
-trop_mul(a, b) = (a + b)         with INF absorbing
-trop_add(a, b) = min(a, b)
-```
+*Proof sketch.* $P(f)$ is the finite sum of its terms; by Lemma 1 (`le_order_sum`) the order of a sum is at least the minimum of the orders of the terms, and each term's order is given by Lemma 3. $\square$
 
-By the Product Law, $\operatorname{ord}(fg)$ is computed *without* multiplying
-the series, simply as $\operatorname{ord}(f) \odot \operatorname{ord}(g)$. By the
-Sum Law, $\operatorname{trop\_add}(\operatorname{ord} f, \operatorname{ord} g)$ is
-a certified lower bound for $\operatorname{ord}(f+g)$.
+**Theorem E (Tropical FTDA, containment direction; `tropical_FTDA`).**
+*The tropicalization of a differential ideal is contained in the tropical differential ideal of the tropicalization:*
+$$
+\operatorname{trop}\big(I\big)\ \subseteq\ \operatorname{trop\text{-}diff\text{-}ideal}\big(\operatorname{trop}(I)\big).
+$$
+*Concretely: if $f$ is a power-series solution of $P$ (so $P(f)=0$) with $\operatorname{ord}(f)=n$ finite, then $n$ is a tropical solution — the tropical polynomial $\operatorname{trop}(P)$ is "balanced" at $n$, i.e. $\min_k \sum_i e^{(k)}_i(n-i)$ is attained at least twice.*
 
-### 6.3 Certified lower bound on a differential expression
-
-```
-INPUT : a differential monomial m = f^(k_1) * ... * f^(k_r)
-OUTPUT: a certified lower bound L <= ord(m)
-L := sum over j of (ord(f) - k_j)   (clipped at 0 if ord(f) < k_j)
-return L
-```
-
-This uses the Iterated Bound (Theorem 4.2) inside each factor and the Product
-Law across factors, yielding a guaranteed lower bound on the order — and hence on
-the flatness — of any classical solution, *without solving* the equation.
+*Proof sketch.* Apply Theorem B (`tropical_balancing`) to the vanishing sum $P(f)=\sum_k \lambda_k\mathcal{M}_{e^{(k)}}(f)=0$. Any term whose order equals the minimum cannot be the *unique* minimizer, so the minimal value $\operatorname{trop}(P)(n)$ is attained by at least two terms — precisely the tropical balancing/solution condition. Closure under the differential-ideal operations follows since differentiation shifts orders affinely (Theorem C) and the sum/product rules are min-plus homomorphic. $\square$
 
 ---
 
-## 7. Applications and discussion
+## 7. Worked numerical examples
 
-**Lower bounds on solution growth.** The headline practical consequence of the
-differential half is that tropical data *certify* lower bounds on the valuation
-of solutions. Given a differential equation and a candidate order $n$ for $f$,
-the Iterated Bound and Product Law let one read off the order of every
-differential monomial and check tropical balancing — a purely combinatorial test
-that can rule out impossible valuations, exactly as in the Pinning Theorem.
+**Example 7.1 (Balancing in a monomial equation).** For $X y' - 3y = 0$ try $f=X^3$: the terms are $Xf'=3X^3$ (order $3$) and $-3f=-3X^3$ (order $3$). The orders tie at $3$ (balancing, Theorem E), the leading coefficients $+3$ and $-3$ cancel, and the sum vanishes. For a general $f=X^n$, both terms have order $n$, so balancing holds for *all* $n$, but the coefficients $n$ and $-3$ cancel only when $n=3$. This illustrates that balancing (Theorem B/E) is necessary but not sufficient — the gap is the realizability problem (Conjecture 1).
 
-**Initial-value rigidity.** Theorem 5.1 says exponential-type equations admit no
-"delayed" solutions: a nonzero solution of $f' = cf$ cannot vanish at the origin.
-This is the formal-power-series shadow of the analytic fact that $e^{cX}$ is
-nonzero at $X = 0$, proved without any analysis.
+**Example 7.2 (Unique minimum forces non-vanishing).** Let $\varphi_1=X^2$, $\varphi_2=X^5$, $\varphi_3=X^7$. The minimum order $2$ is uniquely attained, so by Theorem A, $\operatorname{ord}(\varphi_1+\varphi_2+\varphi_3)=2$ and the sum is nonzero. No relation among these terms can vanish; this is the contrapositive of balancing.
 
-**The lax/exact dichotomy as a characteristic detector.** Theorems 4.1 and 4.3
-together turn the question "does the derivative drop the order exactly?" into a
-test for characteristic zero. The failure witness $f = X^p$ (with $f' = 0$) is a
-clean diagnostic: exactness of the tropical derivative is equivalent to the
-integer factors $(i+1)$ never vanishing, i.e. to characteristic zero.
+**Example 7.3 (Monomial order formula).** With $f$ of order $n=5$, Theorem D gives $\operatorname{ord}((f')^2 f'')=2(5-1)+(5-2)=11$, $\operatorname{ord}(f\cdot f''')=5+(5-3)=7$, and $\operatorname{ord}((f'')^3)=3(5-2)=9$.
 
-**Position within tropical geometry.** This is the single-variable, order-valued
-instance of the fundamental theorem of tropical differential algebra. The Product
-and Sum Laws are the differential-ring analogues of the valuation axioms; the
-Derivative Bound is the new structural ingredient that the differential setting
-demands; the Pinning Theorem exhibits the fundamental-theorem phenomenon
-concretely rather than axiomatically.
+**Example 7.4 (Growth lower bound).** For $P(f)=(f')^2 + f''$ with $\operatorname{ord}(f)=n$, the term orders are $2(n-1)$ and $n-2$. By Theorem F, $\operatorname{ord}(P(f))\ge \min(2n-2, n-2)=n-2$ for $n\ge 0$. The minimum is uniquely the $f''$ term unless $2n-2=n-2$, i.e. $n=0$; at $n=0$ both tie at $-2$ (formally handled by the support condition $i\le n$), so the only candidate balanced order for $P(f)=0$ is where the two coincide.
 
 ---
 
-## 8. Future directions
+## 8. Algorithms
 
-The following directions, identified during the development, extend the theory
-along three axes — coarser-to-finer invariants, single- to multivariable, and
-linear to nonlinear equations.
+**Algorithm 8.1 (Order of a differential monomial).** Given $n=\operatorname{ord}(f)$ and an exponent vector $e$, return $\sum_i e_i (n-i)$. This is $O(|\operatorname{supp}(e)|)$ arithmetic and realizes Theorem D directly.
 
-- **From order to initial form.** Replace the order-only tropicalization
-  $\mathsf{T}(f) = \operatorname{trop}(\operatorname{ord} f)$ by the *initial
-  form* (the leading coefficient together with the order), recovering a finer
-  shadow that detects cancellation in the Sum Law and upgrades the lax additive
-  inequality to a tracked equality-with-defect.
-- **Several variables and several derivations.** Generalize from
-  $R\llbracket X\rrbracket$ with one derivation to
-  $R\llbracket X_1, \dots, X_m\rrbracket$ with partial derivatives, where orders
-  become Newton-polytope data and the Derivative Bound becomes a statement about
-  supporting hyperplanes.
-- **Nonlinear and higher-order ODEs.** Extend the Pinning Theorem from
-  $f' = cf$ to general polynomial differential equations $P(f, f', \dots,
-  f^{(k)}) = 0$, characterizing which equations pin the valuation and which leave
-  it free, via tropical balancing of the Newton polytope of $P$.
-- **Systems and matrices.** Tropicalize linear systems $f' = A f$ with $A$ a
-  matrix over $R$, connecting the valuation spectrum of $A$ to the achievable
-  orders of solution vectors.
-- **Positive characteristic refinements.** In characteristic $p$, replace the
-  failed Exact Drop by a $p$-adically corrected statement tracking how many times
-  the order can "jump" under repeated differentiation, linking to the theory of
-  $p$-derivations and Hasse derivatives.
+**Algorithm 8.2 (Tropical balancing check).** Given the multiset of term-orders of a differential polynomial evaluated at order $n$, compute the minimum and test whether it is attained at least twice. Returns "balanced" (a candidate tropical solution, Theorem E) or "unbalanced" (provably no classical solution at order $n$, contrapositive of Theorem B). Complexity $O(t)$ for $t$ terms.
+
+**Algorithm 8.3 (Tropical solution-order enumeration).** Sweep candidate orders $n$, evaluate each term's tropicalized order $\sum_i e^{(k)}_i (n-i)$, and collect the $n$ at which the minimum is tied. These are the tropical solution orders; by Theorem F each gives a lower bound $\operatorname{trop}(P)(n)$ on $\operatorname{ord}(P(f))$, and only these $n$ can host classical solutions.
 
 ---
 
-## 9. Conclusion
+## 9. Discussion and future directions
 
-We have built the foundational layer of tropical differential algebra for
-single-variable formal power series: a valuation tropicalization that is a lax
-semiring homomorphism (exact on products, super-additive on sums), a derivation
-that tropicalizes to "subtract at most one" over any commutative ring and
-"subtract exactly one" in characteristic zero, and a pinning theorem showing that
-the equation $f' = cf$ ($c \ne 0$) forces every nonzero solution to have order
-zero. The recurring lesson is that a single number — the order — already obeys a
-rich tropical arithmetic, and that arithmetic is sharp enough to constrain, and
-sometimes determine, features of the solutions of differential equations without
-ever solving them.
+The order valuation is a tropical valuation on the differential ring $K\llbracket X\rrbracket$: it sends multiplication to $+$, addition to $\min$ (as a lower bound), and — in characteristic zero — differentiation to a shift by $-1$. Under it, classical solutions of differential polynomials become *balanced* tropical solutions (Theorem E, `tropical_FTDA`), and the tropical minimum lower-bounds the growth of any classical value (Theorem F, `order_diffPoly_ge`). We close with the principal open problems isolated by this work.
+
+**Conjecture 1 (Converse FTDA / realizability).** Over an algebraically closed characteristic-zero field, every tropical solution $n$ of a tropicalized differential polynomial is *realized*: there is $f$ with $\operatorname{ord}(f)=n$ and $P(f)=0$. Equivalently, $\operatorname{trop}(\text{differential ideal})$ equals the tropical differential ideal of $\operatorname{trop}$ as an equality, not just the $\subseteq$ proved here. Balancing is not only necessary but sufficient once the field is rich enough to choose coefficients that cancel the tied lowest-order terms — a tropical implicit-function / Newton-polygon lifting argument. This cycle isolated the exact obstruction (`tropical_balancing`) and the exact order bookkeeping (`order_diffTerm`); the converse needs only a coefficient-solving step, a finite linear-algebra problem at each order.
+
+**Conjecture 2 (Positive-characteristic defect).** Over $\mathbb{F}_p\llbracket X\rrbracket$ the derivation rule degrades to $\operatorname{ord}(f')\ge \operatorname{ord}(f)-1$, with equality iff $p\nmid \operatorname{ord}(f)$; the failures are exactly the multiples of $p$. The defect is governed by the $p$-adic valuation of the order, since $\frac{d}{dX}(X^{pm})=0$ kills precisely the $p$-divisible orders. Replacing `CharZero` in Theorem C by an explicit $p\nmid(k+1)$ hypothesis is a direct, testable refinement.
+
+**Conjecture 3 (Tropical Wronskian detects independence).** For $f_1,\dots,f_m$ with *distinct* orders, the Wronskian satisfies $\operatorname{ord}(W(f_1,\dots,f_m))=\sum_i \operatorname{ord}(f_i)-\binom{m}{2}$, and in particular $W\ne 0$ — a tropical certificate of linear independence over constants. The Wronskian is an alternating sum of differential monomials whose tropical valuations are separated by the distinct orders, so a unique minimum survives and Theorem A (`order_sum_eq_of_unique_min`) forces non-vanishing: balancing *fails*, which is exactly independence.
+
+**Conjecture 4 (Newton-polygon bound on solution orders).** A differential polynomial with $t$ monomials admits at most $t-1$ distinct values of the solution order, mirroring the classical Newton-polygon count: each balanced order corresponds to an edge of the tropical (lower) Newton polygon of $\operatorname{trop}(P)$, and a polygon on $t$ points has at most $t-1$ edges.
 
 ---
 
-## References
+## 10. Conclusion
 
-1. F. Aroca, C. Garay, Z. Toghani. *The fundamental theorem of tropical
-   differential algebraic geometry.* Pacific J. Math. **283** (2016), no. 2,
-   257–270.
-2. D. Maclagan, B. Sturmfels. *Introduction to Tropical Geometry.* Graduate
-   Studies in Mathematics **161**, American Mathematical Society, 2015.
+Three translation rules (product $\to$ sum, sum $\to$ min, derivative $\to$ shift-by-$-1$) and one combinatorial principle (a vanishing sum ties for its minimum at least twice) suffice to build a working tropical calculus for differential equations over characteristic-zero power series. From them we obtain exact orders of differential monomials, a guaranteed lower bound on the order of any differential polynomial's value, and the containment direction of a tropical fundamental theorem of differential algebra. The order map — which discards almost all information about a series — retains precisely the data tropical geometry needs, and the balancing lemma is the law its shadows obey. All results have been formally verified.
