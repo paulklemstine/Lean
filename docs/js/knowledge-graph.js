@@ -1189,25 +1189,42 @@
 
             ctx.clearRect(0, 0, W, H);
 
-            // Background: dark navy with subtle nebula
+            // Background: dark navy with subtle nebula or light theme background
+            const isLightMode = document.body.classList.contains('light-theme');
             const bgGrad = ctx.createRadialGradient(W * 0.3, H * 0.4, 0, W * 0.5, H * 0.5, Math.max(W, H) * 0.8);
-            bgGrad.addColorStop(0, '#0d0d2b');
-            bgGrad.addColorStop(0.5, '#0a0a1a');
-            bgGrad.addColorStop(1, '#050510');
+            if (isLightMode) {
+                bgGrad.addColorStop(0, '#ffffff');
+                bgGrad.addColorStop(0.5, '#f4f6f8');
+                bgGrad.addColorStop(1, '#e5e9ec');
+            } else {
+                bgGrad.addColorStop(0, '#0d0d2b');
+                bgGrad.addColorStop(0.5, '#0a0a1a');
+                bgGrad.addColorStop(1, '#050510');
+            }
             ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, W, H);
 
             // Second nebula glow
             const neb2 = ctx.createRadialGradient(W * 0.7, H * 0.6, 0, W * 0.7, H * 0.6, Math.max(W, H) * 0.5);
-            neb2.addColorStop(0, 'rgba(60, 20, 80, 0.15)');
-            neb2.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
+            if (isLightMode) {
+                neb2.addColorStop(0, 'rgba(100, 150, 255, 0.05)');
+                neb2.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+            } else {
+                neb2.addColorStop(0, 'rgba(60, 20, 80, 0.15)');
+                neb2.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
+            }
             ctx.fillStyle = neb2;
             ctx.fillRect(0, 0, W, H);
 
             // Third nebula cloud
             const neb3 = ctx.createRadialGradient(W * 0.2, H * 0.8, 0, W * 0.2, H * 0.8, Math.max(W, H) * 0.35);
-            neb3.addColorStop(0, 'rgba(20, 40, 80, 0.1)');
-            neb3.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
+            if (isLightMode) {
+                neb3.addColorStop(0, 'rgba(100, 200, 255, 0.05)');
+                neb3.addColorStop(1, 'rgba(255, 255, 255, 0.0)');
+            } else {
+                neb3.addColorStop(0, 'rgba(20, 40, 80, 0.1)');
+                neb3.addColorStop(1, 'rgba(10, 10, 26, 0.0)');
+            }
             ctx.fillStyle = neb3;
             ctx.fillRect(0, 0, W, H);
 
@@ -1224,13 +1241,13 @@
                 const alpha = s.brightness * twinkle;
                 ctx.beginPath();
                 ctx.arc(sp.x, sp.y, s.r * camera.zoom, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(200, 200, 255, ${alpha})`;
+                ctx.fillStyle = isLightMode ? `rgba(50, 80, 150, ${alpha * 0.3})` : `rgba(200, 200, 255, ${alpha})`;
                 ctx.fill();
                 // Lens flare for bright large stars
                 if (s.r > 1.0 && alpha > 0.6) {
                     ctx.beginPath();
                     ctx.arc(sp.x, sp.y, s.r * camera.zoom * 3, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(200, 200, 255, ${alpha * 0.1})`;
+                    ctx.fillStyle = isLightMode ? `rgba(50, 80, 150, ${alpha * 0.05})` : `rgba(200, 200, 255, ${alpha * 0.1})`;
                     ctx.fill();
                 }
             });
@@ -1660,7 +1677,7 @@
                 // Package number centered on node
                 if (node.pkgNum && r > 8) {
                     ctx.save();
-                    ctx.fillStyle = `hsla(${adjColor.h}, 20%, 95%, 0.9)`;
+                    ctx.fillStyle = isLightMode ? `hsla(${adjColor.h}, 20%, 20%, 0.9)` : `hsla(${adjColor.h}, 20%, 95%, 0.9)`;
                     const fontSize = Math.max(8, Math.min(r * 0.7, 16));
                     ctx.font = `bold ${fontSize}px 'SF Mono', monospace`;
                     ctx.textAlign = 'center';
@@ -1731,7 +1748,10 @@
                 const massScale = 0.7 + (node.mass || 1) * 0.3;
                 const r = Math.max(8, Math.min(16, (node.radius || 22) * pulse * massScale * camera.zoom));
                 const massBright = Math.min(1, (node.mass || 1) * 0.4);
-                const adjustedL = Math.min(col.l * 0.8 + 15 + massBright * 10, 95);
+                let adjustedL = Math.min(col.l * 0.8 + 15 + massBright * 10, 95);
+                if (isLightMode) {
+                    adjustedL = Math.max(25, 60 - col.l * 0.5 - massBright * 15);
+                }
                 const adjColor = { h: col.h, s: col.s, l: adjustedL };
                 const ghostAlpha = 0.25;  // ghosts are faint
 
