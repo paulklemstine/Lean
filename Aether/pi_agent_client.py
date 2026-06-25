@@ -3619,7 +3619,7 @@ make it beautiful to read.
 
             Required: Lean 4 proofs, FUTURE_DIRECTIONS.md, RESEARCH_PAPER.md,
                       ARTICLE.md (Scientific American style), algorithm, demo.py,
-                      1–3 interactive HTML widgets in PACKAGE.json interactive_demos (each: name, html, description)
+                      3 interactive HTML widgets in PACKAGE.json interactive_demos (each: name, html, description)
             Optional: (none — all key deliverables are mandatory)
 
             ## Taboo Topics for ARTICLE.md
