@@ -7514,6 +7514,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Perfect Numbers & the Abundancy Index\n\nDerived from this cycle's findings (Euclid–Euler classification, the abundancy-index\ndictionary, divisibility monotonicity, prime-power deficiency, and the unconditional\n`≥ 2`-distinct-prime bound).\n\n## 1. Strengthen the Nielsen fragment from 2 to 3 distinct prime factors\n\nProve: every odd perfect number has at least **3** distinct prime factors (Sylvester, 1888).\n\nThe key insight is that the abundancy index is *multiplicative* (`abundancy_mul_of_coprime`) and\neach odd-prime-power factor contributes at most `p/(p−1)`, so a two-prime odd number has\nabundancy `≤ (3/2)(5/4) = 15/8 < 2`, never reaching the perfect value `2`. This converts the\ncombinatorial bound into a finite product estimate already half-built in `Abundancy.lean`.\n\nWhy now? `abundancy_prime_pow` plus `abundancy_mul_of_coprime` already give the exact\nmultiplicative form; only the geometric bound `abundancy (p^k) < p/(p−1)` and a small product\ninequality remain — both within reach of the present toolkit.\n\n## 2. A general \"abundancy product bound\" engine\n\nProve: for `n = ∏ pᵢ^{aᵢ}`, `abundancy n = ∏ pᵢ/(pᵢ−1) · (1 − pᵢ^{−(aᵢ+1)})`, and hence\n`abundancy n < ∏ pᵢ/(pᵢ−1)`.\n\nThe key insight is that telescoping the finite geometric series for each prime power turns the\nadditive divisor sum into a clean Euler product, making *every* abundancy question a statement\nabout `∏ p/(p−1)` over the prime support.\n\nWhy now? `abundancy_mul_of_coprime` and `abundancy_prime_pow` are proved; the missing piece is a\nsingle per-prime closed form, after which abundancy bounds for arbitrary `n` follow by induction\non the prime factorization.\n\n## 3. Mersenne-prime exponents are themselves prime\n\nProve: if `mersenne (m)` is prime and `m > 1`, then `m` is prime.\n\nThe key insight is the algebraic factorization `2^{ab} − 1 = (2^a − 1)(1 + 2^a + ⋯ + 2^{a(b−1)})`:\na composite exponent forces a nontrivial divisor of the Mersenne number, contradicting primality.\n\nWhy now? This is the natural companion to `even_perfect_iff_mersenne` and sharpens the indexing\nof even perfect numbers from \"`k+1` arbitrary\" to \"`k+1` prime\"; the factorization is a direct\n`geom_sum` manipulation analogous to `sigma_two_pow_eq_mersenne_succ`.\n\n## 4. No odd perfect number is a perfect square multiple of the wrong shape (Euler's form)\n\nProve: every odd perfect number has the form `q^e · m²` with `q` prime, `q ≡ e ≡ 1 (mod 4)`,\nand `gcd(q, m) = 1` (Euler).\n\nThe key insight is parity of the divisor sum: `σ₁` is multiplicative, and `σ₁(p^a)` is odd iff\n`a` is even or `p = 2`, so forcing `σ₁(n) = 2n ≡ 2 (mod 4)` pins exactly one prime to an odd\nexponent and that prime/exponent to `1 (mod 4)`.\n\nWhy now? The multiplicativity and prime-power sigma formulas used here (`isMultiplicative_sigma`,\n`sigma_one_apply_prime_pow`) are exactly the inputs Euler's parity argument needs.\n\n## 5. Strict abundancy strict-monotonicity gives a \"perfect numbers are incompressible\" theorem\n\nProve: if `a ∣ b ∣ c` with `a < b < c` and `b` perfect, then `a` is deficient and `c` abundant,\nand moreover `abundancy a < 2 < abundancy c` with quantitative gap `≥ 1/c`.\n\nThe key insight is that `abundancy_lt_of_dvd_lt` already yields *strict* inequality via the\nsingle missing divisor `1`; counting the omitted divisors makes the gap quantitative.\n\nWhy now? `abundancy_lt_of_dvd_lt` and `eq_of_perfect_dvd_perfect` are proved; upgrading the\nstrictness witness from \"one missing divisor\" to \"sum of all missing divisors\" is a localized\nrefinement of the existing `Finset.sum_lt_sum_of_subset` step.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2484",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "eb2eee3d",
+    "status": "available",
+    "timestamp": "2026-06-25T01:29:31.435843+00:00",
+    "title": "Derived from this cycle's findings (Euclid–Euler classification, the abundancy-i"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
