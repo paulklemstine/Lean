@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ef874ad4",
     "filename": "statistical_mechanics_ising_model_phase_transition.json",
     "pkg_num": 54,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.512,
     "title": "Statistical Mechanics of the 1D Ising Model: Exact Solution and the Absence of a Phase Transition"
   },
   {
@@ -1575,8 +1575,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.512,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Statistical Mechanics of the 1D Ising Model: Exact Solution and the Absence of a Phase Transition"
     }

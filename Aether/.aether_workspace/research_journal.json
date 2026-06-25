@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5ddac85b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Spectral Universality of LLM Weight Matrices\n\nThis cycle established the deterministic algebraic skeleton of random-matrix\nphase transitions for weight matrices: the Marchenko–Pa",
-      "quality_score": 0.38904000000000005,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-18T12:08:46",
-      "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
-    },
-    {
       "cycle_id": "f6a45eec",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Euler–Mascheroni constant\n\nDerived from the Stage 3/4 findings in `SeriesRepresentation.lean` and\n`Approximation.lean`. Each conjecture is falsifiable and ready for a next cycle.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-25T08:11:59",
       "title": "Brocard-Ramanujan Triangular Classification"
+    },
+    {
+      "cycle_id": "ef874ad4",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Ising Model Phase Transition\n\nThis research cycle established, fully formally (0 sorries), the exact solution of\nthe **one-dimensional Ising model** and the rigorous sense in whi",
+      "quality_score": 0.512,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-06-25T08:43:24",
+      "title": "Statistical Mechanics: Ising Model Phase Transition"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8125600000000002
     }
   ],
-  "last_updated": "2026-06-25T08:11:59",
+  "last_updated": "2026-06-25T08:43:24",
   "open_questions": [
     {
       "context": "`appendCode_card`) proved `sorry`-free for arbitrary lengths; `hamming ⊕ hamming`",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "225644b1",
-        "quality": 0.44512863813229575,
-        "theorems": 57,
-        "title": "The Library of Babel: Combinatorics of the Universal Library"
-      },
-      {
         "cycle_id": "47c79c52",
         "quality": 0.69352,
         "theorems": 17,
@@ -3823,6 +3817,12 @@
         "quality": 0.333456,
         "theorems": 4,
         "title": "Extremal Graph Theory: Turán and Szemerédi"
+      },
+      {
+        "cycle_id": "ef874ad4",
+        "quality": 0.512,
+        "theorems": 22,
+        "title": "Statistical Mechanics: Ising Model Phase Transition"
       }
     ],
     "Pythagorean": [

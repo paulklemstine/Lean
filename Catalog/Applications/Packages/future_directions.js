@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "c2993e46",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -418,7 +418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Groups of Spheres: Low-Dimensional"
   },
   {
-    "consumed_by_exp_id": "2479b03a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
     "domains": [
       "Physics",
@@ -428,7 +428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432770+00:00",
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "506f0bb6",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -4694,6 +4694,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Ising Model Phase Transition\n\nThis research cycle established, fully formally (0 sorries), the exact solution of\nthe **one-dimensional Ising model** and the rigorous sense in which it has **no\nphase transition at any positive temperature**:\n\n* `IsingChain1D.lean` \u2014 open chain, *from the raw configuration sum*:\n  `Zfree \u03b2 J n = 2 (2 cosh \u03b2J)\u207f`, the free-energy-density limit\n  `(1/(n+1)) log Zfree \u2192 log(2 cosh \u03b2J)`, and `C^\u221e`-smoothness of the limiting\n  free energy in `\u03b2` (the rigorous \"no singularity \u21d2 no phase transition\").\n* `IsingChainPeriodic.lean` \u2014 ring, via the transfer matrix:\n  spectral decomposition `T\u207f = \u03bb\u208a\u207f Pp + \u03bb\u208b\u207f Pm`, exact `Zper = (2cosh)\u207f+(2sinh)\u207f`,\n  the same bulk free energy, and the **spectral gap** `g = log(coth \u03b2J) > 0` for\n  all `\u03b2,J>0` with `g \u2192 0` only as `\u03b2 \u2192 \u221e` (criticality lives at `T=0`).\n\nThe following conjectures are precise, testable targets for follow-up cycles.\n\n## Conjecture 1 (Transfer trace = configuration sum; the missing bridge)\nFor the periodic chain, the transfer-matrix trace equals the genuine cyclic\nconfiguration sum:\n`trace (T\u207f) = \u2211_{s : Fin n \u2192 Bool} \u220f_{i} exp(\u03b2J \u00b7 sp(s i) \u00b7 sp(s (i+1)))`,\nwhere `i+1` is taken cyclically in `Fin n`. More generally, for any\n`M : Matrix \u03b9 \u03b9 \u211d`, `trace (M\u207f) = \u2211_{s : Fin n \u2192 \u03b9} \u220f_i M (s i) (s (i+1))`.\nThis \"closed-walk expansion\" is the one ingredient currently *defined* rather than\n*derived* in `IsingChainPeriodic.lean`; proving it would make the ring result as\ncombinatorially grounded as the open-chain result. **Status: open here, true.**\n\n## Conjecture 2 (Exponential decay of correlations / finite correlation length)\nFor the open chain the two-point function is exactly\n`\u27e8\u03c3\u2080 \u03c3_r\u27e9 = (tanh \u03b2J)^r`,\nso connected correlations decay exactly exponentially with rate `\u2212log tanh \u03b2J =\ng` (the spectral gap of Conjecture/Theorem above). Consequently there is **no\nlong-range order** for any `\u03b2 < \u221e`. Testable refinement: the correlation length\n`\u03be(\u03b2) = 1/g(\u03b2) = 1/log(coth \u03b2J)` satisfies `\u03be(\u03b2) ~ \u00bd e^{2\u03b2J}` as `\u03b2 \u2192 \u221e`.\n\n## Conjecture 3 (Internal energy and heat capacity are bounded and smooth)\nDefine `u(\u03b2) = \u2212d/d\u03b2 [ log(2 cosh \u03b2J) ] = \u2212J tanh(\u03b2J)` (energy per site) and\n`c(\u03b2) = du/d\u03b2`. Then `u` and `c` are real-analytic on all of `\u211d`, `c(\u03b2) \u2265 0`,\nand `c` has a single smooth (Schottky) maximum but **no divergence** \u2014 the\nhallmark distinguishing 1D (no transition) from 2D (a `log`-divergent `c` at\n`T\u1d9c`). Formalize `u`, `c` and prove analyticity + the global bound.\n\n## Conjecture 4 (Mean-field / Curie\u2013Weiss transition as a contrast)\nThe mean-field (Curie\u2013Weiss) self-consistency `m = tanh(\u03b2(Jzm + h))` at `h=0`\nhas `m=0` as its only solution iff `\u03b2Jz \u2264 1`, and a nonzero solution iff\n`\u03b2Jz > 1`. Hence the mean-field free energy is **non-analytic** at `\u03b2\u1d9c = 1/(Jz)`:\na genuine, formalizable phase transition. This isolates *why* dimensionality and\nthe transfer-matrix gap matter: the 1D gap never closes at finite `\u03b2`, but the\nmean-field fixed-point structure bifurcates. Target: prove the bifurcation\nthreshold `\u03b2\u1d9c = 1/(Jz)` and non-differentiability of `m*(\u03b2)` there.\n\n## Conjecture 5 (2D Peierls bound: existence of a low-temperature transition)\nOn `\u2124\u00b2`, for `\u03b2` sufficiently large there is spontaneous magnetization: with `+`\nboundary conditions, `\u27e8\u03c3\u2080\u27e9 \u2265 1 \u2212 2\u00b7\u2211_{k\u22651} ... > 0`, via the Peierls contour\nargument (number of contours of length `L` enclosing the origin is `\u2264 L\u00b73^L`, each\nsuppressed by `e^{\u22122\u03b2JL}`, and the geometric sum is `< \u00bd` once `e^{\u22122\u03b2J}` is\nsmall). This is the first genuinely `> 1`-dimensional target: prove\n`\u2203 \u03b2\u2080, \u2200 \u03b2 > \u03b2\u2080, m*(\u03b2) > 0` for the 2D Ising model, establishing the existence\n(not the location) of the phase transition that is *absent* in 1D.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2510",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ef874ad4",
+    "status": "available",
+    "timestamp": "2026-06-25T08:43:17.266711+00:00",
+    "title": "This research cycle established, fully formally (0 sorries), the exact solution "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4707,7 +4722,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "a1450e57",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domains": [
       "Novelty",
@@ -4717,7 +4732,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
@@ -4924,21 +4939,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.385376+00:00",
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
-  },
-  {
-    "consumed_by_exp_id": "e364ad63",
-    "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0416",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:26.588561+00:00",
-    "title": "EML Kolmogorov-Arnold Representation"
   },
   {
     "consumed_by_exp_id": "",
@@ -5420,7 +5420,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "31b020d8",
+    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -5430,7 +5430,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
@@ -5480,7 +5480,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "506609b8",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domains": [
       "MachineLearning",
@@ -5490,7 +5490,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
