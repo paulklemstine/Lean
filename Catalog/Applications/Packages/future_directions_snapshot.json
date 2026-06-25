@@ -1873,7 +1873,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c053e0c9",
     "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
     "domain_bridges": [],
     "domains": [
@@ -1886,7 +1886,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432759+00:00",
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
@@ -5196,7 +5196,7 @@
       "Mathlib: Geometry.Convex.Basic",
       "Mathlib: MeasureTheory.Measure.Lebesgue.Basic"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e4d578ae",
     "description": "For every full-dimensional lattice polytope P in Z^n, let Sigma_P be the tropical hypersurface given by the codimension-one skeleton of the normal fan of P, with edge-length weights. The n-fold stable self-intersection Sigma_P ∩_st ... ∩_st Sigma_P is a reduced point at the origin if and only if P is a unimodular simplex, equivalently if and only if the normalized lattice volume n! vol(P) is equal to 1.",
     "domain_bridges": [
       "Tropical stable intersection multiplicity is converted to mixed volume via tropical Bernstein.",
@@ -5213,7 +5213,7 @@
     "proof_strategy": "First formalize lattice polytopes in Z^n, Euclidean volume, normalized volume, mixed volume, and the normal-fan tropical hypersurface Sigma_P. Use the tropical Bernstein theorem to identify the weight of the n-fold stable intersection of Sigma_P with MV(P,...,P). Prove algebraically from the definition of mixed volume that MV(P,...,P) = n! * vol(P). Finally prove the discrete convex-geometric lemma that a full-dimensional lattice polytope has normalized volume one iff its lattice points are exactly the vertices of an affine unimodular image of the standard simplex. Combining these equivalences gives the iff statement.",
     "research_mode": "team",
     "source_exp_id": "2606.24339v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T02:18:16.655288+00:00",
     "title": "Unmixed Reduced Tropical Bernstein Criterion"
   },

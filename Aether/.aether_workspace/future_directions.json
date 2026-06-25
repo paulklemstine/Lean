@@ -39390,7 +39390,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Maclagan-Sturmfels, Introduction to Tropical Geometry, Theorem 4.6.8: Tropical Bernstein theorem",
         "Esterov-Gusev classification of tuples of lattice polytopes of mixed volume one",
@@ -39400,7 +39400,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e4d578ae",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39416,7 +39416,7 @@
         "Tropical"
       ],
       "id": "fd_2401",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T03:47:07.431725+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unmixed_reduced_tropical_bernstein_iff_unimodular_simplex\n    {n : ℕ} [Fact (0 < n)]\n    (P : LatticePolytope (Fin n → ℤ))\n    (hP : P.FullDimensional) :\n    StableIntersection.weight\n        (List.replicate n (TropicalHypersurface.ofNewtonPolytope P)) 0 = 1\n      ↔ P.IsUnimodularSimplex := by\n  sorry",
       "lineage_refs": [],
@@ -39430,7 +39430,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24339v1",
       "source_path": "http://arxiv.org/abs/2606.24339v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-24T02:18:16.655288+00:00",
       "title": "Unmixed Reduced Tropical Bernstein Criterion"
@@ -49384,11 +49384,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c053e0c9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -49400,7 +49400,7 @@
         "Analysis"
       ],
       "id": "seed_359",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T03:47:03.713685+00:00",
       "last_reviewed_at": "2026-06-25T03:41:49.125585+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -49414,7 +49414,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432759+00:00",
       "title": "Constructive Mathematics: Bishop's Analysis"
@@ -123670,6 +123670,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
