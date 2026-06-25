@@ -894,23 +894,6 @@
       ]
     },
     {
-      "name": "Catalog",
-      "type": "directory",
-      "children": [
-        {
-          "name": "Bridges",
-          "type": "directory",
-          "children": [
-            {
-              "name": "BraidingUniversality.lean",
-              "type": "file",
-              "path": "Catalog/Catalog/Bridges/BraidingUniversality.lean"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "Computation",
       "type": "directory",
       "children": [
