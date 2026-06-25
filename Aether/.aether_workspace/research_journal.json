@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "26902e54",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. The verified core is in `Shar",
-      "quality_score": 0.4953453636363636,
-      "sorry_count": 0,
-      "theorem_count": 34,
-      "timestamp": "2026-06-19T10:10:48",
-      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-    },
-    {
       "cycle_id": "be5e0ab8",
       "domain": "Computation",
       "key_insight": "# Future Directions — Anti-Gravity Mathematics\n\nThis cycle formalized dependency DAGs of a formal library, the **gravitational\nweight** `weight b = #{a : a depends on b}`, and the **anti-gravity** pre",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-06-25T19:11:36",
       "title": "Tropical Differential Equations: Power Series Solutions"
+    },
+    {
+      "cycle_id": "6218af01",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Parabola-Circumscribed Quadrilaterals & Irrational Densities\n\nThese conjectures extend the two proved cores in this directory:\n`ParabolaConcyclic.lean` (concyclic ⟺ `a+b+c+d=0`)",
+      "quality_score": 0.550667741935484,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-06-25T20:03:37",
+      "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72533
     }
   ],
-  "last_updated": "2026-06-25T19:11:36",
+  "last_updated": "2026-06-25T20:03:37",
   "open_questions": [
     {
       "context": "",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "ecc79db8",
-        "quality": 0.4986900000000001,
-        "theorems": 34,
-        "title": "Integrated Information via Tensor Networks"
-      },
-      {
         "cycle_id": "1cfdf3f4",
         "quality": 0.6660400000000001,
         "theorems": 18,
@@ -3761,6 +3755,12 @@
         "quality": 0.66248,
         "theorems": 10,
         "title": "Diffusion Models as Stochastic Differential Equations"
+      },
+      {
+        "cycle_id": "6218af01",
+        "quality": 0.550667741935484,
+        "theorems": 35,
+        "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Til"
       }
     ],
     "Probability": [

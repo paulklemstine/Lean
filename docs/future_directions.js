@@ -3816,7 +3816,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing Hales-Jewett lower bounds via symmetric coloring in Lean"
   },
   {
-    "consumed_by_exp_id": "d1e8d4ba",
+    "consumed_by_exp_id": "",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_\u03bb^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition \u03bb = (\u03bb\u2081, \u03bb\u2082, ..., \u03bb_k) with \u03bb\u2081 > \u03bb\u2082 > ... > \u03bb_k \u2265 0, the formula takes the form s_\u03bb^Q(t) = Pf[Y_{\u03bb_i - i + j}(t) + Y_{\u03bb_j - j + i}(t)]_{1\u2264i<j\u2264k} \u00b7 vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domains": [
       "Algebra"
@@ -3825,7 +3825,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -4132,7 +4132,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
   {
-    "consumed_by_exp_id": "a8f472f7",
+    "consumed_by_exp_id": "",
     "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
     "domains": [
       "Bridges"
@@ -4141,7 +4141,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T23:35:20.703960+00:00",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
@@ -4260,20 +4260,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-25T05:42:47.292631+00:00",
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
-  },
-  {
-    "consumed_by_exp_id": "6218af01",
-    "description": "For any quadrilateral circumscribed to a parabola, if a valid tiling with vertical and horizontal stripes is constructed using Wang tiles derived from this quadrilateral, the densities of the vertical and horizontal stripes must be irrational numbers.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2496",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.24693v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T05:59:06.114125+00:00",
-    "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
   },
   {
     "consumed_by_exp_id": "",
@@ -4942,11 +4928,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for any K3 surface X over a number field K, the p-primary part of the Brauer group Sel_B(X/K_\u221e) is a finitely generated torsion \u039b-module over the Iwasawa algebra \u039b = \u2124_p[[\u0393]] where \u0393 \u2245 \u2124_p.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2543",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25737v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:04:24.610098+00:00",
+    "title": "Finitely generated torsion conjecture for the p-primary Brauer group of K3 surfaces in \u2124_p-cyclotomic extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every integers r \u2265 3 and k \u2265 3 there exist arbitrarily large linear r\u2011uniform hypergraphs on n vertices with edge count just below the bound given in Theorem\u00a01 that contain no ((r\u20112)k+3,\u202fk)\u2011configuration. In other words, the density threshold in Theorem\u00a01 is sharp up to lower\u2011order terms.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2543",
+    "id": "fd_2544",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -4961,13 +4962,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2544",
+    "id": "fd_2545",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
     "status": "available",
     "timestamp": "2026-06-25T19:43:32.279494+00:00",
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor \u03bb > 1, leading to exponential contraction after k iterations: max{\u03c3 \u2208 Del(X_k)}.diameter \u2264 (1/\u03bb)^k \u00b7 max{\u03c3 \u2208 Del(X_0)}.diameter",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2546",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25854v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:05:25.226962+00:00",
+    "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
   {
     "consumed_by_exp_id": "",
@@ -5056,7 +5071,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f9ccaf5",
     "description": "Formalize Frankl's conjecture and prove it for families of size \u2264 50 (Bo\u0161njak-Markovi\u0107). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domains": [
       "Combinatorics",
@@ -5066,7 +5081,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },

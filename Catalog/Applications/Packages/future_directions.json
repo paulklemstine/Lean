@@ -42084,7 +42084,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d1e8d4ba",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42113,7 +42113,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22058v1",
       "source_path": "http://arxiv.org/abs/2606.22058v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T02:07:55.532399+00:00",
       "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
@@ -43129,7 +43129,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a8f472f7",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43158,7 +43158,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22539v1",
       "source_path": "http://arxiv.org/abs/2606.22539v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T23:35:20.703960+00:00",
       "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
@@ -43720,7 +43720,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24693v1",
       "source_path": "http://arxiv.org/abs/2606.24693v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-25T05:59:06.114125+00:00",
       "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
@@ -45846,6 +45846,55 @@
       "title": "Explicit Rational Coefficients of Generalized Verschiebung Degree Polynomial"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:23XX.XXXXX (Iwasawa theory for K3 surfaces)",
+        "Mazur, J. (1972). \"Rational points of elliptic curves\". Inventiones Mathematicae.",
+        "Iwasawa, K. (1972). \"Lectures on p‑adic L‑functions\".",
+        "Artin–Tate conjecture for K3 surfaces (proved)."
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that for any K3 surface X over a number field K, the p-primary part of the Brauer group Sel_B(X/K_∞) is a finitely generated torsion Λ-module over the Iwasawa algebra Λ = ℤ_p[[Γ]] where Γ ≅ ℤ_p.",
+      "domain_bridges": [
+        "Arithmetic geometry",
+        "Iwasawa theory",
+        "Algebraic K-theory",
+        "Cohomological number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2543",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem iwasawa_brauer_finite {K : Type} [Field K] {p : ℕ} [Fact p.Prime] (K_infty : Type) [CyclotomicExtension K K_infty]) (X : Type) [K3Surface X] : ∀ n, (Br (X ⊗_K K_{n})[p]).Finite := by ...",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Apply Hochschild–Serre spectral sequence to the Galois extension K_∞/K, identify the p‑primary Brauer Selmer group with a cohomology group of the Iwasawa algebra, prove finiteness of cohomology in the tower using boundedness results, and deduce torsion via degree arguments.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25737v1",
+      "source_path": "http://arxiv.org/abs/2606.25737v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T20:04:24.610098+00:00",
+      "title": "Finitely generated torsion conjecture for the p-primary Brauer group of K3 surfaces in ℤ_p-cyclotomic extensions"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -45870,7 +45919,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2543",
+      "id": "fd_2544",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lin_optimality_bound (r k n : ℕ) (hn : (r - 2) * (k - 2) + 1 ≤ n) : ∃ H : Hypergraph r n, \\n  (|E H| : ℕ) = ⌊(k - 2) * n^2 / (r^2 * ((r - 2) * (k - 2) + 1))⌋ ∧ \\n  ∀ (S : Finset (Edge H)), S.card = k → (∀ e ∈ S, e ⊆ (∪ᵢ eᵢ) → (∪ᵢ eᵢ).card ≤ (r - 2) * k + 3) → False",
@@ -45916,7 +45965,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2544",
+      "id": "fd_2545",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem glmc_time_bound (n p : ℕ) :\n  ∃ C : ℕ,\n    ∃ alg : UnivGraph → CutVal,\n      ¬¬(∀ G : UnivGraph,\n        (card G.vertices = n) ∧ (card G.labels = p) →\n          (time alg G) ≤ (n * p : ℕ) ^ (C * (Nat.log n) / ((Nat.log (Nat.log n)) + 1)) ∧\n          (alg G = minLabelCut G))\n",
@@ -45935,6 +45984,50 @@
       "thread_id": "",
       "timestamp": "2026-06-25T19:43:32.279494+00:00",
       "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "approximate Carathéodory theorem",
+        "Maurey's empirical method"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor λ > 1, leading to exponential contraction after k iterations: max{σ ∈ Del(X_k)}.diameter ≤ (1/λ)^k · max{σ ∈ Del(X_0)}.diameter",
+      "domain_bridges": [
+        "Delaunay triangulation",
+        "covering estimates"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2546",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "lemma diameter_contraction (X0: Set S^d) (k: Nat) : max { simplex in Del(X_k) }.diameter ≤ (1/λ)^k · max { simplex in Del(X_0) }.diameter  where λ > 1 and minicenter Steiner points are used",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize covering estimates via pivotal sampling and the dimension-dependent Carathéodory theorem to bound diameter decay per refinement step",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25854v1",
+      "source_path": "http://arxiv.org/abs/2606.25854v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T20:05:25.226962+00:00",
+      "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
     },
     {
       "ambition_level": "extension",
@@ -51630,11 +51723,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "4f9ccaf5",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -51646,7 +51739,7 @@
         "Algebra"
       ],
       "id": "seed_353",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T20:05:31.705326+00:00",
       "last_reviewed_at": "2026-06-25T03:27:55.470307+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -51660,7 +51753,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432728+00:00",
       "title": "Frankl's Union-Closed Conjecture: Partial Results"

@@ -6466,7 +6466,7 @@
       "Vertex operator algebras and symmetric functions",
       "Pfaffian Giambelli formulas"
     ],
-    "consumed_by_exp_id": "d1e8d4ba",
+    "consumed_by_exp_id": "",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_λ^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition λ = (λ₁, λ₂, ..., λ_k) with λ₁ > λ₂ > ... > λ_k ≥ 0, the formula takes the form s_λ^Q(t) = Pf[Y_{λ_i - i + j}(t) + Y_{λ_j - j + i}(t)]_{1≤i<j≤k} · vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domain_bridges": [
       "Vertex operator methods in symmetric function theory",
@@ -6482,7 +6482,7 @@
     "proof_strategy": "Formalize the operator construction in Lean 4, prove the Clifford algebra relation [Y_m(t), Y_n(t)]₊ = 2(-1)^mδ_{m,-n}, then establish the Pfaffian determinant formula using standard Pfaffian identities and the operator product expansion, verifying the t=0 specialization recovers the classical Schur Q-function identity.",
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -7055,7 +7055,7 @@
     "catalog_references": [
       "arXiv:2310.00000"
     ],
-    "consumed_by_exp_id": "a8f472f7",
+    "consumed_by_exp_id": "",
     "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
     "domain_bridges": [
       "torus methods",
@@ -7071,7 +7071,7 @@
     "proof_strategy": "Use the lacunary matrix theorem to construct a multiplier vector via linear algebra over \\(\\R\\) and verify its multiplicative properties in the torus. Combine with geometric arguments to ensure minimality and global consistency.",
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T23:35:20.703960+00:00",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
@@ -7282,33 +7282,6 @@
     "status": "available",
     "timestamp": "2026-06-25T05:42:47.292631+00:00",
     "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "MR857454",
-      "MR1417578",
-      "MR2742574"
-    ],
-    "consumed_by_exp_id": "6218af01",
-    "description": "For any quadrilateral circumscribed to a parabola, if a valid tiling with vertical and horizontal stripes is constructed using Wang tiles derived from this quadrilateral, the densities of the vertical and horizontal stripes must be irrational numbers.",
-    "domain_bridges": [
-      "quadratic_irrationalities",
-      "tiling_theory",
-      "Parabola_geometry"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2496",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Geometric argument leveraging properties of parabolas and quadratic number fields to derive irrationality of stripe densities.",
-    "research_mode": "team",
-    "source_exp_id": "2606.24693v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T05:59:06.114125+00:00",
-    "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
   },
   {
     "ambition_level": "extension",
@@ -8557,6 +8530,36 @@
     "title": "Explicit Rational Coefficients of Generalized Verschiebung Degree Polynomial"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:23XX.XXXXX (Iwasawa theory for K3 surfaces)",
+      "Mazur, J. (1972). \"Rational points of elliptic curves\". Inventiones Mathematicae.",
+      "Iwasawa, K. (1972). \"Lectures on p‑adic L‑functions\".",
+      "Artin–Tate conjecture for K3 surfaces (proved)."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any K3 surface X over a number field K, the p-primary part of the Brauer group Sel_B(X/K_∞) is a finitely generated torsion Λ-module over the Iwasawa algebra Λ = ℤ_p[[Γ]] where Γ ≅ ℤ_p.",
+    "domain_bridges": [
+      "Arithmetic geometry",
+      "Iwasawa theory",
+      "Algebraic K-theory",
+      "Cohomological number theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2543",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply Hochschild–Serre spectral sequence to the Galois extension K_∞/K, identify the p‑primary Brauer Selmer group with a cohomology group of the Iwasawa algebra, prove finiteness of cohomology in the tower using boundedness results, and deduce torsion via degree arguments.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25737v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:04:24.610098+00:00",
+    "title": "Finitely generated torsion conjecture for the p-primary Brauer group of K3 surfaces in ℤ_p-cyclotomic extensions"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "arXiv:2210.12345",
@@ -8572,7 +8575,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2543",
+    "id": "fd_2544",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit families of linear r‑uniform hypergraphs (e.g. using finite projective planes, affine geometries, or suitable random constructions) whose edge count meets the bound in Theorem 1 minus an arbitrarily small ε. Prove combinatorially that these hypergraphs avoid any ((r‑2)k+3, k)‑configuration by analysing intersection patterns of edges and counting arguments. The construction should show that any attempt to exceed this edge count would force the existence of the forbidden configuration, thereby proving the bound in Theorem 1 is tight.",
@@ -8599,7 +8602,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2544",
+    "id": "fd_2545",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjectured upper bound can be approached by extending the partition‑lattice dynamic programming techniques used for hypergraph min‑cut.  One would encode the connectivity of the union of label graphs as lattice elements and propagate partial solutions using fast zeta transforms on the lattice.  By carefully arranging the recursion depth to be O(log n / log log n) and applying a logarithmic‑depth divide‑and‑conquer on the label set, the total number of DP states can be bounded by (np)^{O(log n / log log n)}.  A full formal proof would involve defining the lattice, proving its size bound, and showing that the DP recurrence respects the GLMC objective.  The crux is to avoid an exponential blow‑up in the number of subsets of labels by exploiting the lattice’s Möbius inversion to compute union‑connectivity in quasi‑linear time per layer.",
@@ -8608,6 +8611,31 @@
     "status": "available",
     "timestamp": "2026-06-25T19:43:32.279494+00:00",
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "approximate Carathéodory theorem",
+      "Maurey's empirical method"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor λ > 1, leading to exponential contraction after k iterations: max{σ ∈ Del(X_k)}.diameter ≤ (1/λ)^k · max{σ ∈ Del(X_0)}.diameter",
+    "domain_bridges": [
+      "Delaunay triangulation",
+      "covering estimates"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2546",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize covering estimates via pivotal sampling and the dimension-dependent Carathéodory theorem to bound diameter decay per refinement step",
+    "research_mode": "team",
+    "source_exp_id": "2606.25854v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:05:25.226962+00:00",
+    "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
   {
     "ambition_level": "extension",
@@ -8728,7 +8756,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f9ccaf5",
     "description": "Formalize Frankl's conjecture and prove it for families of size ≤ 50 (Bošnjak-Marković). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domain_bridges": [],
     "domains": [
@@ -8741,7 +8769,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },

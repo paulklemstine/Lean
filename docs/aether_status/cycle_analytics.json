@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T19:11:38.971839+00:00",
+  "last_updated": "2026-06-25T20:03:41.201117+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -7093,6 +7093,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T19:11:38.283625+00:00",
       "title": "Tropical Differential Equations: Power Series Solutions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7467,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 9,
+      "domain": "Physics",
+      "duration_seconds": 1514.8357512950897,
+      "end_time": 1782417576.5500596,
+      "files_integrated": 9,
+      "job_id": "6218af01",
+      "outcome_quality": 0.550667741935484,
+      "phase": "complete",
+      "phase_a_prompt_version": "v15",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v15",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.8767,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9263,
+        "novelty": 0.95,
+        "proof_depth": 0.9161,
+        "usefulness": 0.9581
+      },
+      "quality_score": 0.550667741935484,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782416061.7143083,
+      "strategy_count": 0,
+      "theorem_count": 35,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 35,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T20:03:40.738427+00:00",
+      "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
     }
   ]
 }

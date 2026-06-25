@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6218af01",
     "filename": "irrational_densities_from_parabola_circumscribed_q.json",
     "pkg_num": 62,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.550667741935484,
     "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
   },
   {
@@ -1807,8 +1807,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "irrational_densities_from_parabola_circumscribed_q",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.550667741935484,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
     }
