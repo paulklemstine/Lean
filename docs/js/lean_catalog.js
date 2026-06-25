@@ -65,8 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
             return fetch(`${filename}`)
                 .then(res => res.json())
                 .then(pkg => {
-                    if (pkg.lean_proofs && pkg.lean_proofs.length > 0) {
-                        pkg.lean_proofs.forEach(proof => {
+                    if (pkg.lean_proofs) {
+                        let proofs = Array.isArray(pkg.lean_proofs) ? pkg.lean_proofs : 
+                            (typeof pkg.lean_proofs === 'string' && pkg.lean_proofs.length > 0 ? [{
+                                file: pkgMeta.filename ? pkgMeta.filename.replace('.json', '.lean') : (pkgMeta.exp_id + '.lean'),
+                                name: pkg.title || pkgMeta.title || "Lean Proofs",
+                                code: pkg.lean_proofs
+                            }] : []);
+                        
+                        proofs.forEach(proof => {
                             const fileObj = {
                                 pkg: pkgMeta,
                                 file: proof.file,
