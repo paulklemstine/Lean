@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "856aa6ac",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Holographic Primes\n\nDerived from the research cycles formalized in\n`Catalog/NumberTheory/HolographicPrimes.lean` (cycle 1) and\n`Catalog/NumberTheory/HolographicStability.lean` (c",
-      "quality_score": 0.4037273333333333,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-17T22:30:21",
-      "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-    },
-    {
       "cycle_id": "21cfd7dd",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — The Prime Number Crossword\n\nThis cycle established the two boundary facts of the prime crossword in\n`Cryptography/PrimeGaps/`:\n\n* `exists_consecutive_composites` / `gaps_unbounde",
@@ -2501,6 +2491,16 @@
       "theorem_count": 7,
       "timestamp": "2026-06-25T01:29:45",
       "title": "Perfect Numbers: Structure of Even Perfects"
+    },
+    {
+      "cycle_id": "cc1a412b",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Quadratic Irrational Density in the Ratio Spectrum\n\nThese conjectures extend the results formalized in\n`Catalog/Computation/QuadraticRatioSpectrum.lean`, where we proved:\n\n- the",
+      "quality_score": 0.6594499999999999,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-25T01:31:25",
+      "title": "Quadratic irrational density in the ratio spectrum"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.708
     }
   ],
-  "last_updated": "2026-06-25T01:29:45",
+  "last_updated": "2026-06-25T01:31:25",
   "open_questions": [
     {
       "context": "",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "be5e0ab8",
-        "quality": 0.8895200000000001,
-        "theorems": 35,
-        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-      },
-      {
         "cycle_id": "4f74256d",
         "quality": 0.4968983018867924,
         "theorems": 178,
@@ -3327,6 +3321,12 @@
         "quality": 0.5709080000000001,
         "theorems": 1,
         "title": "Close Proofs: These conjectures continue the research cycle begun in"
+      },
+      {
+        "cycle_id": "cc1a412b",
+        "quality": 0.6594499999999999,
+        "theorems": 5,
+        "title": "Quadratic irrational density in the ratio spectrum"
       }
     ],
     "Cryptography": [

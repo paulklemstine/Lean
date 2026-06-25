@@ -689,6 +689,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "seed_356",
+    "priority_score": 0.86,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432745+00:00",
+    "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize cubical type theory primitives in Lean 4. Construct the interval type and path types. Prove function extensionality and the univalence axiom. Implement higher inductive types: circles, torus, suspension.",
     "domains": [
       "Logic",
@@ -3907,12 +3921,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This paper establishes improved lower bounds for the Hales-Jewett number through combinatorial line methods. The goal is to derive tight estimates by exploiting symmetry and constraint satisfaction, a task suitable for precise formalization in Lean with polynomial-size proofs.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2459",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22155v1",
+    "status": "available",
+    "timestamp": "2026-06-25T01:31:52.113586+00:00",
+    "title": "Formalizing Hales-Jewett lower bounds via symmetric coloring in Lean"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For integers d\u22652 and 0\u2264s\u2264d, let \u2131\u2286[n]^{(d+1)} be a (d+1)-uniform family such that every F\u2208\u2131 has a missing trace of size exactly s (i.e. there exists B_F\u2282F with |B_F|=s and B_F\u2209Tr_\u2131(F)). Define  W(d,s,n) = \\binom{n-1}{d} + \\binom{n-2(d+1-s)-2}{2s-d-2}  when the second term is defined (otherwise treat it as 0). The conjecture states that |\u2131| \u2264 W(d,s,n) for all n\u22652(d+1). Moreover, equality holds precisely for the constructions given by Chao\u2011Xu\u2011Yip\u2011Zhang and by the recent disproof for \u2308(d+2)/2\u2309\u2264s\u2264d\u20111.",
     "domains": [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -3926,7 +3955,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
@@ -3941,7 +3970,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -3955,7 +3984,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
@@ -3970,7 +3999,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -3984,7 +4013,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24562v1",
@@ -3998,7 +4027,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -4012,7 +4041,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -4026,7 +4055,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
@@ -4041,7 +4070,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
@@ -4055,7 +4084,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2469",
+    "id": "fd_2470",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
@@ -4069,7 +4098,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2470",
+    "id": "fd_2471",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
@@ -4084,7 +4113,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2471",
+    "id": "fd_2472",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
@@ -4098,7 +4127,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2472",
+    "id": "fd_2473",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
@@ -4112,7 +4141,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2473",
+    "id": "fd_2474",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
@@ -4127,7 +4156,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2474",
+    "id": "fd_2475",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23024v1",
@@ -4142,7 +4171,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2475",
+    "id": "fd_2476",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -4156,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2476",
+    "id": "fd_2477",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22888v1",
@@ -4170,7 +4199,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2477",
+    "id": "fd_2478",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22828v1",
@@ -4185,7 +4214,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2478",
+    "id": "fd_2479",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23750v1",
@@ -4199,7 +4228,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2479",
+    "id": "fd_2480",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -4213,7 +4242,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2481",
+    "id": "fd_2482",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
@@ -4228,13 +4257,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2482",
+    "id": "fd_2483",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22010v1",
     "status": "available",
     "timestamp": "2026-06-25T00:52:44.061628+00:00",
     "title": "Euler Characteristic Conjecture for Varieties over F_1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For an odd integer n, the set of affine panmagic permutations of Z_n of the form x \u21a6 a\u00b7x + b (with a a primitive root modulo n) is closed under composition of three or more elements and forms a subgroup of the general affine group GA(1,n). Moreover, the order of each such permutation equals the multiplicative order of a modulo n, and the cycle decomposition corresponds exactly to the orbits of the action of the cyclic group generated by a on Z_n. A counterexample would be an odd n for which the set fails to be closed under triple composition or the order does not equal the multiplicative order of a.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2484",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22221v1",
+    "status": "available",
+    "timestamp": "2026-06-25T01:32:08.689584+00:00",
+    "title": "Conjecture on Multiplicative Structure of Affine Panmagic Permutations"
   },
   {
     "consumed_by_exp_id": "",
@@ -4323,7 +4367,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ad07afa",
     "description": "Formalize Frankl's conjecture and prove it for families of size \u2264 50 (Bo\u0161njak-Markovi\u0107). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domains": [
       "Combinatorics",
@@ -4333,7 +4377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
@@ -4421,36 +4465,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 C5-decompositions and the 5/8 threshold\n\nDerived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-divisibility,\nedge-count `|E| = 5\u00b7#cycles`, the pentagon witness) and `C5Threshold.lean` (the strictly\ndecreasing threshold family with `\u03b4_{C_5} = 5/8`).\n\n## Conjecture 1 (the headline existence threshold)\nFor every real `\u03b5 > 0` there is `N` such that every C5-divisible simple graph `G` on `n \u2265 N`\nvertices with `\u03b4(G) \u2265 (5/8 + \u03b5)\u00b7n` admits a C5-decomposition (`Nonempty (C5Decomposition G)`).\n- **The key insight is...** that the two necessary obstructions formalized here (even degrees\n  and `5 \u2223 |E|`) become *sufficient* once the minimum degree crosses `5/8 = 5/(2\u00b75\u22122)`, the\n  \u2113=5 point of the generalized Nash-Williams family proven strictly decreasing in\n  `nwThreshold_strictAnti`.\n- **Why now?** The triangle case `\u03b4_{C_3} = 3/4` (Delcourt\u2013Postle / Nash-Williams program) and\n  the long-odd-cycle cases are settled; `C_5` is the isolated remaining small odd cycle, and the\n  necessity/threshold scaffolding is now formal.\n\n## Conjecture 2 (sharpness / lower bound)\nFor every `\u03b5 > 0` and infinitely many `n` there exists a C5-divisible graph `G` on `n` vertices\nwith `\u03b4(G) \u2265 (5/8 \u2212 \u03b5)\u00b7n` that has **no** C5-decomposition.\n- **The key insight is...** that the threshold `5/8` is two-sided: an extremal \"space barrier\"\n  construction (a near-balanced blow-up tuned so some edge cannot be routed through any 5-cycle)\n  should defeat decomposition just below `5/8`, matching Conjecture 1 from below.\n- **Why now?** Our `no_decomposition_of_not_divisible` already turns any *local* obstruction into\n  a non-decomposition proof; the remaining task is a *global* density obstruction, the natural\n  next formal target.\n\n## Conjecture 3 (exact pentagon/complete-graph family)\n`K_n` is C5-divisible iff `n \u2261 1 or 5 (mod 10)` (`5 \u2223 binom(n,2)` and `n` odd), and for every\nsuch `n \u2265 5`, `K_n` admits a C5-decomposition.\n- **The key insight is...** the necessity theorem already forces `n` odd (even degree `n\u22121`) and\n  `5 \u2223 n(n\u22121)/2`; the classical `K_5 = C_5 \u222a C_5` base case (computed C5-divisible in the\n  evidence file) suggests a clean recursive/Wilson-type construction.\n- **Why now?** `K_5`'s divisibility is verified here, so the smallest case of the family is\n  formally in hand and the residue arithmetic is a direct corollary of `five_dvd_card_edgeFinset`.\n\n## Conjecture 4 (unified small-cycle threshold law)\nFor every fixed odd `\u2113 \u2265 3`, the C_\u2113-decomposition threshold of C_\u2113-divisible graphs equals\n`\u03b4_{C_\u2113} = \u2113/(2\u2113\u22122)`, and this sequence is the strictly decreasing rational sequence proven in\n`nwThreshold_strictAnti`, converging to `1/2`.\n- **The key insight is...** the parity argument in `c5edges_even_incidence` (each vertex meets a\n  cycle in `0` or `2` edges) generalizes verbatim to any `\u2113`, so the *necessity* half is uniform;\n  only the existence constant `\u2113/(2\u2113\u22122)` varies, and it is monotone.\n- **Why now?** The general `c5edges`/`IsFiveCycle` machinery is already \u2113-agnostic except for the\n  literal `5`; abstracting `Fin 5 \u2192 Fin \u2113` is a mechanical generalization enabled by this cycle.\n\n## Conjecture 5 (fractional relaxation is easy, integral is the barrier)\nEvery C5-divisible graph with `\u03b4(G) \u2265 (1/2 + \u03b5)\u00b7n` admits a *fractional* C5-decomposition\n(a nonnegative weighting of 5-cycles with each edge total `1`), even though integral\ndecomposition needs `5/8`.\n- **The key insight is...** the limit `\u03b4_{C_\u2113} \u2192 1/2` (formalized via `nwThreshold_gt_half`) is\n  exactly the fractional/iterative-absorption threshold; the gap `5/8 \u2212 1/2 = 1/8` measures the\n  integrality cost specific to the short odd cycle `C_5`.\n- **Why now?** With `nwThreshold` and its limit behavior formal, the `1/2` versus `5/8`\n  separation is precisely stated and ready to be attacked via an LP-duality formalization.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2483",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "99725b45",
-    "status": "available",
-    "timestamp": "2026-06-25T01:27:30.288413+00:00",
-    "title": "Derived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-di"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Perfect Numbers & the Abundancy Index\n\nDerived from this cycle's findings (Euclid\u2013Euler classification, the abundancy-index\ndictionary, divisibility monotonicity, prime-power deficiency, and the unconditional\n`\u2265 2`-distinct-prime bound).\n\n## 1. Strengthen the Nielsen fragment from 2 to 3 distinct prime factors\n\nProve: every odd perfect number has at least **3** distinct prime factors (Sylvester, 1888).\n\nThe key insight is that the abundancy index is *multiplicative* (`abundancy_mul_of_coprime`) and\neach odd-prime-power factor contributes at most `p/(p\u22121)`, so a two-prime odd number has\nabundancy `\u2264 (3/2)(5/4) = 15/8 < 2`, never reaching the perfect value `2`. This converts the\ncombinatorial bound into a finite product estimate already half-built in `Abundancy.lean`.\n\nWhy now? `abundancy_prime_pow` plus `abundancy_mul_of_coprime` already give the exact\nmultiplicative form; only the geometric bound `abundancy (p^k) < p/(p\u22121)` and a small product\ninequality remain \u2014 both within reach of the present toolkit.\n\n## 2. A general \"abundancy product bound\" engine\n\nProve: for `n = \u220f p\u1d62^{a\u1d62}`, `abundancy n = \u220f p\u1d62/(p\u1d62\u22121) \u00b7 (1 \u2212 p\u1d62^{\u2212(a\u1d62+1)})`, and hence\n`abundancy n < \u220f p\u1d62/(p\u1d62\u22121)`.\n\nThe key insight is that telescoping the finite geometric series for each prime power turns the\nadditive divisor sum into a clean Euler product, making *every* abundancy question a statement\nabout `\u220f p/(p\u22121)` over the prime support.\n\nWhy now? `abundancy_mul_of_coprime` and `abundancy_prime_pow` are proved; the missing piece is a\nsingle per-prime closed form, after which abundancy bounds for arbitrary `n` follow by induction\non the prime factorization.\n\n## 3. Mersenne-prime exponents are themselves prime\n\nProve: if `mersenne (m)` is prime and `m > 1`, then `m` is prime.\n\nThe key insight is the algebraic factorization `2^{ab} \u2212 1 = (2^a \u2212 1)(1 + 2^a + \u22ef + 2^{a(b\u22121)})`:\na composite exponent forces a nontrivial divisor of the Mersenne number, contradicting primality.\n\nWhy now? This is the natural companion to `even_perfect_iff_mersenne` and sharpens the indexing\nof even perfect numbers from \"`k+1` arbitrary\" to \"`k+1` prime\"; the factorization is a direct\n`geom_sum` manipulation analogous to `sigma_two_pow_eq_mersenne_succ`.\n\n## 4. No odd perfect number is a perfect square multiple of the wrong shape (Euler's form)\n\nProve: every odd perfect number has the form `q^e \u00b7 m\u00b2` with `q` prime, `q \u2261 e \u2261 1 (mod 4)`,\nand `gcd(q, m) = 1` (Euler).\n\nThe key insight is parity of the divisor sum: `\u03c3\u2081` is multiplicative, and `\u03c3\u2081(p^a)` is odd iff\n`a` is even or `p = 2`, so forcing `\u03c3\u2081(n) = 2n \u2261 2 (mod 4)` pins exactly one prime to an odd\nexponent and that prime/exponent to `1 (mod 4)`.\n\nWhy now? The multiplicativity and prime-power sigma formulas used here (`isMultiplicative_sigma`,\n`sigma_one_apply_prime_pow`) are exactly the inputs Euler's parity argument needs.\n\n## 5. Strict abundancy strict-monotonicity gives a \"perfect numbers are incompressible\" theorem\n\nProve: if `a \u2223 b \u2223 c` with `a < b < c` and `b` perfect, then `a` is deficient and `c` abundant,\nand moreover `abundancy a < 2 < abundancy c` with quantitative gap `\u2265 1/c`.\n\nThe key insight is that `abundancy_lt_of_dvd_lt` already yields *strict* inequality via the\nsingle missing divisor `1`; counting the omitted divisors makes the gap quantitative.\n\nWhy now? `abundancy_lt_of_dvd_lt` and `eq_of_perfect_dvd_perfect` are proved; upgrading the\nstrictness witness from \"one missing divisor\" to \"sum of all missing divisors\" is a localized\nrefinement of the existing `Finset.sum_lt_sum_of_subset` step.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2484",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "eb2eee3d",
-    "status": "available",
-    "timestamp": "2026-06-25T01:29:31.435843+00:00",
-    "title": "Derived from this cycle's findings (Euclid\u2013Euler classification, the abundancy-i"
   },
   {
     "consumed_by_exp_id": "",
@@ -4605,7 +4619,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2480",
+    "id": "fd_2481",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:188674",
