@@ -217,15 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         detailContainer.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
-                <div>
-                    <h2 style="margin: 0 0 8px 0; font-family: var(--font-mono); font-size: 20px; color: var(--text-color);">${name}</h2>
-                    <div style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">
-                        Path: <code>${path}</code>
-                    </div>
-                </div>
-                <div style="text-align: right;">
-                    <a href="${rawUrl}" target="_blank" style="color: var(--accent-color); text-decoration: none; font-size: 14px; border: 1px solid var(--accent-color); padding: 4px 12px; border-radius: 4px; transition: background 0.2s;">View Raw on GitHub</a>
+            <div style="margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px;">
+                <h2 style="margin: 0 0 8px 0; font-family: var(--font-mono); font-size: 20px; color: var(--text-color);">${name}</h2>
+                <div style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">
+                    Path: <code>${path}</code>
                 </div>
             </div>
             <pre style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 8px; overflow-x: auto; font-family: var(--font-mono); font-size: 14px; line-height: 1.6; border: 1px solid #333;"><code class="language-lean">${highlightedHtml}</code></pre>
