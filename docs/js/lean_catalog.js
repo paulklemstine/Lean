@@ -70,16 +70,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (typeof pkg.lean_proofs === 'string') {
                             const lp = pkg.lean_proofs;
                             if (lp.length > 50 && !lp.endsWith('.lean')) {
-                                const parts = lp.split(/-- (?:NEW_FILE|DIFF): (.+?)\n/);
+                                const parts = lp.split(/-- (?:NEW_FILE|DIFF): (.+?)(?:\n|\\n)/);
                                 if (parts.length > 1) {
                                     for (let i = 1; i < parts.length; i += 2) {
                                         const name = parts[i].trim();
-                                        const code = (i + 1 < parts.length) ? parts[i + 1].trim() : '';
+                                        const code = (i + 1 < parts.length) ? parts[i + 1].trim().replace(/\\n/g, '\n') : '';
                                         if (code) leanFiles.push({ file: name, name: name.split('/').pop(), code: code });
                                     }
                                 } else {
                                     const slug = (pkg.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
-                                    leanFiles.push({ file: slug + '.lean', name: slug + '.lean', code: lp });
+                                    leanFiles.push({ file: slug + '.lean', name: slug + '.lean', code: lp.replace(/\\n/g, '\n') });
                                 }
                             }
                         } else if (Array.isArray(pkg.lean_proofs)) {
@@ -87,14 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
                                 if (typeof entry === 'string') {
                                     if (entry.length > 50 && !entry.endsWith('.lean')) {
                                         const slug = (pkg.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
-                                        leanFiles.push({ file: slug + '.lean', name: slug + '.lean', code: entry });
+                                        leanFiles.push({ file: slug + '.lean', name: slug + '.lean', code: entry.replace(/\\n/g, '\n') });
                                     }
                                 } else if (typeof entry === 'object' && entry !== null) {
                                     const fname = entry.file || entry.name || 'Proof.lean';
                                     const basename = fname.split('/').pop();
-                                    const code = (entry.code && entry.code.trim()) ? entry.code : (entry.content && entry.content.trim()) ? entry.content : null;
-                                    if (code) {
-                                        leanFiles.push({ file: fname, name: basename, code: code });
+                                    let rawCode = (entry.code && entry.code.trim()) ? entry.code : (entry.content && entry.content.trim()) ? entry.content : null;
+                                    if (rawCode) {
+                                        leanFiles.push({ file: fname, name: basename, code: rawCode.replace(/\\n/g, '\n') });
                                     }
                                 }
                             }
@@ -154,30 +154,89 @@ document.addEventListener('DOMContentLoaded', () => {
         const filterDomain = domainFilter ? domainFilter.value : '';
         const filterText = searchInput ? searchInput.value.toLowerCase() : '';
         
-        let html = '<div style="display: flex; gap: 20px; height: calc(100vh - 150px);">';
+        let html = '<style>#lean-catalog-content summary::marker { content: ""; } #lean-catalog-content summary::-webkit-details-marker { display: none; }</style>';
+        html += '<div style="display: flex; gap: 20px; height: calc(100vh - 150px);">';
         
         // Sidebar list
         html += '<div style="flex: 0 0 350px; overflow-y: auto; border-right: 1px solid var(--border-color); padding-right: 15px;">';
         
         let filteredCount = 0;
+        
+        // Build Tree
+        const root = { type: 'dir', name: 'Root', children: {} };
+        
         allLeanFiles.forEach((f, idx) => {
             if (filterDomain && f.domain !== filterDomain) return;
             if (filterText && !f.name.toLowerCase().includes(filterText) && !f.theorems.some(t => t.toLowerCase().includes(filterText))) return;
             
             filteredCount++;
-            html += `
-                <div class="lean-file-card" data-idx="${idx}" style="padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 12px; cursor: pointer; background: var(--bg-secondary); transition: all 0.2s;">
-                    <div style="font-weight: 600; font-family: var(--font-mono); font-size: 14px; word-break: break-all; color: var(--text-color);">${f.name}</div>
-                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 6px; display: flex; justify-content: space-between;">
-                        <span>${f.domain}</span>
-                        <span style="color: #10b981;">${f.theorems.length} theorems</span>
-                    </div>
-                </div>
-            `;
+            
+            const parts = f.file.split('/');
+            let current = root;
+            for (let i = 0; i < parts.length - 1; i++) {
+                const p = parts[i];
+                if (!current.children[p]) {
+                    current.children[p] = { type: 'dir', name: p, children: {} };
+                }
+                current = current.children[p];
+            }
+            const fileName = parts[parts.length - 1];
+            current.children[fileName] = { type: 'file', name: fileName, fileObj: f, idx: idx };
         });
+        
+        // Recursive render function
+        function renderTree(node, depth, isRoot = false) {
+            let res = '';
+            
+            // Sort children: directories first, then files, then alphabetically
+            const keys = Object.keys(node.children).sort((a, b) => {
+                const aIsFile = node.children[a].type === 'file';
+                const bIsFile = node.children[b].type === 'file';
+                if (aIsFile && !bIsFile) return 1;
+                if (!aIsFile && bIsFile) return -1;
+                return a.localeCompare(b);
+            });
+            
+            for (const key of keys) {
+                const child = node.children[key];
+                if (child.type === 'dir') {
+                    // Open details automatically if there is a search filter, or if it's the root level
+                    const openAttr = (filterText || filterDomain || depth === 0) ? 'open' : '';
+                    res += `
+                        <details ${openAttr} style="margin-left: ${isRoot ? 0 : 12}px; margin-bottom: 4px;">
+                            <summary style="cursor: pointer; font-weight: 600; padding: 4px 0; color: var(--text-color); font-size: 14px; user-select: none; display: flex; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; color: var(--accent-color);"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                                <span>${child.name}</span>
+                            </summary>
+                            <div style="border-left: 1px solid var(--border-color); padding-left: 4px; margin-top: 4px;">
+                                ${renderTree(child, depth + 1)}
+                            </div>
+                        </details>
+                    `;
+                } else {
+                    const f = child.fileObj;
+                    const idx = child.idx;
+                    res += `
+                        <div class="lean-file-card" data-idx="${idx}" style="margin-left: ${isRoot ? 0 : 12}px; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 8px; cursor: pointer; background: var(--bg-secondary); transition: all 0.2s;">
+                            <div style="font-weight: 600; font-family: var(--font-mono); font-size: 13px; word-break: break-all; color: var(--text-color); display: flex; align-items: flex-start;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px; margin-right: 6px; flex-shrink: 0; color: var(--text-muted);"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                <span>${f.name}</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px; margin-left: 18px; display: flex; justify-content: space-between;">
+                                <span>${f.domain}</span>
+                                <span style="color: #10b981;">${f.theorems.length} thms</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            return res;
+        }
         
         if (filteredCount === 0) {
             html += '<div style="color: var(--text-muted); font-size: 13px; text-align: center; margin-top: 20px;">No files found matching criteria.</div>';
+        } else {
+            html += renderTree(root, 0, true);
         }
         
         html += '</div>';
