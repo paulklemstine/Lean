@@ -240,21 +240,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Correspondence: GL(1) Case"
   },
   {
-    "consumed_by_exp_id": "4093c9b0",
-    "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0432",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:27.909349+00:00",
-    "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
     "domains": [
@@ -552,7 +537,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9bfeca7",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -563,7 +548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -912,7 +897,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "86eb345e",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -921,7 +906,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -957,7 +942,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c36d38e",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domains": [
       "Cryptography",
@@ -968,7 +953,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -1092,7 +1077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "91e64198",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1102,7 +1087,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -1402,21 +1387,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
-  },
-  {
-    "consumed_by_exp_id": "c053e0c9",
-    "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
-    "domains": [
-      "Logic",
-      "Analysis"
-    ],
-    "id": "seed_359",
-    "priority_score": 0.82,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432759+00:00",
-    "title": "Constructive Mathematics: Bishop's Analysis"
   },
   {
     "consumed_by_exp_id": "",
@@ -2974,21 +2944,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Binary 2-binomial equivalence class count equals cake number"
   },
   {
-    "consumed_by_exp_id": "7d3eea85",
-    "description": "The original theorem characterizes $D(k) = \\gcd_{2\\leq q\\leq k+1} \\binom{qk}{k} = 1$ based on the largest prime-power component of $n=k+1$. We propose a generalization: For fixed $k \\geq 2$ and a step size $s \\geq 1$, define $D(k, s) = \\gcd_{j=1}^{\\lfloor (k+1)/s \\rfloor} \\binom{(js)k}{k}$. The conjecture is that $D(k, s) = 1$ if and only if for every prime power $p^a \\parallel n=k+1$, the condition $n/p^a > p^a$ is modified by a factor dependent on $s$, specifically involving the p-adic valuation of $s$.",
-    "domains": [
-      "Pythagorean",
-      "MachineLearning"
-    ],
-    "id": "fd_2388",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22997v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T22:28:01.614691+00:00",
-    "title": "Generalization of the Binomial GCD Criterion for Arithmetic Progressions of Upper Indices"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For a finite group \\(\\Gamma\\) and any non\u2011negative function \\(f:\\Gamma\\to\\mathbb{R}_{\\ge 0}\\), define the two\u2011sided correlation kernel \\(\\mathcal C_f\\) by\n\\[\\mathcal C_f(x,y)=\\frac{1}{|\\Gamma|}\\sum_{a_1,a_2\\in\\Gamma:\\, xa_1=a_2 y} f(a_1)f(a_2) = \\mathbb{E}_{z\\in\\Gamma} f(x^{-1}z)f(zy^{-1}).\\]\nThe conjecture asserts that \\(\\mathcal C_f\\) satisfies Sidorenko\u2019s inequality for **all** finite (undirected) bipartite graphs \\(H\\):\n\\[ t(H,\\mathcal C_f) \\ge t(K_2,\\mathcal C_f)^{e(H)}. \\]\nEquivalently, the homomorphism density of any bipartite graph in \\(\\mathcal C_f\\) is at least the \\(e(H)\\)-th power of the edge density of \\(\\mathcal C_f\\). This extends the theorem of the paper, which proves the statement only for directed graphs (or for the 1\u2011subdivision of any directed graph). The conjecture is precise and falsifiable: a single counterexample \\((\\Gamma,f,H)\\) with \\(t(H,\\mathcal C_f)<t(K_2,\\mathcal C_f)^{e(H)}\\) disproves it.",
     "domains": [
@@ -3092,7 +3047,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Girth bounds minimum distance of bipartite graph codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1311df1d",
     "description": "For the full flag variety GL_{n+1}/\u2102 B, let w \u2208 S_{n+1} index the Schubert cell X_w^o. The cluster algebra structure on \u2102[X_w^o] (coming from the reduced expression of the longest element in the Weyl group modulo the stabilizer of w) is of finite type if and only if w is a Grassmannian permutation (i.e., w has at most one descent).",
     "domains": [
       "Algebra",
@@ -3102,7 +3057,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T00:22:07.112237+00:00",
     "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
   },
@@ -3136,22 +3091,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
   },
   {
-    "consumed_by_exp_id": "e4d578ae",
-    "description": "For every full-dimensional lattice polytope P in Z^n, let Sigma_P be the tropical hypersurface given by the codimension-one skeleton of the normal fan of P, with edge-length weights. The n-fold stable self-intersection Sigma_P \u2229_st ... \u2229_st Sigma_P is a reduced point at the origin if and only if P is a unimodular simplex, equivalently if and only if the normalized lattice volume n! vol(P) is equal to 1.",
-    "domains": [
-      "Geometry",
-      "Tropical"
-    ],
-    "id": "fd_2401",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.24339v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T02:18:16.655288+00:00",
-    "title": "Unmixed Reduced Tropical Bernstein Criterion"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ff8131d4",
     "description": "Every \u2286-minimal minor-closed graph class with limiting density greater than some \u03b4 < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class \ud835\udca2, there exists a graph H such that \ud835\udca2 = excl({H}).",
     "domains": [
       "Bridges"
@@ -3160,7 +3100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24326v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T02:41:49.567859+00:00",
     "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
   },
@@ -3177,20 +3117,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-24T04:01:44.618392+00:00",
     "title": "Exactevaluation of the vector-space Erd\u0151s Matching number m_q(n,k,s)"
-  },
-  {
-    "consumed_by_exp_id": "97d45a04",
-    "description": "For every integer k \u2265 1, let t = 2^k. Then the limit c_t = 1/2 + 2^{-2s_2(t)-1}, where s_2(t) is the binary sum-of-digits function. This conjecture asserts that the explicit lower bound provided in the paper is tight for all powers of two.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2404",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23398v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T04:55:09.073513+00:00",
-    "title": "Tightness of the lower bound for powers of two in Cusick's sum-of-digits conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -4621,7 +4547,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d6e5d02",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domains": [
       "Novelty",
@@ -4631,24 +4557,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
-  },
-  {
-    "consumed_by_exp_id": "051409ce",
-    "description": "Conjecture: The tropicalization of the n-qubit stabilizer state variety in the Grassmannian Gr(2^n, 2^n) yields a balanced polyhedral fan of dimension n(n+1)/2 whose maximal cones are in bijection with Clifford group orbits, and the tropical Pl\u00fccker relations restrict to the monogamy of entanglement inequalities (e.g., Coffman-Kundu-Wootters) on each cone. Test: For n=3,4, compute the tropical variety using numerical tropical algebraic geometry (e.g., via polymake or gfan) and verify: (1) cone count matches known Clifford orbit counts (1075 for n=3), (2) each cone's defining inequalities match the facet description of the corresponding entanglement polytope, (3) the tropical Hopf algebra structure induced by the stabilizer formalism's coalgebra yields a tropical quantum group classifying SLOCC classes. Impact: Establishes tropical geometry as a complete combinatorial invariant for stabilizer entanglement, provides polytime algorithms for entanglement classification via tropical membership tests, and constructs tropical quantum groups as new algebraic structures for quantum information.",
-    "domains": [
-      "Tropical",
-      "Novelty"
-    ],
-    "id": "fd_2490",
-    "priority_score": 0.7156190476190477,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T03:46:38.144414+00:00",
-    "title": "Tropical Geometry of Stabilizer States: Entanglement Classification via Polyhedr"
   },
   {
     "consumed_by_exp_id": "",
