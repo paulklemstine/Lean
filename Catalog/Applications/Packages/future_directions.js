@@ -766,6 +766,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_f25c8810_37bd789b",
+    "priority_score": 0.8545600000000001,
+    "research_mode": "team",
+    "source_exp_id": "f25c8810",
+    "status": "available",
+    "timestamp": "2026-06-25T03:46:44.858796+00:00",
+    "title": "Deepening: Alien Number Systems: Beyond Base-N"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -1449,6 +1463,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:16.410337+00:00",
     "title": "Normality of Mathematical Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle f25c8810 (Q=0.755) proved 734 theorems in Computation but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid",
+    "domains": [
+      "Computation"
+    ],
+    "id": "sorry_fill_f25c8810_4ab835a5",
+    "priority_score": 0.8045600000000002,
+    "research_mode": "team",
+    "source_exp_id": "f25c8810",
+    "status": "available",
+    "timestamp": "2026-06-25T03:46:45.492101+00:00",
+    "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
   },
   {
     "consumed_by_exp_id": "",
@@ -2946,7 +2974,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Binary 2-binomial equivalence class count equals cake number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d3eea85",
     "description": "The original theorem characterizes $D(k) = \\gcd_{2\\leq q\\leq k+1} \\binom{qk}{k} = 1$ based on the largest prime-power component of $n=k+1$. We propose a generalization: For fixed $k \\geq 2$ and a step size $s \\geq 1$, define $D(k, s) = \\gcd_{j=1}^{\\lfloor (k+1)/s \\rfloor} \\binom{(js)k}{k}$. The conjecture is that $D(k, s) = 1$ if and only if for every prime power $p^a \\parallel n=k+1$, the condition $n/p^a > p^a$ is modified by a factor dependent on $s$, specifically involving the p-adic valuation of $s$.",
     "domains": [
       "Pythagorean",
@@ -2956,7 +2984,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T22:28:01.614691+00:00",
     "title": "Generalization of the Binomial GCD Criterion for Arithmetic Progressions of Upper Indices"
   },
@@ -4496,21 +4524,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Extremal Graph Theory (Tur\u00e1n \u00b7 Roth \u00b7 Kruskal\u2013Katona)\n\nDerived from this cycle's findings (see the `-- !-- Lab Notes -- !--` blocks in\n`Turan.lean`, `Roth.lean`, `KruskalKatona.lean`). Each conjecture is bold, falsifiable,\nand stated so it can be attacked directly in Lean on top of the lemmas just proved.\n\n## C1. Stability for Tur\u00e1n/Mantel (uniqueness of the extremal graph, quantitative)\n**Conjecture.** If a triangle-free graph on `n` vertices has `e(G) \u2265 n\u00b2/4 - t`, then `G`\ncan be made complete bipartite by adding/removing at most `O(t)` edges.\n*The key insight is...* the gap `n\u00b2/4 - e(G)` in `mantel_nat` already measures distance to\nthe unique extremal graph, so the integer slack term is the natural stability parameter.\n*Why now?* Mathlib's `isTuranMaximal_iff_nonempty_iso_turanGraph` gives the exact extremal\nisomorphism; combining it with the proved slack-bound `turan_edge_bound_nat` makes a\nquantitative stability statement reachable without re-deriving Tur\u00e1n.\n\n## C2. The extremal\u2013Ramsey bridge generalizes to all `K_{r+1}`\n**Conjecture.** For every `r \u2265 2` there is `N(r)` such that on `\u2265 N(r)` vertices any\n`K_{r+1}`-free graph `G` simultaneously satisfies the Tur\u00e1n bound *and* forces a `K_{r+1}`\nin `G\u1d9c`; moreover `N(2) = 6` is the value supplied by `mantel_ramsey_bridge`.\n*The key insight is...* `R(r+1, r+1)` is exactly the threshold past which one of the two\ncolour classes must contain the forbidden clique, so the extremal bound and the Ramsey\nnumber are two readings of the same colouring.\n*Why now?* The catalog's `RamseyTheory.Arrows` recursion (`arrows_binomial_bound`) provides\nexplicit Ramsey upper bounds, and the proved `turan_edge_bound_nat` provides the matching\nextremal side, so a uniform-`r` bridge is a finite assembly away.\n\n## C3. Quantitative Roth from the proved density-zero limit\n**Conjecture.** Every `A \u2286 \u2115` with upper density `\u03b4 > 0` contains a 3-AP within its first\n`exp(exp(C/\u03b4))` elements, with the constant extractable from `rothNumberNat_isLittleO_id`.\n*The key insight is...* `exists_threeAP_of_freq_dense` already converts the asymptotic\n`o(N)` bound into a concrete finite witness; tracking the `cornersTheoremBound` quantitatively\nturns \"some large N\" into an explicit, computable N.\n*Why now?* The corners-theorem proof in Mathlib carries an explicit (if huge) bound, so the\nqualitative theorem proved here can be refined to an effective one by instrumenting the same\nfilter argument.\n\n## C4. Kruskal\u2013Katona \u21d2 a Sperner-type antichain bound in `Fin n`\n**Conjecture.** Any antichain in `2^{Fin n}` whose members all lie in two adjacent layers\n`r-1, r` has size at most `C(n, \u230an/2\u230b)`, provable by feeding `kk_shadow_lower` into a layer\ndouble-count.\n*The key insight is...* a shadow lower bound is exactly the local LYM inequality in disguise,\nand `kk_shadow_lower` (`C(k,r-1) \u2264 #\u2202\ud835\udc9c`) is the per-layer input that LYM needs.\n*Why now?* With the single-shadow bound now formalized, the only missing piece is the\nnormalization `#\ud835\udc9c / C(n,r) + #\u2202\ud835\udc9c / C(n,r-1) \u2265 1`, a short arithmetic step.\n\n## C5. Nonempty iterated shadows \u21d2 explicit chains of subsets\n**Conjecture.** A large `r`-uniform family (`#\ud835\udc9c \u2265 C(k,r)`) contains a maximal chain\n`\u2205 = B_0 \u2282 B_1 \u2282 \u2026 \u2282 B_r` with `B_r \u2208 \ud835\udc9c` and each `B_i \u2208 \u2202^[r-i] \ud835\udc9c`.\n*The key insight is...* `kk_iterated_shadow_nonempty` guarantees each layer of the shadow\nchain is inhabited, so a chain can be selected greedily from the top down.\n*Why now?* The nonemptiness of every iterated shadow is now a theorem; turning a sequence of\nnonempty layers into a single nested chain is a constructive selection argument well within\nreach.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2487",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3e805dd4",
-    "status": "available",
-    "timestamp": "2026-06-25T03:27:44.297698+00:00",
-    "title": "Derived from this cycle's findings (see the `-- !-- Lab Notes -- !--` blocks in"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4537,6 +4550,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The tropicalization of the n-qubit stabilizer state variety in the Grassmannian Gr(2^n, 2^n) yields a balanced polyhedral fan of dimension n(n+1)/2 whose maximal cones are in bijection with Clifford group orbits, and the tropical Pl\u00fccker relations restrict to the monogamy of entanglement inequalities (e.g., Coffman-Kundu-Wootters) on each cone. Test: For n=3,4, compute the tropical variety using numerical tropical algebraic geometry (e.g., via polymake or gfan) and verify: (1) cone count matches known Clifford orbit counts (1075 for n=3), (2) each cone's defining inequalities match the facet description of the corresponding entanglement polytope, (3) the tropical Hopf algebra structure induced by the stabilizer formalism's coalgebra yields a tropical quantum group classifying SLOCC classes. Impact: Establishes tropical geometry as a complete combinatorial invariant for stabilizer entanglement, provides polytime algorithms for entanglement classification via tropical membership tests, and constructs tropical quantum groups as new algebraic structures for quantum information.",
+    "domains": [
+      "Tropical",
+      "Novelty"
+    ],
+    "id": "fd_2490",
+    "priority_score": 0.7156190476190477,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-25T03:46:38.144414+00:00",
+    "title": "Tropical Geometry of Stabilizer States: Entanglement Classification via Polyhedr"
   },
   {
     "consumed_by_exp_id": "",
@@ -5025,20 +5053,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 3e805dd4 (Q=0.456) proved 734 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_3e805dd4_28e65f06",
-    "priority_score": 0.5063659679193871,
-    "research_mode": "team",
-    "source_exp_id": "3e805dd4",
-    "status": "available",
-    "timestamp": "2026-06-25T03:28:42.967154+00:00",
-    "title": "Close Proofs: Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
   {
     "consumed_by_exp_id": "",

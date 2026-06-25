@@ -158,7 +158,7 @@ def update_index():
         # Fallback if not found
         catalog_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
 
-    json_files = sorted(f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json"))
+    json_files = sorted(f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json", "catalog_tree.json"))
 
     # IMPORTANT: The website displays every Phase B package that exists in this
     # directory. Do NOT filter by quality_score, grade, or any other quality

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f25c8810",
     "filename": "alien_number_systems_beyond_base_n.json",
     "pkg_num": 51,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7545600000000001,
     "title": "Alien Number Systems: A Direct Uniqueness Proof for the Factorial Number System"
   },
   {
@@ -1488,8 +1488,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "alien_number_systems_beyond_base_n",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7545600000000001,
+      "quality": "substantial",
       "shape": "cube",
       "title": "Alien Number Systems: A Direct Uniqueness Proof for the Factorial Number System"
     }

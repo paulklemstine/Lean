@@ -11518,7 +11518,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Logic",
         "Computation"
@@ -12571,7 +12571,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Cryptography",
         "Computation"
@@ -12727,7 +12727,7 @@
       "depth_estimate": 3,
       "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Tropical",
         "Computation"
@@ -13156,7 +13156,7 @@
       "depth_estimate": 3,
       "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Computation"
@@ -13741,7 +13741,7 @@
       "depth_estimate": 3,
       "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.35,
       "domains": [
         "Physics",
         "Computation"
@@ -13819,7 +13819,7 @@
       "depth_estimate": 3,
       "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.35,
       "domains": [
         "Physics",
         "Computation"
@@ -14053,7 +14053,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Tropical",
         "Computation"
@@ -14481,7 +14481,7 @@
       "depth_estimate": 3,
       "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.04999999999999999,
       "domains": [
         "Algebra",
         "Computation"
@@ -15300,7 +15300,7 @@
       "depth_estimate": 3,
       "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Computation",
         "Logic"
@@ -16275,7 +16275,7 @@
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Logic"
@@ -16314,7 +16314,7 @@
       "depth_estimate": 3,
       "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16470,7 +16470,7 @@
       "depth_estimate": 3,
       "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16587,7 +16587,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Tropical",
         "Computation"
@@ -16743,7 +16743,7 @@
       "depth_estimate": 3,
       "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.04999999999999999,
       "domains": [
         "EML",
         "Computation"
@@ -16899,7 +16899,7 @@
       "depth_estimate": 3,
       "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "MachineLearning",
         "Computation"
@@ -34153,7 +34153,7 @@
         "sparse-paving q-matroids to independent sets in the q-Johnson graph",
         "finite vector-space submodule lattice to graph-theoretic stable sets"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -34481,7 +34481,7 @@
         "proper color classes are independent sets, so α(G)≤2 forces every odd color class to be a singleton",
         "using Δ(G)+1 singleton color classes forces Δ(G)+1=|V(G)|, hence G is complete"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -34625,7 +34625,7 @@
         "p_adic_valuations",
         "combinatorics_on_words"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -38801,14 +38801,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "OEIS A080170",
         "FC100OpenSet1"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7d3eea85",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38824,7 +38824,7 @@
         "MachineLearning"
       ],
       "id": "fd_2388",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T03:46:55.386082+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem binomial_gcd_generalization (k s : ℕ) (hk : k ≥ 2) (hs : s ≥ 1) : \n  Nat.gcd {binom (j * s * k) k | j : ℕ, 1 ≤ j, j * s ≤ k + 1} = 1 ↔ \n  ∀ (p : ℕ), p.Prime → (let a := p_adic_valuation p (k + 1) in (k + 1) / p^a > p^a * (s_factor p s))",
       "lineage_refs": [],
@@ -38838,7 +38838,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22997v1",
       "source_path": "http://arxiv.org/abs/2606.22997v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T22:28:01.614691+00:00",
       "title": "Generalization of the Binomial GCD Criterion for Arithmetic Progressions of Upper Indices"
@@ -40376,7 +40376,7 @@
         "Information Theory",
         "Functional Analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation"
@@ -41074,7 +41074,7 @@
         "Finite Field Codes",
         "Probabilistic Method"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -42455,7 +42455,7 @@
         "Discrepancy Theory ↔ Function Space Approximation",
         "Tensor-product Structure ↔ Curse of Dimensionality"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -42640,7 +42640,7 @@
         "binary-carry-chains",
         "density-measures"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -44947,6 +44947,44 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i ≤ i and d i ≤ i for all i < k, equality of their factoradic values up ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "id": "push_f25c8810_37bd789b",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8545600000000001,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "f25c8810",
+      "source_path": "Alien Number Systems: Beyond Base-N",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T03:46:44.858796+00:00",
+      "title": "Deepening: Alien Number Systems: Beyond Base-N"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -45186,7 +45224,7 @@
       "depth_estimate": 3,
       "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Algebra",
         "Computation"
@@ -46873,7 +46911,7 @@
       "depth_estimate": 3,
       "description": "Prove that 78557 is the smallest Sierpiński number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Algebra",
         "Computation"
@@ -47065,7 +47103,7 @@
       "depth_estimate": 3,
       "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Computation",
         "Algebra"
@@ -47219,7 +47257,7 @@
       "depth_estimate": 3,
       "description": "Resolve Kaplansky's conjectures on group rings: no zero divisors, no idempotents other than 0/1, and no nontrivial units in K[G] for torsion-free G.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Algebra",
         "Computation"
@@ -47490,7 +47528,7 @@
       "depth_estimate": 3,
       "description": "Prove that the connective constant for the self-avoiding walk on Z² equals (2+√2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Computation",
         "Algebra"
@@ -47529,7 +47567,7 @@
       "depth_estimate": 3,
       "description": "Prove that π, e, √2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Algebra",
         "Computation"
@@ -47568,7 +47606,7 @@
       "depth_estimate": 3,
       "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Computation",
         "Algebra"
@@ -47607,7 +47645,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Computation",
         "Logic"
@@ -47801,7 +47839,7 @@
       "depth_estimate": 3,
       "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Logic",
         "Computation"
@@ -48228,7 +48266,7 @@
       "depth_estimate": 3,
       "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -48383,7 +48421,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES ∈ P. Construct efficient modular arithmetic tactics for Lean.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -49278,7 +49316,7 @@
       "depth_estimate": 3,
       "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -49317,7 +49355,7 @@
       "depth_estimate": 3,
       "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -49435,7 +49473,7 @@
       "depth_estimate": 3,
       "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic",
         "Computation"
@@ -49593,7 +49631,7 @@
       "depth_estimate": 3,
       "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics",
         "Algebra",
@@ -49792,7 +49830,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -49872,7 +49910,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic",
@@ -49952,7 +49990,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Computation",
@@ -50112,7 +50150,7 @@
       "depth_estimate": 3,
       "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation",
@@ -50152,7 +50190,7 @@
       "depth_estimate": 3,
       "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic",
         "Computation",
@@ -50192,7 +50230,7 @@
       "depth_estimate": 3,
       "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Logic"
@@ -61122,6 +61160,44 @@
       "thread_id": "",
       "timestamp": "2026-06-14T16:16:59.380175+00:00",
       "title": "Close Proofs: This cycle pushed the discrete Hodge program from its *geometric/decom"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Cycle f25c8810 (Q=0.755) proved 734 theorems in Computation but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "id": "sorry_fill_f25c8810_4ab835a5",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8045600000000002,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "f25c8810",
+      "source_path": "Alien Number Systems: Beyond Base-N",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T03:46:45.492101+00:00",
+      "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
     },
     {
       "ambition_level": "extension",
@@ -123594,6 +123670,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
     "cross_domain_bridge",
