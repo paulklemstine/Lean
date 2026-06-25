@@ -569,20 +569,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
   {
-    "consumed_by_exp_id": "0cb84107",
-    "description": "Prove that there are infinitely many primes of the form n\u00b2+1. Formalize Iwaniec's result on semi-primes of this form and connect to Friedlander-Iwaniec theorem on primes of form a\u00b2+b\u2074.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_025",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:00.953818+00:00",
-    "title": "Primes of the Form n\u00b2+1"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domains": [
@@ -1017,7 +1003,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "b08abcae",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1027,7 +1013,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -2006,7 +1992,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
-    "consumed_by_exp_id": "e8c93c85",
+    "consumed_by_exp_id": "",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domains": [
       "Pythagorean",
@@ -2016,7 +2002,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -2498,7 +2484,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ohno-Zudilin Weighted Sum Formula for Double Zeta Values"
   },
   {
-    "consumed_by_exp_id": "d5ef22ee",
+    "consumed_by_exp_id": "",
     "description": "Let \ud835\udd13(y)=\u03a3_{a\u2208A} c_a(t) \u03a0_{i=0}^k (y^(i))^{a_i} be a nonzero ordinary algebraic differential polynomial over algebraically closed characteristic-zero Hahn series with finite support A. Let E_k(trop(\ud835\udd13)) be the set of t-adic orders r of Boolean Hahn elementary k-solutions of its tropicalization, equivalently the r for which the active indicial tropical minimum is attained at least twice. For each r in E_k(trop(\ud835\udd13)), form the classical indicial initial polynomial I_r(Z) in the leading coefficient Z, using exactly the monomials attaining that minimum and the falling-factorial factors coming from derivatives. Conjecture: if every r in E_k(trop(\ud835\udd13)) has a simple nonzero root of I_r(Z), then every elementary tropical order is realized by an actual Hahn-series solution; hence ord_t(Sol(\ud835\udd13)) = E_k(trop(\ud835\udd13)). This strengthens the paper's containment ord_t(Sol(\ud835\udd13)) \u2286 E_k(trop(\ud835\udd13)) to equality under a Newton-nondegeneracy hypothesis.",
     "domains": [
       "Algebra",
@@ -2508,7 +2494,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21829v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T15:04:46.154289+00:00",
     "title": "Newton-nondegenerate elementary tropical orders lift to Hahn-series solutions"
   },
@@ -5214,7 +5200,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
   {
-    "consumed_by_exp_id": "4f9ccaf5",
+    "consumed_by_exp_id": "",
     "description": "Formalize Frankl's conjecture and prove it for families of size \u2264 50 (Bo\u0161njak-Markovi\u0107). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domains": [
       "Combinatorics",
@@ -5224,7 +5210,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
@@ -5285,7 +5271,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
   },
   {
-    "consumed_by_exp_id": "199a5960",
+    "consumed_by_exp_id": "",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
     "domains": [
       "Algebra"
@@ -5294,7 +5280,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erd\u0151s\u2013Straus Conjecture"
   },
@@ -5312,6 +5298,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Primes of the Form n\u00b2 + 1\n\nDerived from the Stage 3 analysis and Stage 4 critique of this research cycle.\nEach conjecture is bold and falsifiable, with the decisive insight and a \"why\nnow?\" justification. Statuses refer to the formal artifacts in\n`Cryptography/PrimesNSqPlusOne.lean` and `Cryptography/SqAddOneDivisors.lean`.\n\n## C1. Quantitative divisor-density of the n\u00b2+1 sequence\n\n**Conjecture.** For every `X`, the number of *distinct* primes `\u2261 1 (mod 4)`\ndividing some `n\u00b2 + 1` with `n \u2264 X` grows at least like `c \u00b7 X / log X`.\n\nThe key insight is that the converse `oddPrime_dvd_some_sq_add_one` already gives\na *root* `n < p` for each such prime, so a counting argument over the box\n`n \u2264 X` should recover a positive proportion of all `1 mod 4` primes up to `X\u00b2`.\n\nWhy now? We have the exact \"which primes occur\" characterization\n(`oddPrime_dvd_sq_add_one_iff`) formalized; turning the qualitative `Set.Infinite`\nresult into a density statement is the natural next quantitative step and needs\nonly counting infrastructure already in Mathlib.\n\n## C2. Parity-refined Landau bases\n\n**Conjecture.** Apart from `n = 1`, every base `n` with `n\u00b2 + 1` prime is\ndivisible by `2` but the quotient `n/2` is *not* forced into any single residue\nclass mod 4 \u2014 i.e. `landau_base_even` is the *only* unconditional congruence\nobstruction on the base.\n\nThe key insight is that `landau_base_even` is proved purely from the evenness of\n`n\u00b2 + 1` for odd `n`; any further base obstruction would have to come from a\nprime `\u2261 3 (mod 4)` dividing `n\u00b2 + 1`, which `oddPrime_dvd_sq_add_one_mod_four`\nforbids \u2014 suggesting no further constraint exists.\n\nWhy now? The minimal-obstruction principle is fully formal on the divisor side;\nproving the base side has *no* extra constraint is a clean, testable target\n(falsifiable by a single counter-pattern in a finite search).\n\n## C3. Iwaniec P\u2082 lower bound via the formal sieve skeleton\n\n**Conjecture.** The count of `n \u2264 X` with `IsSemiprimeValue n`\n(`n\u00b2+1` a product of \u2264 2 primes) is `\u226b X / log X`.\n\nThe key insight is that the same congruence filter that excludes `3 mod 4` prime\nfactors (`three_not_dvd_sq_add_one`) is exactly the local condition feeding\nIwaniec's half-dimensional sieve; formalizing the sieve's *combinatorial*\nskeleton (Buchstab/Selmer weights) is separable from the analytic bound.\n\nWhy now? `IsSemiprimeValue` is already defined; a Lean development of the\nlinear/half-dimensional sieve would unlock this and many neighboring results,\nand Mathlib's analytic number theory is mature enough to host it.\n\n## C4. Friedlander\u2013Iwaniec strictly enlarges the Landau form\n\n**Conjecture.** The inclusion `{Landau primes} \u2286 {a\u00b2+b\u2074 primes}`\n(`landauPrime_isFIPrime`) is *strict*: there are infinitely many `a\u00b2+b\u2074` primes\nthat are **not** of the form `n\u00b2 + 1`.\n\nThe key insight is that fixing `b = 1` collapses `a\u00b2+b\u2074` to `a\u00b2+1`, so any prime\nof the form `a\u00b2 + b\u2074` with `b \u2265 2` (e.g. `a\u00b2+16`) that is not a perfect-square\nshift witnesses strictness; the Friedlander\u2013Iwaniec count `X^{3/4}` dwarfs the\nconjectured Landau count `X^{1/2}/log X`.\n\nWhy now? The set inclusion is formalized; quantifying the gap between the two\nexponents is a concrete, falsifiable density separation.\n\n## C5. Gaussian-integer bridge to cryptographic splitting primes\n\n**Conjecture.** A prime `p` is usable as a \"split modulus prime\" for\n`\u2124[i]`-based key agreement (i.e. `p` splits in `\u2124[i]`) **iff** `p` divides some\n`n\u00b2 + 1`, and this set has natural density `1/2` among all primes.\n\nThe key insight is `oddPrime_dvd_sq_add_one_iff`: divisibility of `n\u00b2+1` is\n*equivalent* to `p \u2261 1 (mod 4)`, which is exactly the Gaussian-splitting\ncondition \u2014 directly tying the number theory to the cryptographic domain of this\ncatalog.\n\nWhy now? The iff is verified here; combining it with Dirichlet density\n(`Nat.infinite_setOf_prime_modEq_one` and its quantitative refinements) makes the\n`1/2`-density claim a near-term formalization target.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2557",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0cb84107",
+    "status": "available",
+    "timestamp": "2026-06-25T22:37:13.860430+00:00",
+    "title": "Derived from the Stage 3 analysis and Stage 4 critique of this research cycle."
   },
   {
     "consumed_by_exp_id": "",
@@ -5726,7 +5727,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "4f516403",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -5736,7 +5737,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

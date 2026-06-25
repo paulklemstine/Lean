@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0cb84107",
     "filename": "primes_of_the_form_n1.json",
     "pkg_num": 63,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.506378,
     "title": "Primes of the Form n\u00b2 + 1: The Verified Local Arithmetic Behind Landau's Problem"
   },
   {
@@ -1836,8 +1836,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "primes_of_the_form_n1",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.506378,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "Primes of the Form n\u00b2 + 1: The Verified Local Arithmetic Behind Landau's Problem"
     }
