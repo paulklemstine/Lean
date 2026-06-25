@@ -8664,6 +8664,56 @@
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Moss and Pedersen 2026"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the finite axiomatizability of strict majority reasoning in bounded social decision frameworks, extending previous results on coherence criteria. It investigates whether a finitely bounded condition can replace a coherence condition in a geometric, dimensional framework.",
+    "domain_bridges": [
+      "Discrete Mathematics",
+      "Theoretical Computer Science"
+    ],
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_2547",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive existence + induction over frame size",
+    "research_mode": "team",
+    "source_exp_id": "2606.25954v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:34:17.076048+00:00",
+    "title": "Measurable Majorities Are Not Finitely Axiomatizable"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "A Simple Counting Argument for Dense Linear Hypergraphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that any linear r-uniform hypergraph with linear density c ≥ (r-1)/r * (k-2)/((r-2)(k-2)+1) + o(1) contains an ((r-2)k+3, k)-configuration. This conjecture asserts that this asymptotic threshold is sharp, i.e., for any ε > 0 there exist arbitrarily large linear r-uniform hypergraphs with density at least this value minus ε that avoid the configuration.",
+    "domain_bridges": [
+      "extremal_combinatorics",
+      "hypergraph_theory",
+      "brown_erdos_sos_conjecture"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2547",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Investigate algebraic constructions (e.g., from finite geometries) or probabilistic methods (e.g., random hypergraphs with edge deletions) to construct dense linear hypergraphs avoiding ((r-2)k+3, k)-configurations. For specific small parameters, computational search may yield explicit examples.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:46:25.553815+00:00",
+    "title": "Asymptotic tightness of the density threshold for ((r-2)k+3, k)-configurations in linear r-uniform hypergraphs"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Erdős Problem 1061",

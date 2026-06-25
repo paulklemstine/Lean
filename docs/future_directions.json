@@ -46075,6 +46075,94 @@
       "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Moss and Pedersen 2026"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "This paper investigates the finite axiomatizability of strict majority reasoning in bounded social decision frameworks, extending previous results on coherence criteria. It investigates whether a finitely bounded condition can replace a coherence condition in a geometric, dimensional framework.",
+      "domain_bridges": [
+        "Discrete Mathematics",
+        "Theoretical Computer Science"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Logic"
+      ],
+      "id": "fd_2547",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Lifted via uniform constructions over bounded parameter spaces",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Constructive existence + induction over frame size",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25954v1",
+      "source_path": "http://arxiv.org/abs/2606.25954v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T20:34:17.076048+00:00",
+      "title": "Measurable Majorities Are Not Finitely Axiomatizable"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "A Simple Counting Argument for Dense Linear Hypergraphs"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that any linear r-uniform hypergraph with linear density c ≥ (r-1)/r * (k-2)/((r-2)(k-2)+1) + o(1) contains an ((r-2)k+3, k)-configuration. This conjecture asserts that this asymptotic threshold is sharp, i.e., for any ε > 0 there exist arbitrarily large linear r-uniform hypergraphs with density at least this value minus ε that avoid the configuration.",
+      "domain_bridges": [
+        "extremal_combinatorics",
+        "hypergraph_theory",
+        "brown_erdos_sos_conjecture"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2547",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem asymptotic_tightness_conjecture (r k : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) : ∀ (ε : ℝ), ε > 0 → ∃ (n : ℕ) (H : LinearHypergraph r n), H.linear_density ≥ ((r-1 : ℝ)/r) * ((k-2 : ℝ)/((r-2)*(k-2)+1)) - ε ∧ ¬ H.contains_configuration ((r-2)*k+3) k := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Investigate algebraic constructions (e.g., from finite geometries) or probabilistic methods (e.g., random hypergraphs with edge deletions) to construct dense linear hypergraphs avoiding ((r-2)k+3, k)-configurations. For specific small parameters, computational search may yield explicit examples.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25931v1",
+      "source_path": "http://arxiv.org/abs/2606.25931v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T20:46:25.553815+00:00",
+      "title": "Asymptotic tightness of the density threshold for ((r-2)k+3, k)-configurations in linear r-uniform hypergraphs"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
