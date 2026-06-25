@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "21cfd7dd",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — The Prime Number Crossword\n\nThis cycle established the two boundary facts of the prime crossword in\n`Cryptography/PrimeGaps/`:\n\n* `exists_consecutive_composites` / `gaps_unbounde",
-      "quality_score": 0.36289866666666665,
-      "sorry_count": 0,
-      "theorem_count": 0,
-      "timestamp": "2026-06-17T23:11:24",
-      "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
-    },
-    {
       "cycle_id": "880250ea",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Split Geometry (Impossible Geometries cycle)\n\nThis cycle studied the \"Split Geometry\" metric on `ℝ²`,\n`ds² = dx²/cosh²y + cosh²x·dy²`, and **refuted** the headline conjecture tha",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-25T01:31:25",
       "title": "Quadratic irrational density in the ratio spectrum"
+    },
+    {
+      "cycle_id": "7242c7d6",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe following are concrete follow-up directions building on the Airy\nexponential–polynomial obstruction (`no_airyCoeff_eq_X_mul` and\n`no_nonzero_expPoly_solves_airy`).\n\n## 1. Gene",
+      "quality_score": 0.6932800000000001,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-25T01:58:31",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.708
     }
   ],
-  "last_updated": "2026-06-25T01:31:25",
+  "last_updated": "2026-06-25T01:58:31",
   "open_questions": [
     {
       "context": "",
@@ -3084,12 +3084,6 @@
     "Applications": [
       {
         "cycle_id": "ddfbd83f",
-        "quality": 0.526909,
-        "theorems": 55,
-        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-      },
-      {
-        "cycle_id": "ddfbd83f",
         "quality": 0.63352,
         "theorems": 247,
         "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
@@ -3141,6 +3135,12 @@
         "quality": 0.6766,
         "theorems": 7,
         "title": "Perfect Numbers: Structure of Even Perfects"
+      },
+      {
+        "cycle_id": "7242c7d6",
+        "quality": 0.6932800000000001,
+        "theorems": 6,
+        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
       }
     ],
     "Bridges": [

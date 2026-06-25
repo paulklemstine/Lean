@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7242c7d6",
     "filename": "eml_differential_equations_odes_with_exponential_l.json",
     "pkg_num": 50,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6932800000000001,
     "title": "EML Differential Equations: No Exponential-Polynomial Solves Airy's Equation"
   },
   {
@@ -1459,8 +1459,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "eml_differential_equations_odes_with_exponential_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6932800000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Differential Equations: No Exponential-Polynomial Solves Airy's Equation"
     }

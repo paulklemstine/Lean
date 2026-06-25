@@ -195,7 +195,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Standard Conjectures on Algebraic Cycles"
   },
   {
-    "consumed_by_exp_id": "f88074cd",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
     "domains": [
       "Algebra",
@@ -205,7 +205,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:17.429886+00:00",
     "title": "Whitehead Problem: Independence from ZFC"
   },
@@ -688,7 +688,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "3e805dd4",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -697,7 +697,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -4468,6 +4468,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe following are concrete follow-up directions building on the Airy\nexponential\u2013polynomial obstruction (`no_airyCoeff_eq_X_mul` and\n`no_nonzero_expPoly_solves_airy`).\n\n## 1. General second-order operators `f'' + a f' + b f = 0`\n\nReplace the Airy right-hand side `x\u00b7f` by an arbitrary polynomial linear ODE\n`f'' = (b\u00b7f + a\u00b7f')` and characterize exactly which `q\u00b7exp(p)` solve it.\n\nThe key insight is that the same factor-out-`exp(p)` reduction turns any such\nequation into a single polynomial identity in `q`, `p` and their derivatives, so\nthe solvable cases are governed by a finite degree-matching system rather than\nanalysis.\n\n**Why now?** The four-term identity and the degree-comparison engine are already\nformalized here, so extending the right-hand side only changes the target\npolynomial `X\u00b7q` to another explicit polynomial, reusing the existing\ninfrastructure verbatim.\n\n## 2. Higher-order Airy-type equations `f^{(n)} = x\u00b7f`\n\nStudy obstructions to `q\u00b7exp(p)` solutions of `f^{(n)} = x f` for `n \u2265 3`.\n\nThe key insight is that the `n`-th derivative of `q\u00b7exp(p)` again factors as\n`(coeff_n q p)\u00b7exp(p)` where `coeff_n` is a universal differential polynomial,\nand its leading term remains `q\u00b7(p')^n`, so a parity/degree obstruction\ngeneralizes once the recursion `coeff_{n+1} = coeff_n' + coeff_n\u00b7p'` is set up.\n\n**Why now?** `second_deriv_expPoly` already exhibits exactly the\n`coeff' + coeff\u00b7p'` recursion step; iterating it is a structural induction that\nthe present derivative-formula lemmas make immediate.\n\n## 3. Complex and entire-function versions\n\nLift the obstruction from `\u211d[X]` to `\u2102[X]` and then to genuine transcendental\nprefactors, asking whether any entire `g` with controlled growth gives\n`g\u00b7exp(p)` solving Airy.\n\nThe key insight is that over `\u2102` the cancellation of `exp(p)` still holds\n(it never vanishes) and `Polynomial.funext` over the infinite field `\u2102`\ntransports the algebraic identity unchanged, isolating exactly where polynomiality\nof the prefactor is essential.\n\n**Why now?** Every analytic step here (`hasDerivAt_polyExp`, the positivity-free\nnonvanishing of `exp`, and extensionality over an infinite domain) is stated in a\nform that already generalizes to `\u2102`, so only the field instance changes.\n\n## 4. Effective classification of `q\u00b7exp(p)` closed-form solutions\n\nTurn the obstruction into a decision procedure: given a polynomial ODE, decide\nand *construct* all `q\u00b7exp(p)` solutions, connecting to the Risch/Kovacic\nalgorithms for Liouvillian solutions.\n\nThe key insight is that matching `airyCoeff q p` against a target polynomial is a\nfinite system of polynomial equations in the coefficients of `q` and `p`, hence\ndecidable, so existence of closed-form solutions becomes a computable check.\n\n**Why now?** The reduction to a single polynomial identity is already mechanized,\ngiving a precise, machine-checked specification that a constructive solver can be\nverified against.\n\n## 5. Spectral / WKB interpretation of the parity obstruction\n\nInterpret the \"degree is always `deg q + even`\" phenomenon as the formal-series\nshadow of the WKB asymptotics of Airy functions, whose exponents scale like\n`x^{3/2}` and are therefore never attainable by a polynomial phase `p`.\n\nThe key insight is that the impossibility of `2\u00b7deg(p') = 1` is the algebraic\nfingerprint of the half-integer WKB exponent, so the discrete parity obstruction\nencodes a continuous asymptotic fact.\n\n**Why now?** With the exact degree formula `deg q + 2\u00b7deg p'` proved, the link to\nthe non-polynomial `3/2`-power growth can be stated precisely and explored without\nre-deriving the algebraic core.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2485",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7242c7d6",
+    "status": "available",
+    "timestamp": "2026-06-25T01:58:20.780458+00:00",
+    "title": "The following are concrete follow-up directions building on the Airy"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4556,7 +4571,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
-    "consumed_by_exp_id": "b56e200f",
+    "consumed_by_exp_id": "",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -4566,7 +4581,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -4583,21 +4598,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T00:36:02.659081+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
-  },
-  {
-    "consumed_by_exp_id": "857e55ef",
-    "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
-    "domains": [
-      "Algebra",
-      "Novelty"
-    ],
-    "id": "fd_2395",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T23:12:45.568532+00:00",
-    "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
   {
     "consumed_by_exp_id": "",
@@ -4954,7 +4954,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "19167f96",
+    "consumed_by_exp_id": "",
     "description": "Formalize transseries as formal series in x, log(x), exp(x), exp(exp(x)), etc. Prove that the field of transseries is real closed. Show that every EML function has a transseries expansion that uniquely determines it. Prove the asymptotic comparison theorem: if two transseries agree to all orders, they are equal.",
     "domains": [
       "EML",
@@ -4964,7 +4964,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
   },
@@ -5239,7 +5239,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
-    "consumed_by_exp_id": "f25c8810",
+    "consumed_by_exp_id": "",
     "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
     "domains": [
       "Algebra",
@@ -5249,7 +5249,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.398671+00:00",
     "title": "Alien Number Systems: Beyond Base-N"
   },
