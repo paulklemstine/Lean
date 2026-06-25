@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "99725b45",
     "filename": "asymptotic_c5_decomposition_threshold_equals_58.json",
     "pkg_num": 47,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.708,
     "title": "The Pentagon Census: C5-Decomposition Divisibility and the 5/8 Threshold"
   },
   {
@@ -1372,8 +1372,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "asymptotic_c5_decomposition_threshold_equals_58",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.708,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Pentagon Census: C5-Decomposition Divisibility and the 5/8 Threshold"
     }

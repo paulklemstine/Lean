@@ -75,17 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
             renderPackage(data, filename);
             welcomeScreen.classList.add('hidden');
             packageView.classList.remove('hidden');
-            const pv = document.getElementById('package-view');
-            pv.innerHTML = pv.innerHTML.replace(/#\\text/g, '\\#\\text');
-            renderMathInElement(pv, {
+            renderMathInElement(document.getElementById('package-view'), {
                 delimiters: [
                     {left: '$$', right: '$$', display: true},
                     {left: '$', right: '$', display: false},
                     {left: '\\(', right: '\\)', display: false},
                     {left: '\\[', right: '\\]', display: true}
                 ],
-                throwOnError: false,
-                strict: "ignore"
+                throwOnError: false
             });
             return;
         }
@@ -112,17 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
             window.Aether.currentPackageFilename = filename;
             renderPackage(data, filename);
 
-            const pv = document.getElementById('package-view');
-            pv.innerHTML = pv.innerHTML.replace(/#\\text/g, '\\#\\text');
-            renderMathInElement(pv, {
+            renderMathInElement(document.getElementById('package-view'), {
                 delimiters: [
                     {left: '$$', right: '$$', display: true},
                     {left: '$', right: '$', display: false},
                     {left: '\\(', right: '\\)', display: false},
                     {left: '\\[', right: '\\]', display: true}
                 ],
-                throwOnError: false,
-                strict: "ignore"
+                throwOnError: false
             });
         } catch(err) {
             console.error(err);

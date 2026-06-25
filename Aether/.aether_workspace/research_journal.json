@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "51575ef7",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — Neural observation pseudometrics ↔ proof-spectrum congruence kernels\n\nThis cycle established the functor\n\n```\nbehaviorCongruence : AlgNeuralSystem R K α  ⟶  SRCong R\n```\n\nsending",
-      "quality_score": 0.794,
-      "sorry_count": 2,
-      "theorem_count": 68,
-      "timestamp": "2026-06-15T06:29:50",
-      "title": "Functorial comparison between neural observation pseudometrics and proof-spectrum congruence kernels"
-    },
-    {
       "cycle_id": "a64f762c",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Functorial Lipschitz comparison: valuation depth ↔ tropical valuation objects\n\nThis cycle established that **valuation depth is the logarithmic shadow of the tropical\nLipschitz c",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-06-24T23:28:45",
       "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
+    },
+    {
+      "cycle_id": "99725b45",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — C5-decompositions and the 5/8 threshold\n\nDerived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-divisibility,\nedge-count `|E| = 5·#cycles`, the pentagon wi",
+      "quality_score": 0.708,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-06-25T01:28:18",
+      "title": "Asymptotic C5-decomposition threshold equals 5/8"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "949d41e5",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Hypergraph Ramsey Theory: Beyond Graphs\n\nThis cycle formalized, with zero `sorry`, a self-contained 2-color Ramsey theory\nfor `r`-uniform hypergraphs over the `Finset (Fin n) → B",
-      "quality_score": 0.6052,
-      "sorry_count": 0,
-      "theorem_count": 15,
-      "timestamp": "2026-06-17T19:26:41",
-      "title": "Hypergraph Ramsey Theory: Beyond Graphs"
-    },
     {
       "cycle_id": "bf4e21b7",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 1,
       "timestamp": "2026-06-25T00:45:50",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
+    },
+    {
+      "cycle_id": "99725b45",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — C5-decompositions and the 5/8 threshold\n\nDerived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-divisibility,\nedge-count `|E| = 5·#cycles`, the pentagon wi",
+      "quality_score": 0.708,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-06-25T01:28:18",
+      "title": "Asymptotic C5-decomposition threshold equals 5/8"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d7a09318",
-      "domain": "Physics",
-      "name": "sum_memberCount_eq_sum_card",
-      "quality": 0.7246
-    },
-    {
-      "cycle_id": "d7a09318",
-      "domain": "Physics",
-      "name": "exists_frequent_element_of_avg_card_ge_half",
-      "quality": 0.7246
-    },
-    {
-      "cycle_id": "d7a09318",
-      "domain": "Physics",
-      "name": "upset_unionClosed",
-      "quality": 0.7246
-    },
     {
       "cycle_id": "b8df0deb",
       "domain": "Logic",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "prodCongr_mem",
       "quality": 0.7496
+    },
+    {
+      "cycle_id": "99725b45",
+      "domain": "Novelty",
+      "name": "on",
+      "quality": 0.708
+    },
+    {
+      "cycle_id": "99725b45",
+      "domain": "Novelty",
+      "name": "c5edges_card",
+      "quality": 0.708
+    },
+    {
+      "cycle_id": "99725b45",
+      "domain": "Novelty",
+      "name": "c5edges_even_incidence",
+      "quality": 0.708
     }
   ],
-  "last_updated": "2026-06-25T00:45:50",
+  "last_updated": "2026-06-25T01:28:18",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "9ba0d905",
-        "quality": 0.5250358274479863,
-        "theorems": 234,
-        "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
-      },
-      {
         "cycle_id": "0de5396c",
         "quality": 0.5094479615384615,
         "theorems": 21,
@@ -3637,6 +3631,12 @@
         "quality": 0.57117,
         "theorems": 24,
         "title": "Bridge: Galois Connections Between Order Theory and Topology"
+      },
+      {
+        "cycle_id": "99725b45",
+        "quality": 0.708,
+        "theorems": 18,
+        "title": "Asymptotic C5-decomposition threshold equals 5/8"
       }
     ],
     "NumberTheory": [

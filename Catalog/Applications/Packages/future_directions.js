@@ -195,7 +195,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Standard Conjectures on Algebraic Cycles"
   },
   {
-    "consumed_by_exp_id": "f88074cd",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
     "domains": [
       "Algebra",
@@ -205,7 +205,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:17.429886+00:00",
     "title": "Whitehead Problem: Independence from ZFC"
   },
@@ -686,20 +686,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432672+00:00",
     "title": "Euler Characteristic and Gauss-Bonnet"
-  },
-  {
-    "consumed_by_exp_id": "3e805dd4",
-    "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "seed_356",
-    "priority_score": 0.86,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432745+00:00",
-    "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
   {
     "consumed_by_exp_id": "",
@@ -4438,6 +4424,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 C5-decompositions and the 5/8 threshold\n\nDerived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-divisibility,\nedge-count `|E| = 5\u00b7#cycles`, the pentagon witness) and `C5Threshold.lean` (the strictly\ndecreasing threshold family with `\u03b4_{C_5} = 5/8`).\n\n## Conjecture 1 (the headline existence threshold)\nFor every real `\u03b5 > 0` there is `N` such that every C5-divisible simple graph `G` on `n \u2265 N`\nvertices with `\u03b4(G) \u2265 (5/8 + \u03b5)\u00b7n` admits a C5-decomposition (`Nonempty (C5Decomposition G)`).\n- **The key insight is...** that the two necessary obstructions formalized here (even degrees\n  and `5 \u2223 |E|`) become *sufficient* once the minimum degree crosses `5/8 = 5/(2\u00b75\u22122)`, the\n  \u2113=5 point of the generalized Nash-Williams family proven strictly decreasing in\n  `nwThreshold_strictAnti`.\n- **Why now?** The triangle case `\u03b4_{C_3} = 3/4` (Delcourt\u2013Postle / Nash-Williams program) and\n  the long-odd-cycle cases are settled; `C_5` is the isolated remaining small odd cycle, and the\n  necessity/threshold scaffolding is now formal.\n\n## Conjecture 2 (sharpness / lower bound)\nFor every `\u03b5 > 0` and infinitely many `n` there exists a C5-divisible graph `G` on `n` vertices\nwith `\u03b4(G) \u2265 (5/8 \u2212 \u03b5)\u00b7n` that has **no** C5-decomposition.\n- **The key insight is...** that the threshold `5/8` is two-sided: an extremal \"space barrier\"\n  construction (a near-balanced blow-up tuned so some edge cannot be routed through any 5-cycle)\n  should defeat decomposition just below `5/8`, matching Conjecture 1 from below.\n- **Why now?** Our `no_decomposition_of_not_divisible` already turns any *local* obstruction into\n  a non-decomposition proof; the remaining task is a *global* density obstruction, the natural\n  next formal target.\n\n## Conjecture 3 (exact pentagon/complete-graph family)\n`K_n` is C5-divisible iff `n \u2261 1 or 5 (mod 10)` (`5 \u2223 binom(n,2)` and `n` odd), and for every\nsuch `n \u2265 5`, `K_n` admits a C5-decomposition.\n- **The key insight is...** the necessity theorem already forces `n` odd (even degree `n\u22121`) and\n  `5 \u2223 n(n\u22121)/2`; the classical `K_5 = C_5 \u222a C_5` base case (computed C5-divisible in the\n  evidence file) suggests a clean recursive/Wilson-type construction.\n- **Why now?** `K_5`'s divisibility is verified here, so the smallest case of the family is\n  formally in hand and the residue arithmetic is a direct corollary of `five_dvd_card_edgeFinset`.\n\n## Conjecture 4 (unified small-cycle threshold law)\nFor every fixed odd `\u2113 \u2265 3`, the C_\u2113-decomposition threshold of C_\u2113-divisible graphs equals\n`\u03b4_{C_\u2113} = \u2113/(2\u2113\u22122)`, and this sequence is the strictly decreasing rational sequence proven in\n`nwThreshold_strictAnti`, converging to `1/2`.\n- **The key insight is...** the parity argument in `c5edges_even_incidence` (each vertex meets a\n  cycle in `0` or `2` edges) generalizes verbatim to any `\u2113`, so the *necessity* half is uniform;\n  only the existence constant `\u2113/(2\u2113\u22122)` varies, and it is monotone.\n- **Why now?** The general `c5edges`/`IsFiveCycle` machinery is already \u2113-agnostic except for the\n  literal `5`; abstracting `Fin 5 \u2192 Fin \u2113` is a mechanical generalization enabled by this cycle.\n\n## Conjecture 5 (fractional relaxation is easy, integral is the barrier)\nEvery C5-divisible graph with `\u03b4(G) \u2265 (1/2 + \u03b5)\u00b7n` admits a *fractional* C5-decomposition\n(a nonnegative weighting of 5-cycles with each edge total `1`), even though integral\ndecomposition needs `5/8`.\n- **The key insight is...** the limit `\u03b4_{C_\u2113} \u2192 1/2` (formalized via `nwThreshold_gt_half`) is\n  exactly the fractional/iterative-absorption threshold; the gap `5/8 \u2212 1/2 = 1/8` measures the\n  integrality cost specific to the short odd cycle `C_5`.\n- **Why now?** With `nwThreshold` and its limit behavior formal, the `1/2` versus `5/8`\n  separation is precisely stated and ready to be attacked via an LP-duality formalization.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2483",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "99725b45",
+    "status": "available",
+    "timestamp": "2026-06-25T01:27:30.288413+00:00",
+    "title": "Derived from this cycle's findings in `C5Decomposition.lean` (necessity of C5-di"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4511,7 +4512,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "7242c7d6",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -4521,7 +4522,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -4555,7 +4556,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "02cd648b",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4565,7 +4566,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -5014,7 +5015,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Compactification of Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "f41a91d1",
+    "consumed_by_exp_id": "",
     "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
     "domains": [
       "Pythagorean",
@@ -5024,7 +5025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.030710+00:00",
     "title": "Pythagorean Triple Group Structure"
   },
@@ -5209,7 +5210,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
-    "consumed_by_exp_id": "f25c8810",
+    "consumed_by_exp_id": "",
     "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
     "domains": [
       "Algebra",
@@ -5219,7 +5220,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.398671+00:00",
     "title": "Alien Number Systems: Beyond Base-N"
   },
