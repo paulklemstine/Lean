@@ -2628,7 +2628,7 @@
       "math.DS",
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce3e5645",
     "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ can be realized as the $(-\\beta)$-expansion of some $x \\in I_\\beta$ if and only if for all $n \\ge 1$, the suffix $x_n x_{n+1} \\dots$ is less than or equal to $d^*(0, -\\beta)$ in the alternating lexicographic order. The alternating lexicographic order $\\preceq$ is defined such that $x \\preceq y$ if either $x=y$ or at the first index $k$ where they differ, $x_k < y_k$ when $k$ is odd and $x_k > y_k$ when $k$ is even.",
     "domain_bridges": [
       "Combinatorics on Words",
@@ -2643,7 +2643,7 @@
     "proof_strategy": "Define the alternating lexicographic order on infinite sequences, the $(-\\beta)$-transformation $T_{-\\beta}$, and the sequence $d^*(0, -\\beta)$. Prove that the shift space defined by this order condition is invariant and corresponds exactly to the admissible sequences of the $(-\\beta)$-transformation, mirroring Parry's proof for positive $\\beta$-expansions.",
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T05:48:57.058098+00:00",
     "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
   },
@@ -7778,7 +7778,7 @@
       "Blinovsky 1987",
       "Goldreich–Levin 1989"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e536cee",
     "description": "For a fixed finite field 𝔽_q, integers n, ρ∈(0,1), and ε>0, let C⊂𝔽_q^n be a random linear subspace of dimension k = ⌈(1 - (1/n)·log_q |B_ρ| + ε)·n⌉, where |B_ρ| is the volume of a Hamming ball of radius ρn in 𝔽_q^n. Then with probability 1‑o(1) (as n→∞) the following holds simultaneously for every centre z∈𝔽_q^n:   |C ∩ B_ρ(z)| = (1±o(1))·|C|·|B_ρ| / q^n.  This conjecture makes precise the “nearly optimal discrepancy” claim for all translates of a fixed Hamming‑ball test and is falsifiable by exhibiting a sequence of n where the failure probability does not tend to zero.",
     "domain_bridges": [
       "probability_theory",
@@ -7794,7 +7794,7 @@
     "proof_strategy": "Use the second‑moment method on the random process that adds basis vectors to C one by one. Show that for any fixed centre z the indicator of membership in B_ρ(z) is a Fourier‑pseudorandom test; bound its Fourier coefficients using Weil‑type exponential sum estimates over 𝔽_q. Apply a union bound over the q^n possible centres together with a Chernoff‑type concentration inequality for hypergeometric draws to obtain the simultaneous guarantee. Formalisation in Lean proceeds by developing finite‑field linear algebra, hypergeometric tail bounds, and a library for Fourier analysis on 𝔽_q^n.",
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T07:44:51.979075+00:00",
     "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
   },
