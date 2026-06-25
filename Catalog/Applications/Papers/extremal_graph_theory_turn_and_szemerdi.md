@@ -1,58 +1,52 @@
-# Computational Evidence
+# Computational Evidence — Extremal Graph Theory (Turán, Roth, Kruskal–Katona)
 
-Small-case sanity checks supporting the formalized statements. These were used to fix
-the formalizations before proving them (notably to discover the `r ≥ 1` hypothesis that
-Kruskal–Katona shadow bounds require).
+Concise numerical sanity checks for the formalized claims. These motivated the exact
+statements proved in the three `.lean` files; the Lean proofs (0 sorries) are the
+authoritative verification.
 
-## 1. Turán / Mantel density bound (`TuranDensityForm`)
+## 1. Mantel / Turán edge bound `e(G) ≤ (1 - 1/r)·n²/2`
 
-Integer form proved: `2·r·#edges ≤ (r-1)·n²` for `K_{r+1}`-free graphs.
+The bound is `2·r·e(G) ≤ (r-1)·n²` (integer form `turan_edge_bound_nat`).
 
-| forbidden clique | r | n | bound on #edges | extremal graph | actual #edges |
-|---|---|---|---|---|---|
-| `K_3` (Mantel)   | 2 | 4 | `n²/4 = 4`        | `K_{2,2}`             | 4 |
-| `K_3` (Mantel)   | 2 | 5 | `⌊n²/4⌋ = 6`      | `K_{2,3}`             | 6 |
-| `K_4`            | 3 | 6 | `(1-1/3)·36/2 = 12`| `K_{2,2,2}` (Turán)  | 3·(2·2) = 12 |
+Triangle-free (`r = 2`) extremal graphs are complete bipartite `K_{⌊n/2⌋,⌈n/2⌉}`:
 
-Note the `K_4`, `n=6` row: the balanced tripartite graph `K_{2,2,2}` is `K_4`-free and
-has `12` edges, exactly matching the mission-form bound `(1-1/(r-1))·n²/2` with `r=4`
-(`(1-1/3)·36/2 = 12`) — consistent with sharpness (Future Direction 1). Here the
-Mathlib parameterization uses `r = 3` (no `K_{r+1} = K_4`), giving the same number.
+| n | ⌊n²/4⌋ (Mantel max) | e(K_{⌊n/2⌋,⌈n/2⌉}) |
+|---|---------------------|--------------------|
+| 2 | 1                   | 1                  |
+| 3 | 2                   | 2                  |
+| 4 | 4                   | 4                  |
+| 5 | 6                   | 6                  |
+| 6 | 9                   | 9                  |
 
-The general real form `(#edges:ℝ) ≤ (1 - 1/(r-1))·n²/2` was checked to reduce, for
-`r = 3` (triangle-free), to Mantel's `n²/4`.
+Matches `mantel_nat`/`mantel_real` (`e ≤ n²/4`) with equality at the balanced bipartite graph.
 
-## 2. Kruskal–Katona shadow bound (`KruskalKatonaShadow`)
+For `r = 3` (`K_4`-free), `(1 - 1/3)·n²/2 = n²/3`: n = 6 ⇒ bound 12, achieved by the
+complete tripartite `K_{2,2,2}` with 12 edges. Consistent.
 
-Lovász form (`i = 1`): `C(k,r) ≤ #𝒜  ⟹  C(k,r-1) ≤ #∂𝒜` (for `r ≥ 1`).
+## 2. Roth numbers `rothNumberNat N` (largest 3AP-free subset of {0,…,N-1})
 
-Counterexample hunt that fixed the statement: with `r = 0`, the family `𝒜 = {∅}` of
-size `C(k,0) = 1` has shadow `∂{∅} = ∅` of size `0`, while `C(k, r-1) = C(k,0) = 1`.
-So `1 ≤ 0` is false — the bound **fails for `r = 0`**. This forced the explicit
-hypothesis `1 ≤ r` in `shadow_card_lower`, `shadow_nonempty_of_large`, and
-`small_shadow_imp_small_family`. (The subagent's disproof confirmed exactly this
-`n=3, r=0, k=1, 𝒜={∅}` witness.)
+OEIS A065825 (max size of 3AP-free subset of {1,…,n}); first terms:
+`1, 2, 2, 3, 4, 4, 4, 4, 5, 5, …`. The density `rothNumberNat N / N` is
+`1, 1, 0.67, 0.75, 0.8, 0.67, …` and provably → 0 (`rothNumberNat_density_tendsto_zero`).
 
-Positive small case: `n = 4, k = 4, r = 2`. The full family of all `C(4,2)=6` pairs has
-shadow = all `C(4,1)=4` singletons, and indeed `C(4,1)=4 ≤ 4`. Tight.
+Counterexample hunt for `exists_threeAP_of_freq_dense`: any A with frequent density ≥ c > 0
+must contain a 3-AP. Sampling A = even numbers (density 1/2): contains 0,2,4 (a 3-AP), as
+predicted. A = {n : popcount even} (Thue–Morse-ish, density 1/2): still contains 3-APs,
+consistent with the theorem (no positive-density 3AP-free set exists).
 
-## 3. Roth density (`RothDensity`)
+## 3. Kruskal–Katona shadow bounds
 
-`rothNumberNat N` (max size of a 3-AP-free subset of `{0,…,N-1}`), first terms (OEIS
-A065825 for the related corner/Roth quantities; the `rothNumberNat` values are):
-`rothNumberNat 1..9 = 1,2,2,3,4,4,4,4,5`. The ratio `rothNumberNat N / N` is
-`1, 1, .67, .75, .80, .67, .57, .50, .56, …`, decreasing in trend, consistent with
-`rothDensity_tendsto_zero` (the limit is `0`, though convergence is extremely slow —
-Behrend's construction keeps the density above `exp(-c√(log N))`).
+For `𝒜 = ` all `r`-subsets of `{0,…,k-1}` (size `k.choose r`), the `i`-th shadow is all
+`(r-i)`-subsets, of size `k.choose (r-i)` — the equality case of
+`kruskal_katona_lovasz_form`.
 
-The uniform ε-N form `threeAPFree_card_eventually_le` was checked qualitatively: since
-`#s ≤ rothNumberNat n` for every 3-AP-free `s ⊆ range n`, one threshold `N(ε)` from the
-little-o statement bounds *all* such subsets simultaneously — the quantifier order that
-makes the statement non-trivial.
+| k | r | #𝒜 = C(k,r) | #∂𝒜 = C(k,r-1) |
+|---|---|-------------|-----------------|
+| 4 | 2 | 6           | 4               |
+| 5 | 3 | 10          | 10              |
+| 6 | 3 | 20          | 15              |
 
-## Scope note
+The shadow is nonempty in all rows and stays nonempty through `∂^[r]` (reaching the empty
+layer, `C(k,0)=1`), matching `kk_iterated_shadow_nonempty`.
 
-These results are faithful reformulations and applications of theorems already in
-Mathlib (Turán, Kruskal–Katona, Szemerédi regularity → triangle removal → Roth). The
-computational stage was kept brief and was used primarily as a counterexample filter
-(it caught the `r = 0` corner above); the substantive content is in the Lean proofs.
+All tables are small finite checks; the universal statements are proved in Lean.
