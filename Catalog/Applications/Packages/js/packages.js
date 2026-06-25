@@ -226,53 +226,56 @@ document.addEventListener('DOMContentLoaded', () => {
         // Parse lean_proofs into [{name, code}] regardless of format
         const leanFiles = [];
         const seenLeanCode = new Set(); // Dedup by code content
+        function parseLeanString(lp, slug) {
+            const parsedFiles = [];
+            // Matches "-- NEW_FILE: path.lean", "-- DIFF: path.lean", or just "-- path.lean"
+            const parts = lp.split(/--\s*(?:NEW_FILE:\s*|DIFF:\s*|)([a-zA-Z0-9_\-\.\/]+\.lean)(?:\r?\n|\\n)/);
+            if (parts.length > 1) {
+                for (let i = 1; i < parts.length; i += 2) {
+                    const name = parts[i].trim();
+                    const code = (i + 1 < parts.length) ? parts[i + 1].trim().split('\\n').join('\n') : '';
+                    if (code && !seenLeanCode.has(code)) {
+                        seenLeanCode.add(code);
+                        parsedFiles.push({ name, code });
+                    }
+                }
+            } else {
+                const code = lp.split('\\n').join('\n');
+                if (code && !seenLeanCode.has(code)) {
+                    seenLeanCode.add(code);
+                    parsedFiles.push({ name: slug + '.lean', code });
+                }
+            }
+            return parsedFiles;
+        }
+
         if (data.lean_proofs) {
+            const slug = (data.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
             if (typeof data.lean_proofs === 'string') {
                 const lp = data.lean_proofs;
                 if (lp.length > 50 && !lp.endsWith('.lean')) {
-                    // Split by file markers
-                    const parts = lp.split(/-- (?:NEW_FILE|DIFF): (.+?)\n/);
-                    if (parts.length > 1) {
-                        for (let i = 1; i < parts.length; i += 2) {
-                            const name = parts[i].trim();
-                            const code = (i + 1 < parts.length) ? parts[i + 1].trim() : '';
-                            if (code && !seenLeanCode.has(code)) {
-                                seenLeanCode.add(code);
-                                leanFiles.push({ name, code });
-                            }
-                        }
-                    } else {
-                        // Single file — derive name from package
-                        const slug = (data.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
-                        leanFiles.push({ name: slug + '.lean', code: lp });
-                    }
+                    leanFiles.push(...parseLeanString(lp, slug));
                 }
             } else if (Array.isArray(data.lean_proofs)) {
-                for (const entry of data.lean_proofs) {
+                for (let j = 0; j < data.lean_proofs.length; j++) {
+                    const entry = data.lean_proofs[j];
                     if (typeof entry === 'string') {
                         if (entry.length > 50 && !entry.endsWith('.lean')) {
-                            const slug = (data.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
-                            if (!seenLeanCode.has(entry)) {
-                                seenLeanCode.add(entry);
-                                leanFiles.push({ name: slug + '.lean', code: entry });
-                            }
+                            const entrySlug = data.lean_proofs.length > 1 ? `${slug}_${j+1}` : slug;
+                            leanFiles.push(...parseLeanString(entry, entrySlug));
                         }
-                        // Skip short filename placeholders
                     } else if (typeof entry === 'object' && entry !== null) {
-                        // Dict with file, theorems, description, and possibly code
                         const fname = entry.file || entry.name || 'Proof.lean';
                         const basename = fname.split('/').pop();
-                        const code = (entry.code && entry.code.trim()) ? entry.code
-                                   : (entry.content && entry.content.trim()) ? entry.content
+                        const code = (entry.code && entry.code.trim()) ? entry.code.split('\\n').join('\n')
+                                   : (entry.content && entry.content.trim()) ? entry.content.split('\\n').join('\n')
                                    : null;
                         if (code && !seenLeanCode.has(code)) {
                             seenLeanCode.add(code);
                             leanFiles.push({ name: basename, code });
                         } else if (!code) {
-                            // No code available — skip this file
                             console.warn('Lean file has no embedded code:', fname);
                         }
-                        // Duplicate code — silently skip
                     }
                 }
             }

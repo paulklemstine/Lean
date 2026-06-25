@@ -1,1 +1,34 @@
-{"consecutive_402": 5, "forecasts": {"chat": {"avg_cost": 0.32537118, "avg_cost_per_char": 6.2111842e-05, "avg_cost_per_output_char": 0.000138773958, "avg_input_chars": 5905.257, "avg_output_chars": 935.375, "count": 18498, "last_cost": 0.4, "last_input_chars": 7543, "last_output_chars": 0, "last_predicted_cost": 0.4, "max_cost": 0.4, "updated_at": 1782398821.6258574}}, "opened_at": 1782398821.6262674, "reserved": {}, "spent": 1.548112, "state": "OPEN", "updated_at": 1782398821.6252513, "used": 1.548112, "window_start": 1782396000}
+{
+  "consecutive_402": 0,
+  "forecasts": {
+    "chat": {
+      "avg_cost": 0.19853729,
+      "avg_cost_per_char": 3.7457757e-05,
+      "avg_cost_per_output_char": 0.000335329245,
+      "avg_input_chars": 5730.332,
+      "avg_output_chars": 777.898,
+      "count": 18500,
+      "last_cost": 0.010896,
+      "last_input_chars": 2223,
+      "last_output_chars": 11,
+      "last_predicted_cost": 0.4,
+      "max_cost": 0.4,
+      "updated_at": 1782401547.4342935
+    }
+  },
+  "opened_at": 0,
+  "reserved": {
+    "edab470ce32c": {
+      "balance_before": null,
+      "cost": 0.4,
+      "created_at": 1782401548.4541206,
+      "input_chars": 3544,
+      "kind": "chat"
+    }
+  },
+  "spent": 0.07912,
+  "state": "CLOSED",
+  "updated_at": 1782401548.4541218,
+  "used": 0.07912,
+  "window_start": 1782399600
+}

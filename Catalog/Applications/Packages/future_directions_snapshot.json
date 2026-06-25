@@ -358,7 +358,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fd9c2f63",
+    "consumed_by_exp_id": "",
     "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -371,7 +371,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432613+00:00",
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
@@ -1257,7 +1257,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e57ac8fb",
+    "consumed_by_exp_id": "",
     "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
     "domain_bridges": [],
     "domains": [
@@ -1271,7 +1271,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432807+00:00",
     "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
   },
@@ -7078,7 +7078,7 @@
       "q-exponential generating functions",
       "descent set"
     ],
-    "consumed_by_exp_id": "f8f4b2b3",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer k≥2 and n≥0, the polynomial a_n^{(k)}(q) equals the finite sum ∑_{m=0}^{⌊n/k⌋} q^{m(m+1)/2} * GaussianBinomial(n - m(k-1), m)_q where GaussianBinomial(n,m)_q denotes the q-binomial coefficient",
     "domain_bridges": [
       "analytic combinatorics",
@@ -7093,7 +7093,7 @@
     "proof_strategy": "Induction on n using the functional equation of the q-exponential generating function F_k(t;q) and coefficient extraction to verify the claimed closed form",
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T22:36:50.930027+00:00",
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
@@ -7476,7 +7476,7 @@
       "Mathlib.Data.Rat.Basic",
       "Mathlib.Tactic.Linarith"
     ],
-    "consumed_by_exp_id": "188ac175",
+    "consumed_by_exp_id": "",
     "description": "Let qc(n) be the largest k < n such that every placement of k mutually non-attacking queens on an n × n board can be completed to a full n-queens configuration. Conjecture: there is an absolute integer N such that for every n ≥ N, qc(n) ≤ floor(n/5), equivalently 5 * qc(n) ≤ n. This sharpens the paper's asymptotic upper bound qc(n) ≤ 0.216n to the rational density 0.2.",
     "domain_bridges": [
       "Model an n-queens partial configuration as an independent set in the queen-attack graph on Fin n × Fin n.",
@@ -7493,7 +7493,7 @@
     "proof_strategy": "Formalize the board, attack lines, partial configurations, completions, and qc(n). Prove the weighting obstruction theorem in Lean: if the unattacked squares of Q are covered by rational weights on rows, columns, and diagonals with total weight strictly less than n - |Q|, then Q is non-completable. Then construct, for all sufficiently large n, an explicit parametric partial configuration Q_n of at most floor(n/5) non-attacking queens together with a rational line-weighting certificate covering all squares not attacked by Q_n and having total weight < n - |Q_n|. The remaining proof obligations should be finite interval-membership and affine rational inequality checks, discharged by normalization and linarith.",
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T09:17:44.772184+00:00",
     "title": "Asymptotic one-fifth upper bound for the n-queens completion threshold"
   },
@@ -8262,7 +8262,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2529",
+    "id": "fd_2530",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit $q$-series transforming objects and verify convergence using the Farkas–Hintikka system.",
@@ -8371,7 +8371,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e653644d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -8384,7 +8384,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -8779,7 +8779,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "26e8a5ea",
+    "consumed_by_exp_id": "",
     "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
     "domain_bridges": [],
     "domains": [
@@ -8792,7 +8792,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.309278+00:00",
     "title": "Category-Theoretic Neural Architectures"
   },
@@ -8819,7 +8819,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5a8b6896",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domain_bridges": [],
     "domains": [
@@ -8832,7 +8832,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -9038,7 +9038,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "364ec557",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
     "domain_bridges": [],
     "domains": [
@@ -9051,7 +9051,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.201625+00:00",
     "title": "EML Differential Algebra: Closure Properties"
   },

@@ -66,35 +66,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(res => res.json())
                 .then(pkg => {
                     let leanFiles = [];
+                    
+                    function parseLeanString(lp, slug) {
+                        const parsedFiles = [];
+                        // Matches "-- NEW_FILE: path.lean", "-- DIFF: path.lean", or just "-- path.lean"
+                        const parts = lp.split(/--\s*(?:NEW_FILE:\s*|DIFF:\s*|)([a-zA-Z0-9_\-\.\/]+\.lean)(?:\r?\n|\\n)/);
+                        if (parts.length > 1) {
+                            for (let i = 1; i < parts.length; i += 2) {
+                                const name = parts[i].trim();
+                                const code = (i + 1 < parts.length) ? parts[i + 1].trim().split('\\n').join('\n') : '';
+                                if (code) parsedFiles.push({ file: name, name: name.split('/').pop(), code: code });
+                            }
+                        } else {
+                            parsedFiles.push({ file: slug + '.lean', name: slug + '.lean', code: lp.split('\\n').join('\n') });
+                        }
+                        return parsedFiles;
+                    }
+                    
                     if (pkg.lean_proofs) {
+                        const slug = (pkg.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
                         if (typeof pkg.lean_proofs === 'string') {
                             const lp = pkg.lean_proofs;
                             if (lp.length > 50 && !lp.endsWith('.lean')) {
-                                const parts = lp.split(/-- (?:NEW_FILE|DIFF): (.+?)(?:\n|\\n)/);
-                                if (parts.length > 1) {
-                                    for (let i = 1; i < parts.length; i += 2) {
-                                        const name = parts[i].trim();
-                                        const code = (i + 1 < parts.length) ? parts[i + 1].trim().replace(/\\n/g, '\n') : '';
-                                        if (code) leanFiles.push({ file: name, name: name.split('/').pop(), code: code });
-                                    }
-                                } else {
-                                    const slug = (pkg.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
-                                    leanFiles.push({ file: slug + '.lean', name: slug + '.lean', code: lp.replace(/\\n/g, '\n') });
-                                }
+                                leanFiles.push(...parseLeanString(lp, slug));
                             }
                         } else if (Array.isArray(pkg.lean_proofs)) {
-                            for (const entry of pkg.lean_proofs) {
+                            for (let j = 0; j < pkg.lean_proofs.length; j++) {
+                                const entry = pkg.lean_proofs[j];
                                 if (typeof entry === 'string') {
                                     if (entry.length > 50 && !entry.endsWith('.lean')) {
-                                        const slug = (pkg.title || 'Proof').replace(/[^a-zA-Z0-9]/g, '').slice(0, 30) || 'Proof';
-                                        leanFiles.push({ file: slug + '.lean', name: slug + '.lean', code: entry.replace(/\\n/g, '\n') });
+                                        // For multiple string entries without names, append an index to the slug
+                                        const entrySlug = pkg.lean_proofs.length > 1 ? `${slug}_${j+1}` : slug;
+                                        leanFiles.push(...parseLeanString(entry, entrySlug));
                                     }
                                 } else if (typeof entry === 'object' && entry !== null) {
                                     const fname = entry.file || entry.name || 'Proof.lean';
                                     const basename = fname.split('/').pop();
                                     let rawCode = (entry.code && entry.code.trim()) ? entry.code : (entry.content && entry.content.trim()) ? entry.content : null;
                                     if (rawCode) {
-                                        leanFiles.push({ file: fname, name: basename, code: rawCode.replace(/\\n/g, '\n') });
+                                        leanFiles.push({ file: fname, name: basename, code: rawCode.split('\\n').join('\n') });
                                     }
                                 }
                             }
