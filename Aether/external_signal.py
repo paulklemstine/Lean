@@ -104,7 +104,9 @@ class ExternalSignalFeed:
             content += f"\nExcerpt:\n{paper.tex_content[:4000]}"
         try:
             raw = self.pi_agent._call_ollama(system, content, timeout=120)
-            data = json.loads(self._strip_markdown(raw))
+            data = self.pi_agent._parse_json_response(raw)
+            if data is None:
+                raise ValueError(f"No JSON found. Raw response snippet: {raw[:100]}")
         except Exception as e:
             print(f"[ExternalSignal] ArXiv mining parse failed: {e}")
             return None
