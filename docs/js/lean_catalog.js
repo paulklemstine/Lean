@@ -65,16 +65,22 @@ document.addEventListener('DOMContentLoaded', () => {
             return fetch(filename)
                 .then(res => res.json())
                 .then(pkg => {
-                    if (pkg.lean_proofs && pkg.lean_proofs.length > 0) {
-                        pkg.lean_proofs.forEach(proof => {
-                            const fileObj = {
-                                pkg: pkgMeta,
-                                file: proof.file,
-                                name: proof.name,
-                                code: proof.code,
-                                domain: pkgMeta.domain,
-                                theorems: []
-                            };
+                    if (pkg.lean_proofs) {
+                        const proofsArray = Array.isArray(pkg.lean_proofs) ? pkg.lean_proofs : [{
+                            file: pkgMeta.filename ? pkgMeta.filename.replace('.json', '.lean') : (pkgMeta.exp_id + '.lean'),
+                            name: pkg.title || pkgMeta.title || "Lean Proof",
+                            code: pkg.lean_proofs
+                        }];
+                        if (proofsArray.length > 0) {
+                            proofsArray.forEach(proof => {
+                                const fileObj = {
+                                    pkg: pkgMeta,
+                                    file: proof.file,
+                                    name: proof.name,
+                                    code: proof.code,
+                                    domain: pkgMeta.domain,
+                                    theorems: []
+                                };
                             
                             // Extract theorem names from code for hyperlinking
                             const lines = proof.code.split('\n');
