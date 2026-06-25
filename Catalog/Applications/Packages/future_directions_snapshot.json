@@ -8562,6 +8562,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Gawron-Miska-Ulas conjecture",
+      "Prouhet-Thue-Morse sequence",
+      "Cauchy convolution"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer m ≥2, the coefficients t_m(2^k) of the generalized Prouhet-Thue-Morse function F_m(x) grow exponentially in k. Specifically, there exist constants C >0 and r >1 such that for all sufficiently large k, |t_m(2^k)| ≥ C*r^k.",
+    "domain_bridges": [
+      "analytic number theory",
+      "combinatorics on words"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2544",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use induction on k combined with the functional equation to establish a recursive lower bound, leveraging the p-adic analytic methods from the original paper.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25825v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:32:46.778777+00:00",
+    "title": "Exponential Growth of Coefficients at Powers of Two for Generalized Prouhet-Thue-Morse Series"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "arXiv:2210.12345",
       "Brown–Erdős–Sós conjecture",
       "Keevash–Long 2023"
@@ -8575,7 +8601,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2544",
+    "id": "fd_2545",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit families of linear r‑uniform hypergraphs (e.g. using finite projective planes, affine geometries, or suitable random constructions) whose edge count meets the bound in Theorem 1 minus an arbitrarily small ε. Prove combinatorially that these hypergraphs avoid any ((r‑2)k+3, k)‑configuration by analysing intersection patterns of edges and counting arguments. The construction should show that any attempt to exceed this edge count would force the existence of the forbidden configuration, thereby proving the bound in Theorem 1 is tight.",
@@ -8602,7 +8628,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2545",
+    "id": "fd_2546",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjectured upper bound can be approached by extending the partition‑lattice dynamic programming techniques used for hypergraph min‑cut.  One would encode the connectivity of the union of label graphs as lattice elements and propagate partial solutions using fast zeta transforms on the lattice.  By carefully arranging the recursion depth to be O(log n / log log n) and applying a logarithmic‑depth divide‑and‑conquer on the label set, the total number of DP states can be bounded by (np)^{O(log n / log log n)}.  A full formal proof would involve defining the lattice, proving its size bound, and showing that the DP recurrence respects the GLMC objective.  The crux is to avoid an exponential blow‑up in the number of subsets of labels by exploiting the lattice’s Möbius inversion to compute union‑connectivity in quasi‑linear time per layer.",
@@ -8627,7 +8653,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2546",
+    "id": "fd_2547",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize covering estimates via pivotal sampling and the dimension-dependent Carathéodory theorem to bound diameter decay per refinement step",
@@ -8636,6 +8662,31 @@
     "status": "available",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Erdős Problem 1061",
+      "Sum-of-divisors function σ"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every ε > 0, there exists a constant c_ε > 0 such that the number of ordered pairs S(x) = #{(a,b) ∈ ℕ² : a + b ≤ x, σ(a) + σ(b) = σ(a+b)} satisfies S(x) > c_ε x (log x)^(2+ε) for all sufficiently large x. This is a specific instance of the main theorem where the growth rate exceeds x (log x)^2.",
+    "domain_bridges": [
+      "Analytic number theory",
+      "Diophantine equations"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2548",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the construction in the paper to establish a quantitative lower bound for R=2+ε, leveraging the two-height core theorem and coprime multiplier amplification. Formalize the asymptotic estimate in Lean using bounds on prime distribution in arithmetic progressions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25849v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:34:08.184471+00:00",
+    "title": "Specific Growth Rate Conjecture for Erdős Problem 1061"
   },
   {
     "ambition_level": "extension",

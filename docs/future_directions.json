@@ -45900,6 +45900,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Gawron-Miska-Ulas conjecture",
+        "Prouhet-Thue-Morse sequence",
+        "Cauchy convolution"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integer m ≥2, the coefficients t_m(2^k) of the generalized Prouhet-Thue-Morse function F_m(x) grow exponentially in k. Specifically, there exist constants C >0 and r >1 such that for all sufficiently large k, |t_m(2^k)| ≥ C*r^k.",
+      "domain_bridges": [
+        "analytic number theory",
+        "combinatorics on words"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2544",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem exponential_growth {m : ℕ} (hm : m ≥ 2) : ∃ (C r : ℝ) (hC : C > 0) (hr : r > 1), ∀ (k : ℕ) (hk : k ≥ k₀ m), |t_m (2^k)| ≥ C * r^k",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use induction on k combined with the functional equation to establish a recursive lower bound, leveraging the p-adic analytic methods from the original paper.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25825v1",
+      "source_path": "http://arxiv.org/abs/2606.25825v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T20:32:46.778777+00:00",
+      "title": "Exponential Growth of Coefficients at Powers of Two for Generalized Prouhet-Thue-Morse Series"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "arXiv:2210.12345",
         "Brown–Erdős–Sós conjecture",
         "Keevash–Long 2023"
@@ -45919,7 +45964,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2544",
+      "id": "fd_2545",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lin_optimality_bound (r k n : ℕ) (hn : (r - 2) * (k - 2) + 1 ≤ n) : ∃ H : Hypergraph r n, \\n  (|E H| : ℕ) = ⌊(k - 2) * n^2 / (r^2 * ((r - 2) * (k - 2) + 1))⌋ ∧ \\n  ∀ (S : Finset (Edge H)), S.card = k → (∀ e ∈ S, e ⊆ (∪ᵢ eᵢ) → (∪ᵢ eᵢ).card ≤ (r - 2) * k + 3) → False",
@@ -45965,7 +46010,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2545",
+      "id": "fd_2546",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem glmc_time_bound (n p : ℕ) :\n  ∃ C : ℕ,\n    ∃ alg : UnivGraph → CutVal,\n      ¬¬(∀ G : UnivGraph,\n        (card G.vertices = n) ∧ (card G.labels = p) →\n          (time alg G) ≤ (n * p : ℕ) ^ (C * (Nat.log n) / ((Nat.log (Nat.log n)) + 1)) ∧\n          (alg G = minLabelCut G))\n",
@@ -46009,7 +46054,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2546",
+      "id": "fd_2547",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "lemma diameter_contraction (X0: Set S^d) (k: Nat) : max { simplex in Del(X_k) }.diameter ≤ (1/λ)^k · max { simplex in Del(X_0) }.diameter  where λ > 1 and minicenter Steiner points are used",
@@ -46028,6 +46073,50 @@
       "thread_id": "",
       "timestamp": "2026-06-25T20:05:25.226962+00:00",
       "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Erdős Problem 1061",
+        "Sum-of-divisors function σ"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every ε > 0, there exists a constant c_ε > 0 such that the number of ordered pairs S(x) = #{(a,b) ∈ ℕ² : a + b ≤ x, σ(a) + σ(b) = σ(a+b)} satisfies S(x) > c_ε x (log x)^(2+ε) for all sufficiently large x. This is a specific instance of the main theorem where the growth rate exceeds x (log x)^2.",
+      "domain_bridges": [
+        "Analytic number theory",
+        "Diophantine equations"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2548",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem erdos_1061_growth_rate (ε : ℝ) (hε : ε > 0) : ∃ (c : ℝ) (x₀ : ℕ), ∀ (x : ℕ) (_ : x ≥ x₀), S x > c * x * (log x)^(2 + ε)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the construction in the paper to establish a quantitative lower bound for R=2+ε, leveraging the two-height core theorem and coprime multiplier amplification. Formalize the asymptotic estimate in Lean using bounds on prime distribution in arithmetic progressions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25849v1",
+      "source_path": "http://arxiv.org/abs/2606.25849v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T20:34:08.184471+00:00",
+      "title": "Specific Growth Rate Conjecture for Erdős Problem 1061"
     },
     {
       "ambition_level": "extension",
@@ -50905,7 +50994,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -50921,7 +51010,7 @@
         "Analysis"
       ],
       "id": "seed_332",
-      "last_attempt_time": "2026-06-25T20:05:41.549845+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -51723,7 +51812,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -51739,7 +51828,7 @@
         "Algebra"
       ],
       "id": "seed_353",
-      "last_attempt_time": "2026-06-25T20:05:31.705326+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:27:55.470307+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -51801,7 +51890,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -51817,7 +51906,7 @@
         "Probability"
       ],
       "id": "seed_355",
-      "last_attempt_time": "2026-06-25T20:05:36.942789+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],

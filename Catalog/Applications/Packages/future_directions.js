@@ -4943,11 +4943,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every integers r \u2265 3 and k \u2265 3 there exist arbitrarily large linear r\u2011uniform hypergraphs on n vertices with edge count just below the bound given in Theorem\u00a01 that contain no ((r\u20112)k+3,\u202fk)\u2011configuration. In other words, the density threshold in Theorem\u00a01 is sharp up to lower\u2011order terms.",
+    "description": "For any integer m \u22652, the coefficients t_m(2^k) of the generalized Prouhet-Thue-Morse function F_m(x) grow exponentially in k. Specifically, there exist constants C >0 and r >1 such that for all sufficiently large k, |t_m(2^k)| \u2265 C*r^k.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2544",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25825v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:32:46.778777+00:00",
+    "title": "Exponential Growth of Coefficients at Powers of Two for Generalized Prouhet-Thue-Morse Series"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integers r \u2265 3 and k \u2265 3 there exist arbitrarily large linear r\u2011uniform hypergraphs on n vertices with edge count just below the bound given in Theorem\u00a01 that contain no ((r\u20112)k+3,\u202fk)\u2011configuration. In other words, the density threshold in Theorem\u00a01 is sharp up to lower\u2011order terms.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2545",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -4962,7 +4976,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2545",
+    "id": "fd_2546",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -4976,13 +4990,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2546",
+    "id": "fd_2547",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
     "status": "available",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every \u03b5 > 0, there exists a constant c_\u03b5 > 0 such that the number of ordered pairs S(x) = #{(a,b) \u2208 \u2115\u00b2 : a + b \u2264 x, \u03c3(a) + \u03c3(b) = \u03c3(a+b)} satisfies S(x) > c_\u03b5 x (log x)^(2+\u03b5) for all sufficiently large x. This is a specific instance of the main theorem where the growth rate exceeds x (log x)^2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2548",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25849v1",
+    "status": "available",
+    "timestamp": "2026-06-25T20:34:08.184471+00:00",
+    "title": "Specific Growth Rate Conjecture for Erd\u0151s Problem 1061"
   },
   {
     "consumed_by_exp_id": "",
