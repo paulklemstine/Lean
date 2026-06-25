@@ -2616,7 +2616,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite-type classification for Grassmannian partial-flag seeds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eee0a16a",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n \u2265 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domains": [
       "Bridges"
@@ -2625,7 +2625,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -2743,20 +2743,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T16:48:35.543989+00:00",
     "title": "Cusick's Sum-of-Digits Explicit Bound"
-  },
-  {
-    "consumed_by_exp_id": "b6772842",
-    "description": "Let G be a simple graph on n vertices with m edges, and define N(S_{2,1},G)=\u2211_v d(v)(d(v)-1)(n-1-d(v)). If 8m \u2264 n(n-1), then N(S_{2,1},G) is maximized by the quasi-clique Q(n,m): writing m = binom(q,2)+r with 0 \u2264 r < q, Q(n,m) consists of a K_q, one additional vertex adjacent to exactly r vertices of the clique, and all remaining vertices isolated. Equivalently, the asymptotic low-density upper branch proved in the paper admits an exact finite-n strengthening throughout the range \u03b2 \u2264 1/4.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2374",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23351v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T17:07:33.678816+00:00",
-    "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
   },
   {
     "consumed_by_exp_id": "",
@@ -3091,7 +3077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
   },
   {
-    "consumed_by_exp_id": "ff8131d4",
+    "consumed_by_exp_id": "",
     "description": "Every \u2286-minimal minor-closed graph class with limiting density greater than some \u03b4 < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class \ud835\udca2, there exists a graph H such that \ud835\udca2 = excl({H}).",
     "domains": [
       "Bridges"
@@ -3100,7 +3086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24326v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T02:41:49.567859+00:00",
     "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
   },
@@ -4335,11 +4321,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self\u2011dual string C\u2011group representations of rank $2m$ (as constructed by the vertex\u2011gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self\u2011dual string C\u2011group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2497",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24654v1",
+    "status": "available",
+    "timestamp": "2026-06-25T06:41:04.137986+00:00",
+    "title": "Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2497",
+    "id": "fd_2498",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4353,7 +4353,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2498",
+    "id": "fd_2499",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4367,7 +4367,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2499",
+    "id": "fd_2500",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4381,7 +4381,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2500",
+    "id": "fd_2501",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -4396,13 +4396,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2501",
+    "id": "fd_2502",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24822v1",
     "status": "available",
     "timestamp": "2026-06-25T06:00:04.455853+00:00",
     "title": "Regularity of generalized multiple complete split-like graphs equals the number of non\u2011trivial clique blocks plus one"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "All binary Type I self-dual codes of length 26 with minimum distance 6 are equivalent under permutation of coordinates.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2503",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24573v1",
+    "status": "available",
+    "timestamp": "2026-06-25T06:42:49.211274+00:00",
+    "title": "Uniqueness of the Binary Self-Dual [26,13,6] Code up to Equivalence"
   },
   {
     "consumed_by_exp_id": "",

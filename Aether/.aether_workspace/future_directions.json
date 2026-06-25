@@ -37698,7 +37698,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Nat.factorial",
         "Nat.sqrt",
@@ -37710,7 +37710,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "eee0a16a",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37727,7 +37727,7 @@
         "Bridges"
       ],
       "id": "fd_2365",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T06:42:54.721746+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen Nat\n\n/-- Triangular form of the Brocard-Ramanujan conjecture: the only `n` such that\n`n! / 8` is triangular are `4`, `5`, and `7`. -/\ntheorem brocard_triangular_classification\n    (n y : Nat)\n    (hn : 4 ≤ n)\n    (htri : y * (y + 1) / 2 = n.factorial / 8) :\n    n = 4 ∨ n = 5 ∨ n = 7 := by\n  sorry\n\n/-- Equivalent Brown-number formulation. -/\ntheorem brocard_brown_number_classification\n    (n m : Nat)\n    (h : n.factorial + 1 = m ^ 2) :\n    (n = 4 ∧ m = 5) ∨ (n = 5 ∧ m = 11) ∨ (n = 7 ∧ m = 71) := by\n  sorry",
       "lineage_refs": [],
@@ -37741,7 +37741,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23485v1",
       "source_path": "http://arxiv.org/abs/2606.23485v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T16:30:05.276546+00:00",
       "title": "Brocard-Ramanujan Triangular Classification"
@@ -38174,7 +38174,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23351v1",
       "source_path": "http://arxiv.org/abs/2606.23351v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-23T17:07:33.678816+00:00",
       "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
@@ -39445,7 +39445,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "ff8131d4",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -39474,7 +39474,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24326v1",
       "source_path": "http://arxiv.org/abs/2606.24326v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T02:41:49.567859+00:00",
       "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
@@ -43731,6 +43731,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Mathlib.GroupTheory.Coxeter",
+        "Mathlib.Combinatorics.Polytope",
+        "Mathlib.Data.Fintype.Card"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self‑dual string C‑group representations of rank $2m$ (as constructed by the vertex‑gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self‑dual string C‑group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
+      "domain_bridges": [
+        "Coxeter groups ↔ abstract regular polytopes",
+        "Alternating groups ↔ permutation representations",
+        "Self‑duality ↔ involutive automorphisms of presentations"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2497",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem max_self_dual_rank_for_A_four_m_plus_three (m : ℕ) (hm : m ≥ 3) :\n  let n := 4 * m + 3\n  let G := alternating_group n\n  -- The maximal rank of any string C‑group representation of G is ⌊(n-1)/2⌋\n  have hmax : ∃ r, (r = (n - 1) / 2) ∧ ∃ (ρ : fin r → G), is_string_C_group ρ ∧\n    (∀ σ : fin r → G, is_string_C_group σ → (∀ i, σ i = ρ i) → False) := sorry\n  -- There exists a self‑dual string C‑group of rank 2*m\n  have hexist : ∃ (ρ : fin (2*m) → G), is_string_C_group ρ ∧ self_dual ρ :=\n    construct_self_dual_string_C_group_of_rank_two_mul_m m hm\n  -- No self‑dual string C‑group of rank 2*m+1 exists\n  have hnon : ¬ ∃ (ρ : fin (2*m+1) → G), is_string_C_group ρ ∧ self_dual ρ :=\n    by\n      intro h\n      rcases h with ⟨ρ, hC, hsd⟩\n      -- derive contradiction using intersection condition and parity\n      exact contradict_self_dual_rank_plus_one ρ hC hsd hm\n  exact ⟨hexist, hnon⟩",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the vertex‑gluing construction of the paper and prove that it yields a self‑dual string C‑group of rank $2m$ for $A_{4m+3}$. Then, using the intersection condition for string C‑groups together with known bounds on the rank of any string C‑group for $A_n$ (the maximal rank $\\lfloor (n-1)/2 \\rfloor$), show that any self‑dual representation would force an extra involutive symmetry that contradicts the parity constraints on generators of $A_{4m+3}$. The contradiction establishes the non‑existence of rank $2m+1$ self‑dual string C‑groups. The proof proceeds by: (1) defining string C‑groups and self‑duality in Lean; (2) encoding the universal string Coxeter group $W_r$ and the intersection condition; (3) constructing the specific generating involutions for the glued representation; (4) verifying the intersection condition and self‑duality; (5) proving a rank‑upper‑bound lemma for self‑dual representations of $A_{4m+3}$ via counting arguments on the fixed‑point structure of the invo",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24654v1",
+      "source_path": "http://arxiv.org/abs/2606.24654v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T06:41:04.137986+00:00",
+      "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "OEIS A287616",
         "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
         "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -43751,7 +43797,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2497",
+      "id": "fd_2498",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -43795,7 +43841,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2498",
+      "id": "fd_2499",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -43838,7 +43884,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2499",
+      "id": "fd_2500",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -43881,7 +43927,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2500",
+      "id": "fd_2501",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
@@ -43927,7 +43973,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2501",
+      "id": "fd_2502",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularity_MMsplit (a : ℕ) (b : List ℕ) (hb : ∀ r ∈ b, 1 ≤ r) :\n  let G := MM a b\n  let ν := (b.filter (· ≥ 2)).length\n  reg (edgeIdeal G) = ν + 1 :=\nby\n  -- proof goes here",
@@ -43946,6 +43992,49 @@
       "thread_id": "",
       "timestamp": "2026-06-25T06:00:04.455853+00:00",
       "title": "Regularity of generalized multiple complete split-like graphs equals the number of non‑trivial clique blocks plus one"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "All binary Type I self-dual codes of length 26 with minimum distance 6 are equivalent under permutation of coordinates.",
+      "domain_bridges": [
+        "design_theory",
+        "finite_geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2503",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem self_dual_code_26_uniqueness : ∀ (C D : Code), (C.is_self_dual ∧ C.length = 26 ∧ C.min_weight = 6) → (D.is_self_dual ∧ D.length = 26 ∧ D.min_weight = 6) → ∃ (perm : Fin 26 → Fin 26), perm • C = D",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the structure of the weight enumerator, harmonic designs, and connection to the projective plane of order 3 to show any such code must have an automorphism group isomorphic to PGL(3,3):2, hence equivalent.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24573v1",
+      "source_path": "http://arxiv.org/abs/2606.24573v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T06:42:49.211274+00:00",
+      "title": "Uniqueness of the Binary Self-Dual [26,13,6] Code up to Equivalence"
     },
     {
       "ambition_level": "extension",

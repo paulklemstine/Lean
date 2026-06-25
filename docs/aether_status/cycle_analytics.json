@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T05:24:21.539832+00:00",
+  "last_updated": "2026-06-25T06:19:15.234453+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -5398,6 +5398,47 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T05:24:21.319871+00:00",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2459,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 7,
+      "domain": "Algebra",
+      "duration_seconds": -517.7324995994568,
+      "end_time": 1782362931.8573546,
+      "files_integrated": 0,
+      "job_id": "b6772842",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16",
+      "phase_b_skipped": false,
+      "prompt_version": "v16",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "cross_domain": 0.9,
+        "importance": 0.883,
+        "novelty": 0.89,
+        "pegb_compliance": 0.75,
+        "proof_depth": 0.88,
+        "usefulness": 0.89
+      },
+      "quality_score": 0.49355,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782363449.5898542,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T06:19:14.961083+00:00",
+      "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
     }
   ]
 }

@@ -4190,7 +4190,7 @@
       "Nat.even_iff",
       "Nat.odd_iff"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eee0a16a",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n ≥ 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domain_bridges": [
       "factorial Diophantine equations",
@@ -4208,7 +4208,7 @@
     "proof_strategy": "Formalize the triangular equivalence lemma: for n ≥ 4, n! + 1 = m^2 iff there exists y such that y*(y+1)/2 = n!/8 and m = 2*y + 1. Then attempt to prove the classification by combining modular exclusions for residue classes of n with factorial divisibility facts and higher-power congruence obstructions. The conjecture is suitable for Lean because it can be stated entirely over Nat using factorials, squares, divisibility by 8, and triangular numbers.",
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -4444,35 +4444,6 @@
     "status": "available",
     "timestamp": "2026-06-23T16:48:35.543989+00:00",
     "title": "Cusick's Sum-of-Digits Explicit Bound"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Mathlib.Combinatorics.SimpleGraph.Basic",
-      "Mathlib.Combinatorics.SimpleGraph.DegreeSum",
-      "Mathlib.Data.Finset.Card",
-      "Mathlib.Algebra.BigOperators.Fin"
-    ],
-    "consumed_by_exp_id": "b6772842",
-    "description": "Let G be a simple graph on n vertices with m edges, and define N(S_{2,1},G)=∑_v d(v)(d(v)-1)(n-1-d(v)). If 8m ≤ n(n-1), then N(S_{2,1},G) is maximized by the quasi-clique Q(n,m): writing m = binom(q,2)+r with 0 ≤ r < q, Q(n,m) consists of a K_q, one additional vertex adjacent to exactly r vertices of the clique, and all remaining vertices isolated. Equivalently, the asymptotic low-density upper branch proved in the paper admits an exact finite-n strengthening throughout the range β ≤ 1/4.",
-    "domain_bridges": [
-      "semi-induced subgraph density",
-      "threshold and quasi-clique extremal constructions",
-      "degree-sequence optimization",
-      "finite strengthening of graphon/asymptotic extremal profiles"
-    ],
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2374",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize N(S_{2,1},G) as a degree-sum functional. Prove that any maximizer in the range 8m ≤ n(n-1) can be transformed, via edge-compressions preserving the number of edges, into a threshold graph without decreasing the functional. Then classify threshold graphs in this sparse range and show that every non-quasi-clique threshold configuration admits a local edge transfer increasing or preserving N until the quasi-clique degree sequence is reached. The final step is a finite arithmetic verification using m = binom(q,2)+r.",
-    "research_mode": "team",
-    "source_exp_id": "2606.23351v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T17:07:33.678816+00:00",
-    "title": "Finite low-density quasi-clique extremality for the semi-induced star S_{2,1}"
   },
   {
     "ambition_level": "extension",
@@ -5125,7 +5096,7 @@
     "catalog_references": [
       "Diestel2010Book"
     ],
-    "consumed_by_exp_id": "ff8131d4",
+    "consumed_by_exp_id": "",
     "description": "Every ⊆-minimal minor-closed graph class with limiting density greater than some δ < 3/2 can be characterized by excluding a single graph as a minor. Formally, for any such class 𝒢, there exists a graph H such that 𝒢 = excl({H}).",
     "domain_bridges": [
       "Graph minors",
@@ -5141,7 +5112,7 @@
     "proof_strategy": "Leverage the Robertson-Seymour theorem on finite forbidden minors and the paper's classification of minimal classes to show that the minimal sets of forbidden graphs for these classes must be singletons.",
     "research_mode": "team",
     "source_exp_id": "2606.24326v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T02:41:49.567859+00:00",
     "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
   },
@@ -7409,6 +7380,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.GroupTheory.Coxeter",
+      "Mathlib.Combinatorics.Polytope",
+      "Mathlib.Data.Fintype.Card"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self‑dual string C‑group representations of rank $2m$ (as constructed by the vertex‑gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self‑dual string C‑group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
+    "domain_bridges": [
+      "Coxeter groups ↔ abstract regular polytopes",
+      "Alternating groups ↔ permutation representations",
+      "Self‑duality ↔ involutive automorphisms of presentations"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2497",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the vertex‑gluing construction of the paper and prove that it yields a self‑dual string C‑group of rank $2m$ for $A_{4m+3}$. Then, using the intersection condition for string C‑groups together with known bounds on the rank of any string C‑group for $A_n$ (the maximal rank $\\lfloor (n-1)/2 \\rfloor$), show that any self‑dual representation would force an extra involutive symmetry that contradicts the parity constraints on generators of $A_{4m+3}$. The contradiction establishes the non‑existence of rank $2m+1$ self‑dual string C‑groups. The proof proceeds by: (1) defining string C‑groups and self‑duality in Lean; (2) encoding the universal string Coxeter group $W_r$ and the intersection condition; (3) constructing the specific generating involutions for the glued representation; (4) verifying the intersection condition and self‑duality; (5) proving a rank‑upper‑bound lemma for self‑dual representations of $A_{4m+3}$ via counting arguments on the fixed‑point structure of the invo",
+    "research_mode": "team",
+    "source_exp_id": "2606.24654v1",
+    "status": "available",
+    "timestamp": "2026-06-25T06:41:04.137986+00:00",
+    "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "OEIS A287616",
       "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
       "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -7423,7 +7421,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2497",
+    "id": "fd_2498",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
@@ -7448,7 +7446,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2498",
+    "id": "fd_2499",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on $n$, leveraging the irreducibility of $f^2$ and a new function measuring 'complexity' in $\\mathbb{Q}(i)$ due to the absence of linear ordering. The base case $n=2$ is given. For the inductive step, analyze the factorization of $f^{n+1} = f^n \\circ f$ using the Galois action on preimages and the tree structure of iterations, adapting techniques from \\cite{evstb} to handle the two-dimensional nature of $\\mathbb{Q}(i)$.",
@@ -7472,7 +7470,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2499",
+    "id": "fd_2500",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the proof of Theorem 1.2(ii) by tracking the exact loss when applying Kahn's small-codegree edge-colouring theorem and the degree‑peeling process, aiming to convert the o(1) term into a uniform additive bound of 4.",
@@ -7496,7 +7494,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2500",
+    "id": "fd_2501",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use shifting/compression to transform an extremal family into a left‑compressed form while preserving the missing‑trace condition. Analyze the possible traces on a fixed (d+1)-set and apply Kleitman’s theorem on intersecting families to bound the number of sets containing a given subset. Perform an induction on n, considering whether a particular element appears in all sets or not. Show that any family attaining the bound must be isomorphic to the explicit construction: take all (d+1)-sets containing a fixed d‑set, together with all (d+1)-sets that avoid a fixed (2(d+1−s)+2)-set and contain a specific (2s−d−2)-subset of its complement.",
@@ -7523,7 +7521,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2501",
+    "id": "fd_2502",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Hochster's formula to express \\(\\beta_{i,i+\\nu+1}(G)\\) as the dimension of reduced homology of induced subcomplexes of the independence complex. Show that for any subset W of vertices, the only possible non‑vanishing reduced homology occurs in dimension \\(\\nu\\) and only when W contains exactly one vertex from each non‑trivial clique block together with any subset of the a isolated vertices. This yields a non‑zero Betti number in homological degree \\(\\nu+1\\) and no Betti numbers with j-i > \\(\\nu+1\\). The forward inequality \\(\\reg(G) \\ge \\nu+1\\) follows from exhibiting such a subset; the reverse inequality follows from a combinatorial analysis of the join decomposition \\(\\ind(G) \\cong \\Delta_a * \\bigast_{r=1}^m \\Delta_{b_r}\\) where \\(\\Delta_{b_r}\\) is a simplex on \\(b_r\\) vertices (contractible) and the only contribution to higher homology comes from the discrete pieces coming from blocks with \\(b_r\\ge2\\). Formalising the join‑homology lemma and the coefficient extraction in Lean wil",
@@ -7532,6 +7530,30 @@
     "status": "available",
     "timestamp": "2026-06-25T06:00:04.455853+00:00",
     "title": "Regularity of generalized multiple complete split-like graphs equals the number of non‑trivial clique blocks plus one"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "All binary Type I self-dual codes of length 26 with minimum distance 6 are equivalent under permutation of coordinates.",
+    "domain_bridges": [
+      "design_theory",
+      "finite_geometry"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2503",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the structure of the weight enumerator, harmonic designs, and connection to the projective plane of order 3 to show any such code must have an automorphism group isomorphic to PGL(3,3):2, hence equivalent.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24573v1",
+    "status": "available",
+    "timestamp": "2026-06-25T06:42:49.211274+00:00",
+    "title": "Uniqueness of the Binary Self-Dual [26,13,6] Code up to Equivalence"
   },
   {
     "ambition_level": "extension",
