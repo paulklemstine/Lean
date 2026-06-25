@@ -36379,7 +36379,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [
         "math.AT",
         "math.NT"
@@ -36402,7 +36402,7 @@
         "Geometry"
       ],
       "id": "fd_2337",
-      "last_attempt_time": "2026-06-25T14:28:29.384033+00:00",
+      "last_attempt_time": "2026-06-25T14:47:26.876936+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem hecke_codim_i_vanishing (p i n : ℕ) (hp : Nat.Prime p) (hi : 0 < i) \n    (hn : n ≥ (3 * i + 1) * p + (3 * i + 2)) :\n    (groupCohomology (HeckeCongruence p n) (n * (n - 1) / 2 - i) ⊗[ℤ] ℚ) ≅ 0 := by\n  sorry",
       "lineage_refs": [],
