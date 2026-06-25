@@ -819,6 +819,34 @@ class PiAgentOrchestrator:
                     from archive_manager import ArchiveManager
                     am = ArchiveManager(self.catalog_root.parent / "Archive")
                     pkg_text = pkg_jsons[0].read_text(encoding="utf-8")
+                    
+                    # Inject reasoning traces from Phase A into the package metadata
+                    if job.project_id:
+                        try:
+                            import json
+                            import aristotlelib
+                            pkg_data = json.loads(pkg_text)
+                            reasoning_traces = []
+                            print(f"[Phase B] Fetching Phase A reasoning traces from project {job.project_id}...")
+                            
+                            project = await aristotlelib.Project.from_id(job.project_id)
+                            tasks, _ = await project.get_tasks()
+                            for task in tasks:
+                                # Fetch events oldest-first so they're in chronological order
+                                events, _ = await task.get_events(limit=100, newest_first=False)
+                                for e in events:
+                                    if e.event_type.name == "THINKING":
+                                        trace_text = e.explanation or e.content
+                                        if trace_text:
+                                            reasoning_traces.append(trace_text)
+                                            
+                            if reasoning_traces:
+                                pkg_data["reasoning_traces"] = reasoning_traces
+                                pkg_text = json.dumps(pkg_data, indent=2)
+                                print(f"[Phase B] Attached {len(reasoning_traces)} reasoning trace(s) to PACKAGE.json.")
+                        except Exception as e:
+                            print(f"[Phase B] Failed to attach reasoning traces: {e}")
+
                     am.store_package(job.exp_id, pkg_text)
                     print(f"[Phase B] {job.exp_id} PACKAGE.json stored in archive!")
                 else:

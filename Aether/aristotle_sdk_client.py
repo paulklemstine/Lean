@@ -70,16 +70,46 @@ class AristotleSDKClient:
 
         Retries on transient SSL errors before giving up.
         In v2: IDLE means not running. has_files=True means results available.
+        Estimates percent_complete by looking at task events.
         """
         for attempt in range(MAX_SSL_RETRIES):
             try:
                 project = await Project.from_id(project_id)
                 status_str = project.status.name if hasattr(project.status, 'name') else str(project.status)
                 pct = getattr(project, 'percent_complete', 0) or 0
+                
                 # In v2, IDLE + has_files = complete; IDLE + no files = failed/not started
                 is_complete = (
                     project.status == ProjectStatus.IDLE and project.has_files
                 )
+
+                if is_complete:
+                    pct = 100
+                elif pct == 0 and project.status != ProjectStatus.IDLE:
+                    # Try to estimate from sub-events if API returns 0%
+                    try:
+                        tasks, _ = await project.get_tasks(limit=10)
+                        if tasks:
+                            total_events_expected = 0
+                            completed_events = 0
+                            
+                            for task in tasks:
+                                if task.status.name in ("COMPLETE", "COMPLETE_WITH_ERRORS", "FAILED", "OUT_OF_BUDGET"):
+                                    completed_events += 15
+                                    total_events_expected += 15
+                                else:
+                                    events, _ = await task.get_events(limit=50)
+                                    total_events_expected += 15  # Assume ~15 events per task
+                                    completed_events += min(len(events), 14) # Cap at 14 until complete
+                            
+                            if total_events_expected > 0:
+                                pct = int((completed_events / total_events_expected) * 100)
+                                pct = min(99, pct) # Cap at 99% until project is actually IDLE
+                        elif status_str == "RUNNING":
+                            pct = 5 # Just started
+                    except Exception as e:
+                        print(f"[Aristotle] Failed to estimate progress from events for {project_id}: {e}")
+
                 return {
                     "project_id": project.project_id,
                     "status": status_str,
