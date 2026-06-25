@@ -7380,6 +7380,33 @@
     "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "MR857454",
+      "MR1417578",
+      "MR2742574"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any quadrilateral circumscribed to a parabola, if a valid tiling with vertical and horizontal stripes is constructed using Wang tiles derived from this quadrilateral, the densities of the vertical and horizontal stripes must be irrational numbers.",
+    "domain_bridges": [
+      "quadratic_irrationalities",
+      "tiling_theory",
+      "Parabola_geometry"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2496",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Geometric argument leveraging properties of parabolas and quadratic number fields to derive irrationality of stripe densities.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24693v1",
+    "status": "available",
+    "timestamp": "2026-06-25T05:59:06.114125+00:00",
+    "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "OEIS A287616",
@@ -7396,7 +7423,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2496",
+    "id": "fd_2497",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
@@ -7421,7 +7448,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2497",
+    "id": "fd_2498",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on $n$, leveraging the irreducibility of $f^2$ and a new function measuring 'complexity' in $\\mathbb{Q}(i)$ due to the absence of linear ordering. The base case $n=2$ is given. For the inductive step, analyze the factorization of $f^{n+1} = f^n \\circ f$ using the Galois action on preimages and the tree structure of iterations, adapting techniques from \\cite{evstb} to handle the two-dimensional nature of $\\mathbb{Q}(i)$.",
@@ -7445,7 +7472,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2498",
+    "id": "fd_2499",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the proof of Theorem 1.2(ii) by tracking the exact loss when applying Kahn's small-codegree edge-colouring theorem and the degree‑peeling process, aiming to convert the o(1) term into a uniform additive bound of 4.",
@@ -7469,7 +7496,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2499",
+    "id": "fd_2500",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use shifting/compression to transform an extremal family into a left‑compressed form while preserving the missing‑trace condition. Analyze the possible traces on a fixed (d+1)-set and apply Kleitman’s theorem on intersecting families to bound the number of sets containing a given subset. Perform an induction on n, considering whether a particular element appears in all sets or not. Show that any family attaining the bound must be isomorphic to the explicit construction: take all (d+1)-sets containing a fixed d‑set, together with all (d+1)-sets that avoid a fixed (2(d+1−s)+2)-set and contain a specific (2s−d−2)-subset of its complement.",
@@ -7478,6 +7505,33 @@
     "status": "available",
     "timestamp": "2026-06-25T05:43:09.628138+00:00",
     "title": "Optimality of the constructed family for the uniform witness conjecture in the upper range"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "mathlib/Algebra/AlgebraicTopology/StanleyReisner",
+      "mathlib/RingTheory/Regularity",
+      "mathlib/Combinatorics/SimplicialComplex"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integers a≥1, m≥1 and a tuple of block sizes \\(b_1,\\dots,b_m\\) with each \\(b_r\\ge 1\\), let \\(G = \\MM(a;\\mathbf{b}) = \\overline{K}_a * \\bigsqcup_{r=1}^m K_{b_r}\\) be the generalized multiple complete split‑like graph. Define \\(\\nu = \\#\\{r \\mid b_r \\ge 2\\}\\), the number of non‑trivial clique blocks. The conjecture asserts that the Castelnuovo–Mumford regularity of the edge ideal of \\(G\\) satisfies \\[ \\reg(G) = \\nu + 1. \\] This gives a simple closed‑form regularity formula for the entire family and refines the \"sharp criterion for 2‑linear resolution\" proved in the paper, which corresponds to the case \\(\\nu=0\\). The statement is precise, falsifiable, and can be formalised in Lean 4 using the existing libraries for simplicial complexes, edge ideals, and regularity.",
+    "domain_bridges": [
+      "Algebraic topology (independence complexes and joins)",
+      "Combinatorial commutative algebra (edge ideals, Hochster's formula)"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2501",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Hochster's formula to express \\(\\beta_{i,i+\\nu+1}(G)\\) as the dimension of reduced homology of induced subcomplexes of the independence complex. Show that for any subset W of vertices, the only possible non‑vanishing reduced homology occurs in dimension \\(\\nu\\) and only when W contains exactly one vertex from each non‑trivial clique block together with any subset of the a isolated vertices. This yields a non‑zero Betti number in homological degree \\(\\nu+1\\) and no Betti numbers with j-i > \\(\\nu+1\\). The forward inequality \\(\\reg(G) \\ge \\nu+1\\) follows from exhibiting such a subset; the reverse inequality follows from a combinatorial analysis of the join decomposition \\(\\ind(G) \\cong \\Delta_a * \\bigast_{r=1}^m \\Delta_{b_r}\\) where \\(\\Delta_{b_r}\\) is a simplex on \\(b_r\\) vertices (contractible) and the only contribution to higher homology comes from the discrete pieces coming from blocks with \\(b_r\\ge2\\). Formalising the join‑homology lemma and the coefficient extraction in Lean wil",
+    "research_mode": "team",
+    "source_exp_id": "2606.24822v1",
+    "status": "available",
+    "timestamp": "2026-06-25T06:00:04.455853+00:00",
+    "title": "Regularity of generalized multiple complete split-like graphs equals the number of non‑trivial clique blocks plus one"
   },
   {
     "ambition_level": "extension",

@@ -4321,11 +4321,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
+    "description": "For any quadrilateral circumscribed to a parabola, if a valid tiling with vertical and horizontal stripes is constructed using Wang tiles derived from this quadrilateral, the densities of the vertical and horizontal stripes must be irrational numbers.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2496",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24693v1",
+    "status": "available",
+    "timestamp": "2026-06-25T05:59:06.114125+00:00",
+    "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2497",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4339,7 +4353,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2497",
+    "id": "fd_2498",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4353,7 +4367,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2498",
+    "id": "fd_2499",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4367,13 +4381,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2499",
+    "id": "fd_2500",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
     "status": "available",
     "timestamp": "2026-06-25T05:43:09.628138+00:00",
     "title": "Optimality of the constructed family for the uniform witness conjecture in the upper range"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integers a\u22651, m\u22651 and a tuple of block sizes \\(b_1,\\dots,b_m\\) with each \\(b_r\\ge 1\\), let \\(G = \\MM(a;\\mathbf{b}) = \\overline{K}_a * \\bigsqcup_{r=1}^m K_{b_r}\\) be the generalized multiple complete split\u2011like graph. Define \\(\\nu = \\#\\{r \\mid b_r \\ge 2\\}\\), the number of non\u2011trivial clique blocks. The conjecture asserts that the Castelnuovo\u2013Mumford regularity of the edge ideal of \\(G\\) satisfies \\[ \\reg(G) = \\nu + 1. \\] This gives a simple closed\u2011form regularity formula for the entire family and refines the \"sharp criterion for 2\u2011linear resolution\" proved in the paper, which corresponds to the case \\(\\nu=0\\). The statement is precise, falsifiable, and can be formalised in Lean\u202f4 using the existing libraries for simplicial complexes, edge ideals, and regularity.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2501",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24822v1",
+    "status": "available",
+    "timestamp": "2026-06-25T06:00:04.455853+00:00",
+    "title": "Regularity of generalized multiple complete split-like graphs equals the number of non\u2011trivial clique blocks plus one"
   },
   {
     "consumed_by_exp_id": "",

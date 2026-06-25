@@ -43680,6 +43680,52 @@
       "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "MR857454",
+        "MR1417578",
+        "MR2742574"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any quadrilateral circumscribed to a parabola, if a valid tiling with vertical and horizontal stripes is constructed using Wang tiles derived from this quadrilateral, the densities of the vertical and horizontal stripes must be irrational numbers.",
+      "domain_bridges": [
+        "quadratic_irrationalities",
+        "tiling_theory",
+        "Parabola_geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2496",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Given a quadrilateral Q circumscribed to a parabola P, and a valid tiling T with vertical/horizontal stripes derived from Q, then the densities of vertical and horizontal stripes in T are irrational.",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Geometric argument leveraging properties of parabolas and quadratic number fields to derive irrationality of stripe densities.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24693v1",
+      "source_path": "http://arxiv.org/abs/2606.24693v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T05:59:06.114125+00:00",
+      "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -43705,7 +43751,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2496",
+      "id": "fd_2497",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -43749,7 +43795,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2497",
+      "id": "fd_2498",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -43792,7 +43838,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2498",
+      "id": "fd_2499",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -43835,7 +43881,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2499",
+      "id": "fd_2500",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
@@ -43854,6 +43900,52 @@
       "thread_id": "",
       "timestamp": "2026-06-25T05:43:09.628138+00:00",
       "title": "Optimality of the constructed family for the uniform witness conjecture in the upper range"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "mathlib/Algebra/AlgebraicTopology/StanleyReisner",
+        "mathlib/RingTheory/Regularity",
+        "mathlib/Combinatorics/SimplicialComplex"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any integers a≥1, m≥1 and a tuple of block sizes \\(b_1,\\dots,b_m\\) with each \\(b_r\\ge 1\\), let \\(G = \\MM(a;\\mathbf{b}) = \\overline{K}_a * \\bigsqcup_{r=1}^m K_{b_r}\\) be the generalized multiple complete split‑like graph. Define \\(\\nu = \\#\\{r \\mid b_r \\ge 2\\}\\), the number of non‑trivial clique blocks. The conjecture asserts that the Castelnuovo–Mumford regularity of the edge ideal of \\(G\\) satisfies \\[ \\reg(G) = \\nu + 1. \\] This gives a simple closed‑form regularity formula for the entire family and refines the \"sharp criterion for 2‑linear resolution\" proved in the paper, which corresponds to the case \\(\\nu=0\\). The statement is precise, falsifiable, and can be formalised in Lean 4 using the existing libraries for simplicial complexes, edge ideals, and regularity.",
+      "domain_bridges": [
+        "Algebraic topology (independence complexes and joins)",
+        "Combinatorial commutative algebra (edge ideals, Hochster's formula)"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2501",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem regularity_MMsplit (a : ℕ) (b : List ℕ) (hb : ∀ r ∈ b, 1 ≤ r) :\n  let G := MM a b\n  let ν := (b.filter (· ≥ 2)).length\n  reg (edgeIdeal G) = ν + 1 :=\nby\n  -- proof goes here",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use Hochster's formula to express \\(\\beta_{i,i+\\nu+1}(G)\\) as the dimension of reduced homology of induced subcomplexes of the independence complex. Show that for any subset W of vertices, the only possible non‑vanishing reduced homology occurs in dimension \\(\\nu\\) and only when W contains exactly one vertex from each non‑trivial clique block together with any subset of the a isolated vertices. This yields a non‑zero Betti number in homological degree \\(\\nu+1\\) and no Betti numbers with j-i > \\(\\nu+1\\). The forward inequality \\(\\reg(G) \\ge \\nu+1\\) follows from exhibiting such a subset; the reverse inequality follows from a combinatorial analysis of the join decomposition \\(\\ind(G) \\cong \\Delta_a * \\bigast_{r=1}^m \\Delta_{b_r}\\) where \\(\\Delta_{b_r}\\) is a simplex on \\(b_r\\) vertices (contractible) and the only contribution to higher homology comes from the discrete pieces coming from blocks with \\(b_r\\ge2\\). Formalising the join‑homology lemma and the coefficient extraction in Lean wil",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24822v1",
+      "source_path": "http://arxiv.org/abs/2606.24822v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T06:00:04.455853+00:00",
+      "title": "Regularity of generalized multiple complete split-like graphs equals the number of non‑trivial clique blocks plus one"
     },
     {
       "ambition_level": "extension",
