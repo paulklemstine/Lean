@@ -182,6 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
             filteredCount++;
             
             const parts = f.file.split('/');
+            if (parts[0] === 'Catalog') parts.shift();
+            
             let current = root;
             for (let i = 0; i < parts.length - 1; i++) {
                 const p = parts[i];
@@ -299,7 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .replace(/>/g, "&gt;");
                 
             // Very naive keyword highlighting
-            processedLine = processedLine.replace(/\\b(import|theorem|lemma|def|example|by|exact|apply|intro|intros|rw|simp|sorry|noncomputable|open)\\b/g, '<span style="color: var(--accent-color); font-weight: 600;">$1</span>');
+            processedLine = processedLine.replace(/\b(import|theorem|lemma|def|example|by|exact|apply|intro|intros|rw|simp|sorry|noncomputable|open)\b/g, '<span style="color: var(--accent-color); font-weight: 600;">$1</span>');
             
             // Hyperlink known theorems (excluding standard keywords)
             allThms.forEach(thm => {
@@ -317,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             
-            highlightedHtml += processedLine + '\\n';
+            highlightedHtml += processedLine + '\n';
         });
 
         detailContainer.innerHTML = `
