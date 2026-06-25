@@ -3816,7 +3816,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing Hales-Jewett lower bounds via symmetric coloring in Lean"
   },
   {
-    "consumed_by_exp_id": "d1e8d4ba",
+    "consumed_by_exp_id": "",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_\u03bb^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition \u03bb = (\u03bb\u2081, \u03bb\u2082, ..., \u03bb_k) with \u03bb\u2081 > \u03bb\u2082 > ... > \u03bb_k \u2265 0, the formula takes the form s_\u03bb^Q(t) = Pf[Y_{\u03bb_i - i + j}(t) + Y_{\u03bb_j - j + i}(t)]_{1\u2264i<j\u2264k} \u00b7 vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domains": [
       "Algebra"
@@ -3825,7 +3825,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -4132,7 +4132,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8f472f7",
     "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
     "domains": [
       "Bridges"
@@ -4141,7 +4141,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T23:35:20.703960+00:00",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
@@ -4913,11 +4913,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture a Rogers-Ramanujan type identity for a sum over four variables with denominators involving (q^4; q^4)_n, expressed as a product involving J_4^3 and J_1^3. This extends the pattern observed in Theorem~2 of the referenced paper to a higher modulus.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2541",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25866v1",
+    "status": "available",
+    "timestamp": "2026-06-25T19:16:31.304723+00:00",
+    "title": "Conjecture on Modular Rank Four Nahm Sums with Modulus 4"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every integers r \u2265 3 and k \u2265 3 there exist arbitrarily large linear r\u2011uniform hypergraphs on n vertices with edge count just below the bound given in Theorem\u00a01 that contain no ((r\u20112)k+3,\u202fk)\u2011configuration. In other words, the density threshold in Theorem\u00a01 is sharp up to lower\u2011order terms.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2541",
+    "id": "fd_2542",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5537,21 +5551,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
-  },
-  {
-    "consumed_by_exp_id": "54abcfb1",
-    "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "fd_0547",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.541008+00:00",
-    "title": "Tropical Differential Equations: Power Series Solutions"
   },
   {
     "consumed_by_exp_id": "",

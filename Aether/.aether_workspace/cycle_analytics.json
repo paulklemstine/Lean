@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T18:50:29.398699+00:00",
+  "last_updated": "2026-06-25T19:11:38.971839+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -7050,6 +7050,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T18:50:28.981035+00:00",
       "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3743,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 6,
+      "domain": "Computation",
+      "duration_seconds": 1301.2919011116028,
+      "end_time": 1782414468.54805,
+      "files_integrated": 8,
+      "job_id": "54abcfb1",
+      "outcome_quality": 0.45116,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v2",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6123,
+        "cross_domain": 0.95,
+        "grade": "substantial",
+        "importance": 0.387,
+        "novelty": 0.89,
+        "proof_depth": 0.1714,
+        "usefulness": 0.5607
+      },
+      "quality_score": 0.45116,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782413167.2561488,
+      "strategy_count": 0,
+      "theorem_count": 17,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 17,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T19:11:38.283625+00:00",
+      "title": "Tropical Differential Equations: Power Series Solutions"
     }
   ]
 }

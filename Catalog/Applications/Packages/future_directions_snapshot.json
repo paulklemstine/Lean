@@ -6466,7 +6466,7 @@
       "Vertex operator algebras and symmetric functions",
       "Pfaffian Giambelli formulas"
     ],
-    "consumed_by_exp_id": "d1e8d4ba",
+    "consumed_by_exp_id": "",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_λ^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition λ = (λ₁, λ₂, ..., λ_k) with λ₁ > λ₂ > ... > λ_k ≥ 0, the formula takes the form s_λ^Q(t) = Pf[Y_{λ_i - i + j}(t) + Y_{λ_j - j + i}(t)]_{1≤i<j≤k} · vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domain_bridges": [
       "Vertex operator methods in symmetric function theory",
@@ -6482,7 +6482,7 @@
     "proof_strategy": "Formalize the operator construction in Lean 4, prove the Clifford algebra relation [Y_m(t), Y_n(t)]₊ = 2(-1)^mδ_{m,-n}, then establish the Pfaffian determinant formula using standard Pfaffian identities and the operator product expansion, verifying the t=0 specialization recovers the classical Schur Q-function identity.",
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -7055,7 +7055,7 @@
     "catalog_references": [
       "arXiv:2310.00000"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8f472f7",
     "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
     "domain_bridges": [
       "torus methods",
@@ -7071,7 +7071,7 @@
     "proof_strategy": "Use the lacunary matrix theorem to construct a multiplier vector via linear algebra over \\(\\R\\) and verify its multiplicative properties in the torus. Combine with geometric arguments to ensure minimality and global consistency.",
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T23:35:20.703960+00:00",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
@@ -8506,6 +8506,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "CW25"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture a Rogers-Ramanujan type identity for a sum over four variables with denominators involving (q^4; q^4)_n, expressed as a product involving J_4^3 and J_1^3. This extends the pattern observed in Theorem~2 of the referenced paper to a higher modulus.",
+    "domain_bridges": [
+      "q-series identities",
+      "modular forms",
+      "Rogers-Ramanujan type identities"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2541",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the lift-dual operation to modular rank three Nahm sums adapted for modulus 4, then use the method of false infinite product series and modular equations as in the referenced paper.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25866v1",
+    "status": "available",
+    "timestamp": "2026-06-25T19:16:31.304723+00:00",
+    "title": "Conjecture on Modular Rank Four Nahm Sums with Modulus 4"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "arXiv:2210.12345",
       "Brown–Erdős–Sós conjecture",
       "Keevash–Long 2023"
@@ -8519,7 +8544,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2541",
+    "id": "fd_2542",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit families of linear r‑uniform hypergraphs (e.g. using finite projective planes, affine geometries, or suitable random constructions) whose edge count meets the bound in Theorem 1 minus an arbitrarily small ε. Prove combinatorially that these hypergraphs avoid any ((r‑2)k+3, k)‑configuration by analysing intersection patterns of edges and counting arguments. The construction should show that any attempt to exceed this edge count would force the existence of the forbidden configuration, thereby proving the bound in Theorem 1 is tight.",
@@ -9351,26 +9376,6 @@
     "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "54abcfb1",
-    "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "fd_0547",
-    "lineage_refs": [],
-    "priority_score": 0.5499999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.541008+00:00",
-    "title": "Tropical Differential Equations: Power Series Solutions"
   },
   {
     "ambition_level": "extension",

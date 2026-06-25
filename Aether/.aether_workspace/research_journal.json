@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "54f377a3",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions: Sheaf-Theoretic Data Integration\n\nDerived from this cycle's findings (gluing of the database/function sheaf,\nthe corrected consistency-probability law `(1-r)^{C(k,2)}`, and the ca",
-      "quality_score": 0.3998539157894737,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-19T09:40:16",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
-    {
       "cycle_id": "26902e54",
       "domain": "Shared",
       "key_insight": "# Future Directions — Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. The verified core is in `Shar",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-25T18:50:27",
       "title": "Extremal Graph Theory: Turán and Szemerédi"
+    },
+    {
+      "cycle_id": "54abcfb1",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Tropical Differential Equations: Power-Series Solutions\n\nDerived from this cycle's findings (`Basic.lean`, `Balancing.lean`, `FundamentalTheorem.lean`):\nthe order map `ord : K⟦X⟧",
+      "quality_score": 0.45116,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-25T19:11:36",
+      "title": "Tropical Differential Equations: Power Series Solutions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72533
     }
   ],
-  "last_updated": "2026-06-25T18:50:27",
+  "last_updated": "2026-06-25T19:11:36",
   "open_questions": [
     {
       "context": "",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "43fe3cd5",
-        "quality": 0.37623999999999996,
-        "theorems": 10,
-        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-      },
-      {
         "cycle_id": "5ef4c190",
         "quality": 0.512,
         "theorems": 13,
@@ -3327,6 +3321,12 @@
         "quality": 0.64162,
         "theorems": 10,
         "title": "Spectral Modular Signatures of Formal Proof Difficulty"
+      },
+      {
+        "cycle_id": "54abcfb1",
+        "quality": 0.45116,
+        "theorems": 17,
+        "title": "Tropical Differential Equations: Power Series Solutions"
       }
     ],
     "Cryptography": [
