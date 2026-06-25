@@ -1,296 +1,418 @@
-# EML Differential Equations: Formal Obstructions to Elementary Solutions of Second-Order Linear ODEs
+# An Elementary Degree Obstruction to Exponential–Polynomial Solutions of Airy's Equation
+
+**Author:** Aristotle
+**Date:** 2026-06-25
+**Domain:** Applications (Differential Equations / Differential Algebra)
 
 ## Abstract
 
-We formalize the theory connecting second-order linear ordinary differential equations with EML (exponential-monomial-logarithmic) coefficient functions to the solvability of associated Riccati equations. Our main results, formalized in Lean 4 with Mathlib, are: (1) **Abel's Wronskian Identity** — for solutions y₁, y₂ of y'' + p·y' + q·y = 0, the Wronskian satisfies W' = -p·W; (2) **Riccati Reduction** — the quotient derivative y'/y satisfies a first-order Riccati equation; (3) **Airy Polynomial Obstruction** — no polynomial satisfies the Riccati equation w' + w² = x associated to the Airy equation y'' = xy; (4) **Kovacic Case 1 Obstruction** — X is not a perfect square in ℝ[X], ruling out the first case of Kovacic's algorithm; and (5) **EML Differential Closure** — the class of EML functions is closed under differentiation, with explicit structure theorems for logarithmic derivatives and exponential-polynomial products. These results formalize the algebraic core of the classical proof that Airy's equation has no Liouvillian solutions.
+Airy's equation $y'' = x\,y$ is the canonical second-order linear ordinary
+differential equation whose solutions — the Airy functions $\mathrm{Ai}$ and
+$\mathrm{Bi}$ — are not elementary. We give a complete, self-contained, and
+machine-verified proof that no *exponential–polynomial* solves Airy's equation:
+if $q,p \in \mathbb{R}[X]$ with $q \neq 0$, then $f(x) = q(x)\,e^{p(x)}$ does not
+satisfy $f'' = x f$. The proof rests on a single algebraic object, the **Airy
+coefficient**
+$$ \operatorname{airyCoeff}(q,p) = q'' + 2 q' p' + q\,p'' + q\,(p')^2 \in \mathbb{R}[X], $$
+characterized by the analytic identity $\big(q\,e^{p}\big)'' =
+\operatorname{airyCoeff}(q,p)\cdot e^{p}$. Cancelling the nowhere-vanishing factor
+$e^{p}$ reduces the differential equation to the polynomial identity
+$\operatorname{airyCoeff}(q,p) = X\cdot q$, which we refute by a degree (indeed a
+*parity*) argument: when $p' \neq 0$ the leading term $q\,(p')^2$ forces
+$\deg \operatorname{airyCoeff}(q,p) = \deg q + 2\deg p'$, an excess of $2\deg p'$
+over $\deg q$, whereas $X\cdot q$ has excess exactly $1$; even cannot equal odd.
+The degenerate case $p' = 0$ yields $\operatorname{airyCoeff}(q,p) = q''$, whose
+degree is strictly below that of $X\cdot q$. We discuss the embedding of this
+result in differential Galois theory and the Risch–Kovacic algorithmic framework,
+and outline several generalizations: arbitrary second-order polynomial-coefficient
+operators, higher-order Airy-type equations $y^{(n)} = x y$, the complex case, and
+an effective decision procedure for $q\,e^{p}$ closed forms.
 
 ## 1. Introduction
 
 ### 1.1 Background
 
-The question of when a differential equation admits solutions expressible in terms of "elementary" functions has been a central problem in mathematics since Liouville's pioneering work in the 1830s. The EML functions — finite compositions of exponentials, monomials, and logarithms over a base field — form a natural class capturing what mathematicians call "closed-form" solutions.
-
-For second-order linear ODEs of the form y'' + p(x)·y' + q(x)·y = 0, the differential Galois theory of Kolchin, Singer, and others provides a complete characterization: the equation has a Liouvillian solution if and only if the identity component of its differential Galois group is solvable. Kovacic (1986) made this constructive for rational coefficients.
-
-### 1.2 Contributions
-
-This work formalizes the foundational layer of this theory in Lean 4:
-
-1. **Abel's Identity** (Theorem 3.1): The Wronskian of two solutions satisfies a first-order linear ODE determined solely by the coefficient p.
-
-2. **Riccati Reduction** (Theorem 3.2): Solutions of y'' = r·y correspond to solutions of the Riccati equation w' + w² = r.
-
-3. **Airy Riccati Obstruction** (Theorem 4.1): No polynomial in ℝ[X] satisfies w' + w² = X, proved by degree analysis.
-
-4. **EML Differential Closure** (Theorems 5.1-5.4): The logarithmic derivative of products decomposes additively, exponential compositions have explicit derivative structure, and exponential-polynomial products are closed under differentiation.
-
-5. **Growth and Square Obstructions** (Theorems 4.2-4.3): X is not a perfect square in ℝ[X], and √x is not a polynomial function, providing complementary obstructions.
-
-### 1.3 Relation to Prior Work
-
-Our formalization builds upon:
-- The EML function theory from `EML/EMLv17Core.lean` (definitions of eml, emlDiag, sigmaEml)
-- The Schwartz-Zippel and Freivalds results in `Algebra/FreivaldsSchwartzZippel.lean`
-- The Galois theory connections in `Bridges/GaloisNeuralCorrespondence.lean`
-
-We extend the existing `eml_beats_poly_for_towers` result (from `EML/UniversalApproxComplexity.lean`) by showing that the EML advantage has differential-equation-theoretic consequences: EML functions generate ODEs whose solution structure constrains what other EML functions can appear as solutions.
-
-## 2. Definitions
-
-### 2.1 EML Functions
-
-**Definition** (EML function). The function eml : ℝ → ℝ → ℝ is defined by
-```
-eml(x, y) = exp(x) - log(y)
-```
-This combines the two fundamental transcendental operations and serves as the basic building block for the EML function class.
-
-### 2.2 Linear ODEs
-
-**Definition** (Second-order linear ODE). A function f satisfies the ODE y'' + p·y' + q·y = 0 at x if
-```
-HasDerivAt (deriv f) (-(p(x) · deriv f x + q(x) · f(x))) x
-```
-
-**Definition** (Reduced form). A function f satisfies y'' = r·y at x if
-```
-HasDerivAt (deriv f) (r(x) · f(x)) x
-```
-
-### 2.3 Wronskian and Riccati Substitution
-
-**Definition** (Wronskian).
-```
-W(f₁, f₂)(x) = f₁(x) · f₂'(x) - f₂(x) · f₁'(x)
-```
-
-**Definition** (Riccati substitution).
-```
-w(x) = f'(x) / f(x)
-```
-
-## 3. Core Results: Abel's Identity and Riccati Reduction
-
-### 3.1 Abel's Wronskian Identity
-
-**Theorem 3.1** (Abel's Identity). *Let f₁, f₂ be differentiable functions both satisfying y'' + p·y' + q·y = 0 at x. Then the Wronskian satisfies*
-```
-HasDerivAt W (-p(x) · W(x)) x
-```
-
-*Proof sketch.* Differentiate W = f₁·f₂' - f₂·f₁' using the product rule:
-```
-W' = f₁'·f₂' + f₁·f₂'' - f₂'·f₁' - f₂·f₁''
-   = f₁·f₂'' - f₂·f₁''
-```
-Substituting f₁'' = -p·f₁' - q·f₁ and f₂'' = -p·f₂' - q·f₂:
-```
-W' = f₁·(-p·f₂' - q·f₂) - f₂·(-p·f₁' - q·f₁)
-   = -p·(f₁·f₂' - f₂·f₁') = -p·W
-```
-
-The formal proof in Lean uses `HasDerivAt.mul` for the product rule and `ring` for the algebraic simplification. □
-
-**Remark.** A subtle point: the formal proof does not use the hypotheses that deriv f₁ and deriv f₂ are differentiable at x, because the proof extracts second-derivative information directly from the ODE hypothesis `SatisfiesLinearODE₂`, which provides `HasDerivAt (deriv f)` directly. This is a case where the formalization reveals that the classical statement includes unnecessary hypotheses.
-
-### 3.2 Riccati Reduction
-
-**Theorem 3.2** (Riccati Reduction). *Let f satisfy y'' = r(x)·y at x with f(x) ≠ 0. Then w = f'/f satisfies*
-```
-HasDerivAt w (r(x) - w(x)²) x
-```
-
-*Proof sketch.* Apply the quotient rule to w = f'/f:
-```
-w' = (f''·f - (f')²) / f² = (r·f² - (f')²) / f² = r - (f'/f)² = r - w²
-```
-
-The formal proof uses `HasDerivAt.div` and algebraic simplification. □
-
-### 3.3 Structural Properties
-
-**Theorem 3.3** (Wronskian antisymmetry). W(f₁, f₂) = -W(f₂, f₁).
-
-**Theorem 3.4** (Wronskian self-vanishing). W(f, f) = 0.
-
-These are proved by direct algebraic manipulation (`ring`).
-
-## 4. Airy Equation Obstructions
-
-### 4.1 No Polynomial Riccati Solutions
-
-**Theorem 4.1** (Main Airy Obstruction). *There exists no polynomial w ∈ ℝ[X] such that w' + w² = X.*
-
-*Proof.* By case analysis on deg(w):
-
-**Case deg(w) ≤ 1:** Write w = aX + b by `Polynomial.eq_X_add_C_of_natDegree_le_one`. Evaluate at x = -1, 0, 1 to obtain the system:
-- a + a² + b² - 2ab = -1
-- a + b² = 0  
-- a + a² + b² + 2ab = 1
-
-These are inconsistent (the first and third give 4ab = 2, the second gives a = -b², and substitution yields a contradiction).
-
-**Case deg(w) ≥ 2:** The leading coefficient of w² is (leading_coeff w)² ≠ 0 (since ℝ has no zero divisors). Therefore deg(w²) = 2·deg(w) ≥ 4. Since deg(w') ≤ deg(w) - 1 < 2·deg(w), we have deg(w' + w²) = 2·deg(w) ≥ 4 ≠ 1 = deg(X). □
-
-**PEGB Analysis:**
-- **P**roof: Complete Lean 4 proof by degree analysis and evaluation
-- **E**xample: For w = X², we get w' + w² = 2X + X⁴, which has degree 4 ≠ 1
-- **G**eneralization: The same argument shows no polynomial satisfies w' + w² = p(X) for any polynomial p of odd degree
-- **B**oundary: The argument fails for w' + w² = X² (degree 2), which *could* have a degree-1 solution w = aX + b. Indeed w = X - 1/(2X) nearly works.
-
-### 4.2 X Is Not a Perfect Square
-
-**Theorem 4.2.** *There is no polynomial p ∈ ℝ[X] such that p² = X.*
-
-*Proof.* If p² = X, then 2·deg(p) = deg(X) = 1, which is impossible since 2·deg(p) is even. □
-
-This obstructs the first case of Kovacic's algorithm, which requires √r(x) to be rational.
-
-### 4.3 √x Is Not Polynomial
-
-**Theorem 4.3.** *There is no polynomial p ∈ ℝ[X] such that p(x) = √x for all x ≥ 0.*
-
-*Proof.* If such p exists, then p(x)² = x for all x ≥ 0. Since ℝ[X] elements agreeing on an infinite set are equal, p² = X as polynomials. But deg(p²) is even while deg(X) = 1 is odd. □
-
-**PEGB Analysis:**
-- **P**roof: Uses the fact that polynomials agreeing on an infinite set are equal, then the degree parity argument
-- **E**xample: √4 = 2, √9 = 3 — these values can't come from a polynomial since a degree-n polynomial is determined by n+1 points
-- **G**eneralization: More generally, x^(p/q) for p/q not a natural number cannot be polynomial. The growth order p/q is a rational non-integer, incompatible with polynomial integer growth
-- **B**oundary: x^(1/2) on [0,∞) *can* be uniformly approximated by polynomials (Weierstrass), but not exactly represented
-
-## 5. EML Differential Algebra
-
-### 5.1 Logarithmic Derivative Additivity
-
-**Theorem 5.1.** *For differentiable f, g with f(x) ≠ 0, g(x) ≠ 0:*
-```
-(log(f·g))' = f'/f + g'/g
-```
-
-This is the infinitesimal version of log(ab) = log(a) + log(b) and underlies the multiplicative-to-additive correspondence in differential Galois theory.
-
-### 5.2 Logarithmic Derivative of Exponential
-
-**Theorem 5.2.** *For differentiable f:*
-```
-(exp(f))' / exp(f) = f'
-```
-
-This shows that exp maps the additive group of derivatives to the multiplicative group — the basic Galois correspondence in the differential setting.
-
-### 5.3 Exponential-Polynomial Closure
-
-**Theorem 5.3.** *For any a ∈ ℝ and differentiable p:*
-```
-(p·exp(a·x))' = (p' + a·p)·exp(a·x)
-```
-
-This closure theorem shows that exponential-polynomial products form a stable class under differentiation — the fundamental reason why EML functions appear as solutions to linear ODEs with polynomial coefficients.
-
-### 5.4 Double Exponential ODE
-
-**Theorem 5.4.** *The function exp(-exp(x)) satisfies f' = -exp(x)·f.*
-
-This arises from Abel's identity when p(x) = exp(x), demonstrating that EML coefficients produce EML-structured solutions of the Wronskian equation.
-
-**PEGB Analysis:**
-- **P**roof: Chain rule composition of exp(-·) with -exp(·)
-- **E**xample: At x = 0, exp(-e⁰) = exp(-1) ≈ 0.368, and the derivative is -1·0.368 = -0.368
-- **G**eneralization: exp(-∫p) satisfies f' = -p·f for any continuous p; when p is EML of tower height n, this produces EML of height n+1
-- **B**oundary: Infinite EML towers (exp(exp(exp(...)))) are not EML — the class requires finite height
-
-## 6. Connections to Differential Galois Theory
-
-### 6.1 The Galois Group of the Airy Equation
-
-The differential Galois group of y'' = xy over ℂ(x) is known to be SL(2,ℂ). This group is:
-- **Connected**: SL(2,ℂ) = SL(2,ℂ)⁰
-- **Simple**: It has no proper normal algebraic subgroups
-- **Non-solvable**: Its derived series does not terminate
-
-By Kolchin's theorem, a linear ODE has Liouvillian solutions iff the identity component G⁰ of its differential Galois group is solvable. Since SL(2,ℂ)⁰ = SL(2,ℂ) is non-solvable, the Airy equation has no Liouvillian solutions.
-
-### 6.2 Kovacic's Algorithm
-
-Our polynomial obstruction theorem (Theorem 4.1) corresponds to **Case 1** of Kovacic's algorithm:
-
-- **Case 1** requires a rational solution of the Riccati equation. Our theorem shows no polynomial solution exists; the full Case 1 check (for rational solutions P/Q) requires showing that pole analysis also fails.
-- **Case 2** requires an algebraic solution of degree 2.
-- **Case 3** requires an algebraic solution of degree 4, 6, or 12.
-
-For the Airy equation, all three cases fail because SL(2,ℂ) has no proper algebraic subgroups of the required types.
-
-### 6.3 Bridge to Classical Galois Theory
-
-The structural parallel is precise: Abel's theorem on the Wronskian is the differential analog of the discriminant in classical Galois theory. Just as the discriminant of a polynomial determines whether its Galois group is contained in the alternating group, the Wronskian determines whether the differential Galois group preserves a particular bilinear form.
-
-This bridge connects our results to `Bridges/GaloisNeuralCorrespondence.lean`, which formalizes `prime_degree_divides_galois_order` for classical field extensions. The differential analog would be: the "degree" of a Picard-Vessiot extension divides the order of the differential Galois group.
-
-## 7. Algorithms
-
-### 7.1 Kovacic Algorithm (Case 1)
-
-```
-Input: r(x) ∈ ℚ(x), the coefficient in y'' = r(x)·y
-Output: An EML solution or "no elementary solution exists"
-
-Step 1: Find the poles of r(x) and their orders
-Step 2: For each pole, compute local exponents
-Step 3: Check if w = ∑(local terms) satisfies w' + w² = r(x)
-Step 4: If yes, return y = exp(∫w). If no, proceed to Case 2.
-```
-
-### 7.2 EML Tower Height Computation
-
-```
-Input: An EML expression e
-Output: The tower height h(e)
-
-h(polynomial) = 0
-h(exp(e)) = h(e) + 1
-h(log(e)) = h(e) + 1
-h(e₁ + e₂) = max(h(e₁), h(e₂))
-h(e₁ · e₂) = max(h(e₁), h(e₂))
-```
-
-## 8. Discussion
-
-### 8.1 What the Formalization Reveals
-
-The formal proofs reveal several insights not obvious from the classical presentation:
-
-1. **Abel's Identity needs fewer hypotheses than expected.** The formal proof of Theorem 3.1 does not use the separate differentiability hypotheses for deriv f₁ and deriv f₂, because the ODE hypothesis already provides HasDerivAt for the second derivative.
-
-2. **The polynomial obstruction is surprisingly robust.** The degree argument works uniformly for all degrees — there is no "exceptional" degree that requires special treatment.
-
-3. **The square root obstruction connects algebra and analysis.** Theorem 4.3 uses the fact that polynomials agreeing on an infinite set are equal (an algebraic result) to bridge to the conclusion about growth orders (an analytic result).
-
-### 8.2 Limitations
-
-Our formalization does not cover:
-- The full rational-function case of Kovacic Case 1 (pole analysis)
-- Cases 2 and 3 of the Kovacic algorithm
-- The complete proof that the Airy equation's Galois group is SL(2,ℂ)
-- The general Kolchin theorem connecting Galois groups to Liouvillian solvability
-
-These would require substantially more Mathlib infrastructure for algebraic groups and differential algebra.
-
-## 9. Future Work
-
-1. **Formalize the Stokes phenomenon**: The Airy function exhibits Stokes lines where its asymptotic expansion changes form. Formalizing this would connect our differential Galois theory to asymptotic analysis.
-
-2. **Extend to Painlevé equations**: The Painlevé equations are the "next level" beyond linear ODEs. Their differential Galois theory involves nonlinear algebraic groups.
-
-3. **Constructive Kovacic**: Implement a verified Kovacic algorithm in Lean that both decides solvability and constructs solutions when they exist.
-
-## References
-
-1. Kovacic, J.J. "An algorithm for solving second order linear homogeneous differential equations." *J. Symbolic Computation* 2 (1986), 3-43.
-
-2. Singer, M. "Liouvillian solutions of n-th order homogeneous linear differential equations." *Amer. J. Math.* 103 (1981), 661-682.
-
-3. van der Put, M.; Singer, M. *Galois Theory of Linear Differential Equations.* Springer, 2003.
-
-4. Kolchin, E.R. *Differential Algebra and Algebraic Groups.* Academic Press, 1973.
-
-5. Catalog results: `EML/EMLv17Core.lean` (eml definitions), `Bridges/GaloisNeuralCorrespondence.lean` (Galois order theorem), `EML/UniversalApproxComplexity.lean` (EML tower complexity).
+Airy's differential equation,
+$$ y'' = x\,y, \tag{Airy} $$
+was introduced by G. B. Airy in 1838 in the study of caustics and the intensity
+of light near a fold (e.g., the bright fringes of a rainbow). It is the simplest
+linear ODE exhibiting a *turning point*: the qualitative behavior of solutions
+changes from oscillatory (for $x<0$) to exponential (for $x>0$) as the coefficient
+$x$ changes sign. Its two standard real solutions $\mathrm{Ai}(x)$ and
+$\mathrm{Bi}(x)$ are entire transcendental functions of fundamental importance in
+optics, quantum mechanics (the WKB connection problem), asymptotic analysis, and
+random matrix theory (the Tracy–Widom distribution).
+
+It is classical that the Airy functions are *not elementary*: they cannot be
+expressed as finite combinations of polynomials, exponentials, logarithms, and
+algebraic functions. The modern explanation is differential Galois theory
+(Picard–Vessiot theory): the differential Galois group of (Airy) over
+$\mathbb{C}(x)$ is $\mathrm{SL}_2(\mathbb{C})$, which is not solvable, so by the
+Liouville–Kolchin criterion (Airy) has no Liouvillian solution.
+
+This paper isolates a particularly transparent, elementary fragment of that fact.
+Rather than invoke the full Galois machinery, we directly refute the most natural
+and most common closed-form ansatz — a polynomial times the exponential of a
+polynomial — using nothing more than the product/chain rules and the arithmetic of
+polynomial degrees. The result is sharp, fully rigorous, and has been formalized
+and machine-checked.
+
+### 1.2 The exponential–polynomial ansatz
+
+By an **exponential–polynomial** we mean a function of the form
+$$ f(x) = q(x)\,e^{p(x)}, \qquad q,p \in \mathbb{R}[X]. \tag{EP} $$
+This family is closed under differentiation and contains, as special cases: all
+polynomials ($p = 0$); the elementary exponentials $e^{cx}$; Gaussians
+$e^{-x^2}$; and products such as $x^k e^{p(x)}$. It is exactly the natural
+"first guess" one writes down when attempting a closed-form solution of a linear
+ODE, and it constitutes the leaf of the Liouvillian tower obtained by a single
+exponential extension over $\mathbb{R}(x)$ with a polynomial prefactor.
+
+### 1.3 Main result
+
+> **Theorem (no exponential–polynomial solves Airy).** Let $q,p \in
+> \mathbb{R}[X]$ with $q \neq 0$. Then $f = q\,e^{p}$ does **not** satisfy
+> $f'' = x f$ on $\mathbb{R}$. Equivalently, there is no nonzero $q$ such that
+> $$ \forall x \in \mathbb{R}, \quad \frac{d^2}{dx^2}\!\left[q(x)e^{p(x)}\right]
+> = x\,q(x)\,e^{p(x)}. $$
+
+In the formalization this is the theorem `no_exp_poly_solves_airy`. The proof is
+assembled from an algebraic core (`airyCoeff`, `airyCoeff_eq`,
+`degree_airyCoeff_eq`, `airyCoeff_ne_X_mul`) and an analytic bridge
+(`hasDerivAt_poly_mul_exp`, `second_deriv_poly_mul_exp`).
+
+### 1.4 Organization
+
+Section 2 fixes notation. Section 3 defines the Airy coefficient and proves the
+algebraic identity that characterizes it. Section 4 carries out the degree/parity
+analysis culminating in the impossibility $\operatorname{airyCoeff}(q,p) \neq
+X\cdot q$. Section 5 establishes the analytic bridge, computing the second
+derivative of $q\,e^{p}$. Section 6 assembles the main theorem. Section 7 places
+the result in the context of differential Galois theory and Liouvillian
+solvability. Section 8 gives an algorithmic reading. Section 9 discusses
+generalizations and open directions.
+
+## 2. Preliminaries and notation
+
+We work in the polynomial ring $\mathbb{R}[X]$ and write $X$ for the indeterminate.
+For $g \in \mathbb{R}[X]$ we write $g'$ (or $\operatorname{D} g$) for the formal
+derivative, $\deg g \in \mathbb{Z}_{\ge 0} \cup \{-\infty\}$ for the degree, with
+the convention $\deg 0 = -\infty$. We use the standard facts:
+
+- **(D1)** $\deg(g+h) \le \max(\deg g, \deg h)$, with equality when $\deg g \neq
+  \deg h$.
+- **(D2)** $\deg(gh) = \deg g + \deg h$ over the integral domain $\mathbb{R}[X]$
+  (with the usual conventions for the zero polynomial).
+- **(D3)** $\deg g' \le \deg g - 1$ for $g \neq 0$ (and $\deg g' = \deg g - 1$ in
+  characteristic $0$ when $\deg g \ge 1$).
+- **(D4)** A polynomial is determined by its values: if $g(x) = h(x)$ for all
+  $x \in \mathbb{R}$ then $g = h$ (extensionality over the infinite field
+  $\mathbb{R}$; `Polynomial.funext`).
+
+For the analytic part we use the evaluation map $g \mapsto (x \mapsto g(x))$,
+written $\operatorname{eval}_x g$, the differentiability of polynomial evaluation
+(`Polynomial.hasDerivAt`), and the chain rule for $\exp$
+(`HasDerivAt.exp`). The exponential satisfies $e^{t} > 0$ for all $t$, in
+particular $e^{t} \neq 0$ (`Real.exp_pos`, `Real.exp_ne_zero`).
+
+## 3. The Airy coefficient
+
+### 3.1 Definition
+
+The crucial observation is that differentiating $q\,e^{p}$ preserves the shape
+"polynomial times $e^{p}$" and acts on the polynomial prefactor by the
+first-order *linear differential operator*
+$$ L_p : \mathbb{R}[X] \to \mathbb{R}[X], \qquad L_p(g) = g' + g\,p'. $$
+Indeed $\frac{d}{dx}\big(g\,e^{p}\big) = (g' + g p')\,e^{p} = (L_p g)\,e^{p}$.
+Iterating, $\big(q\,e^{p}\big)'' = (L_p^2 q)\,e^{p}$. Expanding $L_p^2$ motivates
+the following definition.
+
+> **Definition 3.1 (`airyCoeff`).** For $q,p \in \mathbb{R}[X]$,
+> $$ \operatorname{airyCoeff}(q,p) \;=\; q'' + 2\,q'\,p' + q\,p'' + q\,(p')^2. $$
+
+### 3.2 The operator identity
+
+> **Lemma 3.2 (`airyCoeff_eq`).** For all $q,p \in \mathbb{R}[X]$,
+> $$ L_p\big(L_p q\big) = \operatorname{airyCoeff}(q,p), \qquad\text{i.e.}\qquad
+> \big(q' + q p'\big)' + \big(q' + q p'\big)\,p' = \operatorname{airyCoeff}(q,p). $$
+
+*Proof.* Expand the left-hand side using linearity of the derivative and the
+Leibniz rule $(gh)' = g'h + gh'$:
+$$
+(q' + q p')' + (q' + q p')p' = q'' + (q' p' + q p'') + (q' p' + q (p')^2)
+= q'' + 2 q' p' + q p'' + q (p')^2,
+$$
+which is exactly $\operatorname{airyCoeff}(q,p)$. $\;\;\blacksquare$
+
+This is a pure identity in the differential ring $(\mathbb{R}[X], {}')$ and
+requires no analysis.
+
+## 4. Degree analysis and the algebraic obstruction
+
+### 4.1 Exact degree of the Airy coefficient
+
+> **Lemma 4.1 (`degree_airyCoeff_eq`).** If $q \neq 0$ and $p' \neq 0$, then
+> $$ \deg \operatorname{airyCoeff}(q,p) = \deg q + 2\,\deg p'. $$
+
+*Proof.* Write $d = \deg q \ge 0$ and $m = \deg p' \ge 0$. Compare the degrees of
+the four summands of $\operatorname{airyCoeff}(q,p)$:
+$$
+\deg q'' \le d - 2, \quad \deg(2 q' p') \le (d-1)+m, \quad
+\deg(q p'') \le d + (m-1), \quad \deg(q (p')^2) = d + 2m,
+$$
+using (D2)–(D3); the last is an equality because $q \neq 0$ and $p' \neq 0$ make
+$q(p')^2 \neq 0$ over the integral domain $\mathbb{R}[X]$. Each of the first three
+degrees is strictly less than $d + 2m$: indeed $d-2 < d+2m$, and
+$(d-1)+m < d+2m \iff -1 < m$ (true since $m \ge 0$), and $d+m-1 < d+2m \iff
+-1 < m$. By (D1), the unique strictly-dominant term $q(p')^2$ determines the
+degree, so $\deg \operatorname{airyCoeff}(q,p) = d + 2m$. (Formally one writes
+$\operatorname{airyCoeff}(q,p) = q(p')^2 + R$ with $\deg R < d+2m$ and applies
+`degree_add_eq_left_of_degree_lt`; the boundary subcase $m = 0$, i.e. $p'$ a
+nonzero constant, is handled separately, where the three lower terms have degrees
+$\le d-2$, $\le d-1$, $\le d-1$, again all $< d = d+2m$.) $\;\;\blacksquare$
+
+### 4.2 The core obstruction
+
+> **Theorem 4.2 (`airyCoeff_ne_X_mul`).** For every $q \neq 0$ and every $p$,
+> $$ \operatorname{airyCoeff}(q,p) \neq X\cdot q. $$
+
+*Proof.* Two cases.
+
+**Case $p' \neq 0$.** By Lemma 4.1, $\deg \operatorname{airyCoeff}(q,p) = \deg q +
+2\deg p'$. On the other hand $\deg(X\cdot q) = \deg q + 1$ by (D2) since $X$ has
+degree $1$ and $q \neq 0$. If the two polynomials were equal their degrees would
+coincide, giving $\deg q + 2\deg p' = \deg q + 1$, i.e. $2\deg p' = 1$. This is
+impossible: $2\deg p'$ is even and $1$ is odd. Hence
+$\operatorname{airyCoeff}(q,p) \neq X\cdot q$.
+
+**Case $p' = 0$.** Then $\operatorname{airyCoeff}(q,p) = q''$ (the three terms
+containing $p'$ or $p''$ vanish, and $p'' = (p')' = 0$). By (D3),
+$\deg q'' \le \deg q - 2 < \deg q + 1 = \deg(X\cdot q)$. (If $\deg q = 0$, then
+$q'' = 0 \neq X\cdot q$ since $X\cdot q \neq 0$ for $q \neq 0$.) In all subcases
+the degrees differ, so $\operatorname{airyCoeff}(q,p) \neq X\cdot q$.
+$\;\;\blacksquare$
+
+The conceptual content is a **parity invariant**: multiplication by $X$ raises
+degree by the *odd* number $1$, while the dominant nonlinear term $q(p')^2$ of the
+Airy coefficient raises it by the *even* number $2\deg p'$. No exponent $p$ can
+reconcile the two.
+
+## 5. The analytic bridge
+
+We now connect the algebra to genuine derivatives of $\mathbb{R}\to\mathbb{R}$
+functions.
+
+> **Lemma 5.1 (`hasDerivAt_poly_mul_exp`).** For polynomials $p,g$ and any
+> $x \in \mathbb{R}$, the function $y \mapsto g(y)\,e^{p(y)}$ is differentiable at
+> $x$ with
+> $$ \frac{d}{dy}\Big[g(y)e^{p(y)}\Big]_{y=x} = (g' + g p')(x)\,e^{p(x)}. $$
+
+*Proof.* The polynomial evaluations $y \mapsto g(y)$ and $y\mapsto p(y)$ are
+differentiable with derivatives $g'(x)$ and $p'(x)$ (`Polynomial.hasDerivAt`). By
+the chain rule for $\exp$ (`HasDerivAt.exp`), $y\mapsto e^{p(y)}$ has derivative
+$p'(x)e^{p(x)}$. The product rule then gives
+$$ g'(x)e^{p(x)} + g(x)\,p'(x)e^{p(x)} = (g'(x) + g(x)p'(x))\,e^{p(x)}
+= (g' + g p')(x)\,e^{p(x)}. \;\;\blacksquare$$
+
+> **Theorem 5.2 (`second_deriv_poly_mul_exp`).** For polynomials $q,p$ and any
+> $x \in \mathbb{R}$,
+> $$ \frac{d^2}{dx^2}\Big[q(x)e^{p(x)}\Big]
+> = \operatorname{airyCoeff}(q,p)(x)\,e^{p(x)}. $$
+
+*Proof.* By Lemma 5.1 the first derivative of $y\mapsto q(y)e^{p(y)}$ is the
+function $y \mapsto (q' + q p')(y)\,e^{p(y)}$, an exponential–polynomial with
+prefactor $L_p q = q' + q p'$. Applying Lemma 5.1 again to this prefactor, the
+second derivative is
+$$ \big(L_p(L_p q)\big)(x)\,e^{p(x)} = \operatorname{airyCoeff}(q,p)(x)\,e^{p(x)},$$
+where the last equality is the operator identity Lemma 3.2 (`airyCoeff_eq`).
+$\;\;\blacksquare$
+
+## 6. Proof of the main theorem
+
+> **Theorem 6.1 (`no_exp_poly_solves_airy`).** Let $q,p \in \mathbb{R}[X]$ with
+> $q \neq 0$. There is no way for $f = q\,e^{p}$ to satisfy
+> $f''(x) = x\,f(x)$ for all $x \in \mathbb{R}$.
+
+*Proof.* Suppose, for contradiction, that for every $x \in \mathbb{R}$,
+$$ \frac{d^2}{dx^2}\Big[q(x)e^{p(x)}\Big] = x\,\big(q(x)e^{p(x)}\big). $$
+By Theorem 5.2 the left side equals $\operatorname{airyCoeff}(q,p)(x)\,e^{p(x)}$,
+so for all $x$,
+$$ \operatorname{airyCoeff}(q,p)(x)\,e^{p(x)} = x\,q(x)\,e^{p(x)}. $$
+Since $e^{p(x)} > 0$ is never zero (`Real.exp_pos`), divide both sides by
+$e^{p(x)}$ to obtain the pointwise polynomial equality
+$$ \operatorname{airyCoeff}(q,p)(x) = x\,q(x) = (X\cdot q)(x) \qquad
+\text{for all } x \in \mathbb{R}. $$
+By polynomial extensionality over the infinite field $\mathbb{R}$ (D4,
+`Polynomial.funext`), this forces the equality of *polynomials*
+$\operatorname{airyCoeff}(q,p) = X\cdot q$. But this contradicts Theorem 4.2
+(`airyCoeff_ne_X_mul`), which asserts exactly that no such equality holds for
+$q \neq 0$. The contradiction completes the proof. $\;\;\blacksquare$
+
+The logical skeleton is therefore: *analytic identity* (Thm 5.2) $+$
+*nonvanishing of $\exp$* $+$ *extensionality* (D4) reduce the ODE to a polynomial
+identity, which the *degree/parity obstruction* (Thm 4.2) refutes.
+
+## 6A. Worked examples
+
+We illustrate the mechanism on concrete candidate solutions; in each case the
+Airy coefficient is computed from Definition 3.1 and compared with $X\cdot q$.
+
+**Example 1 ($f = e^{x}$).** Here $q = 1$, $p = X$, so $q' = q'' = 0$, $p' = 1$,
+$p'' = 0$. Then
+$$ \operatorname{airyCoeff}(1, X) = 0 + 0 + 0 + 1\cdot 1^2 = 1, $$
+while $X\cdot q = X$. Indeed $(e^{x})'' = e^{x} \neq x\,e^{x}$; the identity
+$\operatorname{airyCoeff} = X q$ would read $1 = X$, false. The degrees are $0$
+and $1$ — even excess $0$ versus odd excess $1$.
+
+**Example 2 ($f = x^2 e^{2x}$).** Here $q = X^2$, $p = 2X$, so $q' = 2X$,
+$q'' = 2$, $p' = 2$, $p'' = 0$. Then
+$$ \operatorname{airyCoeff}(X^2, 2X) = 2 + 2\cdot(2X)\cdot 2 + 0 + X^2\cdot 2^2
+= 4X^2 + 8X + 2, $$
+of degree $2 = \deg q + 2\deg p' = 2 + 0$, while $X\cdot q = X^3$ has degree $3$.
+The degrees already disagree, confirming $f$ is not a solution.
+
+**Example 3 (Gaussian $f = e^{-x^2}$).** Here $q = 1$, $p = -X^2$, so $p' = -2X$,
+$p'' = -2$, $(p')^2 = 4X^2$. Then
+$$ \operatorname{airyCoeff}(1, -X^2) = 0 + 0 + 1\cdot(-2) + 1\cdot 4X^2
+= 4X^2 - 2, $$
+of degree $2 = \deg q + 2\deg p' = 0 + 2$, an even excess of $2$ over
+$\deg q = 0$, while $X\cdot q = X$ has degree $1$. The parity mismatch is
+explicit: the squared exponent term $q(p')^2$ contributes degree $2$, never the
+odd degree $1$ demanded by multiplication by $X$.
+
+**Example 4 (constant exponent, $p$ constant).** If $p = c$ is constant then
+$p' = 0$ and $\operatorname{airyCoeff}(q, c) = q''$. For $q = X^2$ this is the
+constant $2$, of degree $0$, far below $\deg(X\cdot q) = 3$. Thus even allowing a
+scalar multiplier $e^{c}$ in front of a polynomial cannot help.
+
+These examples show the obstruction is not an artifact of large degrees: it
+already bites on the smallest natural candidates. In every instance the residual
+$\operatorname{airyCoeff}(q,p) - X\cdot q$ is a visibly nonzero polynomial, and
+the leading behavior is dictated by the parity of the degree.
+
+## 7. Differential-Galois context
+
+### 7.1 Liouvillian solutions
+
+A function is **Liouvillian** over $\mathbb{R}(x)$ (or $\mathbb{C}(x)$) if it lies
+in a tower of differential field extensions obtained by successively adjoining
+exponentials of, integrals of, and algebraic functions over previously
+constructed fields. The exponential–polynomials (EP) are precisely the simplest
+Liouvillian functions of "exponential of a polynomial" type with polynomial
+prefactor — one exponential extension $e^{p}$ over $\mathbb{R}(x)$, intersected
+with $\mathbb{R}[x]\cdot e^{p}$.
+
+### 7.2 The Galois-theoretic statement
+
+Kolchin's theorem states that a linear ODE has a Liouvillian solution if and only
+if the connected component of its differential Galois group is solvable. For
+(Airy) the Galois group over $\mathbb{C}(x)$ is $\mathrm{SL}_2(\mathbb{C})$, which
+is connected and *not* solvable; hence (Airy) has no Liouvillian solution at all —
+a fortiori none of EP type. Our Theorem 6.1 reproves the EP-specific consequence
+by entirely elementary means, replacing the group-theoretic nonsolvability of
+$\mathrm{SL}_2$ with a one-line parity count. The trade-off is scope (we restrict
+to the EP ansatz) for transparency and complete elementarity.
+
+### 7.3 The Kovacic algorithm
+
+Kovacic's algorithm is a decision procedure that, given a second-order linear ODE
+$y'' = r(x)y$ with $r \in \mathbb{C}(x)$, determines whether it has a Liouvillian
+solution and, if so, computes one; it is organized around the four conjugacy
+classes of algebraic subgroups of $\mathrm{SL}_2(\mathbb{C})$. Run on (Airy) with
+$r(x)=x$, every case of Kovacic's algorithm fails, certifying the absence of
+Liouvillian solutions. The degree obstruction of this paper can be seen as the
+shadow, for the EP ansatz, of the "Case 1" exponential search in Kovacic's
+algorithm: there one seeks a solution of the form $e^{\int \omega}$ with $\omega$
+rational, and the degree bookkeeping that defeats it is exactly our parity
+mismatch.
+
+## 8. Algorithmic reading
+
+The proof is constructive in a strong sense: it converts an analytic existence
+question into a *finite* algebraic feasibility question. Fix degree bounds
+$\deg q \le d$, $\deg p \le e$, and write $q = \sum_{i=0}^{d} a_i X^i$,
+$p = \sum_{j=0}^{e} b_j X^j$. Then $\operatorname{airyCoeff}(q,p) - X\cdot q$ is a
+polynomial whose coefficients are explicit (quadratic) polynomial expressions in
+$(a_i, b_j)$. Asking whether some EP of bounded degree solves a given polynomial
+ODE is asking whether this system of polynomial equations has a solution with
+$q \neq 0$ — a decidable question (e.g. by Gröbner bases / real quantifier
+elimination). Theorem 4.2 shows that for (Airy) the system is infeasible for
+*every* bound, because the leading-degree equation $2\deg p' = 1$ is already
+unsatisfiable. This is the seed of an effective classifier for $q\,e^{p}$
+solutions of arbitrary polynomial-coefficient linear ODEs (see §9.4).
+
+## 9. Generalizations and future directions
+
+The argument is a reusable template — *factor out $e^{p}$, then compare
+degrees* — and extends along several axes.
+
+### 9.1 General second-order operators
+
+Replace the right-hand side $x\,y$ by $b(x)y + a(x)y'$ with $a,b\in\mathbb{R}[X]$.
+Factoring out $e^{p}$ turns $f'' = b f + a f'$ into the single polynomial identity
+$\operatorname{airyCoeff}(q,p) = b\,q + a\,(q' + q p')$, and a finite
+degree-matching system governs the solvable cases, reusing the present
+infrastructure with only the target polynomial changed.
+
+### 9.2 Higher-order Airy-type equations
+
+For $y^{(n)} = x\,y$ with $n \ge 3$, the $n$-th derivative of $q\,e^{p}$ factors
+as $(\operatorname{coeff}_n(q,p))\,e^{p}$, where $\operatorname{coeff}_n$ is the
+universal differential polynomial defined by the recursion
+$\operatorname{coeff}_{n+1} = \operatorname{coeff}_n' + \operatorname{coeff}_n\,p'$
+(i.e. iterating $L_p$). Its leading term is $q\,(p')^{n}$, so the degree excess is
+$n\,\deg p'$, and a degree/parity obstruction generalizes the present argument.
+
+### 9.3 Complex and entire prefactors
+
+Over $\mathbb{C}$ the cancellation of $e^{p}$ still holds (it never vanishes) and
+polynomial extensionality over the infinite field $\mathbb{C}$ transports the
+algebraic identity unchanged, so the obstruction lifts verbatim from
+$\mathbb{R}[X]$ to $\mathbb{C}[X]$. A further step asks whether any *entire*
+prefactor $g$ of controlled growth gives $g\,e^{p}$ solving (Airy); here the
+algebra must be supplemented with growth/order estimates.
+
+### 9.4 Effective classification
+
+Turn the obstruction into a decision procedure: given a polynomial-coefficient
+linear ODE, decide and *construct* all $q\,e^{p}$ solutions by solving the finite
+polynomial system of §8, connecting to the Risch and Kovacic algorithms for
+Liouvillian solutions. The reduction to a single polynomial identity provides a
+precise, machine-checked specification against which such a solver can be
+verified.
+
+### 9.5 Spectral / WKB interpretation
+
+The parity obstruction admits a WKB reading: a leading exponential ansatz
+$e^{p}$ for $y'' = xy$ would require $(p')^2 \approx x$, i.e. $p' \approx
+x^{1/2}$, which is not a polynomial — the "$1/2$" is precisely the fractional
+exponent that the integer degree count detects as the impossible equation
+$2\deg p' = 1$. This links the elementary algebra to the asymptotic
+$\mathrm{Ai}(x) \sim \tfrac{1}{2\sqrt{\pi}} x^{-1/4} e^{-\frac{2}{3} x^{3/2}}$ for
+$x\to+\infty$, whose exponent $\tfrac23 x^{3/2}$ is manifestly non-polynomial.
+
+## 10. Conclusion
+
+We have given a fully rigorous, elementary, and machine-verified proof that no
+exponential–polynomial $q\,e^{p}$ (with $q \neq 0$) solves Airy's equation
+$y'' = x y$. The argument distils the deep differential-Galois nonsolvability of
+Airy into a one-line parity fact about polynomial degrees, mediated by the Airy
+coefficient $\operatorname{airyCoeff}(q,p) = q'' + 2q'p' + qp'' + q(p')^2$ and its
+defining identity $(q e^{p})'' = \operatorname{airyCoeff}(q,p)\,e^{p}$. Beyond the
+specific result, the method is a portable engine for ruling out — or, in solvable
+cases, constructing — closed-form $q\,e^{p}$ solutions of polynomial-coefficient
+linear ODEs.
+
+## Appendix A. Index of formalized results
+
+- `airyCoeff` — Definition 3.1, the polynomial $q'' + 2q'p' + qp'' + q(p')^2$.
+- `airyCoeff_eq` — Lemma 3.2, the operator identity $L_p(L_p q) =
+  \operatorname{airyCoeff}(q,p)$.
+- `degree_airyCoeff_eq` — Lemma 4.1, $\deg\operatorname{airyCoeff}(q,p) =
+  \deg q + 2\deg p'$ when $q\neq 0$, $p'\neq 0$.
+- `airyCoeff_ne_X_mul` — Theorem 4.2, $\operatorname{airyCoeff}(q,p) \neq X q$ for
+  $q\neq 0$.
+- `hasDerivAt_poly_mul_exp` — Lemma 5.1, the first-derivative formula.
+- `second_deriv_poly_mul_exp` — Theorem 5.2, $(q e^{p})'' =
+  \operatorname{airyCoeff}(q,p)\,e^{p}$.
+- `no_exp_poly_solves_airy` — Theorem 6.1, the main impossibility result.
