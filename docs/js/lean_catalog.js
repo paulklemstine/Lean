@@ -229,12 +229,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     const f = child.fileObj;
                     const idx = child.idx;
                     res += `
-                        <div class="lean-file-card" data-idx="${idx}" style="margin-left: ${isRoot ? 0 : 12}px; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 8px; cursor: pointer; background: var(--bg-secondary); transition: all 0.2s;">
-                            <div style="font-weight: 600; font-family: var(--font-mono); font-size: 13px; word-break: break-all; color: var(--text-color); display: flex; align-items: flex-start;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px; margin-right: 6px; flex-shrink: 0; color: var(--text-muted);"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                        <div class="lean-file-card" data-idx="${idx}" style="margin-left: ${isRoot ? 0 : 12}px; padding: 4px 0; margin-bottom: 4px; cursor: pointer; transition: all 0.2s; opacity: 0.8;">
+                            <div class="lean-file-card-title" style="font-weight: 600; font-family: var(--font-mono); font-size: 13px; word-break: break-all; color: var(--text-color); display: flex; align-items: flex-start; transition: color 0.2s;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px; margin-right: 6px; flex-shrink: 0; color: inherit;"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                                 <span>${f.name}</span>
                             </div>
-                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px; margin-left: 18px; display: flex; justify-content: space-between;">
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px; margin-left: 18px; display: flex; justify-content: space-between;">
                                 <span>${f.domain}</span>
                                 <span style="color: #10b981;">${f.theorems.length} thms</span>
                             </div>
@@ -264,20 +264,25 @@ document.addEventListener('DOMContentLoaded', () => {
         // Attach events
         document.querySelectorAll('.lean-file-card').forEach(card => {
             card.addEventListener('click', () => {
-                document.querySelectorAll('.lean-file-card').forEach(c => c.style.borderColor = 'var(--border-color)');
-                card.style.borderColor = 'var(--accent-color)';
+                document.querySelectorAll('.lean-file-card').forEach(c => {
+                    c.style.opacity = '0.8';
+                    const title = c.querySelector('.lean-file-card-title');
+                    if (title) title.style.color = 'var(--text-color)';
+                });
+                card.style.opacity = '1';
+                const title = card.querySelector('.lean-file-card-title');
+                if (title) title.style.color = 'var(--accent-color)';
                 const idx = parseInt(card.getAttribute('data-idx'));
                 renderFileDetail(allLeanFiles[idx]);
             });
             // Hover effect
             card.addEventListener('mouseenter', () => {
-                if (card.style.borderColor !== 'var(--accent-color)') {
-                    card.style.borderColor = 'var(--text-muted)';
-                }
+                card.style.opacity = '1';
             });
             card.addEventListener('mouseleave', () => {
-                if (card.style.borderColor !== 'var(--accent-color)') {
-                    card.style.borderColor = 'var(--border-color)';
+                const title = card.querySelector('.lean-file-card-title');
+                if (!title || title.style.color !== 'var(--accent-color)') {
+                    card.style.opacity = '0.8';
                 }
             });
         });
