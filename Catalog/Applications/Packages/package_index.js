@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bd1f81a7",
     "filename": "plya_tree_coefficient_divisor_sum_recurrence.json",
     "pkg_num": 57,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.80372,
     "title": "P\u00f3lya Tree Coefficients and the Divisor-Sum (Euler-Transform) Recurrence"
   },
   {
@@ -1662,8 +1662,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "plya_tree_coefficient_divisor_sum_recurrence",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.80372,
+      "quality": "substantial",
       "shape": "dodecahedron",
       "title": "P\u00f3lya Tree Coefficients and the Divisor-Sum (Euler-Transform) Recurrence"
     }

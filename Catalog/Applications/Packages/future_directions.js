@@ -4176,7 +4176,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
   {
-    "consumed_by_exp_id": "80847fe0",
+    "consumed_by_exp_id": "",
     "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
     "domains": [
       "Bridges"
@@ -4185,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T23:35:20.703960+00:00",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
@@ -4480,11 +4480,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that the set of positive integers that are divisible by the number of summands in their Zeckendorf decomposition has asymptotic density\u00a00.  Equivalently, for any real \u03b5>0 there are only finitely many Zeckendorf\u2011Niven numbers\u00a0n< N with n/N > \u03b5, and the ratio of the counting function to N tends to\u00a00 as N\u2192\u221e.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2508",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24006v1",
+    "status": "available",
+    "timestamp": "2026-06-25T12:39:28.725008+00:00",
+    "title": "Zero Asymptotic Density of Zeckendorf\u2011Niven Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4498,7 +4512,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4512,7 +4526,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2510",
+    "id": "fd_2511",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4526,7 +4540,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2511",
+    "id": "fd_2512",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -4541,7 +4555,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2512",
+    "id": "fd_2513",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24822v1",
@@ -4555,7 +4569,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2513",
+    "id": "fd_2514",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24573v1",
@@ -4570,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2514",
+    "id": "fd_2515",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -4585,7 +4599,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2515",
+    "id": "fd_2516",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
@@ -4599,7 +4613,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2516",
+    "id": "fd_2517",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -4613,7 +4627,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2517",
+    "id": "fd_2518",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -4628,7 +4642,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2518",
+    "id": "fd_2519",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24243v1",
@@ -4643,7 +4657,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2519",
+    "id": "fd_2520",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24195v1",
@@ -4658,7 +4672,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2520",
+    "id": "fd_2521",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23863v1",
@@ -4672,7 +4686,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2521",
+    "id": "fd_2522",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23824v1",
@@ -4686,13 +4700,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2522",
+    "id": "fd_2523",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
     "status": "available",
     "timestamp": "2026-06-25T12:14:38.692167+00:00",
     "title": "Shift-normalized monotonicity of the average stack-sorting depth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For each non\u2011negative integer k, define\n\\[\nP_{2k}=\\prod_{n=2}^{\\infty} \\exp\\Bigl(\\frac{1}{n^{2k-1}}\\Bigr)\\Bigl(1-\\frac{1}{n^{2}}\\Bigr)^{n^{2k}}\\,.\n\\]\nThe paper shows that the logarithm of P_{2k} is a finite tail of the Riemann zeta series.  We conjecture an explicit closed\u2011form expression involving only powers of \\(\\pi\\), rational numbers, harmonic numbers \\(H_{2k}\\), and odd zeta values \\(\\zeta(2j+1)\\).  This statement is precise, falsifiable and can be formalised in Lean\u00a04 using the existing libraries for real analysis, the gamma function and the Riemann zeta function.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2524",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23973v1",
+    "status": "available",
+    "timestamp": "2026-06-25T12:40:11.650578+00:00",
+    "title": "Closed form for even\u2011indexed regularised Wallis products"
   },
   {
     "consumed_by_exp_id": "",
@@ -4882,21 +4910,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Quadratic Reciprocity, multiple proofs\n\n**Menu category declaration.** This cycle serves the *cross-domain bridge*\ncategory: every result welds **number theory** (Legendre symbols, quadratic\ncharacters) to a second domain \u2014 **lattice-point geometry** (`Eisenstein.lean`)\nand the **algebra of finite fields / cyclotomy** (`GaussSum.lean`). The\nsupplementary laws (`Supplementary.lean`) bridge character theory and elementary\ncongruence arithmetic.\n\n## What this cycle established (verified, 0 sorries)\n\n* `Eisenstein.quadratic_reciprocity` \u2014 the Law of Quadratic Reciprocity derived\n  **directly from Eisenstein's lattice-point counting** (`ZMod.eisenstein_lemma`\n  + `ZMod.sum_mul_div_add_sum_mul_div_eq_mul`). Mathlib contains these geometric\n  inputs but never assembles reciprocity from them; this file closes that gap.\n* `GaussSum.quadratic_reciprocity` \u2014 the same law via the **quadratic Gauss-sum /\n  finite-field** mechanism (`quadraticChar_odd_prime`, the field-theoretic shadow\n  of `gaussSum_sq` and `Char.card_pow_card`). An independent proof object.\n* The two **supplementary laws** in explicit congruence form:\n  `(-1/p)` controlled by `p mod 4`, `(2/p)` by `p mod 8`, in both residue and\n  nonresidue directions.\n\nThe two reciprocity proofs use *disjoint* mechanisms (geometry vs. Frobenius on\ncharacters), confirming the classical claim that the law admits fundamentally\ndifferent derivations.\n\n## Bold, testable conjectures derived from this cycle\n\n### 1. A fully formalized Zolotarev (permutation-sign) proof of reciprocity\n**Conjecture.** `legendreSym p a` equals the sign of the permutation `x \u21a6 a\u00b7x`\nof `ZMod p`, and quadratic reciprocity follows by comparing two such signs on\n`ZMod (p\u00b7q)` via the CRT isomorphism.\n*The key insight is...* that the Legendre symbol is secretly a **permutation\nparity**, so reciprocity becomes a statement about the sign of a single linear\nmap under a change of basis (`ZMod (pq) \u2243 ZMod p \u00d7 ZMod q`).\n*Why now?* Mathlib already has `Equiv.Perm.sign`, the CRT ring isomorphism\n`ZMod.chineseRemainder`, and `ZMod.gauss_lemma`; the missing glue (`legendreSym =\nsign of multiplication`) is a finite, `Fintype`-level computation now within reach.\n\n### 2. Reciprocity as an Artin-reciprocity special case\n**Conjecture.** The Gauss-sum proof in `GaussSum.lean` is the degree-2 shadow of\nArtin reciprocity for the quadratic subfield `\u211a(\u221a(\u00b1p)) \u2286 \u211a(\u03b6_p)`; a formal\n`IsCyclotomicExtension`-based development reproduces `GaussSum.quadratic_reciprocity`\nas the splitting law of `q` in that subfield.\n*The key insight is...* that `\u03c7\u2084(p)\u00b7p` being a square mod `q` is exactly the\ncondition for `q` to split in `\u211a(\u221a(\u03c7\u2084(p)\u00b7p))`, i.e. a Frobenius/Artin-symbol\nstatement.\n*Why now?* Mathlib's `IsCyclotomicExtension` and `NumberField` machinery have\nmatured enough to state the quadratic subfield and its Frobenius explicitly, even\nif full Artin reciprocity is still absent.\n\n### 3. Jacobi-symbol reciprocity proved *independently* of the prime case\n**Conjecture.** Eisenstein's lattice count generalizes verbatim to coprime odd\n`a, b`, yielding `jacobiSym.quadratic_reciprocity` *without* reducing to primes.\n*The key insight is...* that the rectangle-splitting identity\n`sum_mul_div_add_sum_mul_div_eq_mul` only uses `gcd(a,b)=1`, not primality, so the\nlattice proof should lift directly to the Jacobi symbol.\n*Why now?* The Jacobi symbol and its multiplicativity are already in Mathlib, so\nthe only new content is re-running the lattice bijection with a coprimality\nhypothesis in place of primality.\n\n### 4. Quantitative bias in the lattice-count exponent\n**Conjecture.** For random distinct odd primes `p, q < N`, the Eisenstein exponent\n`\u2211\u230axq/p\u230b mod 2` is equidistributed, and its correlation with `p,q mod 4` is\nexactly the reciprocity sign \u2014 a measurable, falsifiable statistical fingerprint.\n*The key insight is...* that reciprocity forces a *deterministic* parity coupling\non an otherwise pseudorandom lattice count.\n*Why now?* The exponent is fully computable in Lean (`#eval`), so the statistical\nclaim can be checked at scale and then formalized as an exact identity.\n\n### 5. A unified \"sign cocycle\" abstracting all three proofs\n**Conjecture.** Eisenstein, Gauss-sum, and Zolotarev proofs are three evaluations\nof one `ZMod 2`-valued 2-cocycle on the primes; reciprocity is its symmetry.\n*The key insight is...* that each proof computes the *same* parity through a\ndifferent functor (geometry, Galois action, permutation parity), so they must\nagree by a single cohomological identity.\n*Why now?* With two of the three mechanisms already formalized here, the common\nabstraction can be stated and the agreement proved as a Lean `theorem` rather than\na heuristic analogy.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2523",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "292d0525",
-    "status": "available",
-    "timestamp": "2026-06-25T12:36:37.931553+00:00",
-    "title": "**Menu category declaration.** This cycle serves the *cross-domain bridge*"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5071,21 +5084,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 292d0525 (Q=0.543) proved 10 theorems in NumberTheory but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Pr",
-    "domains": [
-      "NumberTheory"
-    ],
-    "id": "sorry_fill_292d0525_9ebe4278",
-    "priority_score": 0.59302,
-    "research_mode": "team",
-    "source_exp_id": "292d0525",
-    "status": "available",
-    "timestamp": "2026-06-25T12:36:46.310589+00:00",
-    "title": "Close Proofs: Quadratic Reciprocity: Five Proofs Formalized"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "33ece4f7",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5094,7 +5093,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },

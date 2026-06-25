@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cb2c4d8f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving (Rank & Shift cycle)\n\nThis cycle added two fully-verified files (0 sorries) extending\n`Bridges.CategoricalTropicalRipsInterleaving`:\n\n- `Br",
-      "quality_score": 0.7260899999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-15T10:38:36",
-      "title": "This cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
-    },
-    {
       "cycle_id": "2086db82",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Intersection Form Classification via Self-Dual Code Direct Sums\n\nThis cycle added `CodeDirectSum.lean`: the direct sum (coordinate concatenation)\n`C ⊕c D` of binary codes, with c",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-25T07:43:02",
       "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
+    },
+    {
+      "cycle_id": "bd1f81a7",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Pólya tree coefficient divisor-sum recurrence\n\nThis cycle formalized the Pólya-tree (A000081) divisor-sum / Euler-transform\nrecurrence in `Catalog/Cryptography/PolyaTreeDivisorSu",
+      "quality_score": 0.80372,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-25T12:39:02",
+      "title": "Pólya tree coefficient divisor-sum recurrence"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9afcaae7",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions\n\nBuilding on the deterministic empirical spectral CDF substrate in\n`MachineLearning/EmpiricalSpectrumCDF.lean`, we outline original directions for\nextending the theory. Each is del",
-      "quality_score": 0.345538,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-19T06:11:31",
-      "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
-    },
     {
       "cycle_id": "3c627a3f",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-25T12:36:46",
       "title": "Quadratic Reciprocity: Five Proofs Formalized"
+    },
+    {
+      "cycle_id": "bd1f81a7",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Pólya tree coefficient divisor-sum recurrence\n\nThis cycle formalized the Pólya-tree (A000081) divisor-sum / Euler-transform\nrecurrence in `Catalog/Cryptography/PolyaTreeDivisorSu",
+      "quality_score": 0.80372,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-25T12:39:02",
+      "title": "Pólya tree coefficient divisor-sum recurrence"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1d465e25",
-      "domain": "Geometry",
-      "name": "of",
-      "quality": 0.79908
-    },
-    {
-      "cycle_id": "1d465e25",
-      "domain": "Geometry",
-      "name": "obstruction_implies_noncontainment",
-      "quality": 0.79908
-    },
-    {
-      "cycle_id": "1d465e25",
-      "domain": "Geometry",
-      "name": "circuit_lower_bound_from_obstruction",
-      "quality": 0.79908
-    },
     {
       "cycle_id": "50d5b31e",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "card_side",
       "quality": 0.8125600000000002
+    },
+    {
+      "cycle_id": "bd1f81a7",
+      "domain": "Cryptography",
+      "name": "collapse",
+      "quality": 0.80372
+    },
+    {
+      "cycle_id": "bd1f81a7",
+      "domain": "Cryptography",
+      "name": "treeList_length",
+      "quality": 0.80372
+    },
+    {
+      "cycle_id": "bd1f81a7",
+      "domain": "Cryptography",
+      "name": "treeList_getD",
+      "quality": 0.80372
     }
   ],
-  "last_updated": "2026-06-25T12:36:46",
+  "last_updated": "2026-06-25T12:39:02",
   "open_questions": [
     {
       "context": "",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "35a8dda5",
-        "quality": 0.74408,
-        "theorems": 89,
-        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-      },
-      {
         "cycle_id": "5e9b4daa",
         "quality": 0.79384,
         "theorems": 103,
@@ -3389,6 +3383,12 @@
         "quality": 0.6288800000000001,
         "theorems": 13,
         "title": "EML Interpolation Theory: Stone-Weierstrass for exp-log Networks"
+      },
+      {
+        "cycle_id": "bd1f81a7",
+        "quality": 0.80372,
+        "theorems": 6,
+        "title": "Pólya tree coefficient divisor-sum recurrence"
       }
     ],
     "Geometry": [
