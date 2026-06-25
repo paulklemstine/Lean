@@ -11123,7 +11123,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "2ce9a5d4",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11148,7 +11148,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:25.154250+00:00",
       "title": "Langlands Program: Functoriality"
@@ -11317,7 +11317,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "4ddbe1fe",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11343,7 +11343,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:25.547297+00:00",
       "title": "Tropical Riemann-Roch Theorem"
@@ -11824,7 +11824,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "e364ad63",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11850,7 +11850,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:26.588561+00:00",
       "title": "EML Kolmogorov-Arnold Representation"
@@ -16499,11 +16499,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "4237ac67",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16515,7 +16515,7 @@
         "Algebra"
       ],
       "id": "fd_0545",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T10:52:29.123847+00:00",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16529,7 +16529,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.376136+00:00",
       "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
@@ -34701,7 +34701,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [
         "MR1577579",
         "MR0025715",
@@ -34709,7 +34709,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "bd1f81a7",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34724,7 +34724,7 @@
         "Pythagorean"
       ],
       "id": "fd_2301",
-      "last_attempt_time": "2026-06-23T15:32:42.673135+00:00",
+      "last_attempt_time": "2026-06-25T10:52:44.127366+00:00",
       "last_reviewed_at": "2026-06-25T03:41:55.238483+00:00",
       "lean_theorem_stub": "theorem polya_tree_coeff_recurrence (k : ℕ) (hk : k ≥ 2) : polya_tree_count k = (1 / (k - 1)) * ∑ j in Finset.range k, polya_tree_count j * omega (k - j) := by\n  sorry",
       "lineage_refs": [],
@@ -34738,7 +34738,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23439v1",
       "source_path": "http://arxiv.org/abs/2606.23439v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T05:17:21.927856+00:00",
       "title": "Pólya tree coefficient divisor-sum recurrence"
@@ -35044,7 +35044,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "8b247aeb",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35071,7 +35071,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23121v1",
       "source_path": "http://arxiv.org/abs/2606.23121v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T04:53:54.133289+00:00",
       "title": "Optimal Separator Bound for Wall Connectors"
@@ -37698,7 +37698,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Nat.factorial",
         "Nat.sqrt",
@@ -37710,7 +37710,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fb5aee47",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37727,7 +37727,7 @@
         "Bridges"
       ],
       "id": "fd_2365",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T10:52:33.280132+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen Nat\n\n/-- Triangular form of the Brocard-Ramanujan conjecture: the only `n` such that\n`n! / 8` is triangular are `4`, `5`, and `7`. -/\ntheorem brocard_triangular_classification\n    (n y : Nat)\n    (hn : 4 ≤ n)\n    (htri : y * (y + 1) / 2 = n.factorial / 8) :\n    n = 4 ∨ n = 5 ∨ n = 7 := by\n  sorry\n\n/-- Equivalent Brown-number formulation. -/\ntheorem brocard_brown_number_classification\n    (n m : Nat)\n    (h : n.factorial + 1 = m ^ 2) :\n    (n = 4 ∧ m = 5) ∨ (n = 5 ∧ m = 11) ∨ (n = 7 ∧ m = 71) := by\n  sorry",
       "lineage_refs": [],
@@ -37741,7 +37741,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23485v1",
       "source_path": "http://arxiv.org/abs/2606.23485v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T16:30:05.276546+00:00",
       "title": "Brocard-Ramanujan Triangular Classification"
@@ -42168,13 +42168,13 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f1dcc123",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42188,7 +42188,7 @@
         "Pythagorean"
       ],
       "id": "fd_2462",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T10:52:36.960070+00:00",
       "last_reviewed_at": "2026-06-25T03:40:40.605952+00:00",
       "lean_theorem_stub": "theorem strict_alternating_cycle_bound (P : Type) [Fintype P] [PartialOrder P] (w : ℕ) (hw : width P = w) (n : ℕ) (hn : Fintype.card P = n) : strict_alternating_cycles P ≤ 4 * (w - 1)! * ((n * (n + w) : ℝ) / (2 * (w : ℝ)^2)) ^ w := by sorry",
       "lineage_refs": [],
@@ -42202,7 +42202,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24877v1",
       "source_path": "http://arxiv.org/abs/2606.24877v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-24T11:12:45.893373+00:00",
       "title": "Upper bound on the number of strict alternating cycles in posets of bounded width"
@@ -43123,13 +43123,13 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "arXiv:2310.00000"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "80847fe0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43144,7 +43144,7 @@
         "Bridges"
       ],
       "id": "fd_2483",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T10:52:47.958890+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lacunary_multiplier_theorem (D : Type*) [inhabited D] (h_lacunary : is_lacunary D) : ∃ α : (closed_half_open [0 1)^2) (δ : ℝ) [δ > 0], (∀ d ∈ D, torus_distance (inner_product d α) ≥ δ)",
       "lineage_refs": [],
@@ -43158,7 +43158,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22539v1",
       "source_path": "http://arxiv.org/abs/2606.22539v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-24T23:35:20.703960+00:00",
       "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
@@ -43348,7 +43348,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "854c699d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43374,7 +43374,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T03:28:36.279962+00:00",
       "title": "Spectral Modular Signatures of Formal Proof Difficulty"
@@ -44062,6 +44062,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "arXiv:2003.13849",
+        "arXiv:2003.13848",
+        "arXiv:2104.15856"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We propose a conjecture characterizing the conditions under which the Lin-Lu-Yau Ricci curvature of an edge in a connected locally finite graph is non-negative. The conjecture posits that if the size of the symmetric difference of the neighborhoods of two adjacent vertices exceeds their common neighborhood size plus their degrees, the curvature vanishes or is non-negative. This bridges the gap between combinatorial graph metrics and curvature theory, enabling exact computation via graph structure analysis.",
+      "domain_bridges": [
+        "optimal_transport_on_graphs",
+        "common_neighborhoods_conditions"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2504",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "def graph_ll_ricci_nonnegative {V : Type} [simple_graph V] {x y : V} (h : x ≠ y) [is_edge _ _ h] : (|N_G x △ N_G y| > |N_G x ∩ N_G y| + deg_G x + deg_G y) → curvature_ll_yau _ _ ≥ 0",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct an optimal transport plan between neighborhoods using Hall's Marriage Theorem, then derive curvature bounds via integral geometry and discrete measure theory.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24261v1",
+      "source_path": "http://arxiv.org/abs/2606.24261v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T10:51:48.704692+00:00",
+      "title": "Non-negative Lin-Lu-Yau Ricci Curvature on Graphs with Common Neighborhoods"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "OEIS A287616",
         "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
         "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -44082,7 +44128,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2504",
+      "id": "fd_2505",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -44126,7 +44172,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2505",
+      "id": "fd_2506",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -44169,7 +44215,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2506",
+      "id": "fd_2507",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -44212,7 +44258,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2507",
+      "id": "fd_2508",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
@@ -44258,7 +44304,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2508",
+      "id": "fd_2509",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularity_MMsplit (a : ℕ) (b : List ℕ) (hb : ∀ r ∈ b, 1 ≤ r) :\n  let G := MM a b\n  let ν := (b.filter (· ≥ 2)).length\n  reg (edgeIdeal G) = ν + 1 :=\nby\n  -- proof goes here",
@@ -44301,7 +44347,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2509",
+      "id": "fd_2510",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem self_dual_code_26_uniqueness : ∀ (C D : Code), (C.is_self_dual ∧ C.length = 26 ∧ C.min_weight = 6) → (D.is_self_dual ∧ D.length = 26 ∧ D.min_weight = 6) → ∃ (perm : Fin 26 → Fin 26), perm • C = D",
@@ -44342,7 +44388,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2510",
+      "id": "fd_2511",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "dimension theorem for Lie algebras",
@@ -44388,7 +44434,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2511",
+      "id": "fd_2512",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem random_linear_code_discrepancy (q : ℕ) [Fact (Nat.Prime q)] (n ρ : ℕ) (hρ : ρ ≤ n) (ε : ℝ) (hε : 0 < ε) :\n  ∀ᵉ (C : subspace (fin n) (zmod q)),\n    (∃ k, C.dimension = k ∧ k = ⌈(1 - (1 / n) * real.log (ball_volume q n ρ) + ε) * n⌉) →\n    (∀ z : (fin n → zmod q),\n      let B := hamming_ball q n ρ z in\n      let expected := (C.card * B.card : ℝ) / (q ^ n) in\n      (C.card ∩ B.card : ℝ) =ᵐ[ℙ] (1 ± o 1) * expected))",
@@ -44440,7 +44486,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2512",
+      "id": "fd_2513",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_erdos_matching_conjecture {q : ℕ} (hq : Nat.Prime q) (n k s : ℕ) (hn : n ≥ (s + 1) * k) :\n  m_q q n k s = max (gaussian_binomial (gaussian_binomial q ((s + 1) * k - 1) k)\n                                     (gaussian_binomial q n k - q ^ (k * s) * gaussian_binomial q (n - s) k) :=\n  sorry\n\n-- Where:\n-- m_q q n k s := maximum cardinality of a family of k-dim subspaces of (ZMod q)^n\n--   with no s+1 members having a direct sum\n-- gaussian_binomial q n k := [n choose k]_q = ∏_{i=0}^{k-1} (q^{n-i} - 1)/(q^{i+1} - 1)\n-- max_binomial a b := max a b",
@@ -44489,7 +44535,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2513",
+      "id": "fd_2514",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace HypergraphRamsey\n\n/-- `ramseyNumber k s m` is the least N such that every red/blue coloring of\n    the k-subsets of `[N]` has a red s-set or a blue m-set. -/\nconstant ramseyNumber : ℕ → ℕ → ℕ → ℕ\n\n/-- `shiftNumber3 t` is the 3-color shift number s_3(t). -/\nconstant shiftNumber3 : ℕ → ℕ\n\n/-- Conjecture: the paper's `1/2` coefficient can be improved to `2/3`. -/\ntheorem ramsey_diag_gt_shift_two_thirds\n    (k : ℕ) (hk : 9 ≤ k) :\n    shiftNumber3 ((2 * k) / 3 - 3) < ramseyNumber k (k + 1) (k + 1) := by\n  sorry\n\nend HypergraphRamsey",
@@ -44538,7 +44584,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2514",
+      "id": "fd_2515",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nopen scoped BigOperators\n\n/-- `jacobiA R S` is the formal power series\n    1 / ((q^S;q^R)_∞ (q^(R-S);q^R)_∞ (q^R;q^R)_∞). -/\nconstant jacobiA : ℕ → ℕ → PowerSeries ℤ\n\n/-- `truncJacobi R S k` is the finite bilateral sum\n    ∑_{j=-k+1}^{k} (-1)^j q^(R*j*(j-1)/2 + S*j). -/\nconstant truncJacobi : ℕ → ℕ → ℕ → PowerSeries ℤ\n\n/-- Coefficient of q^n in\n    (-1)^(k-1) * (T_{R,S,k} * A_{R,S}^c - A_{R,S}^{c-1}). -/\nnoncomputable def coloredTruncJacobiCoeff\n    (R S k c n : ℕ) : ℤ :=\n  PowerSeries.coeff ℤ n\n    ((((-1 : ℤ) ^ (k - 1)) •\n      (truncJacobi R S k * (jacobiA R S) ^ c - (jacobiA R S) ^ (c - 1))))\n\nconjecture colored_truncated_jacobi_coeff_nonneg\n    (R S k c n : ℕ)\n    (hk : 1 ≤ k) (hc : 1 ≤ c)\n    (hS : 1 ≤ S) (hSR : 2 * S ≤ R)\n    (hn : 1 ≤ n) :\n  0 ≤ coloredTruncJacobiCoeff R S k c n",
@@ -44557,6 +44603,48 @@
       "thread_id": "",
       "timestamp": "2026-06-25T10:10:36.166476+00:00",
       "title": "Colored positivity for the bilateral truncated Jacobi triple product after removing the constant term"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture: For any integration problem satisfying the assumptions of Theorem 1 (tensor‑product structure, existence of a one‑dimensional worst‑case function h and associated spline functions s_y with A,B>1), the information complexity N_{it}^+(ε,d) grows at least exponentially with the dimension d. Formally, there exists a constant C>1 (depending only on A and B) such that for every d∈ℕ and every ε∈(0,1/2] we have N_{it}^+(ε,d) ≥ C^d. The conjecture is falsifiable: a single counterexample (d,ε) violating the inequality would refute it.",
+      "domain_bridges": [
+        "computer science",
+        "statistics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Computation"
+      ],
+      "id": "fd_2516",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem curse_of_dimensionality {d : ℕ} (hAssum : Assumptions d) (ε : ℝ) (hε : 0 < ε) (hεbound : ε ≤ 1/2) : info_complexity_plus d ε ≥ (min (A B) : ℝ) ^ d := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Leverage the tensor‑product construction of Theorem 1: define the d‑dimensional worst‑case function h_d = ∏_{i=1}^d h(x_i) and the spline products s_y = ∏_{i=1}^d s_{y_i}(x_i). Using the properties A = inf_y I(h)/I(s_y) > 1 and B = inf_y ||h||_1/||s_y||_1 > 1, show that any non‑negative linear rule must incur an error at least (min(A,B))^d times the initial error, which yields the exponential lower bound on the information complexity.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24195v1",
+      "source_path": "http://arxiv.org/abs/2606.24195v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T10:52:18.858858+00:00",
+      "title": "Exponential lower bound for non‑negative QMC integration in high dimensions"
     },
     {
       "ambition_level": "extension",
@@ -48736,11 +48824,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "e20c7594",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -48752,7 +48840,7 @@
         "Logic"
       ],
       "id": "seed_231",
-      "last_attempt_time": "2026-06-11T15:57:07.016475+00:00",
+      "last_attempt_time": "2026-06-25T10:52:24.229452+00:00",
       "last_reviewed_at": "2026-06-09T15:03:13.623660+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -48766,7 +48854,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:16.980012+00:00",
       "title": "Natural Proofs Barrier: Formalization"
@@ -49473,11 +49561,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "292d0525",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -49489,7 +49577,7 @@
         "Algebra"
       ],
       "id": "seed_333",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T10:52:40.374249+00:00",
       "last_reviewed_at": "2026-06-25T03:28:04.161589+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -49503,7 +49591,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432607+00:00",
       "title": "Quadratic Reciprocity: Five Proofs Formalized"
@@ -50218,7 +50306,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "0ec67d3f",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -50243,7 +50331,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432688+00:00",
       "title": "Ramsey Theory: Bounds and Constructions"
@@ -50885,7 +50973,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f9181e94",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -50912,7 +51000,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432786+00:00",
       "title": "Optimal Transport and Wasserstein Distances"
@@ -51005,7 +51093,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "792d49f1",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -51032,7 +51120,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432794+00:00",
       "title": "Zero-Knowledge Proofs: Schnorr Protocol"

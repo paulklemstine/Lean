@@ -81,7 +81,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e20c7594",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domain_bridges": [],
     "domains": [
@@ -94,7 +94,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.980012+00:00",
     "title": "Natural Proofs Barrier: Formalization"
   },
@@ -837,7 +837,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "292d0525",
     "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
     "domain_bridges": [],
     "domains": [
@@ -850,7 +850,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432607+00:00",
     "title": "Quadratic Reciprocity: Five Proofs Formalized"
   },
@@ -1196,7 +1196,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0ec67d3f",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1208,7 +1208,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1235,7 +1235,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f9181e94",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
     "domain_bridges": [],
     "domains": [
@@ -1249,14 +1249,14 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432786+00:00",
     "title": "Optimal Transport and Wasserstein Distances"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "792d49f1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
     "domain_bridges": [],
     "domains": [
@@ -1270,7 +1270,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432794+00:00",
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
@@ -2431,7 +2431,7 @@
       "MR0025715",
       "MR2483235"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bd1f81a7",
     "description": "Let $a_k$ denote the number of Pólya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the Pólya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
     "domain_bridges": [
       "analytic_combinatorics",
@@ -2447,7 +2447,7 @@
     "proof_strategy": "Define the OGF A(z) via the Pólya functional equation A(z) = z·exp(A(z))·Φ(z) where Φ(z) = exp(∑_{i≥2} A(z^i)/i). Take the logarithmic derivative to obtain zA'(z) = A(z)(1 + ∑_{i≥1} z^i A'(z^i)). Extract the coefficient of z^k on both sides: the left side gives k·a_k; the right side gives a_k + ∑_{j=1}^{k-1} a_j·ω_{k-j}, where ω_k arises from the identity [z^k]∑_{i≥1} z^i A'(z^i) = ∑_{d|k} d·a_d. Rearranging yields the recurrence. The Lean formalization should first establish the coefficient extraction identity for the divisor sum, then apply it to the differentiated functional equation.",
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T05:17:21.927856+00:00",
     "title": "Pólya tree coefficient divisor-sum recurrence"
   },
@@ -2633,7 +2633,7 @@
       "Graph Minors",
       "Wall"
     ],
-    "consumed_by_exp_id": "8b247aeb",
+    "consumed_by_exp_id": "",
     "description": "In Theorem 1.2 of the paper, the function $f(n,s')$ bounding the size of the separator can be chosen to be $ns'-1$ when the vertex sets in $\\mathcal{A}$ are pairwise disjoint.",
     "domain_bridges": [
       "Combinatorics to Logic"
@@ -2647,7 +2647,7 @@
     "proof_strategy": "Apply Menger's theorem to the union of the sets in $\\mathcal{A}$ and the branch vertices of $W$. If no separator of size $ns'-1$ exists, there are $ns'$ disjoint paths, which can be distributed among the $n$ disjoint sets and then routed to distinct nails of a subwall.",
     "research_mode": "team",
     "source_exp_id": "2606.23121v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T04:53:54.133289+00:00",
     "title": "Optimal Separator Bound for Wall Connectors"
   },
@@ -4190,7 +4190,7 @@
       "Nat.even_iff",
       "Nat.odd_iff"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb5aee47",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n ≥ 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domain_bridges": [
       "factorial Diophantine equations",
@@ -4208,7 +4208,7 @@
     "proof_strategy": "Formalize the triangular equivalence lemma: for n ≥ 4, n! + 1 = m^2 iff there exists y such that y*(y+1)/2 = n!/8 and m = 2*y + 1. Then attempt to prove the classification by combining modular exclusions for residue classes of n with factorial divisibility facts and higher-power congruence obstructions. The conjecture is suitable for Lean because it can be stated entirely over Nat using factorials, squares, divisibility by 8, and triangular numbers.",
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -6585,7 +6585,7 @@
     "catalog_references": [
       "math.CO"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f1dcc123",
     "description": "Conjecture that for every finite poset P of size n and width w ≥ 2, the number of strict alternating cycles satisfies s_w(P) ≤ 4·(w−1)!·(n(n+w)/(2w^2))^w.",
     "domain_bridges": [
       "order_dimension",
@@ -6600,7 +6600,7 @@
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T11:12:45.893373+00:00",
     "title": "Upper bound on the number of strict alternating cycles in posets of bounded width"
   },
@@ -7122,7 +7122,7 @@
     "catalog_references": [
       "arXiv:2310.00000"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "80847fe0",
     "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
     "domain_bridges": [
       "torus methods",
@@ -7138,7 +7138,7 @@
     "proof_strategy": "Use the lacunary matrix theorem to construct a multiplier vector via linear algebra over \\(\\R\\) and verify its multiplicative properties in the torus. Combine with geometric arguments to ensure minimality and global consistency.",
     "research_mode": "team",
     "source_exp_id": "2606.22539v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T23:35:20.703960+00:00",
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
@@ -7578,6 +7578,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:2003.13849",
+      "arXiv:2003.13848",
+      "arXiv:2104.15856"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We propose a conjecture characterizing the conditions under which the Lin-Lu-Yau Ricci curvature of an edge in a connected locally finite graph is non-negative. The conjecture posits that if the size of the symmetric difference of the neighborhoods of two adjacent vertices exceeds their common neighborhood size plus their degrees, the curvature vanishes or is non-negative. This bridges the gap between combinatorial graph metrics and curvature theory, enabling exact computation via graph structure analysis.",
+    "domain_bridges": [
+      "optimal_transport_on_graphs",
+      "common_neighborhoods_conditions"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2504",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an optimal transport plan between neighborhoods using Hall's Marriage Theorem, then derive curvature bounds via integral geometry and discrete measure theory.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24261v1",
+    "status": "available",
+    "timestamp": "2026-06-25T10:51:48.704692+00:00",
+    "title": "Non-negative Lin-Lu-Yau Ricci Curvature on Graphs with Common Neighborhoods"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "OEIS A287616",
       "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
       "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
@@ -7592,7 +7619,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2504",
+    "id": "fd_2505",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
@@ -7617,7 +7644,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2505",
+    "id": "fd_2506",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on $n$, leveraging the irreducibility of $f^2$ and a new function measuring 'complexity' in $\\mathbb{Q}(i)$ due to the absence of linear ordering. The base case $n=2$ is given. For the inductive step, analyze the factorization of $f^{n+1} = f^n \\circ f$ using the Galois action on preimages and the tree structure of iterations, adapting techniques from \\cite{evstb} to handle the two-dimensional nature of $\\mathbb{Q}(i)$.",
@@ -7641,7 +7668,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2506",
+    "id": "fd_2507",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the proof of Theorem 1.2(ii) by tracking the exact loss when applying Kahn's small-codegree edge-colouring theorem and the degree‑peeling process, aiming to convert the o(1) term into a uniform additive bound of 4.",
@@ -7665,7 +7692,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2507",
+    "id": "fd_2508",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use shifting/compression to transform an extremal family into a left‑compressed form while preserving the missing‑trace condition. Analyze the possible traces on a fixed (d+1)-set and apply Kleitman’s theorem on intersecting families to bound the number of sets containing a given subset. Perform an induction on n, considering whether a particular element appears in all sets or not. Show that any family attaining the bound must be isomorphic to the explicit construction: take all (d+1)-sets containing a fixed d‑set, together with all (d+1)-sets that avoid a fixed (2(d+1−s)+2)-set and contain a specific (2s−d−2)-subset of its complement.",
@@ -7692,7 +7719,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Hochster's formula to express \\(\\beta_{i,i+\\nu+1}(G)\\) as the dimension of reduced homology of induced subcomplexes of the independence complex. Show that for any subset W of vertices, the only possible non‑vanishing reduced homology occurs in dimension \\(\\nu\\) and only when W contains exactly one vertex from each non‑trivial clique block together with any subset of the a isolated vertices. This yields a non‑zero Betti number in homological degree \\(\\nu+1\\) and no Betti numbers with j-i > \\(\\nu+1\\). The forward inequality \\(\\reg(G) \\ge \\nu+1\\) follows from exhibiting such a subset; the reverse inequality follows from a combinatorial analysis of the join decomposition \\(\\ind(G) \\cong \\Delta_a * \\bigast_{r=1}^m \\Delta_{b_r}\\) where \\(\\Delta_{b_r}\\) is a simplex on \\(b_r\\) vertices (contractible) and the only contribution to higher homology comes from the discrete pieces coming from blocks with \\(b_r\\ge2\\). Formalising the join‑homology lemma and the coefficient extraction in Lean wil",
@@ -7716,7 +7743,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structure of the weight enumerator, harmonic designs, and connection to the projective plane of order 3 to show any such code must have an automorphism group isomorphic to PGL(3,3):2, hence equivalent.",
@@ -7738,7 +7765,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2510",
+    "id": "fd_2511",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "algebraic construction",
@@ -7765,7 +7792,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2511",
+    "id": "fd_2512",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the second‑moment method on the random process that adds basis vectors to C one by one. Show that for any fixed centre z the indicator of membership in B_ρ(z) is a Fourier‑pseudorandom test; bound its Fourier coefficients using Weil‑type exponential sum estimates over 𝔽_q. Apply a union bound over the q^n possible centres together with a Chernoff‑type concentration inequality for hypergeometric draws to obtain the simultaneous guarantee. Formalisation in Lean proceeds by developing finite‑field linear algebra, hypergeometric tail bounds, and a library for Fourier analysis on 𝔽_q^n.",
@@ -7798,7 +7825,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2512",
+    "id": "fd_2513",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The paper combines Lovász's minimax theorem for matroid matchings, a high-dimensional Hoffman bound for uniform hypergraphs, and packing-design arguments in vector spaces. For Lean formalization, one would first develop the theory of Gaussian binomial coefficients, subspace lattices, and direct sums in finite vector spaces. The known cases (k=2, n=(s+1)k, large n) could be formalized incrementally, leveraging matroid libraries and linear algebra over finite fields.",
@@ -7828,7 +7855,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2513",
+    "id": "fd_2514",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Generalize the construction in the paper from the floor(k/2)-2 shift parameter to a three-block or two-scale block encoding. The existing proof converts a 3-coloring witnessing s_3(t) > N into a red/blue coloring of k-subsets with no monochromatic (k+1)-set, where t is roughly k/2. The conjectural improvement would partition the k positions into three interacting zones and encode the local shift obstruction using majority/stability rules so that every candidate monochromatic (k+1)-set yields a forbidden shifted pattern of length floor(2k/3)-3. A Lean formalization would avoid asymptotics: define the finite colorings, the obstruction predicate, and prove that the transformed coloring contains no red or blue clique of size k+1.",
@@ -7858,7 +7885,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2514",
+    "id": "fd_2515",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "First formalize the c=1 Wang--Yee identity as an equality of formal power series over ℤ, where (-1)^(k-1) * (T_{R,S,k} * A_{R,S} - 1) is represented by an explicit multiple sum with manifestly nonnegative coefficients. Then observe that A_{R,S}^{c-1} has nonnegative integer coefficients because it is the generating function for (c-1)-colored partitions into allowed residue classes. The conjectured series factors as A_{R,S}^{c-1} * ((-1)^(k-1) * (T_{R,S,k} * A_{R,S} - 1)), so coefficientwise nonnegativity follows from closure of nonnegative integer sequences under Cauchy product.",
@@ -7867,6 +7894,29 @@
     "status": "available",
     "timestamp": "2026-06-25T10:10:36.166476+00:00",
     "title": "Colored positivity for the bilateral truncated Jacobi triple product after removing the constant term"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any integration problem satisfying the assumptions of Theorem 1 (tensor‑product structure, existence of a one‑dimensional worst‑case function h and associated spline functions s_y with A,B>1), the information complexity N_{it}^+(ε,d) grows at least exponentially with the dimension d. Formally, there exists a constant C>1 (depending only on A and B) such that for every d∈ℕ and every ε∈(0,1/2] we have N_{it}^+(ε,d) ≥ C^d. The conjecture is falsifiable: a single counterexample (d,ε) violating the inequality would refute it.",
+    "domain_bridges": [
+      "computer science",
+      "statistics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2516",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the tensor‑product construction of Theorem 1: define the d‑dimensional worst‑case function h_d = ∏_{i=1}^d h(x_i) and the spline products s_y = ∏_{i=1}^d s_{y_i}(x_i). Using the properties A = inf_y I(h)/I(s_y) > 1 and B = inf_y ||h||_1/||s_y||_1 > 1, show that any non‑negative linear rule must incur an error at least (min(A,B))^d times the initial error, which yields the exponential lower bound on the information complexity.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24195v1",
+    "status": "available",
+    "timestamp": "2026-06-25T10:52:18.858858+00:00",
+    "title": "Exponential lower bound for non‑negative QMC integration in high dimensions"
   },
   {
     "ambition_level": "extension",
@@ -8141,7 +8191,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "854c699d",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
     "domain_bridges": [],
     "domains": [
@@ -8154,7 +8204,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:28:36.279962+00:00",
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
@@ -8376,7 +8426,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2ce9a5d4",
+    "consumed_by_exp_id": "",
     "description": "Prove specific cases of Langlands functoriality: the transfer from GL(2) to GL(3), or symmetric power liftings. Formalize automorphic representations and L-functions in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -8388,7 +8438,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.154250+00:00",
     "title": "Langlands Program: Functoriality"
   },
@@ -8435,7 +8485,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "e364ad63",
+    "consumed_by_exp_id": "",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domain_bridges": [],
     "domains": [
@@ -8448,7 +8498,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -8794,7 +8844,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4ddbe1fe",
+    "consumed_by_exp_id": "",
     "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
     "domain_bridges": [],
     "domains": [
@@ -8807,7 +8857,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.547297+00:00",
     "title": "Tropical Riemann-Roch Theorem"
   },
@@ -8994,7 +9044,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4237ac67",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -9007,7 +9057,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
