@@ -4550,6 +4550,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "A precise bound ensures the existence of a specified hypergraph configuration under given density constraints.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2513",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T09:58:06.923963+00:00",
+    "title": "Finite Threshold Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for each n \u2208 \u2115 there exist x, y, z \u2208 \u2115 such that n = T(x)+P(y)+H(z) and max{x,y,z} \u2264 \u2308\u221a(2n)\u2309.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2513",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-25T09:58:19.138477+00:00",
+    "title": "Every Nonnegative Integer Has a Representation with Bounded Indices"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

@@ -7809,6 +7809,50 @@
     "title": "Two-thirds shift-number lower bound for diagonal hypergraph Ramsey numbers"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": "Brown-Erdős-Sós conjecture",
+    "consumed_by_exp_id": "",
+    "description": "A precise bound ensures the existence of a specified hypergraph configuration under given density constraints.",
+    "domain_bridges": "linear hypergraphs, density conditions",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2513",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Existence proof via combinatorial counting",
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T09:58:06.923963+00:00",
+    "title": "Finite Threshold Theorem"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "OEIS A287616"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for each n ∈ ℕ there exist x, y, z ∈ ℕ such that n = T(x)+P(y)+H(z) and max{x,y,z} ≤ ⌈√(2n)⌉.",
+    "domain_bridges": [
+      "math.NT",
+      "cs.SC"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2513",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use reduction to the ternary quadratic form Q and a primitive seed with descent to obtain explicit bounds on the indices.",
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-25T09:58:19.138477+00:00",
+    "title": "Every Nonnegative Integer Has a Representation with Bounded Indices"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
