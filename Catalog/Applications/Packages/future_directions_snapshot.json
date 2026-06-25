@@ -6592,6 +6592,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Observation 1: monotonicity of gamma_k^L and stabilization at ordinary domination for k >= Delta(G)",
+      "Theorem 2: general lower bound gamma_k^L(G) >= ceil(n(G)/(k+1)) via domination-edge counting",
+      "Paper results on rook graphs K_m □ K_n, viewed as the d=2 Hamming graph case"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every pair of integers q >= 2 and d >= 1, let H(d,q) be the d-fold Cartesian product of K_q, with vertex set Fin d -> Fin q and adjacency given by differing in exactly one coordinate. Then the (q-1)-limited domination number of H(d,q) is exactly q^(d-1). Equivalently, a single coordinate layer is optimal: gamma^{L}_{q-1}(K_q □ ... □ K_q) = q^(d-1).",
+    "domain_bridges": [
+      "k-limited domination ↔ edge-boundary counting between a set and its complement",
+      "Cartesian products of complete graphs ↔ Hamming graphs",
+      "domination in Hamming graphs ↔ coding-theoretic covering layers"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2457",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Upper bound: fix one coordinate value, for example D = {x : x 0 = 0}. This layer has cardinality q^(d-1), dominates H(d,q), and every vertex in D has exactly q-1 neighbors outside D, so it is (q-1)-limited. Lower bound: for any (q-1)-limited dominating set D, every vertex outside D has at least one edge to D, while each vertex of D has at most q-1 edges to the complement. Hence |V \\ D| <= (q-1)|D|, so q^d = |V| <= q|D|, giving |D| >= q^(d-1).",
+    "research_mode": "team",
+    "source_exp_id": "2606.22428v1",
+    "status": "available",
+    "timestamp": "2026-06-25T00:19:28.962491+00:00",
+    "title": "Layer threshold for limited domination in Hamming graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO/2305.01234",
       "math.CO/2407.05678",
       "math.CO/2603.01456"
@@ -6606,7 +6633,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2457",
+    "id": "fd_2458",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the missing‑trace condition as a predicate on (d+1)-subsets of a finite type. Prove a compression lemma that any extremal family can be shifted to a left‑compressed one without decreasing size. Use induction on n and on s, together with the known cases s≤d/2 (proved by Chao‑Xu‑Zakharov) and s=d (trivial). For the induction step, split the family according to whether a fixed element belongs to the missing trace; apply the induction hypothesis to the link and the shadow families, and combine the resulting bounds with binomial identities. Finally, show that the construction attaining the bound matches the extremal families in the equality case.",
@@ -6630,7 +6657,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2458",
+    "id": "fd_2459",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive counting using chain decomposition and Stirling's approximation",
@@ -6656,7 +6683,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2459",
+    "id": "fd_2460",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Ricci curvature using explicit Lie bracket formulas for L(S), express it in terms of the combinatorial data of S (number of comparable pairs), and verify the resulting scalar curvature matches the conjectured formula; check counterexamples by brute force for small S.",
@@ -6682,7 +6709,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2460",
+    "id": "fd_2461",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
@@ -6709,7 +6736,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2461",
+    "id": "fd_2462",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use additive combinatorial tools (Cauchy-Davenport, EGZ) to bound the size of S, then construct a tight example using arithmetic progressions in Z_p.",
@@ -6735,7 +6762,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2462",
+    "id": "fd_2463",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on n, leveraging the grafting property of H_alpha to decompose the index into contributions from subtrees. Show that the caterpillar structure minimizes the index by concentrating probabilities unevenly, while the balanced tree maximizes it by distributing probabilities uniformly. Base cases (n=3,4) can be verified explicitly, and the inductive step would rely on comparing structural cases under the grafting decomposition.",
@@ -6763,7 +6790,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2463",
+    "id": "fd_2464",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the geometric correspondence between minimal additive codes and additive strong blocking sets. Derive the asymptotic size of minimal additive strong blocking sets in PG(k-1, q) using probabilistic methods (random constructions) for the upper bound and combinatorial arguments (e.g., polynomial method or double counting) for the lower bound. Show that the constant h·(q^h - 1)/(q - 1) arises from the size of an h-projective system (i.e., PG(h-1, q)).",
@@ -6788,7 +6815,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2464",
+    "id": "fd_2465",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit functions h and s_y satisfying Theorem 1's assumptions for periodic L_p-discrepancy function spaces, then apply the provided lower bound method to derive exponential information complexity.",
@@ -6815,7 +6842,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2465",
+    "id": "fd_2466",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the stack-sorting diagram tableau framework to derive an explicit infinite series expression for λ, then evaluate it to show equivalence to 3/5*(7-8 ln2). Use generating functions for stack-sortable permutations and asymptotic enumeration techniques.",
@@ -6844,7 +6871,7 @@
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2466",
+    "id": "fd_2467",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend Borel-Serre duality techniques and spectral sequence arguments used in codimension 1 and 2 cases to arbitrary k. Analyze the action of the congruence subgroup on Bruhat-Tits buildings and leverage representation stability to control cohomology in high degrees.",
@@ -6869,7 +6896,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2467",
+    "id": "fd_2468",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct many solutions n to φ(n)=φ(n+1) by leveraging the Graham--Holt--Pomerance same-support construction with carefully chosen small prime parameters, then apply a weighted sieve (e.g., the fundamental lemma of sieve theory) to show that the resulting set has size at least x exp(-(1/2+o(1))√(log x log₂ x)). The construction would mirror the upper bound proof but reverse the injective encoding step to produce a surjective mapping from a large set of friable tuples to solutions.",
@@ -6897,7 +6924,7 @@
     "domains": [
       "Computation"
     ],
-    "id": "fd_2468",
+    "id": "fd_2469",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Transform the problem into a stopped random walk model via base-2 digit deconvolution, then derive lower bounds on the bias by analyzing first-exit probabilities of carry chains in binary expansions.",
@@ -6924,7 +6951,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2469",
+    "id": "fd_2470",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive argument on dimension d, leveraging the structure of convex splinters and the affine dependence condition. Possibly using induction on the number of convex sets composing the splinter, combined with probabilistic method or measure concentration techniques to establish the lower bound.",
@@ -6943,7 +6970,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2470",
+    "id": "fd_2471",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct proof using inequalities derived from asymptotic estimates",
@@ -6972,7 +6999,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2471",
+    "id": "fd_2472",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the paper's prime-divisor criterion to an exact p-adic valuation statement. First reuse the finite-difference argument to show that every prime divisor of D(k) divides n = k+1. For an exact component p^a ∥ n, use Kummer's theorem to express v_p(binom(qk,k)) as a number of base-p carries in k + (q-1)k. Prove a uniform lower bound v_p ≥ a for all q in the range exactly when n/p^a ≤ p^a. Then construct an explicit q, plausibly q = n/p^a + 1 or a small digit-adjusted variant, for which the carry count is exactly a, giving v_p(D(k)) = a. Show that all other prime components have valuation zero in the gcd. Combining over primes yields the asserted exact formula.",
@@ -7003,7 +7030,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2472",
+    "id": "fd_2473",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicitly a non-central element that is St₃ by utilizing long paths in the quiver. For a path p of length ≥ 3, consider x = p₁ + p₂ + ... + pₖ where pᵢ are appropriately chosen paths satisfying the St₃ condition but not the centrality condition. Verify St₃(x, y₁, y₂) = 0 for all y₁, y₂ using the alternating symmetry and multilinearity of St₃, while showing [x, z] ≠ 0 for some z in the algebra to prove non-centrality.",
@@ -7031,7 +7058,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2473",
+    "id": "fd_2474",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the construction of the Betti-Whittaker periods using the pairing between the Whittaker model and the cohomology of the arithmetic quotient. Implement the duality between π and π^* via the contragredient representation, and use the functional equation of the associated L-function to establish the proportionality constant. The Lean proof would require the formalization of Casselman-Wallach representations and the continuous cohomology of GL(n, R).",
@@ -7059,7 +7086,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2474",
+    "id": "fd_2475",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive proof on delta-matroid rank with case analysis for each ⋆∙ operator, leveraging existing results for partial-∗ polynomials and properties of twist/loop complementation.",
@@ -7087,7 +7114,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2475",
+    "id": "fd_2476",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove by induction on n using the known extremal construction, counting arguments, and verifying that any C_{4k+2}^{4-}-free hypergraph cannot exceed the bipartite bound, formalizing the odd‑bipartite structure in Lean.",
@@ -7116,7 +7143,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2476",
+    "id": "fd_2477",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Derive the explicit parameters (a_i,b_j) of the {}_nF_{n-1} series from the known hypergeometric representation of the roots of the trinomial in powers of the discriminant D (using the formulas from the paper).\n2. Verify the conjectured transformation for small n (n=3,4,5) with computer algebra (e.g., Mathematica, Maple, or Sage) by expanding both sides as power series in D and checking equality term-by-term.\n3. Once the pattern holds for these cases, use known results on higher-order Kummer transformations (e.g., Karlsson-Minton theorem) to argue that the conjectured identity follows from the general transformation theory for Saalschützian {}_nF_{n-1} series.\n4. Formalise the conjecture in Lean 4: define the hypergeometric series in mathlib, encode the parameters as dependent types, and state the identity as a theorem. Use the existing hypergeometric transformation lemmas to attempt a proof, or develop new lemmas for the specific parameter shifts.\n5. Aim to complete a machine-check",
@@ -7143,7 +7170,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2477",
+    "id": "fd_2478",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Induction on n using the functional equation of the q-exponential generating function F_k(t;q) and coefficient extraction to verify the claimed closed form",
@@ -7168,7 +7195,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2479",
+    "id": "fd_2480",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the lacunary matrix theorem to construct a multiplier vector via linear algebra over \\(\\R\\) and verify its multiplicative properties in the torus. Combine with geometric arguments to ensure minimality and global consistency.",
@@ -7635,7 +7662,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2478",
+    "id": "fd_2479",
     "lineage_refs": [],
     "priority_score": 0.7,
     "proof_strategy": "",
@@ -7667,7 +7694,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c37a84a2",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -7679,7 +7706,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
