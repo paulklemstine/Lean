@@ -195,7 +195,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Standard Conjectures on Algebraic Cycles"
   },
   {
-    "consumed_by_exp_id": "f88074cd",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
     "domains": [
       "Algebra",
@@ -205,7 +205,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:17.429886+00:00",
     "title": "Whitehead Problem: Independence from ZFC"
   },
@@ -507,7 +507,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "eb2eee3d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -516,7 +516,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -1748,7 +1748,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
   },
   {
-    "consumed_by_exp_id": "99725b45",
+    "consumed_by_exp_id": "",
     "description": "For every real \u03b5 > 0, there exists N such that every finite simple graph G on n \u2265 N vertices with minimum degree at least (5/8 + \u03b5)n has an edge-decomposition into 5-cycles whenever G is C5-divisible, i.e. every vertex has even degree and 5 divides the number of edges. This is the remaining small odd-cycle case suggested by the generalized Nash-Williams threshold \u03b4_{C_\u2113} = \u2113/(2\u2113\u22122), after the triangle case and the long odd-cycle cases addressed in the paper.",
     "domains": [
       "Bridges"
@@ -1757,7 +1757,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21548v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T02:24:24.127531+00:00",
     "title": "Asymptotic C5-decomposition threshold equals 5/8"
   },
@@ -2445,7 +2445,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "cc1a412b",
+    "consumed_by_exp_id": "",
     "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
     "domains": [
       "Bridges"
@@ -2454,7 +2454,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T13:11:45.659366+00:00",
     "title": "Quadratic irrational density in the ratio spectrum"
   },
@@ -4409,6 +4409,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nFollow-up conjectures from the cycle that produced\n`Catalog/Computation/RankOfApparitionSDS.lean` (abstract rank-of-apparition theory\nfor strong divisibility sequences, generalizing the Fibonacci entry-point machinery\nin `CarmichaelComposite.lean` and `Applications/RankOfApparition.lean`).\n\n## Conjecture 1 \u2014 Rank is multiplicative-coprime-additive\nFor a strong divisibility sequence `a` and coprime targets `d, e` (each appearing),\nthe joint appearance set `{n | d*e \u2223 a n}` is governed by `lcm`:\n`rank a (d) hex_d` and `rank a (e) hex_e` are coprime-ish so that\n`(d \u2223 a n \u2227 e \u2223 a n) \u2194 Nat.lcm (rank a d) (rank a e) \u2223 n`.\n**Testable:** already provable from `dvd_iff_rank_dvd` applied twice plus\n`Nat.lcm_dvd_iff`; formalize as `rank_lcm` and specialize to `rank a (d*e)` when\n`gcd (a\u00b7) splits`.\n\n## Conjecture 2 \u2014 Rank of a prime power\nFor Fibonacci (and any SDS with a \"law of apparition\"), if `p` is prime with\n`rank Nat.fib p = r`, then for `e \u2265 1`, `rank Nat.fib (p^e) = p^(e-1) * r`\nunless a Wall\u2013Sun\u2013Sun-type exception holds. **Testable** computationally for\n`p \u2264 50`, `e \u2264 4`; the abstract skeleton needs only a `p`-adic valuation bound\n`v_p (a (p^(e-1) r))`.\n\n## Conjecture 3 \u2014 Pisano period divides a multiple of the rank\nThe Pisano period `\u03c0(m)` (period of `Nat.fib` mod `m`) satisfies\n`rank Nat.fib m \u2223 \u03c0(m)` and `\u03c0(m) / rank Nat.fib m \u2208 {1, 2, 4}`.\n**Testable:** enumerate `m \u2264 200`; tabulate the ratio. Formalizing the divisibility\n`rank \u2223 \u03c0` is a clean next target reusing `dvd_iff_rank_dvd`.\n\n## Conjecture 4 \u2014 Carmichael via abstract SDS primitivity\nGeneralize `fib_carmichael` (every `F n`, `n \u2265 13`, has a primitive prime divisor)\nto abstract SDS: any SDS `a` with strict growth `a n \u2265 2^n` and a uniform bound on\n`\u220f_{d|n, d<n} a d` has a primitive prime divisor for all `n` beyond an explicit\nthreshold. **Testable:** the `removePrimesOf` / `fibCoprimePart` machinery in\n`CarmichaelComposite.lean` is already sequence-agnostic; refactor it to take an\narbitrary SDS and reprove the large-`n` bound.\n\n## Conjecture 5 \u2014 Appearance-set semigroup characterization\nFor an SDS `a`, the family of appearance sets `{ {n | d \u2223 a n} : d \u2208 image a }`,\nordered by reverse inclusion, is isomorphic to the divisor lattice of indices via\n`d \u21a6 rank a d`. **Testable:** `appearance_set_eq` already shows each set is a\n`rank`-multiple set; conjecture that `d \u2223 e` (in the value monoid) corresponds to\n`rank a d \u2223 rank a e`, giving a lattice embedding.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2481",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c37a84a2",
+    "status": "available",
+    "timestamp": "2026-06-25T00:45:38.832058+00:00",
+    "title": "Follow-up conjectures from the cycle that produced"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4482,7 +4497,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "7242c7d6",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -4492,7 +4507,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -4526,7 +4541,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "02cd648b",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Algebraic topological invariants (e.g., persistent homology) can be used to efficiently mitigate errors in noisy quantum systems by encoding error patterns into topological features. Test: Implement a specific algorithm that uses persistent homology to correct errors in a set of NISQ experiments (e.g., quantum circuit repetitions) and compare success rates to traditional error correction methods. Impact: Enhances the reliability of near-term quantum computations, accelerating practical quantum technology development.",
     "domains": [
       "Algebra",
@@ -4536,7 +4551,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T23:12:45.568532+00:00",
     "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
   },
@@ -4985,7 +5000,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Compactification of Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "f41a91d1",
+    "consumed_by_exp_id": "",
     "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
     "domains": [
       "Pythagorean",
@@ -4995,7 +5010,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.030710+00:00",
     "title": "Pythagorean Triple Group Structure"
   },
@@ -5180,7 +5195,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization Group Flow: Wilson's Epsilon Expansion"
   },
   {
-    "consumed_by_exp_id": "f25c8810",
+    "consumed_by_exp_id": "",
     "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
     "domains": [
       "Algebra",
@@ -5190,7 +5205,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.398671+00:00",
     "title": "Alien Number Systems: Beyond Base-N"
   },

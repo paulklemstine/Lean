@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c37a84a2",
     "filename": "close_proofs_these_conjectures_continue_the_resear.json",
     "pkg_num": 46,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5709080000000001,
     "title": "Primitive Prime Divisors of Fibonacci Numbers: The Verified Prime-Index Case of Carmichael's Theorem"
   },
   {
@@ -1343,8 +1343,8 @@ window.PACKAGE_GRAPH = {
       "hue": 281,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5709080000000001,
+      "quality": "partial",
       "shape": "cube",
       "title": "Primitive Prime Divisors of Fibonacci Numbers: The Verified Prime-Index Case of Carmichael's Theorem"
     }
