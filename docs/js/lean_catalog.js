@@ -97,8 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             allLeanFiles.push(fileObj);
                         });
                     }
-                })
-                .catch(err => console.error("Error loading package", pkgMeta.exp_id, err));
+                }
+            })
+            .catch(err => console.error("Error loading package", pkgMeta.exp_id, err));
         });
 
         await Promise.all(promises);
