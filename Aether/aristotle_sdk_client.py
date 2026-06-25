@@ -352,11 +352,11 @@ class AristotleSDKClient:
         def ignore_patterns(src: str, names: list) -> set:
             return {
                 n for n in names
-                if n.startswith(".") or n in {
+                if (n.startswith(".") and n != ".lake") or n in {
                     "aristotle_results", "__pycache__", "*.pyc", "*.tar.gz",
                     "result.tar.gz", "result_extracted", "logs", "output",
                     "jobs", "*.output", "node_modules", "build", "lake-packages",
-                    ".lake", "lakefile.olean", "Manifesto",
+                    "lakefile.olean", "Manifesto",
                 } or n.endswith(".output")
             }
 
@@ -399,6 +399,14 @@ class AristotleSDKClient:
             src = catalog_root / file_name
             if src.exists():
                 shutil.copy2(src, project_dir / file_name)
+
+        # Explicitly copy the .lake directory for phase A upload
+        lake_src = catalog_root / ".lake"
+        if lake_src.exists():
+            lake_dest = project_dir / ".lake"
+            if lake_dest.exists():
+                shutil.rmtree(lake_dest)
+            shutil.copytree(lake_src, lake_dest, ignore=ignore_patterns)
 
     async def submit_with_catalog_context(
         self,

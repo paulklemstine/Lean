@@ -46312,6 +46312,95 @@
       "title": "Mex-binomial weights equal a triangular partition convolution"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "10.48550/arXiv.2606.23853"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every natural number k there exists a maximal standard social decision frame whose shortest coherence violation has length exactly 2k+2, showing that the incoherence index of such frames is not bounded by any uniform finite constant.",
+      "domain_bridges": [
+        "social choice theory ↔ finite additive measures",
+        "combinatorial geometry ↔ rational vector space orthogonality"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2553",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem incoherence_index_unbounded (k : ℕ) : ∃ (f : MaximalStandardFrame k), incoherence_index f = 2 * k + 2",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct, for each k, a maximal standard frame using symmetric half-sized voting blocs arranged in orthogonal rational vector subspaces, guaranteeing that any coherence violation must involve at least 2k+2 sets.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25954v1",
+      "source_path": "http://arxiv.org/abs/2606.25954v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T21:39:44.798884+00:00",
+      "title": "Unbounded Incoherence Index in Maximal Standard Social Decision Frames"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Brown-Erdős-Sós conjecture",
+        "Ruzsa-Szemerédi theorem",
+        "hypergraph Turán problems"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For all integers r ≥ 3, k ≥ 3, and n ≥ (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with |E(H)| = [(k-2)/(r²((r-2)(k-2)+1))n² + n/r] - 1, which does not contain k edges spanning at most (r-2)k+3 vertices. This conjectures that the bound in the main theorem is tight.",
+      "domain_bridges": [
+        "extremal hypergraph theory",
+        "finite combinatorics",
+        "density increment arguments"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2553",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem tightness_of_density_bound (r k n : ℕ) (hr : 3 ≤ r) (hk : 3 ≤ k) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r n), linear H ∧ count_edges H = (k-2)/(r^2*((r-2)*(k-2)+1))*n^2 + n/r - 1 ∧ ¬contains_k_edges_spanning_le (r-2)*k+3 H",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a family of hypergraphs achieving the threshold edge count minus one while avoiding the forbidden configuration, or prove non-existence via contradiction. This requires detailed combinatorial analysis of linear hypergraph structures and their edge distributions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25931v1",
+      "source_path": "http://arxiv.org/abs/2606.25931v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T21:40:29.052604+00:00",
+      "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,

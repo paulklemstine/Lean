@@ -8806,6 +8806,57 @@
     "title": "Mex-binomial weights equal a triangular partition convolution"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "10.48550/arXiv.2606.23853"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every natural number k there exists a maximal standard social decision frame whose shortest coherence violation has length exactly 2k+2, showing that the incoherence index of such frames is not bounded by any uniform finite constant.",
+    "domain_bridges": [
+      "social choice theory ↔ finite additive measures",
+      "combinatorial geometry ↔ rational vector space orthogonality"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2553",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct, for each k, a maximal standard frame using symmetric half-sized voting blocs arranged in orthogonal rational vector subspaces, guaranteeing that any coherence violation must involve at least 2k+2 sets.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25954v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:39:44.798884+00:00",
+    "title": "Unbounded Incoherence Index in Maximal Standard Social Decision Frames"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Brown-Erdős-Sós conjecture",
+      "Ruzsa-Szemerédi theorem",
+      "hypergraph Turán problems"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all integers r ≥ 3, k ≥ 3, and n ≥ (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with |E(H)| = [(k-2)/(r²((r-2)(k-2)+1))n² + n/r] - 1, which does not contain k edges spanning at most (r-2)k+3 vertices. This conjectures that the bound in the main theorem is tight.",
+    "domain_bridges": [
+      "extremal hypergraph theory",
+      "finite combinatorics",
+      "density increment arguments"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2553",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a family of hypergraphs achieving the threshold edge count minus one while avoiding the forbidden configuration, or prove non-existence via contradiction. This requires detailed combinatorial analysis of linear hypergraph structures and their edge distributions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:40:29.052604+00:00",
+    "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",

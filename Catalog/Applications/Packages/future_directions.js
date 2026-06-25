@@ -5073,6 +5073,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every natural number k there exists a maximal standard social decision frame whose shortest coherence violation has length exactly 2k+2, showing that the incoherence index of such frames is not bounded by any uniform finite constant.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2553",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25954v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:39:44.798884+00:00",
+    "title": "Unbounded Incoherence Index in Maximal Standard Social Decision Frames"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For all integers r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with |E(H)| = [(k-2)/(r\u00b2((r-2)(k-2)+1))n\u00b2 + n/r] - 1, which does not contain k edges spanning at most (r-2)k+3 vertices. This conjectures that the bound in the main theorem is tight.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2553",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:40:29.052604+00:00",
+    "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
