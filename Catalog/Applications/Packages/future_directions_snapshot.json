@@ -517,26 +517,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "a4d45ca2",
-    "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES ∈ P. Construct efficient modular arithmetic tactics for Lean.",
-    "domain_bridges": [],
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "seed_334",
-    "lineage_refs": [],
-    "priority_score": 0.88,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432609+00:00",
-    "title": "Primality Testing: Miller-Rabin and AKS Formalization"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Compute and formalize π_n(S^m) for small n, m. Prove π_3(S^2) ≅ ℤ via the Hopf fibration. Construct the Hopf invariant and prove it detects the generator. Formalize the long exact sequence of a fibration.",
     "domain_bridges": [],
@@ -978,7 +958,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "553630de",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -992,7 +972,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -1277,7 +1257,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4af9012c",
+    "consumed_by_exp_id": "e57ac8fb",
     "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
     "domain_bridges": [],
     "domains": [
@@ -2431,7 +2411,7 @@
       "MR0025715",
       "MR2483235"
     ],
-    "consumed_by_exp_id": "e0c8bd91",
+    "consumed_by_exp_id": "",
     "description": "Let $a_k$ denote the number of Pólya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the Pólya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
     "domain_bridges": [
       "analytic_combinatorics",
@@ -2447,7 +2427,7 @@
     "proof_strategy": "Define the OGF A(z) via the Pólya functional equation A(z) = z·exp(A(z))·Φ(z) where Φ(z) = exp(∑_{i≥2} A(z^i)/i). Take the logarithmic derivative to obtain zA'(z) = A(z)(1 + ∑_{i≥1} z^i A'(z^i)). Extract the coefficient of z^k on both sides: the left side gives k·a_k; the right side gives a_k + ∑_{j=1}^{k-1} a_j·ω_{k-j}, where ω_k arises from the identity [z^k]∑_{i≥1} z^i A'(z^i) = ∑_{d|k} d·a_d. Rearranging yields the recurrence. The Lean formalization should first establish the coefficient extraction identity for the divisor sum, then apply it to the differentiated functional equation.",
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T05:17:21.927856+00:00",
     "title": "Pólya tree coefficient divisor-sum recurrence"
   },
@@ -3424,7 +3404,7 @@
       "math.AT",
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d606bfb",
     "description": "For any prime p and integer i ≥ 1, the codimension-i rational cohomology of the Hecke congruence subgroup Γ_{0,n}(p) vanishes for n ≥ (3i+1)p + (3i+2). Specifically, H^{n(n-1)/2 - i}(Γ_{0,n}(p); ℚ) = 0. This extrapolates the paper's results for i=1 (n ≥ 4p+5) and i=2 (n ≥ 7p+8) to arbitrary codimensions.",
     "domain_bridges": [
       "Cohomology of arithmetic groups",
@@ -3441,7 +3421,7 @@
     "proof_strategy": "Apply Borel-Serre duality to translate the vanishing of high-degree rational cohomology into the vanishing of low-degree homology of associated complexes of Steinberg modules, then establish high connectivity of complexes of p-modular systems for large n, inductively generalizing the combinatorial topology techniques used for codimensions 1 and 2.",
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T06:21:54.373451+00:00",
     "title": "Codimension-i Vanishing Conjecture for Hecke Congruence Subgroups"
   },
@@ -4190,7 +4170,7 @@
       "Nat.even_iff",
       "Nat.odd_iff"
     ],
-    "consumed_by_exp_id": "fb5aee47",
+    "consumed_by_exp_id": "",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n ≥ 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domain_bridges": [
       "factorial Diophantine equations",
@@ -4208,7 +4188,7 @@
     "proof_strategy": "Formalize the triangular equivalence lemma: for n ≥ 4, n! + 1 = m^2 iff there exists y such that y*(y+1)/2 = n!/8 and m = 2*y + 1. Then attempt to prove the classification by combining modular exclusions for residue classes of n with factorial divisibility facts and higher-power congruence obstructions. The conjecture is suitable for Lean because it can be stated entirely over Nat using factorials, squares, divisibility by 8, and triangular numbers.",
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -7098,7 +7078,7 @@
       "q-exponential generating functions",
       "descent set"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8f4b2b3",
     "description": "Conjecture that for every integer k≥2 and n≥0, the polynomial a_n^{(k)}(q) equals the finite sum ∑_{m=0}^{⌊n/k⌋} q^{m(m+1)/2} * GaussianBinomial(n - m(k-1), m)_q where GaussianBinomial(n,m)_q denotes the q-binomial coefficient",
     "domain_bridges": [
       "analytic combinatorics",
@@ -7113,7 +7093,7 @@
     "proof_strategy": "Induction on n using the functional equation of the q-exponential generating function F_k(t;q) and coefficient extraction to verify the claimed closed form",
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T22:36:50.930027+00:00",
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
@@ -7496,7 +7476,7 @@
       "Mathlib.Data.Rat.Basic",
       "Mathlib.Tactic.Linarith"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "188ac175",
     "description": "Let qc(n) be the largest k < n such that every placement of k mutually non-attacking queens on an n × n board can be completed to a full n-queens configuration. Conjecture: there is an absolute integer N such that for every n ≥ N, qc(n) ≤ floor(n/5), equivalently 5 * qc(n) ≤ n. This sharpens the paper's asymptotic upper bound qc(n) ≤ 0.216n to the rational density 0.2.",
     "domain_bridges": [
       "Model an n-queens partial configuration as an independent set in the queen-attack graph on Fin n × Fin n.",
@@ -7513,7 +7493,7 @@
     "proof_strategy": "Formalize the board, attack lines, partial configurations, completions, and qc(n). Prove the weighting obstruction theorem in Lean: if the unattacked squares of Q are covered by rational weights on rows, columns, and diagonals with total weight strictly less than n - |Q|, then Q is non-completable. Then construct, for all sufficiently large n, an explicit parametric partial configuration Q_n of at most floor(n/5) non-attacking queens together with a rational line-weighting certificate covering all squares not attacked by Q_n and having total weight < n - |Q_n|. The remaining proof obligations should be finite interval-membership and affine rational inequality checks, discharged by normalization and linarith.",
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T09:17:44.772184+00:00",
     "title": "Asymptotic one-fifth upper bound for the n-queens completion threshold"
   },
@@ -8162,6 +8142,38 @@
     "title": "Closed form for even‑indexed regularised Wallis products"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Brown--Erdos--Sos conjecture for sparse local configurations",
+      "Ruzsa--Szemeredi (6,3)-theorem as the k=3,r=3 case",
+      "Keevash--Long large-uniformity Brown--Erdos--Sos theorem",
+      "mathlib: Data.Finset.Card",
+      "mathlib: Data.Fintype.Card",
+      "mathlib: Combinatorics.SimpleGraph.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every fixed r >= 3 and k >= 3, every linear r-uniform hypergraph H on n vertices with no collection of k edges spanning at most (r - 2)k + 3 vertices has o(n^2) edges. Equivalently: for every rational epsilon > 0 there is N such that for all n >= N, if H is linear and r-uniform on Fin n and every k-edge subfamily spans more than (r - 2)k + 3 vertices, then |E(H)| <= epsilon n^2. This would replace the paper's positive constant-density forcing threshold by the conjectural Brown--Erdos--Sos vanishing threshold in the linear setting.",
+    "domain_bridges": [
+      "Represent a finite r-uniform hypergraph on n vertices as Finset (Finset (Fin n)).",
+      "Express linearity by pairwise edge intersections having cardinality at most 1.",
+      "Express a forbidden ((r-2)k+3,k)-configuration by quantifying over k-cardinality Finsets of edges and bounding the cardinality of their Finset.biUnion.",
+      "Encode the asymptotic o(n^2) statement using rational epsilon-N quantifiers, avoiding real analysis if desired."
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2526",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "A plausible route is to formalize the local averaging inequality from the paper as a reusable finite lemma, then combine it with iterative density increment or hypergraph removal-type arguments specialized to linear r-uniform systems. For r=3,k=3 this should connect to the Ruzsa--Szemeredi theorem; for general k one would seek a Lean-formalizable induction on k tracking the number of pairwise edge intersections inside small edge subfamilies. The conjecture is falsifiable by any explicit infinite-density family of linear r-uniform hypergraphs avoiding k edges on at most (r-2)k+3 vertices.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T14:27:44.525294+00:00",
+    "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -8260,7 +8272,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e653644d",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -8273,7 +8285,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -8430,26 +8442,6 @@
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "4a0d3c7a",
-    "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_2488",
-    "lineage_refs": [],
-    "priority_score": 0.7158260869565218,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T03:28:36.279962+00:00",
-    "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
   {
     "ambition_level": "extension",
@@ -8650,7 +8642,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "33ece4f7",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -8662,7 +8654,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -8688,7 +8680,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26e8a5ea",
     "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
     "domain_bridges": [],
     "domains": [
@@ -8701,7 +8693,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.309278+00:00",
     "title": "Category-Theoretic Neural Architectures"
   },
@@ -8728,7 +8720,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a8b6896",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domain_bridges": [],
     "domains": [
@@ -8741,7 +8733,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -9547,7 +9539,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1f7490cc",
+    "consumed_by_exp_id": "",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domain_bridges": [],
     "domains": [
@@ -9560,7 +9552,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },

@@ -7,36 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Package data cache: filename -> data
     if (!window.Aether.packageCache) window.Aether.packageCache = {};
 
-    // Helper to render markdown without mangling LaTeX math
-    function renderMarkdownWithMath(md) {
-        if (!md) return '';
-        const mathTokens = {};
-        let counter = 0;
-        
-        // Protect display math $$...$$
-        let text = md.replace(/\$\$([\s\S]+?)\$\$/g, (match) => {
-            const token = `@@MATH_DISPLAY_${counter++}@@`;
-            mathTokens[token] = match;
-            return `\n\n${token}\n\n`;
-        });
-        
-        // Protect inline math $...$
-        text = text.replace(/(^|[^\\])\$([^$\n]+?)\$/g, (match, prefix, math) => {
-            const token = `@@MATH_INLINE_${counter++}@@`;
-            mathTokens[token] = `$${math}$`;
-            return prefix + token;
-        });
-
-        let html = marked.parse(text);
-
-        // Restore math
-        for (const [token, math] of Object.entries(mathTokens)) {
-            html = html.replace(new RegExp(token, 'g'), () => math);
-        }
-        
-        return html;
-    }
-
     // URL hash routing: #pkg=filename  →  load that package
     // Listen for back/forward navigation
     window.addEventListener('hashchange', () => {
@@ -214,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Article
         const articleDiv = document.getElementById('content-article');
         if (data.article) {
-            articleDiv.innerHTML = renderMarkdownWithMath(data.article);
+            articleDiv.innerHTML = marked.parse(data.article);
         } else {
             articleDiv.innerHTML = '<p style="color:var(--text-muted)">No article provided.</p>';
         }
@@ -222,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Paper
         const paperDiv = document.getElementById('content-paper');
         if (data.research_paper) {
-            paperDiv.innerHTML = renderMarkdownWithMath(data.research_paper);
+            paperDiv.innerHTML = marked.parse(data.research_paper);
         } else {
             paperDiv.innerHTML = '<p style="color:var(--text-muted)">No research paper provided.</p>';
         }
@@ -809,7 +779,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let explanationHtml = '';
                 const desc = (item.description || item.explanation || '').replace(/\\n/g, '\n');
                 if (desc.trim()) {
-                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main); white-space: pre-line;">${renderMarkdownWithMath(desc)}</div>`;
+                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main); white-space: pre-line;">${marked.parse(desc)}</div>`;
                 }
 
                 // Check what code fields we have
@@ -970,7 +940,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const narrativeDiv = document.getElementById('content-directions-narrative');
         const fd = pkgData.future_directions;
         if (fd && typeof fd === 'string' && fd.length > 50 && !fd.endsWith('.md')) {
-            narrativeDiv.innerHTML = renderMarkdownWithMath(fd);
+            narrativeDiv.innerHTML = marked.parse(fd);
         } else {
             narrativeDiv.innerHTML = '<p style="color:var(--text-muted)">No future directions narrative for this package.</p>';
         }

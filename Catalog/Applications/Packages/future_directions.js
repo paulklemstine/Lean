@@ -388,21 +388,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
   {
-    "consumed_by_exp_id": "a4d45ca2",
-    "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES \u2208 P. Construct efficient modular arithmetic tactics for Lean.",
-    "domains": [
-      "NumberTheory",
-      "Computation"
-    ],
-    "id": "seed_334",
-    "priority_score": 0.88,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432609+00:00",
-    "title": "Primality Testing: Miller-Rabin and AKS Formalization"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Compute and formalize \u03c0_n(S^m) for small n, m. Prove \u03c0_3(S^2) \u2245 \u2124 via the Hopf fibration. Construct the Hopf invariant and prove it detects the generator. Formalize the long exact sequence of a fibration.",
     "domains": [
@@ -734,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Universal Approximation: Quantitative Bounds"
   },
   {
-    "consumed_by_exp_id": "553630de",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domains": [
       "Tropical",
@@ -745,7 +730,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -958,7 +943,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proofs: Schnorr Protocol"
   },
   {
-    "consumed_by_exp_id": "4af9012c",
+    "consumed_by_exp_id": "e57ac8fb",
     "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
     "domains": [
       "Algebra",
@@ -1702,7 +1687,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
   },
   {
-    "consumed_by_exp_id": "e0c8bd91",
+    "consumed_by_exp_id": "",
     "description": "Let $a_k$ denote the number of P\u00f3lya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the P\u00f3lya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
     "domains": [
       "Pythagorean"
@@ -1711,7 +1696,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23439v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T05:17:21.927856+00:00",
     "title": "P\u00f3lya tree coefficient divisor-sum recurrence"
   },
@@ -2224,7 +2209,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the Erd\u0151s 550 Upper Bound for Tree-Multipartite Ramsey Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4d606bfb",
     "description": "For any prime p and integer i \u2265 1, the codimension-i rational cohomology of the Hecke congruence subgroup \u0393_{0,n}(p) vanishes for n \u2265 (3i+1)p + (3i+2). Specifically, H^{n(n-1)/2 - i}(\u0393_{0,n}(p); \u211a) = 0. This extrapolates the paper's results for i=1 (n \u2265 4p+5) and i=2 (n \u2265 7p+8) to arbitrary codimensions.",
     "domains": [
       "Pythagorean",
@@ -2234,7 +2219,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23519v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T06:21:54.373451+00:00",
     "title": "Codimension-i Vanishing Conjecture for Hecke Congruence Subgroups"
   },
@@ -2616,7 +2601,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Finite-type classification for Grassmannian partial-flag seeds"
   },
   {
-    "consumed_by_exp_id": "fb5aee47",
+    "consumed_by_exp_id": "",
     "description": "The only natural numbers n for which n!/8 is a triangular number are n = 4, 5, and 7; equivalently, the only Brown numbers satisfying n! + 1 = m^2 are (4,5), (5,11), and (7,71). This is falsifiable by exhibiting any n \u2265 8 and integer y with y*(y+1)/2 = n!/8, or equivalently any m with n! + 1 = m^2.",
     "domains": [
       "Bridges"
@@ -2625,7 +2610,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23485v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T16:30:05.276546+00:00",
     "title": "Brocard-Ramanujan Triangular Classification"
   },
@@ -4162,7 +4147,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Higher-order Kummer transformation for trinomial root series"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f8f4b2b3",
     "description": "Conjecture that for every integer k\u22652 and n\u22650, the polynomial a_n^{(k)}(q) equals the finite sum \u2211_{m=0}^{\u230an/k\u230b} q^{m(m+1)/2} * GaussianBinomial(n - m(k-1), m)_q where GaussianBinomial(n,m)_q denotes the q-binomial coefficient",
     "domains": [
       "Pythagorean"
@@ -4171,7 +4156,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T22:36:50.930027+00:00",
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
@@ -4378,7 +4363,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Positive-characteristic Veronese circuit bound with p-adic digit weight"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "188ac175",
     "description": "Let qc(n) be the largest k < n such that every placement of k mutually non-attacking queens on an n \u00d7 n board can be completed to a full n-queens configuration. Conjecture: there is an absolute integer N such that for every n \u2265 N, qc(n) \u2264 floor(n/5), equivalently 5 * qc(n) \u2264 n. This sharpens the paper's asymptotic upper bound qc(n) \u2264 0.216n to the rational density 0.2.",
     "domains": [
       "Pythagorean"
@@ -4387,7 +4372,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T09:17:44.772184+00:00",
     "title": "Asymptotic one-fifth upper bound for the n-queens completion threshold"
   },
@@ -4739,6 +4724,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every fixed r >= 3 and k >= 3, every linear r-uniform hypergraph H on n vertices with no collection of k edges spanning at most (r - 2)k + 3 vertices has o(n^2) edges. Equivalently: for every rational epsilon > 0 there is N such that for all n >= N, if H is linear and r-uniform on Fin n and every k-edge subfamily spans more than (r - 2)k + 3 vertices, then |E(H)| <= epsilon n^2. This would replace the paper's positive constant-density forcing threshold by the conjectural Brown--Erdos--Sos vanishing threshold in the linear setting.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2526",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-25T14:27:44.525294+00:00",
+    "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -4809,7 +4809,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e653644d",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -4819,7 +4819,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -4936,21 +4936,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "consumed_by_exp_id": "4a0d3c7a",
-    "description": "Conjecture: For sufficiently large formal mathematical libraries, the minimal proof length of a theorem is asymptotically predicted, up to a universal sublinear error term, by the low-lying spectrum of a sheaf Laplacian built from its type constraints, dependency hypergraph, and local unification data. Test: Construct the sheaf Laplacian for thousands of theorems in Lean/Coq/Isabelle, compare spectral invariants against known shortest or near-shortest proofs, and refute the conjecture if no library-independent predictive law outperforms syntactic and graph-baseline models. Impact: Enables geometry-based proof difficulty estimation, theorem curriculum design, and targeted lemma invention for autonomous theorem provers.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_2488",
-    "priority_score": 0.7158260869565218,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T03:28:36.279962+00:00",
-    "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
   {
     "consumed_by_exp_id": "",
@@ -5099,7 +5084,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "33ece4f7",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5108,7 +5093,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -5127,7 +5112,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Program: Functoriality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26e8a5ea",
     "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
     "domains": [
       "MachineLearning",
@@ -5137,7 +5122,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.309278+00:00",
     "title": "Category-Theoretic Neural Architectures"
   },
@@ -5157,7 +5142,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a8b6896",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -5167,7 +5152,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },
@@ -5771,7 +5756,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "1f7490cc",
+    "consumed_by_exp_id": "",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
@@ -5781,7 +5766,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
