@@ -4768,6 +4768,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every planar graph G admits an (open-neighborhood) conflict-free coloring using at most 4 colors. A conflict-free coloring requires that for every vertex v, there exists a neighbor w such that the color of w is unique among all neighbors of v in the open neighborhood N(v). This conjecture formalizes the main result of the paper, which equivalently establishes the Four Color Theorem.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2529",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25988v1",
+    "status": "available",
+    "timestamp": "2026-06-25T14:54:09.271959+00:00",
+    "title": "Every Planar Graph Admits a Conflict-Free 4-Coloring"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture proposes rigorous closure of known $q$-series identities under the lifting-dual transform, aiming to resolve a critical gap in the modular theory of rank-four Nahm sums.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2529",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25866v1",
+    "status": "available",
+    "timestamp": "2026-06-25T14:54:18.512749+00:00",
+    "title": "Analytic Verification of Modular Rank-Four Nearest-Point Identities"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
