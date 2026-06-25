@@ -1337,7 +1337,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b08abcae",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domain_bridges": [],
     "domains": [
@@ -1350,7 +1350,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -2628,7 +2628,7 @@
       "math.DS",
       "math.NT"
     ],
-    "consumed_by_exp_id": "ce3e5645",
+    "consumed_by_exp_id": "",
     "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ can be realized as the $(-\\beta)$-expansion of some $x \\in I_\\beta$ if and only if for all $n \\ge 1$, the suffix $x_n x_{n+1} \\dots$ is less than or equal to $d^*(0, -\\beta)$ in the alternating lexicographic order. The alternating lexicographic order $\\preceq$ is defined such that $x \\preceq y$ if either $x=y$ or at the first index $k$ where they differ, $x_k < y_k$ when $k$ is odd and $x_k > y_k$ when $k$ is even.",
     "domain_bridges": [
       "Combinatorics on Words",
@@ -2643,7 +2643,7 @@
     "proof_strategy": "Define the alternating lexicographic order on infinite sequences, the $(-\\beta)$-transformation $T_{-\\beta}$, and the sequence $d^*(0, -\\beta)$. Prove that the shift space defined by this order condition is invariant and corresponds exactly to the admissible sequences of the $(-\\beta)$-transformation, mirroring Parry's proof for positive $\\beta$-expansions.",
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T05:48:57.058098+00:00",
     "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
   },
@@ -3005,7 +3005,7 @@
       "Polymatroid_connectivity",
       "Slice_projections"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e8c93c85",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domain_bridges": [
       "Matroid_theory",
@@ -3021,7 +3021,7 @@
     "proof_strategy": "Assume for contradiction that there exist indices $j < k < l$ such that the $j$-th and $l$-th slice-projections are connected, but the $k$-th is disconnected. Use the submodularity of the polymatroid rank function and the lattice of flats to demonstrate that if $P^{(k)}$ is disconnected by a partition $(A, B)$, then either $P^{(j)}$ or $P^{(l)}$ must also be disconnected by a related partition, contradicting the initial assumption.",
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -3953,7 +3953,7 @@
       "Mathlib.Algebra.Polynomial.Basic",
       "Mathlib.Order.WellFoundedSet"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5ef22ee",
     "description": "Let 𝔓(y)=Σ_{a∈A} c_a(t) Π_{i=0}^k (y^(i))^{a_i} be a nonzero ordinary algebraic differential polynomial over algebraically closed characteristic-zero Hahn series with finite support A. Let E_k(trop(𝔓)) be the set of t-adic orders r of Boolean Hahn elementary k-solutions of its tropicalization, equivalently the r for which the active indicial tropical minimum is attained at least twice. For each r in E_k(trop(𝔓)), form the classical indicial initial polynomial I_r(Z) in the leading coefficient Z, using exactly the monomials attaining that minimum and the falling-factorial factors coming from derivatives. Conjecture: if every r in E_k(trop(𝔓)) has a simple nonzero root of I_r(Z), then every elementary tropical order is realized by an actual Hahn-series solution; hence ord_t(Sol(𝔓)) = E_k(trop(𝔓)). This strengthens the paper's containment ord_t(Sol(𝔓)) ⊆ E_k(trop(𝔓)) to equality under a Newton-nondegeneracy hypothesis.",
     "domain_bridges": [
       "Boolean tropical differential equations ↔ valuations of Hahn-series differential equations",
@@ -3970,7 +3970,7 @@
     "proof_strategy": "Prove the known tropicalization inclusion first: the order of any Hahn solution forces at least two lowest-valued differential monomials, so it lies in E_k(trop(𝔓)). For the reverse inclusion, fix r in E_k and choose a simple nonzero root c of the indicial polynomial I_r. Substitute y = c t^r + z with ord(z) > r. Develop a transfinite Newton-Hensel recursion on the well-ordered support of z. At each stage, the simple-root condition makes the linearized initial operator invertible for the next coefficient, preventing resonant obstructions. Show that the constructed support remains well ordered, so the recursion defines a Hahn series y satisfying 𝔓(y)=0 and ord_t(y)=r. Formalization would isolate the differential-polynomial combinatorics, falling-factorial leading terms, and a Hahn-series transfinite recursion lemma.",
     "research_mode": "team",
     "source_exp_id": "2606.21829v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T15:04:46.154289+00:00",
     "title": "Newton-nondegenerate elementary tropical orders lift to Hahn-series solutions"
   },
@@ -7032,31 +7032,6 @@
     "title": "Closed-form conjecture for the inversion enumerator of k-alternating permutations"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "arXiv:2310.00000"
-    ],
-    "consumed_by_exp_id": "a8f472f7",
-    "description": "Given a lacunary sequence of displacement vectors in \\(\\Z^2\\), there exists a multiplier vector \\(\\boldsymbol{\\alpha} = (\\alpha_1, \\alpha_2) \\in [0,1)^2\\) such that the torus distance \\(\\norm{\\langle \\mathbf{d}, \\boldsymbol{\\alpha} \\rangle}_\\T \\) is bounded below by a constant \\(\\delta > 0\\) for all \\(\\mathbf{d}\\in D\\).",
-    "domain_bridges": [
-      "torus methods",
-      "lattice geometry",
-      "diophantine approximation"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2483",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the lacunary matrix theorem to construct a multiplier vector via linear algebra over \\(\\R\\) and verify its multiplicative properties in the torus. Combine with geometric arguments to ensure minimality and global consistency.",
-    "research_mode": "team",
-    "source_exp_id": "2606.22539v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T23:35:20.703960+00:00",
-    "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "Kapranov & Smirnov 1995",
@@ -8866,6 +8841,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "OEIS A287616"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = T(x) + P(y) + H(z) and max(x, y, z) ≤ ⌊√(2n)⌋, where T(x)=x(x+1)/2, P(y)=y(3y+1)/2, H(z)=z(5z+1)/2.",
+    "domain_bridges": [
+      "quadratic forms",
+      "geometry of numbers"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2556",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the circle method to show that the singular series is positive and the singular integral gives a main term of order n^{1/2}. Then apply a sieve to extract a representation with variables bounded by √(2n). The bound follows from size estimates: if any variable exceeds √(2n) then its corresponding term exceeds n, forcing the others to be zero, which can be checked directly.",
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-25T22:46:06.301140+00:00",
+    "title": "Bounded variables representation for triangular-pentagonal-heptagonal sums"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "A Simple Counting Argument for Dense Linear Hypergraphs (arXiv:2408.06542)",
       "Santos and Tyomkyn, On the Brown-Erdős-Sós problem for linear hypergraphs (arXiv:2408.06542)"
     ],
@@ -8880,7 +8879,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2556",
+    "id": "fd_2557",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the probabilistic method (e.g., random linear hypergraph constructions) or algebraic constructions (e.g., finite geometry) to exhibit linear 3-uniform hypergraphs with density approaching 4/9 from below that contain no (7,4)-configurations. Alternatively, adapt known constructions for linear hypergraphs avoiding dense configurations, such as those derived from projective planes or product constructions.",
@@ -8889,6 +8888,32 @@
     "status": "available",
     "timestamp": "2026-06-25T22:19:20.957986+00:00",
     "title": "Asymptotic Tightness of the 4/9 Density Threshold for (7,4)-Configurations in Linear Triple Systems"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "cs.DM"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every planar graph admits a conflict-free coloring with four colors. This is equivalent to the Four Color Theorem and provides an upper bound on the conflict-free chromatic number for planar graphs.",
+    "domain_bridges": [
+      "graph_coloring",
+      "planar_graphs",
+      "computational_complexity"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2558",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the Four Color Theorem and structural decomposition techniques (Gallai-Edmonds variant) to construct a conflict-free 4-coloring for any planar graph. The proof requires formalizing the equivalence between conflict-free colorings and proper colorings in planar graphs.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25988v1",
+    "status": "available",
+    "timestamp": "2026-06-25T22:46:48.794965+00:00",
+    "title": "Conflict-Free Chromatic Number of Planar Graphs is Bounded by Four"
   },
   {
     "ambition_level": "extension",
@@ -9009,7 +9034,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f9ccaf5",
     "description": "Formalize Frankl's conjecture and prove it for families of size ≤ 50 (Bošnjak-Marković). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domain_bridges": [],
     "domains": [
@@ -9022,7 +9047,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
@@ -9105,7 +9130,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "199a5960",
     "description": "Prove that for every integer n ≥ 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
     "domain_bridges": [],
     "domains": [
@@ -9117,7 +9142,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erdős–Straus Conjecture"
   },
@@ -9140,26 +9165,6 @@
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Primes of the Form n² + 1\n\nDerived from the Stage 3 analysis and Stage 4 critique of this research cycle.\nEach conjecture is bold and falsifiable, with the decisive insight and a \"why\nnow?\" justification. Statuses refer to the formal artifacts in\n`Cryptography/PrimesNSqPlusOne.lean` and `Cryptography/SqAddOneDivisors.lean`.\n\n## C1. Quantitative divisor-density of the n²+1 sequence\n\n**Conjecture.** For every `X`, the number of *distinct* primes `≡ 1 (mod 4)`\ndividing some `n² + 1` with `n ≤ X` grows at least like `c · X / log X`.\n\nThe key insight is that the converse `oddPrime_dvd_some_sq_add_one` already gives\na *root* `n < p` for each such prime, so a counting argument over the box\n`n ≤ X` should recover a positive proportion of all `1 mod 4` primes up to `X²`.\n\nWhy now? We have the exact \"which primes occur\" characterization\n(`oddPrime_dvd_sq_add_one_iff`) formalized; turning the qualitative `Set.Infinite`\nresult into a density statement is the natural next quantitative step and needs\nonly counting infrastructure already in Mathlib.\n\n## C2. Parity-refined Landau bases\n\n**Conjecture.** Apart from `n = 1`, every base `n` with `n² + 1` prime is\ndivisible by `2` but the quotient `n/2` is *not* forced into any single residue\nclass mod 4 — i.e. `landau_base_even` is the *only* unconditional congruence\nobstruction on the base.\n\nThe key insight is that `landau_base_even` is proved purely from the evenness of\n`n² + 1` for odd `n`; any further base obstruction would have to come from a\nprime `≡ 3 (mod 4)` dividing `n² + 1`, which `oddPrime_dvd_sq_add_one_mod_four`\nforbids — suggesting no further constraint exists.\n\nWhy now? The minimal-obstruction principle is fully formal on the divisor side;\nproving the base side has *no* extra constraint is a clean, testable target\n(falsifiable by a single counter-pattern in a finite search).\n\n## C3. Iwaniec P₂ lower bound via the formal sieve skeleton\n\n**Conjecture.** The count of `n ≤ X` with `IsSemiprimeValue n`\n(`n²+1` a product of ≤ 2 primes) is `≫ X / log X`.\n\nThe key insight is that the same congruence filter that excludes `3 mod 4` prime\nfactors (`three_not_dvd_sq_add_one`) is exactly the local condition feeding\nIwaniec's half-dimensional sieve; formalizing the sieve's *combinatorial*\nskeleton (Buchstab/Selmer weights) is separable from the analytic bound.\n\nWhy now? `IsSemiprimeValue` is already defined; a Lean development of the\nlinear/half-dimensional sieve would unlock this and many neighboring results,\nand Mathlib's analytic number theory is mature enough to host it.\n\n## C4. Friedlander–Iwaniec strictly enlarges the Landau form\n\n**Conjecture.** The inclusion `{Landau primes} ⊆ {a²+b⁴ primes}`\n(`landauPrime_isFIPrime`) is *strict*: there are infinitely many `a²+b⁴` primes\nthat are **not** of the form `n² + 1`.\n\nThe key insight is that fixing `b = 1` collapses `a²+b⁴` to `a²+1`, so any prime\nof the form `a² + b⁴` with `b ≥ 2` (e.g. `a²+16`) that is not a perfect-square\nshift witnesses strictness; the Friedlander–Iwaniec count `X^{3/4}` dwarfs the\nconjectured Landau count `X^{1/2}/log X`.\n\nWhy now? The set inclusion is formalized; quantifying the gap between the two\nexponents is a concrete, falsifiable density separation.\n\n## C5. Gaussian-integer bridge to cryptographic splitting primes\n\n**Conjecture.** A prime `p` is usable as a \"split modulus prime\" for\n`ℤ[i]`-based key agreement (i.e. `p` splits in `ℤ[i]`) **iff** `p` divides some\n`n² + 1`, and this set has natural density `1/2` among all primes.\n\nThe key insight is `oddPrime_dvd_sq_add_one_iff`: divisibility of `n²+1` is\n*equivalent* to `p ≡ 1 (mod 4)`, which is exactly the Gaussian-splitting\ncondition — directly tying the number theory to the cryptographic domain of this\ncatalog.\n\nWhy now? The iff is verified here; combining it with Dirichlet density\n(`Nat.infinite_setOf_prime_modEq_one` and its quantitative refinements) makes the\n`1/2`-density claim a near-term formalization target.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2557",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0cb84107",
-    "status": "available",
-    "timestamp": "2026-06-25T22:37:13.860430+00:00",
-    "title": "Derived from the Stage 3 analysis and Stage 4 critique of this research cycle."
   },
   {
     "ambition_level": "extension",
@@ -9379,7 +9384,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ba954af9",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -9391,7 +9396,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -9716,7 +9721,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f516403",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -9729,7 +9734,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

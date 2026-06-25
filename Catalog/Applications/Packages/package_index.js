@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a8f472f7",
     "filename": "existence_of_a_satisfactory_multiplier_vector_for_.json",
     "pkg_num": 64,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.56056,
     "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
   },
   {
@@ -1865,8 +1865,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "existence_of_a_satisfactory_multiplier_vector_for_",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.56056,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
     }
