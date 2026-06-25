@@ -378,7 +378,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cfcd856c",
     "description": "Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
     "domain_bridges": [],
     "domains": [
@@ -392,7 +392,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432772+00:00",
     "title": "Noether's Theorem: Symmetries and Conservation Laws"
   },
@@ -1556,7 +1556,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1983a01c",
     "description": "Prove that every convex body K in Rⁿ of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
     "domain_bridges": [],
     "domains": [
@@ -1569,7 +1569,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:11.258186+00:00",
     "title": "Bourgain's Slicing Problem"
   },
@@ -3005,7 +3005,7 @@
       "Polymatroid_connectivity",
       "Slice_projections"
     ],
-    "consumed_by_exp_id": "e8c93c85",
+    "consumed_by_exp_id": "",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domain_bridges": [
       "Matroid_theory",
@@ -3021,7 +3021,7 @@
     "proof_strategy": "Assume for contradiction that there exist indices $j < k < l$ such that the $j$-th and $l$-th slice-projections are connected, but the $k$-th is disconnected. Use the submodularity of the polymatroid rank function and the lattice of flats to demonstrate that if $P^{(k)}$ is disconnected by a partition $(A, B)$, then either $P^{(j)}$ or $P^{(l)}$ must also be disconnected by a related partition, contradicting the initial assumption.",
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -3953,7 +3953,7 @@
       "Mathlib.Algebra.Polynomial.Basic",
       "Mathlib.Order.WellFoundedSet"
     ],
-    "consumed_by_exp_id": "d5ef22ee",
+    "consumed_by_exp_id": "",
     "description": "Let 𝔓(y)=Σ_{a∈A} c_a(t) Π_{i=0}^k (y^(i))^{a_i} be a nonzero ordinary algebraic differential polynomial over algebraically closed characteristic-zero Hahn series with finite support A. Let E_k(trop(𝔓)) be the set of t-adic orders r of Boolean Hahn elementary k-solutions of its tropicalization, equivalently the r for which the active indicial tropical minimum is attained at least twice. For each r in E_k(trop(𝔓)), form the classical indicial initial polynomial I_r(Z) in the leading coefficient Z, using exactly the monomials attaining that minimum and the falling-factorial factors coming from derivatives. Conjecture: if every r in E_k(trop(𝔓)) has a simple nonzero root of I_r(Z), then every elementary tropical order is realized by an actual Hahn-series solution; hence ord_t(Sol(𝔓)) = E_k(trop(𝔓)). This strengthens the paper's containment ord_t(Sol(𝔓)) ⊆ E_k(trop(𝔓)) to equality under a Newton-nondegeneracy hypothesis.",
     "domain_bridges": [
       "Boolean tropical differential equations ↔ valuations of Hahn-series differential equations",
@@ -3970,7 +3970,7 @@
     "proof_strategy": "Prove the known tropicalization inclusion first: the order of any Hahn solution forces at least two lowest-valued differential monomials, so it lies in E_k(trop(𝔓)). For the reverse inclusion, fix r in E_k and choose a simple nonzero root c of the indicial polynomial I_r. Substitute y = c t^r + z with ord(z) > r. Develop a transfinite Newton-Hensel recursion on the well-ordered support of z. At each stage, the simple-root condition makes the linearized initial operator invertible for the next coefficient, preventing resonant obstructions. Show that the constructed support remains well ordered, so the recursion defines a Hahn series y satisfying 𝔓(y)=0 and ord_t(y)=r. Formalization would isolate the differential-polynomial combinatorics, falling-factorial leading terms, and a Hahn-series transfinite recursion lemma.",
     "research_mode": "team",
     "source_exp_id": "2606.21829v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T15:04:46.154289+00:00",
     "title": "Newton-nondegenerate elementary tropical orders lift to Hahn-series solutions"
   },
@@ -6147,7 +6147,7 @@
       "Mathlib.Data.Finset.Card",
       "Mathlib.Combinatorics.Enumerative.Partition"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "25d6b815",
     "description": "For every length n, among all binary 2-binomial equivalence classes of words of length n, the largest class has exactly floor(n/2) occurrences of one letter and inversion statistic floor(floor(n/2) * ceil(n/2) / 2). Equivalently, among all coefficients of all Gaussian binomial coefficients [n choose m]_q, the global maximum is attained at m = floor(n/2) and at the middle degree.",
     "domain_bridges": [
       "binary 2-binomial equivalence classes are indexed by number of ones and inversion statistic",
@@ -6163,7 +6163,7 @@
     "proof_strategy": "Formalize binary words as Fin n -> Bool, define the number of true letters and the inversion statistic. Use the paper's class-size formula identifying each class size with the coefficient of q^t in the Gaussian binomial coefficient [n choose m]_q. Then reduce the conjecture to a purely q-binomial statement: for fixed n, every coefficient of [n choose m]_q is bounded above by the middle coefficient of [n choose floor(n/2)]_q. A possible proof route combines symmetry [n choose m]_q = [n choose n-m]_q, unimodality in degree for fixed m, and an injection from partitions inside an m by n-m rectangle into partitions of the middle size inside a floor(n/2) by ceil(n/2) rectangle.",
     "research_mode": "team",
     "source_exp_id": "2606.23426v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T19:03:49.721168+00:00",
     "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
   },
@@ -9034,7 +9034,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4f9ccaf5",
+    "consumed_by_exp_id": "",
     "description": "Formalize Frankl's conjecture and prove it for families of size ≤ 50 (Bošnjak-Marković). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
     "domain_bridges": [],
     "domains": [
@@ -9047,7 +9047,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432728+00:00",
     "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
@@ -9130,7 +9130,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "199a5960",
+    "consumed_by_exp_id": "",
     "description": "Prove that for every integer n ≥ 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
     "domain_bridges": [],
     "domains": [
@@ -9142,7 +9142,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:02.177753+00:00",
     "title": "Erdős–Straus Conjecture"
   },
@@ -9721,7 +9721,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4f516403",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -9734,7 +9734,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
