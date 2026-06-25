@@ -758,7 +758,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0cb84107",
     "description": "Prove that there are infinitely many primes of the form n²+1. Formalize Iwaniec's result on semi-primes of this form and connect to Friedlander-Iwaniec theorem on primes of form a²+b⁴.",
     "domain_bridges": [],
     "domains": [
@@ -770,7 +770,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:00.953818+00:00",
     "title": "Primes of the Form n²+1"
   },
@@ -877,7 +877,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ab9c78a7",
+    "consumed_by_exp_id": "",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -889,7 +889,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
@@ -958,7 +958,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2e8e485b",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -972,7 +972,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -3018,6 +3018,33 @@
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "Polymatroid_connectivity",
+      "Slice_projections"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
+    "domain_bridges": [
+      "Matroid_theory",
+      "Submodular_optimization"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2324",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Assume for contradiction that there exist indices $j < k < l$ such that the $j$-th and $l$-th slice-projections are connected, but the $k$-th is disconnected. Use the submodularity of the polymatroid rank function and the lattice of flats to demonstrate that if $P^{(k)}$ is disconnected by a partition $(A, B)$, then either $P^{(j)}$ or $P^{(l)}$ must also be disconnected by a related partition, contradicting the initial assumption.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22819v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:20:57.671444+00:00",
+    "title": "Interval Property for Connected Slice-Projections of Polymatroids"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "induced K_{1,k}",
@@ -3079,7 +3106,7 @@
       "math.CO/ramsey_theory",
       "math.CO/combinatorial_lines"
     ],
-    "consumed_by_exp_id": "d6be1a63",
+    "consumed_by_exp_id": "",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex Δ(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) ≥ 22 and HJ(4,2) ≥ 14.",
     "domain_bridges": [
       "combinatorics",
@@ -3095,7 +3122,7 @@
     "proof_strategy": "Formalize coordinate-symmetric colorings as functions on letter-count vectors (elements of the discrete simplex). Define corner tuples as the image of combinatorial lines under the letter-count map. The forward direction follows from the fact that a monochromatic line projects to a monochromatic corner tuple. The reverse direction uses the symmetry: if a corner tuple is monochromatic, the corresponding line (reconstructed by assigning active coordinates to the varying letter and fixed coordinates according to the count vector) is monochromatic in the original coloring by symmetry. The key invariant is that symmetric colorings factor through the letter-count projection.",
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -7263,7 +7290,7 @@
       "MR1417578",
       "MR2742574"
     ],
-    "consumed_by_exp_id": "6218af01",
+    "consumed_by_exp_id": "",
     "description": "For any quadrilateral circumscribed to a parabola, if a valid tiling with vertical and horizontal stripes is constructed using Wang tiles derived from this quadrilateral, the densities of the vertical and horizontal stripes must be irrational numbers.",
     "domain_bridges": [
       "quadratic_irrationalities",
@@ -7279,7 +7306,7 @@
     "proof_strategy": "Geometric argument leveraging properties of parabolas and quadratic number fields to derive irrationality of stripe densities.",
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T05:59:06.114125+00:00",
     "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
   },
@@ -8312,6 +8339,36 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.Analysis.Convex.Basic",
+      "Mathlib.Analysis.InnerProductSpace.PiL2",
+      "Mathlib.Topology.MetricSpace.PiNat",
+      "Mathlib.Data.Finset.Basic",
+      "Mathlib.Data.Real.Sqrt"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every dimension d and every positive integer n, any point p in the standard d-simplex in Euclidean space R^(d+1) is within Euclidean distance sqrt(d+1)/(2n) of some barycentric grid point with denominator n, i.e. of some vector k/n where k_i are natural numbers summing to n. This is a deterministic finite-dimensional approximate Carathéodory statement for the vertex set of the regular simplex, strengthening the usual O(1/sqrt(n)) empirical bound to an O(1/n) covering bound in this special geometry.",
+    "domain_bridges": [
+      "Approximate Carathéodory theory ↔ deterministic rounding of probability vectors",
+      "Euclidean simplex covering estimates ↔ mesh contraction estimates for Delaunay refinement",
+      "Finite-dimensional convex geometry ↔ Lean formalization of EuclideanSpace over Fin index types"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2535",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Scale the barycentric coordinates by n to obtain a nonnegative real vector q with integer total sum n. Let a_i = floor(q_i) and let f_i = q_i - a_i. Since the sum of the f_i is an integer r, choose exactly r indices with largest fractional parts and round those coordinates up, rounding all others down. This gives natural numbers k_i summing to n. The Euclidean error is n^{-1} times the L2 rounding error. It remains to prove the finite rounding inequality: for any fractional vector f_i in [0,1] with integer sum, the minimum over such balanced floor/ceiling roundings of sum_i (q_i-k_i)^2 is at most (d+1)/4. This follows by choosing the r largest f_i and bounding each optimal rounding contribution by the extremal value of the associated separable quadratic under the integer-sum constraint.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25854v1",
+    "status": "available",
+    "timestamp": "2026-06-25T18:23:48.699782+00:00",
+    "title": "Uniform barycentric grid covering radius of the standard Euclidean simplex"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "arXiv:2210.000?? (presented paper)",
       "Four Color Theorem (STUDY)"
     ],
@@ -8325,7 +8382,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2535",
+    "id": "fd_2536",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on the number of vertices and the fact that outerplanar graphs are 2‑degenerate. Remove a vertex of degree ≤2, apply the induction hypothesis to obtain a 3‑color conflict‑free coloring of the remaining graph, then extend the coloring to the removed vertex by recoloring at most a bounded number of neighbors. A discharging argument guarantees that the recoloring step never requires a fourth color.",
@@ -8351,7 +8408,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2536",
+    "id": "fd_2537",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish an upper bound via double counting of symbol occurrences and use finite field constructions to exhibit n‑1 orthogonal squares when n is a prime power; then formalize the combinatorial arguments in Lean using existing libraries for finite fields and finite sets.",
@@ -8379,7 +8436,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2537",
+    "id": "fd_2538",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the Artin–Tate conjecture (known for K3 surfaces) to identify the p‑primary Brauer group with a subquotient of étale cohomology. Prove a Mazur‑style control theorem for the tower Br(X_{k_n})[p^∞] to show that M is a finitely generated torsion Λ‑module. Construct a p‑adic L‑function via the Frobenius action on H^2_et and the theory of overconvergent modular symbols (or via Perrin‑Riou's big exponential map). Finally, compare the characteristic ideal of M with the p‑adic L‑function using an Euler system built from norm‑compatible classes in the Brauer groups of finite level (e.g., using Kummer classes of rational points on associated elliptic fibrations) to obtain divisibility in both directions, hence equality up to a unit.",
@@ -8388,6 +8445,36 @@
     "status": "available",
     "timestamp": "2026-06-25T17:44:05.410825+00:00",
     "title": "Iwasawa Main Conjecture for Brauer groups of K3 surfaces over finite fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Prouhet-Thue-Morse sequence",
+      "Gawron-Miska-Ulas conjecture",
+      "Infinite products in formal power series",
+      "Mahler-type functional equations",
+      "k-regular sequences"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in the finite polynomial product \\prod_{i=0}^{n} (1 - x^{b^i})^m. The conjecture is that the integer sequence n \\mapsto T_{b,m}(n) is unbounded in absolute value: for every B, there exists n such that |T_{b,m}(n)| > B. The paper proves the case b = 2; this conjecture asserts the same phenomenon for every base b >= 2.",
+    "domain_bridges": [
+      "Combinatorics on words via digit-sum and base-b expansions",
+      "Algebraic formal power series via coefficient extraction from polynomial truncations",
+      "p-adic methods via valuations of recursively defined coefficient sequences",
+      "Analytic number theory via growth and unboundedness of coefficient sequences"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2539",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define T_{b,m}(n) by finite truncation, since factors with b^i > n cannot affect the coefficient of x^n. The functional equation F_{b,m}(x) = (1 - x)^m F_{b,m}(x^b) gives a finite recurrence expressing T_{b,m}(bn + r) in terms of nearby earlier coefficients. For b > m, one can already obtain explicit exponentially large values by taking n with many base-b digits equal to 1, where no carrying occurs. The difficult range b <= m should be attacked by adapting the paper's algebraic and p-adic method: encode the coefficient recurrence by a finite family of integer matrices indexed by residues modulo b, then prove that some explicitly constructible product has spectral or p-adic growth greater than 1, forcing unboundedness.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25825v1",
+    "status": "available",
+    "timestamp": "2026-06-25T18:24:34.645043+00:00",
+    "title": "Generalized Gawron–Miska–Ulas unboundedness for arbitrary integer bases"
   },
   {
     "ambition_level": "extension",
@@ -8639,26 +8726,6 @@
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — EML Differential Algebra\n\nBold, falsifiable conjectures derived from this cycle (formalised results live in\n`EMLDifferentialAlgebra.lean` and `EMLDifferentialCorollaries.lean`). Throughout,\n**EML** = the log-free fragment (exponential polynomials): the smallest class of\n`ℝ → ℝ` containing `x` and constants and closed under `+`, `×`, `exp`.\n\nThis cycle established: EML is a commutative differential **ring** (closed under\n`+`, `×`, `∘`, `d/dx`), but **not** a field (`x⁻¹, log ∉ EML`), **not** closed\nunder functional inverse (`x³` has no EML left inverse), and only *partially*\nclosed under integration. The conjectures below push on each boundary.\n\n## C1. EML is not closed under integration (the Liouville boundary)\n\n**Conjecture.** `exp(x²) ∈ EML` but there is **no** EML term `g` with\n`HasDerivAt g.eval (exp(x²)) x` for all `x`; i.e. `¬ HasEMLPrimitive (fun x => exp(x²))`.\n\n*The key insight is* that `HasEMLPrimitive` is exactly the image of the syntactic\nderivation `D`, so non-closure under integration is the statement that `D` is\n**not surjective** onto EML — a differential-Galois / Liouville obstruction\nphrased purely as the non-surjectivity of a syntactic operator on an inductive\ntype.\n\n*Why now?* The forward dynamics (`isEML_iteratedDeriv`) and the linear structure\nof `HasEMLPrimitive` are now formal, so the missing piece is exactly an\nalgebraic-independence input (\"`erf` is transcendental over the exp-polynomials\").\nLiouville's theorem is within reach of current Mathlib differential-field\nmachinery, making `exp(x²)` a concrete, self-contained first formal target.\n\n## C2. EML inverses exist iff the derivative never vanishes\n\n**Conjecture.** For an EML function `f` that is strictly monotone with `f' x ≠ 0`\nfor all `x` and `f` surjective, the inverse `f⁻¹` is again EML **iff** `f` is, up\nto affine change, `x ↦ a·x + b` or `x ↦ c·exp(a x)+b` shapes — and in particular\nthe *only* EML self-bijections of `ℝ` with EML inverse are the affine maps.\n\n*The key insight is* that `no_eml_left_inverse_cube` already isolates the\nobstruction (a critical point of `f'`), so the residual question is a rigidity\nstatement: among exp-polynomials, vanishing-free derivative plus EML inverse\nforces affine-or-exponential normal form via growth-rate matching.\n\n*Why now?* We have both halves of the diagnostic — `EML ⊆ differentiable` and the\ncritical-point obstruction — so the conjecture reduces to classifying\nexp-polynomials whose functional inverse is again an exp-polynomial, a finite\ncase analysis on leading exponential terms.\n\n## C3. The differential transcendence degree of EML is infinite\n\n**Conjecture.** The tower `x ≺ exp(x) ≺ exp(exp(x)) ≺ …` is differentially\nalgebraically independent over `ℝ`; consequently EML has no finite set of\ngenerators as a differential ring.\n\n*The key insight is* that each new `exp` layer strictly increases the\n\"exp-log depth\" invariant (already present as `elDepth` in the term algebra), and\na derivative never increases that depth — so depth is a differential invariant\nthat no finite generating set can exhaust.\n\n*Why now?* `hasDerivAt_eval` shows `D` realises the analytic derivative without\nraising `elDepth`, turning a hard transcendence statement into a monotonicity\nargument about a computable syntactic invariant.\n\n## C4. EML is closed under composition but composition strictly grows depth\n\n**Conjecture.** Composition closure (`isEML_comp`) is *depth-increasing*: there is\nno global bound `B` such that every EML function representable with `elDepth ≤ B`\nis closed under composition; precisely, `elDepth (t.subst s) = elDepth t + elDepth s`\nwhen both are exp-active, and this is sharp.\n\n*The key insight is* that `subst` distributes over the syntax, so composition adds\nexponential depths additively — composition cannot be \"flattened\", unlike the\npolynomial part where products keep depth `0`.\n\n*Why now?* `eval_subst` gives the semantic correctness of `subst` for free, so the\nremaining claim is a purely syntactic equation about the `elDepth` recursion,\ncheckable by structural induction with no analysis.\n\n## C5. A Picard–Vessiot view: EML ODE-solvability is obstructed at critical points\n\n**Conjecture.** A first-order ODE `y' = f(x)·y` with `f ∈ EML` has an EML solution\n**iff** `f ∈ HasEMLPrimitive`-image (i.e. `f` has an EML primitive `F`, giving\n`y = exp(F)`); when `f` lacks an EML primitive (e.g. `f(x) = 2x`, primitive `x²`,\n*does* work, but `f(x)=exp(x²)` does not), no EML solution exists.\n\n*The key insight is* that the exponential-integrating-factor solution `exp(∫f)`\nties ODE-solvability in EML directly to the integration boundary C1 — solvability\nis governed by the **same** non-surjectivity of `D`.\n\n*Why now?* `hasEMLPrimitive_*` lemmas and `isEML_exp` already assemble the\n`exp(∫f)` candidate constructively; the only gap is C1's Liouville input, so C1\nand C5 stand or fall together and can be attacked as one program.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Applications"
-    ],
-    "id": "fd_2538",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "364ec557",
-    "status": "available",
-    "timestamp": "2026-06-25T18:18:40.538130+00:00",
-    "title": "Bold, falsifiable conjectures derived from this cycle (formalised results live i"
   },
   {
     "ambition_level": "extension",
@@ -9176,26 +9243,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0509",
-    "lineage_refs": [],
-    "priority_score": 0.5499999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:47.201625+00:00",
-    "title": "EML Differential Algebra: Closure Properties"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domain_bridges": [],
     "domains": [
@@ -9255,7 +9302,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "54abcfb1",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domain_bridges": [],
     "domains": [
@@ -9268,7 +9315,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },

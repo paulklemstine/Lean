@@ -569,7 +569,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0cb84107",
     "description": "Prove that there are infinitely many primes of the form n\u00b2+1. Formalize Iwaniec's result on semi-primes of this form and connect to Friedlander-Iwaniec theorem on primes of form a\u00b2+b\u2074.",
     "domains": [
       "Algebra"
@@ -578,7 +578,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:00.953818+00:00",
     "title": "Primes of the Form n\u00b2+1"
   },
@@ -658,7 +658,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "ab9c78a7",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -667,7 +667,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -719,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Universal Approximation: Quantitative Bounds"
   },
   {
-    "consumed_by_exp_id": "2e8e485b",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domains": [
       "Tropical",
@@ -730,7 +730,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -2007,6 +2007,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2324",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22819v1",
+    "status": "available",
+    "timestamp": "2026-06-23T11:20:57.671444+00:00",
+    "title": "Interval Property for Connected Slice-Projections of Polymatroids"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer k\u22653 there exists a critical edge density \u03b3_k\u2208(0,1) such that for all sufficiently large n, any graph on n vertices with edge density at least \u03b3_k that contains no induced copy of K_{1,k} is \u03b5 n^2-close (in edit distance) to the complement of a complete (k\u22121)-partite graph whose part sizes differ by at most o(n) from the balanced partition n/(k\u22121).",
     "domains": [
       "Pythagorean",
@@ -2035,7 +2050,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
   },
   {
-    "consumed_by_exp_id": "d6be1a63",
+    "consumed_by_exp_id": "",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex \u0394(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) \u2265 22 and HJ(4,2) \u2265 14.",
     "domains": [
       "Algebra"
@@ -2044,7 +2059,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -4247,7 +4262,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "6218af01",
+    "consumed_by_exp_id": "",
     "description": "For any quadrilateral circumscribed to a parabola, if a valid tiling with vertical and horizontal stripes is constructed using Wang tiles derived from this quadrilateral, the densities of the vertical and horizontal stripes must be irrational numbers.",
     "domains": [
       "Bridges"
@@ -4256,7 +4271,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T05:59:06.114125+00:00",
     "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
   },
@@ -4811,12 +4826,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every dimension d and every positive integer n, any point p in the standard d-simplex in Euclidean space R^(d+1) is within Euclidean distance sqrt(d+1)/(2n) of some barycentric grid point with denominator n, i.e. of some vector k/n where k_i are natural numbers summing to n. This is a deterministic finite-dimensional approximate Carath\u00e9odory statement for the vertex set of the regular simplex, strengthening the usual O(1/sqrt(n)) empirical bound to an O(1/n) covering bound in this special geometry.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2535",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25854v1",
+    "status": "available",
+    "timestamp": "2026-06-25T18:23:48.699782+00:00",
+    "title": "Uniform barycentric grid covering radius of the standard Euclidean simplex"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that every outerplanar graph admits a conflict\u2011free coloring with at most three colors. This extends the known four\u2011color conflict\u2011free bound for planar graphs and would yield a tight bound for the outerplanar subclass.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2535",
+    "id": "fd_2536",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -4830,7 +4860,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2536",
+    "id": "fd_2537",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25884v1",
@@ -4845,13 +4875,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2537",
+    "id": "fd_2538",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25737v1",
     "status": "available",
     "timestamp": "2026-06-25T17:44:05.410825+00:00",
     "title": "Iwasawa Main Conjecture for Brauer groups of K3 surfaces over finite fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in the finite polynomial product \\prod_{i=0}^{n} (1 - x^{b^i})^m. The conjecture is that the integer sequence n \\mapsto T_{b,m}(n) is unbounded in absolute value: for every B, there exists n such that |T_{b,m}(n)| > B. The paper proves the case b = 2; this conjecture asserts the same phenomenon for every base b >= 2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2539",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25825v1",
+    "status": "available",
+    "timestamp": "2026-06-25T18:24:34.645043+00:00",
+    "title": "Generalized Gawron\u2013Miska\u2013Ulas unboundedness for arbitrary integer bases"
   },
   {
     "consumed_by_exp_id": "",
@@ -5038,21 +5082,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 EML Differential Algebra\n\nBold, falsifiable conjectures derived from this cycle (formalised results live in\n`EMLDifferentialAlgebra.lean` and `EMLDifferentialCorollaries.lean`). Throughout,\n**EML** = the log-free fragment (exponential polynomials): the smallest class of\n`\u211d \u2192 \u211d` containing `x` and constants and closed under `+`, `\u00d7`, `exp`.\n\nThis cycle established: EML is a commutative differential **ring** (closed under\n`+`, `\u00d7`, `\u2218`, `d/dx`), but **not** a field (`x\u207b\u00b9, log \u2209 EML`), **not** closed\nunder functional inverse (`x\u00b3` has no EML left inverse), and only *partially*\nclosed under integration. The conjectures below push on each boundary.\n\n## C1. EML is not closed under integration (the Liouville boundary)\n\n**Conjecture.** `exp(x\u00b2) \u2208 EML` but there is **no** EML term `g` with\n`HasDerivAt g.eval (exp(x\u00b2)) x` for all `x`; i.e. `\u00ac HasEMLPrimitive (fun x => exp(x\u00b2))`.\n\n*The key insight is* that `HasEMLPrimitive` is exactly the image of the syntactic\nderivation `D`, so non-closure under integration is the statement that `D` is\n**not surjective** onto EML \u2014 a differential-Galois / Liouville obstruction\nphrased purely as the non-surjectivity of a syntactic operator on an inductive\ntype.\n\n*Why now?* The forward dynamics (`isEML_iteratedDeriv`) and the linear structure\nof `HasEMLPrimitive` are now formal, so the missing piece is exactly an\nalgebraic-independence input (\"`erf` is transcendental over the exp-polynomials\").\nLiouville's theorem is within reach of current Mathlib differential-field\nmachinery, making `exp(x\u00b2)` a concrete, self-contained first formal target.\n\n## C2. EML inverses exist iff the derivative never vanishes\n\n**Conjecture.** For an EML function `f` that is strictly monotone with `f' x \u2260 0`\nfor all `x` and `f` surjective, the inverse `f\u207b\u00b9` is again EML **iff** `f` is, up\nto affine change, `x \u21a6 a\u00b7x + b` or `x \u21a6 c\u00b7exp(a x)+b` shapes \u2014 and in particular\nthe *only* EML self-bijections of `\u211d` with EML inverse are the affine maps.\n\n*The key insight is* that `no_eml_left_inverse_cube` already isolates the\nobstruction (a critical point of `f'`), so the residual question is a rigidity\nstatement: among exp-polynomials, vanishing-free derivative plus EML inverse\nforces affine-or-exponential normal form via growth-rate matching.\n\n*Why now?* We have both halves of the diagnostic \u2014 `EML \u2286 differentiable` and the\ncritical-point obstruction \u2014 so the conjecture reduces to classifying\nexp-polynomials whose functional inverse is again an exp-polynomial, a finite\ncase analysis on leading exponential terms.\n\n## C3. The differential transcendence degree of EML is infinite\n\n**Conjecture.** The tower `x \u227a exp(x) \u227a exp(exp(x)) \u227a \u2026` is differentially\nalgebraically independent over `\u211d`; consequently EML has no finite set of\ngenerators as a differential ring.\n\n*The key insight is* that each new `exp` layer strictly increases the\n\"exp-log depth\" invariant (already present as `elDepth` in the term algebra), and\na derivative never increases that depth \u2014 so depth is a differential invariant\nthat no finite generating set can exhaust.\n\n*Why now?* `hasDerivAt_eval` shows `D` realises the analytic derivative without\nraising `elDepth`, turning a hard transcendence statement into a monotonicity\nargument about a computable syntactic invariant.\n\n## C4. EML is closed under composition but composition strictly grows depth\n\n**Conjecture.** Composition closure (`isEML_comp`) is *depth-increasing*: there is\nno global bound `B` such that every EML function representable with `elDepth \u2264 B`\nis closed under composition; precisely, `elDepth (t.subst s) = elDepth t + elDepth s`\nwhen both are exp-active, and this is sharp.\n\n*The key insight is* that `subst` distributes over the syntax, so composition adds\nexponential depths additively \u2014 composition cannot be \"flattened\", unlike the\npolynomial part where products keep depth `0`.\n\n*Why now?* `eval_subst` gives the semantic correctness of `subst` for free, so the\nremaining claim is a purely syntactic equation about the `elDepth` recursion,\ncheckable by structural induction with no analysis.\n\n## C5. A Picard\u2013Vessiot view: EML ODE-solvability is obstructed at critical points\n\n**Conjecture.** A first-order ODE `y' = f(x)\u00b7y` with `f \u2208 EML` has an EML solution\n**iff** `f \u2208 HasEMLPrimitive`-image (i.e. `f` has an EML primitive `F`, giving\n`y = exp(F)`); when `f` lacks an EML primitive (e.g. `f(x) = 2x`, primitive `x\u00b2`,\n*does* work, but `f(x)=exp(x\u00b2)` does not), no EML solution exists.\n\n*The key insight is* that the exponential-integrating-factor solution `exp(\u222bf)`\nties ODE-solvability in EML directly to the integration boundary C1 \u2014 solvability\nis governed by the **same** non-surjectivity of `D`.\n\n*Why now?* `hasEMLPrimitive_*` lemmas and `isEML_exp` already assemble the\n`exp(\u222bf)` candidate constructively; the only gap is C1's Liouville input, so C1\nand C5 stand or fall together and can be attacked as one program.\n",
-    "domains": [
-      "Algebra",
-      "Applications"
-    ],
-    "id": "fd_2538",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "364ec557",
-    "status": "available",
-    "timestamp": "2026-06-25T18:18:40.538130+00:00",
-    "title": "Bold, falsifiable conjectures derived from this cycle (formalised results live i"
   },
   {
     "consumed_by_exp_id": "",
@@ -5438,21 +5467,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the class of EML functions forms a differential field: closed under addition, multiplication, composition, and differentiation. Show that the inverse function theorem for EML functions yields EML inverses. Determine whether EML functions are closed under integration.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0509",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:47.201625+00:00",
-    "title": "EML Differential Algebra: Closure Properties"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -5497,7 +5511,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
-    "consumed_by_exp_id": "54abcfb1",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -5507,7 +5521,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
