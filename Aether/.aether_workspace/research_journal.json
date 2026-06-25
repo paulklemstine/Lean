@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "afe8c8b6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Neural Observation Pseudometrics ↔ Proof Spectra\n\nThese conjectures extend the bridge developed in\n`Catalog/Bridges/NeuralPseudometricProofSpectrumFunctor.lean` and its functoria",
-      "quality_score": 0.7216,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-15T10:38:08",
-      "title": "Close Proofs: Functorial comparison between neural observation pseudometrics and pro"
-    },
-    {
       "cycle_id": "cb2c4d8f",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving (Rank & Shift cycle)\n\nThis cycle added two fully-verified files (0 sorries) extending\n`Bridges.CategoricalTropicalRipsInterleaving`:\n\n- `Br",
@@ -499,19 +489,19 @@
       "theorem_count": 3,
       "timestamp": "2026-06-25T05:24:17",
       "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
+    },
+    {
+      "cycle_id": "1311df1d",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThis file lists concrete next steps building on\n`Catalog/Geometry/PolygonClusterTypeA.lean`, which formalizes the polygon / associahedron\nmodel of the finite type `A_{m-3}` cluste",
+      "quality_score": 0.8125600000000002,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-25T07:43:02",
+      "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0d2b0b43",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — Tropical Curve Counting / Gromov–Witten Invariants\n\nThis cycle established (in `Core.lean`, 0 sorries):\n\n* the balancing/determinant identity making tropical **vertex multiplicit",
-      "quality_score": 0.5115800000000001,
-      "sorry_count": 0,
-      "theorem_count": 128,
-      "timestamp": "2026-06-18T08:36:17",
-      "title": "Tropical Curve Counting: Gromov-Witten Invariants"
-    },
     {
       "cycle_id": "d6f5cc61",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-06-25T07:04:33",
       "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
+    },
+    {
+      "cycle_id": "1311df1d",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThis file lists concrete next steps building on\n`Catalog/Geometry/PolygonClusterTypeA.lean`, which formalizes the polygon / associahedron\nmodel of the finite type `A_{m-3}` cluste",
+      "quality_score": 0.8125600000000002,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-25T07:43:02",
+      "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fe4ab5a6",
-      "domain": "Logic",
-      "name": "uses",
-      "quality": 0.85612
-    },
-    {
-      "cycle_id": "fe4ab5a6",
-      "domain": "Logic",
-      "name": "recurrence_unique",
-      "quality": 0.85612
-    },
-    {
-      "cycle_id": "fe4ab5a6",
-      "domain": "Logic",
-      "name": "eq_claimSeq",
-      "quality": 0.85612
-    },
     {
       "cycle_id": "1d465e25",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "value_succ",
       "quality": 0.7545600000000001
+    },
+    {
+      "cycle_id": "1311df1d",
+      "domain": "Geometry",
+      "name": "nextV_val",
+      "quality": 0.8125600000000002
+    },
+    {
+      "cycle_id": "1311df1d",
+      "domain": "Geometry",
+      "name": "side_inj",
+      "quality": 0.8125600000000002
+    },
+    {
+      "cycle_id": "1311df1d",
+      "domain": "Geometry",
+      "name": "card_side",
+      "quality": 0.8125600000000002
     }
   ],
-  "last_updated": "2026-06-25T07:04:33",
+  "last_updated": "2026-06-25T07:43:02",
   "open_questions": [
     {
       "context": "`appendCode_card`) proved `sorry`-free for arbitrary lengths; `hamming ⊕ hamming`",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "bcf3395e",
-        "quality": 0.4537146432932148,
-        "theorems": 351,
-        "title": "Ramsey Theory: Bounds and Constructions"
-      },
-      {
         "cycle_id": "dafb1f8b",
         "quality": 0.397447,
         "theorems": 120,
@@ -3451,6 +3445,12 @@
         "quality": 0.5303045714285715,
         "theorems": 11,
         "title": "Symmetrized Monomial Generates T-Ideal in Acyclic Path Algebras"
+      },
+      {
+        "cycle_id": "1311df1d",
+        "quality": 0.8125600000000002,
+        "theorems": 15,
+        "title": "Finite type of cluster algebras on Schubert cells in type A flag varieties"
       }
     ],
     "Logic": [

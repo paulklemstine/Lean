@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1311df1d",
     "filename": "finite_type_of_cluster_algebras_on_schubert_cells_.json",
     "pkg_num": 53,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8125600000000002,
     "title": "Cutting Corners: The Polygon / Associahedron Model of the Finite Type A Cluster Algebra of Gr(2, m)"
   },
   {
@@ -1546,8 +1546,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "finite_type_of_cluster_algebras_on_schubert_cells_",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8125600000000002,
+      "quality": "substantial",
       "shape": "hexagonal_prism",
       "title": "Cutting Corners: The Polygon / Associahedron Model of the Finite Type A Cluster Algebra of Gr(2, m)"
     }
