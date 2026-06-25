@@ -224,7 +224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory: Solvability of Polynomials"
   },
   {
-    "consumed_by_exp_id": "fb2780d5",
+    "consumed_by_exp_id": "",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domains": [
       "Algebra",
@@ -235,7 +235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -658,7 +658,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "ab9c78a7",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -667,7 +667,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -719,7 +719,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Universal Approximation: Quantitative Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e8e485b",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domains": [
       "Tropical",
@@ -730,7 +730,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -1403,21 +1403,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:10.070200+00:00",
     "title": "Sensitivity Conjecture Extensions"
-  },
-  {
-    "consumed_by_exp_id": "7ae59772",
-    "description": "Prove that \u03c0, e, \u221a2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "seed_226",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:16.410337+00:00",
-    "title": "Normality of Mathematical Constants"
   },
   {
     "consumed_by_exp_id": "",
@@ -4827,12 +4812,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Under the Exponential Time Hypothesis, there exists no deterministic algorithm solving Global Label Min-Cut on n-vertex graphs with p labels in time (np)^{o(log n / log log n)}. More precisely, any deterministic reduction from sparse 3-SAT with N variables to balanced Multicolored Clique with k color classes over q vertices, where k = \u0398(sqrt(N/log N)) and log q = \u0398(k log k), yields a GLMC instance with p = kq labels and n = O(k\u00b2q\u00b2 log(q+1)^k) vertices satisfying log n = \u0398(k log k) and consequently (log n)/(log log n) = \u0398(k). This precise parameter relationship is necessary and sufficient for the lower bound to hold.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2534",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25875v1",
+    "status": "available",
+    "timestamp": "2026-06-25T17:43:31.744715+00:00",
+    "title": "ETH-based Reduction from Sparse 3-SAT to Global Label Min-Cut with Optimal Parameter Scaling"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that every outerplanar graph admits a conflict\u2011free coloring with at most three colors. This extends the known four\u2011color conflict\u2011free bound for planar graphs and would yield a tight bound for the outerplanar subclass.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2534",
+    "id": "fd_2535",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -4846,13 +4845,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2535",
+    "id": "fd_2536",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25884v1",
     "status": "available",
     "timestamp": "2026-06-25T16:34:26.097340+00:00",
     "title": "Maximum size of pairwise orthogonal Italian squares is n\u20111 for prime powers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let X be a K3 surface over a finite field \ud835\udd3d_q of characteristic \u2260 p. Let k_n = \ud835\udd3d_{q^{p^n}} and let Br(X_{k_n})[p^\u221e] denote the p\u2011primary part of the Brauer group. Write \u0393 = Gal(k_\u221e/k) \u2245 \u2124_p and \u039b = \u2124_p[[\u0393]]. Let M = varprojlim_n Br(X_{k_n})[p^\u221e]^\u2228 be the Pontryagin dual, a compact \u039b\u2011module. Conjecture: M is a finitely generated torsion \u039b\u2011module and its characteristic power series f_M(T) \u2208 \u039b equals, up to a unit in \u039b, the p\u2011adic L\u2011function L_p(T, X) defined from the Frobenius eigenvalues on H^2_et(X_{\u0305\ud835\udd3d_q}, \u211a_p(1)).",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2537",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25737v1",
+    "status": "available",
+    "timestamp": "2026-06-25T17:44:05.410825+00:00",
+    "title": "Iwasawa Main Conjecture for Brauer groups of K3 surfaces over finite fields"
   },
   {
     "consumed_by_exp_id": "",
@@ -5468,7 +5482,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "4f516403",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -5478,7 +5492,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

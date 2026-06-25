@@ -298,7 +298,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fb2780d5",
+    "consumed_by_exp_id": "",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domain_bridges": [],
     "domains": [
@@ -312,7 +312,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -877,7 +877,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ab9c78a7",
+    "consumed_by_exp_id": "",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -889,7 +889,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
@@ -958,7 +958,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2e8e485b",
     "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
     "domain_bridges": [],
     "domains": [
@@ -972,7 +972,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432796+00:00",
     "title": "Tropical Curves and Chip-Firing Games"
   },
@@ -1870,26 +1870,6 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:10.070200+00:00",
     "title": "Sensitivity Conjecture Extensions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "7ae59772",
-    "description": "Prove that π, e, √2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "seed_226",
-    "lineage_refs": [],
-    "priority_score": 0.81,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:16.410337+00:00",
-    "title": "Normality of Mathematical Constants"
   },
   {
     "ambition_level": "extension",
@@ -8326,6 +8306,37 @@
     "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Exponential Time Hypothesis (ETH)",
+      "Multicolored Clique",
+      "Sparse 3-SAT",
+      "Partition Lattice",
+      "Global Label Min-Cut"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Under the Exponential Time Hypothesis, there exists no deterministic algorithm solving Global Label Min-Cut on n-vertex graphs with p labels in time (np)^{o(log n / log log n)}. More precisely, any deterministic reduction from sparse 3-SAT with N variables to balanced Multicolored Clique with k color classes over q vertices, where k = Θ(sqrt(N/log N)) and log q = Θ(k log k), yields a GLMC instance with p = kq labels and n = O(k²q² log(q+1)^k) vertices satisfying log n = Θ(k log k) and consequently (log n)/(log log n) = Θ(k). This precise parameter relationship is necessary and sufficient for the lower bound to hold.",
+    "domain_bridges": [
+      "Fine-grained Complexity Theory",
+      "Graph Theory",
+      "Parameterized Complexity",
+      "Reduction Constructions",
+      "Proof Complexity"
+    ],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2534",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the deterministic reduction construction from sparse 3-SAT to GLMC in Lean, proving the exact parameter relationships: (1) Show that sparse 3-SAT instances with N variables can be reduced to balanced MCC instances with parameters k and q satisfying the specified Θ-relations; (2) Prove that the partition lattice-based construction yields GLMC instances with exactly p = kq labels and n = O(k²q² log(q+1)^k) vertices; (3) Demonstrate that these parameter choices force log n = Θ(k log k) and (log n)/(log log n) = Θ(k); (4) Establish the correctness of the pointed partition disjunctive composition for preserving the disconnectivity property; (5) Prove that violating the time bound would yield a 2^{o(N)}-time algorithm for sparse 3-SAT, contradicting ETH.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25875v1",
+    "status": "available",
+    "timestamp": "2026-06-25T17:43:31.744715+00:00",
+    "title": "ETH-based Reduction from Sparse 3-SAT to Global Label Min-Cut with Optimal Parameter Scaling"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "arXiv:2210.000?? (presented paper)",
@@ -8341,7 +8352,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2534",
+    "id": "fd_2535",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on the number of vertices and the fact that outerplanar graphs are 2‑degenerate. Remove a vertex of degree ≤2, apply the induction hypothesis to obtain a 3‑color conflict‑free coloring of the remaining graph, then extend the coloring to the removed vertex by recoloring at most a bounded number of neighbors. A discharging argument guarantees that the recoloring step never requires a fourth color.",
@@ -8367,7 +8378,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2535",
+    "id": "fd_2536",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish an upper bound via double counting of symbol occurrences and use finite field constructions to exhibit n‑1 orthogonal squares when n is a prime power; then formalize the combinatorial arguments in Lean using existing libraries for finite fields and finite sets.",
@@ -8376,6 +8387,34 @@
     "status": "available",
     "timestamp": "2026-06-25T16:34:26.097340+00:00",
     "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let X be a K3 surface over a finite field 𝔽_q of characteristic ≠ p. Let k_n = 𝔽_{q^{p^n}} and let Br(X_{k_n})[p^∞] denote the p‑primary part of the Brauer group. Write Γ = Gal(k_∞/k) ≅ ℤ_p and Λ = ℤ_p[[Γ]]. Let M = varprojlim_n Br(X_{k_n})[p^∞]^∨ be the Pontryagin dual, a compact Λ‑module. Conjecture: M is a finitely generated torsion Λ‑module and its characteristic power series f_M(T) ∈ Λ equals, up to a unit in Λ, the p‑adic L‑function L_p(T, X) defined from the Frobenius eigenvalues on H^2_et(X_{̅𝔽_q}, ℚ_p(1)).",
+    "domain_bridges": [
+      "Number Theory",
+      "Algebraic Geometry",
+      "K3 surfaces",
+      "Brauer groups",
+      "Iwasawa theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2537",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the Artin–Tate conjecture (known for K3 surfaces) to identify the p‑primary Brauer group with a subquotient of étale cohomology. Prove a Mazur‑style control theorem for the tower Br(X_{k_n})[p^∞] to show that M is a finitely generated torsion Λ‑module. Construct a p‑adic L‑function via the Frobenius action on H^2_et and the theory of overconvergent modular symbols (or via Perrin‑Riou's big exponential map). Finally, compare the characteristic ideal of M with the p‑adic L‑function using an Euler system built from norm‑compatible classes in the Brauer groups of finite level (e.g., using Kummer classes of rational points on associated elliptic fibrations) to obtain divisibility in both directions, hence equality up to a unit.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25737v1",
+    "status": "available",
+    "timestamp": "2026-06-25T17:44:05.410825+00:00",
+    "title": "Iwasawa Main Conjecture for Brauer groups of K3 surfaces over finite fields"
   },
   {
     "ambition_level": "extension",
@@ -9203,7 +9242,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "4f516403",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -9216,7 +9255,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },

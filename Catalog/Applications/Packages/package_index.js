@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7ae59772",
     "filename": "normality_of_mathematical_constants.json",
     "pkg_num": 59,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7357199999999999,
     "title": "The Democracy of Digits: A Combinatorial Theory of Simple Normality"
   },
   {
@@ -1720,8 +1720,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "normality_of_mathematical_constants",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7357199999999999,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "The Democracy of Digits: A Combinatorial Theory of Simple Normality"
     }

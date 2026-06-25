@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "999c0f6b",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Valuation-Depth → Tropical Functor\n\nDerived from the verified results in\n`Catalog/Bridges/ValuationDepthTropicalFunctor.lean` (foundations) and\n`Catalog/Bridges/ValuationDepthFol",
-      "quality_score": 0.7756000000000001,
-      "sorry_count": 1,
-      "theorem_count": 17,
-      "timestamp": "2026-06-16T01:42:32",
-      "title": "Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFuncto"
-    },
-    {
       "cycle_id": "3fd7a316",
       "domain": "Probability",
       "key_insight": "# FUTURE DIRECTIONS — Functorial Tropical Ultrametric from Pythagorean Lorentz Triples\n\nThis cycle produced two compiling, `sorry`-free Lean files (standard axioms only):\n\n- `Catalog/Bridges/Functoria",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-06-25T16:30:34",
       "title": "Pólya tree coefficient recurrence formula"
+    },
+    {
+      "cycle_id": "7ae59772",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Normality of Mathematical Constants\n\nDerived from the Stage 3/4 findings of this cycle (combinatorial theory of\nsimple normality in `Catalog/Algebra/NormalNumbers/`). Each conjec",
+      "quality_score": 0.7357199999999999,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-25T17:40:06",
+      "title": "Normality of Mathematical Constants"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "74320b24",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Non-Archimedean Probability via Surreal Numbers\n\nDerived from this cycle's findings (files `SurrealInfinitesimalField.lean`,\n`SurrealProbability.lean`):\n\n* the carrier `K = Lex (",
-      "quality_score": 0.6584800000000001,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-19T06:51:30",
-      "title": "Non-Archimedean Probability via Surreal Numbers"
-    },
     {
       "cycle_id": "b53ecc44",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-06-25T16:30:34",
       "title": "Pólya tree coefficient recurrence formula"
+    },
+    {
+      "cycle_id": "7ae59772",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Normality of Mathematical Constants\n\nDerived from the Stage 3/4 findings of this cycle (combinatorial theory of\nsimple normality in `Catalog/Algebra/NormalNumbers/`). Each conjec",
+      "quality_score": 0.7357199999999999,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-25T17:40:06",
+      "title": "Normality of Mathematical Constants"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9537a45c",
-      "domain": "Tropical",
-      "name": "says",
-      "quality": 0.7829999999999999
-    },
-    {
-      "cycle_id": "9537a45c",
-      "domain": "Tropical",
-      "name": "in",
-      "quality": 0.7829999999999999
-    },
-    {
-      "cycle_id": "9537a45c",
-      "domain": "Tropical",
-      "name": "in",
-      "quality": 0.7829999999999999
-    },
     {
       "cycle_id": "cb79327f",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "polya_FE_iff_recurrence",
       "quality": 0.78684
+    },
+    {
+      "cycle_id": "7ae59772",
+      "domain": "Algebra",
+      "name": "is",
+      "quality": 0.7357199999999999
+    },
+    {
+      "cycle_id": "7ae59772",
+      "domain": "Algebra",
+      "name": "countDigit_le",
+      "quality": 0.7357199999999999
+    },
+    {
+      "cycle_id": "7ae59772",
+      "domain": "Algebra",
+      "name": "sum_countDigit",
+      "quality": 0.7357199999999999
     }
   ],
-  "last_updated": "2026-06-25T16:30:34",
+  "last_updated": "2026-06-25T17:40:06",
   "open_questions": [
     {
       "context": "",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "a2755e7b",
-        "quality": 0.5554623188405797,
-        "theorems": 6,
-        "title": "The Library of Babel: Combinatorics of the Universal Library"
-      },
-      {
         "cycle_id": "38689f4d",
         "quality": 0.5154196374622356,
         "theorems": 257,
@@ -3079,6 +3073,12 @@
         "quality": 0.68184,
         "theorems": 13,
         "title": "Conformability remains NP-complete for all fixed independence numbers at least 3"
+      },
+      {
+        "cycle_id": "7ae59772",
+        "quality": 0.7357199999999999,
+        "theorems": 17,
+        "title": "Normality of Mathematical Constants"
       }
     ],
     "Applications": [
