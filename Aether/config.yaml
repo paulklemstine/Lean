@@ -423,7 +423,7 @@ llm_reduction:
 # these caps free the local slot + return the direction to available instead
 # of pinning max_inflight forever. Times in seconds.
 stall:
-  no_progress_seconds: 3600    # fail a dispatched job whose last reasoning
+  no_progress_seconds: 86400   # fail a dispatched job whose last reasoning
                                 #   checkpoint is older than this (server-side
                                 #   hang). > the ~44min healthy checkpoint gap.
   preparing_timeout_seconds: 1800  # fail a job stuck in 'preparing' (never submitted)
