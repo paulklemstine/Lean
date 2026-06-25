@@ -37408,7 +37408,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.RingTheory.HahnSeries",
         "Mathlib.Data.Finsupp",
@@ -37418,7 +37418,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d5ef22ee",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37434,7 +37434,7 @@
         "Pythagorean"
       ],
       "id": "fd_2359",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-25T21:08:39.643400+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.RingTheory.HahnSeries\nimport Mathlib.Data.Finsupp\nimport Mathlib.RingTheory.Valuation.Basic\nimport Mathlib.Algebra.Polynomial.Basic\n\nnamespace TropicalDifferential\n\nvariable {K Γ : Type*} [Field K] [IsAlgClosed K] [CharZero K]\nvariable [LinearOrderedAddCommGroup Γ]\n\nconstant ODEPoly : Type _ → Type _ → ℕ → Type _\nconstant TropicalODEPoly : Type _ → ℕ → Type _\n\nconstant tropicalization : ODEPoly K Γ k → TropicalODEPoly Γ k\nconstant hahnSolutionOrders : ODEPoly K Γ k → Set Γ\nconstant elementaryOrders : TropicalODEPoly Γ k → Set Γ\n\n/-- `indicialHasSimpleUnitRoot P r` means that the initial indicial polynomial\nat the elementary tropical order `r` has a simple nonzero root in the coefficient field. -/\nconstant indicialHasSimpleUnitRoot : ODEPoly K Γ k → Γ → Prop\n\n/-- Conjecture: Newton-nondegenerate elementary tropical orders are exactly the\norders of genuine Hahn-series solutions. -/\ntheorem elementary_orders_eq_solution_orders_of_indicial_nondegenerate\n    {k : ℕ} (P : ODEP",
       "lineage_refs": [],
@@ -37448,7 +37448,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21829v1",
       "source_path": "http://arxiv.org/abs/2606.21829v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T15:04:46.154289+00:00",
       "title": "Newton-nondegenerate elementary tropical orders lift to Hahn-series solutions"
@@ -42084,7 +42084,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d1e8d4ba",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -42113,7 +42113,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22058v1",
       "source_path": "http://arxiv.org/abs/2606.22058v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T02:07:55.532399+00:00",
       "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
@@ -45945,6 +45945,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Number Field Minimal Index",
+        "Radical Extensions",
+        "Discriminant Bounds"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For the family of radical number fields K_n(p) = Q(ζ_{p-1}, \\sqrt[p]{p}) where p is an odd prime and n = p-1, the minimal index satisfies Ind_min(K_n(p)) > log(log(discriminant(K_n(p))))^{1/3} for all sufficiently large p. This provides an explicit quantitative version of the main theorem about arbitrarily large minimal indices.",
+      "domain_bridges": [
+        "Analytic Number Theory",
+        "Diophantine Geometry",
+        "Computational Algebraic Number Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2545",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem radical_extension_minimal_index_growth (p : Nat) (hp : p ≥ 5) :\n  let K := NumberField.radicalExtension (Polynomial.X ^ p - p) in\n  let d := NumberField.discriminant K in\n  NumberField.minimalIndex K > (Real.log (Real.log d)) ^ (1/3) :=",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the Chebotarev density theorem to control the splitting behavior of primes in the radical extensions, combine with explicit discriminant formulas for the constructed fields, and apply lower bounds for L-functions to derive the logarithmic growth rate of the minimal index relative to the discriminant.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25841v1",
+      "source_path": "http://arxiv.org/abs/2606.25841v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T21:08:07.808226+00:00",
+      "title": "Explicit lower bound for minimal index in radical extensions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "arXiv:2210.12345",
         "Brown–Erdős–Sós conjecture",
         "Keevash–Long 2023"
@@ -45964,7 +46011,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2545",
+      "id": "fd_2546",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem lin_optimality_bound (r k n : ℕ) (hn : (r - 2) * (k - 2) + 1 ≤ n) : ∃ H : Hypergraph r n, \\n  (|E H| : ℕ) = ⌊(k - 2) * n^2 / (r^2 * ((r - 2) * (k - 2) + 1))⌋ ∧ \\n  ∀ (S : Finset (Edge H)), S.card = k → (∀ e ∈ S, e ⊆ (∪ᵢ eᵢ) → (∪ᵢ eᵢ).card ≤ (r - 2) * k + 3) → False",
@@ -46010,7 +46057,7 @@
         "Pythagorean",
         "Computation"
       ],
-      "id": "fd_2546",
+      "id": "fd_2547",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem glmc_time_bound (n p : ℕ) :\n  ∃ C : ℕ,\n    ∃ alg : UnivGraph → CutVal,\n      ¬¬(∀ G : UnivGraph,\n        (card G.vertices = n) ∧ (card G.labels = p) →\n          (time alg G) ≤ (n * p : ℕ) ^ (C * (Nat.log n) / ((Nat.log (Nat.log n)) + 1)) ∧\n          (alg G = minLabelCut G))\n",
@@ -46054,7 +46101,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2547",
+      "id": "fd_2548",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "lemma diameter_contraction (X0: Set S^d) (k: Nat) : max { simplex in Del(X_k) }.diameter ≤ (1/λ)^k · max { simplex in Del(X_0) }.diameter  where λ > 1 and minicenter Steiner points are used",
@@ -46073,94 +46120,6 @@
       "thread_id": "",
       "timestamp": "2026-06-25T20:05:25.226962+00:00",
       "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Moss and Pedersen 2026"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "This paper investigates the finite axiomatizability of strict majority reasoning in bounded social decision frameworks, extending previous results on coherence criteria. It investigates whether a finitely bounded condition can replace a coherence condition in a geometric, dimensional framework.",
-      "domain_bridges": [
-        "Discrete Mathematics",
-        "Theoretical Computer Science"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Geometry",
-        "Logic"
-      ],
-      "id": "fd_2547",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "Lifted via uniform constructions over bounded parameter spaces",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Constructive existence + induction over frame size",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.25954v1",
-      "source_path": "http://arxiv.org/abs/2606.25954v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-25T20:34:17.076048+00:00",
-      "title": "Measurable Majorities Are Not Finitely Axiomatizable"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "A Simple Counting Argument for Dense Linear Hypergraphs"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "The paper proves that any linear r-uniform hypergraph with linear density c ≥ (r-1)/r * (k-2)/((r-2)(k-2)+1) + o(1) contains an ((r-2)k+3, k)-configuration. This conjecture asserts that this asymptotic threshold is sharp, i.e., for any ε > 0 there exist arbitrarily large linear r-uniform hypergraphs with density at least this value minus ε that avoid the configuration.",
-      "domain_bridges": [
-        "extremal_combinatorics",
-        "hypergraph_theory",
-        "brown_erdos_sos_conjecture"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean"
-      ],
-      "id": "fd_2547",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem asymptotic_tightness_conjecture (r k : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) : ∀ (ε : ℝ), ε > 0 → ∃ (n : ℕ) (H : LinearHypergraph r n), H.linear_density ≥ ((r-1 : ℝ)/r) * ((k-2 : ℝ)/((r-2)*(k-2)+1)) - ε ∧ ¬ H.contains_configuration ((r-2)*k+3) k := by sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Investigate algebraic constructions (e.g., from finite geometries) or probabilistic methods (e.g., random hypergraphs with edge deletions) to construct dense linear hypergraphs avoiding ((r-2)k+3, k)-configurations. For specific small parameters, computational search may yield explicit examples.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.25931v1",
-      "source_path": "http://arxiv.org/abs/2606.25931v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-25T20:46:25.553815+00:00",
-      "title": "Asymptotic tightness of the density threshold for ((r-2)k+3, k)-configurations in linear r-uniform hypergraphs"
     },
     {
       "ambition_level": "extension",
@@ -46186,7 +46145,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2548",
+      "id": "fd_2549",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_1061_growth_rate (ε : ℝ) (hε : ε > 0) : ∃ (c : ℝ) (x₀ : ℕ), ∀ (x : ℕ) (_ : x ≥ x₀), S x > c * x * (log x)^(2 + ε)",
@@ -46205,6 +46164,56 @@
       "thread_id": "",
       "timestamp": "2026-06-25T20:34:08.184471+00:00",
       "title": "Specific Growth Rate Conjecture for Erdős Problem 1061"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "ohashi2024finite",
+        "ohashi2024finitegroupssymplecticautomorphisms",
+        "Mukai1988",
+        "Brandhorst_Hofmann_2023",
+        "DolgachevKeum2009"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that for any prime p>11, the superspecial K3 surface X over an algebraically closed field of characteristic p does not admit any non‑trivial extension of a maximal symplectic group. Precisely, if G≤ Aut(X) is a finite group whose symplectic subgroup G_s is maximal (as classified by Ohashi‑Schütt) then G = G_s, i.e. the non‑symplectic index [G:G_s] equals 1.",
+      "domain_bridges": [
+        "Finite group actions on K3 surfaces",
+        "Symplectic automorphism groups in positive characteristic",
+        "Classification of maximal symplectic groups",
+        "Formal verification of arithmetic geometry statements"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2550",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem superspecial_k3_maximal_symplectic_extension_is_trivial\n  {p : ℕ} [hp : Fact (Prime p)] [h : p > 11]\n  (X : SuperspecialK3 p)\n  (G : Type*) [Fintype G] [Group G]\n  (action : G →* Aut X)\n  (Gs : Subgroup X) [isMaximalSymplectic Gs]\n  (hcont : Gs ≤ Subgroup.map action Gs)\n  (hfaith : Faithful action)\n: Gs = Subgroup.map action Gs :=\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Combine the classification of maximal symplectic groups (Ohashi‑Schütt) with the lattice‑theoretic constraints on non‑symplectic automorphisms of superspecial K3 surfaces (trace formulas, Artin invariant 1). Show that any non‑trivial extension would give a non‑symplectic element whose fixed locus forces a contradiction with the known list of possible finite subgroups of Aut(X). The tame case theorem (Section TameCase) rules out tame extensions, and the wild case is handled by examining the p‑torsion in the Néron‑Severi lattice.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25724v1",
+      "source_path": "http://arxiv.org/abs/2606.25724v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T21:08:28.285445+00:00",
+      "title": "No non‑trivial extensions of maximal symplectic groups on the superspecial K3 surface"
     },
     {
       "ambition_level": "extension",

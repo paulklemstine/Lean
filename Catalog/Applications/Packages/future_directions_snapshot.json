@@ -3972,7 +3972,7 @@
       "Mathlib.Algebra.Polynomial.Basic",
       "Mathlib.Order.WellFoundedSet"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5ef22ee",
     "description": "Let 𝔓(y)=Σ_{a∈A} c_a(t) Π_{i=0}^k (y^(i))^{a_i} be a nonzero ordinary algebraic differential polynomial over algebraically closed characteristic-zero Hahn series with finite support A. Let E_k(trop(𝔓)) be the set of t-adic orders r of Boolean Hahn elementary k-solutions of its tropicalization, equivalently the r for which the active indicial tropical minimum is attained at least twice. For each r in E_k(trop(𝔓)), form the classical indicial initial polynomial I_r(Z) in the leading coefficient Z, using exactly the monomials attaining that minimum and the falling-factorial factors coming from derivatives. Conjecture: if every r in E_k(trop(𝔓)) has a simple nonzero root of I_r(Z), then every elementary tropical order is realized by an actual Hahn-series solution; hence ord_t(Sol(𝔓)) = E_k(trop(𝔓)). This strengthens the paper's containment ord_t(Sol(𝔓)) ⊆ E_k(trop(𝔓)) to equality under a Newton-nondegeneracy hypothesis.",
     "domain_bridges": [
       "Boolean tropical differential equations ↔ valuations of Hahn-series differential equations",
@@ -3989,7 +3989,7 @@
     "proof_strategy": "Prove the known tropicalization inclusion first: the order of any Hahn solution forces at least two lowest-valued differential monomials, so it lies in E_k(trop(𝔓)). For the reverse inclusion, fix r in E_k and choose a simple nonzero root c of the indicial polynomial I_r. Substitute y = c t^r + z with ord(z) > r. Develop a transfinite Newton-Hensel recursion on the well-ordered support of z. At each stage, the simple-root condition makes the linearized initial operator invertible for the next coefficient, preventing resonant obstructions. Show that the constructed support remains well ordered, so the recursion defines a Hahn series y satisfying 𝔓(y)=0 and ord_t(y)=r. Formalization would isolate the differential-polynomial combinatorics, falling-factorial leading terms, and a Hahn-series transfinite recursion lemma.",
     "research_mode": "team",
     "source_exp_id": "2606.21829v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T15:04:46.154289+00:00",
     "title": "Newton-nondegenerate elementary tropical orders lift to Hahn-series solutions"
   },
@@ -6466,7 +6466,7 @@
       "Vertex operator algebras and symmetric functions",
       "Pfaffian Giambelli formulas"
     ],
-    "consumed_by_exp_id": "d1e8d4ba",
+    "consumed_by_exp_id": "",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_λ^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition λ = (λ₁, λ₂, ..., λ_k) with λ₁ > λ₂ > ... > λ_k ≥ 0, the formula takes the form s_λ^Q(t) = Pf[Y_{λ_i - i + j}(t) + Y_{λ_j - j + i}(t)]_{1≤i<j≤k} · vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domain_bridges": [
       "Vertex operator methods in symmetric function theory",
@@ -6482,7 +6482,7 @@
     "proof_strategy": "Formalize the operator construction in Lean 4, prove the Clifford algebra relation [Y_m(t), Y_n(t)]₊ = 2(-1)^mδ_{m,-n}, then establish the Pfaffian determinant formula using standard Pfaffian identities and the operator product expansion, verifying the t=0 specialization recovers the classical Schur Q-function identity.",
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -8588,6 +8588,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Number Field Minimal Index",
+      "Radical Extensions",
+      "Discriminant Bounds"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For the family of radical number fields K_n(p) = Q(ζ_{p-1}, \\sqrt[p]{p}) where p is an odd prime and n = p-1, the minimal index satisfies Ind_min(K_n(p)) > log(log(discriminant(K_n(p))))^{1/3} for all sufficiently large p. This provides an explicit quantitative version of the main theorem about arbitrarily large minimal indices.",
+    "domain_bridges": [
+      "Analytic Number Theory",
+      "Diophantine Geometry",
+      "Computational Algebraic Number Theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2545",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the Chebotarev density theorem to control the splitting behavior of primes in the radical extensions, combine with explicit discriminant formulas for the constructed fields, and apply lower bounds for L-functions to derive the logarithmic growth rate of the minimal index relative to the discriminant.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25841v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:08:07.808226+00:00",
+    "title": "Explicit lower bound for minimal index in radical extensions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "arXiv:2210.12345",
       "Brown–Erdős–Sós conjecture",
       "Keevash–Long 2023"
@@ -8601,7 +8629,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2545",
+    "id": "fd_2546",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit families of linear r‑uniform hypergraphs (e.g. using finite projective planes, affine geometries, or suitable random constructions) whose edge count meets the bound in Theorem 1 minus an arbitrarily small ε. Prove combinatorially that these hypergraphs avoid any ((r‑2)k+3, k)‑configuration by analysing intersection patterns of edges and counting arguments. The construction should show that any attempt to exceed this edge count would force the existence of the forbidden configuration, thereby proving the bound in Theorem 1 is tight.",
@@ -8628,7 +8656,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2546",
+    "id": "fd_2547",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The conjectured upper bound can be approached by extending the partition‑lattice dynamic programming techniques used for hypergraph min‑cut.  One would encode the connectivity of the union of label graphs as lattice elements and propagate partial solutions using fast zeta transforms on the lattice.  By carefully arranging the recursion depth to be O(log n / log log n) and applying a logarithmic‑depth divide‑and‑conquer on the label set, the total number of DP states can be bounded by (np)^{O(log n / log log n)}.  A full formal proof would involve defining the lattice, proving its size bound, and showing that the DP recurrence respects the GLMC objective.  The crux is to avoid an exponential blow‑up in the number of subsets of labels by exploiting the lattice’s Möbius inversion to compute union‑connectivity in quasi‑linear time per layer.",
@@ -8653,7 +8681,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2547",
+    "id": "fd_2548",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize covering estimates via pivotal sampling and the dimension-dependent Carathéodory theorem to bound diameter decay per refinement step",
@@ -8662,56 +8690,6 @@
     "status": "available",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "Moss and Pedersen 2026"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "This paper investigates the finite axiomatizability of strict majority reasoning in bounded social decision frameworks, extending previous results on coherence criteria. It investigates whether a finitely bounded condition can replace a coherence condition in a geometric, dimensional framework.",
-    "domain_bridges": [
-      "Discrete Mathematics",
-      "Theoretical Computer Science"
-    ],
-    "domains": [
-      "Geometry",
-      "Logic"
-    ],
-    "id": "fd_2547",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Constructive existence + induction over frame size",
-    "research_mode": "team",
-    "source_exp_id": "2606.25954v1",
-    "status": "available",
-    "timestamp": "2026-06-25T20:34:17.076048+00:00",
-    "title": "Measurable Majorities Are Not Finitely Axiomatizable"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "A Simple Counting Argument for Dense Linear Hypergraphs"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "The paper proves that any linear r-uniform hypergraph with linear density c ≥ (r-1)/r * (k-2)/((r-2)(k-2)+1) + o(1) contains an ((r-2)k+3, k)-configuration. This conjecture asserts that this asymptotic threshold is sharp, i.e., for any ε > 0 there exist arbitrarily large linear r-uniform hypergraphs with density at least this value minus ε that avoid the configuration.",
-    "domain_bridges": [
-      "extremal_combinatorics",
-      "hypergraph_theory",
-      "brown_erdos_sos_conjecture"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2547",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Investigate algebraic constructions (e.g., from finite geometries) or probabilistic methods (e.g., random hypergraphs with edge deletions) to construct dense linear hypergraphs avoiding ((r-2)k+3, k)-configurations. For specific small parameters, computational search may yield explicit examples.",
-    "research_mode": "team",
-    "source_exp_id": "2606.25931v1",
-    "status": "available",
-    "timestamp": "2026-06-25T20:46:25.553815+00:00",
-    "title": "Asymptotic tightness of the density threshold for ((r-2)k+3, k)-configurations in linear r-uniform hypergraphs"
   },
   {
     "ambition_level": "extension",
@@ -8728,7 +8706,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2548",
+    "id": "fd_2549",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the construction in the paper to establish a quantitative lower bound for R=2+ε, leveraging the two-height core theorem and coprime multiplier amplification. Formalize the asymptotic estimate in Lean using bounds on prime distribution in arithmetic progressions.",
@@ -8737,6 +8715,37 @@
     "status": "available",
     "timestamp": "2026-06-25T20:34:08.184471+00:00",
     "title": "Specific Growth Rate Conjecture for Erdős Problem 1061"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "ohashi2024finite",
+      "ohashi2024finitegroupssymplecticautomorphisms",
+      "Mukai1988",
+      "Brandhorst_Hofmann_2023",
+      "DolgachevKeum2009"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any prime p>11, the superspecial K3 surface X over an algebraically closed field of characteristic p does not admit any non‑trivial extension of a maximal symplectic group. Precisely, if G≤ Aut(X) is a finite group whose symplectic subgroup G_s is maximal (as classified by Ohashi‑Schütt) then G = G_s, i.e. the non‑symplectic index [G:G_s] equals 1.",
+    "domain_bridges": [
+      "Finite group actions on K3 surfaces",
+      "Symplectic automorphism groups in positive characteristic",
+      "Classification of maximal symplectic groups",
+      "Formal verification of arithmetic geometry statements"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2550",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Combine the classification of maximal symplectic groups (Ohashi‑Schütt) with the lattice‑theoretic constraints on non‑symplectic automorphisms of superspecial K3 surfaces (trace formulas, Artin invariant 1). Show that any non‑trivial extension would give a non‑symplectic element whose fixed locus forces a contradiction with the known list of possible finite subgroups of Aut(X). The tame case theorem (Section TameCase) rules out tame extensions, and the wild case is handled by examining the p‑torsion in the Néron‑Severi lattice.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25724v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:08:28.285445+00:00",
+    "title": "No non‑trivial extensions of maximal symplectic groups on the superspecial K3 surface"
   },
   {
     "ambition_level": "extension",

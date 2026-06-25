@@ -2498,7 +2498,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Ohno-Zudilin Weighted Sum Formula for Double Zeta Values"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d5ef22ee",
     "description": "Let \ud835\udd13(y)=\u03a3_{a\u2208A} c_a(t) \u03a0_{i=0}^k (y^(i))^{a_i} be a nonzero ordinary algebraic differential polynomial over algebraically closed characteristic-zero Hahn series with finite support A. Let E_k(trop(\ud835\udd13)) be the set of t-adic orders r of Boolean Hahn elementary k-solutions of its tropicalization, equivalently the r for which the active indicial tropical minimum is attained at least twice. For each r in E_k(trop(\ud835\udd13)), form the classical indicial initial polynomial I_r(Z) in the leading coefficient Z, using exactly the monomials attaining that minimum and the falling-factorial factors coming from derivatives. Conjecture: if every r in E_k(trop(\ud835\udd13)) has a simple nonzero root of I_r(Z), then every elementary tropical order is realized by an actual Hahn-series solution; hence ord_t(Sol(\ud835\udd13)) = E_k(trop(\ud835\udd13)). This strengthens the paper's containment ord_t(Sol(\ud835\udd13)) \u2286 E_k(trop(\ud835\udd13)) to equality under a Newton-nondegeneracy hypothesis.",
     "domains": [
       "Algebra",
@@ -2508,7 +2508,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21829v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T15:04:46.154289+00:00",
     "title": "Newton-nondegenerate elementary tropical orders lift to Hahn-series solutions"
   },
@@ -3816,7 +3816,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalizing Hales-Jewett lower bounds via symmetric coloring in Lean"
   },
   {
-    "consumed_by_exp_id": "d1e8d4ba",
+    "consumed_by_exp_id": "",
     "description": "The shifted t-Schur functions indexed by strict partitions satisfy an explicit Pfaffian Giambelli formula expressing s_\u03bb^Q(t) as a Pfaffian of Y-operator modes applied to the vacuum, generalizing the classical Schur Q-function case at t=0. Specifically, for strict partition \u03bb = (\u03bb\u2081, \u03bb\u2082, ..., \u03bb_k) with \u03bb\u2081 > \u03bb\u2082 > ... > \u03bb_k \u2265 0, the formula takes the form s_\u03bb^Q(t) = Pf[Y_{\u03bb_i - i + j}(t) + Y_{\u03bb_j - j + i}(t)]_{1\u2264i<j\u2264k} \u00b7 vac where the Pfaffian entries are determined by the Clifford algebra structure of the odd GJZ operators.",
     "domains": [
       "Algebra"
@@ -3825,7 +3825,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T02:07:55.532399+00:00",
     "title": "Pfaffian Giambelli Formula for Shifted t-Schur Functions"
   },
@@ -4957,11 +4957,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the family of radical number fields K_n(p) = Q(\u03b6_{p-1}, \\sqrt[p]{p}) where p is an odd prime and n = p-1, the minimal index satisfies Ind_min(K_n(p)) > log(log(discriminant(K_n(p))))^{1/3} for all sufficiently large p. This provides an explicit quantitative version of the main theorem about arbitrarily large minimal indices.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2545",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25841v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:08:07.808226+00:00",
+    "title": "Explicit lower bound for minimal index in radical extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every integers r \u2265 3 and k \u2265 3 there exist arbitrarily large linear r\u2011uniform hypergraphs on n vertices with edge count just below the bound given in Theorem\u00a01 that contain no ((r\u20112)k+3,\u202fk)\u2011configuration. In other words, the density threshold in Theorem\u00a01 is sharp up to lower\u2011order terms.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2545",
+    "id": "fd_2546",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -4976,7 +4991,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2546",
+    "id": "fd_2547",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -4990,7 +5005,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2547",
+    "id": "fd_2548",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
@@ -5004,13 +5019,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2548",
+    "id": "fd_2549",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
     "status": "available",
     "timestamp": "2026-06-25T20:34:08.184471+00:00",
     "title": "Specific Growth Rate Conjecture for Erd\u0151s Problem 1061"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any prime p>11, the superspecial K3 surface X over an algebraically closed field of characteristic p does not admit any non\u2011trivial extension of a maximal symplectic group. Precisely, if G\u2264\u202fAut(X) is a finite group whose symplectic subgroup G_s is maximal (as classified by Ohashi\u2011Sch\u00fctt) then G\u2001=\u202fG_s, i.e. the non\u2011symplectic index [G:G_s] equals 1.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2550",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25724v1",
+    "status": "available",
+    "timestamp": "2026-06-25T21:08:28.285445+00:00",
+    "title": "No non\u2011trivial extensions of maximal symplectic groups on the superspecial K3 surface"
   },
   {
     "consumed_by_exp_id": "",
