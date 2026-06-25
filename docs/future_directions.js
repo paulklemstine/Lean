@@ -240,7 +240,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands Correspondence: GL(1) Case"
   },
   {
-    "consumed_by_exp_id": "4093c9b0",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
       "Physics",
@@ -250,7 +250,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.909349+00:00",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
@@ -1404,7 +1404,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
   {
-    "consumed_by_exp_id": "c053e0c9",
+    "consumed_by_exp_id": "",
     "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
     "domains": [
       "Logic",
@@ -1414,7 +1414,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432759+00:00",
     "title": "Constructive Mathematics: Bishop's Analysis"
   },
@@ -2974,7 +2974,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Binary 2-binomial equivalence class count equals cake number"
   },
   {
-    "consumed_by_exp_id": "7d3eea85",
+    "consumed_by_exp_id": "",
     "description": "The original theorem characterizes $D(k) = \\gcd_{2\\leq q\\leq k+1} \\binom{qk}{k} = 1$ based on the largest prime-power component of $n=k+1$. We propose a generalization: For fixed $k \\geq 2$ and a step size $s \\geq 1$, define $D(k, s) = \\gcd_{j=1}^{\\lfloor (k+1)/s \\rfloor} \\binom{(js)k}{k}$. The conjecture is that $D(k, s) = 1$ if and only if for every prime power $p^a \\parallel n=k+1$, the condition $n/p^a > p^a$ is modified by a factor dependent on $s$, specifically involving the p-adic valuation of $s$.",
     "domains": [
       "Pythagorean",
@@ -2984,7 +2984,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T22:28:01.614691+00:00",
     "title": "Generalization of the Binomial GCD Criterion for Arithmetic Progressions of Upper Indices"
   },
@@ -3136,7 +3136,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equality Cases for Spectral Radius Bound in Signed Graphs"
   },
   {
-    "consumed_by_exp_id": "e4d578ae",
+    "consumed_by_exp_id": "",
     "description": "For every full-dimensional lattice polytope P in Z^n, let Sigma_P be the tropical hypersurface given by the codimension-one skeleton of the normal fan of P, with edge-length weights. The n-fold stable self-intersection Sigma_P \u2229_st ... \u2229_st Sigma_P is a reduced point at the origin if and only if P is a unimodular simplex, equivalently if and only if the normalized lattice volume n! vol(P) is equal to 1.",
     "domains": [
       "Geometry",
@@ -3146,7 +3146,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24339v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T02:18:16.655288+00:00",
     "title": "Unmixed Reduced Tropical Bernstein Criterion"
   },
@@ -3179,7 +3179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exactevaluation of the vector-space Erd\u0151s Matching number m_q(n,k,s)"
   },
   {
-    "consumed_by_exp_id": "97d45a04",
+    "consumed_by_exp_id": "",
     "description": "For every integer k \u2265 1, let t = 2^k. Then the limit c_t = 1/2 + 2^{-2s_2(t)-1}, where s_2(t) is the binary sum-of-digits function. This conjecture asserts that the explicit lower bound provided in the paper is tight for all powers of two.",
     "domains": [
       "Pythagorean"
@@ -3188,7 +3188,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T04:55:09.073513+00:00",
     "title": "Tightness of the lower bound for powers of two in Cusick's sum-of-digits conjecture"
   },
@@ -3247,21 +3247,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-24T07:12:31.058915+00:00",
     "title": "Linear one-set wall-Menger bound for elementary walls"
-  },
-  {
-    "consumed_by_exp_id": "4ab1c862",
-    "description": "For a broad class of cohomological automorphic representations \u03c0 of GL(n), the Betti-Whittaker periods associated with \u03c0 and its contragredient representation \u03c0^\u2228 satisfy a functional equation involving special values of L-functions, generalizing Chen's result without regularity assumptions.",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2409",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23171v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T07:44:52.667456+00:00",
-    "title": "GeneralizedPeriod Relation for Betti-Whittaker Periods and Contragredient Representations of GL(n)"
   },
   {
     "consumed_by_exp_id": "",
@@ -4352,20 +4337,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2491",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.26035v1",
-    "status": "available",
-    "timestamp": "2026-06-25T04:16:08.696484+00:00",
-    "title": "Triangular + second pentagonal + second nonagonal universality"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For any integer parameters \\(a,b,c,d\\) with \\(a,b,c,d\\ge 0\\) and any base \\(q\\) with \\(|q|<1\\), define the rank\u2011four Nahm sum\n\\[\\Phi_{a,b,c,d}(q) \\;:=\\; \\sum_{i,j,k,l\\ge 0}\\frac{q^{\\frac12(i^2+aj^2+bk^2+cl^2)-ij-jk-kl-dj+ek+fl}}{(q;q)_i\\,(q;q)_j\\,(q;q)_k\\,(q;q)_l} .\\]\nThe conjecture asserts that when the coefficient matrix of the quadratic form is positive\u2011definite and the linear terms satisfy a certain balance condition (namely \\(e=\\frac{a+b}{2}\\) and \\(f=\\frac{b+c}{2}\\)), the sum collapses to a simple product of Euler functions:\n\\[\\Phi_{a,b,c,d}(q) \\;=\\; C_{a,b,c,d}\\, q^{\\kappa_{a,b,c,d}}\\,\\frac{J_{m}^{\\,s}}{J_{1}^{\\,t}},\\]\nwhere \\(J_m = (q^m; q^m)_\\infty\\), the exponent \\(\\kappa_{a,b,c,d}\\) and the constants \\(C_{a,b,c,d}, m, s, t\\) are explicit rational functions of \\(a,b,c,d\\). This family contains the four identities proved in the paper as the special cases\n\\((a,b,c,d) = (1,0,0,2), (0,2,2,2), (1,0,0,1), (2,2,2,2)\\).\n\n**Conjecture (Precise Form).** Let \\(A=\\begin{pmatrix}1 & -\\frac12 & 0 & -\\frac12\\\\ -\\frac12 & 1 & -\\frac12 & -\\frac12\\\\ 0 & -\\frac12 & 1 & -\\frac12\\\\ -\\frac12 & -\\frac12 & -\\frac12 & 1\\end{pmatrix}\\). For any integer vector \\(\\mathbf{u}=(u_1,u_2,u_3,u_4)\\) with \\(u_i\\ge 0\\) define\n\\[\\Phi_{\\mathbf{u}}(q) = \\sum_{i,j,k,l\\ge 0} \\frac{q^{\\frac12\\,(i,j,k,l)A(i,j,k,l)^T + \\mathbf{u}\\cdot(i,j,k,l)}}{(q;q)_i (q;q)_j (q;q)_k (q;q)_l}.\\]\nThen\n\\[\\Phi_{\\mathbf{u}}(q) = 2^{\\alpha(\\mathbf{u})}\\, q^{\\beta(\\mathbf{u})}\\, \\frac{J_{2}^{\\, \\gamma(\\mathbf{u})}}{J_{1}^{\\, \\delta(\\mathbf{u})}},\\]\nwhere the integer\u2011valued functions \\(\\alpha,\\beta,\\gamma,\\delta\\) are given by\n\\[\\alpha(\\mathbf{u}) = u_1+u_2+u_3+u_4 - 2,\\quad \\beta(\\mathbf{u}) = -\\frac{\\lVert\\mathbf{u}\\rVert_1}{2},\\]\n\\[\\gamma(\\mathbf{u}) = 6 - \\frac{\\lVert\\mathbf{u}\\rVert_1}{2},\\quad \\delta(\\mathbf{u}) = 6 - \\frac{\\lVert\\mathbf{u}\\rVert_1}{2}.\\]\nIn particular, for \\(\\mathbf{u} = (0,0,0,0)\\) we recover the first identity of Theorem\u202f1, and for \\(\\mathbf{u} = (2,2,2,2)\\) we recover Theorem\u202f2.\n\n**Why this is falsifiable.** The statement gives an explicit closed\u2011form product for each \\(\\Phi_{\\mathbf{u}}\\). One can compute coefficients of the series expansion of both sides for any concrete \\(\\mathbf{u}\\) (e.g., using SageMath or Mathematica) and check equality up to a high order in \\(q\\). A single counter\u2011example disproves the conjecture.\n\n**Domain**: Number Theory (q\u2011series, modular forms) and Combinatorics.\n\n**Catalog references**: [Cao\u2011Wang 2025, Conjecture\u202f3.2], [Cao\u2011Wang 2025, Conjecture\u202f3.4], [Andrews\u2011Berndt 2005, q\u2011series identities].\n\n**Domain bridges**: Connects the theory of Nahm sums (modular q\u2011hypergeometric series) with the classical theory of theta functions and Euler products.\n\n**Ambition level**: \"extension\" \u2013 it extends the proven four identities to an infinite family.\n\n**Proof strategy**: Use the Bailey\u2011pair / Bailey\u2011chain machinery to transform the multi\u2011sum into a product. The quadratic form matrix \\(A\\) is unimodular, enabling a change of variables that separates the sum",
     "domains": [
       "Pythagorean",
@@ -4395,11 +4366,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2494",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-25T04:16:08.696484+00:00",
+    "title": "Triangular + second pentagonal + second nonagonal universality"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "If a quadratic polynomial $f = x^2 + c$ over $\\mathbb{Q}(i)$ has an irreducible second iterate $f^2$ in $\\mathbb{Q}(i)[x]$, then all subsequent iterates $f^n$ remain irreducible over $\\mathbb{Q}(i)[x]$ for every $n \\geq 1$.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2493",
+    "id": "fd_2495",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4623,7 +4608,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Modular Signatures of Formal Proof Difficulty"
   },
   {
-    "consumed_by_exp_id": "051409ce",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: The tropicalization of the n-qubit stabilizer state variety in the Grassmannian Gr(2^n, 2^n) yields a balanced polyhedral fan of dimension n(n+1)/2 whose maximal cones are in bijection with Clifford group orbits, and the tropical Pl\u00fccker relations restrict to the monogamy of entanglement inequalities (e.g., Coffman-Kundu-Wootters) on each cone. Test: For n=3,4, compute the tropical variety using numerical tropical algebraic geometry (e.g., via polymake or gfan) and verify: (1) cone count matches known Clifford orbit counts (1075 for n=3), (2) each cone's defining inequalities match the facet description of the corresponding entanglement polytope, (3) the tropical Hopf algebra structure induced by the stabilizer formalism's coalgebra yields a tropical quantum group classifying SLOCC classes. Impact: Establishes tropical geometry as a complete combinatorial invariant for stabilizer entanglement, provides polytime algorithms for entanglement classification via tropical membership tests, and constructs tropical quantum groups as new algebraic structures for quantum information.",
     "domains": [
       "Tropical",
@@ -4633,7 +4618,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7156190476190477,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:46:38.144414+00:00",
     "title": "Tropical Geometry of Stabilizer States: Entanglement Classification via Polyhedr"
   },

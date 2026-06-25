@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4ab1c862",
     "filename": "generalizedperiod_relation_for_betti_whittaker_per.json",
     "pkg_num": 52,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5380114482758622,
     "title": "Regularity-Free Functional Equation for Betti\u2013Whittaker Periods and Contragredients of GL(n)"
   },
   {
@@ -1517,8 +1517,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "generalizedperiod_relation_for_betti_whittaker_per",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5380114482758622,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Regularity-Free Functional Equation for Betti\u2013Whittaker Periods and Contragredients of GL(n)"
     }
