@@ -82,8 +82,11 @@ Aether is fully self-managing: it detects its own code changes via mtime watchdo
 | `Aether/` | Core research pipeline — discovery, dispatch, evaluation, integration |
 | `Aether/.aether_workspace/` | Runtime state, logs, and tracked tooling (including git hooks and the archive DB) |
 | `Archive/` | Long-term content-addressable archive of all Aristotle projects (can be split across WSL and external drives) |
-| `Catalog/` | Published research packages (JSON + Lean) + web visualization |
-| `docs/` | GitHub Pages website (synced from `Catalog/Applications/Packages/`) |
+| `Catalog/` | Published research packages (JSON + Lean) + web visualization. **Canonical frontend source.** |
+| `docs/` | GitHub Pages website (synced from `Catalog/Applications/Packages/`). **DO NOT EDIT DIRECTLY.** |
+
+> [!WARNING]
+> The `docs/` folder is automatically synchronized from `Catalog/Applications/Packages/`. If you are making changes to the website frontend (HTML, JS, CSS), you **must** make them in `Catalog/Applications/Packages/` to prevent them from being overwritten during the next Aether tick.
 
 ## Key Files
 
