@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fb5aee47",
     "filename": "brocard_ramanujan_triangular_classification.json",
     "pkg_num": 57,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.30151606086956523,
     "title": "Brocard-Ramanujan Triangular Classification: Factorials Are Almost Never Squares"
   },
   {
@@ -1662,8 +1662,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "brocard_ramanujan_triangular_classification",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.30151606086956523,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Brocard-Ramanujan Triangular Classification: Factorials Are Almost Never Squares"
     }

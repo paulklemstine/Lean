@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3c627a3f",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Code-Threshold Order Valuation over 𝔽₂\n\nDerived from this cycle's findings in `CodeThresholdValuation.lean` and\n`CodeThresholdValuationDeep.lean`. Each conjecture is bold and fal",
-      "quality_score": 0.4785,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-19T06:17:05",
-      "title": "Close Proofs: These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`"
-    },
-    {
       "cycle_id": "f53b6be3",
       "domain": "Physics",
       "key_insight": "# Future Directions\n\nThese build on `Catalog/Physics/JonesBraidNonabelianCertificate.lean`, which\ncertifies that the Jones map transports (non-)commutativity of Temperley–Lieb\ngenerators exactly. Each",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-25T12:39:02",
       "title": "Pólya tree coefficient divisor-sum recurrence"
+    },
+    {
+      "cycle_id": "fb5aee47",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThese are freeform research directions building on the unconditional square\nobstruction for factorials proved in\n`Catalog/NumberTheory/FactorialNotSquare.lean`.\n\n## 1. Bounded com",
+      "quality_score": 0.30151606086956523,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-25T14:46:15",
+      "title": "Brocard-Ramanujan Triangular Classification"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.80372
     }
   ],
-  "last_updated": "2026-06-25T12:39:02",
+  "last_updated": "2026-06-25T14:46:15",
   "open_questions": [
     {
       "context": "",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "1e3d4863",
-        "quality": 0.729932,
-        "theorems": 3,
-        "title": "Whitehead Problem: Independence from ZFC"
-      },
-      {
         "cycle_id": "f0048c68",
         "quality": 0.4162,
         "theorems": 6,
@@ -3637,6 +3631,12 @@
         "quality": 0.4658475833333334,
         "theorems": 20,
         "title": "Minimal Minor-Closed Classes Below 3/2 Have Single Forbidden Minors"
+      },
+      {
+        "cycle_id": "fb5aee47",
+        "quality": 0.30151606086956523,
+        "theorems": 5,
+        "title": "Brocard-Ramanujan Triangular Classification"
       }
     ],
     "NumberTheory": [
