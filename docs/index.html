@@ -26,7 +26,7 @@
     <script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 
-    <link rel="stylesheet" href="style.css?v=0.0.3767">
+    <link rel="stylesheet" href="style.css?v=0.0.3768">
 </head>
 
 <body class="dark-theme">
@@ -40,7 +40,7 @@
         <!-- Sidebar Navigation -->
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2><a href="#" id="home-link">Aether Research</a> <span class="version-badge" id="version-badge">v0.0.3767</span></h2>
+                <h2><a href="#" id="home-link">Aether Research</a> <span class="version-badge" id="version-badge">v0.0.3768</span></h2>
                 <div class="header-controls">
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
                         <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -83,10 +83,16 @@
                         <option value="score-asc">Quality (lowest)</option>
                     </select>
                 </div>
-                <a href="#" class="nav-directions-link" id="nav-directions-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    Future Directions
-                </a>
+                <div class="nav-links-row" style="display: flex; gap: 8px;">
+                    <a href="#" class="nav-directions-link" id="nav-directions-link" style="flex: 1; text-align: center; justify-content: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Directions
+                    </a>
+                    <a href="#" class="nav-directions-link" id="nav-lean-catalog-link" style="flex: 1; text-align: center; justify-content: center; background: rgba(59, 130, 246, 0.1); color: var(--accent-color);">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        Lean 4 Catalog
+                    </a>
+                </div>
                 <ul id="package-list" class="nav-list">
                     <!-- Package links populated by JS -->
                 </ul>
@@ -219,6 +225,23 @@
                 </div>
             </div>
 
+            <!-- Lean 4 Catalog View -->
+            <div class="directions-view hidden" id="lean-catalog-view">
+                <header class="directions-header">
+                    <h1>Lean 4 Proof Catalog</h1>
+                    <p class="directions-subtitle">Central registry of all formalized theorems across the Aether ecosystem</p>
+                    <div class="directions-filters">
+                        <select id="lean-domain-filter">
+                            <option value="">All Domains</option>
+                        </select>
+                        <input type="text" id="lean-search" placeholder="Search theorems or files...">
+                    </div>
+                </header>
+                <div class="lean-catalog-content" id="lean-catalog-content" style="padding: 24px;">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -257,10 +280,11 @@
     <script src="js/theme.js"></script>
     <script src="js/sidebar.js"></script>
     <script src="js/lightbox.js"></script>
-    <script src="js/packages.js?v=0.0.3767"></script>
+    <script src="js/packages.js?v=0.0.3768"></script>
     <script src="js/pyodide-runner.js"></script>
     <script src="js/knowledge-graph.js"></script>
     <script src="js/directions.js"></script>
+    <script src="js/lean_catalog.js"></script>
     <script src="js/notifications.js"></script>
     <script>
     // Cross-module coordination and initialization
@@ -398,15 +422,17 @@
                 const welcomeScreen = document.getElementById('welcome-screen');
                 const packageView = document.getElementById('package-view');
                 const directionsView = document.getElementById('directions-view');
+                const leanCatalogView = document.getElementById('lean-catalog-view');
                 if (welcomeScreen) welcomeScreen.classList.remove('hidden');
                 if (packageView) packageView.classList.add('hidden');
                 if (directionsView) directionsView.classList.add('hidden');
+                if (leanCatalogView) leanCatalogView.classList.add('hidden');
                 if (window.Aether) window.Aether.currentPackage = null;
                 if (window._resetCamera) window._resetCamera();
             });
         }
 
-        // Override loadPackage to also hide directions view
+        // Override loadPackage to also hide directions and lean catalog views
         // Wait until packages.js has defined window.loadPackage
         function wrapLoadPackage() {
             if (typeof window.loadPackage !== 'function') {
@@ -416,6 +442,7 @@
             const orig = window.loadPackage;
             window.loadPackage = function(filename) {
                 if (window.hideDirectionsView) window.hideDirectionsView();
+                if (window.hideLeanCatalogView) window.hideLeanCatalogView();
                 orig(filename);
             };
         }
