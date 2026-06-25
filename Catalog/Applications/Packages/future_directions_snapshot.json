@@ -7352,6 +7352,34 @@
     "title": "Maximum size of cycle-containing families of vectors"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "AFL theorem (Alon–Frankl–Lovász, 1986)",
+      "Pseudorandom hypergraph regularity (Gowers, Rödl‑Schacht)",
+      "LP‑based reduction to strip colourings (paper’s main theorem)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For fixed integers r≥2, t≥2 there exists a constant C(r,t)>0 such that every r‑edge‑colouring of any (C, d)-pseudorandom t‑uniform hypergraph H on n vertices contains a monochromatic matching of size at least (1/(r+t‑1)−o(1))·n. Moreover, this bound is asymptotically best possible: for every ε>0 and all sufficiently large n there is an r‑colouring of a (C, d)-pseudorandom t‑graph with no monochromatic matching larger than (1/(r+t‑1)+ε)·n. The conjecture claims that the classical AFL bound extends from the complete hypergraph K_n^{(t)} to any sufficiently pseudorandom host, without any additional loss beyond the o(1) term.",
+    "domain_bridges": [
+      "Extremal combinatorics ↔ Probabilistic combinatorics",
+      "Hypergraph regularity ↔ Linear programming duality",
+      "Combinatorial optimisation ↔ Formalised matching theory in Lean"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2495",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Formalise the notion of (C,d)-pseudorandom t‑uniform hypergraphs in Lean using edge density and codegree regularity. 2. Encode r‑edge‑colourings and monochromatic matchings as finite sets of edges with disjoint vertex sets. 3. Prove a reduction lemma (as in the paper) that any such colouring can be compressed to an r‑strip colouring with at most o(n) loss in the size of the largest monochromatic matching; this uses hypergraph regularity lemmas already formalised in mathlib and LP duality theorems. 4. Analyse strip colourings: show that for a strip colouring the largest monochromatic matching attains at least (1/(r+t‑1)−δ)n for any δ>0 when n is large, via a simple counting argument on the partition parts. 5. Combine the reduction and the strip analysis to obtain the lower bound. 6. Construct extremal colourings (generalising the known tight examples for K_n^{(t)}) on pseudorandom hosts by embedding a blow‑up of the standard construction, proving the upper bound. 7. Assemble the two ",
+    "research_mode": "team",
+    "source_exp_id": "2606.24863v1",
+    "status": "available",
+    "timestamp": "2026-06-25T05:42:47.292631+00:00",
+    "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "OEIS A287616",
@@ -7368,7 +7396,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2495",
+    "id": "fd_2496",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
@@ -7393,7 +7421,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2496",
+    "id": "fd_2497",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on $n$, leveraging the irreducibility of $f^2$ and a new function measuring 'complexity' in $\\mathbb{Q}(i)$ due to the absence of linear ordering. The base case $n=2$ is given. For the inductive step, analyze the factorization of $f^{n+1} = f^n \\circ f$ using the Galois action on preimages and the tree structure of iterations, adapting techniques from \\cite{evstb} to handle the two-dimensional nature of $\\mathbb{Q}(i)$.",
@@ -7417,7 +7445,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2497",
+    "id": "fd_2498",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Refine the proof of Theorem 1.2(ii) by tracking the exact loss when applying Kahn's small-codegree edge-colouring theorem and the degree‑peeling process, aiming to convert the o(1) term into a uniform additive bound of 4.",
@@ -7426,6 +7454,30 @@
     "status": "available",
     "timestamp": "2026-06-25T05:25:15.555654+00:00",
     "title": "Conjectured additive refinement of the 61/20 lower bound for g(r)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For integers d ≥ 4 and s satisfying ⌈(d+2)/2⌉ ≤ s ≤ d−1, let n be sufficiently large (e.g., n ≥ 2(d+1)). If 𝔽 ⊆ ( [n] choose (d+1) ) is a (d+1)-uniform family such that every F ∈ 𝔽 has a missing trace of size exactly s (i.e., there exists B ⊂ F with |B| = s and for all F' ∈ 𝔽, F ∩ F' ≠ B), then |𝔽| ≤ binom(n−1, d) + binom(n−2(d+1−s)−2, 2s−d−2), and this bound is tight.",
+    "domain_bridges": [
+      "VC-dimension",
+      "Erdos-Ko-Rado"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2499",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use shifting/compression to transform an extremal family into a left‑compressed form while preserving the missing‑trace condition. Analyze the possible traces on a fixed (d+1)-set and apply Kleitman’s theorem on intersecting families to bound the number of sets containing a given subset. Perform an induction on n, considering whether a particular element appears in all sets or not. Show that any family attaining the bound must be isomorphic to the explicit construction: take all (d+1)-sets containing a fixed d‑set, together with all (d+1)-sets that avoid a fixed (2(d+1−s)+2)-set and contain a specific (2s−d−2)-subset of its complement.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24776v1",
+    "status": "available",
+    "timestamp": "2026-06-25T05:43:09.628138+00:00",
+    "title": "Optimality of the constructed family for the uniform witness conjecture in the upper range"
   },
   {
     "ambition_level": "extension",

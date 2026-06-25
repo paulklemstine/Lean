@@ -16460,7 +16460,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16476,7 +16476,7 @@
         "Computation"
       ],
       "id": "fd_0544",
-      "last_attempt_time": "2026-06-25T05:25:20.678097+00:00",
+      "last_attempt_time": "2026-06-11T07:47:34.716203+00:00",
       "last_reviewed_at": "2026-06-09T17:35:09.672546+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -39439,7 +39439,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Diestel2010Book"
       ],
@@ -39460,7 +39460,7 @@
         "Bridges"
       ],
       "id": "fd_2402",
-      "last_attempt_time": "2026-06-25T05:25:40.304606+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem minimal_class_single_forbidden (δ : ℝ) (hδ : δ < 3 / 2) : ∃ (𝒢 : GraphClass) (H : Graph), 𝒢 = excl {H} ∧ minimal_strictly_above_density δ 𝒢",
       "lineage_refs": [],
@@ -43344,7 +43344,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
@@ -43360,7 +43360,7 @@
         "Algebra"
       ],
       "id": "fd_2488",
-      "last_attempt_time": "2026-06-25T05:25:43.923883+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:40:40.605952+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -43633,6 +43633,53 @@
       "title": "Maximum size of cycle-containing families of vectors"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "AFL theorem (Alon–Frankl–Lovász, 1986)",
+        "Pseudorandom hypergraph regularity (Gowers, Rödl‑Schacht)",
+        "LP‑based reduction to strip colourings (paper’s main theorem)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For fixed integers r≥2, t≥2 there exists a constant C(r,t)>0 such that every r‑edge‑colouring of any (C, d)-pseudorandom t‑uniform hypergraph H on n vertices contains a monochromatic matching of size at least (1/(r+t‑1)−o(1))·n. Moreover, this bound is asymptotically best possible: for every ε>0 and all sufficiently large n there is an r‑colouring of a (C, d)-pseudorandom t‑graph with no monochromatic matching larger than (1/(r+t‑1)+ε)·n. The conjecture claims that the classical AFL bound extends from the complete hypergraph K_n^{(t)} to any sufficiently pseudorandom host, without any additional loss beyond the o(1) term.",
+      "domain_bridges": [
+        "Extremal combinatorics ↔ Probabilistic combinatorics",
+        "Hypergraph regularity ↔ Linear programming duality",
+        "Combinatorial optimisation ↔ Formalised matching theory in Lean"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2495",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem asymptotic_AFL_pseudorandom {r t : ℕ} (hr : 2 ≤ r) (ht : 2 ≤ t) {C d : ℝ} (hC : 0 < C) (hd : 0 < d) : ∃ N : ℕ, ∀ (n : ℕ) (hn : N ≤ n), ∀ (H : t_hypergraph_on n) (hH : H.is_pseudorandom C d), ∀ (χ : edge_coloring H r),\n  let M := χ.largest_monochromatic_matching in\n  ( (M.card : ℝ) / n ≥ (1 / (r + t - 1) : ℝ) - 1 / n ) ∧\n  (∀ ε > 0, ∃ (χ' : edge_coloring H r),\n    χ'.largest_monochromatic_matching.card ≤ ((1 / (r + t - 1) : ℝ) + ε) * n) }",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "1. Formalise the notion of (C,d)-pseudorandom t‑uniform hypergraphs in Lean using edge density and codegree regularity. 2. Encode r‑edge‑colourings and monochromatic matchings as finite sets of edges with disjoint vertex sets. 3. Prove a reduction lemma (as in the paper) that any such colouring can be compressed to an r‑strip colouring with at most o(n) loss in the size of the largest monochromatic matching; this uses hypergraph regularity lemmas already formalised in mathlib and LP duality theorems. 4. Analyse strip colourings: show that for a strip colouring the largest monochromatic matching attains at least (1/(r+t‑1)−δ)n for any δ>0 when n is large, via a simple counting argument on the partition parts. 5. Combine the reduction and the strip analysis to obtain the lower bound. 6. Construct extremal colourings (generalising the known tight examples for K_n^{(t)}) on pseudorandom hosts by embedding a blow‑up of the standard construction, proving the upper bound. 7. Assemble the two ",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24863v1",
+      "source_path": "http://arxiv.org/abs/2606.24863v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T05:42:47.292631+00:00",
+      "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -43658,7 +43705,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2495",
+      "id": "fd_2496",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
@@ -43702,7 +43749,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2496",
+      "id": "fd_2497",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
@@ -43745,7 +43792,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2497",
+      "id": "fd_2498",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_g_lower_bound (r : ℕ) (hr : 20 ≤ r) : g r ≥ (61 * r) / 20 - 4 := by sorry",
@@ -43764,6 +43811,49 @@
       "thread_id": "",
       "timestamp": "2026-06-25T05:25:15.555654+00:00",
       "title": "Conjectured additive refinement of the 61/20 lower bound for g(r)"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For integers d ≥ 4 and s satisfying ⌈(d+2)/2⌉ ≤ s ≤ d−1, let n be sufficiently large (e.g., n ≥ 2(d+1)). If 𝔽 ⊆ ( [n] choose (d+1) ) is a (d+1)-uniform family such that every F ∈ 𝔽 has a missing trace of size exactly s (i.e., there exists B ⊂ F with |B| = s and for all F' ∈ 𝔽, F ∩ F' ≠ B), then |𝔽| ≤ binom(n−1, d) + binom(n−2(d+1−s)−2, 2s−d−2), and this bound is tight.",
+      "domain_bridges": [
+        "VC-dimension",
+        "Erdos-Ko-Rado"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2499",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem uniform_witness_upper_bound_optimal {d s n : ℕ} (hd : 4 ≤ d) (hs : ((d + 2) / 2).nat_ceil ≤ s) (hs' : s ≤ d - 1) (hn : n ≥ 2 * (d + 1)) (𝔽 : Finset (Finset ℕ (d + 1))) (hmissing : ∀ (F ∈ 𝔽), ∃ (B ⊆ F), B.card = s ∧ ∀ (F' ∈ 𝔽), F ∩ F' ≠ B) : 𝔽.card ≤ Nat.choose (n - 1) d + Nat.choose (n - 2 * (d + 1 - s) - 2) (2 * s - d - 2) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use shifting/compression to transform an extremal family into a left‑compressed form while preserving the missing‑trace condition. Analyze the possible traces on a fixed (d+1)-set and apply Kleitman’s theorem on intersecting families to bound the number of sets containing a given subset. Perform an induction on n, considering whether a particular element appears in all sets or not. Show that any family attaining the bound must be isomorphic to the explicit construction: take all (d+1)-sets containing a fixed d‑set, together with all (d+1)-sets that avoid a fixed (2(d+1−s)+2)-set and contain a specific (2s−d−2)-subset of its complement.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24776v1",
+      "source_path": "http://arxiv.org/abs/2606.24776v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T05:43:09.628138+00:00",
+      "title": "Optimality of the constructed family for the uniform witness conjecture in the upper range"
     },
     {
       "ambition_level": "extension",
@@ -49421,7 +49511,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -49436,7 +49526,7 @@
         "Combinatorics"
       ],
       "id": "seed_352",
-      "last_attempt_time": "2026-06-25T05:25:48.889348+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -49771,7 +49861,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -49787,7 +49877,7 @@
         "Computation"
       ],
       "id": "seed_361",
-      "last_attempt_time": "2026-06-25T05:25:36.522499+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:27:55.470307+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -49889,7 +49979,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -49906,7 +49996,7 @@
         "Analysis"
       ],
       "id": "seed_364",
-      "last_attempt_time": "2026-06-25T05:25:28.962116+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -50208,7 +50298,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -50225,7 +50315,7 @@
         "Computation"
       ],
       "id": "seed_372",
-      "last_attempt_time": "2026-06-25T05:25:32.578469+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-23T23:10:33.933205+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],

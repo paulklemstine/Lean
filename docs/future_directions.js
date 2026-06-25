@@ -4306,11 +4306,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For fixed integers r\u22652, t\u22652 there exists a constant C(r,t)>0 such that every r\u2011edge\u2011colouring of any (C,\u202fd)-pseudorandom t\u2011uniform hypergraph H on n vertices contains a monochromatic matching of size at least (1/(r+t\u20111)\u2212o(1))\u00b7n. Moreover, this bound is asymptotically best possible: for every \u03b5>0 and all sufficiently large n there is an r\u2011colouring of a (C,\u202fd)-pseudorandom t\u2011graph with no monochromatic matching larger than (1/(r+t\u20111)+\u03b5)\u00b7n. The conjecture claims that the classical AFL bound extends from the complete hypergraph K_n^{(t)} to any sufficiently pseudorandom host, without any additional loss beyond the o(1) term.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2495",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24863v1",
+    "status": "available",
+    "timestamp": "2026-06-25T05:42:47.292631+00:00",
+    "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2495",
+    "id": "fd_2496",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4324,7 +4339,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2496",
+    "id": "fd_2497",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4338,13 +4353,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2497",
+    "id": "fd_2498",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
     "status": "available",
     "timestamp": "2026-06-25T05:25:15.555654+00:00",
     "title": "Conjectured additive refinement of the 61/20 lower bound for g(r)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For integers d \u2265 4 and s satisfying \u2308(d+2)/2\u2309 \u2264 s \u2264 d\u22121, let n be sufficiently large (e.g., n \u2265 2(d+1)). If \ud835\udd3d \u2286 ( [n] choose (d+1) ) is a (d+1)-uniform family such that every F \u2208 \ud835\udd3d has a missing trace of size exactly s (i.e., there exists B \u2282 F with |B| = s and for all F' \u2208 \ud835\udd3d, F \u2229 F' \u2260 B), then |\ud835\udd3d| \u2264 binom(n\u22121, d) + binom(n\u22122(d+1\u2212s)\u22122, 2s\u2212d\u22122), and this bound is tight.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2499",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24776v1",
+    "status": "available",
+    "timestamp": "2026-06-25T05:43:09.628138+00:00",
+    "title": "Optimality of the constructed family for the uniform witness conjecture in the upper range"
   },
   {
     "consumed_by_exp_id": "",
