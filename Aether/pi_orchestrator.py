@@ -760,9 +760,72 @@ class PiAgentOrchestrator:
 
         # Mark job as processed so --reprocess skips it
         processed_marker = job.project_dir / ".processed"
-        processed_marker.write_text(f"quality={proof_quality} score={quality_score:.2f} at {datetime.now(timezone.utc).isoformat()}\n")
+        processed_marker.write_text(f"quality={proof_quality} score={quality_score:.2f} at {datetime.now(timezone.utc).isoformat()}\\n")
+
+        # --- NEW PHASE B LOGIC ---
+        if proof_quality in ("substantial", "partial") and len(files_placed) > 0:
+            print(f"[Process] {exp_id} Scheduling Phase B packaging with Aristotle in the background...")
+            asyncio.create_task(self._run_phase_b(job, files_placed))
 
         print(f"[Process] {exp_id} done. Quality={proof_quality} Score={quality_score:.2f}")
+
+    async def _run_phase_b(self, job: InFlightJob, files_placed: List[str]) -> None:
+        """Phase B: Ask Aristotle to package the Lean 4 files into a JSON research package."""
+        try:
+            phase_b_dir = job.project_dir / "phase_b"
+            phase_b_dir.mkdir(parents=True, exist_ok=True)
+            
+            import shutil
+            # 1. Copy Lean files
+            for f in files_placed:
+                src = Path(f)
+                if src.exists():
+                    shutil.copy2(src, phase_b_dir / src.name)
+            
+            # 2. Add build files
+            catalog_lakefile = self.catalog_root / "lakefile.toml"
+            if catalog_lakefile.exists():
+                shutil.copy2(catalog_lakefile, phase_b_dir / "lakefile.toml")
+            catalog_toolchain = self.catalog_root / "lean-toolchain"
+            if catalog_toolchain.exists():
+                shutil.copy2(catalog_toolchain, phase_b_dir / "lean-toolchain")
+                
+            prompt = (
+                "Phase A research is complete. I have produced self-contained, publishable Lean 4 deliverables "
+                "which are provided in this project. Please perform Phase B: write the ARTICLE.md and "
+                "RESEARCH_PAPER.md explaining the verified mathematics in these files, and bundle everything "
+                "into a valid PACKAGE.json research package (with all schema fields populated: demos, algorithms, "
+                "visualizations, interactive_demos, lean_proofs, future_directions, etc.)."
+            )
+            
+            # 3. Submit and wait
+            print(f"[Phase B] {job.exp_id} submitting Phase B job...")
+            phase_b_result = await self.aristotle.submit_lean_project(
+                prompt=prompt,
+                project_dir=phase_b_dir
+            )
+            
+            if phase_b_result.result_path:
+                print(f"[Phase B] {job.exp_id} complete. Extracting PACKAGE.json...")
+                import tarfile
+                extract_b_dir = phase_b_dir / "result_extracted"
+                extract_b_dir.mkdir(exist_ok=True)
+                with tarfile.open(phase_b_result.result_path, "r:gz") as tar:
+                    tar.extractall(path=extract_b_dir)
+                
+                pkg_jsons = list(extract_b_dir.rglob("PACKAGE.json")) + list(extract_b_dir.rglob("package.json"))
+                if pkg_jsons:
+                    from archive_manager import ArchiveManager
+                    am = ArchiveManager(self.catalog_root.parent / "Archive")
+                    pkg_text = pkg_jsons[0].read_text(encoding="utf-8")
+                    am.store_package(job.exp_id, pkg_text)
+                    print(f"[Phase B] {job.exp_id} PACKAGE.json stored in archive!")
+                else:
+                    print(f"[Phase B] {job.exp_id} finished but no PACKAGE.json found.")
+            else:
+                print(f"[Phase B] {job.exp_id} failed or no result: {phase_b_result.status}")
+        except Exception as e:
+            print(f"[Phase B] {job.exp_id} Error in Phase B: {e}")
 
     # ------------------------------------------------------------------
     # Single cycle (for --single-cycle mode, still uses blocking dispatch)
