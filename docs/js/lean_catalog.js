@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (pkgMeta.domain) domains.add(pkgMeta.domain);
             
             const filename = pkgMeta.filename || (pkgMeta.exp_id + '.package.json');
-            return fetch(`Packages/${filename}`)
+            return fetch(filename)
                 .then(res => res.json())
                 .then(pkg => {
                     if (pkg.lean_proofs && pkg.lean_proofs.length > 0) {
