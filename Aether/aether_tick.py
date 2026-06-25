@@ -1682,11 +1682,11 @@ def rebuild_commit_push() -> bool:
         for sf in state_files:
             sf_path = REPO_ROOT / sf
             if sf_path.exists():
-                subprocess.run(["git", "add", "-f", sf], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+                subprocess.run(["git", "add", "-f", sf], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
 
         diff = subprocess.run(
             ["git", "diff", "--cached", "--quiet"],
-            cwd=str(REPO_ROOT), capture_output=True, timeout=30
+            cwd=str(REPO_ROOT), capture_output=True, timeout=120
         )
         has_local_changes = (diff.returncode != 0)
 
@@ -1712,7 +1712,7 @@ def rebuild_commit_push() -> bool:
         # Stash remaining dirty unstaged/untracked changes to keep working tree clean for merge
         status_res = subprocess.run(
             ["git", "status", "--porcelain"],
-            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=10
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60
         )
         has_unstaged = bool(status_res.stdout.strip())
 
