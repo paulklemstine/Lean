@@ -1,92 +1,199 @@
-# The Numbers That Are Exactly Right
+# The Loyalty Index of Numbers: How Divisors Reveal Perfection
 
-## When Addition Reveals Hidden Architecture
+## A number that adds up to itself
 
-Take the number 6. Write down everything that divides it evenly, not counting 6 itself: 1, 2, 3. Now add them up: 1 + 2 + 3 = 6. You get the number back.
+Pick a number — say $6$. Now list every number that divides it evenly, but
+stop short of $6$ itself: $1$, $2$, and $3$. Add them: $1 + 2 + 3 = 6$. The
+parts reconstitute the whole. The ancient Greeks found this so striking that
+they called such numbers **perfect**.
 
-That is strange. Most numbers don't do this. Try 10: its proper divisors are 1, 2, 5, and they sum to 8 — too few. Try 12: the divisors 1, 2, 3, 4, 6 sum to 16 — too many. But 6 threads the needle perfectly.
+The next perfect number is $28$: its proper divisors $1, 2, 4, 7, 14$ sum to
+$28$. After that comes $496$, then $8128$, and then a yawning gap — the fifth
+perfect number, $33{,}550{,}336$, was not written down until the fifteenth
+century. Perfect numbers are rare, beautiful, and — even after twenty-three
+centuries — still wrapped in unsolved mystery. We do not know whether there
+are infinitely many. We do not know whether a single *odd* one exists.
 
-For at least 2,300 years, mathematicians have been entranced by these *perfect numbers* — positive integers that equal the sum of their proper divisors. The ancient Greeks considered them mystical. St. Augustine wrote that God created the world in six days because six is perfect. And for two millennia, a single question has haunted number theory: can we describe exactly which numbers have this property?
+This article is about the simple, powerful idea that turns these questions from
+mysticism into mathematics: the **abundancy index**. It is a single rational
+number attached to every integer that measures how generous that integer is
+with its divisors — and once you have it, perfect numbers stop being a curiosity
+and become the solution of a clean equation.
 
-The answer, it turns out, is one of the most beautiful theorems in all of mathematics — and it connects prime numbers, powers of two, and a deep structural principle about how multiplication distributes divisor weight across a number's anatomy.
+## From "sum of proper divisors" to one clean ratio
 
-## An Infinite Architecture, Barely Visible
+The Greek definition compares a number to the sum of its *proper* divisors. A
+slicker bookkeeping move is to include the number itself in the sum. Define the
+**sum-of-divisors function** $\sigma(n)$ to be the total of *all* positive
+divisors of $n$, the number itself included:
+$$\sigma(n) = \sum_{d \mid n} d.$$
 
-The next perfect number after 6 is 28: its divisors 1, 2, 4, 7, 14 sum to 28. Then 496. Then 8,128. Then you have to go all the way to 33,550,336 before finding the next one. Perfect numbers are extraordinarily rare — and they grow enormous with frightening speed.
+For example $\sigma(6) = 1 + 2 + 3 + 6 = 12$ and $\sigma(28) = 1+2+4+7+14+28 = 56$.
 
-But look at the pattern:
+Notice that $12 = 2 \times 6$ and $56 = 2 \times 28$. That is not a coincidence:
+a number is perfect exactly when its proper divisors sum to itself, which — once
+you fold the number into the sum — is the same as saying $\sigma(n) = 2n$.
 
-- 6 = 2 × 3
-- 28 = 4 × 7
-- 496 = 16 × 31
-- 8,128 = 64 × 127
+This invites a normalization. Divide $\sigma(n)$ by $n$ to get the **abundancy
+index**:
+$$A(n) = \frac{\sigma(n)}{n}.$$
 
-Each is a power of two times an odd number. And those odd numbers — 3, 7, 31, 127 — are themselves one less than a power of two: 4 − 1, 8 − 1, 32 − 1, 128 − 1. These are the *Mersenne numbers*, named after the 17th-century French monk Marin Mersenne, though Euclid knew about them two thousand years earlier.
+The abundancy index is a kind of *loyalty score* for a number: it asks "relative
+to your own size, how much do your divisors add up to?" With this single ratio,
+the whole vocabulary of antiquity collapses into arithmetic on the number line:
 
-Even more remarkably, those Mersenne numbers are all prime. And the exponents in the powers of two — 2, 3, 5, 7 — are prime too.
+- $A(n) < 2$: the number is **deficient** (its divisors fall short). All primes
+  are deficient — a prime $p$ has $A(p) = (1 + p)/p$, just a hair above $1$.
+- $A(n) = 2$: the number is **perfect**. This is the entire definition.
+- $A(n) > 2$: the number is **abundant** (its divisors overflow). The smallest
+  example is $12$, with $A(12) = 28/12 = 7/3 \approx 2.33$.
 
-## Euclid's Gift, Euler's Completion
+So a **perfect number is precisely a number whose abundancy index equals $2$.**
+Everything interesting about perfection is now a question about where a single
+function lands relative to the value $2$.
 
-Around 300 BCE, Euclid proved the forward direction of what would become one of the great theorems: if 2^p − 1 happens to be prime (which requires p itself to be prime), then 2^(p−1) × (2^p − 1) is perfect.
+## Two rules that govern the index
 
-The proof is elegant. The sum-of-divisors function σ, which adds up all divisors of a number including the number itself, has a remarkable property: it is *multiplicative*. If two numbers share no common factors, then σ of their product equals the product of their individual σ values. It's as if the divisor structure of each piece is completely independent.
+Once you have a quantity like $A(n)$, the natural question is: how does it
+behave? Does it grow predictably? Does it respect multiplication? The heart of
+this work is a pair of structural laws — proved rigorously and independently of
+one another — that pin down exactly how the abundancy index moves.
 
-For powers of 2, there's an exact formula: σ(2^k) = 2^(k+1) − 1 — the next power of two, minus one. And for a prime q, σ(q) = q + 1 — just the prime and 1.
+### Rule 1: Bigger numbers (that contain you) are at least as loyal
 
-Now combine these. If M = 2^p − 1 is prime, then:
+The first law is a **monotonicity** principle:
 
-σ(2^(p−1) × M) = σ(2^(p−1)) × σ(M) = (2^p − 1) × (M + 1) = M × 2^p
+> **If $d$ divides $n$, then $A(d) \le A(n)$. And if $d$ is a *proper*
+> divisor — strictly smaller than $n$ — then $A(d) < A(n)$ strictly.**
 
-And 2 × (2^(p−1) × M) = 2^p × M.
+In words: enlarging a number by absorbing it as a factor of a bigger number can
+only raise its abundancy index, never lower it. Divisors are loyal to their
+multiples.
 
-They're equal. The number is perfect.
+Here is the picture behind the proof, and it is wonderfully concrete. Suppose
+$d$ divides $n$, and write $q = n/d$ for the "stretch factor." Take any divisor
+$e$ of $d$ and multiply it by $q$: the result $e \cdot q$ is automatically a
+divisor of $n$. This little map — "scale every divisor of $d$ by $q$" — sends
+distinct divisors to distinct divisors (if $e_1 q = e_2 q$ then $e_1 = e_2$),
+so it plants a faithful copy of $d$'s divisors inside the divisors of $n$.
 
-But Euclid left the converse wide open. Could there be even perfect numbers with some other shape? It took two thousand years for Leonhard Euler — perhaps the greatest mathematician who ever lived — to prove there couldn't be. Every even perfect number is 2^(p−1) × (2^p − 1) for some prime p where 2^p − 1 is also prime. No exceptions, no loopholes.
+Summing along this copy gives exactly $q \cdot \sigma(d)$, and since these are
+just *some* of $n$'s divisors, that sum cannot exceed the total $\sigma(n)$:
+$$\sigma(d) \cdot \frac{n}{d} \le \sigma(n).$$
 
-## The Engine Under the Hood
+That is the engine of the whole argument — in the formal development it is the
+lemma stating $\sigma(d)\cdot(n/d) \le \sigma(n)$. Cross-multiplying turns it
+into $\sigma(d)\cdot n \le \sigma(n)\cdot d$, which is literally the statement
+$A(d) \le A(n)$ after dividing by $dn$.
 
-What makes this theorem work is not any single clever trick. It's an entire *engine* — a set of interlocking algebraic facts about the divisor-sum function that, once assembled, make the classification inevitable.
+Why is the inequality *strict* when $d < n$? Because then the stretch factor
+$q = n/d$ is at least $2$, and the number $1$ — which is always a divisor of
+$n$ — can never be of the form $e \cdot q$ with $q \ge 2$. So the divisor $1$
+sits in $n$'s divisor list but is missing from our planted copy. One genuine
+term is left over, and a sum of positive numbers with an extra positive term is
+strictly larger. Hence $A(d) < A(n)$.
 
-The engine has four layers:
+This strictness has a striking consequence for perfection. A perfect number sits
+exactly at $A(n) = 2$. If $d$ is any proper divisor of a perfect number, then
+$A(d) < 2$, so $d$ is strictly deficient. And if a perfect number $n$ properly
+divided some larger $m$, then $A(m) > A(n) = 2$, so $m$ would be abundant. In
+other words: **no perfect number can divide another.** Perfect numbers are, in
+this precise sense, incompressible — they never nest.
 
-**Layer 1: Local formulas.** For any prime p and exponent k, the divisor sum of p^k is exactly 1 + p + p² + ⋯ + p^k, a geometric series. This gives a closed form: (p−1) × σ(p^k) = p^(k+1) − 1. For p = 2, this simplifies beautifully: σ(2^k) = 2^(k+1) − 1.
+### Rule 2: Coprime pieces multiply
 
-**Layer 2: Multiplicativity.** The divisor sum is multiplicative over coprime factors: σ(ab) = σ(a) × σ(b) whenever gcd(a, b) = 1. This means the divisor structure of a number decomposes cleanly along its prime factorization.
+The second law concerns how the index interacts with multiplication. It does not
+behave well for *all* products — but it behaves perfectly for **coprime** ones
+(numbers sharing no common prime factor):
 
-**Layer 3: The abundancy index.** Define I(n) = σ(n)/n — the ratio of a number's divisor sum to the number itself. Perfect numbers are exactly those with I(n) = 2. Because σ is multiplicative, so is the abundancy index: I(ab) = I(a) × I(b) for coprime a, b. This transforms the equation σ(n) = 2n from additive arithmetic into a multiplicative constraint on a product of local factors.
+> **If $m$ and $n$ share no common factor, then**
+> $$A(m \cdot n) = A(m) \cdot A(n).$$
 
-**Layer 4: Rigidity.** Once you write n = 2^k × m with m odd and demand I(n) = 2, the multiplicative decomposition forces I(m) to equal a very specific rational number. This, in turn, forces m to be prime and equal to 2^(k+1) − 1. There is zero room for deviation.
+For example $A(12) = A(4) \cdot A(3)$ because $4 = 2^2$ and $3$ share nothing:
+$A(4) = 7/4$, $A(3) = 4/3$, and indeed $7/4 \cdot 4/3 = 7/3 = A(12)$. Try it
+with $A(45) = A(9)\cdot A(5)$: $A(9) = 13/9$, $A(5) = 6/5$, product $78/45 =
+26/15 = A(45)$. It always works, as long as the pieces are coprime.
 
-## The Odd Perfect Mystery
+The reason is that the divisors of a coprime product $m \cdot n$ are exactly the
+products $a \cdot b$ where $a$ runs over the divisors of $m$ and $b$ over those
+of $n$, each pairing occurring once. The sum-of-divisors function therefore
+factors, $\sigma(mn) = \sigma(m)\sigma(n)$, and dividing by $mn = m \cdot n$
+splits cleanly into $A(m) \cdot A(n)$.
 
-The Euclid-Euler theorem completely classifies the *even* perfect numbers. But what about odd ones?
+Crucially, this multiplicativity is established *on its own footing*, directly
+from the multiplicative structure of $\sigma$ — not by smuggling in the
+monotonicity argument, and not the other way around. The two laws are proved as
+genuinely independent pillars. That matters because it is exactly the kind of
+hidden circular reasoning ("A because B, and B because A") that a careful
+foundation must avoid.
 
-No one has ever found an odd perfect number. No one has proved they don't exist. This is one of the oldest open problems in mathematics — older than calculus, older than the printing press, arguably older than algebra itself.
+## Why these two rules are the right tools
 
-What we do know constrains them savagely. An odd perfect number cannot be a prime power — the proof is a direct computation showing that no prime-power divisor sum can hit the perfectness condition exactly. More strongly, any odd perfect number must have at least two distinct prime factors. (If it had only one, it would be a prime power, which we've ruled out.)
+Together, monotonicity and multiplicativity turn the abundancy index into a
+*calculator* for abundance. Every whole number factors uniquely into prime
+powers $p_1^{a_1} p_2^{a_2}\cdots$, and those prime-power blocks are automatically
+coprime. So multiplicativity lets you compute $A(n)$ one prime at a time and
+multiply the answers:
+$$A\bigl(p_1^{a_1}\cdots p_k^{a_k}\bigr) = A(p_1^{a_1})\cdots A(p_k^{a_k}).$$
 
-And the constraints go far deeper. Euler himself showed that an odd perfect number, if it exists, must have a very specific shape: one of its prime-power factors must have an odd exponent, and the prime must be congruent to 1 modulo 4. The rest must be perfect squares.
+For a single prime power, the geometric series gives a clean closed form,
+$$A(p^a) = \frac{1 + p + p^2 + \cdots + p^a}{p^a} = \frac{p^{a+1}-1}{p^a(p-1)},$$
+which is always strictly less than $\dfrac{p}{p-1}$. So each prime $p$ can push a
+number's abundancy index up by a factor of at most $p/(p-1)$: the prime $2$
+contributes up to $2$, the prime $3$ up to $3/2$, the prime $5$ up to $5/4$, and
+so on, with the leverage of large primes fading fast.
 
-Modern computational work has pushed the bound to staggering heights. Pascal Ochem and Michaël Rao showed that any odd perfect number must exceed 10^1500. Kevin Hare, Carl Pomerance, and others proved it must have at least 101 prime factors counted with multiplicity. The abundancy index framework explains *why* these bounds work: each prime factor contributes a local factor to I(n), and the constraint I(n) = 2 means you need enough "room" in the product — small primes contribute factors close to their limit of p/(p−1), and large primes barely move the needle at all.
+This is the lever that constrains perfect numbers. To reach $A(n) = 2$ you need
+your primes to supply, multiplicatively, a total of exactly $2$. Small primes
+are powerful; the prime $2$ alone can almost get you there. Large primes are
+nearly useless — a prime in the millions barely nudges the index above $1$. This
+is the quantitative reason perfect numbers are dominated by powers of $2$, and
+the reason any hypothetical *odd* perfect number — barred from using the prime
+$2$ at all — would need to assemble its abundancy from a vast crowd of small odd
+primes. That intuition is exactly what powers the famous results bounding odd
+perfect numbers: Sylvester showed in 1888 that an odd perfect number must have at
+least three distinct prime factors, and modern work (Nielsen, 2015) has pushed
+that to at least $101$. Each such bound is, at bottom, a careful accounting of
+how much abundancy a fixed set of primes can manufacture — precisely the
+arithmetic that monotonicity and multiplicativity govern.
 
-## The Deeper Pattern
+## The classical payoff: Euclid and Euler
 
-What makes perfect numbers fascinating is not just the classification theorem. It's what the proof *method* reveals.
+The abundancy framework also illuminates the one place where perfect numbers are
+*completely* understood: the even case. Over two millennia, two giants closed the
+book on even perfect numbers.
 
-The abundancy index I(n) = σ(n)/n is a *scale-free* measure of divisor density. It doesn't care how big n is — it measures the ratio of a number's total divisor mass to the number itself. For every prime power p^k, this ratio is (1 + 1/p + 1/p² + ⋯ + 1/p^k), which approaches p/(p−1) as k grows.
+Euclid noticed that whenever $2^p - 1$ is a prime (a so-called **Mersenne
+prime**), the number $2^{p-1}(2^p - 1)$ is perfect. You can see why through the
+index: the two factors $2^{p-1}$ and the prime $2^p-1$ are coprime, so
+$$A\bigl(2^{p-1}(2^p-1)\bigr) = A(2^{p-1}) \cdot A(2^p-1) = \frac{2^p - 1}{2^{p-1}} \cdot \frac{2^p}{2^p-1} = 2.$$
+The Mersenne prime is engineered precisely so its single extra factor of
+$2^p/(2^p-1)$ cancels the small deficit $\,(2^p-1)/2^{p-1}\,$ of the power of two,
+landing the product exactly on $2$. With $p = 2$ this gives $6$; with $p=3$,
+$28$; with $p = 5$, $496$.
 
-This transforms number theory into optimization. Asking "is there an odd perfect number?" becomes: "can you find a set of odd prime powers whose abundancy factors multiply to exactly 2?" Each factor I(p^k) is strictly between 1 and p/(p−1), and the limit p/(p−1) for the smallest odd prime p = 3 is only 3/2. So you need the product of several such factors to reach 2, and you need them from enough different primes.
+Two thousand years later, Euler proved the converse: *every* even perfect number
+arises this way. So the even perfect numbers are in exact, one-to-one
+correspondence with the Mersenne primes — a result now called the **Euclid–Euler
+theorem**. To this day only about fifty Mersenne primes are known, each one
+hunted down by enormous distributed computations, and each one minting a fresh
+perfect number of staggering size.
 
-It's a kind of mathematical puzzle akin to packing: you're trying to assemble the number 2 as a product of rational factors, each drawn from a geometric series defined by a prime. The constraints are tight, the tolerance is zero, and the search space is infinite.
+## What perfection teaches us
 
-## A Living Frontier
+There is a lesson here that reaches beyond perfect numbers. A vague, almost
+poetic idea — "a number equal to the sum of its parts" — became tractable the
+moment it was attached to a *quantity*, the abundancy index $A(n) = \sigma(n)/n$.
+Once you can measure something, you can ask how the measurement behaves; and the
+two behaviors that matter most, **monotonicity under divisibility** and
+**multiplicativity over coprime factors**, are exactly the structural laws proved
+here. Monotonicity tells us perfect numbers are incompressible and that their
+proper divisors are all deficient. Multiplicativity reduces every abundancy
+question to a calculation prime by prime, where each prime contributes a precise,
+bounded amount of "abundance."
 
-Today, the largest known perfect number has over 82 million digits. It was discovered in 2024, corresponding to the Mersenne prime 2^136,279,841 − 1 found by the Great Internet Mersenne Prime Search. Each new Mersenne prime automatically yields a new perfect number via Euclid's 2,300-year-old construction.
-
-Whether an odd perfect number exists remains one of the great unsolved questions in mathematics. The answer is almost certainly no — the constraints are so severe that it strains credulity to imagine any number threading all of them simultaneously. But "almost certainly" is not a proof.
-
-What we can say is this: the quest to understand perfect numbers has generated an entire ecology of mathematical ideas. Multiplicative functions, geometric series identities, coprime decompositions, rational optimization — all of these emerged, in part, from trying to understand which numbers are "exactly right."
-
-Six, the number of days in the creation story. Twenty-eight, the length of a lunar cycle. Whether by cosmic coincidence or deep structural necessity, the perfect numbers continue to stand as monuments to the strange, precise beauty of arithmetic — numbers that carry exactly enough weight to balance themselves, no more and no less.
-
-The real breakthrough isn't finding the next perfect number. It's understanding the *architecture* — the multiplicative geometry of divisor mass — that makes perfectness possible. That architecture is now fully characterized for even numbers, rigorously constrained for odd ones, and waiting for the mathematician who will finally close the oldest open problem in mathematics.
+The Greeks thought $6$ and $28$ were perfect because the universe favored them.
+We now know something better: they are perfect because their divisors balance an
+equation, and the scales that weigh that balance obey laws we can prove. The
+mystery of whether an odd perfect number exists remains open — but every step
+toward it is taken with these same two rules in hand.
