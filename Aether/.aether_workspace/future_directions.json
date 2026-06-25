@@ -43510,52 +43510,6 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [
-        "OEIS A287616",
-        "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
-        "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
-      "domain_bridges": [
-        "polygonal numbers to constrained representations by diagonal ternary quadratic forms",
-        "elementary Nat arithmetic to integral quadratic forms with congruence side conditions",
-        "computer-assisted finite descent certificates to Lean 4 formalization"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Bridges"
-      ],
-      "id": "fd_2491",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8,
-      "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.26035v1",
-      "source_path": "http://arxiv.org/abs/2606.26035v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-25T04:16:08.696484+00:00",
-      "title": "Triangular + second pentagonal + second nonagonal universality"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
       "catalog_references": [],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
@@ -43596,8 +43550,14 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+<<<<<<< Updated upstream
         "Youngs (1996)",
         "Circular Chromatic Number Gap Theorems"
+=======
+        "OEIS A287616",
+        "Zhi-Wei Sun's catalog of universal sums of polygonal-type quadratic polynomials",
+        "Mathlib formalization targets for Nat-valued quadratic polynomial universality"
+>>>>>>> Stashed changes
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
@@ -43605,6 +43565,7 @@
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
+<<<<<<< Updated upstream
       "description": "Formalize the theorem stating that for any graph G that is a quadrangulation of the projective plane, the circular chromatic number χ_c(G) cannot lie in the open interval (2, 4). Specifically, if χ_c(G) > 2, then χ_c(G) ≥ 4.",
       "domain_bridges": [
         "topological_graph_theory",
@@ -43654,6 +43615,13 @@
       "domain_bridges": [
         "Algebraic Number Theory",
         "Polynomial Dynamics"
+=======
+      "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
+      "domain_bridges": [
+        "polygonal numbers to constrained representations by diagonal ternary quadratic forms",
+        "elementary Nat arithmetic to integral quadratic forms with congruence side conditions",
+        "computer-assisted finite descent certificates to Lean 4 formalization"
+>>>>>>> Stashed changes
       ],
       "domain_quality_penalty": 0.0,
       "domains": [
@@ -43662,22 +43630,90 @@
       "id": "fd_2493",
       "last_attempt_time": "",
       "last_reviewed_at": "",
+<<<<<<< Updated upstream
       "lean_theorem_stub": "theorem stable_iterates_Qi (c : ℚ(i)) (hc : irreducible (polynomial.iterate (polynomial.x² + c) 2)) : ∀ n ≥ 1, irreducible (polynomial.iterate (polynomial.x² + c) n)",
+=======
+      "lean_theorem_stub": "import Mathlib.Data.Nat.Basic\n\nnamespace PolygonalConjectures\n\ndef tri (x : ℕ) : ℕ := x * (x + 1) / 2\n\ndef secondPentagonal (y : ℕ) : ℕ := y * (3 * y + 1) / 2\n\ndef secondNonagonal (z : ℕ) : ℕ := z * (7 * z + 1) / 2\n\n/-- Conjecture: every natural number is a sum of a triangular number,\n    a second pentagonal number, and a second nonagonal number. -/\ntheorem tri_pentagonal_nonagonal_universal :\n    ∀ n : ℕ, ∃ x y z : ℕ,\n      n = tri x + secondPentagonal y + secondNonagonal z := by\n  sorry\n\nend PolygonalConjectures",
+>>>>>>> Stashed changes
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
+<<<<<<< Updated upstream
       "proof_strategy": "Proceed by induction on $n$, leveraging the irreducibility of $f^2$ and a new function measuring 'complexity' in $\\mathbb{Q}(i)$ due to the absence of linear ordering. The base case $n=2$ is given. For the inductive step, analyze the factorization of $f^{n+1} = f^n \\circ f$ using the Galois action on preimages and the tree structure of iterations, adapting techniques from \\cite{evstb} to handle the two-dimensional nature of $\\mathbb{Q}(i)$.",
+=======
+      "proof_strategy": "Use the same square-completion reduction as in the paper. The identities 8*T(x)+1=(2*x+1)^2, 24*P(y)+1=(6*y+1)^2, and 56*N(z)+1=(14*z+1)^2 transform the conjecture into: every m = 168*n + 31 is represented by Q(u,v,w)=21*u^2 + 7*v^2 + 3*w^2 with u odd, v ≡ 1 mod 6, and w ≡ 1 mod 14. A proof should first establish a primitive local-global seed for Q on the congruence class 31 mod 168, then construct rational similarities of Q giving a terminating descent to the required congruence class, with any residual finite cone discharged by exact rational/integer certificates analogous to those in the paper.",
+>>>>>>> Stashed changes
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
+<<<<<<< Updated upstream
       "source_exp_id": "2606.25250v1",
       "source_path": "http://arxiv.org/abs/2606.25250v1",
       "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T04:59:16.364433+00:00",
       "title": "Irreducibility of Iterates for Quadratic Polynomials over $\\mathbb{Q}(i)$"
+=======
+      "source_exp_id": "2606.26035v1",
+      "source_path": "http://arxiv.org/abs/2606.26035v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T04:16:08.696484+00:00",
+      "title": "Triangular + second pentagonal + second nonagonal universality"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Brown--Erdos--Sos conjecture for sparse local configurations",
+        "Ruzsa--Szemeredi (6,3)-theorem as the k=3,r=3 case",
+        "Keevash--Long large-uniformity Brown--Erdos--Sos theorem",
+        "mathlib: Data.Finset.Card",
+        "mathlib: Data.Fintype.Card",
+        "mathlib: Combinatorics.SimpleGraph.Basic"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every fixed r >= 3 and k >= 3, every linear r-uniform hypergraph H on n vertices with no collection of k edges spanning at most (r - 2)k + 3 vertices has o(n^2) edges. Equivalently: for every rational epsilon > 0 there is N such that for all n >= N, if H is linear and r-uniform on Fin n and every k-edge subfamily spans more than (r - 2)k + 3 vertices, then |E(H)| <= epsilon n^2. This would replace the paper's positive constant-density forcing threshold by the conjectural Brown--Erdos--Sos vanishing threshold in the linear setting.",
+      "domain_bridges": [
+        "Represent a finite r-uniform hypergraph on n vertices as Finset (Finset (Fin n)).",
+        "Express linearity by pairwise edge intersections having cardinality at most 1.",
+        "Express a forbidden ((r-2)k+3,k)-configuration by quantifying over k-cardinality Finsets of edges and bounding the cardinality of their Finset.biUnion.",
+        "Encode the asymptotic o(n^2) statement using rational epsilon-N quantifiers, avoiding real analysis if desired."
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2494",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Finset.Card\nimport Mathlib.Data.Rat.Basic\n\nopen Finset\n\n/-- `IsLinearUniform H r` means every edge of `H` has size `r`, and any two\n    distinct edges of `H` intersect in at most one vertex. -/\ndef IsLinearUniform {n : ℕ} (H : Finset (Finset (Fin n))) (r : ℕ) : Prop :=\n  (∀ e ∈ H, e.card = r) ∧\n  (∀ e ∈ H, ∀ f ∈ H, e ≠ f → (e ∩ f).card ≤ 1)\n\n/-- The linear Brown--Erdos--Sos conjecture at span threshold `(r - 2) * k + 3`. -/\ntheorem linear_BES_o_quadratic_conjecture\n    (r k : ℕ) (hr : 3 ≤ r) (hk : 3 ≤ k) :\n    ∀ ε : ℚ, 0 < ε → ∃ N : ℕ, ∀ n : ℕ, N ≤ n →\n      ∀ H : Finset (Finset (Fin n)),\n        IsLinearUniform H r →\n        (∀ F : Finset (Finset (Fin n)),\n          F ⊆ H → F.card = k →\n          (F.biUnion id).card > (r - 2) * k + 3) →\n        (H.card : ℚ) ≤ ε * (n : ℚ) ^ 2 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "A plausible route is to formalize the local averaging inequality from the paper as a reusable finite lemma, then combine it with iterative density increment or hypergraph removal-type arguments specialized to linear r-uniform systems. For r=3,k=3 this should connect to the Ruzsa--Szemeredi theorem; for general k one would seek a Lean-formalizable induction on k tracking the number of pairwise edge intersections inside small edge subfamilies. The conjecture is falsifiable by any explicit infinite-density family of linear r-uniform hypergraphs avoiding k edges on at most (r-2)k+3 vertices.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25931v1",
+      "source_path": "http://arxiv.org/abs/2606.25931v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-25T05:03:22.712435+00:00",
+      "title": "Linear Brown--Erdos--Sos o(n^2) conjecture at the paper's span threshold"
+>>>>>>> Stashed changes
     },
     {
       "ambition_level": "extension",
