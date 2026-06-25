@@ -1,198 +1,99 @@
-# Counting Dots: How a Triangle Hides Inside a Factorial
+# The Factorials That Almost Became Squares
 
-## A puzzle that looks easy and isn't
+## A number that refuses to be a perfect square
 
-Some of the most stubborn problems in mathematics can be stated to a curious
-child. Here is one of them.
+Start multiplying. $1$, then $1 \times 2 = 2$, then $2 \times 3 = 6$, then $6 \times 4 = 24$, then $24 \times 5 = 120$. These are the **factorials**, written $n!$ — the product of every whole number from $1$ up to $n$. They are the engine room of counting: $n!$ is exactly the number of ways to shuffle a deck of $n$ distinct cards. By the time you reach $13!$ you have passed six billion, and the numbers keep galloping off toward infinity.
 
-Take a whole number $n$, and form its **factorial**
-$$n! = 1 \cdot 2 \cdot 3 \cdots n,$$
-the product of all the whole numbers up to $n$. Now add $1$. The question is
-disarmingly simple:
+Now ask a deceptively simple question. Among all these factorials, how many are **perfect squares** — numbers like $1, 4, 9, 16, 25, 36$ that are some whole number multiplied by itself?
 
-> When is $n! + 1$ a perfect square?
+The first two factorials cheat their way in. We define $0! = 1$ (the empty product), and $1! = 1$, and $1 = 1^2$ is a square. After that, the door slams shut. $2! = 2$ is not a square. $6$, $24$, $120$, $720$ — none of them. And it is not a coincidence, nor a stroke of luck that runs out at some huge value you'd need a supercomputer to find. The result is total and forever:
 
-A perfect square is a number like $1, 4, 9, 16, 25, \dots$ — a number that is
-some integer multiplied by itself. So we are hunting for whole numbers $n$ and
-$m$ with
-$$n! + 1 = m^2.$$
+> **The factorial $n!$ is a perfect square if and only if $n \le 1$.**
 
-Let us try a few values. For $n = 4$ we get $4! + 1 = 24 + 1 = 25 = 5^2$. A hit!
-For $n = 5$ we get $5! + 1 = 120 + 1 = 121 = 11^2$. Another hit. Press on, and
-the trail goes cold until $n = 7$, where $7! + 1 = 5040 + 1 = 5041 = 71^2$. A
-third hit.
+That single, clean sentence is the heart of this story. It is the kind of statement that sounds like it might require a deep and delicate argument, or worse, an infinite amount of checking. In fact it follows from one of the most charming ideas in number theory — a theorem with a bet attached to its name.
 
-And then... nothing. People have checked, by computer, every $n$ up to numbers
-with more than a billion digits. Not a single new solution has turned up. The
-three solutions
-$$(n, m) = (4, 5), \quad (5, 11), \quad (7, 71)$$
-seem to be the whole story. The values $n = 4, 5, 7$ are called the **Brown
-numbers**, and the equation $n! + 1 = m^2$ is **Brocard's problem**, posed by
-Henri Brocard in 1876 and independently raised by the legendary Srinivasa
-Ramanujan in 1913.
+## Bertrand's bet
 
-To this day, *nobody knows how to prove* that there are no other solutions. It is
-one of those rare problems that is easy to state, almost certainly has a simple
-answer ("just those three"), and yet resists every attempt at a proof. The aim
-of this article is not to claim a solution — that would be a sensation — but to
-show you a beautiful way of *re-seeing* the problem through the geometry of dots
-arranged in triangles.
+In 1845 the French mathematician Joseph Bertrand made a conjecture and checked it by hand up to three million: between any whole number and its double, there is always a prime. More precisely, for every $n \ge 1$ there exists a prime $p$ with $n < p \le 2n$. Pafnuty Chebyshev proved it a few years later, and it has been called **Bertrand's postulate** ever since, though "postulate" undersells it — it is a theorem.
 
-## Triangles made of dots
+It is easy to state and easy to test: between $10$ and $20$ sits the prime $11$ (and $13$, $17$, $19$). Between $100$ and $200$ there are plenty. The primes, scattered though they seem, never leave a gap as wide as a doubling.
 
-Long before algebra, the Pythagoreans drew numbers as patterns of pebbles. Stack
-pebbles in rows of $1, 2, 3, \dots, y$ and you get a triangle. The total number
-of pebbles is the **$y$-th triangular number**:
-$$T_y = 1 + 2 + 3 + \cdots + y = \frac{y(y+1)}{2}.$$
+We will use a mirror-image version of the same fact. For any $n \ge 2$ there is always a prime $p$ sitting in the *upper half* of the range up to $n$:
+$$\frac{n}{2} < p \le n.$$
+For $n = 10$ that prime could be $7$; for $n = 24$ it could be $13$; for $n = 100$ it could be $53$. Such a prime is big — more than half of $n$ — but still no larger than $n$ itself. That double-sided squeeze, $n/2 < p \le n$ (equivalently $p \le n < 2p$), is exactly the lever we need.
 
-The first few are
-$$T_0 = 0,\quad T_1 = 1,\quad T_2 = 3,\quad T_3 = 6,\quad T_4 = 10,\quad T_5 = 15,\quad \dots$$
-Picture $T_4 = 10$: a row of $4$, then $3$, then $2$, then $1$ — the classic
-ten-pin bowling rack. These are among the oldest "shapes" in mathematics, the
-two-dimensional cousins of the square numbers.
+## Why a single big prime breaks the square
 
-Triangular and square numbers have a famous, ancient relationship. If you take a
-triangular number, multiply it by $8$, and add $1$, you *always* get a perfect
-square:
-$$8 T_y + 1 = (2y + 1)^2.$$
+Here is the idea that makes everything click. A perfect square has a beautifully rigid internal structure. If you break any square into its prime building blocks — its prime factorization — every single prime must appear an **even** number of times. Think of $36 = 2^2 \cdot 3^2$ or $900 = 2^2 \cdot 3^2 \cdot 5^2$: twos in pairs, threes in pairs, fives in pairs. That is what "being a square" *means* at the atomic level. To split a number into two identical halves, each prime's supply has to divide evenly in two.
 
-Try it. With $y = 3$: $8 \cdot 6 + 1 = 49 = 7^2$, and indeed $2 \cdot 3 + 1 = 7$.
-With $y = 5$: $8 \cdot 15 + 1 = 121 = 11^2$, and $2 \cdot 5 + 1 = 11$. This is not
-a coincidence; it is an identity, true for every $y$, and it is the secret engine
-of everything that follows. Geometrically, eight copies of a triangle, plus a
-single extra dot in the centre, reassemble exactly into a square of odd side.
+So to prove $n!$ is *not* a square, we only need to find **one** prime that divides it an **odd** number of times. One misfit prime poisons the whole well.
 
-What is remarkable is that this works *in reverse* too. The number $8T_y + 1$ is
-not just *some* square — the construction can be run backwards to give a complete
-test:
+That misfit is exactly the Bertrand prime $p$ with $n/2 < p \le n$. Let's count how many times $p$ divides $n!$. Remember that $n! = 1 \times 2 \times \cdots \times n$. Which of these factors contribute a copy of $p$? Only the multiples of $p$. The first multiple of $p$ is $p$ itself, and since $p \le n$, it is in the product — good, that's one copy. But the *next* multiple of $p$ is $2p$, and our prime satisfies $2p > n$. So $2p$ is too big to appear in the product at all. There is exactly **one** multiple of $p$ among $1, 2, \dots, n$, and (because $p$ is prime and large) it carries exactly **one** factor of $p$.
 
-> **A whole number $t$ is triangular if and only if $8t + 1$ is a perfect
-> square.**
+Conclusion: the prime $p$ divides $n!$ precisely **once**. One is odd. A square needs every exponent even. Therefore $n!$ cannot be a square. The argument is airtight for every $n \ge 2$, all the way to infinity, in a single stroke — no computer search required.
 
-So triangularity, a geometric property about stacking pebbles, is detected by a
-single arithmetic test: multiply by eight, add one, and ask "is this a square?"
-This is the kind of clean, two-way street — geometry on one side, arithmetic on
-the other — that mathematicians treasure.
+There is a classical bookkeeping tool lurking here, **Legendre's formula**, which says the exact number of times a prime $p$ divides $n!$ is
+$$\left\lfloor \frac{n}{p} \right\rfloor + \left\lfloor \frac{n}{p^2} \right\rfloor + \left\lfloor \frac{n}{p^3} \right\rfloor + \cdots,$$
+where $\lfloor x \rfloor$ means "round down." For our big prime, $\lfloor n/p \rfloor = 1$ (there's one multiple of $p$) and every later term is $0$ (since $p^2 > n$). The formula returns exactly $1$, confirming the count.
 
-## The bridge to Brocard
+## Triangles enter the picture
 
-Here is where the two stories collide. Brocard's problem asks when $n! + 1$ is a
-square. The triangular test says $8t + 1$ is a square exactly when $t$ is
-triangular. These look like the same shape of question — and they are.
+Squares are not the only special shapes numbers can take. The **triangular numbers** $1, 3, 6, 10, 15, 21, \dots$ count how many bowling pins, billiard balls, or cannonballs you can pack into a perfect triangle. The $t$-th triangular number is
+$$T_t = \frac{t(t+1)}{2}.$$
+Ten pins ($T_4 = 10$) make a bowling rack; fifteen balls ($T_5 = 15$) make a billiards break.
 
-Watch what happens. For $n \ge 4$, the factorial $n!$ is always divisible by $8$
-(because the product $1\cdot 2 \cdots n$ contains the factors $2$ and $4$, whose
-product is already $8$). So we may form $n!/8$. Setting $t = n!/8$, the
-triangular test reads: $8 \cdot (n!/8) + 1 = n! + 1$ is a square exactly when
-$n!/8$ is triangular. We have arrived at a perfect dictionary:
+A natural follow-up question: can a factorial be **both** a square *and* a triangular number at the same time? Some numbers manage this rare double life — $1$ and $36$ and $1225$ are simultaneously square and triangular. Could a factorial join that exclusive club?
 
-> **For $n \ge 2$, the number $n!/8$ is a triangular number if and only if
-> $n! + 1$ is a perfect square.**
+The answer is again a flat no, and it comes for free from the work we have already done:
 
-In other words, *the Brown numbers are precisely the values of $n$ for which a
-factorial-eighth lands on a triangle of dots.* Brocard's problem, an equation
-about squares and factorials, becomes a question about figurate geometry: when
-does dividing a factorial by eight give you a number of pebbles that you can
-arrange into a perfect triangle?
+> **The factorial $n!$ is simultaneously a perfect square and a triangular number if and only if $n \le 1$.**
 
-This is more than a cosmetic rephrasing. It tells us *where* the solutions live
-and *what* they look like. Let us translate the three known Brown numbers into
-this language.
+The logic is almost cheeky. To be *both* shapes, $n!$ must in particular be a square. But we just proved that for $n \ge 2$ it never is. So the "square" half of the requirement already fails, and the triangular condition never even gets a chance to be tested. The only survivors are $0! = 1$ and $1! = 1$, and indeed $1 = 1^2 = T_1$ is both a square and a triangle. The intersection is as small as it could possibly be.
 
-- For $n = 4$: $\ 4!/8 = 24/8 = 3 = T_2$. The triangle of side $2$.
-- For $n = 5$: $\ 5!/8 = 120/8 = 15 = T_5$. The triangle of side $5$.
-- For $n = 7$: $\ 7!/8 = 5040/8 = 630 = T_{35}$. The triangle of side $35$.
+## The romantic cousin: Brocard's problem
 
-So the three Brown numbers correspond to triangular indices $2, 5, 35$. The
-factorial $7!$, divided by eight, is exactly the number of pebbles in a triangle
-$35$ rows tall — a fact you could, in principle, verify by stacking $630$ marbles
-in your living room.
+Our clean theorem has a famous, far more stubborn relative — and this is where the story turns mysterious.
 
-And the square roots come along for free. Because $8T_y + 1 = (2y+1)^2$, the
-square root $m$ in $n! + 1 = m^2$ is always the *odd* number $m = 2y + 1$:
-- $y = 2 \Rightarrow m = 5$ (and indeed $4! + 1 = 25 = 5^2$),
-- $y = 5 \Rightarrow m = 11$ (and $5! + 1 = 121 = 11^2$),
-- $y = 35 \Rightarrow m = 71$ (and $7! + 1 = 5041 = 71^2$).
+Around 1876, Henri Brocard (and later, independently, the legendary Srinivasa Ramanujan) asked: for which $n$ is $n! + 1$ a perfect square? That is, when does
+$$n! + 1 = m^2$$
+have a solution in whole numbers? The values of $n$ that work are called **Brown numbers**, and only three are known:
+$$4! + 1 = 25 = 5^2, \qquad 5! + 1 = 121 = 11^2, \qquad 7! + 1 = 5041 = 71^2.$$
+So $(n, m) = (4, 5)$, $(5, 11)$, and $(7, 71)$. Searches have since pushed past a trillion without finding a fourth. Almost everyone believes these three are the *only* Brown numbers — but **nobody has proved it.** Brocard's problem is open to this day, one of those tantalizing questions that a curious teenager can understand and no living mathematician can settle.
 
-The index map is exactly $y \mapsto 2y + 1$. The geometry even predicts that the
-square root must be odd: since $n!$ is even for $n \ge 2$, the number
-$m^2 = n! + 1$ is odd, so $m$ itself is odd. The geometric picture and the
-arithmetic constraint agree perfectly.
+There is a lovely way to see Brocard's question as a *triangular* question, which is where our cast of characters reunites. A short calculation shows that $n!/8$ is a triangular number exactly when $n! + 1$ is an odd perfect square. Indeed, if $n!/8 = T_y = y(y+1)/2$, then
+$$n! = 4y(y+1) = (2y+1)^2 - 1, \quad\text{so}\quad n! + 1 = (2y+1)^2.$$
+So the three Brown numbers correspond to three triangular factorials-over-eight:
+$$\frac{4!}{8} = 3 = T_2, \qquad \frac{5!}{8} = 15 = T_5, \qquad \frac{7!}{8} = 630 = T_{35}.$$
+The Brocard–Ramanujan conjecture, restated, is the claim that these are the *only* times $n!/8$ lands on a triangular number. It is the shimmering, unproven counterpart to the theorem we *can* prove.
 
-## Why the square root is always odd
+## Two faces of the same coin
 
-It is worth dwelling on the small fact that $m$ must be odd, because it shows how
-the geometry forces the arithmetic. Suppose $n \ge 2$ and $n! + 1 = m^2$. The
-factorial $n!$ is a product that includes the factor $2$, so it is even. Adding
-$1$ makes $m^2$ odd. But an even number squared is even and an odd number squared
-is odd, so $m^2$ being odd forces $m$ to be odd. Write $m = 2y + 1$. Then
-$$m^2 = (2y+1)^2 = 8T_y + 1,$$
-and comparing with $m^2 = n! + 1$ gives $n! = 8T_y$ — the triangular witness,
-with its index $y = (m-1)/2$ handed to us directly. There is no slack: every
-Brown solution *is* a triangular factorial-eighth, and conversely.
+It is worth pausing on why one question is settled and its near-twin is a famous open problem. Both ask whether a factorial-flavored quantity is a perfect square. The difference is the "$+1$."
 
-## A wall, and a controlled experiment
+When we ask about $n!$ itself, the prime-factorization structure of $n!$ is laid bare. We *built* $n!$ by multiplying, so we know its prime anatomy intimately, and Bertrand's lone prime is sitting right there to sabotage any squareness. The proof is short because the structure is transparent.
 
-If the dictionary is exact, why can't we just finish the problem? Because turning
-"is $n!/8$ triangular?" into a yes/no answer for *all* $n$ at once is exactly as
-hard as Brocard's original question. The translation is a genuine insight — it
-gives the solutions a face and a name — but it does not, by itself, slay the
-beast. No elementary obstruction is known that rules out a fourth Brown number,
-and that is precisely why the conjecture has survived for nearly 150 years.
+Add $1$, and the spell breaks. The number $n! + 1$ shares **no** prime factors with $n!$ at all — adding one scrambles the factorization beyond recognition. Suddenly the Bertrand prime tells us nothing, and the transparent structure is gone. That single $+1$ is the entire difference between a one-paragraph proof and a 150-year-old enigma.
 
-What we *can* do, rigorously and completely, is two things. First, we can prove
-the dictionary itself — the equivalence between triangular factorial-eighths and
-factorial successors that are squares — as an unconditional theorem, with no
-loopholes. Second, we can carry out a *controlled experiment*: check directly
-that there are no new Brown numbers in a chosen range. A careful search confirms
-that for every $n$ from $8$ all the way to $50$, the number $n! + 1$ is never a
-perfect square — equivalently, $n!/8$ is never triangular. The factorials in this
-range are already astronomically large (recall $50!$ has $65$ digits), and not
-one of them slips through.
+This is a recurring drama in number theory: a tiny perturbation turns a tractable problem into an intractable one. The factorial knows exactly what it is made of; $n! + 1$ guards its secrets.
 
-This matters for an honest reason: it shows the equivalence is not an empty
-statement. Both sides of the dictionary have *real* examples ($n = 4, 5, 7$) and
-*real* non-examples ($n = 8, \dots, 50$). The bridge connects two living
-mathematical worlds, not two empty rooms.
+## What we have actually pinned down
 
-## Detectors, rigidity, and the road ahead
+Let us collect the cast and the verdict, because the precise statements are the point.
 
-Once you see that "multiply by $8$, add $1$" detects triangular numbers, a
-mischievous question appears: is $8$ special? Could "multiply by $7$, add $2$" or
-some other rule $a t + b$ also detect triangularity by the square test? The
-conjecture is that the pair $(a, b) = (8, 1)$ is the *unique* linear
-square-detector of triangular numbers — a rigidity statement that says the
-discriminant identity $8T_y + 1 = (2y+1)^2$ is the only one of its kind. This is
-checkable by a finite search over small candidates and is a tempting target.
+- A number is a **perfect square** if it equals $k^2$ for some whole number $k$.
+- A number is **triangular** if it equals $t(t+1)/2$ for some whole number $t$.
+- **Bertrand's postulate** guarantees, for every $n \ge 2$, a prime $p$ with $n/2 < p \le n$, i.e. $p \le n < 2p$.
+- **The exact-multiplicity lemma:** for such a prime, $p$ divides $n!$ exactly once, so $p^2$ does *not* divide $n!$.
+- **The square obstruction:** if a prime divides a number once but its square does not, the number cannot be a perfect square.
+- **Main theorem:** $n!$ is a perfect square if and only if $n \le 1$ — that is, only for $n = 0$ and $n = 1$, where $n! = 1$.
+- **Double-shape theorem:** $n!$ is simultaneously square and triangular if and only if $n \le 1$.
 
-Two more avenues use classical number theory to attack Brocard from the side.
-One leans on **Wilson's theorem**, which says that for a prime $p$ the factorial
-$(p-1)!$ leaves remainder $p - 1$ on division by $p$ — equivalently
-$(p-1)! + 1$ is divisible by $p$. If $n = p - 1$ and $n! + 1 = m^2$, then $p$
-divides $m^2$, so $p$ divides $m$, forcing $m \ge p$ and $m^2 \ge p^2$. Comparing
-$m^2 = (p-1)! + 1$ against $p^2$ gives a growth inequality one can hope to push to
-a contradiction for large primes. Another avenue factors $n! = (m-1)(m+1)$ and
-observes that $m - 1$ and $m + 1$ are two numbers differing by $2$, so their
-greatest common divisor is at most $2$; the factorial must split into two
-near-equal, almost-coprime pieces, which grows arithmetically implausible as the
-prime content of $n!$ swells. These heuristics make density-zero expectations
-believable, even where a full proof remains out of reach.
+Each link in this chain is elementary, and yet together they deliver a sweeping, exception-free statement about an infinite family of enormous numbers. No matter how far you march along the factorials — past the number of atoms in the universe, past any bound you care to name — you will never again stumble on a perfect square. The proof guarantees it with the certainty of pure logic, not the hopefulness of a search.
 
-## Why this is beautiful
+## Why this kind of result matters
 
-Brocard's problem is a reminder that mathematics is not a finished encyclopedia
-but a living landscape with unexplored valleys right next to well-trodden paths.
-A question a child can ask — *when is one more than a factorial a perfect square?*
-— has stood unanswered since the age of steam trains.
+It would be easy to file this away as a curiosity, but the underlying technique is a workhorse. The strategy — "find one prime that occurs to an odd or otherwise forbidden power, and use it to rule out an entire shape" — generalizes far beyond squares. The same Bertrand prime that appears exactly once in $n!$ instantly shows that $n!$ is never a perfect cube, never a fifth power, never any higher perfect power for $n$ large enough: a single odd exponent is incompatible with *all* of them at once. With a little more care, the method rules out other rigid "figurate" shapes — pentagonal numbers, hexagonal numbers, and their kin — whose definitions impose congruence constraints that one stubborn prime can violate.
 
-But the triangular viewpoint gives us something real: a new pair of eyes. By
-recognizing that $8T_y + 1 = (2y+1)^2$, an identity the Pythagoreans could have
-drawn in sand, we convert a problem about factorials and squares into one about
-pebbles arranged in triangles. The three Brown numbers stop being a random list
-and become three specific triangles — of sides $2$, $5$, and $35$ — hidden
-inside the factorials $4!$, $5!$, and $7!$.
+More broadly, this is a parable about **structure versus disguise**. The factorial wears its prime factorization on its sleeve, and that honesty is its undoing as a would-be square. Cryptography, by contrast, is built on the opposite principle: hide a number's factorization well enough and it becomes a vault. The same prime-counting instincts that crack open $n!$ are the ones that, turned around, secure the messages you send every day.
 
-We have not caught the fourth triangle. Perhaps it does not exist; almost
-everyone believes it does not. But now we know exactly what it would have to look
-like: a perfect triangle of dots, sitting quietly inside a factorial divided by
-eight, waiting — if it is there at all — to be found.
+And then there is Brocard's problem, still glittering on the horizon — three known solutions, a trillion-strong silence beyond them, and a conjecture that the silence is total. We have proved the clean theorem about $n!$. Its mischievous cousin $n! + 1$ waits, with that maddening little $+1$, for someone to finish the story.

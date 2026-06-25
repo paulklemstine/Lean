@@ -1,54 +1,47 @@
-# Computational Evidence — Brocard–Ramanujan via Triangular Numbers
+# Computational Evidence — Brocard–Ramanujan Triangular Classification
 
-Topic: the only `n` for which `n!/8` is a triangular number (equivalently the
-only Brown numbers `n! + 1 = m²`).
+All checks below were run in Lean (`#eval`) over `n` in `0..11` using the
+`Nat.sqrt`-based perfect-square test `Nat.sqrt k ^ 2 = k`.
 
-## 1. Small-case table
+## 1. Figurate-factorial trilogy (small cases)
 
-The bridge is `8 · T_y + 1 = (2y+1)²`, so `n!/8 = T_y` ⟺ `n!+1 = (2y+1)²`.
+Detector identity used throughout: `t` is triangular ⟺ `8·t + 1` is a perfect square.
 
-| n  | n!       | n!/8     | is n!/8 triangular? | index y | n!+1     | m (=2y+1) |
-|----|----------|----------|---------------------|---------|----------|-----------|
-| 0  | 1        | 0 (1/8)  | n!/8 not integer    | —       | 2        | —         |
-| 1  | 1        | —        | not integer         | —       | 2        | —         |
-| 2  | 2        | —        | not integer         | —       | 3        | —         |
-| 3  | 6        | —        | not integer         | —       | 7        | —         |
-| 4  | 24       | 3        | **yes**, T_2 = 3    | **2**   | 25       | **5**     |
-| 5  | 120      | 15       | **yes**, T_5 = 15   | **5**   | 121      | **11**    |
-| 6  | 720      | 90       | no (T_12=78,T_13=91)| —       | 721      | —         |
-| 7  | 5040     | 630      | **yes**, T_35 = 630 | **35**  | 5041     | **71**    |
-| 8  | 40320    | 5040     | no                  | —       | 40321    | —         |
-| 9  | 362880   | 45360    | no                  | —       | 362881   | —         |
-| 10 | 3628800  | 453600   | no                  | —       | 3628801  | —         |
+| Problem | Detector | Solutions with `n ≤ 11` | Triangular index |
+|---|---|---|---|
+| `n!` triangular | `8·n! + 1 = □` | `n = 0, 1, 3, 5` | `T₁, T₁, T₃, T₁₅` |
+| `n! + 1` triangular | `8·n! + 9 = □` | `n = 2` | `T₂` |
+| `n! + 1` square (Brocard) | `n! + 1 = □` | `n = 4, 5, 7` (Brown) | roots `5, 11, 71` |
+| `n!` square ∧ triangular | valuation + detector | `n = 0, 1` | `1 = T₁ = 1²` |
 
-Note `8 ∣ n!` exactly when `n ≥ 4`, so the question is only nontrivial there.
-The three hits `n = 4, 5, 7` give triangular indices `2, 5, 35`.
+Raw `#eval` outputs:
+- `{n ≤ 11 : 8·n!+1 = □}` = `[0, 1, 3, 5]`
+- `{n ≤ 11 : 8·n!+9 = □}` = `[2]`
+- `{n ≤ 11 : n! = □}` = `[0, 1]`
 
-## 2. OEIS
+## 2. Counterexample hunt (finite verification window)
 
-* Brown numbers / `n! + 1 = m²` solutions `n = 4, 5, 7`: OEIS **A085692**
-  (and related A146968 for the corresponding `m = 5, 11, 71`).
-* Triangular numbers `T_y`: OEIS **A000217** (`0,1,3,6,10,15,21,28,36,45,55,...`).
-  Indices appearing here: `T_2=3, T_5=15, T_35=630`.
+- `n!` triangular: verified NO solutions for `6 ≤ n ≤ 50` (theorem
+  `FactorialTriangular.no_factorial_triangular_6_to_50`).
+- `n!+1` triangular: verified NO solutions for `n ≤ 50`, `n ≠ 2` (theorem
+  `FactorialSuccTriangular.no_factorial_succ_triangular_ne_two`).
+- `n!` square: ruled out for ALL `n ≥ 2` unconditionally (theorem
+  `FactorialSquareTriangular.factorial_not_isSquare`, via Bertrand).
 
-## 3. Counterexample hunt
+## 3. Modular non-obstruction (why these are Brocard-hard)
 
-We searched `8 ≤ n ≤ 50` for any triangular witness (equivalently any perfect
-square `n!+1`) using `Nat.sqrt`. No counterexample was found; this is formalized
-as `BrocardTriangular.no_triangular_witness_8_to_50` (proved, 0 sorries, via
-`interval_cases` + `Nat.sqrt`). The companion file
-`Catalog/Probability/BrocardBorelCantelli.lean` independently verifies the range
-up to 1000 (`brocard_no_others_below_1000`). No Brown number other than 4,5,7
-exists in any checked range.
+For `n ≥ 6`, `n!` is divisible by `16`, so:
+- `8·n! + 1 ≡ 1 (mod 16)` and `1` is a quadratic residue mod 16;
+- `8·n! + 9 ≡ 9 (mod 16)` and `9` is a quadratic residue mod 16.
 
-## 4. Status of the universal claim
+Hence no elementary parity/mod obstruction rules out large solutions of the
+triangular variants — they are genuinely of Brocard difficulty. By contrast the
+*square* condition on `n!` carries a per-prime valuation parity invariant
+(odd valuation at a Bertrand prime), which is exactly what makes
+`FactorialSquareTriangular` fully resolvable.
 
-The full statement "n = 4, 5, 7 are the ONLY such n" is exactly the
-**Brocard–Ramanujan problem**, an open conjecture. It is NOT asserted as a
-theorem. What is proved unconditionally:
-
-* the geometric equivalence `n!/8 triangular ⟺ n!+1 square`
-  (`factorial_eq_eight_triangular_iff_brown`);
-* the general triangular-number test `t triangular ⟺ 8t+1 square`
-  (`triangular_iff_eight_succ_square`);
-* the three solutions and the finite verification above.
+## OEIS pointers (informal)
+- `n!` triangular: solutions `1, 6, 120` (= `0!/1!, 3!, 5!`), cf. factorials
+  that are triangular numbers.
+- Square–triangular numbers `0, 1, 36, 1225, …` (Pell), of which only `1` is a
+  factorial.
