@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T08:58:48.954614+00:00",
+  "last_updated": "2026-06-25T09:16:45.108950+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -5973,6 +5973,35 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T08:58:48.721157+00:00",
       "title": "Diffusion Models as Stochastic Differential Equations"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 17,
+      "domain": "Computation",
+      "duration_seconds": 0.0,
+      "end_time": 0.0,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "c2993e46",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v16a",
+      "phase_b_skipped": false,
+      "prompt_version": "v16a",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782373497.5218647,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T09:16:44.836490+00:00",
+      "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
     }
   ]
 }

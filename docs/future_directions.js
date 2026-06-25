@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "c2993e46",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -3379,7 +3379,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ESI_lower_bound_conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f3341b0",
     "description": "Formulate a precise conjecture stating that the endpoint Fourier restriction inequality for the three\u2011dimensional paraboloid over a prime field \ud835\udd3d\u209a (with \u20131 non\u2011square) holds if and only if the set of integer lattice points on the Euclidean paraboloid  \\(\\{(x,y,z)\\in\\mathbb Z^3 : z = x^2 + y^2\\}\\) is a \u039b(3) set. This makes the qualitative observation in the paper into a bidirectional, falsifiable statement that can be expressed in the language of finite\u2011field harmonic analysis and additive combinatorics, and thus be formalised in Lean 4.",
     "domains": [
       "Pythagorean",
@@ -3389,7 +3389,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T07:47:01.901499+00:00",
     "title": "Equivalence between the finite\u2011field endpoint restriction estimate for the 3\u2011dimensional paraboloid and the \u039b(3) property of the integer lattice paraboloid"
   },
@@ -4379,11 +4379,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let qc(n) be the largest k < n such that every placement of k mutually non-attacking queens on an n \u00d7 n board can be completed to a full n-queens configuration. Conjecture: there is an absolute integer N such that for every n \u2265 N, qc(n) \u2264 floor(n/5), equivalently 5 * qc(n) \u2264 n. This sharpens the paper's asymptotic upper bound qc(n) \u2264 0.216n to the rational density 0.2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2501",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24400v1",
+    "status": "available",
+    "timestamp": "2026-06-25T09:17:44.772184+00:00",
+    "title": "Asymptotic one-fifth upper bound for the n-queens completion threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonnegative integer n, there exist natural numbers x, y, z such that n = x*(x+1)/2 + y*(3*y+1)/2 + z*(7*z+1)/2. This is the direct nonagonal analogue of the paper's triangular-pentagonal-heptagonal theorem, replacing z*(5*z+1)/2 by z*(7*z+1)/2.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2501",
+    "id": "fd_2502",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26035v1",
@@ -4397,7 +4411,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2502",
+    "id": "fd_2503",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25250v1",
@@ -4411,7 +4425,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2503",
+    "id": "fd_2504",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24878v1",
@@ -4425,7 +4439,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2504",
+    "id": "fd_2505",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24776v1",
@@ -4440,7 +4454,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2505",
+    "id": "fd_2506",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24822v1",
@@ -4454,7 +4468,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2506",
+    "id": "fd_2507",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24573v1",
@@ -4469,7 +4483,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2507",
+    "id": "fd_2508",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -4484,7 +4498,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2508",
+    "id": "fd_2509",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24471v1",
@@ -4498,13 +4512,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2509",
+    "id": "fd_2510",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
     "status": "available",
     "timestamp": "2026-06-25T08:18:46.345580+00:00",
     "title": "Vector-Space Erd\u0151s Matching Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 9, the diagonal k-uniform Ramsey number r_k(k+1,k+1) is strictly larger than the 3-color shift number at parameter floor(2k/3)-3; equivalently, r_k(k+1,k+1) > s_3(\u230a2k/3\u230b-3). This strengthens the paper's bound r_k(k+1,k+1) > s_3(\u230ak/2\u230b-2) by replacing the coefficient 1/2 with 2/3, while retaining an absolute additive loss.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2511",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24198v1",
+    "status": "available",
+    "timestamp": "2026-06-25T09:18:32.163392+00:00",
+    "title": "Two-thirds shift-number lower bound for diagonal hypergraph Ramsey numbers"
   },
   {
     "consumed_by_exp_id": "",
@@ -4691,36 +4719,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Ising Model Phase Transition\n\nThis research cycle established, fully formally (0 sorries), the exact solution of\nthe **one-dimensional Ising model** and the rigorous sense in which it has **no\nphase transition at any positive temperature**:\n\n* `IsingChain1D.lean` \u2014 open chain, *from the raw configuration sum*:\n  `Zfree \u03b2 J n = 2 (2 cosh \u03b2J)\u207f`, the free-energy-density limit\n  `(1/(n+1)) log Zfree \u2192 log(2 cosh \u03b2J)`, and `C^\u221e`-smoothness of the limiting\n  free energy in `\u03b2` (the rigorous \"no singularity \u21d2 no phase transition\").\n* `IsingChainPeriodic.lean` \u2014 ring, via the transfer matrix:\n  spectral decomposition `T\u207f = \u03bb\u208a\u207f Pp + \u03bb\u208b\u207f Pm`, exact `Zper = (2cosh)\u207f+(2sinh)\u207f`,\n  the same bulk free energy, and the **spectral gap** `g = log(coth \u03b2J) > 0` for\n  all `\u03b2,J>0` with `g \u2192 0` only as `\u03b2 \u2192 \u221e` (criticality lives at `T=0`).\n\nThe following conjectures are precise, testable targets for follow-up cycles.\n\n## Conjecture 1 (Transfer trace = configuration sum; the missing bridge)\nFor the periodic chain, the transfer-matrix trace equals the genuine cyclic\nconfiguration sum:\n`trace (T\u207f) = \u2211_{s : Fin n \u2192 Bool} \u220f_{i} exp(\u03b2J \u00b7 sp(s i) \u00b7 sp(s (i+1)))`,\nwhere `i+1` is taken cyclically in `Fin n`. More generally, for any\n`M : Matrix \u03b9 \u03b9 \u211d`, `trace (M\u207f) = \u2211_{s : Fin n \u2192 \u03b9} \u220f_i M (s i) (s (i+1))`.\nThis \"closed-walk expansion\" is the one ingredient currently *defined* rather than\n*derived* in `IsingChainPeriodic.lean`; proving it would make the ring result as\ncombinatorially grounded as the open-chain result. **Status: open here, true.**\n\n## Conjecture 2 (Exponential decay of correlations / finite correlation length)\nFor the open chain the two-point function is exactly\n`\u27e8\u03c3\u2080 \u03c3_r\u27e9 = (tanh \u03b2J)^r`,\nso connected correlations decay exactly exponentially with rate `\u2212log tanh \u03b2J =\ng` (the spectral gap of Conjecture/Theorem above). Consequently there is **no\nlong-range order** for any `\u03b2 < \u221e`. Testable refinement: the correlation length\n`\u03be(\u03b2) = 1/g(\u03b2) = 1/log(coth \u03b2J)` satisfies `\u03be(\u03b2) ~ \u00bd e^{2\u03b2J}` as `\u03b2 \u2192 \u221e`.\n\n## Conjecture 3 (Internal energy and heat capacity are bounded and smooth)\nDefine `u(\u03b2) = \u2212d/d\u03b2 [ log(2 cosh \u03b2J) ] = \u2212J tanh(\u03b2J)` (energy per site) and\n`c(\u03b2) = du/d\u03b2`. Then `u` and `c` are real-analytic on all of `\u211d`, `c(\u03b2) \u2265 0`,\nand `c` has a single smooth (Schottky) maximum but **no divergence** \u2014 the\nhallmark distinguishing 1D (no transition) from 2D (a `log`-divergent `c` at\n`T\u1d9c`). Formalize `u`, `c` and prove analyticity + the global bound.\n\n## Conjecture 4 (Mean-field / Curie\u2013Weiss transition as a contrast)\nThe mean-field (Curie\u2013Weiss) self-consistency `m = tanh(\u03b2(Jzm + h))` at `h=0`\nhas `m=0` as its only solution iff `\u03b2Jz \u2264 1`, and a nonzero solution iff\n`\u03b2Jz > 1`. Hence the mean-field free energy is **non-analytic** at `\u03b2\u1d9c = 1/(Jz)`:\na genuine, formalizable phase transition. This isolates *why* dimensionality and\nthe transfer-matrix gap matter: the 1D gap never closes at finite `\u03b2`, but the\nmean-field fixed-point structure bifurcates. Target: prove the bifurcation\nthreshold `\u03b2\u1d9c = 1/(Jz)` and non-differentiability of `m*(\u03b2)` there.\n\n## Conjecture 5 (2D Peierls bound: existence of a low-temperature transition)\nOn `\u2124\u00b2`, for `\u03b2` sufficiently large there is spontaneous magnetization: with `+`\nboundary conditions, `\u27e8\u03c3\u2080\u27e9 \u2265 1 \u2212 2\u00b7\u2211_{k\u22651} ... > 0`, via the Peierls contour\nargument (number of contours of length `L` enclosing the origin is `\u2264 L\u00b73^L`, each\nsuppressed by `e^{\u22122\u03b2JL}`, and the geometric sum is `< \u00bd` once `e^{\u22122\u03b2J}` is\nsmall). This is the first genuinely `> 1`-dimensional target: prove\n`\u2203 \u03b2\u2080, \u2200 \u03b2 > \u03b2\u2080, m*(\u03b2) > 0` for the 2D Ising model, establishing the existence\n(not the location) of the phase transition that is *absent* in 1D.\n",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_2510",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ef874ad4",
-    "status": "available",
-    "timestamp": "2026-06-25T08:43:17.266711+00:00",
-    "title": "This research cycle established, fully formally (0 sorries), the exact solution "
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Diffusion Models as Stochastic Differential Equations\n\nDerived from this cycle's verified results (`OUProcess.lean`,\n`FokkerPlanck.lean`, `ReverseTime.lean`), which establish, with 0 sorries:\nthe OU moment ODEs and convergence to `N(0, \u03c3\u00b2/2\u03b8)`; the forward Fokker\u2013Planck\nPDE for the Gaussian marginals; the stationary equation; the Gaussian Stein\nscore; and Anderson's reverse-time Fokker\u2013Planck equation with data recovery.\n\nThe conjectures below are bold, falsifiable, and each is phrased so a follow-up\ncycle can attempt a Lean proof or a concrete counterexample.\n\n---\n\n## Conjecture 1 \u2014 Exponential (relative-entropy) convergence rate\n\n**Statement.** For the OU marginals `p\u209c = N(m(t), v(t))` and stationary\n`p\u221e = N(0, \u03c3\u00b2/2\u03b8)`, the KL divergence contracts exponentially:\n`KL(p\u209c \u2016 p\u221e) \u2264 C e^{-2\u03b8 t}` for an explicit `C = C(m\u2080, v\u2080, \u03c3\u00b2, \u03b8)`.\n\n**The key insight is** that the OU generator satisfies a log-Sobolev inequality\nwith constant `\u03b8`, and the Gaussian KL has a *closed form* in `(m(t), v(t))`,\nso the abstract rate becomes the elementary scalar bound\n`KL = \u00bd(log(v\u221e/v) + v/v\u221e + m\u00b2/v\u221e - 1)` composed with the proven exponential\ndecay of `m, v`.\n\n**Why now?** We already have `ouMean_tendsto`/`ouVar_tendsto` and the explicit\nmoments; the remaining step is a one-variable calculus bound on the closed-form\nGaussian KL \u2014 squarely in reach of the current `HasDerivAt` + `field_simp; ring`\ntoolchain, with no new SDE machinery.\n\n---\n\n## Conjecture 2 \u2014 Score-matching error controls sampling error (Girsanov bound)\n\n**Statement.** If an approximate score `\u015d(x,t)` satisfies\n`\u222b |\u015d - \u2202\u2093 log p\u209c|\u00b2 p\u209c dx \u2264 \u03b5\u00b2` for all `t \u2208 [0,T]`, then the law `q\u0302` produced\nby the reverse SDE with drift `b\u0302 = \u03b8x + \u03c3\u00b2 \u015d` obeys\n`KL(p\u2080 \u2016 q\u0302) \u2264 \u00bd \u03c3\u00b2 \u222b\u2080\u1d40 \u03b5\u00b2 dt + KL(p\u221e \u2016 p_T)`.\n\n**The key insight is** that the reverse-FP residual produced by swapping the\nexact score for `\u015d` is *exactly* `-\u2202\u2093((b\u0302-b) q)`, a divergence whose `L\u00b2(p)`\nnorm is the score-matching error; Girsanov then converts the pathwise drift gap\ninto a KL gap.\n\n**Why now?** `ou_reverse_fokker_planck` already isolates the reverse drift\n`b = -f + \u03c3\u00b2\u00b7score` as the unique drift making `q=p(\u00b7,T-\u00b7)` a solution, so the\n*perturbation* `b\u0302-b = \u03c3\u00b2(\u015d-score)` is explicit. The conjecture turns the\nexisting exact-recovery theorem into a quantitative robustness theorem.\n\n---\n\n## Conjecture 3 \u2014 Variance-preserving (cosine) schedule keeps the marginal isotropic\n\n**Statement.** Replace constant `(\u03b8,\u03c3\u00b2)` by time-dependent `(\u03b8(t), \u03c3\u00b2(t))` with\n`\u03c3\u00b2(t) = 2\u03b8(t)` (variance-preserving). Then starting from `v\u2080 = 1` the variance\nis *invariant*: `v(t) \u2261 1` for all schedules `\u03b8(t) > 0`, and the Fokker\u2013Planck\nPDE holds with the time-dependent coefficients.\n\n**The key insight is** that `v' = -2\u03b8(t)v + \u03c3\u00b2(t) = -2\u03b8(t)(v-1)` vanishes\nidentically at `v \u2261 1`, decoupling the variance from the (arbitrary) schedule \u2014\nthe schedule only reshapes the *time parametrization*, not the marginal family.\n\n**Why now?** `ouVar_hasDerivAt` already exposes `v' = -2\u03b8v + \u03c3\u00b2`; allowing\n`\u03b8, \u03c3\u00b2` to depend on `t` is a direct generalization, and `hasDerivAt_gaussian_t`\nis *already* stated for arbitrary differentiable `m(t), v(t)`, so the PDE half is\nin place.\n\n---\n\n## Conjecture 4 \u2014 Multivariate OU diagonalizes into independent scalar channels\n\n**Statement.** For the matrix OU process `dX = -A X dt + \u03a3 dW` with `A`\nsymmetric positive-definite, the Fokker\u2013Planck equation for the Gaussian\nmarginal *factorizes* in the eigenbasis of `A` into `n` independent scalar OU\nFokker\u2013Planck equations, and convergence holds at rate `2 \u03bb_min(A)`.\n\n**The key insight is** that an orthogonal change of variables turns the\nmultivariate generator into a direct sum of the scalar generators already\nformalized here, so the hard PDE reduces to `n` copies of `ou_fokker_planck`.\n\n**Why now?** The scalar case is fully proved and the reduction is purely\nlinear-algebraic (`Matrix.IsHermitian.spectral_theorem` in Mathlib), so the\nmultivariate theorem can be assembled from existing pieces without re-deriving\nany analysis.\n\n---\n\n## Conjecture 5 \u2014 Reverse-time uniqueness: Anderson's drift is the *only* corrector\n\n**Statement.** Among all drifts of the form `b(x,\u03c4) = \u03b8x + c\u00b7(x - m(T-\u03c4))/v(T-\u03c4)`,\nthe reverse Fokker\u2013Planck equation `\u2202_\u03c4 q = -\u2202\u2093(b q)+(\u03c3\u00b2/2)\u2202\u2093\u2093 q` with\n`q = p(\u00b7,T-\u00b7)` holds **iff** `c = -\u03c3\u00b2`.\n\n**The key insight is** that plugging the affine ansatz into the reverse FP RHS\nyields a polynomial in `(x-m)` whose coefficients vanish only at `c = -\u03c3\u00b2`, so\nthe score correction is rigid, not merely sufficient.\n\n**Why now?** The proof of `ou_reverse_fokker_planck` already reduces the equation\nto a `ring` identity in `c = -\u03c3\u00b2`; re-running it with a free parameter `c` and\nmatching coefficients converts the existence theorem into a uniqueness theorem \u2014\na small, self-contained next step.\n",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_2511",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "73a5599a",
-    "status": "available",
-    "timestamp": "2026-06-25T08:52:33.311610+00:00",
-    "title": "Derived from this cycle's verified results (`OUProcess.lean`,"
   },
   {
     "consumed_by_exp_id": "",
