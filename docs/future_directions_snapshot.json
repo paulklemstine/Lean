@@ -636,7 +636,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6fa82f5b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
     "domain_bridges": [],
     "domains": [
@@ -648,7 +648,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -877,7 +877,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "95bbad27",
+    "consumed_by_exp_id": "ab9c78a7",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -8301,6 +8301,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:2404.19603",
+      "Liu's work on finite height representations"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that if a p-adic Galois representation becomes semistable after passing to some finite extension, then it must already have been of finite E-height. This would provide a characterization of finite height representations in terms of their behavior under finite extensions.",
+    "domain_bridges": [
+      "p-adic Hodge theory",
+      "Breuil-Kisin modules",
+      "semistable representations"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2533",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Assume that V_L is semistable for some finite extension L/K. Use the classification of semistable representations via (phi, Gamma)-modules or Breuil-Kisin modules to show that V must be finite height. This involves relating the structure of V_L to V and leveraging the compatibility under base change.",
+    "research_mode": "team",
+    "source_exp_id": "2606.26043v1",
+    "status": "available",
+    "timestamp": "2026-06-25T17:11:00.832064+00:00",
+    "title": "A Converse to Finite Height Implying Semistability for p-adic Galois Representations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "arXiv:2210.000?? (presented paper)",
       "Four Color Theorem (STUDY)"
     ],
@@ -8314,7 +8341,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2533",
+    "id": "fd_2534",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use induction on the number of vertices and the fact that outerplanar graphs are 2‑degenerate. Remove a vertex of degree ≤2, apply the induction hypothesis to obtain a 3‑color conflict‑free coloring of the remaining graph, then extend the coloring to the removed vertex by recoloring at most a bounded number of neighbors. A discharging argument guarantees that the recoloring step never requires a fourth color.",
@@ -8340,7 +8367,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2534",
+    "id": "fd_2535",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish an upper bound via double counting of symbol occurrences and use finite field constructions to exhibit n‑1 orthogonal squares when n is a prime power; then formalize the combinatorial arguments in Lean using existing libraries for finite fields and finite sets.",
@@ -9176,7 +9203,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f516403",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -9189,7 +9216,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
