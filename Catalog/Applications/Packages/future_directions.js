@@ -329,7 +329,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolution of Singularities in Positive Characteristic"
   },
   {
-    "consumed_by_exp_id": "d47e9c74",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domains": [
       "Cryptography",
@@ -340,7 +340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
@@ -658,7 +658,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Euler Characteristic and Gauss-Bonnet"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab9c78a7",
     "description": "Formalize Tur\u00e1n's theorem: ex(n, K_r) = (1-1/(r-1))n\u00b2/2. Prove the Kruskal-Katona theorem. Formalize Szemer\u00e9di's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domains": [
       "Combinatorics"
@@ -667,7 +667,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Tur\u00e1n and Szemer\u00e9di"
   },
@@ -1002,7 +1002,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Sun-Sun Primes"
   },
   {
-    "consumed_by_exp_id": "c880eb36",
+    "consumed_by_exp_id": "",
     "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Computation",
@@ -1012,7 +1012,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
   },
@@ -2006,7 +2006,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e8c93c85",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domains": [
       "Pythagorean",
@@ -2016,7 +2016,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -2050,7 +2050,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6be1a63",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex \u0394(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) \u2265 22 and HJ(4,2) \u2265 14.",
     "domains": [
       "Algebra"
@@ -2059,7 +2059,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -2800,7 +2800,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Codimension-three rational cohomology of Hecke congruence subgroups vanishes in a linear stable range"
   },
   {
-    "consumed_by_exp_id": "21cf80bb",
+    "consumed_by_exp_id": "",
     "description": "Let \u03a3 be a finite connected signed simple graph, let v be a non-isolated vertex, and let \u03c1(\u03a3) denote the spectral radius of its signed adjacency matrix. The paper proves \u03c1(\u03a3)^2 \u2264 \u03c1(\u03a3 - v)^2 + 2 d(v) - 1. Conjecture: equality holds if and only if either the underlying unsigned graph is a star and v is a pendant vertex, or the underlying unsigned graph is complete and the signing is balanced or antibalanced.",
     "domains": [
       "Pythagorean",
@@ -2810,7 +2810,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T18:55:02.130931+00:00",
     "title": "Equality cases for signed vertex-deletion spectral-radius bound"
   },
@@ -4262,7 +4262,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6218af01",
     "description": "For any quadrilateral circumscribed to a parabola, if a valid tiling with vertical and horizontal stripes is constructed using Wang tiles derived from this quadrilateral, the densities of the vertical and horizontal stripes must be irrational numbers.",
     "domains": [
       "Bridges"
@@ -4271,7 +4271,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T05:59:06.114125+00:00",
     "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
   },
@@ -5482,7 +5482,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f516403",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -5492,12 +5492,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
-    "consumed_by_exp_id": "1afe5cb7",
+    "consumed_by_exp_id": "54abcfb1",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",

@@ -438,7 +438,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d47e9c74",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domain_bridges": [],
     "domains": [
@@ -452,7 +452,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
@@ -877,7 +877,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab9c78a7",
     "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
     "domain_bridges": [],
     "domains": [
@@ -889,7 +889,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432745+00:00",
     "title": "Extremal Graph Theory: Turán and Szemerédi"
   },
@@ -1336,7 +1336,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c880eb36",
+    "consumed_by_exp_id": "",
     "description": "Prove that the connective constant for the self-avoiding walk on Z² equals (2+√2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domain_bridges": [],
     "domains": [
@@ -1349,7 +1349,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
   },
@@ -3024,7 +3024,7 @@
       "Polymatroid_connectivity",
       "Slice_projections"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e8c93c85",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domain_bridges": [
       "Matroid_theory",
@@ -3040,7 +3040,7 @@
     "proof_strategy": "Assume for contradiction that there exist indices $j < k < l$ such that the $j$-th and $l$-th slice-projections are connected, but the $k$-th is disconnected. Use the submodularity of the polymatroid rank function and the lattice of flats to demonstrate that if $P^{(k)}$ is disconnected by a partition $(A, B)$, then either $P^{(j)}$ or $P^{(l)}$ must also be disconnected by a related partition, contradicting the initial assumption.",
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -3106,7 +3106,7 @@
       "math.CO/ramsey_theory",
       "math.CO/combinatorial_lines"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6be1a63",
     "description": "A coordinate-symmetric r-coloring of the cube [t]^n is line-free with respect to combinatorial lines having at most K active coordinates if and only if the induced coloring of the discrete simplex Δ(t-1, n) has no monochromatic corner tuple of width at most K. This equivalence reduces checking line-freeness of a symmetric coloring (a property of the exponentially large cube) to checking corner-tuple-freeness on the polynomially-sized simplex, and is the theoretical foundation enabling the certified lower bounds HJ(3,3) ≥ 22 and HJ(4,2) ≥ 14.",
     "domain_bridges": [
       "combinatorics",
@@ -3122,7 +3122,7 @@
     "proof_strategy": "Formalize coordinate-symmetric colorings as functions on letter-count vectors (elements of the discrete simplex). Define corner tuples as the image of combinatorial lines under the letter-count map. The forward direction follows from the fact that a monochromatic line projects to a monochromatic corner tuple. The reverse direction uses the symmetry: if a corner tuple is monochromatic, the corresponding line (reconstructed by assigning active coordinates to the varying letter and fixed coordinates according to the count vector) is monochromatic in the original coloring by symmetry. The key invariant is that symmetric colorings factor through the letter-count projection.",
     "research_mode": "team",
     "source_exp_id": "2606.22155v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T12:25:51.858994+00:00",
     "title": "Symmetric Coloring Reduction Lemma for Hales-Jewett Line-Freeness"
   },
@@ -4587,7 +4587,7 @@
       "Mathlib.Analysis.InnerProductSpace.PiL2",
       "Mathlib.Data.Matrix.Basic"
     ],
-    "consumed_by_exp_id": "21cf80bb",
+    "consumed_by_exp_id": "",
     "description": "Let Σ be a finite connected signed simple graph, let v be a non-isolated vertex, and let ρ(Σ) denote the spectral radius of its signed adjacency matrix. The paper proves ρ(Σ)^2 ≤ ρ(Σ - v)^2 + 2 d(v) - 1. Conjecture: equality holds if and only if either the underlying unsigned graph is a star and v is a pendant vertex, or the underlying unsigned graph is complete and the signing is balanced or antibalanced.",
     "domain_bridges": [
       "signed graphs as symmetric real matrices",
@@ -4605,7 +4605,7 @@
     "proof_strategy": "First formalize signed simple graphs as symmetric {−1,0,1}-valued adjacency matrices over a finite vertex type, with deletion as principal submatrix restriction. Prove the vertex-deletion inequality using the block-matrix spectral-radius lemma from the paper. For equality, trace equality through the block estimate and through |A(Σ)| ≤ A(G). Show that equality forces the underlying unsigned graph to be one of the unsigned extremal cases of Sun-Das: a star with v pendant or a complete graph. In the star case every signing is switching-equivalent on a tree, so equality follows. In the complete case, prove that a signed complete graph on n vertices has spectral radius n−1 exactly when its signing is balanced or antibalanced, equivalently switching-equivalent to the all-positive or all-negative complete graph.",
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T18:55:02.130931+00:00",
     "title": "Equality cases for signed vertex-deletion spectral-radius bound"
   },
@@ -7290,7 +7290,7 @@
       "MR1417578",
       "MR2742574"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6218af01",
     "description": "For any quadrilateral circumscribed to a parabola, if a valid tiling with vertical and horizontal stripes is constructed using Wang tiles derived from this quadrilateral, the densities of the vertical and horizontal stripes must be irrational numbers.",
     "domain_bridges": [
       "quadratic_irrationalities",
@@ -7306,7 +7306,7 @@
     "proof_strategy": "Geometric argument leveraging properties of parabolas and quadratic number fields to derive irrationality of stripe densities.",
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T05:59:06.114125+00:00",
     "title": "Irrational Densities from Parabola-Circumscribed Quadrilaterals in Aperiodic Tilings"
   },
@@ -9242,7 +9242,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f516403",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domain_bridges": [],
     "domains": [
@@ -9255,14 +9255,14 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1afe5cb7",
+    "consumed_by_exp_id": "54abcfb1",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domain_bridges": [],
     "domains": [
