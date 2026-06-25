@@ -4797,6 +4797,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every nonnegative integer n can be expressed as T(x) + P\u2081(y) + H\u2081(z), where T(x) = x(x+1)/2 is the x-th triangular number, P\u2081(y) = y(3y-1)/2 is the y-th first pentagonal number, and H\u2081(z) = z(5z-3)/2 is the z-th first heptagonal number, for nonnegative integers x, y, z.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2531",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-25T16:12:16.241077+00:00",
+    "title": "Every Nonnegative Integer Is a Sum of a Triangular, First Pentagonal, and First Heptagonal Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that every outerplanar graph admits a conflict\u2011free coloring with at most three colors. This extends the known four\u2011color conflict\u2011free bound for planar graphs and would yield a tight bound for the outerplanar subclass.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2532",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25988v1",
+    "status": "available",
+    "timestamp": "2026-06-25T16:12:58.691211+00:00",
+    "title": "Conflict-Free Coloring of Outerplanar Graphs with Three Colors"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

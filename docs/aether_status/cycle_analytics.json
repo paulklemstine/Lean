@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-25T15:38:06.605513+00:00",
+  "last_updated": "2026-06-25T16:10:12.834338+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -6791,6 +6791,49 @@
       "theorem_novelty_new": 14,
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-25T15:38:06.335215+00:00",
+      "title": "EML Differential Algebra: Closure Properties"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.295,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 37,
+      "domain": "Applications",
+      "duration_seconds": -209.92476415634155,
+      "end_time": 1782403449.0809355,
+      "files_integrated": 0,
+      "job_id": "364ec557",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19d",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19d",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.62,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.5975,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.5265,
+        "novelty": 0.95,
+        "proof_depth": 0.345,
+        "usefulness": 0.4225
+      },
+      "quality_score": 0.49296000000000006,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782403659.0056996,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-25T16:10:12.451138+00:00",
       "title": "EML Differential Algebra: Closure Properties"
     }
   ]

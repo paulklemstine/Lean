@@ -8274,6 +8274,56 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "OEIS A287616"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every nonnegative integer n can be expressed as T(x) + P₁(y) + H₁(z), where T(x) = x(x+1)/2 is the x-th triangular number, P₁(y) = y(3y-1)/2 is the y-th first pentagonal number, and H₁(z) = z(5z-3)/2 is the z-th first heptagonal number, for nonnegative integers x, y, z.",
+    "domain_bridges": [
+      "Quadratic Forms",
+      "Polygonal Numbers"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2531",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the proof techniques from the original paper, potentially involving transformations to a quadratic form and checking congruence conditions, but with modified coefficients for the first pentagonal and heptagonal numbers.",
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-25T16:12:16.241077+00:00",
+    "title": "Every Nonnegative Integer Is a Sum of a Triangular, First Pentagonal, and First Heptagonal Number"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "arXiv:2210.000?? (presented paper)",
+      "Four Color Theorem (STUDY)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that every outerplanar graph admits a conflict‑free coloring with at most three colors. This extends the known four‑color conflict‑free bound for planar graphs and would yield a tight bound for the outerplanar subclass.",
+    "domain_bridges": [
+      "combinatorics",
+      "topology"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2532",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use induction on the number of vertices and the fact that outerplanar graphs are 2‑degenerate. Remove a vertex of degree ≤2, apply the induction hypothesis to obtain a 3‑color conflict‑free coloring of the remaining graph, then extend the coloring to the removed vertex by recoloring at most a bounded number of neighbors. A discharging argument guarantees that the recoloring step never requires a fourth color.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25988v1",
+    "status": "available",
+    "timestamp": "2026-06-25T16:12:58.691211+00:00",
+    "title": "Conflict-Free Coloring of Outerplanar Graphs with Three Colors"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
