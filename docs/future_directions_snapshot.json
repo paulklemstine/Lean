@@ -4180,7 +4180,7 @@
       "Mathlib.Analysis.Convex.Basic",
       "Mathlib.LinearAlgebra.AffineSpace.AffineSubspace"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f226a06a",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domain_bridges": [
       "convex geometry ↔ finite set systems",
@@ -4197,7 +4197,7 @@
     "proof_strategy": "Formalize convex splinters as finite unions of convex sets satisfying the minimal affine-dependence containment axiom. Combine the paper's fractional Helly theorem for convex splinters with the standard Alon--Kleitman bootstrapping scheme: derive a weak epsilon-net or selection lemma appropriate to splinters, then use the (p,q)-property to obtain a bounded-size hitting set. The Lean development can separate the abstract finite-set-system part from the geometric input, so that the final theorem only requires the convex-splinter fractional Helly lemma and the Helly number 2d+1.",
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
@@ -9212,6 +9212,56 @@
     "status": "available",
     "timestamp": "2026-06-26T04:18:05.916058+00:00",
     "title": "Resolution of Erdős Problem 1061 using analytic and combinatorial methods"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Keating--Snaith",
+      "Conrey--Ghosh",
+      "Soundararajan"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The inequality M₃(T) ≥ (34.1 + o(1))c₃T(log T)^9 holds under specified conditions for all T > 1.",
+    "domain_bridges": "math.NT -- complex analysis",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2574",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "direct proof",
+    "research_mode": "team",
+    "source_exp_id": "2606.27323v1",
+    "status": "available",
+    "timestamp": "2026-06-26T05:07:00.856815+00:00",
+    "title": "Improved Sixth Moment Bound on Riemann Zeta Function"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "MRS2023:Theorem1.1",
+      "Zagier1975:QuadraticFormPoincareSeries",
+      "BruinierFunke2004:MaassOperators"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a positive discriminant D and an integer k ≥ 2, the Maass raising operator R_{2k} applied to the quadratic‑form Poincaré series f_{k,D} produces the weak Maass form ω_{k+1,D}. Consequently ω_{k+1,D} is a weight‑(2k+2) weak Maass form with Laplace eigenvalue 2k.",
+    "domain_bridges": [
+      "modular_forms",
+      "maass_forms",
+      "differential_operators"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2575",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that the Maass raising operator R_{2k} sends the weight‑2k Poincaré series f_{k,D} to a function satisfying the same Fourier expansion as ω_{k+1,D} (by term‑wise differentiation of the series). Verify modular transformation by the known intertwining property of R_{κ} with the slash action, and compute the Laplace eigenvalue using the commutation relation Δ_{κ+2}∘R_{κ}=R_{κ}∘(Δ_{κ}+κ). Formalize the series convergence in the Lean topology of functions on the upper half‑plane, then use existing Lean libraries for modular forms and Maass operators to finish the argument.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27212v1",
+    "status": "available",
+    "timestamp": "2026-06-26T05:07:34.120324+00:00",
+    "title": "Raising operator realization of the ω‑functions"
   },
   {
     "ambition_level": "extension",

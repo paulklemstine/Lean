@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "quadratic_irrational_density_in_the_ratio_spectrum.json",
     "pkg_num": 75,
     "quality": "partial",
-    "quality_score": 0.67124,
+    "quality_score": 0.40623618823529417,
     "title": "Quadratic Irrational Density in the Ratio Spectrum of Lagrange Constants"
   },
   {
@@ -2184,7 +2184,7 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "quadratic_irrational_density_in_the_ratio_spectrum",
       "primary_domain": "Bridges",
-      "priority_score": 0.67124,
+      "priority_score": 0.40623618823529417,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Quadratic Irrational Density in the Ratio Spectrum of Lagrange Constants"

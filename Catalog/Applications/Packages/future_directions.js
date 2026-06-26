@@ -2584,7 +2584,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inflated line-transversal counterexamples have sphere homotopy type"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f226a06a",
     "description": "For every dimension d and integers p >= q >= 2d+1, there is a constant N = N(d,p,q) such that any finite family F of convex splinters in R^d with the (p,q)-property admits a transversal of size at most N. Here the (p,q)-property means that among every p members of F, some q members have nonempty common intersection. This extends the classical Hadwiger--Debrunner theorem from convex sets to convex splinters, with the Helly threshold 2d+1 replacing d+1.",
     "domains": [
       "Geometry"
@@ -2593,7 +2593,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:24:48.021151+00:00",
     "title": "Hadwiger--Debrunner (p,q) theorem for convex splinters"
   },
@@ -5284,6 +5284,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T04:18:05.916058+00:00",
     "title": "Resolution of Erd\u0151s Problem 1061 using analytic and combinatorial methods"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The inequality M\u2083(T) \u2265 (34.1 + o(1))c\u2083T(log T)^9 holds under specified conditions for all T > 1.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2574",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27323v1",
+    "status": "available",
+    "timestamp": "2026-06-26T05:07:00.856815+00:00",
+    "title": "Improved Sixth Moment Bound on Riemann Zeta Function"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a positive discriminant D and an integer k \u2265 2, the Maass raising operator R_{2k} applied to the quadratic\u2011form Poincar\u00e9 series f_{k,D} produces the weak Maass form \u03c9_{k+1,D}. Consequently \u03c9_{k+1,D} is a weight\u2011(2k+2) weak Maass form with Laplace eigenvalue 2k.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2575",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27212v1",
+    "status": "available",
+    "timestamp": "2026-06-26T05:07:34.120324+00:00",
+    "title": "Raising operator realization of the \u03c9\u2011functions"
   },
   {
     "consumed_by_exp_id": "",

@@ -64,3 +64,5 @@ __pycache__/
 *.swo
 *~
 .hf_cache/
+.hf_cache/
+Aether/.aether_workspace/logs/
