@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "abbbde7c",
     "filename": "navier_stokes_2d_regularity_and_partial_3d_results.json",
     "pkg_num": 98,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.58216,
     "title": "Navier-Stokes: Enstrophy as a Lyapunov Functional and the 2D/3D Regularity Divide"
   },
   {
@@ -2851,8 +2851,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "navier_stokes_2d_regularity_and_partial_3d_results",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.58216,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Navier-Stokes: Enstrophy as a Lyapunov Functional and the 2D/3D Regularity Divide"
     }

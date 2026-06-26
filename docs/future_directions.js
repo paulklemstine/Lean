@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "1ce6e294",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -1831,7 +1831,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
   {
-    "consumed_by_exp_id": "4e31bdaf",
+    "consumed_by_exp_id": "",
     "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
     "domains": [
       "Geometry"
@@ -1840,7 +1840,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T07:39:04.351050+00:00",
     "title": "Helly's Theorem for Convex Splinters"
   },
@@ -1961,7 +1961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
-    "consumed_by_exp_id": "4cfc08f0",
+    "consumed_by_exp_id": "",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domains": [
       "Pythagorean",
@@ -1971,7 +1971,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -5999,6 +5999,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Navier\u2013Stokes: 2D Regularity and Partial 3D Results \u2014 Future Directions\n\nThis cycle formalized, in an abstract Galerkin framework, the precise structural\ndivide between 2D global regularity and 3D conditional regularity:\n\n- `EnergyMethod.lean` (pre-existing): unconditional `L\u00b2` (energy) control via the\n  trilinear cancellation `\u27eaB v v, v\u27eb = 0`.\n- `Enstrophy2D.lean` (new): unconditional **enstrophy** control `\u27eaA u, u\u27eb` from\n  two extra axioms \u2014 self-adjointness of `A` and the **2D vortex-stretching\n  cancellation** `\u27eaB v v, A v\u27eb = 0` \u2014 the a priori estimate behind 2D global\n  regularity.\n- `Partial3D.lean` (new): the **general** enstrophy dissipation identity keeping\n  the stretching term, plus an abstract **conditional regularity** theorem\n  (Prodi\u2013Serrin / BKM shape): if `\u2212\u27eaB(u,u), A u\u27eb \u2264 \u03bd\u27eaA u, A u\u27eb` pointwise then\n  the enstrophy cannot blow up. The energy bound is shown to hold\n  unconditionally in 3D.\n- `Synthesis.lean` (new): 2D regularity is recovered as the degenerate case of\n  the 3D conditional criterion (the 2D cancellation discharges the 3D control\n  hypothesis); the two theories share the *same* enstrophy observable (`rfl`).\n- `Examples.lean` (new): a concrete inhabiting model with a non-constant decaying\n  solution, certifying the theorems are non-vacuous.\n\nThe unifying finding: **regularity = one more dissipated Lyapunov observable**,\nand the entire 2D/3D gap is localized to the sign and size of a single trilinear\npairing `\u27eaB(u,u), A u\u27eb` (the vortex-stretching term).\n\n## Conjectures for follow-up cycles\n\n### C1. Self-improving (Gr\u00f6nwall) enstrophy criterion\n**Statement.** Replace the qualitative pointwise control hypothesis `hctrl` of\n`Model3D.enstrophy_antitone_of_stretching_controlled` by a *self-referential*\nbound `\u27eaB(u,u), A u\u27eb \u2264 C \u00b7 \u03a9(t)^{\u03b1}` (with `\u03a9 = \u27eaA u, u\u27eb`). Conjecture: there is\na critical exponent `\u03b1\u2080` such that for `\u03b1 \u2264 \u03b1\u2080` the resulting differential\ninequality `\u03a9'(t) \u2264 \u22122\u03bd\u2016A u\u2016\u00b2 + 2C \u03a9^{\u03b1}` forces `\u03a9` to stay finite for all time\nfrom finite initial data, while for `\u03b1 > \u03b1\u2080` finite-time blowup of the ODE\nmajorant is possible. **Testable**: formalize the scalar ODE comparison\n(`ODE_solution_le`/Gr\u00f6nwall in Mathlib) and pin down `\u03b1\u2080` (expected `\u03b1\u2080 = 3/2`,\nthe abstract shadow of the `H^1`\u2013`L^\u221e` interpolation in 3D).\n\n### C2. Ladyzhenskaya 2D interpolation as an abstract inequality\n**Statement.** In 2D the stretching term is not merely zero structurally; even a\ngeneric quadratic `B` obeys `|\u27eaB(u,u), A u\u27eb| \u2264 c \u2016u\u2016 \u00b7 \u2016A u\u2016^{?}` with an\nexponent that makes it *absorbable* by `\u03bd\u2016A u\u2016\u00b2` after using the energy bound.\nConjecture: adding an abstract Ladyzhenskaya-type field\n`|\u27eaB v v, A v\u27eb| \u2264 c \u2016v\u2016 \u00b7 \u2016A v\u2016^{3/2} \u00b7 \u2016v\u2016_?^{1/2}` to `Model2D` *derives* the\ncontrol hypothesis of C1 with `\u03b1 < 1`, hence global regularity, *without*\nassuming `hB2 = 0`. **Testable**: state the inequality field and prove it implies\n`hctrl` after the energy bound; check the exponents close.\n\n### C3. Weak\u2013strong uniqueness in the abstract model\n**Statement.** If `u` is any energy-bounded (Leray-type) solution and `v` is a\nsolution with bounded enstrophy on `[0,T]`, then `u = v` on `[0,T]`.\nConjecture: the abstract trilinear cancellation `\u27eaB v v, v\u27eb = 0` plus\nself-adjointness of `A` suffice to prove a Gr\u00f6nwall estimate for the difference\n`w = u \u2212 v` energy `\u2016w\u2016\u00b2`, giving uniqueness in the enstrophy class.\n**Testable**: formalize `d/dt \u2016w\u2016\u00b2 \u2264 K(t) \u2016w\u2016\u00b2` with `K \u2208 L\u00b9` from the enstrophy\nbound on `v`, then Gr\u00f6nwall \u21d2 `w \u2261 0`.\n\n### C4. Backward uniqueness / no eternal nontrivial decay\n**Statement.** In the dissipative abstract model with strictly positive `A`\n(`\u27eaA v, v\u27eb \u2265 \u03bb\u2016v\u2016\u00b2`, `\u03bb > 0`) and `\u03bd > 0`, a solution that vanishes at some time\nmust vanish for all earlier times too (backward uniqueness), and every solution\ndecays exponentially: `\u2016u(t)\u2016 \u2264 e^{\u2212\u03bd\u03bb t}\u2016u(0)\u2016`. **Testable**: the exponential\ndecay is an immediate Gr\u00f6nwall consequence of the energy identity refined with\nthe spectral gap `\u03bb`; formalize it as `Model.norm_decay_of_gap`. (The\n`Examples.lean` witness already realizes the equality case `\u03bb = \u03bd = 1`.)\n\n### C5. Two-mode nonlinear Galerkin witness exercising `hB2`\n**Statement.** There is an explicit 2- or 3-dimensional model (`V = \u211d\u00b2`/`\u211d\u00b3`)\nwith a genuinely nonzero antisymmetric/quadratic `B` satisfying both\n`\u27eaB v v, v\u27eb = 0` and `\u27eaB v v, A v\u27eb = 0`, modelling a finite Fourier truncation of\n2D Euler/Navier\u2013Stokes, whose solutions are non-trivial (rotating) yet have\nstrictly dissipated energy and enstrophy. **Testable**: construct `B(v,w)` from a\ncross-product-like bilinear form, verify both cancellations by `ring`/`fin_cases`,\nand exhibit a closed-form or numerically-validated trajectory. This upgrades the\nlinear witness of `Examples.lean` to one where `hB2` does real work, closing the\ngap to a recognizable spectral Navier\u2013Stokes truncation.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2610",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "abbbde7c",
+    "status": "available",
+    "timestamp": "2026-06-26T14:53:08.920390+00:00",
+    "title": "This cycle formalized, in an abstract Galerkin framework, the precise structural"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6318,21 +6333,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.326758+00:00",
     "title": "Strange Attractors as Algebraic Objects"
-  },
-  {
-    "consumed_by_exp_id": "f247824f",
-    "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0491",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.843772+00:00",
-    "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
     "consumed_by_exp_id": "",
