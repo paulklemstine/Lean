@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5077231f",
     "filename": "quantum_mechanics_spectral_theory_of_hydrogen.json",
     "pkg_num": 101,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6837200000000001,
     "title": "Quantum Mechanics: Spectral Theory of the Hydrogen Atom"
   },
   {
@@ -2947,8 +2947,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "quantum_mechanics_spectral_theory_of_hydrogen",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6837200000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Quantum Mechanics: Spectral Theory of the Hydrogen Atom"
     }

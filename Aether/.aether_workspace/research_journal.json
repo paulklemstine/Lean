@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "47c79c52",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Graph Linear Notation\n\nDerived from the Stage 3/4 findings of this cycle (the encoding `code` is\ninjective, the `sup` over relabelings is attained, and `gln G = gln H ↔ G ≃g H`).",
-      "quality_score": 0.69352,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-20T19:33:18",
-      "title": "Formalizing Graph Linear Notation in Lean 4"
-    },
-    {
       "cycle_id": "977d0362",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThese build directly on the exact one-cell uniformity theorem formalized in\n`Catalog/Combinatorics/LatinSquare/CellUniform.lean`. Each direction states a\nsingle guiding insight an",
@@ -2501,6 +2491,16 @@
       "theorem_count": 26,
       "timestamp": "2026-06-26T16:40:58",
       "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+    },
+    {
+      "cycle_id": "5077231f",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Hydrogen Spectral Theory\n\nDerived from the cycle that produced `HydrogenSpectrum.lean`,\n`HydrogenSelectionRules.lean`, and `HydrogenAngularEigen.lean`. Each conjecture\nis falsifi",
+      "quality_score": 0.6837200000000001,
+      "sorry_count": 1,
+      "theorem_count": 20,
+      "timestamp": "2026-06-26T16:46:34",
+      "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7645600000000001
     }
   ],
-  "last_updated": "2026-06-26T16:40:58",
+  "last_updated": "2026-06-26T16:46:34",
   "open_questions": [
-    {
-      "context": "declaration below is proved with zero `sorry`s.; Result:  Formalised and proved sorry-free.  `mpStep_add`/`mpStep_smul` (linearity),",
-      "cycle_id": "561a2484",
-      "domain": "Cryptography",
-      "sorry_count": 2,
-      "timestamp": "2026-06-15T15:03:08"
-    },
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
       "cycle_id": "cd281b27",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 3,
       "timestamp": "2026-06-26T16:40:58"
+    },
+    {
+      "context": "Synthesis (PI): A self-contained, sorry-free description of the hydrogen energy",
+      "cycle_id": "5077231f",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-06-26T16:46:34"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3e805dd4",
-        "quality": 0.45636596791938716,
-        "theorems": 734,
-        "title": "Extremal Graph Theory: Turán and Szemerédi"
-      },
-      {
         "cycle_id": "364ec557",
         "quality": 0.57649,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.7645600000000001,
         "theorems": 26,
         "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+      },
+      {
+        "cycle_id": "5077231f",
+        "quality": 0.6837200000000001,
+        "theorems": 20,
+        "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
       }
     ],
     "Bridges": [

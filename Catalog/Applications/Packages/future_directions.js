@@ -538,21 +538,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Foundations: Yoneda and Adjunctions"
   },
   {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle be72639d (Q=0.765), which proved 26 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor \u03bb > 1, leading to exponential contraction after k iterations: max{\u03c3 \u2208 Del(X_k)}.diameter \u2264 (1/\u03bb)^k \u00b7 max{\u03c3 \u2208 Del(X_0)}.diameter",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_be72639d_974cee81",
-    "priority_score": 0.8645600000000001,
-    "research_mode": "team",
-    "source_exp_id": "be72639d",
-    "status": "available",
-    "timestamp": "2026-06-26T16:40:58.428883+00:00",
-    "title": "Deepening: Exponentialdiameter contraction under Delaunay minicenter refinement"
-  },
-  {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7496c7ce",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
@@ -562,7 +548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.880463+00:00",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -1357,20 +1343,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432797+00:00",
     "title": "Tropical Convexity and Linear Programming"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle be72639d (Q=0.765) proved 26 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor \u03bb > 1, leading to exponential contraction after k iterations: max{\u03c3 \u2208 ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_be72639d_d29d046c",
-    "priority_score": 0.8145600000000002,
-    "research_mode": "team",
-    "source_exp_id": "be72639d",
-    "status": "available",
-    "timestamp": "2026-06-26T16:40:58.992061+00:00",
-    "title": "Close Proofs: Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
   {
     "consumed_by_exp_id": "",
@@ -2696,6 +2668,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T16:48:35.543989+00:00",
     "title": "Cusick's Sum-of-Digits Explicit Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every n,k,r with n \u2265 2k, k \u2265 3, and r \u2265 2, let (\ud835\udcd5_i)_{i\u2208Fin r} be k-uniform families of subsets of Fin n. Assume each \ud835\udcd5_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i \u2260 j, every A \u2208 \ud835\udcd5_i and B \u2208 \ud835\udcd5_j have A \u2229 B \u2260 \u2205. Then the multilateral product is bounded by the Hilton--Milner value: \u220f_{i\u2208Fin r} |\ud835\udcd5_i| \u2264 h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2375",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23322v1",
+    "status": "available",
+    "timestamp": "2026-06-23T17:25:43.582970+00:00",
+    "title": "Multilateral non-trivial cross-intersection product bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -5504,11 +5490,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "description": "The limit of the average stack-sorting depth scaled by n converges to the rational number 3/4.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2589",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24110v1",
+    "status": "available",
+    "timestamp": "2026-06-26T16:46:53.250760+00:00",
+    "title": "Exact asymptotic value of the average stack-sorting depth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2590",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5522,7 +5522,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5537,7 +5537,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5552,7 +5552,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5567,7 +5567,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5582,7 +5582,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5596,7 +5596,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5610,7 +5610,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5624,7 +5624,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5639,7 +5639,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5654,7 +5654,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5669,7 +5669,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5684,7 +5684,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5699,7 +5699,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5713,7 +5713,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5728,7 +5728,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5743,7 +5743,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5757,7 +5757,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5771,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5785,7 +5785,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5800,7 +5800,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5815,7 +5815,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5830,7 +5830,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -5844,7 +5844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -5858,7 +5858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -5873,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -5887,13 +5887,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
     "status": "available",
     "timestamp": "2026-06-26T16:15:51.884325+00:00",
     "title": "Moduli Space Isomorphism Failure"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture states that the minimal N required to ensure AP-free subset sums scales asymptotically as 3^n over \u221an, a bound validated by iterative proofs.",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_2617",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24139v1",
+    "status": "available",
+    "timestamp": "2026-06-26T16:47:29.894440+00:00",
+    "title": "Proportional Growth Requirement"
   },
   {
     "consumed_by_exp_id": "",
@@ -5967,7 +5982,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "762ed13d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -5977,7 +5992,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -6095,21 +6110,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nDerived from this cycle's findings on *exponential diameter contraction under\nDelaunay minicenter refinement* and the *approximate Carath\u00e9odory / Maurey*\ncatalog references. Each conjecture is falsifiable, with a key insight and a\n\"why now\" grounded in what was proved (`Contraction.lean`, `Maurey.lean`,\n`MaureyGeneral.lean`, `Bridge.lean`) and what failed.\n\n## 1. Higher-dimensional minicenter contraction factor is dimension-dependent\n\n**Conjecture.** For a non-degenerate `d`-simplex, one round of *minicenter*\n(smallest-enclosing-ball center) refinement reduces the maximum child diameter by\na factor `\u03bb_d \u2265 1 + c/d` for an absolute constant `c > 0`, and `\u03bb_d \u2192 1` as\n`d \u2192 \u221e`. (For `d = 1` this gives `\u03bb_1 = 2`, exactly the proved segment case.)\n\n**The key insight is** that the segment base case `minicenter_segment_halves`\nachieves `\u03bb = 2` because the minicenter of a `1`-simplex is its midpoint, but in\nhigher dimensions the minicenter can sit far from the barycenter for skinny\nsimplices, so the guaranteed factor must degrade with dimension and with the\naspect ratio.\n\n**Why now?** `Contraction.lean` isolates the *exact* hypothesis the geometry must\nsupply (`d (k+1) \u2264 (1/\u03bb) d k` with `\u03bb > 1`); the only missing ingredient for a\nfull theorem is the per-step geometric factor, turning an open conjecture into a\nsingle, sharply-stated metric inequality to attack.\n\n## 2. The refinement budget, not the limit, is the right complexity measure\n\n**Conjecture.** Among all subdivision rules with per-step contraction `\u03bb > 1`, the\n*cumulative* diameter `\u2211\u2096 d\u2096` (proved finite `= D\u00b7\u03bb/(\u03bb-1)` in `Bridge.total_budget`)\nis minimized \u2014 over rules achieving a fixed target tolerance \u2014 precisely by the\nrule maximizing `\u03bb`, and this total dominates the mesh-size complexity up to a\nconstant.\n\n**The key insight is** that exponential per-step contraction upgrades \"diameter\n\u2192 0\" to a *summable* series, and the closed form `D\u00b7\u03bb/(\u03bb-1)` is strictly\ndecreasing in `\u03bb`; so the contraction factor controls total work, not merely\nasymptotic mesh fineness.\n\n**Why now?** `Bridge.total_budget` already supplies the exact closed form and\n`summable_of_contraction` shows finiteness fails at `\u03bb = 1`; the budget viewpoint\nis therefore formally available and just needs an optimization layer.\n\n## 3. The Maurey `R/\u221ak` rate is the contraction face for \"flat\" point clouds\n\n**Conjecture.** For a point cloud whose convex hull has no exponential-contraction\nrefinement (e.g. nearly co-spherical points where minicenter splits barely shrink\ndiameters), the best achievable covering of hull points by `k`-sample averages\nstill decays, but only at the Maurey rate `R/\u221ak`, never exponentially \u2014 and this\n`\u221ak` barrier is tight.\n\n**The key insight is** that `maurey_sqrt` gives an *unconditional* `R\u00b2/k` squared\ncovering bound with no geometric contraction assumption, whereas\n`Bridge.covering_budget` gives exponential covering *only when* contraction holds;\nthe two regimes are complementary, and degenerate clouds fall in the first.\n\n**Why now?** `MaureyGeneral.maurey_sqrt` is now fully formalized (the\nproduct-measure variance computation `expectation_bound` is done), so the `\u221ak`\nrate is a theorem and the open part is only its *tightness* on a constructed\nco-spherical family \u2014 exactly the kind of finite witness the `#eval` harness in\n`ComputationalEvidence.md` can pre-screen.\n\n## 4. Independence cancellation generalizes to a \"mixed-moment\" refinement bound\n\n**Conjecture.** The off-diagonal vanishing behind `marg_off` extends: for any\n`m`-th centered mixed moment over the product index `Fin k \u2192 \u03b9`, all terms with a\ncoordinate appearing exactly once vanish, yielding empirical-mean concentration\n`E\u2016x - mean\u2016^m \u2272 R^m / k^{\u2308m/2\u2309}` and hence approximate Carath\u00e9odory in `\u2113^m`-type\nnorms.\n\n**The key insight is** that `marg_off` succeeded by reducing inner-product\nexpectations to the *scalar* factorization `marg_scalar` via indicator functions;\nthe same indicator reduction should kill every \"appears-once\" coordinate at any\nmoment order, because a once-appearing mean-zero factor integrates to `0`.\n\n**Why now?** `marg_scalar` is proved as a standalone, reusable scalar lemma\n(independent of the inner-product structure), so the `m = 2` case is done and the\ninduction on moment order has a concrete, already-formalized base.\n\n## 5. A contraction\u2013Carath\u00e9odory duality for mesh covering radius\n\n**Conjecture.** For any refinement with factor `\u03bb > 1`, the covering radius after\n`k` steps obeys `cov_k \u2264 min((1/\u03bb)^k \u00b7 D, R/\u221a(N_k))`, where `N_k` is the number of\nsample points after `k` rounds; moreover the two bounds *cross over* at a\npredictable `k*`, before which Carath\u00e9odory dominates and after which contraction\ndominates.\n\n**The key insight is** that `Bridge.covering_tendsto_zero` bounds `cov_k` by the\ncontraction term while `maurey_sqrt` bounds approximation by `R/\u221aN`; combining\nthem as a pointwise minimum gives a strictly better, regime-aware guarantee than\neither alone.\n\n**Why now?** Both bounds are now formal theorems in this cycle's files with\nexplicit constants, so their minimum is immediately well-defined and the only open\ncontent is locating and proving the crossover index `k*`.\n",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_2616",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "be72639d",
-    "status": "available",
-    "timestamp": "2026-06-26T16:40:49.702640+00:00",
-    "title": "Derived from this cycle's findings on *exponential diameter contraction under"
   },
   {
     "consumed_by_exp_id": "",

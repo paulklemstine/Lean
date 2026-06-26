@@ -16265,11 +16265,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7496c7ce",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16281,7 +16281,7 @@
         "Logic"
       ],
       "id": "fd_0539",
-      "last_attempt_time": "2026-06-10T10:57:00.478735+00:00",
+      "last_attempt_time": "2026-06-26T16:47:34.938805+00:00",
       "last_reviewed_at": "2026-06-09T17:37:26.550961+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16295,7 +16295,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:06.880463+00:00",
       "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
@@ -38183,7 +38183,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Erdos--Ko--Rado theorem for intersecting uniform families",
         "Hilton--Milner theorem for non-trivial intersecting families",
@@ -38195,7 +38195,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "0d192d1b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38210,11 +38210,11 @@
         "Bridges"
       ],
       "id": "fd_2375",
-      "last_attempt_time": "2026-06-26T16:15:58.098979+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Nat.Choose.Basic\nimport Mathlib.Data.Finset.Basic\nimport Mathlib.Algebra.BigOperators.Fin\n\nopen scoped BigOperators\n\nabbrev IsKUniform {n : ℕ} (k : ℕ) (F : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, A.card = k\n\nabbrev IsStar {n : ℕ} (F : Finset (Finset (Fin n))) : Prop :=\n  ∃ x : Fin n, ∀ A ∈ F, x ∈ A\n\nabbrev CrossIntersecting {n : ℕ} (F G : Finset (Finset (Fin n))) : Prop :=\n  ∀ A ∈ F, ∀ B ∈ G, (A ∩ B).Nonempty\n\nnoncomputable abbrev HMbound (n k : ℕ) : ℕ :=\n  Nat.choose (n - 1) (k - 1) - Nat.choose (n - k - 1) (k - 1) + 1\n\n/-- Conjectural multilateral extension of the sharp non-trivial cross-intersection product bound. -/\ntheorem multilateral_nontrivial_cross_intersecting_product_bound\n    {n k r : ℕ}\n    (hn : 2 * k ≤ n) (hk : 3 ≤ k) (hr : 2 ≤ r)\n    (F : Fin r → Finset (Finset (Fin n)))\n    (h_uniform : ∀ i : Fin r, IsKUniform k (F i))\n    (h_nontrivial : ∀ i : Fin r, ¬ IsStar (F i))\n    (h_cross : ∀ ⦃i j : Fin r⦄, i ≠ j → CrossIntersecting (F i) (F j)) :\n    ",
       "lineage_refs": [],
-      "outcome_quality": 0.7645600000000001,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Formalize the paper's two-family theorem as a Lean lemma: for any two non-star k-uniform cross-intersecting families A,B ⊆ binom(Fin n,k), |A|*|B| ≤ h(n,k)^2. Apply this lemma to every unordered pair of distinct indices i,j ∈ Fin r. Multiplying all pairwise inequalities gives (∏ᵢ |𝓕_i|)^(r-1) ≤ (h(n,k)^r)^(r-1), since each |𝓕_i| occurs in exactly r-1 pair products. Use positivity/monotonicity of natural powers to extract the (r-1)-st root, noting r ≥ 2.",
@@ -38224,7 +38224,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23322v1",
       "source_path": "http://arxiv.org/abs/2606.23322v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T17:25:43.582970+00:00",
       "title": "Multilateral non-trivial cross-intersection product bound"
@@ -47944,6 +47944,50 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "west1990",
+        "defant2020"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The limit of the average stack-sorting depth scaled by n converges to the rational number 3/4.",
+      "domain_bridges": [
+        "stack_sorting",
+        "asymptotic_analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2589",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem conjecture_limit : Tendsto (fun n : ℕ => (D n : ℝ) / n) atTop (nhds (3/4 : ℝ))",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "numerical_experiment_and_analytic_upper_lower_bounds",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24110v1",
+      "source_path": "http://arxiv.org/abs/2606.24110v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T16:46:53.250760+00:00",
+      "title": "Exact asymptotic value of the average stack-sorting depth"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem 1",
         "Corollary 1",
         "Brown-Erdős-Sós conjecture"
@@ -47964,7 +48008,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2589",
+      "id": "fd_2590",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -48012,7 +48056,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2590",
+      "id": "fd_2591",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -48057,7 +48101,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2591",
+      "id": "fd_2592",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -48101,7 +48145,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2592",
+      "id": "fd_2593",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -48148,7 +48192,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2593",
+      "id": "fd_2594",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -48193,7 +48237,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2594",
+      "id": "fd_2595",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -48238,7 +48282,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2595",
+      "id": "fd_2596",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -48279,7 +48323,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2596",
+      "id": "fd_2597",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -48324,7 +48368,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2597",
+      "id": "fd_2598",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -48363,7 +48407,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2598",
+      "id": "fd_2599",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -48405,7 +48449,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2599",
+      "id": "fd_2600",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -48449,7 +48493,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2600",
+      "id": "fd_2601",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -48495,7 +48539,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2601",
+      "id": "fd_2602",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -48540,7 +48584,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2602",
+      "id": "fd_2603",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -48586,7 +48630,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2603",
+      "id": "fd_2604",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -48632,7 +48676,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2604",
+      "id": "fd_2605",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -48682,7 +48726,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2605",
+      "id": "fd_2606",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
@@ -48728,7 +48772,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2606",
+      "id": "fd_2607",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of the use of filtered complete intersection properties in the orderization process",
@@ -48774,7 +48818,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2607",
+      "id": "fd_2608",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vishik_non_similarity_char_2 (m : ℕ) (hm : m ≥ 3) : ∃ (F : Field) (char F = 2), ∃ (φ ψ : QuadraticForm F), \n  dim φ = 2^m ∧ dim ψ = 2^m ∧ \n  anisotropic φ ∧ anisotropic ψ ∧ \n  (∀ (E : Field), (E ⊇ F) → total_isotropy_index φ E = total_isotropy_index ψ E) ∧ \n  ¬ similar φ ψ",
@@ -48819,7 +48863,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2608",
+      "id": "fd_2609",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularized_sum_primes (P : ℂ → ℂ) (is_prime_zeta : IsPrimeZeta P) (continuation : AnalyticContinuation P) : \n  continuation.value_at (-1 : ℂ) = expected_constant_value := by sorry",
@@ -48868,7 +48912,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2609",
+      "id": "fd_2610",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_veronese_circuit_classification (m : ℕ) (t : ℕ) (d : ℕ) : let circuit := λ (forms : Fin t → (ℓ : LinearForm 𝕂) × ℓ ≠ 0), (linear_dependent_minimally (λ i, forms i |> Prod.fst ^ m)) → (dim (span (λ i, (forms i).1)) = (t + m - 2) / m) in circuit → (∃ (curve_config : Fin t → LinearForm 𝕂), (∀ i, (curve_config i) ^ m = (forms i).1 ^ m) ∧ (rational_normal_curve_configuration curve_config) ∧ (t = m * (d - 1) + 2))",
@@ -48915,7 +48959,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2610",
+      "id": "fd_2611",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_zero_sum_characterization {p : ℕ} [Fact p.Prime] (hp : p % 2 = 1)\n    (ℓ : ℕ) (hℓ : 1 ≤ ℓ ∧ ℓ ≤ (p - 1) / 2)\n    (S : Finset (ZMod p)) (hsym : S = S.image (fun x => -x))\n    (hzero : (0 : ZMod p) ∉ S) :\n    (∃ (vs : Fin (2 * ℓ + 1) → ZMod p),\n        (Pairwise (fun i j => vs i ≠ j)) ∧\n        (∀ i : Fin (2 * ℓ + 1), (vs ((i + 1 : Fin (2 * ℓ + 1))) - vs i) ∈ S)) ↔\n    (∃ (t : Finset (ZMod p)), t ⊆ S ∧ t.card = 2 * ℓ + 1 ∧ (∑ x in t, x) = 0) := by sorry",
@@ -48962,7 +49006,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2611",
+      "id": "fd_2612",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positive_dyadic_density (P : Rat) (Q : Nat) (H : Q.numerator < Q) (inf_support : nat.infinite_support (function n, h (a : nat) => a in support n) (support_sum : nat.sum (n -> n * h (bit_from_n n)) / 2^n = P / Q)) : (exists c_Q : PositiveReals, forall X in Dyads, sufficiently_large X, A_support (2*X) - A_support X >= c_Q * X) := ...",
@@ -49006,7 +49050,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2612",
+      "id": "fd_2613",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem qc_asymptotic_tight {n : ℕ} (hn : 1 ≤ n) : (qc n : ℝ) / n ≤ 0.216 + o(1) := by sorry",
@@ -49050,7 +49094,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2613",
+      "id": "fd_2614",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture_s3_eq : ∀ (k : ℕ), k ≥ 5 → s₃ k = (twr (k-2) 2) ^ 2",
@@ -49098,7 +49142,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2614",
+      "id": "fd_2615",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_size_non_outer_additive_strong_blocking_set {q : ℕ} [hq : Fact (IsPrimePower q)] {h : ℕ} (h_pos : h > 1) {k : ℕ} (k_pos : k ≥ 2) : ∀ (B : AdditiveStrongBlockingSet q k), ¬ ContainsHyperplane B → |B| ≤ q^(k-1) := by\n  -- formal proof outline\n  sorry",
@@ -49140,7 +49184,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2615",
+      "id": "fd_2616",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "M_{g,n} ≅ G_{g,n}",
@@ -49165,39 +49209,39 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": "Erdos-Sarkozy Result",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions\n\nDerived from this cycle's findings on *exponential diameter contraction under\nDelaunay minicenter refinement* and the *approximate Carathéodory / Maurey*\ncatalog references. Each conjecture is falsifiable, with a key insight and a\n\"why now\" grounded in what was proved (`Contraction.lean`, `Maurey.lean`,\n`MaureyGeneral.lean`, `Bridge.lean`) and what failed.\n\n## 1. Higher-dimensional minicenter contraction factor is dimension-dependent\n\n**Conjecture.** For a non-degenerate `d`-simplex, one round of *minicenter*\n(smallest-enclosing-ball center) refinement reduces the maximum child diameter by\na factor `λ_d ≥ 1 + c/d` for an absolute constant `c > 0`, and `λ_d → 1` as\n`d → ∞`. (For `d = 1` this gives `λ_1 = 2`, exactly the proved segment case.)\n\n**The key insight is** that the segment base case `minicenter_segment_halves`\nachieves `λ = 2` because the minicenter of a `1`-simplex is its midpoint, but in\nhigher dimensions the minicenter can sit far from the barycenter for skinny\nsimplices, so the guaranteed factor must degrade with dimension and with the\naspect ratio.\n\n**Why now?** `Contraction.lean` isolates the *exact* hypothesis the geometry must\nsupply (`d (k+1) ≤ (1/λ) d k` with `λ > 1`); the only missing ingredient for a\nfull theorem is the per-step geometric factor, turning an open conjecture into a\nsingle, sharply-stated metric inequality to attack.\n\n## 2. The refinement budget, not the limit, is the right complexity measure\n\n**Conjecture.** Among all subdivision rules with per-step contraction `λ > 1`, the\n*cumulative* diameter `∑ₖ dₖ` (proved finite `= D·λ/(λ-1)` in `Bridge.total_budget`)\nis minimized — over rules achieving a fixed target tolerance — precisely by the\nrule maximizing `λ`, and this total dominates the mesh-size complexity up to a\nconstant.\n\n**The key insight is** that exponential per-step contraction upgrades \"diameter\n→ 0\" to a *summable* series, and the closed form `D·λ/(λ-1)` is strictly\ndecreasing in `λ`; so the contraction factor controls total work, not merely\nasymptotic mesh fineness.\n\n**Why now?** `Bridge.total_budget` already supplies the exact closed form and\n`summable_of_contraction` shows finiteness fails at `λ = 1`; the budget viewpoint\nis therefore formally available and just needs an optimization layer.\n\n## 3. The Maurey `R/√k` rate is the contraction face for \"flat\" point clouds\n\n**Conjecture.** For a point cloud whose convex hull has no exponential-contraction\nrefinement (e.g. nearly co-spherical points where minicenter splits barely shrink\ndiameters), the best achievable covering of hull points by `k`-sample averages\nstill decays, but only at the Maurey rate `R/√k`, never exponentially — and this\n`√k` barrier is tight.\n\n**The key insight is** that `maurey_sqrt` gives an *unconditional* `R²/k` squared\ncovering bound with no geometric contraction assumption, whereas\n`Bridge.covering_budget` gives exponential covering *only when* contraction holds;\nthe two regimes are complementary, and degenerate clouds fall in the first.\n\n**Why now?** `MaureyGeneral.maurey_sqrt` is now fully formalized (the\nproduct-measure variance computation `expectation_bound` is done), so the `√k`\nrate is a theorem and the open part is only its *tightness* on a constructed\nco-spherical family — exactly the kind of finite witness the `#eval` harness in\n`ComputationalEvidence.md` can pre-screen.\n\n## 4. Independence cancellation generalizes to a \"mixed-moment\" refinement bound\n\n**Conjecture.** The off-diagonal vanishing behind `marg_off` extends: for any\n`m`-th centered mixed moment over the product index `Fin k → ι`, all terms with a\ncoordinate appearing exactly once vanish, yielding empirical-mean concentration\n`E‖x - mean‖^m ≲ R^m / k^{⌈m/2⌉}` and hence approximate Carathéodory in `ℓ^m`-type\nnorms.\n\n**The key insight is** that `marg_off` succeeded by reducing inner-product\nexpectations to the *scalar* factorization `marg_scalar` via indicator functions;\nthe same indicator reduction should kill every \"appears-once\" coordinate at any\nmoment order, because a once-appearing mean-zero factor integrates to `0`.\n\n**Why now?** `marg_scalar` is proved as a standalone, reusable scalar lemma\n(independent of the inner-product structure), so the `m = 2` case is done and the\ninduction on moment order has a concrete, already-formalized base.\n\n## 5. A contraction–Carathéodory duality for mesh covering radius\n\n**Conjecture.** For any refinement with factor `λ > 1`, the covering radius after\n`k` steps obeys `cov_k ≤ min((1/λ)^k · D, R/√(N_k))`, where `N_k` is the number of\nsample points after `k` rounds; moreover the two bounds *cross over* at a\npredictable `k*`, before which Carathéodory dominates and after which contraction\ndominates.\n\n**The key insight is** that `Bridge.covering_tendsto_zero` bounds `cov_k` by the\ncontraction term while `maurey_sqrt` bounds approximation by `R/√N`; combining\nthem as a pointwise minimum gives a strictly better, regime-aware guarantee than\neither alone.\n\n**Why now?** Both bounds are now formal theorems in this cycle's files with\nexplicit constants, so their minimum is immediately well-defined and the only open\ncontent is locating and proving the crossover index `k*`.\n",
-      "domain_bridges": [],
+      "description": "The conjecture states that the minimal N required to ensure AP-free subset sums scales asymptotically as 3^n over √n, a bound validated by iterative proofs.",
+      "domain_bridges": "null",
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Geometry",
-        "Algebra"
+        "Pythagorean",
+        "Logic"
       ],
-      "id": "fd_2616",
+      "id": "fd_2617",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "Central trinomial coefficient bounds",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Direct inequality verification",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "be72639d",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/be72639d",
+      "source_exp_id": "2606.24139v1",
+      "source_path": "http://arxiv.org/abs/2606.24139v1",
       "status": "available",
-      "thread_id": "th_1b0956cb",
-      "timestamp": "2026-06-26T16:40:49.702640+00:00",
-      "title": "Derived from this cycle's findings on *exponential diameter contraction under"
+      "thread_id": "",
+      "timestamp": "2026-06-26T16:47:29.894440+00:00",
+      "title": "Proportional Growth Requirement"
     },
     {
       "ambition_level": "extension",
@@ -50342,44 +50386,6 @@
       "thread_id": "",
       "timestamp": "2026-06-12T23:58:19.871252+00:00",
       "title": "Deepening: This cycle laid the missing foundation for the \"proof phase transition\" program."
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle be72639d (Q=0.765), which proved 26 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor λ > 1, leading to exponential contraction after k iterations: max{σ ∈ Del(X_k)}.diameter ≤ (1/λ)^k · max{σ ∈ Del(X_0)}.diameter",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Applications"
-      ],
-      "id": "push_be72639d_974cee81",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8645600000000001,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "be72639d",
-      "source_path": "Exponentialdiameter contraction under Delaunay minicenter refinement",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-26T16:40:58.428883+00:00",
-      "title": "Deepening: Exponentialdiameter contraction under Delaunay minicenter refinement"
     },
     {
       "ambition_level": "extension",
@@ -54230,11 +54236,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "762ed13d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -54246,7 +54252,7 @@
         "NumberTheory"
       ],
       "id": "seed_335",
-      "last_attempt_time": "2026-06-26T16:16:07.023343+00:00",
+      "last_attempt_time": "2026-06-25T14:27:50.086691+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -54260,7 +54266,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432611+00:00",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
@@ -64508,44 +64514,6 @@
       "thread_id": "",
       "timestamp": "2026-06-14T19:08:30.184107+00:00",
       "title": "Close Proofs: This cycle delivered `Catalog/Speculative/AutoResearch/EckmannHiltonMo"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Cycle be72639d (Q=0.765) proved 26 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor λ > 1, leading to exponential contraction after k iterations: max{σ ∈ ",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Applications"
-      ],
-      "id": "sorry_fill_be72639d_d29d046c",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8145600000000002,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "be72639d",
-      "source_path": "Exponentialdiameter contraction under Delaunay minicenter refinement",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-26T16:40:58.992061+00:00",
-      "title": "Close Proofs: Exponentialdiameter contraction under Delaunay minicenter refinement"
     },
     {
       "ambition_level": "extension",
@@ -129371,7 +129339,7 @@
   "recent_domain_counts": {
     "Algebra": 303,
     "Applications": 117,
-    "Bridges": 59,
+    "Bridges": 58,
     "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
