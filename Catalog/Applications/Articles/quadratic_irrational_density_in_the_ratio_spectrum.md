@@ -1,243 +1,271 @@
-# The Vector That Refuses to Stretch
+# The Spectrum Hidden Inside a Number
 
-## A small puzzle hiding in plain sight
+## How Well Can You Cheat at Approximating an Irrational?
 
-Imagine you have a machine that takes any arrow drawn from the origin of a sheet of
-graph paper and replaces it with a new arrow. The machine is *linear*: doubling the
-input doubles the output, and the sum of two inputs maps to the sum of the outputs.
-In two dimensions, every such machine is a $2 \times 2$ matrix
+Pick an irrational number — say $\sqrt{2} = 1.41421356\ldots$ — and try to
+sneak up on it with fractions. You will quickly find $\tfrac{7}{5} = 1.4$,
+then $\tfrac{17}{12} = 1.41\overline{6}$, then $\tfrac{41}{29} = 1.4137\ldots$,
+each one a better impostor than the last. A natural question, almost as old as
+mathematics itself, is: *how good can these impostors be?* Not in absolute
+terms — any number can be approximated to arbitrary precision if you allow
+enormous denominators — but relative to the size of the denominator you spend.
 
-$$
-M = \begin{pmatrix} a & b \\ c & d \end{pmatrix},
-$$
-
-and it acts on a vector $v = (x, y)$ by the rule
-
-$$
-Mv = (a x + b y,\; c x + d y).
-$$
-
-Now ask a deceptively simple question. The machine generally changes the *length* of
-an arrow: a short arrow may come out long, a long one may come out short. For each
-nonzero input $v$ we can measure the **stretch factor**
+This is the heart of **Diophantine approximation**, and it has a beautiful,
+precise scorecard. For a real number $x$, define its **Lagrange constant**
 
 $$
-\frac{\lVert Mv \rVert}{\lVert v \rVert},
+k(x) = \limsup_{q \to \infty}\; \frac{1}{q^2 \,\bigl|x - p/q\bigr|},
 $$
 
-where $\lVert (x,y) \rVert = \sqrt{x^2 + y^2}$ is ordinary Euclidean length. As $v$
-sweeps around all possible directions, this stretch factor sweeps out a whole *set* of
-numbers. We call that set the **ratio spectrum** of $M$. Picture standing at the
-center of a trampoline and pushing outward in every direction: in some directions the
-fabric resists and barely moves, in others it gives easily. The ratio spectrum records
-exactly how much "give" the machine $M$ has, direction by direction.
+the largest constant $c$ for which the inequality $|x - p/q| < 1/(c\,q^2)$ has
+infinitely many rational solutions $p/q$. A *large* $k(x)$ means $x$ is
+**approximable** — it can be ambushed by unusually accurate fractions. A *small*
+$k(x)$ means $x$ is **stubborn**, or in the trade, *badly approximable*. The
+golden ratio $\varphi = \tfrac{1+\sqrt5}{2}$ is the most stubborn number of all,
+with the smallest possible Lagrange constant $k(\varphi) = \sqrt5$. This is the
+famous bottom rung of the **Lagrange spectrum**, and it is no accident that the
+golden ratio's continued fraction is the maddeningly simple $[1;1,1,1,\ldots]$:
+a number resists approximation precisely when its continued fraction refuses to
+produce large terms.
 
-Here is the question this article is about: **is there always a direction the machine
-leaves completely unstretched** — an arrow that comes out exactly as long as it went
-in? In symbols, is there a nonzero $v$ with $\lVert Mv \rVert = \lVert v \rVert$, so
-that the number $1$ belongs to the ratio spectrum?
+This article is about a different, less explored question. Instead of asking how
+the Lagrange constant behaves number by number, we ask how it *transforms* when
+we push numbers around with the simplest nonlinear maps in mathematics.
 
-For a *generic* matrix the answer is no. A machine that magnifies everything by a
-factor of $7$, say, never leaves any arrow fixed in length. But there is a special,
-beautiful family of machines for which the answer is always **yes** — and the reason
-why is a small gem of geometry and algebra.
+## Moving Numbers with a Matrix
 
-## Area-preserving machines
-
-The special family consists of the machines that **preserve area**. Every $2 \times 2$
-matrix has a single number attached to it, its *determinant*
+Take a $2\times 2$ matrix of integers,
 
 $$
-\det M = a d - b c,
+M = \begin{pmatrix} p & q \\ r & s \end{pmatrix},
 $$
 
-whose absolute value tells you the factor by which the machine scales areas. If you
-feed the machine a little square of area $1$, the output is a parallelogram of area
-$\lvert \det M \rvert$. A machine that neither inflates nor deflates area satisfies
-$\lvert \det M \rvert = 1$, equivalently
+and let it act on a real number $x$ by the **Möbius transformation** (also
+called a linear fractional transformation):
 
 $$
-(\det M)^2 = 1.
+M \cdot x = \frac{p\,x + q}{r\,x + s}.
 $$
 
-These are the **unimodular** machines (up to sign). They are everywhere in
-mathematics: rotations, shears, the symmetries of a checkerboard lattice, the moves of
-the modular group that governs continued fractions, and the dynamics behind everything
-from billiards to number theory. They can twist, flip, and shear the plane wildly — a
-shear can send the vertical direction far off to the side — but they never change how
-much room a region takes up.
+These maps are everywhere. They are the symmetries of the hyperbolic plane, the
+gears of continued fractions, and the basic moves of the modular group that
+organizes elliptic curves and modular forms. When $M$ is invertible over the
+integers — that is, when its determinant $\det M = ps - qr$ equals $\pm 1$ — the
+map $M$ shuffles the rationals among themselves perfectly and leaves the Lagrange
+constant *completely unchanged*: $k(M\cdot x) = k(x)$. Such maps cannot make a
+number easier or harder to approximate; they just relabel it.
 
-The central result we will explain is this:
-
-> **Every area-preserving linear machine in the plane fixes the length of at least one
-> nonzero arrow.** If $(\det M)^2 = 1$, then there is a nonzero vector $v$ with
-> $\lVert M v \rVert = \lVert v \rVert$. Consequently, the number $1$ always lies in
-> the ratio spectrum of $M$.
-
-This is not obvious. A shear like
+The interesting case is when $\det M$ is some other nonzero integer, say $2$ or
+$-3$ or $12$. Now $M$ is still a perfectly good map, but it is not reversible
+within the integers. It can stretch and fold the number line in a way that
+*does* change how approximable a number is. The natural quantity to study is the
+**ratio**
 
 $$
-S = \begin{pmatrix} 1 & 5 \\ 0 & 1 \end{pmatrix}
+\rho(M, x) = \frac{k(M\cdot x)}{k(x)},
 $$
 
-has determinant $1$, yet it visibly stretches almost everything: the point $(0,1)$ is
-flung to $(5,1)$, whose length is more than five times larger. So which arrow does it
-leave alone? The theorem promises one exists. The horizontal arrow $(1,0)$ is mapped to
-itself, length unchanged — so for this shear, the fixed direction is the one *along*
-the shear. But the theorem is far more general: it covers every unimodular matrix at
-once, including those with no obvious fixed direction.
+which measures exactly how much the transformation $M$ amplifies or dampens the
+approximability of $x$. If $\rho > 1$, the map made $x$ easier to approximate;
+if $\rho < 1$, harder.
 
-## Why it has to be true — the trampoline argument
-
-There is a wonderfully visual reason. Walk around the unit circle, letting $v$ point in
-every possible direction, and watch the stretch factor $\lVert Mv \rVert / \lVert v
-\rVert$ change continuously. It reaches some smallest value $\sigma_{\min}$ in its
-"softest" direction and some largest value $\sigma_{\max}$ in its "stiffest"
-direction. These two extreme numbers are the matrix's **singular values**, and they
-obey a remarkable identity:
+How big, and how small, can this ratio get? A theorem of Lagarias and Shallit
+pins it inside a tidy interval. If $D = |\det M|$, then for every $x$,
 
 $$
-\sigma_{\min} \cdot \sigma_{\max} = \lvert \det M \rvert.
+\frac{1}{D} \;\le\; \rho(M, x) \;\le\; D.
 $$
 
-The product of the most and least stretching equals the area factor. This is just the
-statement that a unit circle is mapped to an ellipse whose half-axes are
-$\sigma_{\min}$ and $\sigma_{\max}$, and whose area is $\pi \sigma_{\min}
-\sigma_{\max} = \pi \lvert \det M \rvert$.
+The determinant — a single integer — sets a hard two-sided speed limit on how
+much any Möbius map can distort approximability. Double the determinant's
+absolute value and you double both the maximum boost and the maximum penalty.
 
-For a unimodular machine $\lvert \det M \rvert = 1$, so
+## The Question: Does the Ratio Fill the Whole Interval?
 
-$$
-\sigma_{\min} \cdot \sigma_{\max} = 1.
-$$
+Knowing the ratio *lives* in $[1/D, D]$ is one thing. Knowing *which values it
+actually achieves* is another, and far richer. Picture the interval $[1/D, D]$ as
+a radio dial. The Lagarias–Shallit bound tells us the dial's two ends. But are
+all the stations in between real? Or are there silent gaps — values of the ratio
+that no number can ever produce?
 
-Two positive numbers whose product is $1$ must straddle $1$: one is at most $1$ and the
-other is at least $1$. So the softest direction shrinks (or holds) and the stiffest
-direction grows (or holds), and the stretch factor takes every value in between as we
-rotate from one to the other. By the Intermediate Value Theorem, somewhere along the
-way it must pass through exactly $1$. That direction is the arrow that refuses to
-stretch.
+The central conjecture of this work says the dial is **completely full**, at
+least when we restrict our attention to the most structured irrationals of all:
 
-This argument is honest and complete, but it leans on calculus and topology. The proof
-we actually certified is purely algebraic — and it turns the geometry into a single
-elegant inequality.
+> **Density Conjecture.** For every primitive integer matrix $M$ with nonzero
+> determinant and every pair of reals $u < v$ inside $[1/D, D]$, there exists a
+> *real quadratic irrational badly approximable number* $x$ with
+> $u < \rho(M, x) < v$.
 
-## Why it has to be true — the algebra
+In words: as $x$ ranges over quadratic irrationals — numbers like $\sqrt2$ or
+$\tfrac{1+\sqrt{13}}{3}$ that solve quadratic equations with integer
+coefficients — the ratios $k(M\cdot x)/k(x)$ are **dense** in the full interval
+$[1/D, D]$. No gaps. Every station broadcasts.
 
-Saying that some nonzero $v=(x,y)$ has $\lVert Mv \rVert = \lVert v \rVert$ is the same
-as saying the quantity
+Why restrict to quadratic irrationals? Because they are the numbers whose
+approximation behavior we can actually compute. A theorem of Lagrange says a
+number is a quadratic irrational exactly when its continued fraction is
+**eventually periodic** — it repeats forever, like a decimal expansion that
+settles into a cycle. That periodicity is what makes the Lagrange constant a
+finite, computable maximum over one period rather than an unfathomable limit, and
+it is what gives us the leverage to engineer ratios on demand.
 
-$$
-Q(x, y) = (a x + b y)^2 + (c x + d y)^2 - (x^2 + y^2)
-$$
+## The Architecture Behind the Conjecture
 
-equals zero for some $(x,y) \neq (0,0)$. The function $Q$ is a **quadratic form** — a
-homogeneous degree-two polynomial — and we can write it as
+Proving full density is a deep program, and it is not finished. But this work
+lays down the **structural backbone** — the rigid scaffolding of facts that any
+proof must rest on, each one established with complete certainty. These facts
+fall into two groups: the geometry of the *target interval*, and the algebra of
+the *Möbius action* itself.
 
-$$
-Q(x, y) = A\,x^2 + 2B\,xy + C\,y^2,
-$$
+### The target interval is real, centered, and self-reciprocal
 
-with coefficients
+The first thing to nail down is that the interval $[1/D, D]$ we are trying to
+fill is not an illusion. Three facts secure it.
 
-$$
-A = a^2 + c^2 - 1, \qquad B = ab + cd, \qquad C = b^2 + d^2 - 1.
-$$
-
-A quadratic form like this has a nontrivial zero precisely when its **discriminant**
-$B^2 - AC$ is nonnegative. (Think of it as the discriminant of the one-variable
-equation $A t^2 + 2B t + C = 0$ obtained by setting $y = 1$ and $x = t$: a real root
-exists exactly when $B^2 - AC \ge 0$.) So everything comes down to checking a single
-inequality.
-
-And here the determinant condition works its magic. A direct expansion, using the
-classical Lagrange identity $(a^2+c^2)(b^2+d^2) = (ab+cd)^2 + (ad-bc)^2$, collapses the
-discriminant into something startlingly clean:
+The cornerstone is almost embarrassingly simple, and yet everything hinges on
+it: an integer matrix with nonzero determinant has
 
 $$
-B^2 - AC = \big(a^2 + b^2 + c^2 + d^2\big) - (ad - bc)^2 - 1.
+|\det M| \ge 1.
 $$
 
-When $M$ is unimodular, $(ad-bc)^2 = 1$, so
+A determinant is an integer; the only integers excluded by "nonzero" are
+sandwiched away from zero by at least a full unit. From this single inequality,
+the rest of the interval's shape follows. Because $D \ge 1$, we have
+$1/D \le 1 \le D$, so the value $\mathbf{1}$ — the "no change" ratio — always
+lies inside the interval. Every Möbius map is *allowed* to leave approximability
+untouched; the interval always contains its neutral point. And because
+$1/D \le D$, the interval is genuinely nonempty, never a backwards or empty
+range.
+
+The most elegant structural fact is that the two endpoints are **reciprocals**:
 
 $$
-B^2 - AC = \big(a^2 + b^2 + c^2 + d^2\big) - 2.
+\frac{1}{D} \cdot D = 1.
 $$
 
-Is this nonnegative? The sum $a^2+b^2+c^2+d^2$ is the squared **Frobenius norm** of
-$M$ — the total "size" of all its entries. The inequality
-$a^2+b^2+c^2+d^2 \ge 2\lvert ad - bc \rvert = 2$ is a two-line consequence of the fact
-that squares are never negative; it is exactly the arithmetic-mean/geometric-mean
-inequality in disguise. So the discriminant is nonnegative, the quadratic form has a
-real zero, and the unstretched arrow exists. The geometric fact "a unimodular matrix
-can never have all four entries small" *is* the reason a length-preserving direction
-must appear.
+This is not a coincidence of arithmetic but a fingerprint of a deep symmetry.
+Running a matrix $M$ backwards (using $M^{-1}$) inverts its effect on
+approximability, sending a ratio $\rho$ to $1/\rho$. The interval $[1/D, D]$ is
+exactly the set fixed, as a whole, by the flip $\rho \mapsto 1/\rho$. The
+boost that $M$ can deliver at one extreme is mirrored, multiplicatively, by the
+penalty it can inflict at the other. The spectrum is its own mirror image.
 
-The actual certified statement of this discriminant positivity is the lemma we named
-`disc_nonneg`. The construction of the zero — choosing $x = (-B + \sqrt{B^2-AC})/A$ and
-$y = 1$ when $A \neq 0$, and falling back to the horizontal arrow $(1,0)$ when $A = 0$
-— is the heart of the theorem `core_exists`. Translating that algebraic zero back into
-the language of matrices and vector norms gives `exists_unit_ratio`, and reading off the
-consequence for the spectrum gives `one_mem_ratioSpectrum`.
+### Only the *primitive part* of the matrix matters
 
-## What the "spectrum" really is
-
-It is worth pausing on the word *spectrum*. For a general matrix $M$, the set of stretch
-factors $\lVert Mv \rVert / \lVert v \rVert$ is not a single number but a whole
-interval: it ranges from the softest stretch $\sigma_{\min}$ to the stiffest stretch
-$\sigma_{\max}$. For a unimodular matrix that interval is
+Here is a subtlety that the formalism makes sharp. Suppose you take a matrix $M$
+and multiply every single entry by the same nonzero integer $k$, producing $kM$.
+This changes the determinant dramatically — it gets multiplied by $k^2$. You
+might expect the ratio spectrum to change too. It does not. The Möbius action is
+**completely blind** to overall scaling:
 
 $$
-\Big[\, \tfrac{1}{\lvert \det M \rvert},\; \lvert \det M \rvert \,\Big] = [\,1,\,1\,],
+(kM)\cdot x = \frac{kp\,x + kq}{kr\,x + ks}
+= \frac{k(p\,x+q)}{k(r\,x+s)} = \frac{p\,x+q}{r\,x+s} = M \cdot x.
 $$
 
-which has collapsed to the single point $1$ — because $\sigma_{\min} \sigma_{\max} = 1$
-forces $\sigma_{\min} \le 1 \le \sigma_{\max}$, and the only way for the *guaranteed*
-common value across all unimodular matrices to sit is at $1$ itself. Our theorem pins
-down that this guaranteed value is genuinely attained, not merely approached. The final
-statement `ratioSpectrum_dense_Icc` records the clean topological consequence: the
-degenerate interval $[1,1]$ is contained in the closure of the ratio spectrum. The one
-value the geometry demands is really there.
+The shared factor $k$ cancels top and bottom, for *every* real $x$. The
+geometric map is identical; only the bookkeeping changed. This is why the density
+statement is phrased for **primitive** matrices — those whose entries share no
+common factor. Every matrix is a primitive one in disguise, scaled up by some
+integer, and the disguise is invisible to the spectrum. Primitivity is not a
+technical convenience; it is the correct, irredundant way to label the maps.
 
-## Where this lives in the wider world
+### Möbius maps compose like matrices, and determinants multiply
 
-The unimodular matrices are the gatekeepers of an enormous amount of mathematics. The
-integer ones, with entries in $\{\dots, -1, 0, 1, 2, \dots\}$ and determinant $\pm 1$,
-form the **modular group**, the engine behind continued fractions, the geometry of the
-hyperbolic plane, and the classification of quadratic forms. When such a matrix acts on
-a number $x$ by the fractional-linear rule $x \mapsto (ax+b)/(cx+d)$, it shuffles the
-*badly approximable* numbers — the real numbers, like the golden ratio $\varphi =
-(1+\sqrt5)/2$, whose continued fractions never settle down — among themselves. The
-stretch factors $\lVert Mv \rVert / \lVert v \rVert$ are precisely the quantities that
-control how the "denominators" $k(\cdot)$ of these numbers grow under the action, which
-is why the ratio spectrum is a natural object to study.
-
-The grand conjecture motivating this line of work says that, for a general
-(not-necessarily-unimodular) primitive integer matrix $M$, the stretch ratios obtained
-by feeding in quadratic-irrational directions fill up the *entire* interval
-$[\,1/\lvert\det M\rvert,\; \lvert\det M\rvert\,]$ densely. The result certified here is
-the cornerstone special case: when $\lvert \det M \rvert = 1$ that interval is the
-single point $1$, and we have shown — completely and rigorously — that this point is
-genuinely occupied. Every area-preserving machine really does have its unstretched
-arrow.
-
-## A puzzle to take home
-
-Try it yourself. Pick any four numbers with $ad - bc = 1$, say
+The final pillar is what turns the problem from a study of individual maps into a
+study of an entire algebraic system. Möbius transformations compose, and they do
+so in perfect lockstep with matrix multiplication:
 
 $$
-M = \begin{pmatrix} 2 & 1 \\ 1 & 1 \end{pmatrix}, \qquad \det M = 2\cdot 1 - 1 \cdot 1 = 1.
+M \cdot (N \cdot x) = (MN) \cdot x.
 $$
 
-The recipe says: form $A = 2^2 + 1^2 - 1 = 4$, $B = 2\cdot 1 + 1\cdot 1 = 3$,
-$C = 1^2 + 1^2 - 1 = 1$, so the discriminant is $B^2 - AC = 9 - 4 = 5 \ge 0$. Take
-$x = (-3 + \sqrt5)/4$ and $y = 1$. Then the arrow $(x, 1)$ has exactly the same length
-before and after the machine acts — even though almost every *other* arrow gets
-stretched or squashed. Notice the cameo by $\sqrt 5$: the unstretched direction of this
-most-famous of unimodular matrices is itself a quadratic irrational, woven from the
-same golden thread that runs through the whole theory.
+Applying one fractional transformation after another is the same as applying the
+single transformation built from the *product* of the two matrices. (One needs
+only the mild caveat that no denominator along the way hits zero.) This is the
+statement that the integer matrices form a *monoid acting on the line by
+fractional transformations* — the same structure that powers the modular group.
 
-That is the quiet beauty of the result. Behind the buzzing complexity of an
-area-preserving transformation — all its twisting and shearing — there is always one
-faithful direction it leaves untouched, and you can find it with nothing more than a
-square root.
+Paired with composition is multiplicativity of the determinant, verified as a
+bare polynomial identity in the eight entries of two matrices:
+
+$$
+\det(MN) = \det M \cdot \det N.
+$$
+
+Together these two facts have a powerful consequence for the spectrum. Since
+ratios multiply under composition and determinants multiply under products, the
+reachable ratios of a product $MN$ live inside the *product* of the intervals for
+$M$ and $N$. The two-sided bound $[1/D, D]$ is not an isolated fact about one
+matrix — it is **closed under composition**, exactly as a well-behaved spectrum
+should be. And it explains the strategy behind the full conjecture: any matrix
+$M$ can be factored, via its **Smith normal form**, into $U \cdot
+\mathrm{diag}(1, D) \cdot V$ where $U$ and $V$ are reversible integer matrices
+that *do not move the ratio at all*. All of the spectral action is concentrated
+in the single diagonal matrix $\mathrm{diag}(1, D)$. Prove density for that one
+clean family and, by composition, you get it for every matrix at once.
+
+## Why the Restriction Class Must Be Stable
+
+There is one more fact without which the entire question would be ill-posed. We
+chose to study the ratio spectrum *restricted to quadratic irrationals*. For that
+to even make sense, the transformation $M$ must keep us inside that class: if $x$
+is a quadratic irrational, $M\cdot x$ had better be one too. Otherwise the
+ratio $k(M\cdot x)/k(x)$ might be comparing apples to a number outside our
+universe.
+
+This **closure property** is the algebraic shadow of Lagrange's periodicity
+theorem, and it holds in full generality:
+
+> The Möbius image of a real quadratic irrational, under any integer matrix of
+> nonzero determinant, is again a real quadratic irrational.
+
+The proof has two moving parts. First, irrationality is preserved: if $x$ is
+irrational and $M$ has nonzero determinant, then $M\cdot x$ cannot suddenly
+become a fraction, because that would force $x$ itself to be rational. Second,
+the *quadratic* nature survives: plug $M\cdot x = \tfrac{px+q}{rx+s}$ into a
+generic quadratic equation and clear denominators, and out pops another quadratic
+equation with integer coefficients that $x$ satisfies — and the nonzero
+determinant guarantees the new equation is genuinely quadratic, not a degenerate
+linear one. A clean discriminant identity,
+
+$$
+4a\,(a m^2 - b m n + c n^2) = (2am - bn)^2 - (b^2 - 4ac)\,n^2,
+$$
+
+underlies the key fact that a quadratic with non-square discriminant has no
+nontrivial integer roots — the algebraic expression of the geometric truth that
+an *anisotropic* binary form never vanishes. With closure in hand, the quadratic
+irrationals form a stable arena, and the ratio spectrum is a well-defined object
+living on it.
+
+## What This Buys Us, and What Comes Next
+
+The picture that emerges is strikingly clean. The approximability of an
+irrational number, distilled into the single number $k(x)$, transforms under
+integer fractional maps in a way governed entirely by one integer: the absolute
+determinant $D$. That determinant fixes a symmetric, self-reciprocal interval
+$[1/D, D]$; the neutral ratio $1$ always sits inside it; overall scaling is
+invisible, so only the primitive class matters; and the whole apparatus is
+closed under composition, with the spectral content of any map concentrated in
+its diagonal Smith form.
+
+What remains is to show the dial is truly full — that *every* value in $[1/D, D]$
+is approached by an actual quadratic irrational. The roadmap is now concrete.
+One direction is to realize the extreme ratios $D$ and $1/D$ as limits of
+purely periodic continued fractions whose period is "aligned" with the diagonal
+form $\mathrm{diag}(1, D)$, so the determinant gets absorbed into a single
+partial-quotient step. Another is to upgrade density to a statement about
+*measure*: not merely that the achievable ratios are dense, but that they fill up
+a set of full length as we allow more and more complex continued fractions —
+with the anisotropy identity above providing the quantitative control. A third is
+to make the mirror symmetry $\rho \in \mathrm{Spec}(M) \iff 1/\rho \in
+\mathrm{Spec}(M^{-1})$ exact.
+
+These are the open frontiers. But the foundation is laid in stone. The ratio
+spectrum is no longer a vague conjecture floating above the number line; it is a
+rigid algebraic object with a known shape, a known symmetry, and a known
+strategy for its conquest. Hidden inside every integer matrix, waiting to be read
+off from a single determinant, is a spectrum of stations — and we now know
+exactly where to tune the dial.
