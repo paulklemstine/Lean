@@ -1,53 +1,27 @@
-# Computational Evidence — Schur Numbers (Ramsey theory, additive)
+# Theorem Trace (internal — anti-hallucination ledger)
 
-All claims below were checked in Lean with `decide` / `Finset.filter` counts
-before formalisation, and are now backed by `sorry`-free proofs in
-`Algebra/SchurNumberTwo.lean` and `Algebra/SchurNumberThree.lean`.
+Every claim in `ARTICLE.md` and `RESEARCH_PAPER.md` maps to one of the Lean
+declarations below. No theorem is stated that is not present in the Phase A
+output. Results from the concept brief that are NOT in the Lean output
+(R(4,4)=18, Hales-Jewett, explicit best-known diagonal lower bounds) are
+deliberately NOT claimed as proved; where mentioned at all they appear only as
+context/future work.
 
-## 1. Small-case calculations (Schur number S(r))
-
-A *Schur triple* is `x + y = z` with `x, y ≥ 1` (entries may repeat, so `2x = z`
-is allowed). `S(r)` is the largest `n` such that `{1,…,n}` admits an `r`-colouring
-with no monochromatic Schur triple.
-
-| r | S(r) | extremal colouring of {1,…,S(r)} |
-|---|------|----------------------------------|
-| 1 | 1    | {1} (since 1+1=2 ∉ {1})          |
-| 2 | 4    | {1,4} / {2,3}                    |
-| 3 | 13   | {1,4,10,13} / {2,3,11,12} / {5,6,7,8,9} |
-| 4 | 44   | (not formalised; future cycle)   |
-
-OEIS: the Schur numbers `1, 4, 13, 44, 160, …` are **A045652**.
-
-## 2. Two-colour case (formalised, `decide`)
-
-* Brute force over all `2^6` colourings of indices `0..5`:
-  every two-colouring of `{1,…,5}` contains a monochromatic Schur triple →
-  `not_schurColourable_five`.
-* Some two-colouring of `{1,…,4}` avoids one (witness `{1,4}` vs `{2,3}`) →
-  `schurColourable_four`.
-* The deterministic forcing chain making `{1,…,5}` unavoidable (with `a = c 1`):
-  `(1,1,2) ⇒ c2≠a`, `(2,2,4) ⇒ c4=a`, `(1,4,5) ⇒ c5≠a`,
-  `(2,3,5) ⇒ c3=a`, `(1,3,4) ⇒` contradiction.
-
-Conclusion: `S(2) = 4` (`schur_number_two`).
-
-## 3. Three-colour construction (formalised, `decide`)
-
-`Finset.filter` count of monochromatic Schur triples of the classical partition
-of `{1,…,13}`:
-
-```
-(Finset.Icc 1 13 ×ˢ Finset.Icc 1 13).filter
-  (fun p => p.1 + p.2 ≤ 13 ∧ col p.1 = col p.2 ∧ col p.2 = col (p.1+p.2)) |>.card
-  = 0
-```
-
-Hence `S(3) ≥ 13` (`schurColourable_three_thirteen`). The colour classes are
-symmetric under `k ↦ 14 - k`.
-
-## 4. Counterexample hunt
-
-No counterexamples to `S(2)=4` or to the validity of the `S(3) ≥ 13`
-construction were found; the universal `{1,…,5}` claim holds for all `2^6 = 64`
-colourings tested, and the `S(3)` construction has exactly 0 bad triples.
+| Lean name | Source file | Mathematical statement | In ARTICLE | In PAPER |
+|---|---|---|---|---|
+| `Arrows` | Applications.Ramsey | `n → (s,t)`: every red/blue colouring of a vertex set of size ≥ n has a red s-clique or blue t-clique | yes (informal) | yes (Def 1) |
+| `Arrows.mono` | Applications.Ramsey | monotonicity: `Arrows n s t → n ≤ n' → Arrows n' s t` | implicit | yes (Lem) |
+| `arrows_step` | Applications.Ramsey | `m→(s,t+1)` and `n→(s+1,t)` imply `(m+n)→(s+1,t+1)` | yes (recursion) | yes (Lem) |
+| `arrows_recursion` / `arrows_binomial_bound` | Applications.Ramsey | `C(s+t,s) → (s+1,t+1)`, i.e. `R(s+1,t+1) ≤ C(s+t,s)` | yes | yes (Thm) |
+| `arrows_three_three` | Applications.Ramsey | `Arrows 6 3 3` | yes | yes |
+| `pentagon`, `pentagon_no_triangle`, `pentagon_compl_no_triangle` | Applications.Ramsey | C₅ has no red/blue triangle | yes | yes |
+| `not_arrows_five_three_three` | Applications.Ramsey | `¬ Arrows 5 3 3` | yes | yes |
+| `ramsey_three_three` | Applications.Ramsey | `Arrows 6 3 3 ∧ ¬ Arrows 5 3 3` (R(3,3)=6) | yes | yes (Thm) |
+| `red_nbrs_sum_even` | Applications.RamseyThreeFour | total red-degree inside W is even (handshake) | yes | yes (Lem) |
+| `arrows_three_four` | Applications.RamseyThreeFour | `Arrows 9 3 4` | yes | yes |
+| `not_arrows_eight_three_four` | Applications.RamseyThreeFour | `¬ Arrows 8 3 4` (Möbius ladder) | yes | yes |
+| `ramsey_three_four` | Applications.RamseyThreeFour | `Arrows 9 3 4 ∧ ¬ Arrows 8 3 4` (R(3,4)=9) | yes | yes (Thm) |
+| `redDeg` | Applications.RamseyParity | red-degree of v inside W | yes | yes (Def) |
+| `red_degree_parity_obstruction` | Applications.RamseyParity | on odd-card W, not all red-degrees can be odd | yes | yes (Thm) |
+| `no_odd_regular_colouring` | Applications.RamseyParity | if n·d odd, no d-regular red colouring on n vertices | yes | yes (Thm) |
+| `hyper_ramsey_counting_lower_bound` | Applications.HypergraphRamsey.ProbabilisticBound | if `2·C(n,k) < 2^{C(k,r)}` then `¬ HyperRamseyProp r n k k`; r=2 gives R(k,k) > 2^{k/2} | yes | yes (Thm) |
