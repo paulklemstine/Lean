@@ -120,7 +120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
   {
-    "consumed_by_exp_id": "580d1f18",
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -130,7 +130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -180,7 +180,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
   {
-    "consumed_by_exp_id": "c743a598",
+    "consumed_by_exp_id": "",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domains": [
       "Geometry",
@@ -190,7 +190,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:11.683325+00:00",
     "title": "Standard Conjectures on Algebraic Cycles"
   },
@@ -210,7 +210,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "6f4d545d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domains": [
       "Algebra"
@@ -219,7 +219,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432615+00:00",
     "title": "Galois Theory: Solvability of Polynomials"
   },
@@ -327,6 +327,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 53529d3f (Q=0.785), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that for all grid sizes m,n \u2265 3 the number of vertices of degree\u202f4 in the flip graph of the m\u00d7n Miura\u2011ori equals (m\u20111)(n\u20111).",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_53529d3f_3676445b",
+    "priority_score": 0.88512,
+    "research_mode": "team",
+    "source_exp_id": "53529d3f",
+    "status": "available",
+    "timestamp": "2026-06-26T19:26:18.282553+00:00",
+    "title": "Deepening: Degree\u20114 vertices in the flip graph of the m\u00d7n Miura\u2011ori"
   },
   {
     "consumed_by_exp_id": "",
@@ -3465,21 +3479,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
   },
   {
-    "consumed_by_exp_id": "4e028e76",
-    "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2438",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.24536v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T13:54:36.235382+00:00",
-    "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The stable tropical intersection is reduced iff specific structural conditions on the subvariety and fan hold, verified via algebraic validation.",
     "domains": [
@@ -6198,6 +6197,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Flip graphs of the m\u00d7n Miura-ori\n\nDerived from this cycle's findings: (a) the crease graph has exactly `(m-1)(n-1)`\ndegree-4 vertices (`card_degreeFour`), and (b) the single-site MV flip graph is\n`(m+1)(n+1)`-regular and connected (`flipGraph_degree`, `flipGraph_connected`).\n\n## 1. Diameter of the MV flip graph is exactly `(m+1)(n+1)`\n\n**Conjecture.** The single-site flip graph of MV assignments of the `m \u00d7 n`\nMiura-ori has diameter exactly `(m+1)(n+1)` (the number of crease vertices).\n\nThe key insight is... the flip graph is the Boolean hypercube `Q_N` with\n`N = (m+1)(n+1)` (established structurally by `flipGraph_degree` +\n`flipGraph_connected`), and the hypercube `Q_N` has diameter `N`; two assignments\nrealizing the diameter are an assignment and its global complement.\n\n**Why now?** We have already proved regularity and connectivity, isolating the\ngraph as a hypercube; the diameter is the immediate next invariant and unlocks\nworst-case bounds on single-site reconfiguration.\n\n## 2. Full degree census determines the crease graph up to isomorphism\n\n**Conjecture.** Among all finite planar grid graphs, the triple\n`(#deg-2, #deg-3, #deg-4) = (4, 2(m-1)+2(n-1), (m-1)(n-1))` characterizes the\n`m \u00d7 n` crease graph up to isomorphism.\n\nThe key insight is... the corner/edge/interior split is rigid: degree-2 vertices\nmust be the 4 corners, degree-3 the boundary chains, forcing the `(m+1)\u00d7(n+1)`\nrectangular shape, so the degree census is a complete combinatorial fingerprint.\n\n**Why now?** The interior count `(m-1)(n-1)` (this cycle) is the last of the\nthree census numbers; combined with the handshake total `(m+1)(n+1)` it gives a\nclosed system ripe for a uniqueness proof.\n\n## 3. Mixing time of Glauber dynamics on MV assignments is `\u0398(N log N)`\n\n**Conjecture.** Single-site Glauber dynamics on the (unconstrained) MV\nassignments of the `m \u00d7 n` Miura-ori mixes in `\u0398(N log N)` steps with\n`N = (m+1)(n+1)`.\n\nThe key insight is... once the state graph is identified with the hypercube\n`Q_N` (this cycle), Glauber dynamics on `Q_N` is the classical\nlazy-random-walk-on-the-cube, whose mixing time is `(1/2)N log N (1+o(1))` by a\ncoupon-collector coupling.\n\n**Why now?** `Cereceda2009mixing` poses mixing of recolouring chains; our\nidentification of the Miura flip graph with `Q_N` makes the Miura instance an\nexactly solvable special case.\n\n## 4. Flat-foldable MV assignments form a degree-`(m+1)(n+1) \u2212 c` subgraph\n\n**Conjecture.** Restricting to *flat-foldable* MV assignments (Maekawa/Kawasaki\nat each interior degree-4 vertex) yields an induced flip subgraph in which every\nvertex has degree `(m+1)(n+1) \u2212 c(p)` where the defect `c(p)` counts sites whose\nflip would violate a local Maekawa constraint, and `\u2211_p c(p)` is governed by the\n`(m-1)(n-1)` interior vertices.\n\nThe key insight is... each interior degree-4 vertex (counted by\n`card_degreeFour`) imposes one Maekawa parity constraint, so the interior-vertex\ncount is exactly the number of linear constraints cutting the hypercube down to\nthe flat-foldable polytope's vertex set.\n\n**Why now?** We now have both the interior-vertex count and the ambient\nhypercube; the constrained subgraph is the natural, harder, physically faithful\nnext object.\n\n## 5. The degree-4 count is invariant under Miura shear/zig-zag offset\n\n**Conjecture.** For any admissible shear angle and zig-zag offset producing a\ncombinatorial `m \u00d7 n` Miura tessellation, the number of degree-4 vertices remains\n`(m-1)(n-1)`.\n\nThe key insight is... `card_degreeFour` depends only on the *vertex* incidence\ncombinatorics, which are preserved by any continuous Miura parameterization, so\nthe count is a topological invariant of the cell complex rather than a metric\none.\n\n**Why now?** Having proved the count for the canonical model, the robustness\nclaim is the natural strengthening and connects to the rigid-origami moduli\ndiscussed in the catalog references.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2624",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "53529d3f",
+    "status": "available",
+    "timestamp": "2026-06-26T19:25:53.009957+00:00",
+    "title": "Derived from this cycle's findings: (a) the crease graph has exactly `(m-1)(n-1)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6271,7 +6285,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "7b228cc3",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -6281,7 +6295,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
@@ -6519,7 +6533,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "f247824f",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6529,7 +6543,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

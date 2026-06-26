@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "53529d3f",
     "filename": "degree4_vertices_in_the_flip_graph_of_the_mn_miura.json",
     "pkg_num": 106,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.78512,
     "title": "Mountain-Valley Configurations and the Hypercube Flip Graph of the Miura-ori"
   },
   {
@@ -3092,8 +3092,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "degree4_vertices_in_the_flip_graph_of_the_mn_miura",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.78512,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Mountain-Valley Configurations and the Hypercube Flip Graph of the Miura-ori"
     }
