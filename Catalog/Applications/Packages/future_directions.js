@@ -2077,7 +2077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "913e3580",
+    "consumed_by_exp_id": "",
     "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
     "domains": [
       "Algebra"
@@ -2086,7 +2086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -4753,7 +4753,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conflict-Free Coloring of Outerplanar Graphs with Three Colors"
   },
   {
-    "consumed_by_exp_id": "0171d9bf",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for every integer n \u2265 2, any collection of mutually orthogonal Italian squares of order n contains at most n\u20111 squares, and this bound is attained exactly when n is a prime power.",
     "domains": [
       "Pythagorean"
@@ -4762,7 +4762,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25884v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T16:34:26.097340+00:00",
     "title": "Maximum size of pairwise orthogonal Italian squares is n\u20111 for prime powers"
   },
@@ -5664,11 +5664,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This paper presents a refined characterization of the externally supported independence number and its computational implications in trees, offering sharp bounds and algorithmic insights.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2601",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22972v1",
+    "status": "available",
+    "timestamp": "2026-06-26T23:15:32.009742+00:00",
+    "title": "Externally Supported Independence Number for Trees"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5682,7 +5697,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5697,7 +5712,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5712,7 +5727,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5727,7 +5742,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5742,7 +5757,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5756,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5770,7 +5785,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5784,7 +5799,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5799,7 +5814,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5814,7 +5829,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5829,7 +5844,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5844,7 +5859,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5859,7 +5874,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5873,7 +5888,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5888,7 +5903,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5903,7 +5918,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5917,7 +5932,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5931,7 +5946,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5945,7 +5960,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5960,7 +5975,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5975,7 +5990,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5990,7 +6005,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6004,7 +6019,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6018,7 +6033,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6033,7 +6048,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6047,7 +6062,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6062,7 +6077,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6076,7 +6091,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6090,7 +6105,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6104,7 +6119,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6119,7 +6134,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6134,7 +6149,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6149,7 +6164,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6163,7 +6178,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6178,7 +6193,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6192,7 +6207,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6207,13 +6222,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
     "status": "available",
     "timestamp": "2026-06-26T22:52:34.019998+00:00",
     "title": "Girth of the deleted co-maximal subgroup graph is three for non-nilpotent finite groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If the endpoint restriction conjecture for the 3-dimensional paraboloid P\u2083 over finite fields (where -1 is not a square) holds, then the integer lattice points on the 3-dimensional Euclidean paraboloid form a \u039b(3) set, characterized by having additive energy bounded by O(|S|\u00b3^(2/3)) for subsets S of size O(1).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2640",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22882v1",
+    "status": "available",
+    "timestamp": "2026-06-26T23:16:39.649655+00:00",
+    "title": "Endpoint Restriction Conjecture for P\u2083 Implies \u039b(3) Structure of Lattice Points"
   },
   {
     "consumed_by_exp_id": "",
