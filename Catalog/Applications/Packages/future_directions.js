@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abbbde7c",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ce6e294",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c488c94",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -2410,7 +2410,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7281fa18",
     "description": "In Lemma 2.1 of the paper the infinite right half-strip row-exchange identity is proved under a uniform contraction assumption for every column. Conjecture: the same identity remains valid under the strictly weaker hypothesis that the contraction ratio is eventually bounded by some \u03b4 < 1. More precisely, for arbitrary top and bottom boundary occupation sequences, nonzero \u03b1, and spectral parameters v,z, if there exist \u03b4 < 1 and N such that for all i \u2265 N the norm of (w\u2081(u\u1d62/z)/w\u2084(u\u1d62/z))*(w\u2084(u\u1d62/v)/w\u2081(u\u1d62/v)) is at most \u03b4, then the two infinite row-exchange partition functions are equal up to the same scalar prefactor f(v/z)/\u03b1\u00b2.",
     "domains": [
       "Pythagorean",
@@ -2420,7 +2420,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22004v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:06:54.483472+00:00",
     "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
   },
@@ -2684,7 +2684,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bc0a8e2b",
     "description": "For q \u2265 3 and n \u2265 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
     "domains": [
       "Bridges"
@@ -2693,7 +2693,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:44:54.697706+00:00",
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
   },
@@ -4796,7 +4796,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Generalized Gawron\u2013Miska\u2013Ulas unboundedness for arbitrary integer bases"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a2f737c1",
     "description": "Conjecture: For every even integer n \u2265 4, there exists a maximal standard social decision frame whose incoherence index (the length of the shortest perfectly balanced sequence of majority or tie sets) equals n. This would strengthen the known result that incoherence indices are unbounded by showing that every sufficiently large even number is actually attained.",
     "domains": [
       "Pythagorean"
@@ -4805,7 +4805,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T18:50:55.115611+00:00",
     "title": "Realization of all even incoherence indices \u22654 by maximal standard frames"
   },
@@ -6015,7 +6015,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "113a596f",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -6025,7 +6025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
