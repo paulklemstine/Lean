@@ -62,7 +62,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "518f172b",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domains": [
       "Computation",
@@ -72,7 +72,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.980012+00:00",
     "title": "Natural Proofs Barrier: Formalization"
   },
@@ -387,7 +387,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Groups of Spheres: Low-Dimensional"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5077231f",
     "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
     "domains": [
       "Physics",
@@ -397,7 +397,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432770+00:00",
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ce6e294",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -1831,7 +1831,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4e31bdaf",
     "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
     "domains": [
       "Geometry"
@@ -1840,7 +1840,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23437v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:39:04.351050+00:00",
     "title": "Helly's Theorem for Convex Splinters"
   },
@@ -1961,7 +1961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4cfc08f0",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domains": [
       "Pythagorean",
@@ -1971,7 +1971,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -2425,7 +2425,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab90b095",
     "description": "For every integer t \u2265 1 and q \u2265 1, let F = tK\u2082 \u222a qK\u2081 be the disjoint union of a matching of size t and q isolated vertices. Then for every n > 2t + q, the Cameron--Puleo upper bound is tight: sat(n, K\u2081 \u2228 F) = n - 1 + sat(n - 1, F). This extends the paper's proved cases t = 1 and t = 2 to all matchings with isolated vertices.",
     "domains": [
       "Bridges"
@@ -2434,7 +2434,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22011v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:25:38.671844+00:00",
     "title": "Join-saturation equality for matchings with isolated vertices"
   },
@@ -4926,7 +4926,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "be72639d",
     "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor \u03bb > 1, leading to exponential contraction after k iterations: max{\u03c3 \u2208 Del(X_k)}.diameter \u2264 (1/\u03bb)^k \u00b7 max{\u03c3 \u2208 Del(X_0)}.diameter",
     "domains": [
       "Pythagorean"
@@ -4935,7 +4935,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
@@ -6348,7 +6348,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f247824f",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6358,7 +6358,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
