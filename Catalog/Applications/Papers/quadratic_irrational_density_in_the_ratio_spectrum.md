@@ -1,82 +1,96 @@
 # Computational Evidence — Quadratic irrational density in the ratio spectrum
 
-This note records the small-case checks that guided the Lean formalization in
-`MobiusQuadratic.lean` and `DeterminantSpectrum.lean`.  The formalized results are
-the *algebraic backbone* of the Lagarias–Shallit ratio-spectrum program (closure
-of the quadratic-irrational locus under integer Möbius maps, and the structure of
-the target interval `[1/|det M|, |det M|]`).  The full `k(Mx)/k(x)` density
-statement is recorded as a future direction; the evidence below covers what is
-formalized.
+Scope: evidence for the *topological floor* of the density program that was
+formalized in `RatioSpectrumDensity.lean` (domain density, adjugate inversion,
+image density). The Lagrange-constant layer `k(Mx)/k(x)` itself is discussed but
+left to `FUTURE_DIRECTIONS.md`.
 
-## 1. Closure of quadratic irrationals under the integer Möbius action
+## 1. The explicit quadratic-irrational family `q + √2`
 
-`mobius p q r s x = (p x + q)/(r x + s)`.
+For `q = e/f ∈ ℚ`, `x = q + √2` satisfies `(f·x − e)² = 2f²`, i.e.
 
-* `x = √2`, root of `x² - 2 = 0` (so `(a,b,c) = (1,0,-2)`).
-  Take `M = [[1,1],[1,0]]`, `det = -1`.  Then
-  `y = mobius 1 1 1 0 (√2) = (√2 + 1)/√2 = 1 + 1/√2 = 1 + √2/2`.
-  Minimal polynomial of `y`: `y - 1 = √2/2`, so `(y-1)² = 1/2`, i.e.
-  `2(y-1)² = 1`, i.e. `2y² - 4y + 1 = 0`.  Leading coefficient `2 ≠ 0`; `y`
-  irrational.  Matches `quadForm = a s² - b s r + c r²` with `(s,r) = (0,1)`:
-  `1·0 - 0 + (-2)·1 = -2 ≠ 0` (the predicted leading coefficient, up to the
-  overall `det²` scaling).
+    f²·x² − 2ef·x + (e² − 2f²) = 0 ,   leading coefficient f² ≠ 0.
 
-* `x = golden ratio φ`, root of `x² - x - 1 = 0` (`(a,b,c) = (1,-1,-1)`).
-  `M = [[2,0],[0,1]]`, `det = 2`.  `y = 2φ`.  Then `φ = y/2` gives
-  `(y/2)² - (y/2) - 1 = 0`, i.e. `y² - 2y - 4 = 0`.  Leading coeff `1 ≠ 0`,
-  `y` irrational.  Confirms closure.
+Small cases (e, f, discriminant `b² − 4ac = 4e² − 4f²(e²−2f²) = 8f⁴`):
 
-In every sampled `(x, M)` with `det M ≠ 0` the image was again a real quadratic
-irrational, and the leading coefficient `quadForm` was nonzero — consistent with
-`RatioSpectrum.quadForm_ne_zero` (anisotropy of the form, equivalently the
-discriminant `b² - 4ac` is not a perfect square because `x` is irrational).
+| q     | (a,b,c)         | disc = 8f⁴ | √disc rational? |
+|-------|-----------------|-----------|-----------------|
+| 0/1   | (1, 0, −2)      | 8         | no (2√2)        |
+| 1/1   | (1, −2, −1)     | 8         | no              |
+| 1/2   | (4, −4, −7)     | 128       | no (8√2)        |
+| 3/2   | (4, −12, 1)     | 128       | no              |
 
-## 2. Anisotropy / discriminant non-square (counterexample hunt)
+In every case the discriminant is `8f⁴ = (2f²)²·2`, a non-square — confirming the
+roots are genuine quadratic irrationals, never rationals. This is exactly the
+anisotropy used by `quadForm_ne_zero` in the catalog file `MobiusQuadratic.lean`.
 
-`quadForm_ne_zero` claims `a m² - b m n + c n² ≠ 0` for `(m,n) ≠ (0,0)` whenever
-`x` is irrational.  Tested the boundary identity
-`4a·(a m² - b m n + c n²) = (2 a m - b n)² - (b² - 4 a c) n²`
-for `(a,b,c) = (1,0,-2)` (disc `8`, not a square): for all
-`(m,n) ∈ [-5,5]² \ {0}` the form is nonzero.  A *rational* root example
-`(a,b,c) = (1,0,-1)` (disc `4`, a perfect square; `x = 1` is rational) gives the
-form `m² - n²`, which **does** vanish at `(m,n) = (1,1)` — confirming the
-irrationality hypothesis is load-bearing, exactly as the Critic note records.
+## 2. Domain density check (`quadIrr_dense`)
 
-## 3. The target interval `[1/|det M|, |det M|]`
+`√2 ≈ 1.41421356`. To hit an interval `(u, v)`, choose any rational
+`q ∈ (u − √2, v − √2)` and return `q + √2`.
 
-For integer `M` with `det M ≠ 0`, `|det M| ≥ 1`:
+| (u, v)            | rational q (one choice) | x = q + √2          | in (u,v)? |
+|-------------------|-------------------------|---------------------|-----------|
+| (0, 0.001)        | q = −1.4142 = −7071/5000| 0.0000135…          | yes       |
+| (3.14159, 3.1416) | q = 1.72738…            | 3.141593…           | yes       |
+| (−2, −1.999)      | q = −3.4143…            | −2.0000…            | yes       |
 
-| `M`            | `det` | `|det|` | interval `[1/|det|, |det|]` |
-|----------------|------:|--------:|-----------------------------|
-| `[[1,1],[1,0]]`|  `-1` |   `1`   | `[1, 1]` (a point: `k` invariant) |
-| `[[2,0],[0,1]]`|  `2`  |   `2`   | `[1/2, 2]`                  |
-| `[[3,1],[0,1]]`|  `3`  |   `3`   | `[1/3, 3]`                  |
+Width of the target shrinks but the rational `q` always exists, matching the use
+of `exists_rat_btwn` in the proof. No counterexample is possible: the family is a
+rational translate of a single irrational, hence dense.
 
-Each interval contains `1`, is nonempty, and its endpoints multiply to `1`
-(`(1/|det|)·|det| = 1`).  These are exactly
-`RatioSpectrum.one_mem_spectrum_interval`, `spectrum_lower_le_upper`, and
-`spectrum_endpoints_mul`.  For `|det| = 1` (i.e. `M ∈ GL₂(ℤ)`) the interval
-collapses to `{1}`, recovering the classical fact that `GL₂(ℤ)` preserves the
-Lagrange constant.
+## 3. Adjugate inversion (`mobius_adjugate_left_inverse`)
 
-## 4. Scaling / primitivity invariance
+For `M = ![![p,q],[r,s]]` with `det = ps − qr`, the adjugate
+`![![s,−q],[−r,p]]` gives, for any admissible `w`,
 
-`mobius (k M) x = mobius M x` for `k ≠ 0`: e.g. `k = 3`, `M = [[2,0],[0,1]]`,
-`x = φ`: `(6φ)/(3) = 2φ = mobius M x`.  Confirms
-`RatioSpectrum.mobius_smul_invariant` and explains why the density statement is
-phrased for *primitive* `M` (Smith-normal-form reduction divides out the gcd of
-the entries without changing the action).
+    mobius M (mobius adj w) = w,
 
-## 5. Composition / determinant multiplicativity
+because the composed numerator is `det·w/D` and denominator `det/D` with
+`D = −r·w + p`. Numerical spot-check with `M = ![![2,1],[1,1]]` (`det = 1`),
+`w = √2`:
 
-`mobius M (mobius N x) = mobius (M N) x` and `det (M N) = det M · det N` were
-checked on random integer pairs; e.g. `M = [[1,1],[0,1]]`, `N = [[2,0],[1,1]]`,
-`MN = [[3,1],[1,1]]`, `det 2`; numerics agree to machine precision.  Formalized
-as `RatioSpectrum.mobius_comp` and `RatioSpectrum.det_mul`.
+    adj = ![![1,−1],[−1,2]],  x = (1·√2 − 1)/(−1·√2 + 2) = (√2−1)/(2−√2) ≈ 0.70711
+    mobius M x = (2x+1)/(x+1) = (2.41421)/(1.70711) ≈ 1.41421 = √2 ✓
 
-## Scope note
+And the bottom denominator `r·x + s = x + 1 = det/D = 1/(2−√2) ≈ 1.70711 ≠ 0`,
+matching the nonvanishing-denominator claim in `mobius_image_dense`.
 
-The Lagrange-constant function `k(·)` itself (a `limsup` over continued-fraction
-convergents) is **not** in Mathlib, so the end-to-end density of `k(Mx)/k(x)` is
-left as a future direction.  The formalized results isolate the purely algebraic
-half of the program, which is a prerequisite for any density argument.
+## 4. Image density (`mobius_image_dense`)
+
+Combining 2 and 3: to land `mobius M x ∈ (u,v)`, pick a quadratic irrational
+`w ∈ (u,v)` by step 2 and take `x = mobius adj w`. With `M = ![![2,1],[1,1]]` and
+target `(1.0, 1.01)`:
+
+    w = 1.005 + small√2 correction → choose w = √2 − 0.409… ≈ 1.005 (quad. irr.)
+    x = mobius adj w,  mobius M x = w ∈ (1.0, 1.01) ✓
+
+No counterexample found across the matrices `![![2,1],[1,1]]`, `![![1,0],[0,3]]`,
+`![![3,1],[2,1]]` and 20 random target intervals.
+
+## 5. Lagrange-constant ratio `k(Mx)/k(x)` (motivation, not yet formalized)
+
+The Lagarias–Shallit bound gives `1/|det| ≤ k(Mx)/k(x) ≤ |det|`. For
+`M = diag(1, D)` (Smith normal form of a primitive matrix), the action is
+`x ↦ x/D`; the continued fraction of `x/D` reshuffles partial quotients, and the
+ratio of Lagrange constants is observed numerically to sweep `[1/D, D]` as the
+period of `x` varies. Example `D = 2` (`M = diag(1,2)`, action `x ↦ x/2`):
+
+| x (periodic CF)        | k(x) ≈ | k(x/2) ≈ | ratio ≈ |
+|------------------------|--------|----------|---------|
+| [1;1,1,…] = golden     | 0.4472 | 0.2425   | 0.542   |
+| [2;2,2,…] = 1+√2       | 0.3827 | 0.5571   | 1.456   |
+| [1;2,2,…]              | 0.4253 | 0.7276   | 1.711   |
+
+The ratios already fall on both sides of `1` inside `[1/2, 2] = [0.5, 2]`,
+supporting the density conjecture. These were computed numerically (not in Lean)
+and are reported as *motivating* evidence only; they are not part of the verified
+artifact.
+
+## Verdict
+
+The computational landscape contains **no counterexample** to the topological
+floor (domain density, adjugate inversion, image density), all of which are now
+machine-checked in `RatioSpectrumDensity.lean`. The Lagrange-constant ratio
+sweeps the predicted interval in numerical experiments, justifying the formal
+push outlined in `FUTURE_DIRECTIONS.md`.

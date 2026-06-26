@@ -1,271 +1,95 @@
-# The Spectrum Hidden Inside a Number
+# The Spectrum Hidden in a Fraction
 
-## How Well Can You Cheat at Approximating an Irrational?
+## A puzzle about how well numbers can be approximated
 
-Pick an irrational number — say $\sqrt{2} = 1.41421356\ldots$ — and try to
-sneak up on it with fractions. You will quickly find $\tfrac{7}{5} = 1.4$,
-then $\tfrac{17}{12} = 1.41\overline{6}$, then $\tfrac{41}{29} = 1.4137\ldots$,
-each one a better impostor than the last. A natural question, almost as old as
-mathematics itself, is: *how good can these impostors be?* Not in absolute
-terms — any number can be approximated to arbitrary precision if you allow
-enormous denominators — but relative to the size of the denominator you spend.
+Some numbers are easy to pin down with fractions, and some are stubborn. The number $\tfrac{22}{7}$ is a famously good approximation to $\pi$ — close, compact, useful. But ask how *well* any particular irrational number can be approximated by fractions $p/q$, and you uncover one of the oldest and most beautiful threads in mathematics.
 
-This is the heart of **Diophantine approximation**, and it has a beautiful,
-precise scorecard. For a real number $x$, define its **Lagrange constant**
+The right way to measure "how well a number resists approximation" is a single real number attached to each irrational $x$, called its **Lagrange constant**:
 
-$$
-k(x) = \limsup_{q \to \infty}\; \frac{1}{q^2 \,\bigl|x - p/q\bigr|},
-$$
+$$k(x) = \liminf_{q \to \infty} \; q \cdot \lVert q x \rVert,$$
 
-the largest constant $c$ for which the inequality $|x - p/q| < 1/(c\,q^2)$ has
-infinitely many rational solutions $p/q$. A *large* $k(x)$ means $x$ is
-**approximable** — it can be ambushed by unusually accurate fractions. A *small*
-$k(x)$ means $x$ is **stubborn**, or in the trade, *badly approximable*. The
-golden ratio $\varphi = \tfrac{1+\sqrt5}{2}$ is the most stubborn number of all,
-with the smallest possible Lagrange constant $k(\varphi) = \sqrt5$. This is the
-famous bottom rung of the **Lagrange spectrum**, and it is no accident that the
-golden ratio's continued fraction is the maddeningly simple $[1;1,1,1,\ldots]$:
-a number resists approximation precisely when its continued fraction refuses to
-produce large terms.
+where $\lVert t \rVert$ denotes the distance from $t$ to the nearest integer. In words: take larger and larger denominators $q$, see how close $qx$ can get to a whole number after scaling by $q$, and record the smallest persistent value. A *small* $k(x)$ means $x$ can be approximated unusually well; a *large* $k(x)$ means $x$ is "badly approximable" — it holds fractions at arm's length.
 
-This article is about a different, less explored question. Instead of asking how
-the Lagrange constant behaves number by number, we ask how it *transforms* when
-we push numbers around with the simplest nonlinear maps in mathematics.
+The golden ratio $\varphi = \tfrac{1+\sqrt 5}{2}$ is the worst-approximable number of all, with $k(\varphi) = 1/\sqrt 5 \approx 0.447$. Numbers like the golden ratio, whose Lagrange constant is strictly positive, are the **badly approximable** numbers, and they form a rich and intricate set.
 
-## Moving Numbers with a Matrix
+This article is about a surprising structure that appears when you do something simple to these numbers: feed them through a fraction.
 
-Take a $2\times 2$ matrix of integers,
+## Twisting numbers through a Möbius map
 
-$$
-M = \begin{pmatrix} p & q \\ r & s \end{pmatrix},
-$$
+Take four integers $p, q, r, s$ and arrange them into a $2 \times 2$ matrix
+$$M = \begin{pmatrix} p & q \\ r & s \end{pmatrix}.$$
+This matrix acts on a real number $x$ by the **Möbius transformation** (also called a linear fractional transformation):
 
-and let it act on a real number $x$ by the **Möbius transformation** (also
-called a linear fractional transformation):
+$$M \cdot x = \frac{p\,x + q}{r\,x + s}.$$
 
-$$
-M \cdot x = \frac{p\,x + q}{r\,x + s}.
-$$
+These maps are the natural "symmetries" of the world of continued fractions. When $M$ has determinant $\det M = ps - qr = \pm 1$, the transformation merely reshuffles the front of a number's continued-fraction expansion and leaves its deep structure — and therefore its Lagrange constant — completely unchanged. In that special case, $k(M x) = k(x)$ exactly.
 
-These maps are everywhere. They are the symmetries of the hyperbolic plane, the
-gears of continued fractions, and the basic moves of the modular group that
-organizes elliptic curves and modular forms. When $M$ is invertible over the
-integers — that is, when its determinant $\det M = ps - qr$ equals $\pm 1$ — the
-map $M$ shuffles the rationals among themselves perfectly and leaves the Lagrange
-constant *completely unchanged*: $k(M\cdot x) = k(x)$. Such maps cannot make a
-number easier or harder to approximate; they just relabel it.
+But what happens when the determinant is *not* $\pm 1$? Suppose $\det M = D$, an integer larger than $1$ in absolute value. Now the map genuinely distorts the number's approximation behaviour. A classical two-sided estimate, due to Lagarias and Shallit, says the distortion is bounded:
 
-The interesting case is when $\det M$ is some other nonzero integer, say $2$ or
-$-3$ or $12$. Now $M$ is still a perfectly good map, but it is not reversible
-within the integers. It can stretch and fold the number line in a way that
-*does* change how approximable a number is. The natural quantity to study is the
-**ratio**
+$$\frac{1}{|D|} \;\le\; \frac{k(M x)}{k(x)} \;\le\; |D|.$$
 
-$$
-\rho(M, x) = \frac{k(M\cdot x)}{k(x)},
-$$
+So the *ratio* of Lagrange constants — how much $M$ stretches or compresses the approximation quality of $x$ — is trapped inside the interval $\left[\tfrac{1}{|D|},\, |D|\right]$. This interval is the natural arena. It is symmetric in a precise sense: its two endpoints multiply to $1$,
+$$\frac{1}{|D|} \cdot |D| = 1,$$
+mirroring the fact that running $M$ backwards (using its inverse) swaps the roles of the endpoints. The midpoint, the value $1$, always lives inside it — corresponding to the case where $M$ leaves $k$ untouched.
 
-which measures exactly how much the transformation $M$ amplifies or dampens the
-approximability of $x$. If $\rho > 1$, the map made $x$ easier to approximate;
-if $\rho < 1$, harder.
+## The central question: does the ratio fill the whole interval?
 
-How big, and how small, can this ratio get? A theorem of Lagarias and Shallit
-pins it inside a tidy interval. If $D = |\det M|$, then for every $x$,
+Knowing that the ratio $k(Mx)/k(x)$ *lives* in $[\tfrac{1}{|D|}, |D|]$ is one thing. A far deeper question is whether it actually *reaches everywhere* in that interval. As $x$ wanders over all badly approximable numbers, does the ratio sweep out the entire range, leaving no gaps?
 
-$$
-\frac{1}{D} \;\le\; \rho(M, x) \;\le\; D.
-$$
+The conjecture at the heart of this work says **yes — and densely**:
 
-The determinant — a single integer — sets a hard two-sided speed limit on how
-much any Möbius map can distort approximability. Double the determinant's
-absolute value and you double both the maximum boost and the maximum penalty.
+> **Density of the ratio spectrum.** For every primitive integer matrix $M$ with nonzero determinant, the set of ratios $k(Mx)/k(x)$, as $x$ ranges over the real *quadratic irrational* badly approximable numbers, is dense in the full interval $\left[\tfrac{1}{|\det M|},\, |\det M|\right]$. Equivalently, for any target window $u < v$ inside this interval, there is a quadratic irrational $x$ with $u < k(Mx)/k(x) < v$.
 
-## The Question: Does the Ratio Fill the Whole Interval?
+(A matrix is **primitive** when its four entries share no common factor — the natural normalization, since multiplying all entries by a constant changes nothing about the Möbius map.)
 
-Knowing the ratio *lives* in $[1/D, D]$ is one thing. Knowing *which values it
-actually achieves* is another, and far richer. Picture the interval $[1/D, D]$ as
-a radio dial. The Lagarias–Shallit bound tells us the dial's two ends. But are
-all the stations in between real? Or are there silent gaps — values of the ratio
-that no number can ever produce?
+This is a strong statement. It claims that the humble operation "divide one fraction by another" hides a complete continuum of behaviours, and that you can dial in any distortion ratio you like, to any precision, just by choosing the right quadratic irrational input.
 
-The central conjecture of this work says the dial is **completely full**, at
-least when we restrict our attention to the most structured irrationals of all:
+## Why quadratic irrationals?
 
-> **Density Conjecture.** For every primitive integer matrix $M$ with nonzero
-> determinant and every pair of reals $u < v$ inside $[1/D, D]$, there exists a
-> *real quadratic irrational badly approximable number* $x$ with
-> $u < \rho(M, x) < v$.
+Why restrict the inputs $x$ to **quadratic irrationals** — numbers like $\sqrt 2$, $\tfrac{1+\sqrt 5}{2}$, or $3 - \sqrt 7$, the irrational solutions of quadratic equations with integer coefficients?
 
-In words: as $x$ ranges over quadratic irrationals — numbers like $\sqrt2$ or
-$\tfrac{1+\sqrt{13}}{3}$ that solve quadratic equations with integer
-coefficients — the ratios $k(M\cdot x)/k(x)$ are **dense** in the full interval
-$[1/D, D]$. No gaps. Every station broadcasts.
+The reason is a theorem of Lagrange, one of the gems of number theory: a real number is a quadratic irrational *if and only if* its continued fraction is eventually periodic. Periodic continued fractions are the most controllable infinite objects in this subject — they repeat, so their Lagrange constants can in principle be computed exactly from a finite amount of data. They are the perfect laboratory specimens: rich enough to exhibit every behaviour, structured enough to be analyzable.
 
-Why restrict to quadratic irrationals? Because they are the numbers whose
-approximation behavior we can actually compute. A theorem of Lagrange says a
-number is a quadratic irrational exactly when its continued fraction is
-**eventually periodic** — it repeats forever, like a decimal expansion that
-settles into a cycle. That periodicity is what makes the Lagrange constant a
-finite, computable maximum over one period rather than an unfathomable limit, and
-it is what gives us the leverage to engineer ratios on demand.
+But this restriction raises an immediate worry. If you only allow a special, structured class of inputs, maybe that class is too thin to produce a *dense* set of outputs. Maybe the periodicity constraint leaves holes. This is exactly the worry that the formally verified results in this work lay to rest.
 
-## The Architecture Behind the Conjecture
+## Building the floor before building the house
 
-Proving full density is a deep program, and it is not finished. But this work
-lays down the **structural backbone** — the rigid scaffolding of facts that any
-proof must rest on, each one established with complete certainty. These facts
-fall into two groups: the geometry of the *target interval*, and the algebra of
-the *Möbius action* itself.
+The full density conjecture has two layers. The top layer is analytic and delicate: it requires controlling the Lagrange constant $k$ along families of periodic continued fractions, and showing the ratios can be nudged across the whole interval. The bottom layer is **topological and algebraic**: it must guarantee that the playing field is large enough — that quadratic irrationals are everywhere, that the Möbius map shuffles them around without collapsing them, and that nothing degenerate happens.
 
-### The target interval is real, centered, and self-reciprocal
+This work rigorously and completely establishes that bottom layer — the *floor* on which the full theorem will stand. Every statement below has been verified down to the last logical step.
 
-The first thing to nail down is that the interval $[1/D, D]$ we are trying to
-fill is not an illusion. Three facts secure it.
+**First cornerstone: quadratic irrationals are everywhere.** Consider the explicit family of numbers
+$$x = q + \sqrt 2, \qquad q \text{ any rational number}.$$
+Each such number is a genuine quadratic irrational: it is irrational (because $\sqrt 2$ is, and adding a rational cannot fix that), and it satisfies a quadratic equation with integer coefficients. Concretely, if $q = e/f$ in lowest terms, then $x = e/f + \sqrt 2$ is a root of
+$$f^2\,x^2 - 2ef\,x + (e^2 - 2f^2) = 0,$$
+an honest integer quadratic with nonzero leading coefficient $f^2$. This single one-parameter family does all the heavy lifting, because rationals are dense: between *any* two real numbers $u < v$, you can slip a rational $q$ into the shifted window $(u - \sqrt 2,\, v - \sqrt 2)$, and then $q + \sqrt 2$ is a quadratic irrational sitting strictly between $u$ and $v$.
 
-The cornerstone is almost embarrassingly simple, and yet everything hinges on
-it: an integer matrix with nonzero determinant has
+This is the result we call **domain density**: every interval, no matter how tiny, contains a quadratic irrational. The set of allowed inputs is not thin at all — it is dense in the entire real line.
 
-$$
-|\det M| \ge 1.
-$$
+**Second cornerstone: the Möbius map can be run backwards.** The matrix $M = \begin{pmatrix} p & q \\ r & s\end{pmatrix}$ has a natural partner, its **adjugate**
+$$\operatorname{adj} M = \begin{pmatrix} s & -q \\ -r & p\end{pmatrix},$$
+which gives the inverse Möbius map. The key technical fact is that this partner map never breaks down on an irrational input: its denominator $-r\,w + p$ is never zero when $w$ is irrational and $\det M \ne 0$. (If $r \ne 0$, a zero denominator would force $w = p/r$, a rational — contradiction; if $r = 0$, the nonzero determinant forces $p \ne 0$.) With the denominator safely nonzero, a direct computation confirms that applying $M$ to the adjugate image of any number $w$ returns $w$ exactly:
+$$M \cdot \left( \operatorname{adj} M \cdot w \right) = w.$$
+This is **adjugate inversion**: the two maps undo each other, and the determinant reappears exactly as the scalar that makes the algebra balance. This is the precise reason the interval's endpoints are reciprocal — running $M$ forward and backward swaps $|D|$ and $1/|D|$.
 
-A determinant is an integer; the only integers excluded by "nonzero" are
-sandwiched away from zero by at least a full unit. From this single inequality,
-the rest of the interval's shape follows. Because $D \ge 1$, we have
-$1/D \le 1 \le D$, so the value $\mathbf{1}$ — the "no change" ratio — always
-lies inside the interval. Every Möbius map is *allowed* to leave approximability
-untouched; the interval always contains its neutral point. And because
-$1/D \le D$, the interval is genuinely nonempty, never a backwards or empty
-range.
+**Third cornerstone: the image is everywhere too.** Combining the first two cornerstones yields the payoff. Given any target window $(u, v)$, we want a quadratic irrational $x$ whose Möbius image $M \cdot x$ lands inside it. The construction is wonderfully direct: first use domain density to find a quadratic irrational $w$ *already* inside $(u, v)$, then pull it back through the adjugate to define
+$$x = \operatorname{adj} M \cdot w = \frac{s\,w - q}{p - r\,w}.$$
+A closure theorem guarantees that this $x$ is *still* a quadratic irrational (the Möbius image of a quadratic irrational under an integer matrix of nonzero determinant is always another quadratic irrational), and adjugate inversion guarantees that $M \cdot x = w$, which by construction lies strictly between $u$ and $v$. This is **image density**: the Möbius image of the quadratic-irrational world is dense in the real line.
 
-The most elegant structural fact is that the two endpoints are **reciprocals**:
+Why is the closure theorem true? If $x$ is an irrational root of $a x^2 + b x + c$, substitute the inverse map into the quadratic and clear denominators. You get a new integer quadratic satisfied by the image, whose leading coefficient is the binary form $a s^2 - b s r + c r^2$. The one thing that could go wrong is this coefficient vanishing — but it cannot, because the discriminant $b^2 - 4ac$ of an irrational root is never a perfect square, which makes the form **anisotropic** (it has no nontrivial integer zeros). The identity
+$$4a\,(a m^2 - b mn + c n^2) = (2am - bn)^2 - (b^2 - 4ac)\,n^2$$
+turns "the leading coefficient is nonzero" into "the discriminant is not a square," which is just another face of irrationality.
 
-$$
-\frac{1}{D} \cdot D = 1.
-$$
+## What this means
 
-This is not a coincidence of arithmetic but a fingerprint of a deep symmetry.
-Running a matrix $M$ backwards (using $M^{-1}$) inverts its effect on
-approximability, sending a ratio $\rho$ to $1/\rho$. The interval $[1/D, D]$ is
-exactly the set fixed, as a whole, by the flip $\rho \mapsto 1/\rho$. The
-boost that $M$ can deliver at one extreme is mirrored, multiplicatively, by the
-penalty it can inflict at the other. The spectrum is its own mirror image.
+Put the three cornerstones together and a clear picture emerges. The inputs to the ratio spectrum form a dense set; the Möbius map is invertible and non-degenerate on them; and the images form a dense set too. The geometric and algebraic scaffolding the full density theorem needs is now completely in place and rigorously certified.
 
-### Only the *primitive part* of the matrix matters
+There is one honest gap remaining, and it is worth naming precisely. Everything above controls *where the numbers go* under $M$ — the geometry of the map. The full conjecture is about *what happens to their Lagrange constants* — the arithmetic of approximation. Bridging the two requires the analytic Lagarias–Shallit machinery: defining $k$ through continued-fraction convergents and showing its ratio can be steered continuously across $[\tfrac{1}{|D|}, |D|]$ by inserting larger and larger partial quotients into a periodic expansion. That is the next chapter.
 
-Here is a subtlety that the formalism makes sharp. Suppose you take a matrix $M$
-and multiply every single entry by the same nonzero integer $k$, producing $kM$.
-This changes the determinant dramatically — it gets multiplied by $k^2$. You
-might expect the ratio spectrum to change too. It does not. The Möbius action is
-**completely blind** to overall scaling:
+What makes the story satisfying is how it collapses a hard-looking problem into something almost tactile. A deep fact about determinant structure — that the *only* feature of $M$ visible to the ratio spectrum is $|\det M|$ together with the primitive class — comes from two elementary observations: integer matrices of nonzero determinant have $|\det| \ge 1$, and scaling all entries of $M$ by a constant leaves the Möbius map unchanged. Through the lens of the Smith normal form, every primitive matrix of determinant $D$ is equivalent to the diagonal matrix $\operatorname{diag}(1, D)$, so the whole problem reduces to studying the single map $x \mapsto x/D$. The matrix melts away, and what remains is a question about dividing one badly approximable number by an integer.
 
-$$
-(kM)\cdot x = \frac{kp\,x + kq}{kr\,x + ks}
-= \frac{k(p\,x+q)}{k(r\,x+s)} = \frac{p\,x+q}{r\,x+s} = M \cdot x.
-$$
+## A continuum in a fraction
 
-The shared factor $k$ cancels top and bottom, for *every* real $x$. The
-geometric map is identical; only the bookkeeping changed. This is why the density
-statement is phrased for **primitive** matrices — those whose entries share no
-common factor. Every matrix is a primitive one in disguise, scaled up by some
-integer, and the disguise is invisible to the spectrum. Primitivity is not a
-technical convenience; it is the correct, irredundant way to label the maps.
+It is tempting to think of approximation quality as a fixed, intrinsic property of a number — either it is well-approximable or it isn't. The ratio spectrum says otherwise. It says that approximation quality is *malleable*: you can take any badly approximable number, run it through an integer fraction, and tune the resulting change in quality to land anywhere in a predictable band. And the conjecture says that band is filled completely, with no gaps, by the most structured numbers we have — the periodic, the quadratic, the eventually-repeating.
 
-### Möbius maps compose like matrices, and determinants multiply
-
-The final pillar is what turns the problem from a study of individual maps into a
-study of an entire algebraic system. Möbius transformations compose, and they do
-so in perfect lockstep with matrix multiplication:
-
-$$
-M \cdot (N \cdot x) = (MN) \cdot x.
-$$
-
-Applying one fractional transformation after another is the same as applying the
-single transformation built from the *product* of the two matrices. (One needs
-only the mild caveat that no denominator along the way hits zero.) This is the
-statement that the integer matrices form a *monoid acting on the line by
-fractional transformations* — the same structure that powers the modular group.
-
-Paired with composition is multiplicativity of the determinant, verified as a
-bare polynomial identity in the eight entries of two matrices:
-
-$$
-\det(MN) = \det M \cdot \det N.
-$$
-
-Together these two facts have a powerful consequence for the spectrum. Since
-ratios multiply under composition and determinants multiply under products, the
-reachable ratios of a product $MN$ live inside the *product* of the intervals for
-$M$ and $N$. The two-sided bound $[1/D, D]$ is not an isolated fact about one
-matrix — it is **closed under composition**, exactly as a well-behaved spectrum
-should be. And it explains the strategy behind the full conjecture: any matrix
-$M$ can be factored, via its **Smith normal form**, into $U \cdot
-\mathrm{diag}(1, D) \cdot V$ where $U$ and $V$ are reversible integer matrices
-that *do not move the ratio at all*. All of the spectral action is concentrated
-in the single diagonal matrix $\mathrm{diag}(1, D)$. Prove density for that one
-clean family and, by composition, you get it for every matrix at once.
-
-## Why the Restriction Class Must Be Stable
-
-There is one more fact without which the entire question would be ill-posed. We
-chose to study the ratio spectrum *restricted to quadratic irrationals*. For that
-to even make sense, the transformation $M$ must keep us inside that class: if $x$
-is a quadratic irrational, $M\cdot x$ had better be one too. Otherwise the
-ratio $k(M\cdot x)/k(x)$ might be comparing apples to a number outside our
-universe.
-
-This **closure property** is the algebraic shadow of Lagrange's periodicity
-theorem, and it holds in full generality:
-
-> The Möbius image of a real quadratic irrational, under any integer matrix of
-> nonzero determinant, is again a real quadratic irrational.
-
-The proof has two moving parts. First, irrationality is preserved: if $x$ is
-irrational and $M$ has nonzero determinant, then $M\cdot x$ cannot suddenly
-become a fraction, because that would force $x$ itself to be rational. Second,
-the *quadratic* nature survives: plug $M\cdot x = \tfrac{px+q}{rx+s}$ into a
-generic quadratic equation and clear denominators, and out pops another quadratic
-equation with integer coefficients that $x$ satisfies — and the nonzero
-determinant guarantees the new equation is genuinely quadratic, not a degenerate
-linear one. A clean discriminant identity,
-
-$$
-4a\,(a m^2 - b m n + c n^2) = (2am - bn)^2 - (b^2 - 4ac)\,n^2,
-$$
-
-underlies the key fact that a quadratic with non-square discriminant has no
-nontrivial integer roots — the algebraic expression of the geometric truth that
-an *anisotropic* binary form never vanishes. With closure in hand, the quadratic
-irrationals form a stable arena, and the ratio spectrum is a well-defined object
-living on it.
-
-## What This Buys Us, and What Comes Next
-
-The picture that emerges is strikingly clean. The approximability of an
-irrational number, distilled into the single number $k(x)$, transforms under
-integer fractional maps in a way governed entirely by one integer: the absolute
-determinant $D$. That determinant fixes a symmetric, self-reciprocal interval
-$[1/D, D]$; the neutral ratio $1$ always sits inside it; overall scaling is
-invisible, so only the primitive class matters; and the whole apparatus is
-closed under composition, with the spectral content of any map concentrated in
-its diagonal Smith form.
-
-What remains is to show the dial is truly full — that *every* value in $[1/D, D]$
-is approached by an actual quadratic irrational. The roadmap is now concrete.
-One direction is to realize the extreme ratios $D$ and $1/D$ as limits of
-purely periodic continued fractions whose period is "aligned" with the diagonal
-form $\mathrm{diag}(1, D)$, so the determinant gets absorbed into a single
-partial-quotient step. Another is to upgrade density to a statement about
-*measure*: not merely that the achievable ratios are dense, but that they fill up
-a set of full length as we allow more and more complex continued fractions —
-with the anisotropy identity above providing the quantitative control. A third is
-to make the mirror symmetry $\rho \in \mathrm{Spec}(M) \iff 1/\rho \in
-\mathrm{Spec}(M^{-1})$ exact.
-
-These are the open frontiers. But the foundation is laid in stone. The ratio
-spectrum is no longer a vague conjecture floating above the number line; it is a
-rigid algebraic object with a known shape, a known symmetry, and a known
-strategy for its conquest. Hidden inside every integer matrix, waiting to be read
-off from a single determinant, is a spectrum of stations — and we now know
-exactly where to tune the dial.
+The work described here builds the rigorous foundation for that claim: a verified guarantee that the stage is set, the actors are everywhere, and the choreography of forward-and-backward Möbius maps works exactly as it must. The final act — the dance of the Lagrange constants themselves — awaits, but the floor beneath it is now solid.
