@@ -1,360 +1,296 @@
-# Formal Theory of Threshold Phenomena in Erdős–Rényi Random Graphs
+# Exact First-Moment Identities for the Erdős–Rényi Random Graph $G(n,p)$ and the Combinatorial Origin of Threshold Phenomena
+
+**Author:** Aristotle
+**Date:** 2026-06-26
+**Domain:** Algebra / Combinatorial Probability
 
 ## Abstract
 
-We present a formally verified theory of phase transitions in finite Erdős–Rényi random graphs, developed in Lean 4 with Mathlib. The formalization introduces reusable definitions for isolated vertex counts, giant components, subgraph counts, graph susceptibility, walk counts, and monotone graph properties. We prove 16 theorems without any unverified assumptions (`sorry`), including: monotonicity of connectivity and giant component properties, the isolated vertex obstruction to connectivity, component structure lemmas, walk-count identities, the Paley–Zygmund inequality for finite types, first and second moment identities for isolated vertex counts, susceptibility bounds, and a cross-domain theorem linking giant components to walk-count lower bounds. The theory establishes the first formal bridge between discrete probabilistic combinatorics, spectral graph theory, and statistical mechanics order parameters.
-
-**Keywords:** random graphs, phase transitions, formal verification, Lean 4, Mathlib, threshold phenomena, Erdős–Rényi model, connectivity, giant component, second moment method.
-
----
+We develop, from first principles, the exact first-moment theory of the
+Erdős–Rényi random graph $G(n,p)$ on a fixed labelled vertex set, and we exhibit
+how the three classical thresholds of the model — the connectivity threshold at
+$p = \ln n / n$, the giant-component / triangle-appearance transition at
+$p = 1/n$, and the appearance thresholds of fixed subgraphs — all descend from a
+single linearity-of-expectation identity evaluated on three different families of
+events. Concretely, we prove (i) a general counting identity
+$\mathbb{E}\big[\#\{i\in I : g \in A_i\}\big] = \sum_{i\in I}\mathbb{P}(A_i)$
+with no independence hypothesis; (ii) the combinatorial cardinalities
+$|\mathrm{Edge}(n)| = \binom{n}{2}$, $|\mathrm{incident}(v)| = n-1$, and
+$|\mathrm{triEdges}(T)| = 3$ for $|T|=3$; and (iii) the three exact expectations
+$\mathbb{E}[\#\text{edges}] = \binom{n}{2}p$,
+$\mathbb{E}[\#\text{isolated vertices}] = n(1-p)^{n-1}$, and
+$\mathbb{E}[\#\text{triangles}] = \binom{n}{3}p^3$. We explain how these exact
+identities feed the first- and second-moment methods to localize each threshold,
+state the asymptotic threshold theorems as corollaries-in-waiting, and record the
+open conjectures (sharp connectivity via the second moment of isolated vertices,
+variance factorization for subgraph counts, the general $n^{-1/m(H)}$ appearance
+threshold, and the Poisson limit for triangles at criticality) that the present
+exact machinery makes tractable.
 
 ## 1. Introduction
 
-### 1.1 Motivation
-
-The Erdős–Rényi random graph model G(n,p) is one of the foundational objects in probabilistic combinatorics [1]. Its phase-transition phenomena — particularly the connectivity threshold near p = ln(n)/n and the giant component transition near p = 1/n — have profound implications across network science, statistical physics, epidemiology, and theoretical computer science.
-
-Despite decades of study, the core theorems of random graph theory have remained informally stated. This presents two problems: (1) complex probabilistic arguments resist independent verification, and (2) the mathematical infrastructure is not reusable in a way that supports systematic formalization of related phenomena (random hypergraphs, percolation, bootstrap dynamics).
-
-### 1.2 Contributions
-
-We formalize a theory of threshold phenomena in Lean 4, contributing:
-
-1. **Six core definitions** designed for reusability: `isolatedVertexCount`, `hasGiantComponent`, `componentOf`, `SubgraphCount`, `walkCount`, `susceptibility`, plus supporting structures (`MonotoneGraphProperty`, `ThresholdWindow`).
-
-2. **16 formally verified theorems** spanning:
-   - Monotonicity of connectivity, giant components, and subgraph counts
-   - The isolated vertex obstruction to connectivity
-   - Component structure (membership, equality under reachability, size bounds)
-   - Walk count identities (length 0 and 1)
-   - The Paley–Zygmund inequality for finite types
-   - First moment computation for isolated vertices
-   - Second moment (variance) bound for isolated vertices
-   - Susceptibility bounds in terms of maximum component size
-   - Giant component implies high susceptibility (cross-domain)
-   - Giant component implies walk count lower bound (spectral bridge)
-
-3. **Computational validation** through Python implementations of certified algorithms for threshold estimation, susceptibility computation, and subgraph detection.
-
-4. **Cross-domain bridges** connecting graph connectivity to spectral theory (via walk counts) and statistical mechanics (via susceptibility as an order parameter).
-
-### 1.3 Related Work
-
-Formal graph theory in Lean 4 / Mathlib includes `SimpleGraph`, reachability (`Reachable`), connectivity (`Connected`), and basic graph operations. Prior formal work on random structures is limited to polynomial identity testing [2] and basic combinatorial bounds.
-
-The informal theory of random graph thresholds is developed in [1, 3, 4]. Our formalization follows the proof architecture of [1] (Chapters 3–7), adapted to finite quantitative statements rather than asymptotic limits.
-
----
-
-## 2. Definitions and Notation
-
-### 2.1 Graph Model
-
-We work with `SimpleGraph (Fin n)` from Mathlib — simple undirected graphs on labeled vertices `{0, 1, ..., n-1}`.
-
-### 2.2 Isolated Vertices
-
-```
-def isolatedVertexSet (G : SimpleGraph (Fin n)) : Finset (Fin n) :=
-  Finset.univ.filter (fun v => ∀ w, ¬G.Adj v w)
-
-def isolatedVertexCount (G : SimpleGraph (Fin n)) : ℕ :=
-  (isolatedVertexSet G).card
-```
-
-### 2.3 Connected Components
-
-```
-def componentOf (G : SimpleGraph (Fin n)) (v : Fin n) : Finset (Fin n) :=
-  Finset.univ.filter (fun w => G.Reachable v w)
-```
-
-### 2.4 Giant Components
-
-```
-def hasGiantComponent (α : ℝ) (G : SimpleGraph (Fin n)) : Prop :=
-  ∃ v : Fin n, ∃ S : Finset (Fin n),
-    (∀ w ∈ S, G.Reachable v w) ∧ ⌈α * n⌉₊ ≤ S.card
-```
-
-### 2.5 Subgraph Counts
-
-```
-def SubgraphCount (H : SimpleGraph (Fin m)) (G : SimpleGraph (Fin n)) : ℕ :=
-  (Finset.univ.filter (fun φ : Fin m → Fin n =>
-    Function.Injective φ ∧ ∀ i j, H.Adj i j → G.Adj (φ i) (φ j))).card
-```
-
-### 2.6 Walk Counts
-
-```
-def walkCount (G : SimpleGraph (Fin n)) (L : ℕ) (u v : Fin n) : ℕ :=
-  ((Matrix.of (fun i j => if G.Adj i j then 1 else 0)) ^ L) u v
-```
-
-### 2.7 Susceptibility
-
-```
-def susceptibility (G : SimpleGraph (Fin n)) : ℝ :=
-  (∑ v : Fin n, (componentOf G v).card) / n
-```
-
-This equals (1/n) Σ_C |C|², the standard susceptibility order parameter.
-
-### 2.8 Monotone Properties and Threshold Windows
-
-```
-def MonotoneGraphProperty (n : ℕ) (P : SimpleGraph (Fin n) → Prop) : Prop :=
-  ∀ G₁ G₂, (∀ u v, G₁.Adj u v → G₂.Adj u v) → P G₁ → P G₂
-```
-
----
-
-## 3. Main Results
-
-### 3.1 Monotonicity Theorems
-
-**Theorem 1 (Connectivity Monotone).** Connectivity is a monotone graph property:
-```
-theorem connectivity_monotone (n : ℕ) :
-    MonotoneGraphProperty n (fun G => G.Connected)
-```
-
-*Proof sketch.* If G₁ is connected and G₁ ≤ G₂ (edge-wise), then every walk in G₁ is also a walk in G₂, so Reachable is preserved. Uses `Connected.mono`.
-
-**Theorem 2 (Giant Component Monotone).** Having a giant component is monotone:
-```
-theorem hasGiantComponent_monotone (α : ℝ) :
-    MonotoneGraphProperty n (fun G => hasGiantComponent α G)
-```
-
-*Proof sketch.* The witness set S and Reachable certificates transfer directly via `Reachable.mono`.
-
-**Theorem 3 (Subgraph Count Monotone).**
-```
-theorem subgraphCount_monotone (H G₁ G₂) (hedge : G₁ ≤ G₂) :
-    SubgraphCount H G₁ ≤ SubgraphCount H G₂
-```
-
-*Proof sketch.* Every labeled embedding valid in G₁ remains valid in G₂.
-
-### 3.2 Isolated Vertex Obstruction
-
-**Theorem 4 (Isolated Vertex Disconnects).** If n ≥ 2 and vertex v is isolated in G, then G is not connected:
-```
-theorem isolated_vertex_disconnects {n : ℕ} (hn : 2 ≤ n)
-    (G : SimpleGraph (Fin n)) (v : Fin n) (hv : ∀ w, ¬G.Adj v w) :
-    ¬G.Connected
-```
-
-*Proof sketch.* Since n ≥ 2, there exists w ≠ v. If G were connected, there would be a walk from v to w, but the first step requires an edge from v, contradicting isolation.
-
-**Theorem 5 (Connected No Isolated).** Contrapositive: connected graphs on ≥ 2 vertices have no isolated vertices.
-
-### 3.3 Isolated Vertex Counts
-
-**Theorem 6.** `isolatedVertexCount ⊥ = n` (empty graph: all isolated).
-
-**Theorem 7.** `isolatedVertexCount ⊤ = 0` for n ≥ 2 (complete graph: none isolated).
-
-**Theorem 8 (Antitone).** Adding edges cannot increase the isolated vertex count.
-
-### 3.4 Component Structure
-
-**Theorem 9.** Components of reachable vertices are identical:
-```
-theorem componentOf_eq_of_reachable (u v) (h : G.Reachable u v) :
-    componentOf G u = componentOf G v
-```
-
-Plus: `mem_componentOf`, `componentOf_card_pos`, `componentOf_card_le`.
-
-### 3.5 Walk Count Identities
-
-**Theorem 10.** `walkCount G 0 u v = if u = v then 1 else 0`
-
-**Theorem 11.** `walkCount G 1 u v = if G.Adj u v then 1 else 0`
-
-### 3.6 Giant Component ⟹ Walk Count Lower Bound
-
-**Theorem 12 (Cross-Domain: Spectral Bridge).**
-```
-theorem giant_component_walk_lower_bound (G) (s)
-    (hs : ∃ v, s ≤ (componentOf G v).card) :
-    s ≤ totalWalkCount G 0
-```
-
-*Proof idea.* The total walk count of length 0 equals n (each vertex contributes exactly one self-walk). Since s ≤ component size ≤ n, the bound follows. This is the simplest instance of a deeper connection: large components force many walks of all lengths.
-
-### 3.7 Susceptibility Bounds
-
-**Theorem 13 (Subcritical Bound).**
-```
-theorem susceptibility_bounded_by_max_component (G) (k) (hn : 0 < n)
-    (hk : ∀ v, (componentOf G v).card ≤ k) :
-    susceptibility G ≤ k
-```
-
-*Proof sketch.* Each term in Σ_v |C(v)| is at most k, so the sum ≤ nk, and dividing by n gives k.
-
-**Theorem 14 (Giant ⟹ Susceptibility).**
-```
-theorem giant_component_implies_susceptibility (G) (α) (hn : 0 < n) ...
-    (hgiant : ∃ v, ⌈α * n⌉₊ ≤ (componentOf G v).card) :
-    α ≤ susceptibility G
-```
-
-*Proof sketch.* The vertex in the giant component contributes at least ⌈αn⌉₊ ≥ αn to the sum, and dividing by n gives α.
-
-### 3.8 Second Moment Method
-
-**Theorem 15 (Paley–Zygmund, Finite).**
-```
-theorem paley_zygmund_finite (f : ι → ℝ) (hf_nn) (hS : 0 < ∑ f)
-    (hSS : ∑ f² ≤ (∑ f)²) :
-    1 ≤ |{a | 0 < f a}|
-```
-
-*Proof sketch.* If all values were zero, the sum would be zero, contradicting positivity. The variance condition is included for generality (future strengthening to quantitative Paley–Zygmund bounds).
-
-### 3.9 First and Second Moment Identities
-
-**Theorem 16 (Expectation Identity).**
-```
-theorem isolated_vertex_expectation_identity (n) (p) :
-    ∑ v : Fin n, (1 - p)^(n-1) = n * (1 - p)^(n-1)
-```
-
-This is the first moment computation: E[isolated count] = n(1-p)^(n-1).
-
-**Theorem 17 (Second Moment Bound).**
-```
-theorem isolated_vertex_second_moment_bound (n) (p) :
-    n*(1-p)^(n-1) + n*(n-1)*(1-p)^(2n-3) ≤ n*(1-p)^(n-1) + n²*(1-p)^(2n-3)
-```
-
-This follows from n(n-1) ≤ n².
-
----
-
-## 4. Algorithms
-
-### 4.1 Isolated Vertex Expectation (O(log n))
-
-**Input:** n, p. **Output:** n(1-p)^(n-1).
-
-Certified by `isolated_vertex_expectation_identity`.
-
-### 4.2 Threshold Detector (Binary Search)
-
-**Input:** n, property test, tolerance ε.
-**Output:** Estimated threshold p* ± ε.
-
-Uses `connectivity_monotone` to guarantee binary search convergence: P[property] is monotone in p for any monotone property.
-
-**Complexity:** O(log(1/ε) × trials × n²).
-
-### 4.3 Susceptibility Estimator
-
-**Input:** n, c, trials.
-**Output:** E[χ(G(n,c/n))] ± confidence interval.
-
-Uses Union-Find for O(nα(n)) per sample. Validated against `susceptibility_bounded_by_max_component`.
-
-### 4.4 Second Moment Existence Test
-
-**Input:** Indicator probabilities, optional pairwise matrix.
-**Output:** Lower bound on P[X > 0].
-
-Implements the Paley–Zygmund bound P[X > 0] ≥ E[X]²/E[X²].
-
----
-
-## 5. Computational Experiments
-
-### 5.1 Connectivity Threshold Verification
-
-For n = 200, we sweep p across the range [0.3p*, 2.0p*] where p* = ln(200)/200 ≈ 0.0265. The empirical connectivity probability exhibits the sharp S-curve predicted by the theory, transitioning from ≈ 0 to ≈ 1 within a narrow window around p*.
-
-| p/p* | P[connected] (empirical) | E[isolated] (theory) |
-|------|--------------------------|---------------------|
-| 0.50 | 0.000 | 38.2 |
-| 0.80 | 0.000 | 6.4 |
-| 1.00 | 0.010 | 1.0 |
-| 1.20 | 0.350 | 0.16 |
-| 1.50 | 0.890 | 0.003 |
-| 2.00 | 1.000 | ≈ 0 |
-
-### 5.2 Giant Component Phase Transition
-
-For n = 200 and c ∈ [0.1, 5.0], the largest component fraction |C_max|/n shows:
-- c < 0.8: largest component negligible (< 0.05)
-- c ≈ 1.0: transition region
-- c > 1.5: giant component dominates (> 0.3)
-
-### 5.3 Susceptibility Peak
-
-The susceptibility χ peaks near c = 1, confirming the formal result that susceptibility diverges at the critical point. For n = 200:
-- χ(c=0.5) ≈ 1.5
-- χ(c=1.0) ≈ 12.4
-- χ(c=2.0) ≈ 80.1
-
----
-
-## 6. Discussion
-
-### 6.1 Proof Architecture
-
-The formalization follows a deliberate architecture:
-
-1. **Definitions first:** All graph-theoretic notions are defined in a separate `Defs.lean` file, enabling reuse across future formalizations.
-
-2. **Monotonicity as infrastructure:** Proving that connectivity, giant components, and subgraph counts are monotone properties establishes the foundation for all threshold arguments.
-
-3. **Deterministic backbone:** The core theorems are deterministic statements about graphs. The probabilistic content enters through the interpretation: when G is sampled from G(n,p), these deterministic facts compose with probability computations to yield threshold theorems.
-
-4. **Cross-domain bridges:** The walk-count and susceptibility theorems connect graph structure to spectral theory and statistical mechanics, making the formalization a hub for multi-domain reasoning.
-
-### 6.2 Limitations
-
-The current formalization does not include:
-- A full probabilistic model of G(n,p) as a product Bernoulli measure
-- Asymptotic analysis (limits as n → ∞)
-- The exploration process for giant component proofs
-- Branching process coupling arguments
-
-These are natural next steps that the current infrastructure supports.
-
-### 6.3 Comparison with Informal Theory
-
-Our formal theorems capture the essential mathematical content of the informal theory while making all dependencies explicit. The isolated vertex obstruction (Theorem 4) and the first moment identity (Theorem 16) together imply the classical statement: if p ≪ ln(n)/n, then G(n,p) is disconnected whp. The susceptibility bound (Theorem 13) and giant component implication (Theorem 14) formalize the subcritical/supercritical dichotomy.
-
----
-
-## 7. Future Work
-
-1. **Full probabilistic model:** Define the product Bernoulli measure on edge spaces and derive expectation/variance identities as measure-theoretic statements.
-
-2. **Asymptotic corollaries:** Formalize the convergence E[isolated] → e^{-c} when p = (ln n + c)/n.
-
-3. **Exploration process:** Formalize the BFS exploration of random graph components and couple with branching processes.
-
-4. **Spectral threshold:** Prove that the non-backtracking spectral radius crosses 1 at the giant component threshold.
-
-5. **Random hypergraphs:** Generalize definitions and monotonicity theorems to k-uniform hypergraphs and simplicial complexes.
-
----
-
-## References
-
-[1] S. Janson, T. Łuczak, A. Ruciński. *Random Graphs*. Wiley, 2000.
-
-[2] R. Schwartz, J. Zippel. "Probabilistic algorithms for verification of polynomial identities." *JACM*, 1980.
-
-[3] B. Bollobás. *Random Graphs*. Cambridge University Press, 2001.
-
-[4] A. Frieze, M. Karoński. *Introduction to Random Graphs*. Cambridge University Press, 2015.
-
-[5] P. Erdős, A. Rényi. "On random graphs I." *Publicationes Mathematicae Debrecen*, 6:290–297, 1959.
-
-[6] The mathlib Community. *Mathlib4*. https://github.com/leanprover-community/mathlib4.
+The random graph model $G(n,p)$ of Erdős and Rényi (1959) assigns, independently
+and with probability $p$, an edge to each of the $\binom{n}{2}$ pairs of a fixed
+set of $n$ labelled vertices. Despite its disarming simplicity, $G(n,p)$ is the
+canonical setting in which to study **threshold phenomena**: monotone graph
+properties that, as $p$ increases through a critical scale, switch from "almost
+surely false" to "almost surely true" within a vanishingly narrow window. The
+three landmark examples are:
+
+1. **Connectivity**, with sharp threshold $p = \ln n / n$;
+2. **The giant component**, a phase transition at $p = 1/n$;
+3. **Appearance of a fixed subgraph $H$**, with threshold $p = n^{-1/m(H)}$,
+   where $m(H)$ is the maximum edge-to-vertex density of a subgraph of $H$
+   (for a triangle, $m(K_3)=1$, giving threshold $1/n$).
+
+The unifying methodological insight — the *moment method* — is that these
+qualitative transitions are governed quantitatively by the first two moments of
+natural counting statistics. The purpose of this paper is to isolate and prove
+the **exact, finite-$n$ first-moment identities** at the foundation of the theory,
+to make explicit the single linear-algebraic identity from which they all flow,
+and to delineate precisely how far the first moment alone determines each
+threshold and where the second moment must take over.
+
+Our contribution is twofold. Mathematically, we package the first-moment layer of
+Erdős–Rényi theory as one master identity plus three combinatorial cardinality
+computations, emphasizing the symmetry between "present" events (subgraph copies)
+and "absent" events (isolated vertices). Structurally, we organize the
+development so that the asymptotic threshold theorems become clean corollaries of
+the exact identities once paired with standard concentration tools, and we record
+the precise covariance estimates that remain.
+
+## 2. The model
+
+Throughout, $n \in \mathbb{N}$ and $p \in [0,1]$ (formally $p \in \mathbb{R}$;
+the identities below are polynomial in $p$ and hold over $\mathbb{R}$).
+
+**Definition 1 (Configuration space and edges).**
+Fix the vertex set $V = \{0,1,\dots,n-1\}$. The set of *potential edges* is
+$$\mathrm{Edge}(n) \;=\; \{\, (i,j) \in V \times V : i < j \,\}.$$
+A *configuration* (a sample graph) is a Boolean assignment
+$g : \mathrm{Edge}(n) \to \{\texttt{true},\texttt{false}\}$, where $g(e)=\texttt{true}$
+means edge $e$ is present. The Erdős–Rényi law is the product Bernoulli$(p)$
+measure on configurations: edges are present independently, each with probability
+$p$.
+
+**Definition 2 (Expectation and probability).**
+For a real functional $f$ of the configuration, $\mathbb{E}_p[f]$ denotes its
+expectation under the product Bernoulli$(p)$ law (`expectation p f`). For an event
+$A$ (a set of configurations), $\mathbb{P}_p(A)$ is its probability (`prob p A`).
+
+**Definition 3 (Present / absent events).**
+For a set of edges $S \subseteq \mathrm{Edge}(n)$:
+- $\mathrm{allPresent}(S)$ is the event "every edge of $S$ is present";
+- $\mathrm{allAbsent}(S)$ is the event "every edge of $S$ is absent".
+
+By edge independence (lemmas `prob_allPresent`, `prob_allAbsent` of the imported
+model), these have the dual product probabilities
+$$\mathbb{P}_p(\mathrm{allPresent}(S)) = p^{|S|}, \qquad
+  \mathbb{P}_p(\mathrm{allAbsent}(S)) = (1-p)^{|S|}. \tag{2.1}$$
+
+**Definition 4 (Subgraph count).**
+Given a family of edge-sets $(S_i)$, $\mathrm{subgraphCount}$ counts how many of
+the corresponding copies are fully present in a configuration. Its first moment
+is $\mathbb{E}_p[\mathrm{subgraphCount}] = \sum_i p^{|S_i|}$ (lemma
+`expectation_subgraphCount`), an immediate consequence of (2.1) and linearity.
+
+## 3. The master identity
+
+The entire first-moment layer rests on one statement, free of any independence
+hypothesis.
+
+**Theorem 1 (Linearity of expectation for counts; `expectation_count`).**
+Let $I$ be a finite index set and $(A_i)_{i \in I}$ a family of events. Define the
+count $X(g) = \#\{\, i \in I : g \in A_i \,\}$. Then
+$$\mathbb{E}_p[X] \;=\; \sum_{i \in I} \mathbb{P}_p(A_i).$$
+
+*Proof sketch.* Write $X(g) = \sum_{i\in I} \mathbf{1}[g \in A_i]$ as a sum of
+indicator functions. Expectation is a finite linear functional over the
+configuration space (it is a weighted finite sum over configurations), so it
+commutes with the finite sum over $i$: $\mathbb{E}_p[X] = \sum_{i\in I}
+\mathbb{E}_p[\mathbf{1}[\cdot \in A_i]] = \sum_{i \in I}\mathbb{P}_p(A_i)$.
+Formally this is the exchange of two finite sums (Fubini for finite sums,
+`Finset.sum_comm`) after expanding `card_filter` as a sum of indicators. No
+property of the measure beyond linearity is used; in particular the events $A_i$
+need not be independent. $\qquad\blacksquare$
+
+Theorem 1 is the only probabilistic input we need. Every expectation below is
+Theorem 1 specialized to a particular event family, and the *only* additional work
+is to compute one probability via (2.1) and one cardinality. We now carry this out
+for edges, isolated vertices, and triangles.
+
+## 4. Edges
+
+**Lemma 2 (Number of potential edges; `card_edge`).**
+$$\bigl|\mathrm{Edge}(n)\bigr| \;=\; \binom{n}{2}.$$
+
+*Proof sketch.* $\mathrm{Edge}(n)$ is the subtype of pairs $(i,j)$ with $i<j$.
+Counting by the larger coordinate, the number of pairs with second coordinate
+$j$ is $j$, so the total is $\sum_{j=0}^{n-1} j = \binom{n}{2}$ (Gauss's sum,
+`Finset.sum_range_id` together with `Nat.choose_two_right`). $\qquad\blacksquare$
+
+**Theorem 3 (Expected number of edges; `expected_edges`).**
+$$\mathbb{E}_p[\#\text{edges}] \;=\; \binom{n}{2}\, p.$$
+
+*Proof sketch.* The edge count is the subgraph count for the singleton family
+$e \mapsto \{e\}$, each copy having $|S|=1$. By `expectation_subgraphCount`
+(equivalently Theorem 1 with $A_e = \mathrm{allPresent}(\{e\})$ and (2.1)), the
+expectation is $\sum_{e}p^{1} = |\mathrm{Edge}(n)|\cdot p = \binom{n}{2}p$ by
+Lemma 2. $\qquad\blacksquare$
+
+## 5. Isolated vertices and the connectivity threshold
+
+**Definition 5 (Incident edges).** For a vertex $v$,
+$$\mathrm{incident}(v) \;=\; \{\, e \in \mathrm{Edge}(n) : v \text{ is an
+endpoint of } e \,\}.$$
+
+**Lemma 4 (Degree of the complete graph; `card_incident`).**
+For every vertex $v$,
+$$\bigl|\mathrm{incident}(v)\bigr| \;=\; n-1.$$
+
+*Proof sketch.* The map sending an incident edge to its *other* endpoint is a
+bijection between $\mathrm{incident}(v)$ and $V \setminus \{v\}$; explicitly,
+$u \mapsto (u,v)$ if $u<v$ and $u\mapsto (v,u)$ otherwise is an injection from the
+$n-1$ vertices $u \neq v$ onto $\mathrm{incident}(v)$ (formally, an
+`image_of_injOn` argument over $\mathrm{univ}.\mathrm{erase}\,v$).
+$\qquad\blacksquare$
+
+**Theorem 5 (Expected number of isolated vertices; `expected_isolated`).**
+A vertex is *isolated* when all of its incident edges are absent. Then
+$$\mathbb{E}_p[\#\text{isolated vertices}] \;=\; n\,(1-p)^{\,n-1}.$$
+
+*Proof sketch.* Apply Theorem 1 with index set $I = V$ and events
+$A_v = \mathrm{allAbsent}(\mathrm{incident}(v))$. By (2.1),
+$\mathbb{P}_p(A_v) = (1-p)^{|\mathrm{incident}(v)|} = (1-p)^{n-1}$ using Lemma 4.
+Summing over the $n$ vertices gives $n(1-p)^{n-1}$. $\qquad\blacksquare$
+
+**Corollary 5.1 (Sharp connectivity threshold — asymptotic; *not formalized,
+stated for context*).** Let $X_n$ be the number of isolated vertices in
+$G(n,p_n)$ with $p_n = (\ln n + c)/n$. Then from Theorem 5,
+$$\mathbb{E}[X_n] = n(1-p_n)^{n-1} \longrightarrow e^{-c} > 0.$$
+Combined with a second-moment (covariance) estimate showing
+$\mathrm{Var}(X_n)/\mathbb{E}[X_n]^2 \to 0$, the second-moment method yields
+$X_n \ge 1$ — hence disconnection — with probability $\to 1 - e^{-e^{-c}}$ as
+$c \to -\infty$ and connection with probability $\to 1$ as $c \to +\infty$. The
+sharp threshold therefore sits at $p = \ln n / n$. The factor $\ln n$ is exactly
+the value making $n(1-p)^{n-1}$ tend to a positive constant. *(This corollary is a
+classical theorem of Erdős–Rényi; in the present development the exact mean
+$n(1-p)^{n-1}$ is proved and the covariance estimate is recorded as Conjecture C1
+of §8.)*
+
+## 6. Triangles and the appearance threshold
+
+**Definition 6 (Edges spanned by a vertex set).** For $T \subseteq V$,
+$$\mathrm{triEdges}(T) \;=\; \{\, e \in \mathrm{Edge}(n) : \text{both endpoints
+of } e \text{ lie in } T \,\}.$$
+
+**Lemma 6 (A triple spans three edges; `card_triEdges`).**
+If $|T| = 3$ then
+$$\bigl|\mathrm{triEdges}(T)\bigr| \;=\; 3.$$
+
+*Proof sketch.* The map $e \mapsto \{e_1, e_2\}$ (the unordered endpoint pair)
+is a bijection from $\mathrm{triEdges}(T)$ onto the $2$-element subsets of $T$,
+of which there are $\binom{3}{2} = 3$ (formally a bijection onto
+$\mathrm{powersetCard}\,2\,T$, injective on $\mathrm{triEdges}(T)$).
+$\qquad\blacksquare$
+
+**Theorem 7 (Expected number of triangles; `expected_triangles`).**
+Triangles are indexed by $3$-element vertex subsets; a triple $T$ forms a triangle
+when all of $\mathrm{triEdges}(T)$ are present. Then
+$$\mathbb{E}_p[\#\text{triangles}] \;=\; \binom{n}{3}\, p^{3}.$$
+
+*Proof sketch.* Apply Theorem 1 with index set the $3$-subsets
+$\mathrm{powersetCard}\,3\,V$ (of which there are $\binom{n}{3}$) and events
+$A_T = \mathrm{allPresent}(\mathrm{triEdges}(T))$. By (2.1) and Lemma 6,
+$\mathbb{P}_p(A_T) = p^{|\mathrm{triEdges}(T)|} = p^{3}$ for every such $T$.
+Summing the constant $p^3$ over the $\binom{n}{3}$ triples gives $\binom{n}{3}p^3$.
+$\qquad\blacksquare$
+
+**Corollary 7.1 (Triangle / giant-component scale — asymptotic; *not formalized,
+stated for context*).** Since $\binom{n}{3} \sim n^3/6$, Theorem 7 gives
+$\mathbb{E}[\#\text{triangles}] \sim \tfrac{1}{6}(np)^3$. If $np \to 0$ the first
+moment $\to 0$ and Markov's inequality (the first-moment method) forces
+$\#\text{triangles} = 0$ whp; if $np \to \infty$ the second-moment method forces
+$\#\text{triangles} \ge 1$ whp. Hence triangles appear at threshold $p = 1/n$,
+the same scale at which the giant component emerges. $\qquad\blacksquare$
+
+## 7. The two-sided moment method
+
+We make explicit the logical skeleton that turns the exact means of §§4–6 into
+threshold statements. Let $X \ge 0$ be an integer-valued count.
+
+- **First-moment (Markov) bound `firstMoment`.** $\mathbb{P}(X \ge 1) \le
+  \mathbb{E}[X]$. Thus $\mathbb{E}[X] \to 0$ implies $X = 0$ whp. This handles the
+  *disappearance* side of every threshold: below the critical $p$, the relevant
+  count has vanishing mean.
+- **Second-moment bound `second_moment_zero`.** If
+  $\mathrm{Var}(X)/\mathbb{E}[X]^2 \to 0$ then $X > 0$ whp (indeed
+  $X/\mathbb{E}[X] \to 1$ in probability). This handles the *appearance* side:
+  above the critical $p$, provided the variance is controlled, the count is
+  positive.
+
+The exact identities of §§4–6 supply the numerators ($\mathbb{E}[X]$) that decide
+the first-moment side outright. The second-moment side additionally requires a
+variance estimate; for triangles and for isolated vertices these reduce to finite
+sums over pairs of copies graded by their *edge overlap*, where (2.1) again gives
+each joint probability exactly as $p^{|S'\cup S''|}$. This is the content of the
+conjectures in §8.
+
+## 8. Open problems and future directions
+
+The exact first-moment layer being in place, each classical threshold reduces to
+one self-contained covariance estimate. We record the program.
+
+**C1. Sharp connectivity via the second moment of isolated vertices.** With
+$p_n = (\ln n + c)/n$, show $\mathrm{Var}(X_n)/\mathbb{E}[X_n]^2 \to 0$ for the
+isolated-vertex count $X_n$. Combined with $\mathbb{E}[X_n] \to e^{-c}$
+(Theorem 5) and `second_moment_zero`, this yields disconnection probability
+$\to 1 - e^{-e^{-c}}$ and the sharp threshold $p = \ln n / n$. The only missing
+input is the two-vertex covariance.
+
+**C2. Variance of subgraph counts factors over edge overlaps.** For a fixed graph
+$H$ with $e_H$ edges, the count $X_H$ of copies of $H$ satisfies
+$$\mathrm{Var}(X_H) = \sum_{H',H''} \bigl(p^{|E(H')\cup E(H'')|} - p^{2e_H}\bigr),$$
+summed over ordered pairs of copies, the dominant contribution coming from pairs
+sharing at least one edge. The key input, $\mathbb{P}(\text{both present}) =
+p^{|E(H')\cup E(H'')|}$, is exactly `prob_allPresent`, so the variance is a pure
+finite sum — no measure theory beyond (2.1).
+
+**C3. Appearance threshold $p = n^{-1/m(H)}$.** For a fixed connected $H$ with
+$m(H) = \max_{H'\subseteq H} |E(H')|/|V(H')|$, copies of $H$ vanish below
+$n^{-1/m(H)}$ and appear above it. The "below" direction is already a corollary of
+`firstMoment` (mean $\Theta(n^{|V(H)|}p^{|E(H)|}) \to 0$); the "above" direction is
+exactly the regime in which C2 gives $\mathrm{Var}/\mathbb{E}^2 \to 0$. The
+remaining content is the densest-subgraph optimization defining $m(H)$.
+
+**C4. Poisson limit for triangles at criticality.** At $p_n = c/n$, the triangle
+count $T_n$ converges in distribution to $\mathrm{Poisson}(c^3/6)$; the mean
+$\binom{n}{3}p_n^3 \to c^3/6$ is precisely Theorem 7 evaluated at $p_n = c/n$, and
+the method of moments reduces the limit to controlling the factorial moments via
+the same overlap-graded sums as C2.
+
+## 9. Conclusion
+
+We have shown that the first-moment foundations of Erdős–Rényi threshold theory
+collapse to a single identity — linearity of expectation for counts (Theorem 1) —
+applied to three event families, with the only combinatorial inputs being three
+cardinalities ($\binom{n}{2}$, $n-1$, $3$). The resulting exact means
+$\binom{n}{2}p$, $n(1-p)^{n-1}$, and $\binom{n}{3}p^3$ localize, respectively, the
+density of the graph, the connectivity threshold $\ln n / n$, and the
+triangle / giant-component scale $1/n$. The symmetry between present-events
+(triangles) and absent-events (isolated vertices) is exactly the duality
+$p^{|S|} \leftrightarrow (1-p)^{|S|}$ of (2.1). What remains for the full
+asymptotic theorems are the matching second-moment estimates, which the present
+exact framework reduces to finite, overlap-graded sums.
+
+## Appendix A. Symbol glossary
+
+| Symbol | Meaning |
+|---|---|
+| $G(n,p)$ | Erdős–Rényi random graph: $n$ vertices, each edge present independently with probability $p$ |
+| $\mathrm{Edge}(n)$ | Potential edges $\{(i,j): i<j\}$; $|\mathrm{Edge}(n)| = \binom{n}{2}$ |
+| $\mathbb{E}_p, \mathbb{P}_p$ | Expectation / probability under the product Bernoulli$(p)$ law |
+| $\mathrm{allPresent}(S), \mathrm{allAbsent}(S)$ | Events "all of $S$ present / absent"; probabilities $p^{|S|}, (1-p)^{|S|}$ |
+| $\mathrm{incident}(v)$ | Edges with endpoint $v$; size $n-1$ |
+| $\mathrm{triEdges}(T)$ | Edges with both endpoints in $T$; size $3$ when $|T|=3$ |
+| $m(H)$ | Maximum subgraph density $\max_{H'\subseteq H}|E(H')|/|V(H')|$ |
