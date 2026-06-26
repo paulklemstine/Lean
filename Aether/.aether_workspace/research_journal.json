@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0f4e6c03",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — HoTT Foundations (Cycle v16)\n\nDerived from this cycle's findings: a proof-relevant synthetic identity type\n`HoTTSynth.Path` (Type-valued, so Lean's definitional UIP does not coll",
-      "quality_score": 0.5147914097421203,
-      "sorry_count": 0,
-      "theorem_count": 112,
-      "timestamp": "2026-06-20T20:32:59",
-      "title": "Homotopy Type Theory Foundations"
-    },
-    {
       "cycle_id": "b4d505d3",
       "domain": "Novelty",
       "key_insight": "# Future Directions\n\nThese directions build on the verified core in\n`Catalog/MachineLearning/UniversalApproximation/QuantitativeBoundsCore.lean`,\nwhich establishes that the width-`2n` ramp-difference",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-26T17:56:47",
       "title": "Join-saturation equality for matchings with isolated vertices"
+    },
+    {
+      "cycle_id": "3be846c2",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from the cycle that produced `RamseyFourFour.lean` (the exact value\n`R(4,4) = 18`) and `RamseyDiagonalBound.lean` (the general bo",
+      "quality_score": 0.464016452173913,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-26T18:05:49",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70446
     }
   ],
-  "last_updated": "2026-06-26T17:56:47",
+  "last_updated": "2026-06-26T18:05:49",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "4364c6f1",
-        "quality": 0.546,
-        "theorems": 37,
-        "title": "Statistical Mechanics: Ising Model Phase Transition"
-      },
-      {
         "cycle_id": "f0b7b2e4",
         "quality": 0.53943,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.62096,
         "theorems": 9,
         "title": "Join-saturation equality for matchings with isolated vertices"
+      },
+      {
+        "cycle_id": "3be846c2",
+        "quality": 0.464016452173913,
+        "theorems": 10,
+        "title": "Ramsey Theory: Bounds and Constructions"
       }
     ],
     "Bridges": [
