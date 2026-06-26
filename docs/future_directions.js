@@ -180,7 +180,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
   {
-    "consumed_by_exp_id": "c743a598",
+    "consumed_by_exp_id": "",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domains": [
       "Geometry",
@@ -190,7 +190,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:11.683325+00:00",
     "title": "Standard Conjectures on Algebraic Cycles"
   },
@@ -210,7 +210,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "6f4d545d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domains": [
       "Algebra"
@@ -219,7 +219,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432615+00:00",
     "title": "Galois Theory: Solvability of Polynomials"
   },
@@ -2077,20 +2077,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "913e3580",
-    "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "fd_2332",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T14:06:13.272860+00:00",
-    "title": "Plethystic Triviality of the Shifted t-Schur Basis"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For every finite connected simple graph G on n \u2265 2 vertices with unit edge resistances, let R_G be its effective-resistance matrix and define \u0394(G) = (-1)^(n-1) det(R_G). Conjecture: 2^n (n-1) / n^n \u2264 \u0394(G) \u2264 2^(n-2) (n-1). Moreover, equality on the left holds exactly for the complete graph K_n, and equality on the right holds exactly for trees. This extends the Graham--Pollak tree determinant formula and predicts that adding simple edges monotonically decreases the signed resistance determinant down to the complete graph.",
     "domains": [
@@ -2368,7 +2354,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "bdb5ae9b",
+    "consumed_by_exp_id": "",
     "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
     "domains": [
       "Bridges"
@@ -2377,7 +2363,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T13:11:45.659366+00:00",
     "title": "Quadratic irrational density in the ratio spectrum"
   },
@@ -3465,7 +3451,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
   },
   {
-    "consumed_by_exp_id": "4e028e76",
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domains": [
       "Pythagorean",
@@ -3475,7 +3461,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -6255,6 +6241,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Fixed-Point / exp-log Iteration\n\nThis cycle extended `Catalog/EML/FixedPointConvergence.lean` from qualitative\nconvergence (to *a* fixed point) to a fully **quantitative** theory: a priori and a\nposteriori geometric error bounds, plus existence-and-uniqueness and convergence to\n*the* unique fixed point. Below are testable conjectures for follow-up cycles.\n\n## C1. Order-of-convergence dichotomy (linear vs. superlinear)\n\n**Conjecture.** For the EML operator with fixed point `x*`, the iteration is exactly\n*linearly* convergent with asymptotic rate `|f'(x*)| = exp(a)\u00b7b/(b\u00b7x*+c)` whenever\n`f'(x*) \u2260 0`, i.e.\n`lim\u2099 |x\u2099\u208a\u2081 \u2212 x*| / |x\u2099 \u2212 x*| = exp(a)\u00b7b/(b\u00b7x*+c)`.\nMoreover the limit is `0` (superlinear) iff `b = 0`.\n*Testable:* the ratios in \u00a72 of `ComputationalEvidence.md` already approach `0.318`;\nformalize via `EMLIterOp.deriv_eq` and a Stolz/`Tendsto` argument.\n\n## C2. Sharpness of the a posteriori bound\n\n**Conjecture.** The constant `\u03c1/(1\u2212\u03c1)` in `iterSeq_aposteriori_bound` is asymptotically\nsharp: there is a parameter regime and starting point for which\n`|x\u2099\u208a\u2081 \u2212 x*| / |x\u2099\u208a\u2081 \u2212 x\u2099| \u2192 \u03c1/(1\u2212\u03c1)` is *not* attained but `|x\u2099\u208a\u2081 \u2212 x*| /\n|x\u2099\u208a\u2081 \u2212 x\u2099| \u2192 f'(x*)/(1\u2212f'(x*))`, and the bound cannot be replaced by any smaller\nconstant valid for all `D` with contraction ratio `\u03c1`.\n\n## C3. Existence of an invariant interval from parameters alone\n\n**Conjecture.** For `b > 0`, `c > 1` and `a` with `exp(a)\u00b7b < c\u00b7log c` (a clean\nsufficient condition), an invariant interval `[lo, hi]` and contraction ratio `\u03c1 < 1`\n*always exist*, so an `EMLContractionData` can be constructed purely from `(a,b,c)`.\nThis would turn the hypothesis-laden `EMLContractionData` into a constructible object\nand yield an unconditional fixed-point theorem on parameter regions.\n\n## C4. Monotone / two-sided enclosure of the fixed point\n\n**Conjecture.** When `f' > 0` on the interval (i.e. `b > 0`), the iteration is monotone\nonce it enters `[lo, hi]`, and from any `x\u2080` the pair `(min(x\u2080, f x\u2080), max(x\u2080, f x\u2080))`\nbrackets `x*`. Consequently `x\u2080 \u2264 x* \u2264 f x\u2080` or `f x\u2080 \u2264 x* \u2264 x\u2080`, giving a *certified\ntwo-sided enclosure* at every step (stronger than the absolute a posteriori bound).\n\n## C5. Depth-n EML composition has a unique fixed point with computable rate\n\n**Conjecture.** Bridging with `Catalog/EML/DeepComposition.lean`: a composition\n`f_{k-1} \u2218 \u2026 \u2218 f_0` of EML operators, each a `\u03c1\u1d62`-contraction on a common invariant\ninterval, is a `\u220f\u1d62 \u03c1\u1d62`-contraction, hence has a unique fixed point to which Picard\niteration converges with rate `\u220f\u1d62 \u03c1\u1d62`, and the a priori/a posteriori bounds of this\ncycle transfer verbatim with `\u03c1 \u21a6 \u220f\u1d62 \u03c1\u1d62`. This unifies the single-operator\nfixed-point theory with the deep-composition error-propagation results.\n",
+    "domains": [
+      "Applications",
+      "Pythagorean"
+    ],
+    "id": "fd_2628",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f247824f",
+    "status": "available",
+    "timestamp": "2026-06-26T20:24:28.526311+00:00",
+    "title": "`Catalog/EML/FixedPointConvergence.lean` from qualitative"
   },
   {
     "consumed_by_exp_id": "",
