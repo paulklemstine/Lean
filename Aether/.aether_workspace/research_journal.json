@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "bf1e3b75",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\n## Weighted and multiplicity-aware dependencies\n\nThe present calculus treats `depends u t` as a Boolean: a theorem either relies\non another or it does not. A natural and immediate",
-      "quality_score": 0.49552432432432436,
-      "sorry_count": 0,
-      "theorem_count": 93,
-      "timestamp": "2026-06-19T23:06:25",
-      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-    },
-    {
       "cycle_id": "d1e35069",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Dream Logic (Paraconsistency ↔ Topology ↔ Number Theory)\n\nDerived from this cycle's findings.  The cycle established four pillars:\nBelnap's four-valued algebra (`Belnap.lean`), t",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-06-26T05:32:41",
       "title": "Duality of Sublevel Set Homotopy Types for RC Functions on Finite‑Dimensional Banach Spaces"
+    },
+    {
+      "cycle_id": "dfb56ea4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Navier–Stokes Existence, Smoothness, and Turbulence\n\nDerived from this cycle's findings in `EnergyMethod.lean` (viscous energy\ndissipation) and `Bridge.lean` (the viscous ↔ tropi",
+      "quality_score": 0.52355,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-26T06:15:58",
+      "title": "Navier-Stokes Existence and Smoothness"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7095
     }
   ],
-  "last_updated": "2026-06-26T05:32:41",
+  "last_updated": "2026-06-26T06:15:58",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "99725b45",
-        "quality": 0.708,
-        "theorems": 18,
-        "title": "Asymptotic C5-decomposition threshold equals 5/8"
-      },
-      {
         "cycle_id": "7ca7bb8c",
         "quality": 0.886574,
         "theorems": 3,
@@ -3637,6 +3631,12 @@
         "quality": 0.6688000000000001,
         "theorems": 16,
         "title": "Birch and Swinnerton-Dyer Conjecture"
+      },
+      {
+        "cycle_id": "dfb56ea4",
+        "quality": 0.52355,
+        "theorems": 8,
+        "title": "Navier-Stokes Existence and Smoothness"
       }
     ],
     "NumberTheory": [

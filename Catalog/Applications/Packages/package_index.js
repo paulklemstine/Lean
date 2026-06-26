@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "dfb56ea4",
     "filename": "navier_stokes_existence_and_smoothness.json",
     "pkg_num": 78,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.52355,
     "title": "Two Anti-Blowup Mechanisms Unified: Viscous Energy Dissipation and Tropical Idempotency"
   },
   {
@@ -2271,8 +2271,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "navier_stokes_existence_and_smoothness",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.52355,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Two Anti-Blowup Mechanisms Unified: Viscous Energy Dissipation and Tropical Idempotency"
     }

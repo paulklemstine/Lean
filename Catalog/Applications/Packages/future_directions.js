@@ -1612,7 +1612,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
   },
   {
-    "consumed_by_exp_id": "7410b0f1",
+    "consumed_by_exp_id": "",
     "description": "For integers n \u2265 2k and k \u2265 3, any two non-trivial cross-intersecting families A, B \u2286 ([n] choose k) satisfy |A| * |B| \u2264 h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
     "domains": [
       "Pythagorean",
@@ -1622,7 +1622,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T04:53:00.715630+00:00",
     "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
   },
@@ -1787,7 +1787,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excess-One Criterion for Kopp-Lagarias Ray Class Fields"
   },
   {
-    "consumed_by_exp_id": "0f17133d",
+    "consumed_by_exp_id": "",
     "description": "A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expansion parameter \u03b1_G(t) and the optimality of the associated code B(G).",
     "domains": [
       "Algebra",
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T06:21:22.540143+00:00",
     "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
@@ -3626,7 +3626,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Externally Supported Independence Number"
   },
   {
-    "consumed_by_exp_id": "d7fd1af1",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For rational \u03b2 = p/q, the natural extension has finite domain bridges.",
     "domains": [
       "Pythagorean",
@@ -3636,7 +3636,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -3656,7 +3656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both deletion and contraction of a non-loop non-coloop element preserve connectivity in connected polymatroids"
   },
   {
-    "consumed_by_exp_id": "01ec1037",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
     "domains": [
       "Geometry",
@@ -3666,7 +3666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T21:58:37.105519+00:00",
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
   },
@@ -5531,6 +5531,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Navier\u2013Stokes Existence, Smoothness, and Turbulence\n\nDerived from this cycle's findings in `EnergyMethod.lean` (viscous energy\ndissipation) and `Bridge.lean` (the viscous \u2194 tropical anti-blowup unification).\n\n## Conjecture 1 \u2014 Enstrophy is the true obstruction, and it has its own identity\n\nState and prove an *enstrophy* analogue of `Model.energy_hasDerivAt`: for the\nabstract model, `d/dt \u27eaA u, u\u27eb = -2\u03bd\u2016A u\u2016\u00b2 + 2\u27eaB(u,u), A u\u27eb`, where the last\nterm \u2014 unlike the energy case \u2014 does **not** vanish.\n\n- **The key insight is** that the trilinear cancellation `\u27eaB v v, v\u27eb = 0`\n  controls the energy but produces *no* cancellation when tested against `A u`,\n  so the enstrophy balance carries an uncontrolled production term \u2014 this is the\n  precise algebraic location of the 3D regularity gap.\n- **Why now?** The energy identity is already formalized with the exact\n  `inner`-product product-rule machinery (`HasDerivAt.inner`, `real_inner_comm`);\n  the enstrophy identity is the same computation tested against `A u` instead of\n  `u`, so it is immediately within reach and isolates the open difficulty.\n\n## Conjecture 2 \u2014 Small-data global regularity is provable in the abstract model\n\nIf the initial enstrophy is below an explicit threshold `c \u03bd\u00b2 / \u2016B\u2016\u00b2`, the\nenstrophy stays bounded for all time (a Beale\u2013Kato\u2013Majda / Fujita\u2013Kato style\ncriterion) and hence no blowup occurs.\n\n- **The key insight is** that the production term `2\u27eaB(u,u), A u\u27eb` is cubic in\n  `u` while the dissipation `-2\u03bd\u2016A u\u2016\u00b2` is quadratic, so a Gr\u00f6nwall/bootstrap\n  argument closes whenever the data is small relative to viscosity.\n- **Why now?** Mathlib already has the Gr\u00f6nwall inequality and the energy bound\n  `Model.energy_le_initial` gives the needed `L\u00b2` control; combining them gives\n  a conditional global-regularity theorem with zero new analysis infrastructure.\n\n## Conjecture 3 \u2014 A Lyapunov-observable meta-theorem unifies all anti-blowup proofs\n\nAbstract `Bridge.lean` into a single statement: any evolution (continuous or\ndiscrete) admitting a real observable `\u03a6` with `\u03a6` nonincreasing along orbits\nis globally bounded by `\u03a6(initial)`; the viscous energy and tropical `sup` are\ntwo instances.\n\n- **The key insight is** that \"singularity obstruction = existence of a monotone\n  observable\", so the parabolic and the idempotent proofs are the *same*\n  one-line monotonicity argument with different proofs of monotonicity.\n- **Why now?** `tropEnergy_iterate_antitone` and `Model.energy_antitone` are\n  already both phrased via `Antitone`; factoring the shared core out is a direct\n  generalization that would let future turbulence models inherit bounds for free.\n\n## Conjecture 4 \u2014 A discrete energy cascade exhibits a sharp dissipation law\n\nBuild a finite shell/dyadic model (`Fin n` shells with nearest-neighbour\nquadratic coupling satisfying the cancellation) and prove that the total energy\nflux through scales is bounded by the input rate, a rigorous discrete analogue\nof the Kolmogorov `\u22125/3` dissipation balance.\n\n- **The key insight is** that the same cancellation `\u27eaB v v, v\u27eb = 0` that makes\n  the global energy a Lyapunov function also forces the inter-shell flux to\n  telescope, so energy injected at large scales is conservatively transported\n  and only removed by viscosity at small scales.\n- **Why now?** The `Model` structure is already parametric over the inner-product\n  space `V`; instantiating `V = EuclideanSpace \u211d (Fin n)` with an explicit shell\n  coupling reuses every theorem in `EnergyMethod.lean` verbatim.\n\n## Conjecture 5 \u2014 The tropical envelope dominates the viscous energy decay rate\n\nFor matched data, the tropical `sup`-observable decays at least as fast as the\nviscous energy norm, making the (cheaply computable) idempotent dynamics a\nrigorous upper barrier for the (expensive) viscous flow.\n\n- **The key insight is** that idempotent max-plus propagation is the `\u03bd \u2192 \u221e`\n  (infinite-dissipation) limit of viscous smoothing, so it can only contract\n  oscillation faster, giving a one-sided comparison.\n- **Why now?** `Bridge.lean` already proves both observables are antitone in the\n  same file; a comparison theorem only needs a quantitative coupling of the two\n  decay rates, with all monotonicity lemmas already in place.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2578",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dfb56ea4",
+    "status": "available",
+    "timestamp": "2026-06-26T06:10:38.747490+00:00",
+    "title": "Derived from this cycle's findings in `EnergyMethod.lean` (viscous energy"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5542,6 +5557,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The generalization gap in supervised learning exhibits modular symmetry properties, where the function mapping training set size to generalization error transforms under SL(2,Z) action on the learning rate parameter, with discrete phase transitions occurring at cusps of modular curves. Test: Analyze generalization gaps of neural networks across learning rate schedules and training set sizes to detect modular invariance and locate phase transitions at predicted cusps. Impact: This would provide a principled mathematical framework for understanding learning phase transitions and optimal hyperparameter scheduling via modular forms.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_2579",
+    "priority_score": 0.7157272727272728,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-26T06:15:51.473794+00:00",
+    "title": "Modular Symmetry in Statistical Learning Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -5912,21 +5941,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
-    "consumed_by_exp_id": "6bde751b",
-    "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "fd_0541",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.042519+00:00",
-    "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
     "domains": [
@@ -6137,7 +6151,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "b0e2bb19",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -6147,7 +6161,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
