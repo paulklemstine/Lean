@@ -1,43 +1,49 @@
-# Computational Evidence — Shamir & Feldman Secret Sharing
+# Theorem Trace — Secret Sharing: Shamir's Scheme and Verifiable Variants
 
-Concise sanity checks performed before formalization. All claims were ultimately
-discharged as `sorry`-free Lean theorems in `ShamirSecretSharing.lean` and
-`FeldmanVSS.lean`; this note records the small-case evidence that guided the statements.
+Internal anti-hallucination map. Every result discussed in `ARTICLE.md` and
+`RESEARCH_PAPER.md` maps to an actual Lean name from the Phase A output. No
+result is stated in the prose that is not listed here.
 
-## 1. Reconstruction (threshold = degree + 1) over `ZMod 7`
+## `Catalog/Cryptography/ShamirSecretSharing.lean`
 
-Take `t = 3`, polynomial `f(X) = 5 + 2X + 3X²` over `ZMod 7`, secret `f(0) = 5`.
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `shamir_reconstruction` | Two polynomials of degree `< t` agreeing on a finset `s` with `#s = t` are equal (threshold = degree + 1). | §"Recovering the secret" | Thm 1 |
+| `shamir_secret_recovered` | Under the reconstruction hypotheses, `f.eval 0 = g.eval 0`. | §"Recovering the secret" | Cor 1 |
+| `shamir_privacy` | For every candidate secret `c`, there is a **unique** degree-`< t` polynomial matching the `t-1` observed shares with `f.eval 0 = c`. | §"Zero knowledge below threshold" | Thm 2 |
+| `shamir_insufficient` | Two distinct secrets `c₁ ≠ c₂` are both consistent with the same `t-1` shares via distinct polynomials. | §"Zero knowledge below threshold" | Cor 2 |
 
-| point x | 1 | 2 | 3 | 4 | 5 |
-|---------|---|---|---|---|---|
-| share f(x) | 3 (=10) | 2 (=21=0..; 5+4+12=21≡0) | … | … | … |
+## `Catalog/Cryptography/FeldmanVSS.lean`
 
-Any 3 of these shares interpolate back to a unique degree-≤2 polynomial (verified by
-hand-Lagrange), recovering `f(0)=5`. Two distinct degree-≤2 polynomials cannot agree on
-3 points — matches `shamir_reconstruction`.
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `feldmanCommit` (def) | `Cⱼ = (f.coeff j)·g`. | §"Catching a cheating dealer" | Def 4 |
+| `FeldmanVerifies` (def) | `s·g = ∑_{j<t} xʲ·Cⱼ`. | §"Catching a cheating dealer" | Def 5 |
+| `feldman_commitment_eval` | `∑_{j<t} xʲ·feldmanCommit g f j = (f.eval x)·g`. | §"Catching a cheating dealer" | Thm 3 |
+| `feldman_complete` | Honest share `f.eval x` always verifies. | §"Catching a cheating dealer" | Cor 3 |
+| `feldman_verify_iff` | With `g ≠ 0`, `s` verifies iff `s = f.eval x`. | §"Catching a cheating dealer" | Thm 4 |
+| `feldman_catches_cheater` | Any `s ≠ f.eval x` is rejected. | §"Catching a cheating dealer" | Cor 4 |
+| `feldman_binding` | Same commitments on `range t` ⇒ equal polynomials (binding). | §"Catching a cheating dealer" | Thm 5 |
 
-## 2. Privacy from `t-1 = 2` shares over `ZMod 7`
+## `Catalog/Cryptography/PedersenVSS.lean`
 
-Fix the coalition points `s = {1, 2}` with observed shares `y(1)=3, y(2)=0`.
-For **each** candidate secret `c ∈ {0,…,6}` there is exactly one degree-≤2 polynomial with
-`f(0)=c, f(1)=3, f(2)=0` (solve the 3×3 Vandermonde system on points {0,1,2}). Counting:
-7 secrets ↦ 7 distinct consistent polynomials, a bijection. So the 2 shares are equally
-compatible with all 7 secrets ⇒ zero information. This is exactly `shamir_privacy`
-(existence + uniqueness for every `c`) and its corollary `shamir_insufficient`.
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `pedersenCommit` (def) | `Cⱼ = (f.coeff j)·g + (f'.coeff j)·h`. | §"Hiding everything, perfectly" | Def 6 |
+| `PedersenVerifies` (def) | `s·g + s'·h = ∑_{j<t} xʲ·Cⱼ`. | §"Hiding everything, perfectly" | Def 7 |
+| `pedersen_commitment_eval` | RHS `= (f.eval x)·g + (f'.eval x)·h`. | §"Hiding everything, perfectly" | Thm 6 |
+| `pedersen_complete` | Honest pair `(f.eval x, f'.eval x)` verifies. | §"Hiding everything, perfectly" | Cor 5 |
+| `pedersen_commit_add` | Commitments add coefficient-wise. | §"Hiding everything, perfectly" | Thm 7 |
+| `pedersen_perfect_hiding` | With `h ≠ 0`, every `f` admits a blinding `f'` reproducing any commitment vector `C` on `range t`. | §"Hiding everything, perfectly" | Thm 8 |
+| `pedersen_equivocation` | Any `f₁, f₂` can share the same commitment vector via suitable blindings. | §"Hiding everything, perfectly" | Cor 6 |
 
-## 3. Feldman verification over the additive model
+## `Catalog/Cryptography/ShamirLagrangeReconstruction.lean`
 
-Generator `g ≠ 0` in a field; commitments `Cⱼ = aⱼ·g`. For `f(X)=5+2X+3X²`, point `x=2`,
-`∑_{j<3} 2ʲ Cⱼ = (a₀ + 2a₁ + 4a₂)·g = f(2)·g`. A forged share `s ≠ f(2)` gives `s·g ≠ f(2)·g`
-(cancel `g`), so verification fails — the cheating-dealer check. Confirms
-`feldman_commitment_eval`, `feldman_verify_iff`, `feldman_catches_cheater`.
-
-## 4. Counterexample hunt
-
-- Dropping `0 ∉ s` in privacy: then the secret point coincides with an observed node and
-  `#(insert 0 s) = t-1`, the system is under-determined — privacy statement as written
-  would be false, so the hypothesis is necessary (kept explicit).
-- Dropping `g ≠ 0` in Feldman soundness: with `g = 0` every share verifies vacuously
-  (`s·0 = 0`), so cheaters are NOT caught — hypothesis necessary (kept explicit).
-
-No counterexample to the final theorem statements was found; all were proved in Lean.
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `lagrangeCoeff` (def) | `(Lagrange.basis s v i).eval 0` — node-only reconstruction weight. | §"Recovering the secret" | Def 3 |
+| `shamir_reconstruct_at` | For `f.degree < #s`, `f.eval z = ∑ i∈s, f.eval (v i)·(Lagrange.basis s v i).eval z`. | §"Recovering the secret" | Thm 9 |
+| `shamir_explicit_reconstruction` | `f.eval 0 = ∑ i∈s, f.eval (v i)·lagrangeCoeff s v i`. | §"Recovering the secret" | Thm 10 |
+| `sum_lagrangeCoeff_eq_one` | `∑ i∈s, lagrangeCoeff s v i = 1` (nonempty `s`). | §"Recovering the secret" | Lem 1 |
+| `shamir_reconstruct_additive` | Reconstruction is additive in the shares (MPC addition). | §"Adding secrets without revealing them" | Thm 11 |
+| `shamir_reconstruct_mul` | Product secret recovered from share products when `(f*g).degree < #s` (BGW core). | §"Adding secrets without revealing them" | Thm 12 |
