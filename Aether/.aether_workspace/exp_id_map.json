@@ -527,5 +527,6 @@
   "01ec1037": "signless_laplacian_spectral_radius_of_pure_simplic.json",
   "d7fd1af1": "domain_finiteness.json",
   "0f17133d": "girth_expansion_equivalence_for_optimal_small_set_.json",
-  "151fa435": "continued_fractions_and_diophantine_approximation.json"
+  "151fa435": "continued_fractions_and_diophantine_approximation.json",
+  "5c41b780": "tightness_of_the_unit_shift_bound_for_eulers_totie.json"
 }
