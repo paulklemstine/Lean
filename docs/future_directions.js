@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "da520741",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -536,6 +536,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432801+00:00",
     "title": "Categorical Foundations: Yoneda and Adjunctions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 0f17133d (Q=0.765), which proved 10 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expans",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "push_0f17133d_5a9fc372",
+    "priority_score": 0.86536,
+    "research_mode": "team",
+    "source_exp_id": "0f17133d",
+    "status": "available",
+    "timestamp": "2026-06-26T07:57:04.967467+00:00",
+    "title": "Deepening: Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
   {
     "consumed_by_exp_id": "",
@@ -1343,6 +1357,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432797+00:00",
     "title": "Tropical Convexity and Linear Programming"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 0f17133d (Q=0.765) proved 10 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and on",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "sorry_fill_0f17133d_9c59b76a",
+    "priority_score": 0.8153600000000001,
+    "research_mode": "team",
+    "source_exp_id": "0f17133d",
+    "status": "available",
+    "timestamp": "2026-06-26T07:57:05.499807+00:00",
+    "title": "Close Proofs: Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
   {
     "consumed_by_exp_id": "",
@@ -4189,7 +4217,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "3847ce48",
+    "consumed_by_exp_id": "",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self\u2011dual string C\u2011group representations of rank $2m$ (as constructed by the vertex\u2011gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self\u2011dual string C\u2011group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domains": [
       "Algebra"
@@ -4198,7 +4226,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
   },
@@ -5620,6 +5648,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Girth\u2013Expansion Equivalence\n\nThis cycle established that the *literal* bridge \"left-`d`-regular graph is an\n`s`-optimal small-set expander \u21d4 girth `\u2265 2s+2`\" is **one-directional**:\n`optimal \u21d2 girth` holds, but the converse fails (`converse_false`), because\n\"exactly `d\u00b7|X|` neighbors\" forces pairwise-*disjoint* neighborhoods\n(`optimal_iff_disjoint`), a strictly stronger property than excluding short\ncycles. The genuine girth-`6` characterization is `no_four_cycle_iff`. The\nfollowing conjectures are derived directly from these findings.\n\n## C1. Forest characterization of girth `\u2265 2s+2`\n**Conjecture.** For a left-`d`-regular bipartite graph, `GirthGe N s` holds iff\nevery set `X` of `\u2264 s` left vertices induces an *acyclic* subgraph on\n`X \u222a nbhd N X` (equivalently `|nbhd N X| = (d\u00b7|X|) - (edges removed by a spanning\nforest)`; concretely the induced incidence graph has no cycle).\n\nThe key insight is that a `2k`-cycle lives entirely inside the induced subgraph\non its `k` left vertices, so forbidding short cycles is *exactly* forbidding\ninduced cycles on small left-sets \u2014 the correct expansion statement is\nacyclicity, not maximal expansion.\n\nWhy now? We already have the cycle-extraction pivot `cycle_shared_neighbor` and\nthe combinatorial cycle model `HasCycle`; promoting \"shares a neighbor\" to\n\"contains an induced cycle\" only needs a Mathlib `SimpleGraph.IsAcyclic` bridge,\nwhich is now within reach.\n\n## C2. Quantitative expansion floor from girth\n**Conjecture.** If `GirthGe N s` then every `X` with `|X| \u2264 s` satisfies\n`(d-1)\u00b7|X| + 1 \u2264 |nbhd N X|`, and this bound is tight (achieved by a single\ntree component).\n\nThe key insight is that an induced forest on `t` left vertices with `d\u00b7t` edges\nmust have at least `d\u00b7t - t + 1` right vertices, turning the *qualitative* girth\nhypothesis into a *quantitative* lower bound on `\u03b1_G(t)`.\n\nWhy now? `nbhd_card_mono` and `card_biUnion_le` already give the matching upper\nbound `|nbhd N X| \u2264 d\u00b7|X|`; the lower bound needs only an edge-counting forest\ninequality, a standard `Finset` induction.\n\n## C3. Threshold collapse of optimal expansion\n**Conjecture.** For `s \u2265 2`, `OptimalExpander N d s` is independent of `s`: it is\nequivalent to `OptimalExpander N d 2`, and hence to `AllPairsDisjoint N`.\n\nThe key insight is that maximal expansion is a *pairwise* condition \u2014 once any\ntwo neighborhoods must be disjoint, every larger union is automatically a\ndisjoint union, so the parameter `s` carries no extra information beyond `s = 2`.\n\nWhy now? `optimal_iff_disjoint` already proves both endpoints reduce to\n`AllPairsDisjoint`; the collapse is a one-line corollary chaining the two\ninstances and is a sharp, surprising statement worth recording explicitly.\n\n## C4. Spielman\u2013Tanner unique-neighbor refinement\n**Conjecture.** The *correct* coding-theoretic analogue of the bridge is:\ngirth `\u2265 2s+2` iff every `X` with `|X| \u2264 s` has a *unique-neighbor* vertex\n(a right vertex adjacent to exactly one element of `X`), i.e. `B(G)` corrects up\nto `\u230as/2\u230b` errors.\n\nThe key insight is that short cycles are exactly the obstruction to the\nunique-neighbor property; replacing \"exactly `d\u00b7|X|`\" by \"has a unique neighbor\"\nrepairs the broken iff while keeping the code-distance interpretation intact.\n\nWhy now? Our counterexample shows the naive `\u03b1_G(t) = d\u00b7t` statement is too\nstrong; the unique-neighbor relaxation is the standard LDPC fix and is directly\nexpressible with the existing `nbhd` machinery.\n\n## C5. Sharp girth from a single forbidden configuration\n**Conjecture.** A left-`d`-regular bipartite graph has girth `\u2265 2s+2` iff it\ncontains no \"theta/two-paths\" configuration of order `\u2264 s`, i.e. no two left\nvertices joined by two internally disjoint paths of total length `\u2264 2s`.\n\nThe key insight is that every shortest cycle decomposes into two internally\ndisjoint paths between a single pair of vertices, so the girth bound is governed\nby a *local* two-vertex connectivity obstruction rather than a global count.\n\nWhy now? `cycle_shared_neighbor` already isolates the two-vertex seed of a\ncycle; extending it from \"one shared neighbor\" to \"two disjoint connecting\npaths\" is the natural next combinatorial lemma and would unify C1 and C4.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2584",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0f17133d",
+    "status": "available",
+    "timestamp": "2026-06-26T07:56:57.116096+00:00",
+    "title": "That the *literal* bridge \"left-`d`-regular graph is an"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6001,7 +6044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
-    "consumed_by_exp_id": "6bde751b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -6011,7 +6054,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -6361,7 +6404,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "ad454ca1",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domains": [
       "MachineLearning",
@@ -6371,7 +6414,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
@@ -6436,7 +6479,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
   {
-    "consumed_by_exp_id": "8ce70c3b",
+    "consumed_by_exp_id": "",
     "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
     "domains": [
       "Physics",
@@ -6446,7 +6489,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },

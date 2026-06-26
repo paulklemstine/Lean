@@ -12844,7 +12844,7 @@
       "depth_estimate": 3,
       "description": "Prove the Langlands correspondence for GL₂ over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges",
         "Algebra"
@@ -12883,7 +12883,7 @@
       "depth_estimate": 3,
       "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Geometry"
@@ -13000,7 +13000,7 @@
       "depth_estimate": 3,
       "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Logic"
@@ -13039,7 +13039,7 @@
       "depth_estimate": 3,
       "description": "Formalize the p-adic Langlands correspondence for GL₂(Q_p): establish a bijection between irreducible unitary Banach representations and 2-dimensional Galois representations. Prove the Colmez functor realization.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges",
         "Algebra"
@@ -13156,7 +13156,7 @@
       "depth_estimate": 3,
       "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Computation"
@@ -13234,7 +13234,7 @@
       "depth_estimate": 3,
       "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Logic"
@@ -13312,7 +13312,7 @@
       "depth_estimate": 3,
       "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Logic"
@@ -13774,7 +13774,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "8ce70c3b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -13800,7 +13800,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:30.651923+00:00",
       "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
@@ -14242,7 +14242,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "da520741",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -14268,7 +14268,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave7",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T21:01:44.957997+00:00",
       "title": "EML Universal Approximation"
@@ -15846,7 +15846,7 @@
       "depth_estimate": 3,
       "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.7000000000000001,
+      "domain_quality_penalty": -0.6000000000000001,
       "domains": [
         "Bridges",
         "Geometry"
@@ -16158,7 +16158,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.7000000000000001,
       "domains": [
         "Bridges",
         "Tropical"
@@ -16197,7 +16197,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Ax-Kochen-Ershov theorem: two henselian valued fields with elementarily equivalent residue fields and value groups are elementarily equivalent. Bridge to number theory: this implies the Q_p's are elementarily equivalent for almost all p. Prove Morley's categoricity theorem: if a countable theory is categorical in one uncountable cardinal, it is categorical in all uncountable cardinals.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Algebra"
@@ -16347,7 +16347,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "6bde751b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16373,7 +16373,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.042519+00:00",
       "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
@@ -16932,7 +16932,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "ad454ca1",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16958,7 +16958,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:08.298113+00:00",
       "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
@@ -33868,7 +33868,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -34529,7 +34529,7 @@
         "score_sequences_and_characteristic_sequences",
         "multigraph_enumeration_and_restricted_sequences"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -34866,7 +34866,7 @@
         "Design theory and graph decompositions",
         "Formal finite combinatorics in Lean 4"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -35052,7 +35052,7 @@
       "domain_bridges": [
         "Combinatorics to Logic"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -35145,7 +35145,7 @@
         "Combinatorics on Words",
         "Symbolic Dynamics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -35236,7 +35236,7 @@
         "Coding_Theory",
         "Graph_Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Bridges"
@@ -35327,7 +35327,7 @@
         "math.CO",
         "math.NT"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -35418,7 +35418,7 @@
         "Finite Combinatorics",
         "Topological Graph Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -36068,7 +36068,7 @@
         "Graph theory",
         "Extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -36817,7 +36817,7 @@
         "combinatorics on words",
         "number theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37146,7 +37146,7 @@
         "limsup of partial quotient expressions to Lagrange constants",
         "Smith normal form to reduction of general determinant D matrices"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37193,7 +37193,7 @@
         "Formal_power_series",
         "Linear_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37335,7 +37335,7 @@
         "extremal combinatorics to finite cardinal minimization",
         "graph joins and disjoint unions to type-level finite graph constructions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -37722,7 +37722,7 @@
         "p-adic obstruction heuristics",
         "smooth-number structure"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38205,7 +38205,7 @@
         "Reduces an r-family product inequality to the two-family sharp product theorem by multiplying pairwise inequalities over unordered pairs.",
         "Connects extremal set theory with finite products and binomial coefficient arithmetic in Nat."
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38251,7 +38251,7 @@
         "Combinatorial designs",
         "Algebraic geometry of Grassmann varieties"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38392,7 +38392,7 @@
         "binary digit sums to carries in addition",
         "density-one asymptotics to filter convergence over finite counting measures"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38587,7 +38587,7 @@
         "binary Cusick inequality as the b = 2 specialization",
         "stopped random-walk laws for carry propagation"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -38725,7 +38725,7 @@
         "quadratic_forms",
         "linear_algebra"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -39455,7 +39455,7 @@
         "Extremal graph theory",
         "Rational densities"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -40001,7 +40001,7 @@
         "graph connectivity",
         "extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -41209,7 +41209,7 @@
         "Graph density classification",
         "Formal proof systems"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -41653,7 +41653,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: For rational β = p/q, the natural extension has finite domain bridges.",
       "domain_bridges": "finite",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Bridges"
@@ -41867,7 +41867,7 @@
       "depth_estimate": 3,
       "description": "The critical density γ_k must exactly equal n²/k for the phase transition to occur.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -42963,7 +42963,7 @@
         "Turán density",
         "Stability in extremal combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -43095,7 +43095,7 @@
       "depth_estimate": 2,
       "description": "Investigate the sequence Stack polyominoes with square core. with terms 1,1,0,0,1,2,3,4,5,7,9,13,17,24,31,42,54,71,90,117,147,188,236,298,371,466,576,716,882,1088,1331,1633. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -43737,7 +43737,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3847ce48",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43766,7 +43766,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24654v1",
       "source_path": "http://arxiv.org/abs/2606.24654v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T06:41:04.137986+00:00",
       "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
@@ -44031,7 +44031,7 @@
         "h=1 additive codes ↔ ordinary linear codes",
         "binary projective systems ↔ submodules of (ZMod 2)^3"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Bridges"
@@ -44353,7 +44353,7 @@
         "elementary Nat arithmetic to integral quadratic forms with congruence side conditions",
         "computer-assisted finite descent certificates to Lean 4 formalization"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -44397,7 +44397,7 @@
         "Algebraic Number Theory",
         "Polynomial Dynamics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -44572,7 +44572,7 @@
         "design_theory",
         "finite_geometry"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -45305,7 +45305,7 @@
         "Quadratic Forms",
         "Polygonal Numbers"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -45915,7 +45915,7 @@
         "analytic number theory",
         "combinatorics on words"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -46010,7 +46010,7 @@
         "deletion-correcting codes and reconstruction thresholds",
         "binomial convolution and generating functions"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -46055,7 +46055,7 @@
         "Extremal Graph Theory",
         "Additive Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -46330,7 +46330,7 @@
         "social choice theory ↔ finite additive measures",
         "combinatorial geometry ↔ rational vector space orthogonality"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -46913,7 +46913,7 @@
         "Order Theory",
         "Combinatorics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -46955,7 +46955,7 @@
       "depth_estimate": 3,
       "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carathéodory-type result.",
       "domain_bridges": "machine_learning > optimization",
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -47234,7 +47234,7 @@
         "extremal combinatorics",
         "configuration problems"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -47508,7 +47508,7 @@
         "Algebraic combinatorics",
         "p-adic analysis"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -47594,7 +47594,7 @@
         "Discrete Mathematics",
         "Information Theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Bridges"
       ],
@@ -47698,6 +47698,45 @@
       "thread_id": "",
       "timestamp": "2026-06-26T07:31:25.425369+00:00",
       "title": "μ(W_2(τ)) Conjecture"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — Girth–Expansion Equivalence\n\nThis cycle established that the *literal* bridge \"left-`d`-regular graph is an\n`s`-optimal small-set expander ⇔ girth `≥ 2s+2`\" is **one-directional**:\n`optimal ⇒ girth` holds, but the converse fails (`converse_false`), because\n\"exactly `d·|X|` neighbors\" forces pairwise-*disjoint* neighborhoods\n(`optimal_iff_disjoint`), a strictly stronger property than excluding short\ncycles. The genuine girth-`6` characterization is `no_four_cycle_iff`. The\nfollowing conjectures are derived directly from these findings.\n\n## C1. Forest characterization of girth `≥ 2s+2`\n**Conjecture.** For a left-`d`-regular bipartite graph, `GirthGe N s` holds iff\nevery set `X` of `≤ s` left vertices induces an *acyclic* subgraph on\n`X ∪ nbhd N X` (equivalently `|nbhd N X| = (d·|X|) - (edges removed by a spanning\nforest)`; concretely the induced incidence graph has no cycle).\n\nThe key insight is that a `2k`-cycle lives entirely inside the induced subgraph\non its `k` left vertices, so forbidding short cycles is *exactly* forbidding\ninduced cycles on small left-sets — the correct expansion statement is\nacyclicity, not maximal expansion.\n\nWhy now? We already have the cycle-extraction pivot `cycle_shared_neighbor` and\nthe combinatorial cycle model `HasCycle`; promoting \"shares a neighbor\" to\n\"contains an induced cycle\" only needs a Mathlib `SimpleGraph.IsAcyclic` bridge,\nwhich is now within reach.\n\n## C2. Quantitative expansion floor from girth\n**Conjecture.** If `GirthGe N s` then every `X` with `|X| ≤ s` satisfies\n`(d-1)·|X| + 1 ≤ |nbhd N X|`, and this bound is tight (achieved by a single\ntree component).\n\nThe key insight is that an induced forest on `t` left vertices with `d·t` edges\nmust have at least `d·t - t + 1` right vertices, turning the *qualitative* girth\nhypothesis into a *quantitative* lower bound on `α_G(t)`.\n\nWhy now? `nbhd_card_mono` and `card_biUnion_le` already give the matching upper\nbound `|nbhd N X| ≤ d·|X|`; the lower bound needs only an edge-counting forest\ninequality, a standard `Finset` induction.\n\n## C3. Threshold collapse of optimal expansion\n**Conjecture.** For `s ≥ 2`, `OptimalExpander N d s` is independent of `s`: it is\nequivalent to `OptimalExpander N d 2`, and hence to `AllPairsDisjoint N`.\n\nThe key insight is that maximal expansion is a *pairwise* condition — once any\ntwo neighborhoods must be disjoint, every larger union is automatically a\ndisjoint union, so the parameter `s` carries no extra information beyond `s = 2`.\n\nWhy now? `optimal_iff_disjoint` already proves both endpoints reduce to\n`AllPairsDisjoint`; the collapse is a one-line corollary chaining the two\ninstances and is a sharp, surprising statement worth recording explicitly.\n\n## C4. Spielman–Tanner unique-neighbor refinement\n**Conjecture.** The *correct* coding-theoretic analogue of the bridge is:\ngirth `≥ 2s+2` iff every `X` with `|X| ≤ s` has a *unique-neighbor* vertex\n(a right vertex adjacent to exactly one element of `X`), i.e. `B(G)` corrects up\nto `⌊s/2⌋` errors.\n\nThe key insight is that short cycles are exactly the obstruction to the\nunique-neighbor property; replacing \"exactly `d·|X|`\" by \"has a unique neighbor\"\nrepairs the broken iff while keeping the code-distance interpretation intact.\n\nWhy now? Our counterexample shows the naive `α_G(t) = d·t` statement is too\nstrong; the unique-neighbor relaxation is the standard LDPC fix and is directly\nexpressible with the existing `nbhd` machinery.\n\n## C5. Sharp girth from a single forbidden configuration\n**Conjecture.** A left-`d`-regular bipartite graph has girth `≥ 2s+2` iff it\ncontains no \"theta/two-paths\" configuration of order `≤ s`, i.e. no two left\nvertices joined by two internally disjoint paths of total length `≤ 2s`.\n\nThe key insight is that every shortest cycle decomposes into two internally\ndisjoint paths between a single pair of vertices, so the girth bound is governed\nby a *local* two-vertex connectivity obstruction rather than a global count.\n\nWhy now? `cycle_shared_neighbor` already isolates the two-vertex seed of a\ncycle; extending it from \"one shared neighbor\" to \"two disjoint connecting\npaths\" is the natural next combinatorial lemma and would unify C1 and C4.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2584",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "0f17133d",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/0f17133d",
+      "status": "available",
+      "thread_id": "th_1d46d095",
+      "timestamp": "2026-06-26T07:56:57.116096+00:00",
+      "title": "That the *literal* bridge \"left-`d`-regular graph is an"
     },
     {
       "ambition_level": "extension",
@@ -48006,6 +48045,44 @@
       "thread_id": "",
       "timestamp": "2026-06-12T22:47:17.444987+00:00",
       "title": "Deepening: Predicative-ordinal-analysis fragment"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 0f17133d (Q=0.765), which proved 10 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t ≤ s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expans",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "push_0f17133d_5a9fc372",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.86536,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "0f17133d",
+      "source_path": "Girth-Expansion Equivalence for Optimal Small-Set Expanders",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T07:57:04.967467+00:00",
+      "title": "Deepening: Girth-Expansion Equivalence for Optimal Small-Set Expanders"
     },
     {
       "ambition_level": "extension",
@@ -52934,7 +53011,7 @@
       "depth_estimate": 3,
       "description": "Formalize quaternion algebras and their classification over number fields. Prove the isomorphism between unit quaternions and SO(3). Construct the Cayley-Dickson construction and prove properties of octonions. Apply to gimbal lock avoidance in 3D rotation.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry",
@@ -54272,7 +54349,7 @@
       "depth_estimate": 3,
       "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "NumberTheory",
@@ -54312,7 +54389,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic",
@@ -54432,7 +54509,7 @@
       "depth_estimate": 3,
       "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic",
         "Computation",
@@ -55256,6 +55333,44 @@
       "thread_id": "",
       "timestamp": "2026-06-13T10:53:36.593438+00:00",
       "title": "Close Proofs: This cycle laid the load-bearing foundation of Baker–Norine divisor th"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Cycle 0f17133d (Q=0.765) proved 10 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t ≤ s has exactly d * t distinct neighbors, maximizing expansion) if and on",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "sorry_fill_0f17133d_9c59b76a",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8153600000000001,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "0f17133d",
+      "source_path": "Girth-Expansion Equivalence for Optimal Small-Set Expanders",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T07:57:05.499807+00:00",
+      "title": "Close Proofs: Girth-Expansion Equivalence for Optimal Small-Set Expanders"
     },
     {
       "ambition_level": "extension",
