@@ -1,125 +1,224 @@
-# When Probability Goes Tropical: Rare Events in the Max-Plus World
+# When Probability Forgets How to Add: The Strange World of Max-Plus Luck
 
-## A different kind of arithmetic
+## A coin that only remembers its best moment
 
-Ask a child to add two numbers and they will reach for the familiar operation: $2 + 3 = 5$. But there is another arithmetic, just as consistent and far older in spirit than it looks, in which "adding" two numbers means *taking the larger one*, and "multiplying" means ordinary addition. In this world,
+Imagine a probability theory that has lost the ability to add numbers together.
+In its place, it has learned a single move: *take the maximum*. Two unlikely
+things no longer combine their small chances into something even smaller — instead
+the world simply remembers the more likely of the two and forgets the rest. Add a
+constant cost to every outcome, and the theory dutifully shifts everything by that
+cost. This is **max-plus probability**, also called *idempotent* or *tropical*
+probability, and it is the natural language of a surprising number of real
+problems: the slowest task in a chain of dependencies, the cheapest route through
+a network, the most likely explanation behind a noisy signal, the dominant term
+when temperatures drop to absolute zero.
 
-$$a \oplus b = \max(a, b), \qquad a \otimes b = a + b.$$
+The name *idempotent* comes from the fact that, in this arithmetic, $\max(a,a)=a$:
+adding something to itself changes nothing. The name *tropical* is a piece of
+mathematical folklore, a tribute to the Brazilian computer scientist Imre Simon
+who pioneered the algebra. Whatever you call it, the rules are simple. The role
+of "plus" is played by **maximum**, and the role of "times" is played by ordinary
+**addition**. The number $0$ becomes the new multiplicative identity (adding zero
+does nothing), and $-\infty$ becomes the new zero (it loses every maximum).
 
-This is the **max-plus semiring**, the backbone of *tropical mathematics*. It sounds like a curiosity, but it is the native language of optimization, scheduling, shortest-path algorithms, and — as we will see — of *rare events*.
+This article is about what happens when you push this strange arithmetic all the
+way into one of the deepest parts of classical probability — the **theory of large
+deviations**, which studies the probability of rare events — and discover that an
+entire chapter of the theory becomes *exact, finite, and convexity-free*.
 
-Why rare events? Because the mathematics of extremely unlikely outcomes has a secret tropical heart. When a probability is astronomically small, what matters is not its precise value but its *exponential rate of decay*. And once you start taking logarithms of exponentials, ordinary sums turn into maxima, and products turn into sums. The probabilistic world quietly dequantizes into the tropical one. This article is about making that dictionary precise — and about a sharp, surprising place where it breaks.
+## Rare events and the price of surprise
 
-## The exponential fog of large deviations
+Classical large-deviation theory asks: how unlikely is a rare event, and *how*
+unlikely, precisely? Flip a fair coin a million times and you expect about half a
+million heads. The probability of seeing 600,000 heads is astronomically small —
+but it is not zero, and its size is governed by a beautiful law. The probability
+decays like $e^{-n\,I(a)}$, where $n$ is the number of flips, $a$ is the
+fraction of heads you are asking about, and $I$ is a function called the **rate
+function**. The rate function is the "price of surprise": the larger $I(a)$, the
+more exponentially punishing it is to witness an average of $a$.
 
-Classical probability theory has a celebrated chapter called the **theory of large deviations**. Its guiding intuition is simple to state. Suppose you average many independent random quantities. The average concentrates near its mean — that is the law of large numbers. But occasionally, against all odds, the average wanders far from where it should be. How unlikely is such an excursion?
+The central miracle of the classical theory, **Cramér's theorem**, is that this
+price of surprise is computable. It equals the *Legendre–Fenchel transform* of a
+single auxiliary quantity, the cumulant generating function. In symbols, $I$ is
+the convex conjugate of $\Lambda$, where $\Lambda$ packages the exponential
+moments of a single coin flip.
 
-The answer, due to Harald Cramér and his successors, is that the probability of seeing the average land near a forbidden value $x$ decays exponentially:
-
-$$P(\text{average} \approx x) \approx e^{-n\, I(x)},$$
-
-where $n$ is the number of samples and $I(x) \ge 0$ is the **rate function**, the "cost" of the deviation. The larger $I(x)$, the more violently improbable the excursion. The rate function is the hero of the story, and Cramér's theorem tells us exactly how to compute it: it is the **Legendre–Fenchel transform** of the cumulant generating function, the log-of-the-exponential-average that encodes all the moments of the distribution.
-
-Now strip away the $e$ and the $\log$. Replace "probability $e^{-nI(x)}$" with "tropical weight $-I(x)$." Replace "average of exponentials" with "maximum." What remains is a fully self-contained probability theory living entirely in the max-plus world — Maslov's *idempotent probability*. The exponential fog lifts, and the skeleton of large-deviation theory stands revealed in clean, finite, combinatorial form.
-
-## Idempotent probability in one paragraph
-
-Here is the entire setup. Fix a finite set of outcomes $X$. A **max-plus measure** assigns to each outcome $x$ a real **weight** $w(x)$. We call it a **tropical probability measure** when the weights are all $\le 0$ and the largest of them is exactly $0$:
-
-$$w(x) \le 0 \text{ for all } x, \qquad \max_{x} w(x) = 0.$$
-
-The first condition is the analogue of "probabilities are at most one"; the second is the analogue of "the total probability is one" — except that "total" now means *maximum*, because in the tropical world summation is maximization. The **rate function** is simply the negated weight,
-
+Now here is the idempotent twist. In the max-plus world, a probability law is just
+a **weight function** $w$ that assigns to each outcome $x$ a number $w(x) \le 0$,
+normalized so that the best outcome has weight exactly $0$:
+$$\max_x w(x) = 0, \qquad w(x) \le 0 \text{ for all } x.$$
+You should read $w(x)$ as the logarithm of a probability after the "temperature"
+has been sent to zero — the most likely outcome sits at $0$, and everything else
+is penalized. The **rate function** is then simply the negative weight,
 $$I(x) = -w(x) \ge 0,$$
+the deviation cost of outcome $x$. The most likely outcomes cost nothing; rare
+ones cost a lot.
 
-so the most likely outcomes (weight $0$) cost nothing, and rarer outcomes (very negative weight) cost a lot. This is precisely the role $-\tfrac{1}{n}\log P$ plays classically.
+And the "probability" of a whole event $A$ — a set of outcomes — is the weight of
+its *best* member:
+$$\mu(A) = \max_{x \in A} w(x).$$
+Its cost is the cheapest deviation that lands you in $A$:
+$$\text{cost}(A) = -\mu(A) = \min_{x \in A} I(x).$$
 
-To "integrate" an observable $f : X \to \mathbb{R}$ against such a measure, you compute the **max-plus integral**
+This last formula is already a complete large-deviation principle — and it holds
+**exactly**, for finitely many outcomes, with no limits and no approximations. In
+the classical world the analogous statement only emerges asymptotically, as the
+number of trials marches to infinity. In the idempotent world there is no
+$\log$, no $\exp$, no smoothing: the cost of a rare event is *literally* the
+minimum cost over the ways it can happen. We call this the **sharp idempotent
+LDP**, and it is the rock on which everything else is built.
 
-$$\textstyle\int^{\!+} f \, d\mu = \max_{x}\big(f(x) + w(x)\big).$$
+## The contraction principle: rare events under a lens
 
-Maxima where there were sums; sums where there were products. Everything else follows.
+Here is the question at the heart of this work. Suppose you have a max-plus
+probability law on some space of detailed outcomes $X$, and you only get to
+observe a *summary* of each outcome through a function $T : X \to Y$. Perhaps $X$
+is the full microscopic configuration of a system and $Y$ is a single number you
+can measure; perhaps $X$ is a pair of dice and $Y$ is their sum; perhaps $X$ is a
+fine-grained path and $Y$ is its endpoint. The summary $T$ collapses many detailed
+outcomes into one observed value — its **fibers**, the sets $T^{-1}(y) = \{x : T(x)=y\}$,
+are the bundles of microstates that look identical from the outside.
 
-## The tropical Cramér dictionary
+Two natural laws now live on the observed space $Y$. First, the **push-forward**:
+the most natural way to transport the law along $T$ is to give each observed value
+$y$ the weight of its best preimage,
+$$w_Y(y) = \max_{x \,:\, T(x) = y} w(x).$$
+Second, on the cost side, every event $B \subseteq Y$ of observed values pulls
+back to an event $T^{-1}(B) \subseteq X$ of detailed outcomes that produce it.
 
-With these definitions, the classical large-deviation machinery transcribes line by line. The **cumulant generating function** — classically $\tfrac{1}{n}\log \mathbb{E}[e^{\lambda S_n}]$ — becomes the idempotent
+The **contraction principle** answers: how is the cost of a rare *observed* event
+related to the cost of the detailed events behind it? The classical version of
+this principle is one of the workhorses of large-deviation theory, and it is
+usually proved with a delicate two-sided estimate that survives a limiting
+procedure. The idempotent version proved here is razor-sharp and almost shockingly
+clean.
 
-$$\Lambda(\lambda) = \int^{\!+} \big(\lambda \cdot \mathrm{val}\big)\, dP = \max_{x}\big(\lambda\, \mathrm{val}(x) + w(x)\big),$$
+**The main theorem, in plain language:** *the deviation cost of any observed event
+equals the deviation cost of its preimage.* Symbolically, for any non-empty event
+$B \subseteq Y$,
+$$\min_{y \in B} I_Y(y) \;=\; \min_{x \in T^{-1}(B)} I_X(x).$$
+There is no inequality to bridge, no $\varepsilon$ to chase to zero. The cheapest
+way to deviate into $B$, measured upstairs in the observed world, is exactly the
+cheapest way to deviate into the preimage of $B$, measured downstairs in the
+detailed world. Equivalently, at the level of the max-plus measure itself, the
+push-forward simply transports mass without loss: $\mu_Y(B) = \mu_X(T^{-1}(B))$.
 
-where $\mathrm{val} : X \to \mathbb{R}$ is the observable whose deviations we study. This $\Lambda$ is **convex** in $\lambda$ — it is a maximum of straight lines, and a maximum of lines is always convex.
+Along the way the theorem delivers a clean formula for the transported rate
+function. The cost of an observed value $y$ is the cheapest deviation among all
+the microstates that produce it:
+$$I_Y(y) = \min_{x \,:\, T(x) = y} I_X(x).$$
+This is the idempotent **contraction of the rate function**, and it is exactly
+what you would hope for: to make the summary $y$ happen, nature picks the least
+costly microscopic story consistent with it.
 
-Independence transcribes too. Classically, the moment generating function of a sum of independent variables factorizes; in logarithmic form, cumulant generating functions *add*. Tropically, the analogue is exact: for an independent product of measures with an additive observable,
+## A worked example you can do by hand
 
-$$\Lambda_{X+Y}(\lambda) = \Lambda_X(\lambda) + \Lambda_Y(\lambda).$$
+Let the detailed world be three outcomes $X = \{a, b, c\}$, with weights
+$$w(a) = 0, \qquad w(b) = -1, \qquad w(c) = -3,$$
+so the deviation costs are $I_X(a)=0$, $I_X(b)=1$, $I_X(c)=3$. The best outcome
+$a$ is free; $c$ is expensive. Now observe through a summary map $T$ that merges
+$a$ and $b$ into a single label $0$ and sends $c$ to label $1$:
+$$T(a) = 0, \quad T(b) = 0, \quad T(c) = 1.$$
+The fiber over $0$ is $\{a,b\}$ and the fiber over $1$ is $\{c\}$.
 
-Iterating this gives the cumulant generating function of an **$n$-step max-plus random walk** with no error term whatsoever:
+The push-forward weights are the best weight in each fiber:
+$$w_Y(0) = \max(0, -1) = 0, \qquad w_Y(1) = -3,$$
+giving observed costs $I_Y(0) = 0$ and $I_Y(1) = 3$ — exactly the fiber-wise
+minima of $I_X$, just as the contraction-of-rate formula promised.
 
-$$\Lambda_{S_n}(\lambda) = n\, \Lambda(\lambda).$$
+Now test the main theorem on the event $B = \{1\}$. Upstairs, its cost is
+$I_Y(1) = 3$. Downstairs, its preimage is $T^{-1}(B) = \{c\}$, whose cost is
+$I_X(c) = 3$. They agree. Try the full event $B = \{0,1\}$: upstairs the cost is
+$\min(0,3) = 0$; downstairs the preimage is everything, $\{a,b,c\}$, with cost
+$\min(0,1,3) = 0$. They agree again. The bookkeeping is exact every time.
 
-In classical probability this identity holds only in the limit, smeared by correction terms. Tropically it holds *exactly, for every finite $n$*. The idempotent world is the asymptotic limit made flesh.
+## Why no convexity is needed — and where it suddenly is
 
-From here, a **tropical Chernoff bound** drops out, and with it the sharp idempotent large-deviation principle: the cost of any event $A$ is exactly the cheapest deviation inside it,
+The most striking feature of the contraction principle is what it *doesn't*
+require. The proof is purely about reordering minimizations: a minimum over a
+preimage is the same number whether you compute it all at once or fiber by fiber
+and then minimize across fibers. In the language of the formal development this is
+the single combinatorial identity
+$$\min_{x \in T^{-1}(B)} f(x) \;=\; \min_{y \in B}\;\min_{x \in T^{-1}(y)} f(x),$$
+a statement of pure order theory. No averages, no straight lines, no convex sets.
+The contraction half of the idempotent Cramér program is **convexity-free**.
 
-$$P(A) = -\inf_{x \in A} I(x),$$
+This is in pointed contrast to the *other* half of the theory — the
+Legendre–Fenchel duality that recovers the rate function from the cumulant
+generating function. There, convexity is not a convenience; it is the whole game.
+To see this, the development includes a deliberately adversarial counterexample.
+Take three observed values $0, 1, 2$ with rate function $I = (0, 2, 0)$ — a
+**spike** in the middle, the opposite of convex. The cumulant generating function
+of this law turns out to satisfy $\lambda \le \Lambda(\lambda)$ for every slope,
+which means no straight line can ever reach up to the tip of the spike. The double
+Legendre–Fenchel transform — the best convex lower envelope of $I$ — flattens the
+spike completely down to the chord joining the endpoints, collapsing the middle
+value from $2$ all the way to $0$. The result is a genuine, exactly computed
+**duality gap of size $2$**: convex duality reports a cost of $0$ where the true
+cost is $2$.
 
-again with no asymptotics — an equality, at every scale.
+The moral is sharp. Idempotent Cramér theory cleanly splits into two halves of
+opposite character. One half — the contraction principle, the transport of rare
+events through a summary map — needs no convexity at all and holds with perfect
+exactness. The other half — recovering the rate function as a convex conjugate —
+lives and dies by convexity, and fails by a measurable amount the moment the rate
+function bends the wrong way. The same example that makes the duality gap concrete
+also shows that the convexity hypothesis in the duality theorem is not a technical
+blemish: it is load-bearing.
 
-## The Legendre–Fenchel transform, tropically
+## The supporting cast: a self-contained toolkit
 
-The deepest part of Cramér's theorem is the claim that the rate function $I$ is the Legendre–Fenchel transform of $\Lambda$. The transform turns a function into its "best linear lower bounds" and back again. Applied twice — the **biconjugate** — it returns not the original function but its *convex lower envelope*: the largest convex function sitting beneath it. For the biconjugate,
+The contraction principle does not stand alone. It is the capstone of a small,
+fully worked idempotent probability theory, and the surrounding results are worth
+meeting because they make the whole picture self-supporting.
 
-$$\Lambda^{**}(v) = \sup_{\lambda}\big(\lambda v - \Lambda(\lambda)\big),$$
+The **max-plus integral** of an observable $f$ against a law $w$ is
+$\max_x\,(f(x) + w(x))$ — the best total score across outcomes. It is monotone, it
+shifts by a constant when you shift $f$, and it always attains its maximum at some
+concrete outcome. These mundane-sounding facts are exactly what make the theory
+behave like genuine integration rather than a notational trick.
 
-one direction of Cramér's theorem is unconditional and easy: the biconjugate never overshoots the rate function,
+The **cumulant generating function** $\Lambda(\lambda) = \max_x(\lambda\,\mathrm{val}(x) + w(x))$
+is the idempotent shadow of the classical exponential-moment function. It is
+always **convex** (it is a maximum of straight lines in $\lambda$). It is
+**additive over independent products** — the max-plus echo of the classical rule
+that exponential moments of independent sums multiply. And for an $n$-step
+**max-plus random walk**, whose path weight is the sum of its per-step weights,
+the cumulant generating function is exactly $n$ times that of a single step. That
+last identity is the engine that drives the scaling behind large deviations,
+reproduced here without a single limit.
 
-$$\Lambda^{**}(\mathrm{val}(x)) \le I(x).$$
+From the same function comes the idempotent **Chernoff bound**: for any
+non-negative slope $\lambda$ and any outcome whose observable is at least $a$, the
+weight is bounded by $\Lambda(\lambda) - \lambda a$. Optimizing over $\lambda$
+gives the exponential-tail estimate familiar from classical probability — except
+here the inequality is an exact, finite statement about weights.
 
-This is the tropical Fenchel–Young inequality, and it holds for *every* idempotent law. The temptation — and this is exactly the temptation a careful skeptic should resist — is to believe the inequality is secretly always an equality, that the double transform always recovers the rate function on the nose. If true, this would make the whole convexity discussion vacuous.
+Stitched together, these pieces form a complete idempotent retelling of Cramér's
+program: a sharp finite large-deviation principle, a convex cumulant generating
+function with the right additivity, an exact contraction principle for transporting
+rare events through summaries, and a precise diagnosis of when — and by exactly how
+much — convex duality can fail.
 
-It is not true. And the place it fails is the heart of this article.
+## Why it matters beyond the symbols
 
-## A spike that the transform cannot see
+Max-plus thinking is not an exotic curiosity; it is how engineers and scientists
+already reason about worst cases and dominant terms. In a manufacturing pipeline,
+the time to finish is the *maximum* over parallel stages, not their sum, and the
+cost of each stage adds along a path — that is max-plus arithmetic exactly. In
+networks, shortest paths obey the cousin min-plus algebra. In statistical physics,
+the zero-temperature limit replaces sums over states with a maximum over the
+lowest-energy ones — the very "dequantization" that turns ordinary probability
+into the idempotent kind. And in machine learning, the same collapse turns a
+softmax into a hard max and turns log-likelihoods into tropical scores.
 
-Consider the smallest interesting example: three outcomes, labeled by their values $\mathrm{val} = (0, 1, 2)$. Put weight $-2$ on the middle outcome and weight $0$ on the two ends:
-
-$$w = (0,\, -2,\, 0), \qquad I = (0,\, 2,\, 0).$$
-
-This is a genuine tropical probability — its weights are all $\le 0$ and its maximum weight is $0$. Its rate function is a **spike**: the cost of landing at the middle value is $2$, while the two flanking values cost nothing. Crucially, this rate function is **non-convex**. The middle point sits at the midpoint of the two ends, so a convex function there could be no higher than the average of the endpoint costs, namely $(0+0)/2 = 0$. Our spike towers a full $2$ units above that chord.
-
-Now compute the cumulant generating function. With values $(0,1,2)$ and weights $(0,-2,0)$,
-
-$$\Lambda(\lambda) = \max\big(0,\; \lambda - 2,\; 2\lambda\big).$$
-
-Here is the decisive observation. For *every* slope $\lambda$, the line $y = \lambda$ lies below $\Lambda(\lambda)$:
-
-$$\lambda \le \Lambda(\lambda) \quad \text{for all } \lambda.$$
-
-(If $\lambda \ge 0$, then $\lambda \le 2\lambda \le \Lambda(\lambda)$; if $\lambda < 0$, then $\lambda < 0 \le \Lambda(\lambda)$.) Consequently $\lambda - \Lambda(\lambda) \le 0$ for every $\lambda$, with equality at $\lambda = 0$. The biconjugate at the middle value is therefore
-
-$$\Lambda^{**}(1) = \sup_{\lambda}\big(\lambda \cdot 1 - \Lambda(\lambda)\big) = 0.$$
-
-The double Legendre–Fenchel transform reports a cost of **zero** at the very point where the true rate function charges **two**. The transform has flattened the spike down to its chord, exactly as a convex envelope must:
-
-$$\Lambda^{**}(1) = 0 \;<\; 2 = I(1).$$
-
-The **duality gap** is precisely
-
-$$I(1) - \Lambda^{**}(1) = 2,$$
-
-equal to the full height of the spike above its chord. There is no supporting line that can reach the tip of a spike, because a spike is concave there, and the Legendre–Fenchel machinery only ever sees convex shadows.
-
-## Why this matters
-
-This little counterexample is not a defect; it is the *sharpening* of the theorem. It pins down the exact boundary of Cramér's theorem in the idempotent world:
-
-> **The double Legendre–Fenchel transform recovers the idempotent rate function if and only if that rate function equals its own convex lower envelope.**
-
-The unconditional inequality $\Lambda^{**} \le I$ is therefore genuinely an inequality — it can be strict — and the supporting-line hypothesis that upgrades it to equality is genuinely necessary, not a technical decoration. Convexity is the precise dividing line between the case where moments determine deviations and the case where they cannot.
-
-There is a broader lesson here, one that recurs throughout the tropical reimagining of analysis. Many classical theorems are, at heart, statements about convex duality wearing an exponential disguise. When you dequantize — strip off the $\exp$ and the $\log$ — the convexity stands exposed, and you see at once both why the theorem is true and exactly when it must fail. The classical Cramér theorem hides its convexity assumption inside the smoothing power of the exponential; the tropical version cannot hide anything. A non-convex rate function produces a visible, measurable, provable gap of exactly the height of its tallest spike.
-
-## The view from the summit
-
-Tropical mathematics began as a tool for counting solutions and routing trains. Maslov's idempotent calculus revealed it as a shadow world cast by classical analysis under the bright light of the exponential. What we have sketched here is one room of that shadow world: a complete, finite, exact theory of large deviations, where cumulant generating functions are convex maxima of lines, where independence makes them add, where random walks scale them linearly with no error, and where the cost of any rare event is simply the cheapest way to achieve it.
-
-And then, at the center of the room, the spike — a three-point measure whose rare middle outcome is invisible to the Legendre–Fenchel transform, betraying a duality gap of exactly $2$. It is a small object with a large message: in probability as in geometry, convexity is not a convenience. It is the dividing line between what duality can see and what it cannot.
+In every one of these settings, the contraction principle answers a recurring
+practical question: *if I only observe a summary of my system, how does the
+worst-case cost of a summary-level event relate to the worst-case cost downstairs?*
+The answer proved here is the cleanest one imaginable — they are equal — and it
+comes with an explicit recipe for the summary-level cost as a fiber-wise minimum.
+That a rare-event theory usually built from careful asymptotic estimates becomes,
+in the idempotent world, a matter of exact bookkeeping is a small but genuine piece
+of mathematical good fortune. And knowing precisely where the good fortune
+runs out — at the spike where convex duality opens a gap of exactly $2$ — is just
+as valuable as knowing where it holds.

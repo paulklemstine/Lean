@@ -1,61 +1,54 @@
-# Computational Evidence — Idempotent Probability: Large Deviations
+# THEOREM_TRACE.md (internal anti-hallucination ledger)
 
-All claims below were checked with exact rational arithmetic (`ℚ`) inside Lean
-(`#eval`) before being formalized over `ℝ`. The point of the exact checks is to
-make sure the *strict* duality gap is real and not a floating-point artefact.
+Every theorem/definition name below is taken verbatim from the Phase A Lean
+output (`Catalog/Tropical/MeasureTheory/{Basic,LargeDeviations,DualityGap}.lean`
+and the new `Contraction.lean` listing in the task prompt). Prose in ARTICLE.md
+and RESEARCH_PAPER.md must only reference these.
 
-## 1. The adversarial idempotent law on `Fin 3`
+## Basic.lean
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `MaxPlusMeasure` | structure: `weight : X → ℝ` | yes (informal) | Def 1 |
+| `IsTropicalProbability` | `sup' w = 0` and `∀x, w x ≤ 0` | yes | Def 2 |
+| `maxPlusIntegral` | `sup_x (f x + w x)` | yes | Def 3 |
+| `maxPlusIntegral_attained` | sup attained at some `x₀` | — | Lemma |
 
-* values `val = (0, 1, 2)`
-* weights `w = (0, -2, 0)`  ⇒  rate function `I = -w = (0, 2, 0)`
+## LargeDeviations.lean
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `idempotentRate` | `I(x) = -w(x)` | yes | Def 4 |
+| `idempotentCGF` | `Λ(λ) = sup_x(λ val x + w x)` | yes | Def 5 |
+| `idempotentCGF_convex` | `Λ` convex | yes | Thm |
+| `idempotentCGF_add` | additive under product | yes | Thm |
+| `idempotentCGF_walk` | `Λ_n = n·Λ` | yes | Thm |
+| `idempotent_chernoff` | `w x ≤ Λ(λ) - λ a` for `λ≥0`, `a≤val x` | yes | Thm |
+| `idempotent_ldp_sharp` | `-(sup_A w) = inf_A I` | yes | Thm (sharp LDP) |
+| `fenchel_young_rate` | `λ val x - Λ(λ) ≤ I(x)` | — | Lemma |
+| `lfBiconj` | `sup_λ(λa - Λ(λ))` | yes | Def |
+| `lfBiconj_le_rate` | `I** ≤ I` | yes | Thm |
+| `lfBiconj_eq_rate_of_support` | equality under supporting line | yes | Thm |
 
-`I` is a "spike up" at the middle point, so it is **non-convex**: the chord from
-`(0,0)` to `(2,0)` lies strictly below `I(1) = 2`.
+## DualityGap.lean
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `gapMeasure` | law on Fin 3, weights (0,-2,0) | yes | Example |
+| `gapRate_nonconvex` | `(I0+I2)/2 < I1` | yes | Example |
+| `strict_duality_gap` | `lfBiconj < I` at midpoint | yes | Thm |
+| `duality_gap_value` | gap `= 2` | yes | Thm |
 
-## 2. Idempotent cumulant generating function `Λ(λ) = max_i (λ·val i + w i)`
+## Contraction.lean (Phase A new file, primary focus)
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `fiber` | `{x : T x = y}` | yes | Def |
+| `preimageEvent` | `{x : T x ∈ B}` | yes | Def |
+| `fiber_nonempty` | surjective ⇒ fiber nonempty | — | Lemma |
+| `preimageEvent_eq_biUnion` | `T⁻¹B = ⋃_{y∈B} fiber y` | yes | Lemma |
+| `inf'_fiber_eq` | `inf_{T⁻¹B} f = inf_{y∈B} inf_{fiber y} f` | yes | Lemma (core) |
+| `pushforwardMeasure` | `w_Y(y) = sup_{T x=y} w(x)` | yes | Def |
+| `le_pushforward_weight` | `w x ≤ w_Y(T x)` | — | Lemma |
+| `pushforwardMeasure_isProb` | pushforward is tropical prob | yes | Thm |
+| `pushforward_rate` | `I_Y(y) = inf_{T x=y} I_X(x)` | yes | Thm |
+| `idempotent_contraction` | cost of B = cost of T⁻¹B | yes (main) | Thm (main) |
+| `idempotent_contraction_measure` | `μ_Y(B) = μ_X(T⁻¹B)` | yes | Thm |
 
-`Λ(λ) = max(λ·0+0, λ·1−2, λ·2+0) = max(0, λ−2, 2λ)`.
-
-Tabulating `λ`, `Λ(λ)` and the Legendre summand `λ·1 − Λ(λ)` (the term whose
-supremum over `λ` is `lfBiconj` at the middle value `a = 1`):
-
-| λ  | Λ(λ) | λ·1 − Λ(λ) |
-|----|------|------------|
-| −4 |  0   |  −4        |
-| −3 |  0   |  −3        |
-| −2 |  0   |  −2        |
-| −1 |  0   |  −1        |
-|  0 |  0   |   0        |  ← supremum
-|  1 |  2   |  −1        |
-|  2 |  4   |  −2        |
-|  3 |  6   |  −3        |
-|  4 |  8   |  −4        |
-
-The supremum of the last column is `0`, attained at `λ = 0`. Hence
-`lfBiconj(1) = 0`, while `I(1) = 2`.
-
-## 3. The duality gap
-
-```
-gap = I(1) − lfBiconj(1) = 2 − 0 = 2.
-```
-
-This equals exactly the height of the non-convex spike above its chord. The double
-Legendre–Fenchel transform produces the **convex lower envelope** of `I`, which here
-is the flat chord `≡ 0`, losing the spike entirely.
-
-These numbers are reproduced exactly by the Lean theorems `gap_lfBiconj_mid`,
-`gapRate_mid`, `strict_duality_gap`, and `duality_gap_value`.
-
-## 4. Counterexample hunt for the main lemmas
-
-* **`idempotentCGF_add` (CGF additivity under independence).** Tested on random
-  small `ℚ`-valued products `Fin 2 × Fin 2`; equality held in every case. It is
-  robust because the product weight is the *sum* of marginal weights and the
-  observable is additive, so the finite sup over the product separates.
-* **`idempotent_chernoff` (LDP upper bound).** The hypothesis `0 ≤ λ` is essential:
-  for `λ < 0` the tabulated `λ·1 − Λ(λ)` line shows the bound would be reversed.
-* **`lfBiconj_le_rate` (weak duality).** The strict example in §3 shows the
-  inequality cannot be upgraded to equality without convexity — so the lemma is
-  exactly as strong as it can be, and `lfBiconj_eq_rate_of_support` records the
-  precise (supporting-line) condition for equality.
+No theorem is referenced in prose that is not in this table.
