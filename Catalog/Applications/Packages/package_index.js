@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c72330ea",
     "filename": "euler_mascheroni_constant_irrationality_approaches.json",
     "pkg_num": 89,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5940000000000001,
     "title": "Euler-Mascheroni Constant: Effective Representations and Irrationality Criteria"
   },
   {
@@ -2590,8 +2590,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "euler_mascheroni_constant_irrationality_approaches",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5940000000000001,
+      "quality": "partial",
       "shape": "star",
       "title": "Euler-Mascheroni Constant: Effective Representations and Irrationality Criteria"
     }

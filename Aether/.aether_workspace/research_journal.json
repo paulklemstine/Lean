@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7b66a66e",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions\n\nThese follow-ups build directly on the verified base case in\n`NumberTheory/Phi6SquareDiceBaseCase.lean` (`p = 2, q = 3, m = 6, n = 2`). Each is a\nconcrete, attainable next step ra",
-      "quality_score": 0.4596814054054055,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-20T10:18:59",
-      "title": "Semiprime cyclotomic transfer for square-sided dice"
-    },
-    {
       "cycle_id": "acb790ee",
       "domain": "Physics",
       "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nThis cycle formalized three machine-checked pillars (all `sorry`-free):\n\n* `Physics/RandomTensorNetwork/Thre",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-26T11:39:02",
       "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
+    },
+    {
+      "cycle_id": "c72330ea",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE DIRECTIONS — Euler–Mascheroni × Tropical bridge\n\nDerived from this cycle's findings (telescoping series certificate\n`hasSum_emTerm`, effective `1/n` error bound `gamma_sub_seq_lt_inv`, and th",
+      "quality_score": 0.5940000000000001,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-26T12:10:45",
+      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7836800000000002
     }
   ],
-  "last_updated": "2026-06-26T11:39:02",
+  "last_updated": "2026-06-26T12:10:45",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "c50363b9",
-        "quality": 0.723184,
-        "theorems": 60,
-        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-      },
-      {
         "cycle_id": "fdab34f3",
         "quality": 0.4961724137931035,
         "theorems": 21,
@@ -4009,6 +4003,12 @@
         "quality": 0.51904,
         "theorems": 21,
         "title": "Graph Coloring: Chromatic Polynomial Theory"
+      },
+      {
+        "cycle_id": "c72330ea",
+        "quality": 0.5940000000000001,
+        "theorems": 14,
+        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
       }
     ]
   }

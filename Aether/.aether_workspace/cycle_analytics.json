@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-26T11:39:05.138630+00:00",
+  "last_updated": "2026-06-26T12:10:48.075746+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -8426,6 +8426,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-26T11:39:04.885511+00:00",
       "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2323,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 37,
+      "domain": "Tropical",
+      "duration_seconds": 1420.1229441165924,
+      "end_time": 1782474960.6775792,
+      "files_integrated": 8,
+      "job_id": "c72330ea",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v16b",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v16b",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7323,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.6559,
+        "novelty": 0.77,
+        "proof_depth": 0.607,
+        "usefulness": 0.8035
+      },
+      "quality_score": 0.5940000000000001,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782473540.554635,
+      "strategy_count": 0,
+      "theorem_count": 14,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 14,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-26T12:10:47.574450+00:00",
+      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
     }
   ]
 }
