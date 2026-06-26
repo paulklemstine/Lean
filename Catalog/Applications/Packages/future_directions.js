@@ -1818,6 +1818,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2314",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:09:34.216269+00:00",
+    "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
     "domains": [
       "Geometry"
@@ -5505,11 +5519,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "description": "For any dimension d \u2265 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is maximized when the side lengths are as equal as possible (i.e., differ by at most 1). Moreover, any maximizer must have this balanced shape.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2591",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24016v1",
+    "status": "available",
+    "timestamp": "2026-06-26T18:14:54.853800+00:00",
+    "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2592",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5523,7 +5551,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5538,7 +5566,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5553,7 +5581,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5568,7 +5596,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5583,7 +5611,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5597,7 +5625,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5611,7 +5639,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5625,7 +5653,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5640,7 +5668,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5655,7 +5683,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5670,7 +5698,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5685,7 +5713,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5700,7 +5728,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5714,7 +5742,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5729,7 +5757,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5744,7 +5772,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5758,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5772,7 +5800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5786,7 +5814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5801,7 +5829,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5816,7 +5844,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5831,7 +5859,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -5845,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -5859,7 +5887,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -5874,7 +5902,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -5888,7 +5916,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -5903,7 +5931,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -5917,13 +5945,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
     "status": "available",
     "timestamp": "2026-06-26T17:28:36.173476+00:00",
     "title": "Formalization of Local Obstruction Group Dimensions for Additive Reduction Types"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that in any arithmetic progression with difference d>0, the length of any block of consecutive Zeckendorf-Niven numbers is at most \u230alog_phi(d)\u230b+2, where phi = (1+\u221a5)/2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2621",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24006v1",
+    "status": "available",
+    "timestamp": "2026-06-26T18:19:40.973278+00:00",
+    "title": "Boundon consecutive Zeckendorf-Niven terms in arithmetic progressions"
   },
   {
     "consumed_by_exp_id": "",
@@ -6128,36 +6170,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Saturation numbers for joins of matchings\n\nDerived from this cycle's findings in `Saturation.lean` and `SaturationClique.lean`.\nThe cycle formalized the saturation API (`IsSaturated`, `satNum`, `exNum`), proved that a\nmaximum-edge `H`-free graph is `H`-saturated (`exists_isSaturated`), the classical bound\n`sat \u2264 ex` (`satNum_le_exNum`), the apex-join edge identity `e(K\u2081\u2228H)=|H|+e(H)`\n(`edgeCount_cone`), the family edge counts, and the Tur\u00e1n bridge\n`sat(n,K_{r+1}) \u2264 e(T(n,r))` (`satNum_clique_le_turan`). What remains open is the\n*lower bound* certifying tightness of the Cameron\u2013Puleo recurrence.\n\n---\n\n## C1 (grand challenge). The Cameron\u2013Puleo equality holds for all `t`.\nFor every `t \u2265 1`, `q \u2265 1`, and `n > 2t+q`,\n`sat(n, K\u2081 \u2228 (tK\u2082 \u222a qK\u2081)) = (n\u22121) + sat(n\u22121, tK\u2082 \u222a qK\u2081)`\n(`Saturation.CameronPuleoEquality t q`, stated as a `Prop`).\n\nThe key insight is that the upper bound is already structural (apex join, `edgeCount_cone`),\nso the entire problem reduces to a **matching lower bound**: every `K\u2081\u2228F`-saturated graph\nmust \"spend\" at least `n\u22121` edges on a near-dominating vertex plus an `F`-saturated trace on\nthe rest. Why now? The `t = 1, 2` proofs in the source paper expose a stabilizing local\nstructure around high-degree vertices; with `satNum`/`exists_isSaturated` now formal, the\ninduction on `t` (peeling one matching edge) has a rigorous scaffold to attach to.\n\n## C2. A clean \"join lowers to a smaller instance\" inequality is the crux.\nFor any graph `F` with an edge, `sat(n, K\u2081 \u2228 F) \u2265 (n\u22121) + sat(n\u22121, F)` whenever\n`n` exceeds `|V(F)|+1`.\n\nThe key insight is that a dominating-type vertex in a `K\u2081\u2228F`-saturated graph induces an\n`F`-saturated graph on its (non-)neighborhood, so the deficiency decomposes additively.\nWhy now? Combined with the already-proved upper bound `\u2264`, this single inequality would\n*immediately* yield C1; isolating it converts a hard equality into one extremal inequality,\nexactly the decomposition style that `satNum_le_exNum` already exemplifies.\n\n## C3. Saturation is monotone under apex joins.\n`sat(n+1, K\u2081 \u2228 H) \u2212 sat(n, H)` is eventually constant in `n` and equals the host size.\n\nThe key insight is that `edgeCount_cone` makes the apex contribution *exactly* linear, so\nany non-linearity in `sat` must come entirely from the `H`-trace. Why now? The eventual\nconstancy of `sat(\u00b7, F)` for edge-forests (K\u00e1szonyi\u2013Tuza) plus the formal apex identity make\nthis a finite-difference statement that is checkable once a brute-force evaluator (C5) exists.\n\n## C4. The `sat \u2264 ex` bridge is asymptotically tight only for cliques.\nFor `H = K_{r+1}`, `sat(n,H)/ex(n,H) \u2192 0`, whereas for `H = K\u2081 \u2228 (tK\u2082 \u222a qK\u2081)`,\n`sat(n,H)/ex(n,H) \u2192 0` as well but with a *different* leading constant determined by `t`.\n\nThe key insight is that `satNum_clique_le_turan` bounds saturation by the Tur\u00e1n number, and\nthe gap between the two encodes how \"rigid\" the forbidden graph is. Why now? Both sides are\nnow formal objects in the same API, so their ratio is a well-posed limit rather than an\ninformal comparison.\n\n## C5. A verified brute-force saturation evaluator exists and matches `satNum`.\nThere is a computable `satNumComp H n` with `satNumComp H n = satNum H n` for all `n`,\nenabling `decide`/`native_decide` checks of C1 for small `(t,q,n)`.\n\nThe key insight is that `satNum` is only `noncomputable` because of `Classical.sInf`; the\nunderlying family is a `Finset`, so a `Decidable` reformulation is possible and provably\nequal. Why now? The definitions in `Saturation.lean` already package the family as a\n`Finset.filter`, so the computable mirror is a short step and would turn C1's small cases\ninto machine-checked data points.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2620",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ab90b095",
-    "status": "available",
-    "timestamp": "2026-06-26T17:56:32.582752+00:00",
-    "title": "Derived from this cycle's findings in `Saturation.lean` and `SaturationClique.le"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Ramsey Theory: Bounds and Constructions\n\nDerived from the cycle that produced `RamseyFourFour.lean` (the exact value\n`R(4,4) = 18`) and `RamseyDiagonalBound.lean` (the general bound\n`R(k+1,k+1) \u2264 4^k` and colour symmetry), on top of the existing catalog files\n`Ramsey.lean` (`R(3,3)=6`, Erd\u0151s\u2013Szekeres bound), `RamseyThreeFour.lean`\n(`R(3,4)=9`), and `RamseyParity.lean` (the handshake/parity obstruction).\n\n## Conjecture 1 \u2014 `R(3,5) = 14` via a Cayley-graph construction\n**Statement.** `Arrows 14 3 5 \u2227 \u00ac Arrows 13 3 5` in the `Arrows` framework.\n**The key insight is** that the lower bound is witnessed by a *circulant* graph on\n`\u2124/13` (difference set `{1,5,8,12}`), exactly the same \"self-complementary Cayley\ngraph\" pattern that made the Paley graph work for `R(4,4)`, so the existing\n`native_decide` certificate template transfers verbatim.\n**Why now?** The `Arrows`/`fromRel`/`native_decide` toolchain is already proven to\ncertify clique-freeness on \u226517 vertices, so 13 vertices is comfortably in range,\nand the upper bound `R(3,5) \u2264 R(2,5)+R(3,4) = 5+9 = 14` is one `arrows_step`\naway from the already-formalised `R(3,4)=9`.\n\n## Conjecture 2 \u2014 A general handshake/regularity obstruction for off-diagonal sharpness\n**Statement.** For every `s`, the Erd\u0151s\u2013Szekeres upper bound `R(s, s+1) \u2264 C(2s-1,s)`\nis *strict* whenever `C(2s-1,s)` is odd and would force an odd-regular extremal\ngraph on an odd number of vertices.\n**The key insight is** that `red_degree_parity_obstruction` (in `RamseyParity.lean`)\nis not special to `R(3,4)`: any tight extremal colouring forces near-regularity, and\nthe handshake parity rules out odd-regular graphs on odd order in a uniform way.\n**Why now?** The parity obstruction is already abstracted into a standalone reusable\ntheorem about arbitrary finite vertex sets, so the only missing step is the\n\"extremal \u27f9 regular\" reduction, which is a counting argument over the same\nred/blue degree sums already formalised.\n\n## Conjecture 3 \u2014 Diagonal lower bound `R(k+1,k+1) > 2^{k/2}` (probabilistic method)\n**Statement.** For `k \u2265 3`, there is a 2-colouring of `K_n` with `n = \u230a2^{k/2}\u230b`\nand no monochromatic `K_{k+1}`, i.e. `\u00ac Arrows (2^{k/2}) (k+1) (k+1)`.\n**The key insight is** that the first-moment union bound already formalised for\nhypergraphs in `HypergraphRamsey/ProbabilisticBound.lean` specialises to `r = 2`:\n`2\u00b7C(n,k+1)\u00b72^{-C(k+1,2)} < 1` forces an avoiding colouring to exist.\n**Why now?** The hypergraph counting bound `hyper_ramsey_counting_lower_bound` is\nalready proved by a finite double-counting argument; instantiating `r = 2` and\nsimplifying `C(k+1,2)` would close the gap between the formalised exponential\n*upper* bound `4^k` and a matching exponential *lower* bound, bracketing the\ndiagonal Ramsey number from both sides inside one catalog.\n\n## Conjecture 4 \u2014 Self-complementarity is necessary for extremal diagonal colourings\n**Statement.** Every colouring of `K_{R(k,k)-1}` with no monochromatic `K_k` is\nisomorphic to a self-complementary graph for `k \u2208 {3,4}`, and conjecturally for all\n`k`.\n**The key insight is** that both formalised extremal witnesses (the pentagon for\n`R(3,3)` and the Paley graph for `R(4,4)`) are self-complementary, which is forced\nbecause the red and blue clique-number constraints are identical on the diagonal.\n**Why now?** Both extremal graphs are already encoded via `fromRel`, so a\n`Decidable`/`native_decide` enumeration of all extremal colourings on 5 and 17\nvertices (modulo isomorphism) is computationally feasible and would turn an\nobservation into a theorem.\n\n## Conjecture 5 \u2014 A density Hales\u2013Jewett toehold: monochromatic combinatorial lines for `n=2`\n**Statement.** For the 2-letter alphabet, every 2-colouring of `{0,1}^N` for `N`\nlarge enough contains a monochromatic combinatorial line.\n**The key insight is** that for the binary alphabet a combinatorial line is exactly\na comparable pair `x \u2264 y` differing in a fixed coordinate block, so Hales\u2013Jewett at\n`n=2` reduces to a Ramsey-type pigeonhole on the Boolean lattice, expressible in the\nsame `Finset`-clique vocabulary used here.\n**Why now?** The full Hales\u2013Jewett theorem is out of immediate reach, but the\n`n=2` case is a finite pigeonhole amenable to the `decide`/`native_decide`\ncertificate style already validated on the Paley and M\u00f6bius-ladder constructions,\ngiving a concrete first formal step toward the general theorem.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2621",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3be846c2",
-    "status": "available",
-    "timestamp": "2026-06-26T18:05:28.006470+00:00",
-    "title": "Derived from the cycle that produced `RamseyFourFour.lean` (the exact value"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6231,7 +6243,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7b228cc3",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -6241,7 +6253,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },

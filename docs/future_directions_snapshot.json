@@ -2691,6 +2691,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "DrmotaKauersSpiegelhofer2016"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer t >= 1, the natural density c_t = lim_{N->∞} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
+    "domain_bridges": [
+      "math.CO",
+      "math.NT"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2314",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "exact deconvolution replaced by finite stopped random-walk law and first-exit median analysis",
+    "research_mode": "team",
+    "source_exp_id": "2606.23398v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:09:34.216269+00:00",
+    "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "math.MG"
     ],
@@ -9620,6 +9644,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO/05C05",
+      "math.CO/05C30",
+      "math.SP/05C50"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any dimension d ≥ 2 and any positive integer N, the number of spanning trees of the d-dimensional grid graph with free boundaries (Cartesian product of d path graphs) having exactly N vertices is maximized when the side lengths are as equal as possible (i.e., differ by at most 1). Moreover, any maximizer must have this balanced shape.",
+    "domain_bridges": [
+      "spectral graph theory",
+      "extremal combinatorics",
+      "discrete optimization"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2591",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the heat-trace Schur-concavity argument from perfect-power volumes to arbitrary N by showing that the logarithm of the spanning tree count is a symmetric Schur-concave function of the logarithmic side lengths. Use discrete majorization and smoothing techniques to prove that any imbalance in side lengths can be locally adjusted to increase the spanning tree count, thereby establishing that the unique maximizers (up to permutation) are the balanced tuples.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24016v1",
+    "status": "available",
+    "timestamp": "2026-06-26T18:14:54.853800+00:00",
+    "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -9634,7 +9685,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9663,7 +9714,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9689,7 +9740,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9714,7 +9765,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9742,7 +9793,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9768,7 +9819,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9794,7 +9845,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9816,7 +9867,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9842,7 +9893,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9862,7 +9913,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9885,7 +9936,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -9910,7 +9961,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
@@ -9937,7 +9988,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the vertex-gluing construction from the paper to establish recursive relationships between the ranks for different n, combined with exhaustive case analysis for small n values, and use induction to generalize to larger n. Critical lemmas would involve verifying the intersection condition preservation under gluing operations and demonstrating self-duality through explicit automorphism constructions.",
@@ -9963,7 +10014,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
@@ -9990,7 +10041,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof techniques from the Chudnovsky-Scott-Seymour paper, using induction on the number of colors and maximum graph size, combined with careful analysis of how vertex partitions interact with the complete join structure under color constraints.",
@@ -10017,7 +10068,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If a tournament has no transitive triangle, then every directed P3 with endpoints in a convex set must have the arc between endpoints, making both convexities equivalent; (2) If a tournament has a transitive triangle (u,v,w) with u→v→w and u→w, construct a set whose convex hulls differ between the two convexity notions.",
@@ -10048,7 +10099,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Lovász’s minimax theorem for matroid matchings to relate the extremal size to the fractional matching number in the associated matroid. Apply a high‑dimensional Hoffman bound for uniform hypergraphs over the lattice of subspaces to obtain upper bounds that match the two constructions. Then develop a stability argument that shows any family attaining the upper bound must be structurally close to one of the two extremal families, and finally exploit design‑theoretic counting to rule out all other configurations. The proof would combine linear‑algebraic isoperimetric inequalities, spectral techniques on the Grassmann graph, and matroid intersection theory.",
@@ -10075,7 +10126,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive adaptation of existing existence techniques with tailored order-preserving constructions",
@@ -10102,7 +10153,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve constructing a specific field extension (likely a function field of a quadric or a sequence of such extensions) and defining semi-singular forms (composed of a non-singular part and a totally singular part) that satisfy the isotropy index equality by construction via the properties of the Witt group in characteristic 2, while ensuring their similarity classes remain distinct using invariants like the Arf invariant or the dimension of the singular part.",
@@ -10128,7 +10179,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the prime zeta function P(s) as a Dirichlet series. 2. Implement the singular expansion of P(s) near the imaginary axis using the relationship between P(s) and the Riemann zeta function ζ(s) via the Mobius inversion formula: P(s) = ∑_{n=1}^∞ μ(n)/n * log ζ(ns). 3. Use the properties of the logarithm of the Riemann zeta function near its zeros and poles to construct a regularized limit or a specific path-dependent continuation. 4. Evaluate the resulting expression at s = -1.",
@@ -10158,7 +10209,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize coefficient codes whose m-th Schur powers have full-support hyperplane structure, apply the Mirandola-Zémor Schur-product Kneser theorem to constrain extremal matroid structures, then prove that any extremal configuration must have the same underlying point configuration as a rational normal curve under the Veronese embedding. The converse direction follows by explicit computation of rational-normal-curve Veronese images.",
@@ -10186,7 +10237,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the polynomial method (Combinatorial Nullstellensatz) to show that a zero-sum subset of size 2ℓ+1 yields a solution to the system of equations defining a cycle, and conversely extract a zero-sum subset from a given cycle via its edge differences. The symmetry of S allows reordering of differences to obtain a subset of S. Character sums over Z_p handle the distinctness condition on vertices.",
@@ -10214,7 +10265,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume density vanishes on a block, then use carry pressure lower bound and upper bound via stopping-time budget to derive contradiction. Uses four local carry estimates: complete-lap mass balance, total-support summation, fixed-pin confinement, and class-one realization.",
@@ -10239,7 +10290,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply linear programming duality to the covering weighting problem to derive a lower bound on the total weight, showing that any weighting covering the uncovered squares must have weight at least n - k + Ω(n), which translates into a lower bound on qc(n) and forces the asymptotic constant to be at least 0.216.",
@@ -10264,7 +10315,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on k. For the base case k=5, verify s₃(5) = (twr₃(2))² = (2^{2^{2}})² = 64 via explicit construction. For the inductive step, assume the formula holds for k and construct a 3-coloring of (k+1)-subsets that avoids large monochromatic homogeneous sets by taking a product of the coloring for k with a 2-coloring of pairs, then apply the stepping-up lemma for shift numbers to show that s₃(k+1) ≥ (twr_{k-1}(2))². Conversely, use a density increment argument to show that any 3-coloring of (k+1)-subsets of a set of size (twr_{k-1}(2))² must contain a monochromatic homogeneous set of size k+1, establishing the upper bound.",
@@ -10293,7 +10344,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed in two parts. (1) Upper bound: Using the strong blocking property, one shows that any non‑outer additive strong blocking set B in PG(k‑1,q) can be partitioned into fibres of a map from the complement to B, leading to the inequality |B| ≤ q^{k‑1}. This follows from counting arguments and the fact that each line not meeting B can be used to bound the number of points in B. (2) Existence: Construct an explicit additive code by taking a generator matrix whose columns are the points of a maximal partial spread in PG(k‑1,q) of size q^{k‑1}. Such partial spreads are known to exist for all q and k (e.g., via affine geometry constructions). The code is nondegenerate and minimal because removing any column destroys the strong blocking property. Formalising these constructions in Lean 4 will require definitions of finite fields, vector spaces, subspaces, projective geometry, and the strong blocking condition.",
@@ -10316,7 +10367,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive contradiction over order counts",
@@ -10336,7 +10387,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct inequality verification",
@@ -10363,7 +10414,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy involves formalizing the Dembélé-Freitas-Voight classification of Weil-Deligne types as a finite data structure. One would then implement the computation of the $H^0$ group by evaluating the invariants of the adjoint representation $\\mathrm{ad}^0\\bar{\\rho}$ under the action of the inertia group $I_p$, utilizing the explicit action of the Weil-Deligne operators (N and the Weil group action) provided by the classification.",
@@ -10372,6 +10423,43 @@
     "status": "available",
     "timestamp": "2026-06-26T17:28:36.173476+00:00",
     "title": "Formalization of Local Obstruction Group Dimensions for Additive Reduction Types"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "ck1988",
+      "ck1993",
+      "costello",
+      "ddk",
+      "kennedy",
+      "kgb",
+      "mcdaniel",
+      "g1994",
+      "brown",
+      "zeckendorf",
+      "rc",
+      "ghlssw",
+      "wilson"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that in any arithmetic progression with difference d>0, the length of any block of consecutive Zeckendorf-Niven numbers is at most ⌊log_phi(d)⌋+2, where phi = (1+√5)/2.",
+    "domain_bridges": [
+      "Combinatorial number theory",
+      "Recurrence sequences",
+      "Divisibility"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2621",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the structure of Zeckendorf decompositions to derive modular constraints on consecutive terms, then apply known bounds on gaps between Fibonacci numbers and properties of the golden ratio to limit the possible run length.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24006v1",
+    "status": "available",
+    "timestamp": "2026-06-26T18:19:40.973278+00:00",
+    "title": "Boundon consecutive Zeckendorf-Niven terms in arithmetic progressions"
   },
   {
     "ambition_level": "extension",
@@ -10648,46 +10736,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS — Saturation numbers for joins of matchings\n\nDerived from this cycle's findings in `Saturation.lean` and `SaturationClique.lean`.\nThe cycle formalized the saturation API (`IsSaturated`, `satNum`, `exNum`), proved that a\nmaximum-edge `H`-free graph is `H`-saturated (`exists_isSaturated`), the classical bound\n`sat ≤ ex` (`satNum_le_exNum`), the apex-join edge identity `e(K₁∨H)=|H|+e(H)`\n(`edgeCount_cone`), the family edge counts, and the Turán bridge\n`sat(n,K_{r+1}) ≤ e(T(n,r))` (`satNum_clique_le_turan`). What remains open is the\n*lower bound* certifying tightness of the Cameron–Puleo recurrence.\n\n---\n\n## C1 (grand challenge). The Cameron–Puleo equality holds for all `t`.\nFor every `t ≥ 1`, `q ≥ 1`, and `n > 2t+q`,\n`sat(n, K₁ ∨ (tK₂ ∪ qK₁)) = (n−1) + sat(n−1, tK₂ ∪ qK₁)`\n(`Saturation.CameronPuleoEquality t q`, stated as a `Prop`).\n\nThe key insight is that the upper bound is already structural (apex join, `edgeCount_cone`),\nso the entire problem reduces to a **matching lower bound**: every `K₁∨F`-saturated graph\nmust \"spend\" at least `n−1` edges on a near-dominating vertex plus an `F`-saturated trace on\nthe rest. Why now? The `t = 1, 2` proofs in the source paper expose a stabilizing local\nstructure around high-degree vertices; with `satNum`/`exists_isSaturated` now formal, the\ninduction on `t` (peeling one matching edge) has a rigorous scaffold to attach to.\n\n## C2. A clean \"join lowers to a smaller instance\" inequality is the crux.\nFor any graph `F` with an edge, `sat(n, K₁ ∨ F) ≥ (n−1) + sat(n−1, F)` whenever\n`n` exceeds `|V(F)|+1`.\n\nThe key insight is that a dominating-type vertex in a `K₁∨F`-saturated graph induces an\n`F`-saturated graph on its (non-)neighborhood, so the deficiency decomposes additively.\nWhy now? Combined with the already-proved upper bound `≤`, this single inequality would\n*immediately* yield C1; isolating it converts a hard equality into one extremal inequality,\nexactly the decomposition style that `satNum_le_exNum` already exemplifies.\n\n## C3. Saturation is monotone under apex joins.\n`sat(n+1, K₁ ∨ H) − sat(n, H)` is eventually constant in `n` and equals the host size.\n\nThe key insight is that `edgeCount_cone` makes the apex contribution *exactly* linear, so\nany non-linearity in `sat` must come entirely from the `H`-trace. Why now? The eventual\nconstancy of `sat(·, F)` for edge-forests (Kászonyi–Tuza) plus the formal apex identity make\nthis a finite-difference statement that is checkable once a brute-force evaluator (C5) exists.\n\n## C4. The `sat ≤ ex` bridge is asymptotically tight only for cliques.\nFor `H = K_{r+1}`, `sat(n,H)/ex(n,H) → 0`, whereas for `H = K₁ ∨ (tK₂ ∪ qK₁)`,\n`sat(n,H)/ex(n,H) → 0` as well but with a *different* leading constant determined by `t`.\n\nThe key insight is that `satNum_clique_le_turan` bounds saturation by the Turán number, and\nthe gap between the two encodes how \"rigid\" the forbidden graph is. Why now? Both sides are\nnow formal objects in the same API, so their ratio is a well-posed limit rather than an\ninformal comparison.\n\n## C5. A verified brute-force saturation evaluator exists and matches `satNum`.\nThere is a computable `satNumComp H n` with `satNumComp H n = satNum H n` for all `n`,\nenabling `decide`/`native_decide` checks of C1 for small `(t,q,n)`.\n\nThe key insight is that `satNum` is only `noncomputable` because of `Classical.sInf`; the\nunderlying family is a `Finset`, so a `Decidable` reformulation is possible and provably\nequal. Why now? The definitions in `Saturation.lean` already package the family as a\n`Finset.filter`, so the computable mirror is a short step and would turn C1's small cases\ninto machine-checked data points.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2620",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ab90b095",
-    "status": "available",
-    "timestamp": "2026-06-26T17:56:32.582752+00:00",
-    "title": "Derived from this cycle's findings in `Saturation.lean` and `SaturationClique.le"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from the cycle that produced `RamseyFourFour.lean` (the exact value\n`R(4,4) = 18`) and `RamseyDiagonalBound.lean` (the general bound\n`R(k+1,k+1) ≤ 4^k` and colour symmetry), on top of the existing catalog files\n`Ramsey.lean` (`R(3,3)=6`, Erdős–Szekeres bound), `RamseyThreeFour.lean`\n(`R(3,4)=9`), and `RamseyParity.lean` (the handshake/parity obstruction).\n\n## Conjecture 1 — `R(3,5) = 14` via a Cayley-graph construction\n**Statement.** `Arrows 14 3 5 ∧ ¬ Arrows 13 3 5` in the `Arrows` framework.\n**The key insight is** that the lower bound is witnessed by a *circulant* graph on\n`ℤ/13` (difference set `{1,5,8,12}`), exactly the same \"self-complementary Cayley\ngraph\" pattern that made the Paley graph work for `R(4,4)`, so the existing\n`native_decide` certificate template transfers verbatim.\n**Why now?** The `Arrows`/`fromRel`/`native_decide` toolchain is already proven to\ncertify clique-freeness on ≥17 vertices, so 13 vertices is comfortably in range,\nand the upper bound `R(3,5) ≤ R(2,5)+R(3,4) = 5+9 = 14` is one `arrows_step`\naway from the already-formalised `R(3,4)=9`.\n\n## Conjecture 2 — A general handshake/regularity obstruction for off-diagonal sharpness\n**Statement.** For every `s`, the Erdős–Szekeres upper bound `R(s, s+1) ≤ C(2s-1,s)`\nis *strict* whenever `C(2s-1,s)` is odd and would force an odd-regular extremal\ngraph on an odd number of vertices.\n**The key insight is** that `red_degree_parity_obstruction` (in `RamseyParity.lean`)\nis not special to `R(3,4)`: any tight extremal colouring forces near-regularity, and\nthe handshake parity rules out odd-regular graphs on odd order in a uniform way.\n**Why now?** The parity obstruction is already abstracted into a standalone reusable\ntheorem about arbitrary finite vertex sets, so the only missing step is the\n\"extremal ⟹ regular\" reduction, which is a counting argument over the same\nred/blue degree sums already formalised.\n\n## Conjecture 3 — Diagonal lower bound `R(k+1,k+1) > 2^{k/2}` (probabilistic method)\n**Statement.** For `k ≥ 3`, there is a 2-colouring of `K_n` with `n = ⌊2^{k/2}⌋`\nand no monochromatic `K_{k+1}`, i.e. `¬ Arrows (2^{k/2}) (k+1) (k+1)`.\n**The key insight is** that the first-moment union bound already formalised for\nhypergraphs in `HypergraphRamsey/ProbabilisticBound.lean` specialises to `r = 2`:\n`2·C(n,k+1)·2^{-C(k+1,2)} < 1` forces an avoiding colouring to exist.\n**Why now?** The hypergraph counting bound `hyper_ramsey_counting_lower_bound` is\nalready proved by a finite double-counting argument; instantiating `r = 2` and\nsimplifying `C(k+1,2)` would close the gap between the formalised exponential\n*upper* bound `4^k` and a matching exponential *lower* bound, bracketing the\ndiagonal Ramsey number from both sides inside one catalog.\n\n## Conjecture 4 — Self-complementarity is necessary for extremal diagonal colourings\n**Statement.** Every colouring of `K_{R(k,k)-1}` with no monochromatic `K_k` is\nisomorphic to a self-complementary graph for `k ∈ {3,4}`, and conjecturally for all\n`k`.\n**The key insight is** that both formalised extremal witnesses (the pentagon for\n`R(3,3)` and the Paley graph for `R(4,4)`) are self-complementary, which is forced\nbecause the red and blue clique-number constraints are identical on the diagonal.\n**Why now?** Both extremal graphs are already encoded via `fromRel`, so a\n`Decidable`/`native_decide` enumeration of all extremal colourings on 5 and 17\nvertices (modulo isomorphism) is computationally feasible and would turn an\nobservation into a theorem.\n\n## Conjecture 5 — A density Hales–Jewett toehold: monochromatic combinatorial lines for `n=2`\n**Statement.** For the 2-letter alphabet, every 2-colouring of `{0,1}^N` for `N`\nlarge enough contains a monochromatic combinatorial line.\n**The key insight is** that for the binary alphabet a combinatorial line is exactly\na comparable pair `x ≤ y` differing in a fixed coordinate block, so Hales–Jewett at\n`n=2` reduces to a Ramsey-type pigeonhole on the Boolean lattice, expressible in the\nsame `Finset`-clique vocabulary used here.\n**Why now?** The full Hales–Jewett theorem is out of immediate reach, but the\n`n=2` case is a finite pigeonhole amenable to the `decide`/`native_decide`\ncertificate style already validated on the Paley and Möbius-ladder constructions,\ngiving a concrete first formal step toward the general theorem.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2621",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3be846c2",
-    "status": "available",
-    "timestamp": "2026-06-26T18:05:28.006470+00:00",
-    "title": "Derived from the cycle that produced `RamseyFourFour.lean` (the exact value"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10786,7 +10834,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7b228cc3",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -10799,7 +10847,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },

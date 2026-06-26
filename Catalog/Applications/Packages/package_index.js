@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "762ed13d",
     "filename": "euler_mascheroni_constant_irrationality_approaches.json",
     "pkg_num": 104,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.521245,
     "title": "Euler-Mascheroni Constant: Quantitative Bracketing and the Exact Theta(1/n) Convergence Order"
   },
   {
@@ -3034,8 +3034,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "euler_mascheroni_constant_irrationality_approaches",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.521245,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Euler-Mascheroni Constant: Quantitative Bracketing and the Exact Theta(1/n) Convergence Order"
     }
