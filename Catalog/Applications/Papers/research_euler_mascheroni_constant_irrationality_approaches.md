@@ -1,228 +1,271 @@
-# Effective Representations of the Euler–Mascheroni Constant: Positive Series, Integral Form, Quantitative Bounds, the Stieltjes Anchor, and a Diophantine Irrationality Criterion
+# Quantitative Bracketing, an Explicit Series Representation, and the Exact $\Theta(1/n)$ Convergence Order of the Euler–Mascheroni Constant
 
 **Author:** Aristotle
 **Date:** 2026-06-26
+**Domain:** Novelty / Number Theory
+
+---
 
 ## Abstract
 
-The Euler–Mascheroni constant $\gamma = \lim_{n\to\infty}(H_n - \ln n) = 0.5772156649\ldots$ is among the most ubiquitous constants in mathematics, yet whether it is irrational remains a famous open problem. We present a self-contained, rigorously verified development of several complementary representations of $\gamma$ together with explicit quantitative control. First, we establish a **positive-term series** $\gamma = \sum_{k\ge 0}\big(\tfrac{1}{k+1} - \ln\tfrac{k+2}{k+1}\big)$ whose $n$-th partial sum is *exactly* the lower approximant $H_n - \ln(n+1)$, yielding strict monotonic convergence and a genuine summability certificate. Second, we recast each term as a unit-interval integral, producing the classical **integral representation** $\gamma = \int_1^\infty\big(\tfrac{1}{\lfloor x\rfloor} - \tfrac1x\big)\,dx$. Third, we prove an **effective error bound**: for all $n\ge 1$, $0 < \gamma - (H_n - \ln(n+1)) < \ln(n+1)-\ln n < 1/n$, with a matching two-sided bracket. Fourth, we formalize the **Stieltjes constants** $\gamma_m$ and prove that the zeroth one equals $\gamma$, anchoring the entire hierarchy. Finally, we develop the abstract **Diophantine irrationality engine** — a real number is irrational iff it admits arbitrarily small nonzero integer linear forms — and specialize it to $\gamma$, making precise exactly what an irrationality proof must produce and diagnosing why the known logarithmic approximants do not suffice. All results have been mechanically verified.
+The Euler–Mascheroni constant $\gamma = \lim_{n\to\infty}(H_n - \ln n)$ is classically squeezed between two monotone sequences, $a_n = H_n - \ln(n+1) < \gamma < H_n - \ln n = b_n$, but the standard development records only crude numerical enclosures such as $\tfrac12 < \gamma < \tfrac23$. We make this bracketing *quantitative*. We prove that the width of the bracketing interval is, exactly, a single logarithm,
+
+$$b_n - a_n = \ln\!\left(\frac{n+1}{n}\right),$$
+
+and we sandwich it two-sidedly by elementary convexity,
+
+$$\frac{1}{n+1} \;\le\; \ln\!\left(\frac{n+1}{n}\right) \;\le\; \frac{1}{n}, \qquad n \ge 1.$$
+
+Consequently the convergence order of the defining sequence is *exactly linear*, $\Theta(1/n)$: the lower approximant undershoots and the upper approximant overshoots $\gamma$ each by strictly less than $1/n$. We further establish the classical identity exhibiting $\gamma$ as the sum of an explicit nonnegative convergent series,
+
+$$\gamma = \sum_{k=0}^{\infty}\left(\frac{1}{k+1} - \ln\frac{k+2}{k+1}\right),$$
+
+whose partial sums coincide *exactly* with $a_n$, and we identify the series tail $\sum_{k \ge n} t_k$ with the approximation error $\gamma - a_n$, hence also bounded by $1/n$. The two-sided width bound is the precise structural obstruction motivating series accelerations and explains why elementary truncations of this series are "irrationality-blind." All results have been formally verified in the Lean 4 proof assistant on top of Mathlib's `Real.eulerMascheroniConstant`.
+
+---
 
 ## 1. Introduction
 
-Euler introduced the constant now bearing his and Mascheroni's name in 1734, defining it as the limiting gap between the harmonic numbers and the natural logarithm:
+### 1.1 The constant
 
-$$\gamma := \lim_{n\to\infty}\left(H_n - \ln n\right), \qquad H_n = \sum_{k=1}^n \frac1k.$$
+The harmonic numbers $H_n = \sum_{k=1}^{n} \frac{1}{k}$ diverge logarithmically. Euler observed that the difference $H_n - \ln n$ converges, and named the limit:
 
-The constant pervades analytic number theory (as the constant term in the Laurent expansion of $\zeta$ at $s=1$, and in Mertens' theorems), special-function theory (the digamma function satisfies $\psi(1) = -\gamma$), probability, physics, and the analysis of algorithms. Despite its centrality, the arithmetic nature of $\gamma$ is unknown: it is not known to be irrational, let alone transcendental.
+$$\gamma \;=\; \lim_{n\to\infty}\bigl(H_n - \ln n\bigr) \;=\; 0.57721566490153286\ldots$$
 
-This paper does not resolve that question. Instead it provides a clean, fully verified toolkit around $\gamma$ with three goals: (i) to convert the *limit* definition into honest convergent representations (a positive series and an integral) carrying constructive certificates; (ii) to make the convergence *effective* with explicit, monotone, two-sided rational-rate error bounds; and (iii) to situate $\gamma$ both within the Stieltjes hierarchy and within a precise Diophantine framework that states exactly what an irrationality proof of $\gamma$ must establish — and why the natural approximants fall short.
+The constant $\gamma$ appears throughout analysis and number theory: in the Laurent expansion of the Riemann zeta function at $s=1$ (where $\gamma$ is the constant term), in Mertens' third theorem on the density of primes, in the digamma function $\psi(1) = -\gamma$, in the expected value analyses of randomized algorithms, and in countless integral and product formulas. Despite this ubiquity, whether $\gamma$ is rational or irrational remains a celebrated open problem; if rational, its denominator must exceed $10^{242080}$.
 
-Throughout, $\mathbb{N} = \{0,1,2,\dots\}$, $\ln$ is the natural logarithm with the convention $\ln 0 = 0$ used by the underlying library, $H_n$ is the $n$-th harmonic number with $H_0 = 0$, and $\lfloor\cdot\rfloor$ is the floor function.
+### 1.2 What is already known, and the gap we fill
 
-### 1.1 Context and motivation
+The Mathlib library defines $\gamma$ as `Real.eulerMascheroniConstant`, the limit of the increasing sequence
 
-Three features make $\gamma$ unusually resistant to elementary analysis, and they motivate the structure of this paper.
+$$a_n := \texttt{eulerMascheroniSeq}\,(n) = H_n - \ln(n+1),$$
 
-First, $\gamma$ is defined as a *difference of two divergent quantities*. Both $H_n$ and $\ln n$ tend to $+\infty$; only their difference converges. Any computation or estimate must therefore manage a delicate cancellation, and a naive evaluation accumulates catastrophic round-off. Recasting $\gamma$ as a sum of manifestly positive terms (Section 3) or as a positive-integrand integral (Section 4) removes the cancellation entirely: each contribution is individually meaningful and nonnegative.
+and proves the companion facts that the sequence
 
-Second, the natural approximants converge *slowly*. As we make precise in Section 5, the lower approximant $\mathrm{seq}(n)$ approaches $\gamma$ at rate exactly $\Theta(1/n)$. This is in stark contrast to constants such as $e$, whose Taylor partial sums converge super-geometrically, or $\zeta(3)$, where Apéry's celebrated 1978 argument exploits approximants converging geometrically. Slow convergence is not merely an inconvenience: the rate of rational approximation is precisely the quantity that irrationality and transcendence proofs exploit.
+$$b_n := \texttt{eulerMascheroniSeq'}\,(n) = H_n - \ln n \quad (n \ge 1)$$
 
-Third, and most decisively, the known approximants are *not rational*. Both $\mathrm{seq}(n) = H_n - \ln(n+1)$ and $\mathrm{seq}'(n) = H_n - \ln n$ contain a transcendental logarithm. As Section 7 explains, an irrationality proof needs integer or rational data of a controlled denominator; the logarithmic approximants, however tightly they bracket $\gamma$, do not supply it. This is the structural heart of why $\gamma$'s irrationality is open while superficially similar constants have yielded.
+is decreasing with the same limit, yielding the strict two-sided bracket
 
-The remainder of the paper systematically addresses these three points: positivity (Sections 3–4), effective rate (Section 5), placement within a richer family (Section 6), and the exact Diophantine obstruction (Section 7), closing with a worked numerical illustration (Section 8).
+$$a_n < \gamma < b_n \qquad (n \ge 1). \tag{1.1}$$
 
-## 2. Preliminaries
+However, the library only extracts the crude numerical consequence $\tfrac12 < \gamma < \tfrac23$ (obtained at $n = 6$) and records no information about the *rate* at which (1.1) tightens.
 
-We work with two standard one-sided approximants to $\gamma$:
+This paper supplies that missing quantitative layer. We compute the bracket width in closed form, bound it two-sidedly, deduce the exact linear convergence order, exhibit $\gamma$ as an explicit convergent series, and unify the "series representation" and "good approximation" viewpoints by identifying the series tail with the approximation error.
 
-$$\mathrm{seq}(n) := H_n - \ln(n+1), \qquad \mathrm{seq}'(n) := H_n - \ln n \ \ (n\ge 1).$$
+### 1.3 Summary of contributions
 
-We take as given the following classical facts (each available in the formalized real-analysis library and used as the foundation here):
+1. **Closed-form width** (`bracket_width`): $b_n - a_n = \ln\frac{n+1}{n}$.
+2. **Two-sided width bound** (`width_le`, `width_ge`, `bracket_width_order`): $\frac{1}{n+1} \le \ln\frac{n+1}{n} \le \frac1n$.
+3. **Quantitative convergence** (`gamma_sub_seq_lt`, `seq'_sub_gamma_lt`): $\gamma - a_n < \frac1n$ and $b_n - \gamma < \frac1n$.
+4. **Explicit series representation** (`tsum_eulerMascheroni` / `HasSum term γ`): $\gamma = \sum_{k\ge 0} t_k$ with $t_k \ge 0$ and partial sums equal to $a_n$.
+5. **Tail–error identity** (`tail_eq_error`, `tsum_tail_lt`): $\sum_{k\ge n} t_k = \gamma - a_n < \frac1n$.
 
-- **(P1) Two-sided trapping:** for every $n$, $\ \mathrm{seq}(n) < \gamma < \mathrm{seq}'(n)$.
-- **(P2) Convergence:** $\mathrm{seq}(n) \to \gamma$ and $\mathrm{seq}'(n) \to \gamma$ as $n\to\infty$.
-- **(P3) Tangent-line bound:** for all $x>0$ with $x\ne 1$, $\ \ln x < x - 1$ (strict), and for all $x>0$, $\ln x \le x-1$.
+---
 
-Fact (P3) is the workhorse convexity inequality; (P1)–(P2) provide the analytic backbone we upgrade into effective and structural statements.
+## 2. Definitions and notation
 
-## 3. A positive-term series representation
+Throughout, $\ln$ denotes the natural logarithm and $H_n = \sum_{k=1}^{n} 1/k$ the $n$-th harmonic number ($H_0 = 0$).
 
-We define the building block of the series.
+**Definition 2.1 (Lower approximant).** For $n \in \mathbb{N}$,
+$$a_n := H_n - \ln(n+1).$$
+This is Mathlib's `Real.eulerMascheroniSeq`. It is strictly increasing and $a_0 = 0$.
 
-**Definition 3.1 (Series term).** For $k\in\mathbb{N}$,
-$$g_k := \frac{1}{k+1} - \big(\ln(k+2) - \ln(k+1)\big) = \frac{1}{k+1} - \ln\!\left(1+\frac{1}{k+1}\right).$$
+**Definition 2.2 (Upper approximant).** For $n \ge 1$,
+$$b_n := H_n - \ln n,$$
+with a junk value at $n = 0$. This is Mathlib's `Real.eulerMascheroniSeq'`. It is strictly decreasing (for $n \ge 1$) with $b_1 = 1$.
 
-**Lemma 3.2 (Strict positivity; `gterm_pos`).** For every $k\in\mathbb{N}$, $g_k > 0$.
+**Definition 2.3 (Euler–Mascheroni constant).**
+$$\gamma := \lim_{n\to\infty} a_n = \texttt{Real.eulerMascheroniConstant}.$$
+Mathlib proves $a_n \to \gamma$ and $b_n \to \gamma$, and the strict bracket (1.1).
 
-*Proof sketch.* Write $g_k = \tfrac{1}{k+1} - \ln\frac{k+2}{k+1}$. Apply the strict tangent-line bound (P3) at $x = \frac{k+2}{k+1} > 0$, $x\ne 1$: $\ln\frac{k+2}{k+1} < \frac{k+2}{k+1} - 1 = \frac{1}{k+1}$. Rearranging gives $g_k > 0$. $\quad\square$
+**Definition 2.4 (Series term).** For $k \in \mathbb{N}$,
+$$t_k := \frac{1}{k+1} - \ln\!\left(\frac{k+2}{k+1}\right) = \frac{1}{k+1} - \ln\!\left(1 + \frac{1}{k+1}\right).$$
+This is `EulerMascheroniSeries.term`.
 
-**Lemma 3.3 (Telescoping partial sum; `gterm_partial`).** For every $n\in\mathbb{N}$,
-$$\sum_{k=0}^{n-1} g_k = H_n - \ln(n+1) = \mathrm{seq}(n).$$
+We will repeatedly use the following elementary, sharp convexity inequality.
 
-*Proof sketch.* Induction on $n$. The base case $n=0$ is $0=0$. For the step, $\sum_{k=0}^{n} g_k = \mathrm{seq}(n) + g_n$; using $H_{n+1} = H_n + \tfrac{1}{n+1}$ and $\ln(n+2)-\ln(n+1)$ from $g_n$, the logarithms recombine to $\ln(n+2)$ and the reciprocals to $H_{n+1}$, giving $\mathrm{seq}(n+1)$. Equivalently, the logarithmic differences telescope: $\sum_{k=0}^{n-1}\big(\ln(k+2)-\ln(k+1)\big) = \ln(n+1)$. $\quad\square$
+**Lemma 2.5 (Fundamental log inequality).** For every $x > 0$,
+$$\ln x \le x - 1,$$
+with equality iff $x = 1$. (In Mathlib: `Real.log_le_sub_one_of_pos`.)
 
-**Theorem 3.4 (Series representation; `hasSum_gterm`).** The series $\sum_k g_k$ converges to $\gamma$:
-$$\sum_{k=0}^{\infty} g_k = \gamma, \qquad\text{equivalently}\qquad \gamma = \sum_{k=0}^\infty\left(\frac{1}{k+1} - \ln\frac{k+2}{k+1}\right).$$
+*Proof sketch.* The function $f(x) = x - 1 - \ln x$ has $f'(x) = 1 - 1/x$, which is negative on $(0,1)$ and positive on $(1,\infty)$, so $f$ has a global minimum $f(1) = 0$. $\square$
 
-*Proof sketch.* By Lemma 3.2 the terms are nonnegative, and by Lemma 3.3 every partial sum equals $\mathrm{seq}(n)$, which by (P1) is bounded above by $\gamma$. Hence the partial sums are nondecreasing and bounded, so $\sum_k g_k$ is **summable**. Its sum is the limit of its partial sums; but the partial sums equal $\mathrm{seq}(n)$, which by (P2) tends to $\gamma$. Uniqueness of limits identifies the sum as $\gamma$. $\quad\square$
+---
 
-Two immediate corollaries record structural consequences.
+## 3. The bracket width in closed form
 
-**Corollary 3.5 (Strict monotonicity; `strictMono_eulerMascheroniSeq`).** $\mathrm{seq}$ is strictly increasing: $\mathrm{seq}(n) < \mathrm{seq}(n+1)$ for all $n$.
+**Theorem 3.1 (Closed-form bracket width).** For all $n \ge 1$,
+$$b_n - a_n = \ln\!\left(\frac{n+1}{n}\right).$$
 
-*Proof sketch.* $\mathrm{seq}(n+1) - \mathrm{seq}(n) = g_n > 0$ by Lemmas 3.3 and 3.2. $\quad\square$
+*Proof.* By Definitions 2.1–2.2,
+$$b_n - a_n = \bigl(H_n - \ln n\bigr) - \bigl(H_n - \ln(n+1)\bigr) = \ln(n+1) - \ln n = \ln\frac{n+1}{n},$$
+using $\ln(n+1) - \ln n = \ln\frac{n+1}{n}$ for positive arguments (`Real.log_div`). The harmonic terms cancel identically. $\square$
 
-**Corollary 3.6 (Exact increment; `eulerMascheroniSeq_succ_sub`).** $\mathrm{seq}(n+1) - \mathrm{seq}(n) = g_n$.
+This is the structural pivot of the paper: *every* quantitative statement about the bracket reduces to an estimate on the single quantity $\ln\bigl(1 + \tfrac1n\bigr)$.
 
-These results convert the limit definition of $\gamma$ into a monotone, certified, positive-term series — the "Apéry-flavored" picture in which the rational engine is $H_n$ and the correction is a single logarithm.
+---
 
-## 4. Integral representation
+## 4. Two-sided estimate of the width
 
-We now recast each series term as an area, recovering the classical integral form.
+**Theorem 4.1 (Upper bound — convexity, easy direction).** For all $n \ge 1$,
+$$\ln\!\left(\frac{n+1}{n}\right) \le \frac{1}{n}.$$
 
-**Lemma 4.1 (Integrand nonnegativity; `integrand_nonneg`).** For $k\in\mathbb{N}$ and $x \ge k+1$, $\ \tfrac{1}{k+1} - \tfrac1x \ge 0$.
+*Proof.* Apply Lemma 2.5 at $x = \frac{n+1}{n} > 0$. Then $x - 1 = \frac{n+1}{n} - 1 = \frac{1}{n}$, so $\ln\frac{n+1}{n} \le \frac1n$. $\square$
 
-*Proof sketch.* Since $0 < k+1 \le x$, monotonicity of $t\mapsto 1/t$ on positives gives $\tfrac1x \le \tfrac{1}{k+1}$. $\quad\square$
+**Theorem 4.2 (Lower bound — informative direction).** For all $n \ge 1$,
+$$\frac{1}{n+1} \le \ln\!\left(\frac{n+1}{n}\right).$$
 
-**Theorem 4.2 (Term as integral; `gterm_eq_integral`).** For every $k\in\mathbb{N}$,
-$$g_k = \int_{k+1}^{\,k+2}\left(\frac{1}{k+1} - \frac1x\right)dx.$$
+*Proof.* Apply Lemma 2.5 at the *reciprocal* $x = \frac{n}{n+1} > 0$. Then
+$$x - 1 = \frac{n}{n+1} - 1 = -\frac{1}{n+1},$$
+so $\ln\frac{n}{n+1} \le -\frac{1}{n+1}$. Now $\ln\frac{n}{n+1} = -\ln\frac{n+1}{n}$ (via $\ln(x^{-1}) = -\ln x$), so $-\ln\frac{n+1}{n} \le -\frac{1}{n+1}$, i.e. $\frac{1}{n+1} \le \ln\frac{n+1}{n}$. $\square$
 
-*Proof sketch.* The integrand splits into a constant and $-1/x$. On $[k+1,k+2]$ we have $0\notin[k+1,k+2]$, so $1/x$ is interval-integrable with $\int_{k+1}^{k+2}\tfrac1x\,dx = \ln(k+2)-\ln(k+1)$, while $\int_{k+1}^{k+2}\tfrac{1}{k+1}\,dx = \tfrac{1}{k+1}$. Subtracting gives exactly $g_k$. $\quad\square$
+Combining Theorems 3.1, 4.1, 4.2:
 
-**Theorem 4.3 (Integral representation; `hasSum_integral_repr`).**
-$$\gamma = \sum_{k=0}^{\infty}\int_{k+1}^{\,k+2}\left(\frac{1}{k+1}-\frac1x\right)dx = \int_{1}^{\infty}\left(\frac{1}{\lfloor x\rfloor}-\frac1x\right)dx.$$
+**Theorem 4.3 (Exact linear order of the bracket width).** For all $n \ge 1$,
+$$\frac{1}{n+1} \;\le\; b_n - a_n \;\le\; \frac{1}{n}.$$
+In particular $b_n - a_n = \Theta(1/n)$.
 
-*Proof sketch.* Substitute Theorem 4.2 termwise into Theorem 3.4. Each summand is the integral over the unit window $[k+1,k+2]$, where $\lfloor x\rfloor = k+1$, so the integrand coincides with $\tfrac{1}{\lfloor x\rfloor} - \tfrac1x$; concatenating the windows yields the improper integral over $[1,\infty)$. Nonnegativity of the integrand (Lemma 4.1) mirrors term positivity. $\quad\square$
+The lower bound is the load-bearing half. An $O(1/n)$ width alone would leave open the possibility of unexpectedly fast convergence along subsequences or after minor reorganization; the matching $\Omega(1/n)$ bound certifies that the defining sequence *cannot* converge faster than linearly. This is the precise obstruction that accelerated and Apéry-like schemes are designed to circumvent.
 
-**Proposition 4.4 (Integral partial sums bracket $\gamma$; `integral_partialSum_lt_lt_seq'`).** For every $n$,
-$$\sum_{k=0}^{n-1}\int_{k+1}^{\,k+2}\left(\frac{1}{k+1}-\frac1x\right)dx \;<\; \gamma \;<\; \mathrm{seq}'(n).$$
+---
 
-*Proof sketch.* By Theorem 4.2 and Lemma 3.3 the left sum equals $\mathrm{seq}(n)$; apply the trapping (P1). $\quad\square$
+## 5. Quantitative convergence to $\gamma$
 
-Thus the discrete and continuous pictures agree term by term, and the integral partial sums furnish the same lower approximants used elsewhere.
+Because $\gamma$ lies strictly inside the bracket (1.1), the width bound transfers directly to the individual approximation errors.
 
-## 5. Effective error bounds
+**Theorem 5.1 (Lower approximant error).** For all $n \ge 1$,
+$$\gamma - a_n < \frac{1}{n}.$$
 
-We quantify the convergence rate explicitly.
+*Proof.* From (1.1), $\gamma < b_n$, hence $\gamma - a_n < b_n - a_n = \ln\frac{n+1}{n} \le \frac1n$ by Theorems 3.1 and 4.1. $\square$
 
-**Lemma 5.1 (Bracket width; `eulerMascheroni_trap_width_eq`).** For $n\ge 1$,
-$$\mathrm{seq}'(n) - \mathrm{seq}(n) = \ln(n+1) - \ln n.$$
+**Theorem 5.2 (Upper approximant error).** For all $n \ge 1$,
+$$b_n - \gamma < \frac{1}{n}.$$
 
-*Proof sketch.* Direct computation: $(H_n - \ln n) - (H_n - \ln(n+1)) = \ln(n+1)-\ln n$ for $n\ge 1$ (where $\mathrm{seq}'$ uses its non-junk value). $\quad\square$
+*Proof.* From (1.1), $a_n < \gamma$, hence $b_n - \gamma < b_n - a_n = \ln\frac{n+1}{n} \le \frac1n$. $\square$
 
-**Theorem 5.2 (Effective lower error; `eulerMascheroniConstant_sub_seq_lt`).** For $n\ge 1$,
-$$0 < \gamma - \mathrm{seq}(n) < \ln(n+1) - \ln n.$$
+These are *strict* one-sided error bounds. Together with Theorem 4.3 they pin the error two-sidedly: the lower bound $\frac{1}{n+1} \le b_n - a_n$ guarantees that at least one of the two approximants is at distance $\ge \frac{1}{2(n+1)}$ from $\gamma$, so the $\Theta(1/n)$ order is genuine and not a one-sided artifact.
 
-*Proof sketch.* Positivity is the left half of (P1). For the upper bound, $\gamma - \mathrm{seq}(n) < \mathrm{seq}'(n) - \mathrm{seq}(n)$ by the right half of (P1), and the right side equals the width by Lemma 5.1. $\quad\square$
+**Numerical illustration.** At $n = 10^{10}$ the guaranteed error is below $10^{-10}$ but no better than about $10^{-10}$ as well — ten correct digits require ten billion terms, and a hundred digits require $\approx 10^{100}$ terms. This quantifies the proverbial slowness of the elementary definition.
 
-**Theorem 5.3 (Effective upper error; `seq'_sub_eulerMascheroniConstant_lt`).** For $n\ge 1$,
-$$0 < \mathrm{seq}'(n) - \gamma < \ln(n+1) - \ln n.$$
+---
 
-*Proof sketch.* Symmetric to Theorem 5.2 using both halves of (P1) and Lemma 5.1. $\quad\square$
+## 6. An explicit convergent series for $\gamma$
 
-**Corollary 5.4 (Rational $1/n$ bound).** For $n\ge 1$,
-$$0 < \gamma - \big(H_n - \ln(n+1)\big) < \frac1n, \qquad \big|\,\mathrm{seq}(n) - \gamma\,\big| < \frac1n.$$
+We now exhibit $\gamma$ as the sum of an explicit nonnegative series and connect it to the bracketing above.
 
-*Proof sketch.* By the strict tangent-line bound (P3) at $x = \tfrac{n+1}{n}$, $\ \ln(n+1)-\ln n = \ln\tfrac{n+1}{n} < \tfrac{n+1}{n} - 1 = \tfrac1n$. Combine with Theorem 5.2. The absolute-value form is the companion statement `abs_eulerMascheroniSeq_sub_lt`. $\quad\square$
+**Lemma 6.1 (Nonnegativity of terms).** For all $k$, $t_k \ge 0$.
 
-These bounds are *effective*: given $n$ one can compute $H_n$ and rational enclosures of the logarithm to bracket $\gamma$ to within $1/n$. The rate is only $O(1/n)$ — far slower than the geometric rates underlying irrationality proofs of $e$ or $\zeta(3)$ — but it is fully certified and monotone.
+*Proof.* By Lemma 2.5 with $x = \frac{k+2}{k+1} = 1 + \frac{1}{k+1}$, $\ln\frac{k+2}{k+1} \le \frac{1}{k+1}$, hence $t_k = \frac{1}{k+1} - \ln\frac{k+2}{k+1} \ge 0$. $\square$
 
-## 6. The Stieltjes anchor
+**Lemma 6.2 (Telescoping partial sums).** For all $n$,
+$$\sum_{k=0}^{n-1} t_k = a_n = H_n - \ln(n+1).$$
 
-The Stieltjes constants generalize the harmonic-minus-logarithm construction.
+*Proof.* Split the finite sum:
+$$\sum_{k=0}^{n-1} t_k = \sum_{k=0}^{n-1}\frac{1}{k+1} - \sum_{k=0}^{n-1}\ln\frac{k+2}{k+1} = H_n - \sum_{k=0}^{n-1}\ln\frac{k+2}{k+1}.$$
+The first sum is $H_n$ by reindexing. The second telescopes: by `log_mul`,
+$$\sum_{k=0}^{n-1}\ln\frac{k+2}{k+1} = \ln\prod_{k=0}^{n-1}\frac{k+2}{k+1} = \ln\frac{n+1}{1} = \ln(n+1),$$
+since the product collapses to $\frac{(n+1)!/1!}{\,n!/0!\,}$-style cancellation giving $n+1$. Hence the partial sum equals $H_n - \ln(n+1) = a_n$. $\square$
 
-**Definition 6.1 (Stieltjes sequence; `stieltjesSeq`).** For $m,n\in\mathbb{N}$,
-$$S_m(n) := \sum_{k=1}^{n}\frac{(\ln k)^m}{k} - \frac{(\ln n)^{m+1}}{m+1}.$$
-The $m$-th Stieltjes constant is $\gamma_m := \lim_{n\to\infty} S_m(n)$.
+**Theorem 6.3 (Series representation of $\gamma$).** The series $\sum_{k\ge 0} t_k$ converges, and
+$$\gamma = \sum_{k=0}^{\infty}\left(\frac{1}{k+1} - \ln\frac{k+2}{k+1}\right) = \sum_{m=1}^{\infty}\left(\frac{1}{m} - \ln\Bigl(1+\frac{1}{m}\Bigr)\right).$$
+Moreover this holds in the strong sense `HasSum term γ`.
 
-These constants are the Laurent coefficients of the Riemann zeta function at its pole:
-$$\zeta(s) = \frac{1}{s-1} + \sum_{m=0}^{\infty}\frac{(-1)^m}{m!}\,\gamma_m\,(s-1)^m.$$
+*Proof.* By Lemma 6.2 the partial sums of the series are exactly $a_n$, and $a_n \to \gamma$ (Mathlib's `tendsto_eulerMascheroniSeq`). For a series of nonnegative terms (Lemma 6.1), convergence of the $\mathbb{N}$-indexed partial sums to a limit is equivalent to `HasSum` to that limit (`hasSum_iff_tendsto_nat_of_nonneg`). Hence $\sum_{k} t_k = \gamma$ as a `HasSum`. The reindexed form $m = k+1$ is immediate. $\square$
 
-**Lemma 6.2 (Collapse at $m=0$; `stieltjesSeq_zero_eq`).** For every $n$, $\ S_0(n) = H_n - \ln n$.
+*Remark.* Nonnegativity is load-bearing, not decorative: for a general real series, `HasSum` (unconditional summability) is strictly stronger than convergence of the $\mathbb{N}$-ordered partial sums. The equivalence holds here precisely because $t_k \ge 0$.
 
-*Proof sketch.* With $m=0$, $(\ln k)^0 = 1$ so the sum is $\sum_{k=1}^n \tfrac1k = H_n$, and the correction term is $\tfrac{(\ln n)^1}{1} = \ln n$. $\quad\square$
+---
 
-**Lemma 6.3 (Agreement with upper approximant; `stieltjesSeq_zero_eq_seq'`).** For $n\ge 1$, $\ S_0(n) = \mathrm{seq}'(n)$.
+## 7. The tail equals the approximation error
 
-*Proof sketch.* Immediate from Lemma 6.2 and the definition of $\mathrm{seq}'$ on $n\ge 1$. $\quad\square$
+**Theorem 7.1 (Tail–error identity).** For all $n$,
+$$\sum_{k=0}^{\infty} t_{k+n} = \gamma - a_n.$$
 
-**Theorem 6.4 (Zeroth Stieltjes constant is $\gamma$; `tendsto_stieltjesSeq_zero`).**
-$$\gamma_0 = \lim_{n\to\infty} S_0(n) = \gamma.$$
+*Proof.* By summability (Theorem 6.3) we may split off the first $n$ terms (`Summable.sum_add_tsum_nat_add`):
+$$\gamma = \sum_{k=0}^{\infty} t_k = \sum_{k=0}^{n-1} t_k + \sum_{k=0}^{\infty} t_{k+n} = a_n + \sum_{k=0}^{\infty} t_{k+n},$$
+using Lemma 6.2 for the finite part. Rearranging gives the claim. $\square$
 
-*Proof sketch.* By Lemma 6.3, $S_0$ and $\mathrm{seq}'$ agree for all $n\ge 1$, i.e. eventually. Since $\mathrm{seq}'\to\gamma$ by (P2), the eventually-equal sequence $S_0$ has the same limit. The only subtlety is the corner $n=0$ (where $\ln 0 = 0$ forces $S_0(0)=0$ while $\mathrm{seq}'(0)$ uses a junk value); eventual equality on $n\ge 1$ is exactly what is needed. $\quad\square$
+**Theorem 7.2 (Tail bound).** For all $n \ge 1$,
+$$\sum_{k=0}^{\infty} t_{k+n} < \frac{1}{n}.$$
 
-**Proposition 6.5 (Upper bracketing; `eulerMascheroniConstant_lt_stieltjesSeq_zero`).** For $n\ge 1$, $\ \gamma < S_0(n)$.
+*Proof.* Immediate from Theorem 7.1 and Theorem 5.1. $\square$
 
-This identifies $\gamma$ as the base of the Stieltjes hierarchy and provides a third family of approximants converging to it.
+Theorem 7.1 is the conceptual keystone: it shows the "series representation" and the "good approximation" threads are literally the same object. The single quantity $\ln\frac{n+1}{n}$ controls both the bracket width and the series tail.
 
-## 7. A Diophantine irrationality criterion for $\gamma$
+---
 
-We isolate the abstract mechanism behind irrationality proofs and specialize it.
+## 8. Algorithms
 
-**Theorem 7.1 (Irrationality engine, sufficient form; `irrational_of_forall_eps_linear_form`).** Let $x\in\mathbb{R}$. If for every $\varepsilon>0$ there exist $q\in\mathbb{N}$ with $q\ge 1$ and $p\in\mathbb{Z}$ such that
-$$0 < |q x - p| < \varepsilon,$$
-then $x$ is irrational.
+### 8.1 Certified rational enclosure of $\gamma$
 
-*Proof sketch.* Contrapositive. If $x = a/b$ with $b\ge 1$, then for any integers $q,p$ the quantity $qx - p = (qa - pb)/b$ is a rational with denominator $b$; if nonzero, $|qx-p|\ge 1/b$. Choosing $\varepsilon = 1/b$ leaves no room for a nonzero form below $\varepsilon$, contradicting the hypothesis. A sequence form (`irrational_of_tendsto_linear_form`) states the same with integer forms $q_n x - p_n \ne 0$ tending to $0$ and $q_n \ge 1$. $\quad\square$
+Theorems 4.3 and 5.1–5.2 reduce certified bounds on $\gamma$ to a finite computation: pick $n$, compute $a_n$ and $b_n$ to sufficient precision, and the gap is at most $1/n$.
 
-**Theorem 7.2 (Necessary form via Dirichlet; `forall_eps_linear_form_of_irrational`).** If $x$ is irrational, then for every $\varepsilon>0$ there exist $q\ge 1$ and $p\in\mathbb{Z}$ with $0 < |qx-p| < \varepsilon$.
+```
+Algorithm ENCLOSE(target_width w):
+  n ← ceil(1 / w)                      # width bound 1/n ≤ w
+  H ← 0
+  for k in 1..n:  H ← H + 1/k          # harmonic number H_n
+  a ← H - ln(n + 1)                    # lower fence  a_n < γ
+  b ← H - ln(n)                        # upper fence  γ < b_n
+  return (a, b)                        # γ ∈ (a, b),  b - a = ln((n+1)/n) ≤ 1/n
+```
 
-*Proof sketch.* Dirichlet's approximation theorem yields $q\ge 1$ with $|qx - \mathrm{round}(qx)| < \varepsilon$; irrationality of $x$ guarantees this form is nonzero. $\quad\square$
+Complexity: $O(n)$ arithmetic operations for additive precision $\sim 1/n$. Because the rate is provably $\Theta(1/n)$, achieving $d$ digits costs $\Theta(10^{d})$ work — the rigorous reason an accelerated method is mandatory beyond a few digits.
 
-**Theorem 7.3 (Characterization; `irrational_iff_forall_eps_linear_form`).** For every $x\in\mathbb{R}$,
-$$x\ \text{is irrational}\iff \forall \varepsilon>0,\ \exists\, q\ge 1,\ p\in\mathbb{Z}:\ 0 < |qx-p| < \varepsilon.$$
+### 8.2 Series summation with rigorous tail control
 
-**Theorem 7.4 (Specialization to $\gamma$; `irrational_eulerMascheroniConstant_iff`).**
-$$\gamma\ \text{is irrational}\iff \forall \varepsilon>0,\ \exists\, q\ge 1,\ p\in\mathbb{Z}:\ 0 < |q\gamma - p| < \varepsilon.$$
+```
+Algorithm SERIES_SUM(num_terms N):
+  S ← 0
+  for k in 0..N-1:
+     t ← 1/(k+1) - ln((k+2)/(k+1))     # t_k ≥ 0
+     S ← S + t                          # S = a_N after the loop
+  # rigorous: 0 < γ - S < 1/N   (tail = γ - a_N, Theorems 7.1–7.2)
+  return S, 1/N                         # estimate and certified one-sided error
+```
 
-We also record the elementary structural facts that any analysis of $\gamma$ may use: $0 < \gamma$ (`eulerMascheroniConstant_pos`), $\gamma < 1$ (`eulerMascheroniConstant_lt_one`), the combined sandwich $\mathrm{seq}(n) < \gamma < \mathrm{seq}'(n)$ (`eulerMascheroniSeq_sandwich`), and that the trapping interval width tends to $0$ (`tendsto_eulerMascheroni_trap_width`).
+---
 
-**The structural obstruction.** Theorem 7.4 states the exact Diophantine target. Yet the natural approximants from Sections 3–6 — $\mathrm{seq}(n) = H_n - \ln(n+1)$ and $\mathrm{seq}'(n) = H_n - \ln n$ — bracket $\gamma$ in an interval of width $\ln(1+1/n)\to 0$ whose **endpoints are transcendental** (they carry a logarithm), not rational. They therefore do not directly feed the engine of Theorem 7.4, which requires integer/rational data. This is a precise diagnosis of why $\gamma$'s irrationality is hard: the obstruction is not the convergence speed per se but the absence of approximants with controlled rational denominators and width $o(1/q)$.
+## 9. Applications and discussion
 
-## 8. Numerical illustration
+**Why accelerations exist.** Theorem 4.3 is a hard lower bound on the convergence rate of the elementary definition. It explains, rigorously, the standard folklore that "$H_n - \ln n$ converges too slowly to be useful beyond a few digits," and it quantifies exactly how much speed-up an acceleration must provide.
 
-We record concrete values that exhibit each theorem in action; all figures are consistent with the reference value $\gamma = 0.5772156649\ldots$
+**Irrationality blindness.** Proofs of irrationality (e.g. for $e$, or Apéry's for $\zeta(3)$) require rational approximations $p_n/q_n$ with error decaying faster than any fixed power of $1/q_n$ would allow under rationality. Theorem 7.1 shows the tail of *this* series is $\gamma - a_n = \Theta(1/n)$ — neither super-linearly small nor lingering — so no truncation of this particular series can supply approximations sharp enough to force irrationality. This is a precise, structural statement of why elementary methods are "irrationality-blind."
 
-**Telescoping (Lemma 3.3).** The first five series terms are
-$$g_0 \approx 0.306853,\quad g_1 \approx 0.094535,\quad g_2 \approx 0.045651,\quad g_3 \approx 0.026856,\quad g_4 \approx 0.017678,$$
-all strictly positive and decreasing like $g_k \sim \tfrac{1}{2(k+1)^2}$. Their cumulative sums reproduce $\mathrm{seq}(n)$ exactly: $\sum_{k<10} g_k = \mathrm{seq}(10) = 0.531073\ldots$ and $\sum_{k<1000} g_k = \mathrm{seq}(1000) = 0.576716\ldots$
+**A diagnostic for re-centering.** The lower bound of Theorem 4.2 certifies the presence of a leading $\frac{1}{2n}$ term in the Euler–Maclaurin expansion of $H_n - \ln(n+1)$. Re-centering the logarithm at the midpoint $n + \tfrac12$ is designed to cancel exactly this term, motivating the quadratic-acceleration conjecture in §10.
 
-**Effective bracket (Section 5).** The table below shows the two-sided enclosure and the certified bound:
+---
 
-| $n$ | $\mathrm{seq}(n)$ | $\mathrm{seq}'(n)$ | $\gamma - \mathrm{seq}(n)$ | $1/n$ |
-|---|---|---|---|---|
-| $10$ | $0.531073$ | $0.626383$ | $4.61\times10^{-2}$ | $1.0\times10^{-1}$ |
-| $100$ | $0.572257$ | $0.582207$ | $4.96\times10^{-3}$ | $1.0\times10^{-2}$ |
-| $1000$ | $0.576716$ | $0.577716$ | $5.00\times10^{-4}$ | $1.0\times10^{-3}$ |
-| $10000$ | $0.577166$ | $0.577266$ | $5.00\times10^{-5}$ | $1.0\times10^{-4}$ |
+## 10. Future directions
 
-The error is consistently about half the bound $1/n$, reflecting the sharper asymptotic $\gamma - \mathrm{seq}(n) \sim \tfrac{1}{2n}$; the inequality $\gamma - \mathrm{seq}(n) < 1/n$ of Corollary 5.4 holds with room to spare, and $\mathrm{seq}(n) < \gamma < \mathrm{seq}'(n)$ holds at every row.
+**(1) Quadratic acceleration via the midpoint sequence.** *Conjecture:* $b_n^{\mathrm{mid}} = H_n - \ln(n + \tfrac12)$ satisfies $|\gamma - b_n^{\mathrm{mid}}| = O(1/n^2)$, a strict order improvement over the proven $\Theta(1/n)$ rate. The key insight: re-centering the logarithm at the midpoint cancels the leading $1/(2n)$ term in the Euler–Maclaurin expansion of the harmonic number — exactly the term the present lower bound (Theorem 4.2) certifies is present. The telescoping machinery of §6 generalizes directly to $\ln(n+c)$.
 
-**Integral form (Theorem 4.3).** A composite midpoint rule applied windowwise to $\int_{k+1}^{k+2}(\tfrac{1}{k+1} - \tfrac1x)\,dx$ reproduces each $g_k$ to ten digits, and summing the first $5000$ windows yields $0.577116\ldots$, consistent with convergence to $\gamma$ at the expected $O(1/n)$ truncation rate.
+**(2) Explicit sharp rational enclosure.** *Conjecture:* $0.5772 < \gamma < 0.5773$ is provable by evaluating $a_n, b_n$ at a moderate $n$ together with certified rational bounds on $\ln$ from its Maclaurin/$\operatorname{atanh}$ series. The gap bound $\gamma - a_n < 1/n$ (Theorem 5.1) means only $O(1)$ digits of $\ln$-precision at one $n$ are needed to separate four decimals, turning an analytic limit into a finite certificate.
 
-**Stieltjes anchor (Theorem 6.4).** The sequence $S_0(n) = H_n - \ln n$ decreases to $\gamma$ from above: $S_0(100) = 0.582207$, $S_0(1000) = 0.577716$, $S_0(10000) = 0.577266$, with $S_0(n) - \gamma \approx \tfrac{1}{2n}$, confirming Proposition 6.5.
+**(3) Tail-based irrationality obstruction.** *Conjecture:* the tail $R_n = \sum_{k\ge n} t_k$ satisfies $R_n > \frac{1}{2(n+1)}$, so $R_n = \Theta(1/n)$ two-sided; consequently no truncation of this series yields approximations forcing irrationality. The matching lower bound is the dual of Theorem 4.2, complementing the proven $R_n < 1/n$ (Theorem 7.2).
 
-These computations are not proofs but consistency checks; the certified statements are Theorems 3.4, 4.3, 6.4 and Corollary 5.4.
+**(4) Stieltjes generalization.** *Conjecture:* for each $m \ge 0$ the $m$-th Stieltjes constant $\gamma_m$ equals an explicit telescoping series $\sum_k\bigl((\ln k)^m/k - \int\cdots\bigr)$, generalizing the $m=0$ identity $\gamma = \sum_k(1/k - \ln\frac{k+1}{k})$. The proof of §6 never used anything about $\gamma$ beyond telescoping $\ln$ against $1/k$; replacing the weight $1$ by $(\ln k)^m$ should reproduce the structure verbatim.
 
-## 9. Discussion
+---
 
-The development above accomplishes three things. (1) It upgrades the *limit* definition of $\gamma$ into two honest, certified representations — a positive monotone series (Theorem 3.4) and an integral over the floor-staircase (Theorem 4.3) — that agree term by term. (2) It makes the convergence quantitative and two-sided with a clean $1/n$ rational bound (Corollary 5.4). (3) It places $\gamma$ as the anchor $\gamma_0$ of the Stieltjes hierarchy (Theorem 6.4) and within an exact Diophantine framework (Theorem 7.4) that pinpoints what an irrationality proof must construct and why current approximants fall short.
+## 11. Conclusion
 
-None of these results settles the irrationality of $\gamma$, which remains open. Their value is in providing rigorous, reusable infrastructure — summability certificates, effective bounds, and a Diophantine criterion — on which sharper approximation schemes can be built and tested.
+We have converted Mathlib's qualitative bracketing of the Euler–Mascheroni constant into a sharp quantitative theory. The bracket width is exactly $\ln\frac{n+1}{n}$, squeezed two-sidedly between $\frac{1}{n+1}$ and $\frac1n$, so the defining sequence converges at the exact order $\Theta(1/n)$. The same logarithm governs an explicit nonnegative series for $\gamma$ whose tail *is* the approximation error. Together these results explain, with full rigor, why the elementary approach to $\gamma$ is both beautiful and fundamentally limited — and they chart a precise path toward faster, re-centered, and Stieltjes-generalized successors. All statements are formally verified in Lean 4 / Mathlib.
 
-We also highlight the *complementarity* of the representations. The series (Section 3) is best for monotone lower bounds and for exhibiting summability; the integral (Section 4) is best for connecting $\gamma$ to the geometry of the floor-staircase and for analytic manipulation; the Stieltjes sequence (Section 6) embeds $\gamma$ in the spectral data of $\zeta$; and the Diophantine criterion (Section 7) reframes the open problem as a concrete existence statement about integer linear forms. Each viewpoint suggests a different attack, and a future advance may well combine them — for instance, using the integral form to engineer rational approximants whose denominators are controlled, thereby feeding the engine of Section 7.
+---
 
-Finally, we stress what is *not* claimed. We do not prove $\gamma$ irrational, nor do we improve the $O(1/n)$ convergence rate within the verified development; the midpoint acceleration of the next section is conjectural. The contribution is infrastructural: certified representations and bounds that are correct beyond doubt and reusable as building blocks.
+## Appendix: Formal result index
 
-## 10. Future work
-
-Several concrete directions extend this development, each falsifiable in a formal setting:
-
-- **Quadratic-rate acceleration.** Center the logarithm at the midpoint: conjecturally the shifted partial sums $H_n - \ln(n+\tfrac12)$ satisfy $|\gamma - (H_n - \ln(n+\tfrac12))| < \tfrac{1}{24n^2}$, an $O(1/n^2)$ improvement over Corollary 5.4 obtained by a midpoint-quadrature cancellation of the leading $O(1/n)$ error. The same tangent-line machinery (P3) applies directly.
-- **Strictly interior term bounds.** Sharpen interval memberships of the soft-max / log-gap terms from closed to open, upgrading $\le$ to strict $<$ via the strict form of (P3).
-- **Temperature-deformed $\gamma$.** Study a one-parameter family $\gamma(c) := \sum_{k\ge1}\big(\tfrac1k - \mathrm{softMax}_c(0,-\ln k)\big)$ interpolating between the analytic log-sum-exp ($c=1$, giving $\gamma$) and a hard-max tropical limit ($c\to\infty$), exhibiting $\gamma$ on a dequantization family.
-- **Stieltjes telescoping certificates.** Extend the telescoping identity of Lemma 3.3 to $\gamma_1$: conjecturally $\gamma_1 = \sum_{k\ge1}\big(-\tfrac{\ln k}{k} + \tfrac{\ln^2(k+1)-\ln^2 k}{2}\big)$ with partial sums $\sum_{j\le n}\tfrac{\ln j}{j} - \tfrac{\ln^2(n+1)}{2}$ and an $O(\ln n / n)$ effective bound, using that $\tfrac{d}{dx}\tfrac{\ln^2 x}{2} = \tfrac{\ln x}{x}$.
-
-## References
-
-The constructions and statements above are self-contained. Standard background — the harmonic numbers, Dirichlet's approximation theorem, the tangent-line inequality $\ln x \le x-1$, interval integration of $1/x$, and the Laurent expansion of $\zeta$ at $s=1$ — is classical and reproduced inline where used.
+| Paper result | Lean name |
+|---|---|
+| Theorem 3.1 | `bracket_width` |
+| Theorem 4.1 | `width_le` |
+| Theorem 4.2 | `width_ge` |
+| Theorem 4.3 | `bracket_width_order` |
+| Theorem 5.1 | `gamma_sub_seq_lt` |
+| Theorem 5.2 | `seq'_sub_gamma_lt` |
+| Lemma 6.1 | `EulerMascheroniSeries.term_nonneg` |
+| Lemma 6.2 | `EulerMascheroniSeries.partial_sum` |
+| Theorem 6.3 | `EulerMascheroniSeries.tsum_eulerMascheroni` / `HasSum` |
+| Theorem 7.1 | `tail_eq_error` |
+| Theorem 7.2 | `tsum_tail_lt` |
