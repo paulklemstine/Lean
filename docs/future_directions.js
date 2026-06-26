@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abbbde7c",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ce6e294",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -1961,7 +1961,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4cfc08f0",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domains": [
       "Pythagorean",
@@ -1971,7 +1971,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -2684,7 +2684,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bc0a8e2b",
     "description": "For q \u2265 3 and n \u2265 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
     "domains": [
       "Bridges"
@@ -2693,7 +2693,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:44:54.697706+00:00",
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
   },
@@ -6044,7 +6044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "113a596f",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -6054,7 +6054,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },

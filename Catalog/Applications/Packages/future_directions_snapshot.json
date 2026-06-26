@@ -139,7 +139,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abbbde7c",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domain_bridges": [],
     "domains": [
@@ -152,7 +152,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -939,7 +939,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ce6e294",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i ≤ i and d i ≤ i for all i < k, equality of their factoradic values up ",
     "domain_bridges": [],
     "domains": [
@@ -951,7 +951,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -2964,7 +2964,7 @@
       "Polymatroid_connectivity",
       "Slice_projections"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4cfc08f0",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domain_bridges": [
       "Matroid_theory",
@@ -2980,7 +2980,7 @@
     "proof_strategy": "Assume for contradiction that there exist indices $j < k < l$ such that the $j$-th and $l$-th slice-projections are connected, but the $k$-th is disconnected. Use the submodularity of the polymatroid rank function and the lattice of flats to demonstrate that if $P^{(k)}$ is disconnected by a partition $(A, B)$, then either $P^{(j)}$ or $P^{(l)}$ must also be disconnected by a related partition, contradicting the initial assumption.",
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -4383,7 +4383,7 @@
       "Filmus and Ihringer 2019",
       "Gavrilyuk and Mogilnykh 2014"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bc0a8e2b",
     "description": "For q ≥ 3 and n ≥ 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
     "domain_bridges": [
       "Quadratic forms on vector spaces",
@@ -4399,7 +4399,7 @@
     "proof_strategy": "Construct a specific Boolean degree one function using a quadratic form (e.g., a conic or quadric) that violates triviality conditions, inspired by the q=3, n=4, k=2 example.",
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:44:54.697706+00:00",
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
   },
@@ -10460,7 +10460,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "113a596f",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -10473,7 +10473,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
