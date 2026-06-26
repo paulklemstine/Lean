@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a7c4b074",
     "filename": "no_nontrivial_extensions_of_maximal_symplectic_gro.json",
     "pkg_num": 94,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6968799999999999,
     "title": "No Non-Trivial Extensions of Maximal Symplectic Groups on the Superspecial K3 Surface: Arithmetic Tameness in Characteristic p > 11"
   },
   {
@@ -2735,8 +2735,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "no_nontrivial_extensions_of_maximal_symplectic_gro",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6968799999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "No Non-Trivial Extensions of Maximal Symplectic Groups on the Superspecial K3 Surface: Arithmetic Tameness in Characteristic p > 11"
     }

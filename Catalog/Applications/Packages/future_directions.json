@@ -11518,7 +11518,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Logic",
         "Computation"
@@ -12298,7 +12298,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -12571,7 +12571,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Cryptography",
         "Computation"
@@ -13390,7 +13390,7 @@
       "depth_estimate": 3,
       "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Cryptography",
         "Logic"
@@ -13585,7 +13585,7 @@
       "depth_estimate": 3,
       "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -16275,7 +16275,7 @@
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Logic"
@@ -16314,7 +16314,7 @@
       "depth_estimate": 3,
       "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16353,7 +16353,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -16392,7 +16392,7 @@
       "depth_estimate": 3,
       "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -16431,7 +16431,7 @@
       "depth_estimate": 3,
       "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.5,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Cryptography",
         "Physics"
@@ -16470,7 +16470,7 @@
       "depth_estimate": 3,
       "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Cryptography",
         "Computation"
@@ -35771,7 +35771,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "Polymatroid_connectivity",
@@ -35779,7 +35779,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "4cfc08f0",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35794,7 +35794,7 @@
         "Algebra"
       ],
       "id": "fd_2324",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T13:28:14.010170+00:00",
       "last_reviewed_at": "2026-06-25T03:41:49.125585+00:00",
       "lean_theorem_stub": "theorem connected_slice_projection_interval \n    {E : Type*} [Fintype E] [DecidableEq E]\n    {P : Polymatroid E} {e : E} (hP : P.Connected) (j k l : ℕ) \n    (hj : j ≤ P.r {e}) (hk : j < k) (hl : k < l) (hl_le : l ≤ P.r {e})\n    (h_conn_j : (P.slice_projection e j).Connected)\n    (h_conn_l : (P.slice_projection e l).Connected) :\n    (P.slice_projection e k).Connected := by\n  sorry",
       "lineage_refs": [],
@@ -35808,7 +35808,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22819v1",
       "source_path": "http://arxiv.org/abs/2606.22819v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T11:20:57.671444+00:00",
       "title": "Interval Property for Connected Slice-Projections of Polymatroids"
@@ -37267,7 +37267,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Mathlib.Analysis.SpecificLimits.Basic",
         "Mathlib.Topology.Algebra.InfiniteSum.Basic",
@@ -37277,7 +37277,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "7281fa18",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37293,11 +37293,11 @@
         "Algebra"
       ],
       "id": "fd_2356",
-      "last_attempt_time": "2026-06-26T12:51:49.968300+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_row_exchange_of_eventual_contraction\n    {α v z : ℂ} (hα : α ≠ 0)\n    (u : ℕ → ℂ) (top bottom : ℕ → Bool)\n    (w₁ w₄ f : ℂ → ℂ)\n    (hden₁ : ∀ i, w₄ (u i / z) ≠ 0)\n    (hden₂ : ∀ i, w₁ (u i / v) ≠ 0)\n    (hcontract : ∃ δ : ℝ, 0 ≤ δ ∧ δ < 1 ∧ ∃ N : ℕ,\n      ∀ i ≥ N,\n        ‖(w₁ (u i / z) / w₄ (u i / z)) *\n          (w₄ (u i / v) / w₁ (u i / v))‖ ≤ δ)\n    (hYB : fiveVertexYangBaxter w₁ w₄ f α) :\n    infiniteRowExchangeLeft α v z u top bottom w₁ w₄ f =\n      (f (v / z) / α ^ 2) *\n        infiniteRowExchangeRight α v z u top bottom w₁ w₄ f := by\n  sorry",
       "lineage_refs": [],
-      "outcome_quality": 0.713,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Define finite truncations of the two row-exchange diagrams at column n. The finite Yang-Baxter equation gives exact equality except for a boundary term where the unique path exits through the artificial right boundary. Show that this boundary term is bounded by C times the product of the contraction ratios from N to n. The eventual δ-bound gives a geometric estimate C*δ^(n-N), hence the boundary term tends to zero. Taking limits of the finite identities yields the infinite row-exchange identity for arbitrary boundary occupation sequences.",
@@ -37307,7 +37307,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22004v1",
       "source_path": "http://arxiv.org/abs/2606.22004v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T14:06:54.483472+00:00",
       "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
@@ -39222,7 +39222,7 @@
         "coding_theory",
         "expander_graphs"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -45720,7 +45720,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a2f737c1",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -45749,7 +45749,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.25954v1",
       "source_path": "http://arxiv.org/abs/2606.25954v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T18:50:55.115611+00:00",
       "title": "Realization of all even incoherence indices ≥4 by maximal standard frames"
@@ -47663,6 +47663,53 @@
       "title": "Convergence to Zero"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Esterov-Gusev classification of mixed volume one tuples",
+        "Fink's Bergman fan characterization",
+        "Tropical Bernstein theorem"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that a tuple of lattice polytopes has mixed volume one if and only if it is unimodularly equivalent to one of the classified configurations and its tropical intersection forms a reduced point whose fan structure corresponds to a uniform matroid Bergman fan. Specifically: MV(P₁,...,Pₙ)=1 ⟺ ∃ unimodular φ such that (φ(P₁),...,φ(Pₙ)) satisfies Esterov-Gusev classification criteria, implying Σ_{P₁}∩_{st}...∩_{st}Σ_{Pₙ}={(0,1)} with Bergman fan structure of U_{n+1,n+1}.",
+      "domain_bridges": [
+        "Matroid Theory",
+        "Polyhedral Geometry",
+        "Algebraic Combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2583",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem mixed_volume_one_iff_unimodular_reduced_point (P : Fin n → Polytope ℝ) : mixed_volume P = 1 ↔ (∃ (φ : ℝ ≃₍≟₎* ℝ), unimodular_transform φ P ∈ classified_esterov_gusev_forms ∧ ∃ (Σ : TropicalFan ℝ), stable_intersection (hypersurface_fan '' P) = weighted_points.from_single_point (0 : ℝ, 1) ∧ is_uniform_matroid_bergman_fan Σ)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Establish necessity by showing mixed volume one implies unimodular equivalence to classified forms via volume considerations; prove sufficiency by verifying tropical intersection multiplicities match reduced point condition. Connect to Fink's work through matroid subdivision dual to mixed volume computations. Use the three verified cases (unmixed sequences, hypersurface cycles, 2-cycles) as foundational tools for induction on dimension and polytope complexity.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24339v1",
+      "source_path": "http://arxiv.org/abs/2606.24339v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T13:27:30.730184+00:00",
+      "title": "Unimodular Equivalence Classification for Mixed Volume One Tuples"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -47688,7 +47735,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2583",
+      "id": "fd_2584",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47736,7 +47783,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2584",
+      "id": "fd_2585",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47781,7 +47828,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2585",
+      "id": "fd_2586",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47820,12 +47867,12 @@
       "domain_bridges": [
         "cs.DS"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2586",
+      "id": "fd_2587",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47872,7 +47919,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2587",
+      "id": "fd_2588",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47917,7 +47964,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2588",
+      "id": "fd_2589",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -47962,7 +48009,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2589",
+      "id": "fd_2590",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -48003,7 +48050,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2590",
+      "id": "fd_2591",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -48048,7 +48095,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2591",
+      "id": "fd_2592",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -48087,7 +48134,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2592",
+      "id": "fd_2593",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -48129,7 +48176,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2593",
+      "id": "fd_2594",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -48173,7 +48220,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2594",
+      "id": "fd_2595",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -48219,7 +48266,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2595",
+      "id": "fd_2596",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -48264,7 +48311,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2596",
+      "id": "fd_2597",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -48310,7 +48357,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2597",
+      "id": "fd_2598",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -48356,7 +48403,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2598",
+      "id": "fd_2599",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -48406,7 +48453,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2599",
+      "id": "fd_2600",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
@@ -48452,7 +48499,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2600",
+      "id": "fd_2601",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of the use of filtered complete intersection properties in the orderization process",
@@ -48498,7 +48545,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2601",
+      "id": "fd_2602",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vishik_non_similarity_char_2 (m : ℕ) (hm : m ≥ 3) : ∃ (F : Field) (char F = 2), ∃ (φ ψ : QuadraticForm F), \n  dim φ = 2^m ∧ dim ψ = 2^m ∧ \n  anisotropic φ ∧ anisotropic ψ ∧ \n  (∀ (E : Field), (E ⊇ F) → total_isotropy_index φ E = total_isotropy_index ψ E) ∧ \n  ¬ similar φ ψ",
@@ -48543,7 +48590,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2602",
+      "id": "fd_2603",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularized_sum_primes (P : ℂ → ℂ) (is_prime_zeta : IsPrimeZeta P) (continuation : AnalyticContinuation P) : \n  continuation.value_at (-1 : ℂ) = expected_constant_value := by sorry",
@@ -48592,7 +48639,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2603",
+      "id": "fd_2604",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_veronese_circuit_classification (m : ℕ) (t : ℕ) (d : ℕ) : let circuit := λ (forms : Fin t → (ℓ : LinearForm 𝕂) × ℓ ≠ 0), (linear_dependent_minimally (λ i, forms i |> Prod.fst ^ m)) → (dim (span (λ i, (forms i).1)) = (t + m - 2) / m) in circuit → (∃ (curve_config : Fin t → LinearForm 𝕂), (∀ i, (curve_config i) ^ m = (forms i).1 ^ m) ∧ (rational_normal_curve_configuration curve_config) ∧ (t = m * (d - 1) + 2))",
@@ -48617,117 +48664,47 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "05C35",
+        "11B75",
+        "05C25"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's formalization (`WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`). Each conjecture is bold, falsifiable, and stated so it could be\nformalized in Lean 4 as a next step.\n\n## 1. Continued-fraction realisation of the convergent criterion\n\n**Conjecture.** Under the smallness condition `2·d·(k·Δ + 1) < ñ` proved sufficient in\n`modified_wiener_convergent_criterion`, the fraction `k/d` literally appears as a value\nof `GenContFract.convs (GenContFract.of (e/ñ))`; i.e. the Legendre threshold `1/(2d²)`\nimplies \"is a convergent\" inside Mathlib's `GenContFract` API.\n\n*The key insight is...* that the abstract Farey separation in `wiener_unique_recovery`\nalready supplies the uniqueness half of Legendre's theorem, so only the *existence* half\n(every `1/(2d²)`-good fraction occurs among the convergents) remains to be bridged to\nMathlib's continued-fraction development.\n\n*Why now?* Mathlib v4.28 ships `ContinuedFractions.Computation.Approximations` with\nsharp convergent error bounds; combining them with our separation lemma is the missing\nlink to a fully formal Legendre theorem, which Mathlib still lacks.\n\n## 2. Exact `δ`-to-bound transfer for the modified Wiener threshold\n\n**Conjecture.** If exactly the top `δ·log₂(p+q)` bits of `p+q` are known, then the\noptimal estimate `s` satisfies `|(p+q) - s| ≤ (p+q)^{1-δ}`, and substituting into\n`hsmall` yields a provable closed form `d < n^{(1+δ)/2}` (up to an explicit constant),\nrecovering Wiener's `d < n^{1/4}` at `δ = 0`.\n\n*The key insight is...* that `hsmall = 2·d·(k·Δ + 1) < ñ` is *linear* in the error\nbound `Δ`, so the asymptotic exponent `(1+δ)/2` follows from a single logarithmic\nsubstitution rather than any continued-fraction analysis.\n\n*Why now?* This cycle reduced the entire attack to the finite inequality `hsmall`;\nturning the informal `Δ ≈ (p+q)^{1-δ}` estimate into a Lean lemma about bit-truncation\nof integers is a self-contained `Nat`-arithmetic project.\n\n## 3. Two-sided estimates and the `k`-bounded regime\n\n**Conjecture.** When only a *one-sided* estimate of `p+q` is available (lower bound `s`\nwith `0 ≤ (p+q) - s ≤ Δ`), the residual `1 - k·((p+q) - s)` has a fixed sign, and the\nattack succeeds with the strictly weaker condition `d·(k·Δ + 1) < ñ` (a factor of 2\ngain), because the absolute value can be dropped.\n\n*The key insight is...* that `modified_approx_error` produces a *signed* identity, and\nabsolute values are only needed for symmetric error models; sign information is itself an\nexploitable side channel.\n\n*Why now?* MSB leakage in practice is one-sided (high bits fix a lower bound), so the\nsigned refinement matches real attack models and is a direct strengthening of\n`modified_approx_abs_bound`.\n\n## 4. Failure boundary: sharpness of the smallness condition\n\n**Conjecture.** The condition `2·d·(k·Δ + 1) < ñ` is essentially tight: there exist RSA\ninstances with `2·d·(k·Δ + 1) ≈ ñ` for which `|e/ñ - k/d| ≥ 1/(2d²)`, so `k/d` is *not*\na convergent and the attack provably fails.\n\n*The key insight is...* that `modified_approx_error` is an *exact* identity, so the\ncriterion's converse can be witnessed by constructing `p, q, s` that saturate the\nresidual `1 - k·((p+q) - s)`.\n\n*Why now?* This cycle proved sufficiency; demonstrating a matching necessary counter-\nexample turns the result into an exact characterization and guards against over-claiming.\n\n## 5. Multi-prime and unbalanced-prime generalisation\n\n**Conjecture.** For `n = p·q` with `p/q = Θ(n^γ)` (unbalanced primes), the corrected\nmodulus identity `e·d - k·ñ = 1 - k·((p+q) - s)` is unchanged, but `p+q ≈ p ≈ n^{(1+γ)/2}`\nshifts the attainable error `Δ`, yielding a `γ`-dependent threshold\n`d < n^{(1+δ-γ)/2}`; balanced primes (`γ = 0`) are optimal for the attacker.\n\n*The key insight is...* that none of `rsa_key_identity`, `modified_key_identity`, or\n`modified_approx_error` used balance of `p, q`; only the *size* of `p+q` enters the\nbound, so prime imbalance is a single scalar perturbation of `Δ`.\n\n*Why now?* Our identities are fully prime-agnostic, so the generalisation is a\nparameter sweep over the same proved lemmas rather than new infrastructure.\n",
-      "domain_bridges": [],
+      "description": "Conjecture: For an odd prime p, integer ℓ with 1 ≤ ℓ ≤ (p-1)/2, and a symmetric subset S ⊆ Z_p\\{0\\} with 0 ∉ S, the undirected Cayley graph Cay(Z_p,S) contains a cycle C_{2ℓ+1} as a subgraph if and only if S contains a subset of size 2ℓ+1 whose elements sum to zero in Z_p.",
+      "domain_bridges": [
+        "Zero-sum problems",
+        "Cayley graphs",
+        "Extremal graph theory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2604",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "d4e980c4",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/d4e980c4",
-      "status": "available",
-      "thread_id": "th_83bf2b17",
-      "timestamp": "2026-06-26T13:13:15.915291+00:00",
-      "title": "Derived from this cycle's formalization (`WienerPartialKnowledge.lean`,"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions — AFL Matching Bound for Random-Like Hypergraphs\n\nDerived from this cycle's findings (see the Lab Notes in `Basic.lean`, `Bounds.lean`,\n`Examples.lean`, and `ComputationalEvidence.md`).  Each conjecture is bold, falsifiable,\nand stated so that a follow-up cycle can attack it in Lean.\n\nThis cycle proved, with 0 `sorry`s:\n\n* `IsMatching.exists_mono_of_card` — colour pigeonhole on a matching.\n* `MaximalMatching.isCover` — maximal matchings are vertex covers.\n* `MaximalMatching.card_host_le` — greedy bound `#H ≤ t·Δ·#M`.\n* `mono_matching_lower_bound` — `r·t·Δ·#M ≥ #H` (a guaranteed monochromatic matching).\n* `afl_constant_gap` / `afl_constant_gap_strict` — `r+t-1 ≤ r·t`, strict for `r,t ≥ 2`.\n* `K4_no_mono_matching_two` — a finite host below the clean AFL fraction.\n\nThe recurring theme: bounded degree fixes the *order* `Θ(n/(rt))` but loses the constant\nfactor `rt/(r+t-1) = 1 + (r-1)(t-1)/(r+t-1)`.\n\n---\n\n## Conjecture 1 — The slack equals the cover/matching gap, edge by edge\nFor every `t`-uniform `H` and every `r`-colouring, the best monochromatic matching has\nsize `≥ #H / (r·τ)` where `τ` is the *vertex cover number* of `H`, and this refines the\ndegree bound whenever `τ < t·Δ`.\n\n**The key insight is** that our greedy proof never used the degree bound directly — it used\nthe cover `support M`, so replacing `t·Δ` by the true cover number `τ` is automatically at\nleast as strong, and is exactly the König/LP-dual quantity that AFL exploits globally.\n\n**Why now?** The cover lemma `MaximalMatching.isCover` is already formalized and `0`-`sorry`;\nthe only missing ingredient is a Lean development of the (fractional) cover number, which\nMathlib's `Finset` machinery now supports.\n\n## Conjecture 2 — Pseudorandomness buys the AFL constant, bounded degree cannot\nThere is a `(C,d)`-pseudorandomness threshold `C₀(r,t)` such that every `t`-graph with\ndiscrepancy below `C₀` has, in every `r`-colouring, a monochromatic matching of size\n`(1/(r+t-1) - o(1))·n`; whereas there exist bounded-degree (even `d`-regular) hosts whose\nbest guarantee is only `(1/(rt) + o(1))·n`.\n\n**The key insight is** that `afl_constant_gap_strict` proves the greedy constant is strictly\nworse, so any proof of the AFL constant *must* consume a global counting hypothesis —\npseudorandom edge-density control is the natural candidate, separating it from mere degree\nregularity.\n\n**Why now?** We have both endpoints in hand: the universal lower bound `1/(rt)` is proved,\nand the target `1/(r+t-1)` is pinned down; the open task is the separating construction,\nwhich is a finite/`Fintype` search amenable to `decide`-assisted Lean experiments.\n\n## Conjecture 3 — The `-o(1)` is `Θ(1/n)`, sharply\nFor the complete host `K_n^{(t)}` the optimal monochromatic matching guarantee is exactly\n`⌊(n - (t-1))/(r+t-1)⌋`-ish: the deviation from `n/(r+t-1)` is `Θ(1)` in absolute terms,\ni.e. `o(1)·n` but never `0`.\n\n**The key insight is** that `K4_no_mono_matching_two` already exhibits an absolute deficit\nof `1` (`1` vs `4/3`) from a star/triangle split, suggesting the extremal colouring is\nalways a small bounded perturbation (a few \"stars\") of the balanced one.\n\n**Why now?** The finite witness is formalized and `decide`-checkable; scaling the star\nconstruction to general `n` is a concrete inductive target, and the matching upper bound\nmachinery (`mono_matching_lower_bound`) gives the complementary inequality for free.\n\n## Conjecture 4 — Multicolour monotonicity: adding a colour costs exactly one in the denominator\nThe optimal monochromatic-matching fraction for `r` colours on the pseudorandom host is\n`1/(r+t-1)`, and passing from `r` to `r+1` colours strictly decreases it by the algebraic\nstep `1/(r+t-1) - 1/(r+t) = 1/((r+t-1)(r+t))`, with no anomalous jumps.\n\n**The key insight is** that the colour pigeonhole `IsMatching.exists_mono_of_card` already\nshows each extra colour can only divide a single matching's value by a controlled amount;\nthe conjecture asserts this local `1/r` intuition globalizes to the exact AFL `1/(r+t-1)`\nladder.\n\n**Why now?** The pigeonhole lemma is proved and isolates the `r`-dependence cleanly, so the\ninduction on `r` has a verified base step and a clear algebraic target to falsify or confirm.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Pythagorean"
-      ],
       "id": "fd_2605",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem conjecture_zero_sum_characterization {p : ℕ} [Fact p.Prime] (hp : p % 2 = 1)\n    (ℓ : ℕ) (hℓ : 1 ≤ ℓ ∧ ℓ ≤ (p - 1) / 2)\n    (S : Finset (ZMod p)) (hsym : S = S.image (fun x => -x))\n    (hzero : (0 : ZMod p) ∉ S) :\n    (∃ (vs : Fin (2 * ℓ + 1) → ZMod p),\n        (Pairwise (fun i j => vs i ≠ j)) ∧\n        (∀ i : Fin (2 * ℓ + 1), (vs ((i + 1 : Fin (2 * ℓ + 1))) - vs i) ∈ S)) ↔\n    (∃ (t : Finset (ZMod p)), t ⊆ S ∧ t.card = 2 * ℓ + 1 ∧ (∑ x in t, x) = 0) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the polynomial method (Combinatorial Nullstellensatz) to show that a zero-sum subset of size 2ℓ+1 yields a solution to the system of equations defining a cycle, and conversely extract a zero-sum subset from a given cycle via its edge differences. The symmetry of S allows reordering of differences to obtain a subset of S. Character sums over Z_p handle the distinctness condition on vertices.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "f014f8e3",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f014f8e3",
+      "source_exp_id": "2606.24426v1",
+      "source_path": "http://arxiv.org/abs/2606.24426v1",
       "status": "available",
-      "thread_id": "th_4d44ad04",
-      "timestamp": "2026-06-26T13:14:36.086469+00:00",
-      "title": "Derived from this cycle's findings (see the Lab Notes in `Basic.lean`, `Bounds.l"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions — Hermitian Bianchi lattice S_K and its discriminant\n\nDerived from the cycle that proved `det Gram(S_K) = D_K` (file\n`HermitianBianchiDiscriminant.lean`) and the scaling/parity properties\n(`HermitianBianchiProperties.lean`).\n\n## 1. The off-diagonal block IS the genus-defining binary form\n**Conjecture.** The binary block `!![-2,-T;-T,-2M]` of `Gram(S_K)` is, up to\nsign, the Gram matrix of the principal binary quadratic form of discriminant\n`D_K`; hence the SL₂(ℤ)-class of this block is a complete invariant of the genus\nof `S_K`, and two fields `K, K'` give isometric off-diagonal blocks iff\n`D_K = D_{K'}`.\n- The key insight is that `T² − 4M`, the determinant we computed, is exactly the\n  discriminant of `ω`'s minimal polynomial, so the off-diagonal block carries the\n  norm form `N(x + yω) = x² + Txy + My²` whose discriminant is `D_K`.\n- Why now? We have a formal, basis-level Gram matrix and `offDiagonalBlock_det`\n  already isolates this block; relating it to `Mathlib`'s binary-quadratic-form\n  class group is the next concrete step.\n\n## 2. Even, 2-elementary structure and the K3 transcendental lattice\n**Conjecture.** `S_K(2)` is an even lattice whose discriminant group is\n`(ℤ/2)^a ⊕ (ℤ/|D_K|)` for an explicit `a`, and the orthogonal complement of\n`S_K(2N)` in the K3 lattice `Λ_{K3} = U³ ⊕ E₈(−1)²` has determinant `16 N⁴ |D_K|`.\n- The key insight is that `det(N·Gram) = N⁴ D_K` (proved as `det_scaledGram`)\n  forces the discriminant of any primitive embedding's complement, by the\n  determinant–covolume relation for finite-index sublattices.\n- Why now? `det_NeronSeveri` already pins the determinant `16 N⁴ D_K`; computing\n  the discriminant *group* (not just its order) is the missing ingredient for a\n  Torelli-type classification of these Picard-rank-four K3 surfaces.\n\n## 3. Hyperbolic-plus-norm-form signature decomposition\n**Conjecture.** For every imaginary quadratic `K`, `S_K ≅ U ⊕ A` as integral\nlattices, where `U` is the hyperbolic plane and `A` is the negative-definite\nbinary norm form of `K`; consequently `S_K` has signature `(1,3)` and\n`disc S_K = − disc A = D_K`.\n- The key insight is the block-diagonal form of `Gram(S_K)`: the diagonal\n  matrix-unit block `!![0,1;1,0]` is literally `U`, and the off-diagonal block is\n  `A`, so the splitting is forced by the basis we chose.\n- Why now? Mathlib has `Matrix.fromBlocks` determinant lemmas (used in\n  `det_gramMatrix`); upgrading the block decomposition from determinants to a\n  genuine lattice isometry `U ⊕ A` is a self-contained formalisation target.\n\n## 4. Discriminant rigidity across real quadratic / Bianchi analogues\n**Conjecture.** Replacing `O_K` by the order of a *real* quadratic field\n(`d > 0` squarefree) leaves the identity `det Gram = T² − 4M = D_K` intact, but\nflips the signature of `S_K` to `(2,2)`; thus `det Gram(S_K)` is a field\ninvariant insensitive to the sign of `d`, while the signature detects it.\n- The key insight is that our determinant proof never used `d < 0`: it is a\n  polynomial identity in `(T, M)`, so it transports verbatim to real fields.\n- Why now? `detGram_eq_fundamentalDisc` is already stated for all `d : ℤ`;\n  only the *interpretation* (definite vs indefinite norm form) changes, making\n  the signature computation the single new lemma required.\n\n## 5. p-adic local discriminant and the Hasse principle for S_K\n**Conjecture.** The lattice `S_K` is unimodular at every prime `p ∤ D_K` and its\n`p`-adic Jordan splitting at `p ∣ D_K` is determined entirely by `v_p(D_K)`;\nhence `S_K` and `S_{K'}` are isometric over `ℤ_p` for all `p` iff `D_K = D_{K'}`.\n- The key insight is that `det Gram = D_K` localises: at primes away from `D_K`\n  the Gram determinant is a unit, so the lattice is `p`-adically unimodular.\n- Why now? With the global determinant formula proven, the local-global\n  (Hasse–Minkowski) analysis reduces to tracking the single integer `D_K`,\n  a tractable next formalisation.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Pythagorean"
-      ],
-      "id": "fd_2606",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "cb117fe9",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/cb117fe9",
-      "status": "available",
-      "thread_id": "th_a2e404cb",
-      "timestamp": "2026-06-26T13:15:58.048482+00:00",
-      "title": "Derived from the cycle that proved `det Gram(S_K) = D_K` (file"
+      "thread_id": "",
+      "timestamp": "2026-06-26T13:28:08.471007+00:00",
+      "title": "Zero-sum characterization of odd cycles in symmetric Cayley graphs over prime cyclic groups"
     },
     {
       "ambition_level": "extension",
@@ -50214,44 +50191,6 @@
       "thread_id": "",
       "timestamp": "2026-06-12T18:16:22.932994+00:00",
       "title": "Deepening: Reversible Computing and Thermodynamic Efficiency"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle f014f8e3 (Q=0.751), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For fixed integers r≥2, t≥2 there exists a constant C(r,t)>0 such that every r‑edge‑colouring of any (C, d)-pseudorandom t‑uniform hypergraph H on n vertices contains a monochromatic matching of size at least (1/(r+t‑1)−o(1))·n. Moreover, this bound is asymptotically best possible: for every ε>0 and",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Novelty"
-      ],
-      "id": "push_f014f8e3_9958325f",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8510892307692308,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "f014f8e3",
-      "source_path": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hy",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-26T13:14:44.987652+00:00",
-      "title": "Deepening: Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hy"
     },
     {
       "ambition_level": "extension",
@@ -55140,7 +55079,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -55220,7 +55159,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic",
@@ -55460,7 +55399,7 @@
       "depth_estimate": 3,
       "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation",
@@ -66356,44 +66295,6 @@
       "thread_id": "",
       "timestamp": "2026-06-12T16:09:33.623152+00:00",
       "title": "Close Proofs: Topological Data Analysis: Persistent Homology Stability"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Cycle f014f8e3 (Q=0.751) proved 13 theorems in Novelty but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For fixed integers r≥2, t≥2 there exists a constant C(r,t)>0 such that every r‑edge‑colouring of any (C, d)-pseudorandom t‑uniform hypergraph H on n vertices contains a monochromatic matching of size ",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Novelty"
-      ],
-      "id": "sorry_fill_f014f8e3_e198810e",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8010892307692309,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "f014f8e3",
-      "source_path": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hy",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-26T13:14:45.714474+00:00",
-      "title": "Close Proofs: Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Rand"
     },
     {
       "ambition_level": "extension",
@@ -128899,7 +128800,7 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 304,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 58,
     "Computation": 100,
@@ -128911,7 +128812,7 @@
     "Novelty": 200,
     "Physics": 45,
     "Probability": 1,
-    "Pythagorean": 112,
+    "Pythagorean": 111,
     "Shared": 6,
     "Tropical": 33
   },
@@ -128929,7 +128830,7 @@
     "compute": 99,
     "computed": 42,
     "condition": 100,
-    "conjecture": 407,
+    "conjecture": 406,
     "connection": 56,
     "constant": 144,
     "construct": 81,
@@ -128954,7 +128855,7 @@
     "formalize": 224,
     "framework": 103,
     "function": 204,
-    "functions": 100,
+    "functions": 99,
     "future": 526,
     "giving": 120,
     "graphs": 47,
@@ -128979,7 +128880,7 @@
     "problem": 83,
     "proof-theoretic": 36,
     "proofs": 390,
-    "proved": 574,
+    "proved": 573,
     "provides": 86,
     "pythagorean": 21,
     "q=0.423": 11,
@@ -128997,7 +128898,7 @@
     "significant": 16,
     "single": 248,
     "spacing": 4,
-    "spectral": 117,
+    "spectral": 116,
     "stable": 38,
     "statistically": 10,
     "statistics": 26,
