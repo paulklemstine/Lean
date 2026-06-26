@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "8344a207",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -224,7 +224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory: Solvability of Polynomials"
   },
   {
-    "consumed_by_exp_id": "97f912e0",
+    "consumed_by_exp_id": "",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domains": [
       "Algebra",
@@ -235,7 +235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -506,7 +506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "4364c6f1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -517,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -2368,20 +2368,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "8f6e0a03",
-    "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2353",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22229v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T13:11:45.659366+00:00",
-    "title": "Quadratic irrational density in the ratio spectrum"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The sum of the elements in the $n$-th row of the Pascal-like Riordan array defined by the power series pair $(1/(1-x), x/(1-x)^2)$, whose entries are given by the binomial coefficient $t_{n,k} = \\binom{n+k}{2k}$, equals the $(2n+1)$-th Fibonacci number. This is derived from the paper's demonstration that the generating function of the row sums is $(1-x)/(1-3x+x^2)$, which characterizes the odd-indexed Fibonacci sequence.",
     "domains": [
@@ -3972,7 +3958,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coefficient Decay Bound"
   },
   {
-    "consumed_by_exp_id": "f6b20d87",
+    "consumed_by_exp_id": "",
     "description": "Let k \u2265 2, n = k + 1, and D(k) = gcd_{2 \u2264 q \u2264 k+1} binom(qk,k). If P is the largest exact prime-power component p^a exactly dividing n, then D(k) is not merely nontrivial exactly when n/P \u2264 P; conjecturally its exact value is P in that case and 1 otherwise. Equivalently, D(k) = P if the largest exact prime-power component of k+1 dominates its complementary factor, and D(k) = 1 otherwise.",
     "domains": [
       "Pythagorean"
@@ -3981,7 +3967,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T19:09:47.341905+00:00",
     "title": "Exact Value of the Binomial GCD in OEIS A080170"
   },
@@ -5428,6 +5414,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Navier\u2013Stokes: 2D Regularity and Partial 3D Results\n\nThis cycle extended the scalar a-priori-estimate framework\n(`NavierStokes.Core`, `NavierStokes.Estimates`) in two directions:\n\n* **`Dissipative.lean`** \u2014 the *driven/forced* regime `Y' \u2264 -a Y + b` (a > 0):\n  comparison bound `Y(t) \u2264 b/a + (Y\u2080 - b/a)e^{-at}`, uniform dissipativity\n  `Y \u2264 max(Y\u2080, b/a)`, the **absorbing ball** (eventual entry into `b/a + \u03b5`),\n  and the sharp asymptotic bound `limsup Y \u2264 b/a`. The unforced `b = 0` case\n  recovers `Core.energy_exponential_decay`.\n* **`BlowupRate.lean`** \u2014 the dual of `Core.enstrophy_3d_apriori_bound`: the\n  **lower** blow-up-rate `Z(t)\u00b2 \u2265 1/(2C(T*\u2212t))` for any finite-time singularity of\n  the supercritical inequality `Z' \u2264 C Z\u00b3`.\n* **`CriticalBorderline.lean`** \u2014 resolves former Conjecture 5: the logarithmic\n  borderline `Z' \u2264 C\u00b7Z\u00b7log(e+Z)` is globally regular, with explicit\n  double-exponential bound `Z(t) \u2264 exp(log(e+Z\u2080)\u00b7e^{Ct}) \u2212 e`.\n\nThe recurring engine in every result is the reciprocal/integrating-factor\nlinearisation of a nonlinear scalar inequality. The conjectures below push that\nengine further. Each is stated so it can be formalised directly as a Lean theorem\nover an abstract observable `Y, Z : \u211d \u2192 \u211d` with a prescribed differential\ninequality, exactly in the style of the existing files.\n\n---\n\n## Conjecture 1 \u2014 General power-law blow-up dichotomy (unify Core + BlowupRate)\n\nLet `p > 1`, `C > 0`, `Z > 0` with `Z'(t) \u2264 C Z(t)^p`. Define\n`\u03b1 = 1/(p\u22121)`. Then:\n\n* **(upper / lifetime)** `Z(t)^{p\u22121} \u2264 Z\u2080^{p\u22121} / (1 \u2212 (p\u22121) C Z\u2080^{p\u22121} t)` on\n  `0 \u2264 t < T* := 1 / ((p\u22121) C Z\u2080^{p\u22121})`;\n* **(lower / blow-up rate)** if `Z \u2192 +\u221e` as `t \u2192 T*\u207b`, then\n  `Z(t)^{p\u22121} \u2265 1 / ((p\u22121) C (T*\u2212t))`, i.e. `Z(t) \u2273 (T*\u2212t)^{\u2212\u03b1}`.\n\nThe current files are the case `p = 3` (`\u03b1 = 1/2`). **Test:** prove both halves\nwith the substitution `w = Z^{\u2212(p\u22121)}`, which obeys the linear bound\n`w' \u2265 \u2212(p\u22121)C`. *Falsifiable:* a counterexample would be a `Z` with `Z' \u2264 C Z^p`\nthat blows up strictly slower than `(T*\u2212t)^{\u2212\u03b1}`.\n\n## Conjecture 2 \u2014 Time-dependent forcing and the moving absorbing ball\n\nLet `a > 0` and let `b : \u211d \u2192 \u211d` be bounded with `\u03b2 := limsup_{t\u2192\u221e} b(t) < \u221e`,\nand suppose `Y'(t) \u2264 \u2212a Y(t) + b(t)`. Then `limsup_{t\u2192\u221e} Y(t) \u2264 \u03b2 / a`, and for\nevery `\u03b5 > 0` the ball `{Y \u2264 \u03b2/a + \u03b5}` is absorbing. If additionally\n`\u222b\u2080^\u221e b(t) e^{at} dt` controls the transient, then `Y(t) \u2192 \u03b2/a` whenever\n`b(t) \u2192 \u03b2`. **Test:** integrating factor `Y(t)e^{at}`; the limsup step needs\n`limsup` subadditivity for the convolution `\u222b\u2080\u1d57 e^{\u2212a(t\u2212s)} b(s) ds`. This\ngeneralises `dissipative_limsup_le` (constant `b`).\n\n## Conjecture 3 \u2014 Two-mode energy/enstrophy comparison (2D Ladyzhenskaya shadow)\n\nCouple energy `E` and enstrophy `Z` by `E' \u2264 \u22122\u03bd \u03bb\u2081 E` and\n`Z' \u2264 \u22122\u03bd Z + \u03ba E Z` (the scalar shadow of the 2D Ladyzhenskaya estimate\n`|\u222b (u\u00b7\u2207)\u03c9 \u00b7 \u03c9| \u2264 \u03ba \u2016u\u2016\u2082 \u2016\u2207\u03c9\u2016\u2082 \u2016\u03c9\u2016\u2082`). Conjecture: with `E` decaying\nexponentially (from `Core.energy_exponential_decay`), `\u222b\u2080^\u221e E < \u221e`, hence\n`Z(t) \u2264 Z\u2080 \u00b7 exp(\u03ba \u222b\u2080^\u221e E) < \u221e` for all `t` \u2014 an **unconditional global enstrophy\nbound** for 2D, with no smallness hypothesis. **Test:** Gr\u00f6nwall with the\nintegrable factor `\u03ba E(t)`; the finite total energy is `Estimates.energy_dissipation_budget`.\n\n## Conjecture 4 \u2014 Determining-modes / finite-dimensionality count\n\nFrom the absorbing ball (radius `R = b/a`) plus the dissipation budget\n`\u222b\u2080\u1d40 G \u2264 Z\u2080/(2\u03bd)` (`Estimates`), conjecture a scalar Constantin\u2013Foias\u2013Temam\nbound: the number `N` of \"determining modes\" needed to pin the long-time state\nsatisfies `N \u2264 c \u00b7 (b / (a\u00b2 \u03bd))` for an absolute constant `c`. **Test (scalar\nform):** if two trajectories `Y\u2081, Y\u2082` obey the same inequality and agree on a\n\"low-mode\" projection with `\u2016high modes\u2016 \u2264 a/(2\u03ba)`, then `|Y\u2081 \u2212 Y\u2082| \u2192 0`. This is\na contraction/Gr\u00f6nwall statement provable in the present abstract setting.\n\n## Conjecture 5 (RESOLVED this cycle) \u2014 Critical (logarithmic) borderline\n\nBetween the globally-regular linear regime and the supercritical cubic regime lies\nthe **critical** inequality `Z'(t) \u2264 C Z(t) log(e + Z(t))`. **Now proved** in\n`CriticalBorderline.lean` (`log_critical_no_blowup`): it is globally regular with\n`Z(t) \u2264 exp(log(e + Z\u2080)\u00b7e^{Ct}) \u2212 e` for all `t \u2265 0` \u2014 no finite-time blow-up, only\ndouble-exponential growth. The proof used the substitution `v = log(e + Z)`, which\nlinearises to `v' \u2264 C v`. *Next:* push the borderline further \u2014 see Conjecture 6.\n\n## Conjecture 6 \u2014 The exact iterated-logarithm threshold\n\nHaving placed `Z log(e+Z)` on the regular side and `Z\u00b3` on the blow-up side, locate\nthe **sharp** threshold. Conjecture: `Z' \u2264 C\u00b7Z\u00b7log(e+Z)\u00b7log(log(e\u00b2+Z))` is still\nglobally regular (triple-exponential growth), while for any `p > 1`,\n`Z' \u2264 C\u00b7Z\u00b7log^p(e+Z)` **blows up in finite time** when `p > 1` and the data is\nlarge. **Test:** for the regular side, the substitution `w = log(log(e\u00b2+Z))`\nlinearises; for the blow-up side, `v = log(e+Z)` obeys `v' \u2264 C v^p`, reducing to\nthe supercritical power-law of Conjecture 1. *Falsifiable:* a global bound for some\n`p > 1` in `Z\u00b7log^p(e+Z)`, or finite-time blow-up for the iterated-log inequality.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2571",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0548f2b9",
+    "status": "available",
+    "timestamp": "2026-06-26T03:16:20.885447+00:00",
+    "title": "Scalar a-priori-estimate framework"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e42393e4",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Weight-Threshold Profiles & the Codes → Tropical Valuation Functor\n\nThese conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`, which builds the\nfunctor `FinLinCodes",
-      "quality_score": 0.79224,
-      "sorry_count": 4,
-      "theorem_count": 42,
-      "timestamp": "2026-06-16T08:06:33",
-      "title": "Functor from finite linear codes to tropical valuation objects via weight-threshold profiles"
-    },
-    {
       "cycle_id": "d6329d46",
       "domain": "Shared",
       "key_insight": "# Future Directions — Cumulative weight thresholds & convolution of binary linear codes\n\nDerived from this research cycle, which added two `sorry`-free Lean files to\n`Catalog/Applications/SmoothPoinca",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-26T02:43:22",
       "title": "Fourier Analysis on Finite Groups"
+    },
+    {
+      "cycle_id": "0548f2b9",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Navier–Stokes: 2D Regularity and Partial 3D Results\n\nThis cycle extended the scalar a-priori-estimate framework\n(`NavierStokes.Core`, `NavierStokes.Estimates`) in two directions:",
+      "quality_score": 0.7095,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-26T03:16:30",
+      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6495e602",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nDerived from the verified results in `MachineLearning.SheafDatabaseProbability`\nand `MachineLearning.SheafImputationBounds` (product law `P(shea",
-      "quality_score": 0.8166,
-      "sorry_count": 0,
-      "theorem_count": 139,
-      "timestamp": "2026-06-19T15:17:54",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
     {
       "cycle_id": "a449aa2a",
       "domain": "NumberTheory",
@@ -2501,21 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-26T02:43:22",
       "title": "Fourier Analysis on Finite Groups"
+    },
+    {
+      "cycle_id": "0548f2b9",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Navier–Stokes: 2D Regularity and Partial 3D Results\n\nThis cycle extended the scalar a-priori-estimate framework\n(`NavierStokes.Core`, `NavierStokes.Estimates`) in two directions:",
+      "quality_score": 0.7095,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-26T03:16:30",
+      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cd0ef092",
-      "domain": "Bridges",
-      "name": "two_pow_gt_sq",
-      "quality": 0.7045299999999999
-    },
-    {
-      "cycle_id": "cd0ef092",
-      "domain": "Bridges",
-      "name": "via",
-      "quality": 0.7045299999999999
-    },
     {
       "cycle_id": "f8c355ed",
       "domain": "Pythagorean",
@@ -2803,9 +2791,21 @@
       "domain": "Combinatorics",
       "name": "dft_conv",
       "quality": 0.7367999999999999
+    },
+    {
+      "cycle_id": "0548f2b9",
+      "domain": "Novelty",
+      "name": "recip_sq_lower_lipschitz",
+      "quality": 0.7095
+    },
+    {
+      "cycle_id": "0548f2b9",
+      "domain": "Novelty",
+      "name": "recip_sq_tendsto_zero_of_blowup",
+      "quality": 0.7095
     }
   ],
-  "last_updated": "2026-06-26T02:43:22",
+  "last_updated": "2026-06-26T03:16:30",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "758d973b",
-        "quality": 0.51744,
-        "theorems": 8,
-        "title": "Degree-normalized linked tree-cut decompositions for locally finite graphs"
-      },
-      {
         "cycle_id": "18853638",
         "quality": 0.42325214328358207,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.72533,
         "theorems": 8,
         "title": "Extremal Graph Theory: Turán and Szemerédi"
+      },
+      {
+        "cycle_id": "0548f2b9",
+        "quality": 0.7095,
+        "theorems": 9,
+        "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
       }
     ],
     "NumberTheory": [
