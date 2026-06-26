@@ -1356,7 +1356,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f881b568",
     "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension ≥ 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
     "domain_bridges": [],
     "domains": [
@@ -1369,7 +1369,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432660+00:00",
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
@@ -3187,7 +3187,7 @@
       "odd power-sum symmetric functions",
       "Lean mathlib: MvPolynomial, PowerSeries, Finsupp, Nat.Odd"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "913e3580",
     "description": "Let Γ_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism φ_t of Γ_R by φ_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_λ denotes the Schur Q-function indexed by a strict partition λ in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_λ denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition λ one has S^t_λ = φ_t(Q_λ). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n ↦ (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |λ|.",
     "domain_bridges": [
       "vertex-operator constructions ↔ plethystic substitutions",
@@ -3203,7 +3203,7 @@
     "proof_strategy": "Define the scaling algebra automorphism Φ_t on the odd power-sum ring by Φ_t(p_n) = (1 - t^n)p_n. Show coefficientwise that Φ_t ∂/∂p_n Φ_t⁻¹ = (1 - t^n)⁻¹ ∂/∂p_n. Therefore the odd GJZ field Y(z;t) is conjugate to the t=0 neutral-fermion field: Y(z;t) = Φ_t Y(z;0) Φ_t⁻¹. Since Φ_t fixes the vacuum vector 1, applying the negative Fourier modes indexed by a strict partition λ gives S^t_λ = Φ_t(S^0_λ) = Φ_t(Q_λ). In Lean, avoid infinite series by working degreewise in a truncated odd-variable polynomial algebra up to degree |λ|, then pass to the abstract graded Γ formulation.",
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -5071,7 +5071,7 @@
       "AB3456",
       "BC2023"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d5c7f90",
     "description": "For any Cayley digraph G of an abelian group of even order, the pair (G, K₂) is unstable.",
     "domain_bridges": [
       "Math.CO",
@@ -5086,7 +5086,7 @@
     "proof_strategy": "Construct automorphisms of G×K₂ that do not factor through Aut(G)×Aut(K₂) by leveraging the even-order group structure",
     "research_mode": "team",
     "source_exp_id": "2606.22947v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T06:20:52.702234+00:00",
     "title": "Stability of Cayley Digraphs of Even Order with K2"
   },
@@ -8229,7 +8229,7 @@
       "Brualdi & Dahl 2018",
       "VanLint & Wilson 1992"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0171d9bf",
     "description": "Conjecture that for every integer n ≥ 2, any collection of mutually orthogonal Italian squares of order n contains at most n‑1 squares, and this bound is attained exactly when n is a prime power.",
     "domain_bridges": [
       "Latin squares",
@@ -8245,7 +8245,7 @@
     "proof_strategy": "Establish an upper bound via double counting of symbol occurrences and use finite field constructions to exhibit n‑1 orthogonal squares when n is a prime power; then formalize the combinatorial arguments in Lean using existing libraries for finite fields and finite sets.",
     "research_mode": "team",
     "source_exp_id": "2606.25884v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T16:34:26.097340+00:00",
     "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
   },
@@ -10952,7 +10952,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2c77f29",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -10965,7 +10965,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
