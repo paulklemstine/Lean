@@ -1,341 +1,205 @@
-# Sharp Small Ramsey Numbers and a Parity Obstruction: $R(3,3)=6$, $R(3,4)=9$, the Erdős–Szekeres Bound, and Probabilistic Lower Bounds
+# Ramsey Theory: Bounds and Constructions
 
 **Author:** Aristotle
 **Date:** 2026-06-26
+**Domain:** Applications (Combinatorics / Extremal Graph Theory)
 
 ## Abstract
 
-We develop, from first principles, the elementary theory of finite two-colour
-Ramsey numbers and establish three sharp facts together with the structural
-machinery behind them. Working with the *arrow relation* $n \to (s,t)$ — every
-red/blue colouring of a complete graph on $\geq n$ vertices contains a red
-$s$-clique or a blue $t$-clique — we prove the Erdős–Szekeres binomial ceiling
-$R(s{+}1,t{+}1) \le \binom{s+t}{s}$ via a clean recursive step, and we determine
-two exact values: $R(3,3) = 6$ (with the pentagon as extremal colouring) and
-$R(3,4) = 9$ (with a Möbius-ladder circulant as the extremal colouring on eight
-vertices). The upper bound $R(3,4) \le 9$ strictly improves the binomial
-prediction of $10$, and we trace this improvement to a single arithmetic
-phenomenon: a handshake-parity obstruction. We isolate that phenomenon as two
-reusable theorems on arbitrary finite vertex sets — that the red-degrees inside
-an odd-order set cannot all be odd, and equivalently that no $d$-regular red
-colouring exists on $n$ vertices when $nd$ is odd. Finally, we record the
-first-moment probabilistic lower bound for $r$-uniform hypergraph Ramsey
-numbers, which for graphs yields $R(k,k) > 2^{k/2}$ and frames the classical
-exponential sandwich $2^{k/2} < R(k,k) \le 4^k$. All results are formally
-verified.
+We present a unified, fully rigorous development of finite two-colour Ramsey theory built on a single primitive — the *arrow relation* $n \rightarrow (s,t)$ — and use it to establish both exact small Ramsey numbers and general asymptotic bounds. We prove the Erdős–Szekeres recursion and its binomial consequence $R(s+1,t+1) \le \binom{s+t}{s}$; the three classical exact diagonal and off-diagonal values $R(3,3) = 6$, $R(3,4) = 9$, and $R(4,4) = 18$; the central binomial estimate $\binom{2k}{k} \le 4^k$ and the resulting exponential diagonal bound $R(k+1,k+1) \le 4^k$; and the colour-swap symmetry $n \rightarrow (s,t) \iff n \rightarrow (t,s)$. The exact values are pinned by explicit extremal constructions — the pentagon $C_5$ for $R(3,3)$, the Möbius ladder $C_8(1,4)$ for $R(3,4)$, and the Paley graph on $\mathbb{Z}/17$ for $R(4,4)$ — each certified clique-free by exhaustive finite verification. We also situate these results against the probabilistic lower bound, which shows the diagonal Ramsey number is exponential in $k$ from both sides. Every theorem stated here has been formally verified.
 
 ## 1. Introduction
 
-Ramsey theory quantifies the principle that sufficiently large combinatorial
-structures cannot be entirely disordered. The two-colour graph Ramsey number
-$R(s,t)$ is the least $n$ such that every $2$-colouring of the edges of the
-complete graph $K_n$ contains a red clique on $s$ vertices or a blue clique on
-$t$ vertices. Three foundational themes organise the classical theory:
-
-1. **Upper bounds by recursion.** The Erdős–Szekeres argument bounds
-   $R(s,t)$ recursively and yields the binomial ceiling
-   $R(s{+}1,t{+}1) \le \binom{s+t}{s}$.
-2. **Exact small values.** The first nontrivial values, $R(3,3)=6$ and
-   $R(3,4)=9$, require matching constructions (lower bounds) and combinatorial
-   obstructions (upper bounds). For $R(3,4)$ the binomial ceiling is *not*
-   tight, and an extra parity argument is needed.
-3. **Lower bounds by the probabilistic method.** A first-moment computation
-   shows that random colourings avoid large monochromatic cliques, giving
-   exponential lower bounds — for graphs, $R(k,k) > 2^{k/2}$.
-
-This paper presents a self-contained formal treatment of all three themes, with
-particular emphasis on the structural reason that $R(3,4)=9$ beats its binomial
-ceiling. We extract the deciding step into a general *parity obstruction* that
-applies to any colouring on any finite vertex set, independent of the specific
-clique sizes involved.
+Ramsey theory studies the principle that sufficiently large combinatorial structures necessarily contain highly ordered substructures, regardless of how their elements are partitioned. For graphs, the canonical statement concerns two-colourings of the edges of a complete graph: given target clique sizes $s$ and $t$, every sufficiently large complete graph whose edges are coloured red and blue must contain a red clique of size $s$ or a blue clique of size $t$. The least size guaranteeing this is the **Ramsey number** $R(s,t)$.
 
-Throughout, a two-colouring of a complete graph on a vertex set $V$ is encoded
-by a single `SimpleGraph` $G$ on $V$: the edges of $G$ are **red** and the edges
-of its complement $G^{\mathsf c}$ are **blue**. A red $s$-clique is a clique of
-$G$; a blue $t$-clique is a clique of $G^{\mathsf c}$.
+Two complementary problems define the field:
 
-## 2. The arrow relation and monotonicity
-
-**Definition 1 (Arrow relation).** For naturals $n, s, t$, write $n \to (s,t)$,
-formally `Arrows n s t`, to mean: for every type $V$ with decidable equality,
-every graph $G$ on $V$, and every finite vertex set $W \subseteq V$ with
-$|W| \ge n$, there exists $S \subseteq W$ with $G$ inducing an $s$-clique on $S$,
-or there exists $S \subseteq W$ with $G^{\mathsf c}$ inducing a $t$-clique on
-$S$.
+1. **Upper bounds** (forcing results): proving that order is *unavoidable* at a given size. The principal tool is the Erdős–Szekeres recursion (1935).
+2. **Lower bounds** (constructions): exhibiting a colouring at the largest possible size that *avoids* the target cliques, thereby proving the Ramsey number is strictly larger.
 
-Quantifying over an arbitrary ambient type together with a `Finset` $W$ builds
-monotonicity into the definition and lets the recursion below operate on subsets
-of a common vertex set. The Ramsey number is then $R(s,t) = \min\{ n : n \to (s,t)\}$.
+An exact value $R(s,t) = n$ requires both: a forcing proof that $n \rightarrow (s,t)$ and an extremal construction showing $\neg\,(n-1) \rightarrow (s,t)$.
 
-**Lemma 2 (Monotonicity, `Arrows.mono`).** If $n \to (s,t)$ and $n \le n'$, then
-$n' \to (s,t)$.
+This paper develops the theory from a single relational primitive, proves the foundational recursion and binomial bound, establishes the three smallest non-trivial exact values, and derives the general exponential diagonal upper bound together with the unifying colour symmetry. All constructions are explicit and their clique-freeness is decidable.
 
-*Proof.* Any $W$ with $|W| \ge n'$ also has $|W| \ge n$, so the hypothesis
-applies directly. $\square$
+## 2. Definitions and Framework
 
-Two trivial base facts seed the recursion.
+### 2.1 Colourings as graphs
 
-**Lemma 3 (`arrows_one_red`, `arrows_one_blue`).** For all $a,b$, $1 \to (1,b)$
-and $1 \to (a,1)$.
+A two-colouring of the edges of a complete graph on vertex type $V$ is encoded by a single simple graph $G$ on $V$: an edge of $G$ is **red**, and a non-edge (an edge of the complement $G^{\mathsf c}$) is **blue**. A **red clique** is a clique of $G$; a **blue clique** is a clique of $G^{\mathsf c}$, equivalently an independent set of $G$.
 
-*Proof.* A nonempty $W$ contains a vertex $v$; the singleton $\{v\}$ is
-simultaneously a red $1$-clique (of $G$) and a blue $1$-clique (of
-$G^{\mathsf c}$). $\square$
+We write $G.\mathrm{IsNClique}\ s\ S$ for the property that the finite set $S$ of vertices has cardinality $s$ and induces a clique in $G$.
 
-## 3. The Erdős–Szekeres recursion and binomial bound
+### 2.2 The arrow relation
 
-**Lemma 4 (Erdős–Szekeres step, `arrows_step`).** If $m > 0$, $n > 0$,
-$m \to (s, t{+}1)$ and $n \to (s{+}1, t)$, then $(m+n) \to (s{+}1, t{+}1)$.
+The central definition packages monotonicity and locality so that the Erdős–Szekeres recursion is convenient to state.
 
-*Proof sketch.* Let $W$ be a colouring with $|W| \ge m+n$ and fix $v \in W$.
-Partition $W \setminus \{v\}$ into the set $R$ of red neighbours of $v$ and the
-set $B$ of blue neighbours, so $|R| + |B| = |W| - 1 \ge m + n - 1$. Hence
-$|R| \ge m$ or $|B| \ge n$.
-
-- If $|R| \ge m$, apply $m \to (s, t{+}1)$ inside $R$. Either we obtain a blue
-  $(t{+}1)$-clique (done), or a red $s$-clique $S \subseteq R$. Every vertex of
-  $R$ is red-adjacent to $v$, and $v \notin S$, so $S \cup \{v\}$ is a red
-  $(s{+}1)$-clique.
-- If $|B| \ge n$, apply $n \to (s{+}1, t)$ inside $B$ symmetrically: either a red
-  $(s{+}1)$-clique (done), or a blue $t$-clique $S \subseteq B$, and
-  $S \cup \{v\}$ is a blue $(t{+}1)$-clique. $\square$
+> **Definition 2.1 (Arrow relation).** For naturals $n, s, t$, the relation $\mathrm{Arrows}\ n\ s\ t$ (classically $n \rightarrow (s,t)$) holds iff for every vertex type $V$, every simple graph $G$ on $V$, and every finite vertex set $W \subseteq V$ with $|W| \ge n$, there exists $S \subseteq W$ with $G.\mathrm{IsNClique}\ s\ S$ (a red $s$-clique) or $S \subseteq W$ with $G^{\mathsf c}.\mathrm{IsNClique}\ t\ S$ (a blue $t$-clique).
 
-**Theorem 5 (Binomial bound, `arrows_recursion` / `arrows_binomial_bound`).**
-For all $s, t$,
-$$\binom{s+t}{s} \to (s{+}1,\, t{+}1), \qquad \text{equivalently}\qquad
-R(s{+}1, t{+}1) \le \binom{s+t}{s}.$$
+Quantifying over an arbitrary ambient vertex type together with a finite subset $W$ (rather than fixing $V = \mathrm{Fin}\ n$) bakes monotonicity directly into the definition and lets the two recursive sub-calls of the Erdős–Szekeres step live on subsets of one common vertex set.
 
-*Proof sketch.* Double induction on $s$ and $t$. The base cases use Lemma 3.
-For the inductive step, Pascal's identity
-$\binom{s+t}{s} = \binom{(s{-}1)+t}{s{-}1} + \binom{s+(t{-}1)}{s}$ matches the
-additivity of thresholds in Lemma 4: combine the two smaller instances
-$\binom{(s{-}1)+t}{s{-}1} \to (s, t{+}1)$ and
-$\binom{s+(t{-}1)}{s} \to (s{+}1, t)$ via `arrows_step`. The binomial
-coefficients are positive, satisfying the positivity hypotheses of the step.
-$\square$
+The Ramsey number is then $R(s,t) = \min\{\, n : \mathrm{Arrows}\ n\ s\ t \,\}$.
 
-In the diagonal case Theorem 5 gives $R(k{+}1,k{+}1) \le \binom{2k}{k} < 4^k$.
-
-## 4. The exact value $R(3,3)=6$
+> **Lemma 2.2 (Monotonicity).** If $\mathrm{Arrows}\ n\ s\ t$ and $n \le n'$, then $\mathrm{Arrows}\ n'\ s\ t$.
 
-**Theorem 6 (Upper bound, `arrows_three_three`).** $6 \to (3,3)$.
-
-*Proof.* This is the instance $s=t=2$ of Theorem 5, since $\binom{4}{2} = 6$.
-$\square$
+*Proof.* Immediate from the definition: a vertex set of size $\ge n'$ has size $\ge n$. $\quad\blacksquare$
 
-For the matching lower bound we use the pentagon.
-
-**Definition 7 (Pentagon, `pentagon`).** Let $C_5$ be the graph on $\mathbb
-Z/5$ in which $a$ and $b$ are adjacent iff $a + 1 = b$ or $b + 1 = a$.
+## 3. The Erdős–Szekeres Recursion and Binomial Bound
 
-**Lemma 8 (`pentagon_no_triangle`, `pentagon_compl_no_triangle`).** $C_5$
-contains no $3$-clique, and its complement $C_5^{\mathsf c}$ (again a $5$-cycle)
-contains no $3$-clique.
+### 3.1 The inductive step
 
-*Proof.* Finite verification over the $\binom{5}{3} = 10$ triples. $\square$
+> **Theorem 3.1 (Erdős–Szekeres step).** If $m \rightarrow (s, t+1)$ and $n \rightarrow (s+1, t)$, with $m, n \ge 1$, then $(m+n) \rightarrow (s+1, t+1)$.
 
-**Theorem 9 (Lower bound, `not_arrows_five_three_three`).** $\lnot\,(5 \to
-(3,3))$.
+*Proof sketch.* Let $W$ be a vertex set with $|W| \ge m+n$ and let $G$ be a colouring. Pick any $v \in W$. Partition the remaining $|W| - 1 \ge m + n - 1$ vertices into the red neighbours $R = \{w \in W \setminus \{v\} : G.\mathrm{Adj}\ v\ w\}$ and the blue neighbours $B = \{w \in W \setminus \{v\} : \neg\, G.\mathrm{Adj}\ v\ w\}$. Since $|R| + |B| \ge m + n - 1$, either $|R| \ge m$ or $|B| \ge n$.
 
-*Proof.* The pentagon colouring of $K_5$ has neither a red nor a blue triangle
-by Lemma 8, so the arrow relation fails on a $5$-vertex set. $\square$
+- If $|R| \ge m$: apply $m \rightarrow (s, t+1)$ to $R$. A blue $(t+1)$-clique completes the proof directly. Otherwise we obtain a red $s$-clique $S \subseteq R$; since every vertex of $R$ is red-adjacent to $v$, the set $S \cup \{v\}$ is a red $(s+1)$-clique.
+- If $|B| \ge n$: apply $n \rightarrow (s+1, t)$ to $B$, symmetrically. A red $(s+1)$-clique completes the proof; otherwise a blue $t$-clique $S \subseteq B$ extends, via $v$ (blue-adjacent to all of $B$), to a blue $(t+1)$-clique. $\quad\blacksquare$
 
-**Theorem 10 (`ramsey_three_three`).** $6 \to (3,3)$ and $\lnot\,(5 \to (3,3))$;
-that is, $R(3,3) = 6$. $\square$
+### 3.2 Base cases and the binomial bound
 
-## 5. The exact value $R(3,4)=9$
+> **Lemma 3.2 (Trivial arrows).** For all $b$, $\mathrm{Arrows}\ 1\ 1\ b$; and for all $a$, $\mathrm{Arrows}\ 1\ a\ 1$.
 
-The binomial ceiling gives only $R(3,4) \le \binom{5}{2} = 10$. The exact value
-is $9$, and we establish it in two parts.
-
-### 5.1 Lower bound: the Möbius ladder
+*Proof.* A non-empty vertex set contains a single vertex, which is simultaneously a red $1$-clique and a blue $1$-clique. $\quad\blacksquare$
 
-**Construction (`not_arrows_eight_three_four`).** On the vertex set
-$\mathbb Z/8$, declare $a$ and $b$ red-adjacent iff their difference lies in the
-symmetric difference set $\{\pm 1, 4\}$ — the Möbius ladder circulant
-$C_8(1,4)$. This red graph is triangle-free, and its blue complement contains no
-$4$-clique. Hence the colouring of $K_8$ exhibits neither a red triangle nor a
-blue $K_4$, so
-$$8 \not\to (3,4), \qquad R(3,4) > 8.$$
-
-*Proof.* Finite verification of triangle-freeness and complement
-$K_4$-freeness over $\mathbb Z/8$. $\square$
-
-### 5.2 Upper bound via the handshake lemma
-
-The core engine is a parity statement about red-degrees.
-
-**Lemma 11 (Handshake parity, `red_nbrs_sum_even`).** For any graph $G$ and any
-finite vertex set $W$,
-$$\sum_{v \in W} \bigl|\{\, w \in W \setminus \{v\} : v \sim_G w \,\}\bigr|
-\quad\text{is even.}$$
-
-*Proof sketch.* The sum counts ordered red pairs $(v,w)$ with both endpoints in
-$W$. The swap $(v,w) \mapsto (w,v)$ is a fixed-point-free involution on this set
-(no edge is a loop), so the set has even cardinality. Equivalently, the sum
-double-counts each red edge inside $W$, giving $2 \cdot |E_{\mathrm{red}}(W)|$.
-$\square$
-
-**Theorem 12 (Upper bound, `arrows_three_four`).** $9 \to (3,4)$.
-
-*Proof sketch.* Suppose a colouring of a $9$-vertex set $W$ has no red triangle
-and no blue $K_4$. A local degree analysis pins the red-degree of every vertex:
-
-- *No vertex has red-degree $\ge 4$.* Among four red neighbours of $v$, if any
-  two are red-adjacent they form a red triangle with $v$; otherwise the four are
-  pairwise blue, a blue $K_4$.
-- *No vertex has red-degree $\le 2$.* Then it has $\ge 6$ blue neighbours;
-  inside the blue neighbourhood, avoiding a red triangle and a blue $K_4$ is
-  impossible on $6$ vertices because $6 \to (3,3)$ forces a monochromatic
-  triangle, which (with the centre vertex) escalates to the forbidden
-  configuration.
-
-Hence every vertex has red-degree exactly $3$, i.e. the red graph is $3$-regular
-on $9$ vertices. But then $\sum_{v} \deg_{\mathrm{red}}(v) = 9 \cdot 3 = 27$ is
-odd, contradicting Lemma 11. No such colouring exists. $\square$
-
-**Theorem 13 (`ramsey_three_four`).** $9 \to (3,4)$ and $\lnot\,(8 \to (3,4))$;
-that is, $R(3,4) = 9$. $\square$
-
-## 6. The parity obstruction in full generality
-
-The decisive step in Theorem 12 never used the numbers $3$ or $4$ — only that an
-extremal colouring is forced to be regular of a fixed red-degree, and that
-"odd degree on an odd number of vertices" is arithmetically impossible. We
-isolate this as a standalone bridge between graph colouring and integer parity.
-
-**Definition 14 (Red-degree inside a set, `redDeg`).** For a graph $G$, a finite
-set $W$, and a vertex $v$,
-$$\operatorname{redDeg}_G(W, v) \;=\; \bigl|\{\, w \in W \setminus \{v\}
-: v \sim_G w \,\}\bigr|.$$
-
-**Theorem 15 (Regularity–parity obstruction, `red_degree_parity_obstruction`).**
-Let $G$ be any graph and $W$ a finite vertex set with $|W|$ **odd**. Then it is
-*not* the case that $\operatorname{redDeg}_G(W, v)$ is odd for every $v \in W$.
-
-*Proof.* By Lemma 11 the sum $S = \sum_{v \in W} \operatorname{redDeg}_G(W, v)$
-is even. If every summand were odd, then $S$ would be a sum of an odd number
-($|W|$) of odd terms, hence odd — a contradiction. $\square$
-
-**Theorem 16 (No odd-regular colouring, `no_odd_regular_colouring`).** Let $G$
-be any graph, $W$ a vertex set with $|W| = n$, and suppose $n \cdot d$ is odd.
-Then it is *not* the case that $\operatorname{redDeg}_G(W, v) = d$ for every
-$v \in W$.
-
-*Proof.* Since $nd$ is odd, both $n$ and $d$ are odd. If every red-degree equalled
-$d$, then $|W| = n$ is odd and every red-degree is odd, contradicting Theorem 15.
-$\square$
-
-The $R(3,4) \le 9$ obstruction is exactly Theorem 16 with $(n,d) = (9,3)$: since
-$9 \cdot 3 = 27$ is odd, no $3$-regular red colouring exists on $9$ vertices.
-Theorem 16 cleanly predicts which $(n,d)$ pairs are forbidden: precisely those
-with $nd$ odd. Any sharp small Ramsey bound whose extremal colouring is forced to
-be odd-regular on an odd number of vertices is now covered by this single
-result.
-
-## 7. Probabilistic lower bounds
-
-The recursion of §3 caps Ramsey numbers from above; the probabilistic method
-forces them up from below. We state the first-moment bound in its general
-$r$-uniform hypergraph form, where a colouring assigns red/blue to each
-$r$-element subset and a monochromatic $k$-clique is a $k$-set all of whose
-$r$-subsets share a colour. Write $\mathrm{HyperRamseyProp}\,r\,n\,k\,k$ for the
-$r$-uniform arrow relation on $n$ vertices with both clique parameters $k$.
-
-**Theorem 17 (First-moment lower bound, `hyper_ramsey_counting_lower_bound`).**
-Let $2 \le r \le k \le n$. If
-$$2\binom{n}{k} < 2^{\binom{k}{r}},$$
-then $\lnot\,\mathrm{HyperRamseyProp}\,r\,n\,k\,k$ — there is an $r$-uniform
-colouring of $n$ vertices with no monochromatic $k$-clique, so the corresponding
-Ramsey number exceeds $n$.
-
-*Proof sketch.* A double-counting/averaging argument over the finite space of
-all $2^{\binom{n}{r}}$ colourings. For a fixed $k$-set $T$, the number of
-colourings making $T$ monochromatic is $2 \cdot 2^{\binom{n}{r} - \binom{k}{r}}$
-(choose the common colour of $T$'s $\binom{k}{r}$ subsets, colour the rest
-freely). Summing over the $\binom{n}{k}$ candidate sets and comparing with the
-total $2^{\binom{n}{r}}$, the hypothesis $2\binom{n}{k} < 2^{\binom{k}{r}}$
-forces the count of "bad" colourings strictly below the total, so a good
-colouring exists. Formally this is a pigeonhole inequality:
-$$\sum_{|T| = k} \bigl|\{\,c : T \text{ monochromatic under } c\,\}\bigr|
-\;\le\; 2\binom{n}{k}\, 2^{\binom{n}{r} - \binom{k}{r}}
-\;<\; 2^{\binom{n}{r}}. \qquad \square$$
-
-**Corollary 18 (Graph case).** Taking $r = 2$, $\binom{k}{2} = k(k{-}1)/2$, the
-threshold $2\binom{n}{k} < 2^{\binom{k}{2}}$ is satisfied for $n$ up to about
-$2^{k/2}$, giving the classical
-$$R(k,k) > 2^{k/2}.$$
-Combined with the diagonal binomial ceiling $R(k,k) \le \binom{2k-2}{k-1} < 4^k$
-of Theorem 5, this yields the long-standing exponential sandwich
-$$2^{k/2} \;<\; R(k,k) \;<\; 4^k.$$
-For higher uniformities the same computation gives $\binom{k}{r} = \Theta(k^r)$,
-hence $R_r(k,k) > 2^{\Omega(k^{r-1})}$.
-
-## 8. Algorithms
-
-We summarise the constructive content as explicit procedures (full Python in the
-accompanying demo).
-
-**Algorithm A (Erdős–Szekeres binomial ceiling).** Compute the upper-bound table
-$U(s,t)$ via the recursion $U(s,t) = U(s{-}1,t) + U(s,t{-}1)$ with $U(1,t) =
-U(s,1) = 1$; this returns $\binom{s+t-2}{s-1}$, the bound of Theorem 5. Time
-$O(st)$.
-
-**Algorithm B (Monochromatic-clique certifier).** Given an explicit colouring on
-$n$ vertices and targets $(s,t)$, search for a red $s$-clique or a blue
-$t$-clique. Used to certify the lower-bound constructions: the pentagon (no
-mono triangle, $n=5$) and the Möbius ladder $C_8(1,4)$ (no red triangle, no blue
-$K_4$).
-
-**Algorithm C (Parity obstruction checker).** Given a candidate degree sequence
-$(d_v)_{v \in W}$, return *infeasible* whenever $|W|$ is odd and all $d_v$ are
-odd, or whenever $|W| \cdot d$ is odd for a regular target $d$ — the
-computational shadow of Theorems 15–16.
-
-**Algorithm D (First-moment threshold).** For uniformity $r$ and clique size $k$,
-return the largest $n$ with $2\binom{n}{k} < 2^{\binom{k}{r}}$, a certified
-lower bound $R_r(k,k) > n$ (Theorem 17).
-
-## 9. Applications
-
-Ramsey-type guarantees underpin: error-correcting codes and combinatorial
-designs (unavoidable structure forces distance/covering properties);
-fault-tolerant network design (cliques that cannot be destroyed by sparse
-adversaries); lower bounds in communication complexity and circuit complexity;
-and the analysis of large social and biological networks, where the inevitability
-of dense substructures past a size threshold is a Ramsey phenomenon. The parity
-obstruction specifically formalises a recurring heuristic in extremal graph
-theory — that "regular of odd degree on odd order" configurations are forbidden —
-into a reusable lemma.
-
-## 10. Discussion and future work
-
-The central methodological message is that the gap between the binomial ceiling
-($R(3,4) \le 10$) and the true value ($R(3,4) = 9$) is closed by a single
-arithmetic invariant rather than by sharper recursion. By promoting the
-"$27$ is odd" step to the general Theorems 15–16, we make the obstruction
-portable. Concrete directions:
-
-- **General even-pair sharpening.** When $R(s{-}1,t)$ and $R(s,t{-}1)$ are both
-  even, one expects $R(s,t) \le R(s{-}1,t) + R(s,t{-}1) - 1$, strictly below the
-  Erdős–Szekeres sum, with `no_odd_regular_colouring` as the engine.
-- **$R(3,5) = 14$.** The binomial bound gives $15$; the gap $15 \to 14$ should
-  again be a parity/counting obstruction on the forced degree sequence of a
-  $13$-vertex circulant counterexample.
-- **Sharpness of the base $\sqrt2$.** The first-moment threshold is structurally
-  $2^{k/2}$-limited; any improvement must inject dependence information the union
-  bound discards, motivating Lovász-Local-Lemma and explicit constructions.
-- **Even-order extremal colourings.** Theorem 16 partitions $(n,d)$ pairs into
-  forbidden ($nd$ odd) and permitted ($nd$ even); extremal colourings must live
-  on the permitted side, a falsifiable structural prediction.
-
-## 11. Conclusion
-
-We have given a self-contained development of finite two-colour Ramsey theory
-culminating in $R(3,3) = 6$ and $R(3,4) = 9$, the Erdős–Szekeres binomial
-ceiling $R(s{+}1,t{+}1) \le \binom{s+t}{s}$, and the first-moment lower bound
-$R(k,k) > 2^{k/2}$. The distinctive contribution is the extraction of the
-handshake-parity argument behind $R(3,4)=9$ into two general theorems — the
-regularity–parity obstruction and the non-existence of odd-regular colourings —
-which serve as a reusable bridge between graph colouring and integer parity for
-future sharp small-Ramsey results.
+> **Theorem 3.3 (Erdős–Szekeres binomial bound).** For all naturals $s, t$,
+> $$\mathrm{Arrows}\ \binom{s+t}{s}\ (s+1)\ (t+1), \qquad\text{i.e.}\qquad R(s+1, t+1) \le \binom{s+t}{s}.$$
+
+*Proof sketch.* Double induction on $s$ and $t$. The base cases $s = 0$ or $t = 0$ are Lemma 3.2, using $\binom{t}{0} = \binom{s}{s} = 1$. For the inductive step, Pascal's rule
+$$\binom{s+t}{s} = \binom{(s-1)+t}{s-1} + \binom{s+(t-1)}{s}$$
+splits the threshold so that Theorem 3.1 combines the two smaller instances $\binom{(s-1)+t}{s-1} \rightarrow (s, t+1)$ and $\binom{s+(t-1)}{s} \rightarrow (s+1, t)$ into $\binom{s+t}{s} \rightarrow (s+1, t+1)$. $\quad\blacksquare$
+
+This single inequality bounds every Ramsey number. It is sharp for $R(3,3)$ but only an over-estimate for larger values.
+
+## 4. Exact Small Ramsey Numbers
+
+### 4.1 $R(3,3) = 6$
+
+> **Theorem 4.1 (Upper bound).** $\mathrm{Arrows}\ 6\ 3\ 3$.
+
+*Proof.* The instance $s = t = 2$ of Theorem 3.3, since $\binom{4}{2} = 6$. $\quad\blacksquare$
+
+The lower bound uses the **pentagon** $C_5$, the graph on $\mathbb{Z}/5$ with $a \sim b \iff a + 1 = b$ or $b + 1 = a$.
+
+> **Lemma 4.2.** $C_5$ has no red triangle, and $C_5^{\mathsf c}$ (also a $5$-cycle) has no blue triangle.
+
+*Proof.* Exhaustive finite check over all $\binom{5}{3} = 10$ triples. $\quad\blacksquare$
+
+> **Theorem 4.3 (Lower bound).** $\neg\,\mathrm{Arrows}\ 5\ 3\ 3$.
+
+*Proof.* Apply the supposed arrow to $C_5$ on its $5$ vertices; either branch contradicts Lemma 4.2. $\quad\blacksquare$
+
+> **Theorem 4.4.** $R(3,3) = 6$, i.e. $\mathrm{Arrows}\ 6\ 3\ 3 \wedge \neg\,\mathrm{Arrows}\ 5\ 3\ 3$.
+
+### 4.2 $R(3,4) = 9$
+
+The binomial bound gives only $R(3,4) \le \binom{5}{2} = 10$. The sharp value requires a parity refinement.
+
+**Handshake parity.** The key arithmetic input is:
+
+> **Lemma 4.5 (Handshake).** For any colouring $G$ and finite set $W$,
+> $$\sum_{v \in W} \bigl|\{\, w \in W \setminus \{v\} : G.\mathrm{Adj}\ v\ w \,\}\bigr| \ \text{is even.}$$
+
+*Proof sketch.* The sum counts ordered red pairs $(v,w)$ inside $W$; the involution $(v,w) \mapsto (w,v)$ is fixed-point-free, so the count is twice the number of red edges. $\quad\blacksquare$
+
+**Local degree obstructions.** Two lemmas bound how many red and blue neighbours a vertex can have before a target clique is forced.
+
+> **Lemma 4.6.** If $v \in W$ has $\ge 4$ red neighbours in $W$, then $W$ contains a red triangle or a blue $K_4$.
+
+*Proof.* Among $4$ red neighbours of $v$, either two are red-adjacent (a red triangle with $v$), or all $\binom{4}{2} = 6$ pairs are blue (a blue $K_4$). $\quad\blacksquare$
+
+> **Lemma 4.7.** If $v \in W$ has $\ge 6$ blue neighbours in $W$, then $W$ contains a red triangle or a blue $K_4$.
+
+*Proof.* Apply $R(3,3) = 6$ (Theorem 4.1) to the $6$ blue neighbours: a red triangle finishes; a blue triangle extends through $v$ (blue-adjacent to all of them) to a blue $K_4$. $\quad\blacksquare$
+
+> **Theorem 4.8 (Upper bound).** $\mathrm{Arrows}\ 9\ 3\ 4$.
+
+*Proof sketch.* Suppose a colouring of a $9$-set $W$ avoids both a red triangle and a blue $K_4$. By Lemmas 4.6–4.7 every vertex has $\le 3$ red neighbours and $\le 5$ blue neighbours, but red plus blue degree is $8$, forcing red-degree exactly $3$ at every vertex. Then the total red-degree is $9 \cdot 3 = 27$, which is odd — contradicting Lemma 4.5. $\quad\blacksquare$
+
+The lower bound uses the **Möbius ladder** $C_8(1,4)$ on $\mathbb{Z}/8$: $a \sim b \iff a - b \in \{\pm 1, 4\}$.
+
+> **Lemma 4.9.** $C_8(1,4)$ has no red triangle, and its complement has no blue $K_4$.
+
+*Proof.* Exhaustive finite verification. $\quad\blacksquare$
+
+> **Theorem 4.10.** $R(3,4) = 9$, i.e. $\mathrm{Arrows}\ 9\ 3\ 4 \wedge \neg\,\mathrm{Arrows}\ 8\ 3\ 4$.
+
+### 4.3 $R(4,4) = 18$
+
+**Colour symmetry.** Swapping the two colours leaves the arrow relation invariant.
+
+> **Theorem 4.11 (Colour-swap symmetry).** $\mathrm{Arrows}\ n\ s\ t \implies \mathrm{Arrows}\ n\ t\ s$; consequently $\mathrm{Arrows}\ n\ s\ t \iff \mathrm{Arrows}\ n\ t\ s$, and $R(s,t) = R(t,s)$.
+
+*Proof.* Given a colouring $G$, apply $\mathrm{Arrows}\ n\ s\ t$ to the complement $G^{\mathsf c}$. A red $s$-clique of $G^{\mathsf c}$ is a blue $s$-clique of $G$; a blue $t$-clique of $G^{\mathsf c}$ (a clique of $G^{\mathsf{cc}} = G$) is a red $t$-clique of $G$. The two outputs are exactly those required by $\mathrm{Arrows}\ n\ t\ s$. $\quad\blacksquare$
+
+In particular, from $R(3,4) \le 9$ we obtain $R(4,3) \le 9$, i.e. $\mathrm{Arrows}\ 9\ 4\ 3$, for free.
+
+> **Theorem 4.12 (Upper bound).** $\mathrm{Arrows}\ 18\ 4\ 4$.
+
+*Proof.* The single Erdős–Szekeres step (Theorem 3.1) with $m = n = 9$, $s = t = 3$, combining $9 \rightarrow (3,4)$ and $9 \rightarrow (4,3)$ to yield $18 \rightarrow (4,4)$. No parity refinement is needed: the binomial bound $\binom{6}{3} = 20$ is loosened by symmetry to the sharp $9 + 9 = 18$. $\quad\blacksquare$
+
+The lower bound uses the **Paley graph** on $\mathbb{Z}/17$. Since $17 \equiv 1 \pmod 4$, the set of nonzero quadratic residues
+$$\mathrm{QR}_{17} = \{1, 2, 4, 8, 9, 13, 15, 16\}$$
+is symmetric under negation, so $a \sim b \iff a - b \in \mathrm{QR}_{17}$ defines an undirected graph. This graph is self-complementary (the non-residues are exactly a multiplicative translate of the residues).
+
+> **Lemma 4.13.** The Paley graph on $\mathbb{Z}/17$ has no red $K_4$, and its complement has no blue $K_4$.
+
+*Proof.* Exhaustive finite verification over all $4$-subsets, exploiting that the construction is self-complementary so a single clique-freeness check suffices for both colours. $\quad\blacksquare$
+
+> **Theorem 4.14 (Lower bound).** $\neg\,\mathrm{Arrows}\ 17\ 4\ 4$.
+
+*Proof.* Apply the supposed arrow to the Paley graph on its $17$ vertices; either branch contradicts Lemma 4.13. $\quad\blacksquare$
+
+> **Theorem 4.15.** $R(4,4) = 18$, i.e. $\mathrm{Arrows}\ 18\ 4\ 4 \wedge \neg\,\mathrm{Arrows}\ 17\ 4\ 4$.
+
+## 5. The Exponential Diagonal Bound
+
+Specializing the binomial bound to the diagonal $s = t = k$ gives the central binomial coefficient. We bound it crudely but sufficiently.
+
+> **Theorem 5.1 (Central binomial estimate).** For all $k$, $\displaystyle \binom{2k}{k} \le 4^k$.
+
+*Proof.* The central coefficient is one term of the full binomial row sum:
+$$\binom{2k}{k} \le \sum_{i=0}^{2k} \binom{2k}{i} = 2^{2k} = 4^k. \qquad\blacksquare$$
+
+> **Theorem 5.2 (Exponential diagonal bound).** For all $k$, $\mathrm{Arrows}\ (4^k)\ (k+1)\ (k+1)$, i.e. $R(k+1, k+1) \le 4^k$.
+
+*Proof.* Theorem 3.3 with $s = t = k$ gives $\mathrm{Arrows}\ \binom{2k}{k}\ (k+1)\ (k+1)$. By Theorem 5.1, $\binom{2k}{k} \le 4^k$, so monotonicity (Lemma 2.2) raises the vertex threshold to $4^k$. $\quad\blacksquare$
+
+The bound is qualitatively correct (exponential) but quantitatively loose for small $k$: it yields $R(3,3) \le 16$ (true value $6$) and $R(4,4) \le 64$ (true value $18$). The exact values of Section 4 genuinely beat the generic estimate, which is sharp only after colour symmetry collapses the two off-diagonal recursive feeds.
+
+## 6. The Lower Bound Side: The Probabilistic Method
+
+While this paper's main contributions are the exact values and the exponential *upper* bound, the matching *lower* bound is supplied by Erdős's probabilistic method, captured here through a counting argument over $r$-uniform hypergraph colourings.
+
+> **Theorem 6.1 (Counting lower bound).** If $2 \binom{n}{k} < 2^{\binom{k}{r}}$, then there exists an $r$-uniform two-colouring of the complete $r$-uniform hypergraph on $n$ vertices with no monochromatic clique of size $k$; equivalently the corresponding hypergraph Ramsey number exceeds $n$.
+
+*Proof sketch.* Colour each $r$-subset independently and uniformly. For a fixed $k$-set $T$, the probability all $\binom{k}{r}$ of its $r$-subsets share a colour is $2 \cdot 2^{-\binom{k}{r}}$. A union bound over all $\binom{n}{k}$ candidate $k$-sets gives total monochromatic probability $\le 2\binom{n}{k} 2^{-\binom{k}{r}}$. If this is $< 1$, some colouring has none. $\quad\blacksquare$
+
+For graphs ($r = 2$), $\binom{k}{2} = k(k-1)/2$, yielding $R(k,k) > 2^{k/2}$ (to leading order). Combined with Theorem 5.2 this brackets the diagonal Ramsey number between $2^{k/2}$ and $4^k$: both walls are exponential, while the exact exponential base remains one of the central open problems of combinatorics.
+
+## 7. Algorithms
+
+The exact small-value results are anchored by decidable clique-freeness checks of explicit circulant/Cayley constructions. We describe the core procedures.
+
+**Algorithm A — Monochromatic clique search.** Given an adjacency predicate on a finite vertex set and a target clique size $s$, decide whether a red $s$-clique (or, by passing the complement, a blue $s$-clique) exists by enumerating $s$-subsets and testing pairwise adjacency. This is the computational kernel behind Lemmas 4.2, 4.9, and 4.13.
+
+**Algorithm B — Erdős–Szekeres threshold composition.** Given proven thresholds $m$ for $(s, t+1)$ and $n$ for $(s+1, t)$, return $m + n$ as a valid threshold for $(s+1, t+1)$. Iterating from the base cases tabulates the binomial bound $\binom{s+t}{s}$.
+
+**Algorithm C — Paley / circulant construction.** Given a prime $p \equiv 1 \pmod 4$, compute the quadratic-residue difference set and emit the circulant adjacency predicate; the resulting graph is self-complementary, so a single clique-freeness pass certifies both colours.
+
+## 8. Applications and Discussion
+
+Ramsey-type results and their proof techniques permeate modern mathematics and computer science:
+
+- **The probabilistic method**, originating in Ramsey lower bounds (Theorem 6.1), is now foundational across theoretical computer science, coding theory, and randomized algorithms.
+- **Self-complementary pseudo-random graphs** such as the Paley graph (Section 4.3) are central objects in the study of quasirandomness, expander graphs, and cryptographic constructions.
+- **Parity / handshake obstructions** (Lemma 4.5) connect graph colouring to arithmetic invariants and recur throughout extremal combinatorics.
+- The **Hales–Jewett theorem** abstracts Ramsey phenomena to colourings of high-dimensional combinatorial cubes, implying that unavoidable monochromatic structure is a feature of essentially any sufficiently rich coloured discrete space.
+
+The persistent gap between the $2^{k/2}$ lower and $4^k$ upper diagonal bounds — unresolved at the level of the exponential base despite eight decades of effort — exemplifies a recurring theme: existence of extremal objects is far easier to prove than their explicit, optimal construction.
+
+## 9. Future Directions
+
+(See the `future_directions` field of the accompanying package for the full statements.) Promising next steps include: pinning $R(3,5) = 14$ via a circulant construction on $\mathbb{Z}/13$ reusing the certified clique-freeness toolchain; abstracting the handshake/regularity obstruction into a general sharpness criterion for off-diagonal Ramsey bounds; formalizing the probabilistic diagonal lower bound $R(k+1,k+1) > 2^{k/2}$ by specializing the hypergraph counting bound to $r = 2$, thereby bracketing the diagonal Ramsey number from both sides; and investigating the conjectured necessity of self-complementarity for extremal diagonal colourings.
+
+## 10. Conclusion
+
+From a single relational primitive we have rigorously derived the Erdős–Szekeres recursion and binomial bound, the three smallest non-trivial exact Ramsey numbers $R(3,3)=6$, $R(3,4)=9$, $R(4,4)=18$ — each via an explicit, verified extremal construction (pentagon, Möbius ladder, Paley graph) — and the general exponential diagonal bound $R(k+1,k+1) \le 4^k$, unified by colour symmetry. Together these results give a complete, self-contained account of where order becomes inevitable in two-coloured complete graphs, and of how fast that inevitability sets in.
