@@ -5826,6 +5826,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for any finite group G of odd order, the odd cycle index \u03c4(G) equals 2 precisely when the group order is not divisible by 3. Equivalently, \u03c4(G) = 2 \u21d4 3 \u2224 |G|. This extends the known result that cyclic groups of order coprime to 3 have \u03c4 = 2 and suggests that the presence of a factor 3 is the sole obstruction to achieving the minimal odd cycle index.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2612",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27208v1",
+    "status": "available",
+    "timestamp": "2026-06-26T15:13:37.874070+00:00",
+    "title": "\u03c4(G) = 2 iff 3 \u2224 |G|"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let l be a prime and \u03c1 : G_Q \u2192 GL_2(Z_l) a continuous Galois representation with open image. Conjecture: the fixed field Q^{ker(\u03c1)} has the Bogomolov property, i.e. there exists c > 0 such that h(\u03b1) \u2265 c for all \u03b1 \u2208 Q^{ker(\u03c1)}^\u00d7 not a root of unity.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2612",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27203v1",
+    "status": "available",
+    "timestamp": "2026-06-26T15:13:56.271553+00:00",
+    "title": "Bogomolov property for fixed fields of open p-adic Galois representations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

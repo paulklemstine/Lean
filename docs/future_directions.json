@@ -48978,6 +48978,98 @@
       "title": "Exact value of the 3-color shift number"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "On $R$-sequenceability of odd ordered groups"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that for any finite group G of odd order, the odd cycle index τ(G) equals 2 precisely when the group order is not divisible by 3. Equivalently, τ(G) = 2 ⇔ 3 ∤ |G|. This extends the known result that cyclic groups of order coprime to 3 have τ = 2 and suggests that the presence of a factor 3 is the sole obstruction to achieving the minimal odd cycle index.",
+      "domain_bridges": [
+        "Lean 4 formalization of groups",
+        "orthomorphisms",
+        "complete mappings",
+        "R** sequenceability",
+        "odd cycle index"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2612",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "-- Conjecture: τ(G) = 2 ⇔ 3 ∤ |G|\\n\\ndef odd_cycle_index (G : Type*) [fintype G] [group G] : Ν := sorry\\n\\ntheorem tau_eq_two_iff_not_three_dvd {G : Type*} [fintype G] [group G] [odd_order G] :\\n  odd_cycle_index G = 2 ⇔ ∤ (3 ∤ fintype.card G) :=\\nby sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "We propose an inductive proof using composition series and the Quotient-Normal Gadget theorem. By induction on |G|, one shows that τ(G) ≤ max{τ(N), τ(G/N)}. Assuming the conjecture for proper quotients, we deduce τ(G) = 2 whenever 3 ∤ |G|, because all composition factors are cyclic of order p ≠ 3, for which τ(C_p) = 2. Conversely, if 3 | |G|, we argue that any construction of a full cycle using orthomorphisms and an involution would force a counting contradiction (e.g., parity of permutations or a Mod‑3 obstruction), proving τ(G) > 2. The key step is to show that τ(C_3) = 1 (or ≥3) and that this obstruction lifts via the inductive bound.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27208v1",
+      "source_path": "http://arxiv.org/abs/2606.27208v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T15:13:37.874070+00:00",
+      "title": "τ(G) = 2 iff 3 ∤ |G|"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Let l be a prime and ρ : G_Q → GL_2(Z_l) a continuous Galois representation with open image. Conjecture: the fixed field Q^{ker(ρ)} has the Bogomolov property, i.e. there exists c > 0 such that h(α) ≥ c for all α ∈ Q^{ker(ρ)}^× not a root of unity.",
+      "domain_bridges": [
+        "Galois representations",
+        "Weil heights",
+        "Bogomolov property"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2612",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem bogomolov_property_open_galois_representation {l : ℕ} [Fact l.Prime] (ρ : ContinuousHom (GaloisGroup ℚ) (GL 2 (ZMod l))) (hopen : OpenImage ρ) : BogomolovProperty (FixedField (kernel ρ)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the open image hypothesis to control decomposition and inertia groups at all places, yielding uniformly bounded local degrees in the tower Q^{ker(ρ)}. Apply the Bombieri–Zannier criterion: a Galois extension with uniformly bounded local degrees at every finite place has property B. To obtain uniform boundedness, combine the Checcoli characterization (finite exponent of Galois group) with the fact that an open subgroup of GL_2(Z_l) has finite abelian quotients of bounded exponent. Then lift the height lower bound from finite subextensions using Northcott's theorem and the functoriality of the Weil height under restriction.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.27203v1",
+      "source_path": "http://arxiv.org/abs/2606.27203v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T15:13:56.271553+00:00",
+      "title": "Bogomolov property for fixed fields of open p-adic Galois representations"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
