@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0d8fceb6",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Winning Probability in the Generalized q-Game\n\nThis cycle formalized the conjectured recurrence for `P(n,q)` (probability the Random player wins\nthe q-game), proved its base data",
-      "quality_score": 0.6901600000000001,
-      "sorry_count": 0,
-      "theorem_count": 104,
-      "timestamp": "2026-06-20T20:29:23",
-      "title": "Recurrence for the Winning Probability in the Generalized Game"
-    },
-    {
       "cycle_id": "0f4e6c03",
       "domain": "Novelty",
       "key_insight": "# Future Directions — HoTT Foundations (Cycle v16)\n\nDerived from this cycle's findings: a proof-relevant synthetic identity type\n`HoTTSynth.Path` (Type-valued, so Lean's definitional UIP does not coll",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-06-26T17:26:53",
       "title": "Natural Proofs Barrier: Formalization"
+    },
+    {
+      "cycle_id": "ab90b095",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Saturation numbers for joins of matchings\n\nDerived from this cycle's findings in `Saturation.lean` and `SaturationClique.lean`.\nThe cycle formalized the saturation API (`IsSatura",
+      "quality_score": 0.62096,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-26T17:56:47",
+      "title": "Join-saturation equality for matchings with isolated vertices"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70446
     }
   ],
-  "last_updated": "2026-06-26T17:26:53",
+  "last_updated": "2026-06-26T17:56:47",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "364ec557",
-        "quality": 0.57649,
-        "theorems": 13,
-        "title": "EML Differential Algebra: Closure Properties"
-      },
-      {
         "cycle_id": "4364c6f1",
         "quality": 0.546,
         "theorems": 37,
@@ -3141,6 +3135,12 @@
         "quality": 0.6837200000000001,
         "theorems": 20,
         "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+      },
+      {
+        "cycle_id": "ab90b095",
+        "quality": 0.62096,
+        "theorems": 9,
+        "title": "Join-saturation equality for matchings with isolated vertices"
       }
     ],
     "Bridges": [

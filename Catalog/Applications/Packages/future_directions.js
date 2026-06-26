@@ -120,7 +120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
   {
-    "consumed_by_exp_id": "580d1f18",
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -130,7 +130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -538,7 +538,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Categorical Foundations: Yoneda and Adjunctions"
   },
   {
-    "consumed_by_exp_id": "7496c7ce",
+    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
@@ -548,7 +548,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.880463+00:00",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -1817,20 +1817,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
   },
   {
-    "consumed_by_exp_id": "1a8e3469",
-    "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2314",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23398v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T07:09:34.216269+00:00",
-    "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
     "domains": [
@@ -2670,7 +2656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cusick's Sum-of-Digits Explicit Bound"
   },
   {
-    "consumed_by_exp_id": "0d192d1b",
+    "consumed_by_exp_id": "",
     "description": "For every n,k,r with n \u2265 2k, k \u2265 3, and r \u2265 2, let (\ud835\udcd5_i)_{i\u2208Fin r} be k-uniform families of subsets of Fin n. Assume each \ud835\udcd5_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i \u2260 j, every A \u2208 \ud835\udcd5_i and B \u2208 \ud835\udcd5_j have A \u2229 B \u2260 \u2205. Then the multilateral product is bounded by the Hilton--Milner value: \u220f_{i\u2208Fin r} |\ud835\udcd5_i| \u2264 h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
     "domains": [
       "Bridges"
@@ -2679,7 +2665,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:25:43.582970+00:00",
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
@@ -3320,7 +3306,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dual Slice-Projection Connectivity Conjecture for Polymatroids"
   },
   {
-    "consumed_by_exp_id": "53529d3f",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for all grid sizes m,n \u2265 3 the number of vertices of degree\u202f4 in the flip graph of the m\u00d7n Miura\u2011ori equals (m\u20111)(n\u20111).",
     "domains": [
       "Pythagorean"
@@ -3329,7 +3315,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22614v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T08:42:34.928992+00:00",
     "title": "Degree\u20114 vertices in the flip graph of the m\u00d7n Miura\u2011ori"
   },
@@ -6142,6 +6128,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Saturation numbers for joins of matchings\n\nDerived from this cycle's findings in `Saturation.lean` and `SaturationClique.lean`.\nThe cycle formalized the saturation API (`IsSaturated`, `satNum`, `exNum`), proved that a\nmaximum-edge `H`-free graph is `H`-saturated (`exists_isSaturated`), the classical bound\n`sat \u2264 ex` (`satNum_le_exNum`), the apex-join edge identity `e(K\u2081\u2228H)=|H|+e(H)`\n(`edgeCount_cone`), the family edge counts, and the Tur\u00e1n bridge\n`sat(n,K_{r+1}) \u2264 e(T(n,r))` (`satNum_clique_le_turan`). What remains open is the\n*lower bound* certifying tightness of the Cameron\u2013Puleo recurrence.\n\n---\n\n## C1 (grand challenge). The Cameron\u2013Puleo equality holds for all `t`.\nFor every `t \u2265 1`, `q \u2265 1`, and `n > 2t+q`,\n`sat(n, K\u2081 \u2228 (tK\u2082 \u222a qK\u2081)) = (n\u22121) + sat(n\u22121, tK\u2082 \u222a qK\u2081)`\n(`Saturation.CameronPuleoEquality t q`, stated as a `Prop`).\n\nThe key insight is that the upper bound is already structural (apex join, `edgeCount_cone`),\nso the entire problem reduces to a **matching lower bound**: every `K\u2081\u2228F`-saturated graph\nmust \"spend\" at least `n\u22121` edges on a near-dominating vertex plus an `F`-saturated trace on\nthe rest. Why now? The `t = 1, 2` proofs in the source paper expose a stabilizing local\nstructure around high-degree vertices; with `satNum`/`exists_isSaturated` now formal, the\ninduction on `t` (peeling one matching edge) has a rigorous scaffold to attach to.\n\n## C2. A clean \"join lowers to a smaller instance\" inequality is the crux.\nFor any graph `F` with an edge, `sat(n, K\u2081 \u2228 F) \u2265 (n\u22121) + sat(n\u22121, F)` whenever\n`n` exceeds `|V(F)|+1`.\n\nThe key insight is that a dominating-type vertex in a `K\u2081\u2228F`-saturated graph induces an\n`F`-saturated graph on its (non-)neighborhood, so the deficiency decomposes additively.\nWhy now? Combined with the already-proved upper bound `\u2264`, this single inequality would\n*immediately* yield C1; isolating it converts a hard equality into one extremal inequality,\nexactly the decomposition style that `satNum_le_exNum` already exemplifies.\n\n## C3. Saturation is monotone under apex joins.\n`sat(n+1, K\u2081 \u2228 H) \u2212 sat(n, H)` is eventually constant in `n` and equals the host size.\n\nThe key insight is that `edgeCount_cone` makes the apex contribution *exactly* linear, so\nany non-linearity in `sat` must come entirely from the `H`-trace. Why now? The eventual\nconstancy of `sat(\u00b7, F)` for edge-forests (K\u00e1szonyi\u2013Tuza) plus the formal apex identity make\nthis a finite-difference statement that is checkable once a brute-force evaluator (C5) exists.\n\n## C4. The `sat \u2264 ex` bridge is asymptotically tight only for cliques.\nFor `H = K_{r+1}`, `sat(n,H)/ex(n,H) \u2192 0`, whereas for `H = K\u2081 \u2228 (tK\u2082 \u222a qK\u2081)`,\n`sat(n,H)/ex(n,H) \u2192 0` as well but with a *different* leading constant determined by `t`.\n\nThe key insight is that `satNum_clique_le_turan` bounds saturation by the Tur\u00e1n number, and\nthe gap between the two encodes how \"rigid\" the forbidden graph is. Why now? Both sides are\nnow formal objects in the same API, so their ratio is a well-posed limit rather than an\ninformal comparison.\n\n## C5. A verified brute-force saturation evaluator exists and matches `satNum`.\nThere is a computable `satNumComp H n` with `satNumComp H n = satNum H n` for all `n`,\nenabling `decide`/`native_decide` checks of C1 for small `(t,q,n)`.\n\nThe key insight is that `satNum` is only `noncomputable` because of `Classical.sInf`; the\nunderlying family is a `Finset`, so a `Decidable` reformulation is possible and provably\nequal. Why now? The definitions in `Saturation.lean` already package the family as a\n`Finset.filter`, so the computable mirror is a short step and would turn C1's small cases\ninto machine-checked data points.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2620",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ab90b095",
+    "status": "available",
+    "timestamp": "2026-06-26T17:56:32.582752+00:00",
+    "title": "Derived from this cycle's findings in `Saturation.lean` and `SaturationClique.le"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6463,7 +6464,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "f247824f",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6473,7 +6474,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
