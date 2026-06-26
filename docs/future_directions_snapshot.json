@@ -159,7 +159,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "580d1f18",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domain_bridges": [],
     "domains": [
@@ -172,7 +172,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -717,7 +717,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7496c7ce",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
     "domain_bridges": [],
     "domains": [
@@ -730,7 +730,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.880463+00:00",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -4356,7 +4356,7 @@
       "Mathlib.Data.Finset.Basic",
       "Mathlib.Algebra.BigOperators.Fin"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d192d1b",
     "description": "For every n,k,r with n ≥ 2k, k ≥ 3, and r ≥ 2, let (𝓕_i)_{i∈Fin r} be k-uniform families of subsets of Fin n. Assume each 𝓕_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i ≠ j, every A ∈ 𝓕_i and B ∈ 𝓕_j have A ∩ B ≠ ∅. Then the multilateral product is bounded by the Hilton--Milner value: ∏_{i∈Fin r} |𝓕_i| ≤ h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
     "domain_bridges": [
       "Represents k-uniform set families as Finset (Finset (Fin n)) in Lean 4.",
@@ -4372,7 +4372,7 @@
     "proof_strategy": "Formalize the paper's two-family theorem as a Lean lemma: for any two non-star k-uniform cross-intersecting families A,B ⊆ binom(Fin n,k), |A|*|B| ≤ h(n,k)^2. Apply this lemma to every unordered pair of distinct indices i,j ∈ Fin r. Multiplying all pairwise inequalities gives (∏ᵢ |𝓕_i|)^(r-1) ≤ (h(n,k)^r)^(r-1), since each |𝓕_i| occurs in exactly r-1 pair products. Use positivity/monotonicity of natural powers to extract the (r-1)-st root, noting r ≥ 2.",
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T17:25:43.582970+00:00",
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
@@ -5590,7 +5590,7 @@
       "Christensen2025origami",
       "Cereceda2009mixing"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53529d3f",
     "description": "Conjecture that for all grid sizes m,n ≥ 3 the number of vertices of degree 4 in the flip graph of the m×n Miura‑ori equals (m‑1)(n‑1).",
     "domain_bridges": [
       "grid graph height functions",
@@ -5607,7 +5607,7 @@
     "proof_strategy": "Use the bijection between flat‑foldable Miura‑ori assignments and proper 3‑colourings of the grid graph, translate vertex degree to the number of strict local extrema of the associated integer height function, prove the polynomial count (m‑1)(n‑1) for degree‑4 vertices by induction on m and n, and derive diameter bounds via extremal Lipschitz‑function inequalities.",
     "research_mode": "team",
     "source_exp_id": "2606.22614v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T08:42:34.928992+00:00",
     "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
   },
@@ -11103,7 +11103,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f247824f",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -11116,7 +11116,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
