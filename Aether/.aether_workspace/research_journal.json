@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6495e602",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nDerived from the verified results in `MachineLearning.SheafDatabaseProbability`\nand `MachineLearning.SheafImputationBounds` (product law `P(shea",
-      "quality_score": 0.8166,
-      "sorry_count": 0,
-      "theorem_count": 139,
-      "timestamp": "2026-06-19T15:17:54",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
-    {
       "cycle_id": "c50363b9",
       "domain": "Tropical",
       "key_insight": "# Future Directions\n\nThese are freeform directions extending the tropical TDLP eigenline\ncounterexample formalized in\n[`Catalog/Tropical/TropicalTDLPEigenAttack.lean`](Catalog/Tropical/TropicalTDLPEig",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-26T13:14:44",
       "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
+    },
+    {
+      "cycle_id": "ab42f98e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Cryptography from Iterated Collatz Maps\n\nDerived from this cycle's findings (see `Map.lean`, `Reversibility.lean`,\n`HashCollision.lean`). Each conjecture is bold, falsifiable, and",
+      "quality_score": 0.70551,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-26T13:59:07",
+      "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "fdab34f3",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nDerived from this cycle's findings in `Catalog/Tropical/TensorNetworkContraction.lean`\nand `Catalog/Tropical/ComplexityThreshold.lean`. Each conjecture is bold, falsifiable,\nand s",
-      "quality_score": 0.4961724137931035,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-06-20T13:43:29",
-      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-    },
     {
       "cycle_id": "831891b4",
       "domain": "Physics",
@@ -2501,6 +2491,16 @@
       "theorem_count": 13,
       "timestamp": "2026-06-26T13:19:46",
       "title": "No non‑trivial extensions of maximal symplectic groups on the superspecial K3 surface"
+    },
+    {
+      "cycle_id": "ab42f98e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions: Cryptography from Iterated Collatz Maps\n\nDerived from this cycle's findings (see `Map.lean`, `Reversibility.lean`,\n`HashCollision.lean`). Each conjecture is bold, falsifiable, and",
+      "quality_score": 0.70551,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-26T13:59:07",
+      "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7510892307692308
     }
   ],
-  "last_updated": "2026-06-26T13:19:46",
+  "last_updated": "2026-06-26T13:59:07",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "7b66a66e",
-        "quality": 0.4596814054054055,
-        "theorems": 6,
-        "title": "Semiprime cyclotomic transfer for square-sided dice"
-      },
-      {
         "cycle_id": "11f0f366",
         "quality": 0.5660000000000001,
         "theorems": 136,
@@ -3699,6 +3693,12 @@
         "quality": 0.7836800000000002,
         "theorems": 13,
         "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
+      },
+      {
+        "cycle_id": "ab42f98e",
+        "quality": 0.70551,
+        "theorems": 3,
+        "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
       }
     ],
     "Physics": [

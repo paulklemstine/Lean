@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ab42f98e",
     "filename": "cryptography_from_the_collatz_conjecture_one_way_f.json",
     "pkg_num": 95,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.70551,
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions and a Verified Hash-Collision Separation"
   },
   {
@@ -2764,8 +2764,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "cryptography_from_the_collatz_conjecture_one_way_f",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.70551,
+      "quality": "substantial",
       "shape": "dodecahedron",
       "title": "Cryptography from the Collatz Conjecture: One-Way Functions and a Verified Hash-Collision Separation"
     }

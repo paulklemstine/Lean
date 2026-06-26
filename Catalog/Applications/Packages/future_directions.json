@@ -16737,7 +16737,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "113a596f",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16763,7 +16763,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.873771+00:00",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
@@ -35355,14 +35355,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "math.MG"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "4e31bdaf",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35377,7 +35377,7 @@
         "Geometry"
       ],
       "id": "fd_2315",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T14:00:20.314397+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem helly_convex_splinters {d : ℕ} (F : Finset (Set (EuclideanSpace ℝ (Fin d))))\n    (hF : ∀ K ∈ F, IsConvexSplinter K)\n    (h_inter : ∀ (G : Finset (Set (EuclideanSpace ℝ (Fin d)))), G ⊆ F → G.card ≤ 2 * d + 1 → (⋂ K ∈ G, K).Nonempty) :\n    (⋂ K ∈ F, K).Nonempty := by\n  sorry",
       "lineage_refs": [],
@@ -35391,7 +35391,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23437v1",
       "source_path": "http://arxiv.org/abs/2606.23437v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T07:39:04.351050+00:00",
       "title": "Helly's Theorem for Convex Splinters"
@@ -35771,7 +35771,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "Polymatroid_connectivity",
@@ -35779,7 +35779,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "4cfc08f0",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35794,7 +35794,7 @@
         "Algebra"
       ],
       "id": "fd_2324",
-      "last_attempt_time": "2026-06-26T13:28:14.010170+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:41:49.125585+00:00",
       "lean_theorem_stub": "theorem connected_slice_projection_interval \n    {E : Type*} [Fintype E] [DecidableEq E]\n    {P : Polymatroid E} {e : E} (hP : P.Connected) (j k l : ℕ) \n    (hj : j ≤ P.r {e}) (hk : j < k) (hl : k < l) (hl_le : l ≤ P.r {e})\n    (h_conn_j : (P.slice_projection e j).Connected)\n    (h_conn_l : (P.slice_projection e l).Connected) :\n    (P.slice_projection e k).Connected := by\n  sorry",
       "lineage_refs": [],
@@ -35808,7 +35808,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22819v1",
       "source_path": "http://arxiv.org/abs/2606.22819v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T11:20:57.671444+00:00",
       "title": "Interval Property for Connected Slice-Projections of Polymatroids"
@@ -37277,7 +37277,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "7281fa18",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37307,7 +37307,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22004v1",
       "source_path": "http://arxiv.org/abs/2606.22004v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T14:06:54.483472+00:00",
       "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
@@ -38233,7 +38233,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Bruen and Drudge 1999",
         "Filmus and Ihringer 2019",
@@ -38241,7 +38241,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "bc0a8e2b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38256,7 +38256,7 @@
         "Bridges"
       ],
       "id": "fd_2376",
-      "last_attempt_time": "2026-06-26T13:28:23.652021+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∃f: J_q(n,2) → {0,1} | f has degree one, f is Boolean, and f ∉ {0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r} for q ≥ 3, n ≥ 4",
       "lineage_refs": [],
@@ -38270,7 +38270,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23465v1",
       "source_path": "http://arxiv.org/abs/2606.23465v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T17:44:54.697706+00:00",
       "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
@@ -45720,7 +45720,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a2f737c1",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -45749,7 +45749,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.25954v1",
       "source_path": "http://arxiv.org/abs/2606.25954v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T18:50:55.115611+00:00",
       "title": "Realization of all even incoherence indices ≥4 by maximal standard frames"
@@ -47715,6 +47715,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Mathlib.Analysis.Convex.Function",
+        "Mathlib.MeasureTheory.Integral.IntervalIntegral",
+        "Mathlib.Topology.Algebra.Order",
+        "Mathlib.Analysis.Calculus.Deriv"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any self‑repelling polymer model on \\(\\mathbb Z^2\\) satisfying the standard assumptions of the paper (finite range, repulsive interaction, and a constant vertical force of strength \\(h>0\\)), the variational problem defining the macroscopic shape has a unique minimizer. Moreover, the minimizer depends continuously on the endpoint data and on the force strength.",
+      "domain_bridges": [
+        "probability_theory.conditional_expectation",
+        "combinatorics.self_avoiding_walk",
+        "geometry.finsler_metric"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra"
+      ],
+      "id": "fd_2584",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem unique_macroscopic_shape {h : ℝ} (h_pos : 0 < h)\n  {x0 x1 : ℝ × ℝ} (endpoints : x0.fst = x1.fst) :\n  ∃! (γ : ℝ → ℝ × ℝ),\n    (γ 0 = x0) ∧ (γ 1 = x1) ∧\n    IsAbsoluteContinuous γ ∧\n    IsMinimizer (fun η => ∫ t in (0:ℝ)..1, L (η t) (deriv η t) ) γ :=\nby\n  -- existence via direct method\n  obtain ⟨γ₀, hγ₀⟩ := exists_minimizer_of_convex_integral h_pos endpoints,\n  -- strict convexity ⇒ uniqueness\n  refine ⟨γ₀, ?_, ?_, ?_, ?_⟩;\n  -- proofs of the required properties follow from the lemmas below\n  all_goals\n    exact sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Show that the functional \\(\\mathcal F[\\gamma]=\\int_0^1 L(\\gamma(t),\\dot\\gamma(t))\\,dt\\) is strictly convex on the admissible set of absolutely continuous curves with prescribed endpoints. The Lagrangian \\(L\\) is the Legendre transform of the limiting free‑energy rate function, which is known to be convex and smooth. Strict convexity follows from uniform positivity of the second derivative of \\(L\\) in the velocity variable, a consequence of the repulsive interaction and the constant force field. Apply the direct method of the calculus of variations to obtain existence, then invoke strict convexity to deduce uniqueness. Continuity of the minimizer with respect to parameters follows from the implicit function theorem for minimizers of strictly convex functionals.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24352v1",
+      "source_path": "http://arxiv.org/abs/2606.24352v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T13:59:56.594661+00:00",
+      "title": "Uniqueness of the macroscopic shape minimizer for self‑repelling polymers in a constant force field"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem 1",
         "Corollary 1",
         "Brown-Erdős-Sós conjecture"
@@ -47735,7 +47782,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2584",
+      "id": "fd_2585",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47783,7 +47830,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2585",
+      "id": "fd_2586",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47828,7 +47875,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2586",
+      "id": "fd_2587",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47872,7 +47919,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2587",
+      "id": "fd_2588",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47919,7 +47966,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2588",
+      "id": "fd_2589",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47964,7 +48011,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2589",
+      "id": "fd_2590",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -48009,7 +48056,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2590",
+      "id": "fd_2591",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -48050,7 +48097,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2591",
+      "id": "fd_2592",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -48095,7 +48142,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2592",
+      "id": "fd_2593",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -48134,7 +48181,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2593",
+      "id": "fd_2594",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -48176,7 +48223,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2594",
+      "id": "fd_2595",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -48220,7 +48267,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2595",
+      "id": "fd_2596",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -48266,7 +48313,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2596",
+      "id": "fd_2597",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -48311,7 +48358,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2597",
+      "id": "fd_2598",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -48357,7 +48404,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2598",
+      "id": "fd_2599",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -48403,7 +48450,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2599",
+      "id": "fd_2600",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -48453,7 +48500,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2600",
+      "id": "fd_2601",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
@@ -48499,7 +48546,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2601",
+      "id": "fd_2602",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of the use of filtered complete intersection properties in the orderization process",
@@ -48545,7 +48592,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2602",
+      "id": "fd_2603",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vishik_non_similarity_char_2 (m : ℕ) (hm : m ≥ 3) : ∃ (F : Field) (char F = 2), ∃ (φ ψ : QuadraticForm F), \n  dim φ = 2^m ∧ dim ψ = 2^m ∧ \n  anisotropic φ ∧ anisotropic ψ ∧ \n  (∀ (E : Field), (E ⊇ F) → total_isotropy_index φ E = total_isotropy_index ψ E) ∧ \n  ¬ similar φ ψ",
@@ -48590,7 +48637,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2603",
+      "id": "fd_2604",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularized_sum_primes (P : ℂ → ℂ) (is_prime_zeta : IsPrimeZeta P) (continuation : AnalyticContinuation P) : \n  continuation.value_at (-1 : ℂ) = expected_constant_value := by sorry",
@@ -48639,7 +48686,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2604",
+      "id": "fd_2605",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_veronese_circuit_classification (m : ℕ) (t : ℕ) (d : ℕ) : let circuit := λ (forms : Fin t → (ℓ : LinearForm 𝕂) × ℓ ≠ 0), (linear_dependent_minimally (λ i, forms i |> Prod.fst ^ m)) → (dim (span (λ i, (forms i).1)) = (t + m - 2) / m) in circuit → (∃ (curve_config : Fin t → LinearForm 𝕂), (∀ i, (curve_config i) ^ m = (forms i).1 ^ m) ∧ (rational_normal_curve_configuration curve_config) ∧ (t = m * (d - 1) + 2))",
@@ -48686,7 +48733,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2605",
+      "id": "fd_2606",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_zero_sum_characterization {p : ℕ} [Fact p.Prime] (hp : p % 2 = 1)\n    (ℓ : ℕ) (hℓ : 1 ≤ ℓ ∧ ℓ ≤ (p - 1) / 2)\n    (S : Finset (ZMod p)) (hsym : S = S.image (fun x => -x))\n    (hzero : (0 : ZMod p) ∉ S) :\n    (∃ (vs : Fin (2 * ℓ + 1) → ZMod p),\n        (Pairwise (fun i j => vs i ≠ j)) ∧\n        (∀ i : Fin (2 * ℓ + 1), (vs ((i + 1 : Fin (2 * ℓ + 1))) - vs i) ∈ S)) ↔\n    (∃ (t : Finset (ZMod p)), t ⊆ S ∧ t.card = 2 * ℓ + 1 ∧ (∑ x in t, x) = 0) := by sorry",
@@ -48705,6 +48752,53 @@
       "thread_id": "",
       "timestamp": "2026-06-26T13:28:08.471007+00:00",
       "title": "Zero-sum characterization of odd cycles in symmetric Cayley graphs over prime cyclic groups"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.NT 2023",
+        "2305.00228",
+        "ArXiv: Positive dyadic density for rational weighted binary expansions"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that the support of any infinite rational series with rational terms has positive density on all sufficiently large dyadic blocks, with the deficit constant depending only on the denominator. This refines and implies a conjecture from the given ArXiv paper on positive densities for rational series, using integral carries and carry geometry.",
+      "domain_bridges": [
+        "Erdős Problem 260",
+        "Dyadic expansions",
+        "Carry recurrence analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2607",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem positive_dyadic_density (P : Rat) (Q : Nat) (H : Q.numerator < Q) (inf_support : nat.infinite_support (function n, h (a : nat) => a in support n) (support_sum : nat.sum (n -> n * h (bit_from_n n)) / 2^n = P / Q)) : (exists c_Q : PositiveReals, forall X in Dyads, sufficiently_large X, A_support (2*X) - A_support X >= c_Q * X) := ...",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Assume density vanishes on a block, then use carry pressure lower bound and upper bound via stopping-time budget to derive contradiction. Uses four local carry estimates: complete-lap mass balance, total-support summation, fixed-pin confinement, and class-one realization.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24972v1",
+      "source_path": "http://arxiv.org/abs/2606.24972v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T14:00:13.576370+00:00",
+      "title": "Positive dyadic density of rational series supports via carry recurrence"
     },
     {
       "ambition_level": "extension",
@@ -50196,11 +50290,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "1ce6e294",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -50211,7 +50305,7 @@
         "Computation"
       ],
       "id": "push_f25c8810_37bd789b",
-      "last_attempt_time": "2026-06-26T13:28:27.929094+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -50225,7 +50319,7 @@
       "research_mode": "team",
       "source_exp_id": "f25c8810",
       "source_path": "Alien Number Systems: Beyond Base-N",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T03:46:44.858796+00:00",
       "title": "Deepening: Alien Number Systems: Beyond Base-N"
@@ -53819,7 +53913,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "9c488c94",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -53844,7 +53938,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432625+00:00",
       "title": "Representation Theory: Character Tables of S_n"
@@ -53975,7 +54069,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "abbbde7c",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -54001,7 +54095,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432645+00:00",
       "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"

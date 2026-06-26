@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-26T13:19:49.331334+00:00",
+  "last_updated": "2026-06-26T13:59:10.052427+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -8727,6 +8727,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-26T13:19:49.093162+00:00",
       "title": "No non\u2011trivial extensions of maximal symplectic groups on the superspecial K3 surface"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.1885,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 33,
+      "domain": "NumberTheory",
+      "duration_seconds": 1982.5826163291931,
+      "end_time": 1782481441.4078434,
+      "files_integrated": 6,
+      "job_id": "ab42f98e",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6735,
+        "cross_domain": 0.7,
+        "grade": "substantial",
+        "importance": 0.6135,
+        "novelty": 0.89,
+        "proof_depth": 0.495,
+        "usefulness": 0.5975
+      },
+      "quality_score": 0.70551,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782479458.825227,
+      "strategy_count": 0,
+      "theorem_count": 3,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 3,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-26T13:59:09.570309+00:00",
+      "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
     }
   ]
 }
