@@ -1,399 +1,388 @@
-# Formal Novelty Certification for Theorem Spaces: Distance-Based Originality Detection in Finite-Dimensional Descriptor Embeddings
+# Certified Novelty Detection for Theorem Provers: A Metric Embedding Approach
+
+**Author:** Aristotle
+**Date:** 2026-06-26
+**Domain:** Applications
 
 ## Abstract
 
-We present a formally verified framework for certifying the novelty of mathematical theorem statements relative to a finite archive of known results. The framework embeds theorem descriptors — structured records capturing syntactic and semantic features such as quantifier depth, symbol count, and logical connective usage — into a nine-dimensional normed vector space. We define the archive distance as the infimum of embedding distances to archived descriptors and prove a complete characterization: a descriptor is ε-novel if and only if every archived descriptor lies at Euclidean distance at least ε. We establish nearest-neighbor witness realization, injectivity of the embedding, a zero-distance membership characterization, monotonicity under archive growth, and a 1-Lipschitz transfer inequality. All results are machine-verified with no unproven assumptions beyond standard axioms.
-
-**Keywords:** novelty certification, theorem embeddings, metric proof theory, archive separation, formal verification, finite-dimensional geometry
-
----
+We develop and formally verify the metric core of a *novelty certification
+system* for automated mathematical research engines. Each known result is mapped
+to a point of a pseudometric space $X$ — the **theorem embedding space** — and the
+set of known results is modeled as a finite catalog $C \subseteq X$. We define the
+**novelty** of a candidate output $x$ as its distance to the nearest catalog
+entry, $\operatorname{novelty}(C, x) = \min_{c \in C} \operatorname{dist}(x, c)$,
+and a **novelty certificate at level $\varepsilon$** as a proof of
+$\varepsilon \le \operatorname{novelty}(C, x)$ with $\varepsilon > 0$. We prove
+four guarantees that justify the slogan *distance bounds novelty*: **soundness**
+(a positive certificate proves $x \notin C$), **separation** (an
+$\varepsilon$-certificate proves $x$ is $\varepsilon$-far from every catalog
+entry), **stability** (novelty is $1$-Lipschitz, so a bounded embedding error
+perturbs the certified novelty by at most the same bound), and **monotonicity**
+(enlarging the catalog can only decrease novelty). We give an incremental update
+law for streaming catalogs, a packing/covering **novelty budget** bounding the
+number of mutually-novel results in a bounded space, and — by instantiating the
+abstract machinery on the Fibonacci primitive prime divisor theorem — an
+*unbounded* stream of certifiably-novel theorems. All results have been formalized
+and machine-checked.
 
 ## 1. Introduction
 
-### 1.1 Motivation
-
-The rapid growth of formalized mathematics — with libraries like Mathlib exceeding 200,000 declarations — creates a pressing need for automated tools that can assess whether a theorem statement is genuinely new or merely a reformulation of known results. Similarly, AI-driven theorem provers increasingly generate candidate statements, and distinguishing novel contributions from rediscoveries requires rigorous criteria.
-
-Existing approaches to novelty detection in mathematics are either informal (human expert judgment), syntactic (exact string matching), or heuristic (embedding-based similarity scores without guarantees). None provides *certified* novelty: a machine-checkable proof that a given statement lies outside the frontier of established knowledge.
-
-### 1.2 Contribution
-
-We formalize the first **certified novelty detection framework** for theorem statements. Our contributions are:
-
-1. **Descriptor structure.** A concrete 9-field record capturing quantifier depth, symbol count, binder count, logical connective usage, and type-arity features of theorem statements (§2).
-
-2. **Feature embedding.** An injective map from descriptors into a 9-dimensional normed space, enabling geometric reasoning about theorem similarity (§3).
-
-3. **Archive distance.** A computable function measuring the minimum embedding distance from a candidate to a finite archive, with guaranteed nearest-neighbor realization (§4).
-
-4. **Novelty Certificate Theorem.** A complete biconditional characterizing ε-novelty in terms of pointwise distance lower bounds (§5).
-
-5. **Structural properties.** Monotonicity under archive growth, 1-Lipschitz stability, and a zero-distance membership equivalence (§6).
-
-All results are formally verified in Lean 4 with Mathlib, using only the standard axioms `propext`, `Classical.choice`, and `Quot.sound`.
-
-### 1.3 Related Work
-
-**Theorem fingerprinting.** De Bruijn indices and hash-consing provide syntactic identifiers for terms, but do not support metric notions of similarity. Our approach extracts *quantitative* features that enable distance-based reasoning.
-
-**Embedding methods in AI.** Neural theorem provers (e.g., GPT-f, AlphaProof) use learned embeddings for premise selection, but these embeddings lack formal guarantees. Our embedding is explicitly constructed and provably injective.
-
-**Certified robustness.** In adversarial machine learning, certified robustness guarantees that no perturbation within a ball changes a classifier's output. Our novelty certificates are analogous: they guarantee that no archived theorem lies within a ball of the candidate.
-
-**Metric spaces of formulas.** Khoussainov and Nerode (2001) studied computable metric spaces in the context of effective mathematics. Our work applies similar ideas to theorem-level metadata rather than individual terms.
-
----
-
-## 2. Theorem Descriptors
-
-### 2.1 Definition
-
-A **descriptor** is a record with nine fields:
-
-```
-Descriptor :=
-  { quantDepth  : ℕ     -- Maximum quantifier nesting depth
-  , symbolCount : ℕ     -- Total number of distinct symbols
-  , binderCount : ℕ     -- Number of variable binders (λ, ∀, ∃)
-  , hasEq      : Bool   -- Whether equality (=) appears
-  , hasForall  : Bool   -- Whether universal quantification (∀) appears
-  , hasExists  : Bool   -- Whether existential quantification (∃) appears
-  , natArity   : ℕ     -- Number of ℕ-typed subexpressions
-  , finArity   : ℕ     -- Number of Fin-typed subexpressions
-  , boolArity  : ℕ }   -- Number of Bool-typed subexpressions
-```
-
-The descriptor type is equipped with decidable equality, enabling computational checks.
-
-### 2.2 Extraction
-
-Given a theorem statement `T` in a restricted language over `ℕ`, `Fin n`, `Bool`, finite sums/products, and a finite symbol vocabulary, each field is computed by a syntax-tree traversal:
-
-- `quantDepth(T)`: maximum depth of nested `∀`/`∃` quantifiers
-- `symbolCount(T)`: cardinality of the set of distinct constant/function symbols
-- `binderCount(T)`: total count of λ, Π, and Σ binders
-- `hasEq(T)`, `hasForall(T)`, `hasExists(T)`: presence flags
-- `natArity(T)`, `finArity(T)`, `boolArity(T)`: count of typed sub-terms
-
-In the current formalization, we abstract over the extraction process and work directly with `Descriptor` values. Section 8 discusses circuit-verified extraction.
-
----
-
-## 3. Feature Embedding
-
-### 3.1 Construction
-
-The embedding maps each descriptor to a vector in `Fin 9 → ℝ`:
-
-```
-embed(d)(i) =
-  | i = 0 → d.quantDepth
-  | i = 1 → d.symbolCount
-  | i = 2 → d.binderCount
-  | i = 3 → if d.hasEq then 1 else 0
-  | i = 4 → if d.hasForall then 1 else 0
-  | i = 5 → if d.hasExists then 1 else 0
-  | i = 6 → d.natArity
-  | i = 7 → d.finArity
-  | i = 8 → d.boolArity
-```
-
-The ambient space `Fin 9 → ℝ` carries the sup-norm `‖f‖ = sup_i |f(i)|`, inherited from Mathlib's `Pi` norm instance. Our theorems are agnostic to the choice of norm — they depend only on the properties `‖x‖ = 0 ↔ x = 0` and the triangle inequality.
-
-### 3.2 Injectivity
-
-**Theorem (Embedding Injectivity).** The map `embed` is injective: if `embed(d₁) = embed(d₂)`, then `d₁ = d₂`.
-
-*Proof sketch.* Each coordinate of `embed(d)` is either a natural number cast to ℝ or a Boolean indicator (0 or 1). Equality of ℝ-casts implies equality of the original naturals (by `Nat.cast_injective`). For Boolean fields, the values 0 and 1 are distinct, so equal coordinates imply equal booleans. Since all nine fields are determined, `d₁ = d₂`. ∎
-
-This injectivity is crucial: it ensures that the embedding preserves the identity of descriptors, enabling the zero-distance characterization (§6.3).
-
----
-
-## 4. Archive Distance
-
-### 4.1 Definition
-
-Given a finite archive `A : Finset Descriptor` and a candidate `d : Descriptor`, the **archive distance** is:
-
-```
-archiveDist(A, d) =
-  if A is nonempty then
-    inf_{a ∈ A} ‖embed(d) - embed(a)‖
-  else
-    0
-```
-
-This is the minimum distance from `d`'s embedding to any archived embedding.
-
-### 4.2 Nearest-Neighbor Realization
-
-**Theorem (Witness Realization).** For any nonempty archive A and descriptor d, there exists a ∈ A such that archiveDist(A, d) = ‖embed(d) − embed(a)‖.
-
-*Proof.* Since A is a nonempty finite set and ℝ is linearly ordered, the infimum over A is achieved by some element. Apply `Finset.exists_mem_eq_inf'`. ∎
-
-This is not merely a technical convenience — it converts the abstract infimum into a concrete witness. Any novelty certificate comes with an explicit "closest known result."
-
-### 4.3 Nonnegativity
-
-**Theorem.** archiveDist(A, d) ≥ 0 for all A, d.
-
-*Proof.* If A is empty, the distance is 0 by definition. If nonempty, the infimum of nonneg norms is nonneg. ∎
-
----
-
-## 5. The Novelty Certificate Theorem
-
-### 5.1 Novelty Predicate
-
-A descriptor d is **ε-novel** relative to archive A if:
-
-```
-Novel(ε, A, d) := ε ≤ archiveDist(A, d)
-```
-
-### 5.2 Forward Direction
-
-**Theorem (Pointwise Lower Bound Implies Novelty).** If A is nonempty and ∀ a ∈ A, ε ≤ ‖embed(d) − embed(a)‖, then Novel(ε, A, d).
-
-*Proof.* Since ε lower-bounds every term in the infimum, it lower-bounds the infimum itself. Apply `Finset.le_inf'`. ∎
-
-### 5.3 Reverse Direction
-
-**Theorem (Novelty Implies Pointwise Lower Bound).** If Novel(ε, A, d) and A is nonempty, then ∀ a ∈ A, ε ≤ ‖embed(d) − embed(a)‖.
-
-*Proof.* Since archiveDist(A, d) ≤ ‖embed(d) − embed(a)‖ for each a ∈ A (by `Finset.inf'_le`), the bound ε ≤ archiveDist(A, d) transfers. ∎
-
-### 5.4 Certificate Equivalence
-
-**Theorem (Novelty Certificate Iff).** For nonempty A:
-
-```
-Novel(ε, A, d) ↔ ∀ a ∈ A, ε ≤ ‖embed(d) − embed(a)‖
-```
-
-This biconditional is the central result: it characterizes novelty exactly in terms of pointwise distance bounds, making novelty both certifiable (forward direction) and verifiable (reverse direction).
-
-### 5.5 Non-Membership Certificate
-
-**Theorem (Positive Novelty Implies Non-Membership).** If embed is injective, ε > 0, and Novel(ε, A, d), then d ∉ A.
-
-*Proof.* If d ∈ A, then ‖embed(d) − embed(d)‖ = 0, so archiveDist(A, d) ≤ 0. But ε ≤ archiveDist(A, d) and ε > 0, a contradiction. ∎
-
-Note: this proof does not actually require injectivity — it holds for any embedding. Injectivity becomes essential for the converse (§6.3).
-
----
-
-## 6. Structural Properties
-
-### 6.1 Monotonicity (Archive Growth)
-
-**Theorem.** If A ⊆ B and A is nonempty, then archiveDist(B, d) ≤ archiveDist(A, d).
-
-*Proof.* The infimum over a larger set is at most the infimum over a subset, since every element of A is also an element of B. ∎
-
-**Interpretation.** Expanding the archive can only make novelty harder to achieve. This models the intuitive principle that the frontier of knowledge retreats as more results are established.
-
-### 6.2 Lipschitz Transfer (1-Lipschitz)
-
-**Theorem.** For nonempty A:
-
-```
-archiveDist(A, d₁) − ‖embed(d₁) − embed(d₂)‖ ≤ archiveDist(A, d₂)
-```
-
-*Proof.* Let a* be the nearest neighbor of d₁ (by witness realization). Then:
-
-```
-archiveDist(A, d₂) ≤ ‖embed(d₂) − embed(a*)‖
-                    ≤ ‖embed(d₂) − embed(d₁)‖ + ‖embed(d₁) − embed(a*)‖
-                    = ‖embed(d₂) − embed(d₁)‖ + archiveDist(A, d₁)
-```
-
-Rearranging gives the result. ∎
-
-**Interpretation.** The archive distance function is 1-Lipschitz in the embedding metric. Small descriptor changes produce small novelty changes. This is the formal foundation for *robust novelty certification*: a theorem that is certified ε-novel remains (ε − δ)-novel under perturbations of magnitude δ.
-
-### 6.3 Zero-Distance Characterization
-
-**Theorem.** If embed is injective and A is nonempty:
-
-```
-archiveDist(A, d) = 0 ↔ d ∈ A
-```
-
-*Proof.*
-- (→) By witness realization, there exists a ∈ A with ‖embed(d) − embed(a)‖ = 0. By norm properties, embed(d) = embed(a). By injectivity, d = a, so d ∈ A.
-- (←) If d ∈ A, then ‖embed(d) − embed(d)‖ = 0 gives archiveDist(A, d) ≤ 0. Combined with nonnegativity, archiveDist(A, d) = 0. ∎
-
-**Interpretation.** This is the exact characterization of archive membership via metric collapse. Under injectivity, the novelty certificate is complete: zero distance means identity, positive distance means genuine novelty.
-
----
-
-## 7. Algorithms
-
-### 7.1 Archive Distance Computation
-
-```
-Algorithm: ComputeArchiveDist
-Input: archive A (list of descriptors), candidate d
-Output: archive distance and nearest neighbor
-
-1. If A is empty, return (0, None)
-2. min_dist ← ∞
-3. nearest ← None
-4. For each a in A:
-     dist ← ‖embed(d) - embed(a)‖
-     If dist < min_dist:
-       min_dist ← dist
-       nearest ← a
-5. Return (min_dist, nearest)
-
-Time complexity: O(|A| · dim) where dim = 9
-Space complexity: O(dim)
-```
-
-### 7.2 Novelty Certification
-
-```
-Algorithm: CertifyNovelty
-Input: archive A, candidate d, threshold ε
-Output: (is_novel, certificate)
-
-1. (dist, nearest) ← ComputeArchiveDist(A, d)
-2. If dist ≥ ε:
-     Return (True, {
-       distance: dist,
-       threshold: ε,
-       nearest_neighbor: nearest,
-       certificate_type: "ε-novel"
-     })
-3. Else:
-     Return (False, {
-       distance: dist,
-       threshold: ε,
-       nearest_neighbor: nearest,
-       certificate_type: "within archive ball"
-     })
-```
-
-### 7.3 Batch Novelty Analysis
-
-```
-Algorithm: BatchNoveltyAnalysis
-Input: archive A, candidates [d₁, ..., dₖ], threshold ε
-Output: list of (candidate, is_novel, distance, nearest)
-
-1. results ← []
-2. For each dᵢ in candidates:
-     (novel, cert) ← CertifyNovelty(A, dᵢ, ε)
-     Append (dᵢ, novel, cert.distance, cert.nearest) to results
-3. Sort results by distance (descending)
-4. Return results
-
-Time complexity: O(k · |A| · dim)
-```
-
----
-
-## 8. Applications
-
-### 8.1 Theorem Library Deduplication
-
-Given a library of N theorem statements, compute all pairwise descriptor distances. Theorems within distance 0 are exact descriptor matches (and, under injectivity, identical descriptors). This identifies potential duplicates for human review.
-
-### 8.2 Conjecture Novelty Screening
-
-Before investing effort in proving a conjecture, compute its archive distance from the library of known results. A high distance provides confidence that the conjecture, if true, represents a genuine advance. A low distance suggests checking whether the result is already known under a different formulation.
-
-### 8.3 AI-Generated Theorem Auditing
-
-When an AI system generates candidate theorems, pass each through the novelty certification pipeline. Theorems with archive distance 0 are flagged as potential rediscoveries. The nearest-neighbor witness provides the specific known result for comparison.
-
-### 8.4 Diversity-Driven Theorem Generation
-
-Use archive distance as an objective function for theorem generation: maximize the minimum archive distance across a batch of generated theorems. The monotonicity theorem guarantees that adding generated theorems to the archive raises the bar for future novelty.
-
----
-
-## 9. Computational Experiments
-
-We implemented the framework in Python and tested it on synthetic theorem descriptor archives.
-
-### 9.1 Random Archive Experiment
-
-We generated 1,000 random descriptors with quantifier depth in [0, 5], symbol count in [1, 20], and other fields drawn uniformly. For each descriptor, we computed its archive distance from the remaining 999 descriptors.
-
-| Metric | Value |
-|--------|-------|
-| Mean archive distance | 3.42 |
-| Median archive distance | 3.00 |
-| Min archive distance | 0.00 (38 collisions) |
-| Max archive distance | 12.00 |
-| Fraction with dist > 2 | 0.83 |
-
-### 9.2 Archive Growth Experiment
-
-Starting with an archive of size 10 and growing to size 500, we tracked the mean archive distance of 100 fixed test descriptors. As predicted by the monotonicity theorem, the mean distance decreased monotonically from 5.1 to 1.8.
-
-### 9.3 Lipschitz Stability Experiment
-
-For 500 descriptor pairs differing in exactly one field by 1 unit, we measured |archiveDist(A, d₁) − archiveDist(A, d₂)| and ‖embed(d₁) − embed(d₂)‖. In all cases, the archive distance change was bounded by the embedding distance change, confirming the Lipschitz bound.
-
----
+Automated research engines that generate, prove, and archive mathematical
+statements face a foundational quality-control problem: distinguishing genuinely
+new output from rediscoveries of cataloged knowledge. Human mathematicians
+adjudicate novelty by intuition; an autonomous system requires something stronger
+than a heuristic label — it requires a *certificate* of novelty that is sound,
+quantitative, robust to numerical error, and cheap to verify.
+
+This paper formalizes such a certificate. Our contributions are:
+
+1. A definition of novelty as distance-to-catalog in a pseudometric *theorem
+   embedding space*, and of a novelty certificate as a single verified inequality
+   (Section 3).
+2. **Soundness** and **separation** theorems showing a positive certificate
+   proves genuine absence from the catalog with a quantitative margin against
+   *every* entry (Section 4).
+3. A **$1$-Lipschitz stability** theorem — the load-bearing robustness result —
+   making numerically computed distances into genuine certificates (Section 5).
+4. **Monotonicity** and an **incremental update law** for streaming catalogs
+   (Section 6).
+5. A packing/covering **novelty budget** in bounded spaces, contrasted with an
+   **unbounded novelty stream** derived from Carmichael's Fibonacci primitive
+   divisor theorem (Section 7).
+
+Throughout, the design choices are deliberately *conservative*: we use a
+pseudometric (not a metric) so that distinct results with identical embeddings are
+correctly reported as non-novel, and we carry nonemptiness of the catalog
+explicitly rather than assigning a junk value to the empty minimum.
+
+## 2. Preliminaries
+
+Let $X$ be a **pseudometric space**: a type equipped with a distance
+$\operatorname{dist} : X \times X \to \mathbb{R}$ satisfying, for all $x, y, z$,
+
+- non-negativity, $\operatorname{dist}(x, y) \ge 0$;
+- $\operatorname{dist}(x, x) = 0$;
+- symmetry, $\operatorname{dist}(x, y) = \operatorname{dist}(y, x)$;
+- the triangle inequality,
+  $\operatorname{dist}(x, z) \le \operatorname{dist}(x, y) + \operatorname{dist}(y, z)$.
+
+Unlike a metric, a pseudometric permits $\operatorname{dist}(x, y) = 0$ for
+distinct $x \ne y$. This is the correct setting for a *certifier*: if two distinct
+theorems embed to the same point, the conservative judgment is to declare them
+indistinguishable (novelty zero), refusing to certify either as new.
+
+A **catalog** is a finite set $C \subseteq X$, modeled as `Finset X`. The empty
+catalog has no nearest point, so novelty is only defined for nonempty $C$; we carry
+a nonemptiness witness $h_C : C \ne \emptyset$ in every statement.
+
+**Definition 2.1 (Function-valued minimum over a finite set).** For a nonempty
+finite set $C$ and a function $g : X \to \mathbb{R}$, the minimum
+$\min_{c \in C} g(c)$ is well-defined. It satisfies two characteristic
+properties: it is a lower bound's least upper bound, namely (i) $\min_{c\in C}
+g(c) \le g(c_0)$ for each $c_0 \in C$, and (ii) if $\ell \le g(c)$ for all
+$c \in C$, then $\ell \le \min_{c \in C} g(c)$. Moreover the minimum is *attained*:
+some $c^\star \in C$ has $g(c^\star) = \min_{c \in C} g(c)$.
+
+## 3. The embedding space and novelty certificates
+
+**Definition 3.1 (Novelty).** For a nonempty catalog $C \subseteq X$ and a
+candidate $x \in X$,
+$$\operatorname{novelty}(C, x) \;=\; \min_{c \in C} \operatorname{dist}(x, c).$$
+
+**Definition 3.2 (Novelty certificate).** A *novelty certificate at level
+$\varepsilon$* for $x$ against $C$ is a pair $(\varepsilon, \pi)$ with
+$\varepsilon > 0$ and $\pi$ a proof of
+$\varepsilon \le \operatorname{novelty}(C, x)$.
+
+The following two facts establish that novelty is genuinely the minimum distance.
+
+**Lemma 3.3 (`novelty_le_dist`).** For every $c \in C$,
+$\operatorname{novelty}(C, x) \le \operatorname{dist}(x, c)$.
+
+*Proof.* Immediate from property (i) of the finite minimum (Definition 2.1):
+the minimum over $C$ of $c \mapsto \operatorname{dist}(x, c)$ is at most its value
+at any particular $c$. $\qquad\blacksquare$
+
+**Lemma 3.4 (`exists_eq_novelty`).** There exists $c \in C$ with
+$\operatorname{dist}(x, c) = \operatorname{novelty}(C, x)$.
+
+*Proof.* By finiteness and nonemptiness, the function $c \mapsto
+\operatorname{dist}(x, c)$ attains its minimum on $C$ at some $c^\star$. Then
+$\operatorname{dist}(x, c^\star) \le \operatorname{dist}(x, c)$ for all $c \in C$,
+which gives $\operatorname{novelty}(C, x) \ge \operatorname{dist}(x, c^\star)$ by
+property (ii); combined with Lemma 3.3 (which gives the reverse inequality), the
+two are equal. $\qquad\blacksquare$
+
+**Lemma 3.5 (`novelty_nonneg`).** $0 \le \operatorname{novelty}(C, x)$.
+
+*Proof.* Each distance is non-negative, so $0$ is a lower bound for all
+$\operatorname{dist}(x, c)$; by property (ii) it is a lower bound for the minimum.
+$\qquad\blacksquare$
+
+**Lemma 3.6 (`le_novelty`).** If $\varepsilon \le \operatorname{dist}(x, c)$ for
+all $c \in C$, then $\varepsilon \le \operatorname{novelty}(C, x)$.
+
+*Proof.* This is exactly property (ii) of the finite minimum applied to the lower
+bound $\varepsilon$. $\qquad\blacksquare$
+
+Lemma 3.6 is the *certificate construction rule*: to produce an
+$\varepsilon$-certificate it suffices to bound the distance to every catalog entry
+from below by $\varepsilon$.
+
+## 4. Soundness and separation
+
+**Theorem 4.1 (Soundness, `cert_sound`).** If $\operatorname{novelty}(C, x) > 0$,
+then $x \notin C$.
+
+*Proof.* Contrapositive. Suppose $x \in C$. Then by Lemma 3.3 applied with $c = x$,
+$$\operatorname{novelty}(C, x) \le \operatorname{dist}(x, x) = 0,$$
+since a pseudometric has $\operatorname{dist}(x, x) = 0$. Hence
+$\operatorname{novelty}(C, x) \le 0$, contradicting positivity. Therefore a
+positive certificate forces $x \notin C$. $\qquad\blacksquare$
+
+This is the *no-false-novelty* guarantee: the certifier never stamps "new" on a
+result already in the catalog.
+
+**Theorem 4.2 (Separation, `cert_separation`).** If
+$\varepsilon \le \operatorname{novelty}(C, x)$, then
+$\varepsilon \le \operatorname{dist}(x, c)$ for every $c \in C$.
+
+*Proof.* Fix $c \in C$. Chaining the hypothesis with Lemma 3.3,
+$$\varepsilon \le \operatorname{novelty}(C, x) \le \operatorname{dist}(x, c).
+\qquad\blacksquare$$
+
+Theorem 4.2 is what allows a single inequality to stand in for a check against the
+entire catalog: an $\varepsilon$-certificate is a uniform $\varepsilon$-margin
+against all of $C$ at once.
+
+## 5. Stability: novelty is 1-Lipschitz
+
+The central robustness result states that novelty changes no faster than the
+candidate point moves. This is what makes a *numerically computed* embedding
+distance a valid certificate.
+
+**Lemma 5.1 (Additive stability, `novelty_le_add`).** For all $x, y \in X$,
+$$\operatorname{novelty}(C, x) \le \operatorname{novelty}(C, y) + \operatorname{dist}(x, y).$$
+
+*Proof.* By Lemma 3.4, choose $c \in C$ with $\operatorname{dist}(y, c) =
+\operatorname{novelty}(C, y)$. Then, using Lemma 3.3 at $x$ and the triangle
+inequality,
+$$\operatorname{novelty}(C, x) \le \operatorname{dist}(x, c)
+  \le \operatorname{dist}(x, y) + \operatorname{dist}(y, c)
+  = \operatorname{dist}(x, y) + \operatorname{novelty}(C, y).
+\qquad\blacksquare$$
+
+**Theorem 5.2 (1-Lipschitz stability, `abs_novelty_sub_le`).** For all
+$x, y \in X$,
+$$\bigl|\operatorname{novelty}(C, x) - \operatorname{novelty}(C, y)\bigr|
+  \le \operatorname{dist}(x, y).$$
+
+*Proof.* Apply Lemma 5.1 twice, once as stated and once with $x, y$ swapped, and
+use $\operatorname{dist}(x, y) = \operatorname{dist}(y, x)$:
+$$\operatorname{novelty}(C, x) - \operatorname{novelty}(C, y) \le \operatorname{dist}(x, y),
+  \qquad
+  \operatorname{novelty}(C, y) - \operatorname{novelty}(C, x) \le \operatorname{dist}(x, y).$$
+Together these bound the absolute value. $\qquad\blacksquare$
+
+**Corollary 5.3 (`lipschitz_novelty`).** The map $x \mapsto
+\operatorname{novelty}(C, x)$ is $1$-Lipschitz.
+
+*Proof.* Theorem 5.2 is exactly the defining inequality of a $1$-Lipschitz map.
+$\qquad\blacksquare$
+
+**Robustness consequence.** Suppose a candidate carries an $\varepsilon$-certificate
+computed from an embedding $\tilde{x}$ that differs from the true embedding $x$ by
+$\operatorname{dist}(x, \tilde{x}) \le \delta$. By Theorem 5.2,
+$$\operatorname{novelty}(C, x) \ge \operatorname{novelty}(C, \tilde{x}) - \delta
+  \ge \varepsilon - \delta.$$
+Thus whenever the margin exceeds the embedding error ($\varepsilon > \delta$), the
+true novelty remains positive and the certificate survives. Errors do not amplify;
+they pass through novelty with gain at most $1$.
+
+## 6. Monotonicity and streaming updates
+
+**Theorem 6.1 (Monotonicity, `novelty_mono`).** If $C \subseteq D$ (both
+nonempty), then for all $x$,
+$$\operatorname{novelty}(D, x) \le \operatorname{novelty}(C, x).$$
+
+*Proof.* By Lemma 3.4 choose $c \in C$ realizing $\operatorname{novelty}(C, x) =
+\operatorname{dist}(x, c)$. Since $C \subseteq D$, $c \in D$, so by Lemma 3.3
+applied to $D$, $\operatorname{novelty}(D, x) \le \operatorname{dist}(x, c) =
+\operatorname{novelty}(C, x)$. $\qquad\blacksquare$
+
+Monotonicity formalizes the principle that *learning more known results can only
+make novelty harder to certify, never easier* — there is no grade inflation as the
+catalog grows.
+
+**Theorem 6.2 (Incremental update, `novelty_insert`).** For $a \in X$ and nonempty
+$C$,
+$$\operatorname{novelty}(C \cup \{a\}, x)
+  = \min\bigl(\operatorname{dist}(x, a),\, \operatorname{novelty}(C, x)\bigr).$$
+
+*Proof sketch.* The minimum of $c \mapsto \operatorname{dist}(x, c)$ over
+$C \cup \{a\}$ splits as the minimum of the value at $a$ and the minimum over $C$;
+this is the standard recursion of `Finset.inf'` under insertion, and holds whether
+or not $a \in C$. $\qquad\blacksquare$
+
+Theorem 6.2 gives an $O(1)$ streaming update: when a new theorem $a$ enters the
+catalog, the novelty of any candidate is refreshed by one distance computation and
+one comparison, with no need to rescan the whole catalog.
+
+## 7. Novelty budget vs. an unbounded novelty stream
+
+The monotonicity and update laws describe how novelty *decays* as a catalog grows.
+A complementary question is how much novelty a space can *hold*.
+
+### 7.1 The novelty budget in bounded spaces
+
+Call a catalog $\varepsilon$-**separated** if any two distinct entries are at
+distance at least $\varepsilon$. An $\varepsilon$-separated catalog is precisely a
+collection of mutually-novel results, each carrying an $\varepsilon$-certificate
+against all the others (Theorem 4.2).
+
+**Proposition 7.1 (Novelty budget, packing bound).** Suppose the embedding space
+is covered by $N$ cells each of diameter $< \varepsilon$. Then any
+$\varepsilon$-separated catalog has at most $N$ entries.
+
+*Proof.* Two points in the same cell are at distance $< \varepsilon$, so an
+$\varepsilon$-separated set contains at most one point per cell; hence its
+cardinality is at most the number $N$ of cells. $\qquad\blacksquare$
+
+Concretely, if the embedding lands in a $d$-dimensional box of side $R$, dividing
+into a grid of cells of side $\varepsilon/\sqrt{d}$ gives $N = O\!\left((R\sqrt{d}/
+\varepsilon)^d\right)$ cells, so the maximum number of mutually $\varepsilon$-novel
+theorems is $O\!\left((R/\varepsilon)^d\right)$. In a bounded space, novelty is a
+*finite, rationed resource*. (We conjecture this packing bound is tight up to the
+doubling constant of the embedding; see Future Directions.)
+
+### 7.2 An unbounded novelty stream from Fibonacci primitive divisors
+
+The budget vanishes precisely when the space is unbounded — and a classical
+number-theoretic fact supplies an *inexhaustible* novelty source.
+
+Recall the Fibonacci numbers $F_1 = F_2 = 1$, $F_{n+1} = F_n + F_{n-1}$. A prime
+$q$ is a **primitive prime divisor** of $F_n$ if $q \mid F_n$ but $q \nmid F_k$ for
+all $0 < k < n$.
+
+**Theorem 7.2 (Carmichael, prime-index case;
+`RankOfApparition.fib_prime_index_has_primitive`).** For every prime $p \ge 3$,
+$F_p$ has a primitive prime divisor.
+
+Let $\operatorname{carPrime}(p)$ denote a chosen primitive prime of $F_p$, and
+embed prime indices on the real line by
+$\operatorname{carEmbed}(p) = \operatorname{carPrime}(p) \in \mathbb{R}$.
+
+**Lemma 7.3 (Distinctness).** For distinct primes $p, p' \ge 3$,
+$\operatorname{carPrime}(p) \ne \operatorname{carPrime}(p')$.
+
+*Proof.* Without loss of generality $p < p'$. Suppose $q = \operatorname{carPrime}
+(p) = \operatorname{carPrime}(p')$. As the primitive prime of $F_{p'}$, $q$ divides
+no $F_k$ with $0 < k < p'$; but $q = \operatorname{carPrime}(p)$ divides $F_p$ and
+$0 < p < p'$, a contradiction. $\qquad\blacksquare$
+
+**Theorem 7.4 (Unbounded novelty budget).** The image catalog
+$\{\operatorname{carEmbed}(p) : p \ge 3 \text{ prime}\} \subseteq \mathbb{R}$ is
+$1$-separated and infinite. Consequently it contains arbitrarily large finite
+sub-catalogs in which every member carries a novelty certificate at level $1$
+against all others.
+
+*Proof.* By Lemma 7.3 the embedded values are distinct integers, so any two differ
+by at least $1$: the set is $1$-separated. There are infinitely many primes
+$p \ge 3$, and by distinctness the map $p \mapsto \operatorname{carEmbed}(p)$ is
+injective, so the image is infinite. For any finite sub-catalog, Theorem 4.2 turns
+$1$-separation into a level-$1$ certificate for each member against the rest.
+$\qquad\blacksquare$
+
+**Remark.** Theorem 7.4 is the exact counterpoint to Proposition 7.1. The packing
+bound caps mutually-novel results in any *bounded* region; the prime line is
+unbounded, and Carmichael's theorem populates it with an endless $1$-separated
+catalog. The construction uses Fibonacci primitivity only through the abstract
+clause *"the chosen prime divides no earlier term,"* which holds for every
+non-degenerate Lucas sequence — suggesting the stream is one instance of a
+parametric family (see Future Directions, Conjecture 3).
+
+## 8. Algorithms
+
+We summarize the computational content. Let $n = |C|$ and let embeddings live in
+$\mathbb{R}^d$.
+
+- **Novelty evaluation** (Definition 3.1): compute $\operatorname{dist}(x, c)$ for
+  each $c \in C$ and take the minimum. Time $O(nd)$, space $O(1)$ beyond the
+  catalog.
+- **Certificate verification** (Definition 3.2, Theorem 4.2): given a claimed
+  level $\varepsilon$, verify $\varepsilon \le \operatorname{dist}(x, c)$ for all
+  $c$; reject on the first violation. Time $O(nd)$.
+- **Streaming update** (Theorem 6.2): on insertion of $a$, update
+  $\operatorname{novelty}(C, x) \leftarrow \min(\operatorname{dist}(x, a),
+  \operatorname{novelty}(C, x))$. Time $O(d)$ per candidate.
+- **Budget estimate** (Proposition 7.1): estimate the maximum $\varepsilon$-novel
+  catalog size by counting occupied grid cells of side $\varepsilon/\sqrt{d}$.
+
+## 9. Applications
+
+- **Quality control for autonomous research engines.** Every generated theorem is
+  embedded and tested; only those with a positive (or above-threshold) certificate
+  are reported as new, with a verifiable margin attached.
+- **Robust deduplication under learned embeddings.** Because novelty is
+  $1$-Lipschitz, certificates computed from approximate, learned embeddings remain
+  valid as long as the margin exceeds the model's worst-case embedding error.
+- **Curriculum and budget planning.** The packing bound estimates how much novel
+  material a bounded conceptual region can yield, guiding where to expand search;
+  the Fibonacci stream illustrates regions guaranteed inexhaustible.
+- **General novelty adjudication.** The same template — embed, measure
+  distance-to-known, certify with the three guarantees — applies to plagiarism
+  detection, patent prior-art search, and de-novo molecular design.
 
 ## 10. Discussion
 
-### 10.1 Strengths
+The mathematical backbone is the classical fact that distance-to-a-set is
+$1$-Lipschitz, here specialized to a finite set and reconstructed from the
+triangle inequality and the explicit minimizer (Lemma 3.4). What is new is the
+*certification framing*: packaging soundness, separation, stability, and
+monotonicity as the contract a novelty detector must satisfy, and proving each as a
+machine-checked theorem so that a numerically computed distance becomes a formal
+guarantee.
 
-The framework provides the first *formally verified* novelty certification for mathematical statements. Every theorem is machine-checked, eliminating the possibility of proof errors. The embedding is constructive, the distance is computable, and the certificates are explicit.
+Two deliberate conservative choices keep the certifier honest. First, the use of a
+*pseudo*metric ensures that distinct results with coincident embeddings are
+reported as non-novel rather than spuriously distinguished. Second, novelty is
+defined only for nonempty catalogs, with the nonemptiness witness carried
+explicitly; we never invent a junk value for the empty minimum.
 
-### 10.2 Limitations
+## 11. Future Directions
 
-**Descriptor granularity.** The nine-dimensional descriptor captures syntactic features but not deep semantic content. Two theorems with identical descriptors may be mathematically very different. The framework provides a *necessary* condition for novelty (different descriptors imply different statements, under injectivity) but the converse is limited by descriptor resolution.
+**Conjecture 1 — Sharp novelty budget via Lipschitz embeddings.** If $f : X \to
+\mathbb{R}^d$ is an $L$-bi-Lipschitz embedding with image in a box of side $R$,
+the maximum size of an $\varepsilon$-separated catalog is $\Theta((RL/\varepsilon)^
+d)$, matching the packing bound up to the doubling constant. The upper half holds
+with no geometric assumption; only an explicit $\varepsilon$-net lower-bound
+construction remains.
 
-**Restricted language.** The current framework assumes a restricted theorem language. Extending to full dependent type theory requires richer descriptors and potentially infinite-dimensional embeddings.
+**Conjecture 2 — Novelty as the Hausdorff gap of catalog growth.** For nested
+catalogs $C_0 \subseteq C_1 \subseteq \cdots$, the certified novelties
+$\operatorname{novelty}(C_n, x)$ are non-increasing and converge to
+$\operatorname{dist}(x, \overline{\bigcup_n C_n})$; moreover
+$\sup_x |\operatorname{novelty}(C_n, x) - \operatorname{novelty}(C_m, x)|$ equals
+the Hausdorff distance $d_H(C_n, C_m)$. Monotonicity is already established; the
+remaining step is the identification with $d_H$ via the $1$-Lipschitz law.
 
-**Norm choice.** Our proofs are norm-agnostic, but practical performance depends on the norm. The sup-norm treats all features equally; a weighted norm could prioritize certain features for domain-specific applications.
-
-### 10.3 Open Questions
-
-1. **Optimal descriptor dimension.** What is the minimum dimension needed to separate all theorem statements up to a given syntax-tree size?
-
-2. **Semantic descriptors.** Can proof-theoretic invariants (e.g., proof complexity, cut-rank) be incorporated into the descriptor while maintaining computability?
-
-3. **Dynamic archives.** Can the framework be extended to support efficient insertion and deletion with maintained certificates?
-
-4. **Approximate nearest neighbor.** For very large archives, can randomized data structures (e.g., locality-sensitive hashing) be used while maintaining formal certificate validity?
-
----
-
-## 11. Future Work
-
-See `FUTURE_DIRECTIONS.md` for five specific, testable hypotheses extending this work. Key targets include:
-
-1. Extended injective descriptors for richer theorem languages
-2. Dimension-vs-certification tradeoff theorems
-3. Perturbation stability bounds
-4. Oracle lower bounds for bounded-query novelty checkers
-5. Circuit-verified descriptor extraction
-
----
+**Conjecture 3 — Every Lucas sequence yields an unbounded novelty stream.** For any
+non-degenerate Lucas sequence $U_n(P, Q)$ (Fibonacci, Pell, Mersenne, …), the
+primitive-prime map induces a $1$-separated real catalog of unbounded size. The
+Fibonacci construction used primitivity only through the abstract "divides no
+earlier term" clause; Carmichael's theorem holds for all non-degenerate Lucas
+sequences, so the construction is parametric over the same rank-of-apparition
+spine.
 
 ## 12. Conclusion
 
-We have formalized the first certified novelty detection framework for mathematical theorem statements. The framework treats theorem archives as finite metric configurations and provides rigorous distance-based certificates of originality. The central result — the Novelty Certificate Theorem — gives a complete biconditional characterization of ε-novelty, supported by witness realization, injectivity, monotonicity, and Lipschitz stability. All proofs are machine-verified, establishing a foundation for trustworthy automated assessment of mathematical originality.
-
----
-
-## References
-
-1. Avigad, J. (2024). *Mathematical Logic and Computation*. Cambridge University Press.
-
-2. Mathlib Community. (2024). *Mathlib4: The Lean 4 Mathematical Library*. https://github.com/leanprover-community/mathlib4
-
-3. Cohen, M., Wetzler, N., & Heule, M. (2023). Certified proof checking for combinatorial optimization. *Journal of Automated Reasoning*, 67(1), 1–25.
-
-4. Blanchette, J., Haslbeck, M., Matichuk, D., & Nipkow, T. (2023). Mining the archive: Formal verification meets big mathematics. *Proceedings of ITP 2023*.
-
-5. Khoussainov, B., & Nerode, A. (2001). *Automata Theory and its Applications*. Birkhäuser.
+We have given a formally verified foundation for certified novelty detection:
+novelty as distance-to-catalog in a pseudometric embedding space, certificates as
+single verified inequalities, and four guarantees — soundness, separation,
+$1$-Lipschitz stability, and monotonicity — that make those certificates
+trustworthy under numerical error and catalog growth. A packing-based novelty
+budget quantifies the scarcity of novelty in bounded spaces, while Carmichael's
+Fibonacci primitive divisor theorem furnishes an explicit, unbounded stream of
+certifiably-novel results. Distance, it turns out, really does bound novelty — and
+in the right space, it bounds it from below forever.

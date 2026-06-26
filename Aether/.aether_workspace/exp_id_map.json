@@ -561,5 +561,6 @@
   "0d192d1b": "multilateral_non_trivial_cross_intersection_produc.json",
   "7496c7ce": "zero_knowledge_proofs_in_lean_verifiable_computati.json",
   "53529d3f": "degree4_vertices_in_the_flip_graph_of_the_mn_miura.json",
-  "1a8e3469": "explicit_bias_lower_bound_for_the_density_of_n_wit.json"
+  "1a8e3469": "explicit_bias_lower_bound_for_the_density_of_n_wit.json",
+  "580d1f18": "certified_novelty_detection_for_theorem_provers.json"
 }
