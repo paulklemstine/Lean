@@ -1,270 +1,248 @@
-# The Lines That Refuse to Be Simple
+# Lines, Pencils, and the Hidden Arithmetic of Geometry
 
-## A hidden census of geometry
+## A function that can only see one dimension at a time
 
-Imagine standing inside a three-dimensional world built not from the smooth
-continuum of everyday space, but from a *finite* arithmetic. In such a world there
-are only finitely many points, finitely many lines, finitely many planes — and yet
-the geometry is rich enough to host the same incidences, the same pencils, the same
-duality between points and planes that we know from ordinary projective space. This
-is **finite projective space**, written $PG(3, q)$, where $q$ is the number of
-elements in the underlying field $\mathbb{F}_q$ (so $q = 2, 3, 4, 5, 7, 8, 9, \dots$
-runs over prime powers).
+Imagine you are handed an enormous catalogue of all the *lines* in a geometric
+world. Not lines on a sheet of paper, but lines inside a higher-dimensional
+space built over a finite arithmetic — a space where there are only $q$ numbers
+to count with instead of infinitely many. Your job is to invent a rule that
+labels each line either **YES** (1) or **NO** (0). A simple sorting rule.
 
-The lines of $PG(3,q)$ are the real protagonists of this story. They are the
-two-dimensional subspaces of a four-dimensional vector space over $\mathbb{F}_q$, and
-when we collect them all together with their natural notion of "closeness," they form
-a beautiful combinatorial object called the **Grassmann scheme** $J_q(4,2)$. The
-question we will explore is deceptively simple to state:
+There are astronomically many ways to sort lines into yes and no. But suppose
+someone adds a constraint that sounds innocent and turns out to be ferociously
+restrictive: your YES/NO rule must be **"degree one."** Loosely, it must be
+*smooth* with respect to the geometry — it can't wiggle wildly from line to line.
+It has to be expressible as a simple accumulation of local contributions, one per
+point, with nothing more elaborate allowed.
 
-> Which *yes/no labellings* of the lines are, in a precise sense, the "simplest
-> possible"? And — crucially — are the simplest labellings the *only* tidy ones, or
-> does geometry hide labellings that look complicated but behave simply?
+The astonishing fact, conjectured and largely proven by mathematicians studying
+these *Grassmann schemes*, is that this single smoothness constraint nearly
+annihilates your freedom. Once $q \ge 3$ and the ambient space has dimension at
+least $4$, **the only YES/NO smooth rules that exist are the obvious ones**: say
+yes to everything, say no to everything, or say yes exactly to the lines passing
+through one chosen point — plus the mirror images of these. There is essentially
+nothing creative left to do. The geometry is *rigid*.
 
-The answer turns out to be a small drama about a single integer, a midpoint, and a
-threshold at $q = 3$.
+This article is about that rigidity, about the one exceptional case ($q = 2$,
+the famous **Fano plane**) where the rigidity cracks and exotic rules sneak in,
+and about a clean, elementary skeleton that captures why the whole phenomenon
+happens. We will build that skeleton from scratch, and along the way we will meet
+*point-pencils*, the surprising power of every line having the same length, and a
+small, beautiful obstruction that explains why you cannot simply glue two valid
+rules together to make a new one.
 
-## Counting before we philosophize
+## The world of lines over a finite field
 
-Before anything subtle happens, we need to count. Finite geometry rewards counting
-the way number theory rewards factoring: the formulas are clean, and they encode
-everything.
+Start with $\mathbb{F}_q$, the field of $q$ elements — think of it as clock
+arithmetic where $q$ is prime: the numbers $0, 1, \dots, q-1$ with addition and
+multiplication wrapping around. Now build an $n$-dimensional vector space
+$\mathbb{F}_q^n$ over it. The **2-dimensional subspaces** of this space are what
+geometers call the *lines* of the projective geometry $\mathrm{PG}(n-1, q)$.
 
-How many lines pass through a single fixed point of $PG(3,q)$? The lines through a
-point form a little projective plane in their own right — a *pencil* — and the count
-is the number of points of a projective plane $PG(2,q)$:
-$$
-\text{(lines through a point)} \;=\; q^2 + q + 1.
-$$
-For $q = 3$ that is $13$; for $q = 5$ it is $31$.
+The collection of all these lines, with a natural notion of "closeness" between
+them, is the **Grassmann scheme** $J_q(n,2)$ — the $q$-analogue of the classical
+Johnson scheme. It is one of the central objects of algebraic combinatorics: a
+highly symmetric structure whose spectral theory (its eigenvalues and
+eigenspaces) encodes deep geometric truths.
 
-How many lines are there in total? This is the Gaussian binomial coefficient
-$\left[ \begin{smallmatrix} 4 \\ 2 \end{smallmatrix}\right]_q$, and it factors
-gorgeously:
-$$
-\text{(all lines)} \;=\; (q^2 + 1)\,(q^2 + q + 1).
-$$
-For $q = 3$ there are $10 \times 13 = 130$ lines; for $q = 5$ there are
-$26 \times 31 = 806$. These two numbers — $q^2+q+1$ lines through a point, and
-$(q^2+1)(q^2+q+1)$ lines in all — are the entire scaffolding on which the rest of the
-argument hangs.
+For our story we strip this down to its combinatorial bones, and what remains is
+a structure every schoolchild half-knows: a **linear space** of points and lines
+where
 
-## What does "simple labelling" even mean?
+- every line contains exactly $q + 1$ points, and
+- any two distinct points lie on exactly one common line.
 
-A *labelling* of the lines is just a function that assigns to each line either
-$\textsf{true}$ or $\textsf{false}$ — equivalently, a choice of a set of lines (those
-labelled $\textsf{true}$). There are astronomically many such labellings:
-$2^{(q^2+1)(q^2+q+1)}$ of them. Most are random noise. We want the ones that respect
-the geometry.
+That second axiom — *two points determine a unique line* — is Euclid's, reborn in
+a finite world. The first — *every line has the same length $q+1$* — is the
+combinatorial fingerprint of the underlying field, and, as we will see, it does
+an enormous amount of work.
 
-The right notion of "respecting the geometry" comes from the theory of *association
-schemes*. The Grassmann scheme $J_q(4,2)$ has a natural hierarchy of frequencies, or
-"degrees," much like a sphere has spherical harmonics of degree $0, 1, 2, \dots$. A
-labelling is called a **Boolean degree one function** if, when expanded in these
-frequencies, it lives entirely in the lowest two layers — the constant layer (degree
-zero) and the first harmonic layer (degree one). Intuitively, a Boolean degree one
-function is one that is *as smooth as a non-constant $\{0,1\}$-valued function can
-be*.
+## Degree one, made elementary
 
-These objects have a famous second name in finite geometry: **Cameron–Liebler line
-classes**. They were introduced by Peter Cameron and Robert Liebler in 1982 while
-studying the symmetries of projective space, and they have been a magnet for research
-ever since because they sit at the crossroads of geometry, coding theory, and the
-spectral theory of graphs.
+Here is where the analytic notion of "smooth" becomes something you can compute
+on your fingers. A real-valued function $f$ on the lines is **degree $\le 1$** if
+there is a single constant $c$ and a **weight** $w(p)$ attached to each point $p$
+such that the value on any line $\ell$ is simply the constant plus the sum of the
+weights of the points lying on that line:
 
-A defining miracle of these labellings is that they admit a single integer summary.
-Every Cameron–Liebler line class carries a **parameter** $x$, an integer with
-$$
-0 \le x \le q^2 + 1,
-$$
-and the number of lines it selects is *forced* to be exactly
-$$
-x \cdot (q^2 + q + 1)
-$$
-— that is, $x$ "point-pencils' worth" of lines. The parameter is not something you
-choose; it is read off from the labelling, and it controls almost everything about
-it. This counting identity — *size equals parameter times lines-through-a-point* — is
-the precise, checkable fingerprint of degree one.
+$$f(\ell) \;=\; c \;+\; \sum_{p \in \ell} w(p).$$
 
-## The eight obvious labellings
+That is the entire definition. No products, no higher interactions — just a
+baseline plus a tally of point-contributions. In the language of the scheme this
+is exactly the top of the spectrum, the eigenspace $V_0 \oplus V_1$; but rendered
+this way it is pure bookkeeping.
 
-Some Boolean degree one functions are obvious, because we can *build* them by hand
-from the raw ingredients of geometry. There are eight of them, and they come in
-complementary pairs:
+The function $f$ is **Boolean** if it only ever outputs $0$ or $1$:
 
-1. **Nothing** — label every line $\textsf{false}$. Parameter $x = 0$.
-2. **Everything** — label every line $\textsf{true}$. Parameter $x = q^2 + 1$.
-3. **A point-pencil** $x_p$ — label $\textsf{true}$ exactly the lines through a fixed
-   point $p$. There are $q^2+q+1$ of them, so parameter $x = 1$.
-4. **The complement of a point-pencil**, $1 - x_p$. Parameter $x = q^2$.
-5. **A plane-pencil** $y_r$ — label $\textsf{true}$ exactly the lines lying inside a
-   fixed plane $r$. Again $q^2+q+1$ lines, parameter $x = 1$.
-6. **The complement of a plane-pencil**, $1 - y_r$. Parameter $x = q^2$.
-7. **A point-pencil plus a plane-pencil**, $x_p + y_r$ (choosing $p$ not on $r$ so
-   the two families are disjoint). Parameter $x = 2$.
-8. **Its complement**, $1 - x_p - y_r$. Parameter $x = q^2 - 1$.
+$$f(\ell) = 0 \quad\text{or}\quad f(\ell) = 1 \qquad \text{for every line } \ell.$$
 
-Tabulating the parameters of these eight "trivial" labellings, we get a small, tidy
-set:
-$$
-\{\,0,\; 1,\; 2,\; q^2-1,\; q^2,\; q^2+1\,\}.
-$$
-Notice the perfect symmetry: the set is unchanged when we send each parameter $x$ to
-$q^2 + 1 - x$, the operation of *taking complements*. The trivial labellings live at
-the two ends of the parameter range and nowhere in the middle.
+A **Boolean degree one function** is one that is both: a genuine YES/NO labelling
+that also admits the smooth, additive description above. These are the objects
+whose entire population we want to count and classify.
 
-This raises the central question with full force: **is the middle empty?** Is every
-Boolean degree one function on the lines of $PG(3,q)$ one of these eight obvious
-constructions, or are there labellings whose parameter lands strictly *between* $2$
-and $q^2 - 1$ — labellings that are smooth in the degree-one sense yet cannot be
-assembled from points and planes?
+## The cast of "trivial" solutions
 
-## The midpoint that breaks the monotony
+Some Boolean degree one functions are obvious. Let us name them, because the
+deep theorem says these are *all* of them.
 
-Here is the elegant idea at the heart of this work. Among all possible parameters,
-one is singled out by symmetry: the **midpoint**. A labelling whose parameter sits
-exactly halfway across the range is *self-complementary* — it is congruent to its own
-mirror image under $x \mapsto q^2+1-x$. The midpoint parameter is
-$$
-\text{bdParam}(q) \;=\; \frac{q^2 + 1}{2}.
-$$
-We name it after **Bruen and Drudge**, who in the late 1990s gave an explicit
-geometric construction (built from elliptic quadrics and the deep arithmetic of
-finite fields) of a genuine Cameron–Liebler line class sitting at exactly this
-midpoint, for every odd prime power $q$.
+**The constants.** Always say $0$, or always say $1$. Take $w(p) = 0$ for every
+point and $c = 0$ (or $c = 1$). The tally is empty, the baseline carries the day.
 
-Two arithmetic facts about this midpoint do all the work.
+**The point-pencils.** Fix one point $p$. The **pencil** of $p$ is the set of all
+lines passing through $p$ — the "star" of lines radiating from that point. Its
+indicator function,
 
-**Fact one: it is only an honest integer when $q$ is odd.** The expression
-$(q^2+1)/2$ is a whole number precisely when $q^2 + 1$ is even, i.e. when $q$ is odd.
-We can state this as a clean identity: for odd $q$,
-$$
-2 \cdot \text{bdParam}(q) \;=\; q^2 + 1,
-$$
-so that $\text{bdParam}(q) + \text{bdParam}(q) = q^2 + 1$, the self-complementary
-equation. For *even* $q$ there simply is no integer midpoint — the parameter range
-has even length, the centre falls between two integers, and self-complementary
-labellings are impossible. (For $q = 4$, for instance, $q^2+1 = 17$ is odd, and
-twice the floor $(17 \div 2) = 8$ gives $16 \ne 17$.) The parity of $q$ is not a
-technicality; it is an arithmetic obstruction baked into the geometry.
+$$\mathbf{1}[p \in \ell] = \begin{cases} 1 & \text{if } p \text{ lies on } \ell, \\ 0 & \text{otherwise,} \end{cases}$$
 
-**Fact two: for $q \ge 3$ the midpoint is strictly inside the forbidden middle.**
-This is the punchline. We need the midpoint $\text{bdParam}(q) = (q^2+1)/2$ to satisfy
-$$
-2 \;<\; \frac{q^2+1}{2} \;<\; q^2 - 1.
-$$
-The lower bound says $q^2 + 1 > 4$, true whenever $q \ge 2$; in fact for $q \ge 3$
-the midpoint already exceeds $4$. The upper bound says $q^2 + 1 < 2q^2 - 2$, i.e.
-$q^2 > 3$, true for all $q \ge 2$. So the midpoint lands strictly between the trivial
-boundary values $2$ and $q^2 - 1$ — it is genuinely *in the middle*.
+is Boolean, and it is degree one: take $c = 0$ and the weight that is $1$ at $p$
+and $0$ everywhere else. Then $\sum_{q \in \ell} w(q)$ counts how many times $p$
+appears among the points of $\ell$, which is $1$ if $p \in \ell$ and $0$ if not.
+Exactly the indicator. These pencils are the prototypical non-constant solutions.
 
-Put the two facts together. For every **odd** $q$ with $q \ge 3$, the Bruen–Drudge
-construction delivers a Boolean degree one function whose parameter is an honest
-integer lying strictly inside the non-trivial window. Such a labelling cannot be any
-of the eight obvious ones, because all eight have parameters at the extremes. It is a
-*non-trivial* Boolean degree one function — a smooth $\{0,1\}$-labelling of the lines
-that no amount of gluing points and planes can reproduce.
+**The complements.** If $f$ is a Boolean degree one function, so is $1 - f$. The
+value flips $0 \leftrightarrow 1$ (still Boolean), and the smooth description
+flips too: replace $c$ by $1 - c$ and every weight $w(p)$ by $-w(p)$. So every
+solution comes with its mirror image for free.
 
-## Why $q = 3$ is the gateway
+(There is also a dual family — the "hyperplane" families $\mathbf{1}[\ell \subseteq H]$
+of lines lying inside a fixed hyperplane — which by a point/hyperplane duality
+behave just like pencils. We focus on the pencils; the duals are their reflection.)
 
-The threshold is sharp, and the reason is a counting collision. For very small fields
-the trivial six parameters $\{0,1,2,q^2-1,q^2,q^2+1\}$ already exhaust the entire
-range $\{0, 1, \dots, q^2+1\}$, leaving no room in the middle. This happens exactly
-when the range has six or fewer slots, i.e. when $q^2 + 1 \le 5$, which means
-$q \le 2$.
+## How many solutions must there be?
 
-For $q = 2$ the parameter range is $\{0,1,2,3,4,5\}$ and the trivial set is the *whole
-thing*: $\{0,1,2,3,4,5\}$. There is no non-trivial window at all. The $35$ lines of
-$PG(3,2)$ are too few to hide anything.
+Even before classifying everything, we can *count from below*. Suppose our linear
+space is rich enough to tell points apart — formally:
 
-The moment $q$ reaches $3$, the dam breaks. Now the range is $\{0,1,\dots,10\}$, the
-trivial set is only $\{0,1,2,8,9,10\}$, and the middle $\{3,4,5,6,7\}$ opens up. The
-midpoint $\text{bdParam}(3) = 5$ sits squarely inside, and the $130$ lines of
-$PG(3,3)$ are numerous enough to support a labelling that is smooth but not simple.
-From $q = 3$ onward the window only widens, and the midpoint always rides along inside
-it.
+- every point lies on **some** line,
+- every point is **avoided** by some line, and
+- any two distinct points can be **separated**: there is a line through one but
+  not the other.
 
-So the existence of non-trivial Boolean degree one functions is governed by a single
-crisp threshold: **never for $q = 2$, always available at the midpoint for odd
-$q \ge 3$.**
+These are mild richness conditions, true in any honest projective geometry. Under
+them, the pencils of distinct points are genuinely different functions. The
+reason is delightfully direct: if points $p$ and $p'$ differ, pick a separating
+line $\ell$ — one through $p$ but not $p'$. Then the pencil of $p$ outputs $1$ on
+$\ell$ while the pencil of $p'$ outputs $0$. The functions disagree somewhere, so
+they are distinct. (Formally, this is the injectivity of the map sending a point
+to its pencil.)
 
-## Separating what we *know* from what we *assume*
+Counting them up: the two constants plus one pencil per point gives at least
 
-It is worth being scrupulous about what has actually been established, because the
-discipline of separating the proven from the assumed is exactly what makes the result
-trustworthy.
+$$|P| + 2$$
 
-The **arithmetic** is unconditional. That the midpoint $\text{bdParam}(q)$ is a true
-integer for odd $q$, that it satisfies the self-complementary equation
-$2\,\text{bdParam}(q) = q^2+1$, and that it lies strictly between $2$ and $q^2-1$ for
-$q \ge 3$ — all of this is pure number theory, proved once and for all with no
-geometric input.
+distinct Boolean degree one functions, where $|P|$ is the number of points. They
+are packaged as an *injection* from "points-plus-two-bits" into the space of
+functions, every one of whose images is verified to be Boolean degree one. So the
+trivial solutions are abundant — there are at least $|P| + 2$ of them — and the
+rigidity theorem says, for $q \ge 3$, that (together with the dual hyperplane
+families and complements) they are the *whole story*.
 
-The **geometry** is the input. The statement that a Cameron–Liebler class actually
-*exists* at this midpoint is the hard theorem of Bruen and Drudge, and rather than
-re-deriving their elliptic-quadric construction we treat it as a clearly labelled
-hypothesis. We model a Cameron–Liebler class abstractly: it is a Boolean function on
-the (finite) set of lines, equipped with its parameter, subject to the single
-defining identity that its support has size $x \cdot (q^2+q+1)$.
+## Why symmetry forces constancy
 
-From that minimal data, two logical levers do the rest. If the parameter is
-*positive*, the support is non-empty, so the function takes the value $\textsf{true}$
-somewhere. If the parameter is *less than the maximum* $q^2+1$ and the line set is the
-genuine Grassmann count $(q^2+1)(q^2+q+1)$, then the support cannot be everything, so
-the function takes the value $\textsf{false}$ somewhere. Feed in the midpoint
-parameter, which for $q \ge 3$ is both positive (indeed exceeds $4$) and below the
-maximum, and you conclude:
+Now comes the first piece of real magic, and it leans entirely on every line
+having the same length $q+1$.
 
-> **The Bruen–Drudge labelling is non-constant.** It says $\textsf{true}$ on some
-> lines and $\textsf{false}$ on others. It is neither "nothing" nor "everything," and
-> — because its parameter is in the forbidden middle — it is none of the eight
-> obvious constructions.
+Suppose your weight is **symmetric** — it does not single out any point, assigning
+the *same* value $a$ to every point. Then on a line $\ell$ the tally is just $a$
+added to itself once per point on the line:
 
-That is the existence of a non-trivial Boolean degree one function, reduced to its
-logical and arithmetic essentials.
+$$f(\ell) = c + \sum_{p \in \ell} a = c + (q+1)\,a.$$
 
-## Why this matters beyond the puzzle
+But $q+1$ is the same number for *every* line. So $f$ takes the identical value
+$c + (q+1)a$ on every single line — it is **constant**. There is no room for a
+non-trivial symmetric solution. This is the clean, abstract reason the only
+*symmetric* (automorphism-invariant) Boolean degree one functions are the boring
+constants. The uniform line size — the regularity of the scheme — is doing all
+the work. In our framework this is the theorem `const_weight_is_constant`.
 
-Cameron–Liebler classes are not an isolated curiosity. They are *equivalent* to
-several objects that appear all over discrete mathematics:
+## The obstruction: why you can't just add two pencils
 
-- **Spectral graph theory.** The lines of $PG(3,q)$ form the vertices of the
-  *Grassmann graph*, and Boolean degree one functions are exactly the $\{0,1\}$-valued
-  vectors that live in the top two eigenspaces. The threshold at $q=3$ is a statement
-  about which graphs admit "low-frequency" Boolean eigen-combinations — a question
-  with the same flavour as the celebrated sensitivity and expansion phenomena.
+The most tempting way to manufacture a *new* solution is to combine old ones.
+Take two distinct points $p$ and $p'$ and add their pencils:
 
-- **Coding theory and designs.** The supports of these classes are highly structured
-  line sets — tight, balanced, and self-dual at the midpoint — exactly the raw
-  material of combinatorial designs and the geometric codes built from them.
+$$g(\ell) = \mathbf{1}[p \in \ell] + \mathbf{1}[p' \in \ell].$$
 
-- **The arithmetic of fields.** That non-triviality switches on at $q = 3$ and that
-  self-complementarity demands *odd* $q$ are reminders that finite geometry is
-  ultimately number theory in disguise. The parity of the field size is destiny.
+This is still degree one — sums of degree one functions are degree one; the
+weights just add. So smoothness survives. But is $g$ Boolean? Watch what happens
+on the unique line $\ell^\*$ joining $p$ and $p'$ (the second axiom guarantees it
+exists). That line passes through *both* points, so
 
-There is also a tantalizing bridge to the most classical of combinatorial schemes,
-the **Hamming scheme** of binary strings. There, degree-one Boolean functions are
-governed by the first Krawtchouk polynomial $K_1(x; n) = n - 2x$, a perfectly linear
-"dictatorship detector." The Grassmann scheme is the $q$-analogue, and its degree-one
-theory is governed by a $q$-Krawtchouk polynomial — a $q$-deformation of the same
-$n - 2x$ line. The midpoint $x = (q^2+1)/2$ is precisely the place where this
-$q$-linear functional vanishes, the geometric "balance point." Seen this way, the
-self-complementary Bruen–Drudge class is the finite-field cousin of the balanced
-Boolean functions that pervade theoretical computer science.
+$$g(\ell^\*) = 1 + 1 = 2.$$
 
-## The shape of the answer
+The value $2$ is neither $0$ nor $1$. The function has burst out of the Boolean
+range. The very axiom that makes the geometry coherent — two points lie on a
+common line — is what sabotages the naive gluing: that shared line is forced to
+register a $2$. This little fact (the theorem `two_pencils_not_boolean`) is the
+seed of the whole rigidity phenomenon: you cannot cheaply combine trivial
+solutions to escape triviality, because the geometry keeps colliding your
+contributions on shared lines.
 
-Strip away the machinery and a single, satisfying picture remains. The lines of a
-finite three-dimensional space can be labelled $\textsf{true}/\textsf{false}$ in a
-"smooth" degree-one way. The smoothest such labellings come in a tidy family of eight,
-sitting at the extremes of a parameter line that runs from $0$ to $q^2+1$. For the
-tiniest space, $PG(3,2)$, those eight are *all there is* — the middle is empty. But
-the instant the field grows to three elements, a gap opens in the centre of the
-parameter line, and the symmetry of the problem points to its exact midpoint
-$(q^2+1)/2$. Whenever the field has an odd number of elements, that midpoint is a real
-integer, and a real, self-mirroring, non-trivial labelling lives there.
+## The exceptional plane: $q = 2$ and Fano
 
-It is a small theorem with a large moral: in finite geometry, *simplicity is bounded
-above by size*. Make the world large enough, and it will always contain structures
-that are smooth without being obvious — lines that, collectively, refuse to be
-simple.
+Every good rigidity theorem has its rebel, and here the rebel is $q = 2$. The
+smallest projective plane, $\mathrm{PG}(2,2)$, is the celebrated **Fano plane**:
+$7$ points, $7$ lines, every line holding exactly $3$ points, every point on
+exactly $3$ lines. It is the most symmetric tiny geometry in existence, drawn as
+a triangle with its medians and inscribed circle, and it is $J_2(3,2)$ in our
+notation.
+
+When $q = 2$, the arithmetic over the field with two elements is special — adding
+is the same as subtracting, and $1 + 1 = 0$. This collapse breaks the obstruction
+above just enough that **non-trivial** Boolean degree one functions appear, rules
+that are not constants, not pencils, not hyperplane families, and not complements
+of any of these. The boundary between $q = 2$ and $q \ge 3$ is precisely the
+fault line the main theorem traces. Studying the Fano plane concretely is how one
+sees the exception in the flesh, and it is what makes the $q \ge 3$ rigidity
+remarkable rather than automatic.
+
+## Why anyone should care
+
+This may sound like a private game played by combinatorialists, but the structure
+echoes loudly elsewhere.
+
+**The analysis of Boolean functions.** In theoretical computer science, "low
+degree" Boolean functions on the hypercube (think: voting rules, decision
+procedures, error-correcting codes) are famously constrained — the
+Friedgut–Kalai–Naor theorem and its descendants say low-degree Boolean functions
+must be *juntas*, depending on only a few coordinates. The Grassmann story is the
+same melody transposed into the world of subspaces: degree one plus Boolean
+equals "essentially a single point's pencil." The point-pencils are the
+geometric juntas.
+
+**Coding theory and design theory.** Pencils and hyperplane families are exactly
+the kinds of structured subsets that build optimal codes and combinatorial
+designs over finite fields. Knowing that *no other* small-degree Boolean
+structures exist tells designers that these classical constructions are not just
+convenient — they are, in a precise sense, the only ones.
+
+**The shape of rigidity itself.** The phenomenon — a mild smoothness constraint
+crushing an exponential sea of possibilities down to a short, fully understood
+list — is one of the recurring miracles of modern combinatorics. It is the same
+spirit as stability theorems, as the classification of extremal configurations,
+as the idea that "almost optimal implies almost structured." Here it appears in
+an unusually clean and provable form.
+
+## What we actually built
+
+Stripped to essentials, the framework is a finite linear space — points, lines,
+$q+1$ points per line, two points on a unique line — together with three
+notions: *Boolean* (outputs in $\{0,1\}$), *degree $\le 1$* (a constant plus a
+sum of point-weights), and their conjunction. On this skeleton we established,
+with no gaps:
+
+- the trivial solutions really qualify — the constants, every point-pencil, and
+  all complements are Boolean degree one;
+- there are at least $|P| + 2$ of them, via an explicit, verified injection that
+  separates distinct points by a line;
+- every *symmetric* degree-one function is constant, because every line has the
+  same length $q+1$;
+- and you cannot build a new Boolean solution by adding two pencils, because
+  their unique common line is forced to read $2$.
+
+Together these are the load-bearing walls of the rigidity theorem. The grand
+conjecture — that for $q \ge 3$ and $n \ge 4$ *nothing else exists* — stands on
+exactly this foundation, with the Fano plane standing quietly to one side as the
+beautiful exception that proves the rule.
+
+Geometry, it turns out, has an arithmetic of its own, and that arithmetic is far
+stingier with its secrets than its size would ever suggest.

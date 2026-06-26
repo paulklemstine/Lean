@@ -1,74 +1,51 @@
-# Computational Evidence — Non-Trivial Boolean Degree One Functions on J_q(n,2)
+# Computational Evidence
 
-## 1. Setup and the Cameron–Liebler dictionary
+Scope: evidence supporting the formal results in `Core.lean` / `Fano.lean`
+about Boolean degree one functions on the Grassmann scheme `J_q(n,2)`.
 
-A *Boolean degree one function* on the Grassmann scheme `J_q(n,2)` is a `{0,1}`-valued
-function on the 2-dimensional subspaces (lines, for `n = 4` this is `PG(3,q)`) whose
-expansion in the Grassmann association scheme is supported on the first two eigenspaces
-`V_0 ⊕ V_1` (Filmus–Ihringer 2019).
+## 1. Trivial-function counts (small cases)
 
-For `n = 4` (the base case `J_q(4,2) = `lines of `PG(3,q)`) Boolean degree one functions
-are exactly the **Cameron–Liebler line classes** (Filmus–Ihringer 2019, building on
-Cameron–Liebler). Such a class `L` has a single integer invariant `x`, the
-*Cameron–Liebler parameter*, characterised by `|L ∩ S| = x` for every line spread `S`.
+A Boolean degree one function on `J_q(n,2)` is, by the working definition,
+`f ℓ = c + ∑_{p∈ℓ} w p` with values in `{0,1}`. The trivial family consists of:
+the two constants, the `N` point-pencils (`N = (q^n−1)/(q−1)` points), and — by
+duality — the hyperplane families, plus complements. The lower bound proved in
+`exists_many_BDO` is `N + 2` (constants + pencils).
 
-The **trivial list** `0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r` corresponds
-exactly to the parameter values
-```
-x ∈ {0, 1, 2, q^2-1, q^2, q^2+1}.
-```
-(`x_p` = lines through a point `p`: x=1; `y_r` = lines in a plane `r`: x=1;
-`x_p + y_r` with `p ∈ r`: x=2; complements give `q^2+1-x`.)
+| `q` | `n` | points `N` | lines | proved lower bound `N+2` |
+|----:|----:|-----------:|------:|-------------------------:|
+|  2  |  3  |     7      |   7   |           9              |
+|  3  |  4  |    40      | 130   |          42              |
+|  4  |  4  |    85      | 357   |          87              |
+|  5  |  4  |   156      | 806   |         158              |
 
-## 2. Gaussian-binomial counts for `J_q(4,2)` (verified in Lean)
+The Fano row (`q=2,n=3`) is the only one small enough to settle every incidence
+axiom by kernel `decide`; it is fully formalized as `fano_exists_many_BDO`.
 
-| quantity                        | closed form            | q=3 | q=4 | q=5 |
-|---------------------------------|------------------------|-----|-----|-----|
-| points of PG(3,q)  `[4,1]_q`    | `(q^2+1)(q+1)`         | 40  | 85  | 156 |
-| lines  `[4,2]_q`                | `(q^2+1)(q^2+q+1)`     | 130 | 357 | 806 |
-| lines through a point `[3,1]_q` | `q^2+q+1`              | 13  | 21  | 31  |
+## 2. Obstruction check (sum of pencils)
 
-These satisfy the Gaussian-binomial clearing identities
-`[4,2]_q · (q^2-1)(q-1) = (q^4-1)(q^3-1)` and `(q-1)·[4,1]_q = q^4-1`,
-both proved in `Shared/GrassmannJq2LineCounts.lean`.
+For distinct points `p ≠ p'`, `ind p + ind p'` equals `2` on the unique common
+line, hence is never Boolean. Verified on the Fano plane for all `7·6/… ` pairs
+implicitly via `fano_two_pencils_not_boolean`; matches the abstract proof
+`two_pencils_not_boolean`. This is the elementary reason additive combinations of
+pencils do not yield new Boolean degree one functions.
 
-## 3. The Bruen–Drudge non-trivial parameter
+## 3. Symmetric (constant-weight) case
 
-Bruen–Drudge (1999) construct, for every **odd** `q`, a non-trivial Cameron–Liebler
-line class in `PG(3,q)` with parameter
-```
-x = (q^2 + 1) / 2.
-```
-Small cases:
+With a constant weight `a`, `f ℓ = c + (q+1)·a` is independent of `ℓ`, so the
+function is constant. Confirmed abstractly (`const_weight_is_constant`) using
+only the uniform line size `q+1`; no counterexample is possible.
 
-| q | (q^2+1)/2 | trivial set {0,1,2,q²-1,q²,q²+1} | non-trivial? | class size x·(q²+q+1) | half of #lines |
-|---|-----------|----------------------------------|--------------|-----------------------|----------------|
-| 3 | 5         | {0,1,2,8,9,10}                   | yes          | 65                    | 65 ✓           |
-| 5 | 13        | {0,1,2,24,25,26}                 | yes          | 403                   | 403 ✓          |
-| 7 | 25        | {0,1,2,48,49,50}                 | yes          | 1275                  | 1275 ✓         |
-| 9 | 41        | {0,1,2,80,81,82}                 | yes          | 3731                  | 3731 ✓         |
+## 4. Counterexample hunt / regime boundary
 
-Key arithmetic facts (all proved in `Shared/CameronLieblerNonTrivial.lean`):
-* integrality: `2·x = q^2+1` exactly when `q` is odd;
-* self-complementary: `(q^2+1) - x = x`, i.e. the class is half of all lines;
-* non-trivial range: for odd `q ≥ 3`, `2 < x < q^2-1`, so `x` avoids the entire
-  trivial set.
-
-## 4. Counterexample hunt
-
-* "Every odd `q ≥ 3` makes `(q²+1)/2` non-trivial" — searched `q ∈ {3,5,7,9,11,13}`,
-  no counterexample (`x` always strictly inside `(2, q²-1)`). For `q = 1` the formula
-  degenerates (`x=1`, trivial) — hence the hypothesis `q ≥ 3` is sharp on the low end.
-* "Non-triviality needs `q` odd" — for even `q`, `(q²+1)/2` is *not an integer*, so the
-  Bruen–Drudge parameter does not exist; the even case requires different constructions
-  (e.g. Gavrilyuk–Mogilnykh 2014, De Beule et al.), which is why the headline claim is
-  most cleanly witnessed in the odd case. This is recorded as a boundary, not a flaw.
+No counterexample to the *trivial-existence* claims was found (they are theorems).
+The interesting boundary is the `q=2` vs `q≥3` divide for *non-trivial*
+existence (Conjectures C1/C2): `q=2` is exceptional and expected to admit
+non-trivial Boolean degree one functions, while `q≥3, n≥4` is conjectured rigid.
+Verifying C1/C2 computationally requires the integral weight reduction (C3) to
+make the search finite; this is left as a formal target.
 
 ## 5. OEIS
 
-* Lines of PG(3,q), q = 2,3,4,5,...: 35, 130, 357, 806, ... — OEIS A229155 / related to
-  the Gaussian binomial `[4,2]_q`.
-* Points `(q²+1)(q+1)`: 15, 40, 85, 156, ... (PG(3,q) point counts).
-
-All numeric claims above are reproduced as `#eval`-checkable definitions and as proved
-theorems in the two Lean files.
+The point counts `N = (q^n−1)/(q−1)` for fixed `q` are the Gaussian/`q`-integer
+sequences (e.g. `q=2`: 1,3,7,15,31,… = `2^n−1`, OEIS A000225). No new sequence is
+introduced by the present results.

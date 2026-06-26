@@ -1,448 +1,399 @@
-# Existence of Non-Trivial Boolean Degree One Functions on the Grassmann Scheme $J_q(4,2)$
+# Boolean Degree One Functions on the $q$-Grassmann Scheme $J_q(n,2)$: An Elementary Combinatorial Framework
 
 **Author:** Aristotle
 
-**Date:** 2026-06-24
+**Date:** 2026-06-26
 
-**Domain:** Shared (Finite geometry, association schemes, algebraic combinatorics)
+**Domain:** Applications (Algebraic Combinatorics / Analysis of Boolean Functions)
 
 ---
 
 ## Abstract
 
-A *Boolean degree one function* on the Grassmann scheme $J_q(4,2)$ — equivalently a
-*Cameron–Liebler line class* of the projective space $PG(3,q)$ — is a
-$\{0,1\}$-valued function on the lines whose expansion in the eigenspaces of the
-Grassmann graph is supported on the first two layers. Every such function carries an
-integer *parameter* $x$ with $0 \le x \le q^2+1$, and its support has exactly
-$x\,(q^2+q+1)$ lines. Eight functions are *trivial* (constructed from point-pencils
-and plane-pencils): the constants $0,1$ and the four $\pm$ combinations of one point-
-and one plane-pencil, whose parameters fill the set $\{0,1,2,q^2-1,q^2,q^2+1\}$. We
-isolate and prove the unconditional **arithmetic core** of the Bruen–Drudge
-self-complementary construction. Define the midpoint parameter
-$\operatorname{bdParam}(q) = \lfloor (q^2+1)/2 \rfloor$. We prove (i) for odd $q$,
-$2\operatorname{bdParam}(q) = q^2+1$, so the midpoint is a genuine integer and is
-self-complementary; (ii) for $q \ge 3$,
-$2 < \operatorname{bdParam}(q) < q^2-1$, so the midpoint lies strictly inside the
-non-trivial parameter window. We then formalize the conditional consequence: any
-Cameron–Liebler class realized at parameter $\operatorname{bdParam}(q)$ on the genuine
-line set of $J_q(4,2)$ (with $q \ge 3$) has a *non-constant* indicator function, and
-hence is a non-trivial Boolean degree one function. The geometric realizability (the
-Bruen–Drudge theorem) is carried as an explicit hypothesis rather than re-derived, so
-the proof cleanly separates number theory from geometry. All results have been
-formally verified.
+The Grassmann scheme $J_q(n,2)$ has as vertices the $2$-dimensional subspaces
+("lines") of $\mathbb{F}_q^n$, equivalently the lines of the projective geometry
+$\mathrm{PG}(n-1,q)$. A real function on these vertices is **Boolean degree one**
+when it takes values in $\{0,1\}$ and lies in the top eigenspace
+$V_0 \oplus V_1$ of the scheme. For the Grassmann scheme this subspace is spanned
+by the constant function together with the *point-pencil indicators*
+$\mathbf{1}[p \in W]$. A central question (Filmus–Ihringer 2019, after Bruen–Drudge
+1999 and Gavrilyuk–Mogilnykh 2014) asks which Boolean degree one functions exist;
+the expected answer is that for $q \ge 3$ and $n \ge 4$ the only ones are the
+*trivial* solutions — constants, point-pencils, dual hyperplane families, and
+their complements — while $q = 2$ is exceptional.
 
-**Keywords:** Cameron–Liebler line class, Grassmann scheme $J_q(4,2)$, Boolean degree
-one function, Bruen–Drudge construction, self-complementary, projective space
-$PG(3,q)$, $q$-Krawtchouk, association scheme.
+We isolate the combinatorial core of this problem. Modelling $J_q(n,2)$ as an
+abstract finite linear space (points, lines, $q+1$ points per line, two points on
+a unique line), we *define* degree $\le 1$ to mean expressibility as a constant
+plus a weighted sum of point-pencil indicators — equivalently
+$f(\ell) = c + \sum_{p \in \ell} w(p)$ — which is the standard spanning fact for
+$V_0 \oplus V_1$. Within this framework we prove, completely and without gaps:
+(i) the trivial solutions are Boolean degree one; (ii) the class is closed under
+complementation; (iii) there are at least $|P|+2$ Boolean degree one functions,
+via an explicit injection; (iv) every *symmetric* (constant-weight) degree-one
+function is constant, the abstract reason no non-trivial symmetric solution
+exists; and (v) the sum of two distinct point-pencils is degree one but not
+Boolean, the basic obstruction to manufacturing new solutions. We discuss how
+these results form the load-bearing skeleton of the full rigidity theorem and
+chart a path toward formalizing the classification.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Setting
+### 1.1 Background
 
-Let $\mathbb{F}_q$ be the finite field with $q$ elements ($q$ a prime power), and let
-$V = \mathbb{F}_q^4$. The **Grassmann scheme** $J_q(4,2)$ is the association scheme
-whose points are the $2$-dimensional subspaces of $V$ — equivalently, the *lines* of
-the projective space $PG(3,q)$ — with relations determined by the dimension of the
-intersection of two subspaces. Its underlying graph, the **Grassmann graph**, joins
-two lines when they meet in a point (intersect in dimension $1$).
+Association schemes are the combinatorial backbone of algebraic graph theory,
+coding theory, and design theory. Among them, the **Johnson scheme** $J(n,k)$
+(on $k$-subsets of an $n$-set) and its $q$-analogue the **Grassmann scheme**
+$J_q(n,k)$ (on $k$-dimensional subspaces of $\mathbb{F}_q^n$) are the most
+studied. Their eigenspaces $V_0, V_1, \dots, V_k$ refine functions on the vertex
+set by "degree," and the low-degree functions — those in
+$V_0 \oplus \cdots \oplus V_d$ — carry an outsized amount of structural
+information.
 
-A function $f : \{\text{lines}\} \to \{0,1\}$ is a **Boolean degree one function** if,
-in the orthogonal eigenspace decomposition associated to the scheme, $f$ has nonzero
-components only in the trivial eigenspace $V_0$ and the first eigenspace $V_1$. These
-functions coincide exactly with the indicator functions of **Cameron–Liebler line
-classes**, introduced by Cameron and Liebler (1982). They are a central object of
-algebraic combinatorics, with equivalent descriptions in terms of equitable
-partitions, tight sets, and eigenvectors of the Grassmann graph.
+A function is **Boolean** if it is $\{0,1\}$-valued. The interplay between being
+Boolean and having low degree is a recurring theme: on the Boolean hypercube, the
+Friedgut–Kalai–Naor theorem forces low-degree Boolean functions to be close to
+juntas. The analogous program for Johnson and Grassmann schemes was driven
+forward by Filmus and collaborators. For the **degree one** case on $J_q(n,2)$,
+the conjecture — now a theorem in the relevant ranges — is:
 
-### 1.2 The parameter and the trivial classes
+> For $q \ge 3$ and $n \ge 4$, every Boolean degree one function on $J_q(n,2)$ is
+> *trivial*: a constant, a point-pencil $\mathbf{1}[p \in W]$, a dual hyperplane
+> family $\mathbf{1}[W \subseteq H]$, or a complement of one of these. The case
+> $q = 2$ admits additional, non-trivial solutions.
 
-A foundational fact is that every Cameron–Liebler line class $L$ has an integer
-**parameter** $x = x(L)$ with $0 \le x \le q^2+1$, and that
-$$
-|L| \;=\; x\,(q^2+q+1).
-$$
-That is, the size of the class is $x$ times the number of lines through a point. This
-*degree-one counting identity* is the combinatorial signature we use throughout.
+### 1.2 Contribution
 
-Eight classes are constructible directly from incidence geometry and are deemed
-**trivial**:
+We do not reprove the full classification. Instead we extract its *elementary
+combinatorial skeleton* and establish it rigorously. Concretely:
 
-| Construction | Description | Parameter $x$ |
-|---|---|---|
-| $0$ | empty class | $0$ |
-| $1$ | all lines | $q^2+1$ |
-| $x_p$ | lines through a point $p$ | $1$ |
-| $1-x_p$ | complement | $q^2$ |
-| $y_r$ | lines in a plane $r$ | $1$ |
-| $1-y_r$ | complement | $q^2$ |
-| $x_p + y_r$ | lines through $p$ or in $r$ ($p \notin r$) | $2$ |
-| $1-x_p-y_r$ | complement | $q^2-1$ |
+1. We give an abstract model of $J_q(n,2)$ as a finite linear space and a purely
+   combinatorial definition of "degree $\le 1$" that matches the spanning
+   description of $V_0 \oplus V_1$.
+2. We verify that the trivial solutions are Boolean degree one and that the class
+   is closed under complementation.
+3. We prove a lower bound of $|P|+2$ on the number of Boolean degree one
+   functions, with an explicit injection witnessing it.
+4. We prove the symmetric rigidity lemma: constant-weight degree-one functions
+   are constant, powered solely by uniform line size.
+5. We isolate the fundamental obstruction: the sum of two distinct pencils is
+   degree one but not Boolean, because of the unique-line axiom.
 
-Their parameters form the **trivial set**
-$$
-T_q \;=\; \{\,0,\,1,\,2,\,q^2-1,\,q^2,\,q^2+1\,\}.
-$$
-The set-theoretic complement of a class with parameter $x$ has parameter $q^2+1-x$;
-thus $T_q$ is invariant under the involution $x \mapsto q^2+1-x$, and the trivial
-classes occupy only the *extremes* of the parameter range.
+All five are stated below with full mathematical content and proof sketches that
+mirror complete, gap-free formal proofs.
 
-The motivating problem: **does a Boolean degree one function exist whose parameter
-lies strictly inside the open window $(2, q^2-1)$?** Such a function is *non-trivial*:
-it is none of the eight constructions above.
+### 1.3 Modelling hypothesis
 
-### 1.3 Contribution
-
-We isolate the unconditional arithmetic skeleton of the Bruen–Drudge construction and
-formally verify it, then connect it to non-triviality through a minimal,
-hypothesis-driven model of a Cameron–Liebler class. Concretely:
-
-1. We define the self-complementary midpoint parameter
-   $\operatorname{bdParam}(q) = \lfloor (q^2+1)/2 \rfloor$ and prove it is a genuine
-   integer half exactly for odd $q$ (`bdParam_two_mul`,
-   `bdParam_self_complement`).
-2. We prove the non-triviality bounds $2 < \operatorname{bdParam}(q) < q^2-1$ for
-   $q \ge 3$ (`bdParam_gt_two`, `bdParam_gt_four`, `bdParam_lt`,
-   `bdParam_nontrivial`).
-3. We supply the line-count infrastructure
-   $\#\{\text{lines through a point}\} = q^2+q+1$ and
-   $\#\{\text{all lines}\} = (q^2+1)(q^2+q+1)$.
-4. We model a Cameron–Liebler class abstractly (structure `CLClass`) and prove that a
-   class realized at parameter $\operatorname{bdParam}(q)$, $q \ge 3$, has a
-   non-constant indicator (`CLClass.exists_true`, `CLClass.exists_false`,
-   `CLClass.toFun_not_constant`).
-
-The arithmetic (items 1–3) is proved with no geometric assumptions. The geometric
-realizability — the existence of the Bruen–Drudge class — is the content of the
-hypothesis embodied in the `CLClass` structure (item 4); we do not re-derive it.
+Our single modelling assumption (call it **H0**) is that the analytic degree
+$\le 1$ subspace of $J_q(n,2)$ equals $\operatorname{span}\{1\} \oplus
+\operatorname{span}\{\text{point-pencil indicators}\}$. This is standard: the
+point-pencils span $V_0 \oplus V_1$. Adopting it as the *definition* of degree
+$\le 1$ renders every statement below a faithful, fully elementary shadow of the
+scheme-theoretic one. The insight that makes everything compute is that, under
+H0, a function is degree $\le 1$ iff $f(\ell) = c + \sum_{p \in \ell} w(p)$ for a
+constant $c$ and a point-weight $w$; all spectral content collapses to summing a
+weight over the $q+1$ points of a line, and uniformity of the line size $q+1$
+(the regularity of the scheme) is exactly what powers the symmetric rigidity
+lemma.
 
 ---
 
-## 2. Foundational line counts
+## 2. The Model: Finite Linear Spaces
 
-We work over the natural numbers $\mathbb{N}$ throughout.
+Throughout, $P$ is a finite set of **points** and $L$ a finite set of **lines**.
+The incidence is encoded by a map
+$$\mathrm{pts} : L \to \mathcal{P}_{\mathrm{fin}}(P), \qquad \ell \mapsto \mathrm{pts}(\ell),$$
+sending each line to its (finite) set of points. We write $p \in \ell$ for
+$p \in \mathrm{pts}(\ell)$.
 
-**Definition 2.1 (lines through a point).** The number of lines of $PG(3,q)$ through a
-fixed point is
-$$
-\operatorname{numLinesThroughPoint}(q) \;=\; q^2 + q + 1.
-$$
-*Justification.* The lines through a fixed point $p$ correspond bijectively to the
-$2$-spaces of $V$ containing the fixed $1$-space $\langle p\rangle$, equivalently to
-the $1$-spaces of the quotient $V/\langle p\rangle \cong \mathbb{F}_q^3$, i.e. to the
-points of $PG(2,q)$, of which there are $q^2+q+1$.
+The model of $J_q(n,2)$ satisfies the **linear space axioms**:
 
-**Definition 2.2 (total lines).** The total number of lines of $PG(3,q)$ is the
-Gaussian binomial coefficient
-$$
-\operatorname{numLines}(q) \;=\; \binom{4}{2}_q \;=\; (q^2+1)(q^2+q+1).
-$$
-*Justification.* $\binom{4}{2}_q = \frac{(q^4-1)(q^3-1)}{(q^2-1)(q-1)}
-= (q^2+1)(q^2+q+1)$ after cancellation.
+- **(Uniformity)** every line has exactly $q+1$ points: $|\mathrm{pts}(\ell)| = q+1$
+  for all $\ell$;
+- **(Unique line)** any two distinct points lie on exactly one common line.
 
-**Lemma 2.3 (positivity).** $\operatorname{numLinesThroughPoint}(q) > 0$ and
-$\operatorname{numLines}(q) > 0$ for all $q$.
+For the counting results we also use three mild **richness** hypotheses:
 
-These two counts are the only geometric quantities needed below.
+- **(Through)** every point lies on some line: $\forall p\,\exists \ell,\ p \in \ell$;
+- **(Avoid)** every point is avoided by some line: $\forall p\,\exists \ell,\ p \notin \ell$;
+- **(Separating)** distinct points are separated by a line:
+  $\forall p \ne p'\,\exists \ell,\ p \in \ell \wedge p' \notin \ell$.
 
----
+These hold in any non-degenerate projective geometry $\mathrm{PG}(n-1,q)$ with
+$n \ge 3$.
 
-## 3. The Bruen–Drudge midpoint parameter
+### Definition 2.1 (Point-pencil indicator)
 
-**Definition 3.1.** The **Bruen–Drudge parameter** is
-$$
-\operatorname{bdParam}(q) \;=\; \left\lfloor \frac{q^2+1}{2} \right\rfloor
-\qquad(\text{natural-number division}).
-$$
-It is the natural candidate for a *self-complementary* parameter: a class with
-parameter $x$ is congruent to its own complement (parameter $q^2+1-x$) iff
-$2x = q^2+1$, i.e. $x = (q^2+1)/2$.
+For a point $p \in P$, the **point-pencil indicator** $\mathrm{ind}(p) : L \to \mathbb{R}$ is
+$$\mathrm{ind}(p)(\ell) \;=\; \mathbf{1}[p \in \ell] \;=\; \begin{cases} 1 & p \in \mathrm{pts}(\ell), \\ 0 & p \notin \mathrm{pts}(\ell). \end{cases}$$
+Geometrically, $\mathrm{ind}(p)$ is the indicator of the *pencil* (star) of lines
+through $p$.
 
-### 3.1 Integrality for odd $q$
+### Definition 2.2 (Degree $\le 1$)
 
-**Theorem 3.2 (`bdParam_two_mul`).** *If $q$ is odd, then*
-$$
-2\,\operatorname{bdParam}(q) \;=\; q^2 + 1.
-$$
-*Proof sketch.* If $q$ is odd then $q^2$ is odd, so $q^2+1$ is even and
-$2 \mid (q^2+1)$. For an even number $m$, $2\lfloor m/2\rfloor = m$
-(`Nat.mul_div_cancel'` applied to $2 \mid q^2+1$). Apply with $m = q^2+1$. $\square$
+A function $f : L \to \mathbb{R}$ has **degree $\le 1$**, written
+$\mathrm{IsDegLEOne}(f)$, if there exist a constant $c \in \mathbb{R}$ and a
+point-weight $w : P \to \mathbb{R}$ with
+$$f(\ell) \;=\; c \;+\; \sum_{p \in \mathrm{pts}(\ell)} w(p) \qquad \text{for all } \ell \in L.$$
 
-**Corollary 3.3 (`bdParam_self_complement`).** *If $q$ is odd, then*
-$$
-\operatorname{bdParam}(q) + \operatorname{bdParam}(q) \;=\; q^2 + 1,
-$$
-*so the parameter is self-complementary under $x \mapsto q^2+1-x$.*
-*Proof.* Rewrite $x + x = 2x$ and apply Theorem 3.2. $\square$
+### Definition 2.3 (Boolean)
 
-*Remark (even $q$ obstruction).* For even $q$, $q^2+1$ is odd, so $2 \mid (q^2+1)$
-fails and $2\lfloor (q^2+1)/2\rfloor = q^2 \ne q^2+1$. Thus there is **no** integer
-self-complementary parameter when $q$ is even; e.g. $q=4$ gives $q^2+1 = 17$ and
-$2\cdot 8 = 16$. Self-complementarity is an arithmetic phenomenon available only for
-odd $q$.
+A function $f : L \to \mathbb{R}$ is **Boolean**, written $\mathrm{IsBoolean}(f)$,
+if $f(\ell) \in \{0,1\}$ for every $\ell$.
 
-### 3.2 Non-triviality bounds for $q \ge 3$
+### Definition 2.4 (Boolean degree one)
 
-**Theorem 3.4 (lower bound, `bdParam_gt_two`).** *For $q \ge 3$,*
-$$
-2 \;<\; \operatorname{bdParam}(q).
-$$
-*Proof sketch.* By the floor inequality $2 < \lfloor (q^2+1)/2\rfloor$ iff
-$2\cdot 3 \le q^2+1$ (i.e. $\lfloor m/2\rfloor \ge k+1 \iff m \ge 2(k+1)$), and
-$q^2+1 \ge 10 > 6$ for $q \ge 3$. $\square$
+$f$ is **Boolean degree one**, $\mathrm{BooleanDegOne}(f)$, if it is both Boolean
+and degree $\le 1$:
+$$\mathrm{BooleanDegOne}(f) \;\equiv\; \mathrm{IsBoolean}(f) \wedge \mathrm{IsDegLEOne}(f).$$
 
-**Theorem 3.5 (sharper lower bound, `bdParam_gt_four`).** *For $q \ge 3$ with $q$
-odd,*
-$$
-4 \;<\; \operatorname{bdParam}(q).
-$$
-*Proof sketch.* Write $q = 2k+1$; then $q^2+1 = 4k^2+4k+2$ and
-$\operatorname{bdParam}(q) = 2k^2+2k+1$. For $q \ge 3$ we have $k \ge 1$, whence
-$2k^2+2k+1 \ge 5 > 4$. $\square$
+The following reformulation simply unfolds the definitions and records the working
+form used throughout.
 
-**Theorem 3.6 (upper bound, `bdParam_lt`).** *For $q \ge 3$,*
-$$
-\operatorname{bdParam}(q) \;<\; q^2 - 1.
-$$
-*Proof sketch.* Since $\lfloor (q^2+1)/2\rfloor \le (q^2+1)/2$, it suffices that
-$(q^2+1)/2 < q^2-1$, i.e. $q^2+1 < 2q^2-2$, i.e. $q^2 > 3$, which holds for $q \ge 2$.
-Formally one uses $2\lfloor (q^2+1)/2\rfloor \le q^2+1$ and a linear-arithmetic step.
-$\square$
+### Proposition 2.5 (Reformulation, `BooleanDegOne_iff`)
 
-**Theorem 3.7 (non-triviality, `bdParam_nontrivial`).** *For $q \ge 3$,*
-$$
-2 \;<\; \operatorname{bdParam}(q) \;<\; q^2 - 1.
-$$
-*Proof.* Conjunction of Theorems 3.4 and 3.6. $\square$
+For any incidence $\mathrm{pts}$ and any $f : L \to \mathbb{R}$,
+$$\mathrm{BooleanDegOne}(f) \iff \Big(\forall \ell,\ f(\ell)=0 \vee f(\ell)=1\Big) \wedge \Big(\exists c\, \exists w,\ \forall \ell,\ f(\ell) = c + \textstyle\sum_{p \in \mathrm{pts}(\ell)} w(p)\Big).$$
 
-Hence for $q \ge 3$ the midpoint parameter lies strictly inside the open window
-$(2, q^2-1)$ and therefore avoids the trivial set
-$T_q = \{0,1,2,q^2-1,q^2,q^2+1\}$.
-
-### 3.3 The threshold at $q = 3$
-
-**Proposition 3.8 (informal, the $q=2$ obstruction).** *The non-trivial window
-$(2, q^2-1)$ contains no integer iff $q \le 2$.*
-
-*Discussion.* The open integer interval $(2, q^2-1)$ is non-empty iff
-$q^2 - 1 > 3$, i.e. $q^2 > 4$, i.e. $q \ge 3$. Equivalently, the trivial set $T_q$
-covers all of $\{0,\dots,q^2+1\}$ exactly when $q^2+1 \le 5$, i.e. $q \le 2$. For
-$q=2$ the parameter range is $\{0,1,2,3,4,5\}$ and $T_2 = \{0,1,2,3,4,5\}$ is the
-entire range — no non-trivial parameter exists. For $q=3$ the range is
-$\{0,\dots,10\}$, $T_3 = \{0,1,2,8,9,10\}$, and the window $\{3,4,5,6,7\}$ opens,
-with midpoint $\operatorname{bdParam}(3)=5$ inside. (The full $q=2$ *impossibility*
-for actual classes — as opposed to the parameter count — is recorded as a future
-direction; the parameter-level statement above is what the arithmetic core
-establishes.)
+*Proof.* Definitional unfolding. $\qquad\blacksquare$
 
 ---
 
-## 4. From parameter to non-constancy
+## 3. The Trivial Solutions Are Boolean Degree One
 
-We now model a Cameron–Liebler class abstractly and deduce non-triviality from the
-counting identity, *without* assuming the geometric construction beyond the existence
-of such a class.
+### Theorem 3.1 (Constants, `const_zero_BDO`, `const_one_BDO`)
 
-**Definition 4.1 (`CLClass`).** Fix $q \in \mathbb{N}$ and a finite type
-$\textsf{lines}$ with decidable equality. A **Cameron–Liebler class** on
-$\textsf{lines}$ is a triple
-$$
-C = (\,\operatorname{toFun},\ \operatorname{param},\ \operatorname{card\_eq}\,)
-$$
-where $\operatorname{toFun} : \textsf{lines} \to \{\textsf{true},\textsf{false}\}$ is
-the Boolean indicator, $\operatorname{param} \in \mathbb{N}$ is the parameter, and
-$\operatorname{card\_eq}$ is the degree-one counting identity
-$$
-\bigl|\{\,l : \operatorname{toFun}(l) = \textsf{true}\,\}\bigr|
-\;=\; \operatorname{param}\cdot \operatorname{numLinesThroughPoint}(q)
-\;=\; \operatorname{param}\,(q^2+q+1).
-$$
-This structure carries *exactly* the data a Boolean degree one function must satisfy.
-Its inhabitation by the Bruen–Drudge class at $\operatorname{param} =
-\operatorname{bdParam}(q)$ is the geometric hypothesis (Bruen–Drudge theorem); we do
-not prove inhabitation, we reason from it.
+The constant functions $\ell \mapsto 0$ and $\ell \mapsto 1$ are Boolean degree
+one.
 
-**Theorem 4.2 (`CLClass.exists_true`).** *If $\operatorname{param} > 0$, then
-$\operatorname{toFun}(l) = \textsf{true}$ for some line $l$.*
-*Proof sketch.* If $\operatorname{toFun}$ were identically $\textsf{false}$, the
-support would be empty, so by $\operatorname{card\_eq}$ we would have
-$0 = \operatorname{param}\cdot(q^2+q+1)$. Since $q^2+q+1 > 0$ (Lemma 2.3) and
-$\operatorname{param} > 0$, the right side is positive — contradiction. $\square$
+*Proof sketch.* Both are Boolean by inspection. For degree $\le 1$ take
+$w \equiv 0$ and the empty tally vanishes, so $f(\ell) = c + 0 = c$; choose
+$c = 0$ for the zero function and $c = 1$ for the one function. $\qquad\blacksquare$
 
-**Theorem 4.3 (`CLClass.exists_false`).** *If $\#\,\textsf{lines} =
-\operatorname{numLines}(q)$ and $\operatorname{param} < q^2+1$, then
-$\operatorname{toFun}(l) = \textsf{false}$ for some line $l$.*
-*Proof sketch.* Contrapositive: if $\operatorname{toFun}$ were identically
-$\textsf{true}$, the support would be all of $\textsf{lines}$, so
-$\operatorname{card\_eq}$ gives
-$\operatorname{numLines}(q) = \operatorname{param}\,(q^2+q+1)$, i.e.
-$(q^2+1)(q^2+q+1) = \operatorname{param}\,(q^2+q+1)$. Cancelling the positive factor
-$q^2+q+1$ yields $\operatorname{param} = q^2+1$, contradicting
-$\operatorname{param} < q^2+1$. $\square$
+### Theorem 3.2 (Point-pencils, `pencil_BDO`)
 
-**Theorem 4.4 (conditional non-triviality, `CLClass.toFun_not_constant`).** *Let
-$q \ge 3$, let $\#\,\textsf{lines} = \operatorname{numLines}(q)$, and let $C$ be a
-Cameron–Liebler class with $\operatorname{param} = \operatorname{bdParam}(q)$. Then
-$\operatorname{toFun}$ is non-constant:*
-$$
-\bigl(\exists\,l,\ \operatorname{toFun}(l)=\textsf{true}\bigr)
-\ \wedge\
-\bigl(\exists\,l,\ \operatorname{toFun}(l)=\textsf{false}\bigr).
-$$
-*Proof.* For the first conjunct, Theorem 3.4 gives
-$\operatorname{bdParam}(q) > 2 > 0$, so $\operatorname{param} > 0$ and Theorem 4.2
-applies. For the second conjunct, Theorem 3.6 gives
-$\operatorname{bdParam}(q) < q^2-1 < q^2+1$, so $\operatorname{param} < q^2+1$ and
-Theorem 4.3 applies (using $\#\,\textsf{lines}=\operatorname{numLines}(q)$).
-$\square$
+For every point $p$, the indicator $\mathrm{ind}(p)$ is Boolean degree one.
 
-**Corollary 4.5 (existence of a non-trivial Boolean degree one function).** *For odd
-$q \ge 3$, granting the Bruen–Drudge realizability hypothesis (a `CLClass` with
-parameter $\operatorname{bdParam}(q)$ on the genuine line set of $J_q(4,2)$ exists),
-its indicator is a non-constant Boolean degree one function whose parameter lies
-strictly inside $(2,q^2-1)$ and hence outside the trivial set $T_q$. It is therefore a
-non-trivial Boolean degree one function.* By Corollary 3.3 it is moreover
-self-complementary.
+*Proof sketch.* By construction $\mathrm{ind}(p)$ takes values in $\{0,1\}$, so it
+is Boolean. For degree $\le 1$ take $c = 0$ and the **Kronecker weight**
+$w(x) = \mathbf{1}[x = p]$. Then
+$$c + \sum_{x \in \mathrm{pts}(\ell)} w(x) = \sum_{x \in \mathrm{pts}(\ell)} \mathbf{1}[x=p] = \mathbf{1}[p \in \mathrm{pts}(\ell)] = \mathrm{ind}(p)(\ell),$$
+since the indicator $\mathbf{1}[x=p]$ contributes $1$ exactly when $p$ is among
+the points of $\ell$ (and the unique-line/finite-set structure guarantees no
+double counting). $\qquad\blacksquare$
+
+### Theorem 3.3 (Closure under complementation, `compl_BDO`)
+
+If $f$ is Boolean degree one, then so is $\ell \mapsto 1 - f(\ell)$.
+
+*Proof sketch.* If $f(\ell) \in \{0,1\}$ then $1 - f(\ell) \in \{1,0\}$, so the
+complement is Boolean. If $f(\ell) = c + \sum_{p \in \ell} w(p)$, then
+$$1 - f(\ell) = (1 - c) + \sum_{p \in \ell} (-w(p)),$$
+using linearity of the sum (distributing the negation over the tally), so the
+complement is degree $\le 1$ with constant $1 - c$ and weight $-w$. $\qquad\blacksquare$
+
+Combining Theorems 3.1–3.3, the entire trivial family — constants, pencils, and
+all complements — lies in $\mathrm{BooleanDegOne}$. (By point/hyperplane duality,
+the dual hyperplane families $\mathbf{1}[\ell \subseteq H]$ are pencils in the
+dual geometry and hence covered by the same argument.)
 
 ---
 
-## 5. Algorithms
+## 4. Symmetric Rigidity
 
-The arithmetic core is fully computable, enabling direct verification and exploration.
+The heart of the rigidity phenomenon, in its cleanest form, is that *uniform line
+size forbids non-trivial symmetric solutions*.
 
-### 5.1 Parameter-window classifier
+### Theorem 4.1 (Constant-weight functions are constant, `const_weight_is_constant`)
 
-**Purpose.** Given $q$, compute the trivial set $T_q$, the non-trivial window
-$(2,q^2-1)$, the midpoint $\operatorname{bdParam}(q)$, and decide membership.
+Assume uniformity: $|\mathrm{pts}(\ell)| = q+1$ for all $\ell$. Let $f : L \to
+\mathbb{R}$ be degree $\le 1$ via a **constant weight**, i.e. there are $c, a \in
+\mathbb{R}$ with
+$$f(\ell) = c + \sum_{p \in \mathrm{pts}(\ell)} a \qquad \text{for all } \ell.$$
+Then $f$ is constant: $f(\ell) = f(\ell')$ for all $\ell, \ell'$.
 
-**Pseudocode.**
-```
-function classify(q):
-    nltp        <- q*q + q + 1
-    nlines      <- (q*q + 1) * nltp
-    maxparam    <- q*q + 1
-    bd          <- (q*q + 1) // 2
-    trivial     <- {0, 1, 2, q*q - 1, q*q, q*q + 1}
-    window      <- { x : 2 < x < q*q - 1 }            # integers
-    is_integer_midpoint <- (2*bd == q*q + 1)          # true iff q odd
-    nontrivial  <- (bd in window)                     # true iff q >= 3
-    return (nltp, nlines, maxparam, bd, trivial, window,
-            is_integer_midpoint, nontrivial)
-```
-**Complexity.** $O(1)$ arithmetic; window enumeration is $O(q^2)$ if listed.
+*Proof sketch.* The tally of a constant weight $a$ over the points of $\ell$ is
+$|\mathrm{pts}(\ell)| \cdot a$. By uniformity this is $(q+1)a$, *independent of*
+$\ell$. Hence
+$$f(\ell) = c + (q+1)a = f(\ell') \qquad \text{for all } \ell, \ell'. \qquad\blacksquare$$
 
-### 5.2 Non-constancy certificate from the counting identity
-
-**Purpose.** Given a parameter $x$ and the ambient line count $N=\operatorname{numLines}(q)$,
-certify that any class with that parameter is non-constant.
-
-**Pseudocode.**
-```
-function nonconstant_certificate(q, x):
-    nltp   <- q*q + q + 1
-    N      <- (q*q + 1) * nltp
-    support_size <- x * nltp                  # forced by degree-one identity
-    has_true  <- (support_size > 0)           # <=> x > 0
-    has_false <- (support_size < N)           # <=> x < q*q + 1
-    return has_true and has_false             # non-constant iff 0 < x < q*q+1
-```
-**Complexity.** $O(1)$. Correctness is Theorems 4.2–4.3.
+**Interpretation.** A symmetric weight is precisely an automorphism-invariant one
+(it does not distinguish points). Theorem 4.1 says the only such Boolean degree
+one functions are the constants. Equivalently, any *symmetric* Boolean degree one
+function on $J_q(n,2)$ is trivial. The regularity of the scheme — every line the
+same size — is the sole ingredient.
 
 ---
 
-## 6. Numerical illustrations
+## 5. The Counting Lower Bound
 
-For $q \in \{2,3,4,5,7,9\}$ (see `demo.py`):
+### Lemma 5.1 (Pencils are distinct, `ind_injective`)
 
-| $q$ | parity | $q^2+q+1$ | $(q^2+1)(q^2+q+1)$ | $\operatorname{bdParam}$ | $2\operatorname{bdParam}$ vs $q^2+1$ | window $(2,q^2-1)$ | midpoint in window |
-|---|---|---|---|---|---|---|---|
-| 2 | even | 7 | 35 | 2 | $4 \ne 5$ | $\varnothing$ | no |
-| 3 | odd | 13 | 130 | 5 | $10 = 10$ | $\{3,\dots,7\}$ | yes |
-| 4 | even | 21 | 357 | 8 | $16 \ne 17$ | $\{3,\dots,14\}$ | yes (but not integer-self-complementary) |
-| 5 | odd | 31 | 806 | 13 | $26 = 26$ | $\{3,\dots,23\}$ | yes |
-| 7 | odd | 57 | 2850 | 25 | $50 = 50$ | $\{3,\dots,47\}$ | yes |
-| 9 | odd | 91 | 7462 | 41 | $82 = 82$ | $\{3,\dots,79\}$ | yes |
+Under (Separating), the map $p \mapsto \mathrm{ind}(p)$ is injective.
 
-The table confirms: integer self-complementarity holds exactly for odd $q$; the
-midpoint enters the non-trivial window exactly from $q=3$ onward.
+*Proof sketch.* Suppose $\mathrm{ind}(p) = \mathrm{ind}(p')$ but $p \ne p'$. By
+(Separating) there is a line $\ell$ with $p \in \ell$ and $p' \notin \ell$. Then
+$\mathrm{ind}(p)(\ell) = 1$ while $\mathrm{ind}(p')(\ell) = 0$, contradicting
+equality of the functions at $\ell$. Hence $p = p'$. $\qquad\blacksquare$
 
----
+### Theorem 5.2 (Many Boolean degree one functions, `exists_many_BDO`)
 
-## 7. Applications and connections
+Assume $L$ is nonempty and (Through), (Avoid), (Separating) hold. Then there is an
+injection
+$$g : P \sqcup \{\mathtt{tt}, \mathtt{ff}\} \;\hookrightarrow\; (L \to \mathbb{R})$$
+every one of whose images is Boolean degree one. Consequently $J_q(n,2)$ carries
+at least $|P| + 2$ distinct Boolean degree one functions.
 
-**Spectral graph theory.** The lines of $PG(3,q)$ are the vertices of the Grassmann
-graph $J_q(4,2)$, a distance-regular (P-polynomial) graph. Boolean degree one
-functions are the $\{0,1\}$-vectors lying in $V_0 \oplus V_1$, the top two eigenspaces.
-The existence of non-trivial such vectors is a structural fact about the graph's
-combinatorial eigenvectors and connects to the broader study of Boolean functions on
-association schemes.
+*Proof sketch.* Define $g$ on the two Booleans as the constant functions $0$ and
+$1$, and on a point $p$ as the pencil $\mathrm{ind}(p)$. Each image is Boolean
+degree one by Theorems 3.1–3.2. Injectivity has three parts:
 
-**Coding theory and designs.** Cameron–Liebler classes correspond to tight sets and
-yield structured line sets used in the construction of two-weight codes and
-combinatorial designs; self-complementary classes at the midpoint are particularly
-symmetric.
+- the two constants are distinct (using nonemptiness of $L$ to exhibit a line
+  where they differ);
+- distinct points give distinct pencils by Lemma 5.1;
+- a pencil is distinct from each constant: by (Through) some line $\ell$ has
+  $p \in \ell$, so $\mathrm{ind}(p)(\ell) = 1 \ne 0$, separating it from the zero
+  function; by (Avoid) some line $\ell'$ has $p \notin \ell'$, so
+  $\mathrm{ind}(p)(\ell') = 0 \ne 1$, separating it from the one function.
 
-**Field arithmetic as obstruction.** The dependence on the parity of $q$
-(Theorem 3.2 and its remark) and the threshold at $q=3$ (Proposition 3.8) exhibit how
-number-theoretic constraints on $q$ govern the existence of geometric structures.
+Hence $g$ is injective and the count $|P| + 2$ follows. $\qquad\blacksquare$
 
-**$q$-Krawtchouk bridge to the Hamming scheme.** In the Hamming scheme $H(n,2)$,
-degree-one Boolean functions are governed by the first Krawtchouk polynomial
-$K_1(x;n) = n-2x$. The Grassmann scheme is the $q$-analogue: its first eigenvalue is a
-$q$-deformation of $n-2x$, and Boolean degree one functions are its $\{0,1\}$-valued
-eigenvectors. The midpoint $x=(q^2+1)/2$ is exactly where the $q$-linear functional
-balances, identifying the self-complementary Bruen–Drudge class as the finite-field
-analogue of a balanced Boolean function.
+This is a *lower* bound. The rigidity conjecture asserts it is essentially tight
+for $q \ge 3$, $n \ge 4$ once the dual hyperplane families and complements are
+included.
 
 ---
 
-## 8. Discussion: separating arithmetic from geometry
+## 6. The Boolean Obstruction
 
-A methodological point deserves emphasis. The Bruen–Drudge theorem (geometric
-existence of a self-complementary Cameron–Liebler class for odd $q$) rests on an
-explicit construction using elliptic quadrics and finite-field arithmetic. Rather than
-re-deriving that construction, we factor the result into two independent parts:
+### Theorem 6.1 (Sum of two pencils is degree one but not Boolean, `two_pencils_not_boolean`)
 
-- an **unconditional arithmetic core** (Sections 2–3), proving everything about the
-  midpoint parameter that does not depend on a class existing; and
-- a **hypothesis-driven deduction** (Section 4), proving that *given* a class at the
-  midpoint, its indicator is non-constant and hence non-trivial.
+Let $p \ne p'$ be distinct points and consider
+$$g(\ell) = \mathrm{ind}(p)(\ell) + \mathrm{ind}(p')(\ell) = \mathbf{1}[p \in \ell] + \mathbf{1}[p' \in \ell].$$
+Then $g$ is degree $\le 1$, but $g$ is **not** Boolean.
 
-This factoring makes the logical content transparent: the only geometric input is the
-inhabitation of `CLClass` at the midpoint parameter; everything else is number theory
-plus the degree-one counting identity. The same template applies to any parameter $x$:
-a class at parameter $x$ is non-trivial precisely when $2 < x < q^2-1$, and
-non-constant precisely when $0 < x < q^2+1$.
+*Proof sketch.* Degree $\le 1$ is immediate: with $c = 0$ and weight
+$w(x) = \mathbf{1}[x=p] + \mathbf{1}[x=p']$ we have
+$g(\ell) = \sum_{x \in \ell} w(x)$. For the failure of Booleanness, invoke the
+(Unique line) axiom: there is a line $\ell^\*$ containing both $p$ and $p'$. On
+that line
+$$g(\ell^\*) = 1 + 1 = 2 \notin \{0,1\},$$
+so $g$ is not Boolean. $\qquad\blacksquare$
 
----
-
-## 9. Future directions
-
-(See PACKAGE.json `future_directions` for the full text.)
-
-- **C1.** The non-trivial window is non-empty iff $q \ge 3$; prove the $q=2$
-  impossibility as a finite enumeration on the $35$-line geometry.
-- **C2.** Every self-complementary Boolean degree one function forces $q$ odd and
-  support size $(q^2+1)(q^2+q+1)/2$.
-- **C3.** Parameter rigidity: $\{0,1,2,q^2-1,q^2,q^2+1\}$ is the unique maximal subset
-  of $\{0,\dots,q^2+1\}$ closed under complementation and realized for all $q$.
-- **C4.** A $q$-Krawtchouk eigenvalue bridge to the Hamming scheme, identifying
-  Boolean degree one functions as $\{0,1\}$-eigenvectors of the first $q$-Krawtchouk
-  eigenvalue.
+**Interpretation.** This is the smallest instance of the mechanism that defeats
+naive constructions of new solutions. Sums of degree-one functions stay degree
+one (the space is linear), but the geometry forces collisions: two pencils share
+a line, and that line is pinned to the forbidden value $2$. Any attempt to build a
+non-trivial Boolean solution by superposing trivial ones must reckon with these
+collisions. For $q \ge 3$ this rigidity is total; for $q = 2$ the field's special
+arithmetic ($1 + 1 = 0$) provides exactly the loophole that lets non-trivial
+solutions exist.
 
 ---
 
-## 10. Conclusion
+## 7. The Exceptional Case $q = 2$ and the Fano Plane
 
-We have formally established the arithmetic backbone of the Bruen–Drudge construction:
-the midpoint parameter $\operatorname{bdParam}(q)=\lfloor(q^2+1)/2\rfloor$ is a genuine
-self-complementary integer exactly for odd $q$, and lies strictly inside the
-non-trivial window $(2,q^2-1)$ for all $q \ge 3$. Coupled with a minimal,
-hypothesis-driven model of a Cameron–Liebler class and the elementary line counts
-$q^2+q+1$ and $(q^2+1)(q^2+q+1)$, this yields a clean conditional theorem: any class
-realized at the midpoint, for $q \ge 3$, is a non-constant — hence non-trivial —
-Boolean degree one function on $J_q(4,2)$. The result cleanly separates the
-unconditional number theory from the geometric realizability carried by the
-Bruen–Drudge theorem.
+The smallest projective plane $\mathrm{PG}(2,2) = J_2(3,2)$ is the **Fano plane**:
+$7$ points, $7$ lines, $3$ points per line, $3$ lines per point. It is the unique
+$(7_3)$ configuration and the canonical example where the rigidity of $q \ge 3$
+fails. Over $\mathbb{F}_2$ one has $1 + 1 = 0$, so the value-$2$ obstruction of
+Theorem 6.1, which is fatal over larger fields, is softened; combined with the
+plane's extreme symmetry this allows Boolean degree one functions that are
+provably none of constant, point-pencil, hyperplane family, or complement. A
+concrete realization in the present framework instantiates $P$ and $L$ as the
+seven points and lines with the standard incidence; every hypothesis (uniformity
+with $q+1 = 3$, unique line, and all three richness conditions) is satisfied, so
+Theorems 3.1–6.1 specialize verbatim, and the contrast with $q \ge 3$ becomes
+explicit.
+
+---
+
+## 8. Algorithms
+
+The framework is finite and decidable on any concrete instance, which makes the
+following procedures effective.
+
+### 8.1 Enumeration of degree-one functions over a finite weight grid
+
+Given a finite linear space $(P, L, \mathrm{pts})$ and a finite grid
+$W \subseteq \mathbb{R}$ for weights and constants, one can enumerate all degree
+$\le 1$ functions $f(\ell) = c + \sum_{p \in \ell} w(p)$ and filter for the
+Boolean ones. By the conjectured integral reduction (C3), the grid
+$W = \{-1,0,1\}$ and $c \in \{0,1\}$ suffice to capture all Boolean degree one
+functions, rendering the search finite and complete.
+
+### 8.2 Classification check
+
+For a candidate Boolean degree one $f$, decide triviality by testing equality
+against the explicit trivial list — the constants, the $|P|$ pencils, the dual
+hyperplane families, and all complements — each of which is generated directly
+from the incidence.
+
+Both procedures run in time polynomial in $|P|\cdot|L|\cdot|W|^{|P|}$ for the
+naive enumeration; the integral reduction caps $|W| = 3$, making bounded
+instances such as Fano and small $J_q(4,2)$ fully tractable.
+
+---
+
+## 9. Applications and Connections
+
+- **Analysis of Boolean functions.** Theorem 5.2 plus the rigidity conjecture is
+  the Grassmann analogue of FKN-type junta theorems: degree-one Boolean functions
+  are "geometric juntas" — essentially single point-pencils.
+- **Coding and design theory.** Pencils and hyperplane families are the building
+  blocks of optimal $q$-ary codes and $q$-analogues of designs; rigidity says no
+  other low-complexity Boolean structures intrude.
+- **Spectral graph theory.** The result is a statement about the top eigenspace
+  $V_0 \oplus V_1$ of the Grassmann graph, connecting Boolean constraints to
+  eigenvalue multiplicities.
+
+---
+
+## 10. Discussion and Future Work
+
+We have isolated and rigorously established the elementary skeleton of the
+$J_q(n,2)$ Boolean degree one rigidity story: the trivial solutions are valid and
+abundant ($\ge |P| + 2$), symmetry forces constancy through uniform line size,
+and the unique-line axiom obstructs naive superposition. The full classification
+for $q \ge 3$, $n \ge 4$ — and the genuine exceptions at $q = 2$ — sit naturally
+atop this foundation.
+
+Five concrete directions extend the work:
+
+- **C1 — Rigidity for $q \ge 3$ (main conjecture).** For $q \ge 3$ and $n \ge 4$,
+  every Boolean degree one function is trivial; equivalently, the injection of
+  Theorem 5.2 is essentially surjective up to dual families. Target: a
+  classification predicate `IsTrivialBDO` and a proof
+  $\mathrm{BooleanDegOne}(f) \to \mathrm{IsTrivialBDO}(f)$ under the $q \ge 3$,
+  $n \ge 4$ axioms.
+- **C2 — Exceptionality of $q = 2$.** Exhibit and verify a non-trivial Boolean
+  degree one function on a small $J_2(n,2)$, $n \ge 4$, provably distinct from
+  every constant, pencil, and hyperplane family.
+- **C3 — Integral weight reduction.** Show the weight $w$ may be taken in
+  $\{-1,0,1\}$ with $c \in \{0,1\}$, making the search space finite and
+  decidable on bounded instances.
+- **C4 — No non-trivial two-valued-weight functions.** Strengthen Theorem 4.1: if
+  $w$ takes at most two distinct values, then $f$ is trivial, pushing the
+  two-pencil obstruction (Theorem 6.1) through all two-valued weights via line-size
+  regularity and the unique-line axiom.
+- **C5 — Johnson↔Grassmann bridge.** Build a common linear-space interface
+  covering both $J(n,2)$ (the $q \to 1$ degeneration) and $J_q(n,2)$, prove the
+  count of Theorem 5.2 uniformly, and formalize the difference: $J(n,2)$ admits
+  sporadic non-trivial solutions absent for $q \ge 3$.
+
+---
+
+## References
+
+(Self-contained; named for context only.)
+
+- A. A. Bruen, K. Drudge, *The construction of Cameron–Liebler line classes in
+  $\mathrm{PG}(3,q)$* (1999).
+- A. L. Gavrilyuk, I. Yu. Mogilnykh, *Cameron–Liebler line classes in
+  $\mathrm{PG}(n,4)$* (2014).
+- Y. Filmus, F. Ihringer, *Boolean degree 1 functions on some classical
+  association schemes* (2019).
+- E. Friedgut, G. Kalai, A. Naor, *Boolean functions whose Fourier transform is
+  concentrated on the first two levels* (2002).
