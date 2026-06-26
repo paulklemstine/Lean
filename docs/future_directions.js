@@ -1166,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
   },
   {
-    "consumed_by_exp_id": "0dc2bca1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
     "domains": [
       "Analysis",
@@ -1176,7 +1176,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432657+00:00",
     "title": "Fourier Analysis on Finite Groups"
   },
@@ -4782,7 +4782,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Iwasawa Main Conjecture for Brauer groups of K3 surfaces over finite fields"
   },
   {
-    "consumed_by_exp_id": "9e1a2820",
+    "consumed_by_exp_id": "",
     "description": "For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in the finite polynomial product \\prod_{i=0}^{n} (1 - x^{b^i})^m. The conjecture is that the integer sequence n \\mapsto T_{b,m}(n) is unbounded in absolute value: for every B, there exists n such that |T_{b,m}(n)| > B. The paper proves the case b = 2; this conjecture asserts the same phenomenon for every base b >= 2.",
     "domains": [
       "Pythagorean"
@@ -4791,7 +4791,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T18:24:34.645043+00:00",
     "title": "Generalized Gawron\u2013Miska\u2013Ulas unboundedness for arbitrary integer bases"
   },
@@ -5128,11 +5128,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that for Reed-Muller code conversion in the merge regime, when the write cost meets the lower bound derived from generalized Hamming weights (as shown in the paper), the read cost for both initial blocks also achieves the corresponding lower bound under the same parameter conditions. Specifically, for Reed-Muller codes with parameters $(m, r)$ converted to $(m', r')$ in the Plotkin decomposition framework, if the write cost is tight, then the read cost bound must also be tight for both initial blocks. This would resolve the gap noted in the paper where one block's read cost analysis is sharp but the other remains unaccounted for.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2564",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27179v1",
+    "status": "available",
+    "timestamp": "2026-06-26T02:20:22.110481+00:00",
+    "title": "Read Cost Tightness for Reed-Muller Code Conversion in the Merge Regime"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2564",
+    "id": "fd_2565",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5146,7 +5160,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2565",
+    "id": "fd_2566",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5161,7 +5175,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2566",
+    "id": "fd_2567",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5176,7 +5190,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2567",
+    "id": "fd_2568",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",

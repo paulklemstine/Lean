@@ -1555,7 +1555,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0dc2bca1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) · supp(f̂) ≥ |G|.",
     "domain_bridges": [],
     "domains": [
@@ -1568,7 +1568,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432657+00:00",
     "title": "Fourier Analysis on Finite Groups"
   },
@@ -8286,7 +8286,7 @@
       "Mahler-type functional equations",
       "k-regular sequences"
     ],
-    "consumed_by_exp_id": "9e1a2820",
+    "consumed_by_exp_id": "",
     "description": "For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in the finite polynomial product \\prod_{i=0}^{n} (1 - x^{b^i})^m. The conjecture is that the integer sequence n \\mapsto T_{b,m}(n) is unbounded in absolute value: for every B, there exists n such that |T_{b,m}(n)| > B. The paper proves the case b = 2; this conjecture asserts the same phenomenon for every base b >= 2.",
     "domain_bridges": [
       "Combinatorics on words via digit-sum and base-b expansions",
@@ -8303,7 +8303,7 @@
     "proof_strategy": "Define T_{b,m}(n) by finite truncation, since factors with b^i > n cannot affect the coefficient of x^n. The functional equation F_{b,m}(x) = (1 - x)^m F_{b,m}(x^b) gives a finite recurrence expressing T_{b,m}(bn + r) in terms of nearby earlier coefficients. For b > m, one can already obtain explicit exponentially large values by taking n with many base-b digits equal to 1, where no carrying occurs. The difficult range b <= m should be attacked by adapting the paper's algebraic and p-adic method: encode the coefficient recurrence by a finite family of integer matrices indexed by residues modulo b, then prove that some explicitly constructible product has spectral or p-adic growth greater than 1, forcing unboundedness.",
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T18:24:34.645043+00:00",
     "title": "Generalized Gawron–Miska–Ulas unboundedness for arbitrary integer bases"
   },
@@ -8927,6 +8927,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "maturana2022convertible",
+      "ge2024mds"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for Reed-Muller code conversion in the merge regime, when the write cost meets the lower bound derived from generalized Hamming weights (as shown in the paper), the read cost for both initial blocks also achieves the corresponding lower bound under the same parameter conditions. Specifically, for Reed-Muller codes with parameters $(m, r)$ converted to $(m', r')$ in the Plotkin decomposition framework, if the write cost is tight, then the read cost bound must also be tight for both initial blocks. This would resolve the gap noted in the paper where one block's read cost analysis is sharp but the other remains unaccounted for.",
+    "domain_bridges": [
+      "finite_fields",
+      "distributed_storage",
+      "linear_codes"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2564",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the Plotkin decomposition structure for Reed-Muller codes to construct explicit conversion algorithms that simultaneously optimize both read and write costs. Analyze the generalized Hamming weight hierarchy to establish a bijective correspondence between the bounds and achievable costs, focusing on parameter regimes where nontrivial weight jumps occur.",
+    "research_mode": "team",
+    "source_exp_id": "2606.27179v1",
+    "status": "available",
+    "timestamp": "2026-06-26T02:20:22.110481+00:00",
+    "title": "Read Cost Tightness for Reed-Muller Code Conversion in the Merge Regime"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -8941,7 +8967,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2564",
+    "id": "fd_2565",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -8970,7 +8996,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2565",
+    "id": "fd_2566",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -8996,7 +9022,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2566",
+    "id": "fd_2567",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9021,7 +9047,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2567",
+    "id": "fd_2568",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
