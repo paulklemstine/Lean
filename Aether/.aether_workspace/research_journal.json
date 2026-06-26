@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f370d5ee",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions\n\nBuilding on the collision-probability core in\n`Catalog/Cryptography/LeftoverHashCollisionCore.lean`, here are several research\ndirections that extend the formalization toward the",
-      "quality_score": 0.4935106666666667,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-06-21T01:27:46",
-      "title": "Consciousness as Integrated Information"
-    },
-    {
       "cycle_id": "3e812933",
       "domain": "Probability",
       "key_insight": "# Future Directions — Packing-Isolating Sets in Block Graphs\n\nDerived from this cycle's findings: the periodic construction for paths, the\ndomination shortcut for complete graphs, and the `C₅` necessi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-26T19:56:58",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "1f3047ef",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Representation theory of `Sₙ`\n\nDerived from this cycle's findings: we formally pinned down the **shape** of the `Sₙ`\ncharacter table (`p(n)` rows, via the partition ↔ conjugacy-c",
+      "quality_score": 0.45104400000000006,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-06-26T20:28:00",
+      "title": "Representation Theory: Character Tables of S_n"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-06-26T19:56:58",
+  "last_updated": "2026-06-26T20:28:00",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "1ce6e294",
-        "quality": 0.571318,
-        "theorems": 13,
-        "title": "Deepening: Alien Number Systems: Beyond Base-N"
-      },
-      {
         "cycle_id": "be72639d",
         "quality": 0.7645600000000001,
         "theorems": 26,
@@ -3141,6 +3135,12 @@
         "quality": 0.74264,
         "theorems": 14,
         "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+      },
+      {
+        "cycle_id": "1f3047ef",
+        "quality": 0.45104400000000006,
+        "theorems": 20,
+        "title": "Representation Theory: Character Tables of S_n"
       }
     ],
     "Bridges": [

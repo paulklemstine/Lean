@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "5544e8f5",
+    "consumed_by_exp_id": "",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -2075,6 +2075,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T13:47:18.898418+00:00",
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2332",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22058v1",
+    "status": "available",
+    "timestamp": "2026-06-23T14:06:13.272860+00:00",
+    "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
   {
     "consumed_by_exp_id": "",
@@ -5258,7 +5272,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic formula for discrete second moments of Dirichlet L-functions under GRH"
   },
   {
-    "consumed_by_exp_id": "f36ed9b7",
+    "consumed_by_exp_id": "",
     "description": "For any fixed integer width w \u2265 2, the maximum number of strict alternating cycles in a poset of size n and width w is \u0398(n^{2w}) as n \u2192 \u221e. The paper establishes an upper bound of O(n^{2w}) (Corollary 1 and Lemma 1); this conjecture asserts that this bound is asymptotically tight, i.e., there exists a constant c_w > 0 such that for all sufficiently large n, some poset of size n and width w has at least c_w n^{2w} strict alternating cycles.",
     "domains": [
       "Pythagorean"
@@ -5267,7 +5281,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T08:32:26.631386+00:00",
     "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles in posets of fixed width"
   },
@@ -5563,11 +5577,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "description": "This paper investigates the triviality of Boolean degree one functions on the Grassmann scheme $J_q(n,k)$ under specific constraints involving $k$ and $n$, aiming to characterize when such functions must vanish.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2595",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23465v1",
+    "status": "available",
+    "timestamp": "2026-06-26T20:28:58.741837+00:00",
+    "title": "Boolean degree one functions on the Grassmann scheme"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5581,7 +5609,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5596,7 +5624,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5611,7 +5639,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5626,7 +5654,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5641,7 +5669,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5655,7 +5683,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5669,7 +5697,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5683,7 +5711,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5698,7 +5726,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5713,7 +5741,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5728,7 +5756,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5743,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5758,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5772,7 +5800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5787,7 +5815,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5802,7 +5830,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5816,7 +5844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5830,7 +5858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5844,7 +5872,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5859,7 +5887,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5874,7 +5902,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5889,7 +5917,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -5903,7 +5931,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -5917,7 +5945,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -5932,7 +5960,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -5946,7 +5974,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -5961,7 +5989,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -5975,7 +6003,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -5989,7 +6017,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6003,7 +6031,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6018,7 +6046,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6033,13 +6061,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
     "status": "available",
     "timestamp": "2026-06-26T19:57:46.403371+00:00",
     "title": "Finite-type classification of cluster structures on Schubert cells and partial flag varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proposes a conjecture extending Sun and Das's result to signed graphs by bounding the spectral radius difference upon vertex deletion using a tighter degree-weighted inequality, alongside a chromatic number lower bound incorporating all eigenvalues of the graph and its negative subgraph.",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2629",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23584v1",
+    "status": "available",
+    "timestamp": "2026-06-26T20:29:09.398164+00:00",
+    "title": "Bounds on the Spectral Radius of Signed Graphs via Vertex Deletion and Chromatic Number Constraints"
   },
   {
     "consumed_by_exp_id": "",
@@ -6241,21 +6284,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 EML Fixed-Point / exp-log Iteration\n\nThis cycle extended `Catalog/EML/FixedPointConvergence.lean` from qualitative\nconvergence (to *a* fixed point) to a fully **quantitative** theory: a priori and a\nposteriori geometric error bounds, plus existence-and-uniqueness and convergence to\n*the* unique fixed point. Below are testable conjectures for follow-up cycles.\n\n## C1. Order-of-convergence dichotomy (linear vs. superlinear)\n\n**Conjecture.** For the EML operator with fixed point `x*`, the iteration is exactly\n*linearly* convergent with asymptotic rate `|f'(x*)| = exp(a)\u00b7b/(b\u00b7x*+c)` whenever\n`f'(x*) \u2260 0`, i.e.\n`lim\u2099 |x\u2099\u208a\u2081 \u2212 x*| / |x\u2099 \u2212 x*| = exp(a)\u00b7b/(b\u00b7x*+c)`.\nMoreover the limit is `0` (superlinear) iff `b = 0`.\n*Testable:* the ratios in \u00a72 of `ComputationalEvidence.md` already approach `0.318`;\nformalize via `EMLIterOp.deriv_eq` and a Stolz/`Tendsto` argument.\n\n## C2. Sharpness of the a posteriori bound\n\n**Conjecture.** The constant `\u03c1/(1\u2212\u03c1)` in `iterSeq_aposteriori_bound` is asymptotically\nsharp: there is a parameter regime and starting point for which\n`|x\u2099\u208a\u2081 \u2212 x*| / |x\u2099\u208a\u2081 \u2212 x\u2099| \u2192 \u03c1/(1\u2212\u03c1)` is *not* attained but `|x\u2099\u208a\u2081 \u2212 x*| /\n|x\u2099\u208a\u2081 \u2212 x\u2099| \u2192 f'(x*)/(1\u2212f'(x*))`, and the bound cannot be replaced by any smaller\nconstant valid for all `D` with contraction ratio `\u03c1`.\n\n## C3. Existence of an invariant interval from parameters alone\n\n**Conjecture.** For `b > 0`, `c > 1` and `a` with `exp(a)\u00b7b < c\u00b7log c` (a clean\nsufficient condition), an invariant interval `[lo, hi]` and contraction ratio `\u03c1 < 1`\n*always exist*, so an `EMLContractionData` can be constructed purely from `(a,b,c)`.\nThis would turn the hypothesis-laden `EMLContractionData` into a constructible object\nand yield an unconditional fixed-point theorem on parameter regions.\n\n## C4. Monotone / two-sided enclosure of the fixed point\n\n**Conjecture.** When `f' > 0` on the interval (i.e. `b > 0`), the iteration is monotone\nonce it enters `[lo, hi]`, and from any `x\u2080` the pair `(min(x\u2080, f x\u2080), max(x\u2080, f x\u2080))`\nbrackets `x*`. Consequently `x\u2080 \u2264 x* \u2264 f x\u2080` or `f x\u2080 \u2264 x* \u2264 x\u2080`, giving a *certified\ntwo-sided enclosure* at every step (stronger than the absolute a posteriori bound).\n\n## C5. Depth-n EML composition has a unique fixed point with computable rate\n\n**Conjecture.** Bridging with `Catalog/EML/DeepComposition.lean`: a composition\n`f_{k-1} \u2218 \u2026 \u2218 f_0` of EML operators, each a `\u03c1\u1d62`-contraction on a common invariant\ninterval, is a `\u220f\u1d62 \u03c1\u1d62`-contraction, hence has a unique fixed point to which Picard\niteration converges with rate `\u220f\u1d62 \u03c1\u1d62`, and the a priori/a posteriori bounds of this\ncycle transfer verbatim with `\u03c1 \u21a6 \u220f\u1d62 \u03c1\u1d62`. This unifies the single-operator\nfixed-point theory with the deep-composition error-propagation results.\n",
-    "domains": [
-      "Applications",
-      "Pythagorean"
-    ],
-    "id": "fd_2628",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f247824f",
-    "status": "available",
-    "timestamp": "2026-06-26T20:24:28.526311+00:00",
-    "title": "`Catalog/EML/FixedPointConvergence.lean` from qualitative"
   },
   {
     "consumed_by_exp_id": "",
@@ -6476,7 +6504,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Certified Adversarial Robustness via Sheaf Cohomology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6452feb1",
     "description": "The Kolmogorov-Arnold theorem says any continuous f: [0,1]^n -> R can be written as a sum of 2n+1 continuous univariate functions. Conjecture: The inner univariate functions in the K-A representation can be chosen to be EML-type functions (exp-log compositions). Test: for n=2, construct the 5 inner functions explicitly as EML compositions that achieve the K-A decomposition for a specific target (e.g., x1*x2). Impact: directly connects EML to a deep representation theorem.",
     "domains": [
       "EML",
@@ -6486,7 +6514,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.588561+00:00",
     "title": "EML Kolmogorov-Arnold Representation"
   },

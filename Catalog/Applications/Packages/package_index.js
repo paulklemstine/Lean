@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1f3047ef",
     "filename": "representation_theory_character_tables_of_s_n.json",
     "pkg_num": 109,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.45104400000000006,
     "title": "Representation Theory: The Shape of the S_n Character Table via Partitions"
   },
   {
@@ -3179,8 +3179,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "representation_theory_character_tables_of_s_n",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.45104400000000006,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Representation Theory: The Shape of the S_n Character Table via Partitions"
     }
