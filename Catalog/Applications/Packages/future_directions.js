@@ -1197,7 +1197,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0dc2bca1",
     "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
     "domains": [
       "Analysis",
@@ -1207,7 +1207,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432657+00:00",
     "title": "Fourier Analysis on Finite Groups"
   },
@@ -5144,17 +5144,45 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let Q(u, v, w) = 15u^2 + 5v^2 + 3w^2. For any integer m such that m \u2261 23 (mod 120), there exist integers u, v, w such that Q(u, v, w) = m, where u is odd, v \u2261 1 (mod 6), and w \u2261 1 (mod 10).",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2561",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-26T01:04:31.620908+00:00",
+    "title": "Universality of Ternary Quadratic Forms for Specific Congruence Classes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2561",
+    "id": "fd_2562",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
     "status": "available",
     "timestamp": "2026-06-26T00:41:26.824635+00:00",
     "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every planar graph admits a conflict-free coloring with exactly 4 colors, and this statement is equivalent to the Four Color Theorem over ZFC set theory. More precisely, for any planar graph G, there exists a vertex coloring f: V(G) \u2192 {1,2,3,4} such that every vertex v has a neighbor w where color f(w) appears exactly once in the open neighborhood N(v), and the existence of such a 4-coloring for all planar graphs is interderivable with the Four Color Theorem.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2563",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25988v1",
+    "status": "available",
+    "timestamp": "2026-06-26T01:10:10.263546+00:00",
+    "title": "Equivalence Between Four Color Theorem and Conflict-Free Chromatic Number of Planar Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -5518,7 +5546,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "ba954af9",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5527,7 +5555,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },

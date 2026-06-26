@@ -1596,7 +1596,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0dc2bca1",
     "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) · supp(f̂) ≥ |G|.",
     "domain_bridges": [],
     "domains": [
@@ -1609,7 +1609,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432657+00:00",
     "title": "Fourier Analysis on Finite Groups"
   },
@@ -8945,6 +8945,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "OEIS A287616",
+      "Zhi-Wei Sun (2015) conjectures"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let Q(u, v, w) = 15u^2 + 5v^2 + 3w^2. For any integer m such that m ≡ 23 (mod 120), there exist integers u, v, w such that Q(u, v, w) = m, where u is odd, v ≡ 1 (mod 6), and w ≡ 1 (mod 10).",
+    "domain_bridges": [
+      "Quadratic Forms",
+      "Modular Arithmetic",
+      "Local-Global Principle"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2561",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof would require formalizing the genus-theoretic properties of the quadratic form Q, specifically showing that the genus of Q contains only two classes and using the Hasse-Minkowski theorem to establish local representation, then applying the descent method (as described in the paper) to ensure the specific congruence constraints on u, v, and w are satisfied.",
+    "research_mode": "team",
+    "source_exp_id": "2606.26035v1",
+    "status": "available",
+    "timestamp": "2026-06-26T01:04:31.620908+00:00",
+    "title": "Universality of Ternary Quadratic Forms for Specific Congruence Classes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -8959,7 +8985,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2561",
+    "id": "fd_2562",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -8968,6 +8994,35 @@
     "status": "available",
     "timestamp": "2026-06-26T00:41:26.824635+00:00",
     "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "FourColorTheorem",
+      "GallaiEdmondsDecomposition",
+      "ConflictFreeColoring",
+      "PlanarGraphColoring"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every planar graph admits a conflict-free coloring with exactly 4 colors, and this statement is equivalent to the Four Color Theorem over ZFC set theory. More precisely, for any planar graph G, there exists a vertex coloring f: V(G) → {1,2,3,4} such that every vertex v has a neighbor w where color f(w) appears exactly once in the open neighborhood N(v), and the existence of such a 4-coloring for all planar graphs is interderivable with the Four Color Theorem.",
+    "domain_bridges": [
+      "four_color_theorem_equivalence",
+      "gallai_edmonds_refinement",
+      "combinatorial_chromatic_properties",
+      "planar_graph_structural_theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2563",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25988v1",
+    "status": "available",
+    "timestamp": "2026-06-26T01:10:10.263546+00:00",
+    "title": "Equivalence Between Four Color Theorem and Conflict-Free Chromatic Number of Planar Graphs"
   },
   {
     "ambition_level": "extension",
@@ -9458,7 +9513,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ba954af9",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -9470,7 +9525,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
