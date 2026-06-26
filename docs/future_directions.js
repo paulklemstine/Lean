@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "151fa435",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1612,7 +1612,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7410b0f1",
     "description": "For integers n \u2265 2k and k \u2265 3, any two non-trivial cross-intersecting families A, B \u2286 ([n] choose k) satisfy |A| * |B| \u2264 h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
     "domains": [
       "Pythagorean",
@@ -1622,7 +1622,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T04:53:00.715630+00:00",
     "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
   },
@@ -1787,7 +1787,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excess-One Criterion for Kopp-Lagarias Ray Class Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f17133d",
     "description": "A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expansion parameter \u03b1_G(t) and the optimality of the associated code B(G).",
     "domains": [
       "Algebra",
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T06:21:22.540143+00:00",
     "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
@@ -3626,7 +3626,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Externally Supported Independence Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7fd1af1",
     "description": "Conjecture: For rational \u03b2 = p/q, the natural extension has finite domain bridges.",
     "domains": [
       "Pythagorean",
@@ -3636,7 +3636,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -3656,7 +3656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both deletion and contraction of a non-loop non-coloop element preserve connectivity in connected polymatroids"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01ec1037",
     "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
     "domains": [
       "Geometry",
@@ -3666,7 +3666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T21:58:37.105519+00:00",
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
   },
@@ -5690,7 +5690,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab8befc8",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5699,7 +5699,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -6137,7 +6137,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0e2bb19",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -6147,7 +6147,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
