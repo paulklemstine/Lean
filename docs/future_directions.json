@@ -12717,11 +12717,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "f2499c75",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -12733,7 +12733,7 @@
         "Computation"
       ],
       "id": "fd_0439",
-      "last_attempt_time": "2026-06-10T08:18:23.277609+00:00",
+      "last_attempt_time": "2026-06-26T10:45:04.958444+00:00",
       "last_reviewed_at": "2026-06-09T15:03:13.623660+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -12747,7 +12747,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:28.479969+00:00",
       "title": "Idempotent Probability: Large Deviations"
@@ -47444,6 +47444,53 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Ax–Lindemann–Weierstrass theorem",
+        "Ax–Schanuel conjecture",
+        "Becker–Bergweiler transcendence theorem"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For a non‑exceptional polynomial f with disconnected Julia set, if α_1,…,α_n are algebraic numbers in the Böttcher domain D_R that are linearly independent over ℚ, then the tuple (Ψ_f(α_1),…,Ψ_f(α_n)) is algebraically independent over the algebraic numbers; equivalently there is no non‑zero polynomial P∈ℚ[X_1,…,X_n] such that P(Ψ_f(α_1),…,Ψ_f(α_n))=0.",
+      "domain_bridges": [
+        "complex dynamics",
+        "transcendental number theory",
+        "algebraic geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2578",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem psi_f_lindemann_weierstrass {n : ℕ} (f : Polynomial ℂ) (hf : NonExceptional f) {α : Fin n → ℂ} (hα : AlgebraicIndependentOverQ α) : ∀ (p : Polynomial ℂ), p ≠ 0 → p.eval (map Ψ_f α) ≠ 0",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the classical Lindemann–Weierstrass proof using properties of the Böttcher coordinate, linear independence over ℚ, and transcendence measures; possibly invoke Mahler’s method or properties of rational functions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24553v1",
+      "source_path": "http://arxiv.org/abs/2606.24553v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T10:44:31.207157+00:00",
+      "title": "Ψ_f-Lindemann–Weierstrass Conjecture for Algebraic Independence of Böttcher Coordinates"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem 1",
         "Corollary 1",
         "Brown-Erdős-Sós conjecture"
@@ -47464,7 +47511,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2578",
+      "id": "fd_2579",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47512,7 +47559,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2579",
+      "id": "fd_2580",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47557,7 +47604,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2580",
+      "id": "fd_2581",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47601,7 +47648,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2581",
+      "id": "fd_2582",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47648,7 +47695,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2582",
+      "id": "fd_2583",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47693,7 +47740,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2583",
+      "id": "fd_2584",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -47738,7 +47785,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2584",
+      "id": "fd_2585",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -47779,7 +47826,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2585",
+      "id": "fd_2586",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -47824,7 +47871,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2586",
+      "id": "fd_2587",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -47863,7 +47910,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2587",
+      "id": "fd_2588",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -47905,7 +47952,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2588",
+      "id": "fd_2589",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -47949,7 +47996,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2589",
+      "id": "fd_2590",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -47995,7 +48042,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2590",
+      "id": "fd_2591",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -48040,7 +48087,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2591",
+      "id": "fd_2592",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -48086,7 +48133,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2592",
+      "id": "fd_2593",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -48132,7 +48179,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2593",
+      "id": "fd_2594",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -48153,43 +48200,54 @@
       "title": "Characterization of When P3-Direct Convexity Equals P3^s-Direct Convexity in Tournaments"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "Erdős, P. (1965). On the number of independent subsets of a set of integers. *Journal of Combinatorial Theory*",
+        "Frankl, P. (1976). Set systems of finite type. *Journal of Combinatorial Theory*",
+        "Lovász, L. (2009). Minimum matchings in matroids. *Combinatorica*",
+        "Shan, Q.; Zhou, Y. (2024). t‑cover‑free families in vector spaces. *Combinatorics, Probability & Computing*"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Line Transversal Spaces and Sphere Homotopy\n\nThis cycle formalized the order-theoretic and antipodal-symmetry skeleton of the\ntheory of line transversals (`LineTransversalOrder.lean`,\n`TransversalDirectionSphere.lean`), the setting of the Cheong–Goaoc–Holmsen\nconjecture and its disproof. From the verified results we extract the following\nbold, falsifiable conjectures.\n\n## Conjecture 1 (Sphere homotopy type, the grand challenge)\nFor every `n ≥ 1` there is a finite family of pairwise disjoint open convex sets\nin `ℝ^{3n}` whose space of (oriented) line transversals is homotopy equivalent to\nthe sphere `S^{n-1}`.\n\n- **The key insight is...** the orientation reversal of transversals, formalized\n  here as `unitDir_reverse_eq_antipode`, is *exactly* the antipodal involution\n  `antipode` of the direction sphere; iterating the basic `3`-set gadget `n`\n  times multiplies these antipodal `S^0` factors into an `S^{n-1}`.\n- **Why now?** The reduced-homology disproof (nonzero `H̃_{n-1}`) is already\n  known; lifting it from homology to a genuine homotopy equivalence only requires\n  controlling the cell structure of each gadget, which the orientation/antipode\n  dictionary proved here makes explicit.\n\n## Conjecture 2 (Geometric permutations come in exactly antipodal pairs)\nFor a family admitting a connected positive-dimensional transversal space, the\nset of realized geometric permutations is closed under the order reversal\n`σ ↦ σ^{rev}` and contains no order-reversal-fixed element.\n\n- **The key insight is...** `geomPerm_reverse` shows reversal is the order\n  anti-automorphism `t ↦ -t`, and `antipode_ne` shows the corresponding sphere\n  involution is fixed-point-free, so no single permutation can be its own\n  reverse on a connected transversal component.\n- **Why now?** With `params_injective_of_pairwise_disjoint` guaranteeing a\n  well-defined permutation per directed transversal, the pairing structure is now\n  a precise combinatorial statement amenable to enumeration.\n\n## Conjecture 3 (Quotient model: real projective transversal space)\nThe space of *unoriented* line transversals is the quotient of the oriented\ntransversal space by the fixed-point-free antipodal involution, hence fibers over\n`ℝP^{d-1}` through the unit-direction map.\n\n- **The key insight is...** `antipode_involutive` together with `antipode_ne`\n  exhibits a free `ℤ/2` action on the direction sphere, the defining data of the\n  projective quotient `S^{d-1}/± = ℝP^{d-1}`.\n- **Why now?** The bridge `unitDir_reverse_eq_antipode` ties the geometric\n  reversal to this free action, so the quotient model can be built without\n  re-deriving the convex geometry.\n\n## Conjecture 4 (Sharp dimension threshold)\nThe smallest ambient dimension hosting a disjoint convex family with\n`(k-1)`-sphere transversal homotopy type is exactly `3k`; below `3k` every such\ntransversal space is contractible or empty.\n\n- **The key insight is...** each independent `S^1`/antipodal factor consumes\n  three coordinates (the `3`-per-gadget pattern visible in the `ℝ^{3n}`\n  statement), and the injective-parameter ordering lemma forbids packing two\n  independent factors into fewer dimensions.\n- **Why now?** The combinatorial lower-bound side is now formal (distinct\n  parameters force genuine order separation), isolating the construction side as\n  the only remaining gap.\n",
-      "domain_bridges": [],
+      "description": "For a finite field ϵ_q of order q and integers n ≥ (s+1)k, the maximum number m_q(n,k,s) of k‑dimensional subspaces of an n‑dimensional ϵ_q‑vector space that contain no s+1 mutually independent members (i.e. no s+1 subspaces whose sum is direct) equals the maximum of the two natural constructions: all k‑subspaces inside a fixed ((s+1)k−1)‑dimensional subspace, and all k‑subspaces that meet a fixed s‑dimensional subspace non‑trivially. Explicitly, for n ≥ (s+1)k:\n\nm_q(n,k,s) = max { [((s+1)k−1) choose k]_q , [n choose k]_q – q^{ks} [n−s choose k]_q }.\n\nThis conjecture generalises the Erdős–Gallai theorem to vector spaces and is still open for arbitrary k, s and n.",
+      "domain_bridges": [
+        "FiniteVectorSpaces",
+        "MatroidTheory",
+        "HypergraphMatching",
+        "qBinomialCoefficients",
+        "SpectralGraphTheory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Geometry",
+        "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2594",
+      "id": "fd_2595",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use Lovász’s minimax theorem for matroid matchings to relate the extremal size to the fractional matching number in the associated matroid. Apply a high‑dimensional Hoffman bound for uniform hypergraphs over the lattice of subspaces to obtain upper bounds that match the two constructions. Then develop a stability argument that shows any family attaining the upper bound must be structurally close to one of the two extremal families, and finally exploit design‑theoretic counting to rule out all other configurations. The proof would combine linear‑algebraic isoperimetric inequalities, spectral techniques on the Grassmann graph, and matroid intersection theory.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "da5cb31c",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/da5cb31c_retry1",
+      "source_exp_id": "2606.24529v1",
+      "source_path": "http://arxiv.org/abs/2606.24529v1",
       "status": "available",
-      "thread_id": "th_9c13061d",
-      "timestamp": "2026-06-26T10:38:08.389510+00:00",
-      "title": "This cycle formalized the order-theoretic and antipodal-symmetry skeleton of the"
+      "thread_id": "",
+      "timestamp": "2026-06-26T10:45:02.796912+00:00",
+      "title": "Vector‑Space Erdős Matching Conjecture (full case)"
     },
     {
       "ambition_level": "extension",

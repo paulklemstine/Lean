@@ -5331,11 +5331,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a non\u2011exceptional polynomial f with disconnected Julia set, if \u03b1_1,\u2026,\u03b1_n are algebraic numbers in the B\u00f6ttcher domain D_R that are linearly independent over \u211a, then the tuple (\u03a8_f(\u03b1_1),\u2026,\u03a8_f(\u03b1_n)) is algebraically independent over the algebraic numbers; equivalently there is no non\u2011zero polynomial P\u2208\u211a[X_1,\u2026,X_n] such that P(\u03a8_f(\u03b1_1),\u2026,\u03a8_f(\u03b1_n))=0.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2578",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24553v1",
+    "status": "available",
+    "timestamp": "2026-06-26T10:44:31.207157+00:00",
+    "title": "\u03a8_f-Lindemann\u2013Weierstrass Conjecture for Algebraic Independence of B\u00f6ttcher Coordinates"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5349,7 +5364,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5364,7 +5379,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5379,7 +5394,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5394,7 +5409,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5409,7 +5424,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5423,7 +5438,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5437,7 +5452,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5451,7 +5466,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5466,7 +5481,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5481,7 +5496,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5496,7 +5511,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5511,7 +5526,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5526,7 +5541,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5540,7 +5555,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5555,13 +5570,28 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
     "status": "available",
     "timestamp": "2026-06-26T10:13:18.660002+00:00",
     "title": "Characterization of When P3-Direct Convexity Equals P3^s-Direct Convexity in Tournaments"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a finite field \u03f5_q of order q and integers n \u2265 (s+1)k, the maximum number m_q(n,k,s) of k\u2011dimensional subspaces of an n\u2011dimensional \u03f5_q\u2011vector space that contain no s+1 mutually independent members (i.e. no s+1 subspaces whose sum is direct) equals the maximum of the two natural constructions: all k\u2011subspaces inside a fixed ((s+1)k\u22121)\u2011dimensional subspace, and all k\u2011subspaces that meet a fixed s\u2011dimensional subspace non\u2011trivially. Explicitly, for n \u2265 (s+1)k:\n\nm_q(n,k,s) = max { [((s+1)k\u22121) choose k]_q , [n choose k]_q \u2013 q^{ks} [n\u2212s choose k]_q }.\n\nThis conjecture generalises the Erd\u0151s\u2013Gallai theorem to vector spaces and is still open for arbitrary k, s and n.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2595",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24529v1",
+    "status": "available",
+    "timestamp": "2026-06-26T10:45:02.796912+00:00",
+    "title": "Vector\u2011Space Erd\u0151s Matching Conjecture (full case)"
   },
   {
     "consumed_by_exp_id": "",
@@ -5763,21 +5793,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Line Transversal Spaces and Sphere Homotopy\n\nThis cycle formalized the order-theoretic and antipodal-symmetry skeleton of the\ntheory of line transversals (`LineTransversalOrder.lean`,\n`TransversalDirectionSphere.lean`), the setting of the Cheong\u2013Goaoc\u2013Holmsen\nconjecture and its disproof. From the verified results we extract the following\nbold, falsifiable conjectures.\n\n## Conjecture 1 (Sphere homotopy type, the grand challenge)\nFor every `n \u2265 1` there is a finite family of pairwise disjoint open convex sets\nin `\u211d^{3n}` whose space of (oriented) line transversals is homotopy equivalent to\nthe sphere `S^{n-1}`.\n\n- **The key insight is...** the orientation reversal of transversals, formalized\n  here as `unitDir_reverse_eq_antipode`, is *exactly* the antipodal involution\n  `antipode` of the direction sphere; iterating the basic `3`-set gadget `n`\n  times multiplies these antipodal `S^0` factors into an `S^{n-1}`.\n- **Why now?** The reduced-homology disproof (nonzero `H\u0303_{n-1}`) is already\n  known; lifting it from homology to a genuine homotopy equivalence only requires\n  controlling the cell structure of each gadget, which the orientation/antipode\n  dictionary proved here makes explicit.\n\n## Conjecture 2 (Geometric permutations come in exactly antipodal pairs)\nFor a family admitting a connected positive-dimensional transversal space, the\nset of realized geometric permutations is closed under the order reversal\n`\u03c3 \u21a6 \u03c3^{rev}` and contains no order-reversal-fixed element.\n\n- **The key insight is...** `geomPerm_reverse` shows reversal is the order\n  anti-automorphism `t \u21a6 -t`, and `antipode_ne` shows the corresponding sphere\n  involution is fixed-point-free, so no single permutation can be its own\n  reverse on a connected transversal component.\n- **Why now?** With `params_injective_of_pairwise_disjoint` guaranteeing a\n  well-defined permutation per directed transversal, the pairing structure is now\n  a precise combinatorial statement amenable to enumeration.\n\n## Conjecture 3 (Quotient model: real projective transversal space)\nThe space of *unoriented* line transversals is the quotient of the oriented\ntransversal space by the fixed-point-free antipodal involution, hence fibers over\n`\u211dP^{d-1}` through the unit-direction map.\n\n- **The key insight is...** `antipode_involutive` together with `antipode_ne`\n  exhibits a free `\u2124/2` action on the direction sphere, the defining data of the\n  projective quotient `S^{d-1}/\u00b1 = \u211dP^{d-1}`.\n- **Why now?** The bridge `unitDir_reverse_eq_antipode` ties the geometric\n  reversal to this free action, so the quotient model can be built without\n  re-deriving the convex geometry.\n\n## Conjecture 4 (Sharp dimension threshold)\nThe smallest ambient dimension hosting a disjoint convex family with\n`(k-1)`-sphere transversal homotopy type is exactly `3k`; below `3k` every such\ntransversal space is contractible or empty.\n\n- **The key insight is...** each independent `S^1`/antipodal factor consumes\n  three coordinates (the `3`-per-gadget pattern visible in the `\u211d^{3n}`\n  statement), and the injective-parameter ordering lemma forbids packing two\n  independent factors into fewer dimensions.\n- **Why now?** The combinatorial lower-bound side is now formal (distinct\n  parameters force genuine order separation), isolating the construction side as\n  the only remaining gap.\n",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_2594",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "da5cb31c",
-    "status": "available",
-    "timestamp": "2026-06-26T10:38:08.389510+00:00",
-    "title": "This cycle formalized the order-theoretic and antipodal-symmetry skeleton of the"
   },
   {
     "consumed_by_exp_id": "",
@@ -6028,7 +6043,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2499c75",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domains": [
       "Tropical",
@@ -6038,7 +6053,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
   },

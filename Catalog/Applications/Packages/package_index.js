@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3718ce68",
     "filename": "betti_whittaker_period_relation_for_contragredient.json",
     "pkg_num": 86,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.71376,
     "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
   },
   {
@@ -2503,8 +2503,8 @@ window.PACKAGE_GRAPH = {
       "hue": 314,
       "id": "betti_whittaker_period_relation_for_contragredient",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.71376,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
     }

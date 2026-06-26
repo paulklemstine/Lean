@@ -9298,6 +9298,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Ax–Lindemann–Weierstrass theorem",
+      "Ax–Schanuel conjecture",
+      "Becker–Bergweiler transcendence theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a non‑exceptional polynomial f with disconnected Julia set, if α_1,…,α_n are algebraic numbers in the Böttcher domain D_R that are linearly independent over ℚ, then the tuple (Ψ_f(α_1),…,Ψ_f(α_n)) is algebraically independent over the algebraic numbers; equivalently there is no non‑zero polynomial P∈ℚ[X_1,…,X_n] such that P(Ψ_f(α_1),…,Ψ_f(α_n))=0.",
+    "domain_bridges": [
+      "complex dynamics",
+      "transcendental number theory",
+      "algebraic geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2578",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the classical Lindemann–Weierstrass proof using properties of the Böttcher coordinate, linear independence over ℚ, and transcendence measures; possibly invoke Mahler’s method or properties of rational functions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24553v1",
+    "status": "available",
+    "timestamp": "2026-06-26T10:44:31.207157+00:00",
+    "title": "Ψ_f-Lindemann–Weierstrass Conjecture for Algebraic Independence of Böttcher Coordinates"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -9312,7 +9340,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9341,7 +9369,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9367,7 +9395,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9392,7 +9420,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9420,7 +9448,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9446,7 +9474,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9472,7 +9500,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9494,7 +9522,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9520,7 +9548,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9540,7 +9568,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9563,7 +9591,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -9588,7 +9616,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
@@ -9615,7 +9643,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the vertex-gluing construction from the paper to establish recursive relationships between the ranks for different n, combined with exhaustive case analysis for small n values, and use induction to generalize to larger n. Critical lemmas would involve verifying the intersection condition preservation under gluing operations and demonstrating self-duality through explicit automorphism constructions.",
@@ -9641,7 +9669,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
@@ -9668,7 +9696,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof techniques from the Chudnovsky-Scott-Seymour paper, using induction on the number of colors and maximum graph size, combined with careful analysis of how vertex partitions interact with the complete join structure under color constraints.",
@@ -9695,7 +9723,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If a tournament has no transitive triangle, then every directed P3 with endpoints in a convex set must have the arc between endpoints, making both convexities equivalent; (2) If a tournament has a transitive triangle (u,v,w) with u→v→w and u→w, construct a set whose convex hulls differ between the two convexity notions.",
@@ -9704,6 +9732,37 @@
     "status": "available",
     "timestamp": "2026-06-26T10:13:18.660002+00:00",
     "title": "Characterization of When P3-Direct Convexity Equals P3^s-Direct Convexity in Tournaments"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Erdős, P. (1965). On the number of independent subsets of a set of integers. *Journal of Combinatorial Theory*",
+      "Frankl, P. (1976). Set systems of finite type. *Journal of Combinatorial Theory*",
+      "Lovász, L. (2009). Minimum matchings in matroids. *Combinatorica*",
+      "Shan, Q.; Zhou, Y. (2024). t‑cover‑free families in vector spaces. *Combinatorics, Probability & Computing*"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a finite field ϵ_q of order q and integers n ≥ (s+1)k, the maximum number m_q(n,k,s) of k‑dimensional subspaces of an n‑dimensional ϵ_q‑vector space that contain no s+1 mutually independent members (i.e. no s+1 subspaces whose sum is direct) equals the maximum of the two natural constructions: all k‑subspaces inside a fixed ((s+1)k−1)‑dimensional subspace, and all k‑subspaces that meet a fixed s‑dimensional subspace non‑trivially. Explicitly, for n ≥ (s+1)k:\n\nm_q(n,k,s) = max { [((s+1)k−1) choose k]_q , [n choose k]_q – q^{ks} [n−s choose k]_q }.\n\nThis conjecture generalises the Erdős–Gallai theorem to vector spaces and is still open for arbitrary k, s and n.",
+    "domain_bridges": [
+      "FiniteVectorSpaces",
+      "MatroidTheory",
+      "HypergraphMatching",
+      "qBinomialCoefficients",
+      "SpectralGraphTheory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2595",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Lovász’s minimax theorem for matroid matchings to relate the extremal size to the fractional matching number in the associated matroid. Apply a high‑dimensional Hoffman bound for uniform hypergraphs over the lattice of subspaces to obtain upper bounds that match the two constructions. Then develop a stability argument that shows any family attaining the upper bound must be structurally close to one of the two extremal families, and finally exploit design‑theoretic counting to rule out all other configurations. The proof would combine linear‑algebraic isoperimetric inequalities, spectral techniques on the Grassmann graph, and matroid intersection theory.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24529v1",
+    "status": "available",
+    "timestamp": "2026-06-26T10:45:02.796912+00:00",
+    "title": "Vector‑Space Erdős Matching Conjecture (full case)"
   },
   {
     "ambition_level": "extension",
@@ -9975,26 +10034,6 @@
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Line Transversal Spaces and Sphere Homotopy\n\nThis cycle formalized the order-theoretic and antipodal-symmetry skeleton of the\ntheory of line transversals (`LineTransversalOrder.lean`,\n`TransversalDirectionSphere.lean`), the setting of the Cheong–Goaoc–Holmsen\nconjecture and its disproof. From the verified results we extract the following\nbold, falsifiable conjectures.\n\n## Conjecture 1 (Sphere homotopy type, the grand challenge)\nFor every `n ≥ 1` there is a finite family of pairwise disjoint open convex sets\nin `ℝ^{3n}` whose space of (oriented) line transversals is homotopy equivalent to\nthe sphere `S^{n-1}`.\n\n- **The key insight is...** the orientation reversal of transversals, formalized\n  here as `unitDir_reverse_eq_antipode`, is *exactly* the antipodal involution\n  `antipode` of the direction sphere; iterating the basic `3`-set gadget `n`\n  times multiplies these antipodal `S^0` factors into an `S^{n-1}`.\n- **Why now?** The reduced-homology disproof (nonzero `H̃_{n-1}`) is already\n  known; lifting it from homology to a genuine homotopy equivalence only requires\n  controlling the cell structure of each gadget, which the orientation/antipode\n  dictionary proved here makes explicit.\n\n## Conjecture 2 (Geometric permutations come in exactly antipodal pairs)\nFor a family admitting a connected positive-dimensional transversal space, the\nset of realized geometric permutations is closed under the order reversal\n`σ ↦ σ^{rev}` and contains no order-reversal-fixed element.\n\n- **The key insight is...** `geomPerm_reverse` shows reversal is the order\n  anti-automorphism `t ↦ -t`, and `antipode_ne` shows the corresponding sphere\n  involution is fixed-point-free, so no single permutation can be its own\n  reverse on a connected transversal component.\n- **Why now?** With `params_injective_of_pairwise_disjoint` guaranteeing a\n  well-defined permutation per directed transversal, the pairing structure is now\n  a precise combinatorial statement amenable to enumeration.\n\n## Conjecture 3 (Quotient model: real projective transversal space)\nThe space of *unoriented* line transversals is the quotient of the oriented\ntransversal space by the fixed-point-free antipodal involution, hence fibers over\n`ℝP^{d-1}` through the unit-direction map.\n\n- **The key insight is...** `antipode_involutive` together with `antipode_ne`\n  exhibits a free `ℤ/2` action on the direction sphere, the defining data of the\n  projective quotient `S^{d-1}/± = ℝP^{d-1}`.\n- **Why now?** The bridge `unitDir_reverse_eq_antipode` ties the geometric\n  reversal to this free action, so the quotient model can be built without\n  re-deriving the convex geometry.\n\n## Conjecture 4 (Sharp dimension threshold)\nThe smallest ambient dimension hosting a disjoint convex family with\n`(k-1)`-sphere transversal homotopy type is exactly `3k`; below `3k` every such\ntransversal space is contractible or empty.\n\n- **The key insight is...** each independent `S^1`/antipodal factor consumes\n  three coordinates (the `3`-per-gadget pattern visible in the `ℝ^{3n}`\n  statement), and the injective-parameter ordering lemma forbids packing two\n  independent factors into fewer dimensions.\n- **Why now?** The combinatorial lower-bound side is now formal (distinct\n  parameters force genuine order separation), isolating the construction side as\n  the only remaining gap.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_2594",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "da5cb31c",
-    "status": "available",
-    "timestamp": "2026-06-26T10:38:08.389510+00:00",
-    "title": "This cycle formalized the order-theoretic and antipodal-symmetry skeleton of the"
   },
   {
     "ambition_level": "extension",
@@ -10332,7 +10371,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2499c75",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domain_bridges": [],
     "domains": [
@@ -10345,7 +10384,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
   },

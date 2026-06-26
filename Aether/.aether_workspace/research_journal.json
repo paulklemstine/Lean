@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "fbd73212",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — EML Single-Operator Church–Turing Thesis\n\nThis cycle established, with fully verified Lean 4 proofs (0 sorries, standard\naxioms only), the **affirmative content** of the single-o",
-      "quality_score": 0.7150400000000001,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-06-16T19:51:14",
-      "title": "EML Single Operator Church-Turing Thesis"
-    },
-    {
       "cycle_id": "1f4bbef7",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Automatic Sequences and the Zero-in-Sequence Problem\n\nThis cycle formalized the automata-theoretic core of the \"halting problem for\nautomatic sequences\": the zero-in-sequence pro",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-06-26T07:59:40",
       "title": "Continued Fractions and Diophantine Approximation"
+    },
+    {
+      "cycle_id": "3718ce68",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Betti–Whittaker periods and the contragredient twist\n\nDerived from the Stage 3/Stage 4 findings of this cycle (files\n`BettiWhittakerContragredient.lean`, `BettiWhittakerReciproci",
+      "quality_score": 0.71376,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-26T10:43:57",
+      "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6d018212",
-      "domain": "Computation",
-      "key_insight": "# Future Directions\n\n## 1. Discharging `hSZ` from a formalised Schwartz–Zippel bound\n\nThe polynomial consumers currently take the cross-multiplied size estimate `hSZ`\nas a hypothesis. The natural next",
-      "quality_score": 0.5091087694974004,
-      "sorry_count": 0,
-      "theorem_count": 222,
-      "timestamp": "2026-06-20T06:50:26",
-      "title": "Randomly piercing algebraic sets and its implications"
-    },
     {
       "cycle_id": "df051b46",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-26T10:38:16",
       "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
+    },
+    {
+      "cycle_id": "3718ce68",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Betti–Whittaker periods and the contragredient twist\n\nDerived from the Stage 3/Stage 4 findings of this cycle (files\n`BettiWhittakerContragredient.lean`, `BettiWhittakerReciproci",
+      "quality_score": 0.71376,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-26T10:43:57",
+      "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a1973066",
-      "domain": "Probability",
-      "name": "brown_four",
-      "quality": 0.7684399999999999
-    },
-    {
-      "cycle_id": "a1973066",
-      "domain": "Probability",
-      "name": "brown_five",
-      "quality": 0.7684399999999999
-    },
-    {
-      "cycle_id": "a1973066",
-      "domain": "Probability",
-      "name": "brown_seven",
-      "quality": 0.7684399999999999
-    },
     {
       "cycle_id": "1d985141",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "sqrt5_nonneg",
       "quality": 0.7885600000000001
+    },
+    {
+      "cycle_id": "3718ce68",
+      "domain": "NumberTheory",
+      "name": "of",
+      "quality": 0.71376
+    },
+    {
+      "cycle_id": "3718ce68",
+      "domain": "NumberTheory",
+      "name": "uses",
+      "quality": 0.71376
+    },
+    {
+      "cycle_id": "3718ce68",
+      "domain": "NumberTheory",
+      "name": "floor_sq_div_four",
+      "quality": 0.71376
     }
   ],
-  "last_updated": "2026-06-26T10:38:16",
+  "last_updated": "2026-06-26T10:43:57",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "89bf180f",
-        "quality": 0.4910402434782609,
-        "theorems": 115,
-        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-      },
-      {
         "cycle_id": "d1e35069",
         "quality": 0.40854,
         "theorems": 2,
@@ -3699,6 +3693,12 @@
         "quality": 0.54302,
         "theorems": 10,
         "title": "Quadratic Reciprocity: Five Proofs Formalized"
+      },
+      {
+        "cycle_id": "3718ce68",
+        "quality": 0.71376,
+        "theorems": 10,
+        "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
       }
     ],
     "Physics": [
