@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "aa3d24c5",
     "filename": "quantum_thermodynamics_landauers_principle_at_the_.json",
     "pkg_num": 102,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.70446,
     "title": "The Price of Forgetting: Landauer's Principle from Relative Entropy, the Jarzynski Second Law, and the Saturation Condition"
   },
   {
@@ -2976,8 +2976,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "quantum_thermodynamics_landauers_principle_at_the_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.70446,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Price of Forgetting: Landauer's Principle from Relative Entropy, the Jarzynski Second Law, and the Saturation Condition"
     }

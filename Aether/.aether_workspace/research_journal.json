@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "35a8dda5",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nCycle 1 established that databases (records over a key space) form a genuine **sheaf**:\nthe presheaf `U ↦ (records on U)` satisfies separation a",
-      "quality_score": 0.74408,
-      "sorry_count": 0,
-      "theorem_count": 89,
-      "timestamp": "2026-06-20T04:59:56",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
-    {
       "cycle_id": "5e9b4daa",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Tropical Cryptography (min-plus eigenvalue cryptanalysis)\n\nDerived from this cycle's findings in `Catalog/Tropical/TropicalDiscreteLog.lean`\n(eigenvalue additivity / TDLP break)",
@@ -499,19 +489,19 @@
       "theorem_count": 26,
       "timestamp": "2026-06-26T16:40:58",
       "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
+    },
+    {
+      "cycle_id": "aa3d24c5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Quantum Thermodynamics: Landauer's Principle at the Nanoscale\n\nDerived from this cycle's findings in `Catalog/Physics/LandauerSaturation.lean`\n(saturation ⇔ zero work fluctuation",
+      "quality_score": 0.70446,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-26T17:21:49",
+      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "977d0362",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThese build directly on the exact one-cell uniformity theorem formalized in\n`Catalog/Combinatorics/LatinSquare/CellUniform.lean`. Each direction states a\nsingle guiding insight an",
-      "quality_score": 0.5126619770114944,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-20T19:47:51",
-      "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
-    },
     {
       "cycle_id": "808095a3",
       "domain": "Applications",
@@ -2501,21 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-06-26T16:46:34",
       "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+    },
+    {
+      "cycle_id": "aa3d24c5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Quantum Thermodynamics: Landauer's Principle at the Nanoscale\n\nDerived from this cycle's findings in `Catalog/Physics/LandauerSaturation.lean`\n(saturation ⇔ zero work fluctuation",
+      "quality_score": 0.70446,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-26T17:21:49",
+      "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1311df1d",
-      "domain": "Geometry",
-      "name": "card_side",
-      "quality": 0.8125600000000002
-    },
-    {
-      "cycle_id": "bd1f81a7",
-      "domain": "Cryptography",
-      "name": "collapse",
-      "quality": 0.80372
-    },
     {
       "cycle_id": "bd1f81a7",
       "domain": "Cryptography",
@@ -2803,9 +2791,21 @@
       "domain": "Applications",
       "name": "summable_of_contraction",
       "quality": 0.7645600000000001
+    },
+    {
+      "cycle_id": "aa3d24c5",
+      "domain": "Novelty",
+      "name": "relativeEntropy_self",
+      "quality": 0.70446
+    },
+    {
+      "cycle_id": "aa3d24c5",
+      "domain": "Novelty",
+      "name": "relativeEntropy_nonneg",
+      "quality": 0.70446
     }
   ],
-  "last_updated": "2026-06-26T16:46:34",
+  "last_updated": "2026-06-26T17:21:49",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8344a207",
-        "quality": 0.6688000000000001,
-        "theorems": 16,
-        "title": "Birch and Swinnerton-Dyer Conjecture"
-      },
-      {
         "cycle_id": "dfb56ea4",
         "quality": 0.52355,
         "theorems": 8,
@@ -3637,6 +3631,12 @@
         "quality": 0.67667,
         "theorems": 8,
         "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+      },
+      {
+        "cycle_id": "aa3d24c5",
+        "quality": 0.70446,
+        "theorems": 14,
+        "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
       }
     ],
     "NumberTheory": [

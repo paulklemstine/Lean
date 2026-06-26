@@ -11518,7 +11518,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Logic",
         "Computation"
@@ -49296,7 +49296,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: Quantum entanglement entropy deviations from classical scaling laws become significant at quantum gravity scales, validated via experiments comparing gravitational wave signatures with entropy predictions from Type III CFT corrections.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty"
       ],

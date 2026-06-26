@@ -717,26 +717,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7496c7ce",
-    "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
-    "domain_bridges": [],
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "fd_0539",
-    "lineage_refs": [],
-    "priority_score": 0.86,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:06.880463+00:00",
-    "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domain_bridges": [],
@@ -1136,7 +1116,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3be846c2",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1148,7 +1128,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -3857,7 +3837,7 @@
       "Cameron-Puleo upper bound sat(n,K1∨F) ≤ n-1+sat(n-1,F)",
       "This paper: equality for F=K2∪qK1 and F=2K2∪qK1"
     ],
-    "consumed_by_exp_id": "ab90b095",
+    "consumed_by_exp_id": "",
     "description": "For every integer t ≥ 1 and q ≥ 1, let F = tK₂ ∪ qK₁ be the disjoint union of a matching of size t and q isolated vertices. Then for every n > 2t + q, the Cameron--Puleo upper bound is tight: sat(n, K₁ ∨ F) = n - 1 + sat(n - 1, F). This extends the paper's proved cases t = 1 and t = 2 to all matchings with isolated vertices.",
     "domain_bridges": [
       "finite simple graph theory to Lean 4 SimpleGraph",
@@ -3873,7 +3853,7 @@
     "proof_strategy": "The upper bound is exactly the Cameron--Puleo construction: take an extremal F-saturated graph on n-1 vertices and join one new universal vertex to it. For the lower bound, let G be any (K1∨F)-saturated graph on n vertices. Analyze a nonedge xy and the forced copy of K1∨F in G+xy. Because F is a matching plus isolated vertices, any forced copy can be decomposed into one apex vertex, t independent edges, and q remaining vertices avoiding the apex constraints. Show that the saturation condition forces either a universal vertex whose deletion is F-saturated, giving |E(G)| ≥ n-1+sat(n-1,F), or else enough local edge-disjoint matching witnesses around nonedges to yield the same global edge lower bound by degree counting. The base cases t=1,2 are supplied by the paper; the induction step increases t by removing one forced matching edge from each witness copy and applying the lower bound to the residual (t-1)K2∪qK1 configuration.",
     "research_mode": "team",
     "source_exp_id": "2606.22011v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:25:38.671844+00:00",
     "title": "Join-saturation equality for matchings with isolated vertices"
   },
@@ -4356,7 +4336,7 @@
       "Mathlib.Data.Finset.Basic",
       "Mathlib.Algebra.BigOperators.Fin"
     ],
-    "consumed_by_exp_id": "0d192d1b",
+    "consumed_by_exp_id": "",
     "description": "For every n,k,r with n ≥ 2k, k ≥ 3, and r ≥ 2, let (𝓕_i)_{i∈Fin r} be k-uniform families of subsets of Fin n. Assume each 𝓕_i is non-trivial, meaning it is not contained in any star, and assume the families are pairwise cross-intersecting: for i ≠ j, every A ∈ 𝓕_i and B ∈ 𝓕_j have A ∩ B ≠ ∅. Then the multilateral product is bounded by the Hilton--Milner value: ∏_{i∈Fin r} |𝓕_i| ≤ h(n,k)^r, where h(n,k) = C(n-1,k-1) - C(n-k-1,k-1) + 1.",
     "domain_bridges": [
       "Represents k-uniform set families as Finset (Finset (Fin n)) in Lean 4.",
@@ -4372,7 +4352,7 @@
     "proof_strategy": "Formalize the paper's two-family theorem as a Lean lemma: for any two non-star k-uniform cross-intersecting families A,B ⊆ binom(Fin n,k), |A|*|B| ≤ h(n,k)^2. Apply this lemma to every unordered pair of distinct indices i,j ∈ Fin r. Multiplying all pairwise inequalities gives (∏ᵢ |𝓕_i|)^(r-1) ≤ (h(n,k)^r)^(r-1), since each |𝓕_i| occurs in exactly r-1 pair products. Use positivity/monotonicity of natural powers to extract the (r-1)-st root, noting r ≥ 2.",
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:25:43.582970+00:00",
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
@@ -5590,7 +5570,7 @@
       "Christensen2025origami",
       "Cereceda2009mixing"
     ],
-    "consumed_by_exp_id": "53529d3f",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for all grid sizes m,n ≥ 3 the number of vertices of degree 4 in the flip graph of the m×n Miura‑ori equals (m‑1)(n‑1).",
     "domain_bridges": [
       "grid graph height functions",
@@ -5607,7 +5587,7 @@
     "proof_strategy": "Use the bijection between flat‑foldable Miura‑ori assignments and proper 3‑colourings of the grid graph, translate vertex degree to the number of strict local extrema of the associated integer height function, prove the polynomial count (m‑1)(n‑1) for degree‑4 vertices by induction on m and n, and derive diameter bounds via extremal Lipschitz‑function inequalities.",
     "research_mode": "team",
     "source_exp_id": "2606.22614v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T08:42:34.928992+00:00",
     "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
   },
@@ -10439,7 +10419,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "762ed13d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -10452,7 +10432,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -10590,26 +10570,6 @@
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe most natural next step is to attack the residue class isolated by the\nprime-core reduction: primes `p ≡ 1 (mod 8)`. The key insight is that the four\nelementary families already dispatch every residue except this one, so the entire\ndifficulty of Erdős–Straus is concentrated in a single arithmetic progression,\nand any constructive scheme that handles it would, via\n`erdosStraus_of_primes_one_mod_eight`, close the problem unconditionally. A\npromising route is to formalize the classical covering-congruence constructions\nof Mordell, which solve `4/p` for all `p` outside a sparse set of residues modulo\nsmall moduli (e.g. residues that are quadratic non-residues modulo `4`, or that\nfall into specific classes mod `3·8`, `5·8`, `7·8`, …). Why now? Because the\npresent development supplies exactly the reusable scaffolding — the predicate, the\nwitness-verification idioms, and divisor inheritance — that such a formalization\nwould otherwise have to rebuild from scratch.\n\nA second direction is computational certification at scale. The key insight is\nthat `ErdosStrausSolution n` is witnessed by a finite triple whose correctness is\na single rational identity, so a verified search procedure could emit witnesses\nfor enormous ranges and check them by `decide`/`norm_num`, turning empirical\ntables (which currently confirm the conjecture far beyond `10^17`) into\nmachine-checked theorems for explicit bounds. Why now? Because Lean's `decide`\nkernel reduction and `norm_num` extensions are mature enough to validate millions\nof rational identities reliably, and the bounded theorem `erdosStraus_upto_100`\ndemonstrates the pattern end to end; scaling it is an engineering problem, not a\nmathematical one.\n\nA third direction concerns the structure of the witness map itself.\nThe key insight is that the family witnesses are not ad hoc but instances of a small\nnumber of algebraic identities (the `1/a + 1/(a·n)` split and its halving, and the\n`(n+3)/(2na)` collapse), so one could formalize a *parametrized solver*: a single\nlemma taking residue data and returning a witness, from which all four families\nbecome corollaries. Why now? Because unifying the families would both shrink the\nproof and expose precisely which algebraic degrees of freedom remain unused for\nthe `1 (mod 8)` case, potentially suggesting the missing construction.\n\nA fourth direction is to connect this development to Mathlib's number-theoretic\ninfrastructure on quadratic residues and Dirichlet characters. The key insight is\nthat the obstruction at `p ≡ 1 (mod 8)` is governed by solvability of congruences\nthat quadratic reciprocity controls, so importing Mathlib's reciprocity and\nLegendre-symbol API could let one phrase the open core as a clean statement about\nrepresentability rather than as a raw existential over triples. Why now? Because\nMathlib's quadratic reciprocity and `ZMod` character theory are now stable and\nwell-supported, making it feasible to translate the analytic-number-theory\nheuristics for Erdős–Straus into formal, checkable hypotheses.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2559",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "199a5960",
-    "status": "available",
-    "timestamp": "2026-06-26T00:08:32.567910+00:00",
-    "title": "The most natural next step is to attack the residue class isolated by the"
   },
   {
     "ambition_level": "extension",
@@ -10806,6 +10766,25 @@
     "status": "available",
     "timestamp": "2026-06-24T22:36:53.104224+00:00",
     "title": "OEIS sequence: Stack polyominoes with square core."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Quantum entanglement entropy deviations from classical scaling laws become significant at quantum gravity scales, validated via experiments comparing gravitational wave signatures with entropy predictions from Type III CFT corrections.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_2619",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-26T17:21:41.522692+00:00",
+    "title": "Quantum Entanglement Entropy Scaling in Multiscale Gravity"
   },
   {
     "ambition_level": "extension",
@@ -11046,7 +11025,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f247824f",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -11059,7 +11038,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
