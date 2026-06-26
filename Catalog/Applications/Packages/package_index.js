@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d7fd1af1",
     "filename": "domain_finiteness.json",
     "pkg_num": 80,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.67919,
     "title": "Domain Finiteness Bridge: From Pigeonhole Counting to Field Structure"
   },
   {
@@ -2329,8 +2329,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "domain_finiteness",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.67919,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Domain Finiteness Bridge: From Pigeonhole Counting to Field Structure"
     }

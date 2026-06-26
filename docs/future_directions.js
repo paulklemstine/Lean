@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da520741",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -4334,7 +4334,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
   {
-    "consumed_by_exp_id": "5c41b780",
+    "consumed_by_exp_id": "",
     "description": "The upper bound S_1^\u03c6(x) \u226a x exp{-(1/2 - o(1))\u221a(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^\u03c6(x) \u2265 C x exp{-(1/2 + o(1))\u221a(log x log_2 x)} for all sufficiently large x.",
     "domains": [
       "Bridges"
@@ -4343,7 +4343,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T12:13:32.061938+00:00",
     "title": "Tightness of the unit-shift bound for Euler's totient function"
   },
@@ -5229,11 +5229,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer A\u202f\u2265\u202f2, the sum over all partitions \u03bb of n of the smallest multiple of A that does not occur as a part of \u03bb equals the number of A\u2011color partitions of n into distinct parts.  Formally, letting mexA0(A,\u03bb) denote the least non\u2011negative integer m such that m\u22610 (mod\u202fA) and m\u2209\u03bb, and letting D_A^dist(n) denote the number of partitions of n whose parts are distinct and each part is coloured with one of A colours, we conjecture that\n\\[\\sum_{\\lambda\\vdash n}\\mathrm{mexA0}(A,\\lambda)=D_A^dist(n).\\]  This reduces to the known identity \u03c3_mex(n)=D_2(n) for A=2.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2571",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25698v1",
+    "status": "available",
+    "timestamp": "2026-06-26T06:59:00.418610+00:00",
+    "title": "Generalization of the mex\u2011sum identity to A\u2011color partitions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2571",
+    "id": "fd_2572",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5247,7 +5262,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2572",
+    "id": "fd_2573",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5262,7 +5277,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2573",
+    "id": "fd_2574",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5277,7 +5292,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2574",
+    "id": "fd_2575",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5292,7 +5307,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2575",
+    "id": "fd_2576",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5307,7 +5322,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2576",
+    "id": "fd_2577",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5321,7 +5336,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2577",
+    "id": "fd_2578",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5335,7 +5350,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5349,13 +5364,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
     "status": "available",
     "timestamp": "2026-06-26T06:18:09.455977+00:00",
     "title": "Upper Bound on Deletion-Ball Intersection under Lower-Order Disjointness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture states that arbitrary local deformation prescriptions can be consistently extended globally under specified conditions, ensuring non-trivial realizability.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2581",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25485v1",
+    "status": "available",
+    "timestamp": "2026-06-26T07:04:20.754036+00:00",
+    "title": "Global Lifting Viability"
   },
   {
     "consumed_by_exp_id": "",
@@ -5560,21 +5590,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Signless Laplacian spectral radius of pure complexes\n\nDerived from this cycle's findings in `Core.lean`, `Simplex.lean`,\n`Bridge.lean`. The cycle established the *dimension-free analytic engine*\n`q_{r-1}(K) \u2264 (facet size)\u00b7(max ridge degree)` via per-facet\nCauchy\u2013Schwarz, proved it sharp on the simplex, and connected it to the\nclassical graph bound `q(G) \u2264 2\u0394` through the flag-complex catalog.\n\nEach direction below is bold, falsifiable, and testable in Lean.\n\n## D1. Homology-vanishing \u27f9 ridge-degree ceiling\n**Conjecture.** For a pure `r`-complex `K` on `n` vertices, if\n`H\u0303_t(lk(\u03c3); \u211d) = 0` for every `(r\u2212t)`-face `\u03c3`, then every `(r\u22121)`-face\n(ridge) lies in at most `t\u00b7n/(r+1) \u2212 (t\u22121)` facets, i.e.\n`degree(\u03c1) \u2264 (t n \u2212 (t\u22121)(r+1))/(r+1)`.\n*The key insight is* that combined with `Core.specRad_le` (`s = r+1`),\nthis single degree bound yields the conjectured\n`q_{r-1}(K) \u2264 t n \u2212 (t\u22121)(r+1)` with no further spectral input \u2014 the\nspectral half of the conjecture is already done.\n*Why now?* `specRad_le` reduces the whole conjecture to a purely\ncombinatorial degree estimate, so effort can focus on one clean inequality.\n\n## D2. Equality forces a single high-degree star (rigidity)\n**Conjecture.** If `q_{r-1}(K) = (facet size)\u00b7(max degree)` exactly, then\nthe Cauchy\u2013Schwarz step is tight facet-by-facet, which forces the\nPerron eigenvector to be constant on every facet; for `r`-down-path-\nconnected `K` this propagates to a global constant, so `K` is the\nneighbourhood-complete (join-of-simplex) configuration.\n*The key insight is* that equality in `sq_sum_le_card_mul_sum_sq` per facet\nis equivalence of the entries `x_r` inside each facet, and connectivity\nglues these local constancies into one.\n*Why now?* `simplex_specRad` already exhibits the extremal vector\n(all-ones) explicitly, giving a concrete target for the rigidity argument.\n\n## D3. Down-Laplacian / Hodge symmetry of the bound\n**Conjecture.** The same `(facet size)\u00b7(max degree)` bound holds for the\n*down* signless Laplacian on `r`-faces, with `facet size` replaced by the\ncommon-coface count, giving a self-dual pair of bounds whose minimum beats\neither one.\n*The key insight is* that `slQuad_eq_matrix` shows the form is `B B\u1d40`; the\ndual form `B\u1d40 B` has the same nonzero spectrum, so a row-sum bound on the\ntranspose transfers for free.\n*Why now?* `slQuad_eq_matrix` makes the `B B\u1d40` structure explicit in Lean,\nso the transpose argument is a short formal step away.\n\n## D4. Strict improvement under positive higher Betti numbers\n**Conjecture.** If some link has `H\u0303_t \u2260 0` (the hypothesis fails), the\nspectral radius can exceed `t n \u2212 (t\u22121)(r+1)`, and the excess is at least\nthe smallest nonzero reduced Betti number of that link.\n*The key insight is* that the counterexample `q(K\u2083) = 4 > 3` (see\n`ComputationalEvidence.md`) is exactly a failure of the degree ceiling, and\nthe gap is governed by a cycle in the link.\n*Why now?* Bridge.lean's graph case already produces the first concrete\nviolation `K\u2083`, pinning down where the hypothesis becomes load-bearing.\n\n## D5. Quantitative stability of the simplex extremizer\n**Conjecture.** If `q_{r-1}(K)` is within `\u03b5` of `(r+1)\u00b7\u0394`, then `K` is\n`O(\u03b5)`-close (in facet edit distance) to a join of a simplex and a skeleton,\na robust version of D2.\n*The key insight is* that the slack in the summed Cauchy\u2013Schwarz bound is a\nsum of squared eigenvector differences across facets, so small slack means\nsmall total variation of the eigenvector.\n*Why now?* `Core.slQuad_le` carries an explicit per-facet slack term that\ncan be retained rather than discarded, turning the bound into a stability\nestimate.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2580",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "01ec1037",
-    "status": "available",
-    "timestamp": "2026-06-26T06:49:00.330184+00:00",
-    "title": "Derived from this cycle's findings in `Core.lean`, `Simplex.lean`,"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5734,7 +5749,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "ab8befc8",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5743,7 +5758,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -6389,6 +6404,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
+    "domains": [
+      "Physics",
+      "Geometry"
+    ],
+    "id": "fd_0466",
+    "priority_score": 0.09999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.651923+00:00",
+    "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
     "consumed_by_exp_id": "",
