@@ -37125,7 +37125,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Lagarias-Shallit bounds for Lagrange constants under integer linear fractional transformations",
         "Smith normal form over Z for reducing integer matrices",
@@ -37135,7 +37135,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "bdb5ae9b",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37151,7 +37151,7 @@
         "Bridges"
       ],
       "id": "fd_2353",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T19:30:57.212345+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Data.Matrix.Notation\nimport Mathlib.Data.Real.Basic\n\nnoncomputable section\n\nabbrev Mat2Z := Matrix (Fin 2) (Fin 2) ℤ\n\nconstant Primitive : Mat2Z → Prop\nconstant mobius : Mat2Z → ℝ → ℝ\nconstant lagrangeConst : ℝ → ℝ\nconstant Bad : Set ℝ\nconstant IsQuadraticIrrational : ℝ → Prop\n\ndef detAbs (M : Mat2Z) : ℝ := ((Int.natAbs (M.det) : ℕ) : ℝ)\n\ntheorem quadratic_irrational_ratio_spectrum_dense\n    (M : Mat2Z) (hprim : Primitive M) (hdet : M.det ≠ 0) :\n    ∀ u v : ℝ,\n      (detAbs M)⁻¹ ≤ u → u < v → v ≤ detAbs M →\n        ∃ x : ℝ,\n          x ∈ Bad ∧ IsQuadraticIrrational x ∧\n          u < lagrangeConst (mobius M x) / lagrangeConst x ∧\n          lagrangeConst (mobius M x) / lagrangeConst x < v := by\n  sorry",
       "lineage_refs": [],
@@ -37165,7 +37165,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22229v1",
       "source_path": "http://arxiv.org/abs/2606.22229v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T13:11:45.659366+00:00",
       "title": "Quadratic irrational density in the ratio spectrum"
@@ -41103,14 +41103,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "https://arxiv.org/abs/2001.12345",
         "https://arxiv.org/abs/2203.67890"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "4e028e76",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41126,11 +41126,11 @@
         "Algebra"
       ],
       "id": "fd_2438",
-      "last_attempt_time": "2026-06-26T18:59:56.846552+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem prime_zeta_boundary (K : ImaginaryQuadraticField) [class_number_one K] : exists (r : RR) (C : CompactlySupportedFunction), r > 0 and C.has_natural_boundary (r * [0 1])",
       "lineage_refs": [],
-      "outcome_quality": 0.78512,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Leverage analytic continuation of Dirichlet L-functions and properties of their critical strips to establish the natural boundary's extent and position, then apply techniques from complex analysis to demonstrate the absence of meromorphic continuation beyond the boundary.",
@@ -41140,7 +41140,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24536v1",
       "source_path": "http://arxiv.org/abs/2606.24536v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T13:54:36.235382+00:00",
       "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
@@ -48125,6 +48125,49 @@
       "title": "Optimality of the Density-One Constant for Erdős Problem 400"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Eq1",
+        "Ref. Kopp2",
+        "Ref. Scott2"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "This paper investigates the algebraic origins of overlap units in SIC-POVMs by linking them to square roots of Stark units in the context of ray class fields. It proposes a framework to systematically decode these units through arithmetic progression properties.",
+      "domain_bridges": "linear algebra over finite fields + analytic number theory",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2593",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Unit generation from divisor lattices in quadratic extensions",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Inductive construction of ray class fields and modular constraints",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23535v1",
+      "source_path": "http://arxiv.org/abs/2606.23535v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T19:28:35.741064+00:00",
+      "title": "Constructive characterization of overlap units in SIC-POVMs via ray class fields"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -48150,7 +48193,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2593",
+      "id": "fd_2594",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -48198,7 +48241,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2594",
+      "id": "fd_2595",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -48243,7 +48286,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2595",
+      "id": "fd_2596",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -48287,7 +48330,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2596",
+      "id": "fd_2597",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -48334,7 +48377,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2597",
+      "id": "fd_2598",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -48379,7 +48422,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2598",
+      "id": "fd_2599",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -48424,7 +48467,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2599",
+      "id": "fd_2600",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -48465,7 +48508,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2600",
+      "id": "fd_2601",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -48510,7 +48553,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2601",
+      "id": "fd_2602",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -48549,7 +48592,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2602",
+      "id": "fd_2603",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -48591,7 +48634,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2603",
+      "id": "fd_2604",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -48635,7 +48678,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2604",
+      "id": "fd_2605",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -48681,7 +48724,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2605",
+      "id": "fd_2606",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -48726,7 +48769,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2606",
+      "id": "fd_2607",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -48772,7 +48815,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2607",
+      "id": "fd_2608",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -48818,7 +48861,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2608",
+      "id": "fd_2609",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -48868,7 +48911,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2609",
+      "id": "fd_2610",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
@@ -48914,7 +48957,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2610",
+      "id": "fd_2611",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of the use of filtered complete intersection properties in the orderization process",
@@ -48960,7 +49003,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2611",
+      "id": "fd_2612",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vishik_non_similarity_char_2 (m : ℕ) (hm : m ≥ 3) : ∃ (F : Field) (char F = 2), ∃ (φ ψ : QuadraticForm F), \n  dim φ = 2^m ∧ dim ψ = 2^m ∧ \n  anisotropic φ ∧ anisotropic ψ ∧ \n  (∀ (E : Field), (E ⊇ F) → total_isotropy_index φ E = total_isotropy_index ψ E) ∧ \n  ¬ similar φ ψ",
@@ -49005,7 +49048,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2612",
+      "id": "fd_2613",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularized_sum_primes (P : ℂ → ℂ) (is_prime_zeta : IsPrimeZeta P) (continuation : AnalyticContinuation P) : \n  continuation.value_at (-1 : ℂ) = expected_constant_value := by sorry",
@@ -49054,7 +49097,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2613",
+      "id": "fd_2614",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_veronese_circuit_classification (m : ℕ) (t : ℕ) (d : ℕ) : let circuit := λ (forms : Fin t → (ℓ : LinearForm 𝕂) × ℓ ≠ 0), (linear_dependent_minimally (λ i, forms i |> Prod.fst ^ m)) → (dim (span (λ i, (forms i).1)) = (t + m - 2) / m) in circuit → (∃ (curve_config : Fin t → LinearForm 𝕂), (∀ i, (curve_config i) ^ m = (forms i).1 ^ m) ∧ (rational_normal_curve_configuration curve_config) ∧ (t = m * (d - 1) + 2))",
@@ -49101,7 +49144,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2614",
+      "id": "fd_2615",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_zero_sum_characterization {p : ℕ} [Fact p.Prime] (hp : p % 2 = 1)\n    (ℓ : ℕ) (hℓ : 1 ≤ ℓ ∧ ℓ ≤ (p - 1) / 2)\n    (S : Finset (ZMod p)) (hsym : S = S.image (fun x => -x))\n    (hzero : (0 : ZMod p) ∉ S) :\n    (∃ (vs : Fin (2 * ℓ + 1) → ZMod p),\n        (Pairwise (fun i j => vs i ≠ j)) ∧\n        (∀ i : Fin (2 * ℓ + 1), (vs ((i + 1 : Fin (2 * ℓ + 1))) - vs i) ∈ S)) ↔\n    (∃ (t : Finset (ZMod p)), t ⊆ S ∧ t.card = 2 * ℓ + 1 ∧ (∑ x in t, x) = 0) := by sorry",
@@ -49148,7 +49191,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2615",
+      "id": "fd_2616",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positive_dyadic_density (P : Rat) (Q : Nat) (H : Q.numerator < Q) (inf_support : nat.infinite_support (function n, h (a : nat) => a in support n) (support_sum : nat.sum (n -> n * h (bit_from_n n)) / 2^n = P / Q)) : (exists c_Q : PositiveReals, forall X in Dyads, sufficiently_large X, A_support (2*X) - A_support X >= c_Q * X) := ...",
@@ -49192,7 +49235,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2616",
+      "id": "fd_2617",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem qc_asymptotic_tight {n : ℕ} (hn : 1 ≤ n) : (qc n : ℝ) / n ≤ 0.216 + o(1) := by sorry",
@@ -49236,7 +49279,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2617",
+      "id": "fd_2618",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture_s3_eq : ∀ (k : ℕ), k ≥ 5 → s₃ k = (twr (k-2) 2) ^ 2",
@@ -49284,7 +49327,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2618",
+      "id": "fd_2619",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_size_non_outer_additive_strong_blocking_set {q : ℕ} [hq : Fact (IsPrimePower q)] {h : ℕ} (h_pos : h > 1) {k : ℕ} (k_pos : k ≥ 2) : ∀ (B : AdditiveStrongBlockingSet q k), ¬ ContainsHyperplane B → |B| ≤ q^(k-1) := by\n  -- formal proof outline\n  sorry",
@@ -49326,7 +49369,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2619",
+      "id": "fd_2620",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "M_{g,n} ≅ G_{g,n}",
@@ -49365,7 +49408,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2620",
+      "id": "fd_2621",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Central trinomial coefficient bounds",
@@ -49411,7 +49454,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2621",
+      "id": "fd_2622",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_obstruction_dim_twisted_steinberg\n  (p : ℕ)\n  (ℓ : ℕ)\n  (is_prime_p : fact_is_prime p)\n  (is_prime_ℓ : fact_is_prime ℓ)\n  (h_p_not_ℓ : p ≠ ℓ)\n  (type : WeilDeligneType)\n  (h_type : type = twisted_steinberg p)\n  (h_congruence : p % ℓ = 1) :\n  dim (H0 Gp (cyclotomic_char ℓ ⊗ adjoint_zero_rho_bar)) = 1 :=",
@@ -49467,7 +49510,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2622",
+      "id": "fd_2623",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem consecutive_zeckendorf_niven_bound {d a : ℕ} (h : d > 0) : ∀ (n m : ℕ), n ≤ m → (∀ k ∈ Finset.Icc n m, ZeckendorfNiven (a + k * d)) → m - n + 1 ≤ ⌊Real.logb (phi) (d : ℝ)⌋ + 2 := by sorry",
@@ -49512,7 +49555,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2623",
+      "id": "fd_2624",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem wallis_hierarchy_even_branch (k : ℕ) : \n  let P_m := ∏' (n : ℕ), (Real.exp (counterterm k n)) * (1 - 1/(n^2))^(n^(2*k))\n  exists (val : ℝ), P_m = val ∧ is_closed_form_zeta_pi_gamma val\n  where\n    counterterm (k : ℕ) (n : ℕ) : ℝ := sorry",
@@ -49533,82 +49576,51 @@
       "title": "Closed Form for the Regularised Wallis Product P_m for Even m"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# FUTURE DIRECTIONS — Flip graphs of the m×n Miura-ori\n\nDerived from this cycle's findings: (a) the crease graph has exactly `(m-1)(n-1)`\ndegree-4 vertices (`card_degreeFour`), and (b) the single-site MV flip graph is\n`(m+1)(n+1)`-regular and connected (`flipGraph_degree`, `flipGraph_connected`).\n\n## 1. Diameter of the MV flip graph is exactly `(m+1)(n+1)`\n\n**Conjecture.** The single-site flip graph of MV assignments of the `m × n`\nMiura-ori has diameter exactly `(m+1)(n+1)` (the number of crease vertices).\n\nThe key insight is... the flip graph is the Boolean hypercube `Q_N` with\n`N = (m+1)(n+1)` (established structurally by `flipGraph_degree` +\n`flipGraph_connected`), and the hypercube `Q_N` has diameter `N`; two assignments\nrealizing the diameter are an assignment and its global complement.\n\n**Why now?** We have already proved regularity and connectivity, isolating the\ngraph as a hypercube; the diameter is the immediate next invariant and unlocks\nworst-case bounds on single-site reconfiguration.\n\n## 2. Full degree census determines the crease graph up to isomorphism\n\n**Conjecture.** Among all finite planar grid graphs, the triple\n`(#deg-2, #deg-3, #deg-4) = (4, 2(m-1)+2(n-1), (m-1)(n-1))` characterizes the\n`m × n` crease graph up to isomorphism.\n\nThe key insight is... the corner/edge/interior split is rigid: degree-2 vertices\nmust be the 4 corners, degree-3 the boundary chains, forcing the `(m+1)×(n+1)`\nrectangular shape, so the degree census is a complete combinatorial fingerprint.\n\n**Why now?** The interior count `(m-1)(n-1)` (this cycle) is the last of the\nthree census numbers; combined with the handshake total `(m+1)(n+1)` it gives a\nclosed system ripe for a uniqueness proof.\n\n## 3. Mixing time of Glauber dynamics on MV assignments is `Θ(N log N)`\n\n**Conjecture.** Single-site Glauber dynamics on the (unconstrained) MV\nassignments of the `m × n` Miura-ori mixes in `Θ(N log N)` steps with\n`N = (m+1)(n+1)`.\n\nThe key insight is... once the state graph is identified with the hypercube\n`Q_N` (this cycle), Glauber dynamics on `Q_N` is the classical\nlazy-random-walk-on-the-cube, whose mixing time is `(1/2)N log N (1+o(1))` by a\ncoupon-collector coupling.\n\n**Why now?** `Cereceda2009mixing` poses mixing of recolouring chains; our\nidentification of the Miura flip graph with `Q_N` makes the Miura instance an\nexactly solvable special case.\n\n## 4. Flat-foldable MV assignments form a degree-`(m+1)(n+1) − c` subgraph\n\n**Conjecture.** Restricting to *flat-foldable* MV assignments (Maekawa/Kawasaki\nat each interior degree-4 vertex) yields an induced flip subgraph in which every\nvertex has degree `(m+1)(n+1) − c(p)` where the defect `c(p)` counts sites whose\nflip would violate a local Maekawa constraint, and `∑_p c(p)` is governed by the\n`(m-1)(n-1)` interior vertices.\n\nThe key insight is... each interior degree-4 vertex (counted by\n`card_degreeFour`) imposes one Maekawa parity constraint, so the interior-vertex\ncount is exactly the number of linear constraints cutting the hypercube down to\nthe flat-foldable polytope's vertex set.\n\n**Why now?** We now have both the interior-vertex count and the ambient\nhypercube; the constrained subgraph is the natural, harder, physically faithful\nnext object.\n\n## 5. The degree-4 count is invariant under Miura shear/zig-zag offset\n\n**Conjecture.** For any admissible shear angle and zig-zag offset producing a\ncombinatorial `m × n` Miura tessellation, the number of degree-4 vertices remains\n`(m-1)(n-1)`.\n\nThe key insight is... `card_degreeFour` depends only on the *vertex* incidence\ncombinatorics, which are preserved by any continuous Miura parameterization, so\nthe count is a topological invariant of the cell complex rather than a metric\none.\n\n**Why now?** Having proved the count for the canonical model, the robustness\nclaim is the natural strengthening and connects to the rigid-origami moduli\ndiscussed in the catalog references.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Logic"
+      "catalog_references": [
+        "doi:10.1007/BF01227447",
+        "doi:10.1016/0012-365X(81)90022-9",
+        "arXiv:1808.02216"
       ],
-      "id": "fd_2624",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "53529d3f",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/53529d3f",
-      "status": "available",
-      "thread_id": "th_65918016",
-      "timestamp": "2026-06-26T19:25:53.009957+00:00",
-      "title": "Derived from this cycle's findings: (a) the crease graph has exactly `(m-1)(n-1)"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Cusick density bias for `s₂(n+t) ≥ s₂(n)`\n\nContext. The binary digit-sum problem of Cusick asks for the asymptotic density\n`c_t = dens{ n : s₂(n+t) ≥ s₂(n) }` and conjectures `c_t > 1/2` for all `t ≥ 1`.\nThis cycle formalized (in `CusickDoublingInvariance.lean`, building on\n`CusickSumOfDigits.lean`, `CusickCarryReformulation.lean`,\n`CusickDensityWitness.lean`):\n\n* doubling invariance `cusickCount (2t)(2N) = 2·cusickCount t N` and its orbit\n  form `cusickCount (2^k t)(2^k N) = 2^k·cusickCount t N` (so `c_t` depends only on\n  the odd part of `t`);\n* the exact density `c_{2^k} = 3/4` for every power of two, with explicit bias\n  `1/4`, via the pointwise rule `s₂(n) ≤ s₂(n+2^k) ↔ (n / 2^k) % 4 ≠ 3`.\n\nThe conjectures below are precise, falsifiable, and supported by the data in\n`ComputationalEvidence.md`.\n\n## Conjecture 1 (Dyadic exactness of small-shift densities)\n\nFor `t ∈ {3, 5, 7}` the finite count satisfies, for all `N ≥ 2·s₂(t)`,\n`cusickCount t (2^N) = a_t · 2^{N - 2 s₂(t)}` with `(a_3,a_5,a_7) = (11,10,43)`\nand denominator scale `2^{2 s₂(t)} = 16,16,64`. Hence `c_3 = 11/16`, `c_5 = 5/8`,\n`c_7 = 43/64`. Testable now: prove `cusickCount 3 (2^N) = 11·2^{N-4}` for all\n`N ≥ 4` (a single self-similar recursion would suffice).\n\n## Conjecture 2 (Power-of-two denominator for odd `t`)\n\nFor every odd `t`, the density `c_t` is a dyadic rational `c_t = a_t / 2^{2 s₂(t)}`\nwith odd numerator `a_t`, and the finite count stabilizes exactly:\n`cusickCount t (2^{N+1}) = 2·cusickCount t (2^N)` for all `N ≥ 2 s₂(t)`. (For\n`t = 2^k` this holds with `s₂(t)=1` and denominator `4`, already proved.)\n\n## Conjecture 3 (Explicit bias lower bound, DKS form)\n\nFor every `t`, `c_t ≥ 1/2 + 2^{-(2 s₂(t) + 1)}`. The proved cases give room to\nspare: `c_{2^k} = 3/4 ≥ 1/2 + 1/8`, and `c_3 = 11/16 ≥ 1/2 + 1/32`,\n`c_7 = 43/64 ≥ 1/2 + 1/128`. A formal route: build the level-`N` transfer/recursion\nfor `cusickCount t (2^N)` and prove the bias term never drops below\n`2^{N-1-(2 s₂(t))}` per block.\n\n## Conjecture 4 (Carry-count tail bound ⇒ Cusick)\n\nVia `cusick_reformulation` (`s₂(n) ≤ s₂(n+t) ↔ carries t n ≤ s₂(t)`), Cusick's\n`c_t > 1/2` is equivalent to: the carry count `carries t n = v₂(C(n+t,t))` lies\nin `[0, s₂(t)]` for more than half of `n` in each dyadic block. Conjecture the\nsharper symmetric statement: for each block `[0,2^N)`,\n`#{ n : carries t n ≤ s₂(t) } - #{ n : carries t n > s₂(t) } ≥ 2^{N - 2 s₂(t)}`.\n\n## Conjecture 5 (Gap-independent density for two separated set bits)\n\nLet `t = 2^a + 2^b` with `b > a`, so `s₂(t) = 2`. Computation at `N = 14`\n(`c_t` out of `1024`) gives, for `a = 0`:\n`c_5 = 5/8` (gap `b-a = 2`), but `c_9 = c_{17} = c_{33} = c_{65} = 11/16`\n(gaps `3,4,5,6`). Conjecture: the density is **gap-independent once the bits are\nseparated by at least 3**, namely\n`c_{2^a + 2^b} = 11/16` for all `b ≥ a + 3`,\nequal to the adjacent-bit value `c_3 = 11/16`, while the borderline gap-2 case\nyields `c_{2^a + 2^{a+2}} = 5/8`. Falsifiable: exhibit any `b ≥ a+3` with\n`cusickCount (2^a+2^b)(2^N) / 2^N ≠ 11/16` for large `N`. A proof would likely\nfactor the carry analysis into two non-interacting windows once the gap exceeds\nthe maximal carry reach of a single isolated `1` bit (which is `2`).\n",
-      "domain_bridges": [],
+      "description": "For fixed integers k ≥ 2 and 1 ≤ m₁ ≤ ... ≤ mₖ, the threshold n₀(m₁, ..., mₖ) in the main theorem can be bounded above by an explicitly computable function of the form n₀ ≤ C · (m₁m₂⋯mₖ)^(poly(k, m₁, ..., mₖ)) for some absolute constant C and polynomial exponent. This conjecture asserts that the asymptotic nature of the proof can be made constructive with quantifiable bounds.",
+      "domain_bridges": [
+        "Ramsey Theory",
+        "Graph Limits",
+        "Computability Theory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Pythagorean",
-        "Logic"
+        "Logic",
+        "Pythagorean"
       ],
       "id": "fd_2625",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem erdos_550_effective_threshold (k : ℕ) (m : Fin k → ℕ) (hk : 2 ≤ k) (hordered : ∀ i j, i ≤ j → m i ≤ m j) :\n  ∃ (C C' : ℝ) (poly : ℕ → ℕ), ∀ (m₁ : ℕ), let n₀ := C * (∏ i, m i) ^ (poly k m₁) in\n  ∀ (n : ℕ) (T : Graph), n ≥ n₀ → (T.IsTree ∧ T.VertexCount = n) →\n  let q := k - 1 in\n  let r := RamseyNumber T (CompleteMultipartite [m 0, m 1]) in\n  RamseyNumber T (CompleteMultipartite (List.map (fun i => m i) (List.range k))) ≤ q * (r - 1) + m 0",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Derive explicit bounds from the off-Turán embedding theorem using quantitative Szemerédi regularity, then trace through the compactness argument to bound the stabilization threshold, leveraging finite versions of the shadow hypergraph construction and effective null-blocker theory.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "1a8e3469",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/1a8e3469",
+      "source_exp_id": "2606.23659v1",
+      "source_path": "http://arxiv.org/abs/2606.23659v1",
       "status": "available",
-      "thread_id": "th_ef93c649",
-      "timestamp": "2026-06-26T19:28:09.053118+00:00",
-      "title": "Context. The binary digit-sum problem of Cusick asks for the asymptotic density"
+      "thread_id": "",
+      "timestamp": "2026-06-26T19:30:49.236955+00:00",
+      "title": "Effective Computability of Erdős-550 Threshold"
     },
     {
       "ambition_level": "extension",
@@ -50221,44 +50233,6 @@
       "thread_id": "",
       "timestamp": "2026-06-13T22:11:35.829702+00:00",
       "title": "Deepening: The file `Applications/CombinatorialSpecies.lean` originally established the exp"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle 53529d3f (Q=0.785), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that for all grid sizes m,n ≥ 3 the number of vertices of degree 4 in the flip graph of the m×n Miura‑ori equals (m‑1)(n‑1).",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Applications"
-      ],
-      "id": "push_53529d3f_3676445b",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.88512,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "53529d3f",
-      "source_path": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-26T19:26:18.282553+00:00",
-      "title": "Deepening: Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
     },
     {
       "ambition_level": "extension",
@@ -54757,11 +54731,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "1f3047ef",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -54772,11 +54746,11 @@
         "Algebra"
       ],
       "id": "seed_338",
-      "last_attempt_time": "2026-06-26T18:59:50.480352+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:27:55.470307+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.5860000000000001,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.85,
       "proof_strategy": "",
@@ -54786,7 +54760,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432625+00:00",
       "title": "Representation Theory: Character Tables of S_n"
@@ -129742,7 +129716,7 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 305,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 58,
     "Computation": 100,
@@ -129754,7 +129728,7 @@
     "Novelty": 200,
     "Physics": 45,
     "Probability": 1,
-    "Pythagorean": 112,
+    "Pythagorean": 111,
     "Shared": 6,
     "Tropical": 33
   },
@@ -129769,7 +129743,7 @@
     "codes": 13,
     "complete": 393,
     "computational": 66,
-    "compute": 100,
+    "compute": 99,
     "computed": 42,
     "condition": 100,
     "conjecture": 406,
@@ -129794,9 +129768,9 @@
     "first": 325,
     "first-order": 19,
     "formal": 133,
-    "formalize": 225,
+    "formalize": 224,
     "framework": 103,
-    "function": 205,
+    "function": 204,
     "functions": 99,
     "future": 526,
     "giving": 120,
@@ -129809,11 +129783,11 @@
     "matrix": 83,
     "mature": 28,
     "metric": 132,
-    "natural": 197,
+    "natural": 196,
     "normally": 2,
     "novelty": 139,
     "now?**": 143,
-    "number": 179,
+    "number": 178,
     "o(1/log": 2,
     "original": 353,
     "parameter": 58,
@@ -129847,10 +129821,10 @@
     "structure": 227,
     "structures": 48,
     "systems": 72,
-    "theorem": 398,
+    "theorem": 397,
     "theorems": 462,
     "theories": 33,
-    "theory": 351,
+    "theory": 350,
     "tononi's": 3,
     "topological": 91,
     "topology": 65,

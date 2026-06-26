@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "568da95c",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Quantum EML Single-Qubit Activations\n\nThese directions extend the verified Euler-activation core in\n`EML/QuantumActivation.lean`. Each is independent and self-contained.\n\n## 1. Fr",
-      "quality_score": 0.4444041217391304,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-20T23:53:46",
-      "title": "EML Quantum Activation Functions"
-    },
-    {
       "cycle_id": "97399ed6",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Library of Babel: Catalogs & Incompressibility\n\nDerived from this cycle's verified results\n(`BabelDiagonalCatalog.lean`, `BabelDeBruijnCatalog.lean`,\n`BabelIncompressibility.lean",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-26T19:26:17",
       "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
+    },
+    {
+      "cycle_id": "1a8e3469",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Cusick density bias for `s₂(n+t) ≥ s₂(n)`\n\nContext. The binary digit-sum problem of Cusick asks for the asymptotic density\n`c_t = dens{ n : s₂(n+t) ≥ s₂(n) }` and conjectures `c_",
+      "quality_score": 0.5860000000000001,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-26T19:28:25",
+      "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.78512
     }
   ],
-  "last_updated": "2026-06-26T19:26:17",
+  "last_updated": "2026-06-26T19:28:25",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a2f737c1",
-        "quality": 0.4444762417582418,
-        "theorems": 9,
-        "title": "Realization of all even incoherence indices ≥4 by maximal standard frames"
-      },
-      {
         "cycle_id": "abbbde7c",
         "quality": 0.58216,
         "theorems": 14,
@@ -3141,6 +3135,12 @@
         "quality": 0.78512,
         "theorems": 10,
         "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
+      },
+      {
+        "cycle_id": "1a8e3469",
+        "quality": 0.5860000000000001,
+        "theorems": 11,
+        "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
       }
     ],
     "Bridges": [

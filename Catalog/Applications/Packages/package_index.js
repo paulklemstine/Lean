@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1a8e3469",
     "filename": "explicit_bias_lower_bound_for_the_density_of_n_wit.json",
     "pkg_num": 107,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5860000000000001,
     "title": "Doubling Invariance and Exact Cusick Densities for Powers of Two"
   },
   {
@@ -3121,8 +3121,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "explicit_bias_lower_bound_for_the_density_of_n_wit",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5860000000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Doubling Invariance and Exact Cusick Densities for Powers of Two"
     }

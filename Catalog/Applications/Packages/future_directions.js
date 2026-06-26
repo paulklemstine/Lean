@@ -330,20 +330,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 53529d3f (Q=0.785), which proved 10 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Conjecture that for all grid sizes m,n \u2265 3 the number of vertices of degree\u202f4 in the flip graph of the m\u00d7n Miura\u2011ori equals (m\u20111)(n\u20111).",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_53529d3f_3676445b",
-    "priority_score": 0.88512,
-    "research_mode": "team",
-    "source_exp_id": "53529d3f",
-    "status": "available",
-    "timestamp": "2026-06-26T19:26:18.282553+00:00",
-    "title": "Deepening: Degree\u20114 vertices in the flip graph of the m\u00d7n Miura\u2011ori"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
     "domains": [
       "Algebra"
@@ -837,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "1f3047ef",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -846,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -2382,7 +2368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bdb5ae9b",
     "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
     "domains": [
       "Bridges"
@@ -2391,7 +2377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T13:11:45.659366+00:00",
     "title": "Quadratic irrational density in the ratio spectrum"
   },
@@ -3477,6 +3463,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-24T13:27:56.688809+00:00",
     "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2438",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24536v1",
+    "status": "available",
+    "timestamp": "2026-06-24T13:54:36.235382+00:00",
+    "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
   {
     "consumed_by_exp_id": "",
@@ -5546,11 +5547,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This paper investigates the algebraic origins of overlap units in SIC-POVMs by linking them to square roots of Stark units in the context of ray class fields. It proposes a framework to systematically decode these units through arithmetic progression properties.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2593",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23535v1",
+    "status": "available",
+    "timestamp": "2026-06-26T19:28:35.741064+00:00",
+    "title": "Constructive characterization of overlap units in SIC-POVMs via ray class fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5564,7 +5580,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5579,7 +5595,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5594,7 +5610,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5609,7 +5625,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5624,7 +5640,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5638,7 +5654,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5652,7 +5668,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5666,7 +5682,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5681,7 +5697,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5696,7 +5712,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5711,7 +5727,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5726,7 +5742,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5741,7 +5757,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5755,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5770,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5785,7 +5801,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5799,7 +5815,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5813,7 +5829,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5827,7 +5843,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5842,7 +5858,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5857,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5872,7 +5888,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -5886,7 +5902,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -5900,7 +5916,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -5915,7 +5931,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -5929,7 +5945,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -5944,7 +5960,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -5958,7 +5974,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -5972,7 +5988,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -5986,13 +6002,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
     "status": "available",
     "timestamp": "2026-06-26T18:59:39.163751+00:00",
     "title": "Closed Form for the Regularised Wallis Product P_m for Even m"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For fixed integers k \u2265 2 and 1 \u2264 m\u2081 \u2264 ... \u2264 m\u2096, the threshold n\u2080(m\u2081, ..., m\u2096) in the main theorem can be bounded above by an explicitly computable function of the form n\u2080 \u2264 C \u00b7 (m\u2081m\u2082\u22efm\u2096)^(poly(k, m\u2081, ..., m\u2096)) for some absolute constant C and polynomial exponent. This conjecture asserts that the asymptotic nature of the proof can be made constructive with quantifiable bounds.",
+    "domains": [
+      "Logic",
+      "Pythagorean"
+    ],
+    "id": "fd_2625",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23659v1",
+    "status": "available",
+    "timestamp": "2026-06-26T19:30:49.236955+00:00",
+    "title": "Effective Computability of Erd\u0151s-550 Threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -6194,21 +6225,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Flip graphs of the m\u00d7n Miura-ori\n\nDerived from this cycle's findings: (a) the crease graph has exactly `(m-1)(n-1)`\ndegree-4 vertices (`card_degreeFour`), and (b) the single-site MV flip graph is\n`(m+1)(n+1)`-regular and connected (`flipGraph_degree`, `flipGraph_connected`).\n\n## 1. Diameter of the MV flip graph is exactly `(m+1)(n+1)`\n\n**Conjecture.** The single-site flip graph of MV assignments of the `m \u00d7 n`\nMiura-ori has diameter exactly `(m+1)(n+1)` (the number of crease vertices).\n\nThe key insight is... the flip graph is the Boolean hypercube `Q_N` with\n`N = (m+1)(n+1)` (established structurally by `flipGraph_degree` +\n`flipGraph_connected`), and the hypercube `Q_N` has diameter `N`; two assignments\nrealizing the diameter are an assignment and its global complement.\n\n**Why now?** We have already proved regularity and connectivity, isolating the\ngraph as a hypercube; the diameter is the immediate next invariant and unlocks\nworst-case bounds on single-site reconfiguration.\n\n## 2. Full degree census determines the crease graph up to isomorphism\n\n**Conjecture.** Among all finite planar grid graphs, the triple\n`(#deg-2, #deg-3, #deg-4) = (4, 2(m-1)+2(n-1), (m-1)(n-1))` characterizes the\n`m \u00d7 n` crease graph up to isomorphism.\n\nThe key insight is... the corner/edge/interior split is rigid: degree-2 vertices\nmust be the 4 corners, degree-3 the boundary chains, forcing the `(m+1)\u00d7(n+1)`\nrectangular shape, so the degree census is a complete combinatorial fingerprint.\n\n**Why now?** The interior count `(m-1)(n-1)` (this cycle) is the last of the\nthree census numbers; combined with the handshake total `(m+1)(n+1)` it gives a\nclosed system ripe for a uniqueness proof.\n\n## 3. Mixing time of Glauber dynamics on MV assignments is `\u0398(N log N)`\n\n**Conjecture.** Single-site Glauber dynamics on the (unconstrained) MV\nassignments of the `m \u00d7 n` Miura-ori mixes in `\u0398(N log N)` steps with\n`N = (m+1)(n+1)`.\n\nThe key insight is... once the state graph is identified with the hypercube\n`Q_N` (this cycle), Glauber dynamics on `Q_N` is the classical\nlazy-random-walk-on-the-cube, whose mixing time is `(1/2)N log N (1+o(1))` by a\ncoupon-collector coupling.\n\n**Why now?** `Cereceda2009mixing` poses mixing of recolouring chains; our\nidentification of the Miura flip graph with `Q_N` makes the Miura instance an\nexactly solvable special case.\n\n## 4. Flat-foldable MV assignments form a degree-`(m+1)(n+1) \u2212 c` subgraph\n\n**Conjecture.** Restricting to *flat-foldable* MV assignments (Maekawa/Kawasaki\nat each interior degree-4 vertex) yields an induced flip subgraph in which every\nvertex has degree `(m+1)(n+1) \u2212 c(p)` where the defect `c(p)` counts sites whose\nflip would violate a local Maekawa constraint, and `\u2211_p c(p)` is governed by the\n`(m-1)(n-1)` interior vertices.\n\nThe key insight is... each interior degree-4 vertex (counted by\n`card_degreeFour`) imposes one Maekawa parity constraint, so the interior-vertex\ncount is exactly the number of linear constraints cutting the hypercube down to\nthe flat-foldable polytope's vertex set.\n\n**Why now?** We now have both the interior-vertex count and the ambient\nhypercube; the constrained subgraph is the natural, harder, physically faithful\nnext object.\n\n## 5. The degree-4 count is invariant under Miura shear/zig-zag offset\n\n**Conjecture.** For any admissible shear angle and zig-zag offset producing a\ncombinatorial `m \u00d7 n` Miura tessellation, the number of degree-4 vertices remains\n`(m-1)(n-1)`.\n\nThe key insight is... `card_degreeFour` depends only on the *vertex* incidence\ncombinatorics, which are preserved by any continuous Miura parameterization, so\nthe count is a topological invariant of the cell complex rather than a metric\none.\n\n**Why now?** Having proved the count for the canonical model, the robustness\nclaim is the natural strengthening and connects to the rigid-origami moduli\ndiscussed in the catalog references.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2624",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "53529d3f",
-    "status": "available",
-    "timestamp": "2026-06-26T19:25:53.009957+00:00",
-    "title": "Derived from this cycle's findings: (a) the crease graph has exactly `(m-1)(n-1)"
   },
   {
     "consumed_by_exp_id": "",
