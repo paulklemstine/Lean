@@ -16382,7 +16382,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16398,7 +16398,7 @@
         "Algebra"
       ],
       "id": "fd_0542",
-      "last_attempt_time": "2026-06-26T09:39:00.026495+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35864,7 +35864,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Mathlib.NumberTheory.LegendreSymbol",
         "Mathlib.LinearAlgebra.Matrix.Determinant",
@@ -35888,7 +35888,7 @@
         "Pythagorean"
       ],
       "id": "fd_2326",
-      "last_attempt_time": "2026-06-26T09:39:09.101676+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-25T03:41:49.125585+00:00",
       "lean_theorem_stub": "import Mathlib\n\nopen Matrix Polynomial\nopen scoped BigOperators\n\nnoncomputable def sunTruncatedLegendreMatrix (p : ℕ) :\n    Matrix (Fin ((p - 5) / 2)) (Fin ((p - 5) / 2)) (Polynomial ℤ) :=\n  fun j k => Polynomial.X + Polynomial.C (legendreSym p (((j : ℕ) : ℤ) - ((k : ℕ) : ℤ)))\n\nconjecture sun_truncated_legendre_det\n    (p : ℕ) (hp : Nat.Prime p) (hp7 : 7 ≤ p) (hpmod : p % 4 = 3) :\n    (sunTruncatedLegendreMatrix p).det =\n      Polynomial.C ((((p - 2) / 3) ^ 2 : ℕ) : ℤ) * Polynomial.X",
       "lineage_refs": [],
@@ -36482,7 +36482,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "da5cb31c",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -36512,7 +36512,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23193v1",
       "source_path": "http://arxiv.org/abs/2606.23193v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T07:10:06.412019+00:00",
       "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
@@ -38946,7 +38946,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "3718ce68",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -38977,7 +38977,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23171v1",
       "source_path": "http://arxiv.org/abs/2606.23171v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T22:02:58.683140+00:00",
       "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
@@ -47395,6 +47395,50 @@
       "title": "Existence of H-deletion-saturated graphs for all non-complete H"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Esperet et al., 2020"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "This conjecture asserts that a finitely generated abelian group $A$ defines a canonical threshold for $k$-flow-connectedness based on the existence of certain minor structures in cubic graphs, aiming to bridge the combinatorial rigidity described in Esperet et al. with algorithmic verification in Lean 4.",
+      "domain_bridges": [
+        "graph minor theory",
+        "combinatorial optimization"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2577",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Presumed applicable for canonical word system formulations",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Constructive existence via minor elimination and inductive flow decomposition",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24685v1",
+      "source_path": "http://arxiv.org/abs/2606.24685v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T10:07:44.038904+00:00",
+      "title": "A compact characterization of $A$-flow-connectedness in terms of graph minor theory"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -47420,7 +47464,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2577",
+      "id": "fd_2578",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47468,7 +47512,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2578",
+      "id": "fd_2579",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47513,7 +47557,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2579",
+      "id": "fd_2580",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47557,7 +47601,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2580",
+      "id": "fd_2581",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47604,7 +47648,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2581",
+      "id": "fd_2582",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47649,7 +47693,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2582",
+      "id": "fd_2583",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -47694,7 +47738,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2583",
+      "id": "fd_2584",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -47735,7 +47779,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2584",
+      "id": "fd_2585",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -47780,7 +47824,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2585",
+      "id": "fd_2586",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -47819,7 +47863,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2586",
+      "id": "fd_2587",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -47861,7 +47905,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2587",
+      "id": "fd_2588",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -47905,7 +47949,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2588",
+      "id": "fd_2589",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -47951,7 +47995,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2589",
+      "id": "fd_2590",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -47996,7 +48040,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2590",
+      "id": "fd_2591",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -48042,7 +48086,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2591",
+      "id": "fd_2592",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -48061,6 +48105,52 @@
       "thread_id": "",
       "timestamp": "2026-06-26T09:38:57.858346+00:00",
       "title": "Quantitative bound for multi-colored induced join-free partition"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "convex_geometry",
+        "directed_graphs",
+        "P3_convexity"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any tournament T (complete oriented graph), the P3-direct convexity and P3^s-direct convexity coincide if and only if T contains no transitive directed triangle as an induced subtournament. This conjecture provides a structural characterization linking tournament theory to convex geometry properties.",
+      "domain_bridges": [
+        "combinatorics",
+        "computational_complexity"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry",
+        "Pythagorean"
+      ],
+      "id": "fd_2593",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Prove both directions: (1) If a tournament has no transitive triangle, then every directed P3 with endpoints in a convex set must have the arc between endpoints, making both convexities equivalent; (2) If a tournament has a transitive triangle (u,v,w) with u→v→w and u→w, construct a set whose convex hulls differ between the two convexity notions.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24707v1",
+      "source_path": "http://arxiv.org/abs/2606.24707v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T10:13:18.660002+00:00",
+      "title": "Characterization of When P3-Direct Convexity Equals P3^s-Direct Convexity in Tournaments"
     },
     {
       "ambition_level": "extension",
