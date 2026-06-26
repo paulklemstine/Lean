@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "da520741",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for \u03b5-approximation is O(K(f)/\u03b5), connecting to Kolmogorov complexity.",
     "domains": [
       "EML",
@@ -13,7 +13,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 1.0,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e7c31a4",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "9c488c94",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -2179,7 +2179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Finiteness Bound for Same-Radical Shift Sets"
   },
   {
-    "consumed_by_exp_id": "da5cb31c",
+    "consumed_by_exp_id": "",
     "description": "The authors disprove a conjecture by Cheong, Goaoc, and Holmsen by showing that for every n >= 1, there is a finite family of pairwise disjoint open convex sets in R^{3n} such that the (n-1)-st reduced homology of the space of line transversals is nonzero. They explicitly state the conjecture that this space of line transversals is in fact homotopy equivalent to the (n-1)-sphere, S^{n-1}. This proposes formalizing that stronger homotopy equivalence conjecture.",
     "domains": [
       "Geometry",
@@ -2189,7 +2189,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T07:10:06.412019+00:00",
     "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
   },
@@ -2870,7 +2870,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sidorenko Property for Two\u2011Sided Correlation Kernels on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "3718ce68",
+    "consumed_by_exp_id": "",
     "description": "For a number field k with r\u2081 real and r\u2082 complex places, let b = r\u2081\u00b7\u230an\u00b2/4\u230b + r\u2082\u00b7n(n-1)/2. For any cohomological generic representation \u03c0 in R_\u03b5^{coge,\u221e} of GL(n,k_\u221e) with coefficient system F_\u03c0 and quadratic character \u03b5: \u03c0\u2080(k_\u221e\u00d7) \u2192 \u2102\u00d7, the Betti-Whittaker period of the contragredient \u03c0\u2228 in degree b satisfies P^b(\u03c0\u2228, F_{\u03c0\u2228}, \u03b5) = \u03b5(disc(k))^b \u00b7 P^b(\u03c0, F_\u03c0, \u03b5), where disc(k) is viewed as an element of \u03c0\u2080(k_\u221e\u00d7) via the determinant identification \u03c0\u2080(k_\u221e\u00d7) \u2245 \u03c0\u2080(GL_n(k_\u221e)).",
     "domains": [
       "Algebra",
@@ -2880,7 +2880,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T22:02:58.683140+00:00",
     "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
   },
@@ -4189,7 +4189,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "3847ce48",
+    "consumed_by_exp_id": "",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self\u2011dual string C\u2011group representations of rank $2m$ (as constructed by the vertex\u2011gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self\u2011dual string C\u2011group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domains": [
       "Algebra"
@@ -4198,7 +4198,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
   },
@@ -4362,7 +4362,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero Asymptotic Density of Zeckendorf\u2011Niven Numbers"
   },
   {
-    "consumed_by_exp_id": "fad59fd8",
+    "consumed_by_exp_id": "",
     "description": "For any tree T on n vertices and any complete tripartite graph K_{m_1,m_2,m_3} with 1 \u2264 m_1 \u2264 m_2 \u2264 m_3, the Ramsey number R(T, K_{m_1,m_2,m_3}) equals 2(R(T, K_{m_1,m_2}) - 1) + m_1 for all sufficiently large n. This conjecture specifically tests whether the general bound in the paper becomes an exact equality for the k=3 case.",
     "domains": [
       "Pythagorean",
@@ -4372,7 +4372,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T12:57:20.450102+00:00",
     "title": "Exact Ramsey Numbers for Trees vs Tripartite Graphs"
   },
@@ -5273,11 +5273,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any fixed integer width w \u2265 2, the maximum number of strict alternating cycles in a poset of size n and width w is \u0398(n^{2w}) as n \u2192 \u221e. The paper establishes an upper bound of O(n^{2w}) (Corollary 1 and Lemma 1); this conjecture asserts that this bound is asymptotically tight, i.e., there exists a constant c_w > 0 such that for all sufficiently large n, some poset of size n and width w has at least c_w n^{2w} strict alternating cycles.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2574",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24877v1",
+    "status": "available",
+    "timestamp": "2026-06-26T08:32:26.631386+00:00",
+    "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles in posets of fixed width"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2574",
+    "id": "fd_2575",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5291,7 +5305,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2575",
+    "id": "fd_2576",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5306,7 +5320,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2576",
+    "id": "fd_2577",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5321,7 +5335,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2577",
+    "id": "fd_2578",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5336,7 +5350,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5351,7 +5365,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5365,7 +5379,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5379,7 +5393,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5393,7 +5407,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5408,7 +5422,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5423,7 +5437,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5438,13 +5452,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
     "status": "available",
     "timestamp": "2026-06-26T08:01:28.241763+00:00",
     "title": "Pseudoshattering pairs in high-dimensional spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer n \u226513, the highest rank of a self-dual string C-group representation of the alternating group A_n is exactly floor((n-1)/2) -1. This conjecture asserts that the upper bound suggested by computational evidence for n \u226513 is tight, meaning no self-dual string C-group for A_n can exceed this rank, and this bound is achieved for all n \u226513.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2587",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24654v1",
+    "status": "available",
+    "timestamp": "2026-06-26T08:33:34.965492+00:00",
+    "title": "Maximum self-dual rank of string C-groups for alternating groups A_n with n \u226513 is floor((n-1)/2) -1"
   },
   {
     "consumed_by_exp_id": "",
@@ -6390,7 +6419,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alien Number Systems: Beyond Base-N"
   },
   {
-    "consumed_by_exp_id": "ad454ca1",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domains": [
       "MachineLearning",
@@ -6400,7 +6429,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
@@ -6465,7 +6494,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
   {
-    "consumed_by_exp_id": "8ce70c3b",
+    "consumed_by_exp_id": "",
     "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
     "domains": [
       "Physics",
@@ -6475,7 +6504,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },

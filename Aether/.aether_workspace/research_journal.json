@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "972d4c89",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThe development in `Catalog/Applications/RamseyBounds/` proves the Erdős–Szekeres\nrecursion, the binomial upper bound, and the exact value `R(3,3) = 6`.  The following\ndirections",
-      "quality_score": 0.8524,
-      "sorry_count": 0,
-      "theorem_count": 103,
-      "timestamp": "2026-06-20T05:09:26",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
-    {
       "cycle_id": "0c649dc0",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Anti-Gravity Mathematics in Cryptographic Dependency Graphs\n\nDerived from this cycle's findings (see the Lab Notes in\n`AntiGravityWeight.lean` and `AntiGravityDensity.lean`). Thi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 19,
       "timestamp": "2026-06-26T07:59:40",
       "title": "Continued Fractions and Diophantine Approximation"
+    },
+    {
+      "cycle_id": "5c41b780",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — Tightness of the unit-shift bound for Euler's totient\n\nDerived from the v19 scientific-method cycle formalized in\n`Bridges/TotientShiftWitnesses.lean` and `Bridges/TotientUnitShi",
+      "quality_score": 0.44476594336283193,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-26T08:26:45",
+      "title": "Tightness of the unit-shift bound for Euler's totient function"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7885600000000001
     }
   ],
-  "last_updated": "2026-06-26T07:59:40",
+  "last_updated": "2026-06-26T08:26:45",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "7f1e65fe",
-        "quality": 0.476594,
-        "theorems": 41,
-        "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
-      },
-      {
         "cycle_id": "d94e79ee",
         "quality": 0.68624,
         "theorems": 60,
@@ -3203,6 +3197,12 @@
         "quality": 0.76536,
         "theorems": 10,
         "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
+      },
+      {
+        "cycle_id": "5c41b780",
+        "quality": 0.44476594336283193,
+        "theorems": 15,
+        "title": "Tightness of the unit-shift bound for Euler's totient function"
       }
     ],
     "Combinatorics": [
