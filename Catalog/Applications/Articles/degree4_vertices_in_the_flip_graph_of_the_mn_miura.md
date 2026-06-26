@@ -1,253 +1,97 @@
-# The Hidden Cube Inside a Folded Sheet of Paper
+# The Hidden Geometry of a Fold: Counting the Ways to Crease the Universe
 
-Take a flat sheet of paper and crease it so that, when you press it together,
-it collapses into a tidy zigzag that can be opened and shut with a single tug.
-This is the **Miura-ori** — a folding pattern invented by the Japanese
-astrophysicist Koryo Miura to pack solar panels for spacecraft. Fold it once on
-the ground, launch it folded, and let it bloom open in orbit. The same pattern
-now stiffens cardboard, shapes deployable shelters, and inspires self-folding
-robots and stretchable electronics.
+## A single crease
 
-But beneath the engineering lies a quiet piece of mathematics that is every bit
-as elegant as the fold itself. At the heart of the Miura-ori sits a humble
-object: a single point where four creases meet. Understand that point, and you
-understand a surprising amount about how the whole sheet behaves — and, as we
-will see, you uncover a perfect geometric cube hiding inside the space of all
-possible foldings.
+Take a sheet of paper and fold it once. You have just made a *crease* — a straight scar that the paper will remember forever. Fold it again, and again, in just the right pattern, and something remarkable happens: a flat, two-dimensional sheet learns to collapse, expand, and curve like a living thing. This is the science of **origami**, and over the last few decades it has quietly become one of the most surprising bridges between art, engineering, and pure mathematics.
 
-This article tells the story of that cube. Along the way we will meet two famous
-laws of origami, count the ways a corner of paper can fold flat, and discover
-that the "4" in "degree-4 vertex" and the "4" in "every node has four neighbours"
-are secretly the same number, born from the same four creases.
+The star of this story is a particular fold pattern called the **Miura-ori**. Invented by the Japanese astrophysicist Koryo Miura, it is a tessellation of identical parallelograms arranged in a zig-zag grid. Pull on two opposite corners and the entire sheet expands at once; push them together and it collapses into a compact stack no thicker than the paper itself. NASA has flown Miura-folded solar panels into orbit, packed tight for launch and unfurled in space with a single tug. Engineers fold maps, stents, and self-deploying shelters the same way. The Miura-ori is, in a precise sense, a machine made entirely of creases.
 
-## Mountains, valleys, and a sheet that lies flat
+But behind the engineering lies a combinatorial puzzle of startling depth. At the heart of every Miura-ori is a repeating local feature — the **degree-4 vertex** — and the question of *how many ways* you can validly fold such a vertex, and *how those folded states connect to one another*, turns out to have crisp, beautiful answers. This article tells that story, and explains a set of theorems that pin those answers down with mathematical certainty.
 
-Look closely at any flat-foldable origami and you will see that every crease is
-one of two kinds. A **mountain** fold rises toward you, like the ridge of a roof.
-A **valley** fold sinks away, like a gutter. That is the entire vocabulary:
-mountain or valley, ridge or gutter, up or down. Nothing else.
+## The anatomy of a crossing
 
-Now zoom in on a single interior point of the Miura-ori where four creases
-radiate outward, slicing the neighbourhood of that point into four pie-slice
-sectors. We will call this a **degree-4 vertex** — "degree 4" simply because four
-creases meet there. To describe how the paper folds at this point, we only need
-to say, for each of the four creases, whether it is a mountain or a valley. That
-is four yes/no choices, four bits of information.
+Look closely at the Miura-ori and you will see that its creases meet in a grid of crossings. At each interior crossing, exactly **four** crease lines come together. Mathematicians call this a *degree-4 vertex*: four creases radiating out, carving the paper around that point into four angular sectors.
 
-It is tempting to think all $2^4 = 16$ combinations are possible. They are not.
-For the paper to fold *flat* — to collapse into a stack with no buckling, no
-tearing, no self-intersection — the four choices must obey strict rules. Two of
-those rules have been known to origami mathematicians for decades, and they are
-where our story really begins.
+Each of the four creases can be folded in one of two ways. A **mountain** fold lifts the crease toward you, like the ridge of a roof. A **valley** fold pushes it away, like a gutter. So at every degree-4 vertex, an assignment of mountains and valleys is simply a choice of one bit — mountain or valley — for each of the four creases. We can write such an assignment as a function
 
-## Maekawa's law: the three-and-one rule
+$$a : \{0,1,2,3\} \to \{\text{true}, \text{false}\},$$
 
-The first law was discovered by Jun Maekawa. **Maekawa's theorem** says that at
-any flat-foldable vertex, the number of mountain creases and the number of valley
-creases must differ by exactly two.
+where `true` means mountain and `false` means valley. There are $2^4 = 16$ such assignments in total. But here is the catch: **most of them are physically impossible.** You cannot fold a flat sheet flat at that vertex with an arbitrary mix of mountains and valleys. The paper would have to pass through itself or tear.
 
-For a degree-4 vertex with four creases, this leaves only two possibilities: you
-either have **three mountains and one valley**, or **one mountain and three
-valleys**. A perfectly even split — two mountains, two valleys — is forbidden, as
-is an all-mountain or all-valley star. The paper simply will not lie flat any
-other way.
+So which assignments actually work? This is where two classical theorems of origami mathematics enter.
 
-We can state this precisely. Encode an assignment as four bits, writing `true`
-for a mountain and `false` for a valley, and let $\text{mountains}(a)$ count how
-many of the four creases are mountains. Then for every *valid* degree-4 folding
-$a$,
+## Maekawa's law: the 3-to-1 rule
+
+The first is **Maekawa's theorem**, one of the foundational facts of flat-foldability. It states that at any degree-4 vertex that folds flat, the number of mountain creases and the number of valley creases must differ by exactly two. With four creases, that leaves only two possibilities: **three mountains and one valley, or one mountain and three valleys.** Never two-and-two, never four-and-zero.
+
+If we count the number of mountains at a vertex,
+
+$$\text{mountains}(a) = \#\{\, i : a(i) = \text{mountain} \,\},$$
+
+then Maekawa's theorem says a valid flat-foldable degree-4 vertex always satisfies
 
 $$\text{mountains}(a) = 1 \quad \text{or} \quad \text{mountains}(a) = 3.$$
 
-This is the three-and-one rule, and it is exactly the content of the theorem we
-named `mountains_of_genericValid`.
+There is a lovely intuition for the "differ by two" rule. Walk in a tiny circle around the vertex. Each time you cross a mountain crease, the paper turns one way; each time you cross a valley, it turns the other. To come back to where you started — a full turn of $360^\circ$ — the mountains and valleys must almost balance, but a flat fold forces a single net "extra" half-turn, which works out to exactly two more of one type than the other.
 
-## The big-little-big lemma, and exactly four foldings
+## Hull's count: exactly four ways
 
-Maekawa's law alone allows eight assignments: there are four ways to place the
-single valley among three mountains, and four ways to place the single mountain
-among three valleys. But the *geometry* of a real Miura-ori vertex narrows this
-further, through a second principle origami theorists call the
-**big-little-big lemma**.
+Maekawa narrows sixteen possibilities down, but not all 3-1 and 1-3 splits are realizable at a *generic* vertex — one whose four sector angles are all different, with a unique smallest sector. Here a second principle, the **big-little-big lemma** of Tom Hull, takes over. It says that the two creases bordering the strictly smallest sector must be folded *oppositely*: one mountain, one valley. The little sector gets pinched shut between a ridge and a gutter.
 
-The idea is intuitive. The four creases carve the neighbourhood into four sector
-angles, and in a generic Miura-ori vertex one of those sectors is strictly the
-smallest. When paper folds flat, the smallest sector gets "swallowed" between its
-two neighbours — and the two creases bounding that smallest sector are forced to
-fold in *opposite* directions. One must be a mountain, the other a valley. They
-cannot agree.
+Combine the big-little-big constraint with Maekawa's 3-1 rule and the bookkeeping collapses to something astonishingly clean. If the smallest sector sits between creases $0$ and $1$, then a valid assignment is exactly one in which
 
-Suppose, then, that the unique smallest sector lies between crease $0$ and crease
-$1$. The big-little-big lemma forces these two to disagree:
+$$a(0) \neq a(1) \quad \text{and} \quad a(2) = a(3).$$
 
-$$a_0 \neq a_1.$$
-
-Maekawa's three-and-one rule then does the rest. With one disagreement already
-locked in between creases $0$ and $1$, the only way to reach a total imbalance of
-three-versus-one across all four creases is for the *remaining* pair to agree:
-
-$$a_2 = a_3.$$
-
-These two conditions together — "the small-sector creases disagree, the other
-pair agree" — are our working definition of a **generic valid** degree-4 vertex,
-the property we called `GenericValid`. From it, Maekawa's law follows as a theorem
-rather than an assumption.
-
-How many foldings satisfy both conditions? The arithmetic is delightful. The
-disagreeing pair $a_0 \neq a_1$ can be arranged in $2$ ways (mountain-then-valley
-or valley-then-mountain). The agreeing pair $a_2 = a_3$ can also be arranged in
-$2$ ways (both mountains or both valleys). Multiply, and you get
+The first condition is big-little-big (opposite folds around the small sector); the second is what Maekawa forces on the remaining pair (they must agree). And now we can simply count: the pair $(a(0), a(1))$ that disagrees has $2$ choices, the pair $(a(2), a(3))$ that agrees has $2$ choices, and everything else is determined. That gives
 
 $$2 \times 2 = 4$$
 
-valid foldings. Not sixteen, not eight — exactly **four**. This is the
-combinatorial heart of Thomas Hull's classical count of flat-foldings at a
-generic degree-4 vertex, and it is the content of our theorem `card_genericValid`:
-the number of valid mountain/valley assignments is precisely $4$.
+valid mountain/valley assignments at a generic flat-foldable degree-4 vertex. This is **Hull's count**: every generic degree-4 origami vertex has *exactly four* legal ways to fold flat. Not three, not five — four, always, no matter the precise angles, as long as the smallest sector is unique.
 
-So a single corner of a Miura-ori, viewed as a tiny origami puzzle, has exactly
-four solutions. Hold that number in mind. It is about to reappear from a
-completely different direction.
+Both of these facts — Maekawa's 3-1 rule and Hull's count of four — have been verified here as exact, exhaustively checked combinatorial theorems. There are only sixteen assignments to consider, and the theorems hold for every single one.
 
-## The flip graph: a map of all foldings
+## From one vertex to the whole sheet: the flip graph
 
-Counting foldings is one thing. Understanding how they relate to one another is
-another, richer question. Imagine you have one valid folding and you want to reach
-another. What is the most natural *move* that takes you from one to the next?
+So far we have one vertex with four legal foldings. But a Miura-ori has *many* vertices, and the truly interesting questions are global. If you have folded the whole sheet one way, and your collaborator has folded it another, can you get from your configuration to theirs by a sequence of small local changes? How many such changes are needed in the worst case? If you wander randomly among configurations, do you eventually visit them all?
 
-In the theory of reconfiguration — the branch of mathematics that studies how to
-morph one solution of a puzzle into another by small legal steps — the natural
-move is a **flip**: change one bit and see if you are still valid. This gives rise
-to a **flip graph**, a vast map in which each node is a configuration and each
-edge joins two configurations that differ by a single flip.
+These are questions about a **reconfiguration graph**, often called a **flip graph**. Picture every valid global configuration as a single dot. Draw an edge between two dots whenever you can transform one into the other by a single elementary "flip." The structure of this graph — how connected it is, how far apart its nodes can be, how it is shaped — governs everything about how the folded system can be rearranged.
 
-To study flip graphs in their cleanest form, imagine a system with $d$ independent
-binary switches — $d$ choices, each of which can be toggled on or off without
-disturbing the others. A configuration is a list of $d$ bits. Two configurations
-are **neighbours** in the flip graph exactly when they differ in a single
-coordinate: flip one switch, and you have a neighbour. Mathematicians call this
-graph the **Boolean hypercube** $Q_d$.
+What is the right elementary flip? One might guess: change a single crease from mountain to valley. But here lies a subtle trap, and a genuine discovery. Flipping a *single crease* at a degree-4 vertex turns a legal 3-1 split into an illegal 2-2 split — it destroys flat-foldability instantly. The naive single-crease flip graph on valid origami states has **no edges at all**: every legal state is stranded, unable to reach any other by a single crease change. A dead end.
 
-For $d = 1$ the hypercube is just two points joined by an edge — one switch, two
-states. For $d = 2$ it is a square. For $d = 3$ it is the familiar wire-frame cube
-with eight corners. For $d = 4$ it is the **tesseract**, the four-dimensional
-hypercube. And in general $Q_d$ has $2^d$ corners, one for each way to set the
-$d$ switches.
+The productive move is to flip *a whole vertex at once*: simultaneously reverse all the creases meeting at one crossing. This swaps a 3-1 split into a 1-3 split, preserving legality. Each independently flippable vertex then contributes **one binary degree of freedom** — one switch you can throw. A configuration of the whole system is a setting of all these switches, and a flip toggles exactly one switch.
 
-We made this precise: in the flip graph $Q_d$, two configurations $a$ and $b$ are
-adjacent exactly when the set of coordinates on which they disagree has size $1$.
-Equivalently — and this is the lemma `flipGraph_adj_iff` — $b$ is a neighbour of
-$a$ if and only if $b$ is obtained from $a$ by toggling one chosen coordinate and
-leaving all the others alone.
+## The shape of all configurations: a hypercube
 
-## The main theorem: every corner has exactly $d$ neighbours
+When you abstract a system down to $d$ independent binary switches, where a move toggles exactly one switch, the resulting flip graph has a name as old as it is beautiful: the **Boolean hypercube** $Q_d$.
 
-Here is the central result, and it is beautifully simple to state.
+The hypercube $Q_d$ has $2^d$ vertices — one for each setting of the $d$ switches — and two vertices are joined by an edge precisely when they differ in a single switch. $Q_1$ is a line segment. $Q_2$ is a square. $Q_3$ is the familiar cube. $Q_4$ is the four-dimensional hypercube, the "tesseract." And the flip graph of our $d$-vertex Miura system, in the independent-vertex regime, is exactly $Q_d$.
 
-> **In the hypercube flip graph $Q_d$, every single configuration has exactly $d$
-> neighbours.**
+Formally, we model a configuration as a function $a : \{0, 1, \dots, d-1\} \to \{\text{true}, \text{false}\}$, and we declare two configurations $a$ and $b$ adjacent when they differ in exactly one coordinate:
 
-Why $d$? Because from any configuration you can flip switch number $1$, or switch
-number $2$, or … or switch number $d$ — that is $d$ different moves, each landing
-you on a distinct neighbour, and there are no others. No matter which of the
-$2^d$ corners you stand on, you see exactly $d$ doors leading out. A graph with
-this property — every vertex having the same number of neighbours — is called
-**regular**, and so we say $Q_d$ is **$d$-regular**. This is the theorem
-`flipGraph_degree`: the degree of every vertex equals $d$.
+$$\#\{\, i : a(i) \neq b(i) \,\} = 1.$$
 
-Now specialize to $d = 4$, the case tailored to a degree-4 origami vertex with its
-four creases. The four-dimensional hypercube $Q_4$ is then **$4$-regular**: every
-one of its $16$ corners has *exactly four* neighbours. That is our headline
-corollary, `flipGraph_degree_four`:
+This single definition unlocks a cascade of exact structural results.
 
-$$\text{degree of every vertex in } Q_4 = 4.$$
+**Every configuration has the same number of neighbors.** A flip can be applied at any one of the $d$ switches, and each gives a distinct new configuration. So every vertex of $Q_d$ has exactly $d$ neighbors — the graph is **$d$-regular**. This is the headline theorem: in the flip graph $Q_d$, *every* configuration has degree exactly $d$. The proof is a clean bijection: the neighbors of a configuration $a$ are precisely the configurations $a^{(i)}$ obtained by toggling coordinate $i$, one for each of the $d$ coordinates, all distinct.
 
-And here is the unification promised at the start. The "$4$" in *degree-4 vertex*
-— four creases meeting at a point — and the "$4$" in *every node has degree $4$*
-in the flip graph are the *same four*. Both spring from a four-element index set:
-four creases on the paper, four coordinates in the cube. Among all the hypercubes
-$Q_1, Q_2, Q_3, Q_4, \dots$, the tesseract $Q_4$ is the unique one that is
-simultaneously four-dimensional and four-regular. The geometry of the fold and the
-geometry of the configuration space rhyme.
+In particular, when $d = 4$ — the four-vertex regime that mirrors the four creases of a single Miura crossing — every node of $Q_4$ has degree exactly $4$. The "four" of a degree-4 origami vertex and the "four" of a degree-4 flip-graph node turn out to be the same four, both born from a four-element index set. $Q_4$ is the unique hypercube that is simultaneously 4-regular.
 
-## Counting the doors, and reaching every room
+**You can always get from anywhere to anywhere.** The hypercube $Q_d$ is **connected**: given any two configurations, you can transform one into the other by flipping the switches where they disagree, one at a time. Each flip reduces the number of disagreements by one, so after at most $d$ flips you arrive. No configuration is ever stranded — the system fully *mixes* under single-vertex flips. This is the rigorous antidote to the dead-end single-crease graph.
 
-Two further facts round out the picture, and both follow from the regularity above.
+**Counting the moves.** Because $Q_d$ is $d$-regular on $2^d$ vertices, a classical handshake argument counts its edges exactly. Summing the degrees counts each edge twice, so the number of edges is
 
-First, **how many edges does $Q_d$ have?** There is a classic counting trick: add
-up the number of neighbours over all vertices, and you have counted every edge
-exactly twice (once from each end). Each of the $2^d$ vertices contributes $d$
-neighbours, so the total is $d \cdot 2^d$, and dividing by two gives
+$$\frac{d \cdot 2^d}{2} = d \cdot 2^{d-1}.$$
 
-$$\text{number of edges in } Q_d = d \cdot 2^{d-1}.$$
+For the tesseract $Q_4$ this gives $4 \cdot 8 = 32$ edges — thirty-two distinct single-flip moves connecting its sixteen configurations.
 
-Our theorem `flipGraph_card_edges` records this in the clean integer form
-$2 \cdot (\text{edges}) = d \cdot 2^d$. For the tesseract $Q_4$ this gives
-$4 \cdot 2^3 = 32$ edges — thirty-two single flips knitting sixteen configurations
-into one elegant lattice.
+**A two-coloring no path can cheat.** Finally, the hypercube is **bipartite**, and there is a beautiful invariant that proves it. Color each configuration by the *parity* of its number of mountains — even or odd. A single flip toggles exactly one switch, which changes the mountain count by one, flipping its parity. So adjacent configurations always have opposite colors. No edge ever joins two same-colored configurations. A consequence: any path of flips between two given configurations always has length of a fixed parity. You can never sneak from a configuration back to itself in an odd number of flips, and the "distance" between configurations carries a hidden conservation law.
 
-Second, **can you always get from any folding to any other?** Yes. The flip graph
-is **connected**: starting from any configuration, you can reach any target by
-flipping, one at a time, exactly the switches on which the two configurations
-disagree. There is never a folding marooned on its own island. This is the theorem
-`flipGraph_connected`, a clean instance of the *mixing* phenomenon that
-reconfiguration theory cares about: the space of configurations is fully navigable
-by small local moves.
+## Why this matters
 
-## A concrete walk through the tesseract
+It is tempting to see all this as an elaborate game with paper. But the payoff is real and broad. Reconfiguration graphs are the mathematical backbone of how engineered systems rearrange themselves: deployable structures unfolding in space, programmable matter shifting between shapes, robots reassembling, and even the statistical-physics models that describe how complex systems explore their states. The questions "is it connected?" (can we always reach the target?), "how regular is it?" (how many moves are available at each step?), and "how far apart can states be?" (worst-case effort) are exactly the questions an engineer or a physicist must answer before trusting such a system.
 
-Let us make the abstraction tangible with $d = 4$. Write a configuration as four
-bits, say `1011`, meaning switches $1$, $3$, $4$ are on and switch $2$ is off.
-Its four neighbours are obtained by toggling each bit in turn:
+By identifying the Miura flip graph — in its clean independent-vertex regime — with the Boolean hypercube $Q_d$, we inherit a century of knowledge about one of the most studied objects in all of combinatorics. Connectivity, regularity, edge count, bipartiteness: all follow at once, and all have been established here as exact theorems, verified down to the last case.
 
-$$1011 \to 0011, \quad 1011 \to 1111, \quad 1011 \to 1001, \quad 1011 \to 1010.$$
+There is honesty to add. The hypercube models the *generic, independent-vertex* regime, where each flippable vertex acts on its own. A real Miura-ori shares creases between neighboring vertices, coupling them together; its full flip graph is a subgraph or quotient of a hypercube and need not be perfectly regular. Capturing those couplings exactly — and pinning down the diameter, the full degree census, and the mixing time of random folding dynamics — is the open frontier. But the core is now solid rock: four ways to fold a vertex, a hypercube of ways to fold the sheet, and a web of connections through which every folded state can reach every other.
 
-Four neighbours, exactly as the theorem promises. To travel from `1011` to, say,
-`0110`, compare bit by bit: they differ in positions $1$, $2$, and $4$. Flip those
-three, in any order, and you arrive — a path of length three. The longest journey
-in the whole tesseract is from a configuration to its exact opposite, flipping all
-four bits, a path of length four. The cube is small, symmetric, and entirely
-connected, with no corner more than four steps from any other.
-
-## Why this matters beyond paper
-
-It is easy to enjoy this as a piece of recreational mathematics, but the threads
-reach much further. The Boolean hypercube is one of the most important graphs in
-all of computer science: it is the natural arena for error-correcting codes, for
-the analysis of Boolean functions, for parallel-computing network topologies, and
-for the study of how randomized algorithms "mix." Reconfiguration graphs — flip
-graphs in general — model everything from sliding-block puzzles to the rezoning of
-electoral districts to the way physical systems relax toward equilibrium.
-
-Origami sits squarely in this landscape. Engineers designing a deployable
-structure need to know not only *whether* a fold pattern can lie flat, but *how
-many* distinct flat states it admits and *how* one can be morphed into another —
-precisely the questions of counting and connectivity that the flip graph answers.
-The clean result here, that the independent-vertex flip graph is a perfect
-hypercube, is the rigid skeleton on which the messier, *coupled* theory of the
-real $m \times n$ Miura-ori is being built.
-
-For in the true Miura-ori, the vertices are not independent. Creases are shared
-between neighbouring vertices, so toggling one corner disturbs its neighbours, and
-the pristine product structure of the hypercube is broken. The grand conjecture
-motivating this work is that, for every grid of size $m \times n$ with
-$m, n \ge 3$, the number of "most rigid" degree-4 nodes in the coupled flip graph
-is exactly $(m-1)(n-1)$ — one for each interior vertex of the grid. The
-independent case settled here is the first, cleanest rung of that ladder: it
-isolates exactly *why* the number four keeps appearing, and gives a precise,
-proven anchor against which the harder coupled theory can be measured.
-
-## The number four, twice over
-
-We began with a sheet of paper and ended inside a four-dimensional cube. The
-journey turned on a single coincidence that turned out to be no coincidence at
-all. A degree-4 origami vertex has four creases; those four creases admit, after
-Maekawa's three-and-one law and the big-little-big lemma, exactly four valid
-flat-foldings. Meanwhile the flip graph of four independent binary choices is the
-tesseract $Q_4$, in which every corner has exactly four neighbours. The four
-creases of the fold and the four neighbours of the cube are the same four,
-glimpsed from two sides.
-
-Mathematics is full of such echoes — the same small number surfacing in two
-distant rooms, until you open the door between them and find it was one room all
-along. A folded sheet of paper, it turns out, is one of those doors.
+A single crease remembers. A grid of them, it turns out, remembers an entire geometry — one we can now count, navigate, and prove.
