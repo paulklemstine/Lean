@@ -5502,6 +5502,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Ramsey Bounds and the Parity Obstruction\n\nDerived from this cycle's findings (`Applications.RamseyThreeFour`,\n`Applications.RamseyParity`), which proved `R(3,4) = 9` by combining the\n`Arrows`/`R(3,3)=6` framework of `Applications.Ramsey` with a handshake-parity\nargument, here are bold, falsifiable conjectures to pursue next.\n\n## C1. General even-pair sharpening `R(s,t) \u2264 R(s-1,t) + R(s,t-1) - 1`\n\n**Statement.** If `R(s-1,t)` and `R(s,t-1)` are both even and at least `1`, then\n`R(s,t) \u2264 R(s-1,t) + R(s,t-1) - 1`, strictly below the Erd\u0151s\u2013Szekeres sum.\n\n**The key insight is** that the `R(3,4)` proof never used the value `3`\nspecifically \u2014 it used that an extremal colouring is forced to be *regular* of a\nfixed red-degree on a vertex set whose order \u00d7 degree is odd, which\n`red_degree_parity_obstruction` already rules out in full generality.\n\n**Why now?** The reusable lemma `no_odd_regular_colouring` (this cycle) is exactly\nthe engine; lifting it from the special case `(n,d) = (9,3)` to the general\neven-pair statement is now a packaging problem, not a new idea.\n\n## C2. `R(3,5) = 14` via the same regular-obstruction route\n\n**Statement.** `Arrows 14 3 5` and `\u00ac Arrows 13 3 5`; the binomial bound only\ngives `15`.\n\n**The key insight is** that the gap `15 \u2192 14` should again be a single parity/\ncounting obstruction on the forced degree sequence of a `K\u2081\u2083` counterexample,\nanalogous to the `9\u00b73 = 27` step.\n\n**Why now?** With `Applications.RamseyThreeFour` providing a worked template\n(degree truncation + handshake) and the lower-bound certified by `decide` on a\n13-vertex circulant, the proof skeleton transfers almost verbatim.\n\n## C3. Diagonal lower bound `R(k,k) > 2^{k/2}` is sharp in the exponent base\n\n**Statement.** The probabilistic counting bound (already in the catalog for\nhypergraphs) gives `R(k,k) > 2^{k/2}`; we conjecture the exponential *base*\n`\u221a2` cannot be improved by any purely first-moment (union-bound) argument, only\nby the Lov\u00e1sz Local Lemma / explicit constructions.\n\n**The key insight is** that the first-moment threshold `C(n,k)\u00b72^{1-C(k,2)} < 1`\nis structurally `2^{k/2}`-limited, and any improvement must inject dependence\ninformation the union bound discards.\n\n**Why now?** The catalog's hypergraph probabilistic bound supplies the\ncounting backbone; isolating the base-`\u221a2` ceiling as a formal limitation lemma\nis a concrete, falsifiable target.\n\n## C4. Parity obstructions force *even-order* extremal colourings\n\n**Statement.** For every sharp small Ramsey value whose binomial bound is not\ntight, the extremal colouring on `R(s,t) - 1` vertices has the property that the\nforced red-degree `d` and order `n = R(s,t)-1` satisfy `n\u00b7d` even (i.e. the\nobstruction `no_odd_regular_colouring` is *vacuous* exactly at the extremal\ngraph).\n\n**The key insight is** that `no_odd_regular_colouring` partitions `(n,d)` pairs\ninto \"impossible\" (n\u00b7d odd) and \"permitted\" (n\u00b7d even); extremal colourings must\nlive on the permitted side, predicting a parity signature of extremal graphs.\n\n**Why now?** We can test this immediately against the certified extremal graphs\n(`graph34` here, the pentagon in `Applications.Ramsey`) and any new ones from C2.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2577",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f0b7b2e4",
+    "status": "available",
+    "timestamp": "2026-06-26T05:18:18.108669+00:00",
+    "title": "Derived from this cycle's findings (`Applications.RamseyThreeFour`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"

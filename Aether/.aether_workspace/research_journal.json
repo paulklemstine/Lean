@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "89bf180f",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nThe file `Catalog/Combinatorics/ErdosRenyi.lean` establishes the exact, finite\nalgebraic foundation of `G(n, p)`: the Bernoulli product factorization, the edge\ncount `n(n-1)/2`, a",
-      "quality_score": 0.4910402434782609,
-      "sorry_count": 1,
-      "theorem_count": 115,
-      "timestamp": "2026-06-19T21:06:36",
-      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
-    },
-    {
       "cycle_id": "ead94fbc",
       "domain": "Applications",
       "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nThis cycle established, fully formally (0 sorries, only `propext`,\n`Classical.choice`, `Quot.sound`):\n\n* **Databases form a sheaf** (`dataSheaf_",
@@ -2501,6 +2491,16 @@
       "theorem_count": 16,
       "timestamp": "2026-06-26T05:16:07",
       "title": "Birch and Swinnerton-Dyer Conjecture"
+    },
+    {
+      "cycle_id": "f0b7b2e4",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Ramsey Bounds and the Parity Obstruction\n\nDerived from this cycle's findings (`Applications.RamseyThreeFour`,\n`Applications.RamseyParity`), which proved `R(3,4) = 9` by combining",
+      "quality_score": 0.53943,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-26T05:18:24",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7095
     }
   ],
-  "last_updated": "2026-06-26T05:16:07",
+  "last_updated": "2026-06-26T05:18:24",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bfb13379",
-        "quality": 0.46096,
-        "theorems": 16,
-        "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-      },
-      {
         "cycle_id": "449dda28",
         "quality": 0.67296,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.546,
         "theorems": 37,
         "title": "Statistical Mechanics: Ising Model Phase Transition"
+      },
+      {
+        "cycle_id": "f0b7b2e4",
+        "quality": 0.53943,
+        "theorems": 10,
+        "title": "Ramsey Theory: Bounds and Constructions"
       }
     ],
     "Bridges": [
