@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "580d1f18",
     "filename": "certified_novelty_detection_for_theorem_provers.json",
     "pkg_num": 108,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.73672,
     "title": "Certified Novelty Detection for Theorem Provers"
   },
   {
@@ -3150,8 +3150,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "certified_novelty_detection_for_theorem_provers",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.73672,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Certified Novelty Detection for Theorem Provers"
     }

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "df051b46",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Transition Endomorphisms (`transEndo`)\n\nThis cycle introduced `transEndo f i j` (the ordered composition of an endomorphism\nstream `f : ℕ → V →ₗ[K] V` over the window `[i, j)`),",
-      "quality_score": 0.8183600000000001,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-20T07:34:32",
-      "title": "Close Proofs: These conjectures continue the research cycle begun in"
-    },
-    {
       "cycle_id": "443cc80d",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Tensor-Network Holography & Categorical Entanglement\n\nDerived from this cycle's verified results in\n`Geometry/TensorNetwork/{FormanCurvature, LatticeCurvature, QuantumInfoMetric}",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-26T19:26:17",
       "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
+    },
+    {
+      "cycle_id": "580d1f18",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle establishe",
+      "quality_score": 0.73672,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-06-26T19:55:31",
+      "title": "Certified Novelty Detection for Theorem Provers"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "97399ed6",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Library of Babel: Catalogs & Incompressibility\n\nDerived from this cycle's verified results\n(`BabelDiagonalCatalog.lean`, `BabelDeBruijnCatalog.lean`,\n`BabelIncompressibility.lean",
-      "quality_score": 0.71035,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-21T00:36:49",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
     {
       "cycle_id": "2683755a",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-06-26T19:28:25",
       "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+    },
+    {
+      "cycle_id": "580d1f18",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle establishe",
+      "quality_score": 0.73672,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-06-26T19:55:31",
+      "title": "Certified Novelty Detection for Theorem Provers"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "7ae59772",
-      "domain": "Algebra",
-      "name": "is",
-      "quality": 0.7357199999999999
-    },
-    {
-      "cycle_id": "7ae59772",
-      "domain": "Algebra",
-      "name": "countDigit_le",
-      "quality": 0.7357199999999999
-    },
-    {
-      "cycle_id": "7ae59772",
-      "domain": "Algebra",
-      "name": "sum_countDigit",
-      "quality": 0.7357199999999999
-    },
     {
       "cycle_id": "fb2780d5",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "gridGraph_degree_eq",
       "quality": 0.78512
+    },
+    {
+      "cycle_id": "580d1f18",
+      "domain": "Applications",
+      "name": "embedding",
+      "quality": 0.73672
+    },
+    {
+      "cycle_id": "580d1f18",
+      "domain": "Applications",
+      "name": "embedding",
+      "quality": 0.73672
+    },
+    {
+      "cycle_id": "580d1f18",
+      "domain": "Applications",
+      "name": "novelty_nonneg",
+      "quality": 0.73672
     }
   ],
-  "last_updated": "2026-06-26T19:28:25",
+  "last_updated": "2026-06-26T19:55:31",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "abbbde7c",
-        "quality": 0.58216,
-        "theorems": 14,
-        "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-      },
-      {
         "cycle_id": "bc0a8e2b",
         "quality": 0.5310828235294118,
         "theorems": 17,
@@ -3141,6 +3135,12 @@
         "quality": 0.5860000000000001,
         "theorems": 11,
         "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
+      },
+      {
+        "cycle_id": "580d1f18",
+        "quality": 0.73672,
+        "theorems": 23,
+        "title": "Certified Novelty Detection for Theorem Provers"
       }
     ],
     "Bridges": [

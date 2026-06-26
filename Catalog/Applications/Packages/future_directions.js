@@ -180,7 +180,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
   {
-    "consumed_by_exp_id": "c743a598",
+    "consumed_by_exp_id": "",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domains": [
       "Geometry",
@@ -190,7 +190,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:11.683325+00:00",
     "title": "Standard Conjectures on Algebraic Cycles"
   },
@@ -210,7 +210,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "6f4d545d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domains": [
       "Algebra"
@@ -219,7 +219,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432615+00:00",
     "title": "Galois Theory: Solvability of Polynomials"
   },
@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "1f3047ef",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -2368,20 +2368,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "bdb5ae9b",
-    "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2353",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22229v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T13:11:45.659366+00:00",
-    "title": "Quadratic irrational density in the ratio spectrum"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The sum of the elements in the $n$-th row of the Pascal-like Riordan array defined by the power series pair $(1/(1-x), x/(1-x)^2)$, whose entries are given by the binomial coefficient $t_{n,k} = \\binom{n+k}{2k}$, equals the $(2n+1)$-th Fibonacci number. This is derived from the paper's demonstration that the generating function of the row sums is $(1-x)/(1-3x+x^2)$, which characterizes the odd-indexed Fibonacci sequence.",
     "domains": [
@@ -3465,7 +3451,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
   },
   {
-    "consumed_by_exp_id": "4e028e76",
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domains": [
       "Pythagorean",
@@ -3475,7 +3461,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -6228,6 +6214,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle established: (i) a sound, `1`-Lipschitz novelty\ncertificate in a metric embedding space; (ii) certificate composition and a packing-vs-\ncovering **novelty budget**; (iii) an *unbounded* novelty stream from the catalog's\nFibonacci primitive-divisor theorem.  The contrast between (ii) and (iii) \u2014 finite budget in\nbounded spaces vs. infinite budget in the discrete prime line \u2014 is the engine for the\nconjectures below.\n\n## Conjecture 1 \u2014 Sharp novelty budget via Lipschitz embeddings\n**Statement.** If `f : X \u2192 \u211d^d` is an `L`-bi-Lipschitz embedding of the theorem space with\nimage in a box of side `R`, then the maximum size of an `\u03b5`-separated catalog is\n`\u0398((R\u00b7L/\u03b5)^d)`, matching `Separated.card_le_of_cells` up to the constant.\n- **The key insight is** that the packing bound `card \u2264 K.card` becomes *tight* exactly when\n  the cells of the cover are realized as an `\u03b5`-net, so the covering number and packing\n  number agree up to the doubling constant of the embedding.\n- **Why now?** `Separated.card_le_of_cells` already gives the upper half with *no* geometric\n  assumption; only the matching lower-bound construction (an explicit `\u03b5`-net in the box)\n  remains, which is finite and directly checkable.\n\n## Conjecture 2 \u2014 Novelty is exactly the Hausdorff gap of catalog growth\n**Statement.** For nested catalogs `C\u2080 \u2286 C\u2081 \u2286 \u2026`, the sequence of certified novelties of a\nfixed output `x`, `novelty C\u2099 x`, is non-increasing and converges to\n`dist x (closure \u22c3\u2099 C\u2099)`; moreover `sup\u2093 |novelty C\u2099 x \u2212 novelty C\u2098 x| =`\nHausdorff distance `d_H(C\u2099, C\u2098)`.\n- **The key insight is** that `novelty C = dist(\u00b7, C)` and the `1`-Lipschitz law\n  (`abs_novelty_sub_le`) make novelty the support function of the catalog, so catalog\n  *growth* and novelty *decay* are dual via the Hausdorff metric.\n- **Why now?** `novelty_mono` already proves monotonicity; the missing step is the\n  identification with `d_H`, a standard but unformalized consequence of the Lipschitz bound.\n\n## Conjecture 3 \u2014 Every Lucas sequence yields an unbounded novelty stream\n**Statement.** For any non-degenerate Lucas sequence `U\u2099(P, Q)` (e.g. Fibonacci, Pell,\nMersenne), the primitive-prime map `n \u21a6 (primitive prime of U\u2099)` induces a `1`-separated\nreal catalog of unbounded size \u2014 so *every* such recurrence is an inexhaustible novelty\nsource.\n- **The key insight is** that `unbounded_novelty_budget` used Fibonacci primitivity only\n  through the abstract clause \"the chosen prime divides no earlier term\"; Carmichael's\n  theorem holds for all non-degenerate Lucas sequences, so the construction is parametric.\n- **Why now?** The Fibonacci case is fully formalized here via the catalog's\n  `RankOfApparition.fib_prime_index_has_primitive`; generalizing requires only the same\n  rank-of-apparition spine, which the catalog already develops abstractly.\n\n## Conjecture 4 \u2014 Soundness \u21d2 no certified duplicate under bounded perturbation\n**Statement.** If output `x` carries an `\u03b5`-novelty certificate and the embedding is computed\nwith error `< \u03b5`, then `x` is *provably* not a duplicate of any catalog entry \u2014 formally, no\ncatalog entry `c` satisfies `dist x c = 0` even after re-embedding within tolerance `\u03b4 < \u03b5`.\n- **The key insight is** that the `1`-Lipschitz stability `abs_novelty_sub_le` converts an\n  approximate (numerically computed) certificate into an exact one whenever the margin\n  exceeds the embedding error: certificates are *robust*, not just nominal.\n- **Why now?** `cert_sound` and `abs_novelty_sub_le` are both proved; the conjecture is their\n  composition into an end-to-end robustness theorem for a *computed* embedding.\n\n## Three concrete next-cycle sub-conjectures\n1. **Budget additivity:** for a disjoint union of embedding spaces, the novelty budget is the\n   sum of the budgets (cover numbers add); test on `\u211d \u2294 \u211d`.\n2. **Stream interleaving:** the union of the Fibonacci and Pell primitive-prime streams is\n   still `1`-separated (primes from different recurrences rarely coincide); quantify the\n   finitely many collisions.\n3. **Certificate compression:** the minimal sub-catalog needed to certify the same novelty\n   for all outputs is an `\u03b5`-net of the catalog; bound its size by Conjecture 1.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2626",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "580d1f18",
+    "status": "available",
+    "timestamp": "2026-06-26T19:55:05.815068+00:00",
+    "title": "Derived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6549,7 +6550,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "f247824f",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6559,7 +6560,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

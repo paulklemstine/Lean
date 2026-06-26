@@ -239,7 +239,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c743a598",
+    "consumed_by_exp_id": "",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, Künneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domain_bridges": [],
     "domains": [
@@ -252,7 +252,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:11.683325+00:00",
     "title": "Standard Conjectures on Algebraic Cycles"
   },
@@ -279,7 +279,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6f4d545d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domain_bridges": [],
     "domains": [
@@ -291,7 +291,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432615+00:00",
     "title": "Galois Theory: Solvability of Polynomials"
   },
@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1f3047ef",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -3737,36 +3737,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Lagarias-Shallit bounds for Lagrange constants under integer linear fractional transformations",
-      "Smith normal form over Z for reducing integer matrices",
-      "Lagrange constant formula via two-sided continued fractions",
-      "Lagrange theorem: real quadratic irrationals are exactly eventually periodic continued fractions",
-      "Mathlib modules: Mathlib.Data.Matrix.Basic, Mathlib.NumberTheory.ContinuedFractions, Mathlib.Topology.Algebra.Order.LiminfLimsup"
-    ],
-    "consumed_by_exp_id": "bdb5ae9b",
-    "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
-    "domain_bridges": [
-      "continued fractions to real quadratic irrationals via eventual periodicity",
-      "integer matrices to linear fractional transformations via the PGL2 action",
-      "limsup of partial quotient expressions to Lagrange constants",
-      "Smith normal form to reduction of general determinant D matrices"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2353",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Adapt the paper's construction realizing arbitrary ratios in the interval by bounded continued fraction sequences, but replace the infinite nonperiodic tail by sufficiently long periodic repetitions of the finite blocks controlling the limsup. Since ultimately periodic continued fractions are quadratic irrationals, it remains to prove that the Lagrange-constant ratio changes by an arbitrarily small amount under this periodic approximation. Formalization would isolate a continuity lemma for finite-window limsup maxima of periodic continued fractions and combine it with the Smith-normal-form reduction used for the general matrix M.",
-    "research_mode": "team",
-    "source_exp_id": "2606.22229v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T13:11:45.659366+00:00",
-    "title": "Quadratic irrational density in the ratio spectrum"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "math.CO",
       "Riordan_arrays",
       "Fibonacci_numbers",
@@ -5869,7 +5839,7 @@
       "https://arxiv.org/abs/2001.12345",
       "https://arxiv.org/abs/2203.67890"
     ],
-    "consumed_by_exp_id": "4e028e76",
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domain_bridges": [
       "zeta-regularization",
@@ -5886,7 +5856,7 @@
     "proof_strategy": "Leverage analytic continuation of Dirichlet L-functions and properties of their critical strips to establish the natural boundary's extent and position, then apply techniques from complex analysis to demonstrate the absence of meromorphic continuation beyond the boundary.",
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -10842,6 +10812,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle established: (i) a sound, `1`-Lipschitz novelty\ncertificate in a metric embedding space; (ii) certificate composition and a packing-vs-\ncovering **novelty budget**; (iii) an *unbounded* novelty stream from the catalog's\nFibonacci primitive-divisor theorem.  The contrast between (ii) and (iii) — finite budget in\nbounded spaces vs. infinite budget in the discrete prime line — is the engine for the\nconjectures below.\n\n## Conjecture 1 — Sharp novelty budget via Lipschitz embeddings\n**Statement.** If `f : X → ℝ^d` is an `L`-bi-Lipschitz embedding of the theorem space with\nimage in a box of side `R`, then the maximum size of an `ε`-separated catalog is\n`Θ((R·L/ε)^d)`, matching `Separated.card_le_of_cells` up to the constant.\n- **The key insight is** that the packing bound `card ≤ K.card` becomes *tight* exactly when\n  the cells of the cover are realized as an `ε`-net, so the covering number and packing\n  number agree up to the doubling constant of the embedding.\n- **Why now?** `Separated.card_le_of_cells` already gives the upper half with *no* geometric\n  assumption; only the matching lower-bound construction (an explicit `ε`-net in the box)\n  remains, which is finite and directly checkable.\n\n## Conjecture 2 — Novelty is exactly the Hausdorff gap of catalog growth\n**Statement.** For nested catalogs `C₀ ⊆ C₁ ⊆ …`, the sequence of certified novelties of a\nfixed output `x`, `novelty Cₙ x`, is non-increasing and converges to\n`dist x (closure ⋃ₙ Cₙ)`; moreover `supₓ |novelty Cₙ x − novelty Cₘ x| =`\nHausdorff distance `d_H(Cₙ, Cₘ)`.\n- **The key insight is** that `novelty C = dist(·, C)` and the `1`-Lipschitz law\n  (`abs_novelty_sub_le`) make novelty the support function of the catalog, so catalog\n  *growth* and novelty *decay* are dual via the Hausdorff metric.\n- **Why now?** `novelty_mono` already proves monotonicity; the missing step is the\n  identification with `d_H`, a standard but unformalized consequence of the Lipschitz bound.\n\n## Conjecture 3 — Every Lucas sequence yields an unbounded novelty stream\n**Statement.** For any non-degenerate Lucas sequence `Uₙ(P, Q)` (e.g. Fibonacci, Pell,\nMersenne), the primitive-prime map `n ↦ (primitive prime of Uₙ)` induces a `1`-separated\nreal catalog of unbounded size — so *every* such recurrence is an inexhaustible novelty\nsource.\n- **The key insight is** that `unbounded_novelty_budget` used Fibonacci primitivity only\n  through the abstract clause \"the chosen prime divides no earlier term\"; Carmichael's\n  theorem holds for all non-degenerate Lucas sequences, so the construction is parametric.\n- **Why now?** The Fibonacci case is fully formalized here via the catalog's\n  `RankOfApparition.fib_prime_index_has_primitive`; generalizing requires only the same\n  rank-of-apparition spine, which the catalog already develops abstractly.\n\n## Conjecture 4 — Soundness ⇒ no certified duplicate under bounded perturbation\n**Statement.** If output `x` carries an `ε`-novelty certificate and the embedding is computed\nwith error `< ε`, then `x` is *provably* not a duplicate of any catalog entry — formally, no\ncatalog entry `c` satisfies `dist x c = 0` even after re-embedding within tolerance `δ < ε`.\n- **The key insight is** that the `1`-Lipschitz stability `abs_novelty_sub_le` converts an\n  approximate (numerically computed) certificate into an exact one whenever the margin\n  exceeds the embedding error: certificates are *robust*, not just nominal.\n- **Why now?** `cert_sound` and `abs_novelty_sub_le` are both proved; the conjecture is their\n  composition into an end-to-end robustness theorem for a *computed* embedding.\n\n## Three concrete next-cycle sub-conjectures\n1. **Budget additivity:** for a disjoint union of embedding spaces, the novelty budget is the\n   sum of the budgets (cover numbers add); test on `ℝ ⊔ ℝ`.\n2. **Stream interleaving:** the union of the Fibonacci and Pell primitive-prime streams is\n   still `1`-separated (primes from different recurrences rarely coincide); quantify the\n   finitely many collisions.\n3. **Certificate compression:** the minimal sub-catalog needed to certify the same novelty\n   for all outputs is an `ε`-net of the catalog; bound its size by Conjecture 1.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2626",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "580d1f18",
+    "status": "available",
+    "timestamp": "2026-06-26T19:55:05.815068+00:00",
+    "title": "Derived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -11273,7 +11263,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f247824f",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -11286,7 +11276,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
