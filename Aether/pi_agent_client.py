@@ -536,8 +536,8 @@ class PiAgentClient:
         consecutive_402 = cb_state.get("consecutive_402", 0)
         opened_at = cb_state.get("opened_at", 0)
 
-        skip_tier1 = False
-        if state == "OPEN":
+        skip_tier1 = not getattr(self.pollen_gate.config, 'enabled', True)
+        if not skip_tier1 and state == "OPEN":
             if time.time() - opened_at > 20 * 60:
                 print("[Pi-Agent] Circuit HALF-OPEN — probing Pollinations")
                 self._save_cb_state({"state": "HALF-OPEN"})
@@ -601,6 +601,10 @@ class PiAgentClient:
             print("[Pi-Agent] OpenRouter enabled but no API key set")
         else:
             print("[Pi-Agent] OpenRouter not enabled")
+
+        if not getattr(self.pollen_gate.config, 'enabled', True):
+            print("[Pi-Agent] All enabled API tiers failed and Pollinations is disabled. Returning error.")
+            return "[API_ERROR] All API tiers failed (Pollinations disabled)."
 
         # All tiers failed — wait for Pollinations pollen reset and retry
         print("[Pi-Agent] All API tiers failed. Waiting for Pollinations pollen reset...")
