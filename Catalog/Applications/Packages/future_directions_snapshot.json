@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da520741",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c488c94",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1575,7 +1575,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49f14a50",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to χ(G) ≤ 4 for all planar G. Formalize Brooks' theorem: χ(G) ≤ Δ(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domain_bridges": [],
     "domains": [
@@ -1588,7 +1588,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -3382,7 +3382,7 @@
       "math.CO",
       "math.GT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da5cb31c",
     "description": "The authors disprove a conjecture by Cheong, Goaoc, and Holmsen by showing that for every n >= 1, there is a finite family of pairwise disjoint open convex sets in R^{3n} such that the (n-1)-st reduced homology of the space of line transversals is nonzero. They explicitly state the conjecture that this space of line transversals is in fact homotopy equivalent to the (n-1)-sphere, S^{n-1}. This proposes formalizing that stronger homotopy equivalence conjecture.",
     "domain_bridges": [
       "Geometric Transversal Theory",
@@ -3399,7 +3399,7 @@
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:10:06.412019+00:00",
     "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
   },
@@ -4749,7 +4749,7 @@
       "math.RT",
       "math.NT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3718ce68",
     "description": "For a number field k with r₁ real and r₂ complex places, let b = r₁·⌊n²/4⌋ + r₂·n(n-1)/2. For any cohomological generic representation π in R_ε^{coge,∞} of GL(n,k_∞) with coefficient system F_π and quadratic character ε: π₀(k_∞×) → ℂ×, the Betti-Whittaker period of the contragredient π∨ in degree b satisfies P^b(π∨, F_{π∨}, ε) = ε(disc(k))^b · P^b(π, F_π, ε), where disc(k) is viewed as an element of π₀(k_∞×) via the determinant identification π₀(k_∞×) ≅ π₀(GL_n(k_∞)).",
     "domain_bridges": [
       "automorphic_forms",
@@ -4767,7 +4767,7 @@
     "proof_strategy": "First formalize the cohomological generic representations of GL(n) over number fields, define the bottom-degree Betti-Whittaker period functional via continuous group cohomology H^b_ct(GL_n(k_∞)⁰; F_π ⊗ π) → ℂ through the Whittaker pairing, establish the identification π₀(k_∞×) ≅ π₀(GL_n(k_∞)) via determinant, then prove the period relation by extending Chen's argument using the functional equation framework and the Casselman-Wallach module structure on the Whittaker model.",
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T22:02:58.683140+00:00",
     "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
   },
@@ -7175,7 +7175,7 @@
       "Mathlib.Combinatorics.Polytope",
       "Mathlib.Data.Fintype.Card"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3847ce48",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self‑dual string C‑group representations of rank $2m$ (as constructed by the vertex‑gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self‑dual string C‑group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domain_bridges": [
       "Coxeter groups ↔ abstract regular polytopes",
@@ -7191,7 +7191,7 @@
     "proof_strategy": "Formalize the vertex‑gluing construction of the paper and prove that it yields a self‑dual string C‑group of rank $2m$ for $A_{4m+3}$. Then, using the intersection condition for string C‑groups together with known bounds on the rank of any string C‑group for $A_n$ (the maximal rank $\\lfloor (n-1)/2 \\rfloor$), show that any self‑dual representation would force an extra involutive symmetry that contradicts the parity constraints on generators of $A_{4m+3}$. The contradiction establishes the non‑existence of rank $2m+1$ self‑dual string C‑groups. The proof proceeds by: (1) defining string C‑groups and self‑duality in Lean; (2) encoding the universal string Coxeter group $W_r$ and the intersection condition; (3) constructing the specific generating involutions for the glued representation; (4) verifying the intersection condition and self‑duality; (5) proving a rank‑upper‑bound lemma for self‑dual representations of $A_{4m+3}$ via counting arguments on the fixed‑point structure of the invo",
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
   },
@@ -7506,7 +7506,7 @@
       "Chvatal1977",
       "EFRS1989"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fad59fd8",
     "description": "For any tree T on n vertices and any complete tripartite graph K_{m_1,m_2,m_3} with 1 ≤ m_1 ≤ m_2 ≤ m_3, the Ramsey number R(T, K_{m_1,m_2,m_3}) equals 2(R(T, K_{m_1,m_2}) - 1) + m_1 for all sufficiently large n. This conjecture specifically tests whether the general bound in the paper becomes an exact equality for the k=3 case.",
     "domain_bridges": [
       "Ramsey Theory",
@@ -7523,7 +7523,7 @@
     "proof_strategy": "Construct explicit red-blue colorings of K_N for N = 2(R(T, K_{m_1,m_2}) - 1) + m_1 - 1 to show they avoid both a red T and blue K_{m_1,m_2,m_3}, thereby proving the lower bound matches the upper bound from the main theorem.",
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T12:57:20.450102+00:00",
     "title": "Exact Ramsey Numbers for Trees vs Tripartite Graphs"
   },
@@ -10815,7 +10815,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ad454ca1",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domain_bridges": [],
     "domains": [
@@ -10828,7 +10828,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
