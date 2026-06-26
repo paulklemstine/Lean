@@ -516,7 +516,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5077231f",
     "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n² : n ∈ ℕ+} ∪ [0,∞). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
     "domain_bridges": [],
     "domains": [
@@ -529,7 +529,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432770+00:00",
     "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
   },
