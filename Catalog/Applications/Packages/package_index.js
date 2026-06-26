@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3ffd492f",
     "filename": "optimality_of_the_density_threshold_for_linear_run.json",
     "pkg_num": 114,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3990000000000001,
     "title": "Optimality of the Density Threshold for Linear r-Uniform Hypergraphs"
   },
   {
@@ -3324,8 +3324,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "optimality_of_the_density_threshold_for_linear_run",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3990000000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Optimality of the Density Threshold for Linear r-Uniform Hypergraphs"
     }

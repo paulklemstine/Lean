@@ -1017,21 +1017,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Invariant Subspace Problem: Special Cases"
   },
   {
-    "consumed_by_exp_id": "f881b568",
-    "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension \u2265 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
-    "domains": [
-      "Geometry",
-      "Analysis"
-    ],
-    "id": "seed_347",
-    "priority_score": 0.84,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432660+00:00",
-    "title": "Kakeya Conjecture: Known Cases and Bounds"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
@@ -6518,6 +6503,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T22:40:33.647327+00:00",
     "title": "Distance-Matrix Reconstruction Conjecture for Embedded Manifolds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The computational complexity of finding Nash equilibria in multiplayer games equals the complexity of quantifier elimination over real closed fields (via equivalence of decision and search problems). Test: Construct polynomial-time reductions between classical equilibrium existence problems and Tarski-Seidenberg instances using semi-algebraic geometry tools. Impact: Transfers automated theorem proving techniques from real algebraic geometry to game theory, enabling application of cylindrical algebraic decomposition algorithms to mechanism design and economic modeling.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_2640",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-26T22:47:27.798094+00:00",
+    "title": "Real Algebraic Game Theory: Nash Equilibria and Quantifier Elimination"
   },
   {
     "consumed_by_exp_id": "",
