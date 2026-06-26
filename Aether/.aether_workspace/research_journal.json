@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "225644b1",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Library of Babel: Combinatorics of the Universal Library\n\nThis cycle added, in `Algebra/LibraryOfBabelProbability.lean`, a probabilistic\n**lower** bound on substring occurrence (",
-      "quality_score": 0.44512863813229575,
-      "sorry_count": 0,
-      "theorem_count": 57,
-      "timestamp": "2026-06-19T19:05:34",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
-    {
       "cycle_id": "89bf180f",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions\n\nThe file `Catalog/Combinatorics/ErdosRenyi.lean` establishes the exact, finite\nalgebraic foundation of `G(n, p)`: the Bernoulli product factorization, the edge\ncount `n(n-1)/2`, a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-06-26T04:44:57",
       "title": "Quadratic irrational density in the ratio spectrum"
+    },
+    {
+      "cycle_id": "8344a207",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Birch and Swinnerton-Dyer Research Cycle\n\nThis cycle added two self-contained modules to `Catalog/Applications/BSD/`:\n\n* **`FunctionalEquation.lean`** — the unconditional analyti",
+      "quality_score": 0.6688000000000001,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-26T05:16:07",
+      "title": "Birch and Swinnerton-Dyer Conjecture"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7095
     }
   ],
-  "last_updated": "2026-06-26T04:44:57",
+  "last_updated": "2026-06-26T05:16:07",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "226a5c12",
-        "quality": 0.57117,
-        "theorems": 24,
-        "title": "Bridge: Galois Connections Between Order Theory and Topology"
-      },
-      {
         "cycle_id": "99725b45",
         "quality": 0.708,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.67124,
         "theorems": 12,
         "title": "Quadratic irrational density in the ratio spectrum"
+      },
+      {
+        "cycle_id": "8344a207",
+        "quality": 0.6688000000000001,
+        "theorems": 16,
+        "title": "Birch and Swinnerton-Dyer Conjecture"
       }
     ],
     "NumberTheory": [

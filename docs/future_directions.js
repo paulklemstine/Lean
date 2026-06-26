@@ -1612,21 +1612,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
   },
   {
-    "consumed_by_exp_id": "7410b0f1",
-    "description": "For integers n \u2265 2k and k \u2265 3, any two non-trivial cross-intersecting families A, B \u2286 ([n] choose k) satisfy |A| * |B| \u2264 h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2300",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T04:53:00.715630+00:00",
-    "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let $a_k$ denote the number of P\u00f3lya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the P\u00f3lya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
     "domains": [
@@ -3626,7 +3611,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Externally Supported Independence Number"
   },
   {
-    "consumed_by_exp_id": "d7fd1af1",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For rational \u03b2 = p/q, the natural extension has finite domain bridges.",
     "domains": [
       "Pythagorean",
@@ -3636,7 +3621,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -3656,7 +3641,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both deletion and contraction of a non-loop non-coloop element preserve connectivity in connected polymatroids"
   },
   {
-    "consumed_by_exp_id": "01ec1037",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
     "domains": [
       "Geometry",
@@ -3666,7 +3651,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T21:58:37.105519+00:00",
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
   },
@@ -5502,6 +5487,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Birch and Swinnerton-Dyer Research Cycle\n\nThis cycle added two self-contained modules to `Catalog/Applications/BSD/`:\n\n* **`FunctionalEquation.lean`** \u2014 the unconditional analytic *parity theorem*\n  `(-1)^{ord_{s=1} \u039b} = w` for any function analytic at the central point obeying the\n  functional-equation symmetry `\u039b(2-s) = w\u00b7\u039b(s)`, its corollaries (`sign = \u00b11`,\n  even rank \u21d4 sign `+1`, sign `-1` \u21d2 central vanishing), and the conditional\n  consequences under the BSD rank equality: the **Parity Conjecture**\n  `(-1)^{algebraic rank} = w` and \"root number `-1` \u21d2 infinitely many rational points\".\n* **`FrobeniusTrace.lean`** \u2014 Newton's recurrence `s_{n+2} = a\u00b7s_{n+1} - p\u00b7s_n` for the\n  Frobenius power sums `s_n = \u03b1^n+\u03b2^n`, the trace-sequence computation of the point-count\n  tower `#E(\ud835\udd3d_{p^n}) = p^n+1-s_n`, the **Sato\u2013Tate angle** `a = 2\u221ap\u00b7cos \u03b8`, and the RH\n  bound `\u2016\u03b1^n+\u03b2^n\u2016 \u2264 2(\u221ap)^n`.\n\nThese extend the existing `AnalyticRank.lean`, `LocalFactor.lean`, `RankBridge.lean`.\nThe following conjectures are bold but testable targets for the next cycles.\n\n## Conjecture 1 \u2014 Functional-equation order symmetry (full Taylor reflection)\n\nThe parity theorem only reads the *parity* of the order of vanishing off the\nfunctional equation. Strengthen it: if `\u039b` is analytic at `1`, of finite order, and\n`\u039b(2-s) = w\u00b7\u039b(s)`, then **every** Taylor coefficient obeys `c_k = (-1)^k w \u00b7 c_k`, so\nthe Taylor expansion at the center is supported on exponents of a single parity\n(`k \u2261 ord (mod 2)`). *Test:* formalize `iteratedDeriv k \u039b 1 = (-1)^k w \u00b7 iteratedDeriv k \u039b 1`\nand deduce the leading-coefficient reality/sign constraints. *Falsifiable:* exhibit an\nanalytic solution of the functional equation with two nonzero Taylor coefficients of\nopposite parity (should be impossible).\n\n## Conjecture 2 \u2014 Additivity of root numbers across products (global Artin formalism)\n\nRoot numbers should multiply under products of L-functions:\nif `\u039b\u2081(2-s) = w\u2081\u039b\u2081(s)` and `\u039b\u2082(2-s) = w\u2082\u039b\u2082(s)` then `(\u039b\u2081\u00b7\u039b\u2082)(2-s) = (w\u2081w\u2082)(\u039b\u2081\u00b7\u039b\u2082)(s)`,\nand combined with `analyticRank_mul` (additivity of orders) this gives\n`(-1)^{ord(\u039b\u2081\u039b\u2082)} = w\u2081w\u2082`. *Test:* prove `root number is multiplicative` and that the\nparity theorem is compatible with `analyticRank_mul`; this is the analytic shadow of\nthe behaviour of BSD data under isogeny and Weil restriction.\n\n## Conjecture 3 \u2014 Hasse interval is exactly attained by the angle distribution\n\nFor each `\u03b8 \u2208 [0,\u03c0]` and each `p`, the value `a = \u230a2\u221ap cos \u03b8\u2309` is realized as a trace\nof Frobenius of *some* curve mod `p`; equivalently the map `(a,p) \u21a6 \u03b8` of\n`exists_satoTate_angle` is, over varying `a` with `|a| \u2264 2\u221ap`, asymptotically\nequidistributed for `(2/\u03c0) sin\u00b2\u03b8 d\u03b8` (Sato\u2013Tate). *Test (formalizable now):* prove the\nangle map `a \u21a6 arccos(a/(2\u221ap))` is injective and order-reversing on the Hasse interval\n`[-2\u221ap, 2\u221ap]`, and that `#{a : a\u00b2\u22644p}` grows like `4\u221ap`; the measure-theoretic limit is\nthe long-range target.\n\n## Conjecture 4 \u2014 Positivity and integrality of the point-count tower\n\nDefine `N_n = p^n + 1 - s_n` via `traceSeq`. Conjecture: for `0 < p` with the Hasse\nbound `a\u00b2 \u2264 4p`, every `N_n > 0` (the curve always has points over every extension),\nand the generating series `Z(T) = exp(\u03a3_{n\u22651} N_n T^n / n)` equals the rational\nfunction `(1 - aT + pT\u00b2) / ((1-T)(1-pT))` (the local zeta function / Weil conjectures\nfor curves). *Test:* prove `0 < N_n` from `traceSeq_norm_le` (already in the file) plus\n`p^n + 1 > 2(\u221ap)^n` for `p > 1`; then formalize the closed form of `Z(T)` as a power\nseries identity.\n\n## Conjecture 5 \u2014 Quantitative parity-to-rank lower bound\n\nCombine the parity bridge with a height/torsion estimate: under the BSD rank equality,\nroot number `-1` forces not merely infinitude but an explicit rank lower bound\n`rank E(\u211a) \u2265 1` *with an effective generator bound* in terms of the conductor. *Test:*\nformalize, for the `(Fin r \u2192 \u2124) \u00d7 T` model, that root number `-1` yields a free `\u2124`\nsub-summand `Function.update 0 i : \u2124 \u21aa E(\u211a)` (already implicit in\n`bsd_root_number_neg_one_infinite`) and package it as an explicit injection\n`\u2124 \u21aa MordellWeil`, the first quantitative rung toward effective BSD.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2576",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8344a207",
+    "status": "available",
+    "timestamp": "2026-06-26T05:16:00.068875+00:00",
+    "title": "This cycle added two self-contained modules to `Catalog/Applications/BSD/`:"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6108,7 +6108,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "b0e2bb19",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -6118,7 +6118,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -6138,7 +6138,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "dfb56ea4",
+    "consumed_by_exp_id": "",
     "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
     "domains": [
       "Algebra",
@@ -6148,7 +6148,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:24.924994+00:00",
     "title": "Navier-Stokes Existence and Smoothness"
   },

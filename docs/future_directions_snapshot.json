@@ -2297,34 +2297,6 @@
     "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
   },
   {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO",
-      "Frankl-Wang conjecture",
-      "Hilton-Milner theorem"
-    ],
-    "consumed_by_exp_id": "7410b0f1",
-    "description": "For integers n ≥ 2k and k ≥ 3, any two non-trivial cross-intersecting families A, B ⊆ ([n] choose k) satisfy |A| * |B| ≤ h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
-    "domain_bridges": [
-      "finite set families",
-      "combinatorial inequalities",
-      "shifting techniques"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2300",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize the definitions of cross-intersecting and non-trivial families, and the size function h(n,k). Apply the shifting technique to reduce to left-compressed families, and use the diversity method to bound the sizes of families with elements far from a common core. Establish properties of the extended shift operation to manage the inductive steps.",
-    "research_mode": "team",
-    "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T04:53:00.715630+00:00",
-    "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
-  },
-  {
     "ambition_level": "extension",
     "catalog_references": [
       "MR1577579",
@@ -6148,7 +6120,7 @@
       "Parry",
       "Ito-Takahashi"
     ],
-    "consumed_by_exp_id": "d7fd1af1",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For rational β = p/q, the natural extension has finite domain bridges.",
     "domain_bridges": "finite",
     "domains": [
@@ -6161,7 +6133,7 @@
     "proof_strategy": "Constructive counterexample based on known results",
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -6197,7 +6169,7 @@
       "arXiv:2303.04252",
       "doi:10.1016/j.disc.2023.112345"
     ],
-    "consumed_by_exp_id": "01ec1037",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
     "domain_bridges": [
       "extremal graph theory",
@@ -6214,7 +6186,7 @@
     "proof_strategy": "We will develop a simplicial complex version of the Hoffman bound for graphs by analyzing the spectral properties of the signless Laplacian matrix of the join of simplices. This will involve studying the eigenvalues of the join matrix, constructing explicit examples achieving the bound, and using homology constraints to derive inequalities on the spectral radius. We will also employ a matroid intersection approach to characterize the extremal complexes.",
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T21:58:37.105519+00:00",
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
   },
@@ -9514,6 +9486,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Birch and Swinnerton-Dyer Research Cycle\n\nThis cycle added two self-contained modules to `Catalog/Applications/BSD/`:\n\n* **`FunctionalEquation.lean`** — the unconditional analytic *parity theorem*\n  `(-1)^{ord_{s=1} Λ} = w` for any function analytic at the central point obeying the\n  functional-equation symmetry `Λ(2-s) = w·Λ(s)`, its corollaries (`sign = ±1`,\n  even rank ⇔ sign `+1`, sign `-1` ⇒ central vanishing), and the conditional\n  consequences under the BSD rank equality: the **Parity Conjecture**\n  `(-1)^{algebraic rank} = w` and \"root number `-1` ⇒ infinitely many rational points\".\n* **`FrobeniusTrace.lean`** — Newton's recurrence `s_{n+2} = a·s_{n+1} - p·s_n` for the\n  Frobenius power sums `s_n = α^n+β^n`, the trace-sequence computation of the point-count\n  tower `#E(𝔽_{p^n}) = p^n+1-s_n`, the **Sato–Tate angle** `a = 2√p·cos θ`, and the RH\n  bound `‖α^n+β^n‖ ≤ 2(√p)^n`.\n\nThese extend the existing `AnalyticRank.lean`, `LocalFactor.lean`, `RankBridge.lean`.\nThe following conjectures are bold but testable targets for the next cycles.\n\n## Conjecture 1 — Functional-equation order symmetry (full Taylor reflection)\n\nThe parity theorem only reads the *parity* of the order of vanishing off the\nfunctional equation. Strengthen it: if `Λ` is analytic at `1`, of finite order, and\n`Λ(2-s) = w·Λ(s)`, then **every** Taylor coefficient obeys `c_k = (-1)^k w · c_k`, so\nthe Taylor expansion at the center is supported on exponents of a single parity\n(`k ≡ ord (mod 2)`). *Test:* formalize `iteratedDeriv k Λ 1 = (-1)^k w · iteratedDeriv k Λ 1`\nand deduce the leading-coefficient reality/sign constraints. *Falsifiable:* exhibit an\nanalytic solution of the functional equation with two nonzero Taylor coefficients of\nopposite parity (should be impossible).\n\n## Conjecture 2 — Additivity of root numbers across products (global Artin formalism)\n\nRoot numbers should multiply under products of L-functions:\nif `Λ₁(2-s) = w₁Λ₁(s)` and `Λ₂(2-s) = w₂Λ₂(s)` then `(Λ₁·Λ₂)(2-s) = (w₁w₂)(Λ₁·Λ₂)(s)`,\nand combined with `analyticRank_mul` (additivity of orders) this gives\n`(-1)^{ord(Λ₁Λ₂)} = w₁w₂`. *Test:* prove `root number is multiplicative` and that the\nparity theorem is compatible with `analyticRank_mul`; this is the analytic shadow of\nthe behaviour of BSD data under isogeny and Weil restriction.\n\n## Conjecture 3 — Hasse interval is exactly attained by the angle distribution\n\nFor each `θ ∈ [0,π]` and each `p`, the value `a = ⌊2√p cos θ⌉` is realized as a trace\nof Frobenius of *some* curve mod `p`; equivalently the map `(a,p) ↦ θ` of\n`exists_satoTate_angle` is, over varying `a` with `|a| ≤ 2√p`, asymptotically\nequidistributed for `(2/π) sin²θ dθ` (Sato–Tate). *Test (formalizable now):* prove the\nangle map `a ↦ arccos(a/(2√p))` is injective and order-reversing on the Hasse interval\n`[-2√p, 2√p]`, and that `#{a : a²≤4p}` grows like `4√p`; the measure-theoretic limit is\nthe long-range target.\n\n## Conjecture 4 — Positivity and integrality of the point-count tower\n\nDefine `N_n = p^n + 1 - s_n` via `traceSeq`. Conjecture: for `0 < p` with the Hasse\nbound `a² ≤ 4p`, every `N_n > 0` (the curve always has points over every extension),\nand the generating series `Z(T) = exp(Σ_{n≥1} N_n T^n / n)` equals the rational\nfunction `(1 - aT + pT²) / ((1-T)(1-pT))` (the local zeta function / Weil conjectures\nfor curves). *Test:* prove `0 < N_n` from `traceSeq_norm_le` (already in the file) plus\n`p^n + 1 > 2(√p)^n` for `p > 1`; then formalize the closed form of `Z(T)` as a power\nseries identity.\n\n## Conjecture 5 — Quantitative parity-to-rank lower bound\n\nCombine the parity bridge with a height/torsion estimate: under the BSD rank equality,\nroot number `-1` forces not merely infinitude but an explicit rank lower bound\n`rank E(ℚ) ≥ 1` *with an effective generator bound* in terms of the conductor. *Test:*\nformalize, for the `(Fin r → ℤ) × T` model, that root number `-1` yields a free `ℤ`\nsub-summand `Function.update 0 i : ℤ ↪ E(ℚ)` (already implicit in\n`bsd_root_number_neg_one_infinite`) and package it as an explicit injection\n`ℤ ↪ MordellWeil`, the first quantitative rung toward effective BSD.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2576",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "8344a207",
+    "status": "available",
+    "timestamp": "2026-06-26T05:16:00.068875+00:00",
+    "title": "This cycle added two self-contained modules to `Catalog/Applications/BSD/`:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10325,7 +10317,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b0e2bb19",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -10338,7 +10330,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -10365,7 +10357,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "dfb56ea4",
+    "consumed_by_exp_id": "",
     "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
     "domain_bridges": [],
     "domains": [
@@ -10378,7 +10370,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:24.924994+00:00",
     "title": "Navier-Stokes Existence and Smoothness"
   },
