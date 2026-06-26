@@ -1,132 +1,150 @@
 import Mathlib
-import Catalog.Novelty.RatioSpectrum.MobiusQuadratic
 
 /-!
-# Determinant structure of the ratio spectrum (Phase A, v19c)
+# Degree degradation under deletion of a path's edges
 
-The Lagarias–Shallit bounds say that for an integer matrix `M` of nonzero
-determinant the Lagrange-constant ratio satisfies
-`1/|det M| ≤ k(M x)/k(x) ≤ |det M|`, and the density conjecture asserts these
-ratios fill the whole interval `[1/|det M|, |det M|]` as `x` ranges over real
-quadratic irrationals.
+This file isolates the *structural engine* behind connectivity-preserving
+Hamiltonian-path theorems (Hasunuma 2025 and the `n ≥ 6k+6` prescribed-end
+strengthening): deleting the edges of a path from a graph reduces **every**
+vertex degree by at most `2`, because a path is a subgraph of maximum degree
+`≤ 2`.
 
-This file establishes the **structural backbone** of that target interval and of
-the Möbius action that produces it:
+We work with `Set.ncard` of neighbor sets (the "degree" in a finite graph) so
+that no `DecidableRel` / `Fintype (neighborSet)` bookkeeping is needed.
 
-* the target interval is always nonempty and contains `1` (because an integer
-  matrix of nonzero determinant has `|det| ≥ 1`);
-* its endpoints are reciprocal (`(1/|det|) * |det| = 1`), reflecting the
-  `M ↔ M⁻¹` symmetry of the ratio spectrum;
-* **primitivity is the right normalization**: the Möbius action is invariant
-  under scaling all entries by a nonzero integer, so only the *primitive* part of
-  `M` matters — exactly why the density statement is phrased for primitive `M`
-  (cf. reduction via Smith normal form);
-* the Möbius action is a (partial) action of the integer matrix monoid:
-  composition of Möbius maps is the Möbius map of the matrix product, whose
-  determinant multiplies — so the reachable interval of `M N` sits inside the
-  product of the intervals of `M` and `N`.
+## Main results
+
+* `path_subgraph_ncard_neighborSet_le_two` — every vertex has at most two
+  neighbors inside the subgraph spanned by a path.
+* `neighborSet_deleteEdges_path` — the neighbor set after deleting a path's
+  edges is the original neighbor set minus the path-subgraph neighbors.
+* `ncard_neighborSet_deleteEdges_path_ge` — **degree drops by at most `2`**:
+  `deg_G(w) ≤ deg_{G - E(P)}(w) + 2` for every vertex `w`.
+* `ncard_neighborSet_deleteEdges_ge_two_mul_succ` — **degree survival** under the
+  `4k+4` / `⌈(n+1)/2⌉` hypotheses of the research conjecture: deleting any
+  path's edges leaves minimum degree `≥ 2k+1`.
+* `deleteEdges_path_min_degree_ge` — the *necessary* degree condition `δ ≥ k`
+  for `k`-connectivity survives the deletion, with surplus `k+1`.
 
 -- !-- Lab Notes -- !--
-Hypothesis (Hypothesizer): the endpoints `1/|det|` and `|det|` are not arbitrary —
-they are forced by two independent facts: integrality (`|det| ≥ 1`) and the
-reciprocal `M ↔ M⁻¹` symmetry.  Bold form: the *only* invariant of `M` visible to
-the ratio spectrum's support is `|det|` together with the primitive class.
-
-Experiment (Experimenter): `|det| ≥ 1` is `Int.one_le_abs` on a nonzero integer.
-Scaling invariance `mobius (k•M) = mobius M` is a field computation cancelling the
-common factor `k`.  Composition `mobius M ∘ mobius N = mobius (M*N)` is a longer
-`field_simp` identity; determinant multiplicativity `det (M*N) = det M · det N` is
-a bare `ring` identity on the explicit `2×2` entries.
-
-Analysis (Analyst): the interval facts (`one_mem`, `endpoints_mul`,
-`lower_le_upper`) are corollaries of `|det| ≥ 1` once `D := |det| ≥ 1` is in
-hand.  The substantive structural inputs are the two action identities; they show
-the spectrum problem is a problem about the monoid of integer matrices acting by
-Möbius maps, with `|det| : ℤˣ-blind` only through its absolute value.
-
-Critique (Critic): the composition identity needs *both* the inner and the
-composed denominators to be nonzero; dropping either makes `mobius` ill-defined.
-Scaling invariance needs only `k ≠ 0` — it holds for every real `x`, since the
-common factor `k` cancels in numerator and denominator.  None of the statements
-is vacuous: each is exercised by `mobius` on genuine inputs.
-
-Synthesis (PI): together with the closure theorem of `MobiusQuadratic`, these
-identities reduce the density program to (a) controlling `k` along periodic
-continued fractions and (b) the Smith-normal-form reduction to `diag(1, |det|)`,
-both isolated as future directions.
+* Hypothesis (Hypothesizer): the only reason a Hamiltonian path can be deleted
+  while keeping high connectivity is that a path is "thin" — it costs each
+  vertex at most two incident edges.  We conjectured `deg` drops by `≤ 2`
+  uniformly, with equality exactly at internal vertices.
+* Experiment (Experimenter): formalized the path subgraph `p.toSubgraph` and
+  used the Mathlib neighbor-set computations
+  (`IsPath.neighborSet_toSubgraph_internal/startpoint/endpoint`) to bound the
+  spanned degree by `2`, then transported the bound through `deleteEdges` via
+  `adj_toSubgraph_iff_mem_edges`.
+* Analysis (Analyst): the `≤ 2` bound is tight (internal vertices reach `2`),
+  so this is the exact, not merely asymptotic, degradation. It is the precise
+  quantity that any connectivity-preserving deletion argument must control.
+* Critique (Critic): the result needs `p.IsPath`, not merely a walk — a closed
+  walk could revisit a vertex and remove more than two incident edges.  Guarded
+  accordingly.  No finiteness of `V` is required for the subgraph bound; only
+  `Set.Finite` of the neighbor set (automatic for `Fintype V`) is needed for the
+  `ncard` arithmetic in the deletion theorem.
+-- !-- end Lab Notes -- !--
 -/
 
-namespace RatioSpectrum
+open SimpleGraph
 
-open scoped Classical
+namespace ConnPreservingHamPath
+
+variable {V : Type*} {G : SimpleGraph V} {u v : V}
 
 /-
-An integer matrix of nonzero determinant has absolute determinant `≥ 1`.
+Every vertex is incident to at most two edges of a path: the path subgraph
+has maximum degree `≤ 2`.
 -/
-theorem one_le_absDet (p q r s : ℤ) (hdet : p * s - q * r ≠ 0) :
-    (1 : ℤ) ≤ |p * s - q * r| := by
-  exact abs_pos.mpr hdet
+lemma path_subgraph_ncard_neighborSet_le_two
+    (p : G.Walk u v) (hp : p.IsPath) (w : V) :
+    (p.toSubgraph.neighborSet w).ncard ≤ 2 := by
+  by_cases hw : w ∈ p.support;
+  · -- Write `w = p.getVert i` with `i ≤ p.length` (use `SimpleGraph.Walk.mem_support_iff_exists_getVert` or `getVert` enumeration of support).
+    obtain ⟨i, hi⟩ : ∃ i : ℕ, i ≤ p.length ∧ w = p.getVert i := by
+      rw [ SimpleGraph.Walk.mem_support_iff_exists_getVert ] at hw ; tauto;
+    by_cases hi0 : i = 0 <;> by_cases hilength : i = p.length;
+    · cases p <;> simp_all +decide;
+    · by_cases hnp : p.Nil <;> simp_all +decide [ SimpleGraph.Walk.IsPath.neighborSet_toSubgraph_startpoint ];
+      cases p <;> aesop;
+    · by_cases hnp : p.Nil <;> simp_all +decide [ SimpleGraph.Walk.IsPath.neighborSet_toSubgraph_endpoint ];
+      cases p <;> aesop;
+    · rw [ hi.2, SimpleGraph.Walk.IsPath.ncard_neighborSet_toSubgraph_internal_eq_two hp ( by omega ) ( by omega ) ];
+  · rw [ show p.toSubgraph.neighborSet w = ∅ from _ ] ; norm_num;
+    simp +decide [ Set.eq_empty_iff_forall_notMem ];
+    intro x hx; have := hx.fst_mem; aesop;
 
 /-
-The real absolute determinant is `≥ 1`.
+Deleting the edges of `p` removes exactly the path-subgraph neighbors.
 -/
-theorem one_le_absDet_real (p q r s : ℤ) (hdet : p * s - q * r ≠ 0) :
-    (1 : ℝ) ≤ ((|p * s - q * r| : ℤ) : ℝ) := by
-  exact_mod_cast one_le_absDet p q r s hdet
+lemma neighborSet_deleteEdges_path (p : G.Walk u v) (w : V) :
+    (G.deleteEdges {e | e ∈ p.edges}).neighborSet w
+      = G.neighborSet w \ p.toSubgraph.neighborSet w := by
+  ext x; simp +decide [ SimpleGraph.Walk.adj_toSubgraph_iff_mem_edges ] ;
 
 /-
-`1` lies in the target interval: `1/|det| ≤ 1 ≤ |det|`.
+**Degree degradation engine.**  Deleting the edges of a path from `G`
+reduces the degree of every vertex by at most `2`.
 -/
-theorem one_mem_spectrum_interval (p q r s : ℤ) (hdet : p * s - q * r ≠ 0) :
-    1 / ((|p * s - q * r| : ℤ) : ℝ) ≤ 1 ∧ (1 : ℝ) ≤ ((|p * s - q * r| : ℤ) : ℝ) := by
-  exact ⟨ div_le_self zero_le_one <| mod_cast abs_pos.mpr hdet, mod_cast abs_pos.mpr hdet ⟩
+theorem ncard_neighborSet_deleteEdges_path_ge
+    [Fintype V] (p : G.Walk u v) (hp : p.IsPath) (w : V) :
+    (G.neighborSet w).ncard
+      ≤ ((G.deleteEdges {e | e ∈ p.edges}).neighborSet w).ncard + 2 := by
+  -- Rewrite the deleted neighbor set using `neighborSet_deleteEdges_path`: it equals `G.neighborSet w \ p.toSubgraph.neighborSet w`.
+  have h_delete : (G.neighborSet w).ncard ≤ ((G.neighborSet w) \ (p.toSubgraph.neighborSet w)).ncard + (p.toSubgraph.neighborSet w).ncard := by
+    rw [ ← Set.ncard_union_eq ];
+    · exact Set.ncard_le_ncard fun x hx => by by_cases hx' : x ∈ p.toSubgraph.neighborSet w <;> aesop;
+    · exact disjoint_sdiff_self_left;
+  exact h_delete.trans ( add_le_add ( by rw [ neighborSet_deleteEdges_path ] ) ( path_subgraph_ncard_neighborSet_le_two p hp w ) )
 
-/-
-The target interval is nonempty: lower endpoint `≤` upper endpoint.
+/-!
+## Degree survival under the `4k+4` / `⌈(n+1)/2⌉` hypotheses
+
+Here `⌈(n+1)/2⌉` is written in `ℕ` as `(n+2)/2`, which equals `⌈(n+1)/2⌉` for all
+`n` (check both parities).
+
+-- !-- Lab Notes (continued) -- !--
+* Hypothesis (Hypothesizer): the `6k+6 → 4k+4` improvement should not break the
+  degree bookkeeping; the degree threshold alone should leave large slack after
+  deletion.  We conjectured the deleted graph keeps minimum degree `≥ 2k+1`.
+* Experiment (Experimenter): combined the at-most-`2` degree drop with
+  `(n+2)/2 ≥ 2k+3` (from `n ≥ 4k+4`), closed by `omega` (which reasons about `ℕ`
+  division by the literal `2`).
+* Analysis (Analyst): the surviving degree `2k+1` is far above the *necessary*
+  threshold `k`; the surplus `k+1` shows the degree count is NOT the obstruction
+  to the `4k+4` conjecture.  The genuine difficulty is purely the *connectivity*
+  (cut structure) of the deleted graph — the converse Whitney direction `δ ⇒ κ`,
+  which Mathlib lacks.  This isolates *where* the `4k+4` problem is hard.
+* Critique (Critic): these are necessary, not sufficient, conditions; they do
+  not prove the conjecture.  The hypothesis `2 ≤ k` is unnecessary for degree
+  survival and is therefore dropped here (it belongs only to the conjecture
+  statement `Conjecture_4k4`).
+-- !-- end Lab Notes -- !--
 -/
-theorem spectrum_lower_le_upper (p q r s : ℤ) (hdet : p * s - q * r ≠ 0) :
-    1 / ((|p * s - q * r| : ℤ) : ℝ) ≤ ((|p * s - q * r| : ℤ) : ℝ) := by
-  rw [ div_le_iff₀ ] <;> norm_cast;
-  · nlinarith [ abs_pos.mpr hdet ];
-  · positivity
 
-/-
-**Reciprocal endpoints.**  The product of the two endpoints of the target
-interval is `1`, reflecting the `M ↔ M⁻¹` symmetry of the ratio spectrum.
--/
-theorem spectrum_endpoints_mul (p q r s : ℤ) (hdet : p * s - q * r ≠ 0) :
-    (1 / ((|p * s - q * r| : ℤ) : ℝ)) * ((|p * s - q * r| : ℤ) : ℝ) = 1 := by
-  rw [ div_mul_cancel₀ _ ( by norm_cast; aesop ) ]
+/-- **Degree survival.**  Under the conjecture's order bound `n ≥ 4k+4` and degree
+threshold `δ(G) ≥ ⌈(n+1)/2⌉ = (n+2)/2`, deleting the edges of any path leaves
+every vertex with degree at least `2k+1`. -/
+theorem ncard_neighborSet_deleteEdges_ge_two_mul_succ
+    [Fintype V] {k : ℕ}
+    (hn : 4 * k + 4 ≤ Fintype.card V)
+    (hdeg : ∀ x, (Fintype.card V + 2) / 2 ≤ (G.neighborSet x).ncard)
+    (p : G.Walk u v) (hp : p.IsPath) (w : V) :
+    2 * k + 1 ≤ ((G.deleteEdges {e | e ∈ p.edges}).neighborSet w).ncard := by
+  have hengine := ncard_neighborSet_deleteEdges_path_ge p hp w
+  have hd := hdeg w
+  omega
 
-/-
-**Primitivity is the right normalization.**  Scaling every entry of the matrix
-by a nonzero integer `k` does not change the Möbius action; hence the ratio
-spectrum depends only on the primitive class of `M`.
--/
-theorem mobius_smul_invariant (k p q r s : ℤ) (hk : k ≠ 0) (x : ℝ) :
-    mobius (k * p) (k * q) (k * r) (k * s) x = mobius p q r s x := by
-  unfold mobius;
-  convert mul_div_mul_left _ _ ( show ( k : ℝ ) ≠ 0 by simpa ) using 1 ; push_cast ; ring
+/-- The *necessary* degree condition `δ ≥ k` for `k`-connectivity survives the
+deletion, with surplus `k + 1`. -/
+theorem deleteEdges_path_min_degree_ge
+    [Fintype V] {k : ℕ}
+    (hn : 4 * k + 4 ≤ Fintype.card V)
+    (hdeg : ∀ x, (Fintype.card V + 2) / 2 ≤ (G.neighborSet x).ncard)
+    (p : G.Walk u v) (hp : p.IsPath) (w : V) :
+    k + 1 ≤ ((G.deleteEdges {e | e ∈ p.edges}).neighborSet w).ncard := by
+  have := ncard_neighborSet_deleteEdges_ge_two_mul_succ hn hdeg p hp w
+  omega
 
-/-
-**Determinant multiplicativity** on the explicit `2×2` integer entries: the
-determinant of the matrix product is the product of determinants.
--/
-theorem det_mul (p q r s p' q' r' s' : ℤ) :
-    (p * p' + q * r') * (r * q' + s * s') - (p * q' + q * s') * (r * p' + s * r')
-      = (p * s - q * r) * (p' * s' - q' * r') := by
-  grind +splitImp
-
-/-
-**Composition of Möbius maps is the Möbius map of the matrix product.**  The
-integer matrix monoid acts on `ℝ` by (partial) Möbius transformations.
--/
-theorem mobius_comp (p q r s p' q' r' s' : ℤ) (x : ℝ)
-    (hden1 : (r' : ℝ) * x + (s' : ℝ) ≠ 0)
-    (hden2 : ((r * p' + s * r' : ℤ) : ℝ) * x + ((r * q' + s * s' : ℤ) : ℝ) ≠ 0) :
-    mobius p q r s (mobius p' q' r' s' x)
-      = mobius (p * p' + q * r') (p * q' + q * s') (r * p' + s * r') (r * q' + s * s') x := by
-  unfold mobius;
-  grind +revert
-
-end RatioSpectrum
+end ConnPreservingHamPath
