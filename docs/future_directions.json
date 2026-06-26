@@ -11206,7 +11206,7 @@
       "depth_estimate": 3,
       "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning",
         "Algebra"
@@ -11245,7 +11245,7 @@
       "depth_estimate": 3,
       "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning",
         "Algebra"
@@ -14248,7 +14248,7 @@
       "depth_estimate": 3,
       "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "EML",
         "MachineLearning"
@@ -15144,7 +15144,7 @@
       "depth_estimate": 3,
       "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.4,
+      "domain_quality_penalty": -0.5,
       "domains": [
         "MachineLearning",
         "Physics"
@@ -16899,7 +16899,7 @@
       "depth_estimate": 3,
       "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.45000000000000007,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "MachineLearning",
         "Computation"
@@ -16938,7 +16938,7 @@
       "depth_estimate": 3,
       "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "MachineLearning",
         "Logic"
@@ -34794,7 +34794,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Mathlib.Algebra.MonoidAlgebra.Basic",
         "Mathlib.GroupTheory.GroupAction.ConjAct",
@@ -34804,7 +34804,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "72d240c8",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34821,11 +34821,11 @@
         "Geometry"
       ],
       "id": "fd_2303",
-      "last_attempt_time": "2026-06-26T11:14:08.014071+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib\n\nuniverse u v\n\n/-- Zeroth Hochschild homology as the cocenter: A modulo the R-span of additive commutators. -/\ndef HH0 (R A : Type*) [CommRing R] [Ring A] [Algebra R A] : Type _ :=\n  (Submodule.span R (Set.range (fun p : A × A => p.1 * p.2 - p.2 * p.1))).Quotient\n\n/-- The setoid identifying conjugate elements of a group. -/\ndef conjugacySetoid (G : Type*) [Group G] : Setoid G where\n  r x y := ∃ h : G, h * x * h⁻¹ = y\n  iseqv := by\n    constructor\n    · intro x\n      exact ⟨1, by simp⟩\n    · intro x y hxy\n      rcases hxy with ⟨h, hxy⟩\n      subst hxy\n      exact ⟨h⁻¹, by group⟩\n    · intro x y z hxy hyz\n      rcases hxy with ⟨h, hxy⟩\n      rcases hyz with ⟨k, hyz⟩\n      subst hxy\n      subst hyz\n      exact ⟨k * h, by group⟩\n\nabbrev ConjClass (G : Type*) [Group G] : Type _ := Quotient (conjugacySetoid G)\n\n/-- Conjecture: the cocenter of a finite group algebra is the free module on conjugacy classes. -/\ntheorem HH0_groupAlgebra_linearEquiv_conjClasses\n    (R G : Type*) [C",
       "lineage_refs": [],
-      "outcome_quality": 0.75084,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
@@ -34835,7 +34835,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.21313v1",
       "source_path": "http://arxiv.org/abs/2606.21313v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T02:05:39.955397+00:00",
       "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
@@ -35539,7 +35539,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Paper: definition of S_K = Herm_2(O_K) with quadratic form 2 det",
         "Paper: use of S_K(2N) as the Neron-Severi lattice of Picard-rank-four K3 surfaces",
@@ -35549,7 +35549,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cb117fe9",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35565,7 +35565,7 @@
         "Pythagorean"
       ],
       "id": "fd_2319",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T11:40:09.802732+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "def fundamentalDiscriminant (d : ℤ) : ℤ :=\n  if d % 4 = 1 then d else 4 * d\n\n/-- Gram matrix of `Herm_2(O_K)` in the basis consisting of the two diagonal\nHermitian matrix units and the off-diagonal basis `1, ω`, for `K = Q(√d)`.\nHere the bilinear form is the one associated to `q(A) = 2 * det A`. -/\nnoncomputable def hermitianBianchiGram (d : ℤ) : Matrix (Fin 4) (Fin 4) ℤ :=\n  if d % 4 = 1 then\n    !![0, 1, 0, 0;\n       1, 0, 0, 0;\n       0, 0, -2, -1;\n       0, 0, -1, -((1 - d) / 2)]\n  else\n    !![0, 1, 0, 0;\n       1, 0, 0, 0;\n       0, 0, -2, 0;\n       0, 0, 0, 2 * d]\n\n/-- The Hermitian Bianchi lattice has determinant equal to the fundamental\ndiscriminant of the imaginary quadratic field. -/\ntheorem det_hermitianBianchiGram_eq_fundamentalDiscriminant\n    (d : ℤ) (hneg : d < 0) :\n    Matrix.det (hermitianBianchiGram d) = fundamentalDiscriminant d := by\n  sorry",
       "lineage_refs": [],
@@ -35579,7 +35579,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22921v1",
       "source_path": "http://arxiv.org/abs/2606.22921v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T09:16:17.802367+00:00",
       "title": "Discriminant of the Hermitian Bianchi lattice S_K"
@@ -47535,6 +47535,55 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.NT: Beilinson's conjectures",
+        "math.KT: K-theory of curves",
+        "math.AG: Fermat curves"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Conjecture that the regulator integral R_N of the element Ξ_N ∈ K₄^{(3)}(X_N) satisfies R_N = (3/2) ζ(3) N² − (π²/6) N log N + O(N) as N → ∞. This refines the asymptotic result proved in the paper by specifying the coefficient of the N log N term.",
+      "domain_bridges": [
+        "K-theory",
+        "Motivic cohomology",
+        "Polylogarithms",
+        "L-functions",
+        "Asymptotic analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2580",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem regulator_next_to_leading_asymptotic_conjecture (N : ℕ) (hN : N ≥ 3) :\n  ∃ (C : ℝ), | regulator_N - ((3/2) * Real.zeta 3 * (N : ℝ)^2 - (Real.pi^2 / 6) * (N : ℝ) * Real.log (N : ℝ)) | ≤ C * (N : ℝ) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the explicit hypergeometric expression for the regulator derived in the paper, apply known asymptotics of the hypergeometric function {}_3F₂ and of Zagier's trilogarithm sums, and extract the subleading term via Mellin–Barnes integral techniques or saddle‑point analysis.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24532v1",
+      "source_path": "http://arxiv.org/abs/2606.24532v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T11:39:29.687989+00:00",
+      "title": "Next-to-leading asymptotic of regulator integrals for K₄ elements on Fermat curves"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem 1",
         "Corollary 1",
         "Brown-Erdős-Sós conjecture"
@@ -47555,7 +47604,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2580",
+      "id": "fd_2581",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47603,7 +47652,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2581",
+      "id": "fd_2582",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47648,7 +47697,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2582",
+      "id": "fd_2583",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47692,7 +47741,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2583",
+      "id": "fd_2584",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47739,7 +47788,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2584",
+      "id": "fd_2585",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47784,7 +47833,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2585",
+      "id": "fd_2586",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -47829,7 +47878,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2586",
+      "id": "fd_2587",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -47870,7 +47919,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2587",
+      "id": "fd_2588",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -47915,7 +47964,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2588",
+      "id": "fd_2589",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -47954,7 +48003,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2589",
+      "id": "fd_2590",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -47996,7 +48045,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2590",
+      "id": "fd_2591",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -48040,7 +48089,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2591",
+      "id": "fd_2592",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -48086,7 +48135,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2592",
+      "id": "fd_2593",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -48131,7 +48180,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2593",
+      "id": "fd_2594",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -48177,7 +48226,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2594",
+      "id": "fd_2595",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -48223,7 +48272,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2595",
+      "id": "fd_2596",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -48273,7 +48322,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2596",
+      "id": "fd_2597",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
@@ -48319,7 +48368,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2597",
+      "id": "fd_2598",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of the use of filtered complete intersection properties in the orderization process",
@@ -48344,39 +48393,46 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "math.AC",
+        "math.AG",
+        "math.NT"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1 — Palindrome is the *only* abstract obstruction below the ceiling\n\nFor every rank `r ≤ 2m` and every palindromic admissible Schläfli symbol of length\n`r-1`, the alternating group `A_{4m+3}` admits a self-dual string C-group with that\nsymbol (vertex-gluing realizability).\n\n- **The key insight is...** that `schlafli_palindrome` shows palindromicity is\n  *necessary*; the vertex-gluing construction suggests it is also *sufficient* up to\n  the ceiling, so the only abstract obstruction is the palindrome condition together\n  with the rank bound — not any finer diagram constraint.\n- **Why now?** We have a clean, machine-checked separation between the necessary\n  condition (palindrome) and the realizability question, so the sufficiency half can\n  be attacked construction-by-construction with the framework already in place.\n\n## Conjecture 2 — The ceiling drop is a parity phenomenon at the central edge\n\nThe loss of exactly one rank (`2m` instead of `2m+1`) for self-dual representations\nof `A_{4m+3}` is forced by the central edge: at rank `2m+1` the Schläfli palindrome\nhas an even number of edges, pairing each with a distinct partner, and the induced\npermutation-sign constraint inside `A_n` becomes unsatisfiable.\n\n- **The key insight is...** that `selfDual_central_fixed` shows odd rank pins a\n  *fixed* central generator while even rank pairs all edges; the parity of the\n  number of edges (`r-1`) flips precisely between rank `2m` and `2m+1`.\n- **Why now?** The central-fixed-point lemma isolates the exact index where the\n  parity flips, turning a vague \"parity obstruction\" into a concrete statement about\n  one generator.\n\n## Conjecture 3 — Symmetric vs. alternating dichotomy is sharp\n\nFor every `n`, `S_n` admits self-dual string C-groups of the maximal possible rank\n`n-1` (the simplex), whereas `A_n` never reaches its own overall ceiling in the\nself-dual case for `n ≡ 3 (mod 4)`.\n\n- **The key insight is...** that `symmetricGroup_selfDual_rank` proves *unbounded*\n  self-dual rank for symmetric groups, so the ceiling is genuinely an artifact of\n  the index-2 alternating subgroup, not of string C-groups per se.\n- **Why now?** With the symmetric-group side fully formalized, the contrast is\n  precise and the remaining work is entirely about the parity cost of restricting to\n  `A_n`.\n\n## Conjecture 4 — Self-dual ceiling as a function of `n mod 4`\n\nThe gap between the self-dual maximum rank and the overall maximum rank\n`⌊(n-1)/2⌋` for `A_n` depends only on `n mod 4`: it is `1` for `n ≡ 3 (mod 4)` and\n`0` for the other residues with `n` large.\n\n- **The key insight is...** that `selfDual_rank_one_below_overall_max` pins the gap\n  to exactly `1` in the residue class `n ≡ 3 (mod 4)`; the palindrome-parity\n  analysis predicts the gap closes in the other classes.\n- **Why now?** The arithmetic backbone is formalized for the `4m+3` class, so the\n  residue-by-residue refinement is a natural and testable next step.\n\n## Conjecture 5 — Period-matrix reversal characterizes inner self-dualities\n\nA self-duality of a string C-group is realized by an *inner* automorphism (as for\nthe simplex, via the longest element) iff the reversal of generator indices is\nitself induced by conjugation by a single involution of `G`.\n\n- **The key insight is...** that `simplex_selfDual` realizes self-duality by\n  conjugation by `Fin.revPerm`, an involution; `period_rev_of_selfDual` shows every\n  self-duality reverses the period matrix, so the inner/outer distinction reduces to\n  whether that reversal is conjugation-induced.\n- **Why now?** The conjugation witness for the simplex gives a concrete template,\n  and the abstract `IsSelfDual` predicate lets us state the inner/outer dichotomy\n  precisely for the first time in this framework.\n",
-      "domain_bridges": [],
+      "description": "For any integer m ≥ 3, there exists a field F of characteristic 2 and two anisotropic quadratic forms φ and ψ over F of dimension 2^m, such that φ and ψ are Vishik-equivalent (i.e., for every field extension E/F, the dimension of the maximal totally isotropic subspace of φ_E equals that of ψ_E), yet φ and ψ are not similar.",
+      "domain_bridges": [
+        "Motivic Cohomology",
+        "Chow Motives",
+        "Field Theory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "Pythagorean"
+        "Algebra"
       ],
-      "id": "fd_2598",
+      "id": "fd_2599",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem vishik_non_similarity_char_2 (m : ℕ) (hm : m ≥ 3) : ∃ (F : Field) (char F = 2), ∃ (φ ψ : QuadraticForm F), \n  dim φ = 2^m ∧ dim ψ = 2^m ∧ \n  anisotropic φ ∧ anisotropic ψ ∧ \n  (∀ (E : Field), (E ⊇ F) → total_isotropy_index φ E = total_isotropy_index ψ E) ∧ \n  ¬ similar φ ψ",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The proof would involve constructing a specific field extension (likely a function field of a quadric or a sequence of such extensions) and defining semi-singular forms (composed of a non-singular part and a totally singular part) that satisfy the isotropy index equality by construction via the properties of the Witt group in characteristic 2, while ensuring their similarity classes remain distinct using invariants like the Arf invariant or the dimension of the singular part.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "3847ce48",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3847ce48_retry1",
+      "source_exp_id": "2606.24988v1",
+      "source_path": "http://arxiv.org/abs/2606.24988v1",
       "status": "available",
-      "thread_id": "th_578893d0",
-      "timestamp": "2026-06-26T11:34:03.140019+00:00",
-      "title": "Derived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,"
+      "thread_id": "",
+      "timestamp": "2026-06-26T11:40:03.991489+00:00",
+      "title": "Non-similarity of Vishik-equivalent semi-singular quadratic forms in characteristic 2"
     },
     {
       "ambition_level": "extension",
@@ -48837,44 +48893,6 @@
       "thread_id": "",
       "timestamp": "2026-06-13T15:34:47.039486+00:00",
       "title": "Deepening: The file `Bridges/CombinatorialSpecies.lean` formalizes Joyal's combinatorial sp"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle 3847ce48 (Q=0.751), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the theory of self‑dual string C‑group representations and prove the maximal rank result for alternating groups A_{4m+3}: for every integer m≥3 (n=4m+3≥15), any self‑dual string C‑group representation of A_n has rank at most 2m, and this bound is attained by the vertex‑gluing construction.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "MachineLearning"
-      ],
-      "id": "push_3847ce48_1f84dfa0",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8508399999999999,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "3847ce48",
-      "source_path": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-26T11:34:11.383795+00:00",
-      "title": "Deepening: Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
     },
     {
       "ambition_level": "extension",
@@ -53413,7 +53431,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "c72330ea",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -53439,7 +53457,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432611+00:00",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
@@ -54630,7 +54648,7 @@
       "depth_estimate": 3,
       "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "MachineLearning",
         "Analysis"
@@ -54749,7 +54767,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "MachineLearning",
         "Analysis",
@@ -128510,13 +128528,13 @@
     }
   ],
   "recent_domain_counts": {
-    "Algebra": 304,
+    "Algebra": 303,
     "Applications": 117,
     "Bridges": 58,
     "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
-    "Geometry": 169,
+    "Geometry": 168,
     "Logic": 116,
     "MachineLearning": 37,
     "Novelty": 200,
@@ -128548,7 +128566,7 @@
     "converge": 25,
     "create": 25,
     "cryptographic": 17,
-    "define": 196,
+    "define": 195,
     "degree": 55,
     "determined": 51,
     "directions": 531,

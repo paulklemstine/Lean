@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c9ad0581",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions\n\n## 1. From eigenvectors to arbitrary secret vectors\n\nThe current boundary analysis assumes the secret vector is an exact tropical\neigenvector of the public matrix. Real protocols",
-      "quality_score": 0.829866,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-19T09:36:53",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
       "cycle_id": "be5e0ab8",
       "domain": "Computation",
       "key_insight": "# Future Directions — Anti-Gravity Mathematics\n\nThis cycle formalized dependency DAGs of a formal library, the **gravitational\nweight** `weight b = #{a : a depends on b}`, and the **anti-gravity** pre",
@@ -499,19 +489,19 @@
       "theorem_count": 9,
       "timestamp": "2026-06-26T11:34:11",
       "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
+    },
+    {
+      "cycle_id": "0e9a5064",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Sun's truncated Legendre-symbol determinant\n\nThis cycle formalised the *structural* half of Sun's identity in full generality\n(`det A = det(C+J) · X` for all primes `p ≥ 7`, `p ≡",
+      "quality_score": 0.7836800000000002,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-26T11:39:02",
+      "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "443cc80d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Tensor-Network Holography & Categorical Entanglement\n\nDerived from this cycle's verified results in\n`Geometry/TensorNetwork/{FormanCurvature, LatticeCurvature, QuantumInfoMetric}",
-      "quality_score": 0.7460199999999999,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-20T09:34:34",
-      "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
-    },
     {
       "cycle_id": "7b66a66e",
       "domain": "NumberTheory",
@@ -2501,15 +2491,19 @@
       "theorem_count": 9,
       "timestamp": "2026-06-26T11:34:11",
       "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
+    },
+    {
+      "cycle_id": "0e9a5064",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Sun's truncated Legendre-symbol determinant\n\nThis cycle formalised the *structural* half of Sun's identity in full generality\n(`det A = det(C+J) · X` for all primes `p ≥ 7`, `p ≡",
+      "quality_score": 0.7836800000000002,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-26T11:39:02",
+      "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ef60a392",
-      "domain": "Applications",
-      "name": "in",
-      "quality": 0.77328
-    },
     {
       "cycle_id": "ef60a392",
       "domain": "Applications",
@@ -2803,9 +2797,15 @@
       "domain": "MachineLearning",
       "name": "period_swap",
       "quality": 0.75084
+    },
+    {
+      "cycle_id": "0e9a5064",
+      "domain": "NumberTheory",
+      "name": "det_add_smul_onesM",
+      "quality": 0.7836800000000002
     }
   ],
-  "last_updated": "2026-06-26T11:34:11",
+  "last_updated": "2026-06-26T11:39:02",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "d1e35069",
-        "quality": 0.40854,
-        "theorems": 2,
-        "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-      },
-      {
         "cycle_id": "7b66a66e",
         "quality": 0.4596814054054055,
         "theorems": 6,
@@ -3699,6 +3693,12 @@
         "quality": 0.71376,
         "theorems": 10,
         "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
+      },
+      {
+        "cycle_id": "0e9a5064",
+        "quality": 0.7836800000000002,
+        "theorems": 13,
+        "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
       }
     ],
     "Physics": [

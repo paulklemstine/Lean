@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0e9a5064",
     "filename": "lean_formalizable_sun_truncated_legendre_symbol_de.json",
     "pkg_num": 89,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7836800000000002,
     "title": "Sun's Truncated Legendre-Symbol Determinant: Affine Collapse and a Perfect-Square Coefficient"
   },
   {
@@ -2590,8 +2590,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "lean_formalizable_sun_truncated_legendre_symbol_de",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7836800000000002,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Sun's Truncated Legendre-Symbol Determinant: Affine Collapse and a Perfect-Square Coefficient"
     }

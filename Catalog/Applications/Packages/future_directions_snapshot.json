@@ -959,25 +959,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 3847ce48 (Q=0.751), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the theory of self‑dual string C‑group representations and prove the maximal rank result for alternating groups A_{4m+3}: for every integer m≥3 (n=4m+3≥15), any self‑dual string C‑group representation of A_n has rank at most 2m, and this bound is attained by the vertex‑gluing construction.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_3847ce48_1f84dfa0",
-    "lineage_refs": [],
-    "priority_score": 0.8508399999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3847ce48",
-    "status": "available",
-    "timestamp": "2026-06-26T11:34:11.383795+00:00",
-    "title": "Deepening: Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domain_bridges": [],
     "domains": [
@@ -2399,6 +2380,37 @@
     "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Algebra.MonoidAlgebra.Basic",
+      "Mathlib.GroupTheory.GroupAction.ConjAct",
+      "Mathlib.LinearAlgebra.Finsupp",
+      "Mathlib.LinearAlgebra.Quotient",
+      "Mathlib.RingTheory.TensorProduct"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let R be any commutative ring and G any finite group. Define HH₀(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH₀(R[G]) ≃ R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
+    "domain_bridges": [
+      "Finite group algebras as toy models for Hecke algebras of p-adic groups",
+      "Zeroth Hochschild homology as the cocenter of an algebra",
+      "Conjugacy classes as the finite analogue of orbital data appearing in Hecke algebra cocenters",
+      "A Lean-formalizable stepping stone toward the paper's comparison of Hochschild homology for asymptotic and compactly supported Hecke algebras"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2303",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
+    "research_mode": "team",
+    "source_exp_id": "2606.21313v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:05:39.955397+00:00",
+    "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Nash-Williams triangle decomposition conjecture",
@@ -2817,7 +2829,7 @@
       "mathlib: QuadraticForm",
       "mathlib: NumberTheory.NumberField"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb117fe9",
     "description": "Conjecture: Let d < 0 be squarefree, let K = Q(√d), and let O_K have Z-basis {1, ω}, where ω = √d if d ≠ 1 mod 4 and ω = (1 + √d)/2 if d ≡ 1 mod 4. Form the rank-four lattice S_K = Herm_2(O_K) with quadratic form q(A) = 2 det(A), and use the basis given by the two diagonal Hermitian matrix units together with the off-diagonal elements 1 and ω. Then the determinant of the Gram matrix of the associated integral symmetric bilinear form is exactly the fundamental discriminant D_K: det Gram(S_K) = d if d ≡ 1 mod 4, and det Gram(S_K) = 4d otherwise.",
     "domain_bridges": [
       "Identifies the discriminant of the rank-four K3 Neron-Severi lattice used in the paper with the field discriminant of K",
@@ -2834,7 +2846,7 @@
     "proof_strategy": "Choose the standard Z-basis of Herm_2(O_K): the two diagonal basis vectors and the two off-diagonal basis vectors corresponding to 1 and ω. Write z = x + yω. Since q([[a,z],[conj z,c]]) = 2ac - 2 Norm(z), the Gram matrix splits as a hyperbolic plane with determinant -1 and a rank-two negative norm block. If Tr(ω)=T and Norm(ω)=n, the norm block has matrix [[-2, -T], [-T, -2n]], whose determinant is 4n - T^2 = -D_K. Multiplying by the hyperbolic determinant -1 gives det Gram(S_K)=D_K.",
     "research_mode": "team",
     "source_exp_id": "2606.22921v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T09:16:17.802367+00:00",
     "title": "Discriminant of the Hermitian Bianchi lattice S_K"
   },
@@ -9339,6 +9351,36 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT: Beilinson's conjectures",
+      "math.KT: K-theory of curves",
+      "math.AG: Fermat curves"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the regulator integral R_N of the element Ξ_N ∈ K₄^{(3)}(X_N) satisfies R_N = (3/2) ζ(3) N² − (π²/6) N log N + O(N) as N → ∞. This refines the asymptotic result proved in the paper by specifying the coefficient of the N log N term.",
+    "domain_bridges": [
+      "K-theory",
+      "Motivic cohomology",
+      "Polylogarithms",
+      "L-functions",
+      "Asymptotic analysis"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2580",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the explicit hypergeometric expression for the regulator derived in the paper, apply known asymptotics of the hypergeometric function {}_3F₂ and of Zagier's trilogarithm sums, and extract the subleading term via Mellin–Barnes integral techniques or saddle‑point analysis.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24532v1",
+    "status": "available",
+    "timestamp": "2026-06-26T11:39:29.687989+00:00",
+    "title": "Next-to-leading asymptotic of regulator integrals for K₄ elements on Fermat curves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -9353,7 +9395,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9382,7 +9424,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9408,7 +9450,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9433,7 +9475,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9461,7 +9503,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9487,7 +9529,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9513,7 +9555,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9535,7 +9577,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9561,7 +9603,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9581,7 +9623,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9604,7 +9646,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -9629,7 +9671,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
@@ -9656,7 +9698,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the vertex-gluing construction from the paper to establish recursive relationships between the ranks for different n, combined with exhaustive case analysis for small n values, and use induction to generalize to larger n. Critical lemmas would involve verifying the intersection condition preservation under gluing operations and demonstrating self-duality through explicit automorphism constructions.",
@@ -9682,7 +9724,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
@@ -9709,7 +9751,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof techniques from the Chudnovsky-Scott-Seymour paper, using induction on the number of colors and maximum graph size, combined with careful analysis of how vertex partitions interact with the complete join structure under color constraints.",
@@ -9736,7 +9778,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If a tournament has no transitive triangle, then every directed P3 with endpoints in a convex set must have the arc between endpoints, making both convexities equivalent; (2) If a tournament has a transitive triangle (u,v,w) with u→v→w and u→w, construct a set whose convex hulls differ between the two convexity notions.",
@@ -9767,7 +9809,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Lovász’s minimax theorem for matroid matchings to relate the extremal size to the fractional matching number in the associated matroid. Apply a high‑dimensional Hoffman bound for uniform hypergraphs over the lattice of subspaces to obtain upper bounds that match the two constructions. Then develop a stability argument that shows any family attaining the upper bound must be structurally close to one of the two extremal families, and finally exploit design‑theoretic counting to rule out all other configurations. The proof would combine linear‑algebraic isoperimetric inequalities, spectral techniques on the Grassmann graph, and matroid intersection theory.",
@@ -9794,7 +9836,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive adaptation of existing existence techniques with tailored order-preserving constructions",
@@ -9803,6 +9845,33 @@
     "status": "available",
     "timestamp": "2026-06-26T11:14:03.330176+00:00",
     "title": "Nilpotent Lie algebras obtained by ordered sets and Ricci solitons"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.AC",
+      "math.AG",
+      "math.NT"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any integer m ≥ 3, there exists a field F of characteristic 2 and two anisotropic quadratic forms φ and ψ over F of dimension 2^m, such that φ and ψ are Vishik-equivalent (i.e., for every field extension E/F, the dimension of the maximal totally isotropic subspace of φ_E equals that of ψ_E), yet φ and ψ are not similar.",
+    "domain_bridges": [
+      "Motivic Cohomology",
+      "Chow Motives",
+      "Field Theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2599",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof would involve constructing a specific field extension (likely a function field of a quadric or a sequence of such extensions) and defining semi-singular forms (composed of a non-singular part and a totally singular part) that satisfy the isotropy index equality by construction via the properties of the Witt group in characteristic 2, while ensuring their similarity classes remain distinct using invariants like the Arf invariant or the dimension of the singular part.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24988v1",
+    "status": "available",
+    "timestamp": "2026-06-26T11:40:03.991489+00:00",
+    "title": "Non-similarity of Vishik-equivalent semi-singular quadratic forms in characteristic 2"
   },
   {
     "ambition_level": "extension",
@@ -9903,7 +9972,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c72330ea",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -9916,7 +9985,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -10074,26 +10143,6 @@
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1 — Palindrome is the *only* abstract obstruction below the ceiling\n\nFor every rank `r ≤ 2m` and every palindromic admissible Schläfli symbol of length\n`r-1`, the alternating group `A_{4m+3}` admits a self-dual string C-group with that\nsymbol (vertex-gluing realizability).\n\n- **The key insight is...** that `schlafli_palindrome` shows palindromicity is\n  *necessary*; the vertex-gluing construction suggests it is also *sufficient* up to\n  the ceiling, so the only abstract obstruction is the palindrome condition together\n  with the rank bound — not any finer diagram constraint.\n- **Why now?** We have a clean, machine-checked separation between the necessary\n  condition (palindrome) and the realizability question, so the sufficiency half can\n  be attacked construction-by-construction with the framework already in place.\n\n## Conjecture 2 — The ceiling drop is a parity phenomenon at the central edge\n\nThe loss of exactly one rank (`2m` instead of `2m+1`) for self-dual representations\nof `A_{4m+3}` is forced by the central edge: at rank `2m+1` the Schläfli palindrome\nhas an even number of edges, pairing each with a distinct partner, and the induced\npermutation-sign constraint inside `A_n` becomes unsatisfiable.\n\n- **The key insight is...** that `selfDual_central_fixed` shows odd rank pins a\n  *fixed* central generator while even rank pairs all edges; the parity of the\n  number of edges (`r-1`) flips precisely between rank `2m` and `2m+1`.\n- **Why now?** The central-fixed-point lemma isolates the exact index where the\n  parity flips, turning a vague \"parity obstruction\" into a concrete statement about\n  one generator.\n\n## Conjecture 3 — Symmetric vs. alternating dichotomy is sharp\n\nFor every `n`, `S_n` admits self-dual string C-groups of the maximal possible rank\n`n-1` (the simplex), whereas `A_n` never reaches its own overall ceiling in the\nself-dual case for `n ≡ 3 (mod 4)`.\n\n- **The key insight is...** that `symmetricGroup_selfDual_rank` proves *unbounded*\n  self-dual rank for symmetric groups, so the ceiling is genuinely an artifact of\n  the index-2 alternating subgroup, not of string C-groups per se.\n- **Why now?** With the symmetric-group side fully formalized, the contrast is\n  precise and the remaining work is entirely about the parity cost of restricting to\n  `A_n`.\n\n## Conjecture 4 — Self-dual ceiling as a function of `n mod 4`\n\nThe gap between the self-dual maximum rank and the overall maximum rank\n`⌊(n-1)/2⌋` for `A_n` depends only on `n mod 4`: it is `1` for `n ≡ 3 (mod 4)` and\n`0` for the other residues with `n` large.\n\n- **The key insight is...** that `selfDual_rank_one_below_overall_max` pins the gap\n  to exactly `1` in the residue class `n ≡ 3 (mod 4)`; the palindrome-parity\n  analysis predicts the gap closes in the other classes.\n- **Why now?** The arithmetic backbone is formalized for the `4m+3` class, so the\n  residue-by-residue refinement is a natural and testable next step.\n\n## Conjecture 5 — Period-matrix reversal characterizes inner self-dualities\n\nA self-duality of a string C-group is realized by an *inner* automorphism (as for\nthe simplex, via the longest element) iff the reversal of generator indices is\nitself induced by conjugation by a single involution of `G`.\n\n- **The key insight is...** that `simplex_selfDual` realizes self-duality by\n  conjugation by `Fin.revPerm`, an involution; `period_rev_of_selfDual` shows every\n  self-duality reverses the period matrix, so the inner/outer distinction reduces to\n  whether that reversal is conjugation-induced.\n- **Why now?** The conjugation witness for the simplex gives a concrete template,\n  and the abstract `IsSelfDual` predicate lets us state the inner/outer dichotomy\n  precisely for the first time in this framework.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2598",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3847ce48",
-    "status": "available",
-    "timestamp": "2026-06-26T11:34:03.140019+00:00",
-    "title": "Derived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,"
   },
   {
     "ambition_level": "extension",

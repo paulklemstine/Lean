@@ -720,20 +720,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 3847ce48 (Q=0.751), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the theory of self\u2011dual string C\u2011group representations and prove the maximal rank result for alternating groups A_{4m+3}: for every integer m\u22653 (n=4m+3\u226515), any self\u2011dual string C\u2011group representation of A_n has rank at most 2m, and this bound is attained by the vertex\u2011gluing construction.",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_3847ce48_1f84dfa0",
-    "priority_score": 0.8508399999999999,
-    "research_mode": "team",
-    "source_exp_id": "3847ce48",
-    "status": "available",
-    "timestamp": "2026-06-26T11:34:11.383795+00:00",
-    "title": "Deepening: Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -1671,6 +1657,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let R be any commutative ring and G any finite group. Define HH\u2080(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH\u2080(R[G]) \u2243 R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2303",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.21313v1",
+    "status": "available",
+    "timestamp": "2026-06-23T02:05:39.955397+00:00",
+    "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every real \u03b5 > 0, there exists N such that every finite simple graph G on n \u2265 N vertices with minimum degree at least (5/8 + \u03b5)n has an edge-decomposition into 5-cycles whenever G is C5-divisible, i.e. every vertex has even degree and 5 divides the number of edges. This is the remaining small odd-cycle case suggested by the generalized Nash-Williams threshold \u03b4_{C_\u2113} = \u2113/(2\u2113\u22122), after the triangle case and the long odd-cycle cases addressed in the paper.",
     "domains": [
       "Bridges"
@@ -1888,7 +1889,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraicity of Contragredient Betti-Whittaker Period Ratio for Reductive Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb117fe9",
     "description": "Conjecture: Let d < 0 be squarefree, let K = Q(\u221ad), and let O_K have Z-basis {1, \u03c9}, where \u03c9 = \u221ad if d \u2260 1 mod 4 and \u03c9 = (1 + \u221ad)/2 if d \u2261 1 mod 4. Form the rank-four lattice S_K = Herm_2(O_K) with quadratic form q(A) = 2 det(A), and use the basis given by the two diagonal Hermitian matrix units together with the off-diagonal elements 1 and \u03c9. Then the determinant of the Gram matrix of the associated integral symmetric bilinear form is exactly the fundamental discriminant D_K: det Gram(S_K) = d if d \u2261 1 mod 4, and det Gram(S_K) = 4d otherwise.",
     "domains": [
       "Algebra",
@@ -1898,7 +1899,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22921v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T09:16:17.802367+00:00",
     "title": "Discriminant of the Hermitian Bianchi lattice S_K"
   },
@@ -5360,11 +5361,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that the regulator integral R_N of the element \u039e_N \u2208 K\u2084^{(3)}(X_N) satisfies R_N = (3/2) \u03b6(3) N\u00b2 \u2212 (\u03c0\u00b2/6) N log N + O(N) as N \u2192 \u221e. This refines the asymptotic result proved in the paper by specifying the coefficient of the N log N term.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2580",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24532v1",
+    "status": "available",
+    "timestamp": "2026-06-26T11:39:29.687989+00:00",
+    "title": "Next-to-leading asymptotic of regulator integrals for K\u2084 elements on Fermat curves"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5378,7 +5394,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5393,7 +5409,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5408,7 +5424,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5423,7 +5439,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5438,7 +5454,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5452,7 +5468,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5466,7 +5482,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5480,7 +5496,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5495,7 +5511,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5510,7 +5526,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5525,7 +5541,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5540,7 +5556,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5555,7 +5571,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5569,7 +5585,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5584,7 +5600,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5599,7 +5615,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5613,13 +5629,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
     "status": "available",
     "timestamp": "2026-06-26T11:14:03.330176+00:00",
     "title": "Nilpotent Lie algebras obtained by ordered sets and Ricci solitons"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any integer m \u2265 3, there exists a field F of characteristic 2 and two anisotropic quadratic forms \u03c6 and \u03c8 over F of dimension 2^m, such that \u03c6 and \u03c8 are Vishik-equivalent (i.e., for every field extension E/F, the dimension of the maximal totally isotropic subspace of \u03c6_E equals that of \u03c8_E), yet \u03c6 and \u03c8 are not similar.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2599",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24988v1",
+    "status": "available",
+    "timestamp": "2026-06-26T11:40:03.991489+00:00",
+    "title": "Non-similarity of Vishik-equivalent semi-singular quadratic forms in characteristic 2"
   },
   {
     "consumed_by_exp_id": "",
@@ -5693,7 +5723,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "c72330ea",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -5703,7 +5733,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -5821,21 +5851,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1 \u2014 Palindrome is the *only* abstract obstruction below the ceiling\n\nFor every rank `r \u2264 2m` and every palindromic admissible Schl\u00e4fli symbol of length\n`r-1`, the alternating group `A_{4m+3}` admits a self-dual string C-group with that\nsymbol (vertex-gluing realizability).\n\n- **The key insight is...** that `schlafli_palindrome` shows palindromicity is\n  *necessary*; the vertex-gluing construction suggests it is also *sufficient* up to\n  the ceiling, so the only abstract obstruction is the palindrome condition together\n  with the rank bound \u2014 not any finer diagram constraint.\n- **Why now?** We have a clean, machine-checked separation between the necessary\n  condition (palindrome) and the realizability question, so the sufficiency half can\n  be attacked construction-by-construction with the framework already in place.\n\n## Conjecture 2 \u2014 The ceiling drop is a parity phenomenon at the central edge\n\nThe loss of exactly one rank (`2m` instead of `2m+1`) for self-dual representations\nof `A_{4m+3}` is forced by the central edge: at rank `2m+1` the Schl\u00e4fli palindrome\nhas an even number of edges, pairing each with a distinct partner, and the induced\npermutation-sign constraint inside `A_n` becomes unsatisfiable.\n\n- **The key insight is...** that `selfDual_central_fixed` shows odd rank pins a\n  *fixed* central generator while even rank pairs all edges; the parity of the\n  number of edges (`r-1`) flips precisely between rank `2m` and `2m+1`.\n- **Why now?** The central-fixed-point lemma isolates the exact index where the\n  parity flips, turning a vague \"parity obstruction\" into a concrete statement about\n  one generator.\n\n## Conjecture 3 \u2014 Symmetric vs. alternating dichotomy is sharp\n\nFor every `n`, `S_n` admits self-dual string C-groups of the maximal possible rank\n`n-1` (the simplex), whereas `A_n` never reaches its own overall ceiling in the\nself-dual case for `n \u2261 3 (mod 4)`.\n\n- **The key insight is...** that `symmetricGroup_selfDual_rank` proves *unbounded*\n  self-dual rank for symmetric groups, so the ceiling is genuinely an artifact of\n  the index-2 alternating subgroup, not of string C-groups per se.\n- **Why now?** With the symmetric-group side fully formalized, the contrast is\n  precise and the remaining work is entirely about the parity cost of restricting to\n  `A_n`.\n\n## Conjecture 4 \u2014 Self-dual ceiling as a function of `n mod 4`\n\nThe gap between the self-dual maximum rank and the overall maximum rank\n`\u230a(n-1)/2\u230b` for `A_n` depends only on `n mod 4`: it is `1` for `n \u2261 3 (mod 4)` and\n`0` for the other residues with `n` large.\n\n- **The key insight is...** that `selfDual_rank_one_below_overall_max` pins the gap\n  to exactly `1` in the residue class `n \u2261 3 (mod 4)`; the palindrome-parity\n  analysis predicts the gap closes in the other classes.\n- **Why now?** The arithmetic backbone is formalized for the `4m+3` class, so the\n  residue-by-residue refinement is a natural and testable next step.\n\n## Conjecture 5 \u2014 Period-matrix reversal characterizes inner self-dualities\n\nA self-duality of a string C-group is realized by an *inner* automorphism (as for\nthe simplex, via the longest element) iff the reversal of generator indices is\nitself induced by conjugation by a single involution of `G`.\n\n- **The key insight is...** that `simplex_selfDual` realizes self-duality by\n  conjugation by `Fin.revPerm`, an involution; `period_rev_of_selfDual` shows every\n  self-duality reverses the period matrix, so the inner/outer distinction reduces to\n  whether that reversal is conjugation-induced.\n- **Why now?** The conjugation witness for the simplex gives a concrete template,\n  and the abstract `IsSelfDual` predicate lets us state the inner/outer dichotomy\n  precisely for the first time in this framework.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2598",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3847ce48",
-    "status": "available",
-    "timestamp": "2026-06-26T11:34:03.140019+00:00",
-    "title": "Derived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,"
   },
   {
     "consumed_by_exp_id": "",
