@@ -538,5 +538,6 @@
   "0e9a5064": "lean_formalizable_sun_truncated_legendre_symbol_de.json",
   "c72330ea": "euler_mascheroni_constant_irrationality_approaches.json",
   "f2499c75": "idempotent_probability_large_deviations.json",
-  "72d240c8": "hh0_of_a_finite_group_algebra_is_the_free_module_o.json"
+  "72d240c8": "hh0_of_a_finite_group_algebra_is_the_free_module_o.json",
+  "d4e980c4": "rsa_factorization_with_partial_pq_knowledge_and_sm.json"
 }
