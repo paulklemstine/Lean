@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e8c93c85",
     "filename": "interval_property_for_connected_slice_projections_.json",
     "pkg_num": 66,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6236999999999999,
     "title": "Interval Property for Connected Slice-Projections of Polymatroids: A Finite-Discrepancy Tropical Fourier Criterion"
   },
   {
@@ -1923,8 +1923,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "interval_property_for_connected_slice_projections_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6236999999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Interval Property for Connected Slice-Projections of Polymatroids: A Finite-Discrepancy Tropical Fourier Criterion"
     }

@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0548f2b9",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -1003,7 +1003,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "b08abcae",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1013,7 +1013,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1790,7 +1790,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Contragredient Period Sign Formula for Betti-Whittaker Periods of GL(n)"
   },
   {
-    "consumed_by_exp_id": "ce3e5645",
+    "consumed_by_exp_id": "",
     "description": "An infinite word $x_1x_2\\dots \\in \\mathcal{A}^\\mathbb{N}$ can be realized as the $(-\\beta)$-expansion of some $x \\in I_\\beta$ if and only if for all $n \\ge 1$, the suffix $x_n x_{n+1} \\dots$ is less than or equal to $d^*(0, -\\beta)$ in the alternating lexicographic order. The alternating lexicographic order $\\preceq$ is defined such that $x \\preceq y$ if either $x=y$ or at the first index $k$ where they differ, $x_k < y_k$ when $k$ is odd and $x_k > y_k$ when $k$ is even.",
     "domains": [
       "Bridges"
@@ -1799,7 +1799,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T05:48:57.058098+00:00",
     "title": "Ito-Sadahiro Admissibility Condition for Negative Beta-Expansions"
   },
@@ -3628,20 +3628,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Degree-One Triviality for Grassmannians over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "25d6b815",
-    "description": "For every length n, among all binary 2-binomial equivalence classes of words of length n, the largest class has exactly floor(n/2) occurrences of one letter and inversion statistic floor(floor(n/2) * ceil(n/2) / 2). Equivalently, among all coefficients of all Gaussian binomial coefficients [n choose m]_q, the global maximum is attained at m = floor(n/2) and at the middle degree.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2447",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23426v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T19:03:49.721168+00:00",
-    "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For each integer n\u22651 there exists a finite family C of pairwise disjoint compact (or open bounded) convex sets in \u211d^{3n} such that the space L(C) of all lines transversal to C is homeomorphic (hence homotopy equivalent) to the (n\u20111)-sphere S^{n\u20111}. Moreover, for any family of pairwise disjoint convex sets whose transversal space is non\u2011empty and whose reduced (n\u20111)\u2011st homology is non\u2011zero, the transversal space is homotopy equivalent to S^{n\u20111}. This refines the counterexamples to the Cheong\u2013Goaoc\u2013Holmsen conjecture by identifying the exact homotopy type.",
     "domains": [
@@ -5129,6 +5115,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every k\u22651, we construct a maximal standard frame where the shortest coherence violation sequence has precisely length 2k+2. This disproves the existence of a universal finite bound on coherence violations across all standard frames, resolving Moss and Pedersen's Conjecture 5.7 via a geometric construction in rational vector spaces.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2560",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25954v1",
+    "status": "available",
+    "timestamp": "2026-06-26T00:40:37.274427+00:00",
+    "title": "The incoherence index of social decision frames cannot be bounded uniformly across all frame sizes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2561",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25931v1",
+    "status": "available",
+    "timestamp": "2026-06-26T00:41:26.824635+00:00",
+    "title": "Tightness of the Density Threshold for Configurations in Linear Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -5312,6 +5327,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe most natural next step is to attack the residue class isolated by the\nprime-core reduction: primes `p \u2261 1 (mod 8)`. The key insight is that the four\nelementary families already dispatch every residue except this one, so the entire\ndifficulty of Erd\u0151s\u2013Straus is concentrated in a single arithmetic progression,\nand any constructive scheme that handles it would, via\n`erdosStraus_of_primes_one_mod_eight`, close the problem unconditionally. A\npromising route is to formalize the classical covering-congruence constructions\nof Mordell, which solve `4/p` for all `p` outside a sparse set of residues modulo\nsmall moduli (e.g. residues that are quadratic non-residues modulo `4`, or that\nfall into specific classes mod `3\u00b78`, `5\u00b78`, `7\u00b78`, \u2026). Why now? Because the\npresent development supplies exactly the reusable scaffolding \u2014 the predicate, the\nwitness-verification idioms, and divisor inheritance \u2014 that such a formalization\nwould otherwise have to rebuild from scratch.\n\nA second direction is computational certification at scale. The key insight is\nthat `ErdosStrausSolution n` is witnessed by a finite triple whose correctness is\na single rational identity, so a verified search procedure could emit witnesses\nfor enormous ranges and check them by `decide`/`norm_num`, turning empirical\ntables (which currently confirm the conjecture far beyond `10^17`) into\nmachine-checked theorems for explicit bounds. Why now? Because Lean's `decide`\nkernel reduction and `norm_num` extensions are mature enough to validate millions\nof rational identities reliably, and the bounded theorem `erdosStraus_upto_100`\ndemonstrates the pattern end to end; scaling it is an engineering problem, not a\nmathematical one.\n\nA third direction concerns the structure of the witness map itself.\nThe key insight is that the family witnesses are not ad hoc but instances of a small\nnumber of algebraic identities (the `1/a + 1/(a\u00b7n)` split and its halving, and the\n`(n+3)/(2na)` collapse), so one could formalize a *parametrized solver*: a single\nlemma taking residue data and returning a witness, from which all four families\nbecome corollaries. Why now? Because unifying the families would both shrink the\nproof and expose precisely which algebraic degrees of freedom remain unused for\nthe `1 (mod 8)` case, potentially suggesting the missing construction.\n\nA fourth direction is to connect this development to Mathlib's number-theoretic\ninfrastructure on quadratic residues and Dirichlet characters. The key insight is\nthat the obstruction at `p \u2261 1 (mod 8)` is governed by solvability of congruences\nthat quadratic reciprocity controls, so importing Mathlib's reciprocity and\nLegendre-symbol API could let one phrase the open core as a clean statement about\nrepresentability rather than as a raw existential over triples. Why now? Because\nMathlib's quadratic reciprocity and `ZMod` character theory are now stable and\nwell-supported, making it feasible to translate the analytic-number-theory\nheuristics for Erd\u0151s\u2013Straus into formal, checkable hypotheses.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2559",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "199a5960",
+    "status": "available",
+    "timestamp": "2026-06-26T00:08:32.567910+00:00",
+    "title": "The most natural next step is to attack the residue class isolated by the"
   },
   {
     "consumed_by_exp_id": "",

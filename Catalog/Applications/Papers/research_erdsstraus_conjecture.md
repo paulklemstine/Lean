@@ -1,293 +1,173 @@
-# Formal Arithmetic Geometry of Egyptian Fraction Decompositions: A Verified Framework for the Erdős–Straus Conjecture
+# Structural Reduction of the Erdős–Straus Conjecture: Parametric Families, Divisor Inheritance, and a Prime-Core Theorem
+
+**Author:** Aristotle
+**Date:** 2026-06-25
 
 ## Abstract
 
-We present a formally verified framework in Lean 4 for studying 3-term Egyptian fraction decompositions of 4/n, the central object of the Erdős–Straus conjecture (1948). Our contributions include: (1) a dual formulation capturing both the rational-equation and denominator-cleared integer-surface viewpoints, with a machine-verified equivalence theorem; (2) proven infinite parametric families covering all even integers and all integers congruent to 3 modulo 4, establishing the conjecture for 75% of all natural numbers; (3) a multiplicative scaling principle that turns seed solutions into infinite cones of derived solutions; (4) a geometric bound on ordered witnesses connecting number theory to discrete lattice-point geometry; (5) a simplex normalization identity bridging the problem to probability geometry; and (6) a verified search algorithm with proven soundness. All theorems are machine-checked with no axioms beyond the standard foundations (propext, Classical.choice, Quot.sound). We discuss the implications for a potential complete resolution of the conjecture.
+The Erdős–Straus conjecture (1948) asserts that for every integer $n \ge 2$ the fraction $\frac{4}{n}$ admits a representation as a sum of three (not necessarily distinct) unit fractions: there exist positive integers $x, y, z$ with $\frac{4}{n} = \frac{1}{x} + \frac{1}{y} + \frac{1}{z}$. We present a complete, self-contained structural treatment built around a single arithmetic bridge that converts denominator-cleared integer identities into genuine unit-fraction representations. Using this bridge, we establish four explicit parametric solution families covering even denominators, multiples of three, denominators $n \equiv 3 \pmod 4$ (Sierpiński), and denominators $n \equiv 5 \pmod 8$ (Komornik). We prove a divisor-inheritance principle stating that solvability is closed under taking multiples, and we correct a common misstatement of this principle by exhibiting that the reverse (divisor) direction fails. Combining the families with divisor inheritance yields the main structural result: the Erdős–Straus conjecture for all $n \ge 2$ reduces to the single residue class of primes $p \equiv 1 \pmod 8$. We give a bounded version of this reduction suitable for finite certification and indicate how it confirms the conjecture for all $2 \le n < 1000$. We close with applications and a discussion of the open prime-core and its connection to quadratic reciprocity.
 
-**Keywords:** Egyptian fractions, Erdős–Straus conjecture, formal verification, Diophantine geometry, cubic surfaces, lattice points, verified algorithms.
-
----
+**Keywords:** Erdős–Straus conjecture, Egyptian fractions, unit fractions, parametric families, divisor inheritance, prime reduction, covering congruences, quadratic residues.
 
 ## 1. Introduction
 
-### 1.1 Background
+In 1948 Paul Erdős and Ernst G. Straus conjectured that for every integer $n \ge 2$, the rational number $\frac{4}{n}$ can be written as a sum of three positive unit fractions. Despite its elementary statement, the conjecture remains open. It has been verified computationally for all $n$ up to bounds exceeding $10^{17}$, yet a general proof is unknown.
 
-The Erdős–Straus conjecture, posed in 1948 by Paul Erdős and Ernst Straus, asserts that for every integer n ≥ 2, the fraction 4/n can be expressed as a sum of three unit fractions:
+The problem belongs to the venerable tradition of *Egyptian fraction* problems, in which rationals are decomposed into sums of unit fractions $\frac{1}{x}$. This tradition is among the oldest in recorded mathematics: the scribes of ancient Egypt, more than three millennia ago, expressed essentially every fraction as a sum of distinct unit fractions, and the Rhind Mathematical Papyrus preserves an extensive table of decompositions of $\frac{2}{n}$. The Erdős–Straus problem fixes the numerator at $4$ and the number of summands at exactly $3$, and asks for universal solvability. Unlike the strict Egyptian convention, the three unit fractions here need not be distinct; this relaxation is exactly what makes the explicit families below possible, since several of them repeat a denominator.
 
-$$\frac{4}{n} = \frac{1}{x} + \frac{1}{y} + \frac{1}{z}$$
+The conjecture is one of a cluster of related problems. Sierpiński proposed the analogous statement for $\frac{5}{n}$, and Schinzel the general $\frac{a}{n}$ for fixed numerator $a$; all share the same fundamental obstruction structure, in which the bulk of cases yield to elementary identities while a thin set of residues resists. Understanding the Erdős–Straus case in clean structural terms therefore illuminates an entire family of questions.
 
-where x, y, z are positive integers. The conjecture has been verified computationally for all n up to 10^{17} (Swett, 1999; Elsholtz and Tao, 2013), but no proof exists for the general case.
+This paper develops the standard structural theory of the conjecture in a unified, rigorous form. Our contributions are:
 
-### 1.2 Prior Work
+1. **An arithmetic bridge** (Theorem 3.1) reducing the rational existence statement to a single polynomial Diophantine identity over $\mathbb{N}$, so that all constructions become purely algebraic verifications.
+2. **Four parametric families** (Theorems 4.1–4.4), each a standalone constructive existence proof with no circular dependence on the conjecture.
+3. **Divisor inheritance** (Theorem 5.1) together with an explicit correction (Remark 5.2, Theorem 5.3) of a frequently misstated converse.
+4. **A prime-core reduction** (Theorems 6.2–6.4): the conjecture for all $n \ge 2$ follows from its truth for primes $p \equiv 1 \pmod 8$, in both an unbounded and a finite-verification form.
+5. **A finite certification** confirming the conjecture for all $2 \le n < 1000$.
 
-Classical results include:
-- **Mordell (1967):** Proved that the number of exceptions up to N is O(N^{2/3} log N).
-- **Vaughan (1970):** Improved the exception estimate.
-- **Elsholtz and Tao (2013):** Showed that for almost all n, several specific parametric families provide solutions, and gave density-one results.
-- **Schinzel (1956), Sierpiński (1956):** Studied related conjectures for k/n with k ≠ 4.
-- **Webb (1970):** Proved the conjecture for all n up to 10^8 by systematic computation.
+Throughout, $\mathbb{N}$ denotes the nonnegative integers and $\mathbb{N}^{+}$ (written $\mathbb{Z}_{>0}$ where convenient) the positive integers. We write $a \equiv b \pmod m$ for congruence and $m \mid n$ for divisibility.
 
-### 1.3 Our Contributions
+## 2. The central definition
 
-We formalize the Erdős–Straus problem as a study of lattice points on the affine cubic surface
+**Definition 2.1 (Erdős–Straus solution).** For $n \in \mathbb{N}$, we say $n$ *has an Erdős–Straus solution*, written $\mathrm{ES}(n)$, if there exist positive integers $x, y, z$ such that
+$$\frac{4}{n} = \frac{1}{x} + \frac{1}{y} + \frac{1}{z}.$$
 
-$$4xyz = n(xy + xz + yz)$$
+The Erdős–Straus conjecture is the assertion that $\mathrm{ES}(n)$ holds for every integer $n \ge 2$. Note the summands need not be distinct; repetition is permitted, and several of the families below exploit this.
 
-and develop a verified formal framework with the following components:
+## 3. The arithmetic bridge
 
-1. **Dual formulation:** `ESDecomposition` (rational) and `ESWitness` (integer surface), with verified equivalence.
-2. **Parametric families:** Explicit closed-form decompositions for all even n and all n ≡ 3 (mod 4).
-3. **Transfer principle:** Multiplicative scaling from solutions of 4/n to solutions of 4/(kn).
-4. **Geometric bound:** For ordered witnesses, 4x ≤ 3n.
-5. **Simplex bridge:** Normalization identity connecting to probability distributions.
-6. **Verified search:** Computational algorithm with proven soundness.
+The first step is to eliminate denominators so that every construction reduces to verifying an integer polynomial identity.
 
----
+**Theorem 3.1 (Arithmetic bridge, `es_of_nat`).** Let $n, x, y, z$ be positive integers satisfying the cleared identity
+$$4 \, (xyz) = n \,(xy + yz + zx). \tag{$\ast$}$$
+Then $\mathrm{ES}(n)$ holds, witnessed by $(x, y, z)$.
 
-## 2. Definitions and Notation
+*Proof sketch.* Since $x, y, z, n > 0$, all of $x, y, z, n$ are nonzero in $\mathbb{Q}$. Casting $(\ast)$ into $\mathbb{Q}$ gives $4 (xyz) = n(xy+yz+zx)$ as a rational identity. Clearing denominators in the target equation $\frac{4}{n} = \frac{1}{x}+\frac{1}{y}+\frac{1}{z}$ via $\texttt{field\_simp}$ produces exactly $(\ast)$ up to reassociation; the polynomial normal forms agree, so the rational equation holds. $\square$
 
-### 2.1 The Decomposition Structure
+The power of Theorem 3.1 is that it converts the *analytic-looking* problem (an equality of rationals) into an *algebraic* one (a single multiplication identity). To prove $\mathrm{ES}(n)$ for a family of $n$, it now suffices to exhibit a parametric triple $(x, y, z)$ and check $(\ast)$ as a polynomial identity in the parameter — a mechanical task.
 
-We define two formulations:
+## 4. Parametric solution families
 
-**Rational formulation (ESDecomposition):**
-```
-structure ESDecomposition (n : ℕ) where
-  x y z : ℕ
-  hx : 1 ≤ x;  hy : 1 ≤ y;  hz : 1 ≤ z
-  eqn : (4 : ℚ) / n = 1 / x + 1 / y + 1 / z
-```
+Each family is a self-contained constructive proof; none invokes $\mathrm{ES}$ of any other number, so there is no circular dependence on the conjecture.
 
-**Integer surface formulation (ESWitness):**
-```
-def ESWitness (n x y z : ℕ) : Prop :=
-  1 ≤ x ∧ 1 ≤ y ∧ 1 ≤ z ∧
-  4 * x * y * z = n * (x * y + x * z + y * z)   -- over ℤ
-```
+**Theorem 4.1 (Even denominators, `es_even`).** If $n$ is even and $n \ge 2$, then $\mathrm{ES}(n)$ holds. Writing $n = 2m$ with $m \ge 1$,
+$$\frac{4}{n} = \frac{1}{m} + \frac{1}{m+1} + \frac{1}{m(m+1)}.$$
 
-**Theorem 2.1 (Equivalence).** For n ≥ 1, ESDecomposition n can be constructed from ESWitness n x y z and conversely, ESDecomposition n yields ESWitness n d.x d.y d.z.
+*Proof sketch.* Take $(x, y, z) = (m, m+1, m(m+1))$. The cleared identity $(\ast)$ reads $4 \cdot m(m+1)\cdot m(m+1) = 2m\big(m(m+1) + (m+1)m(m+1) + m(m+1)m\big)$, which simplifies to a polynomial identity in $m$ verifiable by ring normalization. Conceptually, $\frac{1}{m}+\frac{1}{m+1} = \frac{2m+1}{m(m+1)}$, and adding the corrective sliver $\frac{1}{m(m+1)}$ yields $\frac{2m+2}{m(m+1)} = \frac{2}{m} = \frac{4}{2m}$. $\square$
 
-*Proof.* The forward direction multiplies the rational equation by n·x·y·z and clears denominators. The reverse direction divides the integer equation by n·x·y·z (all positive) and simplifies. Both directions are formally verified using `field_simp` and `push_cast` tactics. □
+**Theorem 4.2 (Multiples of three, `es_three_dvd`).** If $3 \mid n$ and $n \ge 1$, then $\mathrm{ES}(n)$ holds. Writing $n = 3m$ with $m \ge 1$,
+$$\frac{4}{n} = \frac{1}{m+1} + \frac{1}{m(m+1)} + \frac{1}{3m}.$$
 
-### 2.2 Ordered Witnesses and the Solution Surface
+*Proof sketch.* Take $(x, y, z) = (m+1, m(m+1), 3m)$. Then $\frac{1}{m+1}+\frac{1}{m(m+1)} = \frac{m+1}{m(m+1)} = \frac{1}{m}$, and $\frac{1}{m}+\frac{1}{3m} = \frac{4}{3m}$. The cleared identity $(\ast)$ holds by ring normalization in $m$. $\square$
 
-```
-def OrderedESWitness (n x y z : ℕ) : Prop :=
-  ESWitness n x y z ∧ x ≤ y ∧ y ≤ z
+**Theorem 4.3 (Sierpiński's family, `es_three_mod_four`).** If $n \equiv 3 \pmod 4$, then $\mathrm{ES}(n)$ holds. Writing $n + 1 = 4k$ (so $k \ge 1$ and $n \ge 3$),
+$$\frac{4}{n} = \frac{1}{k} + \frac{1}{2kn} + \frac{1}{2kn}.$$
 
-def ESSurface (n : ℕ) : Set (ℕ × ℕ × ℕ) :=
-  {p | ESWitness n p.1 p.2.1 p.2.2}
-```
+*Proof sketch.* Take $(x, y, z) = (k, 2kn, 2kn)$. The cleared identity $(\ast)$ becomes
+$$4 \cdot k \cdot (2kn)^2 = n\big(k\cdot 2kn + 2kn\cdot 2kn + 2kn\cdot k\big),$$
+i.e. $16 k^3 n^2 = n(4k^2 n + 4k^2 n^2) = 4k^2 n^2(1 + n)$. Substituting $n + 1 = 4k$ gives $4k^2 n^2 \cdot 4k = 16 k^3 n^2$, an exact match. Over $\mathbb{Z}$ this is the linear combination of the hypothesis $n + 1 = 4k$ with coefficient $-4k^2 n^2$. $\square$
 
-**Theorem 2.2 (Existence of ordered form).** Any ESWitness can be permuted to yield an OrderedESWitness. This is verified by exhaustive case analysis on the six possible orderings using permutation lemmas.
+**Theorem 4.4 (Komornik's family, `es_five_mod_eight`).** If $n \equiv 5 \pmod 8$, then $\mathrm{ES}(n)$ holds. Writing $n + 3 = 8b$ (so $b \ge 1$ and $n \ge 5$),
+$$\frac{4}{n} = \frac{1}{2b} + \frac{1}{2bn} + \frac{1}{bn}.$$
 
----
+*Proof sketch.* Take $(x, y, z) = (2b, 2bn, bn)$. The cleared identity $(\ast)$ reduces, after substituting $n + 3 = 8b$, to a polynomial identity expressible as the linear combination of $n + 3 = 8b$ with coefficient $-2 b^2 n^2$ over $\mathbb{Z}$. Conceptually the three pieces sum to $\frac{n + 3}{2bn} = \frac{8b}{2bn} = \frac{4}{n}$. $\square$
 
-## 3. Main Results
+**Remark 4.5 (Coverage of residues mod 8).** Among odd $n$, the residues $3$ and $7 \pmod 8$ both satisfy $n \equiv 3 \pmod 4$ and so are covered by Theorem 4.3; the residue $5 \pmod 8$ is covered by Theorem 4.4. Together with the even case (Theorem 4.1), the *only* uncovered residue among odd numbers is $1 \pmod 8$. This observation drives the reduction in Section 6.
 
-### 3.1 Theorem: Universal Even Family
+## 4a. Worked examples
 
-**Theorem 3.1.** For every m ≥ 1:
+It is instructive to see the families produce concrete witnesses, each checkable by a single multiplication.
 
-$$\frac{4}{2m} = \frac{1}{m} + \frac{1}{2m} + \frac{1}{2m}$$
+- **Even, $n = 10$:** here $m = 5$, giving $(x,y,z) = (5, 6, 30)$ and $\frac{4}{10} = \frac{1}{5} + \frac{1}{6} + \frac{1}{30}$. The cleared identity reads $4\cdot 5\cdot 6\cdot 30 = 3600 = 10\,(30 + 180 + 150) = 10\cdot 360$.
+- **Multiple of three, $n = 21$:** here $m = 7$, giving $(8, 56, 21)$ and $\frac{4}{21} = \frac{1}{8} + \frac{1}{56} + \frac{1}{21}$.
+- **Sierpiński, $n = 11$ ($11 \equiv 3 \bmod 4$):** here $n + 1 = 12 = 4\cdot 3$, so $k = 3$ and $(3, 66, 66)$, giving $\frac{4}{11} = \frac{1}{3} + \frac{1}{66} + \frac{1}{66}$.
+- **Komornik, $n = 13$ ($13 \equiv 5 \bmod 8$):** here $n + 3 = 16 = 8\cdot 2$, so $b = 2$ and $(4, 52, 26)$, giving $\frac{4}{13} = \frac{1}{4} + \frac{1}{52} + \frac{1}{26}$.
+- **Open core, $n = 17$ ($17 \equiv 1 \bmod 8$):** no family applies; a short search yields, for instance, $(5, 30, 510)$, since $\frac{4}{17} = \frac{1}{5} + \frac{1}{30} + \frac{1}{510}$. This is the smallest denominator at which the structural families fall silent and an explicit witness must be supplied.
 
-*Proof.* Direct algebraic verification. After `push_cast` to move from ℕ to ℚ, the identity `ring` closes the goal. The denominators m, 2m, 2m are all ≥ 1 when m ≥ 1. □
+The contrast between the first four (formulaic) examples and the last (searched) one is the entire story of the conjecture in miniature.
 
-**Corollary 3.2.** Every even n ≥ 2 admits an ESDecomposition.
+## 5. Divisor inheritance
 
-*Proof.* Write n = 2m with m ≥ 1 (from n ≥ 2 and n even), then apply Theorem 3.1. □
+Solvability of the Erdős–Straus equation propagates upward through divisibility.
 
-### 3.2 Theorem: Residue Class n ≡ 3 (mod 4)
+**Theorem 5.1 (Divisor inheritance, `es_of_dvd`).** If $\mathrm{ES}(m)$ holds, $m \mid n$, and $n > 0$, then $\mathrm{ES}(n)$ holds.
 
-**Theorem 3.3.** For every k ≥ 0:
+*Proof sketch.* Write $n = km$ with $k > 0$ (and $m > 0$ since $n > 0$). Let $(x, y, z)$ witness $\mathrm{ES}(m)$, so $\frac{4}{m} = \frac{1}{x}+\frac{1}{y}+\frac{1}{z}$. Scaling every denominator by $k$ gives
+$$\frac{1}{kx} + \frac{1}{ky} + \frac{1}{kz} = \frac{1}{k}\Big(\frac{1}{x}+\frac{1}{y}+\frac{1}{z}\Big) = \frac{1}{k}\cdot \frac{4}{m} = \frac{4}{km} = \frac{4}{n},$$
+so $(kx, ky, kz)$ witnesses $\mathrm{ES}(n)$. Formally one clears denominators in both equations and matches polynomial normal forms. $\square$
 
-$$\frac{4}{4k+3} = \frac{1}{k+2} + \frac{1}{(k+1)(k+2)} + \frac{1}{(k+1)(4k+3)}$$
+**Remark 5.2 (The reverse direction is false).** A frequent misstatement asserts that $\mathrm{ES}(n)$ and $d \mid n$ imply $\mathrm{ES}(n/d)$. This is false. Take $n = 4$ and $d = 4$; then $n/d = 1$ and $\frac{4}{1} = 4$, which cannot be a sum of three unit fractions because the maximum such sum is $\frac{1}{1}+\frac{1}{1}+\frac{1}{1} = 3 < 4$. Solvability is monotone with respect to *multiples*, not divisors.
 
-*Proof sketch.* The identity is derived in two steps:
+**Theorem 5.3 (Corrected converse, `es_of_div_dvd`).** If $d \mid n$, $n > 0$, and $\mathrm{ES}(n/d)$ holds, then $\mathrm{ES}(n)$ holds.
 
-1. **Two-term decomposition:** Since 4(k+1) − (4k+3) = 1, we have
-   $$\frac{4}{4k+3} = \frac{1}{k+1} + \frac{1}{(k+1)(4k+3)}$$
+*Proof sketch.* Since $d \mid n$, the quotient $n/d$ divides $n$. Apply Theorem 5.1 with $m = n/d$. $\square$
 
-2. **Partial fraction splitting:** We decompose 1/(k+1) as
-   $$\frac{1}{k+1} = \frac{1}{k+2} + \frac{1}{(k+1)(k+2)}$$
+## 6. Reduction to primes $\equiv 1 \pmod 8$
 
-Combining yields the three-term decomposition. The formal proof uses the `grind` tactic after establishing positivity of all denominators. □
+We now combine the families with divisor inheritance to localize the entire difficulty of the conjecture.
 
-### 3.3 Theorem: Multiplicative Transfer Principle
+**Lemma 6.1 (Prime dichotomy, `es_prime`).** Let $p$ be prime, and suppose that $\mathrm{ES}(p)$ holds whenever $p \equiv 1 \pmod 8$. Then $\mathrm{ES}(p)$ holds for every prime $p$.
 
-**Theorem 3.4 (Scaling).** If ESWitness(n, x, y, z), then ESWitness(kn, kx, ky, kz) for any k ≥ 1.
+*Proof sketch.* If $2 \mid p$ then $p = 2$, handled by the even family (Theorem 4.1). Otherwise $p$ is odd, so $p \bmod 8 \in \{1, 3, 5, 7\}$. The case $p \equiv 1$ is the hypothesis; $p \equiv 3$ and $p \equiv 7$ both give $p \equiv 3 \pmod 4$, handled by Sierpiński (Theorem 4.3); $p \equiv 5$ is handled by Komornik (Theorem 4.4). $\square$
 
-*Proof.* The positivity conditions scale trivially (k ≥ 1 and x ≥ 1 imply kx ≥ 1). For the equation:
+**Theorem 6.2 (Prime-core reduction, `erdosStraus_reduction`).** Suppose $\mathrm{ES}(p)$ holds for every prime $p \equiv 1 \pmod 8$. Then $\mathrm{ES}(n)$ holds for every integer $n \ge 2$.
 
-$$4(kx)(ky)(kz) = 4k^3 xyz = k^3 \cdot n(xy + xz + yz) = kn \cdot k^2(xy + xz + yz)$$
-$$= kn((kx)(ky) + (kx)(kz) + (ky)(kz))$$
+*Proof sketch.* Let $n \ge 2$ and let $p = \mathrm{minFac}(n)$ be its smallest prime factor, which exists and is prime since $n \ge 2$. By Lemma 6.1, $\mathrm{ES}(p)$ holds. Since $p \mid n$ and $n > 0$, divisor inheritance (Theorem 5.1) yields $\mathrm{ES}(n)$. $\square$
 
-The formal proof uses `push_cast` and `nlinarith` with the original hypothesis. □
+Theorem 6.2 is the central structural result: **the full Erdős–Straus conjecture is equivalent to its restriction to primes $p \equiv 1 \pmod 8$.** Every other case is settled unconditionally by the explicit families.
 
-**Corollary 3.5 (ESDecomposition scaling).** The same principle holds at the rational level:
-$$\frac{4}{kn} = \frac{1}{kx} + \frac{1}{ky} + \frac{1}{kz}$$
+**Theorem 6.3 (Bounded reduction, `erdosStraus_reduction_bounded`).** Fix $N \in \mathbb{N}$. Suppose $\mathrm{ES}(p)$ holds for every prime $p \equiv 1 \pmod 8$ with $p < N$. Then $\mathrm{ES}(n)$ holds for every integer $n$ with $2 \le n < N$.
 
-### 3.4 Theorem: Three-Quarter Coverage
+*Proof sketch.* As in Theorem 6.2, take $p = \mathrm{minFac}(n)$. Then $p \le n < N$, so $p < N$, and $p \equiv 1 \pmod 8$ is covered by hypothesis (other residues by Lemma 6.1's families). Lift via divisor inheritance. $\square$
 
-**Theorem 3.6.** For every n ≥ 2, if n is even or n ≡ 3 (mod 4), then there exists an ESDecomposition of n.
+**Theorem 6.4 (Finite verification below 1000, `erdosStraus_lt_1000`).** $\mathrm{ES}(n)$ holds for every integer $n$ with $2 \le n < 1000$.
 
-*Proof.* Case analysis:
-- If n is even: apply Corollary 3.2.
-- If n % 4 = 3: write n = 4(n/4) + 3 and apply Theorem 3.3. □
+*Proof sketch.* Apply Theorem 6.3 with $N = 1000$. It remains to certify $\mathrm{ES}(p)$ for each prime $p \equiv 1 \pmod 8$ below $1000$ — namely $p \in \{17, 41, 73, 89, 97, 113, 137, 193, 233, 241, 257, \ldots\}$. For each such $p$ a witness triple $(x, y, z)$ is exhibited and the cleared identity $(\ast)$ is checked by direct computation via the bridge (Theorem 3.1). All non-$1 \pmod 8$ residues, and all composites, are handled by the families and divisor inheritance. $\square$
 
-This theorem establishes the conjecture for exactly 75% of all integers (residue classes 0, 2, 3 modulo 4).
+## 7. Algorithms
 
-### 3.5 Theorem: Geometric Denominator Bound
+The structural theory yields two natural algorithms.
 
-**Theorem 3.7.** If OrderedESWitness(n, x, y, z) with n ≥ 1, then 4x ≤ 3n.
+**Algorithm A (Structured solver).** Given $n \ge 2$, return a witness triple by case analysis:
+1. If $n$ even, return $(m, m+1, m(m+1))$ with $m = n/2$.
+2. Else if $3 \mid n$, return $(m+1, m(m+1), 3m)$ with $m = n/3$.
+3. Else if $n \equiv 3 \pmod 4$, return $(k, 2kn, 2kn)$ with $k = (n+1)/4$.
+4. Else if $n \equiv 5 \pmod 8$, return $(2b, 2bn, bn)$ with $b = (n+3)/8$.
+5. Else ($n$ has all prime factors $\equiv 1 \pmod 8$ and itself $\equiv 1 \pmod 8$): reduce to $p = \mathrm{minFac}(n)$ and look up / search a witness for the prime, then scale by $n/p$.
 
-*Proof.* From x ≤ y ≤ z, we have xy ≤ yz and xz ≤ yz, hence
-$$xy + xz + yz ≤ 3yz$$
+This runs in $O(\sqrt{n})$ time dominated by trial factorization in the final case; the first four cases are $O(1)$.
 
-Substituting into 4xyz = n(xy + xz + yz):
-$$4xyz ≤ 3nyz$$
+**Algorithm B (Bounded certifier).** To certify $\mathrm{ES}(n)$ for all $2 \le n < N$: enumerate primes $p \equiv 1 \pmod 8$ below $N$, brute-force a witness for each by bounded search over $x$, verify $(\ast)$, and tabulate. All other $n$ are covered by the families and lifting. The witness search for a single prime $p$ is $O(p^{1+\epsilon})$ in the worst case but typically finds a small witness almost immediately.
 
-Since yz ≥ 1 (both y, z ≥ 1), dividing gives 4x ≤ 3n. □
+## 8. Applications and significance
 
-**Interpretation.** This bounds the first denominator to the interval [1, ⌊3n/4⌋], establishing a finite search domain. Combined with further bounds on y given x, this reduces the search space to O(n log n) candidates.
+**Finite certification.** Theorem 6.3 reduces confirming the conjecture on $[2, N)$ from $N$ cases to roughly $\frac{N}{8\ln N}$ prime cases (by the prime number theorem applied to the arithmetic progression $1 \pmod 8$, which by Dirichlet's theorem and the prime number theorem for arithmetic progressions contains a positive proportion $\frac{1}{\varphi(8)} = \frac{1}{4}$ of all primes). Each surviving case is a one-line identity check. Concretely, of the roughly $168$ primes below $1000$, only about a quarter lie in the class $1 \pmod 8$ — explicitly $17, 41, 73, 89, 97, 113, 137, 193, 233, 241, 257, 281, 313, 337, 353, 401, 409, 433, 449, 457, \ldots$ — and these are the *only* values for which a witness must be supplied by hand; everything else follows from the families and divisor inheritance. This is the engine behind all large-scale empirical verifications.
 
-### 3.6 Theorem: Simplex Normalization
+**Localization of difficulty.** The reduction provides a precise diagnosis: the conjecture's entire unresolved content lives in a single arithmetic progression. Any constructive scheme covering primes $\equiv 1 \pmod 8$ closes the problem unconditionally.
 
-**Theorem 3.8.** For any ESDecomposition d of n:
+**A reusable algebraic toolkit.** The bridge (Theorem 3.1) plus the "two natural pieces and a corrective sliver" template recur across Egyptian-fraction problems (e.g. the analogous $\frac{5}{n}$ conjecture of Sierpiński). The same scaffolding transfers directly.
 
-$$\frac{n}{4 \cdot d.x} + \frac{n}{4 \cdot d.y} + \frac{n}{4 \cdot d.z} = 1$$
+## 9. Discussion: why $1 \pmod 8$ is hard
 
-*Proof.* Multiply d.eqn by n/4 and simplify. □
+The four families exploit cheap algebraic identities tied to small moduli. The residue $1 \pmod 8$ is precisely the class where $2$ is a quadratic residue modulo $p$ (by the supplement to quadratic reciprocity, $2$ is a QR mod an odd prime $p$ iff $p \equiv \pm 1 \pmod 8$). This changes the solvability of the auxiliary congruences governing whether a clean parametric construction exists. Classical work of Mordell handles all primes outside a sparse set of residues modulo products of small primes via covering congruences, but no covering system is known to capture every prime $\equiv 1 \pmod 8$. The obstruction is genuinely arithmetic: it concerns representability conditions controlled by quadratic characters, not a mere failure of search.
 
-**Interpretation.** The triple (n/(4x), n/(4y), n/(4z)) lies on the standard probability simplex Δ² = {(a,b,c) ∈ ℝ³ : a+b+c = 1, a,b,c ≥ 0}. Egyptian fraction decompositions of 4/n are in bijection with rational points on the simplex satisfying the reciprocal constraint a = n/(4x) for positive integers x.
+To see the mechanism more concretely, consider seeking a solution of a fixed structural shape, say with one denominator divisible by $n$ and the rest controlled by a parameter. Substituting such an ansatz into the cleared identity $(\ast)$ and reducing modulo $n$ produces a congruence condition whose solvability is governed by whether certain small integers are quadratic residues modulo the prime $p$. For $p \equiv 3 \pmod 4$ the relevant condition involves $-1$, which is a non-residue, and the Sierpiński shape always closes; for $p \equiv 5 \pmod 8$ the relevant condition involves $2$, and the Komornik shape closes. For $p \equiv 1 \pmod 8$ both $-1$ and $2$ become residues, simultaneously *removing* the arithmetic leverage that the other two families relied upon. The conjecture's difficulty is thus not an accident of presentation but a reflection of which quadratic characters are trivial in this class.
 
----
+It is worth emphasizing what is *not* in doubt. For any individual $n$, the conjecture is a decidable, indeed easily verifiable, statement: a witness, once found, certifies $\mathrm{ES}(n)$ by a single multiplication. The conjecture's open status is entirely about *uniformity* — the absence of a single construction, or finite family of constructions, provably covering every prime $\equiv 1 \pmod 8$. The structural results of this paper sharpen exactly this gap: they show that uniformity over all $n \ge 2$ is logically equivalent to uniformity over this one arithmetic progression.
 
-## 4. Algorithm
+## 10. Future work
 
-### 4.1 Search Procedure
+Four directions stand out, each building directly on the present scaffolding.
 
-We implement a search over ordered pairs (x, y) with 1 ≤ x ≤ y ≤ B:
+1. **Covering congruences for $1 \pmod 8$.** Formalize Mordell's covering-congruence constructions, which solve $\frac{4}{p}$ for all $p$ outside a sparse residue set modulo small moduli. The predicate, witness-verification idioms, and divisor inheritance developed here are exactly the reusable infrastructure such a formalization needs.
+2. **Computational certification at scale.** Since $\mathrm{ES}(n)$ is witnessed by a finite triple whose correctness is a single rational identity, a verified search procedure can emit witnesses for enormous ranges and check them mechanically, turning empirical tables (confirmed beyond $10^{17}$) into certified theorems for explicit bounds. Theorem 6.4 demonstrates the pattern end to end; scaling it is an engineering task.
+3. **A parametrized solver.** The four families are instances of a few algebraic identities — the $\frac{1}{a} + \frac{1}{an}$ split and its halving, and the $\frac{n+3}{2na}$ collapse. A single lemma taking residue data and returning a witness would yield all four families as corollaries and expose precisely which algebraic degrees of freedom remain unused for $1 \pmod 8$.
+4. **Connection to quadratic reciprocity.** The obstruction at $p \equiv 1 \pmod 8$ is governed by congruences that quadratic reciprocity controls. Phrasing the open core via Legendre symbols and character theory could recast it as a clean representability statement rather than a raw existential over triples.
 
-**Algorithm: searchES(B, n)**
-```
-Input: bound B, denominator n
-Output: (x, y, z) such that ESWitness(n, x, y, z), or None
+## 11. Conclusion
 
-for x = 1 to B:
-  for y = x to B:
-    denom ← 4xy − nx − ny
-    if denom > 0 and denom | nxy:
-      z ← nxy / denom
-      if z ≥ 1:
-        return (x, y, z)
-return None
-```
+We have given a complete structural treatment of the Erdős–Straus conjecture: an arithmetic bridge converting it to integer identities, four explicit solution families, a divisor-inheritance principle (with its converse correctly stated), and a prime-core reduction showing that the conjecture for all $n \ge 2$ follows from its truth for primes $p \equiv 1 \pmod 8$. A bounded version certifies all $2 \le n < 1000$. The work isolates the conjecture's entire difficulty in one arithmetic progression and assembles the precise toolkit needed to attack it.
 
-**Time complexity:** O(B²) per query. With the bound x ≤ 3n/4 from Theorem 3.7 and further analysis, B = O(n) suffices empirically.
+## References
 
-**Space complexity:** O(1).
-
-### 4.2 Verified Soundness
-
-We add a post-check using a Boolean verifier:
-
-```
-def checkESWitness (n x y z : ℕ) : Bool :=
-  (1 ≤ x) && (1 ≤ y) && (1 ≤ z) &&
-  (4 * x * y * z == n * (x * y + x * z + y * z))
-```
-
-**Theorem 4.1 (Soundness).** If `searchESVerified B n = some (x, y, z)`, then `ESWitness n x y z`.
-
-*Proof.* The verified search wraps the raw search with the Boolean check. Soundness follows from the correctness of `checkESWitness`. □
-
-### 4.3 Computational Results
-
-| n | x | y | z | Verification |
-|---|---|---|---|---|
-| 2 | 1 | 2 | 2 | 4·1·2·2 = 16 = 2·(2+2+4) ✓ |
-| 3 | 1 | 4 | 12 | 4·1·4·12 = 192 = 3·(4+12+48) ✓ |
-| 5 | 2 | 4 | 20 | 4·2·4·20 = 640 = 5·(8+40+80) ✓ |
-| 7 | 2 | 15 | 210 | 4·2·15·210 = 25200 = 7·(30+420+3150) ✓ |
-| 11 | 3 | 34 | 1122 | Verified ✓ |
-| 13 | 4 | 18 | 468 | Verified ✓ |
-
----
-
-## 5. Cross-Domain Connections
-
-### 5.1 Discrete Geometry
-
-The equation 4xyz = n(xy + xz + yz) defines an affine cubic surface S_n ⊂ ℝ³. Solutions are positive lattice points on S_n. Theorem 3.7 shows the first coordinate of ordered lattice points is bounded, establishing that the projection of S_n ∩ ℤ³₊ onto the first axis is finite.
-
-The scaling principle (Theorem 3.4) shows that S_n and S_{kn} are related by a linear dilation: if (x,y,z) ∈ S_n, then (kx,ky,kz) ∈ S_{kn}. This makes the family {S_n} a "multiplicatively coherent" system of surfaces.
-
-### 5.2 Probability Geometry
-
-Theorem 3.8 identifies each decomposition with a point on the 2-simplex. The constraint that coordinates must be of the form n/(4a) for positive integers a restricts these to a discrete subset of the simplex. The geometry of this discrete set — its distribution, clustering, and density properties — encodes the difficulty of the Erdős–Straus conjecture.
-
-### 5.3 Permutation Symmetry
-
-The solution set ESSurface(n) is invariant under the symmetric group S₃ acting by permutation of coordinates. Any witness can be sorted to produce an ordered witness (Theorem 2.2), reducing the fundamental domain by a factor of 6.
-
----
-
-## 6. Discussion
-
-### 6.1 The Remaining Gap: n ≡ 1 (mod 4)
-
-Our framework resolves three out of four residue classes modulo 4. The remaining class — n ≡ 1 (mod 4) — is where the difficulty concentrates. For these values, no single polynomial identity suffices; instead, different decompositions are needed for different subclasses.
-
-Current approaches to the remaining cases include:
-1. **Finer congruence covering:** Using residues modulo 12, 24, or larger moduli to find polynomial templates for each sub-class.
-2. **Density arguments:** Showing that the exceptions have density zero (known) or are actually empty (unknown).
-3. **Algebraic geometry:** Using the Hasse principle or Brauer–Manin obstruction to understand rational points on S_n.
-
-### 6.2 Advantages of Formal Verification
-
-Our framework demonstrates several advantages of machine-verified mathematics:
-- **Certified correctness:** Every theorem is verified down to foundational axioms.
-- **Composability:** The scaling principle, families, and search algorithm are modular and can be extended independently.
-- **Computational integration:** The search algorithm is both executable and verified, bridging the gap between computation and proof.
-
-### 6.3 Limitations
-
-- The coverage theorem (75% density) is far from the full conjecture.
-- The search algorithm is correct but not optimized for large-scale computation.
-- We do not formalize the deeper analytic estimates (e.g., Mordell's O(N^{2/3}) bound on exceptions).
-
----
-
-## 7. Future Work
-
-1. **Extended congruence covering:** Formalize polynomial templates for n ≡ 1 (mod 4) restricted to sub-residue classes modulo 12, 24, or 120.
-2. **Analytic bounds:** Formalize the Mordell–Vaughan estimates on the exception set.
-3. **Geometric structure:** Study the dimension and convex hull properties of ESSurface(n) for specific n.
-4. **Completeness of search:** Prove that the search algorithm finds all witnesses within the bound.
-5. **Generalization:** Extend the framework to k/n decompositions for k ≠ 4 (Sierpiński's conjecture).
-
----
-
-## 8. References
-
-1. Erdős, P. (1950). "Az 1/x₁ + 1/x₂ + ... + 1/xₙ = a/b egyenletről." *Mat. Lapok*, 1, 192–210.
-2. Mordell, L. J. (1967). *Diophantine Equations.* Academic Press.
-3. Elsholtz, C. and Tao, T. (2013). "Counting the number of solutions to the Erdős–Straus equation on unit fractions." *J. Aust. Math. Soc.*, 94(1), 50–105.
-4. Schinzel, A. (1956). "Sur quelques propriétés des nombres 3/n et 4/n, où n est un nombre impair." *Mathesis*, 65, 219–222.
-5. Webb, W. A. (1970). "On 4/n = 1/x + 1/y + 1/z." *Proc. Amer. Math. Soc.*, 25(3), 578–584.
-6. Guy, R. K. (2004). *Unsolved Problems in Number Theory.* 3rd ed. Springer. Problem D11.
-7. Swett, A. (1999). "Erdős–Straus conjecture." Computational verification to 10^{14}.
-
----
-
-## Appendix: Formal Artifact Summary
-
-| File | Content | Lines | Sorries |
-|------|---------|-------|---------|
-| `Defs.lean` | Core structures, equivalence theorem | ~100 | 0 |
-| `Families.lean` | Even and mod-4≡3 parametric families | ~75 | 0 |
-| `Transfer.lean` | Scaling principle, symmetry, ordering | ~80 | 0 |
-| `Cover.lean` | 75% coverage theorem, geometric bound, simplex identity | ~90 | 0 |
-| `Search.lean` | Verified search algorithm, soundness theorem | ~110 | 0 |
-| **Total** | | **~455** | **0** |
+The conjecture originates with P. Erdős and E. G. Straus (1948). The residue families are due to W. Sierpiński and V. Komornik; the covering-congruence approach is due to L. J. Mordell. The supplement to the law of quadratic reciprocity governs the quadratic character of $2$. (Full bibliographic details are standard and omitted here in keeping with the self-contained format.)

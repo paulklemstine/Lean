@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0abb7f10",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Tropical Cryptography after Eigenvalue Additivity\n\nDerived from this cycle's findings (`Catalog/Tropical/TropicalMatrixPower.lean`,\n`Catalog/Tropical/TropicalDiscreteLog.lean`):",
-      "quality_score": 0.614,
-      "sorry_count": 0,
-      "theorem_count": 157,
-      "timestamp": "2026-06-19T11:11:18",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
       "cycle_id": "4f74256d",
       "domain": "Computation",
       "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nFollow-up conjectures arising from `Computation/SheafDatabaseColimit.lean`\n(the information-order / colimit layer), to be attacked in subsequent",
@@ -2501,6 +2491,16 @@
       "theorem_count": 3,
       "timestamp": "2026-06-25T22:45:18",
       "title": "Existence of a Satisfactory Multiplier Vector for 2D Lacunary Distance Graphs"
+    },
+    {
+      "cycle_id": "e8c93c85",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Interval Property for Connected Slice-Projections\n\nDerived from this cycle's findings:\n\n* `DiscreteConcave.superlevel_isInterval`: discrete concavity ⇒ the positive\n  set is an i",
+      "quality_score": 0.6236999999999999,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-26T00:40:19",
+      "title": "Interval Property for Connected Slice-Projections of Polymatroids"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72533
     }
   ],
-  "last_updated": "2026-06-25T22:45:18",
+  "last_updated": "2026-06-26T00:40:19",
   "open_questions": [
     {
       "context": "",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "c3d42768",
-        "quality": 0.57488,
-        "theorems": 11,
-        "title": "Korselt criterion completion and Carmichael divisor-lattice tropical flatness"
-      },
-      {
         "cycle_id": "c1948da4",
         "quality": 0.6361600000000001,
         "theorems": 23,
@@ -3947,6 +3941,12 @@
         "quality": 0.69522,
         "theorems": 12,
         "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and "
+      },
+      {
+        "cycle_id": "e8c93c85",
+        "quality": 0.6236999999999999,
+        "theorems": 15,
+        "title": "Interval Property for Connected Slice-Projections of Polymatroids"
       }
     ],
     "Tropical": [
