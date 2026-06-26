@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "60ec8c30",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nThese build directly on the local Jones–Temperley–Lieb braid identity proved in\n`TL_Braid_Local.lean` (the theorems `tl_triple_normal_form`,\n`tl_braid_general`, `tl_inverse_genera",
-      "quality_score": 0.48337107438016536,
-      "sorry_count": 0,
-      "theorem_count": 39,
-      "timestamp": "2026-06-19T13:20:44",
-      "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
-    },
-    {
       "cycle_id": "b3d82bf4",
       "domain": "Cryptography",
       "key_insight": "# FUTURE DIRECTIONS — Tropical Cryptography: Multiple Homomorphic Shadows of the Exponent\n\nDerived from this cycle's findings in `TropicalMagnitudeLeak.lean` and\n`TropicalGminSuperadditive.lean` (and",
@@ -2501,6 +2491,16 @@
       "theorem_count": 22,
       "timestamp": "2026-06-26T01:35:24",
       "title": "Bourgain's Slicing Problem"
+    },
+    {
+      "cycle_id": "25d6b815",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Binary 2-binomial classes & Gaussian coefficients\n\nBuilding on `Catalog/Probability/BinaryTwoBinomial.lean`, which establishes for the class-size\nfunction `classSize n k i` (= co",
+      "quality_score": 0.5960000000000001,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-26T01:56:50",
+      "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7400800000000001
     }
   ],
-  "last_updated": "2026-06-26T01:35:24",
+  "last_updated": "2026-06-26T01:56:50",
   "open_questions": [
     {
       "context": "",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "47c79c52",
-        "quality": 0.69352,
-        "theorems": 17,
-        "title": "Formalizing Graph Linear Notation in Lean 4"
-      },
-      {
         "cycle_id": "3e812933",
         "quality": 0.6599999999999999,
         "theorems": 19,
@@ -3823,6 +3817,12 @@
         "quality": 0.512,
         "theorems": 22,
         "title": "Statistical Mechanics: Ising Model Phase Transition"
+      },
+      {
+        "cycle_id": "25d6b815",
+        "quality": 0.5960000000000001,
+        "theorems": 12,
+        "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
       }
     ],
     "Pythagorean": [

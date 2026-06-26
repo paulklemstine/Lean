@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "25d6b815",
     "filename": "central_gaussian_coefficient_maximizes_binary_2_bi.json",
     "pkg_num": 70,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5960000000000001,
     "title": "Central Gaussian Coefficient Maximizes Binary 2-Binomial Class Size"
   },
   {
@@ -2039,8 +2039,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "central_gaussian_coefficient_maximizes_binary_2_bi",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5960000000000001,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Central Gaussian Coefficient Maximizes Binary 2-Binomial Class Size"
     }
