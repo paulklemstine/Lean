@@ -1,58 +1,68 @@
-# Computational Evidence
+# Computational Evidence — 2D Enstrophy Control vs. 3D Stretching
 
-The two theorems proved this cycle are scalar differential-*inequality* bounds, so
-the relevant "evidence" is checking the comparison/bound functions against the
-worst case (equality in the inequality, i.e. the comparison ODE). The bounds are
-proved rigorously in Lean; the tables below are sanity checks that the constants
-and exponents are right.
+The theorems proved this cycle are *abstract structural identities* (a derivative
+computation + a sign argument), so the decisive evidence is small concrete
+instances confirming (i) the structural axioms are jointly satisfiable, and
+(ii) the dissipation conclusions hold on genuine trajectories. These are encoded
+directly in Lean (`Examples.lean`), so the "evidence" below is machine-checked,
+not ad hoc.
 
-## 1. Forced dissipative bound `Y' = -aY + b` (worst case: equality)
+## 1. Concrete inhabiting model and solution (verified in `Examples.lean`)
 
-Exact solution of `Y' = -aY + b`, `Y(0) = Y₀`:
-`Y(t) = b/a + (Y₀ - b/a) e^{-at}` — this is exactly the upper bound proved in
-`dissipative_apriori`, so equality is attained (the bound is sharp).
+Model on `V = ℝ`: `ν = 1`, `A = id`, `B = 0`.
+- All five structural axioms (`hA`, `hB`, `hA_symm`, `hB2`) discharged by `simp`.
+- Solution `u(t) = e^{−t}` solves `u'(t) = −u(t)` (chain rule), verified.
+- Enstrophy `Ω(t) = ⟪A u, u⟫ = (e^{−t})² = e^{−2t}` is strictly decreasing.
 
-Take `a = 1`, `b = 2` (so `b/a = 2`), two initial data:
+| t   | u(t)=e^{−t} | Ω(t)=e^{−2t} | Ω decreasing? |
+|-----|-------------|--------------|---------------|
+| 0.0 | 1.000       | 1.000        | —             |
+| 0.5 | 0.6065      | 0.3679       | yes           |
+| 1.0 | 0.3679      | 0.1353       | yes           |
+| 2.0 | 0.1353      | 0.0183       | yes           |
 
-| t   | Y₀ = 5 (above ball) | Y₀ = 0 (below ball) |
-|-----|---------------------|---------------------|
-| 0   | 5.000               | 0.000               |
-| 1   | 3.104               | 1.264               |
-| 2   | 2.406               | 1.729               |
-| 5   | 2.020               | 1.987               |
-| 10  | 2.0001              | 1.9999              |
-| ∞   | 2.000               | 2.000               |
+This confirms `trivialModel2D_enstrophy_bound` is non-vacuous: a non-constant
+trajectory with strictly dissipated enstrophy.
 
-* `dissipative_bound` predicts `Y ≤ max(Y₀, b/a)`: for `Y₀=5`, `≤ 5` ✓ (monotone
-  down to 2); for `Y₀=0`, `≤ 2` ✓ (monotone up to 2, never exceeds 2).
-* `dissipative_absorbing` / `dissipative_limsup_le` predict entry into `2 + ε` and
-  `limsup = 2` ✓ (both columns → 2).
+## 2. The 2D vs 3D dichotomy, scalarized
 
-## 2. 3D blow-up lower rate `Z' = C Z³` (worst case: equality)
+The general enstrophy identity is `Ω'(t) = −2ν‖A u‖² − 2⟨B(u,u), A u⟩`.
+Writing `S = ⟨B(u,u), A u⟩` (the stretching pairing) and `D = ν‖A u‖² ≥ 0`:
 
-Exact solution of `Z' = C Z³`: `Z(t)² = Z₀² / (1 - 2C Z₀² t)`, blowing up at
-`T* = 1/(2C Z₀²)`. The lower-rate claim is `Z(t)² ≥ 1/(2C(T*-t))`.
+- **2D** (`hB2`): `S = 0` ⇒ `Ω' = −2D ≤ 0` always. Enstrophy decays.
+- **3D conditional** (`hctrl`): `−S ≤ D` ⇒ `Ω' = −2D − 2S ≤ −2D + 2D = 0`.
+- **3D unconditional**: `S` free ⇒ `Ω'` sign indeterminate (possible growth).
 
-Take `C = 1`, `Z₀ = 1`, so `T* = 0.5`:
+Sanity check of the sign algebra used in
+`Model3D.enstrophy_antitone_of_stretching_controlled` (here `D = 1`):
 
-| t     | Z(t)² (exact) | lower bound 1/(2(T*-t)) | ratio |
-|-------|---------------|------------------------|-------|
-| 0.0   | 1.000         | 1.000                  | 1.000 |
-| 0.25  | 2.000         | 2.000                  | 1.000 |
-| 0.40  | 5.000         | 5.000                  | 1.000 |
-| 0.49  | 50.00         | 50.00                  | 1.000 |
-| →T*   | +∞            | +∞                     | 1.000 |
+| S (stretching) | −S ≤ D? | Ω' = −2D−2S | ≤ 0? |
+|----------------|---------|-------------|------|
+| 0.0            | yes     | −2.0        | yes  |
+| −0.5           | yes     | −1.0        | yes  |
+| −1.0           | yes (=) | 0.0         | yes  |
+| −1.5           | no      | +1.0        | no   |
 
-For the *equality* (pure comparison ODE) the lower bound is attained exactly
-(ratio ≡ 1), confirming the constant `2C` and the exponent `-1/2` are sharp. For a
-genuine *inequality* `Z' ≤ C Z³` the true `Z` is ≤ the comparison solution, so it
-blows up *no earlier*, and the lower bound `Z(t)² ≥ 1/(2C(T*-t))` is exactly the
-statement that it cannot blow up *slower*. No counterexample exists by the proof.
+The control hypothesis `−S ≤ D` is exactly the threshold `S ≥ −D` separating
+guaranteed decay from possible growth — matching the proved theorem.
 
-## Counterexample hunt
+## 3. Counterexample hunt (against over-claiming)
 
-* Removed hypotheses confirmed unnecessary (and thus dropped from the statements):
-  `recip_sq_lower_lipschitz` does **not** need `C > 0`; `recip_sq_tendsto_zero_of_blowup`
-  does **not** need `Z > 0`. No false generalisation slipped in: both still build.
-* `dissipative_limsup_le` genuinely needs `0 ≤ Y` (physical non-negativity) — without
-  a lower cobound `limsup` can degenerate; this is recorded as a load-bearing hypothesis.
+We deliberately checked that the **3D unconditional** enstrophy bound is *false*
+in general (otherwise the work would be vacuous or wrong): the row `S = −1.5`
+above gives `Ω' > 0`, so without `hctrl` the enstrophy can increase. This is why
+`Partial3D.lean` only states a *conditional* result, and why the genuine 3D
+global regularity problem remains open. No false universal claim is made.
+
+## 4. OEIS
+
+No integer sequence arises (the objects are continuous dissipation identities),
+so no OEIS lookup applies.
+
+## Scope note
+
+This stage is intentionally brief: the mathematical content is an exact identity
+plus a sign inequality, both fully verified in Lean with only the standard
+axioms `{propext, Classical.choice, Quot.sound}`. The tables above are
+illustrative restatements of the machine-checked algebra, not the primary
+evidence.
