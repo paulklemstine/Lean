@@ -81,7 +81,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "518f172b",
     "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
     "domain_bridges": [],
     "domains": [
@@ -94,7 +94,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:16.980012+00:00",
     "title": "Natural Proofs Barrier: Formalization"
   },
@@ -1136,7 +1136,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3be846c2",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1148,7 +1148,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -3857,7 +3857,7 @@
       "Cameron-Puleo upper bound sat(n,K1∨F) ≤ n-1+sat(n-1,F)",
       "This paper: equality for F=K2∪qK1 and F=2K2∪qK1"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab90b095",
     "description": "For every integer t ≥ 1 and q ≥ 1, let F = tK₂ ∪ qK₁ be the disjoint union of a matching of size t and q isolated vertices. Then for every n > 2t + q, the Cameron--Puleo upper bound is tight: sat(n, K₁ ∨ F) = n - 1 + sat(n - 1, F). This extends the paper's proved cases t = 1 and t = 2 to all matchings with isolated vertices.",
     "domain_bridges": [
       "finite simple graph theory to Lean 4 SimpleGraph",
@@ -3873,7 +3873,7 @@
     "proof_strategy": "The upper bound is exactly the Cameron--Puleo construction: take an extremal F-saturated graph on n-1 vertices and join one new universal vertex to it. For the lower bound, let G be any (K1∨F)-saturated graph on n vertices. Analyze a nonedge xy and the forced copy of K1∨F in G+xy. Because F is a matching plus isolated vertices, any forced copy can be decomposed into one apex vertex, t independent edges, and q remaining vertices avoiding the apex constraints. Show that the saturation condition forces either a universal vertex whose deletion is F-saturated, giving |E(G)| ≥ n-1+sat(n-1,F), or else enough local edge-disjoint matching witnesses around nonedges to yield the same global edge lower bound by degree counting. The base cases t=1,2 are supplied by the paper; the induction step increases t by removing one forced matching edge from each witness copy and applying the lower bound to the residual (t-1)K2∪qK1 configuration.",
     "research_mode": "team",
     "source_exp_id": "2606.22011v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:25:38.671844+00:00",
     "title": "Join-saturation equality for matchings with isolated vertices"
   },
@@ -10394,7 +10394,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "762ed13d",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -10407,7 +10407,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -11001,7 +11001,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f247824f",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -11014,7 +11014,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -11481,7 +11481,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa3d24c5",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domain_bridges": [],
     "domains": [
@@ -11494,7 +11494,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
