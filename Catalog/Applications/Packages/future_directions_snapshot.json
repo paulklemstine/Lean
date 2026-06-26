@@ -2388,7 +2388,7 @@
       "Mathlib.LinearAlgebra.Quotient",
       "Mathlib.RingTheory.TensorProduct"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72d240c8",
     "description": "Let R be any commutative ring and G any finite group. Define HH₀(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH₀(R[G]) ≃ R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
     "domain_bridges": [
       "Finite group algebras as toy models for Hecke algebras of p-adic groups",
@@ -2406,7 +2406,7 @@
     "proof_strategy": "Define the class map φ : R[G] → ConjClass(G) →₀ R by φ(g) = [g]. Show every additive commutator maps to zero, so φ descends to HH₀(R[G]). For the inverse, define a map on conjugacy classes by sending the class of g to the image of the basis vector g in the commutator quotient. This is well-defined because hgh⁻¹ - g equals the commutator δ_h δ_{g h⁻¹} - δ_{g h⁻¹} δ_h in R[G]. Extend linearly and check the two composites on basis generators.",
     "research_mode": "team",
     "source_exp_id": "2606.21313v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T02:05:39.955397+00:00",
     "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
   },
@@ -9324,6 +9324,31 @@
     "title": "Ψ_f-Lindemann–Weierstrass Conjecture for Algebraic Independence of Böttcher Coordinates"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "2409.07877"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Formulates a concise formalism in Lean 4 to verify an instance of Hegedçs' eigenvalue condition using Gram matrix eigenvalues and algebraic constraints, making the bound falsifiable through explicit construction.",
+    "domain_bridges": [
+      "combinatorics",
+      "algorithms"
+    ],
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2579",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the lemma on norm equality and linear independence to tighten dimension bounds via spectral arguments.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24624v1",
+    "status": "available",
+    "timestamp": "2026-06-26T11:13:57.875110+00:00",
+    "title": "Proof of Hegedçs bound via spectral constraints in combinatorial families"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem 1",
@@ -9340,7 +9365,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9369,7 +9394,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9395,7 +9420,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9420,7 +9445,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9448,7 +9473,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9474,7 +9499,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9500,7 +9525,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9522,7 +9547,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9548,7 +9573,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9568,7 +9593,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9591,7 +9616,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -9616,7 +9641,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
@@ -9643,7 +9668,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the vertex-gluing construction from the paper to establish recursive relationships between the ranks for different n, combined with exhaustive case analysis for small n values, and use induction to generalize to larger n. Critical lemmas would involve verifying the intersection condition preservation under gluing operations and demonstrating self-duality through explicit automorphism constructions.",
@@ -9669,7 +9694,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
@@ -9696,7 +9721,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof techniques from the Chudnovsky-Scott-Seymour paper, using induction on the number of colors and maximum graph size, combined with careful analysis of how vertex partitions interact with the complete join structure under color constraints.",
@@ -9723,7 +9748,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If a tournament has no transitive triangle, then every directed P3 with endpoints in a convex set must have the arc between endpoints, making both convexities equivalent; (2) If a tournament has a transitive triangle (u,v,w) with u→v→w and u→w, construct a set whose convex hulls differ between the two convexity notions.",
@@ -9754,7 +9779,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Lovász’s minimax theorem for matroid matchings to relate the extremal size to the fractional matching number in the associated matroid. Apply a high‑dimensional Hoffman bound for uniform hypergraphs over the lattice of subspaces to obtain upper bounds that match the two constructions. Then develop a stability argument that shows any family attaining the upper bound must be structurally close to one of the two extremal families, and finally exploit design‑theoretic counting to rule out all other configurations. The proof would combine linear‑algebraic isoperimetric inequalities, spectral techniques on the Grassmann graph, and matroid intersection theory.",
@@ -9763,6 +9788,33 @@
     "status": "available",
     "timestamp": "2026-06-26T10:45:02.796912+00:00",
     "title": "Vector‑Space Erdős Matching Conjecture (full case)"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Mizoguchi and Tamaru, 2024",
+      "Gromov, 1995",
+      "Laurention et al., 2018"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This paper explores the construction of nilpotent Lie algebras with arbitrarily high nilpotency using structured ordered sets and investigates their implications for algebraic Ricci solitons.",
+    "domain_bridges": [
+      "algebraic geometry",
+      "microalgebra",
+      "algebraic topology"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2597",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive adaptation of existing existence techniques with tailored order-preserving constructions",
+    "research_mode": "team",
+    "source_exp_id": "2606.24569v1",
+    "status": "available",
+    "timestamp": "2026-06-26T11:14:03.330176+00:00",
+    "title": "Nilpotent Lie algebras obtained by ordered sets and Ricci solitons"
   },
   {
     "ambition_level": "extension",
@@ -9863,7 +9915,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c72330ea",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domain_bridges": [],
     "domains": [
@@ -9876,7 +9928,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -10034,26 +10086,6 @@
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Chromatic Polynomial Theory (Tropical domain)\n\nDerived from this cycle's findings (`Counting.lean`, `Brooks.lean`, `FourColor.lean`,\n`TropicalBridge.lean`).  Each conjecture is bold, falsifiable, and supported by the\nresults already proved.\n\n---\n\n## C1. Full Brooks' theorem: removing the `+1`\n\n**Conjecture.** For every finite connected graph `G` that is neither a complete\ngraph nor an odd cycle, `G.Colorable G.maxDegree` (i.e. `χ(G) ≤ Δ(G)`).\n\n**The key insight is** that the slack vertex in the greedy argument\n(`colorable_maxDegree_add_one`, proved here by a `Finset.induction` greedy that gives\neach vertex a free color among `Δ+1`) can be *recycled*: in any non-complete,\nnon-odd-cycle connected graph there is a vertex ordering ending at a cut-adjacent\nvertex with two neighbors of equal color, freeing one color globally.\n\n**Why now?** We have already formalized the universal bound `χ ≤ Δ+1` and *both*\ntight exception families with their exact `χ = Δ+1` values\n(`completeGraph_chromatic_eq_maxDegree_add_one`,\n`oddCycle_chromatic_eq_maxDegree_add_one`).  The only missing ingredient is the\nordering lemma, so the target is sharply isolated.\n\n---\n\n## C2. The chromatic polynomial is a genuine integer polynomial with the DC recursion\n\n**Conjecture.** There is a `P : SimpleGraph V → Polynomial ℤ` with\n`(P G).eval (k : ℤ) = chromCount G k` for all `k`, satisfying\n`P Gdel = P G + P (contraction)` and `(P G).coeff` alternating in sign with\n`(P G).natDegree = |V|` and leading coefficient `1`.\n\n**The key insight is** that the *additive* `ℕ`-valued recursion proved here\n(`chromCount_deletion_contraction`) lifts uniquely to `ℤ[X]` by induction on the\nnumber of edges, because the empty-graph base case `kⁿ` and the recursion pin down\nall coefficients.\n\n**Why now?** The additive deletion–contraction identity over `ℕ` is in hand and\nmatches the small-case table (§2 of `ComputationalEvidence.md`); promoting it to\n`ℤ[X]` is a finite-edge induction rather than new combinatorics.\n\n---\n\n## C3. T-positivity of the chromatic polynomial for claw-free graphs\n\n**Conjecture.** For every claw-free graph `G`, the chromatic polynomial written in the\nfalling-factorial (tropical/`σ`) basis has nonnegative coefficients; equivalently its\ntropicalization `x ↦ log chromCount G ⌈e^x⌉` is a convex, piecewise-linear (max-plus)\nfunction with integer slopes `0,1,…,|V|`.\n\n**The key insight is** that the tropicalized deletion–contraction sandwich proved here\n(`tropical_deletion_contraction_lower/upper`) turns the count recursion into a max-plus\nrecursion, and claw-freeness forbids the local configuration that would otherwise\ncreate a negative tropical coefficient (a sign cancellation in the σ-expansion).\n\n**Why now?** The tropical bridge is established (`log_chromCount_bot_two` matches the\ncatalog `tropicalQuadratic` exactly, and the DC sandwich is general), so the question\nis now a precise statement about slopes of a known piecewise-linear envelope.\n\n---\n\n## C4. Multiplicativity and the clique-sum divisibility law\n\n**Conjecture.** `chromCount` is multiplicative over connected components, and for a\nclique-sum `G = G₁ ∪_{Kᵣ} G₂` the chromatic polynomial satisfies\n`P(G) · P(Kᵣ) = P(G₁) · P(G₂)`.\n\n**The key insight is** that a proper coloring of a disjoint union is an independent\npair of proper colorings (a product `Finset` bijection), and gluing along a clique\nforces the shared `Kᵣ` to be colored once, dividing out `P(Kᵣ)`.\n\n**Why now?** The `Finset`-based `properColorings` model used here makes the product\nbijection a direct `Fintype.card` computation, exactly the style already used in\n`chromCount_top` (injections ↔ embeddings).\n\n---\n\n## C5. Polynomial four-color criterion meets a formal planarity predicate\n\n**Conjecture.** With a Mathlib-style planarity predicate `Planar` (via an Euler-formula\n/ Kuratowski development), `∀ G, Planar G → chromCount G 4 ≠ 0`; equivalently the\nchromatic polynomial of every planar graph is nonzero at `4`.\n\n**The key insight is** that four-colorability is *exactly* non-vanishing of the\nchromatic polynomial at `4` (`fourColorable_iff_chromCount_four_ne_zero`), so the Four\nColor Theorem is equivalent to a single non-vanishing statement about an explicit\ninteger polynomial.\n\n**Why now?** The equivalence of the two phrasings is already proved here over an\nabstract `Planar` predicate (`fourColorTheorem_formulations_equiv`); the remaining work\nis solely a formal definition of planarity, decoupled from the coloring side.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2596",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "49f14a50",
-    "status": "available",
-    "timestamp": "2026-06-26T11:12:39.434769+00:00",
-    "title": "Derived from this cycle's findings (`Counting.lean`, `Brooks.lean`, `FourColor.l"
   },
   {
     "ambition_level": "extension",
@@ -10387,6 +10419,26 @@
     "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0439",
+    "lineage_refs": [],
+    "priority_score": 0.5499999999999999,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.479969+00:00",
+    "title": "Idempotent Probability: Large Deviations"
   },
   {
     "ambition_level": "extension",

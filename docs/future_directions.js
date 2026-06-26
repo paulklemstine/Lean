@@ -1656,7 +1656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72d240c8",
     "description": "Let R be any commutative ring and G any finite group. Define HH\u2080(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH\u2080(R[G]) \u2243 R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
     "domains": [
       "Algebra",
@@ -1666,7 +1666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.21313v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T02:05:39.955397+00:00",
     "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
   },
@@ -5346,11 +5346,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formulates a concise formalism in Lean 4 to verify an instance of Heged\u00e7s' eigenvalue condition using Gram matrix eigenvalues and algebraic constraints, making the bound falsifiable through explicit construction.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2579",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24624v1",
+    "status": "available",
+    "timestamp": "2026-06-26T11:13:57.875110+00:00",
+    "title": "Proof of Heged\u00e7s bound via spectral constraints in combinatorial families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5364,7 +5379,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5379,7 +5394,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5394,7 +5409,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5409,7 +5424,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5424,7 +5439,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5438,7 +5453,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5452,7 +5467,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5466,7 +5481,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5481,7 +5496,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5496,7 +5511,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5511,7 +5526,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5526,7 +5541,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5541,7 +5556,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5555,7 +5570,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5570,7 +5585,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5585,13 +5600,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
     "status": "available",
     "timestamp": "2026-06-26T10:45:02.796912+00:00",
     "title": "Vector\u2011Space Erd\u0151s Matching Conjecture (full case)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper explores the construction of nilpotent Lie algebras with arbitrarily high nilpotency using structured ordered sets and investigates their implications for algebraic Ricci solitons.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2597",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24569v1",
+    "status": "available",
+    "timestamp": "2026-06-26T11:14:03.330176+00:00",
+    "title": "Nilpotent Lie algebras obtained by ordered sets and Ricci solitons"
   },
   {
     "consumed_by_exp_id": "",
@@ -5665,7 +5694,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "c72330ea",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -5675,7 +5704,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -5793,21 +5822,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Chromatic Polynomial Theory (Tropical domain)\n\nDerived from this cycle's findings (`Counting.lean`, `Brooks.lean`, `FourColor.lean`,\n`TropicalBridge.lean`).  Each conjecture is bold, falsifiable, and supported by the\nresults already proved.\n\n---\n\n## C1. Full Brooks' theorem: removing the `+1`\n\n**Conjecture.** For every finite connected graph `G` that is neither a complete\ngraph nor an odd cycle, `G.Colorable G.maxDegree` (i.e. `\u03c7(G) \u2264 \u0394(G)`).\n\n**The key insight is** that the slack vertex in the greedy argument\n(`colorable_maxDegree_add_one`, proved here by a `Finset.induction` greedy that gives\neach vertex a free color among `\u0394+1`) can be *recycled*: in any non-complete,\nnon-odd-cycle connected graph there is a vertex ordering ending at a cut-adjacent\nvertex with two neighbors of equal color, freeing one color globally.\n\n**Why now?** We have already formalized the universal bound `\u03c7 \u2264 \u0394+1` and *both*\ntight exception families with their exact `\u03c7 = \u0394+1` values\n(`completeGraph_chromatic_eq_maxDegree_add_one`,\n`oddCycle_chromatic_eq_maxDegree_add_one`).  The only missing ingredient is the\nordering lemma, so the target is sharply isolated.\n\n---\n\n## C2. The chromatic polynomial is a genuine integer polynomial with the DC recursion\n\n**Conjecture.** There is a `P : SimpleGraph V \u2192 Polynomial \u2124` with\n`(P G).eval (k : \u2124) = chromCount G k` for all `k`, satisfying\n`P Gdel = P G + P (contraction)` and `(P G).coeff` alternating in sign with\n`(P G).natDegree = |V|` and leading coefficient `1`.\n\n**The key insight is** that the *additive* `\u2115`-valued recursion proved here\n(`chromCount_deletion_contraction`) lifts uniquely to `\u2124[X]` by induction on the\nnumber of edges, because the empty-graph base case `k\u207f` and the recursion pin down\nall coefficients.\n\n**Why now?** The additive deletion\u2013contraction identity over `\u2115` is in hand and\nmatches the small-case table (\u00a72 of `ComputationalEvidence.md`); promoting it to\n`\u2124[X]` is a finite-edge induction rather than new combinatorics.\n\n---\n\n## C3. T-positivity of the chromatic polynomial for claw-free graphs\n\n**Conjecture.** For every claw-free graph `G`, the chromatic polynomial written in the\nfalling-factorial (tropical/`\u03c3`) basis has nonnegative coefficients; equivalently its\ntropicalization `x \u21a6 log chromCount G \u2308e^x\u2309` is a convex, piecewise-linear (max-plus)\nfunction with integer slopes `0,1,\u2026,|V|`.\n\n**The key insight is** that the tropicalized deletion\u2013contraction sandwich proved here\n(`tropical_deletion_contraction_lower/upper`) turns the count recursion into a max-plus\nrecursion, and claw-freeness forbids the local configuration that would otherwise\ncreate a negative tropical coefficient (a sign cancellation in the \u03c3-expansion).\n\n**Why now?** The tropical bridge is established (`log_chromCount_bot_two` matches the\ncatalog `tropicalQuadratic` exactly, and the DC sandwich is general), so the question\nis now a precise statement about slopes of a known piecewise-linear envelope.\n\n---\n\n## C4. Multiplicativity and the clique-sum divisibility law\n\n**Conjecture.** `chromCount` is multiplicative over connected components, and for a\nclique-sum `G = G\u2081 \u222a_{K\u1d63} G\u2082` the chromatic polynomial satisfies\n`P(G) \u00b7 P(K\u1d63) = P(G\u2081) \u00b7 P(G\u2082)`.\n\n**The key insight is** that a proper coloring of a disjoint union is an independent\npair of proper colorings (a product `Finset` bijection), and gluing along a clique\nforces the shared `K\u1d63` to be colored once, dividing out `P(K\u1d63)`.\n\n**Why now?** The `Finset`-based `properColorings` model used here makes the product\nbijection a direct `Fintype.card` computation, exactly the style already used in\n`chromCount_top` (injections \u2194 embeddings).\n\n---\n\n## C5. Polynomial four-color criterion meets a formal planarity predicate\n\n**Conjecture.** With a Mathlib-style planarity predicate `Planar` (via an Euler-formula\n/ Kuratowski development), `\u2200 G, Planar G \u2192 chromCount G 4 \u2260 0`; equivalently the\nchromatic polynomial of every planar graph is nonzero at `4`.\n\n**The key insight is** that four-colorability is *exactly* non-vanishing of the\nchromatic polynomial at `4` (`fourColorable_iff_chromCount_four_ne_zero`), so the Four\nColor Theorem is equivalent to a single non-vanishing statement about an explicit\ninteger polynomial.\n\n**Why now?** The equivalence of the two phrasings is already proved here over an\nabstract `Planar` predicate (`fourColorTheorem_formulations_equiv`); the remaining work\nis solely a formal definition of planarity, decoupled from the coloring side.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2596",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "49f14a50",
-    "status": "available",
-    "timestamp": "2026-06-26T11:12:39.434769+00:00",
-    "title": "Derived from this cycle's findings (`Counting.lean`, `Brooks.lean`, `FourColor.l"
   },
   {
     "consumed_by_exp_id": "",
@@ -6056,6 +6070,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0439",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.479969+00:00",
+    "title": "Idempotent Probability: Large Deviations"
   },
   {
     "consumed_by_exp_id": "",

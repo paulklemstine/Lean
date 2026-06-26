@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8e353e57",
-      "domain": "Logic",
-      "key_insight": "# Future Directions\n\nThe six-element witness model in `Catalog/Computation/ParadoxesAsTheorems.lean` is a\ntight, self-contained certificate. Below are concrete directions for extending it.\n\n## 1. A ge",
-      "quality_score": 0.63384,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-20T07:47:58",
-      "title": "Derived from the cycle whose verified results live in"
-    },
-    {
       "cycle_id": "db367995",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Invariant Subspace Problem\n\nDerived from this cycle's findings in `InvariantSubspaceCore.lean` (finite-dimensional\nexistence + commutant invariance) and `InvariantSubspaceSelfAdj",
@@ -2501,6 +2491,16 @@
       "theorem_count": 21,
       "timestamp": "2026-06-26T11:12:48",
       "title": "Graph Coloring: Chromatic Polynomial Theory"
+    },
+    {
+      "cycle_id": "18edb6fb",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Secret Sharing: Shamir's Scheme and Verifiable Variants\n\nThis cycle added two files extending the catalog's `ShamirSecretSharing` and `FeldmanVSS`:\n\n- `ShamirLagrangeReconstructi",
+      "quality_score": 0.6521899999999999,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-26T11:13:49",
+      "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71376
     }
   ],
-  "last_updated": "2026-06-26T11:12:48",
+  "last_updated": "2026-06-26T11:13:49",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "0c649dc0",
-        "quality": 0.5379381188118812,
-        "theorems": 103,
-        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-      },
-      {
         "cycle_id": "93e2fea4",
         "quality": 0.45196000000000003,
         "theorems": 2,
@@ -3389,6 +3383,12 @@
         "quality": 0.506378,
         "theorems": 10,
         "title": "Primes of the Form n²+1"
+      },
+      {
+        "cycle_id": "18edb6fb",
+        "quality": 0.6521899999999999,
+        "theorems": 12,
+        "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
       }
     ],
     "Geometry": [
