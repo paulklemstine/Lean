@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d4c70419",
     "filename": "random_graphs_erds_rnyi_threshold_phenomena.json",
     "pkg_num": 74,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.65696,
     "title": "Random Graphs: Erdos-Renyi Threshold Phenomena"
   },
   {
@@ -2155,8 +2155,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "random_graphs_erds_rnyi_threshold_phenomena",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.65696,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Random Graphs: Erdos-Renyi Threshold Phenomena"
     }

@@ -852,7 +852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f0b7b2e4",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -861,7 +861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -3612,21 +3612,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Externally Supported Independence Number"
   },
   {
-    "consumed_by_exp_id": "d7fd1af1",
-    "description": "Conjecture: For rational \u03b2 = p/q, the natural extension has finite domain bridges.",
-    "domains": [
-      "Pythagorean",
-      "Bridges"
-    ],
-    "id": "fd_2450",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23097v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T20:58:20.101200+00:00",
-    "title": "Domain Finiteness"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture: Let P be a connected polymatroid on a finite ground set E. For any element e \u2208 E that is neither a loop (f({e})=0) nor a coloop (f(E)\u2212f(E\\{e}) = f({e})), both the deletion P\u2212e and the contraction P/e are connected polymatroids. This would strengthen Hall's 2013 result which guarantees only two elements with at least one connected minor.",
     "domains": [
@@ -5429,6 +5414,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T03:16:20.885447+00:00",
     "title": "Scalar a-priori-estimate framework"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Erd\u0151s\u2013R\u00e9nyi threshold phenomena\n\nDerived from this cycle's findings (`Model.lean`, `SecondMoment.lean`,\n`Concrete.lean`).  Each conjecture is bold, falsifiable, and accompanied by the\nkey insight that makes it tractable and a \"why now?\" justification grounded in\nthe artifacts already proved.\n\n## C1. Sharp connectivity threshold via second moment of isolated vertices\n**Statement.** Let `X_n` be the number of isolated vertices in `G(n, p_n)` with\n`p_n = (ln n + c)/n`.  Then `Var X_n / (\ud835\udd3c X_n)\u00b2 \u2192 0`, and combined with\n`\ud835\udd3c X_n \u2192 e^{-c} > 0`, `second_moment_zero` forces `\u2119(X_n = 0) \u2192 0`; hence\n`G(n, p_n)` is disconnected with probability `\u2192 1 \u2212 e^{-e^{-c}}`, giving the\nsharp threshold at `p = ln n / n`.\n\nThe key insight is... that the *exact* first moment `\ud835\udd3c X_n = n(1\u2212p)^{n\u22121}`\n(already formalized as `Concrete.expected_isolated`) only needs to be paired with\na covariance bound for pairs of vertices, because `second_moment_zero` is already\navailable as a black box.\n\n**Why now?** Both moment inequalities (`firstMoment`, `second_moment_zero`) and\nthe exact isolated-vertex expectation are now proved with `0` sorries, so only the\ntwo-vertex covariance estimate remains \u2014 a single, self-contained lemma.\n\n## C2. The variance of subgraph counts factors over edge overlaps\n**Statement.** For a fixed graph `H` with `e_H` edges, the count `X_H` of copies\nof `H` in `G(n,p)` satisfies\n`Var X_H = \u2211_{H', H''} (p^{|E(H')\u222aE(H'')|} \u2212 p^{2 e_H})`, summed over ordered\npairs of copies, and the dominant contribution comes from pairs sharing at least\none edge.\n\nThe key insight is... that `prob_allPresent` already gives\n`\u2119(both copies present) = p^{|E(H')\u222aE(H'')|}` exactly, so the variance is a pure\nfinite sum over copy-pairs graded by their edge-overlap \u2014 no measure theory.\n\n**Why now?** `expectation_subgraphCount` established the first moment as a sum of\n`p^{|S_i|}`; the identical Fubini/independence template extends verbatim to the\n*product* indicator of two copies, making the second moment a mechanical\ngeneralization.\n\n## C3. Threshold for `H`-appearance is `n^{-1/m(H)}` where `m(H)=max density`\n**Statement.** For a fixed connected graph `H`, the threshold function for the\nappearance of a copy of `H` in `G(n,p)` is `p = n^{-1/m(H)}` with\n`m(H) = max_{H'\u2286H} |E(H')|/|V(H')|`; below it copies vanish, above it they appear\nwhp.\n\nThe key insight is... that the \"below\" direction is *already* a corollary of\n`firstMoment` (`\ud835\udd3c = \u0398(n^{|V|} p^{|E|}) \u2192 0`), and the \"above\" direction is\nexactly the regime where C2's variance bound makes `Var/\ud835\udd3c\u00b2 \u2192 0`, so the whole\ntheorem reduces to the densest-subgraph optimization defining `m(H)`.\n\n**Why now?** The two halves of the method are formalized; the remaining content is\nthe combinatorial optimization `m(H)`, which is finite for each fixed `H`.\n\n## C4. Poisson limit for triangle counts at the critical scale `p = c/n`\n**Statement.** At `p_n = c/n`, the number of triangles `T_n` converges in\ndistribution to `Poisson(c\u00b3/6)`; in particular `\u2119(T_n = 0) \u2192 e^{-c\u00b3/6}`.\n\nThe key insight is... that `Concrete.expected_triangles` already pins\n`\ud835\udd3c T_n = C(n,3)p\u00b3 \u2192 c\u00b3/6`, and the method of moments only requires showing the\n`k`-th factorial moment `\u2192 (c\u00b3/6)^k`, each of which is again a\n`prob_allPresent`-style product over `k` edge-disjoint triangles.\n\n**Why now?** The exact expectation is proved; the factorial-moment computation is\nthe same independence identity iterated, and triangles are edge-disjoint\n\"generically\", which is precisely what makes the Poisson regime appear at `1/n`.\n\n## C5. Giant component emergence at `p = 1/n` via a branching-process coupling\n**Statement.** For `p = c/n` with `c > 1`, `G(n,p)` has a unique component of\nsize `\u0398(n)` whp, while for `c < 1` all components are `O(log n)`; the transition\nis exactly at `c = 1`.\n\nThe key insight is... that the local exploration of a component is coupled to a\nGalton\u2013Watson branching process with `Poisson(c)` offspring, whose survival\nprobability is positive iff `c > 1`; the subcritical bound is a first-moment\n(`firstMoment`-style) union bound over long paths.\n\n**Why now?** The subcritical half is within reach of the existing first-moment\nmachinery (expected number of length-`k` paths is `n^{k+1}p^k = n(np)^k`, summable\nfor `np < 1`); formalizing the branching coupling is the natural next milestone\nonce the path-count lemma \u2014 a direct `expectation_subgraphCount` instance \u2014 is in\nplace.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2572",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d4c70419",
+    "status": "available",
+    "timestamp": "2026-06-26T03:18:23.930480+00:00",
+    "title": "Derived from this cycle's findings (`Model.lean`, `SecondMoment.lean`,"
   },
   {
     "consumed_by_exp_id": "",
