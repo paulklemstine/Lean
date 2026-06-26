@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bc0a8e2b",
     "filename": "existence_of_non_trivial_boolean_degree_one_functi.json",
     "pkg_num": 98,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5310828235294118,
     "title": "Existence and Rigidity of Boolean Degree One Functions on the q-Grassmann Scheme J_q(n,2)"
   },
   {
@@ -2851,8 +2851,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "existence_of_non_trivial_boolean_degree_one_functi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5310828235294118,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Existence and Rigidity of Boolean Degree One Functions on the q-Grassmann Scheme J_q(n,2)"
     }

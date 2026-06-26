@@ -517,6 +517,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n² : n ∈ ℕ+} ∪ [0,∞). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Analysis"
+    ],
+    "id": "seed_362",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432770+00:00",
+    "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| ≤ 2√p.",
     "domain_bridges": [],
     "domains": [
@@ -8539,7 +8559,7 @@
       "approximate Carathéodory theorem",
       "Maurey's empirical method"
     ],
-    "consumed_by_exp_id": "be72639d",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor λ > 1, leading to exponential contraction after k iterations: max{σ ∈ Del(X_k)}.diameter ≤ (1/λ)^k · max{σ ∈ Del(X_0)}.diameter",
     "domain_bridges": [
       "Delaunay triangulation",
@@ -8554,7 +8574,7 @@
     "proof_strategy": "Formalize covering estimates via pivotal sampling and the dimension-dependent Carathéodory theorem to bound diameter decay per refinement step",
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
@@ -9490,6 +9510,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Diestel2010Book"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that there exist infinitely many subset-minimal minor-closed graph classes whose limiting density is exactly 3/2. This is the boundary case beyond which the paper's finiteness result no longer applies.",
+    "domain_bridges": [
+      "Graph minor theory",
+      "Extremal graph theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2586",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct an infinite family of minor-minimal classes with density 3/2 by generalizing known constructions, or prove that any finite bound leads to a contradiction via density properties.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24326v2",
+    "status": "available",
+    "timestamp": "2026-06-26T14:59:48.837106+00:00",
+    "title": "Infinitude of Minimal Minor-Closed Classes with Density Exactly 3/2"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -9504,7 +9548,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9533,7 +9577,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9559,7 +9603,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9584,7 +9628,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9612,7 +9656,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9638,7 +9682,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9664,7 +9708,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9686,7 +9730,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9712,7 +9756,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9732,7 +9776,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9755,7 +9799,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -9780,7 +9824,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
@@ -9807,7 +9851,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the vertex-gluing construction from the paper to establish recursive relationships between the ranks for different n, combined with exhaustive case analysis for small n values, and use induction to generalize to larger n. Critical lemmas would involve verifying the intersection condition preservation under gluing operations and demonstrating self-duality through explicit automorphism constructions.",
@@ -9833,7 +9877,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
@@ -9860,7 +9904,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof techniques from the Chudnovsky-Scott-Seymour paper, using induction on the number of colors and maximum graph size, combined with careful analysis of how vertex partitions interact with the complete join structure under color constraints.",
@@ -9887,7 +9931,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If a tournament has no transitive triangle, then every directed P3 with endpoints in a convex set must have the arc between endpoints, making both convexities equivalent; (2) If a tournament has a transitive triangle (u,v,w) with u→v→w and u→w, construct a set whose convex hulls differ between the two convexity notions.",
@@ -9918,7 +9962,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Lovász’s minimax theorem for matroid matchings to relate the extremal size to the fractional matching number in the associated matroid. Apply a high‑dimensional Hoffman bound for uniform hypergraphs over the lattice of subspaces to obtain upper bounds that match the two constructions. Then develop a stability argument that shows any family attaining the upper bound must be structurally close to one of the two extremal families, and finally exploit design‑theoretic counting to rule out all other configurations. The proof would combine linear‑algebraic isoperimetric inequalities, spectral techniques on the Grassmann graph, and matroid intersection theory.",
@@ -9945,7 +9989,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive adaptation of existing existence techniques with tailored order-preserving constructions",
@@ -9972,7 +10016,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve constructing a specific field extension (likely a function field of a quadric or a sequence of such extensions) and defining semi-singular forms (composed of a non-singular part and a totally singular part) that satisfy the isotropy index equality by construction via the properties of the Witt group in characteristic 2, while ensuring their similarity classes remain distinct using invariants like the Arf invariant or the dimension of the singular part.",
@@ -9998,7 +10042,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the prime zeta function P(s) as a Dirichlet series. 2. Implement the singular expansion of P(s) near the imaginary axis using the relationship between P(s) and the Riemann zeta function ζ(s) via the Mobius inversion formula: P(s) = ∑_{n=1}^∞ μ(n)/n * log ζ(ns). 3. Use the properties of the logarithm of the Riemann zeta function near its zeros and poles to construct a regularized limit or a specific path-dependent continuation. 4. Evaluate the resulting expression at s = -1.",
@@ -10028,7 +10072,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize coefficient codes whose m-th Schur powers have full-support hyperplane structure, apply the Mirandola-Zémor Schur-product Kneser theorem to constrain extremal matroid structures, then prove that any extremal configuration must have the same underlying point configuration as a rational normal curve under the Veronese embedding. The converse direction follows by explicit computation of rational-normal-curve Veronese images.",
@@ -10056,7 +10100,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the polynomial method (Combinatorial Nullstellensatz) to show that a zero-sum subset of size 2ℓ+1 yields a solution to the system of equations defining a cycle, and conversely extract a zero-sum subset from a given cycle via its edge differences. The symmetry of S allows reordering of differences to obtain a subset of S. Character sums over Z_p handle the distinctness condition on vertices.",
@@ -10084,7 +10128,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume density vanishes on a block, then use carry pressure lower bound and upper bound via stopping-time budget to derive contradiction. Uses four local carry estimates: complete-lap mass balance, total-support summation, fixed-pin confinement, and class-one realization.",
@@ -10109,7 +10153,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply linear programming duality to the covering weighting problem to derive a lower bound on the total weight, showing that any weighting covering the uncovered squares must have weight at least n - k + Ω(n), which translates into a lower bound on qc(n) and forces the asymptotic constant to be at least 0.216.",
@@ -10118,6 +10162,31 @@
     "status": "available",
     "timestamp": "2026-06-26T14:33:06.466347+00:00",
     "title": "Tight asymptotic bound for the n‑queens completion threshold"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "05D10",
+      "05C55"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all integers k ≥ 5, the 3-color shift number s₃(k) equals the square of the (k-2)-fold tower of twos evaluated at 2, i.e., s₃(k) = (twr_{k-2}(2))².",
+    "domain_bridges": [
+      "proof theory",
+      "extremal combinatorics"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2611",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Proceed by induction on k. For the base case k=5, verify s₃(5) = (twr₃(2))² = (2^{2^{2}})² = 64 via explicit construction. For the inductive step, assume the formula holds for k and construct a 3-coloring of (k+1)-subsets that avoids large monochromatic homogeneous sets by taking a product of the coloring for k with a 2-coloring of pairs, then apply the stepping-up lemma for shift numbers to show that s₃(k+1) ≥ (twr_{k-1}(2))². Conversely, use a density increment argument to show that any 3-coloring of (k+1)-subsets of a set of size (twr_{k-1}(2))² must contain a monochromatic homogeneous set of size k+1, establishing the upper bound.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24198v1",
+    "status": "available",
+    "timestamp": "2026-06-26T15:00:24.904002+00:00",
+    "title": "Exact value of the 3-color shift number"
   },
   {
     "ambition_level": "extension",
@@ -10389,46 +10458,6 @@
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Navier–Stokes: 2D Regularity and Partial 3D Results — Future Directions\n\nThis cycle formalized, in an abstract Galerkin framework, the precise structural\ndivide between 2D global regularity and 3D conditional regularity:\n\n- `EnergyMethod.lean` (pre-existing): unconditional `L²` (energy) control via the\n  trilinear cancellation `⟪B v v, v⟫ = 0`.\n- `Enstrophy2D.lean` (new): unconditional **enstrophy** control `⟪A u, u⟫` from\n  two extra axioms — self-adjointness of `A` and the **2D vortex-stretching\n  cancellation** `⟪B v v, A v⟫ = 0` — the a priori estimate behind 2D global\n  regularity.\n- `Partial3D.lean` (new): the **general** enstrophy dissipation identity keeping\n  the stretching term, plus an abstract **conditional regularity** theorem\n  (Prodi–Serrin / BKM shape): if `−⟪B(u,u), A u⟫ ≤ ν⟪A u, A u⟫` pointwise then\n  the enstrophy cannot blow up. The energy bound is shown to hold\n  unconditionally in 3D.\n- `Synthesis.lean` (new): 2D regularity is recovered as the degenerate case of\n  the 3D conditional criterion (the 2D cancellation discharges the 3D control\n  hypothesis); the two theories share the *same* enstrophy observable (`rfl`).\n- `Examples.lean` (new): a concrete inhabiting model with a non-constant decaying\n  solution, certifying the theorems are non-vacuous.\n\nThe unifying finding: **regularity = one more dissipated Lyapunov observable**,\nand the entire 2D/3D gap is localized to the sign and size of a single trilinear\npairing `⟪B(u,u), A u⟫` (the vortex-stretching term).\n\n## Conjectures for follow-up cycles\n\n### C1. Self-improving (Grönwall) enstrophy criterion\n**Statement.** Replace the qualitative pointwise control hypothesis `hctrl` of\n`Model3D.enstrophy_antitone_of_stretching_controlled` by a *self-referential*\nbound `⟪B(u,u), A u⟫ ≤ C · Ω(t)^{α}` (with `Ω = ⟪A u, u⟫`). Conjecture: there is\na critical exponent `α₀` such that for `α ≤ α₀` the resulting differential\ninequality `Ω'(t) ≤ −2ν‖A u‖² + 2C Ω^{α}` forces `Ω` to stay finite for all time\nfrom finite initial data, while for `α > α₀` finite-time blowup of the ODE\nmajorant is possible. **Testable**: formalize the scalar ODE comparison\n(`ODE_solution_le`/Grönwall in Mathlib) and pin down `α₀` (expected `α₀ = 3/2`,\nthe abstract shadow of the `H^1`–`L^∞` interpolation in 3D).\n\n### C2. Ladyzhenskaya 2D interpolation as an abstract inequality\n**Statement.** In 2D the stretching term is not merely zero structurally; even a\ngeneric quadratic `B` obeys `|⟪B(u,u), A u⟫| ≤ c ‖u‖ · ‖A u‖^{?}` with an\nexponent that makes it *absorbable* by `ν‖A u‖²` after using the energy bound.\nConjecture: adding an abstract Ladyzhenskaya-type field\n`|⟪B v v, A v⟫| ≤ c ‖v‖ · ‖A v‖^{3/2} · ‖v‖_?^{1/2}` to `Model2D` *derives* the\ncontrol hypothesis of C1 with `α < 1`, hence global regularity, *without*\nassuming `hB2 = 0`. **Testable**: state the inequality field and prove it implies\n`hctrl` after the energy bound; check the exponents close.\n\n### C3. Weak–strong uniqueness in the abstract model\n**Statement.** If `u` is any energy-bounded (Leray-type) solution and `v` is a\nsolution with bounded enstrophy on `[0,T]`, then `u = v` on `[0,T]`.\nConjecture: the abstract trilinear cancellation `⟪B v v, v⟫ = 0` plus\nself-adjointness of `A` suffice to prove a Grönwall estimate for the difference\n`w = u − v` energy `‖w‖²`, giving uniqueness in the enstrophy class.\n**Testable**: formalize `d/dt ‖w‖² ≤ K(t) ‖w‖²` with `K ∈ L¹` from the enstrophy\nbound on `v`, then Grönwall ⇒ `w ≡ 0`.\n\n### C4. Backward uniqueness / no eternal nontrivial decay\n**Statement.** In the dissipative abstract model with strictly positive `A`\n(`⟪A v, v⟫ ≥ λ‖v‖²`, `λ > 0`) and `ν > 0`, a solution that vanishes at some time\nmust vanish for all earlier times too (backward uniqueness), and every solution\ndecays exponentially: `‖u(t)‖ ≤ e^{−νλ t}‖u(0)‖`. **Testable**: the exponential\ndecay is an immediate Grönwall consequence of the energy identity refined with\nthe spectral gap `λ`; formalize it as `Model.norm_decay_of_gap`. (The\n`Examples.lean` witness already realizes the equality case `λ = ν = 1`.)\n\n### C5. Two-mode nonlinear Galerkin witness exercising `hB2`\n**Statement.** There is an explicit 2- or 3-dimensional model (`V = ℝ²`/`ℝ³`)\nwith a genuinely nonzero antisymmetric/quadratic `B` satisfying both\n`⟪B v v, v⟫ = 0` and `⟪B v v, A v⟫ = 0`, modelling a finite Fourier truncation of\n2D Euler/Navier–Stokes, whose solutions are non-trivial (rotating) yet have\nstrictly dissipated energy and enstrophy. **Testable**: construct `B(v,w)` from a\ncross-product-like bilinear form, verify both cancellations by `ring`/`fin_cases`,\nand exhibit a closed-form or numerically-validated trajectory. This upgrades the\nlinear witness of `Examples.lean` to one where `hB2` does real work, closing the\ngap to a recognizable spectral Navier–Stokes truncation.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_2610",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "abbbde7c",
-    "status": "available",
-    "timestamp": "2026-06-26T14:53:08.920390+00:00",
-    "title": "This cycle formalized, in an abstract Galerkin framework, the precise structural"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS — EML Differential Equations (Airy / Kovacic layer)\n\nDerived from this cycle's findings in `EML/EMLAiryRiccati.lean` (rational Riccati\nobstruction) and `EML/EMLRiccatiTransform.lean` (abstract Riccati transform & Wronskian),\nbuilding on the catalog file `EML/EMLDiffObstruction.lean` (polynomial obstruction).\n\nThis cycle established a three-layer obstruction tower for Airy's equation `y″ = x·y`:\npolynomial (catalog) → rational Riccati (degree/parity) → abstract differential-field\ntransform. The directions below push each layer further.\n\n---\n\n## D1. The full odd-degree family has no rational *or* algebraic Riccati solution.\n\n**Conjecture.** For every `f ∈ ℝ[X]` of odd degree, the Riccati equation `v′ + v² = f`\nhas no solution `v` algebraic over `ℝ(X)` (not merely no rational solution).\n\n*The key insight is...* that the degree/parity dichotomy proved for rational `v` is a\nshadow of a *ramification-parity* invariant: an algebraic `v` of degree `d` over `ℝ(X)`\ncontributes a `v²` whose Puiseux valuations are even multiples of the local uniformizer,\nwhich cannot match the odd pole/zero pattern forced by an odd-degree `f` at infinity.\n\n*Why now?* We already have the clean `natDegree` parity engine\n(`no_rational_solves_riccati_odd_deg`); lifting it to algebraic extensions only needs a\nvaluation-at-infinity refinement, and Mathlib now has enough Puiseux/valuation API\n(`HahnSeries`, used in `EML/Transseries/Field.lean`) to host the argument.\n\n## D2. Wronskian constancy ⇒ a two-dimensional solution space over the constants.\n\n**Conjecture.** In any differential field `K` with field of constants `C`, the solution\nset `{y : y″ = a·y}` is a `C`-vector space of dimension ≤ 2, and equals 2 exactly when a\nnonzero-Wronskian pair exists.\n\n*The key insight is...* that `wronskian_deriv_eq_zero` makes the Wronskian a constant, so\ntwo solutions are `C`-linearly dependent **iff** their Wronskian vanishes — turning a\ndifferential statement into linear algebra over `C`.\n\n*Why now?* The abstract Wronskian identity is already proved over an arbitrary\n`Differential` field; the missing step is purely the linear-dependence ⇔ zero-Wronskian\nlemma, which is finite-dimensional linear algebra Mathlib supports directly.\n\n## D3. A Galois-group dichotomy for `y″ = f·y` indexed by `deg f mod 2`.\n\n**Conjecture.** For `f ∈ ℝ[X]`, the differential Galois group of `y″ = f·y` is\n*reducible* (has a common eigenvector ⇔ a rational Riccati solution) only if `deg f` is\neven; for odd `deg f` the group is `SL₂`-large and Airy (`f = X`) is the minimal instance.\n\n*The key insight is...* that the rational-solution layer (`EMLAiryRiccati`) is exactly the\n\"reducible case\" test of the Kovacic algorithm, and our parity obstruction shows this test\n*always fails* for odd degree — pinning the group away from the reducible (triangularizable)\nlocus.\n\n*Why now?* With the reducible-case obstruction formalized, the remaining Kovacic cases\n(imprimitive / finite group) are finite, checkable conditions; a Lean encoding of the\nGalois group as the closure of the monodromy is now within reach via the differential-field\nframework already imported here.\n\n## D4. Transseries-valued non-existence: Airy has no EML transseries solution.\n\n**Conjecture.** Airy's equation has no nonzero solution in the transseries field\n`EMLTransseries.TSeries` whose logarithmic derivative is a *grid-based* transmonomial\nseries with eventually-rational support.\n\n*The key insight is...* that an EML (exp–log–multiply) solution would have a logarithmic\nderivative living one exp-level below it, and the Riccati parity obstruction, transported\nacross the valuation of `EML/Transseries/Field.lean`, forbids the required leading\ntransmonomial.\n\n*Why now?* The transseries field is already constructed in the catalog\n(`EML/Transseries/Field.lean`) with the dominance law `exp_dominates_pow`; coupling it to\nthe Riccati transform (`EMLRiccatiTransform`) gives a concrete asymptotic obstruction with\nno new infrastructure.\n\n## D5. Quantitative obstruction: a degree bound on approximate Riccati solutions.\n\n**Conjecture.** For odd-degree `f`, any polynomials `p, q` (`q ≠ 0`) make the residual\n`R := p′q − pq′ + p² − f·q²` satisfy `deg R ≥ deg f + 2·deg q` (the residual cannot be\nmade low-degree), with equality describing the best rational approximant.\n\n*The key insight is...* that our proof shows the top-degree term of `f·q²` is *never*\ncancelled by the cleared left side, so the obstruction is not just qualitative\nnon-existence but a hard lower bound on the leading residual.\n\n*Why now?* The proof of `no_rational_solves_riccati_odd_deg` already isolates the dominant\nterm; promoting \"they differ\" to \"they differ by at least this degree\" is a direct\nstrengthening that yields a computable certificate of non-solvability.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2611",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "113a596f",
-    "status": "available",
-    "timestamp": "2026-06-26T14:55:56.954377+00:00",
-    "title": "Derived from this cycle's findings in `EML/EMLAiryRiccati.lean` (rational Riccat"
   },
   {
     "ambition_level": "extension",
@@ -10861,6 +10890,26 @@
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.326758+00:00",
     "title": "Strange Attractors as Algebraic Objects"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
+    "domain_bridges": [],
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0491",
+    "lineage_refs": [],
+    "priority_score": 0.5499999999999999,
+    "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.843772+00:00",
+    "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
     "ambition_level": "extension",
@@ -11325,7 +11374,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa3d24c5",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domain_bridges": [],
     "domains": [
@@ -11338,7 +11387,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },

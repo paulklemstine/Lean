@@ -388,6 +388,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
+    "domains": [
+      "Physics",
+      "Analysis"
+    ],
+    "id": "seed_362",
+    "priority_score": 0.88,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432770+00:00",
+    "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| \u2264 2\u221ap.",
     "domains": [
       "Cryptography",
@@ -4911,7 +4926,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
   },
   {
-    "consumed_by_exp_id": "be72639d",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that each Delaunay refinement with minicenter Steiner points reduces the maximum simplex diameter by a constant factor \u03bb > 1, leading to exponential contraction after k iterations: max{\u03c3 \u2208 Del(X_k)}.diameter \u2264 (1/\u03bb)^k \u00b7 max{\u03c3 \u2208 Del(X_0)}.diameter",
     "domains": [
       "Pythagorean"
@@ -4920,7 +4935,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T20:05:25.226962+00:00",
     "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
   },
@@ -5433,11 +5448,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that there exist infinitely many subset-minimal minor-closed graph classes whose limiting density is exactly 3/2. This is the boundary case beyond which the paper's finiteness result no longer applies.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2586",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24326v2",
+    "status": "available",
+    "timestamp": "2026-06-26T14:59:48.837106+00:00",
+    "title": "Infinitude of Minimal Minor-Closed Classes with Density Exactly 3/2"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5451,7 +5480,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5466,7 +5495,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5481,7 +5510,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5496,7 +5525,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5511,7 +5540,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5525,7 +5554,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5539,7 +5568,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5553,7 +5582,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5568,7 +5597,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5583,7 +5612,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5598,7 +5627,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5613,7 +5642,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5628,7 +5657,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5642,7 +5671,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5657,7 +5686,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5672,7 +5701,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5686,7 +5715,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5700,7 +5729,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5714,7 +5743,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5729,7 +5758,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5744,7 +5773,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5759,7 +5788,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -5773,13 +5802,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
     "status": "available",
     "timestamp": "2026-06-26T14:33:06.466347+00:00",
     "title": "Tight asymptotic bound for the n\u2011queens completion threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for all integers k \u2265 5, the 3-color shift number s\u2083(k) equals the square of the (k-2)-fold tower of twos evaluated at 2, i.e., s\u2083(k) = (twr_{k-2}(2))\u00b2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2611",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24198v1",
+    "status": "available",
+    "timestamp": "2026-06-26T15:00:24.904002+00:00",
+    "title": "Exact value of the 3-color shift number"
   },
   {
     "consumed_by_exp_id": "",
@@ -5981,36 +6024,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Navier\u2013Stokes: 2D Regularity and Partial 3D Results \u2014 Future Directions\n\nThis cycle formalized, in an abstract Galerkin framework, the precise structural\ndivide between 2D global regularity and 3D conditional regularity:\n\n- `EnergyMethod.lean` (pre-existing): unconditional `L\u00b2` (energy) control via the\n  trilinear cancellation `\u27eaB v v, v\u27eb = 0`.\n- `Enstrophy2D.lean` (new): unconditional **enstrophy** control `\u27eaA u, u\u27eb` from\n  two extra axioms \u2014 self-adjointness of `A` and the **2D vortex-stretching\n  cancellation** `\u27eaB v v, A v\u27eb = 0` \u2014 the a priori estimate behind 2D global\n  regularity.\n- `Partial3D.lean` (new): the **general** enstrophy dissipation identity keeping\n  the stretching term, plus an abstract **conditional regularity** theorem\n  (Prodi\u2013Serrin / BKM shape): if `\u2212\u27eaB(u,u), A u\u27eb \u2264 \u03bd\u27eaA u, A u\u27eb` pointwise then\n  the enstrophy cannot blow up. The energy bound is shown to hold\n  unconditionally in 3D.\n- `Synthesis.lean` (new): 2D regularity is recovered as the degenerate case of\n  the 3D conditional criterion (the 2D cancellation discharges the 3D control\n  hypothesis); the two theories share the *same* enstrophy observable (`rfl`).\n- `Examples.lean` (new): a concrete inhabiting model with a non-constant decaying\n  solution, certifying the theorems are non-vacuous.\n\nThe unifying finding: **regularity = one more dissipated Lyapunov observable**,\nand the entire 2D/3D gap is localized to the sign and size of a single trilinear\npairing `\u27eaB(u,u), A u\u27eb` (the vortex-stretching term).\n\n## Conjectures for follow-up cycles\n\n### C1. Self-improving (Gr\u00f6nwall) enstrophy criterion\n**Statement.** Replace the qualitative pointwise control hypothesis `hctrl` of\n`Model3D.enstrophy_antitone_of_stretching_controlled` by a *self-referential*\nbound `\u27eaB(u,u), A u\u27eb \u2264 C \u00b7 \u03a9(t)^{\u03b1}` (with `\u03a9 = \u27eaA u, u\u27eb`). Conjecture: there is\na critical exponent `\u03b1\u2080` such that for `\u03b1 \u2264 \u03b1\u2080` the resulting differential\ninequality `\u03a9'(t) \u2264 \u22122\u03bd\u2016A u\u2016\u00b2 + 2C \u03a9^{\u03b1}` forces `\u03a9` to stay finite for all time\nfrom finite initial data, while for `\u03b1 > \u03b1\u2080` finite-time blowup of the ODE\nmajorant is possible. **Testable**: formalize the scalar ODE comparison\n(`ODE_solution_le`/Gr\u00f6nwall in Mathlib) and pin down `\u03b1\u2080` (expected `\u03b1\u2080 = 3/2`,\nthe abstract shadow of the `H^1`\u2013`L^\u221e` interpolation in 3D).\n\n### C2. Ladyzhenskaya 2D interpolation as an abstract inequality\n**Statement.** In 2D the stretching term is not merely zero structurally; even a\ngeneric quadratic `B` obeys `|\u27eaB(u,u), A u\u27eb| \u2264 c \u2016u\u2016 \u00b7 \u2016A u\u2016^{?}` with an\nexponent that makes it *absorbable* by `\u03bd\u2016A u\u2016\u00b2` after using the energy bound.\nConjecture: adding an abstract Ladyzhenskaya-type field\n`|\u27eaB v v, A v\u27eb| \u2264 c \u2016v\u2016 \u00b7 \u2016A v\u2016^{3/2} \u00b7 \u2016v\u2016_?^{1/2}` to `Model2D` *derives* the\ncontrol hypothesis of C1 with `\u03b1 < 1`, hence global regularity, *without*\nassuming `hB2 = 0`. **Testable**: state the inequality field and prove it implies\n`hctrl` after the energy bound; check the exponents close.\n\n### C3. Weak\u2013strong uniqueness in the abstract model\n**Statement.** If `u` is any energy-bounded (Leray-type) solution and `v` is a\nsolution with bounded enstrophy on `[0,T]`, then `u = v` on `[0,T]`.\nConjecture: the abstract trilinear cancellation `\u27eaB v v, v\u27eb = 0` plus\nself-adjointness of `A` suffice to prove a Gr\u00f6nwall estimate for the difference\n`w = u \u2212 v` energy `\u2016w\u2016\u00b2`, giving uniqueness in the enstrophy class.\n**Testable**: formalize `d/dt \u2016w\u2016\u00b2 \u2264 K(t) \u2016w\u2016\u00b2` with `K \u2208 L\u00b9` from the enstrophy\nbound on `v`, then Gr\u00f6nwall \u21d2 `w \u2261 0`.\n\n### C4. Backward uniqueness / no eternal nontrivial decay\n**Statement.** In the dissipative abstract model with strictly positive `A`\n(`\u27eaA v, v\u27eb \u2265 \u03bb\u2016v\u2016\u00b2`, `\u03bb > 0`) and `\u03bd > 0`, a solution that vanishes at some time\nmust vanish for all earlier times too (backward uniqueness), and every solution\ndecays exponentially: `\u2016u(t)\u2016 \u2264 e^{\u2212\u03bd\u03bb t}\u2016u(0)\u2016`. **Testable**: the exponential\ndecay is an immediate Gr\u00f6nwall consequence of the energy identity refined with\nthe spectral gap `\u03bb`; formalize it as `Model.norm_decay_of_gap`. (The\n`Examples.lean` witness already realizes the equality case `\u03bb = \u03bd = 1`.)\n\n### C5. Two-mode nonlinear Galerkin witness exercising `hB2`\n**Statement.** There is an explicit 2- or 3-dimensional model (`V = \u211d\u00b2`/`\u211d\u00b3`)\nwith a genuinely nonzero antisymmetric/quadratic `B` satisfying both\n`\u27eaB v v, v\u27eb = 0` and `\u27eaB v v, A v\u27eb = 0`, modelling a finite Fourier truncation of\n2D Euler/Navier\u2013Stokes, whose solutions are non-trivial (rotating) yet have\nstrictly dissipated energy and enstrophy. **Testable**: construct `B(v,w)` from a\ncross-product-like bilinear form, verify both cancellations by `ring`/`fin_cases`,\nand exhibit a closed-form or numerically-validated trajectory. This upgrades the\nlinear witness of `Examples.lean` to one where `hB2` does real work, closing the\ngap to a recognizable spectral Navier\u2013Stokes truncation.\n",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_2610",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "abbbde7c",
-    "status": "available",
-    "timestamp": "2026-06-26T14:53:08.920390+00:00",
-    "title": "This cycle formalized, in an abstract Galerkin framework, the precise structural"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 EML Differential Equations (Airy / Kovacic layer)\n\nDerived from this cycle's findings in `EML/EMLAiryRiccati.lean` (rational Riccati\nobstruction) and `EML/EMLRiccatiTransform.lean` (abstract Riccati transform & Wronskian),\nbuilding on the catalog file `EML/EMLDiffObstruction.lean` (polynomial obstruction).\n\nThis cycle established a three-layer obstruction tower for Airy's equation `y\u2033 = x\u00b7y`:\npolynomial (catalog) \u2192 rational Riccati (degree/parity) \u2192 abstract differential-field\ntransform. The directions below push each layer further.\n\n---\n\n## D1. The full odd-degree family has no rational *or* algebraic Riccati solution.\n\n**Conjecture.** For every `f \u2208 \u211d[X]` of odd degree, the Riccati equation `v\u2032 + v\u00b2 = f`\nhas no solution `v` algebraic over `\u211d(X)` (not merely no rational solution).\n\n*The key insight is...* that the degree/parity dichotomy proved for rational `v` is a\nshadow of a *ramification-parity* invariant: an algebraic `v` of degree `d` over `\u211d(X)`\ncontributes a `v\u00b2` whose Puiseux valuations are even multiples of the local uniformizer,\nwhich cannot match the odd pole/zero pattern forced by an odd-degree `f` at infinity.\n\n*Why now?* We already have the clean `natDegree` parity engine\n(`no_rational_solves_riccati_odd_deg`); lifting it to algebraic extensions only needs a\nvaluation-at-infinity refinement, and Mathlib now has enough Puiseux/valuation API\n(`HahnSeries`, used in `EML/Transseries/Field.lean`) to host the argument.\n\n## D2. Wronskian constancy \u21d2 a two-dimensional solution space over the constants.\n\n**Conjecture.** In any differential field `K` with field of constants `C`, the solution\nset `{y : y\u2033 = a\u00b7y}` is a `C`-vector space of dimension \u2264 2, and equals 2 exactly when a\nnonzero-Wronskian pair exists.\n\n*The key insight is...* that `wronskian_deriv_eq_zero` makes the Wronskian a constant, so\ntwo solutions are `C`-linearly dependent **iff** their Wronskian vanishes \u2014 turning a\ndifferential statement into linear algebra over `C`.\n\n*Why now?* The abstract Wronskian identity is already proved over an arbitrary\n`Differential` field; the missing step is purely the linear-dependence \u21d4 zero-Wronskian\nlemma, which is finite-dimensional linear algebra Mathlib supports directly.\n\n## D3. A Galois-group dichotomy for `y\u2033 = f\u00b7y` indexed by `deg f mod 2`.\n\n**Conjecture.** For `f \u2208 \u211d[X]`, the differential Galois group of `y\u2033 = f\u00b7y` is\n*reducible* (has a common eigenvector \u21d4 a rational Riccati solution) only if `deg f` is\neven; for odd `deg f` the group is `SL\u2082`-large and Airy (`f = X`) is the minimal instance.\n\n*The key insight is...* that the rational-solution layer (`EMLAiryRiccati`) is exactly the\n\"reducible case\" test of the Kovacic algorithm, and our parity obstruction shows this test\n*always fails* for odd degree \u2014 pinning the group away from the reducible (triangularizable)\nlocus.\n\n*Why now?* With the reducible-case obstruction formalized, the remaining Kovacic cases\n(imprimitive / finite group) are finite, checkable conditions; a Lean encoding of the\nGalois group as the closure of the monodromy is now within reach via the differential-field\nframework already imported here.\n\n## D4. Transseries-valued non-existence: Airy has no EML transseries solution.\n\n**Conjecture.** Airy's equation has no nonzero solution in the transseries field\n`EMLTransseries.TSeries` whose logarithmic derivative is a *grid-based* transmonomial\nseries with eventually-rational support.\n\n*The key insight is...* that an EML (exp\u2013log\u2013multiply) solution would have a logarithmic\nderivative living one exp-level below it, and the Riccati parity obstruction, transported\nacross the valuation of `EML/Transseries/Field.lean`, forbids the required leading\ntransmonomial.\n\n*Why now?* The transseries field is already constructed in the catalog\n(`EML/Transseries/Field.lean`) with the dominance law `exp_dominates_pow`; coupling it to\nthe Riccati transform (`EMLRiccatiTransform`) gives a concrete asymptotic obstruction with\nno new infrastructure.\n\n## D5. Quantitative obstruction: a degree bound on approximate Riccati solutions.\n\n**Conjecture.** For odd-degree `f`, any polynomials `p, q` (`q \u2260 0`) make the residual\n`R := p\u2032q \u2212 pq\u2032 + p\u00b2 \u2212 f\u00b7q\u00b2` satisfy `deg R \u2265 deg f + 2\u00b7deg q` (the residual cannot be\nmade low-degree), with equality describing the best rational approximant.\n\n*The key insight is...* that our proof shows the top-degree term of `f\u00b7q\u00b2` is *never*\ncancelled by the cleared left side, so the obstruction is not just qualitative\nnon-existence but a hard lower bound on the leading residual.\n\n*Why now?* The proof of `no_rational_solves_riccati_odd_deg` already isolates the dominant\nterm; promoting \"they differ\" to \"they differ by at least this degree\" is a direct\nstrengthening that yields a computable certificate of non-solvability.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2611",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "113a596f",
-    "status": "available",
-    "timestamp": "2026-06-26T14:55:56.954377+00:00",
-    "title": "Derived from this cycle's findings in `EML/EMLAiryRiccati.lean` (rational Riccat"
   },
   {
     "consumed_by_exp_id": "",
@@ -6333,6 +6346,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.326758+00:00",
     "title": "Strange Attractors as Algebraic Objects"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
+    "domains": [
+      "EML",
+      "Algebra"
+    ],
+    "id": "fd_0491",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.843772+00:00",
+    "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
     "consumed_by_exp_id": "",
@@ -6680,7 +6708,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa3d24c5",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -6690,7 +6718,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },

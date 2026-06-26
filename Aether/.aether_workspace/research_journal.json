@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "c4b2f906",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — generalized Turán growth `ex(n, K_{a,b}, K_{3,t})`\n\nDerived from this cycle's results: the parity-uniform cubic **upper** bound\n(`KabCopies_cubic_of_K3tFree`, holding already at",
-      "quality_score": 0.5545492752326414,
-      "sorry_count": 0,
-      "theorem_count": 33,
-      "timestamp": "2026-06-20T16:15:09",
-      "title": "Necessary threshold for cubic generalized Turán growth against K_{3,t}"
-    },
-    {
       "cycle_id": "656b45a0",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — The Prime Number Crossword (next cycle)\n\nThis cycle established, with zero `sorry`s, the unconditional skeleton of the prime\ncrossword in `Catalog/Cryptography/PrimeGaps/`:\n\n* `B",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-26T14:56:06",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "bc0a8e2b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Boolean Degree One Functions on `J_q(n,2)`\n\nThese conjectures are stated relative to the formal framework in\n`Core.lean` (abstract finite linear space modelling `J_q(n,2)`: points",
+      "quality_score": 0.5310828235294118,
+      "sorry_count": 1,
+      "theorem_count": 17,
+      "timestamp": "2026-06-26T14:58:13",
+      "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7510892307692308
     }
   ],
-  "last_updated": "2026-06-26T14:56:06",
+  "last_updated": "2026-06-26T14:58:13",
   "open_questions": [
-    {
-      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
-      "cycle_id": "497e55b6",
-      "domain": "Computation",
-      "sorry_count": 1,
-      "timestamp": "2026-06-15T13:39:19"
-    },
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on",
       "cycle_id": "c11e0165",
@@ -3016,6 +3009,13 @@
       "domain": "Novelty",
       "sorry_count": 2,
       "timestamp": "2026-06-26T13:14:44"
+    },
+    {
+      "context": "unique line) and proves, with zero `sorry`s:",
+      "cycle_id": "bc0a8e2b",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-06-26T14:58:13"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "b45eb1d8",
-        "quality": 0.7496,
-        "theorems": 9,
-        "title": "Stability of Cayley Digraphs of Abelian Groups of Odd Order"
-      },
-      {
         "cycle_id": "eb2eee3d",
         "quality": 0.6766,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.58216,
         "theorems": 14,
         "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
+      },
+      {
+        "cycle_id": "bc0a8e2b",
+        "quality": 0.5310828235294118,
+        "theorems": 17,
+        "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and "
       }
     ],
     "Bridges": [
