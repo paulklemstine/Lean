@@ -558,5 +558,6 @@
   "ab90b095": "join_saturation_equality_for_matchings_with_isolat.json",
   "3be846c2": "ramsey_theory_bounds_and_constructions.json",
   "762ed13d": "euler_mascheroni_constant_irrationality_approaches.json",
-  "0d192d1b": "multilateral_non_trivial_cross_intersection_produc.json"
+  "0d192d1b": "multilateral_non_trivial_cross_intersection_produc.json",
+  "7496c7ce": "zero_knowledge_proofs_in_lean_verifiable_computati.json"
 }

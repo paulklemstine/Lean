@@ -1,248 +1,212 @@
-# Formalized Verifiable Computation: R1CS, QAP, and SNARK Soundness in Lean 4
+# Zero-Knowledge Proofs and Constant-Query Local Verification: A Formal Study of Graph 3-Colourability
 
 ## Abstract
 
-We present a formalization of the algebraic foundations of zero-knowledge Succinct Non-interactive Arguments of Knowledge (zk-SNARKs) in the Lean 4 theorem prover. Our development introduces the *Verifiable Computation System* — a novel mathematical structure that unifies Rank-1 Constraint Systems (R1CS), Quadratic Arithmetic Programs (QAP), and evaluation domains into a single algebraic object capturing the full SNARK pipeline. We prove twelve theorems, including QAP completeness, a Schwartz-Zippel-based soundness bound for polynomial verification, R1CS composition soundness, polynomial commitment verification, and the algebraic foundation of zero-knowledge for graph 3-coloring. All proofs are machine-verified with no axioms beyond the standard Lean foundations (propext, Classical.choice, Quot.sound).
+We present a self-contained formal development of the classical Goldreich–Micali–Wigderson (GMW) zero-knowledge proof system for graph 3-colourability, together with a bridge connecting it to the constant-query backbone of the PCP theorem ($\mathrm{NP} \subseteq \mathrm{PCP}(\mathrm{poly}, O(1))$). Working over a finite vertex type $V$ and an explicit edge set $E$, we model a 3-colouring as a map $c : V \to \mathbb{F}_3$ (where $\mathbb{F}_3 = \{0,1,2\}$ is the three-element colour alphabet) and the protocol's randomization as a uniformly chosen permutation $\pi \in S_3$ of the colours. We establish four pillars: **perfect completeness** (colour permutations preserve properness, so honest provers always succeed); a **soundness gap** (against a non-3-colourable instance, every claimed proof is rejected on a uniformly random edge with probability at least $1/|E|$); **perfect honest-verifier zero knowledge** (the real opened view is *identically* distributed to a uniform random ordered pair of distinct colours, via an explicit bijection $S_3 \cong \{(a,b) : a \neq b\}$); and a **constant-query local-verifier** reading at most two proof symbols per random challenge. The last result reinterprets the GMW protocol as a $2$-query probabilistically checkable proof for an NP-complete language, isolating *gap amplification* as the sole remaining ingredient of the full PCP theorem. All results have been formally verified.
 
-**Keywords**: zero-knowledge proofs, SNARKs, R1CS, QAP, formal verification, Schwartz-Zippel lemma, polynomial commitment, Lean 4
+**Keywords:** zero-knowledge proof, graph 3-colourability, GMW protocol, honest-verifier zero knowledge, soundness gap, probabilistically checkable proofs, PCP theorem, constant-query verifier, sigma protocol, verifiable computation.
+
+---
 
 ## 1. Introduction
 
-Zero-knowledge proof systems are among the most remarkable constructions in modern cryptography: they allow a prover to convince a verifier of a computational claim without revealing any information beyond the claim's validity. The last decade has seen an explosion of practical SNARK constructions — Groth16 [1], Plonk [2], Marlin [3] — deployed in blockchain scaling (zkRollups), private credentials (zkSNARKs for identity), and verifiable cloud computing.
+A zero-knowledge proof allows a *prover* to convince a *verifier* that a statement is true while revealing nothing beyond the truth of the statement itself. Since their introduction by Goldwasser, Micali, and Rackoff, and the subsequent demonstration by Goldreich, Micali, and Wigderson (GMW) that *every* NP statement admits such a proof, zero-knowledge proofs have become a cornerstone of modern cryptography, powering anonymous credentials, privacy-preserving cryptocurrencies, and the rapidly growing field of *verifiable computation*.
 
-Despite their practical importance, the mathematical foundations of SNARKs have received limited attention in the formal verification literature. Existing formalizations focus on specific cryptographic protocols (Schnorr signatures, commitment schemes) rather than the algebraic pipeline that underlies all modern SNARK constructions. This paper addresses that gap.
+The GMW result rests on a single, beautifully concrete protocol: a zero-knowledge proof for **graph 3-colourability**. Because 3-colourability is NP-complete, a zero-knowledge proof for it lifts (via NP-reductions) to a zero-knowledge proof for any NP statement. This paper develops that protocol formally and in full, and then draws a precise line from it to the **PCP theorem**, the celebrated result that every NP language has proofs checkable by reading only a constant number of symbols.
 
-### 1.1 Contributions
+Our contributions are:
 
-1. **Novel Mathematical Structure**: We define the `VerifiableComputation` structure, combining R1CS, evaluation domains, and public/private variable partitions into a single algebraic object.
+1. A formal model of the GMW 3-colouring protocol over a finite vertex type and explicit edge set (Section 3).
+2. A proof of **perfect completeness** via invariance of properness under colour permutations (Theorem 4.1).
+3. A quantitative **soundness gap**: a clean rational lower bound of $1/|E|$ on the single-round rejection probability against non-3-colourable instances (Theorems 4.2–4.4).
+4. A proof of **perfect honest-verifier zero knowledge** through an explicit bijection between the symmetric group $S_3$ and the set of ordered pairs of distinct colours (Theorems 4.5–4.7).
+5. A **bridge to the PCP theorem**: a reinterpretation of the protocol as a $2$-query local verifier with constant query complexity, perfect completeness, and a positive soundness gap (Section 5), isolating gap amplification as the only missing ingredient of $\mathrm{NP} \subseteq \mathrm{PCP}(\mathrm{poly}, O(1))$.
 
-2. **Complete Pipeline Formalization**: We prove the full chain from R1CS satisfaction through QAP polynomial vanishing to Schwartz-Zippel-based verification.
+Everything below is stated inline and is self-contained; no external references are required to follow the development.
 
-3. **Composition Theorem**: We prove that sequential composition of R1CS preserves soundness, formalizing the algebraic foundation of recursive SNARKs.
+---
 
-4. **Zero-Knowledge for 3-Coloring**: We prove that color permutation preserves coloring validity, the key algebraic property enabling zero-knowledge proofs for NP-complete problems.
+## 2. Background and Notation
 
-5. **Machine Verification**: All results are verified in Lean 4, using only standard axioms.
+### 2.1 Graphs and colourings
 
-## 2. Definitions
+Throughout, $V$ is a finite type of **vertices** and $E$ is a finite set of **edges**, modelled as a finite set of ordered pairs $E \subseteq V \times V$ (an ordered model is convenient and harmless: the verifier's accept predicate is symmetric in the endpoints). We write $|E|$ for the number of edges and $|V|$ for the number of vertices.
 
-### 2.1 Rank-1 Constraint System
+A **3-colouring** is a function
+$$c : V \to \mathbb{F}_3, \qquad \mathbb{F}_3 = \{0, 1, 2\},$$
+assigning one of three colours to each vertex.
 
-**Definition 2.1** (R1CS). A *Rank-1 Constraint System* over a field $F$ with $m$ constraints and $n$ variables consists of three matrices $A, B, C : \text{Fin}(m) \to \text{Fin}(n) \to F$. A vector $w : \text{Fin}(n) \to F$ *satisfies* the R1CS if for every constraint $i \in \text{Fin}(m)$:
+**Definition 2.1 (Proper colouring).** A colouring $c$ is *proper* for the edge set $E$, written $\mathrm{IsProperColoring}(E, c)$, when every edge has differently coloured endpoints:
+$$\mathrm{IsProperColoring}(E, c) \;\iff\; \forall\, e \in E,\; c(e_1) \neq c(e_2),$$
+where $e = (e_1, e_2)$. A graph is **3-colourable** when some proper colouring exists.
 
-$$\left(\sum_j A_{ij} \cdot w_j\right) \cdot \left(\sum_j B_{ij} \cdot w_j\right) = \sum_j C_{ij} \cdot w_j$$
+Deciding 3-colourability is NP-complete; a proper colouring is the canonical NP-witness, and verifying a claimed witness amounts to checking the inequality $c(e_1) \neq c(e_2)$ on each edge.
 
-In Lean 4, this is formalized as:
+### 2.2 The symmetric group on colours
 
-```lean
-structure R1CS (F : Type*) [Field F] (m n : ℕ) where
-  A : Fin m → Fin n → F
-  B : Fin m → Fin n → F
-  C : Fin m → Fin n → F
+Let $S_3 = \mathrm{Sym}(\mathbb{F}_3)$ denote the group of permutations (bijections) of the three colours; $|S_3| = 3! = 6$. For $\pi \in S_3$ and a colouring $c$, the **recoloured** map $\pi \circ c$ sends $v \mapsto \pi(c(v))$.
 
-def R1CS.IsSatisfied (r : R1CS F m n) (w : Fin n → F) : Prop :=
-  ∀ i : Fin m, rowDot r.A i w * rowDot r.B i w = rowDot r.C i w
-```
+---
 
-### 2.2 Vanishing Polynomial
+## 3. The GMW 3-Colouring Protocol
 
-**Definition 2.2** (Vanishing Polynomial). Given an evaluation domain $\omega : \text{Fin}(m) \to F$, the *vanishing polynomial* is:
+We model the interactive protocol between a prover $P$ (holding a proper colouring $c$) and a verifier $\mathcal V$.
 
-$$t(x) = \prod_{i=0}^{m-1} (x - \omega_i)$$
+**Protocol (GMW 3-colouring, one round).**
+1. **Commit.** $P$ samples $\pi \in S_3$ uniformly at random and commits to the recoloured colouring $\pi \circ c$ — conceptually, sealing each vertex's recoloured value $\pi(c(v))$ in an individual locked box.
+2. **Challenge.** $\mathcal V$ samples an edge $e = (u, v) \in E$ uniformly at random.
+3. **Open.** $P$ opens the two committed values at the endpoints, revealing the pair
+$$\mathrm{revealedView}(\pi, c, e) = \big(\pi(c(u)),\, \pi(c(v))\big).$$
+4. **Decide.** $\mathcal V$ **accepts** iff the two revealed colours differ.
 
-### 2.3 Verifiable Computation System
+**Definition 3.1 (Verifier accept predicate).** For a (committed) colouring $c$ and challenge edge $e$, the verifier's single-round accept predicate is
+$$\mathrm{accept}(c, e) \;\iff\; c(e_1) \neq c(e_2).$$
 
-**Definition 2.3** (Verifiable Computation System). A *Verifiable Computation System* over $F$ consists of:
-- An R1CS with $m$ constraints and $n$ variables
-- An evaluation domain $\omega : \text{Fin}(m) \to F$ with $\omega$ injective
-- A public input count $k \leq n$
+The three desiderata of a proof system are completeness (honest provers convince), soundness (cheating provers are caught), and zero knowledge (the verifier learns nothing). We address each formally.
 
-This structure captures the complete algebraic data needed for SNARK construction: the constraint system, the polynomial interpolation domain, and the public/private partition.
+---
 
-### 2.4 Graph 3-Coloring
+## 4. Main Results
 
-**Definition 2.4** (3-Coloring). A *3-coloring* of a graph $G = (V, E)$ is a function $c : V \to \{0, 1, 2\}$ such that $c(i) \neq c(j)$ for every edge $(i, j) \in E$.
+### 4.1 Perfect completeness
 
-## 3. Main Results
+**Theorem 4.1 (completeness).** *If $c$ is a proper colouring of $E$, then for every permutation $\pi \in S_3$ the recoloured colouring $\pi \circ c$ is also proper:*
+$$\mathrm{IsProperColoring}(E, c) \;\Longrightarrow\; \mathrm{IsProperColoring}(E,\, \pi \circ c).$$
+*Consequently the honest prover's revealed pair $(\pi(c(u)), \pi(c(v)))$ consists of distinct colours on every edge, and the verifier accepts with probability $1$.*
 
-### 3.1 QAP Completeness (Theorem 3.1)
+*Proof sketch.* Fix an edge $e = (u,v) \in E$. Properness gives $c(u) \neq c(v)$. Since $\pi$ is injective (a bijection), $\pi(c(u)) \neq \pi(c(v))$. As $e$ was arbitrary, $\pi \circ c$ is proper, and the revealed pair has distinct entries on every challenge, so the verifier always accepts. $\square$
 
-**Theorem 3.1** (QAP Completeness). If $w$ satisfies the R1CS, then the constraint residual at every domain point is zero:
+The essential content is that injectivity of $\pi$ transports the inequality $c(u) \neq c(v)$ to the recoloured values; permuting colour *names* never collapses two distinct colours.
 
-$$\text{constraintPoly}(r, w, i) = 0 \quad \forall i$$
+### 4.2 Soundness gap
 
-*Proof sketch.* The constraint residual is defined as $\langle A_i, w\rangle \cdot \langle B_i, w\rangle - \langle C_i, w\rangle$. By the satisfaction hypothesis, the product equals $\langle C_i, w\rangle$, so the difference is zero. □
+We now bound the probability that a cheating prover survives a single round when the instance is unsatisfiable. The key combinatorial object is the set of **catching edges** of a colouring $c$:
+$$\mathrm{Catch}(E, c) \;=\; \{\, e \in E : c(e_1) = c(e_2)\,\} \;=\; E \cap \{e : \neg\,\mathrm{accept}(c,e)\}.$$
 
-This is the completeness direction: a valid witness produces a QAP polynomial that vanishes on the domain.
+**Theorem 4.2 (existence of a catching edge — soundness\_exists\_catch).** *If $c$ is not a proper colouring of $E$, then there exists an edge $e \in E$ with $c(e_1) = c(e_2)$.*
 
-### 3.2 Vanishing Polynomial Properties (Theorems 3.2-3.3)
+*Proof sketch.* Negate Definition 2.1: $\neg\,\mathrm{IsProperColoring}(E,c)$ unfolds to $\neg\,\forall e \in E,\ c(e_1) \neq c(e_2)$, i.e. $\exists e \in E,\ c(e_1) = c(e_2)$. $\square$
 
-**Theorem 3.2.** For any evaluation domain $\omega$, $t(\omega_i) = 0$ for all $i$.
+**Theorem 4.3 (catching set is nonempty — soundness\_catch\_card).** *If $c$ is not proper, then $|\mathrm{Catch}(E, c)| \geq 1$.*
 
-**Theorem 3.3.** If the domain points are distinct, the vanishing polynomial has degree exactly $m$ and is nonzero (for $m > 0$).
+*Proof sketch.* Theorem 4.2 exhibits a member of $\mathrm{Catch}(E,c)$; a finite set with a member has cardinality at least $1$. $\square$
 
-### 3.3 Schwartz-Zippel Root Bound (Theorem 3.4)
+**Theorem 4.4 (soundness gap — soundness\_prob).** *Let $|E| > 0$. If $c$ is not a proper colouring of $E$, then the fraction of catching edges is at least $1/|E|$:*
+$$\frac{1}{|E|} \;\le\; \frac{|\mathrm{Catch}(E, c)|}{|E|}.$$
+*Equivalently, when the verifier challenges a uniformly random edge, it rejects the proof $c$ with probability at least $1/|E|$.*
 
-**Theorem 3.4** (Schwartz-Zippel Root Bound). For any nonzero polynomial $p$ over a field $F$ and any finite set $S \subseteq F$:
+*Proof sketch.* By Theorem 4.3, $|\mathrm{Catch}(E,c)| \ge 1$. Dividing the inequality $1 \le |\mathrm{Catch}(E,c)|$ by the positive integer $|E|$ (cast into the rationals) gives the claim. The probability interpretation follows because the challenge is uniform over $E$, so the rejection probability is exactly $|\mathrm{Catch}(E,c)|/|E|$. $\square$
 
-$$|\{z \in S : p(z) = 0\}| \leq \deg(p)$$
+**Corollary 4.4.1 (soundness for unsatisfiable instances).** If the graph is *not* 3-colourable — i.e. *no* proper colouring exists — then the hypothesis of Theorem 4.4 holds for *every* claimed colouring $c$, so the verifier rejects any prover with probability at least $1/|E|$ per round.
 
-*Proof sketch.* The roots of $p$ in $S$ form a subset of $p$'s root multiset. By `Polynomial.card_roots'`, the root multiset has cardinality at most $\deg(p)$. The result follows by subset cardinality bounds. □
+**Amplification (discussion).** A single round leaves a cheater an acceptance probability of at most $1 - 1/|E|$. Running $m$ independent rounds and accepting only if all succeed reduces the cheating probability to at most $(1 - 1/|E|)^m$; choosing $m \ge |E|\,\ln(1/\varepsilon)$ drives it below any target $\varepsilon$, since $(1 - 1/|E|)^{|E|} \le e^{-1}$. This standard amplification is not formalized here but is a self-contained probability argument built directly on Theorem 4.4 (see Future Directions).
 
-**Corollary 3.5** (Soundness Error). If $\deg(p) < |S|$ and $p \neq 0$, then $|\{z \in S : p(z) = 0\}| < |S|$.
+### 4.3 Perfect honest-verifier zero knowledge
 
-### 3.4 Polynomial Commitment Soundness (Theorem 3.6)
+The protocol's privacy is captured by analyzing the distribution of the revealed view on a fixed challenged edge. Fix an edge with *true* endpoint colours $a, b \in \mathbb{F}_3$, $a \neq b$ (which holds for the honest prover by properness). As $\pi$ ranges over $S_3$, the revealed view is $(\pi(a), \pi(b))$. Let
+$$\mathrm{DistinctPairs} = \{(x,y) \in \mathbb{F}_3 \times \mathbb{F}_3 : x \neq y\}, \qquad |\mathrm{DistinctPairs}| = 3 \cdot 2 = 6.$$
 
-**Theorem 3.6.** If $p \neq C(v)$ and $\deg(p) \leq d < |S|$, then there exists $z \in S$ with $p(z) \neq v$.
+**Theorem 4.5 (revealed view is well-formed — revealedView\_distinct).** *For an honest prover with proper colouring $c$ and any edge $e = (u,v)$ with $c(u) \neq c(v)$, and any $\pi \in S_3$, the revealed pair consists of distinct colours: $\pi(c(u)) \neq \pi(c(v))$.* In particular $\mathrm{revealedView}(\pi, c, e) \in \mathrm{DistinctPairs}$.
 
-*Proof sketch.* Consider $q = p - C(v)$, which is nonzero. The roots of $q$ in $S$ number at most $\deg(q) \leq d < |S|$, so some element of $S$ is not a root. □
+*Proof sketch.* Injectivity of $\pi$ applied to $c(u) \neq c(v)$. $\square$
 
-This theorem establishes that polynomial commitment verification at a random point catches cheating provers.
+**Theorem 4.6 (injectivity — hvzk\_view\_injective).** *Fix $a, b \in \mathbb{F}_3$ with $a \neq b$. The view map*
+$$\Phi_{a,b} : S_3 \to \mathrm{DistinctPairs}, \qquad \Phi_{a,b}(\pi) = (\pi(a), \pi(b))$$
+*is injective.*
 
-### 3.5 R1CS Composition (Theorem 3.7)
+*Proof sketch.* Suppose $\Phi_{a,b}(\pi) = \Phi_{a,b}(\rho)$, i.e. $\pi(a) = \rho(a)$ and $\pi(b) = \rho(b)$. Then $\rho^{-1}\pi$ fixes both $a$ and $b$. In $S_3$, a permutation fixing two of the three points must fix the third as well (the remaining point has nowhere else to go), hence $\rho^{-1}\pi = \mathrm{id}$ and $\pi = \rho$. $\square$
 
-**Theorem 3.7** (Composition Soundness). For R1CS $r_1$ with $m_1$ constraints and $r_2$ with $m_2$ constraints (both over $n$ variables), the composed system $r_1 \circ r_2$ with $m_1 + m_2$ constraints satisfies:
+**Theorem 4.7 (bijection — hvzk\_bijection).** *Fix $a, b \in \mathbb{F}_3$ with $a \neq b$. The view map $\Phi_{a,b} : S_3 \to \mathrm{DistinctPairs}$ is a bijection. Consequently, pushing the uniform distribution on $S_3$ forward along $\Phi_{a,b}$ yields the uniform distribution on $\mathrm{DistinctPairs}$.*
 
-$$w \text{ satisfies } r_1 \circ r_2 \iff w \text{ satisfies } r_1 \text{ and } w \text{ satisfies } r_2$$
+*Proof sketch.* By Theorem 4.6, $\Phi_{a,b}$ is injective. Both finite sets have cardinality $6$ ($|S_3| = 3! = 6$ and $|\mathrm{DistinctPairs}| = 3 \cdot 2 = 6$), so an injection between them is automatically a bijection. Since $\Phi_{a,b}$ is a bijection and $\pi$ is uniform on $S_3$, each of the six distinct pairs is hit by exactly one $\pi$, hence occurs with probability $1/6$ — the uniform law on $\mathrm{DistinctPairs}$, independent of $(a,b)$. $\square$
 
-*Proof sketch.* The composed constraint matrix uses `Fin.addCases` to route the first $m_1$ constraints to $r_1$ and the remaining $m_2$ to $r_2$. The quantifier over $\text{Fin}(m_1 + m_2)$ splits accordingly. □
+**Interpretation: perfect zero knowledge.** Theorem 4.7 is the crux of privacy. The real view on a challenged edge — under the honest prover's random colour shuffle — is *exactly* a uniform random ordered pair of distinct colours, with a distribution that does not depend on the actual colours $a, b$ or on the rest of the colouring $c$. Therefore a trivial **simulator** that simply outputs a uniformly random element of $\mathrm{DistinctPairs}$ reproduces the verifier's view *perfectly* (zero statistical distance), without any access to the witness $c$. This is **perfect honest-verifier zero knowledge**: the verifier provably learns nothing about $c$ beyond what it could have generated alone. The exact-bijection phenomenon is special to $k = 3$, where the fibre size $(k-2)! = 1$; for $k > 3$ the same conclusion holds via uniform fibres rather than a bijection (see Future Directions).
 
-### 3.6 Zero-Knowledge for 3-Coloring (Theorems 3.8-3.10)
+---
 
-**Theorem 3.8** (Permutation Preserves Coloring). If $c$ is a valid 3-coloring and $\sigma$ is a permutation of $\{0, 1, 2\}$, then $\sigma \circ c$ is also a valid 3-coloring.
+## 5. Bridge to the PCP Theorem
 
-*Proof.* For adjacent $i, j$: $c(i) \neq c(j)$ implies $\sigma(c(i)) \neq \sigma(c(j))$ by injectivity of $\sigma$. □
+The PCP theorem states $\mathrm{NP} \subseteq \mathrm{PCP}(\mathrm{poly}, O(1))$: every NP language has membership proofs checkable by a randomized verifier that reads only a *constant* number of proof symbols, accepting valid proofs and rejecting invalid ones with constant probability. We make the *constant-query local-verifiability* content concrete on 3-colourability.
 
-**Theorem 3.9** (Simulation). For any two colorings $c_1, c_2$ and any vertex $v$, there exists a permutation $\sigma$ with $\sigma(c_1(v)) = c_2(v)$.
+**Model.** A PCP-style proof is a colouring $c : V \to \mathbb{F}_3$ — a proof string indexed by vertices over the constant-size alphabet $\mathbb{F}_3$. The verifier's randomness is a single edge $e \in E$; it queries exactly the two endpoint symbols $c(e_1), c(e_2)$ and accepts iff they differ.
 
-**Theorem 3.10** (Soundness Contrapositive). If $c$ is not a valid 3-coloring, there exist adjacent vertices with the same color.
+**Definition 5.1 (local verifier).** $\mathrm{pcpVerifier}(c, e) \iff c(e_1) \neq c(e_2)$.
 
-### 3.7 PCP Connection (Theorem 3.11)
+**Definition 5.2 (query positions).** $\mathrm{queryPositions}(e) = \{e_1, e_2\}$, the (multiset-collapsed) set of proof positions read on challenge $e$.
 
-**Theorem 3.11** (R1CS as Local Verification). R1CS satisfaction is equivalent to passing all local checks:
+**Theorem 5.1 (constant query complexity — query\_count\_le\_two).** *For every challenge edge $e$, $|\mathrm{queryPositions}(e)| \le 2$, independent of $|V|$.*
 
-$$r.\text{IsSatisfied}(w) \iff \forall i, (r.\text{toLocalCheck}(i)).\text{predicate}(w)$$
+*Proof sketch.* $\mathrm{queryPositions}(e) = \{e_1, e_2\}$ is built by inserting one element into a singleton, so its cardinality is at most $1 + 1 = 2$ by the inequality $|\{x\} \cup S| \le |S| + 1$. $\square$
 
-This is definitionally true (proved by `rfl`) but conceptually important: it exhibits R1CS as a concrete realization of the PCP paradigm, where each constraint is a local check reading $O(n)$ positions.
+This is precisely the $O(1)$ in $\mathrm{PCP}(\mathrm{poly}, O(1))$: the verifier inspects at most two proof symbols regardless of instance size.
 
-### 3.8 Boundary Analysis (Theorems 3.12-3.14)
+**Theorem 5.2 (local checks $=$ global witness — pcp\_accepts\_all\_iff\_proper).** *For all $E$ and $c$,*
+$$\big(\forall e \in E,\ \mathrm{pcpVerifier}(c, e)\big) \;\iff\; \mathrm{IsProperColoring}(E, c).$$
 
-**Theorem 3.12.** Over a "small" field ($|S| \leq \deg(p)$), the soundness bound is trivially satisfied.
+*Proof sketch.* Both sides unfold definitionally to $\forall e \in E,\ c(e_1) \neq c(e_2)$; the equivalence is an identity. $\square$
 
-**Theorem 3.13.** An R1CS with 0 constraints is trivially satisfiable.
+The two-symbol local tests, quantified over all edges, are *exactly* the global NP-witness predicate. This honest definitional bridge is what makes "local checkability" equivalent to "global correctness" for this problem.
 
-**Theorem 3.14.** An R1CS with 0 variables is trivially satisfiable.
+**Theorem 5.3 (perfect completeness — pcp\_perfect\_completeness).** *If $c$ is a proper colouring of $E$, then for every $\pi \in S_3$ the honest randomized proof $\pi \circ c$ is accepted on every edge: $\forall e \in E,\ \mathrm{pcpVerifier}(\pi \circ c, e)$.*
 
-## 4. The Verifiable Computation Pipeline
+*Proof sketch.* Combine Theorem 4.1 (properness preserved by $\pi$) with Theorem 5.2 (acceptance-on-all-edges equals properness). $\square$
 
-The full SNARK verification pipeline operates in layers:
+**Theorem 5.4 (existence of a rejecting query — pcp\_soundness\_exists\_reject).** *If the graph is not 3-colourable (no proper colouring exists), then for every proof $c$ there is an edge $e \in E$ on which the verifier rejects: $\exists e \in E,\ \neg\,\mathrm{pcpVerifier}(c, e)$.*
 
-1. **Statement Layer**: A computation expressed as an R1CS.
-2. **Algebraic Layer**: R1CS satisfaction reduced to QAP polynomial divisibility.
-3. **Probabilistic Layer**: Divisibility checked via random evaluation (Schwartz-Zippel).
-4. **Commitment Layer**: Polynomial values committed and verified at random points.
+*Proof sketch.* Non-3-colourability implies $c$ is not proper (else it would be a witness), so Theorem 4.2 yields a catching edge $e$ with $c(e_1) = c(e_2)$, i.e. $\neg\,\mathrm{pcpVerifier}(c, e)$. $\square$
 
-Our `VerifiableComputation` structure captures layers 1-3 explicitly. The composition theorem (Theorem 3.7) shows that this pipeline is modular: systems can be combined without breaking soundness.
+**Theorem 5.5 (soundness gap for proof-checking — pcp\_soundness\_gap).** *Let $|E| > 0$. If the graph is not 3-colourable, then against any proof $c$ the verifier rejects with probability at least $1/|E|$ over a uniform random edge:*
+$$\frac{1}{|E|} \;\le\; \frac{|\{e \in E : c(e_1) = c(e_2)\}|}{|E|}.$$
 
-## 5. Algorithms
+*Proof sketch.* Non-3-colourability makes every $c$ improper; apply Theorem 4.4. $\square$
 
-### 5.1 R1CS Verification Algorithm
+**What is and isn't captured.** The bridge formally captures the *constant-query* aspect (Theorem 5.1), the equivalence of local checks with the global witness (Theorem 5.2), *perfect completeness* (Theorem 5.3), and a *positive soundness gap* (Theorems 5.4–5.5). What it does **not** capture — and what constitutes the genuine depth of the PCP theorem — is **gap amplification**: boosting the instance-dependent gap $1/|E|$ to a *universal constant* across all of NP, while keeping the query count constant. That amplification, together with the NP-hardness of the resulting constant-gap problem, is supplied by the full PCP machinery (gap-preserving reductions and proof composition) and is deliberately outside the present scope.
 
-```
-Input: R1CS (A, B, C) with m constraints, n variables; witness w
-Output: Accept/Reject
+---
 
-For i = 0 to m-1:
-  left  ← Σ_j A[i][j] * w[j]
-  right ← Σ_j B[i][j] * w[j]
-  out   ← Σ_j C[i][j] * w[j]
-  if left * right ≠ out: return Reject
-return Accept
-```
+## 6. Algorithms
 
-**Complexity**: O(mn) field operations.
+We summarize the procedures implied by the formal development; full type-hinted implementations appear in the accompanying demonstration code.
 
-### 5.2 SNARK Verification Algorithm
+**Algorithm A (Proper-colouring verification / local check).** Given $E$ and $c$, return *accept* iff $c(e_1) \neq c(e_2)$ for all $e \in E$. Complexity $O(|E|)$ for the global check; the *single-round local check* is $O(1)$, reading two symbols. This realizes Definitions 3.1/5.1 and Theorem 5.2.
 
-```
-Input: Polynomial commitment π, evaluation point z, claimed values
-Output: Accept/Reject
+**Algorithm B (Honest prover round).** Sample $\pi \in S_3$ uniformly; on verifier challenge $e = (u,v)$, output $(\pi(c(u)), \pi(c(v)))$. By Theorem 4.1 the output is always a distinct pair. Complexity $O(1)$ per round after an $O(|V|)$ commitment.
 
-1. Derive z from statement hash (Fiat-Shamir)
-2. Evaluate vanishing polynomial: t(z) ← Π_i (z - ω_i)
-3. Check pairing equation: e(π, [τ - z]) = e([p(z) - v], [1])
-4. Return Accept iff pairing check passes
-```
+**Algorithm C (Soundness search / catching edge).** Given an improper $c$, scan $E$ to find an edge with $c(e_1) = c(e_2)$; such an edge exists by Theorem 4.2 and the catching fraction is $\ge 1/|E|$ by Theorem 4.4. Complexity $O(|E|)$.
 
-**Complexity**: O(1) pairings + O(m) for vanishing polynomial (precomputable).
+**Algorithm D (Perfect simulator for HVZK).** Without access to $c$, output a uniformly random element of $\mathrm{DistinctPairs}$. By Theorem 4.7 this matches the real view distribution exactly. Complexity $O(1)$.
 
-## 6. Discussion
+**Algorithm E (Soundness amplification).** Repeat Algorithm B/local-check over $m$ independent challenges; accept iff all rounds accept. Against an unsatisfiable instance the cheating probability is $\le (1 - 1/|E|)^m$; $m = \lceil |E|\,\ln(1/\varepsilon)\rceil$ suffices for error $\le \varepsilon$.
 
-### 6.1 Relationship to Existing Work
+---
 
-Our formalization connects to and extends several existing results in the catalog:
+## 7. Applications
 
-- **`soundness_error_bound`** (Cryptography/Foundation.lean): Our Schwartz-Zippel bound provides the concrete polynomial-level justification for the abstract error bounds proved there.
-- **`circuit_zero_poly_vanishes`** (Algebra/NullstellensatzPIT.lean): Our QAP completeness theorem is the SNARK-specific version of the general principle that constraint-satisfying assignments produce vanishing polynomials.
-- **`tropical_zero_knowledge_shift`** (Cryptography/TropicalMinPlusCrypto.lean): Our permutation-based ZK theorem operates in a different algebraic setting (finite groups vs. tropical semirings) but captures the same structural principle.
+- **Zero-knowledge proofs for all of NP.** Because 3-colourability is NP-complete, the GMW protocol composes with NP-reductions to give zero-knowledge proofs for arbitrary NP statements — the foundational result of the area.
+- **Verifiable computation and zk-SNARKs.** Commit-challenge-open structure with a few cheap verifier queries is the template behind succinct non-interactive arguments (SNARKs) used in privacy-preserving ledgers and rollups, where a verifier checks a short certificate instead of re-executing a computation.
+- **Anonymous credentials and identification.** Sigma protocols of this shape let a party prove possession of a secret (a colouring, a discrete log, a signature) without disclosing it, enabling privacy-preserving authentication.
+- **Probabilistically checkable proofs and hardness of approximation.** The constant-query verifier viewpoint connects directly to the PCP theorem and, through it, to inapproximability results for optimization problems.
 
-### 6.2 Limitations
+---
 
-Our formalization does not yet cover:
-- The extractability property of SNARKs (knowledge soundness vs. regular soundness)
-- Concrete pairing-based instantiations (Groth16 verification equation)
-- The trusted setup ceremony and its security properties
-- Recursive composition beyond simple stacking (folding schemes à la Nova)
+## 8. Discussion
 
-### 6.3 Falsifiable Conjecture
+The development isolates *what is easy and what is hard* with unusual clarity. Completeness, the soundness gap, and perfect HVZK for $k = 3$ are clean, finite, and fully provable from first principles — the HVZK statement reducing to a cardinality coincidence ($|S_3| = |\mathrm{DistinctPairs}| = 6$) and the simple fact that a permutation of three points fixing two fixes the third. The constant-query PCP reframing is likewise immediate. By contrast, the genuinely deep content — amplifying a $1/|E|$ gap to a universal constant across NP — is honestly flagged as outside scope, and is exactly the part the PCP theorem supplies.
 
-**Conjecture (R1CS Compression)**: For any satisfiable R1CS with $m$ constraints and $n < m$ variables over a field of characteristic 0, there exists an equivalent R1CS with at most $n$ constraints preserving the solution set. This is related to circuit minimization and may be connected to the natural proofs barrier.
+A subtlety worth emphasizing is the *perfection* of the zero-knowledge guarantee here: not statistical, not computational, but a literal equality of distributions, witnessed by an explicit bijection. This is a feature of the small alphabet; it degrades gracefully (to uniform-fibre arguments) as the number of colours grows.
 
-**Test**: Construct random R1CS instances with $m > n$ over $\mathbb{Q}$ and attempt to find compressed representations. A counterexample would disprove the conjecture.
+---
 
-## 7. Future Work
+## 9. Future Directions
 
-1. **Knowledge Soundness**: Formalize the extraction property of SNARKs, showing that any accepting prover must "know" a valid witness.
-2. **Pairing-Based Verification**: Formalize the Groth16 verification equation using bilinear pairings.
-3. **Recursive SNARKs**: Extend the composition theorem to folding-based recursive proof systems (Nova, HyperNova).
-4. **PCP Theorem Connection**: Formalize the full PCP theorem and show that R1CS provides a concrete instantiation.
-5. **Trusted Setup Security**: Model the structured reference string and prove properties of the setup ceremony.
+1. **Perfect HVZK for $k$-colouring via a transitive symmetric-group action.** Conjecture: for every $k \ge 3$, the GMW protocol over $\mathbb{F}_k$ is perfectly HVZK. For $k > 3$ the map $\pi \mapsto (\pi(a), \pi(b))$ from $S_k$ is no longer a bijection onto distinct pairs ($k!$ vs $k(k-1)$), but the action of $S_k$ on ordered distinct pairs is transitive with uniform fibres of size $(k-2)!$, so the pushforward of the uniform measure on $S_k$ is still uniform on distinct pairs. The $k = 3$ case is the degenerate fibre-size-$1$ instance.
 
-## References
+2. **Soundness amplification by independent repetition.** Conjecture: running the verifier on $m$ independent edges drives the soundness error of a non-3-colourable instance from $1 - 1/|E|$ to $(1 - 1/|E|)^m < \varepsilon$ once $m \ge |E|\,\ln(1/\varepsilon)$. The single-edge rejecting set has density $\ge 1/|E|$, and independence makes per-round acceptance probabilities multiply.
 
-[1] J. Groth, "On the Size of Pairing-Based Non-Interactive Arguments," EUROCRYPT 2016.
+3. **Gap-preserving reduction certifies a constant-query PCP for 3-colouring.** Conjecture: there is a polynomial-time, gap-preserving reduction from any constant-gap NP problem to graph 3-colouring such that the 2-query local verifier inherits a *universal constant* soundness gap (independent of $|E|$), formally instantiating the constant-query, constant-gap content of $\mathrm{NP} \subseteq \mathrm{PCP}(\mathrm{poly}, O(1))$. Constant query complexity is already achieved; the remaining difficulty is amplifying the gap to a constant while keeping queries constant.
 
-[2] A. Gabizon, Z. J. Williamson, O. Ciobotaru, "PLONK: Permutations over Lagrange-bases for Oecumenical Noninteractive arguments of Knowledge," IACR ePrint 2019/953.
+---
 
-[3] A. Chiesa, Y. Hu, M. Maller, P. Mishra, N. Vesely, N. Ward, "Marlin: Preprocessing zkSNARKs with Universal and Updatable SRS," EUROCRYPT 2020.
+## 10. Conclusion
 
-[4] E. Ben-Sasson, A. Chiesa, D. Genkin, E. Tromer, M. Virza, "SNARKs for C: Verifying Program Executions Succinctly and in Zero Knowledge," CRYPTO 2013.
-
-[5] R. Gennaro, C. Gentry, B. Parno, M. Rabin, "Quadratic Span Programs and Succinct NIZKs without PCPs," EUROCRYPT 2013.
-
-[6] J. T. Schwartz, "Fast probabilistic algorithms for verification of polynomial identities," JACM 1980.
-
-[7] R. Zippel, "Probabilistic algorithms for sparse polynomials," EUROSAM 1979.
-
-[8] S. Goldwasser, S. Micali, C. Rackoff, "The Knowledge Complexity of Interactive Proof Systems," SIAM J. Computing, 1989.
-
-## Appendix: Lean 4 Theorem Inventory
-
-| Theorem | Statement | Status |
-|---------|-----------|--------|
-| `R1CS.zero_satisfied` | Zero R1CS is universally satisfied | ✓ Proved |
-| `vanishingPoly_eval_domain` | t(ωᵢ) = 0 | ✓ Proved |
-| `vanishingPoly_natDegree` | deg(t) = m | ✓ Proved |
-| `vanishingPoly_ne_zero` | t ≠ 0 for distinct domain | ✓ Proved |
-| `qap_completeness` | Valid witness ⟹ zero residual | ✓ Proved |
-| `schwartz_zippel_root_bound` | Root count ≤ degree | ✓ Proved |
-| `soundness_error_fraction` | Root count < |S| when deg < |S| | ✓ Proved |
-| `r1cs_compose_sound` | Composition preserves satisfaction | ✓ Proved |
-| `poly_commit_soundness` | ∃ non-root in large set | ✓ Proved |
-| `permute_preserves_coloring` | σ ∘ c is valid 3-coloring | ✓ Proved |
-| `coloring_simulation_single_vertex` | ∃ σ matching at vertex | ✓ Proved |
-| `coloring_soundness_contrapositive` | ¬coloring ⟹ ∃ bad edge | ✓ Proved |
-| `r1cs_local_check_equiv` | R1CS = local checks | ✓ Proved |
-| `soundness_trivial_small_field` | Trivial bound for small fields | ✓ Proved |
-| `r1cs_zero_constraints_trivial` | 0-constraint R1CS trivial | ✓ Proved |
-| `r1cs_zero_variables_trivial` | 0-variable R1CS trivial | ✓ Proved |
+We have given a complete, self-contained formal account of the GMW zero-knowledge proof for graph 3-colourability — perfect completeness, a clean $1/|E|$ soundness gap, and *perfect* honest-verifier zero knowledge via an explicit $S_3 \cong \mathrm{DistinctPairs}$ bijection — and bridged it to the constant-query backbone of the PCP theorem through a 2-query local verifier. The result is a transparent map of the territory: the local, finite, perfectly analyzable structure of zero-knowledge proof-checking on one side, and the single deep ingredient of gap amplification on the other.
