@@ -1,224 +1,244 @@
 # The Equation That Refuses a Formula
 
-## A rainbow, a telescope, and a stubborn little differential equation
+## A rainbow, a telescope, and a stubborn little curve
 
-In 1838 the British astronomer George Biddell Airy was trying to understand a
-puzzle of light. When light passes near a sharp edge — the rim of a rainbow, the
-boundary of a shadow, the focus of a telescope — it does not stop cleanly. It
-ripples. The brightness oscillates on one side of the boundary and fades smoothly
-to nothing on the other. To capture this delicate behavior, Airy wrote down what
-looks like one of the simplest possible differential equations:
+If you have ever looked closely at the bright edge of a rainbow, or at the
+fringe of light spilling past the rim of a shadow, you have seen the
+fingerprints of a single mathematical object. Near a *caustic* — the place
+where light rays pile up and focus — the brightness of light is governed by a
+special function that wiggles on one side and fades smoothly to nothing on the
+other. Astronomers meet the same curve when they sharpen a telescope; physicists
+meet it at the turning point of a quantum particle, exactly where a ball would
+roll back if the world were classical instead of quantum.
+
+That curve is the **Airy function**, and it is the solution to one of the most
+deceptively simple differential equations ever written down:
 
 $$ y'' = x\,y. $$
 
-In words: *the curvature of the function at each point equals the function's own
-height multiplied by how far you are along the axis.* Where $x$ is negative the
-function curves back toward the axis and oscillates like a wave; where $x$ is
-positive it curves away and either explodes or decays. The two basic solutions,
-written $\mathrm{Ai}(x)$ and $\mathrm{Bi}(x)$, are now called the **Airy
-functions**, and they appear everywhere physicists look at the edge of things:
-optics, quantum mechanics near a "turning point," the theory of how rainbows get
-their supernumerary fringes, even the statistics of the largest eigenvalues of
-random matrices.
+In words: *the curvature of the graph at each point equals the height of the
+graph times the horizontal position.* That is all. No exotic ingredients, no
+hidden constants. And yet this equation hides a secret that took mathematicians
+the better part of two centuries to fully articulate, and that we can now state
+with complete precision: **Airy's equation has no solution that can be written
+as a formula built from ordinary algebra.**
 
-Here is the strange part. Despite the equation being almost childishly simple,
-its solutions cannot be written down with the symbols we usually reach for. There
-is no formula for $\mathrm{Ai}(x)$ built from powers, roots, exponentials,
-logarithms, sines, and cosines. The Airy functions are genuinely *new*
-functions — not shortcuts for combinations of old ones.
+This article is about *why* — and about a clean, modern way to prove a sharp
+version of that impossibility using nothing more sophisticated than counting the
+degree of a polynomial.
 
-That kind of statement is easy to assert and notoriously hard to prove. "I can't
-find a formula" is not the same as "no formula exists." Mathematicians have a
-long, embarrassing history of failing to find things that were there all along.
-To say with certainty that *no* elementary formula can ever work, you need an
-argument that rules out every possibility at once.
+## What "no formula" really means
 
-This article tells the story of one such argument — a clean, complete, and fully
-rigorous proof that a large and natural family of candidate formulas is
-*impossible*. The family is the **exponential–polynomials**: functions of the
-shape
+We have to be careful. The Airy function certainly *exists*: you can compute it
+to a billion decimal places, plot it, build a telescope around it. When we say
+"no formula," we mean something specific and historically deep.
 
-$$ f(x) = q(x)\,e^{p(x)}, $$
+In the 1800s, Joseph Liouville asked a revolutionary question: which integrals
+and which differential equations can be solved "in closed form" — using
+polynomials, roots, exponentials, logarithms, and the four arithmetic
+operations? He discovered that *most* cannot. The integral $\int e^{-x^2}\,dx$,
+the engine of all of statistics, has no elementary antiderivative. It is not
+that we have been too lazy to find one; it is that none exists, and this is a
+*theorem*, as firm as the irrationality of $\sqrt{2}$.
 
-where $q$ and $p$ are ordinary polynomials and $q$ is not the zero polynomial.
-This family already contains an enormous amount of what we mean by "closed-form":
-every polynomial (take $p=0$), every pure exponential like $e^{x}$ and the
-Gaussian bell $e^{-x^2}$, products like $x^3 e^{2x}$, and so on. If the Airy
-equation had a tidy elementary solution of the most common shape, it would very
-plausibly live here.
+Differential equations have their own version of this story, and it is even
+richer. It is called **differential Galois theory**. Just as ordinary Galois
+theory attaches a symmetry group to a polynomial equation and reads off whether
+the roots can be expressed by radicals, differential Galois theory attaches a
+symmetry group to a *differential* equation and reads off whether its solutions
+can be expressed in elementary terms. For a second-order linear equation like
+Airy's, there is even an explicit recipe — the **Kovacic algorithm** — that
+takes the equation as input and decides, in finite time, whether a "nice"
+(so-called *Liouvillian*) solution exists.
 
-It doesn't. And the reason is beautiful: it comes down to **counting**, and to a
-single mismatch between an *odd* number and an *even* number.
+For Airy's equation, the verdict is: **no**. The Airy function is genuinely
+new — it cannot be assembled from the classical toolkit. This article gives a
+self-contained, rigorous proof of the crucial first and most decisive step of
+that verdict.
 
-## The trick: peel off the exponential
+## The trick that changes everything: Riccati's substitution
 
-The first move is the one every good physicist or mathematician makes when they
-see $e^{p(x)}$ sitting in a problem: differentiate and watch what happens to the
-exponential.
+Here is the central idea, and it is beautiful. A second-order equation looks
+hard because it talks about curvature ($y''$). But there is a classical change
+of variables — due to the 18th-century Italian count Jacopo Riccati — that
+trades the second-order *linear* equation for a first-order *nonlinear* one.
 
-If $f(x) = q(x) e^{p(x)}$, then by the product rule and the chain rule,
+Set
+$$ v = \frac{y'}{y}, $$
+the *logarithmic derivative* of the unknown solution. If $y'' = q\,y$, then a
+one-line computation with the quotient rule shows that $v$ satisfies the
+**Riccati equation**
+$$ v' + v^2 = q. $$
 
-$$ f'(x) = \big(q'(x) + q(x)\,p'(x)\big)\, e^{p(x)}. $$
+For Airy ($q = x$) this becomes
+$$ v' + v^2 = x. $$
 
-Notice the shape is preserved: a polynomial times the *same* exponential
-$e^{p(x)}$. The exponential never goes away and never changes; only the
-polynomial prefactor evolves. Differentiating $q(x) e^{p(x)}$ is the same as
-applying the operator
+Why is this a good trade? Because of a fundamental principle of differential
+Galois theory: the original linear equation has a "nice" (Liouvillian) solution
+**only if** its Riccati equation has a solution that is *algebraic* — in the
+simplest case, a **rational function**, a ratio of two polynomials. The hunt for
+elementary solutions of a hard second-order equation collapses into the hunt for
+a humble fraction $v = p/q$ solving a first-order equation. This is exactly the
+reducible-case test at the heart of the Kovacic algorithm.
 
-$$ q \;\longmapsto\; q' + q\,p' $$
+So the whole question — *can the rainbow's curve be written as a formula?* —
+funnels down to a single sharp puzzle:
 
-to the prefactor. Apply it twice and you get the second derivative. After a short
-computation, the second derivative of $q\, e^{p}$ is
+> **Is there a rational function $v = p/q$ with $v' + v^2 = x$?**
 
-$$ f''(x) = \Big(\,q'' + 2\,q'\,p' + q\,p'' + q\,(p')^2\,\Big)\, e^{p(x)}. $$
+If the answer is no, the most important door to an elementary solution is shut.
 
-That bracketed polynomial is the hero of the story. Call it the **Airy
-coefficient** of $q$ and $p$:
+## Clearing the fraction
 
-$$ \mathrm{airyCoeff}(q,p) \;=\; q'' + 2\,q'\,p' + q\,p'' + q\,(p')^2. $$
+Fractions are awkward to reason about, so we clear them. Suppose $v = p/q$ with
+polynomials $p, q$ and $q \neq 0$. The quotient rule gives
+$$ v' = \frac{p'q - p q'}{q^2}, \qquad v^2 = \frac{p^2}{q^2}. $$
+Substituting into $v' + v^2 = x$ and multiplying through by $q^2$ turns the
+rational equation into a pristine **polynomial identity**:
+$$ p'\,q - p\,q' + p^2 = x\,q^2. $$
 
-It is, by definition, the exact polynomial you get when you differentiate
-$q\,e^{p}$ twice and then strip the exponential back off. This is not an
-approximation or a heuristic; it is an algebraic identity, true for every choice
-of polynomials $q$ and $p$.
+Every term here is an honest polynomial. The fractions are gone. A rational
+solution of Airy's Riccati equation exists *if and only if* there are
+polynomials $p, q$ (with $q \neq 0$) making this identity true. We have turned a
+question about calculus into a question about algebra — and algebra we can win by
+counting.
 
-Now suppose, hopefully, that $f = q\,e^{p}$ actually solves Airy's equation
-$f'' = x f$. The left side is $\mathrm{airyCoeff}(q,p)\, e^{p}$. The right side
-is $x\cdot q(x)\, e^{p(x)}$. The exponential factor is *the same on both sides*,
-and an exponential is never zero, so we can cancel it cleanly. What remains is a
-purely algebraic equation between polynomials:
+## The proof is parity
 
-$$ \mathrm{airyCoeff}(q,p) \;=\; x\cdot q. $$
+Here is the entire argument, and the wonderful thing is that you can follow it
+with no machinery beyond the **degree** of a polynomial — the highest power of
+$x$ that appears. Write $\deg p$ and $\deg q$ for these degrees. Recall two
+schoolbook facts: the degree of a product adds ($\deg(fg) = \deg f + \deg g$),
+and differentiation *lowers* degree by one.
 
-We have completely removed calculus from the problem. The analytic question "does
-this function solve a differential equation?" has become the algebraic question
-"can these two polynomials be equal?" And polynomials are things we can *count*.
+Look at the right-hand side, $x\,q^2$. Its degree is
+$$ \deg(x\,q^2) = 1 + 2\deg q, $$
+which is **odd** — an even number $2\deg q$ plus one. That single observation is
+the seed of the whole impossibility. Now we examine the left-hand side and show
+it can *never* be odd of the right size.
 
-## The decisive count
+The left-hand side has two pieces. The square $p^2$ has degree $2\deg p$,
+always **even**. The cross term $p'q - p q'$ — a "Wronskian-like" combination —
+is the interesting one. Naively it looks like it should have degree
+$\deg p + \deg q$. But here is a small gem we prove along the way:
 
-Every nonzero polynomial has a **degree**: the highest power of $x$ that appears.
-The degree of $x \cdot q$ is simply one more than the degree of $q$. If $q$ has
-degree $d$, then $x\cdot q$ has degree $d+1$. Keep that number in mind: the target
-on the right-hand side has degree $d+1$.
+> **The cross term drops a degree.** For any polynomials $p$ and $q$,
+> $$ \deg\!\big(p'q - p q'\big) \le \deg p + \deg q - 1. $$
 
-Now look at the Airy coefficient itself. It has four terms, and we ask which one
-is biggest. Write $m$ for the degree of $p'$ (the derivative of $p$). The four
-terms have degrees:
+The leading terms of $p'q$ and $p q'$ are designed to cancel — exactly the
+phenomenon that makes the classical *Wronskian* of two solutions degenerate.
+(In the Lean formalization this is the lemma `natDegree_wronskianLike_le`.)
 
-- $q''$ has degree $d-2$ (differentiating lowers degree),
-- $2\,q'\,p'$ has degree $(d-1)+m$,
-- $q\,p''$ has degree $d + (m-1)$,
-- $q\,(p')^2$ has degree $d + 2m$.
+With that in hand the case analysis is short and decisive:
 
-When $p$ is genuinely nonconstant, so $p'$ is not zero and $m \ge 0$, the last
-term $q\,(p')^2$ towers over the other three: its degree $d + 2m$ is strictly
-larger than each of $d-2$, $d-1+m$, and $d+m-1$. Nothing can cancel it. So the
-Airy coefficient has degree *exactly*
+**Case 1: $\deg p \ge \deg q$.** Then the square $p^2$ (degree $2\deg p$) sits
+*above* the cross term (degree at most $\deg p + \deg q - 1 \le 2\deg p - 1$), so
+the whole left side has degree exactly $2\deg p$ — even. But it must equal the
+right side, of degree $1 + 2\deg q$ — odd. An even number cannot equal an odd
+number. Contradiction.
 
-$$ \deg\big(\mathrm{airyCoeff}(q,p)\big) = d + 2m. $$
+**Case 2: $\deg p < \deg q$.** Now $p^2$ has degree $2\deg p \le 2\deg q - 2$,
+and the cross term has degree at most $\deg p + \deg q - 1 \le 2\deg q - 2$. So
+the entire left side has degree at most $2\deg q - 2$ — but the right side has
+degree $1 + 2\deg q$, which is at least two larger. The two sides cannot match.
+Contradiction.
 
-Here is the punchline. For the two polynomials to be equal, their degrees must
-match:
+Either way, no polynomials $p, q$ exist. The fraction we sought does not exist.
+**Airy's Riccati equation has no rational solution.** (This is the theorem
+`no_rational_solves_riccati_airy`.)
 
-$$ d + 2m \;=\; d + 1, \qquad\text{which forces}\qquad 2m = 1. $$
+That is the whole proof. No pole counting, no residues, no heavy differential
+algebra — just the parity of an exponent. And it is rigorous: every step has
+been checked by machine.
 
-But $2m$ is an **even** number and $1$ is **odd**. No whole number $m$ can make
-$2m$ equal to $1$. The equation is impossible — not approximately, not usually,
-but *always*, by the most elementary fact about even and odd numbers. The
-$(p')^2$ term, by squaring the derivative of the exponent, can only ever raise the
-degree by an *even* amount, while the multiplication by $x$ on the right raises it
-by exactly *one*. Even can never meet odd.
+## The result is bigger than Airy
 
-There is one remaining loophole to close: what if $p$ is constant, so that
-$e^{p}$ is just a constant multiplier and $p' = 0$? Then the Airy coefficient
-collapses to $q''$, whose degree is at most $d-2$, strictly *less* than the
-target degree $d+1$. Mismatch again. (If $q$ itself is constant the gap is even
-more obvious: a constant cannot equal $x$ times a nonzero constant.) Every branch
-of the argument ends in the same wall.
+Notice what the argument actually used about the right-hand side $q = x$: only
+that its degree, $1$, is **odd**. Nothing about Airy in particular. So the same
+two-line parity dichotomy proves a sweeping generalization:
 
-So we have proved, with complete rigor and astonishing economy, the central fact:
+> **The odd-degree obstruction.** Let $f$ be *any* polynomial of odd degree.
+> Then the Riccati equation $v' + v^2 = f$ has no rational solution; equivalently,
+> the cleared identity $p'q - pq' + p^2 = f\,q^2$ has no solution with $q \neq 0$.
 
-> **No exponential–polynomial solves Airy's equation.** If $q$ is a nonzero real
-> polynomial and $p$ is any real polynomial, then $f = q\,e^{p}$ does **not**
-> satisfy $f'' = x\,f$.
+(In Lean this is `no_rational_solves_riccati_odd_deg`, and Airy is the special
+case $f = x$.) Translated back through Riccati's substitution, this says: for an
+entire infinite family of equations $y'' = f\,y$ with $\deg f$ odd — $y''=xy$,
+$y''=x^3y$, $y'' = (x^5 - x)y$, and so on — the reducible-case test of the
+Kovacic algorithm *always fails*. The most accessible route to an elementary
+solution is closed for all of them at once.
 
-The Airy functions are forced to live outside this entire universe of formulas.
-Whatever $\mathrm{Ai}(x)$ is, it is not a polynomial, not an exponential, not a
-polynomial times an exponential, not any finite assembly of those parts.
+The odd-degree hypothesis is not a technicality we failed to remove; it is
+*load-bearing*. For $f = x^2$, degree two and **even**, the parity clash
+disappears, and indeed such equations *can* have rational Riccati solutions. The
+boundary between solvable and unsolvable runs exactly along the parity of the
+degree. That is the kind of clean dividing line mathematicians dream of.
 
-## Why a counting argument is so satisfying
+## A tower of barriers
 
-It is worth savoring *why* this works. A naive person hunting for a formula tries
-candidate after candidate, each one failing for its own particular reason. That
-process never ends and never proves anything; the next candidate might always
-succeed. The degree argument does something categorically stronger. It assigns to
-each side of the equation a single integer — a fingerprint — and shows the
-fingerprints can never match, no matter how cleverly you choose the polynomials.
-One side always carries an even excess; the other always carries an odd one. The
-infinitely many candidates are all rejected by one stroke.
+It helps to see where this fits. The impossibility of solving Airy's equation in
+closed form is established by a tower of increasingly strong obstructions, each
+ruling out a larger class of would-be solutions:
 
-This is the same spirit in which one proves that $\sqrt{2}$ is irrational (a
-parity contradiction between even and odd) or that you cannot square the circle
-with ruler and compass (an algebraic invariant that constructions can never
-reach). In each case an *invariant* — something that stays put no matter how you
-manipulate the objects — exposes an impossibility that brute force could never
-confirm. Here the invariant is the parity of the degree, and the manipulation is
-the act of writing down a formula.
+1. **The polynomial barrier.** No nonzero polynomial $p$ can satisfy $p'' = x p$.
+   The reason is a blunt degree mismatch: differentiating twice *lowers* degree,
+   while multiplying by $x$ *raises* it, so $p''$ is always too small to equal
+   $x p$. (In Lean: `no_poly_solves_airy`, and more generally
+   `no_poly_solves_second_order_pos_deg` for any coefficient of positive degree.)
 
-## The bigger picture: a hierarchy of "solvable"
+2. **The rational Riccati barrier** — the new result of this work. Even allowing
+   *fractions* of polynomials as candidate logarithmic derivatives, the parity
+   argument above shuts the door. This is genuinely stronger than the polynomial
+   layer, and it is the true Galois-theoretic step, because rational solutions of
+   the Riccati equation are exactly what the Kovacic algorithm searches for.
 
-The Airy obstruction is a small, sharp instance of one of the grand themes of
-mathematics: the realization that *most* problems do not have answers in the
-vocabulary we start with, and that the right response is to enlarge the
-vocabulary honestly rather than to keep searching in vain.
+3. **The abstract differential-field layer.** Above both sits the structural
+   fact, true in any differential field, that the Wronskian of two solutions of
+   $y'' = a y$ has zero derivative — the polynomial echo of Abel's classical
+   identity. (In Lean: `poly_wronskian_derivative_zero`.) It is what guarantees
+   the solution space is only two-dimensional and frames the Galois group as a
+   group of $2 \times 2$ matrices.
 
-Évariste Galois discovered the prototype for polynomial equations: the quintic
-$x^5 + \cdots = 0$ has no solution by radicals, not because nobody is clever
-enough, but because a hidden symmetry group forbids it. In the 20th century this
-idea was carried over to *differential* equations by Picard, Vessiot, Kolchin,
-and others, creating **differential Galois theory**. To every linear differential
-equation it attaches a symmetry group, and the shape of that group dictates
-exactly which kinds of formulas — polynomials, exponentials, logarithms, algebraic
-functions, and their finite combinations, the so-called **Liouvillian**
-functions — can possibly appear in a solution. For Airy's equation that group is
-as large and "unsolvable" as it can be, which is the deep reason the Airy
-functions resist every elementary formula.
+The combined first step — *no polynomial solution and no rational Riccati
+solution* — is bundled together in the single statement
+`airy_no_poly_and_no_rational_riccati`, the formal certificate that the two most
+elementary doors to a closed-form Airy function are both locked.
 
-The full differential-Galois machinery is heavy. What makes the result in this
-article delightful is that for the most important and most common family of
-candidate formulas — a polynomial times an exponential — you do not need any of
-that machinery. You need the product rule, the chain rule, and the fact that two
-plus two is even. A single algebraic identity converts the analytic question into
-a counting question, and counting finishes the job.
+## Why this is worth caring about
 
-## Where this idea goes next
+It would be easy to file this under "abstract curiosities," but the Airy function
+is one of the most practically important special functions in all of applied
+mathematics. It describes:
 
-The argument is a template, not a one-off. Its engine — *factor out the
-exponential, compare degrees* — keeps running when you change the equation:
+- the **intensity of light** at a caustic, the optics of rainbows and the
+  shimmer at the edge of shadows;
+- the wavefunction of a **quantum particle near a turning point**, the bedrock
+  of the WKB approximation in quantum mechanics;
+- the diffraction pattern at the edge of a **telescope aperture**;
+- the statistics of the largest eigenvalue of huge random matrices — the
+  **Tracy–Widom distribution** that governs everything from the heights of
+  randomly growing interfaces to fluctuations in number theory.
 
-- **Other linear equations.** Replace the right-hand side $x\,y$ by any
-  polynomial combination $a(x)\,y' + b(x)\,y$. The same cancellation turns the
-  problem into a single polynomial identity, and a degree count again decides,
-  case by case, exactly which $q\,e^{p}$ can survive.
+Every time an engineer or physicist reaches for the Airy function, they are
+reaching for something that *provably has no elementary formula*. Understanding
+*why* — knowing that the obstruction is as simple and as unbreakable as the
+parity of a single integer — is what turns "we couldn't find a formula" into "no
+formula can exist." That distinction is the whole difference between ignorance
+and knowledge.
 
-- **Higher-order Airy cousins.** For equations like $y''' = x\,y$ or, more
-  generally, $y^{(n)} = x\,y$, the $n$-th derivative of $q\,e^{p}$ still factors
-  as a polynomial times $e^{p}$, and the dominant term is still $q\,(p')^{n}$.
-  The same even-versus-odd tension reappears in a new guise.
+## The shape of an impossibility
 
-- **Complex coefficients.** Nothing in the argument truly needed the numbers to
-  be real. Over the complex numbers the exponential still never vanishes and the
-  degree bookkeeping is identical, so the obstruction lifts verbatim.
+There is a quiet aesthetic lesson here. Impossibility proofs are often imagined
+as forbidding, technical fortresses. But the best of them have the opposite
+character: they reveal that the obstruction was something almost embarrassingly
+simple, hiding in plain sight. You cannot square the circle because $\pi$ is
+transcendental. You cannot solve the general quintic by radicals because a
+certain group is not solvable. And you cannot write the Airy function as an
+elementary formula because — at the very first and most important step — an even
+number cannot equal an odd number.
 
-- **A decision procedure.** Because matching the Airy coefficient against a target
-  polynomial is just a finite system of equations in the unknown coefficients of
-  $q$ and $p$, one can build an *algorithm* that, given a polynomial differential
-  equation, decides whether any $q\,e^{p}$ solves it — and constructs the solution
-  when one exists. This connects the elementary count back to the powerful,
-  general algorithms of Risch and Kovacic for finding closed-form solutions.
-
-Airy's little equation, born from the study of how light bends around a shadow,
-turns out to be a perfect teaching example of a profound idea: that the boundary
-between "has a formula" and "needs a new function" is not a matter of cleverness
-but of arithmetic. Some equations simply live on the other side of that line, and
-once you learn to count, you can prove it.
+The next time you see the bright fringe of a rainbow, you can know two things at
+once: that the curve of its brightness is computed by a function science cannot
+do without, and that this function is, in the most precise sense, *irreducibly
+new* — a stranger that no amount of algebra will ever tame. The proof of its
+strangeness fits in a paragraph, and it comes down to counting.
