@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b3d82bf4",
-      "domain": "Cryptography",
-      "key_insight": "# FUTURE DIRECTIONS — Tropical Cryptography: Multiple Homomorphic Shadows of the Exponent\n\nDerived from this cycle's findings in `TropicalMagnitudeLeak.lean` and\n`TropicalGminSuperadditive.lean` (and",
-      "quality_score": 0.74352,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-06-19T14:41:57",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
       "cycle_id": "6495e602",
       "domain": "Probability",
       "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nDerived from the verified results in `MachineLearning.SheafDatabaseProbability`\nand `MachineLearning.SheafImputationBounds` (product law `P(shea",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-26T13:13:27",
       "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
+    },
+    {
+      "cycle_id": "f014f8e3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — AFL Matching Bound for Random-Like Hypergraphs\n\nDerived from this cycle's findings (see the Lab Notes in `Basic.lean`, `Bounds.lean`,\n`Examples.lean`, and `ComputationalEvidence.",
+      "quality_score": 0.7510892307692308,
+      "sorry_count": 2,
+      "theorem_count": 13,
+      "timestamp": "2026-06-26T13:14:44",
+      "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "722e1f4a",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nFive research directions building directly on the formal finite-library combinatorics in\n`LibraryOfBabel.lean`. Each is freeform but anchored to a concrete next theorem.\n\n## 1. Ex",
-      "quality_score": 0.654,
-      "sorry_count": 1,
-      "theorem_count": 22,
-      "timestamp": "2026-06-20T11:10:43",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
     {
       "cycle_id": "47b46667",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-26T13:13:27",
       "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
+    },
+    {
+      "cycle_id": "f014f8e3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — AFL Matching Bound for Random-Like Hypergraphs\n\nDerived from this cycle's findings (see the Lab Notes in `Basic.lean`, `Bounds.lean`,\n`Examples.lean`, and `ComputationalEvidence.",
+      "quality_score": 0.7510892307692308,
+      "sorry_count": 2,
+      "theorem_count": 13,
+      "timestamp": "2026-06-26T13:14:44",
+      "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "99725b45",
-      "domain": "Novelty",
-      "name": "c5edges_even_incidence",
-      "quality": 0.708
-    },
-    {
-      "cycle_id": "f25c8810",
-      "domain": "Computation",
-      "name": "or",
-      "quality": 0.7545600000000001
-    },
-    {
-      "cycle_id": "f25c8810",
-      "domain": "Computation",
-      "name": "value_zero",
-      "quality": 0.7545600000000001
-    },
     {
       "cycle_id": "f25c8810",
       "domain": "Computation",
@@ -2803,17 +2785,28 @@
       "domain": "Cryptography",
       "name": "correctedModulus_perfect",
       "quality": 0.713
+    },
+    {
+      "cycle_id": "f014f8e3",
+      "domain": "Novelty",
+      "name": "needs",
+      "quality": 0.7510892307692308
+    },
+    {
+      "cycle_id": "f014f8e3",
+      "domain": "Novelty",
+      "name": "IsMatching",
+      "quality": 0.7510892307692308
+    },
+    {
+      "cycle_id": "f014f8e3",
+      "domain": "Novelty",
+      "name": "isMatching_empty",
+      "quality": 0.7510892307692308
     }
   ],
-  "last_updated": "2026-06-26T13:13:27",
+  "last_updated": "2026-06-26T13:14:44",
   "open_questions": [
-    {
-      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
-      "cycle_id": "2d95135b",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-06-15T13:01:23"
-    },
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
       "cycle_id": "497e55b6",
@@ -3016,6 +3009,13 @@
       "domain": "Bridges",
       "sorry_count": 1,
       "timestamp": "2026-06-26T07:57:04"
+    },
+    {
+      "context": "and the colour pigeonhole.  Both are fully provable in Lean with no `sorry`.; `afl_constant_gap` — all `sorry`-free.",
+      "cycle_id": "f014f8e3",
+      "domain": "Novelty",
+      "sorry_count": 2,
+      "timestamp": "2026-06-26T13:14:44"
     }
   ],
   "research_threads": {
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ab9c78a7",
-        "quality": 0.72533,
-        "theorems": 8,
-        "title": "Extremal Graph Theory: Turán and Szemerédi"
-      },
-      {
         "cycle_id": "0548f2b9",
         "quality": 0.7095,
         "theorems": 9,
@@ -3637,6 +3631,12 @@
         "quality": 0.7694400000000001,
         "theorems": 10,
         "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
+      },
+      {
+        "cycle_id": "f014f8e3",
+        "quality": 0.7510892307692308,
+        "theorems": 13,
+        "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hy"
       }
     ],
     "NumberTheory": [

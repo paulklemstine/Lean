@@ -720,6 +720,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f014f8e3 (Q=0.751), which proved 13 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For fixed integers r\u22652, t\u22652 there exists a constant C(r,t)>0 such that every r\u2011edge\u2011colouring of any (C,\u202fd)-pseudorandom t\u2011uniform hypergraph H on n vertices contains a monochromatic matching of size at least (1/(r+t\u20111)\u2212o(1))\u00b7n. Moreover, this bound is asymptotically best possible: for every \u03b5>0 and",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_f014f8e3_9958325f",
+    "priority_score": 0.8510892307692308,
+    "research_mode": "team",
+    "source_exp_id": "f014f8e3",
+    "status": "available",
+    "timestamp": "2026-06-26T13:14:44.987652+00:00",
+    "title": "Deepening: Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hy"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -1372,6 +1386,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-25T03:46:45.492101+00:00",
     "title": "Close Proofs: Alien Number Systems: Beyond Base-N"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle f014f8e3 (Q=0.751) proved 13 theorems in Novelty but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For fixed integers r\u22652, t\u22652 there exists a constant C(r,t)>0 such that every r\u2011edge\u2011colouring of any (C,\u202fd)-pseudorandom t\u2011uniform hypergraph H on n vertices contains a monochromatic matching of size ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_f014f8e3_e198810e",
+    "priority_score": 0.8010892307692309,
+    "research_mode": "team",
+    "source_exp_id": "f014f8e3",
+    "status": "available",
+    "timestamp": "2026-06-26T13:14:45.714474+00:00",
+    "title": "Close Proofs: Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Rand"
   },
   {
     "consumed_by_exp_id": "",
@@ -5909,6 +5937,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T13:13:15.915291+00:00",
     "title": "Derived from this cycle's formalization (`WienerPartialKnowledge.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 AFL Matching Bound for Random-Like Hypergraphs\n\nDerived from this cycle's findings (see the Lab Notes in `Basic.lean`, `Bounds.lean`,\n`Examples.lean`, and `ComputationalEvidence.md`).  Each conjecture is bold, falsifiable,\nand stated so that a follow-up cycle can attack it in Lean.\n\nThis cycle proved, with 0 `sorry`s:\n\n* `IsMatching.exists_mono_of_card` \u2014 colour pigeonhole on a matching.\n* `MaximalMatching.isCover` \u2014 maximal matchings are vertex covers.\n* `MaximalMatching.card_host_le` \u2014 greedy bound `#H \u2264 t\u00b7\u0394\u00b7#M`.\n* `mono_matching_lower_bound` \u2014 `r\u00b7t\u00b7\u0394\u00b7#M \u2265 #H` (a guaranteed monochromatic matching).\n* `afl_constant_gap` / `afl_constant_gap_strict` \u2014 `r+t-1 \u2264 r\u00b7t`, strict for `r,t \u2265 2`.\n* `K4_no_mono_matching_two` \u2014 a finite host below the clean AFL fraction.\n\nThe recurring theme: bounded degree fixes the *order* `\u0398(n/(rt))` but loses the constant\nfactor `rt/(r+t-1) = 1 + (r-1)(t-1)/(r+t-1)`.\n\n---\n\n## Conjecture 1 \u2014 The slack equals the cover/matching gap, edge by edge\nFor every `t`-uniform `H` and every `r`-colouring, the best monochromatic matching has\nsize `\u2265 #H / (r\u00b7\u03c4)` where `\u03c4` is the *vertex cover number* of `H`, and this refines the\ndegree bound whenever `\u03c4 < t\u00b7\u0394`.\n\n**The key insight is** that our greedy proof never used the degree bound directly \u2014 it used\nthe cover `support M`, so replacing `t\u00b7\u0394` by the true cover number `\u03c4` is automatically at\nleast as strong, and is exactly the K\u00f6nig/LP-dual quantity that AFL exploits globally.\n\n**Why now?** The cover lemma `MaximalMatching.isCover` is already formalized and `0`-`sorry`;\nthe only missing ingredient is a Lean development of the (fractional) cover number, which\nMathlib's `Finset` machinery now supports.\n\n## Conjecture 2 \u2014 Pseudorandomness buys the AFL constant, bounded degree cannot\nThere is a `(C,d)`-pseudorandomness threshold `C\u2080(r,t)` such that every `t`-graph with\ndiscrepancy below `C\u2080` has, in every `r`-colouring, a monochromatic matching of size\n`(1/(r+t-1) - o(1))\u00b7n`; whereas there exist bounded-degree (even `d`-regular) hosts whose\nbest guarantee is only `(1/(rt) + o(1))\u00b7n`.\n\n**The key insight is** that `afl_constant_gap_strict` proves the greedy constant is strictly\nworse, so any proof of the AFL constant *must* consume a global counting hypothesis \u2014\npseudorandom edge-density control is the natural candidate, separating it from mere degree\nregularity.\n\n**Why now?** We have both endpoints in hand: the universal lower bound `1/(rt)` is proved,\nand the target `1/(r+t-1)` is pinned down; the open task is the separating construction,\nwhich is a finite/`Fintype` search amenable to `decide`-assisted Lean experiments.\n\n## Conjecture 3 \u2014 The `-o(1)` is `\u0398(1/n)`, sharply\nFor the complete host `K_n^{(t)}` the optimal monochromatic matching guarantee is exactly\n`\u230a(n - (t-1))/(r+t-1)\u230b`-ish: the deviation from `n/(r+t-1)` is `\u0398(1)` in absolute terms,\ni.e. `o(1)\u00b7n` but never `0`.\n\n**The key insight is** that `K4_no_mono_matching_two` already exhibits an absolute deficit\nof `1` (`1` vs `4/3`) from a star/triangle split, suggesting the extremal colouring is\nalways a small bounded perturbation (a few \"stars\") of the balanced one.\n\n**Why now?** The finite witness is formalized and `decide`-checkable; scaling the star\nconstruction to general `n` is a concrete inductive target, and the matching upper bound\nmachinery (`mono_matching_lower_bound`) gives the complementary inequality for free.\n\n## Conjecture 4 \u2014 Multicolour monotonicity: adding a colour costs exactly one in the denominator\nThe optimal monochromatic-matching fraction for `r` colours on the pseudorandom host is\n`1/(r+t-1)`, and passing from `r` to `r+1` colours strictly decreases it by the algebraic\nstep `1/(r+t-1) - 1/(r+t) = 1/((r+t-1)(r+t))`, with no anomalous jumps.\n\n**The key insight is** that the colour pigeonhole `IsMatching.exists_mono_of_card` already\nshows each extra colour can only divide a single matching's value by a controlled amount;\nthe conjecture asserts this local `1/r` intuition globalizes to the exact AFL `1/(r+t-1)`\nladder.\n\n**Why now?** The pigeonhole lemma is proved and isolates the `r`-dependence cleanly, so the\ninduction on `r` has a verified base step and a clear algebraic target to falsify or confirm.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2605",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f014f8e3",
+    "status": "available",
+    "timestamp": "2026-06-26T13:14:36.086469+00:00",
+    "title": "Derived from this cycle's findings (see the Lab Notes in `Basic.lean`, `Bounds.l"
   },
   {
     "consumed_by_exp_id": "",

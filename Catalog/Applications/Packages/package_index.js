@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f014f8e3",
     "filename": "asymptotic_tightness_of_the_alonfrankllovsz_matchi.json",
     "pkg_num": 92,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7510892307692308,
     "title": "Asymptotic Tightness of the Alon-Frankl-Lovasz Matching Bound for Random-Like Hypergraphs"
   },
   {
@@ -2677,8 +2677,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "asymptotic_tightness_of_the_alonfrankllovsz_matchi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7510892307692308,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Asymptotic Tightness of the Alon-Frankl-Lovasz Matching Bound for Random-Like Hypergraphs"
     }
