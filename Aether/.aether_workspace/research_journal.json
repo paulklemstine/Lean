@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d9e56a6a",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions: Tropical Linear Algebra vs. Discrete-Logarithm Security\n\nThese directions build on the verified results in\n[`Cryptography/TropicalDiscreteLog.lean`](Cryptography/TropicalDiscreteL",
-      "quality_score": 0.5512728045325779,
-      "sorry_count": 0,
-      "theorem_count": 33,
-      "timestamp": "2026-06-20T16:12:33",
-      "title": "*normalization functor into the probability simplex*"
-    },
-    {
       "cycle_id": "c4b2f906",
       "domain": "Novelty",
       "key_insight": "# Future Directions — generalized Turán growth `ex(n, K_{a,b}, K_{3,t})`\n\nDerived from this cycle's results: the parity-uniform cubic **upper** bound\n(`KabCopies_cubic_of_K3tFree`, holding already at",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-26T14:53:19",
       "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
+    },
+    {
+      "cycle_id": "113a596f",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — EML Differential Equations (Airy / Kovacic layer)\n\nDerived from this cycle's findings in `EML/EMLAiryRiccati.lean` (rational Riccati\nobstruction) and `EML/EMLRiccatiTransform.lea",
+      "quality_score": 0.67667,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-26T14:56:06",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7510892307692308
     }
   ],
-  "last_updated": "2026-06-26T14:53:19",
+  "last_updated": "2026-06-26T14:56:06",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "8f6e0a03",
-        "quality": 0.67124,
-        "theorems": 12,
-        "title": "Quadratic irrational density in the ratio spectrum"
-      },
-      {
         "cycle_id": "8344a207",
         "quality": 0.6688000000000001,
         "theorems": 16,
@@ -3637,6 +3631,12 @@
         "quality": 0.5050399999999999,
         "theorems": 12,
         "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex "
+      },
+      {
+        "cycle_id": "113a596f",
+        "quality": 0.67667,
+        "theorems": 8,
+        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
       }
     ],
     "NumberTheory": [

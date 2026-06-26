@@ -387,21 +387,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Groups of Spheres: Low-Dimensional"
   },
   {
-    "consumed_by_exp_id": "5077231f",
-    "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
-    "domains": [
-      "Physics",
-      "Analysis"
-    ],
-    "id": "seed_362",
-    "priority_score": 0.88,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432770+00:00",
-    "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| \u2264 2\u221ap.",
     "domains": [
@@ -6011,6 +5996,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T14:53:08.920390+00:00",
     "title": "This cycle formalized, in an abstract Galerkin framework, the precise structural"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 EML Differential Equations (Airy / Kovacic layer)\n\nDerived from this cycle's findings in `EML/EMLAiryRiccati.lean` (rational Riccati\nobstruction) and `EML/EMLRiccatiTransform.lean` (abstract Riccati transform & Wronskian),\nbuilding on the catalog file `EML/EMLDiffObstruction.lean` (polynomial obstruction).\n\nThis cycle established a three-layer obstruction tower for Airy's equation `y\u2033 = x\u00b7y`:\npolynomial (catalog) \u2192 rational Riccati (degree/parity) \u2192 abstract differential-field\ntransform. The directions below push each layer further.\n\n---\n\n## D1. The full odd-degree family has no rational *or* algebraic Riccati solution.\n\n**Conjecture.** For every `f \u2208 \u211d[X]` of odd degree, the Riccati equation `v\u2032 + v\u00b2 = f`\nhas no solution `v` algebraic over `\u211d(X)` (not merely no rational solution).\n\n*The key insight is...* that the degree/parity dichotomy proved for rational `v` is a\nshadow of a *ramification-parity* invariant: an algebraic `v` of degree `d` over `\u211d(X)`\ncontributes a `v\u00b2` whose Puiseux valuations are even multiples of the local uniformizer,\nwhich cannot match the odd pole/zero pattern forced by an odd-degree `f` at infinity.\n\n*Why now?* We already have the clean `natDegree` parity engine\n(`no_rational_solves_riccati_odd_deg`); lifting it to algebraic extensions only needs a\nvaluation-at-infinity refinement, and Mathlib now has enough Puiseux/valuation API\n(`HahnSeries`, used in `EML/Transseries/Field.lean`) to host the argument.\n\n## D2. Wronskian constancy \u21d2 a two-dimensional solution space over the constants.\n\n**Conjecture.** In any differential field `K` with field of constants `C`, the solution\nset `{y : y\u2033 = a\u00b7y}` is a `C`-vector space of dimension \u2264 2, and equals 2 exactly when a\nnonzero-Wronskian pair exists.\n\n*The key insight is...* that `wronskian_deriv_eq_zero` makes the Wronskian a constant, so\ntwo solutions are `C`-linearly dependent **iff** their Wronskian vanishes \u2014 turning a\ndifferential statement into linear algebra over `C`.\n\n*Why now?* The abstract Wronskian identity is already proved over an arbitrary\n`Differential` field; the missing step is purely the linear-dependence \u21d4 zero-Wronskian\nlemma, which is finite-dimensional linear algebra Mathlib supports directly.\n\n## D3. A Galois-group dichotomy for `y\u2033 = f\u00b7y` indexed by `deg f mod 2`.\n\n**Conjecture.** For `f \u2208 \u211d[X]`, the differential Galois group of `y\u2033 = f\u00b7y` is\n*reducible* (has a common eigenvector \u21d4 a rational Riccati solution) only if `deg f` is\neven; for odd `deg f` the group is `SL\u2082`-large and Airy (`f = X`) is the minimal instance.\n\n*The key insight is...* that the rational-solution layer (`EMLAiryRiccati`) is exactly the\n\"reducible case\" test of the Kovacic algorithm, and our parity obstruction shows this test\n*always fails* for odd degree \u2014 pinning the group away from the reducible (triangularizable)\nlocus.\n\n*Why now?* With the reducible-case obstruction formalized, the remaining Kovacic cases\n(imprimitive / finite group) are finite, checkable conditions; a Lean encoding of the\nGalois group as the closure of the monodromy is now within reach via the differential-field\nframework already imported here.\n\n## D4. Transseries-valued non-existence: Airy has no EML transseries solution.\n\n**Conjecture.** Airy's equation has no nonzero solution in the transseries field\n`EMLTransseries.TSeries` whose logarithmic derivative is a *grid-based* transmonomial\nseries with eventually-rational support.\n\n*The key insight is...* that an EML (exp\u2013log\u2013multiply) solution would have a logarithmic\nderivative living one exp-level below it, and the Riccati parity obstruction, transported\nacross the valuation of `EML/Transseries/Field.lean`, forbids the required leading\ntransmonomial.\n\n*Why now?* The transseries field is already constructed in the catalog\n(`EML/Transseries/Field.lean`) with the dominance law `exp_dominates_pow`; coupling it to\nthe Riccati transform (`EMLRiccatiTransform`) gives a concrete asymptotic obstruction with\nno new infrastructure.\n\n## D5. Quantitative obstruction: a degree bound on approximate Riccati solutions.\n\n**Conjecture.** For odd-degree `f`, any polynomials `p, q` (`q \u2260 0`) make the residual\n`R := p\u2032q \u2212 pq\u2032 + p\u00b2 \u2212 f\u00b7q\u00b2` satisfy `deg R \u2265 deg f + 2\u00b7deg q` (the residual cannot be\nmade low-degree), with equality describing the best rational approximant.\n\n*The key insight is...* that our proof shows the top-degree term of `f\u00b7q\u00b2` is *never*\ncancelled by the cleared left side, so the obstruction is not just qualitative\nnon-existence but a hard lower bound on the leading residual.\n\n*Why now?* The proof of `no_rational_solves_riccati_odd_deg` already isolates the dominant\nterm; promoting \"they differ\" to \"they differ by at least this degree\" is a direct\nstrengthening that yields a computable certificate of non-solvability.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2611",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "113a596f",
+    "status": "available",
+    "timestamp": "2026-06-26T14:55:56.954377+00:00",
+    "title": "Derived from this cycle's findings in `EML/EMLAiryRiccati.lean` (rational Riccat"
   },
   {
     "consumed_by_exp_id": "",
