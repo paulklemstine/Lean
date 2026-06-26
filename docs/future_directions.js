@@ -2077,7 +2077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "913e3580",
+    "consumed_by_exp_id": "",
     "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
     "domains": [
       "Algebra"
@@ -2086,7 +2086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -3044,7 +3044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-acyclicity of transversal spaces in high dimensions"
   },
   {
-    "consumed_by_exp_id": "7d5c7f90",
+    "consumed_by_exp_id": "",
     "description": "For any Cayley digraph G of an abelian group of even order, the pair (G, K\u2082) is unstable.",
     "domains": [
       "Algebra"
@@ -3053,7 +3053,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22947v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T06:20:52.702234+00:00",
     "title": "Stability of Cayley Digraphs of Even Order with K2"
   },
@@ -4753,20 +4753,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conflict-Free Coloring of Outerplanar Graphs with Three Colors"
   },
   {
-    "consumed_by_exp_id": "0171d9bf",
-    "description": "Conjecture that for every integer n \u2265 2, any collection of mutually orthogonal Italian squares of order n contains at most n\u20111 squares, and this bound is attained exactly when n is a prime power.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2537",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.25884v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T16:34:26.097340+00:00",
-    "title": "Maximum size of pairwise orthogonal Italian squares is n\u20111 for prime powers"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let X be a K3 surface over a finite field \ud835\udd3d_q of characteristic \u2260 p. Let k_n = \ud835\udd3d_{q^{p^n}} and let Br(X_{k_n})[p^\u221e] denote the p\u2011primary part of the Brauer group. Write \u0393 = Gal(k_\u221e/k) \u2245 \u2124_p and \u039b = \u2124_p[[\u0393]]. Let M = varprojlim_n Br(X_{k_n})[p^\u221e]^\u2228 be the Pontryagin dual, a compact \u039b\u2011module. Conjecture: M is a finitely generated torsion \u039b\u2011module and its characteristic power series f_M(T) \u2208 \u039b equals, up to a unit in \u039b, the p\u2011adic L\u2011function L_p(T, X) defined from the Frobenius eigenvalues on H^2_et(X_{\u0305\ud835\udd3d_q}, \u211a_p(1)).",
     "domains": [
@@ -6258,7 +6244,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "f2c77f29",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -6268,7 +6254,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -6371,21 +6357,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T01:40:49.707518+00:00",
     "title": "Derived from this cycle's findings in `AKSCriterion.lean` and `MillerRabin.lean`"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe most natural next step is to attack the residue class isolated by the\nprime-core reduction: primes `p \u2261 1 (mod 8)`. The key insight is that the four\nelementary families already dispatch every residue except this one, so the entire\ndifficulty of Erd\u0151s\u2013Straus is concentrated in a single arithmetic progression,\nand any constructive scheme that handles it would, via\n`erdosStraus_of_primes_one_mod_eight`, close the problem unconditionally. A\npromising route is to formalize the classical covering-congruence constructions\nof Mordell, which solve `4/p` for all `p` outside a sparse set of residues modulo\nsmall moduli (e.g. residues that are quadratic non-residues modulo `4`, or that\nfall into specific classes mod `3\u00b78`, `5\u00b78`, `7\u00b78`, \u2026). Why now? Because the\npresent development supplies exactly the reusable scaffolding \u2014 the predicate, the\nwitness-verification idioms, and divisor inheritance \u2014 that such a formalization\nwould otherwise have to rebuild from scratch.\n\nA second direction is computational certification at scale. The key insight is\nthat `ErdosStrausSolution n` is witnessed by a finite triple whose correctness is\na single rational identity, so a verified search procedure could emit witnesses\nfor enormous ranges and check them by `decide`/`norm_num`, turning empirical\ntables (which currently confirm the conjecture far beyond `10^17`) into\nmachine-checked theorems for explicit bounds. Why now? Because Lean's `decide`\nkernel reduction and `norm_num` extensions are mature enough to validate millions\nof rational identities reliably, and the bounded theorem `erdosStraus_upto_100`\ndemonstrates the pattern end to end; scaling it is an engineering problem, not a\nmathematical one.\n\nA third direction concerns the structure of the witness map itself.\nThe key insight is that the family witnesses are not ad hoc but instances of a small\nnumber of algebraic identities (the `1/a + 1/(a\u00b7n)` split and its halving, and the\n`(n+3)/(2na)` collapse), so one could formalize a *parametrized solver*: a single\nlemma taking residue data and returning a witness, from which all four families\nbecome corollaries. Why now? Because unifying the families would both shrink the\nproof and expose precisely which algebraic degrees of freedom remain unused for\nthe `1 (mod 8)` case, potentially suggesting the missing construction.\n\nA fourth direction is to connect this development to Mathlib's number-theoretic\ninfrastructure on quadratic residues and Dirichlet characters. The key insight is\nthat the obstruction at `p \u2261 1 (mod 8)` is governed by solvability of congruences\nthat quadratic reciprocity controls, so importing Mathlib's reciprocity and\nLegendre-symbol API could let one phrase the open core as a clean statement about\nrepresentability rather than as a raw existential over triples. Why now? Because\nMathlib's quadratic reciprocity and `ZMod` character theory are now stable and\nwell-supported, making it feasible to translate the analytic-number-theory\nheuristics for Erd\u0151s\u2013Straus into formal, checkable hypotheses.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2559",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "199a5960",
-    "status": "available",
-    "timestamp": "2026-06-26T00:08:32.567910+00:00",
-    "title": "The most natural next step is to attack the residue class isolated by the"
   },
   {
     "consumed_by_exp_id": "",
@@ -6532,6 +6503,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-24T22:36:53.104224+00:00",
     "title": "OEIS sequence: Stack polyominoes with square core."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every compact smooth n\u2011dimensional manifold M smoothly embedded in Euclidean space \u211d^{n+1}, the full pairwise distance matrix D(p,q)=||p\u2212q|| determines M uniquely up to a rigid motion, and there exists a deterministic polynomial\u2011time algorithm that, given D, reconstructs a coordinate representation of M exactly.",
+    "domains": [
+      "Geometry",
+      "Novelty"
+    ],
+    "id": "fd_2638",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-26T22:40:33.647327+00:00",
+    "title": "Distance-Matrix Reconstruction Conjecture for Embedded Manifolds"
   },
   {
     "consumed_by_exp_id": "",

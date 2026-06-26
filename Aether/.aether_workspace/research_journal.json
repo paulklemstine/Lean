@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "971b371e",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nFree-form research directions emerging from the Lean 4 development in\n`Catalog/NumberTheory/PerfectNumbers.lean` (Euclid–Euler theorem, the abundancy-index\ntoolkit, the three-prim",
-      "quality_score": 0.3106280036849378,
-      "sorry_count": 0,
-      "theorem_count": 121,
-      "timestamp": "2026-06-21T06:23:15",
-      "title": "Perfect Numbers: Structure of Even Perfects"
-    },
-    {
       "cycle_id": "43fe3cd5",
       "domain": "Computation",
       "key_insight": "# FUTURE DIRECTIONS — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nDerived from this cycle's verified Lean results in `RTMinCut.lean`,\n`PageTransition.lean`, and `QECCBridge.l",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-26T22:13:45",
       "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
+    },
+    {
+      "cycle_id": "15963379",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Monotone Circuit Complexity\n\nDerived from the v19 research cycle that produced `Basic.lean`,\n`KarchmerWigderson.lean`, and `Clique.lean`. The cycle established: monotone\ncircuits",
+      "quality_score": 0.6772,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-26T22:40:52",
+      "title": "Circuit Complexity: Monotone Lower Bounds"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-06-26T22:13:45",
+  "last_updated": "2026-06-26T22:40:52",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "a7c4b074",
-        "quality": 0.6968799999999999,
-        "theorems": 13,
-        "title": "No non‑trivial extensions of maximal symplectic groups on the superspecial K3 su"
-      },
-      {
         "cycle_id": "7281fa18",
         "quality": 0.5050399999999999,
         "theorems": 12,
@@ -3637,6 +3631,12 @@
         "quality": 0.5980399999999999,
         "theorems": 0,
         "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
+      },
+      {
+        "cycle_id": "15963379",
+        "quality": 0.6772,
+        "theorems": 0,
+        "title": "Circuit Complexity: Monotone Lower Bounds"
       }
     ],
     "NumberTheory": [

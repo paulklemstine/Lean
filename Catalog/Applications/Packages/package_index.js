@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "15963379",
     "filename": "circuit_complexity_monotone_lower_bounds.json",
     "pkg_num": 113,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6772,
     "title": "Monotone Boolean Circuit Complexity: Foundations, the CLIQUE Lower Bound, and the Karchmer-Wigderson Correspondence"
   },
   {
@@ -3295,8 +3295,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "circuit_complexity_monotone_lower_bounds",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6772,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Monotone Boolean Circuit Complexity: Foundations, the CLIQUE Lower Bound, and the Karchmer-Wigderson Correspondence"
     }
