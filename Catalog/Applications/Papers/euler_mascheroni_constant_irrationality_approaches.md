@@ -1,50 +1,71 @@
-# Computational Evidence — Euler–Mascheroni constant `γ`
+# Computational Evidence — Euler–Mascheroni constant γ
 
-All numbers below were produced with `Float` evaluation in Lean (`#eval`).
-Reference value: `γ = 0.5772156649…`.
+All numbers below were produced with `Float` `#eval` in Lean (see commands at the
+bottom). They are *evidence*, not proof; the proofs are in the `.lean` files and
+build with 0 sorries.
 
-## 1. The positive series `γ = ∑_k gterm k`, `gterm k = 1/(k+1) − log((k+2)/(k+1))`
+## 1. The defining sequence `H_n − log(n+1)` approaches γ ≈ 0.5772
 
-| `k` | `gterm k` |
-|----|-----------|
-| 0  | 0.306853  (= 1 − log 2) |
-| 1  | 0.094535  |
-| 9  | 0.004690  |
+| n | `eulerMascheroniSeq n = H_n − log(n+1)` |
+|---|------------------------------------------|
+| 0 | 0.000000 |
+| 1 | 0.306853 |
+| 2 | 0.401388 |
+| 3 | 0.447039 |
+| 4 | 0.473895 |
+| 5 | 0.491574 |
+| 6 | 0.504090 |
+| 7 | 0.513416 |
 
-Every term is positive and decreasing, with `gterm k ≈ 1/(2(k+1)^2)` (e.g.
-`gterm 9 ≈ 0.00469 ≈ 1/(2·100)`), so the series converges (slowly, like a tail
-`∑ 1/k^2`).  This matches `gterm_pos` and `summable_gterm`.
+Monotonically increasing toward γ = 0.5772156649… (slow, `O(1/n)` convergence —
+exactly the rate certified by `gamma_sub_seq_lt_inv`).
 
-## 2. Partial sums = lower approximant `eulerMascheroniSeq n = H_n − log(n+1)`
+## 2. The telescoping series terms `emTerm k = 1/(k+1) − log((k+2)/(k+1))`
 
-| `n`   | `seq n` (lower) | `seq' n` (upper) |
-|-------|-----------------|------------------|
-| 10    | 0.531073        | 0.626383         |
-| 100   | 0.572257        | 0.582207         |
-| 1000  | 0.576716        | —                |
+| k | emTerm k |
+|---|----------|
+| 0 | 0.306853 |
+| 1 | 0.094535 |
+| 2 | 0.045651 |
+| 3 | 0.026856 |
+| 4 | 0.017678 |
+| 5 | 0.012516 |
 
-The partial sums increase monotonically toward `γ ≈ 0.57722` (confirming
-`strictMono_eulerMascheroniSeq`) and stay strictly below it
-(`integral_partialSum_lt_lt_seq'`), while `seq'` stays strictly above.
+All strictly positive and decreasing (consistent with `emTerm_nonneg`); their
+running sums reproduce column 1 of Table 1 (telescoping identity
+`partialSum_emTerm`). Asymptotically `emTerm k ≈ 1/(2(k+1)²)`, so the series
+converges and is summable (`summable_emTerm`).
 
-## 3. Trap width
+## 3. Tropical soft-max cap
 
-`seq' 100 − seq 100 = 0.009950 = log(101/100)`, matching the exact width
-`log(1 + 1/n)`.  Convergence is only `~1/n`; this is the structural reason an
-elementary irrationality proof is out of reach (the catalog engine in
-`Catalog/NumberTheory/Irrationality.lean` needs `o(1/q)` *rational* forms).
+`log 2 = 0.693147…`. The soft-max term `softMax 1 0 (−log(k+1)) = log((k+2)/(k+1))`
+takes its maximum value at `k = 0` (namely `log 2 = 0.693`), and decreases to `0`.
+This matches the EML dequantization sandwich `0 ≤ softMax ≤ log 2`
+(`softMax_term_mem_Icc`): the hard tropical max `max(0, −log(k+1)) = 0`, and the
+soft correction never exceeds `log 2`.
 
-## 4. Stieltjes order 0
+## 4. Counterexample hunt
 
-`stieltjesSeq 0 n = ∑_{k=1}^n 1/k − log n = H_n − log n = seq' n` for `n ≥ 1`,
-which is the upper approximant above; it converges to `γ` from above
-(`tendsto_stieltjesSeq_zero`).  `γ_0 = γ` is the anchoring case of the Stieltjes
-hierarchy.
+- Claim "`emTerm k ≥ 0`": tested `k = 0..200`, no negative term. (Proved.)
+- Claim "`softMax 1 0 (−log(k+1)) ≤ log 2`": tested `k = 0..200`, max at `k=0` equals
+  `log 2`; never exceeded. (Proved.)
+- Claim "error `< 1/n`": for `n = 1..50`, `γ_approx(n) := H_n − log(n+1)` satisfies
+  `γ − γ_approx(n) < 1/n` with healthy margin (the true gap is ≈ `1/(2n)`).
+  No counterexample. (Proved as `gamma_sub_seq_lt_inv`.)
 
-## 5. OEIS / references
+## OEIS
 
-- `γ`: OEIS A001620 (decimal expansion 0, 5, 7, 7, 2, 1, 5, 6, 6, 4, 9, …).
-- Stieltjes constants `γ_n`: OEIS A001620 (`γ_0 = γ`), A082633 (`γ_1`), etc.
+The harmonic numerators/denominators (A001008 / A002805) and γ's decimal expansion
+(A001620) are the relevant catalogued sequences; the telescoping correction series
+`1/k − log(1+1/k)` is a standard but un-tabulated transcendental series.
 
-No counterexample was found to any claim formalized; all computational checks are
-consistent with the proved theorems.
+## Reproduction (Lean `#eval`)
+
+```lean
+def H : ℕ → Float | 0 => 0 | (n+1) => H n + 1.0/(Float.ofNat (n+1))
+def seqn (n:ℕ) : Float := H n - Float.log (Float.ofNat n + 1.0)
+#eval (List.range 8).map (fun n => (n, seqn n))
+#eval Float.log 2
+#eval (List.range 6).map (fun k =>
+  (k, 1.0/(Float.ofNat k+1.0) - (Float.log (Float.ofNat k+2.0) - Float.log (Float.ofNat k+1.0))))
+```
