@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8344a207",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -224,7 +224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory: Solvability of Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97f912e0",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domains": [
       "Algebra",
@@ -235,7 +235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -506,7 +506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4364c6f1",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -517,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -2368,7 +2368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f6e0a03",
     "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
     "domains": [
       "Bridges"
@@ -2377,7 +2377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T13:11:45.659366+00:00",
     "title": "Quadratic irrational density in the ratio spectrum"
   },
@@ -3972,7 +3972,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coefficient Decay Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6b20d87",
     "description": "Let k \u2265 2, n = k + 1, and D(k) = gcd_{2 \u2264 q \u2264 k+1} binom(qk,k). If P is the largest exact prime-power component p^a exactly dividing n, then D(k) is not merely nontrivial exactly when n/P \u2264 P; conjecturally its exact value is P in that case and 1 otherwise. Equivalently, D(k) = P if the largest exact prime-power component of k+1 dominates its complementary factor, and D(k) = 1 otherwise.",
     "domains": [
       "Pythagorean"
@@ -3981,7 +3981,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T19:09:47.341905+00:00",
     "title": "Exact Value of the Binomial GCD in OEIS A080170"
   },
@@ -5590,7 +5590,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab8befc8",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5599,7 +5599,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
