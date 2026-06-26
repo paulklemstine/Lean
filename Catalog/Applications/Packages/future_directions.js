@@ -1612,7 +1612,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7410b0f1",
     "description": "For integers n \u2265 2k and k \u2265 3, any two non-trivial cross-intersecting families A, B \u2286 ([n] choose k) satisfy |A| * |B| \u2264 h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
     "domains": [
       "Pythagorean",
@@ -1622,7 +1622,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T04:53:00.715630+00:00",
     "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
   },
@@ -1787,7 +1787,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excess-One Criterion for Kopp-Lagarias Ray Class Fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f17133d",
     "description": "A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expansion parameter \u03b1_G(t) and the optimality of the associated code B(G).",
     "domains": [
       "Algebra",
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T06:21:22.540143+00:00",
     "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
@@ -4334,7 +4334,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c41b780",
     "description": "The upper bound S_1^\u03c6(x) \u226a x exp{-(1/2 - o(1))\u221a(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^\u03c6(x) \u2265 C x exp{-(1/2 + o(1))\u221a(log x log_2 x)} for all sufficiently large x.",
     "domains": [
       "Bridges"
@@ -4343,7 +4343,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T12:13:32.061938+00:00",
     "title": "Tightness of the unit-shift bound for Euler's totient function"
   },
@@ -5214,11 +5214,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for the superspecial K3 surface in characteristic p>11, any maximal symplectic subgroup Gs (as classified by Ohashi\u2013Sch\u00fctt) cannot be properly extended by a non\u2011symplectic finite group; i.e., the non\u2011symplectic index [G:Gs] must be 1 for every faithful action.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2570",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25724v1",
+    "status": "available",
+    "timestamp": "2026-06-26T06:17:52.068887+00:00",
+    "title": "Nontrivial extensions of maximal symplectic groups on superspecial K3 surfaces do not exist"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2570",
+    "id": "fd_2571",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5232,7 +5247,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2571",
+    "id": "fd_2572",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5247,7 +5262,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2572",
+    "id": "fd_2573",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5262,7 +5277,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2573",
+    "id": "fd_2574",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5277,7 +5292,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2574",
+    "id": "fd_2575",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5292,7 +5307,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2575",
+    "id": "fd_2576",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5306,7 +5321,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2576",
+    "id": "fd_2577",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5320,13 +5335,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2577",
+    "id": "fd_2578",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
     "status": "available",
     "timestamp": "2026-06-26T05:41:38.703710+00:00",
     "title": "Number Fields with Arbitrarily Large Minimal Index"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Given a $q$-ary alphabet $\\Sigma_q$ and two sequences $x, y \\in \\Sigma_q^n$, if their $(s-1)$-deletion balls are disjoint ($D_{s-1}(x) \\cap D_{s-1}(y) = \\emptyset$), then the size of the intersection of their $t$-deletion balls is bounded by $|D_t(x) \\cap D_t(y)| \\le \\binom{2s}{s}\\binom{n-s}{t-s}$ for $t \\ge s$.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2579",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25822v1",
+    "status": "available",
+    "timestamp": "2026-06-26T06:18:09.455977+00:00",
+    "title": "Upper Bound on Deletion-Ball Intersection under Lower-Order Disjointness"
   },
   {
     "consumed_by_exp_id": "",
@@ -5531,21 +5560,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Navier\u2013Stokes Existence, Smoothness, and Turbulence\n\nDerived from this cycle's findings in `EnergyMethod.lean` (viscous energy\ndissipation) and `Bridge.lean` (the viscous \u2194 tropical anti-blowup unification).\n\n## Conjecture 1 \u2014 Enstrophy is the true obstruction, and it has its own identity\n\nState and prove an *enstrophy* analogue of `Model.energy_hasDerivAt`: for the\nabstract model, `d/dt \u27eaA u, u\u27eb = -2\u03bd\u2016A u\u2016\u00b2 + 2\u27eaB(u,u), A u\u27eb`, where the last\nterm \u2014 unlike the energy case \u2014 does **not** vanish.\n\n- **The key insight is** that the trilinear cancellation `\u27eaB v v, v\u27eb = 0`\n  controls the energy but produces *no* cancellation when tested against `A u`,\n  so the enstrophy balance carries an uncontrolled production term \u2014 this is the\n  precise algebraic location of the 3D regularity gap.\n- **Why now?** The energy identity is already formalized with the exact\n  `inner`-product product-rule machinery (`HasDerivAt.inner`, `real_inner_comm`);\n  the enstrophy identity is the same computation tested against `A u` instead of\n  `u`, so it is immediately within reach and isolates the open difficulty.\n\n## Conjecture 2 \u2014 Small-data global regularity is provable in the abstract model\n\nIf the initial enstrophy is below an explicit threshold `c \u03bd\u00b2 / \u2016B\u2016\u00b2`, the\nenstrophy stays bounded for all time (a Beale\u2013Kato\u2013Majda / Fujita\u2013Kato style\ncriterion) and hence no blowup occurs.\n\n- **The key insight is** that the production term `2\u27eaB(u,u), A u\u27eb` is cubic in\n  `u` while the dissipation `-2\u03bd\u2016A u\u2016\u00b2` is quadratic, so a Gr\u00f6nwall/bootstrap\n  argument closes whenever the data is small relative to viscosity.\n- **Why now?** Mathlib already has the Gr\u00f6nwall inequality and the energy bound\n  `Model.energy_le_initial` gives the needed `L\u00b2` control; combining them gives\n  a conditional global-regularity theorem with zero new analysis infrastructure.\n\n## Conjecture 3 \u2014 A Lyapunov-observable meta-theorem unifies all anti-blowup proofs\n\nAbstract `Bridge.lean` into a single statement: any evolution (continuous or\ndiscrete) admitting a real observable `\u03a6` with `\u03a6` nonincreasing along orbits\nis globally bounded by `\u03a6(initial)`; the viscous energy and tropical `sup` are\ntwo instances.\n\n- **The key insight is** that \"singularity obstruction = existence of a monotone\n  observable\", so the parabolic and the idempotent proofs are the *same*\n  one-line monotonicity argument with different proofs of monotonicity.\n- **Why now?** `tropEnergy_iterate_antitone` and `Model.energy_antitone` are\n  already both phrased via `Antitone`; factoring the shared core out is a direct\n  generalization that would let future turbulence models inherit bounds for free.\n\n## Conjecture 4 \u2014 A discrete energy cascade exhibits a sharp dissipation law\n\nBuild a finite shell/dyadic model (`Fin n` shells with nearest-neighbour\nquadratic coupling satisfying the cancellation) and prove that the total energy\nflux through scales is bounded by the input rate, a rigorous discrete analogue\nof the Kolmogorov `\u22125/3` dissipation balance.\n\n- **The key insight is** that the same cancellation `\u27eaB v v, v\u27eb = 0` that makes\n  the global energy a Lyapunov function also forces the inter-shell flux to\n  telescope, so energy injected at large scales is conservatively transported\n  and only removed by viscosity at small scales.\n- **Why now?** The `Model` structure is already parametric over the inner-product\n  space `V`; instantiating `V = EuclideanSpace \u211d (Fin n)` with an explicit shell\n  coupling reuses every theorem in `EnergyMethod.lean` verbatim.\n\n## Conjecture 5 \u2014 The tropical envelope dominates the viscous energy decay rate\n\nFor matched data, the tropical `sup`-observable decays at least as fast as the\nviscous energy norm, making the (cheaply computable) idempotent dynamics a\nrigorous upper barrier for the (expensive) viscous flow.\n\n- **The key insight is** that idempotent max-plus propagation is the `\u03bd \u2192 \u221e`\n  (infinite-dissipation) limit of viscous smoothing, so it can only contract\n  oscillation faster, giving a one-sided comparison.\n- **Why now?** `Bridge.lean` already proves both observables are antitone in the\n  same file; a comparison theorem only needs a quantitative coupling of the two\n  decay rates, with all monotonicity lemmas already in place.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2578",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "dfb56ea4",
-    "status": "available",
-    "timestamp": "2026-06-26T06:10:38.747490+00:00",
-    "title": "Derived from this cycle's findings in `EnergyMethod.lean` (viscous energy"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5557,20 +5571,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: The generalization gap in supervised learning exhibits modular symmetry properties, where the function mapping training set size to generalization error transforms under SL(2,Z) action on the learning rate parameter, with discrete phase transitions occurring at cusps of modular curves. Test: Analyze generalization gaps of neural networks across learning rate schedules and training set sizes to detect modular invariance and locate phase transitions at predicted cusps. Impact: This would provide a principled mathematical framework for understanding learning phase transitions and optimal hyperparameter scheduling via modular forms.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_2579",
-    "priority_score": 0.7157272727272728,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-26T06:15:51.473794+00:00",
-    "title": "Modular Symmetry in Statistical Learning Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -5939,6 +5939,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
+  },
+  {
+    "consumed_by_exp_id": "6bde751b",
+    "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0541",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T22:10:07.042519+00:00",
+    "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
   {
     "consumed_by_exp_id": "",
@@ -6361,7 +6376,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ce70c3b",
     "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
     "domains": [
       "Physics",
@@ -6371,7 +6386,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
