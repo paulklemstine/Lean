@@ -16499,7 +16499,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
@@ -16515,7 +16515,7 @@
         "Algebra"
       ],
       "id": "fd_0545",
-      "last_attempt_time": "2026-06-26T03:51:53.240930+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -37135,7 +37135,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "8f6e0a03",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37165,7 +37165,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22229v1",
       "source_path": "http://arxiv.org/abs/2606.22229v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T13:11:45.659366+00:00",
       "title": "Quadratic irrational density in the ratio spectrum"
@@ -46850,7 +46850,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.FA/2301.01234",
         "math.GN/2105.06789",
@@ -46874,7 +46874,7 @@
         "Algebra"
       ],
       "id": "fd_2565",
-      "last_attempt_time": "2026-06-26T03:52:01.799599+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem rc_ratio_sublevel_homotopy_duality {X : Type*} [NormedAddCommGroup X] [FiniteDimensional ℝ X]\n  (p q : X → ℝ) (hp : ConvexOn ℝ (Set.univ) p) (hq : ConvexOn ℝ (Set.univ) q)\n  (hp_pos : ∀ x, 0 ≤ p x) (hq_pos : ∀ x, 0 ≤ q x) (hom_p : ∀ t ≥ (0:ℝ), ∀ x, p (t • x) = t • p x)\n  (hom_q : ∀ t ≥ (0:ℝ), ∀ x, q (t • x) = t • q x)\n  (c : ℝ) (hc : 0 < c) :\n  ∃ (h : Homeomorph X X),\n    h '' {x | p x / q x ≤ c} = {y | (p.dual) y / (q.dual) y ≤ c} ∧\n    (ReducedHomology ℝ ( {x | p x / q x ≤ c} : Set X )) ≃ₗ[ℝ]\n    ReducedHomology ℝ ( {y | (p.dual) y / (q.dual) y ≤ c} : Set X ) :=\nby\n  -- proof to be filled in",
       "lineage_refs": [],
@@ -46938,6 +46938,48 @@
       "title": "Uniqueness of Exact Potential up to Additive Constant"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "boissonnat2018geometric",
+        "barber1996quickhull",
+        "b-gtfga-80"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carathéodory-type result.",
+      "domain_bridges": "machine_learning > optimization",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2567",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Contraction via dimensional refinement and empirical strengthening",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "dimensional analysis and covering theorems",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25854v1",
+      "source_path": "http://arxiv.org/abs/2606.25854v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T04:18:00.464209+00:00",
+      "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refinement"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -46963,7 +47005,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2567",
+      "id": "fd_2568",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47011,7 +47053,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2568",
+      "id": "fd_2569",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47056,7 +47098,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2569",
+      "id": "fd_2570",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47100,7 +47142,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2570",
+      "id": "fd_2571",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47147,7 +47189,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2571",
+      "id": "fd_2572",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47166,6 +47208,51 @@
       "thread_id": "",
       "timestamp": "2026-06-26T02:52:07.462502+00:00",
       "title": "Decomposition Group Computation via Newton Polygon Indices"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Guy",
+        "OEIS A110177"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Formalizes a precise conjecture about the asymptotic distribution of ordered pairs satisfying the sum-of-divisors identity, leveraging analytic growth estimates and sieve techniques.",
+      "domain_bridges": [
+        "number theory",
+        "analytic number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2573",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25849v1",
+      "source_path": "http://arxiv.org/abs/2606.25849v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T04:18:05.916058+00:00",
+      "title": "Resolution of Erdős Problem 1061 using analytic and combinatorial methods"
     },
     {
       "ambition_level": "extension",

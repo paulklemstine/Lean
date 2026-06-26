@@ -2368,7 +2368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "8f6e0a03",
+    "consumed_by_exp_id": "",
     "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
     "domains": [
       "Bridges"
@@ -2377,7 +2377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T13:11:45.659366+00:00",
     "title": "Quadratic irrational density in the ratio spectrum"
   },
@@ -5171,11 +5171,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carath\u00e9odory-type result.",
     "domains": [
       "Bridges"
     ],
     "id": "fd_2567",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25854v1",
+    "status": "available",
+    "timestamp": "2026-06-26T04:18:00.464209+00:00",
+    "title": "Sharp approximate Carath\u00e9odory theorem and application to iterated Delaunay refinement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2568",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5189,7 +5203,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2568",
+    "id": "fd_2569",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5204,7 +5218,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2569",
+    "id": "fd_2570",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5219,7 +5233,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2570",
+    "id": "fd_2571",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5234,13 +5248,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2571",
+    "id": "fd_2572",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
     "status": "available",
     "timestamp": "2026-06-26T02:52:07.462502+00:00",
     "title": "Decomposition Group Computation via Newton Polygon Indices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalizes a precise conjecture about the asymptotic distribution of ordered pairs satisfying the sum-of-divisors identity, leveraging analytic growth estimates and sieve techniques.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2573",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25849v1",
+    "status": "available",
+    "timestamp": "2026-06-26T04:18:05.916058+00:00",
+    "title": "Resolution of Erd\u0151s Problem 1061 using analytic and combinatorial methods"
   },
   {
     "consumed_by_exp_id": "",
