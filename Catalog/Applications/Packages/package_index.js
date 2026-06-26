@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7b228cc3",
     "filename": "eml_differential_equations_odes_with_exponential_l.json",
     "pkg_num": 108,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.74264,
     "title": "Differential Galois Structure for EML Ordinary Differential Equations"
   },
   {
@@ -3150,8 +3150,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "eml_differential_equations_odes_with_exponential_l",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.74264,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Differential Galois Structure for EML Ordinary Differential Equations"
     }

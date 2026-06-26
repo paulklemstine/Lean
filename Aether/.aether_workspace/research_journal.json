@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "443cc80d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Tensor-Network Holography & Categorical Entanglement\n\nDerived from this cycle's verified results in\n`Geometry/TensorNetwork/{FormanCurvature, LatticeCurvature, QuantumInfoMetric}",
-      "quality_score": 0.7460199999999999,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-20T09:34:34",
-      "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
-    },
-    {
       "cycle_id": "acb790ee",
       "domain": "Physics",
       "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nThis cycle formalized three machine-checked pillars (all `sorry`-free):\n\n* `Physics/RandomTensorNetwork/Thre",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-06-26T19:55:31",
       "title": "Certified Novelty Detection for Theorem Provers"
+    },
+    {
+      "cycle_id": "7b228cc3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Differential Galois Theory for EML ODEs\n\nDerived from this cycle's results in `EMLDifferentialGalois.lean`,\n`EMLKovacicSharp.lean`, and `EMLWronskianGalois.lean` (which build on",
+      "quality_score": 0.74264,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-26T19:56:58",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "2683755a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Bounded tree-independence in `K_{1,d}`-free graphs\n\nDerived from this cycle's findings (`Basic.lean`, `StarFree.lean`,\n`Cluster.lean`), which closed the `d = 2` slice of the Dall",
-      "quality_score": 0.5860000000000001,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-06-21T00:40:07",
-      "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
-    },
     {
       "cycle_id": "f370d5ee",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 23,
       "timestamp": "2026-06-26T19:55:31",
       "title": "Certified Novelty Detection for Theorem Provers"
+    },
+    {
+      "cycle_id": "7b228cc3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Differential Galois Theory for EML ODEs\n\nDerived from this cycle's results in `EMLDifferentialGalois.lean`,\n`EMLKovacicSharp.lean`, and `EMLWronskianGalois.lean` (which build on",
+      "quality_score": 0.74264,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-26T19:56:58",
+      "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fb2780d5",
-      "domain": "Novelty",
-      "name": "card_galois_group_eq_to",
-      "quality": 0.7235799999999999
-    },
     {
       "cycle_id": "ab9c78a7",
       "domain": "Novelty",
@@ -2803,9 +2797,15 @@
       "domain": "Applications",
       "name": "novelty_nonneg",
       "quality": 0.73672
+    },
+    {
+      "cycle_id": "7b228cc3",
+      "domain": "Applications",
+      "name": "mem_constantsSubfield",
+      "quality": 0.74264
     }
   ],
-  "last_updated": "2026-06-26T19:55:31",
+  "last_updated": "2026-06-26T19:56:58",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "bc0a8e2b",
-        "quality": 0.5310828235294118,
-        "theorems": 17,
-        "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and "
-      },
-      {
         "cycle_id": "1ce6e294",
         "quality": 0.571318,
         "theorems": 13,
@@ -3141,6 +3135,12 @@
         "quality": 0.73672,
         "theorems": 23,
         "title": "Certified Novelty Detection for Theorem Provers"
+      },
+      {
+        "cycle_id": "7b228cc3",
+        "quality": 0.74264,
+        "theorems": 14,
+        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
       }
     ],
     "Bridges": [

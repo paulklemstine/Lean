@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5544e8f5",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -2366,6 +2366,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T12:51:47.961383+00:00",
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2353",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22229v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:11:45.659366+00:00",
+    "title": "Quadratic irrational density in the ratio spectrum"
   },
   {
     "consumed_by_exp_id": "",
@@ -5258,7 +5272,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic formula for discrete second moments of Dirichlet L-functions under GRH"
   },
   {
-    "consumed_by_exp_id": "f36ed9b7",
+    "consumed_by_exp_id": "",
     "description": "For any fixed integer width w \u2265 2, the maximum number of strict alternating cycles in a poset of size n and width w is \u0398(n^{2w}) as n \u2192 \u221e. The paper establishes an upper bound of O(n^{2w}) (Corollary 1 and Lemma 1); this conjecture asserts that this bound is asymptotically tight, i.e., there exists a constant c_w > 0 such that for all sufficiently large n, some poset of size n and width w has at least c_w n^{2w} strict alternating cycles.",
     "domains": [
       "Pythagorean"
@@ -5267,7 +5281,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T08:32:26.631386+00:00",
     "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles in posets of fixed width"
   },
@@ -5548,11 +5562,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that the girth of an optimal small-set expander G with parameters (s, \u03b1) is uniquely determined by s and \u03b1, and this property yields optimal code distances for the corresponding binary linear codes B(G). This would enable rigorous translation of combinatorial expander bounds to coding-theoretic parameters.",
+    "domains": [
+      "Cryptography",
+      "Pythagorean"
+    ],
+    "id": "fd_2594",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23579v1",
+    "status": "available",
+    "timestamp": "2026-06-26T19:57:14.224516+00:00",
+    "title": "Girth-Determined Optimality of Small-Set Expanders for Post-Quantum Key Exchange Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5566,7 +5595,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5581,7 +5610,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5596,7 +5625,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5611,7 +5640,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5626,7 +5655,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5640,7 +5669,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5654,7 +5683,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5668,7 +5697,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5683,7 +5712,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5698,7 +5727,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5713,7 +5742,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5728,7 +5757,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5743,7 +5772,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5757,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5772,7 +5801,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5787,7 +5816,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5801,7 +5830,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5815,7 +5844,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5829,7 +5858,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5844,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5859,7 +5888,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5874,7 +5903,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -5888,7 +5917,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -5902,7 +5931,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -5917,7 +5946,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -5931,7 +5960,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -5946,7 +5975,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -5960,7 +5989,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -5974,7 +6003,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -5988,7 +6017,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6003,13 +6032,28 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
     "status": "available",
     "timestamp": "2026-06-26T19:30:49.236955+00:00",
     "title": "Effective Computability of Erd\u0151s-550 Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the classification of cluster algebra structures on the coordinate rings of Schubert cells and partial flag varieties, aiming to unify finite-type results across both settings.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2627",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23474v2",
+    "status": "available",
+    "timestamp": "2026-06-26T19:57:46.403371+00:00",
+    "title": "Finite-type classification of cluster structures on Schubert cells and partial flag varieties"
   },
   {
     "consumed_by_exp_id": "",
@@ -6211,21 +6255,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle established: (i) a sound, `1`-Lipschitz novelty\ncertificate in a metric embedding space; (ii) certificate composition and a packing-vs-\ncovering **novelty budget**; (iii) an *unbounded* novelty stream from the catalog's\nFibonacci primitive-divisor theorem.  The contrast between (ii) and (iii) \u2014 finite budget in\nbounded spaces vs. infinite budget in the discrete prime line \u2014 is the engine for the\nconjectures below.\n\n## Conjecture 1 \u2014 Sharp novelty budget via Lipschitz embeddings\n**Statement.** If `f : X \u2192 \u211d^d` is an `L`-bi-Lipschitz embedding of the theorem space with\nimage in a box of side `R`, then the maximum size of an `\u03b5`-separated catalog is\n`\u0398((R\u00b7L/\u03b5)^d)`, matching `Separated.card_le_of_cells` up to the constant.\n- **The key insight is** that the packing bound `card \u2264 K.card` becomes *tight* exactly when\n  the cells of the cover are realized as an `\u03b5`-net, so the covering number and packing\n  number agree up to the doubling constant of the embedding.\n- **Why now?** `Separated.card_le_of_cells` already gives the upper half with *no* geometric\n  assumption; only the matching lower-bound construction (an explicit `\u03b5`-net in the box)\n  remains, which is finite and directly checkable.\n\n## Conjecture 2 \u2014 Novelty is exactly the Hausdorff gap of catalog growth\n**Statement.** For nested catalogs `C\u2080 \u2286 C\u2081 \u2286 \u2026`, the sequence of certified novelties of a\nfixed output `x`, `novelty C\u2099 x`, is non-increasing and converges to\n`dist x (closure \u22c3\u2099 C\u2099)`; moreover `sup\u2093 |novelty C\u2099 x \u2212 novelty C\u2098 x| =`\nHausdorff distance `d_H(C\u2099, C\u2098)`.\n- **The key insight is** that `novelty C = dist(\u00b7, C)` and the `1`-Lipschitz law\n  (`abs_novelty_sub_le`) make novelty the support function of the catalog, so catalog\n  *growth* and novelty *decay* are dual via the Hausdorff metric.\n- **Why now?** `novelty_mono` already proves monotonicity; the missing step is the\n  identification with `d_H`, a standard but unformalized consequence of the Lipschitz bound.\n\n## Conjecture 3 \u2014 Every Lucas sequence yields an unbounded novelty stream\n**Statement.** For any non-degenerate Lucas sequence `U\u2099(P, Q)` (e.g. Fibonacci, Pell,\nMersenne), the primitive-prime map `n \u21a6 (primitive prime of U\u2099)` induces a `1`-separated\nreal catalog of unbounded size \u2014 so *every* such recurrence is an inexhaustible novelty\nsource.\n- **The key insight is** that `unbounded_novelty_budget` used Fibonacci primitivity only\n  through the abstract clause \"the chosen prime divides no earlier term\"; Carmichael's\n  theorem holds for all non-degenerate Lucas sequences, so the construction is parametric.\n- **Why now?** The Fibonacci case is fully formalized here via the catalog's\n  `RankOfApparition.fib_prime_index_has_primitive`; generalizing requires only the same\n  rank-of-apparition spine, which the catalog already develops abstractly.\n\n## Conjecture 4 \u2014 Soundness \u21d2 no certified duplicate under bounded perturbation\n**Statement.** If output `x` carries an `\u03b5`-novelty certificate and the embedding is computed\nwith error `< \u03b5`, then `x` is *provably* not a duplicate of any catalog entry \u2014 formally, no\ncatalog entry `c` satisfies `dist x c = 0` even after re-embedding within tolerance `\u03b4 < \u03b5`.\n- **The key insight is** that the `1`-Lipschitz stability `abs_novelty_sub_le` converts an\n  approximate (numerically computed) certificate into an exact one whenever the margin\n  exceeds the embedding error: certificates are *robust*, not just nominal.\n- **Why now?** `cert_sound` and `abs_novelty_sub_le` are both proved; the conjecture is their\n  composition into an end-to-end robustness theorem for a *computed* embedding.\n\n## Three concrete next-cycle sub-conjectures\n1. **Budget additivity:** for a disjoint union of embedding spaces, the novelty budget is the\n   sum of the budgets (cover numbers add); test on `\u211d \u2294 \u211d`.\n2. **Stream interleaving:** the union of the Fibonacci and Pell primitive-prime streams is\n   still `1`-separated (primes from different recurrences rarely coincide); quantify the\n   finitely many collisions.\n3. **Certificate compression:** the minimal sub-catalog needed to certify the same novelty\n   for all outputs is an `\u03b5`-net of the catalog; bound its size by Conjecture 1.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2626",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "580d1f18",
-    "status": "available",
-    "timestamp": "2026-06-26T19:55:05.815068+00:00",
-    "title": "Derived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,"
   },
   {
     "consumed_by_exp_id": "",

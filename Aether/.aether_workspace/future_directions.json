@@ -37125,7 +37125,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Lagarias-Shallit bounds for Lagrange constants under integer linear fractional transformations",
         "Smith normal form over Z for reducing integer matrices",
@@ -37135,7 +37135,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "bdb5ae9b",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37151,11 +37151,11 @@
         "Bridges"
       ],
       "id": "fd_2353",
-      "last_attempt_time": "2026-06-26T19:30:57.212345+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Matrix.Basic\nimport Mathlib.Data.Matrix.Notation\nimport Mathlib.Data.Real.Basic\n\nnoncomputable section\n\nabbrev Mat2Z := Matrix (Fin 2) (Fin 2) ℤ\n\nconstant Primitive : Mat2Z → Prop\nconstant mobius : Mat2Z → ℝ → ℝ\nconstant lagrangeConst : ℝ → ℝ\nconstant Bad : Set ℝ\nconstant IsQuadraticIrrational : ℝ → Prop\n\ndef detAbs (M : Mat2Z) : ℝ := ((Int.natAbs (M.det) : ℕ) : ℝ)\n\ntheorem quadratic_irrational_ratio_spectrum_dense\n    (M : Mat2Z) (hprim : Primitive M) (hdet : M.det ≠ 0) :\n    ∀ u v : ℝ,\n      (detAbs M)⁻¹ ≤ u → u < v → v ≤ detAbs M →\n        ∃ x : ℝ,\n          x ∈ Bad ∧ IsQuadraticIrrational x ∧\n          u < lagrangeConst (mobius M x) / lagrangeConst x ∧\n          lagrangeConst (mobius M x) / lagrangeConst x < v := by\n  sorry",
       "lineage_refs": [],
-      "outcome_quality": 0.73672,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Adapt the paper's construction realizing arbitrary ratios in the interval by bounded continued fraction sequences, but replace the infinite nonperiodic tail by sufficiently long periodic repetitions of the finite blocks controlling the limsup. Since ultimately periodic continued fractions are quadratic irrationals, it remains to prove that the Lagrange-constant ratio changes by an arbitrarily small amount under this periodic approximation. Formalization would isolate a continuity lemma for finite-window limsup maxima of periodic continued fractions and combine it with the Smith-normal-form reduction used for the general matrix M.",
@@ -37165,7 +37165,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22229v1",
       "source_path": "http://arxiv.org/abs/2606.22229v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T13:11:45.659366+00:00",
       "title": "Quadratic irrational density in the ratio spectrum"
@@ -47260,7 +47260,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Turán-type problem",
         "poset dimension",
@@ -47270,7 +47270,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f36ed9b7",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -47286,11 +47286,11 @@
         "Pythagorean"
       ],
       "id": "fd_2574",
-      "last_attempt_time": "2026-06-26T19:31:03.813370+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem exists_poset_with_many_strict_alternating_cycles (w : ℕ) (hw : w ≥ 2) :\n  ∃ (c : ℝ) (N : ℕ), c > 0 ∧ ∀ (n : ℕ), n ≥ N → \n    ∃ (P : FinitePoset), P.card = n ∧ P.width = w ∧ P.strictAlternatingCycles.card ≥ ⌈c * (n : ℝ)^(2*w)⌉ := by sorry",
       "lineage_refs": [],
-      "outcome_quality": 0.74264,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Construct explicit families of posets of width w and size n (e.g., by taking w disjoint chains of nearly equal length and adding suitable cross relations) that yield many incomparable pairs and strict alternating cycles. Alternatively, use a probabilistic method to show the existence of posets with at least Ω(n^{2w}) strict alternating cycles. The construction should ensure that the number of strict alternating cycles grows as a polynomial of degree 2w in n.",
@@ -47300,7 +47300,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24877v1",
       "source_path": "http://arxiv.org/abs/2606.24877v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-26T08:32:26.631386+00:00",
       "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles in posets of fixed width"
@@ -48168,6 +48168,52 @@
       "title": "Constructive characterization of overlap units in SIC-POVMs via ray class fields"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2311.07874",
+        "arXiv:2401.04567"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that the girth of an optimal small-set expander G with parameters (s, α) is uniquely determined by s and α, and this property yields optimal code distances for the corresponding binary linear codes B(G). This would enable rigorous translation of combinatorial expander bounds to coding-theoretic parameters.",
+      "domain_bridges": [
+        "Expansion Properties",
+        "Code Distance Lower Bounds",
+        "Post-Quantum Cryptography"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Cryptography",
+        "Pythagorean"
+      ],
+      "id": "fd_2594",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem optimal_expander_girth_determines_code_distance :\nforall (s : nat) (alpha : Rat) (G : optimal_small_set_expander G s alpha),\n  code_distance (B G) = optimal_bound (size G) s alpha",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use transversality principles to link girth constraints with extremal set expansions, then apply derandomization to embed codeword structures.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.23579v1",
+      "source_path": "http://arxiv.org/abs/2606.23579v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T19:57:14.224516+00:00",
+      "title": "Girth-Determined Optimality of Small-Set Expanders for Post-Quantum Key Exchange Codes"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -48193,7 +48239,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2594",
+      "id": "fd_2595",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -48241,7 +48287,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2595",
+      "id": "fd_2596",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -48286,7 +48332,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2596",
+      "id": "fd_2597",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -48330,7 +48376,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2597",
+      "id": "fd_2598",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -48377,7 +48423,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2598",
+      "id": "fd_2599",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -48422,7 +48468,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2599",
+      "id": "fd_2600",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -48467,7 +48513,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2600",
+      "id": "fd_2601",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -48508,7 +48554,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2601",
+      "id": "fd_2602",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -48553,7 +48599,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2602",
+      "id": "fd_2603",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -48592,7 +48638,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2603",
+      "id": "fd_2604",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -48634,7 +48680,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2604",
+      "id": "fd_2605",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -48678,7 +48724,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2605",
+      "id": "fd_2606",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -48724,7 +48770,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2606",
+      "id": "fd_2607",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -48769,7 +48815,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2607",
+      "id": "fd_2608",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -48815,7 +48861,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2608",
+      "id": "fd_2609",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -48861,7 +48907,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2609",
+      "id": "fd_2610",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -48911,7 +48957,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2610",
+      "id": "fd_2611",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
@@ -48957,7 +49003,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2611",
+      "id": "fd_2612",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of the use of filtered complete intersection properties in the orderization process",
@@ -49003,7 +49049,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2612",
+      "id": "fd_2613",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vishik_non_similarity_char_2 (m : ℕ) (hm : m ≥ 3) : ∃ (F : Field) (char F = 2), ∃ (φ ψ : QuadraticForm F), \n  dim φ = 2^m ∧ dim ψ = 2^m ∧ \n  anisotropic φ ∧ anisotropic ψ ∧ \n  (∀ (E : Field), (E ⊇ F) → total_isotropy_index φ E = total_isotropy_index ψ E) ∧ \n  ¬ similar φ ψ",
@@ -49048,7 +49094,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2613",
+      "id": "fd_2614",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularized_sum_primes (P : ℂ → ℂ) (is_prime_zeta : IsPrimeZeta P) (continuation : AnalyticContinuation P) : \n  continuation.value_at (-1 : ℂ) = expected_constant_value := by sorry",
@@ -49097,7 +49143,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2614",
+      "id": "fd_2615",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_veronese_circuit_classification (m : ℕ) (t : ℕ) (d : ℕ) : let circuit := λ (forms : Fin t → (ℓ : LinearForm 𝕂) × ℓ ≠ 0), (linear_dependent_minimally (λ i, forms i |> Prod.fst ^ m)) → (dim (span (λ i, (forms i).1)) = (t + m - 2) / m) in circuit → (∃ (curve_config : Fin t → LinearForm 𝕂), (∀ i, (curve_config i) ^ m = (forms i).1 ^ m) ∧ (rational_normal_curve_configuration curve_config) ∧ (t = m * (d - 1) + 2))",
@@ -49144,7 +49190,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2615",
+      "id": "fd_2616",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_zero_sum_characterization {p : ℕ} [Fact p.Prime] (hp : p % 2 = 1)\n    (ℓ : ℕ) (hℓ : 1 ≤ ℓ ∧ ℓ ≤ (p - 1) / 2)\n    (S : Finset (ZMod p)) (hsym : S = S.image (fun x => -x))\n    (hzero : (0 : ZMod p) ∉ S) :\n    (∃ (vs : Fin (2 * ℓ + 1) → ZMod p),\n        (Pairwise (fun i j => vs i ≠ j)) ∧\n        (∀ i : Fin (2 * ℓ + 1), (vs ((i + 1 : Fin (2 * ℓ + 1))) - vs i) ∈ S)) ↔\n    (∃ (t : Finset (ZMod p)), t ⊆ S ∧ t.card = 2 * ℓ + 1 ∧ (∑ x in t, x) = 0) := by sorry",
@@ -49191,7 +49237,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2616",
+      "id": "fd_2617",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positive_dyadic_density (P : Rat) (Q : Nat) (H : Q.numerator < Q) (inf_support : nat.infinite_support (function n, h (a : nat) => a in support n) (support_sum : nat.sum (n -> n * h (bit_from_n n)) / 2^n = P / Q)) : (exists c_Q : PositiveReals, forall X in Dyads, sufficiently_large X, A_support (2*X) - A_support X >= c_Q * X) := ...",
@@ -49235,7 +49281,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2617",
+      "id": "fd_2618",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem qc_asymptotic_tight {n : ℕ} (hn : 1 ≤ n) : (qc n : ℝ) / n ≤ 0.216 + o(1) := by sorry",
@@ -49279,7 +49325,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2618",
+      "id": "fd_2619",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture_s3_eq : ∀ (k : ℕ), k ≥ 5 → s₃ k = (twr (k-2) 2) ^ 2",
@@ -49327,7 +49373,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2619",
+      "id": "fd_2620",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_size_non_outer_additive_strong_blocking_set {q : ℕ} [hq : Fact (IsPrimePower q)] {h : ℕ} (h_pos : h > 1) {k : ℕ} (k_pos : k ≥ 2) : ∀ (B : AdditiveStrongBlockingSet q k), ¬ ContainsHyperplane B → |B| ≤ q^(k-1) := by\n  -- formal proof outline\n  sorry",
@@ -49369,7 +49415,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2620",
+      "id": "fd_2621",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "M_{g,n} ≅ G_{g,n}",
@@ -49408,7 +49454,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2621",
+      "id": "fd_2622",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Central trinomial coefficient bounds",
@@ -49454,7 +49500,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2622",
+      "id": "fd_2623",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_obstruction_dim_twisted_steinberg\n  (p : ℕ)\n  (ℓ : ℕ)\n  (is_prime_p : fact_is_prime p)\n  (is_prime_ℓ : fact_is_prime ℓ)\n  (h_p_not_ℓ : p ≠ ℓ)\n  (type : WeilDeligneType)\n  (h_type : type = twisted_steinberg p)\n  (h_congruence : p % ℓ = 1) :\n  dim (H0 Gp (cyclotomic_char ℓ ⊗ adjoint_zero_rho_bar)) = 1 :=",
@@ -49510,7 +49556,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2623",
+      "id": "fd_2624",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem consecutive_zeckendorf_niven_bound {d a : ℕ} (h : d > 0) : ∀ (n m : ℕ), n ≤ m → (∀ k ∈ Finset.Icc n m, ZeckendorfNiven (a + k * d)) → m - n + 1 ≤ ⌊Real.logb (phi) (d : ℝ)⌋ + 2 := by sorry",
@@ -49555,7 +49601,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2624",
+      "id": "fd_2625",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem wallis_hierarchy_even_branch (k : ℕ) : \n  let P_m := ∏' (n : ℕ), (Real.exp (counterterm k n)) * (1 - 1/(n^2))^(n^(2*k))\n  exists (val : ℝ), P_m = val ∧ is_closed_form_zeta_pi_gamma val\n  where\n    counterterm (k : ℕ) (n : ℕ) : ℝ := sorry",
@@ -49602,7 +49648,7 @@
         "Logic",
         "Pythagorean"
       ],
-      "id": "fd_2625",
+      "id": "fd_2626",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_550_effective_threshold (k : ℕ) (m : Fin k → ℕ) (hk : 2 ≤ k) (hordered : ∀ i j, i ≤ j → m i ≤ m j) :\n  ∃ (C C' : ℝ) (poly : ℕ → ℕ), ∀ (m₁ : ℕ), let n₀ := C * (∏ i, m i) ^ (poly k m₁) in\n  ∀ (n : ℕ) (T : Graph), n ≥ n₀ → (T.IsTree ∧ T.VertexCount = n) →\n  let q := k - 1 in\n  let r := RamseyNumber T (CompleteMultipartite [m 0, m 1]) in\n  RamseyNumber T (CompleteMultipartite (List.map (fun i => m i) (List.range k))) ≤ q * (r - 1) + m 0",
@@ -49623,82 +49669,51 @@
       "title": "Effective Computability of Erdős-550 Threshold"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# FUTURE DIRECTIONS — Certified Novelty Detection for Theorem Provers\n\nDerived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,\n`FibonacciNoveltyStream.lean`).  This cycle established: (i) a sound, `1`-Lipschitz novelty\ncertificate in a metric embedding space; (ii) certificate composition and a packing-vs-\ncovering **novelty budget**; (iii) an *unbounded* novelty stream from the catalog's\nFibonacci primitive-divisor theorem.  The contrast between (ii) and (iii) — finite budget in\nbounded spaces vs. infinite budget in the discrete prime line — is the engine for the\nconjectures below.\n\n## Conjecture 1 — Sharp novelty budget via Lipschitz embeddings\n**Statement.** If `f : X → ℝ^d` is an `L`-bi-Lipschitz embedding of the theorem space with\nimage in a box of side `R`, then the maximum size of an `ε`-separated catalog is\n`Θ((R·L/ε)^d)`, matching `Separated.card_le_of_cells` up to the constant.\n- **The key insight is** that the packing bound `card ≤ K.card` becomes *tight* exactly when\n  the cells of the cover are realized as an `ε`-net, so the covering number and packing\n  number agree up to the doubling constant of the embedding.\n- **Why now?** `Separated.card_le_of_cells` already gives the upper half with *no* geometric\n  assumption; only the matching lower-bound construction (an explicit `ε`-net in the box)\n  remains, which is finite and directly checkable.\n\n## Conjecture 2 — Novelty is exactly the Hausdorff gap of catalog growth\n**Statement.** For nested catalogs `C₀ ⊆ C₁ ⊆ …`, the sequence of certified novelties of a\nfixed output `x`, `novelty Cₙ x`, is non-increasing and converges to\n`dist x (closure ⋃ₙ Cₙ)`; moreover `supₓ |novelty Cₙ x − novelty Cₘ x| =`\nHausdorff distance `d_H(Cₙ, Cₘ)`.\n- **The key insight is** that `novelty C = dist(·, C)` and the `1`-Lipschitz law\n  (`abs_novelty_sub_le`) make novelty the support function of the catalog, so catalog\n  *growth* and novelty *decay* are dual via the Hausdorff metric.\n- **Why now?** `novelty_mono` already proves monotonicity; the missing step is the\n  identification with `d_H`, a standard but unformalized consequence of the Lipschitz bound.\n\n## Conjecture 3 — Every Lucas sequence yields an unbounded novelty stream\n**Statement.** For any non-degenerate Lucas sequence `Uₙ(P, Q)` (e.g. Fibonacci, Pell,\nMersenne), the primitive-prime map `n ↦ (primitive prime of Uₙ)` induces a `1`-separated\nreal catalog of unbounded size — so *every* such recurrence is an inexhaustible novelty\nsource.\n- **The key insight is** that `unbounded_novelty_budget` used Fibonacci primitivity only\n  through the abstract clause \"the chosen prime divides no earlier term\"; Carmichael's\n  theorem holds for all non-degenerate Lucas sequences, so the construction is parametric.\n- **Why now?** The Fibonacci case is fully formalized here via the catalog's\n  `RankOfApparition.fib_prime_index_has_primitive`; generalizing requires only the same\n  rank-of-apparition spine, which the catalog already develops abstractly.\n\n## Conjecture 4 — Soundness ⇒ no certified duplicate under bounded perturbation\n**Statement.** If output `x` carries an `ε`-novelty certificate and the embedding is computed\nwith error `< ε`, then `x` is *provably* not a duplicate of any catalog entry — formally, no\ncatalog entry `c` satisfies `dist x c = 0` even after re-embedding within tolerance `δ < ε`.\n- **The key insight is** that the `1`-Lipschitz stability `abs_novelty_sub_le` converts an\n  approximate (numerically computed) certificate into an exact one whenever the margin\n  exceeds the embedding error: certificates are *robust*, not just nominal.\n- **Why now?** `cert_sound` and `abs_novelty_sub_le` are both proved; the conjecture is their\n  composition into an end-to-end robustness theorem for a *computed* embedding.\n\n## Three concrete next-cycle sub-conjectures\n1. **Budget additivity:** for a disjoint union of embedding spaces, the novelty budget is the\n   sum of the budgets (cover numbers add); test on `ℝ ⊔ ℝ`.\n2. **Stream interleaving:** the union of the Fibonacci and Pell primitive-prime streams is\n   still `1`-separated (primes from different recurrences rarely coincide); quantify the\n   finitely many collisions.\n3. **Certificate compression:** the minimal sub-catalog needed to certify the same novelty\n   for all outputs is an `ε`-net of the catalog; bound its size by Conjecture 1.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean",
-        "Algebra"
+      "catalog_references": [
+        "FWZ",
+        "FZ",
+        "W"
       ],
-      "id": "fd_2626",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "580d1f18",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/580d1f18",
-      "status": "available",
-      "thread_id": "th_f4c4a381",
-      "timestamp": "2026-06-26T19:55:05.815068+00:00",
-      "title": "Derived from this cycle's findings (`EmbeddingSpace.lean`, `Packing.lean`,"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Differential Galois Theory for EML ODEs\n\nDerived from this cycle's results in `EMLDifferentialGalois.lean`,\n`EMLKovacicSharp.lean`, and `EMLWronskianGalois.lean` (which build on the catalog\nfiles `EMLDiffObstruction.lean`, `EMLAiryRiccati.lean`, `EMLRiccatiTransform.lean`).\nEach conjecture below is falsifiable in Lean 4.\n\n## D1. The parity decision is a *complete* invariant for the monomial family\n\n**Conjecture.** For the family `y″ = X^n·y` (n ≥ 1), the cleared Riccati equation has a\nrational solution **iff** `n` is even is *false in general*, but there is a sharp,\nfully computable criterion `Kovacic(n) ∈ Bool` on `n` alone that decides rational\nsolvability, and it agrees with the parity bit precisely on `n ≤ 2`.\n\nThe key insight is that this cycle already proved the two extreme cases — odd `n` is\nalways obstructed (`no_rational_riccati_genAiry`) and `n = 2`-shaped coefficients can\nbe solvable (`riccati_evenDeg_solvable`) — so the unknown content lives entirely in the\neven `n ≥ 4` regime, where the dominant-balance degree count must be refined by a\nleading-coefficient condition.\n\nWhy now? The degree/parity bookkeeping infrastructure (`natDegree_wronskianLike_le`,\n`no_rational_solves_riccati_odd_deg`) is in place; extending it to track leading\ncoefficients is a bounded, mechanical next step rather than new theory.\n\n## D2. Constants subfield is the exact Picard–Vessiot base\n\n**Conjecture.** For any differential field `K`, the solution set of `y″ = a·y` is a\nmodule over `EMLDiffGalois.constantsSubfield K` of rank at most 2, with rank exactly 2\niff some pair has nonzero Wronskian; and the differential Galois group embeds in\n`GL₂(constants)` preserving that Wronskian (i.e. lands in a group of determinant a\nconstant).\n\nThe key insight is that this cycle reduced \"linear independence over constants\" to a\nsingle scalar test — the Wronskian (`linIndep_of_wronskian_ne_zero`) — and showed the\nWronskian of two solutions is a constant (`wronskian_isConstant`), so the rank-2 module\nstructure and the `SL₂`-up-to-scalars Galois action are now purely algebraic to encode.\n\nWhy now? Mathlib's `Differential`/`Derivation` API plus the constants subfield built\nhere give every ingredient; only the module-rank packaging remains.\n\n## D3. Riccati solvability transfers along differential field extensions\n\n**Conjecture.** If `L/K` is a differential field extension sharing constants\n(`Differential.ContainConstants K L`) and `y″ = a·y` (with `a ∈ K`) has a rational\nRiccati solution in `L`, then it already has one in `K`.\n\nThe key insight is that `firstOrder_ratio_isConstant` shows the logarithmic derivative\nof a solution is determined up to the shared constants, so a solution gained in an\nextension that adds no constants cannot be genuinely new — it must descend.\n\nWhy now? Mathlib already provides `Differential.ContainConstants` and the constants\nmachinery; this cycle supplies the descent obstruction (`firstOrder_ratio_isConstant`)\nneeded to start the induction on extension towers.\n\n## D4. The even-degree solvable locus is exactly the \"completed square\" coefficients\n\n**Conjecture.** Among *monic* degree-2 coefficients `f = X² + bX + c ∈ ℝ[X]`, the\nRiccati equation `v′ + v² = f` has a degree-1 polynomial solution iff\n`4c − b² = 4` (the `v = X + b/2` branch) or `4c − b² = −4` (the `v = −X − b/2` branch).\nEquivalently, the EML-solvable locus is exactly the two affine lines `4c − b² = ±4`.\n\nThe key insight is that for a candidate `v = aX + β` one has `v′ + v² = a²X² + 2aβX +\n(β² + a)`, so matching `X² + bX + c` forces `a = ±1` and pins `c = b²/4 ± 1`; the\nwitness `riccati_evenDeg_solvable` (`f = X² + 1`, `v = X`) is the point `b = 0, c = 1`\non the `+` line (`4·1 − 0 = 4`). This turns the qualitative even/odd dichotomy into an\nexact pair of algebraic equations on `(b, c)`.\n\nWhy now? The cleared-identity formalism of `EMLKovacicSharp` reduces the whole question\nto a finite polynomial-coefficient comparison provable by `ring`/`linear_combination`.\n\n## D5. Airy's non-solvability is stable under EML perturbation of the coefficient\n\n**Conjecture.** For every polynomial `g` with `deg g ≤ 0` (a constant) the perturbed\nAiry equation `y″ = (X + g)·y` still has no rational Riccati solution, but for some\n`deg g = 2` perturbation it acquires one — so the obstruction is robust to low-order\nbut not high-order EML perturbations.\n\nThe key insight is that the obstruction in `no_rational_solves_riccati_odd_deg` depends\nonly on `deg f` parity, and adding a constant keeps `deg(X + g) = 1` odd, while a\ndegree-2 perturbation can flip the dominant balance — exactly the boundary exposed by\n`riccati_evenDeg_solvable`.\n\nWhy now? The parity-only proof means the perturbation analysis reduces to tracking how\n`deg` changes, which the existing `natDegree` lemmas handle directly.\n",
-      "domain_bridges": [],
+      "description": "This paper investigates the classification of cluster algebra structures on the coordinate rings of Schubert cells and partial flag varieties, aiming to unify finite-type results across both settings.",
+      "domain_bridges": [
+        "cluster theory",
+        "algorithmic combinatorics",
+        "representation theory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
-        "Pythagorean"
+        "Geometry"
       ],
       "id": "fd_2627",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "Formal equivalence of mutation operations on quivers and matrix decompositions",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Thesis construction and verification via conjectural examples",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "7b228cc3",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/7b228cc3",
+      "source_exp_id": "2606.23474v2",
+      "source_path": "http://arxiv.org/abs/2606.23474v2",
       "status": "available",
-      "thread_id": "th_ea93e853",
-      "timestamp": "2026-06-26T19:56:43.835977+00:00",
-      "title": "Derived from this cycle's results in `EMLDifferentialGalois.lean`,"
+      "thread_id": "",
+      "timestamp": "2026-06-26T19:57:46.403371+00:00",
+      "title": "Finite-type classification of cluster structures on Schubert cells and partial flag varieties"
     },
     {
       "ambition_level": "extension",
@@ -55706,11 +55721,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5544e8f5",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -55722,7 +55737,7 @@
         "Computation"
       ],
       "id": "seed_361",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T19:57:53.162334+00:00",
       "last_reviewed_at": "2026-06-25T03:27:55.470307+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -55736,7 +55751,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432769+00:00",
       "title": "Lambda Calculus: Church-Rosser and Normalization"
@@ -129796,7 +129811,7 @@
   "recent_domain_counts": {
     "Algebra": 303,
     "Applications": 117,
-    "Bridges": 59,
+    "Bridges": 58,
     "Computation": 100,
     "Cryptography": 26,
     "EML": 2,
@@ -129806,7 +129821,7 @@
     "Novelty": 200,
     "Physics": 45,
     "Probability": 1,
-    "Pythagorean": 112,
+    "Pythagorean": 111,
     "Shared": 6,
     "Tropical": 33
   },
@@ -129824,9 +129839,9 @@
     "compute": 99,
     "computed": 42,
     "condition": 100,
-    "conjecture": 407,
+    "conjecture": 406,
     "connection": 56,
-    "constant": 145,
+    "constant": 144,
     "construct": 81,
     "control": 41,
     "converge": 25,
@@ -129841,7 +129856,7 @@
     "enabling": 39,
     "ensemble": 10,
     "exhibit": 55,
-    "exists": 134,
+    "exists": 132,
     "extensive": 12,
     "first": 325,
     "first-order": 19,
@@ -129858,14 +129873,14 @@
     "insight": 305,
     "invariants": 28,
     "mathematical": 47,
-    "matrix": 84,
+    "matrix": 83,
     "mature": 28,
     "metric": 132,
     "natural": 196,
     "normally": 2,
     "novelty": 139,
     "now?**": 143,
-    "number": 179,
+    "number": 178,
     "o(1/log": 2,
     "original": 353,
     "parameter": 58,
