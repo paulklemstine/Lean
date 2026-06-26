@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ddafecee",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Alien Mathematics: Non-Standard (Lunar/Chain) Arithmetic\n\nThis cycle established the foundation: the **min–max chain semiring** `Chain α`\n(`ChainSemiring.lean`), **lunar arithmet",
-      "quality_score": 0.68521,
-      "sorry_count": 0,
-      "theorem_count": 36,
-      "timestamp": "2026-06-21T03:15:31",
-      "title": "Alien Mathematics: Non-Standard Arithmetic"
-    },
-    {
       "cycle_id": "7a341625",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Game of Life Universality\n\nThis cycle formalised a self-contained theory of 2D Boolean cellular automata on\nthe infinite grid `ℤ × ℤ` (`Basic.lean`), instantiated Conway's Game o",
@@ -2501,6 +2491,16 @@
       "theorem_count": 5,
       "timestamp": "2026-06-26T20:49:35",
       "title": "Quadratic irrational density in the ratio spectrum"
+    },
+    {
+      "cycle_id": "f36ed9b7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — strict alternating cycles in fixed-width posets\n\nDerived from the cycle that produced `AlternatingCyclePosetLowerBound.lean`, which\nproves the tight `Ω(n^{2w})` lower bound (blow",
+      "quality_score": 0.54535,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-26T21:09:33",
+      "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles in posets of fixed "
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-06-26T20:49:35",
+  "last_updated": "2026-06-26T21:09:33",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "72d240c8",
-        "quality": 0.7694400000000001,
-        "theorems": 10,
-        "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
-      },
-      {
         "cycle_id": "f014f8e3",
         "quality": 0.7510892307692308,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.67947,
         "theorems": 5,
         "title": "Quadratic irrational density in the ratio spectrum"
+      },
+      {
+        "cycle_id": "f36ed9b7",
+        "quality": 0.54535,
+        "theorems": 0,
+        "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles"
       }
     ],
     "NumberTheory": [

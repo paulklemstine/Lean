@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f36ed9b7",
     "filename": "tight_asymptotic_lower_bound_for_the_maximum_numbe.json",
     "pkg_num": 110,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.54535,
     "title": "Tight \u0398(n^{2w}) Bound for Strict Alternating Cycles in Width-w Posets"
   },
   {
@@ -3208,8 +3208,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "tight_asymptotic_lower_bound_for_the_maximum_numbe",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.54535,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Tight \u0398(n^{2w}) Bound for Strict Alternating Cycles in Width-w Posets"
     }
