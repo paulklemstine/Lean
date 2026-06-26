@@ -718,25 +718,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 0f17133d (Q=0.765), which proved 10 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t ≤ s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expans",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_0f17133d_5a9fc372",
-    "lineage_refs": [],
-    "priority_score": 0.86536,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0f17133d",
-    "status": "available",
-    "timestamp": "2026-06-26T07:57:04.967467+00:00",
-    "title": "Deepening: Girth-Expansion Equivalence for Optimal Small-Set Expanders"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
     "domain_bridges": [],
     "domains": [
@@ -1809,25 +1790,6 @@
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432797+00:00",
     "title": "Tropical Convexity and Linear Programming"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "Cycle 0f17133d (Q=0.765) proved 10 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t ≤ s has exactly d * t distinct neighbors, maximizing expansion) if and on",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "sorry_fill_0f17133d_9c59b76a",
-    "lineage_refs": [],
-    "priority_score": 0.8153600000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0f17133d",
-    "status": "available",
-    "timestamp": "2026-06-26T07:57:05.499807+00:00",
-    "title": "Close Proofs: Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
   {
     "ambition_level": "extension",
@@ -3420,7 +3382,7 @@
       "math.CO",
       "math.GT"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da5cb31c",
     "description": "The authors disprove a conjecture by Cheong, Goaoc, and Holmsen by showing that for every n >= 1, there is a finite family of pairwise disjoint open convex sets in R^{3n} such that the (n-1)-st reduced homology of the space of line transversals is nonzero. They explicitly state the conjecture that this space of line transversals is in fact homotopy equivalent to the (n-1)-sphere, S^{n-1}. This proposes formalizing that stronger homotopy equivalence conjecture.",
     "domain_bridges": [
       "Geometric Transversal Theory",
@@ -3437,7 +3399,7 @@
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:10:06.412019+00:00",
     "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
   },
@@ -7489,7 +7451,7 @@
       "shifted equal values",
       "Graham--Holt--Pomerance construction"
     ],
-    "consumed_by_exp_id": "5c41b780",
+    "consumed_by_exp_id": "",
     "description": "The upper bound S_1^φ(x) ≪ x exp{-(1/2 - o(1))√(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^φ(x) ≥ C x exp{-(1/2 + o(1))√(log x log_2 x)} for all sufficiently large x.",
     "domain_bridges": [
       "additive number theory",
@@ -7505,7 +7467,7 @@
     "proof_strategy": "Construct explicit examples of n with φ(n)=φ(n+1) achieving the lower bound, or refine the error term analysis in the existing proof",
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T12:13:32.061938+00:00",
     "title": "Tightness of the unit-shift bound for Euler's totient function"
   },
@@ -7544,7 +7506,7 @@
       "Chvatal1977",
       "EFRS1989"
     ],
-    "consumed_by_exp_id": "fad59fd8",
+    "consumed_by_exp_id": "",
     "description": "For any tree T on n vertices and any complete tripartite graph K_{m_1,m_2,m_3} with 1 ≤ m_1 ≤ m_2 ≤ m_3, the Ramsey number R(T, K_{m_1,m_2,m_3}) equals 2(R(T, K_{m_1,m_2}) - 1) + m_1 for all sufficiently large n. This conjecture specifically tests whether the general bound in the paper becomes an exact equality for the k=3 case.",
     "domain_bridges": [
       "Ramsey Theory",
@@ -7561,7 +7523,7 @@
     "proof_strategy": "Construct explicit red-blue colorings of K_N for N = 2(R(T, K_{m_1,m_2}) - 1) + m_1 - 1 to show they avoid both a red T and blue K_{m_1,m_2,m_3}, thereby proving the lower bound matches the upper bound from the main theorem.",
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T12:57:20.450102+00:00",
     "title": "Exact Ramsey Numbers for Trees vs Tripartite Graphs"
   },
@@ -9205,6 +9167,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT:11M06",
+      "math.NT:11M26"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Assuming the Generalised Riemann Hypothesis and simplicity of zeros, for any primitive Dirichlet character χ modulo q>1, the sums over non‑trivial zeros ρ=1/2+iγ with 0<γ≤T of |L'(ρ,χ)|^{-2} and |L(2ρ,χ^2)/L'(ρ,χ)|^2 are asymptotic to (3/π^3)T and (1/(2π))T respectively, as T→∞.",
+    "domain_bridges": [
+      "Analytic Number Theory",
+      "Spectral Theory of L-functions"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2573",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use explicit formulae relating sums over zeros to integrals of logarithmic derivatives, approximate functional equations, and mollifiers to isolate the main term; then apply a smooth weight and optimise the contour to match the conjectured constant, following the strategy of Milinovich–Ng and Sinha adapted to the uniform setting.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25094v1",
+    "status": "available",
+    "timestamp": "2026-06-26T08:01:22.659202+00:00",
+    "title": "Asymptotic formula for discrete second moments of Dirichlet L-functions under GRH"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -9219,7 +9206,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2573",
+    "id": "fd_2574",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9248,7 +9235,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2574",
+    "id": "fd_2575",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9274,7 +9261,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2575",
+    "id": "fd_2576",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9299,7 +9286,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2576",
+    "id": "fd_2577",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9327,7 +9314,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2577",
+    "id": "fd_2578",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9353,7 +9340,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9379,7 +9366,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9401,7 +9388,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9427,7 +9414,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9447,7 +9434,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9470,7 +9457,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -9479,6 +9466,31 @@
     "status": "available",
     "timestamp": "2026-06-26T07:31:25.425369+00:00",
     "title": "μ(W_2(τ)) Conjecture"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2509.04556"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture addresses the structural concentration of cycles in bipartite families defined via pseudocube-like constructions, linking combinatorial bounds to asymptotic behavior under modular conditions.",
+    "domain_bridges": [
+      "combinatorics",
+      "high-dimensional analysis"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2585",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
+    "research_mode": "team",
+    "source_exp_id": "2606.25055v1",
+    "status": "available",
+    "timestamp": "2026-06-26T08:01:28.241763+00:00",
+    "title": "Pseudoshattering pairs in high-dimensional spaces"
   },
   {
     "ambition_level": "extension",
@@ -9750,26 +9762,6 @@
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Girth–Expansion Equivalence\n\nThis cycle established that the *literal* bridge \"left-`d`-regular graph is an\n`s`-optimal small-set expander ⇔ girth `≥ 2s+2`\" is **one-directional**:\n`optimal ⇒ girth` holds, but the converse fails (`converse_false`), because\n\"exactly `d·|X|` neighbors\" forces pairwise-*disjoint* neighborhoods\n(`optimal_iff_disjoint`), a strictly stronger property than excluding short\ncycles. The genuine girth-`6` characterization is `no_four_cycle_iff`. The\nfollowing conjectures are derived directly from these findings.\n\n## C1. Forest characterization of girth `≥ 2s+2`\n**Conjecture.** For a left-`d`-regular bipartite graph, `GirthGe N s` holds iff\nevery set `X` of `≤ s` left vertices induces an *acyclic* subgraph on\n`X ∪ nbhd N X` (equivalently `|nbhd N X| = (d·|X|) - (edges removed by a spanning\nforest)`; concretely the induced incidence graph has no cycle).\n\nThe key insight is that a `2k`-cycle lives entirely inside the induced subgraph\non its `k` left vertices, so forbidding short cycles is *exactly* forbidding\ninduced cycles on small left-sets — the correct expansion statement is\nacyclicity, not maximal expansion.\n\nWhy now? We already have the cycle-extraction pivot `cycle_shared_neighbor` and\nthe combinatorial cycle model `HasCycle`; promoting \"shares a neighbor\" to\n\"contains an induced cycle\" only needs a Mathlib `SimpleGraph.IsAcyclic` bridge,\nwhich is now within reach.\n\n## C2. Quantitative expansion floor from girth\n**Conjecture.** If `GirthGe N s` then every `X` with `|X| ≤ s` satisfies\n`(d-1)·|X| + 1 ≤ |nbhd N X|`, and this bound is tight (achieved by a single\ntree component).\n\nThe key insight is that an induced forest on `t` left vertices with `d·t` edges\nmust have at least `d·t - t + 1` right vertices, turning the *qualitative* girth\nhypothesis into a *quantitative* lower bound on `α_G(t)`.\n\nWhy now? `nbhd_card_mono` and `card_biUnion_le` already give the matching upper\nbound `|nbhd N X| ≤ d·|X|`; the lower bound needs only an edge-counting forest\ninequality, a standard `Finset` induction.\n\n## C3. Threshold collapse of optimal expansion\n**Conjecture.** For `s ≥ 2`, `OptimalExpander N d s` is independent of `s`: it is\nequivalent to `OptimalExpander N d 2`, and hence to `AllPairsDisjoint N`.\n\nThe key insight is that maximal expansion is a *pairwise* condition — once any\ntwo neighborhoods must be disjoint, every larger union is automatically a\ndisjoint union, so the parameter `s` carries no extra information beyond `s = 2`.\n\nWhy now? `optimal_iff_disjoint` already proves both endpoints reduce to\n`AllPairsDisjoint`; the collapse is a one-line corollary chaining the two\ninstances and is a sharp, surprising statement worth recording explicitly.\n\n## C4. Spielman–Tanner unique-neighbor refinement\n**Conjecture.** The *correct* coding-theoretic analogue of the bridge is:\ngirth `≥ 2s+2` iff every `X` with `|X| ≤ s` has a *unique-neighbor* vertex\n(a right vertex adjacent to exactly one element of `X`), i.e. `B(G)` corrects up\nto `⌊s/2⌋` errors.\n\nThe key insight is that short cycles are exactly the obstruction to the\nunique-neighbor property; replacing \"exactly `d·|X|`\" by \"has a unique neighbor\"\nrepairs the broken iff while keeping the code-distance interpretation intact.\n\nWhy now? Our counterexample shows the naive `α_G(t) = d·t` statement is too\nstrong; the unique-neighbor relaxation is the standard LDPC fix and is directly\nexpressible with the existing `nbhd` machinery.\n\n## C5. Sharp girth from a single forbidden configuration\n**Conjecture.** A left-`d`-regular bipartite graph has girth `≥ 2s+2` iff it\ncontains no \"theta/two-paths\" configuration of order `≤ s`, i.e. no two left\nvertices joined by two internally disjoint paths of total length `≤ 2s`.\n\nThe key insight is that every shortest cycle decomposes into two internally\ndisjoint paths between a single pair of vertices, so the girth bound is governed\nby a *local* two-vertex connectivity obstruction rather than a global count.\n\nWhy now? `cycle_shared_neighbor` already isolates the two-vertex seed of a\ncycle; extending it from \"one shared neighbor\" to \"two disjoint connecting\npaths\" is the natural next combinatorial lemma and would unify C1 and C4.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2584",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0f17133d",
-    "status": "available",
-    "timestamp": "2026-06-26T07:56:57.116096+00:00",
-    "title": "That the *literal* bridge \"left-`d`-regular graph is an"
   },
   {
     "ambition_level": "extension",

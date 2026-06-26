@@ -539,20 +539,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 0f17133d (Q=0.765), which proved 10 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expans",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_0f17133d_5a9fc372",
-    "priority_score": 0.86536,
-    "research_mode": "team",
-    "source_exp_id": "0f17133d",
-    "status": "available",
-    "timestamp": "2026-06-26T07:57:04.967467+00:00",
-    "title": "Deepening: Girth-Expansion Equivalence for Optimal Small-Set Expanders"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
@@ -1357,20 +1343,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432797+00:00",
     "title": "Tropical Convexity and Linear Programming"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 0f17133d (Q=0.765) proved 10 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and on",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "sorry_fill_0f17133d_9c59b76a",
-    "priority_score": 0.8153600000000001,
-    "research_mode": "team",
-    "source_exp_id": "0f17133d",
-    "status": "available",
-    "timestamp": "2026-06-26T07:57:05.499807+00:00",
-    "title": "Close Proofs: Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
   {
     "consumed_by_exp_id": "",
@@ -2207,7 +2179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Finiteness Bound for Same-Radical Shift Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da5cb31c",
     "description": "The authors disprove a conjecture by Cheong, Goaoc, and Holmsen by showing that for every n >= 1, there is a finite family of pairwise disjoint open convex sets in R^{3n} such that the (n-1)-st reduced homology of the space of line transversals is nonzero. They explicitly state the conjecture that this space of line transversals is in fact homotopy equivalent to the (n-1)-sphere, S^{n-1}. This proposes formalizing that stronger homotopy equivalence conjecture.",
     "domains": [
       "Geometry",
@@ -2217,7 +2189,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:10:06.412019+00:00",
     "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
   },
@@ -4362,7 +4334,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
   {
-    "consumed_by_exp_id": "5c41b780",
+    "consumed_by_exp_id": "",
     "description": "The upper bound S_1^\u03c6(x) \u226a x exp{-(1/2 - o(1))\u221a(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^\u03c6(x) \u2265 C x exp{-(1/2 + o(1))\u221a(log x log_2 x)} for all sufficiently large x.",
     "domains": [
       "Bridges"
@@ -4371,7 +4343,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T12:13:32.061938+00:00",
     "title": "Tightness of the unit-shift bound for Euler's totient function"
   },
@@ -4390,7 +4362,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zero Asymptotic Density of Zeckendorf\u2011Niven Numbers"
   },
   {
-    "consumed_by_exp_id": "fad59fd8",
+    "consumed_by_exp_id": "",
     "description": "For any tree T on n vertices and any complete tripartite graph K_{m_1,m_2,m_3} with 1 \u2264 m_1 \u2264 m_2 \u2264 m_3, the Ramsey number R(T, K_{m_1,m_2,m_3}) equals 2(R(T, K_{m_1,m_2}) - 1) + m_1 for all sufficiently large n. This conjecture specifically tests whether the general bound in the paper becomes an exact equality for the k=3 case.",
     "domains": [
       "Pythagorean",
@@ -4400,7 +4372,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T12:57:20.450102+00:00",
     "title": "Exact Ramsey Numbers for Trees vs Tripartite Graphs"
   },
@@ -5287,11 +5259,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Assuming the Generalised Riemann Hypothesis and simplicity of zeros, for any primitive Dirichlet character \u03c7 modulo q>1, the sums over non\u2011trivial zeros \u03c1=1/2+i\u03b3 with 0<\u03b3\u2264T of |L'(\u03c1,\u03c7)|^{-2} and |L(2\u03c1,\u03c7^2)/L'(\u03c1,\u03c7)|^2 are asymptotic to (3/\u03c0^3)T and (1/(2\u03c0))T respectively, as T\u2192\u221e.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2573",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25094v1",
+    "status": "available",
+    "timestamp": "2026-06-26T08:01:22.659202+00:00",
+    "title": "Asymptotic formula for discrete second moments of Dirichlet L-functions under GRH"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2573",
+    "id": "fd_2574",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5305,7 +5291,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2574",
+    "id": "fd_2575",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5320,7 +5306,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2575",
+    "id": "fd_2576",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5335,7 +5321,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2576",
+    "id": "fd_2577",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5350,7 +5336,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2577",
+    "id": "fd_2578",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5365,7 +5351,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5379,7 +5365,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5393,7 +5379,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5407,7 +5393,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5422,7 +5408,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5437,13 +5423,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
     "status": "available",
     "timestamp": "2026-06-26T07:31:25.425369+00:00",
     "title": "\u03bc(W_2(\u03c4)) Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This conjecture addresses the structural concentration of cycles in bipartite families defined via pseudocube-like constructions, linking combinatorial bounds to asymptotic behavior under modular conditions.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2585",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25055v1",
+    "status": "available",
+    "timestamp": "2026-06-26T08:01:28.241763+00:00",
+    "title": "Pseudoshattering pairs in high-dimensional spaces"
   },
   {
     "consumed_by_exp_id": "",
@@ -5645,21 +5646,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Girth\u2013Expansion Equivalence\n\nThis cycle established that the *literal* bridge \"left-`d`-regular graph is an\n`s`-optimal small-set expander \u21d4 girth `\u2265 2s+2`\" is **one-directional**:\n`optimal \u21d2 girth` holds, but the converse fails (`converse_false`), because\n\"exactly `d\u00b7|X|` neighbors\" forces pairwise-*disjoint* neighborhoods\n(`optimal_iff_disjoint`), a strictly stronger property than excluding short\ncycles. The genuine girth-`6` characterization is `no_four_cycle_iff`. The\nfollowing conjectures are derived directly from these findings.\n\n## C1. Forest characterization of girth `\u2265 2s+2`\n**Conjecture.** For a left-`d`-regular bipartite graph, `GirthGe N s` holds iff\nevery set `X` of `\u2264 s` left vertices induces an *acyclic* subgraph on\n`X \u222a nbhd N X` (equivalently `|nbhd N X| = (d\u00b7|X|) - (edges removed by a spanning\nforest)`; concretely the induced incidence graph has no cycle).\n\nThe key insight is that a `2k`-cycle lives entirely inside the induced subgraph\non its `k` left vertices, so forbidding short cycles is *exactly* forbidding\ninduced cycles on small left-sets \u2014 the correct expansion statement is\nacyclicity, not maximal expansion.\n\nWhy now? We already have the cycle-extraction pivot `cycle_shared_neighbor` and\nthe combinatorial cycle model `HasCycle`; promoting \"shares a neighbor\" to\n\"contains an induced cycle\" only needs a Mathlib `SimpleGraph.IsAcyclic` bridge,\nwhich is now within reach.\n\n## C2. Quantitative expansion floor from girth\n**Conjecture.** If `GirthGe N s` then every `X` with `|X| \u2264 s` satisfies\n`(d-1)\u00b7|X| + 1 \u2264 |nbhd N X|`, and this bound is tight (achieved by a single\ntree component).\n\nThe key insight is that an induced forest on `t` left vertices with `d\u00b7t` edges\nmust have at least `d\u00b7t - t + 1` right vertices, turning the *qualitative* girth\nhypothesis into a *quantitative* lower bound on `\u03b1_G(t)`.\n\nWhy now? `nbhd_card_mono` and `card_biUnion_le` already give the matching upper\nbound `|nbhd N X| \u2264 d\u00b7|X|`; the lower bound needs only an edge-counting forest\ninequality, a standard `Finset` induction.\n\n## C3. Threshold collapse of optimal expansion\n**Conjecture.** For `s \u2265 2`, `OptimalExpander N d s` is independent of `s`: it is\nequivalent to `OptimalExpander N d 2`, and hence to `AllPairsDisjoint N`.\n\nThe key insight is that maximal expansion is a *pairwise* condition \u2014 once any\ntwo neighborhoods must be disjoint, every larger union is automatically a\ndisjoint union, so the parameter `s` carries no extra information beyond `s = 2`.\n\nWhy now? `optimal_iff_disjoint` already proves both endpoints reduce to\n`AllPairsDisjoint`; the collapse is a one-line corollary chaining the two\ninstances and is a sharp, surprising statement worth recording explicitly.\n\n## C4. Spielman\u2013Tanner unique-neighbor refinement\n**Conjecture.** The *correct* coding-theoretic analogue of the bridge is:\ngirth `\u2265 2s+2` iff every `X` with `|X| \u2264 s` has a *unique-neighbor* vertex\n(a right vertex adjacent to exactly one element of `X`), i.e. `B(G)` corrects up\nto `\u230as/2\u230b` errors.\n\nThe key insight is that short cycles are exactly the obstruction to the\nunique-neighbor property; replacing \"exactly `d\u00b7|X|`\" by \"has a unique neighbor\"\nrepairs the broken iff while keeping the code-distance interpretation intact.\n\nWhy now? Our counterexample shows the naive `\u03b1_G(t) = d\u00b7t` statement is too\nstrong; the unique-neighbor relaxation is the standard LDPC fix and is directly\nexpressible with the existing `nbhd` machinery.\n\n## C5. Sharp girth from a single forbidden configuration\n**Conjecture.** A left-`d`-regular bipartite graph has girth `\u2265 2s+2` iff it\ncontains no \"theta/two-paths\" configuration of order `\u2264 s`, i.e. no two left\nvertices joined by two internally disjoint paths of total length `\u2264 2s`.\n\nThe key insight is that every shortest cycle decomposes into two internally\ndisjoint paths between a single pair of vertices, so the girth bound is governed\nby a *local* two-vertex connectivity obstruction rather than a global count.\n\nWhy now? `cycle_shared_neighbor` already isolates the two-vertex seed of a\ncycle; extending it from \"one shared neighbor\" to \"two disjoint connecting\npaths\" is the natural next combinatorial lemma and would unify C1 and C4.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2584",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0f17133d",
-    "status": "available",
-    "timestamp": "2026-06-26T07:56:57.116096+00:00",
-    "title": "That the *literal* bridge \"left-`d`-regular graph is an"
   },
   {
     "consumed_by_exp_id": "",

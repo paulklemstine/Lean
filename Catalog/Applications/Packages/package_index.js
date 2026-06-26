@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "151fa435",
     "filename": "continued_fractions_and_diophantine_approximation.json",
     "pkg_num": 82,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7885600000000001,
     "title": "The Golden Ratio is Badly Approximable: A Norm-Form Approach to Diophantine Approximation"
   },
   {
@@ -2387,8 +2387,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "continued_fractions_and_diophantine_approximation",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7885600000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Golden Ratio is Badly Approximable: A Norm-Form Approach to Diophantine Approximation"
     }
