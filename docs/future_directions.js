@@ -180,7 +180,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c743a598",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domains": [
       "Geometry",
@@ -190,7 +190,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:11.683325+00:00",
     "title": "Standard Conjectures on Algebraic Cycles"
   },
@@ -210,7 +210,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f4d545d",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domains": [
       "Algebra"
@@ -219,7 +219,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432615+00:00",
     "title": "Galois Theory: Solvability of Polynomials"
   },
@@ -2077,7 +2077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "913e3580",
     "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
     "domains": [
       "Algebra"
@@ -2086,7 +2086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -2368,7 +2368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bdb5ae9b",
     "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
     "domains": [
       "Bridges"
@@ -2377,7 +2377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T13:11:45.659366+00:00",
     "title": "Quadratic irrational density in the ratio spectrum"
   },
@@ -3465,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4e028e76",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domains": [
       "Pythagorean",
@@ -3475,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -5272,7 +5272,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic formula for discrete second moments of Dirichlet L-functions under GRH"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f36ed9b7",
     "description": "For any fixed integer width w \u2265 2, the maximum number of strict alternating cycles in a poset of size n and width w is \u0398(n^{2w}) as n \u2192 \u221e. The paper establishes an upper bound of O(n^{2w}) (Corollary 1 and Lemma 1); this conjecture asserts that this bound is asymptotically tight, i.e., there exists a constant c_w > 0 such that for all sufficiently large n, some poset of size n and width w has at least c_w n^{2w} strict alternating cycles.",
     "domains": [
       "Pythagorean"
@@ -5281,7 +5281,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24877v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T08:32:26.631386+00:00",
     "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles in posets of fixed width"
   },
