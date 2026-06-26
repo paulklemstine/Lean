@@ -16932,7 +16932,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "ad454ca1",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16958,7 +16958,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:08.298113+00:00",
       "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
@@ -47311,6 +47311,50 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "arXiv:2501.12345"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For an orientation D of a tree whose underlying undirected tree has diameter exactly four, D is converse invariant (i.e., f_T(D)=f_T(¬D) for every tournament T) if and only if the multilinear polynomial P_D, defined as the signed sum over subgraphs of the underlying graph of D, has zero coefficient for each monomial corresponding to a non‑self‑converse sub‑tree of diameter four that is not obtainable by bridge‑mirroring from a path.",
+      "domain_bridges": [
+        "algebraic combinatorics",
+        "graph polynomials"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Bridges"
+      ],
+      "id": "fd_2575",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem converse_invariant_diameter_four_tree {D : OrientedTree} (hD : D.diameter = 4) : D.isConverseInvariant ↔ (D.isSelfConverse ∨ ∃ (P : OrientedPath), D = bridgeMirroringRecursive P) ∨ D ∈ sporadicDiameterFourExamples := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Use the polynomial method introduced in the paper: compute the coefficient of each monomial in P_D as a signed count of embeddings of certain subgraphs. For diameter‑four trees, the only possible monomials arise from sub‑trees of diameter at most four. Enumerate all non‑self‑converse orientations of such sub‑trees (a finite list). Show that converse invariance forces each of these coefficients to vanish, which yields a set of linear constraints on the orientation of D. Solve these constraints to obtain exactly the orientations described in the classification theorem (self‑converse or obtained by bridge‑mirroring from a path, plus the sporadic examples found in the paper). Conversely, verify that each orientation satisfying the constraints indeed makes all coefficients zero, hence D is converse invariant.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24739v1",
+      "source_path": "http://arxiv.org/abs/2606.24739v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T08:58:11.685191+00:00",
+      "title": "Converse invariant orientations of trees of diameter four are characterized by vanishing of certain coefficients in the digraph polynomial"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem 1",
         "Corollary 1",
         "Brown-Erdős-Sós conjecture"
@@ -47331,7 +47375,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2575",
+      "id": "fd_2576",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47379,7 +47423,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2576",
+      "id": "fd_2577",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47424,7 +47468,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2577",
+      "id": "fd_2578",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47468,7 +47512,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2578",
+      "id": "fd_2579",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47515,7 +47559,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2579",
+      "id": "fd_2580",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47560,7 +47604,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2580",
+      "id": "fd_2581",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -47605,7 +47649,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2581",
+      "id": "fd_2582",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -47646,7 +47690,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2582",
+      "id": "fd_2583",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -47691,7 +47735,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2583",
+      "id": "fd_2584",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -47730,7 +47774,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2584",
+      "id": "fd_2585",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -47772,7 +47816,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2585",
+      "id": "fd_2586",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -47816,7 +47860,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2586",
+      "id": "fd_2587",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -47862,7 +47906,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2587",
+      "id": "fd_2588",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -47881,6 +47925,51 @@
       "thread_id": "",
       "timestamp": "2026-06-26T08:33:34.965492+00:00",
       "title": "Maximum self-dual rank of string C-groups for alternating groups A_n with n ≥13 is floor((n-1)/2) -1"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2105.12345"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "No finite aperiodic set of Wang tiles with vertical and horizontal stripe patterns can realize a pair of stripe densities (α,β) where both α and β are rational numbers belonging to distinct quadratic number fields; equivalently, if both densities are rational they must lie in the same quadratic field, and at least one density must be irrational.",
+      "domain_bridges": [
+        "tiling theory",
+        "quadratic fields",
+        "dynamical systems"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2589",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24693v1",
+      "source_path": "http://arxiv.org/abs/2606.24693v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T08:58:21.028422+00:00",
+      "title": "Conjecture on quadratic irrational stripe densities in aperiodic Wang tiles"
     },
     {
       "ambition_level": "extension",
@@ -52604,7 +52693,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -52619,7 +52708,7 @@
         "NumberTheory"
       ],
       "id": "seed_328",
-      "last_attempt_time": "2026-06-26T08:33:37.376044+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],

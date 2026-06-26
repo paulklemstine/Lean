@@ -9222,6 +9222,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:2501.12345"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For an orientation D of a tree whose underlying undirected tree has diameter exactly four, D is converse invariant (i.e., f_T(D)=f_T(¬D) for every tournament T) if and only if the multilinear polynomial P_D, defined as the signed sum over subgraphs of the underlying graph of D, has zero coefficient for each monomial corresponding to a non‑self‑converse sub‑tree of diameter four that is not obtainable by bridge‑mirroring from a path.",
+    "domain_bridges": [
+      "algebraic combinatorics",
+      "graph polynomials"
+    ],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_2575",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the polynomial method introduced in the paper: compute the coefficient of each monomial in P_D as a signed count of embeddings of certain subgraphs. For diameter‑four trees, the only possible monomials arise from sub‑trees of diameter at most four. Enumerate all non‑self‑converse orientations of such sub‑trees (a finite list). Show that converse invariance forces each of these coefficients to vanish, which yields a set of linear constraints on the orientation of D. Solve these constraints to obtain exactly the orientations described in the classification theorem (self‑converse or obtained by bridge‑mirroring from a path, plus the sporadic examples found in the paper). Conversely, verify that each orientation satisfying the constraints indeed makes all coefficients zero, hence D is converse invariant.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24739v1",
+    "status": "available",
+    "timestamp": "2026-06-26T08:58:11.685191+00:00",
+    "title": "Converse invariant orientations of trees of diameter four are characterized by vanishing of certain coefficients in the digraph polynomial"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -9236,7 +9261,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2575",
+    "id": "fd_2576",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9265,7 +9290,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2576",
+    "id": "fd_2577",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9291,7 +9316,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2577",
+    "id": "fd_2578",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9316,7 +9341,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9344,7 +9369,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9370,7 +9395,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9396,7 +9421,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9418,7 +9443,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9444,7 +9469,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9464,7 +9489,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9487,7 +9512,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -9512,7 +9537,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
@@ -9539,7 +9564,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the vertex-gluing construction from the paper to establish recursive relationships between the ranks for different n, combined with exhaustive case analysis for small n values, and use induction to generalize to larger n. Critical lemmas would involve verifying the intersection condition preservation under gluing operations and demonstrating self-duality through explicit automorphism constructions.",
@@ -9548,6 +9573,32 @@
     "status": "available",
     "timestamp": "2026-06-26T08:33:34.965492+00:00",
     "title": "Maximum self-dual rank of string C-groups for alternating groups A_n with n ≥13 is floor((n-1)/2) -1"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2105.12345"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "No finite aperiodic set of Wang tiles with vertical and horizontal stripe patterns can realize a pair of stripe densities (α,β) where both α and β are rational numbers belonging to distinct quadratic number fields; equivalently, if both densities are rational they must lie in the same quadratic field, and at least one density must be irrational.",
+    "domain_bridges": [
+      "tiling theory",
+      "quadratic fields",
+      "dynamical systems"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2589",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24693v1",
+    "status": "available",
+    "timestamp": "2026-06-26T08:58:21.028422+00:00",
+    "title": "Conjecture on quadratic irrational stripe densities in aperiodic Wang tiles"
   },
   {
     "ambition_level": "extension",
@@ -10815,7 +10866,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ad454ca1",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domain_bridges": [],
     "domains": [
@@ -10828,7 +10879,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
