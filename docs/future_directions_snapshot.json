@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9c488c94",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -3020,7 +3020,7 @@
       "Mathlib.Data.Polynomial.Basic",
       "Mathlib.Data.Matrix.Basic"
     ],
-    "consumed_by_exp_id": "0e9a5064",
+    "consumed_by_exp_id": "",
     "description": "For every prime p ≥ 7 with p ≡ 3 mod 4, the determinant of the truncated Legendre-symbol matrix with polynomial parameter X is exactly ((p - 2) / 3)^2 X over ℤ[X]. Explicitly, for m = (p - 5) / 2 and matrix A indexed by Fin m with A_{j,k} = X + (j - k | p), where the Legendre symbol is viewed as an integer coefficient polynomial, det A = ((p - 2) / 3)^2 X.",
     "domain_bridges": [
       "quadratic characters over finite fields to integer-valued polynomial matrices",
@@ -3036,7 +3036,7 @@
     "proof_strategy": "Formalize the matrix over Polynomial ℤ indexed by Fin ((p - 5) / 2). Prove the identity by importing or separately formalizing the inverse-data reduction from the full Chapman matrix C = [legendreSym p (j - i)] indexed by Fin ((p + 1) / 2). The determinant computation then reduces to Jacobi complementary minor identities and the rank-one determinant lemma for adding the constant X matrix. The remaining arithmetic simplification is Nat division: floor((p - 2) / 3) is represented by (p - 2) / 3.",
     "research_mode": "team",
     "source_exp_id": "2606.22548v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:03:49.419256+00:00",
     "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
   },
@@ -6479,7 +6479,7 @@
       "Wiener's 1990 attack",
       "Continued fractions in cryptanalysis"
     ],
-    "consumed_by_exp_id": "d4e980c4",
+    "consumed_by_exp_id": "",
     "description": "For RSA modulus n=p*q with primes p>q, if the private exponent d satisfies d < n^{(1+δ)/2} and a δ-fraction of the most significant bits of p+q is known, then the modulus n can be factored using a modified Wiener's continued fraction attack.",
     "domain_bridges": [
       "Number theory",
@@ -6495,7 +6495,7 @@
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T11:56:42.011405+00:00",
     "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
   },
@@ -7175,7 +7175,7 @@
       "Mathlib.Combinatorics.Polytope",
       "Mathlib.Data.Fintype.Card"
     ],
-    "consumed_by_exp_id": "3847ce48",
+    "consumed_by_exp_id": "",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self‑dual string C‑group representations of rank $2m$ (as constructed by the vertex‑gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self‑dual string C‑group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domain_bridges": [
       "Coxeter groups ↔ abstract regular polytopes",
@@ -7191,7 +7191,7 @@
     "proof_strategy": "Formalize the vertex‑gluing construction of the paper and prove that it yields a self‑dual string C‑group of rank $2m$ for $A_{4m+3}$. Then, using the intersection condition for string C‑groups together with known bounds on the rank of any string C‑group for $A_n$ (the maximal rank $\\lfloor (n-1)/2 \\rfloor$), show that any self‑dual representation would force an extra involutive symmetry that contradicts the parity constraints on generators of $A_{4m+3}$. The contradiction establishes the non‑existence of rank $2m+1$ self‑dual string C‑groups. The proof proceeds by: (1) defining string C‑groups and self‑duality in Lean; (2) encoding the universal string Coxeter group $W_r$ and the intersection condition; (3) constructing the specific generating involutions for the glued representation; (4) verifying the intersection condition and self‑duality; (5) proving a rank‑upper‑bound lemma for self‑dual representations of $A_{4m+3}$ via counting arguments on the fixed‑point structure of the invo",
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
   },
@@ -10039,6 +10039,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Chromatic Polynomial Theory (Tropical domain)\n\nDerived from this cycle's findings (`Counting.lean`, `Brooks.lean`, `FourColor.lean`,\n`TropicalBridge.lean`).  Each conjecture is bold, falsifiable, and supported by the\nresults already proved.\n\n---\n\n## C1. Full Brooks' theorem: removing the `+1`\n\n**Conjecture.** For every finite connected graph `G` that is neither a complete\ngraph nor an odd cycle, `G.Colorable G.maxDegree` (i.e. `χ(G) ≤ Δ(G)`).\n\n**The key insight is** that the slack vertex in the greedy argument\n(`colorable_maxDegree_add_one`, proved here by a `Finset.induction` greedy that gives\neach vertex a free color among `Δ+1`) can be *recycled*: in any non-complete,\nnon-odd-cycle connected graph there is a vertex ordering ending at a cut-adjacent\nvertex with two neighbors of equal color, freeing one color globally.\n\n**Why now?** We have already formalized the universal bound `χ ≤ Δ+1` and *both*\ntight exception families with their exact `χ = Δ+1` values\n(`completeGraph_chromatic_eq_maxDegree_add_one`,\n`oddCycle_chromatic_eq_maxDegree_add_one`).  The only missing ingredient is the\nordering lemma, so the target is sharply isolated.\n\n---\n\n## C2. The chromatic polynomial is a genuine integer polynomial with the DC recursion\n\n**Conjecture.** There is a `P : SimpleGraph V → Polynomial ℤ` with\n`(P G).eval (k : ℤ) = chromCount G k` for all `k`, satisfying\n`P Gdel = P G + P (contraction)` and `(P G).coeff` alternating in sign with\n`(P G).natDegree = |V|` and leading coefficient `1`.\n\n**The key insight is** that the *additive* `ℕ`-valued recursion proved here\n(`chromCount_deletion_contraction`) lifts uniquely to `ℤ[X]` by induction on the\nnumber of edges, because the empty-graph base case `kⁿ` and the recursion pin down\nall coefficients.\n\n**Why now?** The additive deletion–contraction identity over `ℕ` is in hand and\nmatches the small-case table (§2 of `ComputationalEvidence.md`); promoting it to\n`ℤ[X]` is a finite-edge induction rather than new combinatorics.\n\n---\n\n## C3. T-positivity of the chromatic polynomial for claw-free graphs\n\n**Conjecture.** For every claw-free graph `G`, the chromatic polynomial written in the\nfalling-factorial (tropical/`σ`) basis has nonnegative coefficients; equivalently its\ntropicalization `x ↦ log chromCount G ⌈e^x⌉` is a convex, piecewise-linear (max-plus)\nfunction with integer slopes `0,1,…,|V|`.\n\n**The key insight is** that the tropicalized deletion–contraction sandwich proved here\n(`tropical_deletion_contraction_lower/upper`) turns the count recursion into a max-plus\nrecursion, and claw-freeness forbids the local configuration that would otherwise\ncreate a negative tropical coefficient (a sign cancellation in the σ-expansion).\n\n**Why now?** The tropical bridge is established (`log_chromCount_bot_two` matches the\ncatalog `tropicalQuadratic` exactly, and the DC sandwich is general), so the question\nis now a precise statement about slopes of a known piecewise-linear envelope.\n\n---\n\n## C4. Multiplicativity and the clique-sum divisibility law\n\n**Conjecture.** `chromCount` is multiplicative over connected components, and for a\nclique-sum `G = G₁ ∪_{Kᵣ} G₂` the chromatic polynomial satisfies\n`P(G) · P(Kᵣ) = P(G₁) · P(G₂)`.\n\n**The key insight is** that a proper coloring of a disjoint union is an independent\npair of proper colorings (a product `Finset` bijection), and gluing along a clique\nforces the shared `Kᵣ` to be colored once, dividing out `P(Kᵣ)`.\n\n**Why now?** The `Finset`-based `properColorings` model used here makes the product\nbijection a direct `Fintype.card` computation, exactly the style already used in\n`chromCount_top` (injections ↔ embeddings).\n\n---\n\n## C5. Polynomial four-color criterion meets a formal planarity predicate\n\n**Conjecture.** With a Mathlib-style planarity predicate `Planar` (via an Euler-formula\n/ Kuratowski development), `∀ G, Planar G → chromCount G 4 ≠ 0`; equivalently the\nchromatic polynomial of every planar graph is nonzero at `4`.\n\n**The key insight is** that four-colorability is *exactly* non-vanishing of the\nchromatic polynomial at `4` (`fourColorable_iff_chromCount_four_ne_zero`), so the Four\nColor Theorem is equivalent to a single non-vanishing statement about an explicit\ninteger polynomial.\n\n**Why now?** The equivalence of the two phrasings is already proved here over an\nabstract `Planar` predicate (`fourColorTheorem_formulations_equiv`); the remaining work\nis solely a formal definition of planarity, decoupled from the coloring side.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2596",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "49f14a50",
+    "status": "available",
+    "timestamp": "2026-06-26T11:12:39.434769+00:00",
+    "title": "Derived from this cycle's findings (`Counting.lean`, `Brooks.lean`, `FourColor.l"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10351,7 +10371,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ab42f98e",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domain_bridges": [],
     "domains": [
@@ -10364,29 +10384,9 @@
     "proof_strategy": "Define Collatz hash H_k(x) = T^k(x) mod 2^256. Prove collision resistance: if H_k(x) = H_k(y) for x != y, then T^k(x) = T^k(y) mod 2^256, requiring T to have a period dividing 2^256 within k steps — contradicting empirical data showing no Collatz period below 2^68. Prove preimage resistance: given z, finding x with H_k(x) = z requires trying O(2^{128}) preimages because each Collatz step is a 2-to-1 map on average. Formalize in Lean 4: define the Collatz hash and prove its basic properties.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "f2499c75",
-    "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "fd_0439",
-    "lineage_refs": [],
-    "priority_score": 0.5499999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:28.479969+00:00",
-    "title": "Idempotent Probability: Large Deviations"
   },
   {
     "ambition_level": "extension",
