@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c488c94",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -2829,7 +2829,7 @@
       "mathlib: QuadraticForm",
       "mathlib: NumberTheory.NumberField"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb117fe9",
     "description": "Conjecture: Let d < 0 be squarefree, let K = Q(√d), and let O_K have Z-basis {1, ω}, where ω = √d if d ≠ 1 mod 4 and ω = (1 + √d)/2 if d ≡ 1 mod 4. Form the rank-four lattice S_K = Herm_2(O_K) with quadratic form q(A) = 2 det(A), and use the basis given by the two diagonal Hermitian matrix units together with the off-diagonal elements 1 and ω. Then the determinant of the Gram matrix of the associated integral symmetric bilinear form is exactly the fundamental discriminant D_K: det Gram(S_K) = d if d ≡ 1 mod 4, and det Gram(S_K) = 4d otherwise.",
     "domain_bridges": [
       "Identifies the discriminant of the rank-four K3 Neron-Severi lattice used in the paper with the field discriminant of K",
@@ -2846,7 +2846,7 @@
     "proof_strategy": "Choose the standard Z-basis of Herm_2(O_K): the two diagonal basis vectors and the two off-diagonal basis vectors corresponding to 1 and ω. Write z = x + yω. Since q([[a,z],[conj z,c]]) = 2ac - 2 Norm(z), the Gram matrix splits as a hyperbolic plane with determinant -1 and a rank-two negative norm block. If Tr(ω)=T and Norm(ω)=n, the norm block has matrix [[-2, -T], [-T, -2n]], whose determinant is 4n - T^2 = -D_K. Multiplying by the hyperbolic determinant -1 gives det Gram(S_K)=D_K.",
     "research_mode": "team",
     "source_exp_id": "2606.22921v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T09:16:17.802367+00:00",
     "title": "Discriminant of the Hermitian Bianchi lattice S_K"
   },
@@ -6479,7 +6479,7 @@
       "Wiener's 1990 attack",
       "Continued fractions in cryptanalysis"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4e980c4",
     "description": "For RSA modulus n=p*q with primes p>q, if the private exponent d satisfies d < n^{(1+δ)/2} and a δ-fraction of the most significant bits of p+q is known, then the modulus n can be factored using a modified Wiener's continued fraction attack.",
     "domain_bridges": [
       "Number theory",
@@ -6495,7 +6495,7 @@
     "proof_strategy": "Formalize the attack by combining bounds on d, δ-known bits of p+q, and continued fraction convergents of e/n to show existence of a convergent yielding φ(n), then derive p and q.",
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T11:56:42.011405+00:00",
     "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
   },
@@ -7147,7 +7147,7 @@
       "Pseudorandom hypergraph regularity (Gowers, Rödl‑Schacht)",
       "LP‑based reduction to strip colourings (paper’s main theorem)"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f014f8e3",
     "description": "For fixed integers r≥2, t≥2 there exists a constant C(r,t)>0 such that every r‑edge‑colouring of any (C, d)-pseudorandom t‑uniform hypergraph H on n vertices contains a monochromatic matching of size at least (1/(r+t‑1)−o(1))·n. Moreover, this bound is asymptotically best possible: for every ε>0 and all sufficiently large n there is an r‑colouring of a (C, d)-pseudorandom t‑graph with no monochromatic matching larger than (1/(r+t‑1)+ε)·n. The conjecture claims that the classical AFL bound extends from the complete hypergraph K_n^{(t)} to any sufficiently pseudorandom host, without any additional loss beyond the o(1) term.",
     "domain_bridges": [
       "Extremal combinatorics ↔ Probabilistic combinatorics",
@@ -7164,7 +7164,7 @@
     "proof_strategy": "1. Formalise the notion of (C,d)-pseudorandom t‑uniform hypergraphs in Lean using edge density and codegree regularity. 2. Encode r‑edge‑colourings and monochromatic matchings as finite sets of edges with disjoint vertex sets. 3. Prove a reduction lemma (as in the paper) that any such colouring can be compressed to an r‑strip colouring with at most o(n) loss in the size of the largest monochromatic matching; this uses hypergraph regularity lemmas already formalised in mathlib and LP duality theorems. 4. Analyse strip colourings: show that for a strip colouring the largest monochromatic matching attains at least (1/(r+t‑1)−δ)n for any δ>0 when n is large, via a simple counting argument on the partition parts. 5. Combine the reduction and the strip analysis to obtain the lower bound. 6. Construct extremal colourings (generalising the known tight examples for K_n^{(t)}) on pseudorandom hosts by embedding a blow‑up of the standard construction, proving the upper bound. 7. Assemble the two ",
     "research_mode": "team",
     "source_exp_id": "2606.24863v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T05:42:47.292631+00:00",
     "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hypergraphs"
   },
@@ -8612,7 +8612,7 @@
       "Brandhorst_Hofmann_2023",
       "DolgachevKeum2009"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a7c4b074",
     "description": "We conjecture that for any prime p>11, the superspecial K3 surface X over an algebraically closed field of characteristic p does not admit any non‑trivial extension of a maximal symplectic group. Precisely, if G≤ Aut(X) is a finite group whose symplectic subgroup G_s is maximal (as classified by Ohashi‑Schütt) then G = G_s, i.e. the non‑symplectic index [G:G_s] equals 1.",
     "domain_bridges": [
       "Finite group actions on K3 surfaces",
@@ -8630,7 +8630,7 @@
     "proof_strategy": "Combine the classification of maximal symplectic groups (Ohashi‑Schütt) with the lattice‑theoretic constraints on non‑symplectic automorphisms of superspecial K3 surfaces (trace formulas, Artin invariant 1). Show that any non‑trivial extension would give a non‑symplectic element whose fixed locus forces a contradiction with the known list of possible finite subgroups of Aut(X). The tame case theorem (Section TameCase) rules out tame extensions, and the wild case is handled by examining the p‑torsion in the Néron‑Severi lattice.",
     "research_mode": "team",
     "source_exp_id": "2606.25724v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T21:08:28.285445+00:00",
     "title": "No non‑trivial extensions of maximal symplectic groups on the superspecial K3 surface"
   },
@@ -10512,7 +10512,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab42f98e",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domain_bridges": [],
     "domains": [
@@ -10525,7 +10525,7 @@
     "proof_strategy": "Define Collatz hash H_k(x) = T^k(x) mod 2^256. Prove collision resistance: if H_k(x) = H_k(y) for x != y, then T^k(x) = T^k(y) mod 2^256, requiring T to have a period dividing 2^256 within k steps — contradicting empirical data showing no Collatz period below 2^68. Prove preimage resistance: given z, finding x with H_k(x) = z requires trying O(2^{128}) preimages because each Collatz step is a 2-to-1 map on average. Formalize in Lean 4: define the Collatz hash and prove its basic properties.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
