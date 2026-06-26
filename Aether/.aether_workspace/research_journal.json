@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3e812933",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — Packing-Isolating Sets in Block Graphs\n\nDerived from this cycle's findings: the periodic construction for paths, the\ndomination shortcut for complete graphs, and the `C₅` necessi",
-      "quality_score": 0.6599999999999999,
-      "sorry_count": 0,
-      "theorem_count": 19,
-      "timestamp": "2026-06-21T02:28:51",
-      "title": "Packing isolating sets exist in finite block graphs"
-    },
-    {
       "cycle_id": "ddafecee",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Alien Mathematics: Non-Standard (Lunar/Chain) Arithmetic\n\nThis cycle established the foundation: the **min–max chain semiring** `Chain α`\n(`ChainSemiring.lean`), **lunar arithmet",
@@ -2501,6 +2491,16 @@
       "theorem_count": 20,
       "timestamp": "2026-06-26T20:28:00",
       "title": "Representation Theory: Character Tables of S_n"
+    },
+    {
+      "cycle_id": "bdb5ae9b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Quadratic irrational density in the ratio spectrum\n\nDerived from the Phase A v19b cycle that produced `MobiusQuadratic.lean`,\n`DeterminantSpectrum.lean`, and the new `RatioSpectr",
+      "quality_score": 0.67947,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-26T20:49:35",
+      "title": "Quadratic irrational density in the ratio spectrum"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-06-26T20:28:00",
+  "last_updated": "2026-06-26T20:49:35",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "da5cb31c",
-        "quality": 0.5496381818181819,
-        "theorems": 14,
-        "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
-      },
-      {
         "cycle_id": "72d240c8",
         "quality": 0.7694400000000001,
         "theorems": 10,
@@ -3637,6 +3631,12 @@
         "quality": 0.6544800000000001,
         "theorems": 13,
         "title": "Multilateral non-trivial cross-intersection product bound"
+      },
+      {
+        "cycle_id": "bdb5ae9b",
+        "quality": 0.67947,
+        "theorems": 5,
+        "title": "Quadratic irrational density in the ratio spectrum"
       }
     ],
     "NumberTheory": [

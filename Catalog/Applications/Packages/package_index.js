@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bdb5ae9b",
     "filename": "quadratic_irrational_density_in_the_ratio_spectrum.json",
     "pkg_num": 109,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.67947,
     "title": "Quadratic-Irrational Density in the Ratio Spectrum: The Topological Floor"
   },
   {
@@ -3179,8 +3179,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "quadratic_irrational_density_in_the_ratio_spectrum",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.67947,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Quadratic-Irrational Density in the Ratio Spectrum: The Topological Floor"
     }

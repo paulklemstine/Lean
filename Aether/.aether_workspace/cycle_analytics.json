@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-26T20:28:05.236794+00:00",
+  "last_updated": "2026-06-26T20:49:39.082952+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -9716,6 +9716,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-26T20:28:04.950573+00:00",
       "title": "Representation Theory: Character Tables of S_n"
+    },
+    {
+      "adversarial_agreement": "agree",
+      "adversarial_delta": 0.0842,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 68,
+      "domain": "Novelty",
+      "duration_seconds": 1466.1223866939545,
+      "end_time": 1782506748.7204735,
+      "files_integrated": 7,
+      "job_id": "bdb5ae9b",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19b",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19b",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.74,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.5842,
+        "cross_domain": 0.7,
+        "grade": "substantial",
+        "importance": 0.4307,
+        "novelty": 0.74,
+        "proof_depth": 0.2982,
+        "usefulness": 0.4991
+      },
+      "quality_score": 0.67947,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782505282.5980868,
+      "strategy_count": 0,
+      "theorem_count": 5,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 5,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-26T20:49:37.022688+00:00",
+      "title": "Quadratic irrational density in the ratio spectrum"
     }
   ]
 }
