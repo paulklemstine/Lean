@@ -1,241 +1,234 @@
-# Why Magnets Don't Work in One Dimension: The Exact Story of the Ising Chain
+# The Temperature Where Iron Forgets Itself
 
-## A puzzle hidden inside a refrigerator magnet
+## A magnet's secret number
 
-Stick a magnet to your refrigerator and you are looking at the end product of a
-quiet revolution. Inside that little black disk, trillions upon trillions of
-atomic compass needles all point the same way. They do this *spontaneously* — no
-external field forces them. Heat the magnet hot enough, though, and the order
-collapses: the needles begin to point every which way, and the magnetism
-vanishes. Cool it back down and, suddenly, below a sharp threshold temperature,
-the order snaps back into place.
+Heat a bar magnet in a flame and something strange happens. At first nothing
+seems to change — it still clings to your refrigerator, still tugs at a nearby
+compass needle. But keep heating, and at one precise temperature the magnetism
+vanishes all at once, as if a switch had been thrown. Cool it back down and the
+magnetism returns, again at that same special temperature. For iron this magic
+threshold sits at about $770^{\circ}\mathrm{C}$. Physicists call it the *Curie
+point*, and it marks one of the cleanest examples in all of nature of a **phase
+transition**: a qualitative change in the collective behavior of matter that
+happens at a single, sharp value of a control parameter.
 
-That sudden snap is a **phase transition**, one of the most dramatic phenomena in
-all of physics. Water boiling into steam, a metal becoming a superconductor, the
-early universe condensing matter out of a uniform soup — all are phase
-transitions. The mathematical signature of such an event is a *singularity*: some
-smooth, well-behaved quantity suddenly develops a kink, a cusp, or an outright
-divergence at one special value of the temperature.
+What makes a phase transition so puzzling is that nothing dramatic happens to
+any *individual* atom. Each atom is a tiny magnet, a "spin," that prefers to
+point the same way as its neighbors. At low temperature this preference wins:
+the spins lock together into a vast, coordinated army, and the material is
+magnetized. At high temperature thermal jostling wins: each spin flickers
+randomly, the army dissolves into a disorganized mob, and the magnetism
+disappears. Somewhere in between is a knife-edge — the critical temperature —
+where order and chaos are perfectly balanced.
 
-The simplest mathematical model that captures this drama is the **Ising model**,
-invented in the 1920s. It is so simple that it can be written on a napkin, yet so
-rich that physicists are still mining it a century later. This article tells the
-exact, complete story of the Ising model in its most stripped-down form — a
-single chain of spins in one dimension — and explains a result that surprised the
-model's own inventor: **in one dimension, the magnet never works.** There is no
-phase transition, at any temperature above absolute zero, and we can prove it
-with a formula you could check by hand.
+The deep question is: *can we predict that knife-edge from first principles?* Not
+measure it — predict it, with a formula, starting only from the rule "spins like
+to align with their neighbors." For decades this looked hopeless. Then, in 1944,
+Lars Onsager produced one of the most celebrated calculations of twentieth-century
+physics, and out of the algebra fell a number of startling elegance.
 
-## The rules of the game
+This article is about that number, and about the beautiful self-mirroring
+symmetry that makes it inevitable.
 
-Imagine a row of $n+1$ tiny magnets, which physicists call **spins**, sitting at
-positions $0, 1, 2, \dots, n$. Each spin can be in one of exactly two states:
-pointing "up" ($+1$) or "down" ($-1$). A complete description of the system — a
-**configuration** — is just a choice of up or down for every site. With $n+1$
-sites, there are $2^{n+1}$ possible configurations.
+## A checkerboard of arrows
 
-Spins like to agree with their neighbors. We encode this with an **energy**: each
-neighboring pair contributes a little energy that is *lower* when the two spins
-align and *higher* when they disagree. If we write $\sigma_i = \pm 1$ for the spin
-at site $i$, the energy of the whole chain is
+To make the problem precise, physicists strip it to its bones. Forget the
+complicated three-dimensional crystal of iron. Picture instead a flat square
+grid — a checkerboard — and at every square place a single arrow that can only
+point in one of two directions: **up** ($+1$) or **down** ($-1$). This is the
+**two-dimensional Ising model**, named after Ernst Ising, who studied its
+one-dimensional cousin in the 1920s.
 
-$$E(\sigma) = -J \sum_{i=0}^{n-1} \sigma_i \, \sigma_{i+1},$$
+The rule of the game is encoded in an *energy*. Every arrow looks at its
+immediate neighbors — the squares directly to its right and directly above it —
+and the system pays an energy penalty whenever two neighbors disagree. Concretely,
+write $\sigma_p = \pm 1$ for the spin at site $p$. The total energy, or
+**Hamiltonian**, of a whole configuration $\sigma$ of arrows is
 
-where $J > 0$ is the **coupling strength**. When two adjacent spins point the same
-way, $\sigma_i \sigma_{i+1} = +1$ and the term $-J\sigma_i\sigma_{i+1} = -J$ lowers
-the energy; when they disagree it raises it. Nature prefers low energy, so the
-spins *want* to line up. The chain of $n+1$ sites has $n$ such neighboring bonds.
+$$H(\sigma) \;=\; -\sum_{p}\left( \sigma_p\,\sigma_{p\rightarrow} + \sigma_p\,\sigma_{p\uparrow}\right),$$
 
-But nature is not purely orderly. At any positive temperature, thermal jitter
-shakes the spins around. The fundamental law of statistical mechanics, the
-**Boltzmann distribution**, says that a configuration with energy $E$ occurs with
-probability proportional to $e^{-\beta E}$, where $\beta = 1/(k_B T)$ is the
-*inverse temperature*. Hot systems (small $\beta$) explore all configurations
-nearly equally; cold systems (large $\beta$) overwhelmingly favor the
-lowest-energy, most-ordered ones. The battle between energy and temperature is the
-whole story of magnetism.
+where $p\rightarrow$ and $p\uparrow$ denote the right and upper neighbors of $p$.
+The minus sign means that aligned neighbors ($\sigma_p\sigma_q = +1$) *lower* the
+energy, while misaligned ones ($\sigma_p\sigma_q = -1$) *raise* it. Nature, left
+to itself, slides toward low energy — so the model has a built-in bias toward
+agreement.
 
-The single number that controls everything is the **partition function**, the sum
-of the Boltzmann weights over *all* configurations:
+How strong is that bias? It must compete with temperature. The laws of statistical
+mechanics say that a configuration $\sigma$ occurs with probability proportional
+to the Boltzmann weight $e^{-\beta H(\sigma)}$, where $\beta = 1/T$ is the
+*inverse temperature*. When $\beta$ is large (cold), the weight punishes
+high-energy, disordered states severely, and order reigns. When $\beta$ is small
+(hot), all configurations are nearly equally likely, and disorder reigns. The
+phase transition is the boundary between these regimes.
 
-$$Z = \sum_{\text{configurations } \sigma} e^{-\beta E(\sigma)}
-   = \sum_{\sigma} \prod_{i=0}^{n-1} e^{\beta J \, \sigma_i \sigma_{i+1}}.$$
+Two facts about this energy are worth pinning down precisely, because they are
+the skeleton on which everything else hangs.
 
-This looks like an astronomically complicated object — a sum over $2^{n+1}$ terms,
-each a product of $n$ exponentials. For a chain of just 300 spins, the number of
-terms exceeds the number of atoms in the observable universe. And yet, as we will
-see, it collapses to a one-line formula.
+**The lowest-energy state is perfect agreement.** If every arrow points up — or
+every arrow points down — then *every* neighboring pair agrees, every bond
+contributes $-1$, and the energy hits rock bottom. On a periodic grid of
+$N$ sites, each site owns two bonds (right and up), so the minimum energy is
+exactly $-2N$. No configuration can do better: each of the $2N$ bonds contributes
+at most $+1$ to the aligned count, so $H(\sigma) \ge -2N$ for every $\sigma$, with
+equality precisely for the two uniform states. These two perfectly ordered states
+are the **ground states** of the model.
 
-## A domino-style trick: the transfer matrix
+**The energy cannot tell up from down.** Flip *every* arrow at once,
+$\sigma \mapsto -\sigma$. Then every product $\sigma_p\sigma_q$ becomes
+$(-\sigma_p)(-\sigma_q) = \sigma_p\sigma_q$, unchanged. So the Hamiltonian is
+perfectly symmetric: $H(-\sigma) = H(\sigma)$. This is a global $\mathbb{Z}/2$
+symmetry — a two-element symmetry group, "flip everything or don't." The
+*magnetization* $M(\sigma) = \sum_p \sigma_p$, by contrast, is *odd*: it changes
+sign under the flip, $M(-\sigma) = -M(\sigma)$, and is bounded in magnitude by the
+number of sites.
 
-The key to taming the partition function is an idea of breathtaking elegance,
-called the **transfer matrix** method. Instead of trying to grasp the entire chain
-at once, we build it up one spin at a time, the way you might compute a long
-product by multiplying in one factor at a time.
+Here is the paradox that the whole subject revolves around. The energy is
+symmetric — it has no preference for up over down. Yet below the critical
+temperature the system *chooses*. It piles up around one of the two ground states
+and develops a nonzero average magnetization, breaking the very symmetry that the
+energy respects. This is **spontaneous symmetry breaking**, and it is the
+mathematical heart of magnetism.
 
-Here is the crucial observation. Consider summing over the *very first* spin,
-$\sigma_0$, while holding its neighbor $\sigma_1$ fixed. That spin appears in
-exactly one bond. Summing its two possible values gives
+## The mirror trick
 
-$$\sum_{\sigma_0 = \pm 1} e^{\beta J \, \sigma_0 \sigma_1}
-   = e^{\beta J \sigma_1} + e^{-\beta J \sigma_1} = 2\cosh(\beta J).$$
+Onsager's full solution is a tour de force. But the *location* of the critical
+point — the value of $T_c$ — can be pinned down by an argument of breathtaking
+economy, discovered by Hendrik Kramers and Gregory Wannier in 1941, three years
+*before* Onsager. Their idea is a kind of mirror.
 
-Look closely at what happened: the answer, $2\cosh(\beta J)$, *does not depend on
-$\sigma_1$ at all!* This is because the hyperbolic cosine is an even function —
-$\cosh(x) = \cosh(-x)$ — so flipping the neighboring spin from $+1$ to $-1$ leaves
-the result untouched. In our formalization this fact is captured by two small but
-load-bearing lemmas: one stating that $\cosh(c \cdot \sigma) = \cosh(c)$ for any
-spin $\sigma = \pm 1$, and one stating
+Imagine you understand the Ising model perfectly at very low temperature, where
+the system is almost perfectly ordered and the only excitations are small
+"islands" of flipped spins. And imagine you also understand it at very high
+temperature, where the system is almost perfectly random and order appears only
+as faint, fleeting correlations. Kramers and Wannier discovered something
+miraculous: *these two descriptions are the same description.* The low-temperature
+theory at inverse temperature $\beta$ is mathematically identical to the
+high-temperature theory at a different inverse temperature $\beta^{*}$, its
+**dual**. The precise dictionary relating them is the elegant relation
 
-$$\sum_{\sigma_0 = \pm 1} e^{\,c\,\sigma_0\,\sigma_1} = 2\cosh(c),$$
+$$\sinh(2\beta)\,\sinh(2\beta^{*}) \;=\; 1.$$
 
-independent of the boundary spin $\sigma_1$.
+This is the **Kramers–Wannier duality**. It is an involution: apply it twice and
+you return to where you started, because the relation is symmetric in $\beta$ and
+$\beta^*$. Low maps to high, and high maps back to low. The map folds the entire
+temperature axis onto itself like a sheet of paper.
 
-This independence is the magic ingredient. It means that peeling off the first
-spin simply multiplies the partition function of the remaining, shorter chain by
-the *same constant factor* $2\cosh(\beta J)$, no matter what. Each spin we strip
-away contributes one identical factor. This gives a clean recursion: if
-$Z_n$ denotes the partition function of a chain with $n$ bonds, then
+Now comes the punchline. A phase transition is a point where the system's behavior
+turns non-smooth — a crease in the fabric of its thermodynamics. If there is
+exactly one such crease, then duality, which is a symmetry of the whole theory,
+*must map the crease to itself*. The only way a point can be sent to itself by the
+duality is to be a **fixed point**: a temperature equal to its own dual,
+$\beta = \beta^{*}$. Set $\beta = \beta^*$ in the duality relation and it collapses
+to a single clean equation:
 
-$$Z_{n+1} = \big(2\cosh(\beta J)\big)\, Z_n.$$
+$$\sinh(2\beta_c) \;=\; 1.$$
 
-A chain with zero bonds is a single site with two states and no interactions, so
-$Z_0 = 2$. Unrolling the recursion gives the exact, closed-form solution:
+The critical point is *self-dual*. It is the unique temperature that looks the
+same in the low-temperature mirror as in the high-temperature one. Order and
+disorder meet exactly where the model becomes its own reflection.
 
-$$\boxed{\,Z_n = 2\,\big(2\cosh(\beta J)\big)^{n}.\,}$$
+## Solving the riddle
 
-That is the entire 1D Ising model, solved exactly, for every temperature and every
-chain length. A sum over more configurations than there are atoms in the universe
-collapses to a single power of a hyperbolic cosine. The factor of $2$ out front
-counts the two-fold freedom of the very last unconstrained spin; the factor
-$\big(2\cosh(\beta J)\big)^n$ is one transfer-matrix step per bond.
+The equation $\sinh(2\beta_c) = 1$ is now just algebra, and it unwinds into a
+gem. Recall $\sinh(x) = \tfrac{1}{2}(e^x - e^{-x})$. Writing $u = e^{2\beta_c}$,
+the condition $\sinh(2\beta_c)=1$ becomes $u - 1/u = 2$, i.e. $u^2 - 2u - 1 = 0$,
+whose positive root is
 
-## From microscopic to macroscopic: the free energy
+$$e^{2\beta_c} \;=\; 1 + \sqrt{2}.$$
 
-Physicists rarely care about the partition function directly. What they care
-about is the **free energy**, which governs all the thermodynamics, and especially
-the **free energy density** — the free energy *per site* in an infinitely long
-chain. This is where phase transitions reveal themselves: a phase transition is,
-by definition, a point where the free energy density fails to be smooth.
+Taking logarithms,
 
-Taking the logarithm of our exact formula and dividing by the number of sites
-$n+1$, we get
+$$\beta_c \;=\; \tfrac{1}{2}\ln\!\bigl(1 + \sqrt{2}\,\bigr), \qquad\text{and therefore}\qquad T_c \;=\; \frac{1}{\beta_c} \;=\; \frac{2}{\ln\!\bigl(1 + \sqrt{2}\,\bigr)}.$$
 
-$$\frac{1}{n+1}\log Z_n
-   = \frac{1}{n+1}\log 2 + \frac{n}{n+1}\log\!\big(2\cosh(\beta J)\big).$$
+There it is — the **Onsager critical temperature**, conjured from a single
+self-mirroring equation. Plug in $\sqrt{2} \approx 1.41421$ and you find
+$\ln(1+\sqrt 2) \approx 0.88137$, so
 
-Now send the chain length to infinity. The first term, carrying the leftover
-boundary spin, vanishes like $1/n$ — boundary effects don't matter in a large
-system. The fraction $n/(n+1)$ tends to $1$. So the free energy density converges
-to a strikingly clean limit:
+$$T_c \;\approx\; 2.269\quad(\text{in units where the coupling }J\text{ and Boltzmann's constant }k_B\text{ equal }1).$$
 
-$$\lim_{n\to\infty} \frac{1}{n+1}\log Z_n = \log\!\big(2\cosh(\beta J)\big).$$
+Even without a calculator one can box the answer in cleanly. Since
+$\sqrt 2$ lies strictly between $1.41$ and $1.42$, the quantity $1+\sqrt 2$ lies
+between $2$ and Euler's number $e \approx 2.71828$. Because the logarithm is
+increasing, $\ln(1+\sqrt 2)$ lies strictly between $\ln 2 \approx 0.693$ and
+$\ln e = 1$. Inverting and doubling, the critical temperature is trapped in the
+honest interval
 
-This is the **thermodynamic limit**, and it is the true bulk free energy of the
-infinite 1D Ising chain. Every thermodynamic property — energy, entropy, heat
-capacity — can be extracted from this one function of temperature.
+$$2 \;<\; T_c \;<\; 3.$$
 
-## The punchline: no phase transition, ever
+This crude bracket already rules out any lazy misreading of the formula: $T_c$ is
+a genuine transcendental number near $2.27$, not some disguised triviality.
 
-Now we can answer the original question. *Does the 1D Ising chain become a
-spontaneous magnet at low temperature?* A phase transition would show up as a
-singularity — a kink or divergence — in the free energy density
-$f(\beta) = \log\!\big(2\cosh(\beta J)\big)$ at some special inverse temperature
-$\beta$.
+The same fixed point has an equally pretty *bond* form. The natural variable in
+the lattice expansions is not $\beta$ itself but $t = \tanh\beta$, the strength of
+a single bond's correlation. At the critical point this collapses to
 
-But look at the function. The hyperbolic cosine $\cosh(\beta J)$ is **strictly
-positive** for every real $\beta$ — it never touches zero, never goes negative.
-And the logarithm of a strictly positive, infinitely-smooth function is itself
-infinitely smooth. There is simply nowhere for a singularity to hide. Formally,
-$f(\beta) = \log\!\big(2\cosh(\beta J)\big)$ is **infinitely differentiable on all
-of the real line** — it is, in fact, real-analytic everywhere.
+$$\tanh(\beta_c) \;=\; \sqrt 2 - 1 \;=\; e^{-2\beta_c}.$$
 
-This is the rigorous content of the statement "**the one-dimensional Ising model
-has no phase transition at any positive temperature.**" The free energy is a
-perfectly smooth curve, with no kink, no cusp, no divergence, from infinite
-temperature all the way down toward absolute zero. The magnet never spontaneously
-switches on. Only at $T = 0$ exactly ($\beta = \infty$) does perfect order finally
-win — and that is a limit, not a true transition at finite temperature.
+The middle expression, $\sqrt 2 - 1 \approx 0.41421$, is simply the reciprocal of
+$1+\sqrt 2$ — the same silver number wearing a different mask. The identity
+$\tanh\beta_c = e^{-2\beta_c}$ is the form Kramers and Wannier actually used, the
+exact place where the high-temperature bond expansion and the low-temperature
+contour expansion shake hands.
 
-The single algebraic fact responsible for this verdict is worth savoring: the
-dominant transfer-matrix eigenvalue, $2\cosh(\beta J)$, is a strictly positive,
-real-analytic function of $\beta$. Because it never vanishes and never misbehaves,
-its logarithm — the free energy — can never become singular. Dimensionality, in
-the end, comes down to whether the transfer matrix has room to develop a
-degeneracy. In one dimension, it never does.
+So the critical point is pinned down three independent ways, each a different
+language for the same truth: **transcendentally** as $\sinh(2\beta_c) = 1$;
+**algebraically** in bond variables as $\tanh(\beta_c) = \sqrt 2 - 1$; and
+**numerically** as $2 < T_c < 3$, with true value $\approx 2.269$.
 
-## Why one dimension is different
+## Why the magnet really breaks
 
-This might feel anticlimactic — we built a beautiful model of magnetism and it
-refuses to be a magnet! Ernst Ising, in his 1925 thesis, found exactly this and
-concluded, pessimistically, that the model was useless for explaining real
-ferromagnets. He was wrong, but in an instructive way.
+Knowing *where* the transition sits is one thing; proving that order *actually
+survives* at low temperature is another. That order is real — that below $T_c$ the
+infinite lattice settles into a magnetized state rather than washing out to zero —
+is the content of a marvelous geometric argument by Rudolf Peierls, dating to
+1936.
 
-The deep reason is about the *cost of disorder*. Imagine an ordered chain, all
-spins up. To create a region of disorder, you flip a contiguous block of spins.
-In one dimension, doing so costs energy only at the **two boundaries** of the
-flipped block — just two unhappy bonds — regardless of how large the block is. So
-a single, cheap "domain wall" can be inserted anywhere, and there are many places
-to put it. Entropy (the sheer number of ways to be disordered) always beats the
-fixed, finite energy cost. Order cannot survive at any positive temperature.
+Peierls reasoned about the *boundaries* between regions of up-spins and
+down-spins. Start from the all-up ground state and ask: could the system, in
+thermal equilibrium at low temperature, secretly contain a large island of
+flipped spins big enough to destroy the overall magnetization? Any such island is
+surrounded by a closed contour — a loop on the grid separating "up" territory from
+"down" territory. Flipping a region bounded by a contour of length $L$ costs energy
+proportional to $L$, so its Boltzmann weight is suppressed by a factor like
+$e^{-2\beta L}$: long boundaries are exponentially expensive when $\beta$ is large.
 
-In **two dimensions**, the situation flips. The boundary of a disordered region is
-now a closed loop whose energy cost *grows* with its size. Large disordered
-patches become expensive, and below a critical temperature, order finally wins.
-This is the celebrated result of Lars Onsager, who in 1944 solved the 2D Ising
-model exactly and found a genuine phase transition at the critical temperature
+Now the combinatorial magic. The *number* of distinct contours of length $L$
+through a given point grows only exponentially in $L$ — there are at most about
+$3^L$ ways for a self-avoiding loop to wander. So the total probabilistic weight of
+all large islands is bounded by a sum like $\sum_L 3^L e^{-2\beta L}$, a geometric
+series that **converges and stays small** whenever $\beta$ is large enough that
+$3\,e^{-2\beta} < 1$. The energy cost of a long fence beats the entropy of all the
+ways to build it. Large islands are vanishingly rare; the sea of up-spins
+percolates across the entire infinite lattice; and the magnetization stays
+strictly positive. The symmetry is broken, and the magnet remembers which way it
+was pointing. This is **spontaneous magnetization**, and the energy-versus-entropy
+competition that drives it — short cheap fences win, long expensive ones lose — is
+the same accounting that fixes the critical temperature in the first place.
 
-$$T_c = \frac{2J}{k_B \ln(1+\sqrt{2})} \approx \frac{2.269\,J}{k_B}.$$
+By contrast, repeat the experiment in *one* dimension — a single chain of spins
+rather than a sheet — and the magic fails. There the "boundary" of a flipped
+segment is just a pair of points, costing a fixed energy no matter how long the
+segment, while the number of places to put it grows with the chain. Entropy always
+wins, the chain never orders at any positive temperature, and there is no phase
+transition at all. The transfer-matrix method makes this exact: the chain's free
+energy per spin equals the perfectly smooth function $\ln(2\cosh\beta)$, analytic
+for every real $\beta$, with no crease anywhere. The contrast between the smooth
+one-dimensional chain and the cusped two-dimensional sheet is precisely the
+contrast between a world with no magnets and the world we live in.
 
-The contrast between the smooth 1D free energy and the singular 2D one is one of
-the cleanest illustrations in all of science of how *dimensionality* shapes
-collective behavior. The same local rules — spins prefer to agree — produce a
-magnet in two dimensions and refuse to in one. The difference is entirely a matter
-of geometry and counting.
+## The shape of a deeper truth
 
-## What we have actually established
+It is worth pausing on how much is packed into the single equation
+$\sinh(2\beta_c) = 1$. It says that the special temperature is not an accident of
+detailed dynamics but a *symmetry point* — the one place where the model's low- and
+high-temperature faces coincide. Such self-dual points turn up again and again
+across physics and mathematics: in lattice gauge theories, in percolation, in the
+study of the Riemann zeta function's functional equation, in string theory's
+T-duality relating large and small spacetimes. The Ising critical point is the
+simplest, sharpest member of this family — the place where a humble checkerboard of
+arrows teaches a lesson about how the universe organizes itself.
 
-Let us collect the exact results, stated plainly:
-
-1. **Exact partition function.** For a chain of $n$ bonds at inverse temperature
-   $\beta$ and coupling $J$, the partition function summed over all $2^{n+1}$
-   spin configurations equals exactly $Z_n = 2\,\big(2\cosh(\beta J)\big)^n$.
-
-2. **Transfer recursion.** Adding one bond multiplies the partition function by
-   the dominant eigenvalue: $Z_{n+1} = \big(2\cosh(\beta J)\big)\,Z_n$.
-
-3. **Thermodynamic limit.** The free energy density converges:
-   $\frac{1}{n+1}\log Z_n \to \log\!\big(2\cosh(\beta J)\big)$ as
-   $n \to \infty$.
-
-4. **No phase transition.** The limiting free energy density
-   $\beta \mapsto \log\!\big(2\cosh(\beta J)\big)$ is infinitely differentiable on
-   all of $\mathbb{R}$ — smooth and singularity-free at every temperature.
-
-None of these is an approximation. Each is an exact identity, true for every
-finite chain or every real temperature. The transfer-matrix method turns an
-impossible-looking sum into elementary algebra, and elementary algebra delivers a
-verdict that took the physics community years to fully appreciate.
-
-## The bigger picture
-
-The Ising chain is a gateway. The transfer-matrix idea — reduce an extended
-many-body sum to repeated multiplication by a small matrix — reappears throughout
-physics and mathematics: in quantum mechanics (where it becomes the path
-integral), in the theory of stochastic processes (Markov chains), in coding
-theory, and in modern machine learning (where it underlies the forward algorithm
-for hidden Markov models). The humble lesson that "summing one spin gives the same
-factor regardless of its neighbor" is the seed of an entire computational
-philosophy.
-
-And the headline result — that order can or cannot survive depending on the
-*dimension* of space — echoes far beyond magnets. It tells us that collective
-phenomena are not just about the local rules but about the stage on which those
-rules play out. A society of agents who each merely want to agree with their
-neighbors will reach consensus on a grid but never on a line. The same arithmetic
-that governs a refrigerator magnet governs, in spirit, any system where local
-agreement competes with random noise.
-
-One dimension is too small a world for order to take hold. Two dimensions is just
-big enough. That razor's edge, captured exactly in a single hyperbolic cosine, is
-one of the quiet marvels of mathematical physics.
+The number $T_c = 2/\ln(1+\sqrt 2)$ is, in the end, a piece of poetry written in
+the language of hyperbolic functions. It is what a magnet computes, silently, every
+time it is heated through its Curie point — the temperature at which iron forgets,
+and then remembers, itself.

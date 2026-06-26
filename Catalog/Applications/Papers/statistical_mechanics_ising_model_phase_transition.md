@@ -1,58 +1,73 @@
-# Computational Evidence — 1D Ising Partition Function
+# Computational Evidence — 2D Ising Model Phase Transition
 
-Small-case checks done by direct enumeration of the `2^(n+1)` spin
-configurations of the open chain (`Zfree`) and comparison with the closed form
-`2 (2 cosh βJ)ⁿ`, plus the periodic ring trace `Zper = (2cosh)ⁿ + (2sinh)ⁿ`.
+All numbers below were checked against the formalized definitions; the decisive
+identities are *proved* (0 sorries) in the accompanying Lean files.
 
-## Open chain (free boundary), `Zfree β J n`
+## 1. Critical temperature / Kramers–Wannier self-duality
 
-Take `J = 1`. Let `c = cosh β`, `s = sinh β`.
+Units `J = k_B = 1`, `β_c = ½ ln(1+√2)`, `T_c = 2/ln(1+√2)`.
 
-| n (bonds) | sites | brute-force sum (over 2^(n+1) configs)      | closed form `2(2c)ⁿ` |
-|-----------|-------|---------------------------------------------|----------------------|
-| 0         | 1     | `Σ_{σ₀} 1 = 2`                              | `2`                  |
-| 1         | 2     | `e^{β}+e^{-β}+e^{-β}+e^{β} = 4 cosh β`      | `2(2c) = 4c`         |
-| 2         | 3     | `8 cosh²β` (8 configs, expand)              | `2(2c)² = 8c²`       |
-| 3         | 4     | `16 cosh³β`                                 | `2(2c)³ = 16c³`      |
+| quantity            | value (numeric) | proved identity                         |
+|---------------------|-----------------|-----------------------------------------|
+| `ln(1+√2)`          | `0.8813735870`  | `log_one_add_sqrt_two_pos`              |
+| `β_c`               | `0.4406867935`  | `betaC_pos`                             |
+| `2β_c`              | `0.8813735870`  | `exp_two_betaC : e^{2β_c}=1+√2`         |
+| `sinh(2β_c)`        | `1.0000000000`  | `sinh_two_betaC` (**self-dual point**)  |
+| `tanh(β_c)`         | `0.4142135624`  | `tanh_betaC = √2-1 = e^{-2β_c}`         |
+| `T_c`               | `2.2691853142`  | `TC_bounds : 2 < T_c < 3`               |
 
-The `n=1` case spelled out: configs `(++),(+-),(-+),(--)` give weights
-`e^{β}, e^{-β}, e^{-β}, e^{β}`, summing to `2e^{β}+2e^{-β}=4 cosh β`. ✓
+The self-duality fixed point `sinh(2β)·sinh(2β*) = 1` with `β = β*` forces
+`sinh(2β) = 1`; numerically the unique positive root is `β = 0.44069 = β_c`. ✓
 
-## Ring (periodic), `Zper β 1 n = trace(Tⁿ) = (2c)ⁿ + (2s)ⁿ`
+## 2. Transfer matrix (1D row transfer), zero field
 
-| n | trace(Tⁿ)                | closed form           |
-|---|--------------------------|-----------------------|
-| 1 | `tr T = 2 e^{β}? ` no: `tr T = 2 cosh? ` → `2c + ... ` see note | `(2c)+(2s)` = `2e^{β}` |
-| 2 | `tr T² = (2c)²+(2s)²`     | `4c²+4s²`             |
-| 3 | `(2c)³+(2s)³`             | `8c³+8s³`             |
+`T(β) = [[e^β, e^{-β}], [e^{-β}, e^β]]`, eigenvalues `λ₊ = 2cosh β`,
+`λ₋ = 2sinh β`. Small-case partition function `Z_N = Tr T^N = λ₊^N + λ₋^N`:
 
-Note `n=1`: `(2c)+(2s) = 2(cosh β+sinh β) = 2 e^{β}`, matching `tr T = exp(β)+exp(β)`?
-Actually `tr T = T₀₀+T₁₁ = e^{β}+e^{β} = 2e^{β} = 2(c+s)`. ✓
+| β    | λ₊       | λ₋       | Z_1   | Z_2     | Z_3      |
+|------|----------|----------|-------|---------|----------|
+| 0.25 | 2.06430  | 0.50521  | 2.569 | 4.516   | 8.927    |
+| 0.50 | 2.25525  | 1.04219  | 3.297 | 6.172   | 12.616   |
+| 1.00 | 3.08616  | 2.35040  | 5.437 | 15.05   | 42.39    |
 
-## Free energy density and the absence of a transition
+Always `λ₊ > λ₋ > 0` (proved `lamPlus_gt_lamMinus`), so `Z_N` is dominated by
+`λ₊^N`; the per-site free energy `(1/N)·ln Z_N → ln λ₊ = ln(2cosh β)`. This is the
+1D solution: a strictly positive eigenvalue gap for every finite `β`, hence **no
+phase transition in 1D** (consistent with the model being exactly solvable).
 
-`f(β) := (1/N) log Z_N → log(2 cosh β)` for both boundary conditions. Sampling:
+## 3. Peierls majorant and the low-temperature threshold
 
-| β   | log(2 cosh β) | derivative −J tanh β (energy/site) |
-|-----|---------------|-------------------------------------|
-| 0.5 | 0.8133…       | −0.4621…                            |
-| 1.0 | 1.4338…       | −0.7616…                            |
-| 2.0 | 2.7536…       | −0.9640…                            |
+`P(β) = ∑_{L} L·x^L = x/(1-x)^2` with `x = 3e^{-2β}` (proved `peierls_closed_form`).
 
-`log(2 cosh β)` and all its derivatives are finite and continuous for every real
-`β` (cosh > 0 everywhere) — **no singularity at any temperature**, so no phase
-transition in 1D. This is exactly `free_energy_smooth` (proved, `C^∞`).
+| β                | x = 3e^{-2β} | P(β) = x/(1-x)^2 | < 1/2 ? |
+|------------------|--------------|------------------|---------|
+| ½ln 3 ≈ 0.549    | 1.000        | +∞ (diverges)    | no      |
+| 1.000            | 0.4060       | 1.151            | no      |
+| β₀ = ½ln 12 ≈ 1.242 | 0.2500    | 0.4444 = 4/9     | **yes** |
+| 1.500            | 0.1494       | 0.2067           | yes     |
+| 2.000            | 0.0549       | 0.0615           | yes     |
 
-## Spectral gap (correlation length) sample, `g = log(coth β)`
+The witnessed threshold `β₀ = ½ ln 12 ≈ 1.2425` gives `x = 1/4`, `P = 4/9 < 1/2`
+(proved `peierls_threshold`).  Note `β₀ > β_c ≈ 0.4407`: the *elementary* Peierls
+majorant overestimates the true transition point, which is exactly why Onsager's
+exact `β_c` is a strictly stronger result than the Peierls criterion.
 
-| β   | coth β   | g = log(coth β) | ξ = 1/g |
-|-----|----------|------------------|---------|
-| 0.5 | 2.1640   | 0.7719           | 1.296   |
-| 1.0 | 1.3130   | 0.2722           | 3.673   |
-| 2.0 | 1.0373   | 0.0366           | 27.3    |
+## 4. Counterexample hunt
 
-`g > 0` for all finite `β` and `g → 0` (so `ξ → ∞`) only as `β → ∞` — matching
-`spectral_gap_pos` and `spectral_gap_tendsto_zero` (both proved).
+* Tested whether `sinh(2β) = 1` admits a second positive root: `sinh` is strictly
+  increasing, so the root is unique — no counterexample to canonicity of `β_c`.
+* Tested the ground-state bound `H(σ) ≥ -2N` on random `±1` configurations of the
+  `3×3` and `4×4` tori (`N = 9, 16`): minimum `-2N` attained only by all-aligned
+  configurations; no configuration beat it (consistent with
+  `hamiltonian_ground_bound` + `hamiltonian_allUp`).
+* Tested `1 - 4x + x^2 > 0` for `x ∈ (0, 1/4]` on a fine grid: always positive
+  (the algebraic heart of `peierls_threshold`); first sign change at
+  `x = 2 - √3 ≈ 0.268 > 1/4`, confirming the margin.
 
-All closed forms above are *proved* in `IsingChain1D.lean` /
-`IsingChainPeriodic.lean`; the table values are consistency spot-checks.
+## 5. OEIS
+
+No integer sequence is the *object* of the proved theorems. The contour counts
+underlying the full Peierls argument (self-avoiding polygons on `ℤ²`) are related
+to OEIS A002931 (self-avoiding polygons by perimeter); the crude bound `L·3^L`
+used for the majorant is deliberately looser than the true growth `~ μ^L`,
+`μ ≈ 2.638` (the connective constant), and is all that is needed for convergence.
