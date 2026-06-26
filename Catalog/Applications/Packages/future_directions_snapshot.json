@@ -139,7 +139,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abbbde7c",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domain_bridges": [],
     "domains": [
@@ -152,7 +152,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c488c94",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -8314,7 +8314,7 @@
       "Conjecture 5.7",
       "Conjecture B.25"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a2f737c1",
     "description": "Conjecture: For every even integer n ≥ 4, there exists a maximal standard social decision frame whose incoherence index (the length of the shortest perfectly balanced sequence of majority or tie sets) equals n. This would strengthen the known result that incoherence indices are unbounded by showing that every sufficiently large even number is actually attained.",
     "domain_bridges": [
       "combinatorics",
@@ -8330,7 +8330,7 @@
     "proof_strategy": "Use an algebraic construction based on orthogonal vectors in ℚ^d to encode voting blocs. For a given even n=2k+2, build a family of half-sized subsets corresponding to vectors with pairwise zero dot product, then extend to a maximal frame by adding complementary choices for all remaining subsets of size n/2. Verify that any perfectly balanced sequence of majority/tie sets must have length at least n, and exhibit a sequence of length exactly n, establishing the incoherence index.",
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T18:50:55.115611+00:00",
     "title": "Realization of all even incoherence indices ≥4 by maximal standard frames"
   },
@@ -10562,7 +10562,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab42f98e",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domain_bridges": [],
     "domains": [
@@ -10575,7 +10575,7 @@
     "proof_strategy": "Define Collatz hash H_k(x) = T^k(x) mod 2^256. Prove collision resistance: if H_k(x) = H_k(y) for x != y, then T^k(x) = T^k(y) mod 2^256, requiring T to have a period dividing 2^256 within k steps — contradicting empirical data showing no Collatz period below 2^68. Prove preimage resistance: given z, finding x with H_k(x) = z requires trying O(2^{128}) preimages because each Collatz step is a 2-to-1 map on average. Formalize in Lean 4: define the Collatz hash and prove its basic properties.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
