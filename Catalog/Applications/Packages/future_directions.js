@@ -224,7 +224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory: Solvability of Polynomials"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97f912e0",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domains": [
       "Algebra",
@@ -235,7 +235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -431,20 +431,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432811+00:00",
     "title": "Formal Verification of Algorithms"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 2e536cee (Q=0.773), which proved 15 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For a fixed finite field \ud835\udd3d_q, integers n, \u03c1\u2208(0,1), and \u03b5>0, let C\u2282\ud835\udd3d_q^n be a random linear subspace of dimension k = \u2308(1 - (1/n)\u00b7log_q |B_\u03c1| + \u03b5)\u00b7n\u2309, where |B_\u03c1| is the volume of a Hamming ball of radius \u03c1n in \ud835\udd3d_q^n. Then with probability 1\u2011o(1) (as n\u2192\u221e) the following holds simultaneously for every ",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_2e536cee_f12e5e64",
-    "priority_score": 0.8725600000000001,
-    "research_mode": "team",
-    "source_exp_id": "2e536cee",
-    "status": "available",
-    "timestamp": "2026-06-26T01:31:23.477097+00:00",
-    "title": "Deepening: Discrepancy of Random Linear Codes for All Hamming Balls"
   },
   {
     "consumed_by_exp_id": "",
@@ -1165,21 +1151,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s-Faber-Lov\u00e1sz Conjecture"
   },
   {
-    "consumed_by_exp_id": "1983a01c",
-    "description": "Prove that every convex body K in R\u207f of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_219",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:11.258186+00:00",
-    "title": "Bourgain's Slicing Problem"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove the Jacobian conjecture for polynomial maps of degree 2 in all dimensions. Formalize the reduction to degree 3 (Dru\u017ckowski's theorem). Construct explicit counterexample candidates and verify they fail. Prove the conjecture implies the Dixmier conjecture.",
     "domains": [
@@ -1195,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
   },
   {
-    "consumed_by_exp_id": "0dc2bca1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
     "domains": [
       "Analysis",
@@ -1205,7 +1176,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432657+00:00",
     "title": "Fourier Analysis on Finite Groups"
   },
@@ -3626,20 +3597,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Degree-One Triviality for Grassmannians over Finite Fields"
   },
   {
-    "consumed_by_exp_id": "25d6b815",
-    "description": "For every length n, among all binary 2-binomial equivalence classes of words of length n, the largest class has exactly floor(n/2) occurrences of one letter and inversion statistic floor(floor(n/2) * ceil(n/2) / 2). Equivalently, among all coefficients of all Gaussian binomial coefficients [n choose m]_q, the global maximum is attained at m = floor(n/2) and at the middle degree.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2447",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23426v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-24T19:03:49.721168+00:00",
-    "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For each integer n\u22651 there exists a finite family C of pairwise disjoint compact (or open bounded) convex sets in \u211d^{3n} such that the space L(C) of all lines transversal to C is homeomorphic (hence homotopy equivalent) to the (n\u20111)-sphere S^{n\u20111}. Moreover, for any family of pairwise disjoint convex sets whose transversal space is non\u2011empty and whose reduced (n\u20111)\u2011st homology is non\u2011zero, the transversal space is homotopy equivalent to S^{n\u20111}. This refines the counterexamples to the Cheong\u2013Goaoc\u2013Holmsen conjecture by identifying the exact homotopy type.",
     "domains": [
@@ -4825,7 +4782,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Iwasawa Main Conjecture for Brauer groups of K3 surfaces over finite fields"
   },
   {
-    "consumed_by_exp_id": "9e1a2820",
+    "consumed_by_exp_id": "",
     "description": "For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in the finite polynomial product \\prod_{i=0}^{n} (1 - x^{b^i})^m. The conjecture is that the integer sequence n \\mapsto T_{b,m}(n) is unbounded in absolute value: for every B, there exists n such that |T_{b,m}(n)| > B. The paper proves the case b = 2; this conjecture asserts the same phenomenon for every base b >= 2.",
     "domains": [
       "Pythagorean"
@@ -4834,7 +4791,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T18:24:34.645043+00:00",
     "title": "Generalized Gawron\u2013Miska\u2013Ulas unboundedness for arbitrary integer bases"
   },
@@ -5141,11 +5098,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This conjecture formalizes the result from the paper, asserting that for any congruence subgroup \u0393 of SL\u2082(\u2124) and any non-trivial congruence character \u03c7, the error term in the prime geodesic theorem satisfies |\u03c0_\u0393(X; \u03c7) - MainTerm| \u2264 C X^{25/36 + \u03b5} for any \u03b5 > 0, where C is a constant depending on \u0393, \u03c7, and \u03b5. Here, \u03c0_\u0393(X; \u03c7) counts primitive conjugacy classes in \u0393 with trace > 2 and norm \u2264 X, weighted by \u03c7, and MainTerm represents the expected asymptotic contribution from the principal part of the explicit formula.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2562",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25903v1",
+    "status": "available",
+    "timestamp": "2026-06-26T01:36:38.243256+00:00",
+    "title": "Exponent bound in the Chebotarev geodesic theorem for SL\u2082(\u2124) congruence subgroups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2562",
+    "id": "fd_2563",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5159,13 +5131,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2563",
+    "id": "fd_2564",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
     "status": "available",
     "timestamp": "2026-06-26T01:10:10.263546+00:00",
     "title": "Equivalence Between Four Color Theorem and Conflict-Free Chromatic Number of Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that a rank four Nahm sum of the form \u03a3 q^Q(i,j,k,l)/((q;q)_i(q;q)_j(q;q)_k(q;q)_l) where Q is a quadratic form in four variables is modular (expressible as an infinite product of q-Pochhammer symbols) if and only if the discriminant of Q's Hessian matrix equals 8, 12, or 16. This would generalize the proven cases in the paper where discriminants compute to these values.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2565",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25866v1",
+    "status": "available",
+    "timestamp": "2026-06-26T01:38:56.664555+00:00",
+    "title": "Characterization of Modular Rank Four Nahm Sums via Discriminant Condition"
   },
   {
     "consumed_by_exp_id": "",
@@ -5367,36 +5354,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Discrepancy of Random Linear Codes for Hamming Balls\n\nDerived from this cycle's findings: an exact averaging identity (`sum_inter_ball`),\nthe explicit ball-volume formula (`ball_card_formula` / `sphere_card`), and coset\ninvariance of the discrepancy for linear codes (`inter_ball_coset_invariant`).  The\nunconditional kernel is now formalized; what remains is *concentration around the\nexact mean*.\n\n---\n\n## Direction 1 \u2014 Second-moment (variance) identity for random linear codes\n\n**Conjecture.** For a uniformly random linear code `C` of dimension `k`, the variance\nof `|C \u2229 B_\u03c1(z)|` (over the choice of `C`, for fixed `z`) is at most\n`(|C|\u00b7|B_\u03c1|/q^n) \u00b7 (1 + o(1))`, matching the Poisson/heuristic prediction.\n\n**The key insight is** that the first moment is already an *exact deterministic*\nidentity (`sum_inter_ball`), so the entire content of the conjecture is a\nsecond-moment bound; pairwise independence of distinct nonzero codewords reduces the\nvariance to a sum over pairs that the averaging identity already controls.\n\n**Why now?** With `sum_inter_ball` formalized, the mean is no longer an estimate to be\ntracked through the proof \u2014 it is a fixed closed form, so a Chebyshev argument needs\nonly the variance, isolating the one genuinely probabilistic step.\n\n---\n\n## Direction 2 \u2014 Union bound over cosets, not centres\n\n**Conjecture.** The \"for every centre `z`\" quantifier in the discrepancy conjecture\ncan be replaced by \"for every coset representative\", reducing the union bound from\n`q^n` events to `q^n/|C|` events, and this reduction is *lossless*.\n\n**The key insight is** that `inter_ball_coset_invariant` proves `z \u21a6 |C \u2229 B_\u03c1(z)|` is\nconstant on cosets of `C`, so the `q^n` per-centre tests are really only `q^n/|C|`\ndistinct tests \u2014 an exponential saving in the failure-probability union bound.\n\n**Why now?** The coset-invariance lemma is proved here with an explicit bijection; it\nimmediately licenses re-indexing every \"for all centres\" statement by the quotient\ngroup `G/C`, which is the natural object for a sharp union bound.\n\n---\n\n## Direction 3 \u2014 Exact rational target via the volume formula\n\n**Conjecture.** The discrepancy target `|C|\u00b7|B_\u03c1|/q^n` equals the explicit rational\n`q^{k-n} \u00b7 \u2211_{i\u2264\u03c1n} C(n,i)(q-1)^i`, and the threshold dimension\n`k = \u2308(1 - (1/n)log_q|B_\u03c1| + \u03b5)n\u2309` is the *unique* `k` making this target tend to a\nconstant multiple of `1` (so codewords-per-ball is `\u0398(1)` exactly at threshold).\n\n**The key insight is** that `ball_card_formula` gives `|B_\u03c1|` in closed form, turning\nthe target into an elementary expression in `n, q, \u03c1` whose `log_q` is, by entropy\nestimates on binomial sums, `(H_q(\u03c1) + o(1))\u00b7n` \u2014 pinning the threshold.\n\n**Why now?** `sphere_card` and `ball_card_formula` remove the last non-explicit object\n(`|B_\u03c1|`) from the statement, so the threshold can be analysed by standard `q`-ary\nentropy asymptotics rather than treated as a black box.\n\n---\n\n## Direction 4 \u2014 Lower-tail companion to the Markov bound\n\n**Conjecture.** A matching *lower* bound holds: for all but an `o(1)` fraction of\ncentres, `|C \u2229 B_\u03c1(z)| \u2265 (1-o(1))\u00b7|C|\u00b7|B_\u03c1|/q^n`, complementing the upper-tail bound\n`card_bad_centres_le` proved here.\n\n**The key insight is** that the exact averaging identity forces a lower tail: if too\nmany centres had a deficient count, the few remaining centres would have to exceed the\nball volume `|B_\u03c1|`, which is impossible since `|C \u2229 B_\u03c1(z)| \u2264 |B_\u03c1|`.\n\n**Why now?** `card_bad_centres_le` already extracts one tail from the averaging\nidentity using only Markov; the bounded support `|C \u2229 B_\u03c1(z)| \u2264 |B_\u03c1|` (a direct\nconsequence of `ball_card_eq`) supplies the reverse inequality with no new randomness.\n\n---\n\n## Direction 5 \u2014 Beyond Hamming balls: arbitrary translation-invariant tests\n\n**Conjecture.** The exact averaging identity `\u2211_z |C \u2229 (T + z)| = |C|\u00b7|T|` holds for\n*any* finite test set `T` (not just Hamming balls), and the discrepancy conjecture\ngeneralizes to every test family of sub-exponential size.\n\n**The key insight is** that the proof of `sum_inter_ball` never used the ball's\ngeometry \u2014 only translation invariance of its volume \u2014 so it is a statement about the\ngroup action of `G` on itself, and `B_\u03c1` can be swapped for any `T`.\n\n**Why now?** The formalization isolates translation invariance as the single\nload-bearing property (`hammingDist_add_right`), making the generalization to\narbitrary `T` a matter of replacing one lemma, not rebuilding the argument.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2564",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2e536cee",
-    "status": "available",
-    "timestamp": "2026-06-26T01:31:10.743022+00:00",
-    "title": "Derived from this cycle's findings: an exact averaging identity (`sum_inter_ball"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Continuous Noether & Conservation Laws\n\nDerived from this cycle's findings in `NoetherConservation.lean`,\n`KeplerConservation.lean`, and `NoetherDiscreteContinuousBridge.lean`.\n\n## 1. LRL conservation is a *characterization* of the inverse-square law\n\n**Conjecture.** For a planar central force `(ax, ay) = f(r)\u00b7(x, y)`, the\nLaplace\u2013Runge\u2013Lenz vector `A = (Lz\u00b7vy \u2212 c\u00b7x/r, \u2212Lz\u00b7vx \u2212 c\u00b7y/r)` is conserved on\nall trajectories (for some constant `c`) **iff** `f(r) = \u2212k/r\u00b3`, i.e. the force is\ninverse-square (or, degenerately, the harmonic case for a *different* invariant).\n\n*The key insight is...* the LRL numerator cancellation in this cycle worked\n*only* because the radial power in Newton's law exactly matched the power produced\nby differentiating `x/r`; mismatched powers leave a nonzero residual proportional\nto `(p \u2212 2)`, turning \"construction\" into \"obstruction.\"\n\n*Why now?* We already have `kepler_LRL_x_conserved` with the exact `r\u00b3`\ndenominator and the `radius_hasDerivAt` lemma; the converse only needs to show the\nresidual is nonzero for `p \u2260 2`, a `field_simp`/`ring`-style nonvanishing argument\non the same algebra.\n\n## 2. The full SO(4)/SO(3,1) symmetry algebra closes formally\n\n**Conjecture.** The conserved quantities `{Lz, A_x, A_y}` of the Kepler problem,\nunder the Poisson bracket, close into a 3-dimensional Lie algebra isomorphic to\n`so(3)` (bound, `E < 0`) or `so(2,1)` (scattering, `E > 0`), with the bracket\n`{A_x, A_y} = \u22122E\u00b7Lz`.\n\n*The key insight is...* energy `E` is itself one of our proved invariants, so the\nstructure constant `\u22122E` is a *conserved* scalar \u2014 the bracket relations are\nalgebraic identities among already-formalized conserved functions, provable\nwithout any new analysis.\n\n*Why now?* All three generators (`Lz`, `A_x`, `A_y`) and `E` are now formalized\nwith clean axioms; only a formal Poisson-bracket definition on `\u211d\u2074` phase space is\nmissing, and the closure is pure polynomial algebra.\n\n## 3. Symplectic integrators inherit *every* continuous symmetry exactly\n\n**Conjecture.** Any variational integrator in the `DiscreteNoether` framework whose\ndiscrete momentum samples a continuous Noether charge conserves that charge to\nmachine precision (zero drift), for *all* step sizes \u2014 including non-uniform and\nadaptive sampling.\n\n*The key insight is...* `sampled_charge_discretely_conserved` already shows the\nsampled charge is conserved on the *trivial* flow (all pairs), so the conservation\nis independent of which DEL trajectory or step pattern the integrator follows.\n\n*Why now?* The continuous\u2192discrete bridge is proved; the remaining step is to\nidentify which standard integrators (St\u00f6rmer\u2013Verlet, leapfrog) realize a discrete\nmomentum that is literally a sampling of `\u27e8p, g\u27e9`.\n\n## 4. Energy conservation forces autonomy (a converse)\n\n**Conjecture.** If the energy `E(t) = \u27e8p(t), v(t)\u27e9 \u2212 \u2113(t)` is conserved along a\n*rich* family of trajectories (enough to vary `(p, v, p', v')` freely), then the\nchain-rule defect `\u2113' \u2212 \u2211(p'v + pv')` vanishes identically \u2014 i.e. conservation of\nenergy *implies* the Lagrangian is autonomous.\n\n*The key insight is...* the forward theorem `energy_conserved_of_autonomous` makes\n`hchain` the unique obstruction; richness lets one solve pointwise for the defect,\nmirroring the converse already proved in the *discrete* setting\n(`converse_discrete_noether`).\n\n*Why now?* The discrete converse exists as a template and the continuous forward\ndirection is formalized; the converse is the natural next theorem completing the\nbidirectional `symmetry \u2194 conservation` picture in the continuous case.\n\n## 5. Bertrand's theorem fingerprint: closed orbits \u21d2 inverse-square or harmonic\n\n**Conjecture.** Among central forces `f(r) = \u2212k\u00b7r^\u03b1`, the LRL-type extra invariant\n(direction (1)) exists *exactly* for `\u03b1 = \u22122` (Kepler) and a quadratic analogue\nexists for `\u03b1 = 1` (harmonic) \u2014 the two Bertrand exponents \u2014 and for no other `\u03b1`.\n\n*The key insight is...* the existence of an extra polynomial-in-velocity invariant\nis the algebraic shadow of orbit closure; our cancellation computation isolates the\nprecise exponents where the residual vanishes.\n\n*Why now?* Direction (1) supplies the `\u03b1 = \u22122` case constructively and the\nobstruction machinery for `\u03b1 \u2260 \u22122`; adding the harmonic invariant is a parallel\n`ring` computation, putting both Bertrand exponents within reach without the full\nanalytic Bertrand theorem.\n",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_2565",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "cfcd856c",
-    "status": "available",
-    "timestamp": "2026-06-26T01:32:45.848984+00:00",
-    "title": "Derived from this cycle's findings in `NoetherConservation.lean`,"
   },
   {
     "consumed_by_exp_id": "",

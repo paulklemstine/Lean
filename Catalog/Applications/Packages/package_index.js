@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1983a01c",
     "filename": "bourgains_slicing_problem.json",
     "pkg_num": 69,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7400800000000001,
     "title": "The Discrete Cube as a Dimension-Free Isotropic Body: A Verified Model for Bourgain's Slicing Problem"
   },
   {
@@ -2010,8 +2010,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "bourgains_slicing_problem",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7400800000000001,
+      "quality": "substantial",
       "shape": "triangular_prism",
       "title": "The Discrete Cube as a Dimension-Free Isotropic Body: A Verified Model for Bourgain's Slicing Problem"
     }

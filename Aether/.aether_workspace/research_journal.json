@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6ce4a7be",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Metric Filtration Rank Profiles as Tropical Valuation Objects\n\nThis research cycle established (file\n`Catalog/Bridges/MetricFiltrationTropicalProfile.lean`, all theorems verified",
-      "quality_score": 0.76292,
-      "sorry_count": 0,
-      "theorem_count": 39,
-      "timestamp": "2026-06-16T04:50:02",
-      "title": "Metric filtration rank profiles as tropical valuation objects"
-    },
-    {
       "cycle_id": "c38e2bf9",
       "domain": "Applications",
       "key_insight": "# Future Directions: Tropical weight enumerator profiles for binary linear codes\n\nThis cycle introduced `TropicalWeightEnumerator.lean`, the **min-plus tropicalization**\nof the classical Hamming weigh",
@@ -499,19 +489,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-26T01:31:23",
       "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
+    },
+    {
+      "cycle_id": "1983a01c",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Bourgain's Slicing Problem\n\nThis research cycle established a fully verified, dimension-free model of *isotropic position*\nfor the discrete cube `{-1,1}ⁿ` (`DiscreteCube.lean`),",
+      "quality_score": 0.7400800000000001,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-06-26T01:35:24",
+      "title": "Bourgain's Slicing Problem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7f1e65fe",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions\n\nThese directions continue naturally from the deterministic deletion lemma proved\nin `Catalog/Bridges/LocallySparseHypergraphDegree.lean`. Each is phrased so that\nthe deletion lemm",
-      "quality_score": 0.476594,
-      "sorry_count": 0,
-      "theorem_count": 41,
-      "timestamp": "2026-06-19T12:18:18",
-      "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
-    },
     {
       "cycle_id": "60ec8c30",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-26T01:32:54",
       "title": "Noether's Theorem: Symmetries and Conservation Laws"
+    },
+    {
+      "cycle_id": "1983a01c",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Bourgain's Slicing Problem\n\nThis research cycle established a fully verified, dimension-free model of *isotropic position*\nfor the discrete cube `{-1,1}ⁿ` (`DiscreteCube.lean`),",
+      "quality_score": 0.7400800000000001,
+      "sorry_count": 0,
+      "theorem_count": 22,
+      "timestamp": "2026-06-26T01:35:24",
+      "title": "Bourgain's Slicing Problem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "e56a1e16",
-      "domain": "Tropical",
-      "name": "for",
-      "quality": 0.86528
-    },
-    {
-      "cycle_id": "e56a1e16",
-      "domain": "Tropical",
-      "name": "coordCM_apply",
-      "quality": 0.86528
-    },
-    {
-      "cycle_id": "a5fa8083",
-      "domain": "Computation",
-      "name": "ker_pow_le_succ",
-      "quality": 0.789328
-    },
     {
       "cycle_id": "a5fa8083",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Computation",
       "name": "ball_eq_image",
       "quality": 0.7725600000000001
+    },
+    {
+      "cycle_id": "1983a01c",
+      "domain": "Pythagorean",
+      "name": "sgn_true",
+      "quality": 0.7400800000000001
+    },
+    {
+      "cycle_id": "1983a01c",
+      "domain": "Pythagorean",
+      "name": "sgn_false",
+      "quality": 0.7400800000000001
+    },
+    {
+      "cycle_id": "1983a01c",
+      "domain": "Pythagorean",
+      "name": "sgn_not",
+      "quality": 0.7400800000000001
     }
   ],
-  "last_updated": "2026-06-26T01:32:54",
+  "last_updated": "2026-06-26T01:35:24",
   "open_questions": [
     {
       "context": "",
@@ -3827,12 +3827,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "9afcaae7",
-        "quality": 0.345538,
-        "theorems": 8,
-        "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
-      },
-      {
         "cycle_id": "ebc08ab7",
         "quality": 0.4770719626168225,
         "theorems": 90,
@@ -3885,6 +3879,12 @@
         "quality": 0.7276800000000001,
         "theorems": 23,
         "title": "Lattice Cryptography: LWE Hardness"
+      },
+      {
+        "cycle_id": "1983a01c",
+        "quality": 0.7400800000000001,
+        "theorems": 22,
+        "title": "Bourgain's Slicing Problem"
       }
     ],
     "Shared": [
