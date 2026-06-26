@@ -6148,7 +6148,7 @@
       "Parry",
       "Ito-Takahashi"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7fd1af1",
     "description": "Conjecture: For rational β = p/q, the natural extension has finite domain bridges.",
     "domain_bridges": "finite",
     "domains": [
@@ -6161,7 +6161,7 @@
     "proof_strategy": "Constructive counterexample based on known results",
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -6197,7 +6197,7 @@
       "arXiv:2303.04252",
       "doi:10.1016/j.disc.2023.112345"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01ec1037",
     "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
     "domain_bridges": [
       "extremal graph theory",
@@ -6214,7 +6214,7 @@
     "proof_strategy": "We will develop a simplicial complex version of the Hoffman bound for graphs by analyzing the spectral properties of the signless Laplacian matrix of the join of simplices. This will involve studying the eigenvalues of the join matrix, constructing explicit examples achieving the bound, and using homology constraints to derive inequalities on the spectral radius. We will also employ a matroid intersection approach to characterize the extremal complexes.",
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T21:58:37.105519+00:00",
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
   },
@@ -9728,7 +9728,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab8befc8",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -9740,7 +9740,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -10325,7 +10325,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0e2bb19",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -10338,7 +10338,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -10365,7 +10365,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dfb56ea4",
     "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
     "domain_bridges": [],
     "domains": [
@@ -10378,7 +10378,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:24.924994+00:00",
     "title": "Navier-Stokes Existence and Smoothness"
   },

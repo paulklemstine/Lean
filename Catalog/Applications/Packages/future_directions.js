@@ -3626,7 +3626,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Externally Supported Independence Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7fd1af1",
     "description": "Conjecture: For rational \u03b2 = p/q, the natural extension has finite domain bridges.",
     "domains": [
       "Pythagorean",
@@ -3636,7 +3636,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -3656,7 +3656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both deletion and contraction of a non-loop non-coloop element preserve connectivity in connected polymatroids"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01ec1037",
     "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
     "domains": [
       "Geometry",
@@ -3666,7 +3666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T21:58:37.105519+00:00",
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
   },
@@ -5661,7 +5661,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab8befc8",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5670,7 +5670,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -6108,7 +6108,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0e2bb19",
     "description": "Formalize the tropical semiring (R \u222a {-\u221e}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domains": [
       "Tropical",
@@ -6118,7 +6118,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -6138,7 +6138,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dfb56ea4",
     "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
     "domains": [
       "Algebra",
@@ -6148,7 +6148,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:24.924994+00:00",
     "title": "Navier-Stokes Existence and Smoothness"
   },
