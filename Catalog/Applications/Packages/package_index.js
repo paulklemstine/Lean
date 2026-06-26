@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7281fa18",
     "filename": "row_exchange_under_eventual_contraction_for_the_in.json",
     "pkg_num": 97,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5050399999999999,
     "title": "Row-Exchange Invariance under Eventual Contraction for the Infinite Asymmetric Five-Vertex Half-Strip"
   },
   {
@@ -2822,8 +2822,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "row_exchange_under_eventual_contraction_for_the_in",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5050399999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Row-Exchange Invariance under Eventual Contraction for the Infinite Asymmetric Five-Vertex Half-Strip"
     }
