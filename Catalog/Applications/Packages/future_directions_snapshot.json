@@ -159,7 +159,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "580d1f18",
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domain_bridges": [],
     "domains": [
@@ -172,7 +172,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -2693,7 +2693,7 @@
     "catalog_references": [
       "DrmotaKauersSpiegelhofer2016"
     ],
-    "consumed_by_exp_id": "1a8e3469",
+    "consumed_by_exp_id": "",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->∞} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domain_bridges": [
       "math.CO",
@@ -2708,7 +2708,7 @@
     "proof_strategy": "exact deconvolution replaced by finite stopped random-walk law and first-exit median analysis",
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -5590,7 +5590,7 @@
       "Christensen2025origami",
       "Cereceda2009mixing"
     ],
-    "consumed_by_exp_id": "53529d3f",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for all grid sizes m,n ≥ 3 the number of vertices of degree 4 in the flip graph of the m×n Miura‑ori equals (m‑1)(n‑1).",
     "domain_bridges": [
       "grid graph height functions",
@@ -5607,7 +5607,7 @@
     "proof_strategy": "Use the bijection between flat‑foldable Miura‑ori assignments and proper 3‑colourings of the grid graph, translate vertex degree to the number of strict local extrema of the associated integer height function, prove the polynomial count (m‑1)(n‑1) for degree‑4 vertices by induction on m and n, and derive diameter bounds via extremal Lipschitz‑function inequalities.",
     "research_mode": "team",
     "source_exp_id": "2606.22614v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T08:42:34.928992+00:00",
     "title": "Degree‑4 vertices in the flip graph of the m×n Miura‑ori"
   },
@@ -10736,6 +10736,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Multilateral non-trivial cross-intersection product bound\n\nThis cycle formalized, fully and unconditionally, the *multilateral cross-intersecting\nproduct skeleton*\n\n    ∏_{i : Fin r} |𝓕_i| ≤ g(n,k)^r,   g(n,k) = C(n,k) - C(n-k,k),\n\nfor `r ≥ 2` non-empty, `k`-uniform, pairwise cross-intersecting families\n(`CrossIntersectingProduct.multilateral_cross_product_bound`), together with the\nbilateral `r = 2` Pyber-type corollary, a ground-set-agnostic generalization, and an\nexplicit Hilton–Milner witness of size `h(6,3) = 10` showing the hypotheses are\nrealisable.  The gap between the proven base `g(n,k)` and the conjectured sharp\nHilton–Milner base `h(n,k)` motivates the following.\n\n## Conjecture 1 — Hilton–Milner per-family sharpening\nFor `n ≥ 2k`, `k ≥ 3`, a `k`-uniform **non-trivial** family that is cross-intersecting\nwith at least one other non-trivial `k`-uniform family satisfies `|𝓕| ≤ h(n,k)`.\n- **The key insight is...** non-triviality removes the single member realising the\n  full `g(n,k)` count (the all-of-`A₀ᶜ`-complement extreme), collapsing the elementary\n  bound to the Hilton–Milner value.\n- **Why now?** The formal `card_le_of_cross` already isolates the exact counting set\n  `powersetCard k univ \\ powersetCard k A₀ᶜ`; adding a non-triviality deletion lemma is\n  a localized next step rather than a new framework.\n\n## Conjecture 2 — Multilateral Frankl–Wang from the per-family bound\nThe full Frankl–Wang bound `∏_i |𝓕_i| ≤ h(n,k)^r` follows from Conjecture 1 by the\nalready-formalized `prod_card_le_pow` reduction.\n- **The key insight is...** the product step is purely arithmetic (`prod_le_prod'` +\n  `prod_const`) and is *already proved*; the entire remaining difficulty is the single\n  per-family Hilton–Milner inequality.\n- **Why now?** `multilateral_cross_product_bound` is literally this reduction with `g`\n  in place of `h`; swapping in Conjecture 1 yields the theorem verbatim.\n\n## Conjecture 3 — Uniqueness / stability of extremizers\nEquality `∏_i |𝓕_i| = h(n,k)^r` forces every `𝓕_i` to be (isomorphic to) the\nHilton–Milner family, and near-equality forces structural closeness to it.\n- **The key insight is...** the product is maximized only when *each* factor is\n  individually maximized, so a multilateral stability statement reduces to bilateral\n  Hilton–Milner stability.\n- **Why now?** The explicit witness `hiltonMilnerWitness` (size exactly `h(6,3)`)\n  provides a concrete extremizer to test stability statements against.\n\n## Conjecture 4 — Threshold in `k`: the bound fails for `k ≤ 2`\nFor `k = 2` the Hilton–Milner regime degenerates and `g(n,2)` already coincides with\nthe extremal count; the sharp `h`-bound either trivializes or fails, explaining the\nhypothesis `k ≥ 3`.\n- **The key insight is...** triangles (`k = 2`) admit no non-trivial intersecting\n  family beyond a single triangle, so the multilateral product is governed by a\n  different (smaller) constant than `h(n,2)^r`.\n- **Why now?** The proven `g`-bound holds for all `k`; comparing it to `h(n,2)`\n  numerically (see `ComputationalEvidence.md`) pinpoints where the `k ≥ 3` hypothesis\n  becomes essential.\n\n## Conjecture 5 — Asymmetric / mixed-uniformity version\nIf `𝓕_i` is `k_i`-uniform with possibly different `k_i`, then\n`∏_i |𝓕_i| ≤ ∏_i g(n,k_i)` (and conjecturally `∏_i h(n,k_i)`).\n- **The key insight is...** the per-family pinning argument never uses that all\n  families share the same `k`; only the partner's member size matters for the count.\n- **Why now?** The general file `CrossIntersectingProductGeneral` already abstracts the\n  ground set; abstracting the uniformity parameter per index is the natural next axis,\n  and `card_le_of_cross` is stated for a single family's `k` already.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2622",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0d192d1b",
+    "status": "available",
+    "timestamp": "2026-06-26T18:48:09.315287+00:00",
+    "title": "This cycle formalized, fully and unconditionally, the *multilateral cross-inters"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10830,26 +10850,6 @@
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "7b228cc3",
-    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "fd_0551",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.873771+00:00",
-    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
     "ambition_level": "extension",
@@ -11167,7 +11167,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f247824f",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -11180,7 +11180,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

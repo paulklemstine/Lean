@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0d192d1b",
     "filename": "multilateral_non_trivial_cross_intersection_produc.json",
     "pkg_num": 105,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6544800000000001,
     "title": "Multilateral Cross-Intersecting Product Bound: The Skeleton of the Frankl-Wang Conjecture"
   },
   {
@@ -3063,8 +3063,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "multilateral_non_trivial_cross_intersection_produc",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6544800000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Multilateral Cross-Intersecting Product Bound: The Skeleton of the Frankl-Wang Conjecture"
     }

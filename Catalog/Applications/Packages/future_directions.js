@@ -120,7 +120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
   {
-    "consumed_by_exp_id": "580d1f18",
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -130,7 +130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -1817,7 +1817,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphism of Cluster Structures on Schubert Cells and Partial Flag Varieties"
   },
   {
-    "consumed_by_exp_id": "1a8e3469",
+    "consumed_by_exp_id": "",
     "description": "For every integer t >= 1, the natural density c_t = lim_{N->\u221e} (1/N) * #{0 <= n < N : s_2(n+t) >= s_2(n)} satisfies c_t >= 1/2 + 2^{-2*s_2(t)-1}.",
     "domains": [
       "Bridges"
@@ -1826,7 +1826,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23398v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T07:09:34.216269+00:00",
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
@@ -3320,7 +3320,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dual Slice-Projection Connectivity Conjecture for Polymatroids"
   },
   {
-    "consumed_by_exp_id": "53529d3f",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that for all grid sizes m,n \u2265 3 the number of vertices of degree\u202f4 in the flip graph of the m\u00d7n Miura\u2011ori equals (m\u20111)(n\u20111).",
     "domains": [
       "Pythagorean"
@@ -3329,7 +3329,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22614v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T08:42:34.928992+00:00",
     "title": "Degree\u20114 vertices in the flip graph of the m\u00d7n Miura\u2011ori"
   },
@@ -6170,6 +6170,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Multilateral non-trivial cross-intersection product bound\n\nThis cycle formalized, fully and unconditionally, the *multilateral cross-intersecting\nproduct skeleton*\n\n    \u220f_{i : Fin r} |\ud835\udcd5_i| \u2264 g(n,k)^r,   g(n,k) = C(n,k) - C(n-k,k),\n\nfor `r \u2265 2` non-empty, `k`-uniform, pairwise cross-intersecting families\n(`CrossIntersectingProduct.multilateral_cross_product_bound`), together with the\nbilateral `r = 2` Pyber-type corollary, a ground-set-agnostic generalization, and an\nexplicit Hilton\u2013Milner witness of size `h(6,3) = 10` showing the hypotheses are\nrealisable.  The gap between the proven base `g(n,k)` and the conjectured sharp\nHilton\u2013Milner base `h(n,k)` motivates the following.\n\n## Conjecture 1 \u2014 Hilton\u2013Milner per-family sharpening\nFor `n \u2265 2k`, `k \u2265 3`, a `k`-uniform **non-trivial** family that is cross-intersecting\nwith at least one other non-trivial `k`-uniform family satisfies `|\ud835\udcd5| \u2264 h(n,k)`.\n- **The key insight is...** non-triviality removes the single member realising the\n  full `g(n,k)` count (the all-of-`A\u2080\u1d9c`-complement extreme), collapsing the elementary\n  bound to the Hilton\u2013Milner value.\n- **Why now?** The formal `card_le_of_cross` already isolates the exact counting set\n  `powersetCard k univ \\ powersetCard k A\u2080\u1d9c`; adding a non-triviality deletion lemma is\n  a localized next step rather than a new framework.\n\n## Conjecture 2 \u2014 Multilateral Frankl\u2013Wang from the per-family bound\nThe full Frankl\u2013Wang bound `\u220f_i |\ud835\udcd5_i| \u2264 h(n,k)^r` follows from Conjecture 1 by the\nalready-formalized `prod_card_le_pow` reduction.\n- **The key insight is...** the product step is purely arithmetic (`prod_le_prod'` +\n  `prod_const`) and is *already proved*; the entire remaining difficulty is the single\n  per-family Hilton\u2013Milner inequality.\n- **Why now?** `multilateral_cross_product_bound` is literally this reduction with `g`\n  in place of `h`; swapping in Conjecture 1 yields the theorem verbatim.\n\n## Conjecture 3 \u2014 Uniqueness / stability of extremizers\nEquality `\u220f_i |\ud835\udcd5_i| = h(n,k)^r` forces every `\ud835\udcd5_i` to be (isomorphic to) the\nHilton\u2013Milner family, and near-equality forces structural closeness to it.\n- **The key insight is...** the product is maximized only when *each* factor is\n  individually maximized, so a multilateral stability statement reduces to bilateral\n  Hilton\u2013Milner stability.\n- **Why now?** The explicit witness `hiltonMilnerWitness` (size exactly `h(6,3)`)\n  provides a concrete extremizer to test stability statements against.\n\n## Conjecture 4 \u2014 Threshold in `k`: the bound fails for `k \u2264 2`\nFor `k = 2` the Hilton\u2013Milner regime degenerates and `g(n,2)` already coincides with\nthe extremal count; the sharp `h`-bound either trivializes or fails, explaining the\nhypothesis `k \u2265 3`.\n- **The key insight is...** triangles (`k = 2`) admit no non-trivial intersecting\n  family beyond a single triangle, so the multilateral product is governed by a\n  different (smaller) constant than `h(n,2)^r`.\n- **Why now?** The proven `g`-bound holds for all `k`; comparing it to `h(n,2)`\n  numerically (see `ComputationalEvidence.md`) pinpoints where the `k \u2265 3` hypothesis\n  becomes essential.\n\n## Conjecture 5 \u2014 Asymmetric / mixed-uniformity version\nIf `\ud835\udcd5_i` is `k_i`-uniform with possibly different `k_i`, then\n`\u220f_i |\ud835\udcd5_i| \u2264 \u220f_i g(n,k_i)` (and conjecturally `\u220f_i h(n,k_i)`).\n- **The key insight is...** the per-family pinning argument never uses that all\n  families share the same `k`; only the partner's member size matters for the count.\n- **Why now?** The general file `CrossIntersectingProductGeneral` already abstracts the\n  ground set; abstracting the uniformity parameter per index is the natural next axis,\n  and `card_le_of_cross` is stated for a single family's `k` already.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2622",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0d192d1b",
+    "status": "available",
+    "timestamp": "2026-06-26T18:48:09.315287+00:00",
+    "title": "This cycle formalized, fully and unconditionally, the *multilateral cross-inters"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6241,21 +6256,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
-  },
-  {
-    "consumed_by_exp_id": "7b228cc3",
-    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "fd_0551",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.873771+00:00",
-    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
     "consumed_by_exp_id": "",
@@ -6491,7 +6491,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "f247824f",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6501,7 +6501,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
