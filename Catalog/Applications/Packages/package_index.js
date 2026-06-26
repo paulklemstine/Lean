@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ab7f1188",
     "filename": "duality_of_sublevel_set_homotopy_types_for_rc_func.json",
     "pkg_num": 77,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.49574803827751207,
     "title": "Duality of Sublevel-Set Homotopy Types for RC Functions on Finite-Dimensional Banach Spaces"
   },
   {
@@ -2242,8 +2242,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "duality_of_sublevel_set_homotopy_types_for_rc_func",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.49574803827751207,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Duality of Sublevel-Set Homotopy Types for RC Functions on Finite-Dimensional Banach Spaces"
     }

@@ -1613,6 +1613,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For integers n \u2265 2k and k \u2265 3, any two non-trivial cross-intersecting families A, B \u2286 ([n] choose k) satisfy |A| * |B| \u2264 h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2300",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23322v1",
+    "status": "available",
+    "timestamp": "2026-06-23T04:53:00.715630+00:00",
+    "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let $a_k$ denote the number of P\u00f3lya trees on $k$ nodes, and define $\\omega_k = \\sum_{d \\mid k} d \\cdot a_d$. Then $a_1 = 1$ and for all $k \\ge 2$: $a_k = \\frac{1}{k-1} \\sum_{j=1}^{k-1} a_j \\, \\omega_{k-j}$. This is derived by extracting coefficients from the logarithmic derivative of the P\u00f3lya functional equation $A(z) = z \\exp(A(z)) \\Phi(z)$, where $[z^k] \\sum_{i \\ge 1} z^i A'(z^i) = \\omega_k$.",
     "domains": [
       "Pythagorean"
@@ -5184,11 +5199,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let K be a finite extension of Q_p. For a one-dimensional formal group F over K of arbitrary height h, we conjecture that if the multiplication-by-n endomorphisms [n]_F have coefficients in O_K for all integers n and the Weierstrass degree of [p]_F is p^h, then F itself has coefficients in O_K. This extends the height-one case proven in the paper to higher heights, suggesting a general equivalence between integrality of endomorphisms and the formal group under height constraints.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2569",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25726v1",
+    "status": "available",
+    "timestamp": "2026-06-26T05:40:23.910328+00:00",
+    "title": "Integrality of Higher Height Formal Groups via Endomorphism Conditions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2569",
+    "id": "fd_2570",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5202,7 +5232,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2570",
+    "id": "fd_2571",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5217,7 +5247,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2571",
+    "id": "fd_2572",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5232,7 +5262,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2572",
+    "id": "fd_2573",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5247,7 +5277,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2573",
+    "id": "fd_2574",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5262,7 +5292,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2574",
+    "id": "fd_2575",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5276,13 +5306,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2575",
+    "id": "fd_2576",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
     "status": "available",
     "timestamp": "2026-06-26T04:48:18.981471+00:00",
     "title": "Unbounded 2-adic valuation of coefficients in F_m(x)^m for m \u2265 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "It is possible to construct infinitely many number fields of degree n > 2 with minimal index exceeding any given N > 1.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2577",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25841v1",
+    "status": "available",
+    "timestamp": "2026-06-26T05:41:38.703710+00:00",
+    "title": "Number Fields with Arbitrarily Large Minimal Index"
   },
   {
     "consumed_by_exp_id": "",
@@ -5487,36 +5531,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Birch and Swinnerton-Dyer Research Cycle\n\nThis cycle added two self-contained modules to `Catalog/Applications/BSD/`:\n\n* **`FunctionalEquation.lean`** \u2014 the unconditional analytic *parity theorem*\n  `(-1)^{ord_{s=1} \u039b} = w` for any function analytic at the central point obeying the\n  functional-equation symmetry `\u039b(2-s) = w\u00b7\u039b(s)`, its corollaries (`sign = \u00b11`,\n  even rank \u21d4 sign `+1`, sign `-1` \u21d2 central vanishing), and the conditional\n  consequences under the BSD rank equality: the **Parity Conjecture**\n  `(-1)^{algebraic rank} = w` and \"root number `-1` \u21d2 infinitely many rational points\".\n* **`FrobeniusTrace.lean`** \u2014 Newton's recurrence `s_{n+2} = a\u00b7s_{n+1} - p\u00b7s_n` for the\n  Frobenius power sums `s_n = \u03b1^n+\u03b2^n`, the trace-sequence computation of the point-count\n  tower `#E(\ud835\udd3d_{p^n}) = p^n+1-s_n`, the **Sato\u2013Tate angle** `a = 2\u221ap\u00b7cos \u03b8`, and the RH\n  bound `\u2016\u03b1^n+\u03b2^n\u2016 \u2264 2(\u221ap)^n`.\n\nThese extend the existing `AnalyticRank.lean`, `LocalFactor.lean`, `RankBridge.lean`.\nThe following conjectures are bold but testable targets for the next cycles.\n\n## Conjecture 1 \u2014 Functional-equation order symmetry (full Taylor reflection)\n\nThe parity theorem only reads the *parity* of the order of vanishing off the\nfunctional equation. Strengthen it: if `\u039b` is analytic at `1`, of finite order, and\n`\u039b(2-s) = w\u00b7\u039b(s)`, then **every** Taylor coefficient obeys `c_k = (-1)^k w \u00b7 c_k`, so\nthe Taylor expansion at the center is supported on exponents of a single parity\n(`k \u2261 ord (mod 2)`). *Test:* formalize `iteratedDeriv k \u039b 1 = (-1)^k w \u00b7 iteratedDeriv k \u039b 1`\nand deduce the leading-coefficient reality/sign constraints. *Falsifiable:* exhibit an\nanalytic solution of the functional equation with two nonzero Taylor coefficients of\nopposite parity (should be impossible).\n\n## Conjecture 2 \u2014 Additivity of root numbers across products (global Artin formalism)\n\nRoot numbers should multiply under products of L-functions:\nif `\u039b\u2081(2-s) = w\u2081\u039b\u2081(s)` and `\u039b\u2082(2-s) = w\u2082\u039b\u2082(s)` then `(\u039b\u2081\u00b7\u039b\u2082)(2-s) = (w\u2081w\u2082)(\u039b\u2081\u00b7\u039b\u2082)(s)`,\nand combined with `analyticRank_mul` (additivity of orders) this gives\n`(-1)^{ord(\u039b\u2081\u039b\u2082)} = w\u2081w\u2082`. *Test:* prove `root number is multiplicative` and that the\nparity theorem is compatible with `analyticRank_mul`; this is the analytic shadow of\nthe behaviour of BSD data under isogeny and Weil restriction.\n\n## Conjecture 3 \u2014 Hasse interval is exactly attained by the angle distribution\n\nFor each `\u03b8 \u2208 [0,\u03c0]` and each `p`, the value `a = \u230a2\u221ap cos \u03b8\u2309` is realized as a trace\nof Frobenius of *some* curve mod `p`; equivalently the map `(a,p) \u21a6 \u03b8` of\n`exists_satoTate_angle` is, over varying `a` with `|a| \u2264 2\u221ap`, asymptotically\nequidistributed for `(2/\u03c0) sin\u00b2\u03b8 d\u03b8` (Sato\u2013Tate). *Test (formalizable now):* prove the\nangle map `a \u21a6 arccos(a/(2\u221ap))` is injective and order-reversing on the Hasse interval\n`[-2\u221ap, 2\u221ap]`, and that `#{a : a\u00b2\u22644p}` grows like `4\u221ap`; the measure-theoretic limit is\nthe long-range target.\n\n## Conjecture 4 \u2014 Positivity and integrality of the point-count tower\n\nDefine `N_n = p^n + 1 - s_n` via `traceSeq`. Conjecture: for `0 < p` with the Hasse\nbound `a\u00b2 \u2264 4p`, every `N_n > 0` (the curve always has points over every extension),\nand the generating series `Z(T) = exp(\u03a3_{n\u22651} N_n T^n / n)` equals the rational\nfunction `(1 - aT + pT\u00b2) / ((1-T)(1-pT))` (the local zeta function / Weil conjectures\nfor curves). *Test:* prove `0 < N_n` from `traceSeq_norm_le` (already in the file) plus\n`p^n + 1 > 2(\u221ap)^n` for `p > 1`; then formalize the closed form of `Z(T)` as a power\nseries identity.\n\n## Conjecture 5 \u2014 Quantitative parity-to-rank lower bound\n\nCombine the parity bridge with a height/torsion estimate: under the BSD rank equality,\nroot number `-1` forces not merely infinitude but an explicit rank lower bound\n`rank E(\u211a) \u2265 1` *with an effective generator bound* in terms of the conductor. *Test:*\nformalize, for the `(Fin r \u2192 \u2124) \u00d7 T` model, that root number `-1` yields a free `\u2124`\nsub-summand `Function.update 0 i : \u2124 \u21aa E(\u211a)` (already implicit in\n`bsd_root_number_neg_one_infinite`) and package it as an explicit injection\n`\u2124 \u21aa MordellWeil`, the first quantitative rung toward effective BSD.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2576",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "8344a207",
-    "status": "available",
-    "timestamp": "2026-06-26T05:16:00.068875+00:00",
-    "title": "This cycle added two self-contained modules to `Catalog/Applications/BSD/`:"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Ramsey Bounds and the Parity Obstruction\n\nDerived from this cycle's findings (`Applications.RamseyThreeFour`,\n`Applications.RamseyParity`), which proved `R(3,4) = 9` by combining the\n`Arrows`/`R(3,3)=6` framework of `Applications.Ramsey` with a handshake-parity\nargument, here are bold, falsifiable conjectures to pursue next.\n\n## C1. General even-pair sharpening `R(s,t) \u2264 R(s-1,t) + R(s,t-1) - 1`\n\n**Statement.** If `R(s-1,t)` and `R(s,t-1)` are both even and at least `1`, then\n`R(s,t) \u2264 R(s-1,t) + R(s,t-1) - 1`, strictly below the Erd\u0151s\u2013Szekeres sum.\n\n**The key insight is** that the `R(3,4)` proof never used the value `3`\nspecifically \u2014 it used that an extremal colouring is forced to be *regular* of a\nfixed red-degree on a vertex set whose order \u00d7 degree is odd, which\n`red_degree_parity_obstruction` already rules out in full generality.\n\n**Why now?** The reusable lemma `no_odd_regular_colouring` (this cycle) is exactly\nthe engine; lifting it from the special case `(n,d) = (9,3)` to the general\neven-pair statement is now a packaging problem, not a new idea.\n\n## C2. `R(3,5) = 14` via the same regular-obstruction route\n\n**Statement.** `Arrows 14 3 5` and `\u00ac Arrows 13 3 5`; the binomial bound only\ngives `15`.\n\n**The key insight is** that the gap `15 \u2192 14` should again be a single parity/\ncounting obstruction on the forced degree sequence of a `K\u2081\u2083` counterexample,\nanalogous to the `9\u00b73 = 27` step.\n\n**Why now?** With `Applications.RamseyThreeFour` providing a worked template\n(degree truncation + handshake) and the lower-bound certified by `decide` on a\n13-vertex circulant, the proof skeleton transfers almost verbatim.\n\n## C3. Diagonal lower bound `R(k,k) > 2^{k/2}` is sharp in the exponent base\n\n**Statement.** The probabilistic counting bound (already in the catalog for\nhypergraphs) gives `R(k,k) > 2^{k/2}`; we conjecture the exponential *base*\n`\u221a2` cannot be improved by any purely first-moment (union-bound) argument, only\nby the Lov\u00e1sz Local Lemma / explicit constructions.\n\n**The key insight is** that the first-moment threshold `C(n,k)\u00b72^{1-C(k,2)} < 1`\nis structurally `2^{k/2}`-limited, and any improvement must inject dependence\ninformation the union bound discards.\n\n**Why now?** The catalog's hypergraph probabilistic bound supplies the\ncounting backbone; isolating the base-`\u221a2` ceiling as a formal limitation lemma\nis a concrete, falsifiable target.\n\n## C4. Parity obstructions force *even-order* extremal colourings\n\n**Statement.** For every sharp small Ramsey value whose binomial bound is not\ntight, the extremal colouring on `R(s,t) - 1` vertices has the property that the\nforced red-degree `d` and order `n = R(s,t)-1` satisfy `n\u00b7d` even (i.e. the\nobstruction `no_odd_regular_colouring` is *vacuous* exactly at the extremal\ngraph).\n\n**The key insight is** that `no_odd_regular_colouring` partitions `(n,d)` pairs\ninto \"impossible\" (n\u00b7d odd) and \"permitted\" (n\u00b7d even); extremal colourings must\nlive on the permitted side, predicting a parity signature of extremal graphs.\n\n**Why now?** We can test this immediately against the certified extremal graphs\n(`graph34` here, the pentagon in `Applications.Ramsey`) and any new ones from C2.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2577",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f0b7b2e4",
-    "status": "available",
-    "timestamp": "2026-06-26T05:18:18.108669+00:00",
-    "title": "Derived from this cycle's findings (`Applications.RamseyThreeFour`,"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5676,7 +5690,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "ab8befc8",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5685,7 +5699,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -5898,7 +5912,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6bde751b",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -5908,7 +5922,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
