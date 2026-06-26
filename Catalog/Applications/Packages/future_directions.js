@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "abbbde7c",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "1ce6e294",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -1831,20 +1831,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
   {
-    "consumed_by_exp_id": "4e31bdaf",
-    "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_2315",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.23437v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T07:39:04.351050+00:00",
-    "title": "Helly's Theorem for Convex Splinters"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For all positive integers s' and t', there exist integers t and f such that for any graph G, vertex set A, and wall W of size at least t, either there exists a vertex set X of size at most f separating A from the branch vertices of W, or there exists a subwall W' of W of size at least t' and s' vertex-disjoint A-W'-paths ending in distinct nails of W'.",
     "domains": [
@@ -1961,7 +1947,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Prismatic Purity for F-Crystals on Regular Schemes"
   },
   {
-    "consumed_by_exp_id": "4cfc08f0",
+    "consumed_by_exp_id": "",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domains": [
       "Pythagorean",
@@ -1971,7 +1957,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -2684,7 +2670,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multilateral non-trivial cross-intersection product bound"
   },
   {
-    "consumed_by_exp_id": "bc0a8e2b",
+    "consumed_by_exp_id": "",
     "description": "For q \u2265 3 and n \u2265 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
     "domains": [
       "Bridges"
@@ -2693,7 +2679,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:44:54.697706+00:00",
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q \u2265 3 and n \u2265 4"
   },
@@ -5971,6 +5957,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Character Tables of `S\u2099`\n\nThis cycle established the \"column count\" of the character table of the symmetric group:\nthe table is square of side `p(n)`, via a from-scratch proof that every partition of `n`\nis realised as the cycle type of some permutation\n(`Catalog/Algebra/SymmetricGroupCharacterTable.lean`,\ntheorem `card_conjClasses_eq_card_partition` / `card_conjClasses_perm_fin`).\n\nBelow are testable conjectures for follow-up cycles. Each is stated so that it can be turned\ndirectly into a Lean `theorem ... := by sorry` skeleton.\n\n## C1. Conjugacy-class size formula (Cauchy / centralizer order)\nFor `\u03c3 : Perm (Fin n)` with cycle type given by a partition having `m_i` parts equal to `i`,\nthe centralizer has order `\u220f_i i^{m_i} \u00b7 m_i!`, and the conjugacy class of `\u03c3` has size\n`n! / \u220f_i i^{m_i} \u00b7 m_i!`. Testable form: the sum over conjugacy classes of these class\nsizes equals `n!` (a refinement of the class equation / Burnside that re-derives `card S\u2099`).\n\n## C2. Number of even-permutation classes splitting in `A\u2099`\nA conjugacy class of `S\u2099` lying in `A\u2099` splits into two `A\u2099`-classes iff its cycle type\nconsists of distinct odd parts. Conjecture (testable per `n`):\n`card (ConjClasses (alternatingGroup (Fin n)))`\n`= card {p : Nat.Partition n // p even} + card {p : Nat.Partition n // distinct odd parts}`.\n\n## C3. Counting permutations by number of cycles (Stirling numbers)\nThe number of `\u03c3 : Perm (Fin n)` with exactly `k` cycles (counting fixed points) equals the\nunsigned Stirling number of the first kind `c(n,k)`. Testable form:\n`\u2211_k c(n,k) \u00b7 x^k = x (x+1) \u22ef (x+n-1)` (rising factorial), and\n`\u2211_k c(n,k) = n!`. This connects the cycle-type stratification to a clean generating identity.\n\n## C4. Self-conjugate partitions and the sign / number of odd-order classes\nThe number of self-conjugate partitions of `n` equals the number of partitions of `n` into\ndistinct odd parts. Bridge conjecture: this count also equals the number of conjugacy classes\nof `S\u2099` on which a specified class function (e.g. a chosen real irreducible character) takes a\nprescribed value \u2014 a concrete handle on symmetry of the character table.\n\n## C5. Column sums of the character table\nFor any finite group, the sum of the entries in a fixed column of the character table\n(indexed by `g`) equals the number of square roots of `g`, i.e. `#{x : x^2 = g}`.\nSpecialised to `S\u2099`: `\u2211_\u03c7 \u03c7(\u03c3) = #{\u03c4 : Perm (Fin n) | \u03c4^2 = \u03c3}`, and summing over all `\u03c3`\ngives `\u2211_\u03c7 \u2211_\u03c3 \u03c7(\u03c3)` linked to the total number of involutions-plus-identity solutions.\nTestable per `n` by `decide`/`native_decide` for small `n` before attempting the general proof.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2608",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9c488c94",
+    "status": "available",
+    "timestamp": "2026-06-26T14:28:39.498116+00:00",
+    "title": "\"column count\" of the character table of the symmetri"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6044,7 +6045,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "113a596f",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domains": [
       "EML",
@@ -6054,7 +6055,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },

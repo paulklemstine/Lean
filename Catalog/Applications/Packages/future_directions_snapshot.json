@@ -139,7 +139,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "abbbde7c",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domain_bridges": [],
     "domains": [
@@ -152,7 +152,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -939,7 +939,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "1ce6e294",
+    "consumed_by_exp_id": "",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i ≤ i and d i ≤ i for all i < k, equality of their factoradic values up ",
     "domain_bridges": [],
     "domains": [
@@ -951,7 +951,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -2713,32 +2713,6 @@
     "title": "Explicit bias lower bound for the density of n with s_2(n+t) >= s_2(n)"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "math.CO",
-      "math.MG"
-    ],
-    "consumed_by_exp_id": "4e31bdaf",
-    "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
-    "domain_bridges": [
-      "Convex Geometry",
-      "Affine Geometry",
-      "Combinatorics"
-    ],
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_2315",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize the definition of a convex splinter as a union of convex sets satisfying the affine independence condition. Proceed by induction on the dimension d, adapting the original proof by Arocha, Bracho, and Montejano which leverages Radon's theorem and properties of affine dependence on splinters.",
-    "research_mode": "team",
-    "source_exp_id": "2606.23437v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T07:39:04.351050+00:00",
-    "title": "Helly's Theorem for Convex Splinters"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Menger's Theorem",
@@ -2964,7 +2938,7 @@
       "Polymatroid_connectivity",
       "Slice_projections"
     ],
-    "consumed_by_exp_id": "4cfc08f0",
+    "consumed_by_exp_id": "",
     "description": "For any connected polymatroid $P$ and any element $e$, the set of indices $j \\in \\{0, \\dots, f(e)\\}$ for which the $j$-th slice-projection of $e$ is connected forms a contiguous interval of integers. This conjecture strengthens the paper's theorem that no two consecutive slice-projections can both be disconnected, and naturally generalizes the interval property trivially satisfied by matroids (where the rank $f(e) \\le 1$).",
     "domain_bridges": [
       "Matroid_theory",
@@ -2980,7 +2954,7 @@
     "proof_strategy": "Assume for contradiction that there exist indices $j < k < l$ such that the $j$-th and $l$-th slice-projections are connected, but the $k$-th is disconnected. Use the submodularity of the polymatroid rank function and the lattice of flats to demonstrate that if $P^{(k)}$ is disconnected by a partition $(A, B)$, then either $P^{(j)}$ or $P^{(l)}$ must also be disconnected by a related partition, contradicting the initial assumption.",
     "research_mode": "team",
     "source_exp_id": "2606.22819v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T11:20:57.671444+00:00",
     "title": "Interval Property for Connected Slice-Projections of Polymatroids"
   },
@@ -4383,7 +4357,7 @@
       "Filmus and Ihringer 2019",
       "Gavrilyuk and Mogilnykh 2014"
     ],
-    "consumed_by_exp_id": "bc0a8e2b",
+    "consumed_by_exp_id": "",
     "description": "For q ≥ 3 and n ≥ 4, there exists a non-trivial Boolean degree one function on the Grassmann scheme J_q(n,2) that is not in the trivial list (0, 1, x_p, 1-x_p, y_r, 1-y_r, x_p+y_r, 1-x_p-y_r).",
     "domain_bridges": [
       "Quadratic forms on vector spaces",
@@ -4399,7 +4373,7 @@
     "proof_strategy": "Construct a specific Boolean degree one function using a quadratic form (e.g., a conic or quadric) that violates triviality conditions, inspired by the q=3, n=4, k=2 example.",
     "research_mode": "team",
     "source_exp_id": "2606.23465v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T17:44:54.697706+00:00",
     "title": "Existence of Non-Trivial Boolean Degree One Functions on J_q(n,2) for q ≥ 3 and n ≥ 4"
   },
@@ -10362,6 +10336,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Character Tables of `Sₙ`\n\nThis cycle established the \"column count\" of the character table of the symmetric group:\nthe table is square of side `p(n)`, via a from-scratch proof that every partition of `n`\nis realised as the cycle type of some permutation\n(`Catalog/Algebra/SymmetricGroupCharacterTable.lean`,\ntheorem `card_conjClasses_eq_card_partition` / `card_conjClasses_perm_fin`).\n\nBelow are testable conjectures for follow-up cycles. Each is stated so that it can be turned\ndirectly into a Lean `theorem ... := by sorry` skeleton.\n\n## C1. Conjugacy-class size formula (Cauchy / centralizer order)\nFor `σ : Perm (Fin n)` with cycle type given by a partition having `m_i` parts equal to `i`,\nthe centralizer has order `∏_i i^{m_i} · m_i!`, and the conjugacy class of `σ` has size\n`n! / ∏_i i^{m_i} · m_i!`. Testable form: the sum over conjugacy classes of these class\nsizes equals `n!` (a refinement of the class equation / Burnside that re-derives `card Sₙ`).\n\n## C2. Number of even-permutation classes splitting in `Aₙ`\nA conjugacy class of `Sₙ` lying in `Aₙ` splits into two `Aₙ`-classes iff its cycle type\nconsists of distinct odd parts. Conjecture (testable per `n`):\n`card (ConjClasses (alternatingGroup (Fin n)))`\n`= card {p : Nat.Partition n // p even} + card {p : Nat.Partition n // distinct odd parts}`.\n\n## C3. Counting permutations by number of cycles (Stirling numbers)\nThe number of `σ : Perm (Fin n)` with exactly `k` cycles (counting fixed points) equals the\nunsigned Stirling number of the first kind `c(n,k)`. Testable form:\n`∑_k c(n,k) · x^k = x (x+1) ⋯ (x+n-1)` (rising factorial), and\n`∑_k c(n,k) = n!`. This connects the cycle-type stratification to a clean generating identity.\n\n## C4. Self-conjugate partitions and the sign / number of odd-order classes\nThe number of self-conjugate partitions of `n` equals the number of partitions of `n` into\ndistinct odd parts. Bridge conjecture: this count also equals the number of conjugacy classes\nof `Sₙ` on which a specified class function (e.g. a chosen real irreducible character) takes a\nprescribed value — a concrete handle on symmetry of the character table.\n\n## C5. Column sums of the character table\nFor any finite group, the sum of the entries in a fixed column of the character table\n(indexed by `g`) equals the number of square roots of `g`, i.e. `#{x : x^2 = g}`.\nSpecialised to `Sₙ`: `∑_χ χ(σ) = #{τ : Perm (Fin n) | τ^2 = σ}`, and summing over all `σ`\ngives `∑_χ ∑_σ χ(σ)` linked to the total number of involutions-plus-identity solutions.\nTestable per `n` by `decide`/`native_decide` for small `n` before attempting the general proof.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2608",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "9c488c94",
+    "status": "available",
+    "timestamp": "2026-06-26T14:28:39.498116+00:00",
+    "title": "\"column count\" of the character table of the symmetri"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10460,7 +10454,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "113a596f",
+    "consumed_by_exp_id": "",
     "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
     "domain_bridges": [],
     "domains": [
@@ -10473,7 +10467,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.873771+00:00",
     "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9c488c94",
     "filename": "representation_theory_character_tables_of_s_n.json",
     "pkg_num": 96,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6903199999999999,
     "title": "Counting Conjugacy Classes of the Symmetric Group: An Explicit Partition Bijection"
   },
   {
@@ -2793,8 +2793,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "representation_theory_character_tables_of_s_n",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6903199999999999,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Counting Conjugacy Classes of the Symmetric Group: An Explicit Partition Bijection"
     }
