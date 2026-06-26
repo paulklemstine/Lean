@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "acb790ee",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nThis cycle formalized three machine-checked pillars (all `sorry`-free):\n\n* `Physics/RandomTensorNetwork/Thre",
-      "quality_score": 0.8075699999999999,
-      "sorry_count": 0,
-      "theorem_count": 238,
-      "timestamp": "2026-06-20T10:20:45",
-      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-    },
-    {
       "cycle_id": "97399ed6",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Library of Babel: Catalogs & Incompressibility\n\nDerived from this cycle's verified results\n(`BabelDiagonalCatalog.lean`, `BabelDeBruijnCatalog.lean`,\n`BabelIncompressibility.lean",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-26T19:56:58",
       "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
+    },
+    {
+      "cycle_id": "913e3580",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Shifted t-Schur Basis / Plethystic Triviality\n\nThis cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the\ngenerating-function backbone of the shifted (Schur `Q`) basis",
+      "quality_score": 0.7981560000000001,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-26T23:37:29",
+      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "51640204",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — LWE Hardness, Dual-Regev, Ring-LWE\n\nDerived from the verified results in `DualRegev.lean`, `RingLWE.lean`, and\n`RegevReduction.lean` (all main theorems carry 0 sorries and depend",
-      "quality_score": 0.6127985535714285,
-      "sorry_count": 0,
-      "theorem_count": 96,
-      "timestamp": "2026-06-21T07:21:54",
-      "title": "Lattice Cryptography: LWE Hardness"
-    },
     {
       "cycle_id": "863d07b7",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 0,
       "timestamp": "2026-06-26T22:52:00",
       "title": "Lambda Calculus: Church-Rosser and Normalization"
+    },
+    {
+      "cycle_id": "913e3580",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Shifted t-Schur Basis / Plethystic Triviality\n\nThis cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the\ngenerating-function backbone of the shifted (Schur `Q`) basis",
+      "quality_score": 0.7981560000000001,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-26T23:37:29",
+      "title": "Plethystic Triviality of the Shifted t-Schur Basis"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ab9c78a7",
-      "domain": "Novelty",
-      "name": "lives",
-      "quality": 0.72533
-    },
-    {
-      "cycle_id": "ab9c78a7",
-      "domain": "Novelty",
-      "name": "triangles_sized",
-      "quality": 0.72533
-    },
-    {
-      "cycle_id": "ab9c78a7",
-      "domain": "Novelty",
-      "name": "shadow_triangles_subset_edges",
-      "quality": 0.72533
-    },
     {
       "cycle_id": "2e536cee",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "mem_constantsSubfield",
       "quality": 0.74264
+    },
+    {
+      "cycle_id": "913e3580",
+      "domain": "Applications",
+      "name": "cc_ne",
+      "quality": 0.7981560000000001
+    },
+    {
+      "cycle_id": "913e3580",
+      "domain": "Applications",
+      "name": "phiT_X",
+      "quality": 0.7981560000000001
+    },
+    {
+      "cycle_id": "913e3580",
+      "domain": "Applications",
+      "name": "phiT_p",
+      "quality": 0.7981560000000001
     }
   ],
-  "last_updated": "2026-06-26T22:52:00",
+  "last_updated": "2026-06-26T23:37:29",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ab90b095",
-        "quality": 0.62096,
-        "theorems": 9,
-        "title": "Join-saturation equality for matchings with isolated vertices"
-      },
-      {
         "cycle_id": "3be846c2",
         "quality": 0.464016452173913,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.5449999999999999,
         "theorems": 0,
         "title": "Lambda Calculus: Church-Rosser and Normalization"
+      },
+      {
+        "cycle_id": "913e3580",
+        "quality": 0.7981560000000001,
+        "theorems": 8,
+        "title": "Plethystic Triviality of the Shifted t-Schur Basis"
       }
     ],
     "Bridges": [

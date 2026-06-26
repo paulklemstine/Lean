@@ -285,6 +285,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 913e3580 (Q=0.798), which proved 8 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The previous attempt failed due to a circularity where the identity between the shifted t-Schur basis and the plethystically transformed Schur Q-basis was being proven using the very property it intended to establish. The goal is to decouple the definition of the shifted t-Schur functions from their",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_913e3580_ee9346cb",
+    "priority_score": 0.8981560000000001,
+    "research_mode": "team",
+    "source_exp_id": "913e3580",
+    "status": "available",
+    "timestamp": "2026-06-26T23:37:30.163329+00:00",
+    "title": "Deepening: Plethystic Triviality of the Shifted t-Schur Basis"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that any integer a \u2260 -1,\u25a1 that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
     "domains": [
       "Algebra"
@@ -852,7 +866,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "de494596",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -861,7 +875,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1017,7 +1031,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Invariant Subspace Problem: Special Cases"
   },
   {
-    "consumed_by_exp_id": "f881b568",
+    "consumed_by_exp_id": "",
     "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension \u2265 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
     "domains": [
       "Geometry",
@@ -1027,7 +1041,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432660+00:00",
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
@@ -3044,7 +3058,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-acyclicity of transversal spaces in high dimensions"
   },
   {
-    "consumed_by_exp_id": "7d5c7f90",
+    "consumed_by_exp_id": "",
     "description": "For any Cayley digraph G of an abelian group of even order, the pair (G, K\u2082) is unstable.",
     "domains": [
       "Algebra"
@@ -3053,7 +3067,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22947v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T06:20:52.702234+00:00",
     "title": "Stability of Cayley Digraphs of Even Order with K2"
   },
@@ -6317,7 +6331,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "f2c77f29",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -6327,7 +6341,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -6445,6 +6459,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Shifted t-Schur Basis / Plethystic Triviality\n\nThis cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the\ngenerating-function backbone of the shifted (Schur `Q`) basis and the precise\n\"plethystic triviality\" statement: the logarithmic derivative of the shifted\ngenerating series `qGen n = \u220f\u1d62 (1 + x\u1d62T)/(1 - x\u1d62T)` is the series times a\npotential supported **only on the odd power sums**:\n\n```\n(qGen n)' = qGen n \u00b7 ( 2 \u2211_{k\u22650} p_{2k+1} T^{2k} ).\n```\n\nBelow are bold, testable conjectures for follow-up cycles. Each is stated so it\ncan be turned directly into a Lean theorem skeleton.\n\n## C1. Exponential closed form (odd-power-sum exponential)\n\n**Conjecture.** Over `MvPolynomial (Fin n) \u211a`, with `PowerSeries.exp`,\n```\nqGen n = PowerSeries.exp \u00b7 (rescaled antiderivative of oddPsumSeries n),\n```\ni.e. `qGen n = exp( 2 \u2211_{k\u22651, k odd} p_k T^k / k )`.\nThis upgrades the first-order ODE `qGen_logDeriv` to the integrated form and is\nthe cleanest statement that \"Schur `Q` lives in `\u211a[p\u2081,p\u2083,p\u2085,\u2026]`\".\n*Test path:* build a `PowerSeries` antiderivative `I` with `I' = oddPsumSeries n`\nand constant term `0`, prove `(qGen n) = exp I` by showing both satisfy the same\nODE with the same constant term (uniqueness of solutions of `F' = F\u00b7g`,\n`F(0)=1`).\n\n## C2. Subalgebra membership of the one-row coefficients `q\u1d63`\n\n**Conjecture.** Each coefficient `q\u1d63 = coeff r (qGen n)` lies in the subalgebra\n`\u211a[p\u2081, p\u2083, p\u2085, \u2026] \u2286 MvPolynomial (Fin n) \u211a` generated by the odd power sums, and\nthe even power sums `p\u2082, p\u2084, \u2026` are *not* needed. Concretely, `q\u1d63` is a polynomial\nwith rational coefficients in `{p_{2j+1} : 2j+1 \u2264 r}`.\n*Test path:* Newton-type recurrence `r\u00b7q\u1d63 = 2 \u2211_{j\u22650} p_{2j+1} q_{r-(2j+1)}`\nextracted from `qGen_logDeriv` by reading degree `r-1` coefficients, then induct.\n\n## C3. Newton recurrence for the shifted basis\n\n**Conjecture (provable now, strong lemma).** For all `r \u2265 1`,\n```\nr \u00b7 (coeff r (qGen n)) = 2 \u00b7 \u2211_{j : 2j+1 \u2264 r} p_{2j+1} \u00b7 (coeff (r-(2j+1)) (qGen n)).\n```\nThis is the coefficient-`(r-1)` reading of `qGen_logDeriv` via\n`coeff_derivativeFun` and `coeff_mul`, and would give an effective algorithm for\nthe `q\u1d63` purely from odd power sums. It is the discrete shadow of C1/C2.\n\n## C4. `t`-deformation and the \"shift by t\"\n\n**Conjecture.** Introduce a deformation `oneRowQ_t x t = \u220f-kernel with factor\n(1 - t\u00b7x\u1d62T)` (a one-parameter family interpolating between `t = 1`, the Schur `Q`\ncase, and `t = 0`, the trivial/Schur case). Then the logarithmic derivative is\n```\n(qGen_t n)' = qGen_t n \u00b7 ( (1+t) \u2211_{k\u22651} ((-t)^{k-1}+1)/?  p_k T^{k-1} ),\n```\nand the *odd-only* support is recovered exactly at `t = 1`, while at `t = 0` the\npotential becomes the full (all-degree) power-sum series of the ordinary Schur\ngenerating function. **Falsifiable claim:** the set of `t \u2208 \u211a` for which the\nlog-derivative potential is supported on even `T`-degrees (odd power sums only)\nis exactly `{1}`. This isolates Schur `Q` as the unique \"plethystically trivial\"\nmember of the family.\n\n## C5. Cauchy / dual-Cauchy identity for the shifted kernel\n\n**Conjecture.** With two alphabets `x` (in `Fin n`) and `y` (in `Fin m`),\n```\n\u220f_{i,j} (1 + x\u1d62 y\u2c7c)/(1 - x\u1d62 y\u2c7c) = exp( 2 \u2211_{k odd} p_k(x) p_k(y) / k ),\n```\nthe bilinear Cauchy kernel of the shifted basis, whose exponent is again\nsupported only on odd `k`. *Test path:* iterate `oneRowQ_logDeriv` /  C1 in two\nvariable families; the odd-only support is inherited factorwise, so this should\nreduce to C1 plus a product-over-`j` Leibniz step (reuse\n`derivativeFun_prod_of_logDeriv`).\n\n---\n\n### Cross-domain bridge (speculative)\n\nThe ODE `F' = F\u00b7g` with `g` supported on odd degrees is structurally identical to\nthe free-fermion / neutral-fermion vertex-operator presentation of Schur `Q`\n(odd Heisenberg modes only). A future cycle could formalize the Heisenberg\ncommutation `[a_k, a_{-k}] = k/2` for odd `k` and recover `qGen_logDeriv` as the\nvertex-operator vacuum expectation \u2014 connecting this file to the catalog's\n\"neutral fermion vertex operator\" theme.\n",
+    "domains": [
+      "Bridges",
+      "Pythagorean"
+    ],
+    "id": "fd_2641",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "913e3580",
+    "status": "available",
+    "timestamp": "2026-06-26T23:37:08.036483+00:00",
+    "title": "This cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the"
   },
   {
     "consumed_by_exp_id": "",
@@ -6769,7 +6798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "6adcd103",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6779,7 +6808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -6919,7 +6948,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Riemann-Roch Theorem"
   },
   {
-    "consumed_by_exp_id": "9871aa6d",
+    "consumed_by_exp_id": "",
     "description": "Prove the Langlands correspondence for GL\u2082 over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
     "domains": [
       "Bridges",
@@ -6929,7 +6958,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.714293+00:00",
     "title": "Langlands for GL\u2082 over Q"
   },
