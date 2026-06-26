@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "29017e68",
-      "domain": "Physics",
-      "key_insight": "# FUTURE_DIRECTIONS — Rips Filtrations ↔ Tropical Valuation Objects\n\nCycle output. This cycle formalized, in Lean 4 (0 sorries, only the standard\n`propext`/`Classical.choice`/`Quot.sound` axioms), the",
-      "quality_score": 0.7856000000000001,
-      "sorry_count": 0,
-      "theorem_count": 28,
-      "timestamp": "2026-06-16T04:49:38",
-      "title": "Follow-up conjectures arising from `Catalog/Bridges/RipsTropicalFunctor.lean`, w"
-    },
-    {
       "cycle_id": "6ce4a7be",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Metric Filtration Rank Profiles as Tropical Valuation Objects\n\nThis research cycle established (file\n`Catalog/Bridges/MetricFiltrationTropicalProfile.lean`, all theorems verified",
@@ -499,19 +489,19 @@
       "theorem_count": 8,
       "timestamp": "2026-06-25T18:50:27",
       "title": "Extremal Graph Theory: Turán and Szemerédi"
+    },
+    {
+      "cycle_id": "2e536cee",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Discrepancy of Random Linear Codes for Hamming Balls\n\nDerived from this cycle's findings: an exact averaging identity (`sum_inter_ball`),\nthe explicit ball-volume formula (`ball_",
+      "quality_score": 0.7725600000000001,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-26T01:31:23",
+      "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "4f74256d",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nFollow-up conjectures arising from `Computation/SheafDatabaseColimit.lean`\n(the information-order / colimit layer), to be attacked in subsequent",
-      "quality_score": 0.4968983018867924,
-      "sorry_count": 0,
-      "theorem_count": 178,
-      "timestamp": "2026-06-19T11:38:06",
-      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-    },
     {
       "cycle_id": "e88eb144",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-26T00:40:19",
       "title": "Interval Property for Connected Slice-Projections of Polymatroids"
+    },
+    {
+      "cycle_id": "2e536cee",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Discrepancy of Random Linear Codes for Hamming Balls\n\nDerived from this cycle's findings: an exact averaging identity (`sum_inter_ball`),\nthe explicit ball-volume formula (`ball_",
+      "quality_score": 0.7725600000000001,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-26T01:31:23",
+      "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0dfef380",
-      "domain": "Bridges",
-      "name": "prime_product_below_eq",
-      "quality": 0.7484
-    },
-    {
-      "cycle_id": "0dfef380",
-      "domain": "Bridges",
-      "name": "digits_of_pos_lt",
-      "quality": 0.7484
-    },
-    {
-      "cycle_id": "e56a1e16",
-      "domain": "Tropical",
-      "name": "for",
-      "quality": 0.86528
-    },
     {
       "cycle_id": "e56a1e16",
       "domain": "Tropical",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "shadow_triangles_subset_edges",
       "quality": 0.72533
+    },
+    {
+      "cycle_id": "2e536cee",
+      "domain": "Computation",
+      "name": "hammingDist_add_right",
+      "quality": 0.7725600000000001
+    },
+    {
+      "cycle_id": "2e536cee",
+      "domain": "Computation",
+      "name": "mem_ball",
+      "quality": 0.7725600000000001
+    },
+    {
+      "cycle_id": "2e536cee",
+      "domain": "Computation",
+      "name": "ball_eq_image",
+      "quality": 0.7725600000000001
     }
   ],
-  "last_updated": "2026-06-26T00:40:19",
+  "last_updated": "2026-06-26T01:31:23",
   "open_questions": [
     {
       "context": "",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "5ef4c190",
-        "quality": 0.512,
-        "theorems": 13,
-        "title": "EML Universal Approximation: Density of EML Functions"
-      },
-      {
         "cycle_id": "9a580942",
         "quality": 0.6555200000000001,
         "theorems": 9,
@@ -3327,6 +3321,12 @@
         "quality": 0.45116,
         "theorems": 17,
         "title": "Tropical Differential Equations: Power Series Solutions"
+      },
+      {
+        "cycle_id": "2e536cee",
+        "quality": 0.7725600000000001,
+        "theorems": 15,
+        "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
       }
     ],
     "Cryptography": [

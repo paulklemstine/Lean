@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "0548f2b9",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -447,6 +447,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432811+00:00",
     "title": "Formal Verification of Algorithms"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 2e536cee (Q=0.773), which proved 15 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For a fixed finite field \ud835\udd3d_q, integers n, \u03c1\u2208(0,1), and \u03b5>0, let C\u2282\ud835\udd3d_q^n be a random linear subspace of dimension k = \u2308(1 - (1/n)\u00b7log_q |B_\u03c1| + \u03b5)\u00b7n\u2309, where |B_\u03c1| is the volume of a Hamming ball of radius \u03c1n in \ud835\udd3d_q^n. Then with probability 1\u2011o(1) (as n\u2192\u221e) the following holds simultaneously for every ",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_2e536cee_f12e5e64",
+    "priority_score": 0.8725600000000001,
+    "research_mode": "team",
+    "source_exp_id": "2e536cee",
+    "status": "available",
+    "timestamp": "2026-06-26T01:31:23.477097+00:00",
+    "title": "Deepening: Discrepancy of Random Linear Codes for All Hamming Balls"
   },
   {
     "consumed_by_exp_id": "",
@@ -1003,7 +1017,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "b08abcae",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1013,7 +1027,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1345,7 +1359,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "d4c70419",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1355,7 +1369,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -4522,21 +4536,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dimension Equality Conjecture"
   },
   {
-    "consumed_by_exp_id": "2e536cee",
-    "description": "For a fixed finite field \ud835\udd3d_q, integers n, \u03c1\u2208(0,1), and \u03b5>0, let C\u2282\ud835\udd3d_q^n be a random linear subspace of dimension k = \u2308(1 - (1/n)\u00b7log_q |B_\u03c1| + \u03b5)\u00b7n\u2309, where |B_\u03c1| is the volume of a Hamming ball of radius \u03c1n in \ud835\udd3d_q^n. Then with probability 1\u2011o(1) (as n\u2192\u221e) the following holds simultaneously for every centre z\u2208\ud835\udd3d_q^n:  \u2003|C \u2229 B_\u03c1(z)| = (1\u00b1o(1))\u00b7|C|\u00b7|B_\u03c1| / q^n.  This conjecture makes precise the \u201cnearly optimal discrepancy\u201d claim for all translates of a fixed Hamming\u2011ball test and is falsifiable by exhibiting a sequence of n where the failure probability does not tend to zero.",
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_2517",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.24471v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-25T07:44:51.979075+00:00",
-    "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "For any prime power q and integers n \u2265 k \u2265 1, s \u2265 1 with n \u2265 (s+1)k, let m_q(n,k,s) be the maximum size of a family of k-dimensional subspaces of \ud835\udd3d_q^n containing no s+1 members with a direct sum. The conjecture states that m_q(n,k,s) equals the maximum of two explicit constructions: all k-subspaces contained in a fixed ((s+1)k-1)-dimensional subspace, or all k-subspaces intersecting a fixed s-dimensional subspace nontrivially. This is the q-analogue of the Erd\u0151s Matching Conjecture (proven for k=2, n=(s+1)k, and large n, but open in general).",
     "domains": [
@@ -5384,6 +5383,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Discrepancy of Random Linear Codes for Hamming Balls\n\nDerived from this cycle's findings: an exact averaging identity (`sum_inter_ball`),\nthe explicit ball-volume formula (`ball_card_formula` / `sphere_card`), and coset\ninvariance of the discrepancy for linear codes (`inter_ball_coset_invariant`).  The\nunconditional kernel is now formalized; what remains is *concentration around the\nexact mean*.\n\n---\n\n## Direction 1 \u2014 Second-moment (variance) identity for random linear codes\n\n**Conjecture.** For a uniformly random linear code `C` of dimension `k`, the variance\nof `|C \u2229 B_\u03c1(z)|` (over the choice of `C`, for fixed `z`) is at most\n`(|C|\u00b7|B_\u03c1|/q^n) \u00b7 (1 + o(1))`, matching the Poisson/heuristic prediction.\n\n**The key insight is** that the first moment is already an *exact deterministic*\nidentity (`sum_inter_ball`), so the entire content of the conjecture is a\nsecond-moment bound; pairwise independence of distinct nonzero codewords reduces the\nvariance to a sum over pairs that the averaging identity already controls.\n\n**Why now?** With `sum_inter_ball` formalized, the mean is no longer an estimate to be\ntracked through the proof \u2014 it is a fixed closed form, so a Chebyshev argument needs\nonly the variance, isolating the one genuinely probabilistic step.\n\n---\n\n## Direction 2 \u2014 Union bound over cosets, not centres\n\n**Conjecture.** The \"for every centre `z`\" quantifier in the discrepancy conjecture\ncan be replaced by \"for every coset representative\", reducing the union bound from\n`q^n` events to `q^n/|C|` events, and this reduction is *lossless*.\n\n**The key insight is** that `inter_ball_coset_invariant` proves `z \u21a6 |C \u2229 B_\u03c1(z)|` is\nconstant on cosets of `C`, so the `q^n` per-centre tests are really only `q^n/|C|`\ndistinct tests \u2014 an exponential saving in the failure-probability union bound.\n\n**Why now?** The coset-invariance lemma is proved here with an explicit bijection; it\nimmediately licenses re-indexing every \"for all centres\" statement by the quotient\ngroup `G/C`, which is the natural object for a sharp union bound.\n\n---\n\n## Direction 3 \u2014 Exact rational target via the volume formula\n\n**Conjecture.** The discrepancy target `|C|\u00b7|B_\u03c1|/q^n` equals the explicit rational\n`q^{k-n} \u00b7 \u2211_{i\u2264\u03c1n} C(n,i)(q-1)^i`, and the threshold dimension\n`k = \u2308(1 - (1/n)log_q|B_\u03c1| + \u03b5)n\u2309` is the *unique* `k` making this target tend to a\nconstant multiple of `1` (so codewords-per-ball is `\u0398(1)` exactly at threshold).\n\n**The key insight is** that `ball_card_formula` gives `|B_\u03c1|` in closed form, turning\nthe target into an elementary expression in `n, q, \u03c1` whose `log_q` is, by entropy\nestimates on binomial sums, `(H_q(\u03c1) + o(1))\u00b7n` \u2014 pinning the threshold.\n\n**Why now?** `sphere_card` and `ball_card_formula` remove the last non-explicit object\n(`|B_\u03c1|`) from the statement, so the threshold can be analysed by standard `q`-ary\nentropy asymptotics rather than treated as a black box.\n\n---\n\n## Direction 4 \u2014 Lower-tail companion to the Markov bound\n\n**Conjecture.** A matching *lower* bound holds: for all but an `o(1)` fraction of\ncentres, `|C \u2229 B_\u03c1(z)| \u2265 (1-o(1))\u00b7|C|\u00b7|B_\u03c1|/q^n`, complementing the upper-tail bound\n`card_bad_centres_le` proved here.\n\n**The key insight is** that the exact averaging identity forces a lower tail: if too\nmany centres had a deficient count, the few remaining centres would have to exceed the\nball volume `|B_\u03c1|`, which is impossible since `|C \u2229 B_\u03c1(z)| \u2264 |B_\u03c1|`.\n\n**Why now?** `card_bad_centres_le` already extracts one tail from the averaging\nidentity using only Markov; the bounded support `|C \u2229 B_\u03c1(z)| \u2264 |B_\u03c1|` (a direct\nconsequence of `ball_card_eq`) supplies the reverse inequality with no new randomness.\n\n---\n\n## Direction 5 \u2014 Beyond Hamming balls: arbitrary translation-invariant tests\n\n**Conjecture.** The exact averaging identity `\u2211_z |C \u2229 (T + z)| = |C|\u00b7|T|` holds for\n*any* finite test set `T` (not just Hamming balls), and the discrepancy conjecture\ngeneralizes to every test family of sub-exponential size.\n\n**The key insight is** that the proof of `sum_inter_ball` never used the ball's\ngeometry \u2014 only translation invariance of its volume \u2014 so it is a statement about the\ngroup action of `G` on itself, and `B_\u03c1` can be swapped for any `T`.\n\n**Why now?** The formalization isolates translation invariance as the single\nload-bearing property (`hammingDist_add_right`), making the generalization to\narbitrary `T` a matter of replacing one lemma, not rebuilding the argument.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2564",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2e536cee",
+    "status": "available",
+    "timestamp": "2026-06-26T01:31:10.743022+00:00",
+    "title": "Derived from this cycle's findings: an exact averaging identity (`sum_inter_ball"
   },
   {
     "consumed_by_exp_id": "",

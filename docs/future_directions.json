@@ -11518,7 +11518,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Logic",
         "Computation"
@@ -12571,7 +12571,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Cryptography",
         "Computation"
@@ -12727,7 +12727,7 @@
       "depth_estimate": 3,
       "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.45000000000000007,
       "domains": [
         "Tropical",
         "Computation"
@@ -13156,7 +13156,7 @@
       "depth_estimate": 3,
       "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Bridges",
         "Computation"
@@ -13741,7 +13741,7 @@
       "depth_estimate": 3,
       "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.35,
+      "domain_quality_penalty": -0.24999999999999997,
       "domains": [
         "Physics",
         "Computation"
@@ -13819,7 +13819,7 @@
       "depth_estimate": 3,
       "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.35,
+      "domain_quality_penalty": -0.24999999999999997,
       "domains": [
         "Physics",
         "Computation"
@@ -14053,7 +14053,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Tropical",
         "Computation"
@@ -14481,7 +14481,7 @@
       "depth_estimate": 3,
       "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": 0.05000000000000002,
       "domains": [
         "Algebra",
         "Computation"
@@ -15300,7 +15300,7 @@
       "depth_estimate": 3,
       "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.7000000000000001,
       "domains": [
         "Computation",
         "Logic"
@@ -16275,7 +16275,7 @@
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Cryptography",
         "Logic"
@@ -16314,7 +16314,7 @@
       "depth_estimate": 3,
       "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16470,7 +16470,7 @@
       "depth_estimate": 3,
       "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16743,7 +16743,7 @@
       "depth_estimate": 3,
       "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": 0.05000000000000002,
       "domains": [
         "EML",
         "Computation"
@@ -16899,7 +16899,7 @@
       "depth_estimate": 3,
       "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.45000000000000007,
       "domains": [
         "MachineLearning",
         "Computation"
@@ -34153,7 +34153,7 @@
         "sparse-paving q-matroids to independent sets in the q-Johnson graph",
         "finite vector-space submodule lattice to graph-theoretic stable sets"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Computation"
@@ -34481,7 +34481,7 @@
         "proper color classes are independent sets, so α(G)≤2 forces every odd color class to be a singleton",
         "using Δ(G)+1 singleton color classes forces Δ(G)+1=|V(G)|, hence G is complete"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -34625,7 +34625,7 @@
         "p_adic_valuations",
         "combinatorics_on_words"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -40376,7 +40376,7 @@
         "Information Theory",
         "Functional Analysis"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Computation"
@@ -41074,7 +41074,7 @@
         "Finite Field Codes",
         "Probabilistic Method"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -42455,7 +42455,7 @@
         "Discrepancy Theory ↔ Function Space Approximation",
         "Tensor-product Structure ↔ Curse of Dimensionality"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation"
       ],
@@ -42640,7 +42640,7 @@
         "binary-carry-chains",
         "density-measures"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation"
       ],
@@ -44668,7 +44668,7 @@
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem random_linear_code_discrepancy (q : ℕ) [Fact (Nat.Prime q)] (n ρ : ℕ) (hρ : ρ ≤ n) (ε : ℝ) (hε : 0 < ε) :\n  ∀ᵉ (C : subspace (fin n) (zmod q)),\n    (∃ k, C.dimension = k ∧ k = ⌈(1 - (1 / n) * real.log (ball_volume q n ρ) + ε) * n⌉) →\n    (∀ z : (fin n → zmod q),\n      let B := hamming_ball q n ρ z in\n      let expected := (C.card * B.card : ℝ) / (q ^ n) in\n      (C.card ∩ B.card : ℝ) =ᵐ[ℙ] (1 ± o 1) * expected))",
       "lineage_refs": [],
-      "outcome_quality": 0.0,
+      "outcome_quality": 0.7725600000000001,
       "parent_direction": "",
       "priority_score": 0.8,
       "proof_strategy": "Use the second‑moment method on the random process that adds basis vectors to C one by one. Show that for any fixed centre z the indicator of membership in B_ρ(z) is a Fourier‑pseudorandom test; bound its Fourier coefficients using Weil‑type exponential sum estimates over 𝔽_q. Apply a union bound over the q^n possible centres together with a Chernoff‑type concentration inequality for hypergeometric draws to obtain the simultaneous guarantee. Formalisation in Lean proceeds by developing finite‑field linear algebra, hypergeometric tail bounds, and a library for Fourier analysis on 𝔽_q^n.",
@@ -44678,7 +44678,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24471v1",
       "source_path": "http://arxiv.org/abs/2606.24471v1",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-25T07:44:51.979075+00:00",
       "title": "Discrepancy of Random Linear Codes for All Hamming Balls"
@@ -44850,7 +44850,7 @@
         "computer science",
         "statistics"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -45449,7 +45449,7 @@
         "Reduction Constructions",
         "Proof Complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -46100,7 +46100,7 @@
         "hypergraph_connectivity",
         "parameterized_complexity"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -46807,6 +46807,45 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "# Future Directions — Discrepancy of Random Linear Codes for Hamming Balls\n\nDerived from this cycle's findings: an exact averaging identity (`sum_inter_ball`),\nthe explicit ball-volume formula (`ball_card_formula` / `sphere_card`), and coset\ninvariance of the discrepancy for linear codes (`inter_ball_coset_invariant`).  The\nunconditional kernel is now formalized; what remains is *concentration around the\nexact mean*.\n\n---\n\n## Direction 1 — Second-moment (variance) identity for random linear codes\n\n**Conjecture.** For a uniformly random linear code `C` of dimension `k`, the variance\nof `|C ∩ B_ρ(z)|` (over the choice of `C`, for fixed `z`) is at most\n`(|C|·|B_ρ|/q^n) · (1 + o(1))`, matching the Poisson/heuristic prediction.\n\n**The key insight is** that the first moment is already an *exact deterministic*\nidentity (`sum_inter_ball`), so the entire content of the conjecture is a\nsecond-moment bound; pairwise independence of distinct nonzero codewords reduces the\nvariance to a sum over pairs that the averaging identity already controls.\n\n**Why now?** With `sum_inter_ball` formalized, the mean is no longer an estimate to be\ntracked through the proof — it is a fixed closed form, so a Chebyshev argument needs\nonly the variance, isolating the one genuinely probabilistic step.\n\n---\n\n## Direction 2 — Union bound over cosets, not centres\n\n**Conjecture.** The \"for every centre `z`\" quantifier in the discrepancy conjecture\ncan be replaced by \"for every coset representative\", reducing the union bound from\n`q^n` events to `q^n/|C|` events, and this reduction is *lossless*.\n\n**The key insight is** that `inter_ball_coset_invariant` proves `z ↦ |C ∩ B_ρ(z)|` is\nconstant on cosets of `C`, so the `q^n` per-centre tests are really only `q^n/|C|`\ndistinct tests — an exponential saving in the failure-probability union bound.\n\n**Why now?** The coset-invariance lemma is proved here with an explicit bijection; it\nimmediately licenses re-indexing every \"for all centres\" statement by the quotient\ngroup `G/C`, which is the natural object for a sharp union bound.\n\n---\n\n## Direction 3 — Exact rational target via the volume formula\n\n**Conjecture.** The discrepancy target `|C|·|B_ρ|/q^n` equals the explicit rational\n`q^{k-n} · ∑_{i≤ρn} C(n,i)(q-1)^i`, and the threshold dimension\n`k = ⌈(1 - (1/n)log_q|B_ρ| + ε)n⌉` is the *unique* `k` making this target tend to a\nconstant multiple of `1` (so codewords-per-ball is `Θ(1)` exactly at threshold).\n\n**The key insight is** that `ball_card_formula` gives `|B_ρ|` in closed form, turning\nthe target into an elementary expression in `n, q, ρ` whose `log_q` is, by entropy\nestimates on binomial sums, `(H_q(ρ) + o(1))·n` — pinning the threshold.\n\n**Why now?** `sphere_card` and `ball_card_formula` remove the last non-explicit object\n(`|B_ρ|`) from the statement, so the threshold can be analysed by standard `q`-ary\nentropy asymptotics rather than treated as a black box.\n\n---\n\n## Direction 4 — Lower-tail companion to the Markov bound\n\n**Conjecture.** A matching *lower* bound holds: for all but an `o(1)` fraction of\ncentres, `|C ∩ B_ρ(z)| ≥ (1-o(1))·|C|·|B_ρ|/q^n`, complementing the upper-tail bound\n`card_bad_centres_le` proved here.\n\n**The key insight is** that the exact averaging identity forces a lower tail: if too\nmany centres had a deficient count, the few remaining centres would have to exceed the\nball volume `|B_ρ|`, which is impossible since `|C ∩ B_ρ(z)| ≤ |B_ρ|`.\n\n**Why now?** `card_bad_centres_le` already extracts one tail from the averaging\nidentity using only Markov; the bounded support `|C ∩ B_ρ(z)| ≤ |B_ρ|` (a direct\nconsequence of `ball_card_eq`) supplies the reverse inequality with no new randomness.\n\n---\n\n## Direction 5 — Beyond Hamming balls: arbitrary translation-invariant tests\n\n**Conjecture.** The exact averaging identity `∑_z |C ∩ (T + z)| = |C|·|T|` holds for\n*any* finite test set `T` (not just Hamming balls), and the discrepancy conjecture\ngeneralizes to every test family of sub-exponential size.\n\n**The key insight is** that the proof of `sum_inter_ball` never used the ball's\ngeometry — only translation invariance of its volume — so it is a statement about the\ngroup action of `G` on itself, and `B_ρ` can be swapped for any `T`.\n\n**Why now?** The formalization isolates translation invariance as the single\nload-bearing property (`hammingDist_add_right`), making the generalization to\narbitrary `T` a matter of replacing one lemma, not rebuilding the argument.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.1,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "id": "fd_2564",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2e536cee",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2e536cee",
+      "status": "available",
+      "thread_id": "th_daa6a396",
+      "timestamp": "2026-06-26T01:31:10.743022+00:00",
+      "title": "Derived from this cycle's findings: an exact averaging identity (`sum_inter_ball"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -47186,6 +47225,44 @@
       "thread_id": "",
       "timestamp": "2026-06-13T10:52:59.511741+00:00",
       "title": "Deepening: Proof-Complexity Holography: Geometric Duals of Formal Derivations"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "Building on cycle 2e536cee (Q=0.773), which proved 15 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: For a fixed finite field 𝔽_q, integers n, ρ∈(0,1), and ε>0, let C⊂𝔽_q^n be a random linear subspace of dimension k = ⌈(1 - (1/n)·log_q |B_ρ| + ε)·n⌉, where |B_ρ| is the volume of a Hamming ball of radius ρn in 𝔽_q^n. Then with probability 1‑o(1) (as n→∞) the following holds simultaneously for every ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Computation"
+      ],
+      "id": "push_2e536cee_f12e5e64",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8725600000000001,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2e536cee",
+      "source_path": "Discrepancy of Random Linear Codes for All Hamming Balls",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T01:31:23.477097+00:00",
+      "title": "Deepening: Discrepancy of Random Linear Codes for All Hamming Balls"
     },
     {
       "ambition_level": "extension",
@@ -48303,7 +48380,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i ≤ i and d i ≤ i for all i < k, equality of their factoradic values up ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -48570,7 +48647,7 @@
       "depth_estimate": 3,
       "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Algebra",
         "Computation"
@@ -50257,7 +50334,7 @@
       "depth_estimate": 3,
       "description": "Prove that 78557 is the smallest Sierpiński number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Algebra",
         "Computation"
@@ -50449,7 +50526,7 @@
       "depth_estimate": 3,
       "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Computation",
         "Algebra"
@@ -50603,7 +50680,7 @@
       "depth_estimate": 3,
       "description": "Resolve Kaplansky's conjectures on group rings: no zero divisors, no idempotents other than 0/1, and no nontrivial units in K[G] for torsion-free G.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Algebra",
         "Computation"
@@ -50874,7 +50951,7 @@
       "depth_estimate": 3,
       "description": "Prove that the connective constant for the self-avoiding walk on Z² equals (2+√2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Computation",
         "Algebra"
@@ -50952,7 +51029,7 @@
       "depth_estimate": 3,
       "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Computation",
         "Algebra"
@@ -50991,7 +51068,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.7000000000000001,
       "domains": [
         "Computation",
         "Logic"
@@ -51185,7 +51262,7 @@
       "depth_estimate": 3,
       "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.7000000000000001,
       "domains": [
         "Logic",
         "Computation"
@@ -51612,7 +51689,7 @@
       "depth_estimate": 3,
       "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -51683,7 +51760,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "b08abcae",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -51709,7 +51786,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432605+00:00",
       "title": "Continued Fractions and Diophantine Approximation"
@@ -52072,7 +52149,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "0548f2b9",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -52098,7 +52175,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432645+00:00",
       "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
@@ -52579,7 +52656,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "d4c70419",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -52605,7 +52682,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432742+00:00",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
@@ -52662,7 +52739,7 @@
       "depth_estimate": 3,
       "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Logic"
@@ -52701,7 +52778,7 @@
       "depth_estimate": 3,
       "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Logic"
@@ -52819,7 +52896,7 @@
       "depth_estimate": 3,
       "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic",
         "Computation"
@@ -52977,7 +53054,7 @@
       "depth_estimate": 3,
       "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Physics",
         "Algebra",
@@ -53176,7 +53253,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -53256,7 +53333,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Cryptography",
         "Logic",
@@ -53336,7 +53413,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Computation",
@@ -53496,7 +53573,7 @@
       "depth_estimate": 3,
       "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "Computation",
@@ -53536,7 +53613,7 @@
       "depth_estimate": 3,
       "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Logic",
         "Computation",
@@ -53576,7 +53653,7 @@
       "depth_estimate": 3,
       "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Computation",
         "Logic"
@@ -64521,7 +64598,7 @@
       "depth_estimate": 3,
       "description": "Cycle f25c8810 (Q=0.755) proved 734 theorems in Computation but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -126900,7 +126977,7 @@
     "Algebra": 303,
     "Applications": 117,
     "Bridges": 58,
-    "Computation": 100,
+    "Computation": 101,
     "Cryptography": 26,
     "EML": 2,
     "Geometry": 168,
@@ -126909,7 +126986,7 @@
     "Novelty": 200,
     "Physics": 45,
     "Probability": 1,
-    "Pythagorean": 111,
+    "Pythagorean": 112,
     "Shared": 6,
     "Tropical": 33
   },
@@ -126921,13 +126998,13 @@
     "automated": 16,
     "bridge": 299,
     "close": 295,
-    "codes": 13,
+    "codes": 14,
     "complete": 393,
     "computational": 66,
     "compute": 99,
     "computed": 42,
     "condition": 100,
-    "conjecture": 406,
+    "conjecture": 407,
     "connection": 56,
     "constant": 144,
     "construct": 81,
@@ -126982,7 +127059,7 @@
     "pythagorean": 21,
     "q=0.423": 11,
     "q=0.426": 16,
-    "random": 62,
+    "random": 63,
     "random-matrix": 4,
     "refuted": 29,
     "reproducible": 11,
