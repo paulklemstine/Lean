@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "01ec1037",
     "filename": "signless_laplacian_spectral_radius_of_pure_simplic.json",
     "pkg_num": 79,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.55696,
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with Vanishing Link Homology"
   },
   {
@@ -2300,8 +2300,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "signless_laplacian_spectral_radius_of_pure_simplic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.55696,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with Vanishing Link Homology"
     }

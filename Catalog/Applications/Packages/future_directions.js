@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "151fa435",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1612,7 +1612,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cusick's sum-of-digits conjecture with explicit bias bound"
   },
   {
-    "consumed_by_exp_id": "7410b0f1",
+    "consumed_by_exp_id": "",
     "description": "For integers n \u2265 2k and k \u2265 3, any two non-trivial cross-intersecting families A, B \u2286 ([n] choose k) satisfy |A| * |B| \u2264 h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
     "domains": [
       "Pythagorean",
@@ -1622,7 +1622,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T04:53:00.715630+00:00",
     "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
   },
@@ -1787,7 +1787,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excess-One Criterion for Kopp-Lagarias Ray Class Fields"
   },
   {
-    "consumed_by_exp_id": "0f17133d",
+    "consumed_by_exp_id": "",
     "description": "A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expansion parameter \u03b1_G(t) and the optimality of the associated code B(G).",
     "domains": [
       "Algebra",
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T06:21:22.540143+00:00",
     "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
@@ -5560,6 +5560,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Signless Laplacian spectral radius of pure complexes\n\nDerived from this cycle's findings in `Core.lean`, `Simplex.lean`,\n`Bridge.lean`. The cycle established the *dimension-free analytic engine*\n`q_{r-1}(K) \u2264 (facet size)\u00b7(max ridge degree)` via per-facet\nCauchy\u2013Schwarz, proved it sharp on the simplex, and connected it to the\nclassical graph bound `q(G) \u2264 2\u0394` through the flag-complex catalog.\n\nEach direction below is bold, falsifiable, and testable in Lean.\n\n## D1. Homology-vanishing \u27f9 ridge-degree ceiling\n**Conjecture.** For a pure `r`-complex `K` on `n` vertices, if\n`H\u0303_t(lk(\u03c3); \u211d) = 0` for every `(r\u2212t)`-face `\u03c3`, then every `(r\u22121)`-face\n(ridge) lies in at most `t\u00b7n/(r+1) \u2212 (t\u22121)` facets, i.e.\n`degree(\u03c1) \u2264 (t n \u2212 (t\u22121)(r+1))/(r+1)`.\n*The key insight is* that combined with `Core.specRad_le` (`s = r+1`),\nthis single degree bound yields the conjectured\n`q_{r-1}(K) \u2264 t n \u2212 (t\u22121)(r+1)` with no further spectral input \u2014 the\nspectral half of the conjecture is already done.\n*Why now?* `specRad_le` reduces the whole conjecture to a purely\ncombinatorial degree estimate, so effort can focus on one clean inequality.\n\n## D2. Equality forces a single high-degree star (rigidity)\n**Conjecture.** If `q_{r-1}(K) = (facet size)\u00b7(max degree)` exactly, then\nthe Cauchy\u2013Schwarz step is tight facet-by-facet, which forces the\nPerron eigenvector to be constant on every facet; for `r`-down-path-\nconnected `K` this propagates to a global constant, so `K` is the\nneighbourhood-complete (join-of-simplex) configuration.\n*The key insight is* that equality in `sq_sum_le_card_mul_sum_sq` per facet\nis equivalence of the entries `x_r` inside each facet, and connectivity\nglues these local constancies into one.\n*Why now?* `simplex_specRad` already exhibits the extremal vector\n(all-ones) explicitly, giving a concrete target for the rigidity argument.\n\n## D3. Down-Laplacian / Hodge symmetry of the bound\n**Conjecture.** The same `(facet size)\u00b7(max degree)` bound holds for the\n*down* signless Laplacian on `r`-faces, with `facet size` replaced by the\ncommon-coface count, giving a self-dual pair of bounds whose minimum beats\neither one.\n*The key insight is* that `slQuad_eq_matrix` shows the form is `B B\u1d40`; the\ndual form `B\u1d40 B` has the same nonzero spectrum, so a row-sum bound on the\ntranspose transfers for free.\n*Why now?* `slQuad_eq_matrix` makes the `B B\u1d40` structure explicit in Lean,\nso the transpose argument is a short formal step away.\n\n## D4. Strict improvement under positive higher Betti numbers\n**Conjecture.** If some link has `H\u0303_t \u2260 0` (the hypothesis fails), the\nspectral radius can exceed `t n \u2212 (t\u22121)(r+1)`, and the excess is at least\nthe smallest nonzero reduced Betti number of that link.\n*The key insight is* that the counterexample `q(K\u2083) = 4 > 3` (see\n`ComputationalEvidence.md`) is exactly a failure of the degree ceiling, and\nthe gap is governed by a cycle in the link.\n*Why now?* Bridge.lean's graph case already produces the first concrete\nviolation `K\u2083`, pinning down where the hypothesis becomes load-bearing.\n\n## D5. Quantitative stability of the simplex extremizer\n**Conjecture.** If `q_{r-1}(K)` is within `\u03b5` of `(r+1)\u00b7\u0394`, then `K` is\n`O(\u03b5)`-close (in facet edit distance) to a join of a simplex and a skeleton,\na robust version of D2.\n*The key insight is* that the slack in the summed Cauchy\u2013Schwarz bound is a\nsum of squared eigenvector differences across facets, so small slack means\nsmall total variation of the eigenvector.\n*Why now?* `Core.slQuad_le` carries an explicit per-facet slack term that\ncan be retained rather than discarded, turning the bound into a stability\nestimate.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2580",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "01ec1037",
+    "status": "available",
+    "timestamp": "2026-06-26T06:49:00.330184+00:00",
+    "title": "Derived from this cycle's findings in `Core.lean`, `Simplex.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5941,7 +5956,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Universal Approximation: Density of EML Functions"
   },
   {
-    "consumed_by_exp_id": "6bde751b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -5951,7 +5966,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -6374,21 +6389,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
-  },
-  {
-    "consumed_by_exp_id": "8ce70c3b",
-    "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
-    "domains": [
-      "Physics",
-      "Geometry"
-    ],
-    "id": "fd_0466",
-    "priority_score": 0.09999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:30.651923+00:00",
-    "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
     "consumed_by_exp_id": "",
