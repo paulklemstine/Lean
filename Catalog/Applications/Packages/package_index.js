@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4364c6f1",
     "filename": "statistical_mechanics_ising_model_phase_transition.json",
     "pkg_num": 75,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.546,
     "title": "Statistical Mechanics: The Onsager Critical Temperature of the 2D Ising Model"
   },
   {
@@ -2184,8 +2184,8 @@ window.PACKAGE_GRAPH = {
       "hue": 280,
       "id": "statistical_mechanics_ising_model_phase_transition",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.546,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Statistical Mechanics: The Onsager Critical Temperature of the 2D Ising Model"
     }

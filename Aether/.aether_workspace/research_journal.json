@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3b2adc6d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — BSD Research Cycle\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nEach conjecture is falsifiable in Lean and extends the three modules\n`LocalF",
-      "quality_score": 0.4494149295774648,
-      "sorry_count": 0,
-      "theorem_count": 78,
-      "timestamp": "2026-06-19T16:03:49",
-      "title": "Birch and Swinnerton-Dyer Conjecture"
-    },
-    {
       "cycle_id": "6bd9e95d",
       "domain": "Probability",
       "key_insight": "# Future Directions\n\nThese build on the formalization in `Catalog/Logic/BelnapRetractable.lean`.\n\n## 1. From values to a syntactic formula language with valuations\n\nThe present consequence relation is",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-26T03:43:40",
       "title": "Exact Value of the Binomial GCD in OEIS A080170"
+    },
+    {
+      "cycle_id": "4364c6f1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — 2D Ising Model Phase Transition\n\nBold, falsifiable conjectures distilled from this research cycle (Stages 3–4).\nEach is stated so that it can be *proved or refuted in Lean* on to",
+      "quality_score": 0.546,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-06-26T03:45:09",
+      "title": "Statistical Mechanics: Ising Model Phase Transition"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7095
     }
   ],
-  "last_updated": "2026-06-26T03:43:40",
+  "last_updated": "2026-06-26T03:45:09",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3d0b9aaa",
-        "quality": 0.49636883468834697,
-        "theorems": 18,
-        "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers)"
-      },
-      {
         "cycle_id": "bfb13379",
         "quality": 0.46096,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.57649,
         "theorems": 13,
         "title": "EML Differential Algebra: Closure Properties"
+      },
+      {
+        "cycle_id": "4364c6f1",
+        "quality": 0.546,
+        "theorems": 37,
+        "title": "Statistical Mechanics: Ising Model Phase Transition"
       }
     ],
     "Bridges": [

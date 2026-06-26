@@ -1136,7 +1136,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f0b7b2e4",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1148,7 +1148,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -3737,6 +3737,36 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Lagarias-Shallit bounds for Lagrange constants under integer linear fractional transformations",
+      "Smith normal form over Z for reducing integer matrices",
+      "Lagrange constant formula via two-sided continued fractions",
+      "Lagrange theorem: real quadratic irrationals are exactly eventually periodic continued fractions",
+      "Mathlib modules: Mathlib.Data.Matrix.Basic, Mathlib.NumberTheory.ContinuedFractions, Mathlib.Topology.Algebra.Order.LiminfLimsup"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
+    "domain_bridges": [
+      "continued fractions to real quadratic irrationals via eventual periodicity",
+      "integer matrices to linear fractional transformations via the PGL2 action",
+      "limsup of partial quotient expressions to Lagrange constants",
+      "Smith normal form to reduction of general determinant D matrices"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2353",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the paper's construction realizing arbitrary ratios in the interval by bounded continued fraction sequences, but replace the infinite nonperiodic tail by sufficiently long periodic repetitions of the finite blocks controlling the limsup. Since ultimately periodic continued fractions are quadratic irrationals, it remains to prove that the Lagrange-constant ratio changes by an arbitrarily small amount under this periodic approximation. Formalization would isolate a continuity lemma for finite-window limsup maxima of periodic continued fractions and combine it with the Smith-normal-form reduction used for the general matrix M.",
+    "research_mode": "team",
+    "source_exp_id": "2606.22229v1",
+    "status": "available",
+    "timestamp": "2026-06-23T13:11:45.659366+00:00",
+    "title": "Quadratic irrational density in the ratio spectrum"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "Riordan_arrays",
       "Fibonacci_numbers",
@@ -6118,7 +6148,7 @@
       "Parry",
       "Ito-Takahashi"
     ],
-    "consumed_by_exp_id": "d7fd1af1",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For rational β = p/q, the natural extension has finite domain bridges.",
     "domain_bridges": "finite",
     "domains": [
@@ -6131,7 +6161,7 @@
     "proof_strategy": "Constructive counterexample based on known results",
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -8951,6 +8981,31 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.GameTheory.PotentialGame",
+      "Mathlib.Combinatorics.Graph.Connected"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "In any finite game satisfying the path independence condition (PI), any two exact potentials differ by a constant. This follows because the unilateral move graph is connected and the potential differences are path-independent.",
+    "domain_bridges": [
+      "Order Theory",
+      "Combinatorics"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2566",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Fix a reference profile s₀. For any two exact potentials P and Q, show that P(s) - Q(s) = P(s₀) - Q(s₀) for all s by considering a path of unilateral moves from s₀ to s and using the exact potential property. The path independence condition ensures the difference is well-defined.",
+    "research_mode": "team",
+    "source_exp_id": "2606.26564v1",
+    "status": "available",
+    "timestamp": "2026-06-26T03:51:18.010943+00:00",
+    "title": "Uniqueness of Exact Potential up to Additive Constant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -8965,7 +9020,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2566",
+    "id": "fd_2567",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -8994,7 +9049,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2567",
+    "id": "fd_2568",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9020,7 +9075,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2568",
+    "id": "fd_2569",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9045,7 +9100,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2569",
+    "id": "fd_2570",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9073,7 +9128,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2570",
+    "id": "fd_2571",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9358,66 +9413,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Navier–Stokes: 2D Regularity and Partial 3D Results\n\nThis cycle extended the scalar a-priori-estimate framework\n(`NavierStokes.Core`, `NavierStokes.Estimates`) in two directions:\n\n* **`Dissipative.lean`** — the *driven/forced* regime `Y' ≤ -a Y + b` (a > 0):\n  comparison bound `Y(t) ≤ b/a + (Y₀ - b/a)e^{-at}`, uniform dissipativity\n  `Y ≤ max(Y₀, b/a)`, the **absorbing ball** (eventual entry into `b/a + ε`),\n  and the sharp asymptotic bound `limsup Y ≤ b/a`. The unforced `b = 0` case\n  recovers `Core.energy_exponential_decay`.\n* **`BlowupRate.lean`** — the dual of `Core.enstrophy_3d_apriori_bound`: the\n  **lower** blow-up-rate `Z(t)² ≥ 1/(2C(T*−t))` for any finite-time singularity of\n  the supercritical inequality `Z' ≤ C Z³`.\n* **`CriticalBorderline.lean`** — resolves former Conjecture 5: the logarithmic\n  borderline `Z' ≤ C·Z·log(e+Z)` is globally regular, with explicit\n  double-exponential bound `Z(t) ≤ exp(log(e+Z₀)·e^{Ct}) − e`.\n\nThe recurring engine in every result is the reciprocal/integrating-factor\nlinearisation of a nonlinear scalar inequality. The conjectures below push that\nengine further. Each is stated so it can be formalised directly as a Lean theorem\nover an abstract observable `Y, Z : ℝ → ℝ` with a prescribed differential\ninequality, exactly in the style of the existing files.\n\n---\n\n## Conjecture 1 — General power-law blow-up dichotomy (unify Core + BlowupRate)\n\nLet `p > 1`, `C > 0`, `Z > 0` with `Z'(t) ≤ C Z(t)^p`. Define\n`α = 1/(p−1)`. Then:\n\n* **(upper / lifetime)** `Z(t)^{p−1} ≤ Z₀^{p−1} / (1 − (p−1) C Z₀^{p−1} t)` on\n  `0 ≤ t < T* := 1 / ((p−1) C Z₀^{p−1})`;\n* **(lower / blow-up rate)** if `Z → +∞` as `t → T*⁻`, then\n  `Z(t)^{p−1} ≥ 1 / ((p−1) C (T*−t))`, i.e. `Z(t) ≳ (T*−t)^{−α}`.\n\nThe current files are the case `p = 3` (`α = 1/2`). **Test:** prove both halves\nwith the substitution `w = Z^{−(p−1)}`, which obeys the linear bound\n`w' ≥ −(p−1)C`. *Falsifiable:* a counterexample would be a `Z` with `Z' ≤ C Z^p`\nthat blows up strictly slower than `(T*−t)^{−α}`.\n\n## Conjecture 2 — Time-dependent forcing and the moving absorbing ball\n\nLet `a > 0` and let `b : ℝ → ℝ` be bounded with `β := limsup_{t→∞} b(t) < ∞`,\nand suppose `Y'(t) ≤ −a Y(t) + b(t)`. Then `limsup_{t→∞} Y(t) ≤ β / a`, and for\nevery `ε > 0` the ball `{Y ≤ β/a + ε}` is absorbing. If additionally\n`∫₀^∞ b(t) e^{at} dt` controls the transient, then `Y(t) → β/a` whenever\n`b(t) → β`. **Test:** integrating factor `Y(t)e^{at}`; the limsup step needs\n`limsup` subadditivity for the convolution `∫₀ᵗ e^{−a(t−s)} b(s) ds`. This\ngeneralises `dissipative_limsup_le` (constant `b`).\n\n## Conjecture 3 — Two-mode energy/enstrophy comparison (2D Ladyzhenskaya shadow)\n\nCouple energy `E` and enstrophy `Z` by `E' ≤ −2ν λ₁ E` and\n`Z' ≤ −2ν Z + κ E Z` (the scalar shadow of the 2D Ladyzhenskaya estimate\n`|∫ (u·∇)ω · ω| ≤ κ ‖u‖₂ ‖∇ω‖₂ ‖ω‖₂`). Conjecture: with `E` decaying\nexponentially (from `Core.energy_exponential_decay`), `∫₀^∞ E < ∞`, hence\n`Z(t) ≤ Z₀ · exp(κ ∫₀^∞ E) < ∞` for all `t` — an **unconditional global enstrophy\nbound** for 2D, with no smallness hypothesis. **Test:** Grönwall with the\nintegrable factor `κ E(t)`; the finite total energy is `Estimates.energy_dissipation_budget`.\n\n## Conjecture 4 — Determining-modes / finite-dimensionality count\n\nFrom the absorbing ball (radius `R = b/a`) plus the dissipation budget\n`∫₀ᵀ G ≤ Z₀/(2ν)` (`Estimates`), conjecture a scalar Constantin–Foias–Temam\nbound: the number `N` of \"determining modes\" needed to pin the long-time state\nsatisfies `N ≤ c · (b / (a² ν))` for an absolute constant `c`. **Test (scalar\nform):** if two trajectories `Y₁, Y₂` obey the same inequality and agree on a\n\"low-mode\" projection with `‖high modes‖ ≤ a/(2κ)`, then `|Y₁ − Y₂| → 0`. This is\na contraction/Grönwall statement provable in the present abstract setting.\n\n## Conjecture 5 (RESOLVED this cycle) — Critical (logarithmic) borderline\n\nBetween the globally-regular linear regime and the supercritical cubic regime lies\nthe **critical** inequality `Z'(t) ≤ C Z(t) log(e + Z(t))`. **Now proved** in\n`CriticalBorderline.lean` (`log_critical_no_blowup`): it is globally regular with\n`Z(t) ≤ exp(log(e + Z₀)·e^{Ct}) − e` for all `t ≥ 0` — no finite-time blow-up, only\ndouble-exponential growth. The proof used the substitution `v = log(e + Z)`, which\nlinearises to `v' ≤ C v`. *Next:* push the borderline further — see Conjecture 6.\n\n## Conjecture 6 — The exact iterated-logarithm threshold\n\nHaving placed `Z log(e+Z)` on the regular side and `Z³` on the blow-up side, locate\nthe **sharp** threshold. Conjecture: `Z' ≤ C·Z·log(e+Z)·log(log(e²+Z))` is still\nglobally regular (triple-exponential growth), while for any `p > 1`,\n`Z' ≤ C·Z·log^p(e+Z)` **blows up in finite time** when `p > 1` and the data is\nlarge. **Test:** for the regular side, the substitution `w = log(log(e²+Z))`\nlinearises; for the blow-up side, `v = log(e+Z)` obeys `v' ≤ C v^p`, reducing to\nthe supercritical power-law of Conjecture 1. *Falsifiable:* a global bound for some\n`p > 1` in `Z·log^p(e+Z)`, or finite-time blow-up for the iterated-log inequality.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2571",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0548f2b9",
-    "status": "available",
-    "timestamp": "2026-06-26T03:16:20.885447+00:00",
-    "title": "Scalar a-priori-estimate framework"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Erdős–Rényi threshold phenomena\n\nDerived from this cycle's findings (`Model.lean`, `SecondMoment.lean`,\n`Concrete.lean`).  Each conjecture is bold, falsifiable, and accompanied by the\nkey insight that makes it tractable and a \"why now?\" justification grounded in\nthe artifacts already proved.\n\n## C1. Sharp connectivity threshold via second moment of isolated vertices\n**Statement.** Let `X_n` be the number of isolated vertices in `G(n, p_n)` with\n`p_n = (ln n + c)/n`.  Then `Var X_n / (𝔼 X_n)² → 0`, and combined with\n`𝔼 X_n → e^{-c} > 0`, `second_moment_zero` forces `ℙ(X_n = 0) → 0`; hence\n`G(n, p_n)` is disconnected with probability `→ 1 − e^{-e^{-c}}`, giving the\nsharp threshold at `p = ln n / n`.\n\nThe key insight is... that the *exact* first moment `𝔼 X_n = n(1−p)^{n−1}`\n(already formalized as `Concrete.expected_isolated`) only needs to be paired with\na covariance bound for pairs of vertices, because `second_moment_zero` is already\navailable as a black box.\n\n**Why now?** Both moment inequalities (`firstMoment`, `second_moment_zero`) and\nthe exact isolated-vertex expectation are now proved with `0` sorries, so only the\ntwo-vertex covariance estimate remains — a single, self-contained lemma.\n\n## C2. The variance of subgraph counts factors over edge overlaps\n**Statement.** For a fixed graph `H` with `e_H` edges, the count `X_H` of copies\nof `H` in `G(n,p)` satisfies\n`Var X_H = ∑_{H', H''} (p^{|E(H')∪E(H'')|} − p^{2 e_H})`, summed over ordered\npairs of copies, and the dominant contribution comes from pairs sharing at least\none edge.\n\nThe key insight is... that `prob_allPresent` already gives\n`ℙ(both copies present) = p^{|E(H')∪E(H'')|}` exactly, so the variance is a pure\nfinite sum over copy-pairs graded by their edge-overlap — no measure theory.\n\n**Why now?** `expectation_subgraphCount` established the first moment as a sum of\n`p^{|S_i|}`; the identical Fubini/independence template extends verbatim to the\n*product* indicator of two copies, making the second moment a mechanical\ngeneralization.\n\n## C3. Threshold for `H`-appearance is `n^{-1/m(H)}` where `m(H)=max density`\n**Statement.** For a fixed connected graph `H`, the threshold function for the\nappearance of a copy of `H` in `G(n,p)` is `p = n^{-1/m(H)}` with\n`m(H) = max_{H'⊆H} |E(H')|/|V(H')|`; below it copies vanish, above it they appear\nwhp.\n\nThe key insight is... that the \"below\" direction is *already* a corollary of\n`firstMoment` (`𝔼 = Θ(n^{|V|} p^{|E|}) → 0`), and the \"above\" direction is\nexactly the regime where C2's variance bound makes `Var/𝔼² → 0`, so the whole\ntheorem reduces to the densest-subgraph optimization defining `m(H)`.\n\n**Why now?** The two halves of the method are formalized; the remaining content is\nthe combinatorial optimization `m(H)`, which is finite for each fixed `H`.\n\n## C4. Poisson limit for triangle counts at the critical scale `p = c/n`\n**Statement.** At `p_n = c/n`, the number of triangles `T_n` converges in\ndistribution to `Poisson(c³/6)`; in particular `ℙ(T_n = 0) → e^{-c³/6}`.\n\nThe key insight is... that `Concrete.expected_triangles` already pins\n`𝔼 T_n = C(n,3)p³ → c³/6`, and the method of moments only requires showing the\n`k`-th factorial moment `→ (c³/6)^k`, each of which is again a\n`prob_allPresent`-style product over `k` edge-disjoint triangles.\n\n**Why now?** The exact expectation is proved; the factorial-moment computation is\nthe same independence identity iterated, and triangles are edge-disjoint\n\"generically\", which is precisely what makes the Poisson regime appear at `1/n`.\n\n## C5. Giant component emergence at `p = 1/n` via a branching-process coupling\n**Statement.** For `p = c/n` with `c > 1`, `G(n,p)` has a unique component of\nsize `Θ(n)` whp, while for `c < 1` all components are `O(log n)`; the transition\nis exactly at `c = 1`.\n\nThe key insight is... that the local exploration of a component is coupled to a\nGalton–Watson branching process with `Poisson(c)` offspring, whose survival\nprobability is positive iff `c > 1`; the subcritical bound is a first-moment\n(`firstMoment`-style) union bound over long paths.\n\n**Why now?** The subcritical half is within reach of the existing first-moment\nmachinery (expected number of length-`k` paths is `n^{k+1}p^k = n(np)^k`, summable\nfor `np < 1`); formalizing the branching coupling is the natural next milestone\nonce the path-count lemma — a direct `expectation_subgraphCount` instance — is in\nplace.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2572",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d4c70419",
-    "status": "available",
-    "timestamp": "2026-06-26T03:18:23.930480+00:00",
-    "title": "Derived from this cycle's findings (`Model.lean`, `SecondMoment.lean`,"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — OEIS A080170 binomial GCD (`D(k) = gcd_{2≤q≤k+1} C(qk,k)`)\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle.\nThe headline outcome was a **disproof** of the exact-value form of Ralf Stephan's\nconjecture (17) (`exact_value_conjecture_false`, first counterexample `k = 11`),\ntogether with proofs that the conjecture *is* exact at the level of the dominant\nprime on the prime and prime-power fibres (`prime_dvd_binomGCD`,\n`not_pSq_dvd_binomGCD`, `prime_dvd_binomGCD_primePow`). Each direction below is\nfalsifiable by a single `#eval` or by a Lean proof/counterexample.\n\n## C1. The corrected closed form via carry-minima\n\n**Conjecture.** For all `k ≥ 2`, with `n = k+1`, `p^a ∥ n`, `m = n/p^a`,\n```\nD(k) = max_{p ∣ n}  p^{ max(0, a − ⌊log_p m⌋) }      (= 1 if all exponents vanish).\n```\n\nThe key insight is that Kummer's theorem makes `v_p(C(qk,k))` the number of base-`p`\ncarries on adding `k` and `(q-1)k`, and `D` takes the *minimum* carry count over\n`q`; the minimum equals `a − ⌊log_p m⌋`, not `a`, because the complementary factor\n`m` forces carry cancellation at the top `⌊log_p m⌋` digits.\n**Why now?** We already verified this formula against `D(k)` for every `2 ≤ k ≤ 201`\nin Lean and proved the `m = 1` (prime-power) instance exactly; the general case is a\nfinite-carry counting argument squarely within reach of the `padicValNat_choose'`\nAPI used in this cycle.\n\n## C2. The nontriviality dichotomy is sharp\n\n**Conjecture.** For all `k ≥ 2`, `D(k) > 1 ⟺ (k+1)/P(k+1) ≤ P(k+1)`.\n\nThis is the half of Stephan (17) that *survived* all testing (no counterexample to\n`k = 201`), even though the exact value failed. The key insight is that `D(k) > 1`\niff *some* prime `p ∣ n` has a guaranteed carry for every `q`, which happens exactly\nwhen the dominant prime power dominates its cofactor, i.e. `m ≤ p^a`.\n**Why now?** The carry analysis of C1 yields the `⇐` direction directly (a positive\nexponent), and the `⇒` direction reduces to exhibiting, for a non-dominant prime, a\nsingle `q` with zero carries — a localized, checkable statement.\n\n## C3. `D` is always a prime power (or 1)\n\n**Conjecture.** For all `k ≥ 2`, `D(k) ∈ {1} ∪ { p^b : p prime }`.\n\nThe key insight is that at most one prime can contribute to the gcd: if two distinct\nprimes `p, p'` both divided `D(k)`, both would need a carry for *every* `q`, but the\nminimal-carry witnesses for `p` and `p'` occur at different `q` (the residue patterns\nare incompatible), so they cannot coexist. **Why now?** Verified for all `2 ≤ k ≤ 201`;\nthe obstruction is a clean two-prime incompatibility lemma that the present\n`padicValNat_choose'` machinery can express.\n\n## C4. Exact value on the full prime-power fibre\n\n**Conjecture.** For every prime `p` and `a ≥ 1`, `D(p^a − 1) = p^a`.\n\nThe key insight is that the central term `q = 2` already realises the *minimum*\nvaluation `a` (adding `p^a−1` to itself produces exactly `a` carries), while every\nterm has at least `a` carries, so the `p`-part is pinned to `p^a` and no other prime\nsurvives. We proved the two endpoints for `a = 1` (`v_p(D(p−1)) = 1`) and the lower\nbound `p ∣ D(p^a−1)` for all `a` in this cycle. **Why now?** Only the \"exactly `a`,\nnot more\" upper bound and the \"no other prime\" step remain, both reachable by the\nsame carry-counting used for `not_pSq_dvd_central`.\n\n## C5. Cross-link to Ram's theorem (row vs column gcd)\n\n**Conjecture.** Define the Pascal *row* gcd `R(n) = gcd_{0<j<n} C(n,j)` (Ram:\n`R(n) = p` if `n = p^a`, else `1`). Then on prime powers the A080170 *column* gcd and\nthe row gcd agree up to the exponent: `D(p^a − 1) = p^a = R(p^a)·p^{a−1}`, and more\ngenerally `rad(D(k)) = rad(R(k+1))` (same prime, possibly higher power).\n\nThe key insight is that both gcds are governed by base-`p` carries, but the column\nfamily `C(qk,k)` ranges over a longer arithmetic progression than a single Pascal\nrow, allowing higher powers to persist. **Why now?** Ram's theorem is already in the\nliterature referenced by this mission, and our Kummer-based proofs of the prime\nfibre give the exact dictionary between the two gcds for the first time.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Logic"
-    ],
-    "id": "fd_2573",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f6b20d87",
-    "status": "available",
-    "timestamp": "2026-06-26T03:43:31.165077+00:00",
-    "title": "Derived from the Stage-3 analysis and Stage-4 critique of this research cycle."
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -9632,7 +9627,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ab8befc8",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -9644,7 +9639,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -10229,7 +10224,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b0e2bb19",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -10242,7 +10237,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
