@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c38e2bf9",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Tropical weight enumerator profiles for binary linear codes\n\nThis cycle introduced `TropicalWeightEnumerator.lean`, the **min-plus tropicalization**\nof the classical Hamming weigh",
-      "quality_score": 0.7101600000000001,
-      "sorry_count": 0,
-      "theorem_count": 7,
-      "timestamp": "2026-06-16T07:28:43",
-      "title": "Tropical weight enumerator profiles for binary linear codes via Smooth Poincaré primitives"
-    },
-    {
       "cycle_id": "e42393e4",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Weight-Threshold Profiles & the Codes → Tropical Valuation Functor\n\nThese conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`, which builds the\nfunctor `FinLinCodes",
@@ -499,19 +489,19 @@
       "theorem_count": 22,
       "timestamp": "2026-06-26T01:35:24",
       "title": "Bourgain's Slicing Problem"
+    },
+    {
+      "cycle_id": "0dc2bca1",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Fourier Analysis on Finite Groups (Combinatorics)\n\nThis cycle established, for `A ⊆ ℤ/Nℤ`, the spectral toolkit on `ZMod.dft`\n(orthogonality, convolution theorem, Parseval/Planch",
+      "quality_score": 0.7367999999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-26T02:43:22",
+      "title": "Fourier Analysis on Finite Groups"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "78320320",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions\n\nThis note records concrete next steps building on\n`Catalog/Cryptography/LibraryOfBabelEntropy.lean`, which proves that every finite-order\nRényi entropy of the *uniform* distributi",
-      "quality_score": 0.5258320497819382,
-      "sorry_count": 0,
-      "theorem_count": 82,
-      "timestamp": "2026-06-19T14:45:55",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
     {
       "cycle_id": "6495e602",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 20,
       "timestamp": "2026-06-26T02:42:00",
       "title": "Generalized Gawron–Miska–Ulas unboundedness for arbitrary integer bases"
+    },
+    {
+      "cycle_id": "0dc2bca1",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Fourier Analysis on Finite Groups (Combinatorics)\n\nThis cycle established, for `A ⊆ ℤ/Nℤ`, the spectral toolkit on `ZMod.dft`\n(orthogonality, convolution theorem, Parseval/Planch",
+      "quality_score": 0.7367999999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-26T02:43:22",
+      "title": "Fourier Analysis on Finite Groups"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "a5fa8083",
-      "domain": "Computation",
-      "name": "ker_pow_mono",
-      "quality": 0.789328
-    },
-    {
-      "cycle_id": "a5fa8083",
-      "domain": "Computation",
-      "name": "ker_pow_succ_eq_comap",
-      "quality": 0.789328
-    },
-    {
-      "cycle_id": "cd0ef092",
-      "domain": "Bridges",
-      "name": "therefore",
-      "quality": 0.7045299999999999
-    },
     {
       "cycle_id": "cd0ef092",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Pythagorean",
       "name": "sgn_not",
       "quality": 0.7400800000000001
+    },
+    {
+      "cycle_id": "0dc2bca1",
+      "domain": "Combinatorics",
+      "name": "conj_stdAddChar",
+      "quality": 0.7367999999999999
+    },
+    {
+      "cycle_id": "0dc2bca1",
+      "domain": "Combinatorics",
+      "name": "stdAddChar_sum_mul",
+      "quality": 0.7367999999999999
+    },
+    {
+      "cycle_id": "0dc2bca1",
+      "domain": "Combinatorics",
+      "name": "dft_conv",
+      "quality": 0.7367999999999999
     }
   ],
-  "last_updated": "2026-06-26T02:42:00",
+  "last_updated": "2026-06-26T02:43:22",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "e88eb144",
-        "quality": 0.7144,
-        "theorems": 33,
-        "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-      },
-      {
         "cycle_id": "df051b46",
         "quality": 0.8183600000000001,
         "theorems": 3,
@@ -3265,6 +3259,12 @@
         "quality": 0.6342000000000001,
         "theorems": 3,
         "title": "Tropical Curves and Chip-Firing Games"
+      },
+      {
+        "cycle_id": "0dc2bca1",
+        "quality": 0.7367999999999999,
+        "theorems": 10,
+        "title": "Fourier Analysis on Finite Groups"
       }
     ],
     "Computation": [

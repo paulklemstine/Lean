@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0dc2bca1",
     "filename": "fourier_analysis_on_finite_groups.json",
     "pkg_num": 72,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7367999999999999,
     "title": "Fourier Analysis on Finite Cyclic Groups: Convolution, Plancherel, and the Spectral Formula for Additive Energy"
   },
   {
@@ -2097,8 +2097,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "fourier_analysis_on_finite_groups",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7367999999999999,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Fourier Analysis on Finite Cyclic Groups: Convolution, Plancherel, and the Spectral Formula for Additive Energy"
     }

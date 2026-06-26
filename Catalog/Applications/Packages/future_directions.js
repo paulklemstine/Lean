@@ -3626,7 +3626,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Externally Supported Independence Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7fd1af1",
     "description": "Conjecture: For rational \u03b2 = p/q, the natural extension has finite domain bridges.",
     "domains": [
       "Pythagorean",
@@ -3636,7 +3636,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -5142,11 +5142,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For a non\u2011negative homogeneous convex function \\(p\\) and a non\u2011negative homogeneous convex function \\(q\\) on a finite\u2011dimensional real Banach space \\(X\\), consider the ratio function \\(f = p/q\\) (defined on \\(\\{x \\mid q(x)>0\\}\\)). The conjecture asserts that the sublevel sets of \\(f\\) and of its polarity dual \\(f^\\circ\\) are homeomorphic after an explicit linear transformation given by the polarity map. Consequently, their reduced homology groups are isomorphic in all degrees, establishing a precise topological duality that underlies the critical\u2011point Morse equivalence proved in the paper.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2565",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.27004v1",
+    "status": "available",
+    "timestamp": "2026-06-26T02:44:27.903292+00:00",
+    "title": "Duality of Sublevel Set Homotopy Types for RC Functions on Finite\u2011Dimensional Banach Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2565",
+    "id": "fd_2566",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5160,7 +5175,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2566",
+    "id": "fd_2567",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5175,7 +5190,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2567",
+    "id": "fd_2568",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5190,13 +5205,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2568",
+    "id": "fd_2569",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
     "status": "available",
     "timestamp": "2026-06-26T02:00:32.669730+00:00",
     "title": "Join of Partition Lattices Corresponds to Graph Union Connectivity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let $f \\in \\mathcal{O}_K[X]$ be a monic irreducible polynomial defining a finite extension of $K$, where $K$ is a finite extension of $\\mathbb{Q}_p$. Suppose the Newton polygon of $f$ with respect to some monic irreducible $\\varphi \\in \\mathcal{O}_K[X]$ satisfies Montes and Nart's index conditions (i.e., the indices of the equation order induced by $f$ are trivial). Then, the decomposition group of any prime $\\mathfrak{p}$ of $\\mathcal{O}_K$ in the splitting field of $f$ is isomorphic to the subgroup of the Galois group constructed via the Newton polygon method described in the paper. This conjecture formalizes the claim that the algorithmic procedure extends to the weaker index assumptions.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2570",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.26888v1",
+    "status": "available",
+    "timestamp": "2026-06-26T02:52:07.462502+00:00",
+    "title": "Decomposition Group Computation via Newton Polygon Indices"
   },
   {
     "consumed_by_exp_id": "",
@@ -5401,21 +5431,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Generalized Gawron\u2013Miska\u2013Ulas unboundedness\n\nThis cycle proved the Gawron\u2013Miska\u2013Ulas unboundedness conjecture on the union\n`{m = 2, all b \u2265 2} \u222a {2 \u2264 m \u2264 b}` of the parameter range, via the Mahler\nfunctional equation `Q_{N+1}(x) = (1-x)^m \u00b7 Q_N(x^b)` and the base-`b` repunit\nidentity `T_{b,m}(R_k) = (-m)^k` (valid when `b \u2265 m`; for `m = 2` valid for all `b`).\nIt also proved the contrast `|T_{b,1}(n)| \u2264 1` (boundedness at `m = 1`). The findings\nbelow are the natural, falsifiable next targets.\n\n## Direction 1 \u2014 The genuinely open corner: small base, large exponent (`b < m`)\n\n**Conjecture.** For every `b \u2265 2` and `m \u2265 2`, `T_{b,m}` is unbounded \u2014 in\nparticular in the still-open region `2 \u2264 b < m` (e.g. `b = 3, m = 4`, where the\nclean repunit identity fails: `T_{3,4}(R_k) = 1,-4,17,-76,353,\u2026`, not `(-4)^k`).\n\nThe key insight is that for `b < m` the \"single surviving binomial term\" collapse\nbreaks: at `n = b\u00b7R_k + 1` the indices `j \u2261 1 (mod b)` inside `[0,m]` are\n`j = 1, 1+b, 1+2b, \u2026`, so the repunit value obeys the *multi-term* recurrence\n`T(R_{k+1}) = \u03a3_{t : 1+tb \u2264 m} (-1)^{1+tb} \\binom{m}{1+tb} \u00b7 T_{b,m}(R_k - t)`,\ncoupling the repunit to its lower neighbours through a fixed transfer operator.\n\nWhy now? The functional equation `factor_succ` and the coefficient extraction\n(`coeff_expand`, `coeff_one_sub_X_pow`) are now fully formalized, so this\nmulti-term recurrence is mechanically derivable in Lean \u2014 only the spectral\n(growth) estimate remains.\n\n## Direction 2 \u2014 A transfer-matrix criterion for unboundedness\n\n**Conjecture.** Fix `b, m`. The finite window `v_k = (T_{b,m}(R_k - t))_{0 \u2264 t \u2264 T}`\n(for `T = \u230a(m-1)/b\u230b`) satisfies `v_{k+1} = M \u00b7 v_k` for a fixed integer matrix `M`\ndepending only on `b, m`, and `T_{b,m}` is unbounded **iff** the spectral radius of\n`M` exceeds `1`.\n\nThe key insight is that the Mahler equation makes `T_{b,m}` a `b`-regular sequence,\nso any \"digit-pattern\" subsequence (here, repunits) is governed by a constant\nlinear recursion; unboundedness is then a finite eigenvalue computation.\n\nWhy now? With `factor_succ` in hand the entries of `M` are explicit binomial\ncoefficients `\u00b1\\binom{m}{1+tb}`, so `M` can be built and its characteristic\npolynomial checked by `decide`/`norm_num` for each `(b,m)` \u2014 turning an analytic\nconjecture into a finite, falsifiable computation.\n\n## Direction 3 \u2014 Sharpness: the repunit is the global maximum when `b \u2265 m`\n\n**Conjecture.** For `b \u2265 m \u2265 2`, `max_{0 \u2264 n < b^k} |T_{b,m}(n)| = m^k`, attained\nexactly at the repunit `R_k`.\n\nThe key insight is that the proven lower bound `|T_{b,m}(R_k)| = m^k` already\nmatches the largest value observed in every computed window, suggesting the\n`(1-x)^m` factor cannot amplify a coefficient beyond the \"all-ones digit\" index.\n\nWhy now? We have the exact lower bound; the matching upper bound is a sup-norm\nestimate `\u2016(1-x)^m \u00b7 expand_b f\u2016_\u221e \u2264 m \u00b7 \u2016f\u2016_\u221e` on coefficients, an inductive\ninequality well suited to the same `coeff_mul` machinery used here.\n\n## Direction 4 \u2014 Exact 2-adic valuation along repunits\n\n**Conjecture.** For all `b \u2265 2` and all `k`, the 2-adic valuation satisfies\n`v_2(T_{b,2}(R_k)) = k`, and more generally for a prime `p \u2223 m` with `b \u2265 m`,\n`v_p(T_{b,m}(R_k)) = k \u00b7 v_p(m)`.\n\nThe key insight is that the formalized identity `T_{b,2}(R_k) = (-2)^k` gives\n`v_2 = k` immediately, and `T_{b,m}(R_k) = (-m)^k` gives `v_p = k\u00b7v_p(m)` in the\nlarge-base regime \u2014 so the valuation grows *linearly*, a quantitative\nstrengthening of unboundedness.\n\nWhy now? The closed forms `T_repunit` and `T_repunit_large` are already proved;\nthe valuation statements are one `padicValInt`/`multiplicity` rewrite away and\nneed no new mathematics.\n\n## Direction 5 \u2014 Boundedness boundary is exactly `m = 1`\n\n**Conjecture.** `T_{b,m}` is bounded **iff** `m \u2264 1`; equivalently, the bounded\ncases are precisely `m = 0` (the constant sequence) and `m = 1` (values in\n`{-1,0,1}`), for every base `b \u2265 2`.\n\nThe key insight is that `m = 1` boundedness (proved here via the two-term Mahler\nrecurrence whose branches never both fire because `b \u2224 1`) is *destroyed* at\n`m = 2`: the extra `\\binom{m}{1}` term doubles the value along repunits.\n\nWhy now? Both halves are within reach: `T_one_bounded` is done, and `T_two_unbounded`\nalready supplies the `m \u2265 2` direction for `m = 2`; combining with Direction 1 would\nclose the dichotomy entirely.\n",
-    "domains": [
-      "Pythagorean",
-      "Physics"
-    ],
-    "id": "fd_2569",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "9e1a2820",
-    "status": "available",
-    "timestamp": "2026-06-26T02:41:51.400936+00:00",
-    "title": "Gawron\u2013Miska\u2013Ulas unboundedness conjecture on the union"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5575,7 +5590,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "ab8befc8",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5584,23 +5599,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 9e1a2820 (Q=0.527) proved 20 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in ",
-    "domains": [
-      "Logic"
-    ],
-    "id": "sorry_fill_9e1a2820_ee08ecaa",
-    "priority_score": 0.57704,
-    "research_mode": "team",
-    "source_exp_id": "9e1a2820",
-    "status": "available",
-    "timestamp": "2026-06-26T02:42:00.409024+00:00",
-    "title": "Close Proofs: Generalized Gawron\u2013Miska\u2013Ulas unboundedness for arbitrary integer base"
   },
   {
     "consumed_by_exp_id": "",
