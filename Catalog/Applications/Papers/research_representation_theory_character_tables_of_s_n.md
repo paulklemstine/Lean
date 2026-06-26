@@ -1,353 +1,181 @@
-# Character-Theoretic Rigidity for Symmetric Groups: Machine-Verified Permutation Representations and Spectral Connections
+# An Explicit Bijection Between Partitions of $n$ and Conjugacy Classes of the Symmetric Group $S_n$
+
+**Author:** Aristotle
+**Date:** 2026-06-26
 
 ## Abstract
 
-We present a formally verified development of permutation representation theory for symmetric groups, establishing the fundamental trace–fixed-point identity, character decomposition theorems, orthogonality-certified irreducibility, and spectral connections to Cayley graph operators. Our development proves that for the symmetric group S₃, the character table is uniquely determined by structural constraints: orthogonality relations, integrality, and degree constraints force the three irreducible characters to be exactly the trivial, sign, and standard characters. All results are machine-verified in Lean 4 with Mathlib, with proofs relying only on standard axioms. We further establish a cross-domain spectral theorem connecting class sum operators to fixed-point statistics, bridging finite group representation theory with spectral graph theory.
+We present a fully formalized, constructive proof that for every natural number $n$ the partitions of $n$ are in explicit one-to-one correspondence with the conjugacy classes of the symmetric group $S_n = \operatorname{Sym}(\{1,\dots,n\})$. The bijection is given concretely: a partition $p$ of $n$ is sent to the conjugacy class of a standard permutation $\pi_p$ whose disjoint-cycle lengths realize the parts of $p$ (parts equal to $1$ becoming fixed points), and a conjugacy class is sent to the cycle-length partition of any of its representatives. The construction is delicate because the standard *cycle type* of a permutation records only cycles of length $\geq 2$, suppressing fixed points; the central lemma reconstructs the full partition by restoring exactly the right number of unit parts. Combining injectivity and surjectivity yields the equivalence
+$$\operatorname{Par}(n) \;\simeq\; \operatorname{Conj}(S_n),$$
+and as an immediate corollary the number of conjugacy classes of $S_n$ equals the partition number $p(n)$, with $p(3)=3$, $p(4)=5$, $p(5)=7$. Because the number of irreducible complex characters of a finite group equals its number of conjugacy classes, this fixes the side length of the (square) character table of $S_n$ at $p(n)$. We discuss the role of this counting result as the structural prerequisite for computing character tables of symmetric groups, and list testable conjectures for follow-up work.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The symmetric group $S_n$ is the group of all bijections of an $n$-element set under composition; it has order $n!$. Two of its most basic invariants are intertwined in a particularly clean way:
 
-Character theory, introduced by Frobenius [1], provides the principal tool for studying representations of finite groups. For symmetric groups S_n, the representation theory has deep connections with combinatorics (through the Robinson–Schensted correspondence and symmetric functions), algebraic geometry (through Schur functors), and mathematical physics (through quantum groups and conformal field theory).
+1. the **conjugacy classes** of $S_n$, the orbits under the action $\tau \mapsto \rho\,\tau\,\rho^{-1}$; and
+2. the **partitions** of $n$, the multisets of positive integers summing to $n$.
 
-Despite its central importance, the formal verification of even basic character-theoretic results for symmetric groups has remained largely unexplored. While computer algebra systems routinely compute character tables, the *correctness* of these computations relies on unverified software. Our work addresses this gap by providing machine-verified proofs of foundational results.
+The classical theorem connecting them states that two permutations are conjugate in $S_n$ if and only if they have the same multiset of cycle lengths, and that every multiset of cycle lengths summing to $n$ is realized. Consequently conjugacy classes of $S_n$ are indexed by partitions of $n$. This fact is the gateway to the representation theory of $S_n$: by Frobenius, the irreducible complex representations of $S_n$ are themselves indexed by partitions of $n$ (Specht modules), so the character table of $S_n$ is a square matrix of side $p(n)$ whose rows and columns are both naturally labeled by $\operatorname{Par}(n)$.
 
-### 1.2 Contributions
+This paper records a from-scratch, machine-verified construction of the indexing bijection itself — not merely a cardinality equality, but an explicit equivalence of sets with an inverse, together with the supporting lemmas. The work is self-contained: it depends only on the standard library facts that (i) every admissible multiset is a cycle type and (ii) conjugacy of permutations is detected by equality of partitions.
 
-Our main contributions are:
+### 1.1 Notation and conventions
 
-1. **Trace–Fixed-Point Identity** (Theorem 3.1): For any field K of characteristic zero and any σ ∈ S_n, the trace of the permutation representation equals the number of fixed points of σ.
+- $\operatorname{Par}(n)$ denotes the set of partitions of $n$, i.e. finite multisets of positive integers with sum $n$.
+- For a permutation $\sigma$, the **cycle type** $\operatorname{cycleType}(\sigma)$ is the multiset of lengths of the disjoint cycles of $\sigma$ that have length $\geq 2$. Fixed points (length-$1$ cycles) are **not** recorded.
+- The **partition of a permutation** $\operatorname{part}(\sigma)$ is the full partition of $n$ obtained from $\operatorname{cycleType}(\sigma)$ by appending $n - |\operatorname{cycleType}(\sigma)|$ parts equal to $1$, where $|\cdot|$ denotes the multiset sum. Thus $\operatorname{part}(\sigma)$ records all cycle lengths, including fixed points, and its parts sum to $n$.
+- $\operatorname{Conj}(S_n)$ denotes the set of conjugacy classes of $S_n$.
+- $\operatorname{IsConj}(\sigma,\tau)$ means $\sigma$ and $\tau$ are conjugate.
 
-2. **Character Decomposition** (Theorem 4.1): The permutation character decomposes as the trivial character plus the standard character: χ_perm = χ_triv + χ_std.
+We realize $S_n$ concretely as $\operatorname{Perm}(\operatorname{Fin} n)$, the permutations of the standard $n$-element type.
 
-3. **Orthogonality-Certified Irreducibility** (Theorem 5.1): The standard character of S₃ has inner product 1 with itself, certifying its irreducibility.
+---
 
-4. **Complete Orthogonality for S₃** (Theorems 5.2–5.7): All pairwise inner products among the three irreducible characters of S₃ are verified, establishing the full orthogonality table.
+## 2. Background lemmas (imported, stated for completeness)
 
-5. **Sum-of-Squares Completeness** (Theorem 5.8): The sum of squared degrees 1² + 1² + 2² = 6 = |S₃| certifies that the character table is complete.
+The construction rests on two standard structural facts, which we use as black boxes.
 
-6. **Spectral Cross-Domain Theorem** (Theorem 6.1): The trace of the class sum operator equals the sum of fixed-point counts, connecting representation theory to spectral graph theory.
+**Fact A (Existence of permutations with prescribed cycle type).**
+A multiset $m$ of positive integers is the cycle type of some permutation of an $n$-element set if and only if every element of $m$ is $\geq 2$ and the sum of $m$ is at most $n$.
 
-### 1.3 Related Work
+**Fact B (Conjugacy detects the partition).**
+For $\sigma,\tau \in S_n$,
+$$\operatorname{IsConj}(\sigma,\tau) \iff \operatorname{part}(\sigma) = \operatorname{part}(\tau).$$
 
-Formal verification of group theory in proof assistants has a growing literature. Gonthier's formal proof of the Feit–Thompson theorem [2] in Coq/SSReflect is the most celebrated achievement. Mathlib [3] provides extensive infrastructure for finite groups, linear algebra, and representation theory in Lean 4. However, explicit character computations for symmetric groups and the connection to spectral graph theory have not been previously formalized.
+Both facts are classical and available in the formalization's ambient library; the contribution of this paper is to leverage them into an explicit, invertible indexing of conjugacy classes by partitions.
 
-## 2. Definitions and Setup
+---
 
-### 2.1 The Permutation Representation
+## 3. The forward construction: from partitions to permutations
 
-**Definition 2.1** (Permutation Linear Representation). For a field K and n ∈ ℕ, the permutation representation of S_n = Equiv.Perm(Fin n) on K^n = (Fin n → K) is defined by:
+### 3.1 Realizing the larger parts as a cycle type
 
-```
-ρ(σ)(v) = v ∘ σ⁻¹
-```
+**Lemma 4 (`exists_perm_cycleType`).** *For every partition $p \in \operatorname{Par}(n)$ there exists $g \in S_n$ with*
+$$\operatorname{cycleType}(g) = \{\, a \in p \;:\; a \geq 2 \,\}$$
+*(the sub-multiset of parts of $p$ that are at least $2$).*
 
-This defines a left action: ρ(σ₁ · σ₂) = ρ(σ₁) ∘ ρ(σ₂).
+*Proof sketch.* Let $m = \{a \in p : a \geq 2\}$. Every element of $m$ is $\geq 2$ by construction, and $|m| \leq |p| = n$ because $m$ is a sub-multiset of $p$ and $p$ sums to $n$. By Fact A, $m$ is the cycle type of some permutation. $\qquad\blacksquare$
 
-**Definition 2.2** (Character Functions). We define:
-- Trivial character: χ_triv(σ) = 1 for all σ
-- Sign character: χ_sign(σ) = sgn(σ) ∈ {±1}
-- Permutation character: χ_perm(σ) = |{i ∈ Fin n : σ(i) = i}|
-- Standard character: χ_std(σ) = χ_perm(σ) - 1
+**Definition 3 (`permOfPartition`).** For $p \in \operatorname{Par}(n)$, let $\pi_p := \operatorname{permOfPartition}(p)$ be a chosen permutation provided by Lemma 4, so that by definition
+$$\operatorname{cycleType}(\pi_p) = \{\, a \in p : a \geq 2 \,\}. \tag{`permOfPartition_cycleType`}$$
 
-**Definition 2.3** (Character Inner Product). For a finite group G and characters χ, ψ : G → K:
+Geometrically, $\pi_p$ arranges $\{1,\dots,n\}$ into disjoint blocks whose sizes are the parts of $p$ and turns each block of size $\geq 2$ into a single cycle, leaving the size-$1$ blocks as fixed points.
 
-```
-⟨χ, ψ⟩ = (1/|G|) Σ_{g ∈ G} χ(g) · ψ(g)
-```
+### 3.2 Restoring the fixed points: the key lemma
 
-**Definition 2.4** (Class Sum Operator). For a finite set C ⊆ S_n:
+The cycle type forgets fixed points, so to recover the original partition we must show that re-appending the suppressed $1$'s reproduces $p$ exactly.
 
-```
-T_C = Σ_{σ ∈ C} ρ(σ)
-```
+**Lemma 6 (`permOfPartition_partition_parts`).** *For every $p \in \operatorname{Par}(n)$,*
+$$\operatorname{part}(\pi_p) = p \quad\text{(equality of partitions; equivalently, equality of their parts as multisets).}$$
 
-### 2.2 Conjugacy Classes of S₃
+*Proof sketch.* By definition of $\operatorname{part}$ and Lemma 5,
+$$\operatorname{part}(\pi_p) = \operatorname{cycleType}(\pi_p) \,\uplus\, \operatorname{replicate}\big(n - |\operatorname{cycleType}(\pi_p)|,\ 1\big) = \{a \in p : a \geq 2\} \,\uplus\, \operatorname{replicate}(k, 1),$$
+where $k = n - \sum_{a \in p,\, a\geq 2} a$. We compare this against the decomposition of $p$ itself into large and small parts,
+$$p = \{a \in p : a \geq 2\} \,\uplus\, \{a \in p : a < 2\}.$$
+Since every part of a partition is positive, each element of $\{a \in p : a < 2\}$ equals $1$; hence $\{a \in p : a < 2\} = \operatorname{replicate}(\ell, 1)$ where $\ell$ is the number of unit parts. Summing $p$ gives $\sum_{a\geq 2} a + \ell\cdot 1 = n$, so $\ell = n - \sum_{a\geq 2} a = k$. Therefore the two small-part blocks coincide, and adding the (shared) large-part block yields $\operatorname{part}(\pi_p) = p$. $\qquad\blacksquare$
 
-S₃ has 6 elements partitioned into 3 conjugacy classes by cycle type:
-- **Identity class** {e}: 1 element, 3 fixed points
-- **Transposition class** {(01), (02), (12)}: 3 elements, 1 fixed point each
-- **3-cycle class** {(012), (021)}: 2 elements, 0 fixed points each
+This lemma is the technical crux: it certifies that the map $p \mapsto \pi_p$ does not lose information through the fixed-point suppression built into the cycle-type convention.
 
-## 3. The Trace–Fixed-Point Identity
+---
 
-### 3.1 Matrix Representation
+## 4. The backward construction: from permutations to partitions
 
-**Lemma 3.1** (Permutation Matrix). The matrix of ρ(σ) in the standard basis {e_i} of K^n is the permutation matrix:
+**Definition 7 (`permPartition`).** For $\sigma \in S_n$, define $\operatorname{permPartition}(\sigma) \in \operatorname{Par}(n)$ to be $\operatorname{part}(\sigma)$, viewed as a partition of the number $n$. A re-indexing is required because $\operatorname{part}(\sigma)$ is, a priori, a partition of $\operatorname{card}(\operatorname{Fin} n)$; the canonical identification $\operatorname{card}(\operatorname{Fin} n) = n$ supplies it.
 
-```
-M(σ)_{ij} = δ_{σ(j),i} = [σ(j) = i]
-```
+**Lemma 9 (`parts_cast`).** *Transporting a partition along an equality of its underlying integer leaves its multiset of parts unchanged.*
 
-*Proof sketch.* The j-th basis vector e_j maps to e_j ∘ σ⁻¹, which has value 1 at position σ(j) and 0 elsewhere. Thus the (i,j) entry of the matrix is [σ⁻¹(i) = j] = [i = σ(j)] = [σ(j) = i]. □
+**Lemma 8 (`permPartition_parts`).** *For every $\sigma$, $\operatorname{permPartition}(\sigma)$ has the same parts as $\operatorname{part}(\sigma)$.* (Immediate from Lemma 9.)
 
-### 3.2 Main Theorem
+**Lemma 13 (`isConj_permOfPartition`).** *If $\sigma \in S_n$ satisfies $\operatorname{part}(\sigma) = p$ (as multisets of parts), then $\operatorname{IsConj}(\pi_p, \sigma)$.*
 
-**Theorem 3.1** (Trace = Fixed Points). For any field K of characteristic zero, any n ∈ ℕ, and any σ ∈ S_n:
+*Proof sketch.* By Fact B it suffices to show $\operatorname{part}(\pi_p) = \operatorname{part}(\sigma)$. By Lemma 6, $\operatorname{part}(\pi_p) = p = \operatorname{part}(\sigma)$. $\qquad\blacksquare$
 
-```
-tr(ρ(σ)) = |Fix(σ)|
-```
+---
 
-where Fix(σ) = {i ∈ Fin n : σ(i) = i}.
+## 5. The bijection
 
-*Proof.* The trace equals the sum of diagonal entries of M(σ):
+**Definition 10 (`toConjClass`).** $\Phi : \operatorname{Par}(n) \to \operatorname{Conj}(S_n)$, $\Phi(p) := [\pi_p]$, the conjugacy class of $\pi_p$.
 
-```
-tr(ρ(σ)) = Σ_i M(σ)_{ii} = Σ_i [σ(i) = i] = |Fix(σ)|
-```
+**Definition 11 (`ofConjClass`).** $\Psi : \operatorname{Conj}(S_n) \to \operatorname{Par}(n)$, $\Psi(c) := \operatorname{permPartition}(\sigma)$ for any representative $\sigma \in c$. This is well defined: if $\sigma,\sigma'$ are conjugate then by Fact B they have equal partitions, so $\operatorname{permPartition}(\sigma) = \operatorname{permPartition}(\sigma')$. (Lemma 12, `ofConjClass_mk`, records $\Psi([\sigma]) = \operatorname{permPartition}(\sigma)$.)
 
-The formal proof proceeds by:
-1. Rewriting the trace using `LinearMap.trace_eq_matrix_trace` with the standard basis `Pi.basisFun K (Fin n)`.
-2. Applying `permLinearRep_matrix_entry` to identify diagonal entries.
-3. Converting the sum of indicator functions to a cardinality via `Fintype.card_subtype`. □
+**Lemma 14 (`toConjClass_injective`).** *$\Phi$ is injective.*
 
-### 3.3 Class Function Property
+*Proof sketch.* Suppose $\Phi(p) = \Phi(q)$, i.e. $[\pi_p] = [\pi_q]$, so $\operatorname{IsConj}(\pi_p,\pi_q)$. By Fact B, $\operatorname{part}(\pi_p) = \operatorname{part}(\pi_q)$. By Lemma 6 these equal $p$ and $q$ respectively, hence $p = q$. $\qquad\blacksquare$
 
-**Theorem 3.2** (Conjugation Invariance). For any σ, τ ∈ S_n:
+**Lemma 15 (`toConjClass_surjective`).** *$\Phi$ is surjective.*
 
-```
-|Fix(τστ⁻¹)| = |Fix(σ)|
-```
+*Proof sketch.* Let $c \in \operatorname{Conj}(S_n)$ and choose a representative $\sigma \in c$. Put $p := \operatorname{permPartition}(\sigma)$. By Lemma 13 (with $\operatorname{part}(\sigma) = p$ via Lemma 8), $\operatorname{IsConj}(\pi_p, \sigma)$, so $[\pi_p] = [\sigma] = c$. Thus $\Phi(p) = c$. $\qquad\blacksquare$
 
-*Proof.* The map i ↦ τ⁻¹(i) is a bijection from Fix(τστ⁻¹) to Fix(σ). If τσ(τ⁻¹(i)) = i, then σ(τ⁻¹(i)) = τ⁻¹(i). □
+**Theorem 1 (Main, `partitionEquivConjClasses`).** *For every $n \in \mathbb{N}$, the maps $\Phi$ and $\Psi$ are mutually inverse, giving an explicit equivalence*
+$$\operatorname{Par}(n) \;\simeq\; \operatorname{Conj}(S_n).$$
 
-## 4. Character Decomposition
+*Proof sketch.* $\Phi$ is a bijection by Lemmas 14 and 15. We verify the inverse is $\Psi$ directly.
+- $\Psi(\Phi(p)) = \Psi([\pi_p]) = \operatorname{permPartition}(\pi_p)$, whose parts equal $\operatorname{part}(\pi_p) = p$ by Lemmas 8 and 6; hence $\Psi(\Phi(p)) = p$.
+- $\Phi(\Psi(c))$: pick $\sigma \in c$; then $\Psi(c) = \operatorname{permPartition}(\sigma) =: p$ and, as in Lemma 15, $\Phi(p) = [\pi_p] = [\sigma] = c$.
+Thus $\Psi = \Phi^{-1}$. $\qquad\blacksquare$
 
-### 4.1 Decomposition Theorem
+**Corollary 2 (Counting).** *The number of conjugacy classes of $S_n$ equals the partition number $p(n)$:*
+$$|\operatorname{Conj}(S_n)| = p(n).$$
+*In particular $|\operatorname{Conj}(S_3)| = 3$, $|\operatorname{Conj}(S_4)| = 5$, $|\operatorname{Conj}(S_5)| = 7$.*
 
-**Theorem 4.1** (Permutation Character Decomposition). For any σ ∈ S_n:
+*Proof.* A bijection of finite sets preserves cardinality; apply Theorem 1 and recall $|\operatorname{Par}(n)| = p(n)$. $\qquad\blacksquare$
 
-```
-χ_perm(σ) = χ_triv(σ) + χ_std(σ)
-```
+---
 
-*Proof.* By definition, χ_std(σ) = χ_perm(σ) - 1 and χ_triv(σ) = 1, so χ_triv(σ) + χ_std(σ) = 1 + (χ_perm(σ) - 1) = χ_perm(σ). □
+## 6. Consequence for character tables
 
-### 4.2 The Standard Subspace
+For any finite group $G$, the number of irreducible complex characters equals the number of conjugacy classes; hence the character table is a square matrix. Specializing to $G = S_n$ and invoking Corollary 2:
 
-**Definition 4.1.** The standard subspace is W = ker(Σ), where Σ: K^n → K sends v ↦ Σᵢ v(i).
+**Proposition 3.** *The character table of $S_n$ is a square matrix of side $p(n)$.* For $n = 3, 4, 5$ the tables are $3\times 3$, $5\times 5$, and $7\times 7$ respectively.
 
-**Theorem 4.2** (Invariance). W is invariant under the permutation representation.
+This is precisely the "column count" needed before any explicit character table of $S_n$ can be assembled: it tells us how many irreducible representations to find (the rows) and how many conjugacy classes to evaluate them on (the columns), and that the two counts agree. The Frobenius indexing of both rows and columns by $\operatorname{Par}(n)$ then makes the table a square matrix naturally addressed by pairs of partitions.
 
-*Proof.* If Σᵢ v(i) = 0, then Σᵢ v(σ⁻¹(i)) = Σᵢ v(i) = 0, since σ⁻¹ is a bijection on Fin n. □
+---
 
-### 4.3 Degree of the Standard Character
+## 7. Algorithmic content
 
-**Theorem 4.3.** For n ≥ 1, χ_std(e) = n - 1, confirming dim(W) = n - 1.
+The proof is constructive and yields directly executable procedures:
 
-## 5. Orthogonality and Rigidity for S₃
+1. **Enumerate $\operatorname{Par}(n)$** by the standard recursion on largest-part-bounded partitions; the count is $p(n)$.
+2. **Realize a partition as a permutation** via `permOfPartition`: lay out $\{1,\dots,n\}$ into consecutive blocks of the prescribed sizes and cycle each block.
+3. **Classify a permutation** via `permPartition`: compute the disjoint-cycle decomposition and read off the sorted multiset of cycle lengths (including fixed points).
+4. **Conjugacy test**: two permutations are conjugate iff steps (3) produce equal partitions (Fact B), so conjugacy is decided in linear time after cycle decomposition.
 
-### 5.1 Irreducibility of the Standard Character
+These four primitives let one compute the full conjugacy-class census of $S_n$ — together with class sizes via the centralizer-order formula $|Z(\sigma)| = \prod_i i^{m_i}\, m_i!$ (where $m_i$ is the number of parts equal to $i$) and class size $n!/|Z(\sigma)|$ — and verify $\sum_{\text{classes}} (\text{class size}) = n!$ as a built-in consistency check. The accompanying demonstration code performs exactly this verification for $n \leq 6$.
 
-**Theorem 5.1** (Standard Character Self-Inner-Product). For S₃:
+---
 
-```
-⟨χ_std, χ_std⟩ = 1
-```
+## 8. Discussion and related structure
 
-*Proof.* Direct computation using |S₃| = 6 and the character values:
+The result sits at the confluence of three classical themes:
 
-```
-⟨χ_std, χ_std⟩ = (1/6)[1·(2²) + 3·(0²) + 2·((-1)²)]
-                = (1/6)(4 + 0 + 2) = 1
-```
+- **Combinatorics.** The partition function $p(n)$, with Hardy–Ramanujan asymptotics $p(n) \sim \frac{1}{4n\sqrt 3}\, e^{\pi\sqrt{2n/3}}$, now also counts conjugacy classes of $S_n$.
+- **Group theory.** Conjugacy in $S_n$ is governed entirely by cycle structure, an unusually transparent situation among finite groups.
+- **Representation theory.** The squareness of the character table and the partition-indexing of both axes (Specht modules for rows, cycle types for columns) are the launching point for the Murnaghan–Nakayama rule, hook-length formula, and the rich combinatorics of symmetric functions.
 
-This certifies irreducibility by the Frobenius criterion. □
+The formalization's care around the cycle-type convention — that fixed points are suppressed and must be explicitly restored (Lemma 6) — is exactly the kind of detail that informal treatments gloss over but that a fully verified proof must confront.
 
-### 5.2 Full Orthogonality Table
+---
 
-**Theorem 5.2–5.4** (Pairwise Orthogonality). The three irreducible characters of S₃ are pairwise orthogonal:
+## 9. Future directions
 
-```
-⟨χ_triv, χ_sign⟩ = 0,    ⟨χ_triv, χ_std⟩ = 0,    ⟨χ_sign, χ_std⟩ = 0
-```
+The following are stated so each can be turned directly into a formal `theorem ... := sorry` skeleton.
 
-**Theorem 5.5–5.7** (Self-Inner-Products). Each is 1:
+**C1. Conjugacy-class size formula (Cauchy / centralizer order).** For $\sigma \in S_n$ with $m_i$ parts equal to $i$, the centralizer has order $\prod_i i^{m_i}\, m_i!$ and the class has size $n! / \prod_i i^{m_i}\, m_i!$. Testable form: the sum over conjugacy classes of these class sizes equals $n!$.
 
-```
-⟨χ_triv, χ_triv⟩ = 1,    ⟨χ_sign, χ_sign⟩ = 1,    ⟨χ_std, χ_std⟩ = 1
-```
+**C2. Classes splitting in $A_n$.** A conjugacy class of $S_n$ contained in $A_n$ splits into two $A_n$-classes iff its cycle type consists of distinct odd parts. Conjecture (testable per $n$): $|\operatorname{Conj}(A_n)| = \#\{p : p \text{ even}\} + \#\{p : \text{distinct odd parts}\}$.
 
-### 5.3 Sum-of-Squares Completeness
+**C3. Counting permutations by number of cycles (Stirling numbers).** The number of $\sigma \in S_n$ with exactly $k$ cycles (counting fixed points) is the unsigned Stirling number of the first kind $c(n,k)$; $\sum_k c(n,k)x^k = x(x+1)\cdots(x+n-1)$ and $\sum_k c(n,k) = n!$.
 
-**Theorem 5.8.** The sum of squared degrees equals |S₃|:
+**C4. Self-conjugate partitions.** The number of self-conjugate partitions of $n$ equals the number of partitions into distinct odd parts, with a bridge to symmetry of the character table.
 
-```
-χ_triv(e)² + χ_sign(e)² + χ_std(e)² = 1² + 1² + 2² = 6 = |S₃|
-```
+**C5. Column sums of the character table.** For any finite group, the sum of a fixed column (indexed by $g$) equals the number of square roots of $g$, $\#\{x : x^2 = g\}$. For $S_n$: $\sum_\chi \chi(\sigma) = \#\{\tau : \tau^2 = \sigma\}$, testable per $n$ by decision procedures for small $n$.
 
-This is a necessary and sufficient condition for completeness: the three characters account for all irreducible representations.
+---
 
-### 5.4 Rigidity Interpretation
+## 10. Conclusion
 
-Theorems 5.1–5.8 together establish *character rigidity* for S₃: any class function on S₃ satisfying:
-- orthonormality under the character inner product,
-- integer values on all conjugacy classes,
-- degree dividing |S₃|,
-
-must be one of χ_triv, χ_sign, or χ_std. The character table is forced by structure.
-
-## 6. Spectral Cross-Domain Theorem
-
-### 6.1 Class Sum Operator
-
-**Theorem 6.1** (Trace of Class Sum). For any finite set C ⊆ S_n:
-
-```
-tr(T_C) = Σ_{σ ∈ C} |Fix(σ)|
-```
-
-*Proof.* By linearity of trace:
-
-```
-tr(T_C) = tr(Σ_{σ ∈ C} ρ(σ)) = Σ_{σ ∈ C} tr(ρ(σ)) = Σ_{σ ∈ C} |Fix(σ)|
-```
-
-using the trace–fixed-point identity (Theorem 3.1). □
-
-### 6.2 Application to Cayley Graphs
-
-For the Cayley graph of S_n generated by transpositions, the adjacency operator is the class sum T_C where C is the conjugacy class of transpositions. Theorem 6.1 gives:
-
-```
-tr(A) = Σ_{transposition σ} |Fix(σ)| = C(n,2) · (n-2) = (n-2)·n!/2
-```
-
-where each transposition fixes n-2 elements and there are C(n,2) = n(n-1)/2 transpositions.
-
-For S₃: tr(A) = 3 · 1 = 3, computed directly via our formalized spectral theorem.
-
-### 6.3 Eigenvalue Decomposition
-
-The character decomposition predicts the spectral structure: each irreducible character χ of degree d contributes eigenvalue λ_χ = (1/d)Σ_{σ ∈ C} χ(σ) with multiplicity d. For S₃ with the transposition class:
-
-| Character | Degree | χ-value on transpositions | Eigenvalue |
-|:---------:|:------:|:-------------------------:|:----------:|
-| Trivial   |   1    |            1              |     3      |
-| Sign      |   1    |           -1              |    -3      |
-| Standard  |   2    |            0              |     0      |
-
-The trace 3 + (-3) + 0 + 0 = 0... wait, the trace of A on the *full* regular representation is different. On the permutation representation K³, the decomposition is K ⊕ W (trivial ⊕ standard), giving eigenvalue 3 on K and eigenvalue 0 on W, with trace 3·1 + 0·2 = 3, matching our theorem.
-
-## 7. Algorithms
-
-### 7.1 Certified Fixed-Point Counter
-
-**Algorithm 1:** Given σ ∈ S_n, compute |Fix(σ)|.
-
-```
-Input: Permutation σ on {0, ..., n-1}
-Output: Number of fixed points
-count ← 0
-for i ← 0 to n-1:
-    if σ(i) = i: count ← count + 1
-return count
-```
-
-Time complexity: O(n). Space complexity: O(1).
-
-This algorithm is certified by Theorem 3.1: its output equals tr(ρ(σ)).
-
-### 7.2 Certified Orthogonality Checker
-
-**Algorithm 2:** Given candidate characters χ₁, ..., χ_k, verify orthonormality.
-
-```
-Input: Character functions χ₁, ..., χ_k on group G
-Output: Boolean (True if orthonormal)
-for i ← 1 to k:
-    for j ← 1 to k:
-        ip ← (1/|G|) · Σ_{g ∈ G} χ_i(g) · χ_j(g)
-        if (i = j and ip ≠ 1) or (i ≠ j and ip ≠ 0):
-            return False
-return True
-```
-
-Time complexity: O(k² · |G|). Space complexity: O(k).
-
-### 7.3 Character Table Completeness Checker
-
-**Algorithm 3:** Verify completeness via sum-of-squares.
-
-```
-Input: Irreducible character degrees d₁, ..., d_k, group order N
-Output: Boolean (True if Σ dᵢ² = N)
-return Σᵢ dᵢ² = N
-```
-
-## 8. Computational Experiments
-
-### 8.1 S₃ Character Table Verification
-
-Our Python demonstration (`demo.py`) constructs S₃, computes conjugacy classes, and verifies:
-
-| Metric | Value |
-|:------:|:-----:|
-| Group order | 6 |
-| Number of conjugacy classes | 3 |
-| Irreducible character degrees | 1, 1, 2 |
-| Sum of squared degrees | 6 ✓ |
-| Orthogonality check | Pass ✓ |
-
-### 8.2 Extension to S₄ and S₅
-
-For S₄ (|G| = 24, 5 conjugacy classes):
-- Degrees: 1, 1, 2, 3, 3
-- Sum of squares: 1 + 1 + 4 + 9 + 9 = 24 ✓
-
-For S₅ (|G| = 120, 7 conjugacy classes):
-- Degrees: 1, 1, 4, 4, 5, 5, 6
-- Sum of squares: 1 + 1 + 16 + 16 + 25 + 25 + 36 = 120 ✓
-
-## 9. Discussion
-
-### 9.1 Character Rigidity as a Paradigm
-
-Our development establishes a new paradigm for character table computation: rather than discovering tables by numerical methods and trusting the software, we *certify* tables by proving they satisfy structural constraints that determine them uniquely. This transforms character tables from computed artifacts into proven theorems.
-
-### 9.2 The Spectral Bridge
-
-The cross-domain spectral theorem (Theorem 6.1) opens connections to:
-- **Random walks on groups**: Mixing times of random walks on Cayley graphs are controlled by the spectral gap, which is determined by character values.
-- **Expander graphs**: Cayley graphs of S_n with small generating sets are candidate expanders, with expansion properties certifiable via character theory.
-- **Quantum walks**: Quantum walks on Cayley graphs inherit spectral structure from representations.
-
-### 9.3 Limitations
-
-Our current development is restricted to:
-- Small symmetric groups (S₃ fully verified, S₄ and S₅ computationally verified)
-- The permutation representation (not arbitrary representations)
-- Characteristic zero fields (excluding modular representation theory)
-
-### 9.4 Comparison with Existing Work
-
-The closest formal development is the Mathlib representation theory library, which provides general module-theoretic infrastructure but does not include explicit character computations for symmetric groups. Our work complements Mathlib by providing concrete computations grounded in the general theory.
-
-## 10. Future Work
-
-1. **Extension to S_n**: Generalize the orthogonality-certified irreducibility from S₃ to all S_n, proving that the standard character ⟨χ_std, χ_std⟩ = 1 for all n ≥ 3.
-
-2. **Young tableaux**: Connect the representation theory to combinatorics via the Robinson–Schensted correspondence and hook length formula.
-
-3. **Modular representations**: Extend to characteristic p dividing |S_n|, where Maschke's theorem fails and decomposition patterns change.
-
-4. **Burnside's theorem**: Use character theory to prove that groups of order p^a · q^b are solvable.
-
-5. **Certified spectral algorithms**: Implement verified algorithms for computing Cayley graph spectra from character tables.
-
-## References
-
-[1] F. G. Frobenius, "Über Gruppencharaktere," Sitzungsberichte der Königlich Preußischen Akademie der Wissenschaften zu Berlin, 1896.
-
-[2] G. Gonthier et al., "A Machine-Checked Proof of the Odd Order Theorem," ITP 2013.
-
-[3] The Mathlib Community, "Mathlib4," https://github.com/leanprover-community/mathlib4.
-
-[4] J.-P. Serre, "Linear Representations of Finite Groups," Springer GTM 42, 1977.
-
-[5] W. Fulton and J. Harris, "Representation Theory: A First Course," Springer GTM 129, 1991.
-
-[6] B. Sagan, "The Symmetric Group: Representations, Combinatorial Algorithms, and Symmetric Functions," Springer GTM 203, 2001.
-
-[7] A. Lubotzky, "Discrete Groups, Expanding Graphs and Invariant Measures," Birkhäuser, 1994.
+We have given a complete, constructive, machine-checked bijection between partitions of $n$ and conjugacy classes of $S_n$, with an explicit inverse and full supporting lemmas. The central difficulty — reconstructing a permutation's partition from its fixed-point-suppressed cycle type — is resolved by Lemma 6. The immediate corollary fixes the side length of the symmetric group's character table at $p(n)$, providing the indispensable first ingredient for any explicit character-table computation for $S_3$, $S_4$, $S_5$, and beyond.
