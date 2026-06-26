@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ab651d5d",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Galois Connections Between Order Theory and Topology\n\nDerived from the Stage 3/4 findings of this research cycle (files:\n`AlexandrovContinuity.lean`, `FixedPointLattice.lean`, `Z",
-      "quality_score": 0.4484232,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-21T04:40:47",
-      "title": "Bridge: Galois Connections Between Order Theory and Topology"
-    },
-    {
       "cycle_id": "971b371e",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions\n\nFree-form research directions emerging from the Lean 4 development in\n`Catalog/NumberTheory/PerfectNumbers.lean` (Euclid–Euler theorem, the abundancy-index\ntoolkit, the three-prim",
@@ -2501,6 +2491,16 @@
       "theorem_count": 11,
       "timestamp": "2026-06-26T22:11:03",
       "title": "EML Kolmogorov-Arnold Representation"
+    },
+    {
+      "cycle_id": "6a7e7235",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — connectivity-preserving Hamiltonian prescribed-end paths\n\nDerived from this cycle's findings (`PathDegree.lean`, `Connectivity.lean`):\nthe degree bookkeeping for the `4k+4` conje",
+      "quality_score": 0.5980399999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-26T22:13:45",
+      "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-06-26T22:11:03",
+  "last_updated": "2026-06-26T22:13:45",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "f014f8e3",
-        "quality": 0.7510892307692308,
-        "theorems": 13,
-        "title": "Asymptotic Tightness of the Alon–Frankl–Lovász Matching Bound for Random‑Like Hy"
-      },
-      {
         "cycle_id": "a7c4b074",
         "quality": 0.6968799999999999,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.54535,
         "theorems": 0,
         "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles"
+      },
+      {
+        "cycle_id": "6a7e7235",
+        "quality": 0.5980399999999999,
+        "theorems": 0,
+        "title": "A 4k+4 order bound for connectivity-preserving Hamiltonian prescribed-end paths"
       }
     ],
     "NumberTheory": [

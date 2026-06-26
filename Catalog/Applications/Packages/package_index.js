@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6a7e7235",
     "filename": "a_4k4_order_bound_for_connectivity_preserving_hami.json",
     "pkg_num": 112,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5980399999999999,
     "title": "A 4k+4 Order Bound for Connectivity-Preserving Hamiltonian Prescribed-End Paths"
   },
   {
@@ -3266,8 +3266,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "a_4k4_order_bound_for_connectivity_preserving_hami",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5980399999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "A 4k+4 Order Bound for Connectivity-Preserving Hamiltonian Prescribed-End Paths"
     }

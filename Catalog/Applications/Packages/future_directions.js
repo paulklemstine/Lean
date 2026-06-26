@@ -852,7 +852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "de494596",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -861,7 +861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -5635,11 +5635,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: Let K be an imaginary quadratic field with class number 1 and let N \u2265 1 be an odd integer. Let S_K = Herm_2(O_K) be the rank\u2011four lattice of 2\u00d72 Hermitian matrices over O_K equipped with the quadratic form 2 det. For the very general S_K(2N)-polarized K3 surface X_{K,2N}, the natural representation Aut(X_{K,2N}) \u2192 O(NS(X_{K,2N})) identifies Aut(X_{K,2N}) with the projective level subgroup Bi_K(2N) of the Bianchi group \u0393_K = PSL_2(O_K). In particular, Aut(X_{K,2N}) \u2245 Bi_K(2N) as abstract groups.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2599",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22921v1",
+    "status": "available",
+    "timestamp": "2026-06-26T22:16:11.152755+00:00",
+    "title": "Automorphism groups of Picard-rank-four K3 surfaces polarized by Hermitian lattices over class number one imaginary quadratic fields equal projective level subgroups of Bianchi groups"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5653,7 +5668,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5668,7 +5683,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5683,7 +5698,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5698,7 +5713,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5713,7 +5728,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5727,7 +5742,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5741,7 +5756,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5755,7 +5770,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5770,7 +5785,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5785,7 +5800,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5800,7 +5815,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5815,7 +5830,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5830,7 +5845,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5844,7 +5859,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5859,7 +5874,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5874,7 +5889,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5888,7 +5903,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5902,7 +5917,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5916,7 +5931,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5931,7 +5946,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5946,7 +5961,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5961,7 +5976,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -5975,7 +5990,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -5989,7 +6004,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6004,7 +6019,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6018,7 +6033,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6033,7 +6048,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6047,7 +6062,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6061,7 +6076,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6075,7 +6090,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6090,7 +6105,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6105,7 +6120,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6120,7 +6135,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6134,7 +6149,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6149,13 +6164,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
     "status": "available",
     "timestamp": "2026-06-26T21:42:39.711754+00:00",
     "title": "Period Relation for Betti\u2011Whittaker Periods of Contragredient Generic Cohomological Representations of GL(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite group \u0393, real-valued function f: \u0393 \u2192 \u211d, and directed cycle C\u2099 of length n, the homomorphism density satisfies t(C\u2099, \ud835\udc9e_f) \u2265 (\ud835\udd3c_{g\u2208\u0393} f(g))^(2n). This provides a concrete falsifiable statement about the Sidorenko inequality for directed cycles in the two-sided correlation construction.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2636",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23018v1",
+    "status": "available",
+    "timestamp": "2026-06-26T22:16:26.574008+00:00",
+    "title": "Sidorenko Inequality for Directed Cycles in Two-Sided Group Correlation Kernels"
   },
   {
     "consumed_by_exp_id": "",
@@ -6357,21 +6386,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 EML Kolmogorov\u2013Arnold Representation\n\nDerived from this cycle's findings (see Lab Notes in\n`Catalog/Applications/KolmogorovArnoldEML.lean` and\n`Catalog/Applications/KolmogorovArnoldEMLProduct.lean`).\n\nThis cycle established: (i) the product `x\u00b7y` has a rank-one exp/log EML\nsuperposition valid only on the open positive quadrant; (ii) it has a two-term\npolynomial EML superposition valid globally; (iii) the `n`-ary product collapses\nto *one* outer `exp` and *one* shared inner `log` for every `n`; (iv) the\nexp/log-depth `elDepth` is the invariant separating \"interior-only\" from\n\"global\". The following conjectures push on exactly these boundaries.\n\n## C1. The minimal-`elDepth` global representation of `x\u00b7y` has `elDepth = 0`.\n**Statement (falsifiable).** Among all EML Kolmogorov\u2013Arnold superpositions of\n`x\u00b7y` that are valid on *all* of `\u211d\u00b2`, the minimum achievable exp/log-depth is\n`0`; i.e. no globally-valid representation strictly needs `exp` or `log`, and the\npolynomial form is depth-optimal.\n**The key insight is** that any bare `log`/`exp` in an inner function imports a\ndomain restriction or unbounded growth that breaks at the boundary, so global\nvalidity *forces* the transcendental depth down to `0`.\n**Why now?** We already have both endpoints formalised (`mul_eq_polarization` at\ndepth `0`, `expLog_fails_at_boundary` showing depth `1` fails globally); the only\nmissing piece is a lower-bound argument over the finite `elDepth = 0` fragment.\n\n## C2. Separable \u21d4 rank-one EML representable.\n**Statement (falsifiable).** A continuous `f : (0,\u221e)\u00b2 \u2192 \u211d` admits a rank-one EML\nsuperposition `\u03a6(\u03c8(x)+\u03c8(y))` (one outer, one shared inner) **iff** `f` is\nmultiplicatively separable up to a monotone reparametrisation, i.e.\n`f(x,y) = \u03a6(g(x)+g(y))` for some continuous `g`.\n**The key insight is** that `log` linearises exactly the multiplicatively\nseparable interactions, so rank-one EML expressivity coincides with additive\nseparability after an inner change of coordinates.\n**Why now?** `prod_eq_exp_sum_log` proves the \"product \u21d2 rank one\" direction for\nall `n`; the converse is a clean functional-equation problem (Pexider/Abel type)\nalready within Mathlib's analytic reach.\n\n## C3. `x\u00b2` needs exp/log-depth \u2265 1 for a *single-term* EML superposition.\n**Statement (falsifiable).** The target `f(x,y) = x\u00b2` (degenerate in `y`) has a\none-outer-term EML representation `\u03a6(\u03c8(x)+\u03c8(y))` only if `\u03c8` or `\u03a6` has\n`elDepth \u2265 1`; no purely polynomial single inner+outer pair reproduces it on a\nneighbourhood.\n**The key insight is** that a single quadratic outer applied to `\u03c8(x)+\u03c8(y)`\nunavoidably couples `x` and `y` unless one of them is annihilated, which a\npolynomial inner cannot do without constant collapse.\n**Why now?** Our polarization machinery (`outerQuadPos/Neg`, `innerId/Neg`)\ngives the exact toolkit to enumerate the depth-`0` single-term candidates and\nrefute them by `ring`/`polyrith`.\n\n## C4. A uniform `n`-independent outer-term count characterises a \"tame\" class.\n**Statement (falsifiable).** The class of continuous `f : (0,\u221e)\u207f \u2192 \u211d` whose EML\nKolmogorov\u2013Arnold representation needs an outer-term count *bounded independent of\n`n`* is exactly the finite sums of separable terms\n`\u03a3_k \u220f_i g_{k,i}(x_i)` (EML \"low tropical rank\").\n**The key insight is** that each separable summand is rank-one via `exp/\u2211/log`\n(by `prod_eq_exp_sum_log`), so a bounded outer count is equivalent to a bounded\nnumber of separable summands \u2014 an EML analogue of tensor rank.\n**Why now?** `prod_eq_exp_sum_log` supplies the rank-one building block; the\ncatalog's tropical bridges (`Catalog/Bridges/EMLTropicalBridge.lean`) suggest a\nready-made rank formalism to make \"EML rank\" precise.\n\n## C5. The boundary obstruction is removable by an EML `softplus` regulariser.\n**Statement (falsifiable).** Replacing the inner `log` by the EML term\n`log(exp(t) + \u03b5)` (a `softplus`-type smoothing, `\u03b5 > 0`) yields a *globally\ncontinuous* EML superposition `exp(softplus_\u03b5(x)+softplus_\u03b5(y))` whose sup-norm\nerror from `x\u00b7y` on `[0,1]\u00b2` is `O(\u03b5)` and vanishes as `\u03b5 \u2192 0`.\n**The key insight is** that the only failure of the rank-one form is the\nsingularity of `log` at `0`, and EML is closed under the smooth `softplus`\ndesingularisation, trading exactness for global continuity controllably.\n**Why now?** `expLog_fails_at_boundary` pinpoints the singular point, and the\ncatalog already studies `softplus` rates\n(`Catalog/MachineLearning/EML/SoftplusRate.lean`), giving the quantitative bound\ninfrastructure to prove the `O(\u03b5)` claim.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2635",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6452feb1",
-    "status": "available",
-    "timestamp": "2026-06-26T22:10:38.595541+00:00",
-    "title": "Derived from this cycle's findings (see Lab Notes in"
   },
   {
     "consumed_by_exp_id": "",
