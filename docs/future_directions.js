@@ -284,22 +284,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture: Consequences and Partial Results"
   },
   {
-    "consumed_by_exp_id": "cfcd856c",
-    "description": "Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
-    "domains": [
-      "Physics",
-      "Algebra",
-      "Analysis"
-    ],
-    "id": "seed_363",
-    "priority_score": 0.9,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432772+00:00",
-    "title": "Noether's Theorem: Symmetries and Conservation Laws"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that any integer a \u2260 -1,\u25a1 that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
     "domains": [
@@ -5398,6 +5382,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T01:31:10.743022+00:00",
     "title": "Derived from this cycle's findings: an exact averaging identity (`sum_inter_ball"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Continuous Noether & Conservation Laws\n\nDerived from this cycle's findings in `NoetherConservation.lean`,\n`KeplerConservation.lean`, and `NoetherDiscreteContinuousBridge.lean`.\n\n## 1. LRL conservation is a *characterization* of the inverse-square law\n\n**Conjecture.** For a planar central force `(ax, ay) = f(r)\u00b7(x, y)`, the\nLaplace\u2013Runge\u2013Lenz vector `A = (Lz\u00b7vy \u2212 c\u00b7x/r, \u2212Lz\u00b7vx \u2212 c\u00b7y/r)` is conserved on\nall trajectories (for some constant `c`) **iff** `f(r) = \u2212k/r\u00b3`, i.e. the force is\ninverse-square (or, degenerately, the harmonic case for a *different* invariant).\n\n*The key insight is...* the LRL numerator cancellation in this cycle worked\n*only* because the radial power in Newton's law exactly matched the power produced\nby differentiating `x/r`; mismatched powers leave a nonzero residual proportional\nto `(p \u2212 2)`, turning \"construction\" into \"obstruction.\"\n\n*Why now?* We already have `kepler_LRL_x_conserved` with the exact `r\u00b3`\ndenominator and the `radius_hasDerivAt` lemma; the converse only needs to show the\nresidual is nonzero for `p \u2260 2`, a `field_simp`/`ring`-style nonvanishing argument\non the same algebra.\n\n## 2. The full SO(4)/SO(3,1) symmetry algebra closes formally\n\n**Conjecture.** The conserved quantities `{Lz, A_x, A_y}` of the Kepler problem,\nunder the Poisson bracket, close into a 3-dimensional Lie algebra isomorphic to\n`so(3)` (bound, `E < 0`) or `so(2,1)` (scattering, `E > 0`), with the bracket\n`{A_x, A_y} = \u22122E\u00b7Lz`.\n\n*The key insight is...* energy `E` is itself one of our proved invariants, so the\nstructure constant `\u22122E` is a *conserved* scalar \u2014 the bracket relations are\nalgebraic identities among already-formalized conserved functions, provable\nwithout any new analysis.\n\n*Why now?* All three generators (`Lz`, `A_x`, `A_y`) and `E` are now formalized\nwith clean axioms; only a formal Poisson-bracket definition on `\u211d\u2074` phase space is\nmissing, and the closure is pure polynomial algebra.\n\n## 3. Symplectic integrators inherit *every* continuous symmetry exactly\n\n**Conjecture.** Any variational integrator in the `DiscreteNoether` framework whose\ndiscrete momentum samples a continuous Noether charge conserves that charge to\nmachine precision (zero drift), for *all* step sizes \u2014 including non-uniform and\nadaptive sampling.\n\n*The key insight is...* `sampled_charge_discretely_conserved` already shows the\nsampled charge is conserved on the *trivial* flow (all pairs), so the conservation\nis independent of which DEL trajectory or step pattern the integrator follows.\n\n*Why now?* The continuous\u2192discrete bridge is proved; the remaining step is to\nidentify which standard integrators (St\u00f6rmer\u2013Verlet, leapfrog) realize a discrete\nmomentum that is literally a sampling of `\u27e8p, g\u27e9`.\n\n## 4. Energy conservation forces autonomy (a converse)\n\n**Conjecture.** If the energy `E(t) = \u27e8p(t), v(t)\u27e9 \u2212 \u2113(t)` is conserved along a\n*rich* family of trajectories (enough to vary `(p, v, p', v')` freely), then the\nchain-rule defect `\u2113' \u2212 \u2211(p'v + pv')` vanishes identically \u2014 i.e. conservation of\nenergy *implies* the Lagrangian is autonomous.\n\n*The key insight is...* the forward theorem `energy_conserved_of_autonomous` makes\n`hchain` the unique obstruction; richness lets one solve pointwise for the defect,\nmirroring the converse already proved in the *discrete* setting\n(`converse_discrete_noether`).\n\n*Why now?* The discrete converse exists as a template and the continuous forward\ndirection is formalized; the converse is the natural next theorem completing the\nbidirectional `symmetry \u2194 conservation` picture in the continuous case.\n\n## 5. Bertrand's theorem fingerprint: closed orbits \u21d2 inverse-square or harmonic\n\n**Conjecture.** Among central forces `f(r) = \u2212k\u00b7r^\u03b1`, the LRL-type extra invariant\n(direction (1)) exists *exactly* for `\u03b1 = \u22122` (Kepler) and a quadratic analogue\nexists for `\u03b1 = 1` (harmonic) \u2014 the two Bertrand exponents \u2014 and for no other `\u03b1`.\n\n*The key insight is...* the existence of an extra polynomial-in-velocity invariant\nis the algebraic shadow of orbit closure; our cancellation computation isolates the\nprecise exponents where the residual vanishes.\n\n*Why now?* Direction (1) supplies the `\u03b1 = \u22122` case constructively and the\nobstruction machinery for `\u03b1 \u2260 \u22122`; adding the harmonic invariant is a parallel\n`ring` computation, putting both Bertrand exponents within reach without the full\nanalytic Bertrand theorem.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2565",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "cfcd856c",
+    "status": "available",
+    "timestamp": "2026-06-26T01:32:45.848984+00:00",
+    "title": "Derived from this cycle's findings in `NoetherConservation.lean`,"
   },
   {
     "consumed_by_exp_id": "",

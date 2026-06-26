@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cfcd856c",
     "filename": "noethers_theorem_symmetries_and_conservation_laws.json",
     "pkg_num": 68,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.66768,
     "title": "Noether's Theorem: Symmetries and Conservation Laws of the Kepler Problem"
   },
   {
@@ -1981,8 +1981,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "noethers_theorem_symmetries_and_conservation_laws",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.66768,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Noether's Theorem: Symmetries and Conservation Laws of the Kepler Problem"
     }
