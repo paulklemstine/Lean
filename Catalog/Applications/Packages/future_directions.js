@@ -1832,6 +1832,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any finite family of convex splinters in d-dimensional Euclidean space, if the intersection of every subfamily of size at most 2d+1 is non-empty, then the intersection of the entire family is non-empty. This extends the classical Helly's theorem to the more general structure of convex splinters.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2315",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23437v1",
+    "status": "available",
+    "timestamp": "2026-06-23T07:39:04.351050+00:00",
+    "title": "Helly's Theorem for Convex Splinters"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For all positive integers s' and t', there exist integers t and f such that for any graph G, vertex set A, and wall W of size at least t, either there exists a vertex set X of size at most f separating A from the branch vertices of W, or there exists a subwall W' of W of size at least t' and s' vertex-disjoint A-W'-paths ending in distinct nails of W'.",
     "domains": [
       "Bridges"
@@ -5420,11 +5434,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let G be a connected graph with equitable partition \u03c0\u2081 yielding quotient graph G/\u03c0\u2081, and suppose G/\u03c0\u2081 admits an equitable partition \u03c0\u2082 with quotient ((G/\u03c0\u2081)/\u03c0\u2082). Then perfect state transfer occurs on G if and only if it occurs on (G/\u03c0\u2081)/\u03c0\u2082. This extends the single-step quotient result to chains of quotient constructions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2585",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24440v1",
+    "status": "available",
+    "timestamp": "2026-06-26T14:32:36.203364+00:00",
+    "title": "PST Preservation Through Iterative Quotient Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5438,7 +5466,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5453,7 +5481,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5468,7 +5496,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5483,7 +5511,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5498,7 +5526,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5512,7 +5540,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5526,7 +5554,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5540,7 +5568,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5555,7 +5583,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5570,7 +5598,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5585,7 +5613,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5600,7 +5628,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5615,7 +5643,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5629,7 +5657,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5644,7 +5672,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5659,7 +5687,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5673,7 +5701,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5687,7 +5715,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5701,7 +5729,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5716,7 +5744,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5731,7 +5759,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5746,13 +5774,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
     "status": "available",
     "timestamp": "2026-06-26T14:00:13.576370+00:00",
     "title": "Positive dyadic density of rational series supports via carry recurrence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the completion threshold ratio satisfies \\(\\displaystyle \\limsup_{n\\to\\infty} \\frac{qc(n)}{n}=0.216\\). Equivalently, there exist infinitely many board sizes n for which qc(n) \\geq c n\\) for some constant c > 0.216, and no constant larger than 0.216 can serve as a universal lower bound.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2609",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24400v1",
+    "status": "available",
+    "timestamp": "2026-06-26T14:33:06.466347+00:00",
+    "title": "Tight asymptotic bound for the n\u2011queens completion threshold"
   },
   {
     "consumed_by_exp_id": "",
@@ -5954,36 +5996,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Character Tables of `S\u2099`\n\nThis cycle established the \"column count\" of the character table of the symmetric group:\nthe table is square of side `p(n)`, via a from-scratch proof that every partition of `n`\nis realised as the cycle type of some permutation\n(`Catalog/Algebra/SymmetricGroupCharacterTable.lean`,\ntheorem `card_conjClasses_eq_card_partition` / `card_conjClasses_perm_fin`).\n\nBelow are testable conjectures for follow-up cycles. Each is stated so that it can be turned\ndirectly into a Lean `theorem ... := by sorry` skeleton.\n\n## C1. Conjugacy-class size formula (Cauchy / centralizer order)\nFor `\u03c3 : Perm (Fin n)` with cycle type given by a partition having `m_i` parts equal to `i`,\nthe centralizer has order `\u220f_i i^{m_i} \u00b7 m_i!`, and the conjugacy class of `\u03c3` has size\n`n! / \u220f_i i^{m_i} \u00b7 m_i!`. Testable form: the sum over conjugacy classes of these class\nsizes equals `n!` (a refinement of the class equation / Burnside that re-derives `card S\u2099`).\n\n## C2. Number of even-permutation classes splitting in `A\u2099`\nA conjugacy class of `S\u2099` lying in `A\u2099` splits into two `A\u2099`-classes iff its cycle type\nconsists of distinct odd parts. Conjecture (testable per `n`):\n`card (ConjClasses (alternatingGroup (Fin n)))`\n`= card {p : Nat.Partition n // p even} + card {p : Nat.Partition n // distinct odd parts}`.\n\n## C3. Counting permutations by number of cycles (Stirling numbers)\nThe number of `\u03c3 : Perm (Fin n)` with exactly `k` cycles (counting fixed points) equals the\nunsigned Stirling number of the first kind `c(n,k)`. Testable form:\n`\u2211_k c(n,k) \u00b7 x^k = x (x+1) \u22ef (x+n-1)` (rising factorial), and\n`\u2211_k c(n,k) = n!`. This connects the cycle-type stratification to a clean generating identity.\n\n## C4. Self-conjugate partitions and the sign / number of odd-order classes\nThe number of self-conjugate partitions of `n` equals the number of partitions of `n` into\ndistinct odd parts. Bridge conjecture: this count also equals the number of conjugacy classes\nof `S\u2099` on which a specified class function (e.g. a chosen real irreducible character) takes a\nprescribed value \u2014 a concrete handle on symmetry of the character table.\n\n## C5. Column sums of the character table\nFor any finite group, the sum of the entries in a fixed column of the character table\n(indexed by `g`) equals the number of square roots of `g`, i.e. `#{x : x^2 = g}`.\nSpecialised to `S\u2099`: `\u2211_\u03c7 \u03c7(\u03c3) = #{\u03c4 : Perm (Fin n) | \u03c4^2 = \u03c3}`, and summing over all `\u03c3`\ngives `\u2211_\u03c7 \u2211_\u03c3 \u03c7(\u03c3)` linked to the total number of involutions-plus-identity solutions.\nTestable per `n` by `decide`/`native_decide` for small `n` before attempting the general proof.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2608",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "9c488c94",
-    "status": "available",
-    "timestamp": "2026-06-26T14:28:39.498116+00:00",
-    "title": "\"column count\" of the character table of the symmetri"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Row-exchange under eventual contraction (five-vertex half-strip)\n\nThis cycle established, for `TM = Matrix (Fin 5) (Fin 5) \u211d` with the `L\u221e` operator norm:\n\n* `conj_inverse_one_sub_eq` / `rowExchange_resolvent_invariant`: an involutive row-exchange `S`\n  (`S\u00b7S = 1`) commuting with a contraction `A` (`\u2016A\u2016<1`) fixes the resolvent `(1-A)\u207b\u00b9`;\n* `prodDown_tendsto_zero` / `transferProduct_vanishes`: eventual contraction collapses the\n  accumulated half-strip transfer product in norm;\n* `rowExchange_transferProduct_vanishes`: row-exchange preserves that collapse.\n\nThe following conjectures are precise and testable in follow-up cycles.\n\n## C1 \u2014 Full permutation-symmetry algebra of the resolvent\nThe fixed set `{X : \u2016A\u2016<1 \u2192 S\u00b7(1-A)\u207b\u00b9\u00b7S = (1-A)\u207b\u00b9}` is closed under the *group* generated by the\ncommuting transpositions, not just a single swap. **Conjecture:** if a subgroup `G \u2264 Perm (Fin 5)`\nsatisfies `g.permMatrix \u00b7 A = A \u00b7 g.permMatrix` for all `g \u2208 G`, then `(1-A)\u207b\u00b9` is fixed by\nconjugation by every `g.permMatrix`. Generalize `conj_inverse_one_sub_eq` from an involution to an\narbitrary unit `u` with `u\u207b\u00b9` (drop `u\u00b7u=1`, use `u \u00b7 (1-A)\u207b\u00b9 \u00b7 u\u207b\u00b9 = (1-A)\u207b\u00b9`).\n\n## C2 \u2014 Resolvent norm/Neumann bound under row exchange\n**Conjecture:** under `\u2016A\u2016<1`, `\u2016(1-A)\u207b\u00b9\u2016 \u2264 (1-\u2016A\u2016)\u207b\u00b9` and this bound is *exactly* invariant under\nrow exchange (since `\u2016S\u2016=1` on the `L\u00b2`/`L\u221e` operator norm). Formalize via\n`NormedRing.norm_inverse_one_sub_le`-style estimates and `permMatrix_l2_opNorm_eq`.\n\n## C3 \u2014 Inhomogeneous (asymmetric) half-strip with summable defects\nReplace the uniform bound by `\u2211\u2096 \u2016M k \u2212 A\u2016 < \u221e` with `\u2016A\u2016<1` (a genuinely *asymmetric*, row-\ndependent strip that is an `\u2113\u00b9` perturbation of a homogeneous contraction). **Conjecture:** the\nordered products `prodDown M m` converge (not merely to `0` but to a well-defined limit operator),\nand the limit is row-exchange covariant: `S \u00b7 (lim) \u00b7 S = lim` whenever every `M k` commutes with `S`.\n\n## C4 \u2014 Spectral-radius sharpening of \"eventual contraction\"\n**Conjecture:** `transferProduct_vanishes` holds under the weaker hypothesis\n`limsup\u2096 \u2016M k\u2016^{1/1} `-type Gelfand condition, i.e. it suffices that the *joint spectral radius* of\n`{M k}` is `< 1`, even if individual `\u2016M k\u2016 \u2265 1`. Test first for commuting `M k` via\n`spectralRadius` and `Matrix.pow_norm` asymptotics.\n\n## C5 \u2014 Fixed-point (affine) form and uniqueness\nLift from linear to affine row maps `x \u21a6 M k \u00b7 x + b k` on `\u211d\u2075`. **Conjecture:** under eventual\ncontraction the forward orbit converges to a unique bounded configuration `x\u221e`, and if every\n`(M k, b k)` is row-exchange equivariant (`S M k = M k S`, `S b k = b k`) then `S \u00b7 x\u221e = x\u221e`.\nThis bridges the resolvent picture (`C1`) and the product-vanishing picture into a single Banach\nfixed-point statement (`ContractingWith` / `edist_le_of_...` in Mathlib).\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2609",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7281fa18",
-    "status": "available",
-    "timestamp": "2026-06-26T14:30:09.884287+00:00",
-    "title": "This cycle established, for `TM = Matrix (Fin 5) (Fin 5) \u211d` with the `L\u221e` operat"
   },
   {
     "consumed_by_exp_id": "",
@@ -6308,7 +6320,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f247824f",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6318,7 +6330,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

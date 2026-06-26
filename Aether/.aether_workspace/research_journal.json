@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "ebc08ab7",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Tropical Differential Equations: Power Series Solutions\n\nThe current cycle established, in `Core.lean`, the support-level intertwining of\ndifferentiation (`support_derivative_eq_",
-      "quality_score": 0.4770719626168225,
-      "sorry_count": 0,
-      "theorem_count": 90,
-      "timestamp": "2026-06-20T15:13:29",
-      "title": "Tropical Differential Equations: Power Series Solutions"
-    },
-    {
       "cycle_id": "bab04850",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nCycles 1–3 established a fully verified combinatorial core: the cut functional of a\nfinite weighted tensor n",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-06-26T14:30:18",
       "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
+    },
+    {
+      "cycle_id": "a2f737c1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Incoherence indices of standard social decision frames\n\nDerived from this cycle's findings (`IncoherenceIndex.lean`,\n`SaturationContrast.lean`, `ComputationalEvidence.md`).  This",
+      "quality_score": 0.4444762417582418,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-26T14:32:19",
+      "title": "Realization of all even incoherence indices ≥4 by maximal standard frames"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7510892307692308
     }
   ],
-  "last_updated": "2026-06-26T14:30:18",
+  "last_updated": "2026-06-26T14:32:19",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "935bc3f6",
-        "quality": 0.7770400000000002,
-        "theorems": 20,
-        "title": "EML Universal Approximation"
-      },
-      {
         "cycle_id": "ef60a392",
         "quality": 0.77328,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.531112,
         "theorems": 15,
         "title": "Discriminant of the Hermitian Bianchi lattice S_K"
+      },
+      {
+        "cycle_id": "a2f737c1",
+        "quality": 0.4444762417582418,
+        "theorems": 9,
+        "title": "Realization of all even incoherence indices ≥4 by maximal standard frames"
       }
     ],
     "Bridges": [

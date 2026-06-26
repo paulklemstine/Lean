@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a2f737c1",
     "filename": "realization_of_all_even_incoherence_indices_4_by_m.json",
     "pkg_num": 98,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4444762417582418,
     "title": "Realization of All Even Incoherence Indices \u2265 4 by Maximal Standard Frames"
   },
   {
@@ -2851,8 +2851,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "realization_of_all_even_incoherence_indices_4_by_m",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4444762417582418,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Realization of All Even Incoherence Indices \u2265 4 by Maximal Standard Frames"
     }
