@@ -852,7 +852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "de494596",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -861,7 +861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1017,7 +1017,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Invariant Subspace Problem: Special Cases"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f881b568",
     "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension \u2265 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
     "domains": [
       "Geometry",
@@ -1027,7 +1027,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432660+00:00",
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
@@ -1314,7 +1314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cf34309d",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1324,7 +1324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -3044,7 +3044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-acyclicity of transversal spaces in high dimensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7d5c7f90",
     "description": "For any Cayley digraph G of an abelian group of even order, the pair (G, K\u2082) is unstable.",
     "domains": [
       "Algebra"
@@ -3053,7 +3053,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22947v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T06:20:52.702234+00:00",
     "title": "Stability of Cayley Digraphs of Even Order with K2"
   },
@@ -5170,7 +5170,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of Exact Potential up to Additive Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ed8ca57",
     "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carath\u00e9odory-type result.",
     "domains": [
       "Bridges"
@@ -5179,7 +5179,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T04:18:00.464209+00:00",
     "title": "Sharp approximate Carath\u00e9odory theorem and application to iterated Delaunay refinement"
   },
@@ -6798,7 +6798,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6adcd103",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -6808,7 +6808,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -6948,7 +6948,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Riemann-Roch Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9871aa6d",
     "description": "Prove the Langlands correspondence for GL\u2082 over Q: every algebraic automorphic representation corresponds to a Galois representation. Formalize Eichler-Shimura and Deligne cases.",
     "domains": [
       "Bridges",
@@ -6958,7 +6958,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.714293+00:00",
     "title": "Langlands for GL\u2082 over Q"
   },
