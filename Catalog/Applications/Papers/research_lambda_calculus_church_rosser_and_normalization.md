@@ -1,194 +1,547 @@
-# Certified Confluence and Semantic Approximation for Lambda Calculus: A Verified Computational Theory
+# Confluence and Normalization in the Untyped Lambda Calculus: A Verified Development via Parallel Reduction and Complete Developments
+
+**Author:** Aristotle
+
+**Date:** 2026-06-26
 
 ## Abstract
 
-We present a machine-verified formalization of the core metatheory of the untyped lambda calculus in Lean 4, including parallel β-reduction, the Church–Rosser theorem (confluence), uniqueness of normal forms, and finite Böhm tree approximants. The development uses de Bruijn indices with a carefully structured substitution calculus comprising six interlocking commutation lemmas. The confluence proof follows the Tait–Martin-Löf method via complete developments, achieving a clean modular architecture. We additionally formalize Böhm tree approximants as a computational semantics and prove key properties including divergence characterization for Ω and monotonicity of reduction trees. The entire development compiles without axioms beyond the standard Lean foundations.
+We present a self-contained, machine-verified development of the
+metatheory of the untyped lambda calculus, organized around the
+Church–Rosser theorem (confluence of beta reduction). The development
+uses the Tait/Martin-Löf method of *parallel reduction* together with
+Takahashi's *complete development*, a deterministic function that
+contracts every redex present in a term in a single sweep. The
+load-bearing result is the **triangle property**: every parallel reduct
+of a term $t$ parallel-reduces to the complete development
+$\mathrm{cd}(t)$. From the triangle property the **diamond property** of
+parallel reduction follows in one line, with the common reduct given
+explicitly as $\mathrm{cd}(t)$; and because the reflexive–transitive
+closures of single-step beta reduction and of parallel reduction
+coincide, the diamond property lifts to full **confluence of beta
+reduction**. We complement the confluence theory with a treatment of
+non-termination and finite Böhm-tree approximants, proving in particular
+that the canonical divergent term $\Omega$ approximates to $\bot$ at every
+depth. We discuss the syntactic infrastructure (de Bruijn indices,
+lifting, substitution and their commutation laws) on which the proofs
+rest, give algorithmic descriptions suitable for implementation, and
+survey applications to programming-language semantics and the
+undecidability of lambda-term equivalence.
+
+**Keywords:** lambda calculus, beta reduction, Church–Rosser theorem,
+confluence, parallel reduction, complete development, Takahashi triangle,
+de Bruijn indices, normalization, Böhm tree.
+
+---
 
 ## 1. Introduction
 
-The lambda calculus, introduced by Church (1936), serves as the foundation for the theory of computation, programming language semantics, and proof theory. Its central metatheoretic property — confluence, also known as the Church–Rosser theorem — guarantees that the order of evaluation does not affect the result of computation whenever a normal form exists.
+The untyped lambda calculus is the canonical model of higher-order
+computation: a minimal language of variables, abstraction, and
+application, with a single computation rule, beta reduction. Its
+expressive power is total — it captures exactly the computable functions
+— and yet its syntax is small enough that its metatheory can be developed
+with complete rigor.
 
-Despite its fundamental importance, complete machine-verified proofs of confluence remain relatively rare. Existing formalizations in Coq, Isabelle/HOL, and Agda typically use named variables with α-equivalence or locally nameless representations, each introducing significant bureaucratic overhead. Our development uses de Bruijn indices, which eliminate α-equivalence entirely but require careful management of variable shifting and substitution interaction.
+The central structural fact about beta reduction is *confluence*, the
+property that the order in which redexes are contracted does not affect
+the final result. Confluence underlies the well-definedness of functional
+program evaluation and the uniqueness of normal forms. Historically it is
+also notorious: the naive strategy of proving a one-step diamond property
+and iterating fails, because beta reduction does not enjoy the diamond
+property — contracting a redex can duplicate other redexes, so two
+one-step reducts of a fork cannot in general be rejoined in one step
+each.
 
-### 1.1 Contributions
+The standard resolution, originating with Tait and Martin-Löf and refined
+by Takahashi, introduces **parallel reduction**, a relation that contracts
+an arbitrary set of *currently present* redexes simultaneously. Parallel
+reduction has the diamond property, and its reflexive–transitive closure
+coincides with that of beta reduction, so its confluence transfers.
+Takahashi's contribution was to make the diamond proof entirely explicit:
+she defined a function, the **complete development**, that contracts *all*
+present redexes, and proved that every parallel reduct of $t$
+parallel-reduces to this single canonical term. The diamond property then
+becomes a trivial corollary.
 
-1. **Complete formalization of substitution calculus**: Six interlocking lemmas (`lift_zero`, `lift_lift`, `lift_lift_merge`, `substAt_lift_cancel`, `lift_substAt_comm`, `substAt_lift_comm_gen`, `substAt_substAt_comm`) providing a reusable foundation for de Bruijn index manipulation.
+This paper records a fully formalized version of this development, in
+which every lemma is mechanically checked from first principles, together
+with a treatment of non-termination via Böhm-tree approximants. The
+contributions are:
 
-2. **Church–Rosser via parallel reduction**: Full proof of confluence using the Tait–Martin-Löf method with complete developments, achieving a clean decomposition into substitution compatibility → diamond property → strip lemma → confluence.
+1. A clean axiomatization of parallel reduction and a structural-recursive
+   definition of the complete development for de Bruijn syntax
+   (Section 3).
+2. The substitution-commutation lemmas for parallel reduction that make
+   the triangle property provable (Section 4).
+3. The triangle property, the diamond property, the
+   beta/parallel closure equivalence, and the Church–Rosser theorem
+   (Section 5).
+4. Finite Böhm-tree approximants, with the divergence of $\Omega$
+   captured as $\bot$ at every depth, and basic properties of bounded
+   reduction sets (Section 6).
+5. Algorithmic and numerical illustrations (Sections 7–8).
 
-3. **Uniqueness of normal forms**: Formal proof that normal forms reachable from a common source are identical.
+---
 
-4. **Böhm tree approximants**: Computational definition of finite Böhm approximants with head reduction, with verified properties for divergent and convergent terms.
+## 2. The syntax of terms
 
-5. **Reduction tree formalization**: Definition and basic properties of reduction trees, connecting lambda reduction to combinatorial tree complexity.
+We use **de Bruijn indices**, which represent a bound variable by the
+number of enclosing abstractions between the variable and its binder.
+This eliminates named-variable capture issues and makes substitution a
+purely arithmetic operation, which is essential for a formal treatment.
 
-## 2. Definitions and Notation
+**Definition 2.1 (Terms).** The set $\Lambda$ of lambda terms is generated
+by
+$$t ::= \mathrm{var}\,n \;\mid\; \mathrm{lam}\,t \;\mid\; \mathrm{app}\,t\,t,
+\qquad n \in \mathbb{N}.$$
+Here $\mathrm{var}\,n$ is the variable with de Bruijn index $n$,
+$\mathrm{lam}\,t$ is the abstraction $\lambda.\,t$ (the bound variable is
+positional, hence nameless), and $\mathrm{app}\,a\,b$ is application,
+written $a\,b$.
 
-### 2.1 Lambda Terms (de Bruijn)
+To define substitution we need two auxiliary operations.
 
-```
-inductive Lam : Type where
-  | var : ℕ → Lam
-  | app : Lam → Lam → Lam
-  | lam : Lam → Lam
-```
+**Definition 2.2 (Lifting).** The *lift* (or shift) operation
+$\mathrm{lift}\,c\,t$ increments every free variable of $t$ whose index is
+$\geq c$:
+$$
+\mathrm{lift}\,c\,(\mathrm{var}\,n) =
+\begin{cases} \mathrm{var}\,(n+1) & n \geq c\\ \mathrm{var}\,n & n < c\end{cases},
+\quad
+\mathrm{lift}\,c\,(\mathrm{lam}\,t) = \mathrm{lam}\,(\mathrm{lift}\,(c{+}1)\,t),
+$$
+$$
+\mathrm{lift}\,c\,(\mathrm{app}\,a\,b) = \mathrm{app}\,(\mathrm{lift}\,c\,a)\,(\mathrm{lift}\,c\,b).
+$$
+The cutoff $c$ is incremented under a binder because that binder shields
+one more index.
 
-### 2.2 Shifting and Substitution
+**Definition 2.3 (Substitution).** The operation $\mathrm{subst}\,j\,s\,t$
+replaces the free variable $j$ of $t$ by $s$, lowering the indices of the
+variables above the hole and lifting $s$ as it crosses binders:
+$$
+\mathrm{subst}\,j\,s\,(\mathrm{var}\,n) =
+\begin{cases}
+s & n = j\\
+\mathrm{var}\,(n-1) & n > j\\
+\mathrm{var}\,n & n < j
+\end{cases},
+$$
+$$
+\mathrm{subst}\,j\,s\,(\mathrm{lam}\,t) = \mathrm{lam}\,(\mathrm{subst}\,(j{+}1)\,(\mathrm{lift}\,0\,s)\,t),
+$$
+$$
+\mathrm{subst}\,j\,s\,(\mathrm{app}\,a\,b) = \mathrm{app}\,(\mathrm{subst}\,j\,s\,a)\,(\mathrm{subst}\,j\,s\,b).
+$$
+The single-variable case used by beta contraction is
+$$\mathrm{subst}_0\,u\,t := \mathrm{subst}\,0\,u\,t.$$
 
-- **Lift**: `lift d c t` increments free variables ≥ c by d
-- **SubstAt**: `substAt σ k t` replaces variable k with σ (shifted by k)
-- **Subst0**: `subst0 u t = substAt u 0 t` — the β-reduction substitution
+These operations satisfy the usual commutation laws — in particular a
+lift/substitution interchange law (`lift_subst_ge`) and a
+substitution/substitution interchange law (`subst0_subst`) — which are the
+arithmetic backbone of every congruence proof below.
 
-### 2.3 Reduction Relations
+**Definition 2.4 (Beta reduction).** Single-step beta reduction
+$\mathrm{Beta} \subseteq \Lambda \times \Lambda$ is the compatible closure
+of the contraction rule:
+$$
+\frac{}{(\mathrm{lam}\,t)\,u \;\to\; \mathrm{subst}_0\,u\,t}\;(\beta)
+\qquad
+\frac{a \to a'}{a\,b \to a'\,b}
+\qquad
+\frac{b \to b'}{a\,b \to a\,b'}
+\qquad
+\frac{t \to t'}{\mathrm{lam}\,t \to \mathrm{lam}\,t'}.
+$$
+Its reflexive–transitive closure is written $\mathrm{BetaStar}$, i.e.
+$\twoheadrightarrow_\beta \;=\; \mathrm{Beta}^{*}$. A term is in
+**normal form** if it has no beta reduct.
 
-- **Beta**: One-step β-reduction with congruence rules
-- **ParBeta**: Parallel β-reduction (simultaneous contraction)
-- **maxDev**: Complete development (maximal parallel reduct)
+---
 
-## 3. Main Results
+## 3. Parallel reduction and complete developments
 
-### 3.1 Substitution Calculus
+**Definition 3.1 (Parallel reduction).** The relation
+$\mathrm{Par} \subseteq \Lambda \times \Lambda$, written
+$t \Rightarrow u$, is defined inductively by
+$$
+\frac{}{\mathrm{var}\,n \Rightarrow \mathrm{var}\,n}
+\qquad
+\frac{t \Rightarrow t'}{\mathrm{lam}\,t \Rightarrow \mathrm{lam}\,t'}
+\qquad
+\frac{a \Rightarrow a' \quad b \Rightarrow b'}{a\,b \Rightarrow a'\,b'}
+$$
+$$
+\frac{t \Rightarrow t' \quad u \Rightarrow u'}
+{(\mathrm{lam}\,t)\,u \;\Rightarrow\; \mathrm{subst}_0\,u'\,t'}\;(\beta_{\Rightarrow}).
+$$
+Intuitively, a single parallel step contracts an arbitrary subset of the
+redexes *already present* in the source, reducing congruently everywhere
+else.
 
-The following lemmas form the backbone of the development:
+**Lemma 3.2 (Reflexivity, `par_refl`).** For every $t$, $t \Rightarrow t$.
+*Proof.* Structural induction on $t$, using the variable, lambda, and
+application clauses. $\square$
 
-**Theorem (lift_lift)**. For c₂ ≤ c₁:
-```
-lift d₂ c₂ (lift d₁ c₁ t) = lift d₁ (c₁ + d₂) (lift d₂ c₂ t)
-```
+**Lemma 3.3 (Beta is parallel, `par_of_beta`).** If $t \to_\beta u$ then
+$t \Rightarrow u$.
+*Proof.* Induction on the derivation of $t \to_\beta u$. The contraction
+rule maps to $\beta_{\Rightarrow}$ with reflexive premises; the three
+congruence rules map to the corresponding parallel clauses with a
+reflexive sibling. $\square$
 
-**Theorem (lift_substAt_comm)**. For k ≤ c:
-```
-lift d c (substAt σ k t) = substAt (lift d (c-k) σ) k (lift d (c+1) t)
-```
+**Definition 3.4 (Complete development, `cd`).** The function
+$\mathrm{cd} : \Lambda \to \Lambda$ contracts every redex present in its
+argument:
+$$
+\mathrm{cd}(\mathrm{var}\,n) = \mathrm{var}\,n,
+\qquad
+\mathrm{cd}(\mathrm{lam}\,t) = \mathrm{lam}\,(\mathrm{cd}\,t),
+$$
+$$
+\mathrm{cd}\big((\mathrm{lam}\,t)\,u\big) = \mathrm{subst}_0\,(\mathrm{cd}\,u)\,(\mathrm{cd}\,t),
+\qquad
+\mathrm{cd}(a\,b) = (\mathrm{cd}\,a)\,(\mathrm{cd}\,b)\ \text{otherwise.}
+$$
+The third clause fires the head redex while developing both of its
+constituents; the fourth applies when the operator $a$ is not an
+abstraction.
 
-**Theorem (substAt_substAt_comm)**.
-```
-substAt σ (k+j) (substAt u j t) = substAt (substAt σ k u) j (substAt σ (k+1+j) t)
-```
+---
 
-*Proof strategy*: Each is proved by structural induction on t with careful case analysis on variables using omega arithmetic. The key difficulty is the n = k case in lift_substAt_comm, which requires lift_lift to commute the two lifting operations.
+## 4. Parallel reduction respects substitution
 
-### 3.2 Diamond Property for Parallel β-Reduction
+The triangle property requires that parallel reduction be a congruence
+for the substitution algebra. These are the technically delicate lemmas,
+each proved by induction with the de Bruijn arithmetic laws of Section 2.
 
-**Theorem (parBeta_diamond)**. If ParBeta t u and ParBeta t v, then ∃ w such that ParBeta u w ∧ ParBeta v w.
+**Lemma 4.1 (Commutation with lifting, `par_lift`).** If $t \Rightarrow t'$
+then $\mathrm{lift}\,c\,t \Rightarrow \mathrm{lift}\,c\,t'$ for every
+cutoff $c$.
+*Proof.* Induction on $t \Rightarrow t'$, generalizing over $c$. The only
+non-routine case is $\beta_{\Rightarrow}$, which is reconciled with the
+lift via the lift/substitution interchange law `lift_subst_ge`. $\square$
 
-*Proof*: The witness is `t.maxDev`, the complete development. We prove `parBeta_to_maxDev`: every parallel reduct further reduces to the complete development. This proceeds by induction on the ParBeta derivation. The critical case is `pbeta`, which requires `parBeta_subst0` — the substitution compatibility of parallel reduction.
+**Lemma 4.2 (Congruence for substitution, `par_subst`).** If
+$s \Rightarrow s'$ and $t \Rightarrow t'$ then
+$\mathrm{subst}\,j\,s\,t \Rightarrow \mathrm{subst}\,j\,s'\,t'$ for every
+$j$.
+*Proof.* Induction on $t \Rightarrow t'$, generalizing over $j$, $s$, $s'$.
+The variable case splits on equality with $j$ and uses reflexivity; the
+lambda case crosses a binder using `par_lift` on the substituted term; the
+$\beta_{\Rightarrow}$ case is closed by the substitution interchange law
+`subst0_subst`. $\square$
 
-### 3.3 Church–Rosser Theorem
+**Corollary 4.3 (Congruence for beta contraction, `par_subst0`).** If
+$u \Rightarrow u'$ and $t \Rightarrow t'$ then
+$\mathrm{subst}_0\,u\,t \Rightarrow \mathrm{subst}_0\,u'\,t'$.
+*Proof.* The case $j = 0$ of Lemma 4.2. $\square$
 
-**Theorem (beta_confluent)**. If Beta* t u and Beta* t v, then ∃ w with Beta* u w ∧ Beta* v w.
+---
 
-*Proof*: Via the "parallel reduction sandwich":
-1. Beta ⊆ ParBeta (each one-step reduction is a parallel reduction)
-2. ParBeta ⊆ Beta* (each parallel reduction decomposes into one-step reductions)
-3. ParBeta has the diamond property (via complete developments)
-4. Diamond lifts to ParBeta* via the strip lemma
-5. Beta* = ParBeta* (from 1 and 2), inheriting confluence
+## 5. The triangle, the diamond, and Church–Rosser
 
-### 3.4 Uniqueness of Normal Forms
+**Theorem 5.1 (Triangle property, `par_triangle`).** If $t \Rightarrow u$
+then $u \Rightarrow \mathrm{cd}(t)$.
 
-**Theorem (normal_form_unique)**. If Beta* t u, Beta* t v, NormalForm u, NormalForm v, then u = v.
+*Proof sketch.* Structural induction on $t$, with the parallel step $u$
+generalized.
+- **Variable.** $t = \mathrm{var}\,n$ forces $u = \mathrm{var}\,n$ and
+  $\mathrm{cd}(t) = \mathrm{var}\,n$; apply reflexivity.
+- **Abstraction.** $t = \mathrm{lam}\,s$. The only way $t \Rightarrow u$ is
+  $u = \mathrm{lam}\,s'$ with $s \Rightarrow s'$; the induction hypothesis
+  gives $s' \Rightarrow \mathrm{cd}(s)$, and the lambda clause concludes.
+- **Application $t = a\,b$.** Case on whether the operator $a$ is an
+  abstraction.
+  - If $a$ is *not* an abstraction, then $u = a'\,b'$ with
+    $a \Rightarrow a'$, $b \Rightarrow b'$; the induction hypotheses give
+    $a' \Rightarrow \mathrm{cd}(a)$, $b' \Rightarrow \mathrm{cd}(b)$, and
+    the application clause yields
+    $u \Rightarrow \mathrm{cd}(a)\,\mathrm{cd}(b) = \mathrm{cd}(t)$.
+  - If $a = \mathrm{lam}\,s$, the redex case, then $t \Rightarrow u$ arises
+    in one of two ways. Either $u = (\mathrm{lam}\,s')\,b'$ was obtained
+    *without* firing the head redex (congruence), in which case inverting
+    the induction hypothesis on $\mathrm{lam}\,s$ and applying
+    $\beta_{\Rightarrow}$ contracts it now to reach
+    $\mathrm{subst}_0\,(\mathrm{cd}\,b)\,(\mathrm{cd}\,s) = \mathrm{cd}(t)$;
+    or $u = \mathrm{subst}_0\,b''\,s''$ was obtained *by* firing the head
+    redex, in which case Corollary 4.3 (`par_subst0`) joins the developed
+    parts to the same target $\mathrm{cd}(t)$.
 
-*Proof*: By beta_confluent, obtain w with Beta* u w and Beta* v w. Since u and v are normal forms, they cannot reduce further, so u = w and v = w.
+In every case $u \Rightarrow \mathrm{cd}(t)$. $\square$
 
-### 3.5 Böhm Tree Approximants
+**Theorem 5.2 (Diamond property, `par_diamond`).** If $t \Rightarrow u$
+and $t \Rightarrow v$ then there exists $w$ with $u \Rightarrow w$ and
+$v \Rightarrow w$.
+*Proof.* Take $w := \mathrm{cd}(t)$. By the triangle property
+$u \Rightarrow \mathrm{cd}(t)$ and $v \Rightarrow \mathrm{cd}(t)$. $\square$
 
-**Definition**. `bohmApprox n t` computes a finite Böhm tree approximant by:
-1. Head-reducing t up to n steps
-2. Extracting the head variable and arguments
-3. Recursively approximating arguments with fuel n-1
+The diamond witness is *explicit and canonical*: it is the complete
+development of the common source, computed once, independent of the two
+branches. This is the conceptual payoff of Takahashi's method.
 
-**Theorem (omega_bohmApprox_bot)**. ∀ n, bohmApprox n Ω = ⊥.
+To transfer confluence to beta reduction we relate the two
+reflexive–transitive closures. Three congruence lemmas for
+$\mathrm{BetaStar}$ are needed.
 
-*Proof*: By induction on n. At each step, head reduction of Ω yields Ω again, consuming one unit of fuel without progress.
+**Lemma 5.3 (BetaStar congruences, `betaStar_lam`, `betaStar_appL`,
+`betaStar_appR`).** $\twoheadrightarrow_\beta$ is closed under
+$\mathrm{lam}(\cdot)$, under $(\cdot)\,b$, and under $a\,(\cdot)$.
+*Proof.* Each by induction on the closure, prefixing a single congruent
+beta step at each tail. $\square$
 
-## 4. Algorithms
+**Lemma 5.4 (Parallel splits into beta, `betaStar_of_par`).** If
+$t \Rightarrow u$ then $t \twoheadrightarrow_\beta u$.
+*Proof.* Structural induction on $t$, inverting the parallel step. The
+congruence cases are assembled from Lemma 5.3. The $\beta_{\Rightarrow}$
+case first reduces operator and operand congruently to the developed
+forms, then fires the head redex with a single $\beta$ step. $\square$
 
-### 4.1 Leftmost-Outermost Normalization
+**Proposition 5.5 (Closures coincide, `reflTransGen_beta_iff_par`).** For
+all $t, u$,
+$$t \twoheadrightarrow_\beta u \iff t \Rightarrow^{*} u.$$
+*Proof.* ($\Rightarrow$) Monotonicity: every beta step is a parallel step
+(Lemma 3.3). ($\Leftarrow$) Induction on the parallel closure, expanding
+each parallel step into a beta sequence via Lemma 5.4. $\square$
 
-```python
-def normalize(t, fuel=100):
-    for _ in range(fuel):
-        next = beta_reduce_leftmost(t)
-        if next is None:  # normal form
-            return t
-        t = next
-    return None  # didn't converge
-```
+**Theorem 5.6 (Church–Rosser / confluence of beta, `church_rosser_beta`).**
+If $t \twoheadrightarrow_\beta u$ and $t \twoheadrightarrow_\beta v$ then
+there exists $w$ with $u \twoheadrightarrow_\beta w$ and
+$v \twoheadrightarrow_\beta w$.
+*Proof.* By Proposition 5.5, $t \Rightarrow^{*} u$ and
+$t \Rightarrow^{*} v$. The diamond property (Theorem 5.2) says
+$\mathrm{Par}$ has the diamond, and any relation with the diamond property
+has a confluent reflexive–transitive closure (the standard
+strip/tile lemma). Hence there is $w$ with $u \Rightarrow^{*} w$ and
+$v \Rightarrow^{*} w$; translating back by Proposition 5.5 gives
+$u \twoheadrightarrow_\beta w$ and $v \twoheadrightarrow_\beta w$.
+$\square$
 
-Correctness: By Church-Rosser, if any normalization strategy finds a normal form, leftmost-outermost will too (for head normalization).
+**Corollary 5.7 (Uniqueness of normal forms).** If
+$t \twoheadrightarrow_\beta u$ and $t \twoheadrightarrow_\beta v$ with $u$
+and $v$ in normal form, then $u = v$.
+*Proof.* By Theorem 5.6 there is a common reduct $w$; since $u$ and $v$
+are normal they each equal $w$. $\square$
 
-### 4.2 Böhm Approximant Computation
+---
 
-```python
-def bohm_approx(n, t):
-    if n == 0: return Bot()
-    r = head_reduce(t)
-    if r is not None: return bohm_approx(n-1, r)
-    hd, args = extract_head(t)
-    return Node(hd, [bohm_approx(n-1, a) for a in args])
-```
+## 6. Non-termination and Böhm-tree approximants
 
-Time complexity: O(n × |t|) per approximation level, where |t| is term size.
+Confluence guarantees uniqueness of normal forms but not their existence.
+The canonical counterexample is built from self-application.
 
-### 4.3 Reduction Tree Explorer
+**Definition 6.1 (Combinators).** Write $I := \mathrm{lam}\,(\mathrm{var}\,0)$
+for the identity, $\delta := \mathrm{lam}\,(\mathrm{app}\,(\mathrm{var}\,0)\,(\mathrm{var}\,0))$
+for the self-applicator, and
+$$\Omega := \mathrm{app}\,\delta\,\delta = (\lambda x.\,x\,x)(\lambda x.\,x\,x).$$
+Beta-contracting the single redex of $\Omega$ returns $\Omega$, so $\Omega$
+has no normal form.
 
-```python
-def reducts_up_to_depth(t, d):
-    current = {t}
-    for _ in range(d):
-        current |= {r for s in current for r in all_reducts(s)}
-    return current
-```
+To analyze such terms we use finite Böhm-tree approximants.
 
-## 5. Computational Experiments
+**Definition 6.2 (Approximants, `BTApprox`).** A *Böhm-tree approximant*
+is
+$$b ::= \bot \;\mid\; \mathrm{node}\,n\,[\,b_1, \dots, b_k\,],$$
+where $\bot$ denotes divergence/undefined and $\mathrm{node}\,n\,\vec{b}$
+denotes a head variable $n$ applied to approximated arguments.
 
-### 5.1 Confluence Verification
+**Definition 6.3 (Head reduction, head normal form, head extraction).**
+- $\mathrm{headReduce}\,t$ fires the *head* redex if present:
+  $\mathrm{headReduce}\big((\mathrm{lam}\,t)\,u\big) = \mathrm{some}\,(\mathrm{subst}_0\,u\,t)$,
+  it recurses into the operator of a non-redex application, and is
+  $\mathrm{none}$ otherwise.
+- $\mathrm{isHNF}\,t$ tests for a head normal form (no head redex).
+- $\mathrm{extractHead}\,t$ returns the head variable and the spine of
+  arguments of a head normal form.
 
-We verified confluence empirically for all closed terms of size ≤ 8, confirming that all reduction paths from each term converge to the same normal form (when one exists).
+**Definition 6.4 (Bounded approximant, `bohmApprox`).** With a fuel
+parameter $n$,
+$$
+\mathrm{bohmApprox}\,0\,t = \bot,
+$$
+$$
+\mathrm{bohmApprox}\,(n{+}1)\,t =
+\begin{cases}
+\mathrm{bohmApprox}\,n\,t' & \text{if } \mathrm{headReduce}\,t = \mathrm{some}\,t'\\
+\mathrm{node}\,h\,(\mathrm{map}\,(\mathrm{bohmApprox}\,n)\,\vec{a}) & \text{if } \mathrm{extractHead}\,t = \mathrm{some}\,(h,\vec{a})\\
+\bot & \text{otherwise.}
+\end{cases}
+$$
+The function first drives $t$ to head normal form by head reduction
+(consuming fuel), then records the head and recursively approximates the
+spine.
 
-### 5.2 Reduction Tree Branching
+**Theorem 6.5 (Divergence of $\Omega$, `omega_bohmApprox_bot`).** For
+every $n$, $\mathrm{bohmApprox}\,n\,\Omega = \bot$.
+*Proof.* Induction on $n$. The base case is immediate. In the step,
+$\mathrm{headReduce}\,\Omega = \mathrm{some}\,\Omega$, so
+$\mathrm{bohmApprox}\,(n{+}1)\,\Omega = \mathrm{bohmApprox}\,n\,\Omega$,
+which is $\bot$ by the induction hypothesis. $\square$
 
-For simply-typed closed terms of size n, the number of distinct reducts reachable within depth d was observed to be strictly less than 2^d in all tested cases, supporting the subexponential branching conjecture.
+**Proposition 6.6 (Identity, `I_bohmApprox`).** For every $n$,
+$\mathrm{bohmApprox}\,(n{+}1)\,I = \bot$.
+*Proof.* $I = \mathrm{lam}\,(\mathrm{var}\,0)$ has no head redex and
+$\mathrm{extractHead}$ returns $\mathrm{none}$ under a lambda, so the
+"otherwise" branch yields $\bot$ by definitional reduction. $\square$
 
-### 5.3 Böhm Separation
+*Remark (stability is delicate).* A naive "approximants of a normal form
+stabilize" statement is **false**: $\mathrm{app}\,(\mathrm{var}\,0)\,(\mathrm{var}\,0)$
+is a normal form yet $\mathrm{bohmApprox}\,1$ gives
+$\mathrm{node}\,0\,[\bot]$ while $\mathrm{bohmApprox}\,2$ gives
+$\mathrm{node}\,0\,[\mathrm{node}\,0\,[]]$. A correct stability statement
+must bound the term's depth. The formalization records this counterexample
+explicitly rather than asserting a false lemma.
 
-For pairs of inequivalent closed terms of size ≤ N, separation by Böhm approximants was always achieved at depth ≤ 2N, providing empirical support for the linear separation depth conjecture.
+Finally, the development records elementary facts about *bounded reduction
+sets*, used to reason about reachable terms.
 
-## 6. Discussion
+**Definition 6.7 (Reducts up to depth, `reductsUpToDepth`).**
+$\mathrm{reductsUpToDepth}\,t\,0 = \{t\}$ and
+$\mathrm{reductsUpToDepth}\,t\,(d{+}1)$ is the union of
+$\mathrm{reductsUpToDepth}\,t\,d$ with the one-step beta reducts of all its
+members.
 
-### 6.1 Architecture
+**Proposition 6.8 (`mem_reductsUpToDepth_self`,
+`reductsUpToDepth_mono`, `reductsUpToDepth_nf`).** A term lies in its own
+reduct set at every depth; the reduct set is monotone in depth; and for a
+normal form $t$, $\mathrm{reductsUpToDepth}\,t\,d = \{t\}$ for all $d$.
+*Proof.* Each by induction on $d$, using that a normal form has no
+one-step reducts. $\square$
 
-The modular architecture separates concerns cleanly:
-- `Syntax.lean`: Terms, substitution, basic lemmas (no reduction)
-- `Confluence.lean`: Parallel reduction, diamond, Church-Rosser
-- `Bohm.lean`: Böhm approximants, reduction trees
-- `STLC.lean`: Simply-typed lambda calculus, strong normalization (partial)
+---
 
-### 6.2 Limitations
+## 7. Algorithms
 
-The strong normalization proof for STLC remains incomplete. The Tait reducibility method requires defining a semantic predicate by recursion on types and proving a fundamental theorem about typed substitutions — this is a substantial formalization effort that we leave for future work.
+The constructive content of the development yields directly executable
+procedures.
 
-### 6.3 Related Work
+**Algorithm A (Complete development).** `cd` is a structural recursion on
+the term (Definition 3.4). Each application node performs at most one
+substitution, so on a term of size $s$ it runs in $O(s)$ recursive
+calls plus the cost of the substitutions it triggers; substitution is
+linear in the size of the body, giving an $O(s^2)$ worst case for
+duplicating redexes. Iterating $\mathrm{cd}$ realizes the *Gross–Knuth*
+(full-development) reduction strategy, which reaches the normal form (when
+one exists) in a number of rounds equal to the developmental depth of the
+term.
 
-- Vestergaard & Brotherston (2003): Confluence in Isabelle/HOL using de Bruijn
-- Pollack (1994): Church-Rosser in LEGO
-- Nipkow (2001): Several lambda calculus formalizations in Isabelle
+**Algorithm B (Confluence joiner).** Given two reduction sequences
+$t \twoheadrightarrow_\beta u$ and $t \twoheadrightarrow_\beta v$, the
+proof of Theorem 5.6 is constructive: reinterpret both sequences as
+parallel reductions, and tile the resulting grid using the explicit
+diamond witness $\mathrm{cd}(\cdot)$ at each cell. The common reduct $w$ is
+produced together with the two joining sequences. The number of tiles is
+bounded by the product of the two sequence lengths.
 
-Our development is distinguished by its use of complete developments (rather than the Takahashi method used in some formalizations) and by the systematic treatment of the substitution calculus.
+**Algorithm C (Böhm approximant).** `bohmApprox` (Definition 6.4) is a
+fuel-bounded head-reduction-then-recurse procedure. With fuel $n$ it
+performs at most $n$ head reductions before recording a node or $\bot$,
+guaranteeing termination even on divergent input; the fuel parameter is
+precisely what makes a partial-by-nature computation total.
 
-## 7. Future Work
+---
 
-1. Complete the strong normalization proof for STLC via reducibility candidates
-2. Extend to System F and polymorphic lambda calculus
-3. Formalize the connection between reduction tree branching and type complexity
-4. Develop a certified normalization-by-evaluation algorithm
-5. Connect Böhm tree approximants to domain-theoretic denotational semantics
+## 8. Numerical and symbolic illustrations
 
-## References
+The companion program (`demo.py`) implements the de Bruijn syntax,
+substitution algebra, single-step and parallel reduction, the complete
+development, and Böhm approximants exactly as above, and checks the
+theorems on concrete terms.
 
-1. Church, A. (1936). An unsolvable problem of elementary number theory. *American Journal of Mathematics*.
-2. Barendregt, H. (1984). *The Lambda Calculus: Its Syntax and Semantics*. North-Holland.
-3. Tait, W.W. (1967). Intensional interpretations of functionals of finite type. *JSL*.
-4. Takahashi, M. (1995). Parallel reductions in λ-calculus. *Information and Computation*.
-5. Nipkow, T. (2001). More Church-Rosser proofs. *Journal of Automated Reasoning*.
+- **Confluence.** For
+  $t = \big((\lambda x.\,x)\,((\lambda x.\,x)\,y)\big)\,\big((\lambda x.\,x)\,z\big)$
+  the program enumerates the distinct one-step reducts, computes
+  $\mathrm{cd}(t)$, and verifies that all branches normalize to the same
+  term, illustrating Theorem 5.6 and Corollary 5.7.
+- **Triangle.** For a term with nested redexes the program enumerates
+  *every* parallel reduct $u$ and confirms that $\mathrm{cd}(t)$ is among
+  the parallel reducts of each $u$, i.e. $u \Rightarrow \mathrm{cd}(t)$
+  (Theorem 5.1).
+- **Diamond.** It checks that the explicit witness $\mathrm{cd}(t)$ joins
+  every pair of parallel reducts (Theorem 5.2).
+- **Normalization vs. divergence.** It reduces $S\,K\,K\,x$ to $x$, and
+  shows $\Omega \to \Omega$; the Böhm approximant of $\Omega$ is $\bot$ at
+  every depth (Theorem 6.5).
+
+---
+
+## 9. Applications and discussion
+
+**Programming-language semantics.** Confluence is the formal guarantee
+that the *result* of a functional program is independent of evaluation
+order, justifying the freedom compilers and runtimes take in scheduling
+reductions (call-by-name, call-by-value, lazy graph reduction). Uniqueness
+of normal forms (Corollary 5.7) is the semantic bedrock on which
+referential transparency rests.
+
+**Proof assistants and type theory.** Dependently typed proof assistants
+rely on confluence (and, in their typed cores, strong normalization) to
+make definitional equality decidable, which is exactly what makes type
+checking — and hence machine-checked proof — possible. The
+parallel-reduction/complete-development technique formalized here is the
+standard route to confluence for the calculi underlying such systems, and
+generalizes smoothly to richer rewriting systems with the same triangle
+skeleton.
+
+**The horizon: undecidability.** Böhm trees (Section 6) are the gateway to
+the semantic theory of the lambda calculus. Two closed terms are
+observationally interchangeable precisely when their Böhm trees agree
+(modulo the appropriate notion of equivalence), and Böhm's separation
+theorem shows that distinct normal-form Böhm trees can always be told
+apart by some applicative context. The flip side, established through this
+same theory, is that *equivalence of lambda terms is undecidable*: no
+algorithm decides, for arbitrary $M$ and $N$, whether $M$ and $N$ denote
+the same function. The divergence analysis of $\Omega$ — the fact that it
+reveals nothing, approximating to $\bot$ everywhere — is the simplest
+instance of the phenomenon that makes this undecidability unavoidable.
+
+**On the formalization.** Working with de Bruijn indices trades the
+intuitive readability of named variables for arithmetic precision: the
+lift/substitution and substitution/substitution interchange laws
+(Section 2) carry the entire weight that informal "without loss of
+generality, rename bound variables" hand-waving usually hides. Concentrating
+that difficulty into a handful of named, reusable commutation lemmas
+(`par_lift`, `par_subst`, `par_subst0`) is what makes the headline proofs
+(Sections 5–6) short and transparent.
+
+---
+
+## 10. Future directions
+
+The development invites several extensions, in increasing order of ambition:
+
+1. **Strong normalization for the simply typed calculus.** Layer a typing
+   judgment over the present syntax and prove, via a logical-relations /
+   reducibility-candidates argument, that every typable term is strongly
+   normalizing. Combined with confluence this gives decidability of
+   beta-equivalence on typable terms.
+
+2. **Standardization and leftmost-outermost normalization.** Prove the
+   standardization theorem and the corollary that the leftmost-outermost
+   strategy is normalizing — if a normal form exists, this strategy finds
+   it. The complete-development machinery here is the natural starting
+   point.
+
+3. **Full Böhm-tree theory and separation.** Extend the finite
+   approximants to (coinductive) Böhm trees, prove monotonicity and limit
+   properties, and formalize Böhm's separation theorem, en route to a
+   rigorous account of the undecidability of lambda-term equivalence.
+
+4. **Confluence transfer to extended calculi.** Reuse the triangle
+   skeleton for $\beta\eta$-reduction, for calculi with constants and
+   pattern matching, and for explicit-substitution calculi, demonstrating
+   the modularity of the method.
+
+---
+
+## References (textbook background, for orientation only)
+
+The results developed here are classical. The parallel-reduction method is
+due to W. W. Tait and P. Martin-Löf; the complete-development streamlining
+is due to M. Takahashi, *Parallel reductions in λ-calculus* (1995). De
+Bruijn indices are from N. G. de Bruijn (1972). Böhm trees and the
+separation theorem are due to C. Böhm; comprehensive treatments appear in
+H. P. Barendregt, *The Lambda Calculus: Its Syntax and Semantics* (1984).
+This paper is self-contained and does not depend on these sources for any
+of its statements or proofs.
