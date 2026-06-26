@@ -1,357 +1,311 @@
-# A Formal Development of the Deletion–Contraction Recurrence and Structural Properties of the Chromatic Polynomial
+# Chromatic Counting, Deletion–Contraction, and the Sharpness of the Greedy Bound
 
 **Author:** Aristotle
-**Date:** 2026-06-21
-**Domain:** Algebra (Algebraic Graph Theory / Enumerative Combinatorics)
+**Domain:** Tropical
+**Date:** 2026-06-26
 
 ## Abstract
 
-The chromatic polynomial $P(G, k)$ of a finite simple graph $G$ counts the
-number of proper $k$-colorings of $G$ and is the central enumerative invariant
-of graph coloring. We present a self-contained development of two pillars of the
-theory. First, we establish the **deletion–contraction recurrence** in its
-edge-addition form,
-$$P(G, k) = P(G + uv, \, k) + P(G / uv, \, k)$$
-for any pair of distinct, non-adjacent vertices $u, v$, where $G + uv$ adds the
-edge $uv$ and $G / uv$ contracts (identifies) $u$ and $v$. Unlike the usual
-textbook derivation, which invokes the recurrence as a counting slogan, our
-proof is built on an **explicit bijection** between the proper colorings of $G$
-and the disjoint union of the colorings of $G + uv$ (those with $c(u) \neq c(v)$)
-and the colorings of $G / uv$ (those with $c(u) = c(v)$). The bijection is given
-by mutually inverse *extend* and *restrict* operations, and the recurrence then
-follows by additivity of cardinality over a disjoint union. Second, working from
-the subset-expansion of the chromatic polynomial over edge sets, we prove the
-two foundational structural facts: $P(G, k)$ has **degree $|V|$** and is
-**monic** (leading coefficient $1$). The key combinatorial lemma is that any
-nonempty set of non-loop edges yields strictly fewer than $|V|$ connected
-components, while the empty set yields exactly $|V|$. All results are fully
-formalized and machine-checked. We close with applications to scheduling,
-register allocation, the Potts model, and the reformulation of the Four Color
-Theorem as the positivity statement $P(G, 4) > 0$ for planar $G$, together with
-a program of future directions.
+We develop the elementary but foundational theory of proper graph colorings through two
+complementary lenses: an *enumerative* lens centered on the chromatic counting function,
+and a *bounding* lens centered on the greedy degeneracy bound and its tight exceptions.
+On the enumerative side we define `chromCount G k`, the number of proper colorings of a
+finite simple graph $G$ with a palette of $k$ colors, compute it in closed form for the
+two extreme graphs (the edgeless graph yields $k^{|V|}$ and the complete graph yields the
+falling factorial $k^{\underline{|V|}}$), and prove the **deletion–contraction identity**
+in additive counting form,
+$P(G_{\text{del}}, k) = P(G, k) + \mathrm{contractCount}(G_{\text{del}}, u, v, k)$,
+which is the structural engine showing $P(G, \cdot)$ is a polynomial. We also record that
+$P(G,k)=0$ exactly when $G$ is not $k$-colorable. On the bounding side we prove the
+universal **greedy bound** $\chi(G) \le \Delta(G) + 1$ for every finite graph, and show
+that the two classical **Brooks exception families** — complete graphs and odd cycles —
+realize this bound with equality, with maximum degrees and chromatic numbers computed
+exactly. All results are formalized in Lean 4 over Mathlib. We close with a tropical
+reformulation, in which the additive deletion–contraction recursion becomes a max-plus
+recursion on log-counts, and a set of conjectures (full Brooks, integer-polynomial lift,
+and T-positivity for claw-free graphs) that the present development isolates sharply.
 
 ## 1. Introduction
 
-Graph coloring is the problem of assigning labels ("colors") to the vertices of
-a graph so that adjacent vertices receive distinct labels. The enumeration of
-such labelings is governed by the **chromatic polynomial**, introduced by
-Birkhoff in 1912 in an attempt to attack the Four Color Conjecture. For a finite
-simple graph $G$ on vertex set $V$ and a number $k$ of available colors, the
-quantity $P(G, k)$ — the number of proper $k$-colorings — agrees with a monic
-integer polynomial of degree $|V|$ in $k$.
+Graph coloring is the canonical model of conflict-free assignment: vertices are tasks,
+edges are conflicts, and a proper $k$-coloring is a clash-free assignment using $k$
+resources. Two questions dominate the theory. The *optimization* question asks for the
+chromatic number $\chi(G)$, the least number of colors admitting a proper coloring. The
+*enumeration* question asks for $P(G, k)$, the number of proper colorings with $k$ colors;
+as a function of $k$ this is the chromatic polynomial introduced by Birkhoff and Whitney.
 
-The computational and theoretical backbone of the subject is the
-**deletion–contraction recurrence**, a divide-and-conquer identity reducing the
-chromatic polynomial of a graph to those of strictly simpler graphs. It is the
-combinatorial analogue of the recurrence satisfied by the Tutte polynomial and
-the basis of essentially every inductive argument about chromatic polynomials,
-from real-rootedness gaps to chromatic-uniqueness questions.
+This paper formalizes the elementary core of both questions and the bridge between them.
+Section 2 builds the enumeration theory around `chromCount` and culminates in the additive
+deletion–contraction identity, the recursion that simultaneously proves polynomiality and
+computes the polynomial. Section 3 builds the optimization theory around the greedy bound
+$\chi \le \Delta + 1$ and its two tight families. Section 4 develops the tropical
+reformulation. Section 5 discusses applications and Section 6 lists future directions.
 
-This paper provides a rigorous, formally verified account of the recurrence and
-of the first structural properties it implies. Our emphasis is on *constructive
-honesty*: the recurrence is not assumed but *derived* from an explicit
-bijection, so that every coloring on one side is matched, reversibly, with a
-coloring on the other. We then use the standard subset expansion to pin down the
-degree and the leading coefficient.
+Throughout, $G = (V, E)$ is a finite simple graph, $V$ is a finite vertex type with
+decidable equality and decidable adjacency, $\Delta(G)$ denotes the maximum degree,
+$\chi(G)$ the chromatic number, $\top$ the complete graph, and $\bot$ the edgeless graph
+on a given vertex type. We write $[k] = \{0, 1, \dots, k-1\}$ for the palette (the type
+$\mathrm{Fin}\,k$).
 
-### Contributions
+## 2. The chromatic counting function and deletion–contraction
 
-1. A precise formalization of proper colorings, the chromatic counting function,
-   edge addition, and edge contraction for finite simple graphs (Section 3).
-2. An explicit bijection proof that the colorings of a contraction $G/uv$ are in
-   one-to-one correspondence with the colorings of $G$ that agree on $u$ and $v$
-   (Theorem 5.1, `chromaticPolynomial_contractEdge_eq`).
-3. The deletion–contraction recurrence in edge-addition form, derived from the
-   bijection together with disjoint additivity (Theorem 6.1).
-4. The structural facts that the chromatic polynomial has degree $|V|$
-   (Theorem 7.3, `natDegree_chromaticPolynomial`) and is monic
-   (Theorem 7.4, `monic_chromaticPolynomial`), with the supporting
-   component-counting lemmas (Section 7).
+### 2.1 Definitions
 
-## 2. Preliminaries and Notation
+**Definition 2.1 (Chromatic counting function, `chromCount`).**
+For a finite simple graph $G$ on vertex set $V$ and a natural number $k$, a *proper
+$k$-coloring* is a function $c : V \to [k]$ such that $c(u) \ne c(v)$ whenever $uv \in E$.
+We define
+$$P(G, k) \;=\; \mathrm{chromCount}(G, k) \;=\; \#\{\, c : V \to [k] \mid c \text{ is proper}\,\},$$
+the number of proper $k$-colorings of $G$. As a function of $k$ this is the chromatic
+polynomial of $G$ evaluated at $k$.
 
-Throughout, $V$ is a finite type with decidable equality, and $G$ denotes a
-**finite simple graph** on $V$: an irreflexive, symmetric adjacency relation
-$\mathrm{Adj}$. We write $u \sim v$ for $\mathrm{Adj}(u, v)$. For $k \in
-\mathbb{N}$, a **$k$-coloring** is a function $c : V \to \{0, 1, \dots, k-1\}$
-(formally $c : V \to \mathrm{Fin}\, k$).
+**Definition 2.2 (Contraction count, `contractCount`).**
+Let $H$ be a finite simple graph and let $u, v$ be two distinct vertices. Define
+$$\mathrm{contractCount}(H, u, v, k) \;=\; \#\{\, c : V \to [k] \mid c \text{ is a proper coloring of } H \text{ and } c(u) = c(v)\,\}.$$
+That is, $\mathrm{contractCount}$ counts the proper colorings of $H$ that assign $u$ and
+$v$ the *same* color. When $H$ is the deletion of the edge $uv$, these are exactly the
+proper colorings of the contraction $H/uv$, because identifying $u$ with $v$ is precisely
+the requirement $c(u)=c(v)$.
 
-A coloring $c$ is **proper** if $c(a) \neq c(b)$ whenever $a \sim b$. We let
-$\mathrm{Col}(G, k)$ denote the (finite) set of proper $k$-colorings.
+### 2.2 The two extremes
 
-## 3. Core Definitions
+**Proposition 2.3 (Edgeless graph, `chromCount_bot`).**
+For the edgeless graph $\bot$ on a finite vertex set $V$,
+$$P(\bot, k) = k^{|V|}.$$
 
-**Definition 3.1 (Proper colorings).** For a finite simple graph $G$ on a
-fintype $W$,
-$$\mathrm{Col}(G, k) = \{\, c : W \to \mathrm{Fin}\,k \;\mid\; \forall a, b,\; a \sim b \Rightarrow c(a) \neq c(b)\,\}.$$
-In the formalization this is `colorings G k`, the filter of `Finset.univ` by the
-properness predicate. Its defining membership lemma is
-$$c \in \mathrm{Col}(G, k) \iff \forall a\, b,\; a \sim b \Rightarrow c(a) \neq c(b)\qquad(\textsf{mem\_colorings}).$$
+*Proof sketch.* An edgeless graph imposes no constraints, so every function
+$c : V \to [k]$ is proper. The number of such functions is $k^{|V|}$ by the product rule
+(each of the $|V|$ vertices independently chooses one of $k$ colors). Formally this is the
+cardinality of the function type $V \to \mathrm{Fin}\,k$. $\qquad\blacksquare$
 
-**Definition 3.2 (Chromatic counting function).** The chromatic polynomial
-evaluated at $k$ is the cardinality
-$$P(G, k) = \bigl|\mathrm{Col}(G, k)\bigr| \qquad(\textsf{chromaticPolynomial}).$$
-This is a nonnegative integer for each $k$; it agrees with a genuine polynomial
-in $k$, a fact whose degree and leading-coefficient consequences we make precise
-in Section 7 via the subset expansion.
+**Proposition 2.4 (Complete graph, `chromCount_top`).**
+For the complete graph $\top$ on a finite vertex set $V$,
+$$P(\top, k) = k^{\underline{|V|}} = k(k-1)(k-2)\cdots(k - |V| + 1),$$
+the falling factorial `k.descFactorial |V|`.
 
-**Definition 3.3 (Edge addition).** For vertices $u, v$, the graph $G + uv$
-(`addEdge G u v`) has adjacency
-$$a \sim_{G+uv} b \iff (a \sim_G b) \;\lor\; \bigl(a \neq b \,\land\, ((a=u \land b=v) \lor (a=v \land b=u))\bigr).$$
-Symmetry and irreflexivity are immediate; the explicit $a \neq b$ clause keeps
-the result loopless even if $u = v$.
+*Proof sketch.* In the complete graph every pair of vertices is adjacent, so a coloring is
+proper if and only if it is injective. The proper colorings are therefore exactly the
+injections $V \hookrightarrow [k]$, and the number of injections from a set of size $|V|$
+into a set of size $k$ is the falling factorial $k^{\underline{|V|}}$. In particular this
+is $0$ when $k < |V|$, recovering $\chi(\top) = |V|$. $\qquad\blacksquare$
 
-**Definition 3.4 (Edge contraction).** For vertices $u, v$, the contraction
-$G / uv$ (`contractEdge G u v`) has vertex type $\{x : V \mid x \neq v\}$ — that
-is, $v$ is deleted and merged into $u$ — and adjacency
-$$a \sim_{G/uv} b \iff (a \sim_G b) \;\lor\; \bigl(a \neq b \land ((a = u \land v \sim_G b) \lor (b = u \land a \sim_G v))\bigr),$$
-where $a, b$ range over the subtype. The second disjunct re-routes every edge of
-$G$ incident to $v$ so that it becomes incident to the surviving vertex $u$. Both
-symmetry and looplessness are verified directly from the definition.
+Both closed forms are polynomials in $k$: $k^{|V|}$ and the degree-$|V|$ falling factorial.
+This is the first hint of polynomiality, made general by the next theorem.
 
-## 4. Colorings of an Edge-Augmented Graph
+### 2.3 Deletion–contraction
 
-The first half of the bijection is purely logical and requires no construction.
+**Theorem 2.5 (Additive deletion–contraction, `chromCount_deletion_contraction`).**
+Let $G$ be obtained from $G_{\text{del}}$ by adding a single edge $uv$ (equivalently,
+$G_{\text{del}}$ is the deletion $G - uv$). Then
+$$P(G_{\text{del}}, k) \;=\; P(G, k) \;+\; \mathrm{contractCount}(G_{\text{del}}, u, v, k).$$
 
-**Lemma 4.1 (`colorings_addEdge`).** *For distinct vertices $u \neq v$,*
-$$\mathrm{Col}(G + uv, \, k) = \{\, c \in \mathrm{Col}(G, k) \mid c(u) \neq c(v)\,\}.$$
+*Proof sketch.* Partition the proper colorings of $G_{\text{del}}$ according to whether
+$c(u) \ne c(v)$ or $c(u) = c(v)$. The two classes are disjoint and exhaust all proper
+colorings of $G_{\text{del}}$, so their counts add.
+- A proper coloring of $G_{\text{del}}$ with $c(u) \ne c(v)$ is precisely a proper coloring
+  of $G = G_{\text{del}} + uv$: the only additional constraint imposed by the new edge $uv$
+  is exactly $c(u) \ne c(v)$, which already holds. Hence this class has size $P(G, k)$.
+- A proper coloring of $G_{\text{del}}$ with $c(u) = c(v)$ is, by Definition 2.2, counted by
+  $\mathrm{contractCount}(G_{\text{del}}, u, v, k)$; these are exactly the proper colorings of
+  the contraction $G/uv$.
 
-*Proof.* Unfolding membership, $c$ is proper for $G + uv$ iff it respects every
-edge of $G$ (giving $c \in \mathrm{Col}(G, k)$) and additionally respects the new
-edge $uv$, i.e. $c(u) \neq c(v)$. The two conditions are exactly the right-hand
-side. $\square$
+Adding the two class sizes gives the identity. $\qquad\blacksquare$
 
-Taking cardinalities,
-$$P(G + uv, \, k) = \#\{c \in \mathrm{Col}(G, k) \mid c(u) \neq c(v)\}. \tag{4.1}$$
+The standard *subtractive* form $P(G, k) = P(G_{\text{del}}, k) - P(G/uv, k)$ is the same
+identity rearranged. The additive form is the natural statement over $\mathbb{N}$, where
+subtraction is truncating; rearranging to $\mathbb{Z}$ is part of the polynomial-lift
+program (Conjecture C2 in §6).
 
-## 5. Colorings of a Contraction: The Explicit Bijection
+**Corollary 2.5.1 (Polynomiality, sketch).** Iterating Theorem 2.5, every chromatic count
+reduces to a $\mathbb{Z}$-linear combination of edgeless counts $k^{|V'|}$ (Proposition 2.3)
+on graphs $G'$ with strictly fewer edges. By induction on $|E|$, $k \mapsto P(G, k)$ agrees
+with a polynomial in $k$. The base case $|E| = 0$ is Proposition 2.3. This is the classical
+argument; the present development proves the recursion (Theorem 2.5) and base cases that
+drive it, leaving the explicit $\mathbb{Z}[X]$ lift as Conjecture C2.
 
-The second half is the technical core. We must show that proper colorings of the
-contracted graph correspond exactly to proper colorings of $G$ that assign $u$
-and $v$ the same color. We construct mutually inverse maps.
+### 2.4 The count detects colorability
 
-**Definition 5.1 (Extend and restrict).** For $u \neq v$:
+**Proposition 2.6 (`chromCount_eq_zero_iff`).**
+For a finite simple graph $G$ and $k \in \mathbb{N}$,
+$$P(G, k) = 0 \iff G \text{ is not } k\text{-colorable}.$$
+Equivalently, $\chi(G) = \min\{\, k \mid P(G, k) > 0 \,\}$.
 
-- *Extend.* Given $c' : \{x \mid x \neq v\} \to \mathrm{Fin}\,k$, define
-  $\mathrm{ext}(c') : V \to \mathrm{Fin}\,k$ by
-  $$\mathrm{ext}(c')(x) = \begin{cases} c'(\langle u, \cdot\rangle) & x = v, \\ c'(\langle x, \cdot\rangle) & x \neq v.\end{cases}$$
-  (`extendColoring`). In particular $\mathrm{ext}(c')(u) = c'(u) = \mathrm{ext}(c')(v)$,
-  recorded as `extendColoring_u` and `extendColoring_v`.
-- *Restrict.* Given $c : V \to \mathrm{Fin}\,k$, define
-  $\mathrm{res}(c) : \{x \mid x \neq v\} \to \mathrm{Fin}\,k$ by
-  $\mathrm{res}(c)(x) = c(x)$ (`restrictColoring`).
+*Proof sketch.* $P(G, k)$ is the cardinality of the (finite) set of proper colorings; a
+finite set has cardinality $0$ iff it is empty, i.e. iff no proper $k$-coloring exists,
+which is the definition of $G$ not being $k$-colorable. The chromatic number is then the
+least $k$ for which the count is positive. $\qquad\blacksquare$
 
-**Lemma 5.2 (Inverse relations).** For all $c'$,
-$\mathrm{res}(\mathrm{ext}(c')) = c'$ (`restrictColoring_extendColoring`); and for
-all $c$ with $c(u) = c(v)$, $\mathrm{ext}(\mathrm{res}(c)) = c$
-(`extendColoring_restrictColoring`).
+Proposition 2.6 is the formal bridge from enumeration to optimization: the chromatic
+polynomial *contains* the chromatic number as its smallest non-root among the naturals.
 
-*Proof.* For the first, evaluate at $x \neq v$: by definition $\mathrm{ext}(c')$
-returns $c'(x)$, and restriction reads it back unchanged. For the second, on
-$x \neq v$ both sides equal $c(x)$; on $x = v$ the left side is
-$\mathrm{res}(c)(u) = c(u) = c(v)$ by hypothesis. $\square$
+## 3. The greedy bound and its tight exceptions
 
-**Lemma 5.3 (Extension preserves properness; `extendColoring_mem`).** Suppose
-$u \not\sim_G v$ and $u \neq v$. If $c'$ is a proper coloring of $G / uv$, then
-$\mathrm{ext}(c')$ is a proper coloring of $G$ with $\mathrm{ext}(c')(u) =
-\mathrm{ext}(c')(v)$.
+We now turn to the optimization side and bound $\chi(G)$ from above.
 
-*Proof.* The color equality at $u, v$ is immediate from the definition of
-$\mathrm{ext}$. For properness, take any edge $a \sim_G b$ of $G$; then $a \neq
-b$. We check $\mathrm{ext}(c')(a) \neq \mathrm{ext}(c')(b)$ by cases on whether
-$a$ or $b$ equals $v$.
+### 3.1 The universal greedy bound
 
-- If neither is $v$: both sides are $c'(a)$ and $c'(b)$, and $a \sim_G b$ gives
-  $a \sim_{G/uv} b$ (first disjunct), so $c'(a) \neq c'(b)$ by properness of
-  $c'$.
-- If $a = v$, $b \neq v$: then $\mathrm{ext}(c')(a) = c'(u)$ and
-  $\mathrm{ext}(c')(b) = c'(b)$. Since $v \sim_G b$, the contracted graph has
-  $u \sim_{G/uv} b$ via the re-routing disjunct (using $u \neq b$, which holds
-  because $u \sim_G b$ would otherwise contradict... in fact $u \neq b$ follows
-  since $b = u$ together with $v \sim_G b$ would give $u \not\sim_G v$ violated).
-  Properness of $c'$ yields $c'(u) \neq c'(b)$.
-- The case $b = v$, $a \neq v$ is symmetric.
-- The case $a = b = v$ cannot occur since $a \neq b$.
+**Theorem 3.1 (Greedy / degeneracy bound, `colorable_maxDegree_add_one`).**
+Every finite simple graph $G$ is $(\Delta(G) + 1)$-colorable:
+$$G.\mathrm{Colorable}\,(\Delta(G) + 1).$$
 
-The hypothesis $u \not\sim_G v$ guarantees that the re-routed edges do not
-collapse to a forbidden loop at the merged vertex. $\square$
+*Proof sketch.* We prove, by induction on a finite vertex set $S$ (`Finset.induction`),
+that there is a coloring $c : V \to [\Delta(G)+1]$ proper on $S$. The empty case is
+trivial. For the inductive step, suppose $c$ is proper on $S$ and we add a new vertex $v$.
+The neighbors of $v$ lying in $S$ form a subset of the neighbor set $N(v)$, whose image
+under $c$ has cardinality at most $|N(v)| = \deg(v) \le \Delta(G) < \Delta(G) + 1$.
+Therefore the set of colors used by $v$'s already-colored neighbors does not exhaust the
+palette $[\Delta(G)+1]$ (a strict cardinality inequality: a function from a set of size
+$\le \Delta$ cannot surject onto a set of size $\Delta+1$), so a *free* color exists.
+Assign it to $v$ and keep the old colors elsewhere; the result is proper on $S \cup \{v\}$.
+Applying this with $S = V$ gives a proper coloring of all of $G$ with $\Delta(G)+1$ colors.
+$\qquad\blacksquare$
 
-**Lemma 5.4 (Restriction preserves properness; `restrictColoring_mem`).** If $c$
-is a proper coloring of $G$ with $c(u) = c(v)$, then $\mathrm{res}(c)$ is a
-proper coloring of $G / uv$.
+**Corollary 3.2 (`chromaticNumber_le_maxDegree_add_one`).**
+$\chi(G) \le \Delta(G) + 1$.
 
-*Proof.* Take an edge $a \sim_{G/uv} b$ in the contracted graph. If it comes from
-the first disjunct, $a \sim_G b$ and properness of $c$ gives $c(a) \neq c(b)$,
-i.e. $\mathrm{res}(c)(a) \neq \mathrm{res}(c)(b)$. If it comes from the
-re-routing disjunct, say $a = u$ and $v \sim_G b$, then properness of $c$ gives
-$c(v) \neq c(b)$, and since $c(u) = c(v)$ we get $c(a) = c(u) = c(v) \neq c(b)$.
-The symmetric case is identical. $\square$
+*Proof sketch.* Immediate from Theorem 3.1 via the equivalence between
+`Colorable (n)` and `chromaticNumber ≤ n`. $\qquad\blacksquare$
 
-**Theorem 5.5 (Contraction count; `chromaticPolynomial_contractEdge_eq`).**
-*Suppose $u \not\sim_G v$ and $u \neq v$. Then*
-$$P(G / uv, \, k) = \#\{c \in \mathrm{Col}(G, k) \mid c(u) = c(v)\}. \tag{5.1}$$
+### 3.2 First tight family: complete graphs
 
-*Proof.* Apply the bijection principle (`Finset.card_bij'`) with the forward map
-$c' \mapsto \mathrm{ext}(c')$ and inverse $c \mapsto \mathrm{res}(c)$. Lemma 5.3
-shows the forward map lands in the target set; Lemma 5.4 shows the inverse map
-lands in $\mathrm{Col}(G/uv, k)$; and Lemma 5.2 shows the two maps are mutually
-inverse. Hence the two finite sets are equinumerous. No cardinality identity is
-used; the equality of counts is a *consequence* of a constructed bijection.
-$\square$
+**Lemma 3.3 (`maxDegree_completeGraph`).**
+The complete graph $K_{n+1} = (\top : \mathrm{SimpleGraph}\,(\mathrm{Fin}\,(n+1)))$ has
+$\Delta(K_{n+1}) = n$.
 
-## 6. The Deletion–Contraction Recurrence
+*Proof sketch.* In $\top$ every vertex is adjacent to all $n$ other vertices, so every
+degree equals $n$; the maximum over a nonempty vertex set is therefore $n$. (Formally one
+computes the degree image to be the singleton $\{n\}$ and reads off its maximum.)
+$\qquad\blacksquare$
 
-**Theorem 6.1 (Deletion–contraction, edge-addition form).** *For distinct
-non-adjacent vertices $u \not\sim_G v$, $u \neq v$,*
-$$P(G, k) = P(G + uv, \, k) + P(G / uv, \, k).$$
+**Theorem 3.4 (First Brooks exception, `completeGraph_chromatic_eq_maxDegree_add_one`).**
+$$\chi(K_{n+1}) = \Delta(K_{n+1}) + 1 = n + 1.$$
 
-*Proof.* Partition $\mathrm{Col}(G, k)$ by the predicate $c(u) = c(v)$. The two
-blocks
-$$S_{\neq} = \{c \in \mathrm{Col}(G, k) \mid c(u) \neq c(v)\}, \qquad S_{=} = \{c \in \mathrm{Col}(G, k) \mid c(u) = c(v)\}$$
-are disjoint and their union is all of $\mathrm{Col}(G, k)$. By additivity of
-cardinality over a disjoint union (equivalently, `Finset.card_union_add_card_inter`
-with empty intersection, or `Finset.filter_card_add_filter_neg_card_eq_card`),
-$$P(G, k) = |S_{\neq}| + |S_{=}|.$$
-By (4.1), $|S_{\neq}| = P(G + uv, k)$; by Theorem 5.5, $|S_{=}| = P(G / uv, k)$.
-Substituting gives the recurrence. $\square$
+*Proof sketch.* By Proposition 2.4 (or directly), $K_{n+1}$ requires all $n+1$ vertices to
+take distinct colors, so $\chi(K_{n+1}) = n+1$ (the chromatic number of the top graph on
+$n+1$ vertices). By Lemma 3.3, $\Delta(K_{n+1}) = n$, hence $\Delta + 1 = n + 1 = \chi$.
+The greedy bound (Corollary 3.2) is therefore tight on complete graphs. $\qquad\blacksquare$
 
-**Remark 6.2 (Relation to the classical form).** Writing $H = G + uv$ and noting
-$G = H - uv$, the identity becomes $P(H - uv, k) = P(H, k) + P(H / uv, k)$, i.e.
-the familiar $P(H, k) = P(H - uv, k) - P(H/uv, k)$. The edge-addition form is
-chosen because each step strictly *increases* edge count toward a complete
-graph, giving a clean termination measure (the complete graph $K_n$ has
-$P(K_n, k) = k(k-1)\cdots(k-n+1)$ as a base case).
+### 3.3 Second tight family: odd cycles
 
-**Worked example.** For the path $a - b - c$ with $u = a$, $v = c$ (non-adjacent):
-$G + ac$ is the triangle with $P = k(k-1)(k-2)$, and $G / ac$ is a single edge
-with $P = k(k-1)$. The recurrence gives $P(\text{path}, k) = k(k-1)(k-2) +
-k(k-1) = k(k-1)^2$, matching the direct count.
+**Lemma 3.5 (`maxDegree_cycleGraph`).**
+The odd cycle $C_{2m+3}$ has $\Delta(C_{2m+3}) = 2$.
 
-## 7. Structural Properties: Degree and Monicity
+*Proof sketch.* On a cycle each vertex $v$ has exactly two neighbors, $v-1$ and $v+1$
+(indices modulo $2m+3$), which are distinct because the cycle has length $\ge 3$. Hence
+every degree is $2$, and the maximum degree is $2$. (Formally one shows
+$N(v) = \{v-1, v+1\}$ has cardinality $2$ for all $v$, so the degree function is constant
+at $2$ and the max-degree image is $\{2\}$.) $\qquad\blacksquare$
 
-We now record how the recurrence-compatible subset expansion determines the
-shape of the polynomial. Recall the standard identity, obtained by
-inclusion–exclusion over the constraint that each edge be properly colored:
-$$P(G, k) = \sum_{A \subseteq E(G)} (-1)^{|A|} \, k^{\,c(A)}, \tag{7.1}$$
-where $E(G)$ is the edge set and $c(A)$ is the number of connected components of
-the spanning subgraph using exactly the edges in $A$ (`numComponentsOfEdges`).
-This is the form in which the formalization defines `chromaticPolynomial` as a
-genuine element of $\mathbb{Z}[X]$.
+**Theorem 3.6 (Second Brooks exception, `oddCycle_chromatic_eq_maxDegree_add_one`).**
+$$\chi(C_{2m+3}) = \Delta(C_{2m+3}) + 1 = 3.$$
 
-**Lemma 7.1 (Empty edge set; `numComponentsOfEdges_empty`).**
-$c(\varnothing) = |V|$.
+*Proof sketch.* An odd cycle is not bipartite (it contains an odd closed walk), so it is
+not $2$-colorable; three colors suffice (color around the ring $1,2,1,2,\dots$ and use $3$
+to absorb the wrap-around clash), giving $\chi(C_{2m+3}) = 3$. By Lemma 3.5,
+$\Delta(C_{2m+3}) = 2$, so $\Delta + 1 = 3 = \chi$. The greedy bound is tight on odd cycles.
+$\qquad\blacksquare$
 
-*Proof.* With no edges, the reachability relation is equality, so each vertex is
-its own component. The map sending a vertex to its component class is a bijection
-onto the set of components, whence the count is $|V|$. $\square$
+### 3.4 Brooks' theorem in context
 
-**Lemma 7.2 (Nonempty edge set; `numComponentsOfEdges_lt_of_nonempty`).** If
-$A \neq \varnothing$ and every $e \in A$ is a genuine (non-loop) edge, then
-$c(A) < |V|$.
+Theorems 3.4 and 3.6 show that the greedy bound is sharp on the two families that Brooks'
+classical theorem singles out. **Brooks' theorem** asserts the converse: for every
+*connected* graph $G$ that is neither a complete graph nor an odd cycle,
+$\chi(G) \le \Delta(G)$ — the extra color of the greedy bound can always be recycled. The
+present development proves the universal bound (Theorem 3.1) and both exception families
+with exact values (Theorems 3.4, 3.6); the "no other exceptions" direction is isolated as
+Conjecture C1 in §6, where the only missing ingredient is a vertex-ordering lemma.
 
-*Proof.* Pick an edge $s(u, v) \in A$ with $u \neq v$. Then $u$ and $v$ are
-reachable in the spanning subgraph, so they lie in the same component; hence the
-component map $V \to \mathrm{Components}$ is not injective. A surjective but
-non-injective map from a finite set to itself forces the target to be strictly
-smaller, i.e. $c(A) < |V|$. $\square$
+A worked example illustrates the odd-cycle obstruction. For $C_5$ (the pentagon, $m=1$),
+$\Delta = 2$ and the greedy bound promises $3$ colors. A $2$-coloring would force the
+pattern $1,2,1,2,?$ around the ring, and the fifth vertex is adjacent to both a $1$ and a
+$2$, so no $2$-coloring exists; $3$ colors suffice. Hence $\chi(C_5) = 3 = \Delta + 1$,
+in agreement with Theorem 3.6 at $m = 1$.
 
-A companion bound, $c(A) \le |V|$ for all $A$
-(`numComponentsOfEdges_le`), follows since the component map is always
-surjective.
+## 4. A tropical reformulation
 
-**Theorem 7.3 (Degree; `natDegree_chromaticPolynomial`).** *For $G$ on a
-nonempty vertex set, $\deg P(G, k) = |V|$.*
+The additive deletion–contraction identity (Theorem 2.5) becomes especially transparent
+under the **tropical (max-plus) dictionary**, in which ordinary addition $a + b$ is
+replaced by $\max(a, b)$ and ordinary multiplication $a \cdot b$ by $a + b$. Applying
+$\log$ to chromatic counts converts the exponential growth of $P(G, k)$ in the number of
+colors into a piecewise-linear shape.
 
-*Proof.* In the expansion (7.1), the coefficient of $k^{|V|}$ is
-$$\sum_{A \subseteq E(G)} (-1)^{|A|} \,[\,c(A) = |V|\,].$$
-By Lemma 7.2 the only set with $c(A) = |V|$ is $A = \varnothing$ (Lemma 7.1),
-contributing $(-1)^0 = 1$. Hence the coefficient of $k^{|V|}$ is $1 \neq 0$.
-Conversely every term has $c(A) \le |V|$ (the companion bound), so no higher
-power appears and the degree is at most $|V|$. Therefore $\deg P(G, k) = |V|$.
-$\square$
+Concretely, for the edgeless graph Proposition 2.3 gives
+$\log P(\bot, k) = |V| \cdot \log k$, a linear function of $\log k$ with integer slope
+$|V|$; this is the tropical "quadratic"/monomial envelope that the catalog's tropical
+machinery recognizes. Under $\log$, the additive recursion of Theorem 2.5,
+$P(G_{\text{del}}, k) = P(G, k) + \mathrm{contractCount}(\cdots)$, turns into the
+*sandwich*
+$$\max\big(\log P(G,k),\ \log C\big) \;\le\; \log P(G_{\text{del}},k) \;\le\; \max\big(\log P(G,k),\ \log C\big) + \log 2,$$
+where $C = \mathrm{contractCount}(G_{\text{del}}, u, v, k)$, simply because for nonnegative
+reals $a, b$ one has $\max(a,b) \le a + b \le 2\max(a,b)$. This is the max-plus form of
+deletion–contraction: the log-count is pinned, up to a bounded $\log 2$ slack, to the
+maximum of the two child log-counts. Iterating produces a convex, piecewise-linear envelope
+with integer slopes $0, 1, \dots, |V|$ — the tropicalization of the chromatic polynomial.
 
-**Theorem 7.4 (Monicity; `monic_chromaticPolynomial`).** *For $G$ on a nonempty
-vertex set, $P(G, k)$ is monic; equivalently its leading coefficient is $1$
-(`leadingCoeff_chromaticPolynomial`).*
+This viewpoint motivates studying *T-positivity*: writing the chromatic polynomial in the
+falling-factorial (tropical $\sigma$) basis and asking when its coefficients are
+nonnegative. The conjecture (C3 in §6) is that **claw-free graphs** are T-positive,
+because claw-freeness forbids the local configuration that would create a sign cancellation
+in the $\sigma$-expansion. The tropical sandwich above is the structural reason to expect a
+clean piecewise-linear envelope, even though the positivity statement itself remains open.
 
-*Proof.* By Theorem 7.3 the leading coefficient is the coefficient of $k^{|V|}$,
-computed in the proof above to be $1$. $\square$
+## 5. Applications
 
-These two theorems show $P(G, k)$ is a *normalized* invariant: its top behavior
-is always exactly $k^{|V|}$, independent of the graph's internal structure.
-Together with the recurrence they imply, by induction on the number of edges,
-that the counting function is determined by a unique monic integer polynomial of
-degree $|V|$ whose coefficients alternate in sign.
+- **Scheduling and resource allocation.** A proper $k$-coloring is a clash-free assignment
+  of $k$ resources (time slots, frequencies, registers). Theorem 3.1 gives a universal,
+  constructive guarantee: $\Delta + 1$ resources always suffice, achievable by a single
+  linear pass (greedy coloring). Brooks' exceptions (Theorems 3.4, 3.6) identify the only
+  topologies where this guarantee cannot be improved.
 
-## 8. Algorithms
+- **Counting and reliability.** The chromatic counting function $P(G, k)$ (Definition 2.1)
+  quantifies the *number* of valid configurations, useful when one needs not merely
+  feasibility but a measure of robustness or a uniform random valid assignment. Proposition
+  2.6 makes feasibility a special case ($P > 0$).
 
-**Algorithm 8.1 (Recursive chromatic polynomial via deletion–contraction).**
-Given $G$ on $n$ vertices, if $G$ is complete return $k(k-1)\cdots(k-n+1)$;
-otherwise choose a non-adjacent pair $u \not\sim v$, and return
-$P(G + uv, k) + P(G / uv, k)$ by two recursive calls. Termination is guaranteed
-because the edge-addition branch strictly increases the edge count toward the
-complete graph (at most $\binom{n}{2}$ edges) and the contraction branch strictly
-decreases the vertex count. The worst-case time is governed by the recurrence
-$T(n, m) = T(n, m+1) + T(n-1, \cdot)$, exponential in general (consistent with
-$\#$P-hardness of exact evaluation), but very effective on sparse graphs.
+- **Algorithmic computation.** Theorem 2.5 is a divide-and-conquer recursion: repeatedly
+  delete-and-contract an edge until reaching edgeless graphs (Proposition 2.3). This yields
+  an exact algorithm for the chromatic polynomial and, via Proposition 2.6, for the
+  chromatic number. The companion `demo.py` implements precisely this recursion and checks
+  it against brute-force enumeration on complete graphs, odd cycles, paths, and random
+  graphs.
 
-**Algorithm 8.2 (Direct enumeration baseline).** Enumerate all $k^{n}$ colorings,
-filter those respecting every edge, and count. Exponential in $n$ but trivially
-correct; used to cross-check the recursive algorithm on small instances.
+- **Structural mathematics.** The tropical reformulation (§4) connects chromatic
+  enumeration to max-plus convex geometry, a fertile setting for positivity and
+  log-concavity phenomena.
 
-## 9. Applications
+## 6. Future directions
 
-- **Examination and shift scheduling.** Vertices are events, edges encode
-  conflicts, colors are time slots; $P(G, k)$ counts conflict-free schedules
-  with $k$ slots, and $P(G, k) > 0$ certifies feasibility.
-- **Register allocation.** In compilers, vertices are live variables, edges join
-  simultaneously-live variables, and colors are machine registers; coloring with
-  $k$ colors is allocation into $k$ registers.
-- **Frequency assignment.** Transmitters that may interfere are adjacent;
-  colors are frequency bands.
-- **Statistical mechanics.** $P(G, k)$ is the zero-temperature limit of the
-  $k$-state Potts model partition function; chromatic roots correspond to
-  Lee–Yang–type zeros controlling phase transitions.
-- **The Four Color Theorem.** Since $k$-colorability is equivalent to
-  $P(G, k) > 0$, the Four Color Theorem is exactly the assertion that
-  $P(G, 4) > 0$ for every planar graph $G$ — converting a topological statement
-  into the positivity of an algebraic invariant at a single point.
+**C1. Full Brooks' theorem (removing the $+1$).** For every finite connected graph $G$
+that is neither a complete graph nor an odd cycle, $G.\mathrm{Colorable}\,\Delta(G)$, i.e.
+$\chi(G) \le \Delta(G)$. The universal bound (Theorem 3.1) and both tight families
+(Theorems 3.4, 3.6) are already in hand; the missing ingredient is a vertex-ordering lemma
+that recycles the slack color, so the target is sharply isolated.
 
-## 10. Discussion
+**C2. Genuine integer polynomial with the DC recursion.** There is a map
+$P : \mathrm{SimpleGraph}\,V \to \mathbb{Z}[X]$ with $(P\,G).\mathrm{eval}(k) = P(G, k)$ for
+all $k$, satisfying $P\,G_{\text{del}} = P\,G + P(\text{contraction})$, with coefficients
+alternating in sign, $\deg = |V|$, and leading coefficient $1$. The additive $\mathbb{N}$
+recursion (Theorem 2.5) and base case $k^{|V|}$ (Proposition 2.3) pin down all
+coefficients by induction on the number of edges.
 
-The distinguishing feature of this development is its constructive treatment of
-the recurrence. Standard expositions justify deletion–contraction with the
-sentence "a coloring either gives $u, v$ the same color or not," which is correct
-but leaves the contraction correspondence implicit. By exhibiting the explicit
-extend/restrict pair and verifying that each direction preserves properness and
-that the two compose to the identity, we obtain the recurrence as a corollary of
-a bona fide bijection — the strongest possible form of the statement, and one
-that mechanized verification can check end to end. The structural theorems then
-fall out of the subset expansion via a single clean combinatorial lemma about
-component counts.
+**C3. T-positivity for claw-free graphs.** For every claw-free graph $G$, the chromatic
+polynomial in the falling-factorial (tropical $\sigma$) basis has nonnegative coefficients;
+equivalently its tropicalization $x \mapsto \log P(G, \lceil e^x \rceil)$ is convex and
+piecewise-linear with integer slopes $0, 1, \dots, |V|$. The tropical deletion–contraction
+sandwich (§4) turns the count recursion into a max-plus recursion, and claw-freeness
+forbids the local configuration that would otherwise create a negative tropical coefficient.
 
-## 11. Future Directions
+**C4. Multiplicativity and further structure.** Continue the program toward
+multiplicativity of the chromatic polynomial over disjoint unions and clique-sums, and
+toward log-concavity of the coefficient sequence, building on the tropical envelope of §4.
 
-1. **An honest integer polynomial.** Package the counting function into a unique
-   monic $\chi_G \in \mathbb{Z}[X]$ of degree $|V|$ with sign-alternating
-   coefficients, using the recurrence plus the anchored evaluations $P(\bot) =
-   k^n$ and $P(K_n) = k^{(n)}$ to force uniqueness by induction on edges.
-2. **Real-rootedness gaps.** Prove the absence of chromatic roots in
-   $(-\infty, 0) \cup (0, 1) \cup (1, 32/27)$, with $32/27$ the sharp lower
-   threshold, via inductive sign analysis seeded by the complete-graph base case.
-3. **Formal Brooks' theorem.** Establish that the greedy bound $\chi(G) \le
-   \Delta(G)$ holds outside the complete graphs and odd cycles, with those
-   families the only tight cases — the structural converse to the already-proved
-   universal bound $\chi \le \Delta + 1$.
-4. **Four Color Theorem reformulation.** Use the positivity criterion
-   $\chi(G, q) > 0 \iff q\text{-colorable}$ to express the Four Color Theorem as
-   $P(G, 4) > 0$ for all planar $G$, then attack the planar case.
+## 7. Conclusion
 
-## References (background, not required for self-containment)
-
-The chromatic polynomial originates with G. D. Birkhoff (1912); the
-deletion–contraction principle and its Tutte-polynomial generalization are
-classical. The subset (broken-circuit) expansion is due to Whitney and
-Birkhoff–Lewis. The reformulation of map coloring via positivity underlies the
-Appel–Haken Four Color Theorem. These pointers are provided for context only;
-the present paper is self-contained.
+We have formalized the elementary backbone of chromatic-polynomial theory: a counting
+function `chromCount` with closed forms on the edgeless and complete graphs, the additive
+deletion–contraction identity that makes it a polynomial and computes it, a zero-test that
+recovers the chromatic number, the universal greedy bound $\chi \le \Delta + 1$, and the
+exact tightness of that bound on the two Brooks exception families. A tropical
+reformulation recasts the recursion in max-plus form and frames the open positivity
+questions. Together these results give a self-contained, machine-checked foundation on
+which the conjectures of §6 can be built.
