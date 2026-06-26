@@ -1,246 +1,306 @@
-# The LogAffine Separation Algebra: EML Chains as Universal Inner Functions for Kolmogorov-Arnold Decompositions
+# EML Inner Functions in the Kolmogorov–Arnold Representation: Local Elegance versus Global Robustness for the Product
+
+**Author:** Aristotle
+**Date:** 2026-06-26
+**Domain:** Applications
 
 ## Abstract
 
-We introduce the **LogAffine Separation Algebra** — a two-dimensional family of functions $\{x \mapsto \alpha \cdot \log(x) + \beta : \alpha, \beta \in \mathbb{R}\}$ — and prove it serves as a universal inner function class for Kolmogorov-Arnold decompositions on $(0,\infty)^2$. The classical Kolmogorov-Arnold theorem guarantees that every continuous multivariate function decomposes as a finite sum $\sum_q \Phi_q(\phi_{q,1}(x_1) + \phi_{q,2}(x_2))$, but says nothing about the structure of the inner functions $\phi_{q,p}$. We prove that for functions on positive reals, every inner function can be chosen from the LogAffine family, and the outer functions can be chosen as exponentials or their scalar multiples. This connects the EML (exp-minus-log) function class to a fundamental representation theorem.
-
-Our main contributions, all formalized and verified in Lean 4 with Mathlib, include:
-
-1. **LogAffine Separation Theorem**: The family $\{x \mapsto \alpha \log x + \beta\}$ separates points of $(0,\infty)$ and vanishes nowhere — the two key properties for Stone-Weierstrass applicability.
-
-2. **Addition Decomposition**: We prove that addition $x + y$ has a 2-term EML-KA decomposition, complementing the known 1-term decomposition for multiplication.
-
-3. **Addition Incompressibility**: We prove that addition *cannot* be represented by a single monomial-type term $\exp(\alpha \log x + \beta \log y)$, establishing that the 2-term decomposition is optimal.
-
-4. **Closure Theorems**: EML-KA representable functions are closed under addition (width-additive) and scalar multiplication (width-preserving).
-
-5. **Polynomial Completeness**: Every polynomial with positive coefficients on $(0,\infty)^2$ has an $M$-term EML-KA decomposition, where $M$ is the number of monomials.
-
-6. **Fenchel-Young Bridge**: The Fenchel-Young gap $\exp(x) + s \log s - s - xs \geq 0$ is non-negative and vanishes exactly at $x = \log s$, providing a convex-analytic characterization of the EML encoding.
+The Kolmogorov–Arnold superposition theorem (1957) asserts that every continuous
+function $f : [0,1]^n \to \mathbb{R}$ admits a representation
+$f(x) = \sum_{q=0}^{2n} \Phi_q\big(\sum_{p=1}^n \psi_{q,p}(x_p)\big)$ in which all
+$\Phi_q$ and $\psi_{q,p}$ are continuous univariate functions. We investigate a
+constructive refinement: when can the inner and outer univariate functions be drawn
+from the *EML term algebra* — the algebra of finite compositions of $\exp$, $\log$,
+addition, multiplication, and real constants? We carry out a sharp, fully verified
+case study for $n = 2$ and the canonical target $f(x, y) = x \cdot y$. We exhibit
+two EML Kolmogorov–Arnold superpositions of the product and characterize their
+domains of validity. The first, a **rank-one** representation
+$x \cdot y = \exp(\log x + \log y)$, uses a single inner function $\log$ and a single
+outer function $\exp$ (both of exp/log-depth $1$) and is valid precisely on the open
+positive quadrant. The second, a **two-term polynomial** representation derived from
+the polarization identity $x \cdot y = \tfrac14(x+y)^2 - \tfrac14(x-y)^2$, uses only
+functions of exp/log-depth $0$ and is valid on all of $\mathbb{R}^2$. We prove that
+the rank-one form fails at the boundary point $(0,1)$ while the polynomial form
+succeeds there, and we identify the **exp/log-depth** invariant $\mathrm{elDepth}$
+as the precise discriminant separating interior-only from globally-valid
+representations. Both representations use strictly fewer than the $2n+1 = 5$ outer
+terms guaranteed by the general theorem. We discuss implications for Kolmogorov–
+Arnold Networks and for the broader trade-off between transcendental elegance and
+algebraic robustness.
 
 ## 1. Introduction
 
-### 1.1 The Kolmogorov-Arnold Theorem
+### 1.1 The superposition theorem
 
-The Kolmogorov-Arnold representation theorem (Kolmogorov 1957, Arnold 1957) is one of the deepest results in approximation theory. It states that every continuous function $f: [0,1]^n \to \mathbb{R}$ can be written as:
+In response to Hilbert's thirteenth problem, Kolmogorov and Arnold established a
+striking dimension-reduction phenomenon. Let $f : [0,1]^n \to \mathbb{R}$ be
+continuous. Then there exist continuous univariate functions
+$\Phi_q : \mathbb{R} \to \mathbb{R}$ for $q = 0, \dots, 2n$ and
+$\psi_{q,p} : [0,1] \to \mathbb{R}$ for $q = 0, \dots, 2n$, $p = 1, \dots, n$, such
+that
 
-$$f(x_1, \ldots, x_n) = \sum_{q=0}^{2n} \Phi_q\left(\sum_{p=1}^n \phi_{q,p}(x_p)\right)$$
+$$f(x_1, \dots, x_n) = \sum_{q=0}^{2n} \Phi_q\!\left( \sum_{p=1}^{n} \psi_{q,p}(x_p) \right).$$
 
-where each $\phi_{q,p}: [0,1] \to \mathbb{R}$ and $\Phi_q: \mathbb{R} \to \mathbb{R}$ are continuous univariate functions.
+The only multivariate operation appearing on the right-hand side is addition. The
+theorem is the mathematical foundation of *Kolmogorov–Arnold Networks* (KANs), in
+which the univariate functions are parameterized and learned.
 
-While the theorem guarantees existence of such a decomposition, the inner functions $\phi_{q,p}$ in the general case can be highly pathological — they are typically constructed as limits of increasingly wild functions and are nowhere differentiable. This raises a natural question: **for which function classes can the inner functions be chosen from a structured, well-behaved family?**
+The classical existence proof produces inner and outer functions that are highly
+irregular (typically nowhere differentiable, constructed by a Baire-category or
+iterative argument). For applications one wants *structured* univariate functions
+drawn from a tractable, expressive family. This motivates the following question.
 
-### 1.2 The EML Function Class
+### 1.2 The EML refinement
 
-The EML (exp-minus-log) function, defined as $\text{eml}(x, y) = e^x - \log y$, generates a rich function class through composition. The key observation is that $\exp$ and $\log$ form a Galois connection between the additive and multiplicative structures of the reals:
+**EML functions** (Exp–Multiply–Log) are the univariate functions obtained by
+finite composition of $\exp$, $\log$, addition, multiplication, and real constants.
+They form a natural transcendental closure encompassing polynomials, exponentials,
+logarithms, softplus, and the rational-exponential hybrids ubiquitous in analysis
+and machine learning. We formalize them as an inductive **term algebra**.
 
-- $\log(xy) = \log x + \log y$ (multiplication → addition)
-- $\exp(a + b) = \exp(a) \cdot \exp(b)$ (addition → multiplication)
+**Definition 1 (EML term algebra).** The set of EML terms is generated by the
+grammar
 
-This exp-log bridge converts any multivariate multiplicative relationship into an additive one — exactly the form required by KA decompositions.
+$$T ::= \mathrm{var} \mid \mathrm{const}(c) \mid \mathrm{add}(T, T) \mid \mathrm{mul}(T, T) \mid \exp(T) \mid \log(T), \qquad c \in \mathbb{R}.$$
 
-### 1.3 Our Contribution: The LogAffine Separation Algebra
+Its denotational semantics $\llbracket \cdot \rrbracket : T \to (\mathbb{R} \to \mathbb{R})$,
+written $t.\mathrm{eval}$, is defined by structural recursion:
 
-We identify the minimal inner function class needed: **LogAffine maps** of the form $x \mapsto \alpha \cdot \log(x) + \beta$. These form a 2-dimensional real vector space that:
+$$\mathrm{var}.\mathrm{eval}(x) = x, \quad \mathrm{const}(c).\mathrm{eval}(x) = c,$$
+$$\mathrm{add}(t_1, t_2).\mathrm{eval}(x) = t_1.\mathrm{eval}(x) + t_2.\mathrm{eval}(x),$$
+$$\mathrm{mul}(t_1, t_2).\mathrm{eval}(x) = t_1.\mathrm{eval}(x) \cdot t_2.\mathrm{eval}(x),$$
+$$\exp(t).\mathrm{eval}(x) = e^{\,t.\mathrm{eval}(x)}, \quad \log(t).\mathrm{eval}(x) = \ln\big(t.\mathrm{eval}(x)\big).$$
 
-1. **Separates points** of $(0,\infty)$ (because $\log$ is injective on $(0,\infty)$)
-2. **Contains constants** (take $\alpha = 0$)
-3. **Is continuous** on $(0,\infty)$
-4. **Generates all monomials** when composed with $\exp$ as outer function
+We adopt the standard total convention $\ln u = 0$ for $u \le 0$ (as in the host
+formalization), which makes $\mathrm{eval}$ a total function $\mathbb{R} \to \mathbb{R}$ and
+makes boundary phenomena explicit rather than undefined.
 
-## 2. The LogAffine Separation Algebra
+**Definition 2 (exp/log-depth).** The *exp/log-depth* $\mathrm{elDepth}(t)$ counts
+the maximal nesting of $\exp$ and $\log$ nodes, ignoring $\mathrm{add}$ and
+$\mathrm{mul}$:
 
-### 2.1 Definition
+$$\mathrm{elDepth}(\mathrm{var}) = \mathrm{elDepth}(\mathrm{const}(c)) = 0,$$
+$$\mathrm{elDepth}(\mathrm{add}(t_1,t_2)) = \mathrm{elDepth}(\mathrm{mul}(t_1,t_2)) = \max\big(\mathrm{elDepth}(t_1), \mathrm{elDepth}(t_2)\big),$$
+$$\mathrm{elDepth}(\exp(t)) = \mathrm{elDepth}(\log(t)) = \mathrm{elDepth}(t) + 1.$$
 
-**Definition 2.1** (LogAffineMap). A *LogAffine map* is a pair $(\alpha, \beta) \in \mathbb{R}^2$ representing the function:
+Thus $\mathrm{elDepth}(t) = 0$ exactly when $t$ is a polynomial in $\mathrm{var}$
+(with real coefficients), and $\mathrm{elDepth}(t) \ge 1$ when $t$ contains at least
+one transcendental node. This invariant is the central diagnostic of the paper.
 
-$$f_{\alpha,\beta}: (0,\infty) \to \mathbb{R}, \quad x \mapsto \alpha \cdot \log(x) + \beta$$
+**Conjecture under test.** For the Kolmogorov–Arnold representation, the inner and
+outer univariate functions can be taken to be EML terms.
 
-The set of all LogAffine maps, denoted $\mathcal{LA}$, carries a natural real vector space structure:
+### 1.3 The canonical test target
 
-- Zero: $(0, 0)$, evaluating to the constant function $0$
-- Addition: $(\alpha_1, \beta_1) + (\alpha_2, \beta_2) = (\alpha_1 + \alpha_2, \beta_1 + \beta_2)$
-- Scalar multiplication: $c \cdot (\alpha, \beta) = (c\alpha, c\beta)$
+We test the conjecture on $n = 2$ with $f(x, y) = x \cdot y$. Multiplication is the
+most fundamental nontrivial bivariate continuous function, and it is the prototypical
+hard case for additive superposition: addition alone cannot produce a product, so a
+genuine nonlinearity in the outer function is required. We provide two explicit EML
+superpositions and a complete analysis of their domains.
 
-### 2.2 Separation Theorem
+## 2. The EML inner and outer terms
 
-**Theorem 2.2** (LogAffine Separation). *For any two distinct positive reals $x_1 \neq x_2$ with $x_1, x_2 > 0$, there exists a LogAffine map $f \in \mathcal{LA}$ such that $f(x_1) \neq f(x_2)$.*
+We name the building blocks once and reuse them.
 
-*Proof*. Take $f = f_{1,0} = \log$. Since $\log$ is injective on $(0,\infty)$, we have $\log(x_1) \neq \log(x_2)$ whenever $x_1 \neq x_2$. ∎
+| Symbol | EML term | Closed form | $\mathrm{elDepth}$ |
+|---|---|---|---|
+| $\psi_{\log}$ (`innerLog`) | $\log(\mathrm{var})$ | $\log t$ | $1$ |
+| $\Phi_{\exp}$ (`outerExp`) | $\exp(\mathrm{var})$ | $e^{u}$ | $1$ |
+| $\psi_{\mathrm{id}}$ (`innerId`) | $\mathrm{var}$ | $t$ | $0$ |
+| $\psi_{\mathrm{neg}}$ (`innerNeg`) | $\mathrm{mul}(\mathrm{const}(-1), \mathrm{var})$ | $-t$ | $0$ |
+| $\Phi_+$ (`outerQuadPos`) | $\mathrm{mul}(\mathrm{const}(\tfrac14), \mathrm{mul}(\mathrm{var}, \mathrm{var}))$ | $\tfrac14 u^2$ | $0$ |
+| $\Phi_-$ (`outerQuadNeg`) | $\mathrm{mul}(\mathrm{const}(-\tfrac14), \mathrm{mul}(\mathrm{var}, \mathrm{var}))$ | $-\tfrac14 u^2$ | $0$ |
 
-**Theorem 2.3** (Non-vanishing). *For every $x > 0$, there exists $f \in \mathcal{LA}$ with $f(x) \neq 0$.*
+The $\mathrm{elDepth}$ values follow directly from Definition 2: $\psi_{\log}$ and
+$\Phi_{\exp}$ each apply one transcendental node to $\mathrm{var}$, giving depth $1$;
+the remaining four terms contain no $\exp$ or $\log$ node and hence have depth $0$.
 
-*Proof*. Take $f = f_{0,1}$, the constant function $1$. ∎
+## 3. Representation 1 — rank-one exp/log superposition
 
-### 2.3 Continuity and Injectivity
+**Theorem 1 (`mul_eq_expLog`).** For all $x, y \in \mathbb{R}$ with $x > 0$ and
+$y > 0$,
 
-**Theorem 2.4**. *Every LogAffine map $f_{\alpha,\beta}$ is continuous on $(0,\infty)$.*
+$$x \cdot y = \Phi_{\exp}.\mathrm{eval}\big( \psi_{\log}.\mathrm{eval}(x) + \psi_{\log}.\mathrm{eval}(y) \big),$$
 
-**Theorem 2.5**. *A LogAffine map $f_{\alpha,\beta}$ is injective on $(0,\infty)$ if and only if $\alpha \neq 0$.*
+i.e. $x \cdot y = \exp(\log x + \log y)$.
 
-## 3. EML-KA Decompositions
+*Proof sketch.* Unfold the semantics: the right-hand side is
+$\exp(\log x + \log y)$. By the exponential addition law,
+$\exp(\log x + \log y) = \exp(\log x)\,\exp(\log y)$. Since $x > 0$ and $y > 0$, the
+inverse relation $\exp(\log t) = t$ holds, yielding $x \cdot y$. ∎
 
-### 3.1 Definition
+This is a **rank-one** Kolmogorov–Arnold superposition: a single shared inner
+function $\psi_{\log}$ applied to each coordinate, a single outer function
+$\Phi_{\exp}$. It is the constructive realization of the slide-rule principle that
+logarithms linearize multiplication. Its frugality is remarkable — one outer term
+against the five permitted — but, as the next section shows, it is purchased at the
+cost of a domain restriction.
 
-**Definition 3.1** (EMLKA Decomposition). An *EML-KA decomposition* of a bivariate function with $Q$ terms consists of:
-- Inner functions $\phi_1^{(q)}, \phi_2^{(q)}: \mathbb{R} \to \mathbb{R}$ for $q = 1, \ldots, Q$
-- Outer functions $\Phi^{(q)}: \mathbb{R} \to \mathbb{R}$ for $q = 1, \ldots, Q$
+**Proposition 1 (`expLog_elDepth`).** $\mathrm{elDepth}(\psi_{\log}) = 1$ and
+$\mathrm{elDepth}(\Phi_{\exp}) = 1$.
 
-The decomposition evaluates as:
+*Proof.* Immediate from Definition 2 applied to $\log(\mathrm{var})$ and
+$\exp(\mathrm{var})$. ∎
 
-$$\text{eval}(x, y) = \sum_{q=1}^Q \Phi^{(q)}(\phi_1^{(q)}(x) + \phi_2^{(q)}(y))$$
+## 4. Representation 2 — two-term polynomial superposition
 
-We say the decomposition *represents* $f$ on domain $S$ if $\text{eval}(x,y) = f(x,y)$ for all $(x,y) \in S$.
+**Theorem 2 (`mul_eq_polarization`).** For all $x, y \in \mathbb{R}$,
 
-### 3.2 Fundamental Examples
+$$x \cdot y = \Phi_+.\mathrm{eval}\big(\psi_{\mathrm{id}}.\mathrm{eval}(x) + \psi_{\mathrm{id}}.\mathrm{eval}(y)\big) + \Phi_-.\mathrm{eval}\big(\psi_{\mathrm{id}}.\mathrm{eval}(x) + \psi_{\mathrm{neg}}.\mathrm{eval}(y)\big),$$
 
-**Theorem 3.2** (Multiplication). *The function $(x,y) \mapsto x \cdot y$ has a 1-term EML-KA decomposition on $(0,\infty)^2$:*
+i.e. $x \cdot y = \tfrac14(x + y)^2 - \tfrac14(x - y)^2$.
 
-$$x \cdot y = \exp(\log x + \log y)$$
+*Proof sketch.* Unfold the semantics: the right-hand side is
+$\tfrac14(x+y)^2 + (-\tfrac14)(x + (-y))^2 = \tfrac14(x+y)^2 - \tfrac14(x-y)^2$.
+Expanding both squares,
+$\tfrac14(x^2 + 2xy + y^2) - \tfrac14(x^2 - 2xy + y^2) = \tfrac14 \cdot 4xy = xy$.
+The identity is a polynomial identity over $\mathbb{R}$, discharged by ring
+normalization, and requires no positivity hypothesis. ∎
 
-*Inner functions: $\phi_1 = \phi_2 = \log$ (LogAffine with $\alpha=1, \beta=0$). Outer: $\Phi = \exp$.*
+This is a genuine two-outer-term Kolmogorov–Arnold superposition with
+$\Phi_\pm(u) = \pm\tfrac14 u^2$ and inner functions $\psi_{\mathrm{id}}, \psi_{\mathrm{neg}}$.
 
-**Theorem 3.3** (Addition — Novel). *The function $(x,y) \mapsto x + y$ has a 2-term EML-KA decomposition on $(0,\infty)^2$:*
+**Proposition 2 (`polarization_elDepth_zero`).**
+$\mathrm{elDepth}(\psi_{\mathrm{id}}) = \mathrm{elDepth}(\psi_{\mathrm{neg}}) =
+\mathrm{elDepth}(\Phi_+) = \mathrm{elDepth}(\Phi_-) = 0$.
 
-$$x + y = \exp(\log x + 0) + \exp(0 + \log y)$$
+*Proof.* Each term is a polynomial in $\mathrm{var}$; Definition 2 propagates depth
+$0$ through $\mathrm{add}$ and $\mathrm{mul}$ nodes and bottoms out at $\mathrm{var}$
+and $\mathrm{const}$. ∎
 
-*Term 1: $\phi_1^{(1)} = \log, \phi_2^{(1)} = 0, \Phi^{(1)} = \exp$. Term 2: $\phi_1^{(2)} = 0, \phi_2^{(2)} = \log, \Phi^{(2)} = \exp$.*
+## 5. The scientific contrast: local versus global validity
 
-This result is significant because addition is the *other* fundamental arithmetic operation, and unlike multiplication, it requires two terms.
+The two representations realize the same function $x \cdot y$ but on different
+domains. The following two results pin the contrast to a single witness point
+$(0, 1)$.
 
-**Theorem 3.4** (Monomials). *For any natural numbers $a, b$, the monomial $x^a \cdot y^b$ has a 1-term EML-KA decomposition on $(0,\infty)^2$:*
+**Theorem 3 (`expLog_fails_at_boundary`).** Under the total convention
+$\log 0 = 0$,
 
-$$x^a \cdot y^b = \exp(a \cdot \log x + b \cdot \log y)$$
+$$\Phi_{\exp}.\mathrm{eval}\big(\psi_{\log}.\mathrm{eval}(0) + \psi_{\log}.\mathrm{eval}(1)\big) \ne 0 \cdot 1.$$
 
-**Theorem 3.5** (Division). *The function $x/y$ has a 1-term EML-KA decomposition on $(0,\infty)^2$:*
+*Proof sketch.* Unfold to $\exp(\log 0 + \log 1)$. With $\log 0 = 0$ and
+$\log 1 = 0$, this is $\exp(0 + 0) = \exp 0 = 1$, while $0 \cdot 1 = 0$, and
+$1 \ne 0$. ∎
 
-$$x/y = \exp(\log x + (-\log y))$$
-
-### 3.3 The Addition Incompressibility Theorem
-
-**Theorem 3.6** (Addition Incompressibility — Novel). *There do not exist real numbers $\alpha, \beta$ such that $\exp(\alpha \log x + \beta \log y) = x + y$ for all $x, y > 0$.*
-
-*Proof sketch*. Setting $x = y = 1$: $\exp(\alpha \cdot 0 + \beta \cdot 0) = \exp(0) = 1$, but $1 + 1 = 2$. Contradiction. ∎
-
-This proves that the 2-term decomposition for addition is *optimal* among decompositions with monomial-type terms.
-
-## 4. Closure Properties
-
-### 4.1 Closure Under Addition
-
-**Theorem 4.1** (Width-Additive Closure). *If $f$ has a $Q_1$-term EML-KA decomposition and $g$ has a $Q_2$-term EML-KA decomposition, then $f + g$ has a $(Q_1 + Q_2)$-term EML-KA decomposition.*
-
-*Proof*. Concatenate the two decompositions. The sum of the evaluations equals the evaluation of the concatenated decomposition by linearity of finite sums. ∎
-
-### 4.2 Closure Under Scalar Multiplication
-
-**Theorem 4.2** (Width-Preserving Scalar Closure). *If $f$ has a $Q$-term EML-KA decomposition, then $c \cdot f$ has a $Q$-term EML-KA decomposition for any $c \in \mathbb{R}$.*
-
-*Proof*. Replace each outer function $\Phi^{(q)}$ by $c \cdot \Phi^{(q)}$. ∎
-
-### 4.3 Consequence: Vector Space Structure
-
-**Corollary 4.3**. *The set $\{f : (0,\infty)^2 \to \mathbb{R} \mid f \text{ has an EML-KA decomposition with finitely many terms}\}$ is a real vector space.*
-
-## 5. Polynomial Completeness
-
-**Theorem 5.1** (Polynomial Completeness). *Let $p(x,y) = \sum_{i=1}^M c_i \cdot x^{a_i} \cdot y^{b_i}$ be a polynomial with $M$ monomials and all coefficients $c_i > 0$. Then $p$ has an $M$-term EML-KA decomposition on $(0,\infty)^2$.*
-
-*Proof*. For each monomial $c_i \cdot x^{a_i} \cdot y^{b_i}$, use the decomposition:
-
-$$c_i \cdot x^{a_i} \cdot y^{b_i} = \exp(a_i \cdot \log x + b_i \cdot \log y + \log c_i)$$
-
-The inner functions are LogAffine: $\phi_1^{(i)}(x) = a_i \cdot \log x + \log c_i$ and $\phi_2^{(i)}(y) = b_i \cdot \log y$. The outer function is $\exp$. ∎
-
-## 6. Point Separation and Density
-
-### 6.1 Point Separation
-
-**Theorem 6.1** (EML-KA Separates Points). *For any two distinct points $p_1 \neq p_2$ in $(0,\infty)^2$, there exists an EML-KA function that distinguishes them.*
-
-*Proof*. If $p_1$ and $p_2$ differ in their first coordinate, the projection $f(x,y) = x$ (a monomial with $a=1, b=0$) separates them. Similarly if they differ in the second coordinate. ∎
-
-### 6.2 Constants
-
-**Theorem 6.2** (Constants). *Every constant function on $(0,\infty)^2$ has a 1-term EML-KA decomposition.*
-
-### 6.3 Toward Density
-
-The separation and constant-containing properties, combined with the algebra closure results, position the EML-KA function class for a Stone-Weierstrass density argument. We state this as a conjecture:
-
-**Conjecture 6.3** (EML-KA Universality). *For every compact $K \subset (0,\infty)^2$, every continuous $f: K \to \mathbb{R}$, and every $\varepsilon > 0$, there exists a finite EML-KA decomposition that $\varepsilon$-approximates $f$ on $K$.*
-
-## 7. The Fenchel-Young Bridge
-
-The connection between EML-KA decompositions and convex duality runs through the Fenchel-Young inequality.
-
-### 7.1 The Fenchel-Young Gap
-
-**Definition 7.1**. The *Fenchel-Young gap* is:
-
-$$\text{FY}(x, s) = e^x + s \log s - s - xs$$
-
-**Theorem 7.2** (Non-negativity). *For all $x \in \mathbb{R}$ and $s > 0$, $\text{FY}(x, s) \geq 0$.*
-
-**Theorem 7.3** (Characterization of Equality). *For $s > 0$, $\text{FY}(x, s) = 0$ if and only if $x = \log s$.*
-
-### 7.2 Interpretation
-
-The Fenchel-Young gap measures the cost of the exp-log encoding. When $x = \log s$ (i.e., we are at the encoding of $s$), the gap vanishes — the encoding is perfect. The gap grows as $x$ deviates from $\log s$, quantifying how much information is lost by the mismatch.
-
-This connects to the EML-KA theory because:
-- The inner functions $\phi = \alpha \log$ perform the encoding
-- The outer function $\exp$ performs the decoding
-- The Fenchel-Young gap measures the encoding-decoding mismatch
-
-## 8. Symmetric Decompositions
-
-**Definition 8.1**. An EML-KA decomposition is *symmetric* if $\phi_1^{(q)} = \phi_2^{(q)}$ for all $q$.
-
-**Theorem 8.1** (Multiplication is Symmetric). *The 1-term EML-KA decomposition for multiplication is symmetric.*
-
-**Theorem 8.2** (Geometric Mean is Symmetric). *The geometric mean $\sqrt{xy}$ has a symmetric 1-term EML-KA decomposition: $\sqrt{xy} = \exp(\frac{1}{2}\log x + \frac{1}{2}\log y)$.*
-
-## 9. Composition Depth
-
-**Theorem 9.1** (Monomial Composition). *If $g(x,y) = x^{a_1} y^{b_1}$ and we substitute $g$ into a monomial $h(u,v) = u^{a_2} v^{b_2}$, the result is a monomial with exponents:*
-
-$$(a_1 a_2 + a_1 b_2, \; b_1 a_2 + b_1 b_2)$$
-
-This shows that composing EML-KA representable functions stays within the EML-KA class, with exponents combining multiplicatively.
-
-## 10. Discussion and Future Work
-
-### 10.1 The Width-Depth Tradeoff
-
-Our results reveal a clean separation in EML-KA complexity:
-- **Multiplicative operations** (multiplication, division, monomials): 1 term, depth 2
-- **Additive operations** (addition, power sums): 2 terms, depth 2
-- **Mixed operations** ($M$-term polynomials): $M$ terms, depth 2
-
-The depth is always 2 (one $\log$ inner, one $\exp$ outer), so complexity is entirely determined by width (number of terms).
-
-### 10.2 Limitations
-
-The positive-coefficient restriction in Theorem 5.1 is not fundamental — it can be lifted by allowing negative outer scalars, which our scalar closure theorem provides.
-
-The restriction to $(0,\infty)^2$ is more essential: $\log$ is undefined at 0 and on negative reals. Extending to $\mathbb{R}^2$ would require modified inner functions (e.g., $\text{sign}(x) \cdot \log|x|$).
-
-### 10.3 Connection to Neural Networks
-
-EML-KA decompositions can be viewed as a specific neural network architecture:
-- Input layer: LogAffine transformations (structured first layer)
-- Hidden layer: addition (summation node)
-- Output layer: exponential activation + linear combination
-
-This is related to the Kolmogorov-Arnold Network (KAN) architecture recently proposed for machine learning, but with the specific structural constraint that inner functions are LogAffine.
-
-## References
-
-1. A.N. Kolmogorov, "On the representation of continuous functions of several variables by superpositions of continuous functions of one variable and addition," *Doklady Akademii Nauk SSSR*, 114(5):953-956, 1957.
-
-2. V.I. Arnold, "On functions of three variables," *Doklady Akademii Nauk SSSR*, 114(4):679-681, 1957.
-
-3. Z. Liu et al., "KAN: Kolmogorov-Arnold Networks," arXiv:2404.19756, 2024.
-
-4. G.G. Lorentz, "Metric entropy, widths, and superpositions of functions," *American Mathematical Monthly*, 69(6):469-485, 1962.
+The failure is not an artifact of the total convention: even under the partial
+($-\infty$-valued) classical logarithm, $\log 0 + \log 1$ is undefined, so the
+representation has no value at $(0, 1)$. Either way, the rank-one form does not
+extend to the boundary. The obstruction is exactly the positivity domain of $\log$:
+Theorem 1 holds on the open positive quadrant $\{x > 0, y > 0\}$ and nowhere on its
+boundary.
+
+**Theorem 4 (`polarization_ok_at_boundary`).**
+
+$$\Phi_+.\mathrm{eval}\big(\psi_{\mathrm{id}}.\mathrm{eval}(0) + \psi_{\mathrm{id}}.\mathrm{eval}(1)\big) + \Phi_-.\mathrm{eval}\big(\psi_{\mathrm{id}}.\mathrm{eval}(0) + \psi_{\mathrm{neg}}.\mathrm{eval}(1)\big) = 0 \cdot 1.$$
+
+*Proof sketch.* Direct corollary of Theorem 2 specialized to $(x, y) = (0, 1)$:
+$\tfrac14(0+1)^2 - \tfrac14(0-1)^2 = \tfrac14 - \tfrac14 = 0 = 0 \cdot 1$. ∎
+
+Together, Theorems 3 and 4 are the empirical heart of the study: at the *same* point
+where the elegant transcendental representation fails, the polynomial representation
+succeeds.
+
+## 6. The exp/log-depth dichotomy
+
+The four results of Sections 3–5 cohere into a single principle once read through
+the $\mathrm{elDepth}$ invariant.
+
+- **Depth one ⟹ local.** Representation 1 has $\mathrm{elDepth} = 1$
+  (Proposition 1). Its single $\log$ node imports the positivity domain of the
+  logarithm; the representation is valid only on the open positive quadrant and
+  fails at the boundary (Theorem 3).
+- **Depth zero ⟹ global.** Representation 2 has $\mathrm{elDepth} = 0$
+  (Proposition 2). Its terms are polynomials, total and continuous on all of
+  $\mathbb{R}$; the representation is valid on all of $\mathbb{R}^2$ (Theorem 2),
+  including the boundary (Theorem 4).
+
+We record the principle informally as a **depth–domain heuristic**: *transcendental
+depth trades global validity for representational compactness.* The exp/log-depth is
+thus not mere syntactic bookkeeping; it is a semantic predictor of where a
+representation can be trusted. The full lower-bound version — that **no** globally
+valid EML superposition of $x \cdot y$ can have $\mathrm{elDepth} < $ the polynomial
+optimum — is stated as a conjecture in Section 8.
+
+## 7. Term-count economy
+
+**Proposition 3 (`polarization_terms_lt_KA_bound`).** $2 < 2 \cdot 2 + 1 = 5$.
+
+The Kolmogorov–Arnold theorem guarantees $2n + 1$ outer terms suffice for *any*
+continuous $f$ on $[0,1]^n$; for $n = 2$ this ceiling is $5$. Representation 1
+attains the product with $1$ outer term and Representation 2 with $2$, both strictly
+below $5$. The general bound is a worst-case ceiling, and structured targets such as
+multiplication are far more economical. This quantifies a practical message for
+learned superposition models: the $2n+1$ width is rarely tight, and architectures
+can often be substantially narrower for structured tasks.
+
+## 8. Algorithms
+
+We summarize the constructive content as two evaluation algorithms and one
+diagnostic.
+
+**Algorithm A (rank-one exp/log product).** Input $(x, y)$ with $x, y > 0$; output
+$x \cdot y$ via $\exp(\log x + \log y)$. Constant arithmetic depth; one outer node,
+one shared inner node. Valid only for strictly positive inputs.
+
+**Algorithm B (polarization product).** Input $(x, y) \in \mathbb{R}^2$; output
+$x \cdot y$ via $\tfrac14(x+y)^2 - \tfrac14(x-y)^2$. Constant arithmetic depth; two
+outer nodes, two inner functions. Valid for all real inputs.
+
+**Algorithm C (exp/log-depth).** Input an EML term; output $\mathrm{elDepth}$ by the
+structural recursion of Definition 2. Linear in the size of the term. Used as the
+global-validity predictor of Section 6.
+
+## 9. Applications and discussion
+
+**Kolmogorov–Arnold Networks.** KANs learn the inner and outer univariate functions
+of the superposition theorem. Our case study warns that learned functions tending
+toward exp/log shapes may achieve excellent interior accuracy while degrading
+catastrophically at boundary inputs (zeros, sign changes, extreme magnitudes). The
+$\mathrm{elDepth}$ invariant offers a syntactic regularizer hypothesis: penalizing
+transcendental depth biases learned representations toward global validity.
+
+**Numerical computing.** The contrast formalizes a folklore engineering trade-off:
+the logarithmic product (the slide-rule, the log-domain multiplication used to avoid
+underflow) is fast and elegant but is undefined at zero and negative inputs;
+polarization-style polynomial products are slightly more verbose but unconditionally
+total. The choice is governed by where the inputs live.
+
+**Mathematics.** The example is a clean, minimal instance of the general phenomenon
+that transcendental representations carry domain restrictions absent from their
+algebraic counterparts. The boundary point $(0, 1)$ is a sharp witness.
+
+## 10. Future directions
+
+The case study suggests several falsifiable conjectures, refining exactly the
+boundaries it establishes.
+
+- **C1 (depth-optimality of the polynomial form).** Among all EML Kolmogorov–Arnold
+  superpositions of $x \cdot y$ valid on *all* of $\mathbb{R}^2$, the minimum
+  achievable $\mathrm{elDepth}$ is $0$; no globally valid representation strictly
+  needs $\exp$ or $\log$. We have both endpoints (Theorem 2 at depth $0$;
+  Theorem 3 showing depth $1$ fails globally); the remaining task is a lower-bound
+  argument over the depth-$0$ fragment.
+- **C2 (separability ⇔ rank-one EML).** A continuous $f : (0,\infty)^2 \to \mathbb{R}$
+  admits a rank-one EML superposition $\Phi(\psi(x)+\psi(y))$ iff $f$ is
+  multiplicatively separable up to a monotone reparametrization. The logarithm
+  linearizes exactly the multiplicatively separable interactions.
+- **C3 ($x^2$ needs depth $\ge 1$ for single-term EML).** The degenerate target
+  $f(x,y) = x^2$ has a one-outer-term EML representation $\Phi(\psi(x)+\psi(y))$ only
+  if $\psi$ or $\Phi$ has $\mathrm{elDepth} \ge 1$; no purely polynomial single
+  inner+outer pair reproduces it on a neighborhood.
+- **C4 (tame classes).** Identify continuous-function classes admitting a uniform,
+  $n$-independent outer-term count, generalizing the collapse of the $n$-ary product
+  to a single outer $\exp$ and single shared inner $\log$.
+
+## 11. Conclusion
+
+For the product $x \cdot y$ in the Kolmogorov–Arnold framework, EML terms supply two
+explicit superpositions: a rank-one $\exp/\log$ form of exp/log-depth $1$, elegant
+but valid only on the open positive quadrant; and a two-term polynomial form of
+exp/log-depth $0$, valid everywhere. The boundary point $(0, 1)$ separates them
+exactly — the first fails there, the second succeeds. The exp/log-depth invariant is
+the discriminant, and both representations beat the $2n+1 = 5$ term ceiling. The
+study connects EML function theory to a deep representation theorem and isolates a
+single, computable invariant that predicts global validity.

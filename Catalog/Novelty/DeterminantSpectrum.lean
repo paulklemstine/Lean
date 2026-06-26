@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Novelty.MobiusQuadratic
+import Catalog.Novelty.RatioSpectrum.MobiusQuadratic
 
 /-!
 # Determinant structure of the ratio spectrum (Phase A, v19c)
