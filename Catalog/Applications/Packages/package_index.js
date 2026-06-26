@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cb117fe9",
     "filename": "discriminant_of_the_hermitian_bianchi_lattice_s_k.json",
     "pkg_num": 93,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.531112,
     "title": "Discriminant of the Hermitian Bianchi Lattice S_K = Herm\u2082(O_K)"
   },
   {
@@ -2706,8 +2706,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "discriminant_of_the_hermitian_bianchi_lattice_s_k",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.531112,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Discriminant of the Hermitian Bianchi Lattice S_K = Herm\u2082(O_K)"
     }

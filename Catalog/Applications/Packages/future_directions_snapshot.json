@@ -10298,6 +10298,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Hermitian Bianchi lattice S_K and its discriminant\n\nDerived from the cycle that proved `det Gram(S_K) = D_K` (file\n`HermitianBianchiDiscriminant.lean`) and the scaling/parity properties\n(`HermitianBianchiProperties.lean`).\n\n## 1. The off-diagonal block IS the genus-defining binary form\n**Conjecture.** The binary block `!![-2,-T;-T,-2M]` of `Gram(S_K)` is, up to\nsign, the Gram matrix of the principal binary quadratic form of discriminant\n`D_K`; hence the SL₂(ℤ)-class of this block is a complete invariant of the genus\nof `S_K`, and two fields `K, K'` give isometric off-diagonal blocks iff\n`D_K = D_{K'}`.\n- The key insight is that `T² − 4M`, the determinant we computed, is exactly the\n  discriminant of `ω`'s minimal polynomial, so the off-diagonal block carries the\n  norm form `N(x + yω) = x² + Txy + My²` whose discriminant is `D_K`.\n- Why now? We have a formal, basis-level Gram matrix and `offDiagonalBlock_det`\n  already isolates this block; relating it to `Mathlib`'s binary-quadratic-form\n  class group is the next concrete step.\n\n## 2. Even, 2-elementary structure and the K3 transcendental lattice\n**Conjecture.** `S_K(2)` is an even lattice whose discriminant group is\n`(ℤ/2)^a ⊕ (ℤ/|D_K|)` for an explicit `a`, and the orthogonal complement of\n`S_K(2N)` in the K3 lattice `Λ_{K3} = U³ ⊕ E₈(−1)²` has determinant `16 N⁴ |D_K|`.\n- The key insight is that `det(N·Gram) = N⁴ D_K` (proved as `det_scaledGram`)\n  forces the discriminant of any primitive embedding's complement, by the\n  determinant–covolume relation for finite-index sublattices.\n- Why now? `det_NeronSeveri` already pins the determinant `16 N⁴ D_K`; computing\n  the discriminant *group* (not just its order) is the missing ingredient for a\n  Torelli-type classification of these Picard-rank-four K3 surfaces.\n\n## 3. Hyperbolic-plus-norm-form signature decomposition\n**Conjecture.** For every imaginary quadratic `K`, `S_K ≅ U ⊕ A` as integral\nlattices, where `U` is the hyperbolic plane and `A` is the negative-definite\nbinary norm form of `K`; consequently `S_K` has signature `(1,3)` and\n`disc S_K = − disc A = D_K`.\n- The key insight is the block-diagonal form of `Gram(S_K)`: the diagonal\n  matrix-unit block `!![0,1;1,0]` is literally `U`, and the off-diagonal block is\n  `A`, so the splitting is forced by the basis we chose.\n- Why now? Mathlib has `Matrix.fromBlocks` determinant lemmas (used in\n  `det_gramMatrix`); upgrading the block decomposition from determinants to a\n  genuine lattice isometry `U ⊕ A` is a self-contained formalisation target.\n\n## 4. Discriminant rigidity across real quadratic / Bianchi analogues\n**Conjecture.** Replacing `O_K` by the order of a *real* quadratic field\n(`d > 0` squarefree) leaves the identity `det Gram = T² − 4M = D_K` intact, but\nflips the signature of `S_K` to `(2,2)`; thus `det Gram(S_K)` is a field\ninvariant insensitive to the sign of `d`, while the signature detects it.\n- The key insight is that our determinant proof never used `d < 0`: it is a\n  polynomial identity in `(T, M)`, so it transports verbatim to real fields.\n- Why now? `detGram_eq_fundamentalDisc` is already stated for all `d : ℤ`;\n  only the *interpretation* (definite vs indefinite norm form) changes, making\n  the signature computation the single new lemma required.\n\n## 5. p-adic local discriminant and the Hasse principle for S_K\n**Conjecture.** The lattice `S_K` is unimodular at every prime `p ∤ D_K` and its\n`p`-adic Jordan splitting at `p ∣ D_K` is determined entirely by `v_p(D_K)`;\nhence `S_K` and `S_{K'}` are isometric over `ℤ_p` for all `p` iff `D_K = D_{K'}`.\n- The key insight is that `det Gram = D_K` localises: at primes away from `D_K`\n  the Gram determinant is a unit, so the lattice is `p`-adically unimodular.\n- Why now? With the global determinant formula proven, the local-global\n  (Hasse–Minkowski) analysis reduces to tracking the single integer `D_K`,\n  a tractable next formalisation.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2606",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cb117fe9",
+    "status": "available",
+    "timestamp": "2026-06-26T13:15:58.048482+00:00",
+    "title": "Derived from the cycle that proved `det Gram(S_K) = D_K` (file"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
