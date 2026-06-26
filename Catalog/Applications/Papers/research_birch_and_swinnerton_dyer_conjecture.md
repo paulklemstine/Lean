@@ -1,327 +1,205 @@
-# The Analytic Rank of an L-Function: A Formal Skeleton for Birch–Swinnerton-Dyer
+# Local and Analytic Structures Underlying the Birch and Swinnerton-Dyer Conjecture
 
 **Author:** Aristotle
-**Date:** 2026-06-19
-**Domain:** Applications (Number Theory / Arithmetic Geometry)
+**Date:** 2026-06-26
+**Domain:** Novelty (Arithmetic of elliptic curves)
 
 ## Abstract
 
-The Birch and Swinnerton-Dyer (BSD) conjecture predicts that the algebraic rank of
-an elliptic curve $E/\mathbb{Q}$ — the rank $r$ of its finitely generated
-Mordell–Weil group $E(\mathbb{Q}) \cong \mathbb{Z}^r \times T$ — equals the
-*analytic rank*, the order of vanishing at $s = 1$ of the Hasse–Weil L-function
-$L(E,s)$. It further predicts the exact leading Taylor coefficient of $L$ at $s=1$
-in terms of the real period $\Omega_E$, the regulator $\operatorname{Reg}_E$, the
-order of the Tate–Shafarevich group $\#\Sha(E)$, the Tamagawa numbers $c_p$, and
-the torsion order. This paper isolates and rigorously establishes the *analytic*
-half of the rank statement. We define the analytic rank as the natural-number order
-of vanishing $\operatorname{ord}_{s_0} L$, and prove four structural theorems that
-any reasonable theory of L-function rank must satisfy: (1) **rank-zero detection**,
-$\operatorname{rank}_{\mathrm{an}} = 0 \iff L(s_0) \ne 0$; (2) its contrapositive,
-**positive-rank detection**; (3) the **leading-term factorization** exhibiting the
-nonzero leading coefficient predicted by the full BSD formula; and (4)
-**additivity** of analytic rank under products, the rank-level shadow of the Artin
-formalism. We certify non-vacuity by constructing, for each $r \in \mathbb{N}$, an
-explicit model L-function of analytic rank exactly $r$. On the local side we record
-the algebraic reformulation of Hasse's bound: a Frobenius eigenvalue lies on the
-circle $|z| = \sqrt p$ iff $a^2 \le 4p$. All results have been formally verified.
+The Birch and Swinnerton-Dyer (BSD) conjecture predicts that the algebraic rank of an elliptic curve $E/\mathbb{Q}$ — the free rank of its Mordell–Weil group $E(\mathbb{Q})$ — equals the analytic rank, the order of vanishing of its Hasse–Weil $L$-function $L(E,s)$ at the central point $s=1$. We develop and rigorously verify a collection of the local and analytic structures that underpin this conjecture, organized in five self-contained modules. On the local side we establish the algebraic equivalence between the Riemann Hypothesis over finite fields (Frobenius eigenvalues on the circle $|z|=\sqrt p$) and the Hasse bound $a_p^2\le 4p$; the Vieta relations $\alpha+\beta=a_p$, $\alpha\beta=p$; the local functional equation $L_p(T)=pT^2L_p(1/(pT))$; Newton's linear recurrence $s_{n+2}=a_p s_{n+1}-p\,s_n$ for the Frobenius power sums $s_n=\alpha^n+\beta^n$ with the calibrated initial data $s_0=2,\ s_1=a_p$; the trace-sequence computation of the point-count tower $\#E(\mathbb{F}_{p^n})=p^n+1-s_n$; the Sato–Tate angle $a_p=2\sqrt p\cos\theta$; and the archimedean bound $\lVert\alpha^n+\beta^n\rVert\le 2(\sqrt p)^n$. On the analytic side we formalize the analytic rank via the order of vanishing, prove rank-zero/positive detection, leading-term factorization, additivity under products, and the unconditional **parity theorem** $(-1)^{\operatorname{ord}_{s=1}\Lambda}=w$ for any function obeying the functional-equation symmetry $\Lambda(2-s)=w\,\Lambda(s)$. Finally we assemble a **rank bridge**: under the BSD rank equality, the central value $L(E,1)$ vanishes if and only if $E(\mathbb{Q})$ is infinite. All results are machine-verified; this paper states each inline with a proof sketch.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The two ranks
+Let $E/\mathbb{Q}$ be an elliptic curve. Two integers are attached to it by entirely different routes. The **algebraic rank** $r_{\mathrm{alg}}$ is the rank of the finitely generated abelian group $E(\mathbb{Q})\cong\mathbb{Z}^{r_{\mathrm{alg}}}\times T$, where $T$ is finite torsion. The **analytic rank** $r_{\mathrm{an}}=\operatorname{ord}_{s=1}L(E,s)$ is the order of vanishing of the Hasse–Weil $L$-function at the center of its functional equation. The BSD conjecture asserts $r_{\mathrm{alg}}=r_{\mathrm{an}}$, and in its refined form predicts the leading Taylor coefficient of $L(E,s)$ at $s=1$ in terms of the regulator, the order of the Tate–Shafarevich group $\Sha$, the real period, and the Tamagawa numbers.
 
-Let $E/\mathbb{Q}$ be an elliptic curve, given in Weierstrass form by
-$y^2 = x^3 + ax + b$ with $4a^3 + 27b^2 \ne 0$. Its set of rational points
-$E(\mathbb{Q})$ carries an abelian group law (the chord–tangent construction). By
-the **Mordell–Weil theorem**, this group is finitely generated:
-$$ E(\mathbb{Q}) \;\cong\; \mathbb{Z}^r \times T, $$
-where $T = E(\mathbb{Q})_{\mathrm{tors}}$ is finite and $r \ge 0$ is the **algebraic
-rank**. The rank measures the number of independent rational points of infinite
-order; it is finite but not effectively computable by any known unconditional
-algorithm.
+This work isolates and verifies the structural scaffolding on which both sides of BSD rest. We do not claim a proof of BSD; rather, we make precise and machine-check the analytic mechanisms (functional-equation parity, order-of-vanishing calculus) and the local mechanisms (Frobenius eigenvalues, the Hasse/RH equivalence, the point-count recurrence, the Sato–Tate angle) that any treatment of BSD must invoke, and we assemble them into a clean qualitative consequence of the rank equality.
 
-To each prime $p$ of good reduction associate the **trace of Frobenius**
-$$ a_p = p + 1 - \#E(\mathbb{F}_p), $$
-and form the **Hasse–Weil L-function** as the Euler product
-$$ L(E, s) = \prod_{p \text{ good}} \big(1 - a_p p^{-s} + p^{1 - 2s}\big)^{-1} \cdot \prod_{p \text{ bad}} (\text{local factor}), \qquad \Re(s) > 3/2, $$
-which (by modularity, Wiles et al.) continues analytically to all of $\mathbb{C}$.
-The **analytic rank** is the order of vanishing at the central point:
-$$ \operatorname{rank}_{\mathrm{an}}(E) := \operatorname{ord}_{s=1} L(E, s). $$
-
-### 1.2 The conjecture
-
-> **Conjecture (BSD, rank form).** $\operatorname{ord}_{s=1} L(E,s) = r$.
-
-> **Conjecture (BSD, strong form).** Writing $r$ for the common rank,
-> $$ \lim_{s\to 1} \frac{L(E,s)}{(s-1)^r} = \frac{\Omega_E \cdot \operatorname{Reg}_E \cdot \#\Sha(E) \cdot \prod_p c_p}{(\#E(\mathbb{Q})_{\mathrm{tors}})^2}. $$
-
-The known unconditional results are partial: by Gross–Zagier and Kolyvagin, if the
-analytic rank is $0$ or $1$ then it equals the algebraic rank, and $\Sha$ is finite
-in those cases. The general statement, and the finiteness of $\Sha$, remain open and
-constitute one of the Clay Millennium Prize Problems.
-
-### 1.3 Contribution and scope
-
-We do not resolve BSD. Instead we give a **formally verified analytic skeleton**:
-the precise, unconditional structural properties that the order-of-vanishing
-invariant satisfies, decoupled from the (open) identification with the algebraic
-rank. These are the statements on which any proof of BSD's rank equality must
-ultimately rest, and which a formalization of the full conjecture would import as
-lemmas. We work with an abstract analytic function $L : \mathbb{C} \to \mathbb{C}$
-and a central point $s_0 \in \mathbb{C}$ (take $s_0 = 1$ for BSD), using the order
-of vanishing as the organizing invariant.
+The exposition follows the five formalized modules: §2 the local $L$-factor and the RH/Hasse equivalence; §3 the Frobenius trace recurrence, the point-count tower, the Sato–Tate angle and the norm bound; §4 the analytic rank and order-of-vanishing calculus; §5 the functional equation and the parity theorem; §6 the rank bridge. §7 discusses applications and §8 future work.
 
 ---
 
-## 2. Definitions
+## 2. The local $L$-factor and the Riemann Hypothesis over finite fields
 
-Throughout, "analytic at $s_0$" means complex-analytic (holomorphic) in a
-neighborhood of $s_0$. For an analytic function the **order of vanishing**
-$\operatorname{ord}_{s_0} L \in \mathbb{N} \cup \{\infty\}$ is the largest $n$ such
-that $(s - s_0)^{-n} L(s)$ remains analytic and nonzero at $s_0$; it equals $\infty$
-exactly when $L$ vanishes identically near $s_0$. Mathlib models this as
-`analyticOrderAt L s₀`, valued in $\mathbb{N}_\infty = \mathbb{N} \cup \{\infty\}$.
+**Definition 1 (Local $L$-factor).** At a prime $p$ of good reduction, the local factor is the degree-two polynomial
+$$L_p(T) = 1 - a_p T + p\,T^2,$$
+where $a_p = p+1-\#E(\mathbb{F}_p)$ is the trace of Frobenius. The global $L$-function is the Euler product $L(E,s)=\prod_p L_p(p^{-s})^{-1}$.
 
-**Definition 2.1 (Analytic rank).**
-$$ \operatorname{analyticRank}(L, s_0) := \big(\operatorname{ord}_{s_0} L\big)_{\mathbb{N}} \in \mathbb{N}, $$
-the truncation to $\mathbb{N}$ of the order of vanishing (so $\infty \mapsto 0$ under
-truncation, which is why finiteness hypotheses appear below). For the BSD L-function
-one takes $s_0 = 1$.
+**Definition 2 (Frobenius characteristic polynomial).** The reciprocal roots of $L_p$ are the roots of
+$$f(X) = X^2 - a_p X + p,$$
+the **Frobenius eigenvalues** $\alpha,\beta$.
 
-**Definition 2.2 (Finiteness / non-degeneracy).** We say $L$ is *non-degenerate at
-$s_0$* if $\operatorname{ord}_{s_0} L \ne \infty$, i.e. $L$ is not identically zero
-in any neighborhood of $s_0$. This is the formal counterpart of the
-analytic-continuation hypothesis: BSD's L-function is non-degenerate because it is a
-nonzero entire function.
+**Theorem 3 (RH over $\mathbb{F}_p$ ⇔ Hasse bound).** Let $a,p\in\mathbb{R}$ with $0<p$, and let $z\in\mathbb{C}$ be any root of $X^2-aX+p$. Then
+$$|z|^2 = p \iff a^2 \le 4p.$$
+*Proof sketch.* Write the condition $f(z)=0$ in real/imaginary coordinates. For the forward direction, split on the sign of the discriminant: if $z$ is non-real then $z,\bar z$ are conjugate roots, so $|z|^2 = z\bar z = \alpha\beta = p$ by Vieta and the discriminant is negative, i.e. $a^2\le 4p$; if $z$ is real then $|z|^2=z^2$ equals $p$ only at the double root $z=a/2$, forcing $a^2=4p$. For the converse, $a^2\le 4p$ yields either complex-conjugate roots (handled by Vieta) or a real double root, and in each case $|z|^2=p$ follows by a nonnegativity argument ($\operatorname{nlinarith}$ on the squared coordinates). $\square$
 
-**Definition 2.3 (Model L-function).** For $r \in \mathbb{N}$ and $c \in \mathbb{C}$,
-$$ \operatorname{modelL}(r, c)(s) := (s - 1)^r \cdot c. $$
-This is the simplest entire function with prescribed order of vanishing at $s_0 = 1$.
+**Lemma 4 (Vieta product).** Distinct roots $z\neq w$ of $f$ satisfy $z\cdot w = p$.
+**Lemma 5 (Vieta sum).** Distinct roots $z\neq w$ of $f$ satisfy $z+w=a$.
+*Proof sketch.* Subtract the two equations $f(z)=f(w)=0$; $z^2-w^2-a(z-w)=0$ factors as $(z-w)(z+w-a)=0$, and cancelling $z-w\neq 0$ gives the sum. Substituting back gives the product. $\square$
 
-**Definition 2.4 (Local factor and Frobenius).** At a prime $p$ of good reduction,
-the local L-factor is the reciprocal of
-$$ L_p(T) = 1 - a_p T + p T^2, $$
-whose reciprocal roots $\alpha, \beta$ — the roots of the **Frobenius
-characteristic polynomial** $X^2 - a_p X + p$ — are the *Frobenius eigenvalues*.
-By Vieta, $\alpha + \beta = a_p$ and $\alpha\beta = p$.
+**Theorem 6 (Hasse bound).** If $0\le p$ and $a^2\le 4p$, then $|a|\le 2\sqrt p$.
+*Proof sketch.* Square the target: $(2\sqrt p)^2 = 4p \ge a^2$, and take square roots using $a^2\le b^2,\ b\ge 0 \Rightarrow |a|\le b$. $\square$
+
+**Theorem 7 (Local functional equation).** For $T\neq 0$, $p\neq 0$,
+$$L_p(T) = p\,T^2\, L_p\!\left(\tfrac{1}{pT}\right).$$
+*Proof sketch.* Substitute $1/(pT)$ into $L_p$, clear denominators, and simplify; the identity is a rational-function tautology ($\operatorname{field\_simp}$ then $\operatorname{ring}$). It is the local incarnation of the global symmetry $s\leftrightarrow 2-s$. $\square$
+
+**Definition 8 (Point count via eigenvalues).** $N_n := \#E(\mathbb{F}_{p^n}) = p^n + 1 - (\alpha^n+\beta^n)$.
+
+The normalizations $N_0=0$ in the eigenvalue convention and $N_1 = p+1-a_p$ are verified, and the Hasse deviation bound $\lVert N_1-(p+1)\rVert\le 2\sqrt p$ follows from Theorem 6.
 
 ---
 
-## 3. Main Results
+## 3. The Frobenius trace recurrence, the point-count tower, and the Sato–Tate angle
 
-### 3.1 Rank-zero and positive-rank detection
+Let $s_n := \alpha^n+\beta^n$ be the $n$-th power sum of the Frobenius eigenvalues — the trace of the $n$-th power of Frobenius.
 
-**Theorem 3.1 (`analyticRank_eq_zero_iff`, rank-zero detection).**
-Let $L$ be analytic at $s_0$ and non-degenerate at $s_0$. Then
-$$ \operatorname{analyticRank}(L, s_0) = 0 \iff L(s_0) \ne 0. $$
+**Theorem 9 (Newton's recurrence for power sums).** For $\alpha,\beta\in\mathbb{C}$ with $\alpha+\beta=a$ and $\alpha\beta=p$, and all $n\in\mathbb{N}$,
+$$\alpha^{n+2}+\beta^{n+2} = a(\alpha^{n+1}+\beta^{n+1}) - p(\alpha^n+\beta^n).$$
+*Proof sketch.* After substituting $a=\alpha+\beta$, $p=\alpha\beta$, both sides are equal polynomials in $\alpha,\beta$; the identity reduces to $\operatorname{ring}$. $\square$
 
-*Proof sketch.* By definition the rank is the $\mathbb{N}$-truncation of
-$\operatorname{ord}_{s_0} L$. Truncation gives $0$ either when the order is genuinely
-$0$ or when it is $\infty$; the non-degeneracy hypothesis excludes the latter, so
-rank $0$ is equivalent to $\operatorname{ord}_{s_0} L = 0$. A standard
-characterization (`analyticOrderAt_eq_zero`) states that, for a function analytic at
-$s_0$, the order of vanishing is $0$ iff $L(s_0) \ne 0$. Combining the two gives the
-equivalence. $\square$
+**Definition 10 (Frobenius trace sequence).** Define $\operatorname{traceSeq}_{a,p}:\mathbb{N}\to\mathbb{C}$ by
+$$s_0 = 2,\quad s_1 = a,\quad s_{n+2} = a\,s_{n+1} - p\,s_n.$$
+The calibration $s_0=2$ (not $1$) is forced by $\alpha^0+\beta^0=2$ and is the classic off-by-one in Newton's identities.
 
-**Theorem 3.2 (`analyticRank_pos_iff`, positive-rank detection).**
-Under the same hypotheses,
-$$ \operatorname{analyticRank}(L, s_0) \ge 1 \iff L(s_0) = 0. $$
+**Theorem 11 (Trace sequence computes power sums).** If $\alpha+\beta=a$ and $\alpha\beta=p$, then for all $n$,
+$$\operatorname{traceSeq}_{a,p}(n) = \alpha^n + \beta^n.$$
+*Proof sketch.* Two-step induction. Base cases: $s_0=2=\alpha^0+\beta^0$ and $s_1=a=\alpha+\beta$. Inductive step: by definition $s_{n+2}=a\,s_{n+1}-p\,s_n$, and applying the inductive hypotheses to $s_{n+1},s_n$ and then Theorem 9 yields $\alpha^{n+2}+\beta^{n+2}$. $\square$
 
-*Proof sketch.* The rank is a natural number, so being positive is the negation of
-being zero. Apply Theorem 3.1 and negate both sides: $L(s_0) \ne 0$ becomes
-$L(s_0) = 0$. $\square$
+**Definition 12 (Trace-sequence point count).** $N_n := p^n + 1 - \operatorname{traceSeq}_{a,p}(n)$. By Theorem 11 this agrees with Definition 8, so the *entire tower* $\{N_n\}$ is determined by the single datum $a_p$ together with $p$, via a second-order linear recurrence with constant coefficients. The boundary values $N_0=0$ and $N_1=p+1-a$ are verified.
 
-These two theorems formalize the most-cited consequence of BSD: for the
-elliptic-curve L-function, $L(E,1) \ne 0$ corresponds to algebraic rank $0$ (finitely
-many rational points), while $L(E,1) = 0$ corresponds to positive rank (infinitely
-many rational points). The detection statements are unconditional facts about the
-analytic side; BSD is the (open) assertion that the analytic rank so detected equals
-the algebraic rank.
+This rigidity is the computational engine of the local zeta function: the generating series $\exp\!\big(\sum_{n\ge 1} N_n T^n/n\big)$ is the rational zeta function $\dfrac{1-a_pT+pT^2}{(1-T)(1-pT)}$, whose numerator is precisely $L_p(T)$.
 
-### 3.2 Leading-term factorization
+**Theorem 13 (Sato–Tate angle).** If $0<p$ and $a^2\le 4p$, there exists $\theta\in[0,\pi]$ with
+$$a = 2\sqrt p\,\cos\theta.$$
+*Proof sketch.* Take $\theta = \arccos\!\big(a/(2\sqrt p)\big)$; the Hasse bound places $a/(2\sqrt p)\in[-1,1]$, the domain of $\arccos$, so $\theta\in[0,\pi]$ and $\cos\theta = a/(2\sqrt p)$, giving the claim after clearing $2\sqrt p>0$. $\square$
 
-**Theorem 3.3 (`analyticRank_factorization`).**
-Let $L$ be analytic and non-degenerate at $s_0$, with $r = \operatorname{analyticRank}(L, s_0)$.
-Then there exists an analytic function $g$ with $g(s_0) \ne 0$ such that, in a
-neighborhood of $s_0$,
-$$ L(s) = (s - s_0)^r \cdot g(s). $$
+The angle $\theta$ is the coordinate of the Sato–Tate conjecture: as $p$ varies, the angles $\theta_p$ equidistribute with respect to $\frac{2}{\pi}\sin^2\theta\,d\theta$.
 
-*Proof sketch.* This is the defining universal property of the order of vanishing.
-Mathlib's `AnalyticAt.analyticOrderNatAt_eq_iff` states, for a function analytic and
-of finite order at $s_0$, that the order equals $n$ iff such a factorization with
-$g(s_0)\ne 0$ exists. Instantiating $n = r$ (which holds by definition) extracts the
-witness $g$. $\square$
-
-The value $g(s_0)$ is exactly the **leading Taylor coefficient**
-$\lim_{s\to s_0}(s-s_0)^{-r}L(s)$. For the BSD L-function with $s_0 = 1$, this
-coefficient is precisely the quantity the strong BSD formula evaluates:
-$$ g(1) = \frac{\Omega_E \cdot \operatorname{Reg}_E \cdot \#\Sha(E) \cdot \prod_p c_p}{(\#E(\mathbb{Q})_{\mathrm{tors}})^2}. $$
-Theorem 3.3 guarantees, unconditionally, that such a finite nonzero leading
-coefficient *exists* whenever $L$ is non-degenerate; the strong conjecture is the
-arithmetic *evaluation* of it.
-
-### 3.3 Additivity under products
-
-**Theorem 3.4 (`analyticRank_mul`, additivity).**
-Let $f, g$ be analytic and non-degenerate at $s_0$. Then
-$$ \operatorname{analyticRank}(f \cdot g, s_0) = \operatorname{analyticRank}(f, s_0) + \operatorname{analyticRank}(g, s_0). $$
-
-*Proof sketch.* Orders of vanishing add under multiplication of analytic functions:
-if $f = (s-s_0)^m f_1$ and $g = (s-s_0)^n g_1$ with $f_1(s_0), g_1(s_0) \ne 0$, then
-$fg = (s-s_0)^{m+n} f_1 g_1$ with $(f_1 g_1)(s_0) \ne 0$. In $\mathbb{N}_\infty$ this
-is `analyticOrderAt_mul`; truncating to $\mathbb{N}$ requires both orders finite,
-supplied by the non-degeneracy hypotheses, giving the natural-number identity
-`analyticOrderNatAt_mul`. $\square$
-
-Additivity is the rank-level form of the **Artin / Rankin–Selberg formalism**: when
-an abelian variety decomposes (up to isogeny) into a product, its L-function
-factors, and analytic ranks add. It underlies the strategy of reducing a curve's
-analytic rank to those of simpler isogeny factors. Combined with Theorem 3.1 it
-yields **isogeny invariance** of the analytic rank: multiplying $L$ by a
-non-vanishing analytic unit $u$ (with $u(s_0)\ne 0$, hence $\operatorname{rank} u = 0$)
-leaves the analytic rank unchanged — the analytic shadow of the BSD prediction that
-isogenous curves share a rank (see Future Directions, Conjecture 3).
-
-### 3.4 Non-vacuity: every rank is realized
-
-**Lemma 3.5 (`modelL_analyticAt`).** For all $r \in \mathbb{N}$, $c \in \mathbb{C}$,
-the model $\operatorname{modelL}(r,c)$ is analytic everywhere, in particular at
-$s_0 = 1$.
-
-*Proof sketch.* $(s-1)^r$ is a polynomial (analytic as a product of $r$ copies of
-the analytic function $s \mapsto s-1$), and the constant $c$ is analytic; the product
-of analytic functions is analytic. $\square$
-
-**Theorem 3.6 (`modelL_analyticRank`, realizability).** For all $r \in \mathbb{N}$
-and $c \ne 0$,
-$$ \operatorname{analyticRank}(\operatorname{modelL}(r,c), 1) = r. $$
-
-*Proof sketch.* By Lemma 3.5 the model is analytic at $1$. The factorization
-$\operatorname{modelL}(r,c)(s) = (s-1)^r \cdot c$ exhibits exactly the form of
-Theorem 3.3 with $g \equiv c$ and $g(1) = c \ne 0$, so the order of vanishing is the
-natural number $r$ (`analyticOrderAt_eq_natCast`). Truncating $r$ to $\mathbb{N}$
-returns $r$. $\square$
-
-**Corollary 3.7 (`modelL_central_value`).** For $c \ne 0$,
-$$ \operatorname{modelL}(r,c)(1) = 0 \iff r \ge 1. $$
-
-*Proof sketch.* At $s = 1$ the factor $(s-1)^r$ becomes $0^r$, which is $0$ for
-$r \ge 1$ and $1$ for $r = 0$; multiplying by $c \ne 0$, the value is $0$ iff
-$r \ge 1$. $\square$
-
-Theorem 3.6 shows the analytic-rank invariant is **surjective onto $\mathbb{N}$**:
-it is not secretly constant or trivial. Corollary 3.7 is the positive-rank
-detection theorem (3.2) made fully explicit on this family.
-
-### 3.5 The local side: Hasse's bound, algebraically
-
-**Theorem 3.8 (Hasse bound, eigenvalue form).** Let $p$ be prime and $a \in \mathbb{Z}$.
-A root $z \in \mathbb{C}$ of the Frobenius polynomial $X^2 - aX + p$ lies on the
-circle of radius $\sqrt p$, i.e. $|z| = \sqrt p$, if and only if
-$$ a^2 \le 4p. $$
-
-*Proof sketch.* The roots are $z = \tfrac{a \pm \sqrt{a^2 - 4p}}{2}$. If
-$a^2 \le 4p$, the discriminant is $\le 0$, the roots are complex conjugates, and
-$|z|^2 = z\bar z = \alpha\beta = p$ by Vieta, so $|z| = \sqrt p$. Conversely, if
-$|z| = \sqrt p$ then $z\bar z = p = \alpha\beta$ forces $\bar z = \beta$, so the
-roots are conjugate, the discriminant $a^2 - 4p$ is $\le 0$, hence $a^2 \le 4p$.
-$\square$
-
-This is the algebraic core of the **Riemann Hypothesis for elliptic curves over
-finite fields** (Hasse's theorem $|a_p| \le 2\sqrt p$): the analytic statement
-"eigenvalues on the circle $\sqrt p$" is equivalent to a one-line integer
-inequality. The reciprocal-root symmetry $\alpha \leftrightarrow p/\alpha$ encodes
-the functional equation of the local zeta function $Z_p(T) = L_p(T)/((1-T)(1-pT))$,
-and the point count expands as
-$\#E(\mathbb{F}_p) = p + 1 - a = (1-\alpha)(1-\beta)$, seeding the global Euler
-product.
+**Theorem 14 (Archimedean / RH bound on power sums).** If $\lVert\alpha\rVert = \lVert\beta\rVert = \sqrt p$, then for all $n$,
+$$\lVert\alpha^n+\beta^n\rVert \le 2(\sqrt p)^n.$$
+*Proof sketch.* Triangle inequality then multiplicativity of the norm under powers: $\lVert\alpha^n+\beta^n\rVert\le\lVert\alpha\rVert^n+\lVert\beta\rVert^n = 2(\sqrt p)^n$. This uses only the RH input $\lVert\alpha\rVert=\lVert\beta\rVert=\sqrt p$, not the algebraic Vieta relations, so it is the genuinely analytic half; it holds for all $n$ including $n=0$ ($2\le 2$). $\square$
 
 ---
 
-## 4. Algorithms
+## 4. Analytic rank and the calculus of orders of vanishing
 
-The structural theorems translate into concrete computational procedures, which the
-companion `demo.py` realizes.
+**Definition 17 (Analytic rank).** For $L:\mathbb{C}\to\mathbb{C}$ analytic at $s_0$, the analytic rank is the order of vanishing
+$$\operatorname{analyticRank}(L,s_0) := \operatorname{ord}_{s_0}L \in \mathbb{N},$$
+formalized as the natural-number order of vanishing at $s_0$. For BSD, $s_0=1$.
 
-**Algorithm A — Analytic rank by series truncation.** Given a Taylor expansion of
-$L$ at $s_0$ (coefficients $a_0, a_1, \dots$), the analytic rank is the index of the
-first nonzero coefficient: $\operatorname{rank} = \min\{ n : a_n \ne 0 \}$. This
-operationalizes Theorem 3.3 (the leading term is $a_r(s-s_0)^r$) and Theorem 3.1
-(rank $0 \iff a_0 = L(s_0) \ne 0$). Complexity: $O(N)$ in the number of coefficients
-examined, with a tolerance for floating-point zero-detection.
+**Theorem 18 (Rank-zero detection).** If $L$ is analytic at $s_0$ and does not vanish identically near $s_0$ (the order is finite), then
+$$\operatorname{analyticRank}(L,s_0)=0 \iff L(s_0)\neq 0.$$
+**Theorem 19 (Positive-rank detection).** Under the same hypotheses,
+$$0 < \operatorname{analyticRank}(L,s_0) \iff L(s_0)=0.$$
+*Proof sketch.* The order of vanishing is $0$ exactly when $L(s_0)\ne0$, given finiteness (which rules out the degenerate $\operatorname{ord}=\infty$, whose truncation to $\mathbb{N}$ would also be $0$). Theorem 19 is the contrapositive. $\square$
 
-**Algorithm B — Trace of Frobenius and Hasse verification.** For a curve
-$y^2 = x^3 + ax + b$ over $\mathbb{F}_p$, count affine points by evaluating the
-Legendre symbol of $x^3+ax+b$ for each $x \in \mathbb{F}_p$, add the point at
-infinity, set $a_p = p + 1 - \#E(\mathbb{F}_p)$, and check $a_p^2 \le 4p$
-(Theorem 3.8). Complexity: $O(p \log p)$ per prime.
+**Theorem 20 (Leading-term factorization).** If $L$ is analytic at $s_0$ with finite order $r=\operatorname{analyticRank}(L,s_0)$, there is $g$ analytic at $s_0$ with $g(s_0)\neq 0$ and, in a neighborhood of $s_0$,
+$$L(z) = (z-s_0)^r\, g(z).$$
+*Proof sketch.* This is the defining property of the natural-number order of vanishing: $\operatorname{ord}_{s_0}L=r$ iff such a factorization with nonvanishing $g(s_0)$ exists. The nonzero value $g(s_0)$ is the leading Taylor coefficient predicted by the refined BSD formula. $\square$
 
-**Algorithm C — Local factor and Euler product.** Form $L_p(T) = 1 - a_p T + pT^2$,
-factor it to obtain Frobenius eigenvalues $\alpha,\beta$, verify $|\alpha|=|\beta|=\sqrt p$
-and $\alpha\beta = p$, and accumulate the partial Euler product
-$\prod_{p \le X} L_p(p^{-s})^{-1}$ as a numerical approximation to $L(E,s)$.
+**Theorem 21 (Additivity under products).** For $f,g$ analytic at $s_0$ of finite order,
+$$\operatorname{analyticRank}(fg,s_0) = \operatorname{analyticRank}(f,s_0) + \operatorname{analyticRank}(g,s_0).$$
+*Proof sketch.* Orders of vanishing add under multiplication of analytic germs. This is the analytic shadow of the Artin/Rankin–Selberg factorization of $L$-functions under products of abelian varieties or isogeny splittings. $\square$
 
----
-
-## 5. Applications
-
-- **Rank-zero curves and finiteness.** Theorem 3.1 gives the analytic criterion
-  $L(E,1)\ne 0$ that (via Kolyvagin) certifies algebraic rank $0$ and hence finitely
-  many rational points — useful in Diophantine problems and descent.
-- **Congruent number problem.** Whether $n$ is the area of a rational right triangle
-  is equivalent to positive rank of $y^2 = x^3 - n^2 x$; Theorem 3.2 provides the
-  analytic test $L(E_n, 1) = 0$.
-- **Cryptographic curve selection.** Hasse's bound (Theorem 3.8) constrains group
-  orders $\#E(\mathbb{F}_p) = p+1-a_p \in [p+1-2\sqrt p,\ p+1+2\sqrt p]$, the
-  backbone of elliptic-curve cryptography parameter choices.
-- **Isogeny classes.** Additivity (Theorem 3.4) and its invariance corollary justify
-  reducing rank computations across an isogeny class to a single representative.
+**Non-vacuity (model $L$-function).** Define $\operatorname{modelL}_{r,c}(s) = (s-1)^r\, c$. It is analytic everywhere, and for $c\neq 0$ its analytic rank at $s=1$ is exactly $r$, with central value vanishing iff $r\ge 1$. Hence the analytic-rank invariant is surjective onto $\mathbb{N}$ and not secretly constant.
 
 ---
 
-## 6. Discussion
+## 5. The functional equation, the sign, and the parity theorem
 
-The results here cleanly separate the *analytic structure* of BSD from its *open
-arithmetic content*. Theorems 3.1–3.4 are unconditional theorems about analytic
-functions; they are exactly the lemmas a complete formalization of BSD would invoke
-on the analytic side. What remains open is the bridge: identifying the analytic rank
-defined here (Definition 2.1) with the algebraic Mordell–Weil rank, and evaluating
-the leading coefficient $g(1)$ of Theorem 3.3 by the strong BSD formula. The
-non-vacuity results (Theorems 3.5–3.7) guard against a subtle failure mode of
-formalization — a definition that is technically well-typed but secretly constant —
-by exhibiting the invariant's surjectivity onto $\mathbb{N}$.
+The completed $L$-function $\Lambda(E,s)=N^{s/2}(2\pi)^{-s}\Gamma(s)L(E,s)$ satisfies
+$$\Lambda(E,2-s) = w(E)\,\Lambda(E,s), \qquad w(E)\in\{+1,-1\},$$
+with $w(E)$ the global root number. We abstract the analytic mechanism.
 
-A delicate point is the finiteness (non-degeneracy) hypothesis. The
-$\mathbb{N}$-valued rank truncates $\infty$ to $0$, so without non-degeneracy the
-equivalence "rank $0 \iff L(s_0)\ne 0$" would fail (a function identically zero near
-$s_0$ has order $\infty$, truncated rank $0$, yet $L(s_0) = 0$). The hypothesis is
-the formal shadow of the analytic-continuation input to BSD: the L-function is a
-genuine nonzero entire function, hence non-degenerate.
+**Theorem 15 (Parity theorem).** Let $\Lambda$ be analytic at the central point $s=1$ with finite order of vanishing, and suppose $\Lambda(2-s)=w\,\Lambda(s)$ with $w\in\{+1,-1\}$. Then
+$$(-1)^{\operatorname{ord}_{s=1}\Lambda} = w.$$
+*Proof sketch.* Use the leading-term factorization (Theorem 20): near $1$, $\Lambda(z)=(z-1)^r g(z)$ with $g(1)\ne0$, where $r=\operatorname{ord}_{s=1}\Lambda$. The reflection $z\mapsto 2-z$ sends $z-1\mapsto -(z-1)$, so on a punctured neighborhood of $1$,
+$$\Lambda(2-z) = (-(z-1))^r g(2-z) = (-1)^r (z-1)^r g(2-z).$$
+The functional equation equates this with $w\,(z-1)^r g(z)$. Cancelling $(z-1)^r$ and letting $z\to 1$ gives $(-1)^r g(1) = w\,g(1)$; since $g(1)\ne0$, $(-1)^r = w$. Equivalently, in Taylor coefficients $c_k$ of $\Lambda$ at $1$, the symmetry forces $(-1)^k c_k = w\,c_k$; on the lowest nonvanishing $c_r$ this is exactly $(-1)^r=w$. $\square$
 
----
+**Corollary 16 (Sign dichotomy).** Under the hypotheses of Theorem 15:
+- if $w=-1$ then $\operatorname{ord}_{s=1}\Lambda$ is odd, hence $\ge 1$, so $\Lambda(1)=0$ (central vanishing);
+- the order of vanishing is even if and only if $w=+1$.
 
-## 7. Future Work
+**Non-vacuity.** The model $\Lambda(s)=(s-1)^r c$ satisfies the functional equation with sign $(-1)^r$, exhibiting both parities and confirming the framework is not empty.
 
-See the Future Directions section of the package for the full list. In brief:
-(1) derive the local zeta functional equation $Z_p(1/(pT)) = (\text{power}) \cdot Z_p(T)$
-purely from eigenvalue symmetry $\alpha\leftrightarrow p/\alpha$; (2) prove the Hasse
-interval $[p+1-\lfloor 2\sqrt p\rfloor,\ p+1+\lfloor 2\sqrt p\rfloor]$ is symmetric
-and saturated under the quadratic twist $a\mapsto -a$; (3) upgrade additivity
-(Theorem 3.4) to full isogeny invariance of the analytic rank; (4) formulate the
-parity bridge linking the central sign $w = (-1)^{\operatorname{rank}}$ to the parity
-of the Mordell–Weil rank.
+Through BSD's rank equality, Theorem 15 becomes the **Parity Conjecture**: $(-1)^{r_{\mathrm{alg}}}=w(E)$; and root number $-1$ predicts $r_{\mathrm{alg}}\ge1$, i.e. infinitely many rational points.
 
 ---
 
-## 8. Conclusion
+## 6. The rank bridge: analytic ⇔ algebraic
 
-We have given a formally verified analytic skeleton for the Birch and
-Swinnerton-Dyer conjecture: a clean definition of analytic rank as the order of
-vanishing of an L-function at its central point, and four structural theorems —
-rank-zero detection, positive-rank detection, leading-term factorization, and
-additivity — together with an explicit realizability family certifying that the
-invariant is genuinely surjective, and the algebraic reformulation of Hasse's bound
-on the local side. These are the load-bearing analytic facts on which a complete
-resolution of BSD must rest.
+Model the Mordell–Weil group as $E(\mathbb{Q})\cong\mathbb{Z}^r\times T$ with $T$ finite (and nonempty, since the point at infinity $O$ always lies in it).
+
+**Theorem 22 (Mordell–Weil infinitude criterion).** For $r\in\mathbb{N}$ and $T$ a finite nonempty type,
+$$\big(\mathbb{Z}^r\times T\big)\ \text{is infinite} \iff r>0.$$
+*Proof sketch.* If $r=0$ the group is $\{*\}\times T$, finite. If $r\ge1$, pick a coordinate $i$ and inject $\mathbb{Z}\hookrightarrow\mathbb{Z}^r\times T$ by $n\mapsto(n e_i, t_0)$; injectivity follows by reading off coordinate $i$, so the group is infinite. $\square$
+
+**Theorem 23 (Local positivity, from Hasse).** For $p>1$ of good reduction with $a^2\le 4p$,
+$$0 < p+1-a = \#E(\mathbb{F}_p).$$
+*Proof sketch.* By Theorem 6, $a\le|a|\le 2\sqrt p$. Since $p>1$ gives $\sqrt p>1$, we have $2\sqrt p < p+1$ (as $(\sqrt p-1)^2>0$), hence $a<p+1$. So the local Euler factor never trivializes the global $L$-function. $\square$
+
+**Theorem 24 (Qualitative BSD bridge).** Let $L$ be analytic at $1$ with finite order, and assume the BSD rank equality $\operatorname{analyticRank}(L,1)=r$ where $r$ is the free rank of $E(\mathbb{Q})\cong\mathbb{Z}^r\times T$. Then
+$$L(1)=0 \iff E(\mathbb{Q})\ \text{is infinite}.$$
+*Proof sketch.* By Theorem 19, $L(1)=0 \iff \operatorname{analyticRank}(L,1)>0$; substitute the rank equality to get $r>0$; by Theorem 22 this is equivalent to $E(\mathbb{Q})$ being infinite. $\square$
+
+**Corollary 25 (Rank-zero form).** Under the same hypotheses, $L(1)\neq 0 \iff E(\mathbb{Q})$ is finite.
+
+**Non-vacuity.** For each target rank $r$ and $c\neq0$, the model $\operatorname{modelL}_{r,c}$ satisfies the rank-equality hypothesis with algebraic rank $r$, so the bridge applies across genuinely distinct ranks, not a single degenerate case.
+
+---
+
+## 7. Applications
+
+1. **Computing point-count towers from one datum.** Theorems 9–12 reduce the infinite family $\{\#E(\mathbb{F}_{p^n})\}_n$ to a two-term recurrence seeded by $(a_p,p)$. This is the practical route to local zeta functions and to the partial Euler products that approximate $L(E,s)$.
+2. **Detecting positive rank from the sign.** Corollary 16 plus Theorem 24 means a root number computation $w(E)=-1$ already forces (under BSD) infinitely many rational points — without any point search. This is the engine behind heuristics for rank in large databases of curves.
+3. **Sato–Tate statistics.** Theorem 13 furnishes the angle coordinate $\theta_p=\arccos(a_p/2\sqrt p)$ in which the distribution of traces is studied; the norm bound (Theorem 14) is the uniform control that makes the limiting measure well defined.
+4. **Stability of $L$-data under products/isogeny.** Theorem 21 (additivity) is the analytic counterpart of how ranks behave under isogeny and Weil restriction; combined with multiplicativity of root numbers it controls parity across products.
+
+---
+
+## 8. Discussion and future work
+
+The modules verified here are deliberately the *load-bearing* and *unconditional* parts of the BSD circle of ideas: the RH/Hasse equivalence, the Vieta and recurrence structure, the Sato–Tate angle, the order-of-vanishing calculus, and the parity theorem are all proved outright; only the bridge theorems are stated *conditionally* on the BSD rank equality, exactly as the mathematics demands. Four concrete directions extend the work.
+
+**Conjecture 1 — Full Taylor reflection.** Strengthen the parity theorem: if $\Lambda$ is analytic at $1$, of finite order, and $\Lambda(2-s)=w\,\Lambda(s)$, then *every* Taylor coefficient obeys $c_k=(-1)^k w\,c_k$, so the expansion at the center is supported on a single parity $k\equiv\operatorname{ord}\ (\mathrm{mod}\ 2)$. Test: formalize $\frac{d^k}{ds^k}\Lambda(1)=(-1)^k w\,\frac{d^k}{ds^k}\Lambda(1)$ and deduce leading-coefficient sign/reality constraints.
+
+**Conjecture 2 — Multiplicativity of root numbers.** If $\Lambda_1(2-s)=w_1\Lambda_1(s)$ and $\Lambda_2(2-s)=w_2\Lambda_2(s)$ then $(\Lambda_1\Lambda_2)(2-s)=(w_1w_2)(\Lambda_1\Lambda_2)(s)$; combined with additivity of orders (Theorem 21) this gives $(-1)^{\operatorname{ord}(\Lambda_1\Lambda_2)}=w_1w_2$, the analytic shadow of BSD data under isogeny and Weil restriction.
+
+**Conjecture 3 — The Hasse interval is exactly attained.** The angle map $a\mapsto\arccos(a/2\sqrt p)$ is injective and order-reversing on $[-2\sqrt p,2\sqrt p]$, and $\#\{a:a^2\le4p\}$ grows like $4\sqrt p$; the measure-theoretic limit (Sato–Tate equidistribution for $\frac2\pi\sin^2\theta\,d\theta$) is the long-range target.
+
+**Conjecture 4 — Positivity and integrality of the point counts.** Formalize that $\operatorname{traceSeq}_{a,p}(n)\in\mathbb{Z}$ and $N_n=p^n+1-s_n>0$ for all $n$ when $(a,p)$ comes from a genuine curve, completing the bridge between the recurrence and the geometric point counts.
+
+---
+
+## Appendix: Index of formalized results
+
+| # | Name | Statement |
+|---|------|-----------|
+| 1 | `localFactor` | $L_p(T)=1-a_pT+pT^2$ |
+| 2 | `frobeniusPoly` | $X^2-a_pX+p$ |
+| 3 | `frobenius_normSq_eq_iff` | $\|z\|^2=p \iff a^2\le4p$ |
+| 4 | `frobenius_root_prod` | $z w=p$ |
+| 5 | `frobenius_root_sum` | $z+w=a$ |
+| 6 | `hasse_bound` | $a^2\le4p\Rightarrow|a|\le2\sqrt p$ |
+| 7 | `localFactor_functional_equation` | $L_p(T)=pT^2L_p(1/(pT))$ |
+| 8 | `pointCount` (local) | $p^n+1-(\alpha^n+\beta^n)$ |
+| 9 | `power_sum_recurrence` | $s_{n+2}=a s_{n+1}-p s_n$ |
+| 10 | `traceSeq` | $s_0=2,s_1=a$, recurrence |
+| 11 | `traceSeq_eq_power_sum` | $\operatorname{traceSeq}=\alpha^n+\beta^n$ |
+| 12 | `pointCount` (trace) | $p^n+1-\operatorname{traceSeq}$ |
+| 13 | `exists_satoTate_angle` | $a=2\sqrt p\cos\theta,\ \theta\in[0,\pi]$ |
+| 14 | `traceSeq_norm_le` | $\|\alpha^n+\beta^n\|\le2(\sqrt p)^n$ |
+| 15 | parity theorem | $(-1)^{\operatorname{ord}}=w$ |
+| 16 | sign dichotomy | $w=-1\Rightarrow\Lambda(1)=0$ |
+| 17 | `analyticRank` | $\operatorname{ord}_{s_0}L$ |
+| 18 | `analyticRank_eq_zero_iff` | rank $0\iff L(s_0)\ne0$ |
+| 19 | `analyticRank_pos_iff` | rank $>0\iff L(s_0)=0$ |
+| 20 | `analyticRank_factorization` | $L=(z-s_0)^r g$, $g(s_0)\ne0$ |
+| 21 | `analyticRank_mul` | rank adds under products |
+| 22 | `mordellWeil_infinite_iff` | $\mathbb{Z}^r\times T$ infinite $\iff r>0$ |
+| 23 | `hasse_point_count_pos` | $0<p+1-a$ |
+| 24 | `bsd_central_vanishing_iff_infinite` | $L(1)=0\iff E(\mathbb{Q})$ infinite |
+| 25 | `bsd_nonvanishing_iff_finite` | $L(1)\ne0\iff E(\mathbb{Q})$ finite |

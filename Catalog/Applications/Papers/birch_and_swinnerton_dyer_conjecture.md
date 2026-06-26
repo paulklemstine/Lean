@@ -1,64 +1,46 @@
-# Computational Evidence — BSD Research Cycle
+# THEOREM TRACE (internal anti-hallucination record)
 
-This note records the small-case checks performed before formalization. The cycle
-targets the *structural* components of the Birch–Swinnerton-Dyer conjecture
-(Frobenius eigenvalues / Hasse bound, order of vanishing, and the rank bridge),
-so the evidence is algebraic rather than large-scale numerics.
+Every name below is copied verbatim from the Phase A Lean source. Prose in
+ARTICLE.md and RESEARCH_PAPER.md only states results that map to one of these.
 
-## 1. Frobenius eigenvalues and the Hasse / Riemann-Hypothesis equivalence
+## LocalFactor.lean (BSD.LocalFactor)
+- `localFactor (a p T : ℂ) := 1 - a*T + p*T^2` — local L-factor. [Article §"Euler product"; Paper Def. 1]
+- `frobeniusPoly (a p X : ℂ) := X^2 - a*X + p` — characteristic poly of Frobenius. [Paper Def. 2]
+- `frobenius_normSq_eq_iff` — root has normSq = p ⇔ a² ≤ 4p (RH over 𝔽_p). [Article §"circle"; Paper Thm 3]
+- `frobenius_root_prod` — α·β = p (Vieta). [Paper Lem 4]
+- `frobenius_root_sum` — α+β = a (Vieta). [Paper Lem 5]
+- `hasse_bound` — a² ≤ 4p ⇒ |a| ≤ 2√p. [Article; Paper Thm 6]
+- `localFactor_functional_equation` — L_p(T) = pT²·L_p(1/(pT)). [Paper Thm 7]
+- `pointCount (p α β n) := p^n + 1 - (α^n+β^n)`. [Paper Def 8]
+- `pointCount_zero`, `pointCount_one`, `pointCount_one_hasse`. [Paper §local]
 
-For the characteristic polynomial of Frobenius `X² − a X + p`, we test the claim
-`normSq(root) = p  ⇔  a² ≤ 4p`:
+## FrobeniusTrace.lean (BSD.FrobeniusTrace)
+- `power_sum_recurrence` — α^{n+2}+β^{n+2} = a(α^{n+1}+β^{n+1}) - p(α^n+β^n). [Article §"recurrence"; Paper Thm 9]
+- `traceSeq (a p) : ℕ→ℂ` with s₀=2, s₁=a, s_{n+2}=a·s_{n+1}-p·s_n. [Paper Def 10]
+- `traceSeq_zero`, `traceSeq_one`, `traceSeq_succ_succ`. [Paper §recurrence]
+- `traceSeq_eq_power_sum` — traceSeq a p n = α^n+β^n. [Article main; Paper Thm 11]
+- `pointCount (a p n) := p^n+1-traceSeq a p n`. [Paper Def 12]
+- `pointCount_zero`, `pointCount_one`. [Paper §recurrence]
+- `exists_satoTate_angle` — a²≤4p ⇒ ∃θ∈[0,π], a=2√p·cosθ. [Article §"angle"; Paper Thm 13]
+- `traceSeq_norm_le` — ‖α^n+β^n‖ ≤ 2(√p)^n. [Article §"RH bound"; Paper Thm 14]
 
-| `a` | `p` | roots                | `normSq(root)` | `a² ≤ 4p`? | central value of `normSq = p`? |
-|----:|----:|----------------------|---------------:|:----------:|:------------------------------:|
-| 2   | 2   | `1 ± i`              | `2`            | `4 ≤ 8` ✓  | `2 = 2` ✓                      |
-| 0   | 3   | `±√3 · i`            | `3`            | `0 ≤ 12` ✓ | `3 = 3` ✓                      |
-| 3   | 2   | `1, 2` (real)        | `1`, `4`       | `9 ≤ 8` ✗  | `≠ 2` ✓ (consistent)          |
-| 4   | 4   | `2` (double)         | `4`            | `16 ≤ 16`✓ | `4 = 4` ✓ (boundary)          |
-| 5   | 4   | `1, 4` (real)        | `1`, `16`      | `25 ≤ 16`✗ | `≠ 4` ✓ (consistent)          |
+## FunctionalEquation.lean (BSD.FunctionalEquation) — parity mechanism
+- Parity theorem: (-1)^{ord_{s=1} Λ} = w for Λ(2-s)=w·Λ(s). [Article §"sign"; Paper Thm 15]
+- Corollaries: sign -1 ⇒ central vanishing; even rank ⇔ sign +1. [Paper Cor 16]
+- Model L-function (s-1)^r·c with sign (-1)^r. [Paper §nonvacuity]
+(Only the stated mathematical content is used; precise Lean identifier kept generic.)
 
-Every row matches the conjectured equivalence, including the boundary case
-`a² = 4p` (the double root sits exactly on the circle of radius `√p`). This is
-formalized as `BSD.LocalFactor.frobenius_normSq_eq_iff`.
+## AnalyticRank.lean (BSD.AnalyticRank)
+- `analyticRank L s₀ := analyticOrderNatAt L s₀`. [Paper Def 17]
+- `analyticRank_eq_zero_iff` — rank 0 ⇔ L(s₀)≠0. [Article; Paper Thm 18]
+- `analyticRank_pos_iff` — rank>0 ⇔ L(s₀)=0. [Paper Thm 19]
+- `analyticRank_factorization` — L(z)=(z-s₀)^r·g(z), g(s₀)≠0. [Paper Thm 20]
+- `analyticRank_mul` — rank(fg)=rank f + rank g. [Paper Thm 21]
+- `modelL`, `modelL_analyticAt`, `modelL_analyticRank`, `modelL_central_value`. [Paper §model]
 
-## 2. Hasse point-count interval
-
-`#E(𝔽_p) = p + 1 − a_p` with `|a_p| ≤ 2√p`. Spot checks of `p + 1 − 2√p > 0`:
-
-| `p`  | `2√p`   | `p + 1 − 2√p` |
-|-----:|--------:|--------------:|
-| 2    | 2.828…  | 0.171… > 0    |
-| 5    | 4.472…  | 1.527… > 0    |
-| 97   | 19.69…  | 78.30… > 0    |
-
-The deviation `(√p − 1)² = p + 1 − 2√p` is positive for all `p ≠ 1`, confirming
-`BSD.RankBridge.hasse_point_count_pos`.
-
-## 3. Order of vanishing of the model L-function
-
-Model `L(s) = (s − 1)^r · c`, `c ≠ 0`. Symbolically the order of vanishing at
-`s = 1` is exactly `r`, and `L(1) = 0 ⇔ r ≥ 1`. Checked for `r = 0,1,2,3`:
-`L(1) = c·0^r`, which is `c ≠ 0` for `r = 0` and `0` for `r ≥ 1`. Formalized as
-`BSD.AnalyticRank.modelL_analyticRank` and `modelL_central_value`.
-
-## 4. Mordell–Weil infinitude
-
-`ℤ^r × T` (`T` finite nonempty) is infinite iff `r ≥ 1`:
-
-| `r` | `T` size | `ℤ^r × T` |
-|----:|---------:|:---------:|
-| 0   | any `≥1` | finite    |
-| 1   | any      | infinite  |
-| 2   | any      | infinite  |
-
-Matches `BSD.RankBridge.mordellWeil_infinite_iff`. Concretely `E(ℚ)` for
-`y² = x³ − x` has rank `0` and is finite (torsion `ℤ/2 × ℤ/2`), while
-`y² = x³ − 2` has rank `1` and is infinite — consistent with the table.
-
-## Counterexample hunt
-
-No counterexamples were found to any formalized statement. The only "near miss"
-is the unrestricted central-value claim `modelL r c 1 = 0 ↔ 0 < r`, which fails
-for `r = 0, c = 0`; the formalization therefore carries the honest hypothesis
-`c ≠ 0`.
+## RankBridge.lean (BSD.RankBridge)
+- `mordellWeil_infinite_iff` — ℤ^r×T infinite ⇔ r>0. [Article §"bridge"; Paper Thm 22]
+- `hasse_point_count_pos` — p>1, a²≤4p ⇒ 0 < p+1-a. [Paper Thm 23]
+- `bsd_central_vanishing_iff_infinite` — under rank equality, L(1)=0 ⇔ E(ℚ) infinite. [Article main; Paper Thm 24]
+- `bsd_nonvanishing_iff_finite` — L(1)≠0 ⇔ E(ℚ) finite. [Paper Cor 25]
+- `bridge_realized` — model realizes every rank r. [Paper §nonvacuity]
