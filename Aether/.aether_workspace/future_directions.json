@@ -43729,7 +43729,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.GroupTheory.Coxeter",
         "Mathlib.Combinatorics.Polytope",
@@ -43737,7 +43737,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "3847ce48",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43752,7 +43752,7 @@
         "Algebra"
       ],
       "id": "fd_2497",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T07:04:32.356792+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_for_A_four_m_plus_three (m : ℕ) (hm : m ≥ 3) :\n  let n := 4 * m + 3\n  let G := alternating_group n\n  -- The maximal rank of any string C‑group representation of G is ⌊(n-1)/2⌋\n  have hmax : ∃ r, (r = (n - 1) / 2) ∧ ∃ (ρ : fin r → G), is_string_C_group ρ ∧\n    (∀ σ : fin r → G, is_string_C_group σ → (∀ i, σ i = ρ i) → False) := sorry\n  -- There exists a self‑dual string C‑group of rank 2*m\n  have hexist : ∃ (ρ : fin (2*m) → G), is_string_C_group ρ ∧ self_dual ρ :=\n    construct_self_dual_string_C_group_of_rank_two_mul_m m hm\n  -- No self‑dual string C‑group of rank 2*m+1 exists\n  have hnon : ¬ ∃ (ρ : fin (2*m+1) → G), is_string_C_group ρ ∧ self_dual ρ :=\n    by\n      intro h\n      rcases h with ⟨ρ, hC, hsd⟩\n      -- derive contradiction using intersection condition and parity\n      exact contradict_self_dual_rank_plus_one ρ hC hsd hm\n  exact ⟨hexist, hnon⟩",
       "lineage_refs": [],
@@ -43766,7 +43766,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24654v1",
       "source_path": "http://arxiv.org/abs/2606.24654v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-25T06:41:04.137986+00:00",
       "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
@@ -44288,7 +44288,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "ErdosProblems550",
         "Chvatal1977",
@@ -44296,7 +44296,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "fad59fd8",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44312,7 +44312,7 @@
         "Algebra"
       ],
       "id": "fd_2509",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T07:04:36.466807+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tree_tripartite_ramsey_exact (T : SimpleGraph) (n m1 m2 m3 : ℕ) [Tree T] [Vs T = n] (h : 1 ≤ m1 ∧ m1 ≤ m2 ∧ m2 ≤ m3) (h_n : large_enough n m1 m2 m3) : RamseyNumber.eq (T, KTripartite m1 m2 m3) = 2 * (RamseyNumber.eq (T, KBipartite m1 m2) - 1) + m1",
       "lineage_refs": [],
@@ -44326,7 +44326,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23659v1",
       "source_path": "http://arxiv.org/abs/2606.23659v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-25T12:57:20.450102+00:00",
       "title": "Exact Ramsey Numbers for Trees vs Tripartite Graphs"

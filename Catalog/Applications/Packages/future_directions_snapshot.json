@@ -7175,7 +7175,7 @@
       "Mathlib.Combinatorics.Polytope",
       "Mathlib.Data.Fintype.Card"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3847ce48",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self‑dual string C‑group representations of rank $2m$ (as constructed by the vertex‑gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self‑dual string C‑group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domain_bridges": [
       "Coxeter groups ↔ abstract regular polytopes",
@@ -7191,7 +7191,7 @@
     "proof_strategy": "Formalize the vertex‑gluing construction of the paper and prove that it yields a self‑dual string C‑group of rank $2m$ for $A_{4m+3}$. Then, using the intersection condition for string C‑groups together with known bounds on the rank of any string C‑group for $A_n$ (the maximal rank $\\lfloor (n-1)/2 \\rfloor$), show that any self‑dual representation would force an extra involutive symmetry that contradicts the parity constraints on generators of $A_{4m+3}$. The contradiction establishes the non‑existence of rank $2m+1$ self‑dual string C‑groups. The proof proceeds by: (1) defining string C‑groups and self‑duality in Lean; (2) encoding the universal string Coxeter group $W_r$ and the intersection condition; (3) constructing the specific generating involutions for the glued representation; (4) verifying the intersection condition and self‑duality; (5) proving a rank‑upper‑bound lemma for self‑dual representations of $A_{4m+3}$ via counting arguments on the fixed‑point structure of the invo",
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
   },
@@ -7506,7 +7506,7 @@
       "Chvatal1977",
       "EFRS1989"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fad59fd8",
     "description": "For any tree T on n vertices and any complete tripartite graph K_{m_1,m_2,m_3} with 1 ≤ m_1 ≤ m_2 ≤ m_3, the Ramsey number R(T, K_{m_1,m_2,m_3}) equals 2(R(T, K_{m_1,m_2}) - 1) + m_1 for all sufficiently large n. This conjecture specifically tests whether the general bound in the paper becomes an exact equality for the k=3 case.",
     "domain_bridges": [
       "Ramsey Theory",
@@ -7523,7 +7523,7 @@
     "proof_strategy": "Construct explicit red-blue colorings of K_N for N = 2(R(T, K_{m_1,m_2}) - 1) + m_1 - 1 to show they avoid both a red T and blue K_{m_1,m_2,m_3}, thereby proving the lower bound matches the upper bound from the main theorem.",
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T12:57:20.450102+00:00",
     "title": "Exact Ramsey Numbers for Trees vs Tripartite Graphs"
   },
