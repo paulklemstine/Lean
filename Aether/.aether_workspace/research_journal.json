@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "42f0bfda",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Densities of fixed partial Latin patterns in random Latin squares\n\nDerived from this cycle's findings (`LatinPatternProbability.lean`), where we proved:\n\n* `prob_single_cell` / `",
-      "quality_score": 0.5537937826789618,
-      "sorry_count": 0,
-      "theorem_count": 96,
-      "timestamp": "2026-06-21T07:14:09",
-      "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
-    },
-    {
       "cycle_id": "51640204",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — LWE Hardness, Dual-Regev, Ring-LWE\n\nDerived from the verified results in `DualRegev.lean`, `RingLWE.lean`, and\n`RegevReduction.lean` (all main theorems carry 0 sorries and depend",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-26T22:47:47",
       "title": "Optimality of the Density Threshold for Linear r‑Uniform Hypergraphs"
+    },
+    {
+      "cycle_id": "5544e8f5",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Research Cycle Brief\n\nThese directions are grounded in verified catalog files. The selected (primary)\ndirection is **D1**; D2–D4 are alternatives in adjacent under-explored corne",
+      "quality_score": 0.5449999999999999,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-26T22:52:00",
+      "title": "Lambda Calculus: Church-Rosser and Normalization"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-06-26T22:47:47",
+  "last_updated": "2026-06-26T22:52:00",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "5077231f",
-        "quality": 0.6837200000000001,
-        "theorems": 20,
-        "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
-      },
-      {
         "cycle_id": "ab90b095",
         "quality": 0.62096,
         "theorems": 9,
@@ -3141,6 +3135,12 @@
         "quality": 0.43033200000000005,
         "theorems": 11,
         "title": "EML Kolmogorov-Arnold Representation"
+      },
+      {
+        "cycle_id": "5544e8f5",
+        "quality": 0.5449999999999999,
+        "theorems": 0,
+        "title": "Lambda Calculus: Church-Rosser and Normalization"
       }
     ],
     "Bridges": [

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5544e8f5",
     "filename": "lambda_calculus_church_rosser_and_normalization.json",
     "pkg_num": 115,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5449999999999999,
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
   {
@@ -3353,8 +3353,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "lambda_calculus_church_rosser_and_normalization",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5449999999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Lambda Calculus: Church-Rosser and Normalization"
     }
