@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1ce6e294",
     "filename": "deepening_alien_number_systems_beyond_base_n.json",
     "pkg_num": 99,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.571318,
     "title": "Alien Number Systems: Mixed-Radix Positional Systems Beyond Base-N"
   },
   {
@@ -1000,6 +1000,7 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Computation",
     "exp_id": "f25c8810",
     "source_exp_ids": [
+      "f25c8810",
       "seed"
     ],
     "title": "Alien Number Systems: A Direct Uniqueness Proof for the Factorial Number System"
@@ -2888,8 +2889,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "deepening_alien_number_systems_beyond_base_n",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.571318,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Alien Number Systems: Mixed-Radix Positional Systems Beyond Base-N"
     }
