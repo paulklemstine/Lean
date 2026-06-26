@@ -572,5 +572,6 @@
   "6a7e7235": "a_4k4_order_bound_for_connectivity_preserving_hami.json",
   "15963379": "circuit_complexity_monotone_lower_bounds.json",
   "3ffd492f": "optimality_of_the_density_threshold_for_linear_run.json",
-  "5544e8f5": "lambda_calculus_church_rosser_and_normalization.json"
+  "5544e8f5": "lambda_calculus_church_rosser_and_normalization.json",
+  "913e3580": "plethystic_triviality_of_the_shifted_t_schur_basis.json"
 }
