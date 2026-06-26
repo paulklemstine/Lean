@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "151fa435",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1787,7 +1787,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excess-One Criterion for Kopp-Lagarias Ray Class Fields"
   },
   {
-    "consumed_by_exp_id": "0f17133d",
+    "consumed_by_exp_id": "",
     "description": "A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t \u2264 s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expansion parameter \u03b1_G(t) and the optimality of the associated code B(G).",
     "domains": [
       "Algebra",
@@ -1797,7 +1797,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T06:21:22.540143+00:00",
     "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
@@ -5244,11 +5244,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that the finite family \ud835\udd09\u2084 of graphs listed in the paper (the minimal obstructions for star\u20114\u2011colorability of split graphs) is *complete*: a split graph G admits a star\u20114\u2011coloring if and only if G contains no induced subgraph isomorphic to a member of \ud835\udd09\u2084. Moreover, each graph in \ud835\udd09\u2084 is minimal with respect to this property. This statement is precise, falsifiable by a counterexample split graph, and can be formalised in Lean\u00a04 using the graph library, induced subgraph predicates, and star\u2011coloring definitions.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2572",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25168v1",
+    "status": "available",
+    "timestamp": "2026-06-26T07:30:29.696237+00:00",
+    "title": "Exact Forbidden Subgraph Characterization for Star\u20114\u2011Colorable Split Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2572",
+    "id": "fd_2573",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5262,7 +5277,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2573",
+    "id": "fd_2574",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5277,7 +5292,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2574",
+    "id": "fd_2575",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5292,7 +5307,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2575",
+    "id": "fd_2576",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5307,7 +5322,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2576",
+    "id": "fd_2577",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5322,7 +5337,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2577",
+    "id": "fd_2578",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5336,7 +5351,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5350,7 +5365,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5364,7 +5379,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5379,13 +5394,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
     "status": "available",
     "timestamp": "2026-06-26T07:04:20.754036+00:00",
     "title": "Global Lifting Viability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts \u03bc(W\u2082(\u03c4)) equals 1 precisely when \u03c4 is within the interval 0 < \u03c4 \u2264 \u03b3/12 \u2248 0.052, as derived from the measure constraints.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2583",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.25305v1",
+    "status": "available",
+    "timestamp": "2026-06-26T07:31:25.425369+00:00",
+    "title": "\u03bc(W_2(\u03c4)) Conjecture"
   },
   {
     "consumed_by_exp_id": "",

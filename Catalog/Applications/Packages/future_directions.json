@@ -14238,7 +14238,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 2,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
@@ -14254,7 +14254,7 @@
         "MachineLearning"
       ],
       "id": "fd_0479",
-      "last_attempt_time": "2026-06-26T07:04:23.600073+00:00",
+      "last_attempt_time": "2026-06-23T05:49:06.134813+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -35226,7 +35226,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "0f17133d",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -35256,7 +35256,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23579v1",
       "source_path": "http://arxiv.org/abs/2606.23579v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-23T06:21:22.540143+00:00",
       "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
@@ -43729,7 +43729,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "Mathlib.GroupTheory.Coxeter",
         "Mathlib.Combinatorics.Polytope",
@@ -43752,7 +43752,7 @@
         "Algebra"
       ],
       "id": "fd_2497",
-      "last_attempt_time": "2026-06-26T07:04:32.356792+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_for_A_four_m_plus_three (m : ℕ) (hm : m ≥ 3) :\n  let n := 4 * m + 3\n  let G := alternating_group n\n  -- The maximal rank of any string C‑group representation of G is ⌊(n-1)/2⌋\n  have hmax : ∃ r, (r = (n - 1) / 2) ∧ ∃ (ρ : fin r → G), is_string_C_group ρ ∧\n    (∀ σ : fin r → G, is_string_C_group σ → (∀ i, σ i = ρ i) → False) := sorry\n  -- There exists a self‑dual string C‑group of rank 2*m\n  have hexist : ∃ (ρ : fin (2*m) → G), is_string_C_group ρ ∧ self_dual ρ :=\n    construct_self_dual_string_C_group_of_rank_two_mul_m m hm\n  -- No self‑dual string C‑group of rank 2*m+1 exists\n  have hnon : ¬ ∃ (ρ : fin (2*m+1) → G), is_string_C_group ρ ∧ self_dual ρ :=\n    by\n      intro h\n      rcases h with ⟨ρ, hC, hsd⟩\n      -- derive contradiction using intersection condition and parity\n      exact contradict_self_dual_rank_plus_one ρ hC hsd hm\n  exact ⟨hexist, hnon⟩",
       "lineage_refs": [],
@@ -44288,7 +44288,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "ErdosProblems550",
         "Chvatal1977",
@@ -44312,7 +44312,7 @@
         "Algebra"
       ],
       "id": "fd_2509",
-      "last_attempt_time": "2026-06-26T07:04:36.466807+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tree_tripartite_ramsey_exact (T : SimpleGraph) (n m1 m2 m3 : ℕ) [Tree T] [Vs T = n] (h : 1 ≤ m1 ∧ m1 ≤ m2 ∧ m2 ≤ m3) (h_n : large_enough n m1 m2 m3) : RamseyNumber.eq (T, KTripartite m1 m2 m3) = 2 * (RamseyNumber.eq (T, KBipartite m1 m2) - 1) + m1",
       "lineage_refs": [],
@@ -47172,6 +47172,52 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Mathlib.Combinatorics.SimpleGraph.StarColoring",
+        "Mathlib.Combinatorics.SimpleGraph.Chordal",
+        "Mathlib.Combinatorics.SimpleGraph.Split"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "We conjecture that the finite family 𝔉₄ of graphs listed in the paper (the minimal obstructions for star‑4‑colorability of split graphs) is *complete*: a split graph G admits a star‑4‑coloring if and only if G contains no induced subgraph isomorphic to a member of 𝔉₄. Moreover, each graph in 𝔉₄ is minimal with respect to this property. This statement is precise, falsifiable by a counterexample split graph, and can be formalised in Lean 4 using the graph library, induced subgraph predicates, and star‑coloring definitions.",
+      "domain_bridges": [
+        "computational_complexity",
+        "algorithmic_graph_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2572",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem star_four_colorable_split_iff_no_forbidden (G : SimpleGraph V) [Fintype V]\n  (hG_split : G.IsSplit) :\n  (∃ (c : V → Fin 4), G.IsStarColoring c) ↔\n  (∀ H ∈ (Finset.image (λ (e : EdgeList), SimpleGraph.of_edge_list e) forbidden_F4),\n    ¬ G.Induces H) :=\nby\n  -- proof to be filled in\n  admit",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Formalise split graphs as simple graphs whose vertex set can be partitioned into a clique C and an independent set I. Define star‑k‑coloring (proper coloring with no bicolored P₄). Encode the finite list 𝔉₄ of forbidden induced subgraphs (as explicit edge lists). Prove two directions: (→) Show that each H ∈ 𝔉₄ does not admit a star‑4‑coloring (by exhaustive case analysis on color assignments, already done in the paper). Hence any star‑4‑colorable split graph cannot contain H as an induced subgraph. (←) Use the certifying linear‑time algorithm from the paper: given a split graph G with no induced H∈𝔉₄, construct a star‑4‑coloring by iteratively coloring the clique C with at most 4 colors while respecting the constraints imposed by the independent set I. Formalise the algorithm as a constructive function in Lean and prove its correctness by induction on the number of vertices, using the structural properties of split graphs (e.g., ordering of clique vertices by neighborhoods). Finally, p",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25168v1",
+      "source_path": "http://arxiv.org/abs/2606.25168v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T07:30:29.696237+00:00",
+      "title": "Exact Forbidden Subgraph Characterization for Star‑4‑Colorable Split Graphs"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem 1",
         "Corollary 1",
         "Brown-Erdős-Sós conjecture"
@@ -47192,7 +47238,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2572",
+      "id": "fd_2573",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47240,7 +47286,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2573",
+      "id": "fd_2574",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47285,7 +47331,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2574",
+      "id": "fd_2575",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47329,7 +47375,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2575",
+      "id": "fd_2576",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47376,7 +47422,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2576",
+      "id": "fd_2577",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47421,7 +47467,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2577",
+      "id": "fd_2578",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -47466,7 +47512,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2578",
+      "id": "fd_2579",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -47507,7 +47553,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2579",
+      "id": "fd_2580",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -47552,7 +47598,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2580",
+      "id": "fd_2581",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -47591,7 +47637,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2581",
+      "id": "fd_2582",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -47610,6 +47656,48 @@
       "thread_id": "",
       "timestamp": "2026-06-26T07:04:20.754036+00:00",
       "title": "Global Lifting Viability"
+    },
+    {
+      "ambition_level": "Extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Velani 2023",
+        "Levesley et al."
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The conjecture asserts μ(W₂(τ)) equals 1 precisely when τ is within the interval 0 < τ ≤ γ/12 ≈ 0.052, as derived from the measure constraints.",
+      "domain_bridges": "Self-similar Measures",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2583",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Conjecture-specific Substitution",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Direct Verification",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25305v1",
+      "source_path": "http://arxiv.org/abs/2606.25305v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T07:31:25.425369+00:00",
+      "title": "μ(W_2(τ)) Conjecture"
     },
     {
       "ambition_level": "extension",
@@ -52491,7 +52579,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "151fa435",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -52517,7 +52605,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432605+00:00",
       "title": "Continued Fractions and Diophantine Approximation"

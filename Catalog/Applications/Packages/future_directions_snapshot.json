@@ -1316,7 +1316,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "151fa435",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domain_bridges": [],
     "domains": [
@@ -1329,7 +1329,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -2639,7 +2639,7 @@
       "cs.IT",
       "cs.CR"
     ],
-    "consumed_by_exp_id": "0f17133d",
+    "consumed_by_exp_id": "",
     "description": "A left-regular bipartite graph of degree d is an s-optimal small-set expander (i.e., every subset X of left vertices of size t ≤ s has exactly d * t distinct neighbors, maximizing expansion) if and only if its girth is at least 2s + 2. This bridges the combinatorial property of girth with the expansion parameter α_G(t) and the optimality of the associated code B(G).",
     "domain_bridges": [
       "Combinatorics",
@@ -2656,7 +2656,7 @@
     "proof_strategy": "The forward direction assumes a cycle of length 2k ≤ 2s and shows that the k left vertices on the cycle must share neighbors, reducing the neighborhood size below dk and violating optimality. The backward direction assumes a subset X of left vertices of size t ≤ s with shared neighbors and constructs a cycle of length ≤ 2s, contradicting the girth assumption.",
     "research_mode": "team",
     "source_exp_id": "2606.23579v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T06:21:22.540143+00:00",
     "title": "Girth-Expansion Equivalence for Optimal Small-Set Expanders"
   },
@@ -9140,6 +9140,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Mathlib.Combinatorics.SimpleGraph.StarColoring",
+      "Mathlib.Combinatorics.SimpleGraph.Chordal",
+      "Mathlib.Combinatorics.SimpleGraph.Split"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the finite family 𝔉₄ of graphs listed in the paper (the minimal obstructions for star‑4‑colorability of split graphs) is *complete*: a split graph G admits a star‑4‑coloring if and only if G contains no induced subgraph isomorphic to a member of 𝔉₄. Moreover, each graph in 𝔉₄ is minimal with respect to this property. This statement is precise, falsifiable by a counterexample split graph, and can be formalised in Lean 4 using the graph library, induced subgraph predicates, and star‑coloring definitions.",
+    "domain_bridges": [
+      "computational_complexity",
+      "algorithmic_graph_theory"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2572",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalise split graphs as simple graphs whose vertex set can be partitioned into a clique C and an independent set I. Define star‑k‑coloring (proper coloring with no bicolored P₄). Encode the finite list 𝔉₄ of forbidden induced subgraphs (as explicit edge lists). Prove two directions: (→) Show that each H ∈ 𝔉₄ does not admit a star‑4‑coloring (by exhaustive case analysis on color assignments, already done in the paper). Hence any star‑4‑colorable split graph cannot contain H as an induced subgraph. (←) Use the certifying linear‑time algorithm from the paper: given a split graph G with no induced H∈𝔉₄, construct a star‑4‑coloring by iteratively coloring the clique C with at most 4 colors while respecting the constraints imposed by the independent set I. Formalise the algorithm as a constructive function in Lean and prove its correctness by induction on the number of vertices, using the structural properties of split graphs (e.g., ordering of clique vertices by neighborhoods). Finally, p",
+    "research_mode": "team",
+    "source_exp_id": "2606.25168v1",
+    "status": "available",
+    "timestamp": "2026-06-26T07:30:29.696237+00:00",
+    "title": "Exact Forbidden Subgraph Characterization for Star‑4‑Colorable Split Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -9154,7 +9181,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2572",
+    "id": "fd_2573",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9183,7 +9210,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2573",
+    "id": "fd_2574",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9209,7 +9236,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2574",
+    "id": "fd_2575",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9234,7 +9261,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2575",
+    "id": "fd_2576",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9262,7 +9289,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2576",
+    "id": "fd_2577",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9288,7 +9315,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2577",
+    "id": "fd_2578",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9314,7 +9341,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9336,7 +9363,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9362,7 +9389,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9382,7 +9409,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9391,6 +9418,29 @@
     "status": "available",
     "timestamp": "2026-06-26T07:04:20.754036+00:00",
     "title": "Global Lifting Viability"
+  },
+  {
+    "ambition_level": "Extension",
+    "catalog_references": [
+      "Velani 2023",
+      "Levesley et al."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts μ(W₂(τ)) equals 1 precisely when τ is within the interval 0 < τ ≤ γ/12 ≈ 0.052, as derived from the measure constraints.",
+    "domain_bridges": "Self-similar Measures",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2583",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Direct Verification",
+    "research_mode": "team",
+    "source_exp_id": "2606.25305v1",
+    "status": "available",
+    "timestamp": "2026-06-26T07:31:25.425369+00:00",
+    "title": "μ(W_2(τ)) Conjecture"
   },
   {
     "ambition_level": "extension",
