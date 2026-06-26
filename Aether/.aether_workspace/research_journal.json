@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7a341625",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Game of Life Universality\n\nThis cycle formalised a self-contained theory of 2D Boolean cellular automata on\nthe infinite grid `ℤ × ℤ` (`Basic.lean`), instantiated Conway's Game o",
-      "quality_score": 0.5548463972823172,
-      "sorry_count": 0,
-      "theorem_count": 43,
-      "timestamp": "2026-06-21T03:58:10",
-      "title": "Game of Life Universality"
-    },
-    {
       "cycle_id": "ab651d5d",
       "domain": "Shared",
       "key_insight": "# Future Directions — Galois Connections Between Order Theory and Topology\n\nDerived from the Stage 3/4 findings of this research cycle (files:\n`AlexandrovContinuity.lean`, `FixedPointLattice.lean`, `Z",
@@ -2501,6 +2491,16 @@
       "theorem_count": 0,
       "timestamp": "2026-06-26T21:09:33",
       "title": "Tight asymptotic lower bound for the maximum number of strict alternating cycles in posets of fixed "
+    },
+    {
+      "cycle_id": "6452feb1",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Kolmogorov–Arnold Representation\n\nDerived from this cycle's findings (see Lab Notes in\n`Catalog/Applications/KolmogorovArnoldEML.lean` and\n`Catalog/Applications/KolmogorovArn",
+      "quality_score": 0.43033200000000005,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-26T22:11:03",
+      "title": "EML Kolmogorov-Arnold Representation"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.74264
     }
   ],
-  "last_updated": "2026-06-26T21:09:33",
+  "last_updated": "2026-06-26T22:11:03",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "be72639d",
-        "quality": 0.7645600000000001,
-        "theorems": 26,
-        "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
-      },
-      {
         "cycle_id": "5077231f",
         "quality": 0.6837200000000001,
         "theorems": 20,
@@ -3141,6 +3135,12 @@
         "quality": 0.45104400000000006,
         "theorems": 20,
         "title": "Representation Theory: Character Tables of S_n"
+      },
+      {
+        "cycle_id": "6452feb1",
+        "quality": 0.43033200000000005,
+        "theorems": 11,
+        "title": "EML Kolmogorov-Arnold Representation"
       }
     ],
     "Bridges": [

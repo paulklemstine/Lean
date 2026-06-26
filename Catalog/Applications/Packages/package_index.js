@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6452feb1",
     "filename": "eml_kolmogorov_arnold_representation.json",
     "pkg_num": 111,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.43033200000000005,
     "title": "EML Inner Functions in the Kolmogorov-Arnold Representation of the Product"
   },
   {
@@ -3237,8 +3237,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "eml_kolmogorov_arnold_representation",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.43033200000000005,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "EML Inner Functions in the Kolmogorov-Arnold Representation of the Product"
     }

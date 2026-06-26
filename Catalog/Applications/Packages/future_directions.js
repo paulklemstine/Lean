@@ -491,7 +491,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Theory: Self-Adjoint Operators"
   },
   {
-    "consumed_by_exp_id": "15963379",
+    "consumed_by_exp_id": "",
     "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
     "domains": [
       "Computation",
@@ -501,7 +501,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432748+00:00",
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
@@ -1032,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
   {
-    "consumed_by_exp_id": "5544e8f5",
+    "consumed_by_exp_id": "",
     "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the B\u00f6hm tree for undecidability of equivalence.",
     "domains": [
       "Logic",
@@ -1042,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432769+00:00",
     "title": "Lambda Calculus: Church-Rosser and Normalization"
   },
@@ -2077,7 +2077,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Functional Equation for F_1-Zeta Functions via Cuntz-Krieger Algebras"
   },
   {
-    "consumed_by_exp_id": "913e3580",
+    "consumed_by_exp_id": "",
     "description": "Let \u0393_R = R[p_1,p_3,p_5,...] and define the R-algebra endomorphism \u03c6_t of \u0393_R by \u03c6_t(p_n) = (1 - t^n) p_n for every positive odd n. If Q_\u03bb denotes the Schur Q-function indexed by a strict partition \u03bb in the same vertex-operator normalization as the t=0 odd GJZ construction, and S^t_\u03bb denotes the shifted t-Schur function obtained from the Fourier modes of the odd GJZ operator, then for every strict partition \u03bb one has S^t_\u03bb = \u03c6_t(Q_\u03bb). Equivalently, the shifted t-Schur family is obtained from the Schur Q basis by the odd plethystic substitution p_n \u21a6 (1 - t^n)p_n. This is falsifiable by coefficient comparison in the finite odd power-sum polynomial ring of degree at most |\u03bb|.",
     "domains": [
       "Algebra"
@@ -2086,7 +2086,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22058v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T14:06:13.272860+00:00",
     "title": "Plethystic Triviality of the Shifted t-Schur Basis"
   },
@@ -3044,7 +3044,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-acyclicity of transversal spaces in high dimensions"
   },
   {
-    "consumed_by_exp_id": "7d5c7f90",
+    "consumed_by_exp_id": "",
     "description": "For any Cayley digraph G of an abelian group of even order, the pair (G, K\u2082) is unstable.",
     "domains": [
       "Algebra"
@@ -3053,7 +3053,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22947v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T06:20:52.702234+00:00",
     "title": "Stability of Cayley Digraphs of Even Order with K2"
   },
@@ -3465,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Linear Codes Achieve List-Decoding Capacity with Concentration"
   },
   {
-    "consumed_by_exp_id": "4e028e76",
+    "consumed_by_exp_id": "",
     "description": "Conjectures that the prime zeta function for imaginary quadratic fields with class number one has a natural boundary extending from the origin along the imaginary axis, preventing regularization of the product of all primes via standard zeta-regularization techniques.",
     "domains": [
       "Pythagorean",
@@ -3475,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T13:54:36.235382+00:00",
     "title": "Existence of a Natural Boundary for the Prime Zeta Function in Imaginary Quadratic Fields"
   },
@@ -4897,7 +4897,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact separator-suffix convolution for deletion-ball intersections"
   },
   {
-    "consumed_by_exp_id": "3ffd492f",
+    "consumed_by_exp_id": "",
     "description": "For every integers r \u2265 3 and k \u2265 3 there exist arbitrarily large linear r\u2011uniform hypergraphs on n vertices with edge count just below the bound given in Theorem\u00a01 that contain no ((r\u20112)k+3,\u202fk)\u2011configuration. In other words, the density threshold in Theorem\u00a01 is sharp up to lower\u2011order terms.",
     "domains": [
       "Bridges"
@@ -4906,7 +4906,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T18:51:30.410771+00:00",
     "title": "Optimality of the Density Threshold for Linear r\u2011Uniform Hypergraphs"
   },
@@ -6229,7 +6229,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "f2c77f29",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -6239,7 +6239,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -6357,6 +6357,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Kolmogorov\u2013Arnold Representation\n\nDerived from this cycle's findings (see Lab Notes in\n`Catalog/Applications/KolmogorovArnoldEML.lean` and\n`Catalog/Applications/KolmogorovArnoldEMLProduct.lean`).\n\nThis cycle established: (i) the product `x\u00b7y` has a rank-one exp/log EML\nsuperposition valid only on the open positive quadrant; (ii) it has a two-term\npolynomial EML superposition valid globally; (iii) the `n`-ary product collapses\nto *one* outer `exp` and *one* shared inner `log` for every `n`; (iv) the\nexp/log-depth `elDepth` is the invariant separating \"interior-only\" from\n\"global\". The following conjectures push on exactly these boundaries.\n\n## C1. The minimal-`elDepth` global representation of `x\u00b7y` has `elDepth = 0`.\n**Statement (falsifiable).** Among all EML Kolmogorov\u2013Arnold superpositions of\n`x\u00b7y` that are valid on *all* of `\u211d\u00b2`, the minimum achievable exp/log-depth is\n`0`; i.e. no globally-valid representation strictly needs `exp` or `log`, and the\npolynomial form is depth-optimal.\n**The key insight is** that any bare `log`/`exp` in an inner function imports a\ndomain restriction or unbounded growth that breaks at the boundary, so global\nvalidity *forces* the transcendental depth down to `0`.\n**Why now?** We already have both endpoints formalised (`mul_eq_polarization` at\ndepth `0`, `expLog_fails_at_boundary` showing depth `1` fails globally); the only\nmissing piece is a lower-bound argument over the finite `elDepth = 0` fragment.\n\n## C2. Separable \u21d4 rank-one EML representable.\n**Statement (falsifiable).** A continuous `f : (0,\u221e)\u00b2 \u2192 \u211d` admits a rank-one EML\nsuperposition `\u03a6(\u03c8(x)+\u03c8(y))` (one outer, one shared inner) **iff** `f` is\nmultiplicatively separable up to a monotone reparametrisation, i.e.\n`f(x,y) = \u03a6(g(x)+g(y))` for some continuous `g`.\n**The key insight is** that `log` linearises exactly the multiplicatively\nseparable interactions, so rank-one EML expressivity coincides with additive\nseparability after an inner change of coordinates.\n**Why now?** `prod_eq_exp_sum_log` proves the \"product \u21d2 rank one\" direction for\nall `n`; the converse is a clean functional-equation problem (Pexider/Abel type)\nalready within Mathlib's analytic reach.\n\n## C3. `x\u00b2` needs exp/log-depth \u2265 1 for a *single-term* EML superposition.\n**Statement (falsifiable).** The target `f(x,y) = x\u00b2` (degenerate in `y`) has a\none-outer-term EML representation `\u03a6(\u03c8(x)+\u03c8(y))` only if `\u03c8` or `\u03a6` has\n`elDepth \u2265 1`; no purely polynomial single inner+outer pair reproduces it on a\nneighbourhood.\n**The key insight is** that a single quadratic outer applied to `\u03c8(x)+\u03c8(y)`\nunavoidably couples `x` and `y` unless one of them is annihilated, which a\npolynomial inner cannot do without constant collapse.\n**Why now?** Our polarization machinery (`outerQuadPos/Neg`, `innerId/Neg`)\ngives the exact toolkit to enumerate the depth-`0` single-term candidates and\nrefute them by `ring`/`polyrith`.\n\n## C4. A uniform `n`-independent outer-term count characterises a \"tame\" class.\n**Statement (falsifiable).** The class of continuous `f : (0,\u221e)\u207f \u2192 \u211d` whose EML\nKolmogorov\u2013Arnold representation needs an outer-term count *bounded independent of\n`n`* is exactly the finite sums of separable terms\n`\u03a3_k \u220f_i g_{k,i}(x_i)` (EML \"low tropical rank\").\n**The key insight is** that each separable summand is rank-one via `exp/\u2211/log`\n(by `prod_eq_exp_sum_log`), so a bounded outer count is equivalent to a bounded\nnumber of separable summands \u2014 an EML analogue of tensor rank.\n**Why now?** `prod_eq_exp_sum_log` supplies the rank-one building block; the\ncatalog's tropical bridges (`Catalog/Bridges/EMLTropicalBridge.lean`) suggest a\nready-made rank formalism to make \"EML rank\" precise.\n\n## C5. The boundary obstruction is removable by an EML `softplus` regulariser.\n**Statement (falsifiable).** Replacing the inner `log` by the EML term\n`log(exp(t) + \u03b5)` (a `softplus`-type smoothing, `\u03b5 > 0`) yields a *globally\ncontinuous* EML superposition `exp(softplus_\u03b5(x)+softplus_\u03b5(y))` whose sup-norm\nerror from `x\u00b7y` on `[0,1]\u00b2` is `O(\u03b5)` and vanishes as `\u03b5 \u2192 0`.\n**The key insight is** that the only failure of the rank-one form is the\nsingularity of `log` at `0`, and EML is closed under the smooth `softplus`\ndesingularisation, trading exactness for global continuity controllably.\n**Why now?** `expLog_fails_at_boundary` pinpoints the singular point, and the\ncatalog already studies `softplus` rates\n(`Catalog/MachineLearning/EML/SoftplusRate.lean`), giving the quantitative bound\ninfrastructure to prove the `O(\u03b5)` claim.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2635",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6452feb1",
+    "status": "available",
+    "timestamp": "2026-06-26T22:10:38.595541+00:00",
+    "title": "Derived from this cycle's findings (see Lab Notes in"
   },
   {
     "consumed_by_exp_id": "",
