@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "518f172b",
     "filename": "natural_proofs_barrier_formalization.json",
     "pkg_num": 103,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.56304,
     "title": "The Natural Proofs Barrier as a Self-Dual Counting Law"
   },
   {
@@ -3005,8 +3005,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "natural_proofs_barrier_formalization",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.56304,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Natural Proofs Barrier as a Self-Dual Counting Law"
     }

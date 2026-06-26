@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "808095a3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions\n\nThese directions build on the deterministic min-cut curvature proxy formalized in\n`Catalog/Speculative/TensorNetworkCurvatureThreshold.lean`. Each is a self-contained\nresearch pro",
-      "quality_score": 0.453335,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-20T20:27:01",
-      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-    },
-    {
       "cycle_id": "0d8fceb6",
       "domain": "Applications",
       "key_insight": "# Future Directions — Winning Probability in the Generalized q-Game\n\nThis cycle formalized the conjectured recurrence for `P(n,q)` (probability the Random player wins\nthe q-game), proved its base data",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-26T17:21:49",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+    },
+    {
+      "cycle_id": "518f172b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Natural Proofs Barrier (Razborov–Rudich)\n\nDerived from this cycle's findings in\n`Cryptography/NaturalProofs/{Core,Counting,Examples}.lean`.\n\nThis cycle formalized the combinatori",
+      "quality_score": 0.56304,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-26T17:26:53",
+      "title": "Natural Proofs Barrier: Formalization"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.70446
     }
   ],
-  "last_updated": "2026-06-26T17:21:49",
+  "last_updated": "2026-06-26T17:26:53",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "dfb56ea4",
-        "quality": 0.52355,
-        "theorems": 8,
-        "title": "Navier-Stokes Existence and Smoothness"
-      },
-      {
         "cycle_id": "01ec1037",
         "quality": 0.55696,
         "theorems": 13,
@@ -3637,6 +3631,12 @@
         "quality": 0.70446,
         "theorems": 14,
         "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+      },
+      {
+        "cycle_id": "518f172b",
+        "quality": 0.56304,
+        "theorems": 16,
+        "title": "Natural Proofs Barrier: Formalization"
       }
     ],
     "NumberTheory": [
