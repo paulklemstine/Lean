@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "0c649dc0",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Anti-Gravity Mathematics in Cryptographic Dependency Graphs\n\nDerived from this cycle's findings (see the Lab Notes in\n`AntiGravityWeight.lean` and `AntiGravityDensity.lean`). Thi",
-      "quality_score": 0.5379381188118812,
-      "sorry_count": 0,
-      "theorem_count": 103,
-      "timestamp": "2026-06-20T05:13:48",
-      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-    },
-    {
       "cycle_id": "38689f4d",
       "domain": "Algebra",
       "key_insight": "# Future Directions\n\nBuilding on the formalized information bilattice of Belnap `FOUR` and the theorem\nthat default (dream-like) reasoning is non-topological, we propose the following\nresearch directi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 15,
       "timestamp": "2026-06-26T08:26:45",
       "title": "Tightness of the unit-shift bound for Euler's totient function"
+    },
+    {
+      "cycle_id": "ad454ca1",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Rademacher Complexity of Neural Networks\n\nDerived from this cycle's findings in `Basic.lean` and `NeuralNet.lean`. Each\nconjecture is bold and falsifiable.\n\n## C1. Talagrand cont",
+      "quality_score": 0.6776,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-26T09:32:11",
+      "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7885600000000001
     }
   ],
-  "last_updated": "2026-06-26T08:26:45",
+  "last_updated": "2026-06-26T09:32:11",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "c9ad0581",
-        "quality": 0.829866,
-        "theorems": 14,
-        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-      },
-      {
         "cycle_id": "4a5dda39",
         "quality": 0.6604548751733703,
         "theorems": 393,
@@ -3575,6 +3569,12 @@
         "quality": 0.6771,
         "theorems": 15,
         "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+      },
+      {
+        "cycle_id": "ad454ca1",
+        "quality": 0.6776,
+        "theorems": 15,
+        "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
       }
     ],
     "Novelty": [

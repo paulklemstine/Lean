@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ad454ca1",
     "filename": "ml_generalization_bounds_rademacher_complexity_of_.json",
     "pkg_num": 84,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6776,
     "title": "Rademacher Complexity of Neural Networks: Exact Depth Scaling and Weight Normalization"
   },
   {
@@ -2445,8 +2445,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "ml_generalization_bounds_rademacher_complexity_of_",
       "primary_domain": "MachineLearning",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6776,
+      "quality": "partial",
       "shape": "sphere_rings",
       "title": "Rademacher Complexity of Neural Networks: Exact Depth Scaling and Weight Normalization"
     }

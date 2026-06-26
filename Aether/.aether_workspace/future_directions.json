@@ -16382,11 +16382,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "18edb6fb",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16398,7 +16398,7 @@
         "Algebra"
       ],
       "id": "fd_0542",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T09:39:00.026495+00:00",
       "last_reviewed_at": "2026-06-09T14:59:44.907609+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16412,7 +16412,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.126580+00:00",
       "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
@@ -44296,7 +44296,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "fad59fd8",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -44326,7 +44326,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23659v1",
       "source_path": "http://arxiv.org/abs/2606.23659v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T12:57:20.450102+00:00",
       "title": "Exact Ramsey Numbers for Trees vs Tripartite Graphs"
@@ -47350,6 +47350,51 @@
       "title": "Converse invariant orientations of trees of diameter four are characterized by vanishing of certain coefficients in the digraph polynomial"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:2401.XXXXX (Asymmetric induced saturation)",
+        "Bonamy et al. (2023) on infinite H-induced-saturated graphs"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every finite simple graph H that is not complete, there exists a finite simple graph G with at least one edge such that G contains no induced subgraph isomorphic to H, but deleting any edge of G creates an induced copy of H. This is the central conjecture of the paper, verified for all graphs on ≤6 vertices and proven for several infinite families including complete bipartite graphs with unequal parts, triangle-free graphs with one cycle, and line graphs of trees.",
+      "domain_bridges": [
+        "Extremal Combinatorics",
+        "Induced Saturation",
+        "Ramsey Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2576",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem deletion_saturated_exists_for_noncomplete {V : Type*} [Fintype V] (H : SimpleGraph V) (hH : ¬CompleteGraph V ⊆ H) : ∃ (W : Type*) [Fintype W] (G : SimpleGraph W), G.Nonempty ∧ HDeletionSaturated H G := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "The paper establishes the conjecture for multiple families using explicit constructions and structural arguments. A general proof might combine: (1) Reduction to prime graphs under some decomposition, (2) Probabilistic method for dense graphs, (3) Explicit constructions for sparse graphs leveraging the asymmetry (only edge deletion matters), (4) Induction on graph parameters using the verified base cases up to 6 vertices.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24763v1",
+      "source_path": "http://arxiv.org/abs/2606.24763v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T09:35:24.155699+00:00",
+      "title": "Existence of H-deletion-saturated graphs for all non-complete H"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -47375,7 +47420,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2576",
+      "id": "fd_2577",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47423,7 +47468,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2577",
+      "id": "fd_2578",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47468,7 +47513,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2578",
+      "id": "fd_2579",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47512,7 +47557,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2579",
+      "id": "fd_2580",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47559,7 +47604,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2580",
+      "id": "fd_2581",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47604,7 +47649,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2581",
+      "id": "fd_2582",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -47649,7 +47694,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2582",
+      "id": "fd_2583",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -47690,7 +47735,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2583",
+      "id": "fd_2584",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -47735,7 +47780,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2584",
+      "id": "fd_2585",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -47774,7 +47819,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2585",
+      "id": "fd_2586",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -47816,7 +47861,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2586",
+      "id": "fd_2587",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -47860,7 +47905,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2587",
+      "id": "fd_2588",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -47906,7 +47951,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2588",
+      "id": "fd_2589",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -47951,7 +47996,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2589",
+      "id": "fd_2590",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -47976,39 +48021,46 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "Ramsey's theorem for multiple colors",
+        "Chudnovsky-Scott-Seymour excluding pairs theorem",
+        "Erdős-Hajnal conjecture for induced subgraphs"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Rademacher Complexity of Neural Networks\n\nDerived from this cycle's findings in `Basic.lean` and `NeuralNet.lean`. Each\nconjecture is bold and falsifiable.\n\n## C1. Talagrand contraction: 1-Lipschitz activations do not increase complexity\n\n**Conjecture.** If `φ : ℝ → ℝ` is `1`-Lipschitz with `φ 0 = 0`, then for the class\nobtained by applying `φ` pointwise to every hypothesis,\n`empRad n (A.image (φ ∘ ·)) ≤ empRad n A`.\n\nThe key insight is that the per-pattern correlation is a Lipschitz functional of\nthe value vector, so a contraction map cannot enlarge the in-class supremum — this\nis the discrete shadow of Talagrand's comparison lemma. **Why now?** Our exact\n`empRad_smul` already handles *linear* layers; contraction is the missing piece\nthat upgrades the depth law from linear nets to genuine ReLU/`tanh` networks, and\nthe `Finset.sup'` machinery used here is exactly what a pairing/peeling argument\nneeds.\n\n## C2. From the geometric `c^L` law to the sub-exponential `O(C·√L)` law\n\n**Conjecture.** The naive product bound `c^L` is not tight; under a per-layer\n*Frobenius* (not operator) budget the depth dependence is `O(C · √L)` rather than\n`O(C^L)`.\n\nThe key insight is that the layer-peeling argument replaces a product of operator\nnorms by a *sum* of squared norms via a Cauchy–Schwarz/Jensen step, turning a\ngeometric blow-up into a `√L` growth. **Why now?** We have proved the exact\ngeometric law `empRad_deepNet = c^L · R`, which pins down the precise gap that the\n√L refinement must close, and isolates Talagrand contraction (C1) as the only\nextra ingredient.\n\n## C3. Strict monotonicity and a separation theorem for weight normalization\n\n**Conjecture.** If the norm ball `normBall n A nrm C₁` is a *proper* subset of\n`normBall n A nrm C₂` and the extra hypotheses correlate with some sign pattern,\nthen `empRad` is *strictly* smaller: `empRad (·C₁) < empRad (·C₂)`.\n\nThe key insight is that a hypothesis lying strictly outside the smaller ball\nachieves a strictly larger per-pattern supremum on at least one `σ`, and that gap\nsurvives the average. **Why now?** We proved the non-strict `empRad_weightNorm_mono`;\nstrictness is what justifies the empirical claim that normalization *actively*\nimproves, not merely *preserves*, generalization.\n\n## C4. PAC-Bayes ⇄ Rademacher: a two-sided bridge\n\n**Conjecture.** The Rademacher generalization functional `genGap` and the\nMcAllester PAC-Bayes bound in `PACBayes/Bounds.lean` are mutually bounding up to\nuniversal constants: each controls the other within a factor depending only on the\nconfidence `δ` and sample size `n`.\n\nThe key insight is that both bounds are monotone variational functionals of a\nsingle \"effective complexity\" (KL divergence on one side, average supremum on the\nother), and a change-of-measure step converts between them. **Why now?** Both\nfunctionals already exist and are proved monotone in this catalog\n(`genGap_mono_rad`, `mcAllester_mono_kl`); the bridge would unify the two\ngeneralization theories the mission asked us to formalize.\n\n## C5. Sample-size law: `empRad → 0` as `n → ∞` for bounded classes\n\n**Conjecture.** For a uniformly bounded class (`|a_i| ≤ B` for all `a ∈ A`,\n`|A| = m`), `empRad n A ≤ B·√(2 log m)/√n`, hence `empRad n A → 0` as `n → ∞`.\n\nThe key insight is Massart's finite-class lemma: the average maximum of `m`\nsub-Gaussian correlations is `O(√(log m))`, and the `1/n` normalization supplies\nthe `1/√n` decay. **Why now?** Our definition already isolates the `(1/n)` factor\nand the average-of-suprema structure; proving the sub-Gaussian maximal inequality\nover `Finset.sup'` would complete the requested `O(C·√L/√n)` statement end-to-end.\n",
-      "domain_bridges": [],
+      "description": "For all c ∈ ℕ and nonnull graphs H₁, ..., Hₜ with each |V(Hᵢ)| ≤ k, the minimum n in the main theorem satisfies n ≤ c^(c²·t·k). This would generalize the known Ramsey bound c^(c(t-1)) and align with the exponential dependence seen in related results.",
+      "domain_bridges": [
+        "Extremal graph theory",
+        "Structural graph theory",
+        "Computational Ramsey theory"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "MachineLearning"
+        "Algebra"
       ],
-      "id": "fd_2590",
+      "id": "fd_2591",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the proof techniques from the Chudnovsky-Scott-Seymour paper, using induction on the number of colors and maximum graph size, combined with careful analysis of how vertex partitions interact with the complete join structure under color constraints.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "ad454ca1",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/ad454ca1",
+      "source_exp_id": "2606.24695v1",
+      "source_path": "http://arxiv.org/abs/2606.24695v1",
       "status": "available",
-      "thread_id": "th_8d67fbbd",
-      "timestamp": "2026-06-26T09:32:03.873717+00:00",
-      "title": "Derived from this cycle's findings in `Basic.lean` and `NeuralNet.lean`. Each"
+      "thread_id": "",
+      "timestamp": "2026-06-26T09:38:57.858346+00:00",
+      "title": "Quantitative bound for multi-colored induced join-free partition"
     },
     {
       "ambition_level": "extension",

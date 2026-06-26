@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-26T08:26:48.305020+00:00",
+  "last_updated": "2026-06-26T09:32:15.080701+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -8125,6 +8125,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-26T08:26:48.063861+00:00",
       "title": "Tightness of the unit-shift bound for Euler's totient function"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.559,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 24,
+      "domain": "MachineLearning",
+      "duration_seconds": 1275.371680021286,
+      "end_time": 1782465221.013671,
+      "files_integrated": 7,
+      "job_id": "ad454ca1",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.694,
+        "cross_domain": 0.95,
+        "grade": "substantial",
+        "importance": 0.5655,
+        "novelty": 0.95,
+        "proof_depth": 0.4008,
+        "usefulness": 0.6754
+      },
+      "quality_score": 0.6776,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782463945.641991,
+      "strategy_count": 0,
+      "theorem_count": 15,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 15,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-26T09:32:14.776670+00:00",
+      "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
     }
   ]
 }

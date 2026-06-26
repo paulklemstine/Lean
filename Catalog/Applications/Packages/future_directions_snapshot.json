@@ -2,7 +2,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "da520741",
+    "consumed_by_exp_id": "",
     "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
     "domain_bridges": [],
     "domains": [
@@ -15,7 +15,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:44.957997+00:00",
     "title": "EML Universal Approximation"
   },
@@ -120,7 +120,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0e7c31a4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domain_bridges": [],
     "domains": [
@@ -132,7 +132,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9c488c94",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1575,7 +1575,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "49f14a50",
+    "consumed_by_exp_id": "",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to χ(G) ≤ 4 for all planar G. Formalize Brooks' theorem: χ(G) ≤ Δ(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domain_bridges": [],
     "domains": [
@@ -1588,7 +1588,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -3382,7 +3382,7 @@
       "math.CO",
       "math.GT"
     ],
-    "consumed_by_exp_id": "da5cb31c",
+    "consumed_by_exp_id": "",
     "description": "The authors disprove a conjecture by Cheong, Goaoc, and Holmsen by showing that for every n >= 1, there is a finite family of pairwise disjoint open convex sets in R^{3n} such that the (n-1)-st reduced homology of the space of line transversals is nonzero. They explicitly state the conjecture that this space of line transversals is in fact homotopy equivalent to the (n-1)-sphere, S^{n-1}. This proposes formalizing that stronger homotopy equivalence conjecture.",
     "domain_bridges": [
       "Geometric Transversal Theory",
@@ -3399,7 +3399,7 @@
     "proof_strategy": "Formalize the explicit construction of the disjoint convex sets and the space of line transversals, then construct an explicit homotopy equivalence between the space of line transversals and the (n-1)-dimensional sphere using the topological properties of the constructed space.",
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T07:10:06.412019+00:00",
     "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
   },
@@ -4749,7 +4749,7 @@
       "math.RT",
       "math.NT"
     ],
-    "consumed_by_exp_id": "3718ce68",
+    "consumed_by_exp_id": "",
     "description": "For a number field k with r₁ real and r₂ complex places, let b = r₁·⌊n²/4⌋ + r₂·n(n-1)/2. For any cohomological generic representation π in R_ε^{coge,∞} of GL(n,k_∞) with coefficient system F_π and quadratic character ε: π₀(k_∞×) → ℂ×, the Betti-Whittaker period of the contragredient π∨ in degree b satisfies P^b(π∨, F_{π∨}, ε) = ε(disc(k))^b · P^b(π, F_π, ε), where disc(k) is viewed as an element of π₀(k_∞×) via the determinant identification π₀(k_∞×) ≅ π₀(GL_n(k_∞)).",
     "domain_bridges": [
       "automorphic_forms",
@@ -4767,7 +4767,7 @@
     "proof_strategy": "First formalize the cohomological generic representations of GL(n) over number fields, define the bottom-degree Betti-Whittaker period functional via continuous group cohomology H^b_ct(GL_n(k_∞)⁰; F_π ⊗ π) → ℂ through the Whittaker pairing, establish the identification π₀(k_∞×) ≅ π₀(GL_n(k_∞)) via determinant, then prove the period relation by extending Chen's argument using the functional equation framework and the Casselman-Wallach module structure on the Whittaker model.",
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T22:02:58.683140+00:00",
     "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
   },
@@ -7175,7 +7175,7 @@
       "Mathlib.Combinatorics.Polytope",
       "Mathlib.Data.Fintype.Card"
     ],
-    "consumed_by_exp_id": "3847ce48",
+    "consumed_by_exp_id": "",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self‑dual string C‑group representations of rank $2m$ (as constructed by the vertex‑gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self‑dual string C‑group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domain_bridges": [
       "Coxeter groups ↔ abstract regular polytopes",
@@ -7191,7 +7191,7 @@
     "proof_strategy": "Formalize the vertex‑gluing construction of the paper and prove that it yields a self‑dual string C‑group of rank $2m$ for $A_{4m+3}$. Then, using the intersection condition for string C‑groups together with known bounds on the rank of any string C‑group for $A_n$ (the maximal rank $\\lfloor (n-1)/2 \\rfloor$), show that any self‑dual representation would force an extra involutive symmetry that contradicts the parity constraints on generators of $A_{4m+3}$. The contradiction establishes the non‑existence of rank $2m+1$ self‑dual string C‑groups. The proof proceeds by: (1) defining string C‑groups and self‑duality in Lean; (2) encoding the universal string Coxeter group $W_r$ and the intersection condition; (3) constructing the specific generating involutions for the glued representation; (4) verifying the intersection condition and self‑duality; (5) proving a rank‑upper‑bound lemma for self‑dual representations of $A_{4m+3}$ via counting arguments on the fixed‑point structure of the invo",
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
   },
@@ -7506,7 +7506,7 @@
       "Chvatal1977",
       "EFRS1989"
     ],
-    "consumed_by_exp_id": "fad59fd8",
+    "consumed_by_exp_id": "",
     "description": "For any tree T on n vertices and any complete tripartite graph K_{m_1,m_2,m_3} with 1 ≤ m_1 ≤ m_2 ≤ m_3, the Ramsey number R(T, K_{m_1,m_2,m_3}) equals 2(R(T, K_{m_1,m_2}) - 1) + m_1 for all sufficiently large n. This conjecture specifically tests whether the general bound in the paper becomes an exact equality for the k=3 case.",
     "domain_bridges": [
       "Ramsey Theory",
@@ -7523,7 +7523,7 @@
     "proof_strategy": "Construct explicit red-blue colorings of K_N for N = 2(R(T, K_{m_1,m_2}) - 1) + m_1 - 1 to show they avoid both a red T and blue K_{m_1,m_2,m_3}, thereby proving the lower bound matches the upper bound from the main theorem.",
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T12:57:20.450102+00:00",
     "title": "Exact Ramsey Numbers for Trees vs Tripartite Graphs"
   },
@@ -9245,6 +9245,32 @@
     "title": "Converse invariant orientations of trees of diameter four are characterized by vanishing of certain coefficients in the digraph polynomial"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2401.XXXXX (Asymmetric induced saturation)",
+      "Bonamy et al. (2023) on infinite H-induced-saturated graphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every finite simple graph H that is not complete, there exists a finite simple graph G with at least one edge such that G contains no induced subgraph isomorphic to H, but deleting any edge of G creates an induced copy of H. This is the central conjecture of the paper, verified for all graphs on ≤6 vertices and proven for several infinite families including complete bipartite graphs with unequal parts, triangle-free graphs with one cycle, and line graphs of trees.",
+    "domain_bridges": [
+      "Extremal Combinatorics",
+      "Induced Saturation",
+      "Ramsey Theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2576",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The paper establishes the conjecture for multiple families using explicit constructions and structural arguments. A general proof might combine: (1) Reduction to prime graphs under some decomposition, (2) Probabilistic method for dense graphs, (3) Explicit constructions for sparse graphs leveraging the asymmetry (only edge deletion matters), (4) Induction on graph parameters using the verified base cases up to 6 vertices.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24763v1",
+    "status": "available",
+    "timestamp": "2026-06-26T09:35:24.155699+00:00",
+    "title": "Existence of H-deletion-saturated graphs for all non-complete H"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem 1",
@@ -9261,7 +9287,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2576",
+    "id": "fd_2577",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9290,7 +9316,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2577",
+    "id": "fd_2578",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9316,7 +9342,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2578",
+    "id": "fd_2579",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9341,7 +9367,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2579",
+    "id": "fd_2580",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9369,7 +9395,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2580",
+    "id": "fd_2581",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9395,7 +9421,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2581",
+    "id": "fd_2582",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9421,7 +9447,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9443,7 +9469,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9469,7 +9495,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9489,7 +9515,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9512,7 +9538,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -9537,7 +9563,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
@@ -9564,7 +9590,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the vertex-gluing construction from the paper to establish recursive relationships between the ranks for different n, combined with exhaustive case analysis for small n values, and use induction to generalize to larger n. Critical lemmas would involve verifying the intersection condition preservation under gluing operations and demonstrating self-duality through explicit automorphism constructions.",
@@ -9590,7 +9616,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
@@ -9599,6 +9625,33 @@
     "status": "available",
     "timestamp": "2026-06-26T08:58:21.028422+00:00",
     "title": "Conjecture on quadratic irrational stripe densities in aperiodic Wang tiles"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Ramsey's theorem for multiple colors",
+      "Chudnovsky-Scott-Seymour excluding pairs theorem",
+      "Erdős-Hajnal conjecture for induced subgraphs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all c ∈ ℕ and nonnull graphs H₁, ..., Hₜ with each |V(Hᵢ)| ≤ k, the minimum n in the main theorem satisfies n ≤ c^(c²·t·k). This would generalize the known Ramsey bound c^(c(t-1)) and align with the exponential dependence seen in related results.",
+    "domain_bridges": [
+      "Extremal graph theory",
+      "Structural graph theory",
+      "Computational Ramsey theory"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2591",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the proof techniques from the Chudnovsky-Scott-Seymour paper, using induction on the number of colors and maximum graph size, combined with careful analysis of how vertex partitions interact with the complete join structure under color constraints.",
+    "research_mode": "team",
+    "source_exp_id": "2606.24695v1",
+    "status": "available",
+    "timestamp": "2026-06-26T09:38:57.858346+00:00",
+    "title": "Quantitative bound for multi-colored induced join-free partition"
   },
   {
     "ambition_level": "extension",
@@ -10406,7 +10459,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "18edb6fb",
     "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
     "domain_bridges": [],
     "domains": [
@@ -10419,7 +10472,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.126580+00:00",
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
