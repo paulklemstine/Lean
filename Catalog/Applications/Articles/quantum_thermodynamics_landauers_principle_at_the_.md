@@ -1,245 +1,261 @@
-# The Price of Forgetting: Why Erasing a Bit Always Costs Heat
+# The Price of Forgetting: Why Erasing a Bit Costs Heat
 
-## A thought experiment that refused to die
+## A thought that refuses to be free
 
-In 1867 the physicist James Clerk Maxwell imagined a tiny, intelligent
-being — later christened "Maxwell's demon" — sitting at a trapdoor between two
-gas chambers. By letting fast molecules through one way and slow molecules the
-other, the demon seemed to sort hot from cold for free, quietly building a
-temperature difference out of nothing. If it could do that, you could run an
-engine off the gradient forever. The Second Law of Thermodynamics, the
-bedrock principle that forbids perpetual motion, appeared to have a loophole.
+Imagine you have a single switch that can be either ON or OFF. It is your one bit
+of memory. Now suppose you want to *erase* it — to force it into the OFF position
+no matter where it started, the way you press "clear" on a calculator. It feels
+like the most trivial act in the world. You are throwing information away, not
+building anything. Surely destruction is free?
 
-It took almost a century to close that loophole, and the answer turned out to
-be about *information*, not gas. The demon has to remember which molecules it
-sorted. Its memory is finite. Sooner or later it must **erase** old records to
-make room for new ones — and that act of forgetting, Rolf Landauer argued in
-1961, is where the bill comes due. Erasing information is not free. It costs
-energy, and that energy is dumped into the environment as heat.
+It is not. In 1961 the physicist Rolf Landauer discovered something startling:
+forgetting has a thermodynamic price. Every time a computer irreversibly erases one
+bit of information, it must dump a minimum amount of heat into its surroundings. The
+amount is tiny but it is *unavoidable*, fixed by the temperature of the world around
+the machine and by one of the deepest constants in physics. The rule is now called
+**Landauer's principle**, and it draws a permanent line connecting two things that
+seem to live in different universes: the abstract logic of information, and the
+sweaty, dissipative physics of heat.
 
-How much? Landauer's answer is one of the most beautiful numbers in physics:
+This article is about that line — and about a recent effort to make it not just
+believable but *certain*, by reconstructing the whole argument from elementary
+mathematics so airtight that a computer can check every step. Along the way we will
+meet a beautiful re-telling of Landauer's bound in the language of **relative
+entropy**, a precise account of *when* the bound can actually be reached, and a clean
+explanation of why "logical irreversibility" is the same thing as "wasted heat."
 
-$$ W \;\ge\; k T \ln 2. $$
+## The magic number
 
-To erase a single bit of information at temperature $T$, you must dissipate at
-least $kT\ln 2$ joules of heat, where $k$ is Boltzmann's constant. At room
-temperature this is a minuscule $\approx 2.9 \times 10^{-21}$ joules — about
-three zeptojoules — but it is never zero. No clever engineering, no
-reversible trick, no future technology can drive the cost of forgetting below
-this floor. This article tells the story of *why* that floor exists, and how a
-single elementary inequality from calculus turns it into a theorem.
+Landauer's minimum cost to erase one bit is
 
-## Logical irreversibility: the moment information vanishes
+$$ W_{\min} = k\,T\,\ln 2. $$
 
-Start with what "erasing a bit" actually means. A bit of memory can be in one
-of two states, call them $0$ and $1$. Before erasure, suppose you have no idea
-which — the two states are equally likely. After erasure, the memory is
-**reset** to a fixed standard state, say $0$, no matter what it held before.
+Here $T$ is the absolute temperature of the environment (in kelvin), and $k$ is
+**Boltzmann's constant**, $k \approx 1.38 \times 10^{-23}$ joules per kelvin, the
+fundamental exchange rate between temperature and energy. The factor $\ln 2$ — the
+natural logarithm of two — is the fingerprint of the fact that a bit has exactly two
+possible states.
 
-Here is the crucial point. The reset operation is a function from the old
-state to the new one, and that function is *not invertible*. Both inputs $0$
-and $1$ map to the same output $0$. Looking only at the result, you cannot
-reconstruct what was there before. The information is gone. Computer
-scientists call this **logical irreversibility**: a map that cannot be undone
-because two distinct inputs collapse to one output.
+At room temperature, around $300$ K, this works out to roughly $3 \times 10^{-21}$
+joules. That is fantastically small: you would have to erase trillions of bits before
+the energy added up to the warmth of a single falling raindrop. And yet it is not
+zero, and it cannot be cheated. As our chips pack ever more switches into ever smaller
+spaces, this once-negligible tax has crept from a curiosity into a real engineering
+constraint on the energy efficiency of computation.
 
-We can quantify "how much you didn't know" with **Shannon entropy**. For a
-state that is $0$ with probability $p_0$ and $1$ with probability $p_1$, the
-entropy is
+Where does $\ln 2$ come from? From counting uncertainty. Before erasure, an unknown
+bit could be either ON or OFF with equal odds. Information theorists measure that
+uncertainty with the **Shannon entropy**. For a probability distribution $p$ over
+outcomes, the entropy is
 
-$$ H = -p_0 \ln p_0 - p_1 \ln p_1, $$
+$$ H(p) = -\sum_\omega p(\omega)\,\ln p(\omega), $$
 
-with the natural convention that a term $p\ln p$ is $0$ whenever $p = 0$
-(there is no surprise in an outcome that never happens). For the unknown bit,
-$p_0 = p_1 = \tfrac12$, and the entropy works out to exactly $\ln 2$. For the
-erased bit, the state is $0$ with certainty, so $p_0 = 1$, $p_1 = 0$, and the
-entropy is $0$. Erasure has destroyed exactly $\ln 2$ "nats" of entropy:
+with the natural convention that an impossible outcome (probability zero) contributes
+nothing. A fair coin — our unknown bit, ON or OFF each with probability $\tfrac12$ —
+has entropy
 
-$$ \Delta H = H(\text{unknown}) - H(\text{erased}) = \ln 2 - 0 = \ln 2. $$
+$$ H\!\left(\tfrac12,\tfrac12\right) = -\tfrac12\ln\tfrac12 - \tfrac12\ln\tfrac12 = \ln 2. $$
 
-That number $\ln 2$ is the same $\ln 2$ that appears in Landauer's bound — and
-that is not a coincidence. It is the bridge between the abstract world of
-information and the physical world of heat.
+After erasure the bit is *definitely* OFF; there is no uncertainty left, so its
+entropy is $0$. The **entropy lost** in erasing the bit is therefore exactly
 
-## The Second Law, restated for computers
+$$ H(\text{before}) - H(\text{after}) = \ln 2 - 0 = \ln 2. $$
 
-Why should destroying entropy in your *memory* cost energy in the *world*?
-Because the total entropy of the universe — your memory plus its environment —
-can never decrease. That is the Second Law. If the entropy stored in the bit
-goes down by $\ln 2$, the entropy of the surrounding heat bath must go up by at
-least $\ln 2$ to compensate. And entropy flowing into a bath at temperature
-$T$ is precisely heat divided by temperature. Multiply through and you get the
-energy cost: at least $kT\ln 2$ of heat must flow out.
+That lost $\ln 2$ of *logical* uncertainty is what Landauer's principle converts,
+through the temperature $T$, into the *physical* energy $kT\ln 2$ that must be paid.
 
-This is the intuitive picture. The achievement of the work behind this article
-is to make it a *theorem* — a statement proved with full rigor, with every
-assumption made explicit and every step checked — starting not from the Second
-Law as an axiom but from a more fundamental and surprising place: a single
-equality discovered in 1997 by Christopher Jarzynski.
+## Two faces of the same cost: enter relative entropy
 
-## The Jarzynski equality: order from chaos
+Shannon entropy measures the uncertainty in a *single* distribution. But there is a
+second, subtler quantity in information theory that compares *two* distributions: the
+**Kullback–Leibler divergence**, also called the **relative entropy**. For a
+distribution $p$ measured against a reference distribution $q$, it is defined as
 
-Classical thermodynamics talks about averages and idealized, infinitely slow
-("quasi-static") processes. But real erasure happens fast, in a small device,
-where random thermal fluctuations matter enormously. Sometimes, by sheer luck,
-a fluctuation helps you and the erasure costs *less* than $kT\ln 2$ on that
-particular run. Does that break Landauer's bound?
+$$ D(p\,\|\,q) = \sum_\omega p(\omega)\,\ln\frac{p(\omega)}{q(\omega)}. $$
 
-No — and Jarzynski's equality explains exactly why. Suppose you drive a small
-system from one state to another, and you measure the work $W$ you put in.
-Because of fluctuations, $W$ is random: repeat the experiment and you get a
-different value each time. Jarzynski discovered that, no matter how violently
-or quickly you drive the system, the random work obeys an exact identity:
+You can think of $D(p\,\|\,q)$ as a measure of *surprise*: how badly you would be
+fooled if you believed the world was described by $q$ but it was really described by
+$p$. It is not a distance — it is asymmetric, and swapping $p$ and $q$ generally
+changes the answer — but it has one cast-iron property, known since the work of Gibbs:
+it is **never negative**, and it is zero only when the two distributions agree.
 
-$$ \big\langle e^{-\alpha W} \big\rangle = e^{-\alpha \,\Delta F}. $$
+This is **Gibbs' inequality**:
 
-Here $\langle \cdot \rangle$ denotes the average over many runs, $\Delta F$ is
-the free-energy difference between the start and end configurations, and
-$\alpha = 1/(kT)$ is the inverse temperature. The remarkable thing is that
-this is an *equality*, valid arbitrarily far from equilibrium. It pins down a
-particular average of the work — the average of $e^{-\alpha W}$ — with no
-inequality, no slop, no idealization.
+$$ D(p\,\|\,q) \ge 0. $$
 
-In the formal development this is taken as the defining property of the
-process, the **Jarzynski condition**: for weights $p$ over the possible
-outcomes and work values $W$,
+The proof is a small marvel of economy. It rests on a single elementary fact about the
+logarithm — that its graph never rises above its tangent line at $1$:
 
-$$ \mathbb{E}_p\!\left[e^{-\alpha W}\right] = e^{-\alpha \Delta F}. $$
+$$ \ln x \le x - 1 \quad\text{for all } x > 0. $$
 
-From this exact identity one can extract, with pure algebra, an exact formula
-for the *ordinary* average work:
+Apply this pointwise (with $x = q(\omega)/p(\omega)$), multiply through by the
+probability $p(\omega)$, and sum. The right-hand side collapses to $\sum_\omega
+\big(p(\omega) - q(\omega)\big) = 1 - 1 = 0$, because both $p$ and $q$ are genuine
+probability distributions that sum to one. What remains on the left is exactly
+$D(p\,\|\,q) \ge 0$. No heavy machinery, no calculus of variations — just the tangent
+line to a logarithm.
 
-$$ \mathbb{E}_p[W] \;=\; \Delta F \;+\; \frac{1}{\alpha}\,
-\ln \mathbb{E}_p\!\left[e^{-\alpha (W - \mathbb{E}_p[W])}\right]. $$
+Now comes the punchline that ties this back to Landauer. Take $p$ to be the *erased*
+bit (all its weight on OFF) and $q$ to be the *uniform* reference (the fair coin,
+ON or OFF each with probability $\tfrac12$). Plug into the definition: the OFF term
+contributes $1 \cdot \ln(1 / \tfrac12) = \ln 2$, and the ON term contributes nothing
+because its probability is zero. So
 
-The mean work equals the free-energy difference $\Delta F$ *plus* a correction
-term built entirely out of the **fluctuations** of the work around its own
-mean. This is the finite-size Landauer identity. It is exact — but on its own
-it does not yet tell you the sign of that correction. Maybe fluctuations push
-the cost down? The whole physical content of the Second Law lives in answering
-that question.
+$$ D(\text{erased}\,\|\,\text{uniform}) = \ln 2. $$
 
-## One inequality to rule them all
+The relative entropy of the erased state against the uniform background is *exactly*
+the same $\ln 2$ we found from the Shannon entropy loss. The two accounts — one based
+on the change in a single distribution's uncertainty, the other on the divergence of
+the final state from a reference — give the identical answer. Landauer's free-energy
+cost can be written either way:
 
-Here is the heart of the matter, and it is gloriously simple. Everything turns
-on a fact you can prove in one line of calculus, true for every real number
-$x$:
+$$ k\,T\,\ln 2 = k\,T\,D(\text{erased}\,\|\,\text{uniform}). $$
 
-$$ 1 + x \;\le\; e^{x}. $$
+Why does this matter? Because the relative-entropy form is far more general. The
+quantity $kT\,D(p\,\|\,q)$ has a direct physical meaning: it is the *extra free
+energy* of a system in state $p$ relative to equilibrium $q$ — the minimum work
+needed to push the system from equilibrium into the state $p$, or equivalently the
+work you are guaranteed to need to prepare or erase that state. Gibbs' inequality then
+says this work is always nonnegative:
 
-The exponential curve always sits above its own tangent line at the origin.
-That's it. That is the entire analytic engine of the proof.
+$$ k\,T\,D(p\,\|\,q) \ge 0 \quad (k, T \ge 0). $$
 
-Apply it to the random variable $g = -\alpha(W - \mathbb{E}_p[W])$, the
-*centered* work fluctuation. Averaging the inequality $1 + g \le e^{g}$ over
-all outcomes gives
+You cannot extract free energy for nothing out of a mismatch with equilibrium. The
+second law, dressed in information-theoretic clothing.
 
-$$ 1 + \mathbb{E}_p[g] \;\le\; \mathbb{E}_p\!\left[e^{g}\right]. $$
+## The bridge: when logic forces physics
 
-This is a discrete cousin of Jensen's inequality, proved here directly from the
-tangent-line bound, with no heavy convexity machinery. Now comes the trick.
-The variable $g$ was *centered* — it measures deviation from the mean — so its
-own average is zero:
+There is a phrase Landauer used that deserves to be made precise: *logical
+irreversibility implies thermodynamic irreversibility*. What does it mean for erasure
+to be "logically irreversible"? Simply this: the erasure operation is a function that
+sends both inputs — ON and OFF — to the same output, OFF. Knowing the output tells you
+nothing about the input. The map is **not injective**; it cannot be undone. Two
+distinct pasts have been crushed into one present.
 
-$$ \mathbb{E}_p\!\left[-\alpha (W - \mathbb{E}_p[W])\right] = 0. $$
+This purely logical fact — a statement about a function on two symbols, with no physics
+in it at all — turns out to *force* a physical consequence. Any real machine that
+performs this non-invertible erasure, while obeying the laws of statistical mechanics,
+must dissipate a *strictly positive* amount of heat on average. You cannot build the
+forgetting machine that runs cold. The non-injectivity of a two-element function and
+the strict positivity of dissipated work are, mathematically, two ends of the same
+short argument.
 
-Substituting $\mathbb{E}_p[g] = 0$ into the inequality leaves
+To get there, we need the engine room of nonequilibrium thermodynamics: the
+**Jarzynski equality**. Discovered by Christopher Jarzynski in 1997, it is a
+remarkable exact identity that holds even when a process is driven rapidly and
+violently, far from gentle equilibrium. It relates the *fluctuating* work $W$ done in
+a process to the equilibrium free-energy difference $\Delta F$:
 
-$$ 1 \;\le\; \mathbb{E}_p\!\left[e^{-\alpha(W - \mathbb{E}_p[W])}\right]. $$
+$$ \big\langle e^{-\alpha W}\big\rangle = e^{-\alpha \Delta F}, $$
 
-The fluctuation factor — the very quantity inside the logarithm of the
-Jarzynski correction — is *at least one*. The logarithm of a number $\ge 1$ is
-$\ge 0$. So the correction term is nonnegative:
+where $\alpha = 1/(kT)$ is the inverse temperature and the angle brackets denote an
+average over many repetitions of the (noisy) process. The astonishing thing about
+this identity is that it is *exact* — not an approximation, not a limit — and it
+encodes the entire second law inside a single average of an exponential.
 
-$$ \frac{1}{\alpha}\,\ln \mathbb{E}_p\!\left[e^{-\alpha(W - \mathbb{E}_p[W])}\right]
-\;\ge\; 0 \qquad (\alpha > 0). $$
+From this identity one can extract an *exact* bookkeeping of the work. Writing
+$\langle W\rangle$ for the mean work, a short manipulation yields
 
-Plug this back into the exact identity, and the conclusion is immediate:
+$$ \langle W \rangle = \Delta F + \frac{1}{\alpha}\,
+\ln\big\langle e^{-\alpha (W - \langle W\rangle)}\big\rangle. $$
 
-$$ \boxed{\;\Delta F \;\le\; \mathbb{E}_p[W]\;} $$
+The first term, $\Delta F$, is the reversible free-energy cost — the unavoidable
+minimum. The second term is a **fluctuation correction**: a record of how noisy the
+process was. Landauer's identity is precisely the special case where the free-energy
+cost is the erasure cost, $\Delta F = (\ln 2)/\alpha = kT\ln 2$ divided by the energy
+scale, so that the equation becomes the exact statement of one-bit erasure with its
+fluctuation tax made explicit.
 
-The average work you must invest is *at least* the free-energy difference. The
-extra you pay is exactly the fluctuation correction, which is never negative.
-This is the Second Law, derived not assumed — a clean inequality squeezed out
-of Jarzynski's equality by the tangent-line bound. Physicists call the gap the
-"dissipated work"; it is the thermodynamic-irreversibility surcharge you pay on
-top of the reversible minimum $\Delta F$.
+Now, what is the *sign* of that correction term? Here lies the heart of the second
+law. The quantity inside the logarithm is an average of $e^{-\alpha(W-\langle
+W\rangle)}$, an exponential of a quantity whose mean is zero. And exponentials are
+convex: their graph curves upward. The simple inequality $1 + x \le e^{x}$, true for
+every real $x$, lifts to averages and gives
 
-## Landauer's number falls out
+$$ \big\langle e^{-\alpha (W - \langle W\rangle)}\big\rangle \ge 1, $$
 
-Now specialize. For erasing one bit, the relevant free-energy difference is
-exactly the Landauer cost, $\Delta F = kT\ln 2$, and the inverse temperature is
-$\alpha = 1/(kT)$. The general theorem instantly gives
+so its logarithm is $\ge 0$. The fluctuation correction can only *add* to the cost,
+never subtract. We conclude the **second law in finite-size form**:
 
-$$ k T \ln 2 \;\le\; \mathbb{E}_p[W]. $$
+$$ \Delta F \le \langle W \rangle \qquad (\alpha > 0). $$
 
-There it is: **Landauer's principle**, as a rigorous lower bound, for any
-one-bit erasure obeying the Jarzynski equality at positive temperature $T$ and
-positive Boltzmann constant $k$. No process can beat $kT\ln 2$ on average. The
-fluctuations that occasionally help you on a single run are *exactly*
-compensated, on average, by the runs where they hurt — that is what the
-inequality $\langle e^{g}\rangle \ge 1$ encodes.
+Specialising to one-bit erasure gives **Landauer's principle** as a genuine lower
+bound:
 
-And the bridge to information is made explicit. The free-energy cost is
-literally temperature times the entropy you destroyed:
+$$ k\,T\,\ln 2 \le \langle W \rangle. $$
 
-$$ k T \ln 2 \;=\; k T\,\big(H(\text{unknown}) - H(\text{erased})\big). $$
+And because erasing the bit costs at least $kT\ln 2 > 0$ whenever the temperature is
+positive, the non-invertible erasure map dissipates strictly positive work. Logical
+irreversibility has produced thermodynamic irreversibility, exactly as Landauer
+claimed.
 
-The thermodynamic price tag $kT\ln 2$ *is* $kT$ times the $\ln 2$ of Shannon
-entropy that vanished when the bit was reset. Logic and heat are two faces of
-the same coin.
+## When can the bound actually be reached?
 
-## Why forgetting must cost something — the dichotomy
+A lower bound invites a question: can you ever *achieve* it? Is $kT\ln 2$ a hard floor
+you can stand on, or an unreachable ideal you can only approach?
 
-The final result closes Maxwell's loophole completely. It says that **logical
-irreversibility forces thermodynamic irreversibility**. The erasure map sends
-both $0$ and $1$ to the same state; it is not injective; you cannot undo it.
-Precisely *because* it is not injective, any physical process that implements
-it — subject to Jarzynski's equality — must dissipate a *strictly positive*
-amount of work:
+The answer is sharp and satisfying. The fluctuation correction we just met — the gap
+between the mean work and the reversible cost — vanishes **exactly when the work has no
+fluctuations at all**. If, run after run, the erasure always costs precisely the same
+amount of work (a single, deterministic value), then the correction is zero and the
+bound is saturated: $\langle W\rangle = kT\ln 2$ on the nose. But the moment the work
+*genuinely fluctuates* — the moment two different runs can cost different amounts — the
+inequality becomes *strict*, and the average cost is forced *above* $kT\ln 2$.
 
-$$ 0 < \mathbb{E}_p[W]. $$
+The mathematics behind this dichotomy is the **strict** version of the convexity bound:
+$1 + x < e^{x}$ for every $x \neq 0$. As long as the work fluctuation is nonzero
+somewhere, this strict inequality survives the averaging, and the correction is
+strictly positive. Physically, the only way to pay exactly Landauer's price is to
+erase *reversibly* — infinitely slowly, in the idealized quasi-static limit, where
+every run is identical and there is no wasted noise. Any real, finite-speed erasure
+fluctuates, and every bit of fluctuation is a surcharge over the ideal. This is the
+precise, finite-size meaning of the "Jarzynski-like correction": it is a tax on
+haste, strictly positive away from the reversible limit and zero only at it.
 
-The logic is airtight. A reversible computation — one whose map *is* injective,
-that loses no information — can in principle be run at zero energy cost; the
-companion data-processing result shows that injective maps preserve entropy
-exactly, so their Landauer cost is zero. But the instant your computation
-throws information away, the thermodynamic meter starts running. Forgetting is
-the only step in computation that is fundamentally, unavoidably expensive.
+## Forgetting in bulk, and computations that run free
 
-## Why it matters today
+Two final consequences round out the picture.
 
-This is not academic hairsplitting. Modern processors dissipate heat by the
-hundreds of watts, and an ever-growing fraction of the world's electricity goes
-to computing and cooling data centers. The vast majority of that energy is
-wasted far above the Landauer floor — today's transistors operate thousands of
-times less efficiently than the theoretical minimum. But the floor is real, and
-experiments since 2012 have actually measured single-bit erasure approaching
-$kT\ln 2$ in colloidal particles and nanomagnets. As devices shrink toward the
-scale where thermal fluctuations dominate, the finite-size correction term —
-the fluctuation surcharge above $kT\ln 2$ — stops being a curiosity and becomes
-a design constraint.
+First, the cost is **extensive**: it adds up. An $n$-bit memory register, fully
+uncertain, carries entropy $n\ln 2$ — because the uniform distribution over $2^n$
+possible states has entropy $\ln(2^n) = n\ln 2$. Erasing the whole register therefore
+costs at least
 
-The same mathematics points toward the quantum frontier, where bits become
-qubits and Shannon entropy becomes von Neumann entropy, and toward the dream of
-*reversible computing*, which sidesteps the Landauer cost by never erasing
-anything at all. The principle even reframes a philosophical puzzle: it shows
-that information is not an abstraction floating above physics but a physical
-quantity with a thermodynamic price, as Landauer himself put it — "information
-is physical."
+$$ n\,k\,T\,\ln 2, $$
 
-## The shape of the argument
+and the guaranteed price *per bit* is exactly $kT\ln 2$, the single-bit answer,
+holding for every register size. There is no bulk discount on forgetting.
 
-Step back and admire the architecture. We began with a riddle about a demon, a
-century-old threat to the Second Law. We translated "forgetting" into the
-precise notion of a non-invertible map, and measured the lost information as a
-drop of $\ln 2$ in Shannon entropy. We invoked Jarzynski's exact equality to
-get a formula for the average work — free energy plus a fluctuation correction.
-And then a single, humble inequality, $1 + x \le e^x$, the exponential lying
-above its tangent, forced that correction to be nonnegative and delivered the
-Second Law and Landauer's $kT\ln 2$ bound in one stroke.
+Second, and conversely, not every computation must pay. The deep principle beneath
+Landauer's bound is that **a deterministic computation can never increase entropy**.
+If a machine applies any function $f$ to its data, the entropy of the output is at most
+the entropy of the input — and the heat it must dissipate, proportional to the entropy
+*drop*, is therefore never negative. But when $f$ is **invertible** (injective), no two
+inputs collide, no information is destroyed, the entropy is preserved exactly, and the
+dissipated heat is precisely **zero**. Reversible computation is, in principle, free.
+This is the theoretical license behind the entire field of reversible computing: if you
+never throw information away, you never have to pay Landauer's tax. The cost is not a
+fee on *computing* — it is a fee on *forgetting*.
 
-That a principle this consequential — the energetic cost of thought itself —
-should rest on so slender an analytic fact is, in the end, the most beautiful
-part of the story. The price of forgetting is small, but it is never zero, and
-now we can prove it.
+## Why bother making it certain?
+
+Landauer's principle has been argued, re-argued, debated, and experimentally confirmed
+(beautiful experiments in the last decade have measured the $kT\ln 2$ floor with single
+colloidal particles and single electrons). So why reconstruct the whole chain of
+reasoning from the most elementary ingredients — the tangent line to a logarithm, the
+inequality $1 + x \le e^x$, the definition of a sum?
+
+Because foundational results deserve foundational certainty. By building Landauer's
+principle up from these atoms — Gibbs' inequality from the logarithm's tangent, the
+second law from the convexity of the exponential, the saturation condition from the
+*strict* version of that same convexity — we obtain not just confidence but a kind of
+X-ray of the result: we see exactly which mathematical fact powers each physical claim.
+The nonnegativity of relative entropy is the tangent line. The second law is convexity.
+Reaching the bound is the *strictness* of convexity. Logical irreversibility becoming
+heat is the non-injectivity of a two-element map. Each piece of physics is pinned to a
+single, transparent piece of mathematics.
+
+That is the quiet pleasure of this corner of science. The price of forgetting, it turns
+out, is written in the curvature of an exponential and the slope of a logarithm — and
+when you trace it carefully, the abstract logic of information and the concrete physics
+of heat are revealed to be the same story, told twice.
