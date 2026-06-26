@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5e9b4daa",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Tropical Cryptography (min-plus eigenvalue cryptanalysis)\n\nDerived from this cycle's findings in `Catalog/Tropical/TropicalDiscreteLog.lean`\n(eigenvalue additivity / TDLP break)",
-      "quality_score": 0.79384,
-      "sorry_count": 0,
-      "theorem_count": 103,
-      "timestamp": "2026-06-20T05:05:53",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
       "cycle_id": "972d4c89",
       "domain": "Applications",
       "key_insight": "# Future Directions\n\nThe development in `Catalog/Applications/RamseyBounds/` proves the Erdős–Szekeres\nrecursion, the binomial upper bound, and the exact value `R(3,3) = 6`.  The following\ndirections",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-26T17:21:49",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+    },
+    {
+      "cycle_id": "7496c7ce",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Zero-Knowledge Proofs & Verifiable Computation\n\nDerived from this cycle's findings in `Catalog/Cryptography/ZeroKnowledge/Graph3Coloring.lean`,\n`Catalog/Cryptography/ZeroKnowledg",
+      "quality_score": 0.80792,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-26T18:52:44",
+      "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bf991533",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Navier–Stokes Regularity (scalar a priori program)\n\nThis research cycle formalized the scalar differential-inequality core of\nNavier–Stokes regularity theory (`Core.lean`) and it",
-      "quality_score": 0.5450164281345566,
-      "sorry_count": 0,
-      "theorem_count": 469,
-      "timestamp": "2026-06-20T22:49:16",
-      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-    },
     {
       "cycle_id": "f832cbd3",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-26T18:48:36",
       "title": "Multilateral non-trivial cross-intersection product bound"
+    },
+    {
+      "cycle_id": "7496c7ce",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Zero-Knowledge Proofs & Verifiable Computation\n\nDerived from this cycle's findings in `Catalog/Cryptography/ZeroKnowledge/Graph3Coloring.lean`,\n`Catalog/Cryptography/ZeroKnowledg",
+      "quality_score": 0.80792,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-26T18:52:44",
+      "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "bd1f81a7",
-      "domain": "Cryptography",
-      "name": "treeList_length",
-      "quality": 0.80372
-    },
-    {
-      "cycle_id": "bd1f81a7",
-      "domain": "Cryptography",
-      "name": "treeList_getD",
-      "quality": 0.80372
-    },
-    {
-      "cycle_id": "701dddb6",
-      "domain": "Bridges",
-      "name": "divisor_bridge",
-      "quality": 0.78684
-    },
     {
       "cycle_id": "701dddb6",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "relativeEntropy_nonneg",
       "quality": 0.70446
+    },
+    {
+      "cycle_id": "7496c7ce",
+      "domain": "Applications",
+      "name": "asserts",
+      "quality": 0.80792
+    },
+    {
+      "cycle_id": "7496c7ce",
+      "domain": "Applications",
+      "name": "supplies",
+      "quality": 0.80792
+    },
+    {
+      "cycle_id": "7496c7ce",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.80792
     }
   ],
-  "last_updated": "2026-06-26T18:48:36",
+  "last_updated": "2026-06-26T18:52:44",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f0b7b2e4",
-        "quality": 0.53943,
-        "theorems": 10,
-        "title": "Ramsey Theory: Bounds and Constructions"
-      },
-      {
         "cycle_id": "cb117fe9",
         "quality": 0.531112,
         "theorems": 15,
@@ -3141,6 +3135,12 @@
         "quality": 0.464016452173913,
         "theorems": 10,
         "title": "Ramsey Theory: Bounds and Constructions"
+      },
+      {
+        "cycle_id": "7496c7ce",
+        "quality": 0.80792,
+        "theorems": 17,
+        "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
       }
     ],
     "Bridges": [

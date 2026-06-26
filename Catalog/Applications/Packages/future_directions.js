@@ -180,7 +180,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Modifying Research via Reflective Type Theory"
   },
   {
-    "consumed_by_exp_id": "c743a598",
+    "consumed_by_exp_id": "",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domains": [
       "Geometry",
@@ -190,7 +190,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:11.683325+00:00",
     "title": "Standard Conjectures on Algebraic Cycles"
   },
@@ -210,7 +210,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "6f4d545d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domains": [
       "Algebra"
@@ -219,7 +219,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432615+00:00",
     "title": "Galois Theory: Solvability of Polynomials"
   },
@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f3047ef",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -5533,11 +5533,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves that for any fixed k \u2265 2 and any \u03b5 > 0, almost all n satisfy g_k(n) \u2265 (3(k-1)/log 12 - \u03b5) log n, where g_k(n) is the maximum excess a_1+\u22ef+a_k - n with a_1!\u22efa_k! \u2223 n!. It also gives the pointwise upper bound g_k(n) \u2264 (k-1) log_2 n + log_2 log n + O_k(1). The constant 3/log 12 \u2248 1.207 is strictly smaller than the binary leading coefficient 1/log 2 \u2248 1.443. This conjecture asserts that the density-one lower bound cannot be improved, i.e., 3(k-1)/log 12 is the exact almost-everywhere constant.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2592",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23661v2",
+    "status": "available",
+    "timestamp": "2026-06-26T18:59:19.862914+00:00",
+    "title": "Optimality of the Density-One Constant for Erd\u0151s Problem 400"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5551,7 +5565,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5566,7 +5580,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5581,7 +5595,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5596,7 +5610,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5611,7 +5625,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5625,7 +5639,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5639,7 +5653,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5653,7 +5667,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5668,7 +5682,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5683,7 +5697,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5698,7 +5712,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5713,7 +5727,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5728,7 +5742,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5742,7 +5756,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5757,7 +5771,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5772,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5786,7 +5800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5800,7 +5814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5814,7 +5828,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5829,7 +5843,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -5844,7 +5858,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -5859,7 +5873,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -5873,7 +5887,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -5887,7 +5901,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -5902,7 +5916,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -5916,7 +5930,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -5931,7 +5945,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -5945,7 +5959,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -5959,13 +5973,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
     "status": "available",
     "timestamp": "2026-06-26T18:19:40.973278+00:00",
     "title": "Boundon consecutive Zeckendorf-Niven terms in arithmetic progressions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For an even integer m = 2k, the regularised Wallis product P_m defined as the limit as N -> infinity of product_{n=2}^N exp(C_{m,n}) * (1 - 1/n^2)^{n^m}, where C_{m,n} is the minimal exponential counterterm cancelling non-summable terms in the log expansion, converges to a closed form involving pi, Euler's gamma, and odd zeta values zeta(2j+1).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2623",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23973v1",
+    "status": "available",
+    "timestamp": "2026-06-26T18:59:39.163751+00:00",
+    "title": "Closed Form for the Regularised Wallis Product P_m for Even m"
   },
   {
     "consumed_by_exp_id": "",
@@ -6170,21 +6198,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Multilateral non-trivial cross-intersection product bound\n\nThis cycle formalized, fully and unconditionally, the *multilateral cross-intersecting\nproduct skeleton*\n\n    \u220f_{i : Fin r} |\ud835\udcd5_i| \u2264 g(n,k)^r,   g(n,k) = C(n,k) - C(n-k,k),\n\nfor `r \u2265 2` non-empty, `k`-uniform, pairwise cross-intersecting families\n(`CrossIntersectingProduct.multilateral_cross_product_bound`), together with the\nbilateral `r = 2` Pyber-type corollary, a ground-set-agnostic generalization, and an\nexplicit Hilton\u2013Milner witness of size `h(6,3) = 10` showing the hypotheses are\nrealisable.  The gap between the proven base `g(n,k)` and the conjectured sharp\nHilton\u2013Milner base `h(n,k)` motivates the following.\n\n## Conjecture 1 \u2014 Hilton\u2013Milner per-family sharpening\nFor `n \u2265 2k`, `k \u2265 3`, a `k`-uniform **non-trivial** family that is cross-intersecting\nwith at least one other non-trivial `k`-uniform family satisfies `|\ud835\udcd5| \u2264 h(n,k)`.\n- **The key insight is...** non-triviality removes the single member realising the\n  full `g(n,k)` count (the all-of-`A\u2080\u1d9c`-complement extreme), collapsing the elementary\n  bound to the Hilton\u2013Milner value.\n- **Why now?** The formal `card_le_of_cross` already isolates the exact counting set\n  `powersetCard k univ \\ powersetCard k A\u2080\u1d9c`; adding a non-triviality deletion lemma is\n  a localized next step rather than a new framework.\n\n## Conjecture 2 \u2014 Multilateral Frankl\u2013Wang from the per-family bound\nThe full Frankl\u2013Wang bound `\u220f_i |\ud835\udcd5_i| \u2264 h(n,k)^r` follows from Conjecture 1 by the\nalready-formalized `prod_card_le_pow` reduction.\n- **The key insight is...** the product step is purely arithmetic (`prod_le_prod'` +\n  `prod_const`) and is *already proved*; the entire remaining difficulty is the single\n  per-family Hilton\u2013Milner inequality.\n- **Why now?** `multilateral_cross_product_bound` is literally this reduction with `g`\n  in place of `h`; swapping in Conjecture 1 yields the theorem verbatim.\n\n## Conjecture 3 \u2014 Uniqueness / stability of extremizers\nEquality `\u220f_i |\ud835\udcd5_i| = h(n,k)^r` forces every `\ud835\udcd5_i` to be (isomorphic to) the\nHilton\u2013Milner family, and near-equality forces structural closeness to it.\n- **The key insight is...** the product is maximized only when *each* factor is\n  individually maximized, so a multilateral stability statement reduces to bilateral\n  Hilton\u2013Milner stability.\n- **Why now?** The explicit witness `hiltonMilnerWitness` (size exactly `h(6,3)`)\n  provides a concrete extremizer to test stability statements against.\n\n## Conjecture 4 \u2014 Threshold in `k`: the bound fails for `k \u2264 2`\nFor `k = 2` the Hilton\u2013Milner regime degenerates and `g(n,2)` already coincides with\nthe extremal count; the sharp `h`-bound either trivializes or fails, explaining the\nhypothesis `k \u2265 3`.\n- **The key insight is...** triangles (`k = 2`) admit no non-trivial intersecting\n  family beyond a single triangle, so the multilateral product is governed by a\n  different (smaller) constant than `h(n,2)^r`.\n- **Why now?** The proven `g`-bound holds for all `k`; comparing it to `h(n,2)`\n  numerically (see `ComputationalEvidence.md`) pinpoints where the `k \u2265 3` hypothesis\n  becomes essential.\n\n## Conjecture 5 \u2014 Asymmetric / mixed-uniformity version\nIf `\ud835\udcd5_i` is `k_i`-uniform with possibly different `k_i`, then\n`\u220f_i |\ud835\udcd5_i| \u2264 \u220f_i g(n,k_i)` (and conjecturally `\u220f_i h(n,k_i)`).\n- **The key insight is...** the per-family pinning argument never uses that all\n  families share the same `k`; only the partner's member size matters for the count.\n- **Why now?** The general file `CrossIntersectingProductGeneral` already abstracts the\n  ground set; abstracting the uniformity parameter per index is the natural next axis,\n  and `card_le_of_cross` is stated for a single family's `k` already.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2622",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0d192d1b",
-    "status": "available",
-    "timestamp": "2026-06-26T18:48:09.315287+00:00",
-    "title": "This cycle formalized, fully and unconditionally, the *multilateral cross-inters"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6256,6 +6269,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
+    "domains": [
+      "EML",
+      "Computation"
+    ],
+    "id": "fd_0551",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.873771+00:00",
+    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
     "consumed_by_exp_id": "",

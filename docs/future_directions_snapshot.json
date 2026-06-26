@@ -239,7 +239,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "c743a598",
+    "consumed_by_exp_id": "",
     "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, Künneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
     "domain_bridges": [],
     "domains": [
@@ -252,7 +252,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:11.683325+00:00",
     "title": "Standard Conjectures on Algebraic Cycles"
   },
@@ -279,7 +279,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6f4d545d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
     "domain_bridges": [],
     "domains": [
@@ -291,7 +291,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432615+00:00",
     "title": "Galois Theory: Solvability of Polynomials"
   },
@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1f3047ef",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -9669,6 +9669,34 @@
     "title": "Balanced Side Lengths Maximize Spanning Trees in Free Boundary Product Grids"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2408.XXXXX",
+      "ErdosGraham1980",
+      "Bloom400"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The paper proves that for any fixed k ≥ 2 and any ε > 0, almost all n satisfy g_k(n) ≥ (3(k-1)/log 12 - ε) log n, where g_k(n) is the maximum excess a_1+⋯+a_k - n with a_1!⋯a_k! ∣ n!. It also gives the pointwise upper bound g_k(n) ≤ (k-1) log_2 n + log_2 log n + O_k(1). The constant 3/log 12 ≈ 1.207 is strictly smaller than the binary leading coefficient 1/log 2 ≈ 1.443. This conjecture asserts that the density-one lower bound cannot be improved, i.e., 3(k-1)/log 12 is the exact almost-everywhere constant.",
+    "domain_bridges": [
+      "Analytic Number Theory",
+      "Probabilistic Number Theory",
+      "Factorial Divisibility",
+      "S-unit Equations"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2592",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a positive-density set of integers n where the mixed 2-3 representation used in the lower bound is essentially optimal, by showing that the phase separation for S-unit progressions cannot be improved beyond the current uniform digit-sum normal-order theorem. Alternatively, develop a large-sieve argument to prove that the exceptional set for any larger constant has positive lower density.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23661v2",
+    "status": "available",
+    "timestamp": "2026-06-26T18:59:19.862914+00:00",
+    "title": "Optimality of the Density-One Constant for Erdős Problem 400"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "Theorem 1",
@@ -9685,7 +9713,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9714,7 +9742,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9740,7 +9768,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9765,7 +9793,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9793,7 +9821,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9819,7 +9847,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9845,7 +9873,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
@@ -9867,7 +9895,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive existence proof",
@@ -9893,7 +9921,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof requires formalizing the notion of 'runs' in sequences and the 'subsequence' relation ($\\preccurlyeq$). One would use a combinatorial counting argument to bound the number of common subsequences based on the fact that if $D_{s-1}(x)$ and $D_{s-1}(y)$ are disjoint, the 'edit distance' or structural difference between $x$ and $y$ is sufficiently large. The Lean proof would likely utilize the `Finset` library for counting and a recursive definition of the subsequence relation, followed by an inductive proof on $n$ and $t$.",
@@ -9913,7 +9941,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive proof via representation theory",
@@ -9936,7 +9964,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct Verification",
@@ -9961,7 +9989,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive upper bound plus refinement via circular ordering",
@@ -9988,7 +10016,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Leverage the vertex-gluing construction from the paper to establish recursive relationships between the ranks for different n, combined with exhaustive case analysis for small n values, and use induction to generalize to larger n. Critical lemmas would involve verifying the intersection condition preservation under gluing operations and demonstrating self-duality through explicit automorphism constructions.",
@@ -10014,7 +10042,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Show that a rational pair of densities would force a periodic tiling via a rationality-induced lattice symmetry, contradicting aperiodicity.",
@@ -10041,7 +10069,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Adapt the proof techniques from the Chudnovsky-Scott-Seymour paper, using induction on the number of colors and maximum graph size, combined with careful analysis of how vertex partitions interact with the complete join structure under color constraints.",
@@ -10068,7 +10096,7 @@
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Prove both directions: (1) If a tournament has no transitive triangle, then every directed P3 with endpoints in a convex set must have the arc between endpoints, making both convexities equivalent; (2) If a tournament has a transitive triangle (u,v,w) with u→v→w and u→w, construct a set whose convex hulls differ between the two convexity notions.",
@@ -10099,7 +10127,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use Lovász’s minimax theorem for matroid matchings to relate the extremal size to the fractional matching number in the associated matroid. Apply a high‑dimensional Hoffman bound for uniform hypergraphs over the lattice of subspaces to obtain upper bounds that match the two constructions. Then develop a stability argument that shows any family attaining the upper bound must be structurally close to one of the two extremal families, and finally exploit design‑theoretic counting to rule out all other configurations. The proof would combine linear‑algebraic isoperimetric inequalities, spectral techniques on the Grassmann graph, and matroid intersection theory.",
@@ -10126,7 +10154,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Constructive adaptation of existing existence techniques with tailored order-preserving constructions",
@@ -10153,7 +10181,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would involve constructing a specific field extension (likely a function field of a quadric or a sequence of such extensions) and defining semi-singular forms (composed of a non-singular part and a totally singular part) that satisfy the isotropy index equality by construction via the properties of the Witt group in characteristic 2, while ensuring their similarity classes remain distinct using invariants like the Arf invariant or the dimension of the singular part.",
@@ -10179,7 +10207,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Define the prime zeta function P(s) as a Dirichlet series. 2. Implement the singular expansion of P(s) near the imaginary axis using the relationship between P(s) and the Riemann zeta function ζ(s) via the Mobius inversion formula: P(s) = ∑_{n=1}^∞ μ(n)/n * log ζ(ns). 3. Use the properties of the logarithm of the Riemann zeta function near its zeros and poles to construct a regularized limit or a specific path-dependent continuation. 4. Evaluate the resulting expression at s = -1.",
@@ -10209,7 +10237,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Characterize coefficient codes whose m-th Schur powers have full-support hyperplane structure, apply the Mirandola-Zémor Schur-product Kneser theorem to constrain extremal matroid structures, then prove that any extremal configuration must have the same underlying point configuration as a rational normal curve under the Veronese embedding. The converse direction follows by explicit computation of rational-normal-curve Veronese images.",
@@ -10237,7 +10265,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the polynomial method (Combinatorial Nullstellensatz) to show that a zero-sum subset of size 2ℓ+1 yields a solution to the system of equations defining a cycle, and conversely extract a zero-sum subset from a given cycle via its edge differences. The symmetry of S allows reordering of differences to obtain a subset of S. Character sums over Z_p handle the distinctness condition on vertices.",
@@ -10265,7 +10293,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Assume density vanishes on a block, then use carry pressure lower bound and upper bound via stopping-time budget to derive contradiction. Uses four local carry estimates: complete-lap mass balance, total-support summation, fixed-pin confinement, and class-one realization.",
@@ -10290,7 +10318,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply linear programming duality to the covering weighting problem to derive a lower bound on the total weight, showing that any weighting covering the uncovered squares must have weight at least n - k + Ω(n), which translates into a lower bound on qc(n) and forces the asymptotic constant to be at least 0.216.",
@@ -10315,7 +10343,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Proceed by induction on k. For the base case k=5, verify s₃(5) = (twr₃(2))² = (2^{2^{2}})² = 64 via explicit construction. For the inductive step, assume the formula holds for k and construct a 3-coloring of (k+1)-subsets that avoids large monochromatic homogeneous sets by taking a product of the coloring for k with a 2-coloring of pairs, then apply the stepping-up lemma for shift numbers to show that s₃(k+1) ≥ (twr_{k-1}(2))². Conversely, use a density increment argument to show that any 3-coloring of (k+1)-subsets of a set of size (twr_{k-1}(2))² must contain a monochromatic homogeneous set of size k+1, establishing the upper bound.",
@@ -10344,7 +10372,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The proof would proceed in two parts. (1) Upper bound: Using the strong blocking property, one shows that any non‑outer additive strong blocking set B in PG(k‑1,q) can be partitioned into fibres of a map from the complement to B, leading to the inequality |B| ≤ q^{k‑1}. This follows from counting arguments and the fact that each line not meeting B can be used to bound the number of points in B. (2) Existence: Construct an explicit additive code by taking a generator matrix whose columns are the points of a maximal partial spread in PG(k‑1,q) of size q^{k‑1}. Such partial spreads are known to exist for all q and k (e.g., via affine geometry constructions). The code is nondegenerate and minimal because removing any column destroys the strong blocking property. Formalising these constructions in Lean 4 will require definitions of finite fields, vector spaces, subspaces, projective geometry, and the strong blocking condition.",
@@ -10367,7 +10395,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "inductive contradiction over order counts",
@@ -10387,7 +10415,7 @@
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct inequality verification",
@@ -10414,7 +10442,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "The strategy involves formalizing the Dembélé-Freitas-Voight classification of Weil-Deligne types as a finite data structure. One would then implement the computation of the $H^0$ group by evaluating the invariants of the adjoint representation $\\mathrm{ad}^0\\bar{\\rho}$ under the action of the inertia group $I_p$, utilizing the explicit action of the Weil-Deligne operators (N and the Weil group action) provided by the classification.",
@@ -10451,7 +10479,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the structure of Zeckendorf decompositions to derive modular constraints on consecutive terms, then apply known bounds on gaps between Fibonacci numbers and properties of the golden ratio to limit the possible run length.",
@@ -10460,6 +10488,32 @@
     "status": "available",
     "timestamp": "2026-06-26T18:19:40.973278+00:00",
     "title": "Boundon consecutive Zeckendorf-Niven terms in arithmetic progressions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Riemann Zeta Function",
+      "Multiple Sine Functions",
+      "Wallis Product"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For an even integer m = 2k, the regularised Wallis product P_m defined as the limit as N -> infinity of product_{n=2}^N exp(C_{m,n}) * (1 - 1/n^2)^{n^m}, where C_{m,n} is the minimal exponential counterterm cancelling non-summable terms in the log expansion, converges to a closed form involving pi, Euler's gamma, and odd zeta values zeta(2j+1).",
+    "domain_bridges": [
+      "Analysis -> Number Theory",
+      "Special Functions -> Analytic Number Theory"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2623",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Utilize the logarithmic expansion of (1 - 1/n^2)^{n^m}, express the resulting sum as a combination of zeta-function tails, apply the reflection formula for the zeta function and the relation between zeta-tails and the Glaisher-Kinkelin constants or polygamma functions to arrive at the closed form.",
+    "research_mode": "team",
+    "source_exp_id": "2606.23973v1",
+    "status": "available",
+    "timestamp": "2026-06-26T18:59:39.163751+00:00",
+    "title": "Closed Form for the Regularised Wallis Product P_m for Even m"
   },
   {
     "ambition_level": "extension",
@@ -10736,26 +10790,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Multilateral non-trivial cross-intersection product bound\n\nThis cycle formalized, fully and unconditionally, the *multilateral cross-intersecting\nproduct skeleton*\n\n    ∏_{i : Fin r} |𝓕_i| ≤ g(n,k)^r,   g(n,k) = C(n,k) - C(n-k,k),\n\nfor `r ≥ 2` non-empty, `k`-uniform, pairwise cross-intersecting families\n(`CrossIntersectingProduct.multilateral_cross_product_bound`), together with the\nbilateral `r = 2` Pyber-type corollary, a ground-set-agnostic generalization, and an\nexplicit Hilton–Milner witness of size `h(6,3) = 10` showing the hypotheses are\nrealisable.  The gap between the proven base `g(n,k)` and the conjectured sharp\nHilton–Milner base `h(n,k)` motivates the following.\n\n## Conjecture 1 — Hilton–Milner per-family sharpening\nFor `n ≥ 2k`, `k ≥ 3`, a `k`-uniform **non-trivial** family that is cross-intersecting\nwith at least one other non-trivial `k`-uniform family satisfies `|𝓕| ≤ h(n,k)`.\n- **The key insight is...** non-triviality removes the single member realising the\n  full `g(n,k)` count (the all-of-`A₀ᶜ`-complement extreme), collapsing the elementary\n  bound to the Hilton–Milner value.\n- **Why now?** The formal `card_le_of_cross` already isolates the exact counting set\n  `powersetCard k univ \\ powersetCard k A₀ᶜ`; adding a non-triviality deletion lemma is\n  a localized next step rather than a new framework.\n\n## Conjecture 2 — Multilateral Frankl–Wang from the per-family bound\nThe full Frankl–Wang bound `∏_i |𝓕_i| ≤ h(n,k)^r` follows from Conjecture 1 by the\nalready-formalized `prod_card_le_pow` reduction.\n- **The key insight is...** the product step is purely arithmetic (`prod_le_prod'` +\n  `prod_const`) and is *already proved*; the entire remaining difficulty is the single\n  per-family Hilton–Milner inequality.\n- **Why now?** `multilateral_cross_product_bound` is literally this reduction with `g`\n  in place of `h`; swapping in Conjecture 1 yields the theorem verbatim.\n\n## Conjecture 3 — Uniqueness / stability of extremizers\nEquality `∏_i |𝓕_i| = h(n,k)^r` forces every `𝓕_i` to be (isomorphic to) the\nHilton–Milner family, and near-equality forces structural closeness to it.\n- **The key insight is...** the product is maximized only when *each* factor is\n  individually maximized, so a multilateral stability statement reduces to bilateral\n  Hilton–Milner stability.\n- **Why now?** The explicit witness `hiltonMilnerWitness` (size exactly `h(6,3)`)\n  provides a concrete extremizer to test stability statements against.\n\n## Conjecture 4 — Threshold in `k`: the bound fails for `k ≤ 2`\nFor `k = 2` the Hilton–Milner regime degenerates and `g(n,2)` already coincides with\nthe extremal count; the sharp `h`-bound either trivializes or fails, explaining the\nhypothesis `k ≥ 3`.\n- **The key insight is...** triangles (`k = 2`) admit no non-trivial intersecting\n  family beyond a single triangle, so the multilateral product is governed by a\n  different (smaller) constant than `h(n,2)^r`.\n- **Why now?** The proven `g`-bound holds for all `k`; comparing it to `h(n,2)`\n  numerically (see `ComputationalEvidence.md`) pinpoints where the `k ≥ 3` hypothesis\n  becomes essential.\n\n## Conjecture 5 — Asymmetric / mixed-uniformity version\nIf `𝓕_i` is `k_i`-uniform with possibly different `k_i`, then\n`∏_i |𝓕_i| ≤ ∏_i g(n,k_i)` (and conjecturally `∏_i h(n,k_i)`).\n- **The key insight is...** the per-family pinning argument never uses that all\n  families share the same `k`; only the partner's member size matters for the count.\n- **Why now?** The general file `CrossIntersectingProductGeneral` already abstracts the\n  ground set; abstracting the uniformity parameter per index is the natural next axis,\n  and `card_le_of_cross` is stated for a single family's `k` already.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2622",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "0d192d1b",
-    "status": "available",
-    "timestamp": "2026-06-26T18:48:09.315287+00:00",
-    "title": "This cycle formalized, fully and unconditionally, the *multilateral cross-inters"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10850,6 +10884,26 @@
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
+    "domain_bridges": [],
+    "domains": [
+      "EML",
+      "Computation"
+    ],
+    "id": "fd_0551",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.873771+00:00",
+    "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
   },
   {
     "ambition_level": "extension",

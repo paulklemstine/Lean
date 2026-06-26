@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7496c7ce",
     "filename": "zero_knowledge_proofs_in_lean_verifiable_computati.json",
     "pkg_num": 106,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.80792,
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
   {
@@ -3092,8 +3092,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "zero_knowledge_proofs_in_lean_verifiable_computati",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.80792,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
     }
