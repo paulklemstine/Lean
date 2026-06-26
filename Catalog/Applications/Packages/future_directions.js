@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e7c31a4",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c488c94",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1181,7 +1181,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fourier Analysis on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49f14a50",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domains": [
       "Combinatorics",
@@ -1191,7 +1191,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1991,7 +1991,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Typical (k\u22121)-partite complement structure of dense K_{1,k}-free graphs above the critical density"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e9a5064",
     "description": "For every prime p \u2265 7 with p \u2261 3 mod 4, the determinant of the truncated Legendre-symbol matrix with polynomial parameter X is exactly ((p - 2) / 3)^2 X over \u2124[X]. Explicitly, for m = (p - 5) / 2 and matrix A indexed by Fin m with A_{j,k} = X + (j - k | p), where the Legendre symbol is viewed as an integer coefficient polynomial, det A = ((p - 2) / 3)^2 X.",
     "domains": [
       "Pythagorean"
@@ -2000,7 +2000,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22548v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T12:03:49.419256+00:00",
     "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
   },
@@ -2179,7 +2179,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Explicit Finiteness Bound for Same-Radical Shift Sets"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "da5cb31c",
     "description": "The authors disprove a conjecture by Cheong, Goaoc, and Holmsen by showing that for every n >= 1, there is a finite family of pairwise disjoint open convex sets in R^{3n} such that the (n-1)-st reduced homology of the space of line transversals is nonzero. They explicitly state the conjecture that this space of line transversals is in fact homotopy equivalent to the (n-1)-sphere, S^{n-1}. This proposes formalizing that stronger homotopy equivalence conjecture.",
     "domains": [
       "Geometry",
@@ -2189,7 +2189,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T07:10:06.412019+00:00",
     "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
   },
@@ -2870,7 +2870,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sidorenko Property for Two\u2011Sided Correlation Kernels on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3718ce68",
     "description": "For a number field k with r\u2081 real and r\u2082 complex places, let b = r\u2081\u00b7\u230an\u00b2/4\u230b + r\u2082\u00b7n(n-1)/2. For any cohomological generic representation \u03c0 in R_\u03b5^{coge,\u221e} of GL(n,k_\u221e) with coefficient system F_\u03c0 and quadratic character \u03b5: \u03c0\u2080(k_\u221e\u00d7) \u2192 \u2102\u00d7, the Betti-Whittaker period of the contragredient \u03c0\u2228 in degree b satisfies P^b(\u03c0\u2228, F_{\u03c0\u2228}, \u03b5) = \u03b5(disc(k))^b \u00b7 P^b(\u03c0, F_\u03c0, \u03b5), where disc(k) is viewed as an element of \u03c0\u2080(k_\u221e\u00d7) via the determinant identification \u03c0\u2080(k_\u221e\u00d7) \u2245 \u03c0\u2080(GL_n(k_\u221e)).",
     "domains": [
       "Algebra",
@@ -2880,7 +2880,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T22:02:58.683140+00:00",
     "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
   },
@@ -4189,7 +4189,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3847ce48",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self\u2011dual string C\u2011group representations of rank $2m$ (as constructed by the vertex\u2011gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self\u2011dual string C\u2011group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domains": [
       "Algebra"
@@ -4198,7 +4198,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
   },
@@ -5968,7 +5968,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Kolmogorov-Arnold Representation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab42f98e",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -5978,7 +5978,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
