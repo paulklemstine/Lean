@@ -1003,7 +1003,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b08abcae",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -1013,7 +1013,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1345,7 +1345,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4c70419",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1355,7 +1355,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -3628,6 +3628,20 @@ window.FUTURE_DIRECTIONS = [
     "title": "Characterization of Degree-One Triviality for Grassmannians over Finite Fields"
   },
   {
+    "consumed_by_exp_id": "25d6b815",
+    "description": "For every length n, among all binary 2-binomial equivalence classes of words of length n, the largest class has exactly floor(n/2) occurrences of one letter and inversion statistic floor(floor(n/2) * ceil(n/2) / 2). Equivalently, among all coefficients of all Gaussian binomial coefficients [n choose m]_q, the global maximum is attained at m = floor(n/2) and at the middle degree.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2447",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23426v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-24T19:03:49.721168+00:00",
+    "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "For each integer n\u22651 there exists a finite family C of pairwise disjoint compact (or open bounded) convex sets in \u211d^{3n} such that the space L(C) of all lines transversal to C is homeomorphic (hence homotopy equivalent) to the (n\u20111)-sphere S^{n\u20111}. Moreover, for any family of pairwise disjoint convex sets whose transversal space is non\u2011empty and whose reduced (n\u20111)\u2011st homology is non\u2011zero, the transversal space is homotopy equivalent to S^{n\u20111}. This refines the counterexamples to the Cheong\u2013Goaoc\u2013Holmsen conjecture by identifying the exact homotopy type.",
     "domains": [
@@ -4828,7 +4842,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Iwasawa Main Conjecture for Brauer groups of K3 surfaces over finite fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9e1a2820",
     "description": "For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in the finite polynomial product \\prod_{i=0}^{n} (1 - x^{b^i})^m. The conjecture is that the integer sequence n \\mapsto T_{b,m}(n) is unbounded in absolute value: for every B, there exists n such that |T_{b,m}(n)| > B. The paper proves the case b = 2; this conjecture asserts the same phenomenon for every base b >= 2.",
     "domains": [
       "Pythagorean"
@@ -4837,7 +4851,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T18:24:34.645043+00:00",
     "title": "Generalized Gawron\u2013Miska\u2013Ulas unboundedness for arbitrary integer bases"
   },
