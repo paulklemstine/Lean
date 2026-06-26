@@ -139,7 +139,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0548f2b9",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domain_bridges": [],
     "domains": [
@@ -152,7 +152,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -675,7 +675,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4364c6f1",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domain_bridges": [],
     "domains": [
@@ -689,7 +689,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -1316,7 +1316,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b08abcae",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domain_bridges": [],
     "domains": [
@@ -1329,7 +1329,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1555,7 +1555,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0dc2bca1",
     "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) · supp(f̂) ≥ |G|.",
     "domain_bridges": [],
     "domains": [
@@ -1568,7 +1568,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432657+00:00",
     "title": "Fourier Analysis on Finite Groups"
   },
@@ -1753,7 +1753,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4c70419",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1766,7 +1766,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -6769,7 +6769,7 @@
       "Lucas theorem and Kummer theorem for binomial coefficients",
       "Formal Conjectures project / FC100OpenSet1"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6b20d87",
     "description": "Let k ≥ 2, n = k + 1, and D(k) = gcd_{2 ≤ q ≤ k+1} binom(qk,k). If P is the largest exact prime-power component p^a exactly dividing n, then D(k) is not merely nontrivial exactly when n/P ≤ P; conjecturally its exact value is P in that case and 1 otherwise. Equivalently, D(k) = P if the largest exact prime-power component of k+1 dominates its complementary factor, and D(k) = 1 otherwise.",
     "domain_bridges": [
       "combinatorial number theory to Lean 4 formalization",
@@ -6785,7 +6785,7 @@
     "proof_strategy": "Extend the paper's prime-divisor criterion to an exact p-adic valuation statement. First reuse the finite-difference argument to show that every prime divisor of D(k) divides n = k+1. For an exact component p^a ∥ n, use Kummer's theorem to express v_p(binom(qk,k)) as a number of base-p carries in k + (q-1)k. Prove a uniform lower bound v_p ≥ a for all q in the range exactly when n/p^a ≤ p^a. Then construct an explicit q, plausibly q = n/p^a + 1 or a small digit-adjusted variant, for which the carry count is exactly a, giving v_p(D(k)) = a. Show that all other prime components have valuation zero in the gcd. Combining over primes yields the asserted exact formula.",
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T19:09:47.341905+00:00",
     "title": "Exact Value of the Binomial GCD in OEIS A080170"
   },
@@ -8286,7 +8286,7 @@
       "Mahler-type functional equations",
       "k-regular sequences"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9e1a2820",
     "description": "For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in the finite polynomial product \\prod_{i=0}^{n} (1 - x^{b^i})^m. The conjecture is that the integer sequence n \\mapsto T_{b,m}(n) is unbounded in absolute value: for every B, there exists n such that |T_{b,m}(n)| > B. The paper proves the case b = 2; this conjecture asserts the same phenomenon for every base b >= 2.",
     "domain_bridges": [
       "Combinatorics on words via digit-sum and base-b expansions",
@@ -8303,7 +8303,7 @@
     "proof_strategy": "Define T_{b,m}(n) by finite truncation, since factors with b^i > n cannot affect the coefficient of x^n. The functional equation F_{b,m}(x) = (1 - x)^m F_{b,m}(x^b) gives a finite recurrence expressing T_{b,m}(bn + r) in terms of nearby earlier coefficients. For b > m, one can already obtain explicit exponentially large values by taking n with many base-b digits equal to 1, where no carrying occurs. The difficult range b <= m should be attacked by adapting the paper's algebraic and p-adic method: encode the coefficient recurrence by a finite family of integer matrices indexed by residues modulo b, then prove that some explicitly constructible product has spectral or p-adic growth greater than 1, forcing unboundedness.",
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T18:24:34.645043+00:00",
     "title": "Generalized Gawron–Miska–Ulas unboundedness for arbitrary integer bases"
   },

@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0548f2b9",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -506,7 +506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4364c6f1",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -517,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b08abcae",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1166,7 +1166,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0dc2bca1",
     "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) \u00b7 supp(f\u0302) \u2265 |G|.",
     "domains": [
       "Analysis",
@@ -1176,7 +1176,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432657+00:00",
     "title": "Fourier Analysis on Finite Groups"
   },
@@ -1314,7 +1314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d4c70419",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1324,7 +1324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -3972,7 +3972,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coefficient Decay Bound"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6b20d87",
     "description": "Let k \u2265 2, n = k + 1, and D(k) = gcd_{2 \u2264 q \u2264 k+1} binom(qk,k). If P is the largest exact prime-power component p^a exactly dividing n, then D(k) is not merely nontrivial exactly when n/P \u2264 P; conjecturally its exact value is P in that case and 1 otherwise. Equivalently, D(k) = P if the largest exact prime-power component of k+1 dominates its complementary factor, and D(k) = 1 otherwise.",
     "domains": [
       "Pythagorean"
@@ -3981,7 +3981,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T19:09:47.341905+00:00",
     "title": "Exact Value of the Binomial GCD in OEIS A080170"
   },
@@ -4782,7 +4782,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Iwasawa Main Conjecture for Brauer groups of K3 surfaces over finite fields"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9e1a2820",
     "description": "For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in the finite polynomial product \\prod_{i=0}^{n} (1 - x^{b^i})^m. The conjecture is that the integer sequence n \\mapsto T_{b,m}(n) is unbounded in absolute value: for every B, there exists n such that |T_{b,m}(n)| > B. The paper proves the case b = 2; this conjecture asserts the same phenomenon for every base b >= 2.",
     "domains": [
       "Pythagorean"
@@ -4791,7 +4791,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T18:24:34.645043+00:00",
     "title": "Generalized Gawron\u2013Miska\u2013Ulas unboundedness for arbitrary integer bases"
   },
