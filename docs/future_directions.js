@@ -105,21 +105,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "abbbde7c",
-    "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
-    "domains": [
-      "Analysis",
-      "Physics"
-    ],
-    "id": "seed_342",
-    "priority_score": 0.93,
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432645+00:00",
-    "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
@@ -823,7 +808,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "9c488c94",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +817,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1889,7 +1874,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraicity of Contragredient Betti-Whittaker Period Ratio for Reductive Groups"
   },
   {
-    "consumed_by_exp_id": "cb117fe9",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: Let d < 0 be squarefree, let K = Q(\u221ad), and let O_K have Z-basis {1, \u03c9}, where \u03c9 = \u221ad if d \u2260 1 mod 4 and \u03c9 = (1 + \u221ad)/2 if d \u2261 1 mod 4. Form the rank-four lattice S_K = Herm_2(O_K) with quadratic form q(A) = 2 det(A), and use the basis given by the two diagonal Hermitian matrix units together with the off-diagonal elements 1 and \u03c9. Then the determinant of the Gram matrix of the associated integral symmetric bilinear form is exactly the fundamental discriminant D_K: det Gram(S_K) = d if d \u2261 1 mod 4, and det Gram(S_K) = 4d otherwise.",
     "domains": [
       "Algebra",
@@ -1899,7 +1884,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22921v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T09:16:17.802367+00:00",
     "title": "Discriminant of the Hermitian Bianchi lattice S_K"
   },
@@ -3815,7 +3800,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scalar curvature formula for incidence-algebra nilpotent Lie algebras"
   },
   {
-    "consumed_by_exp_id": "d4e980c4",
+    "consumed_by_exp_id": "",
     "description": "For RSA modulus n=p*q with primes p>q, if the private exponent d satisfies d < n^{(1+\u03b4)/2} and a \u03b4-fraction of the most significant bits of p+q is known, then the modulus n can be factored using a modified Wiener's continued fraction attack.",
     "domains": [
       "Pythagorean"
@@ -3824,7 +3809,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T11:56:42.011405+00:00",
     "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
   },
@@ -4174,7 +4159,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Maximum size of cycle-containing families of vectors"
   },
   {
-    "consumed_by_exp_id": "f014f8e3",
+    "consumed_by_exp_id": "",
     "description": "For fixed integers r\u22652, t\u22652 there exists a constant C(r,t)>0 such that every r\u2011edge\u2011colouring of any (C,\u202fd)-pseudorandom t\u2011uniform hypergraph H on n vertices contains a monochromatic matching of size at least (1/(r+t\u20111)\u2212o(1))\u00b7n. Moreover, this bound is asymptotically best possible: for every \u03b5>0 and all sufficiently large n there is an r\u2011colouring of a (C,\u202fd)-pseudorandom t\u2011graph with no monochromatic matching larger than (1/(r+t\u20111)+\u03b5)\u00b7n. The conjecture claims that the classical AFL bound extends from the complete hypergraph K_n^{(t)} to any sufficiently pseudorandom host, without any additional loss beyond the o(1) term.",
     "domains": [
       "Algebra",
@@ -4184,7 +4169,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24863v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T05:42:47.292631+00:00",
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
@@ -5882,6 +5867,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Idempotent Probability: Large Deviations\n\nThis cycle extended the catalog's idempotent large-deviation theory\n(`Catalog/Tropical/MeasureTheory/{Basic,LargeDeviations,DualityGap}.lean`) with two\nnew, fully-proved files:\n\n* `Contraction.lean` \u2014 the **idempotent contraction principle**: the push-forward of\n  a tropical probability along a surjection is again a tropical probability, its rate\n  function is the fibre-wise infimum `I_Y(y) = inf_{T x = y} I_X(x)`, and the deviation\n  cost of an event equals the cost of its preimage. Crucially this needs **no\n  convexity** \u2014 it is purely order-theoretic.\n* `Tilting.lean` \u2014 the **idempotent exponential tilt** (max-plus Esscher transform):\n  the additive reweighting `w^\u03bb = \u03bb\u00b7val + w - \u039b(\u03bb)` is always a tropical probability,\n  the rate function tilts affinely, the CGF satisfies the cocycle law\n  `\u039b^\u03bb(\u03bc) = \u039b(\u03bb+\u03bc) - \u039b(\u03bb)`, and every full-support tilt point is a Cram\u00e9r-exposed\n  point where the Legendre\u2013Fenchel biconjugate is tight. Hence for *every* slope a\n  tight point exists, so the supporting-line hypothesis of\n  `lfBiconj_eq_rate_of_support` is never vacuous.\n\nTogether with `DualityGap.lean` these pin down a clean picture: the idempotent Cram\u00e9r\nprogram splits into a convexity-free half (contraction) and a convexity-sensitive half\n(Legendre duality), and tilting is the constructor that exposes exactly the points\nwhere duality is tight.\n\n## Conjectures for the next cycle\n\n### C1. Idempotent Varadhan integral lemma with tilt-rate identity\n**Conjecture.** For any bounded observable `\u03c6 : X \u2192 \u211d`,\n`maxPlusIntegral \u03c6 P = sup_x (\u03c6(x) - I(x))`, and moreover the supremum is attained\nexactly at the full-support points of the tilt `tiltedMeasure P \u03c6 1`.\n**The key insight is** that idempotency turns Varadhan's asymptotic\n`lim (1/n) log \u222b e^{n\u03c6} d\u03bc_n = sup(\u03c6 - I)` into an *exact, attained* identity whose\nmaximisers are precisely the tilt-exposed points already characterised in\n`Tilting.lean`.\n**Why now?** `Tilting.lean` just proved that tilt points realise supporting lines;\nlinking them to the integral's argmax is the missing bridge between the duality and\nintegration sides of the theory, and all needed lemmas (`tilt_provides_support`,\n`maxPlusIntegral_attained`) are now in scope.\n\n### C2. Functoriality / transitivity of the contraction principle\n**Conjecture.** For surjections `T : X \u2192 Y`, `S : Y \u2192 Z`, the push-forwards compose:\n`pushforwardMeasure (S\u2218T) = pushforwardMeasure S \u2218 pushforwardMeasure T`, and the\ncontracted rate satisfies `I_Z(z) = inf_{S y = z} I_Y(y) = inf_{(S\u2218T) x = z} I_X(x)`.\n**The key insight is** that the fibration identity `inf'_fiber_eq` is associative\nunder fibre refinement, so the idempotent contraction principle is a *functor* from\nfinite types-with-rate to itself.\n**Why now?** The single-step contraction is proved; transitivity is the natural\ncategorical strengthening and would let the rate function be transported along any\nfinite computation graph (relevant to the catalog's tropical neural networks).\n\n### C3. Idempotent G\u00e4rtner\u2013Ellis theorem\n**Conjecture.** If a family `P_n` of tropical laws has CGFs converging,\n`(1/n) \u039b_n(\u03bb) \u2192 \u039b_\u221e(\u03bb)` with `\u039b_\u221e` convex, then the rescaled rate functions converge\nto the Legendre\u2013Fenchel transform `\u039b_\u221e^*`; the walk law `walkMeasure P n` is the\ncanonical example with `\u039b_n = n\u00b7\u039b`, giving `\u039b_\u221e = \u039b` exactly.\n**The key insight is** that for the max-plus walk the convexity hypothesis of\nG\u00e4rtner\u2013Ellis is *automatic* (the CGF is a finite sup of affine maps, already proved\nconvex in `idempotentCGF_convex`), so the idempotent G\u00e4rtner\u2013Ellis theorem holds\nwithout the delicate steepness conditions of the classical statement.\n**Why now?** `idempotentCGF_walk` (`= n\u00b7\u039b`) and `idempotentCGF_convex` are both in\nthe catalog; the limit `(1/n)(n\u00b7\u039b) = \u039b` makes the walk a closed-form test case for\nthe general theorem.\n\n### C4. Sharp contraction cost bound with explicit minimiser\n**Conjecture.** The contraction cost `inf_{y\u2208B} I_Y(y)` is attained at `y* = T x*`\nwhere `x*` minimises `I_X` over the preimage `T\u207b\u00b9(B)`, and the optimal transport\nplan between the X- and Y-level deviations is the identity-on-fibres map.\n**The key insight is** that in the idempotent world the contraction infimum is a\n*minimum* (finite sets), so the abstract LDP rate carries a concrete minimiser, unlike\nthe classical case where only an infimum is guaranteed.\n**Why now?** `idempotent_contraction` reduces the cost to a finite `inf'`, which always\nhas a witness via `Finset.exists_mem_eq_inf'`; turning that witness into a transport\nstatement is a short, well-scoped next step.\n\n### C5. Non-convex obstruction transports through contraction\n**Conjecture.** The duality gap of `DualityGap.lean` is *preserved* under any\nfibre-injective contraction: if `I_X` has a strict Legendre gap at `x`, then `I_Y` has\na gap at `T x` whenever the fibre over `T x` is a singleton.\n**The key insight is** that contraction can only ever *shrink* gaps (it takes\ninfima), so a singleton fibre transmits the gap unchanged \u2014 identifying exactly when\nnon-convexity survives coarse-graining.\n**Why now?** Both ingredients \u2014 the gap example (`gapMeasure`) and the exact\ncontraction identity \u2014 now coexist in the catalog, making this falsifiable on the\nexplicit `Fin 3` law by choosing `T` injective.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2602",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f2499c75",
+    "status": "available",
+    "timestamp": "2026-06-26T12:39:28.265484+00:00",
+    "title": "Catalog's idempotent large-deviation theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6114,7 +6114,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Kolmogorov-Arnold Representation"
   },
   {
-    "consumed_by_exp_id": "ab42f98e",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -6124,7 +6124,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "acb790ee",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nThis cycle formalized three machine-checked pillars (all `sorry`-free):\n\n* `Physics/RandomTensorNetwork/Thre",
-      "quality_score": 0.8075699999999999,
-      "sorry_count": 0,
-      "theorem_count": 238,
-      "timestamp": "2026-06-20T10:20:45",
-      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-    },
-    {
       "cycle_id": "5eb69ea3",
       "domain": "Algebra",
       "key_insight": "# FUTURE DIRECTIONS — Topological Generalization Bounds for Deep Learning\n\nDerived from the v19a research cycle that produced `Bounds.lean` and\n`CohomologyCapacity.lean`. Both deliverables serve the *",
@@ -2501,6 +2491,16 @@
       "theorem_count": 14,
       "timestamp": "2026-06-26T12:10:45",
       "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+    },
+    {
+      "cycle_id": "f2499c75",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Idempotent Probability: Large Deviations\n\nThis cycle extended the catalog's idempotent large-deviation theory\n(`Catalog/Tropical/MeasureTheory/{Basic,LargeDeviations,DualityGap}.",
+      "quality_score": 0.68192,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-26T12:39:36",
+      "title": "Idempotent Probability: Large Deviations"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7836800000000002
     }
   ],
-  "last_updated": "2026-06-26T12:10:45",
+  "last_updated": "2026-06-26T12:39:36",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "fdab34f3",
-        "quality": 0.4961724137931035,
-        "theorems": 21,
-        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-      },
-      {
         "cycle_id": "d9e56a6a",
         "quality": 0.5512728045325779,
         "theorems": 33,
@@ -4009,6 +4003,12 @@
         "quality": 0.5940000000000001,
         "theorems": 14,
         "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+      },
+      {
+        "cycle_id": "f2499c75",
+        "quality": 0.68192,
+        "theorems": 15,
+        "title": "Idempotent Probability: Large Deviations"
       }
     ]
   }
