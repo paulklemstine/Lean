@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6bd9e95d",
-      "domain": "Probability",
-      "key_insight": "# Future Directions\n\nThese build on the formalization in `Catalog/Logic/BelnapRetractable.lean`.\n\n## 1. From values to a syntactic formula language with valuations\n\nThe present consequence relation is",
-      "quality_score": 0.5233429030396415,
-      "sorry_count": 0,
-      "theorem_count": 112,
-      "timestamp": "2026-06-19T17:11:41",
-      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-    },
-    {
       "cycle_id": "225644b1",
       "domain": "Probability",
       "key_insight": "# Future Directions — Library of Babel: Combinatorics of the Universal Library\n\nThis cycle added, in `Algebra/LibraryOfBabelProbability.lean`, a probabilistic\n**lower** bound on substring occurrence (",
@@ -2501,6 +2491,16 @@
       "theorem_count": 37,
       "timestamp": "2026-06-26T03:45:09",
       "title": "Statistical Mechanics: Ising Model Phase Transition"
+    },
+    {
+      "cycle_id": "8f6e0a03",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Quadratic irrational density in the ratio spectrum\n\nDerived from this cycle's findings (closure of the quadratic-irrational locus\nunder the integer Möbius action; the determinant",
+      "quality_score": 0.67124,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-26T04:44:57",
+      "title": "Quadratic irrational density in the ratio spectrum"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7095
     }
   ],
-  "last_updated": "2026-06-26T03:45:09",
+  "last_updated": "2026-06-26T04:44:57",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "04a6a732",
-        "quality": 0.6946599999999999,
-        "theorems": 18,
-        "title": "NISQ-Optimized Quantum Error Mitigation via Algebraic Topology"
-      },
-      {
         "cycle_id": "226a5c12",
         "quality": 0.57117,
         "theorems": 24,
@@ -3637,6 +3631,12 @@
         "quality": 0.554,
         "theorems": 8,
         "title": "Exact Value of the Binomial GCD in OEIS A080170"
+      },
+      {
+        "cycle_id": "8f6e0a03",
+        "quality": 0.67124,
+        "theorems": 12,
+        "title": "Quadratic irrational density in the ratio spectrum"
       }
     ],
     "NumberTheory": [

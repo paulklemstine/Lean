@@ -11006,7 +11006,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "dfb56ea4",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -11032,7 +11032,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:24.924994+00:00",
       "title": "Navier-Stokes Existence and Smoothness"
@@ -16503,7 +16503,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "b0e2bb19",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -16529,7 +16529,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T22:10:07.376136+00:00",
       "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
@@ -34654,7 +34654,7 @@
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "Frankl-Wang conjecture",
@@ -34662,7 +34662,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7410b0f1",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -34678,7 +34678,7 @@
         "Algebra"
       ],
       "id": "fd_2300",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T04:48:24.095413+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sharp_product_bound_non_trivial_cross_intersecting {n k : ℕ} (hn : n ≥ 2 * k) (hk : k ≥ 3)\n  (A B : Finset (Finset (Fin n)))\n  (hA : ∀ a ∈ A, a.card = k)\n  (hB : ∀ b ∈ B, b.card = k)\n  (h_cross : ∀ a ∈ A, ∀ b ∈ B, (a ∩ b).Nonempty)\n  (h_non_trivial_A : ∀ x : Fin n, ∃ a ∈ A, x ∉ a)\n  (h_non_trivial_B : ∀ x : Fin n, ∃ b ∈ B, x ∉ b) :\n  (A.card * B.card : ℕ) ≤ (Nat.choose (n - 1) (k - 1) - Nat.choose (n - k - 1) (k - 1) + 1)^2 := by sorry",
       "lineage_refs": [],
@@ -34692,7 +34692,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23322v1",
       "source_path": "http://arxiv.org/abs/2606.23322v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T04:53:00.715630+00:00",
       "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
@@ -41647,7 +41647,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "d7fd1af1",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41673,7 +41673,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.23097v1",
       "source_path": "http://arxiv.org/abs/2606.23097v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T20:58:20.101200+00:00",
       "title": "Domain Finiteness"
@@ -41734,7 +41734,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "01ec1037",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -41764,7 +41764,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22825v1",
       "source_path": "http://arxiv.org/abs/2606.22825v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-24T21:58:37.105519+00:00",
       "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
@@ -46859,7 +46859,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "ab7f1188",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46888,7 +46888,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.27004v1",
       "source_path": "http://arxiv.org/abs/2606.27004v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-26T02:44:27.903292+00:00",
       "title": "Duality of Sublevel Set Homotopy Types for RC Functions on Finite‑Dimensional Banach Spaces"
@@ -46985,6 +46985,51 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Youngs' 1996 quadrangulation result",
+        "Thomassen's finite 6-critical graph theorem"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For any positive integer k, if G is a signed graph embedded on the projective plane where all faces have length k and are positive, then the circular chromatic number of G is either at most 2 or at least 2k/(k-2). In other words, the interval (2, 2k/(k-2)) is excluded from the possible values of the circular chromatic number.",
+      "domain_bridges": [
+        "Topological graph theory",
+        "Signed graph theory",
+        "Circular chromatic number"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Geometry"
+      ],
+      "id": "fd_2568",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem circular_chromatic_number_gap_signed_graph {k : ℕ} (G : SignedGraph) [Embedding G ProjectivePlane] [AllFacesLength G k] [AllFacesPositive G] : circ_chromatic G ≤ 2 ∨ circ_chromatic G ≥ (2*k)/(k-2)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the winding number framework from the paper to characterize continuous extensions of circular colorings for signed graphs, establishing topological obstructions that enforce the chromatic gap.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25644v1",
+      "source_path": "http://arxiv.org/abs/2606.25644v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T04:46:54.643121+00:00",
+      "title": "Circular Chromatic Number Gap for Signed Graphs with Positive Faces"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Theorem 1",
         "Corollary 1",
         "Brown-Erdős-Sós conjecture"
@@ -47005,7 +47050,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2568",
+      "id": "fd_2569",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47053,7 +47098,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2569",
+      "id": "fd_2570",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47098,7 +47143,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2570",
+      "id": "fd_2571",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47142,7 +47187,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2571",
+      "id": "fd_2572",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47189,7 +47234,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2572",
+      "id": "fd_2573",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47234,7 +47279,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2573",
+      "id": "fd_2574",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -47253,6 +47298,51 @@
       "thread_id": "",
       "timestamp": "2026-06-26T04:18:05.916058+00:00",
       "title": "Resolution of Erdős Problem 1061 using analytic and combinatorial methods"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Gawron-Miska-Ulas conjecture",
+        "Prouhet-Thue-Morse sequence",
+        "2-adic valuation properties"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "For every integer m ≥ 2 and every integer k ≥ 0, there exists a natural number n such that the 2-adic valuation of t_m(n) is at least k.",
+      "domain_bridges": [
+        "Algebraic combinatorics",
+        "p-adic analysis"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2575",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.25825v1",
+      "source_path": "http://arxiv.org/abs/2606.25825v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T04:48:18.981471+00:00",
+      "title": "Unbounded 2-adic valuation of coefficients in F_m(x)^m for m ≥ 2"
     },
     {
       "ambition_level": "extension",
@@ -49361,7 +49451,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "8344a207",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -49386,7 +49476,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:24:59.227937+00:00",
       "title": "Birch and Swinnerton-Dyer Conjecture"
@@ -52914,7 +53004,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "f0b7b2e4",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -52939,7 +53029,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432688+00:00",
       "title": "Ramsey Theory: Bounds and Constructions"
@@ -61470,7 +61560,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "ab8befc8",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -61495,7 +61585,7 @@
       "research_mode": "team",
       "source_exp_id": "a0dd96a5",
       "source_path": "These conjectures continue the research cycle begun in",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-16T12:52:43.615426+00:00",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"

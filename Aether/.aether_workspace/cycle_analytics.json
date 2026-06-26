@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-26T03:45:12.898342+00:00",
+  "last_updated": "2026-06-26T04:44:59.500278+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -7695,6 +7695,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-26T03:45:12.623483+00:00",
       "title": "Statistical Mechanics: Ising Model Phase Transition"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3631,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 11,
+      "domain": "Novelty",
+      "duration_seconds": 1090.7116174697876,
+      "end_time": 1782448405.3868997,
+      "files_integrated": 7,
+      "job_id": "8f6e0a03",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.86,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.8,
+        "composite": 0.6131,
+        "cross_domain": 0.9,
+        "grade": "substantial",
+        "importance": 0.3828,
+        "novelty": 0.86,
+        "proof_depth": 0.1783,
+        "usefulness": 0.5392
+      },
+      "quality_score": 0.67124,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1782447314.6752822,
+      "strategy_count": 0,
+      "theorem_count": 12,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 12,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-26T04:44:59.064834+00:00",
+      "title": "Quadratic irrational density in the ratio spectrum"
     }
   ]
 }

@@ -62,7 +62,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "8344a207",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -74,7 +74,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -1136,7 +1136,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f0b7b2e4",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1148,7 +1148,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -2303,7 +2303,7 @@
       "Frankl-Wang conjecture",
       "Hilton-Milner theorem"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7410b0f1",
     "description": "For integers n ≥ 2k and k ≥ 3, any two non-trivial cross-intersecting families A, B ⊆ ([n] choose k) satisfy |A| * |B| ≤ h(n,k)^2, where h(n,k) = choose(n-1, k-1) - choose(n-k-1, k-1) + 1 is the size of the Hilton-Milner family. This formalizes the resolved Frankl-Wang conjecture.",
     "domain_bridges": [
       "finite set families",
@@ -2320,7 +2320,7 @@
     "proof_strategy": "Formalize the definitions of cross-intersecting and non-trivial families, and the size function h(n,k). Apply the shifting technique to reduce to left-compressed families, and use the diversity method to bound the sizes of families with elements far from a common core. Establish properties of the extended shift operation to manage the inductive steps.",
     "research_mode": "team",
     "source_exp_id": "2606.23322v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T04:53:00.715630+00:00",
     "title": "Sharp Product Bound for Non-Trivial Cross-Intersecting Families"
   },
@@ -6148,7 +6148,7 @@
       "Parry",
       "Ito-Takahashi"
     ],
-    "consumed_by_exp_id": "d7fd1af1",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For rational β = p/q, the natural extension has finite domain bridges.",
     "domain_bridges": "finite",
     "domains": [
@@ -6161,7 +6161,7 @@
     "proof_strategy": "Constructive counterexample based on known results",
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -6197,7 +6197,7 @@
       "arXiv:2303.04252",
       "doi:10.1016/j.disc.2023.112345"
     ],
-    "consumed_by_exp_id": "01ec1037",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
     "domain_bridges": [
       "extremal graph theory",
@@ -6214,7 +6214,7 @@
     "proof_strategy": "We will develop a simplicial complex version of the Hoffman bound for graphs by analyzing the spectral properties of the signless Laplacian matrix of the join of simplices. This will involve studying the eigenvalues of the join matrix, constructing explicit examples achieving the bound, and using homology constraints to derive inequalities on the spectral radius. We will also employ a matroid intersection approach to characterize the extremal complexes.",
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T21:58:37.105519+00:00",
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
   },
@@ -8958,7 +8958,7 @@
       "Lean4 Mathlib: Topology/Algebra/Module.lean",
       "Lean4 Mathlib: Analysis/Convex/Basic.lean"
     ],
-    "consumed_by_exp_id": "ab7f1188",
+    "consumed_by_exp_id": "",
     "description": "For a non‑negative homogeneous convex function \\(p\\) and a non‑negative homogeneous convex function \\(q\\) on a finite‑dimensional real Banach space \\(X\\), consider the ratio function \\(f = p/q\\) (defined on \\(\\{x \\mid q(x)>0\\}\\)). The conjecture asserts that the sublevel sets of \\(f\\) and of its polarity dual \\(f^\\circ\\) are homeomorphic after an explicit linear transformation given by the polarity map. Consequently, their reduced homology groups are isomorphic in all degrees, establishing a precise topological duality that underlies the critical‑point Morse equivalence proved in the paper.",
     "domain_bridges": [
       "convex_analysis ↔ algebraic_topology",
@@ -8974,7 +8974,7 @@
     "proof_strategy": "1. Formalize the polarity map \\(\\mathcal P : X \\to X^*\\) as a linear isomorphism induced by the dual norm. 2. Show that for any \\(c>0\\), the sublevel set \\(\\{x\\mid p(x)/q(x) \\le c\\}\\) is the image under \\(\\mathcal P^{-1}\\) of the sublevel set of the dual ratio \\(\\{\\phi\\mid p^\\circ(\\phi)/q^\\circ(\\phi) \\le c\\}\\). 3. Use the fact that \\(\\mathcal P\\) is a homeomorphism to deduce a homeomorphism of sublevel sets. 4. Invoke the existing Lean theorem `homeomorph.induced_homology_eq` to obtain isomorphism of reduced homology groups. 5. Assemble the result into a statement about Morse critical groups being preserved under polarity duality.",
     "research_mode": "team",
     "source_exp_id": "2606.27004v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T02:44:27.903292+00:00",
     "title": "Duality of Sublevel Set Homotopy Types for RC Functions on Finite‑Dimensional Banach Spaces"
   },
@@ -9029,6 +9029,32 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Youngs' 1996 quadrangulation result",
+      "Thomassen's finite 6-critical graph theorem"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any positive integer k, if G is a signed graph embedded on the projective plane where all faces have length k and are positive, then the circular chromatic number of G is either at most 2 or at least 2k/(k-2). In other words, the interval (2, 2k/(k-2)) is excluded from the possible values of the circular chromatic number.",
+    "domain_bridges": [
+      "Topological graph theory",
+      "Signed graph theory",
+      "Circular chromatic number"
+    ],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_2568",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the winding number framework from the paper to characterize continuous extensions of circular colorings for signed graphs, establishing topological obstructions that enforce the chromatic gap.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25644v1",
+    "status": "available",
+    "timestamp": "2026-06-26T04:46:54.643121+00:00",
+    "title": "Circular Chromatic Number Gap for Signed Graphs with Positive Faces"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "Theorem 1",
       "Corollary 1",
       "Brown-Erdős-Sós conjecture"
@@ -9043,7 +9069,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2568",
+    "id": "fd_2569",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct an explicit family of hypergraphs achieving the lower bound or use probabilistic methods to demonstrate existence; might involve careful averaging arguments similar to those in the paper.",
@@ -9072,7 +9098,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2569",
+    "id": "fd_2570",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Establish the forward direction by constructing an explicit 4-coloring algorithm using the refined Gallai-Edmonds decomposition, then prove the backward direction by showing that any planar graph requiring 4 colors for conflict-free coloring must contain a subgraph that violates the Four Color Theorem. The equivalence follows from demonstrating that both statements have the same logical strength and can be used to prove each other via constructive transformations.",
@@ -9098,7 +9124,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2570",
+    "id": "fd_2571",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Compute the Hessian matrix of the quadratic form in each exponent, determine its discriminant, verify it matches one of the allowed values {8,12,16}, then apply the Bailey lemma or Bailey pair machinery to establish the sum-to-product identity. For the converse, use modularity constraints to show that other discriminants cannot yield modular forms.",
@@ -9123,7 +9149,7 @@
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2571",
+    "id": "fd_2572",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the fact that two vertices are in the same component of the union iff there is a path using edges from the union, which corresponds to the transitive closure of the union of relations, which is the join of the equivalence relations.",
@@ -9151,7 +9177,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2572",
+    "id": "fd_2573",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the Newton polygon decomposition algorithm in Lean, then prove that under Montes-Nart index conditions, the constructed group matches the decomposition group by verifying compatibility with ramification filtrations and Frobenius actions.",
@@ -9177,7 +9203,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2573",
+    "id": "fd_2574",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct a three-parameter rational solution and apply a sieve to uniformize solutions across divisor classes.",
@@ -9186,6 +9212,32 @@
     "status": "available",
     "timestamp": "2026-06-26T04:18:05.916058+00:00",
     "title": "Resolution of Erdős Problem 1061 using analytic and combinatorial methods"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Gawron-Miska-Ulas conjecture",
+      "Prouhet-Thue-Morse sequence",
+      "2-adic valuation properties"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer m ≥ 2 and every integer k ≥ 0, there exists a natural number n such that the 2-adic valuation of t_m(n) is at least k.",
+    "domain_bridges": [
+      "Algebraic combinatorics",
+      "p-adic analysis"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2575",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Inductive construction using the functional equation F_m(x) = (1-x)^m F_m(x^2) combined with p-adic valuation analysis to demonstrate arbitrarily high 2-adic valuations.",
+    "research_mode": "team",
+    "source_exp_id": "2606.25825v1",
+    "status": "available",
+    "timestamp": "2026-06-26T04:48:18.981471+00:00",
+    "title": "Unbounded 2-adic valuation of coefficients in F_m(x)^m for m ≥ 2"
   },
   {
     "ambition_level": "extension",
@@ -9676,7 +9728,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ab8befc8",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
     "domain_bridges": [],
     "domains": [
@@ -9688,7 +9740,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -10273,7 +10325,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b0e2bb19",
+    "consumed_by_exp_id": "",
     "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
     "domain_bridges": [],
     "domains": [
@@ -10286,7 +10338,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.376136+00:00",
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
@@ -10313,7 +10365,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "dfb56ea4",
+    "consumed_by_exp_id": "",
     "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
     "domain_bridges": [],
     "domains": [
@@ -10326,7 +10378,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:24.924994+00:00",
     "title": "Navier-Stokes Existence and Smoothness"
   },
