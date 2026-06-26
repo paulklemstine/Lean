@@ -43729,7 +43729,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.GroupTheory.Coxeter",
         "Mathlib.Combinatorics.Polytope",
@@ -43737,7 +43737,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "1394b2e6",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -43752,7 +43752,7 @@
         "Algebra"
       ],
       "id": "fd_2497",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T23:43:37.495776+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_for_A_four_m_plus_three (m : ℕ) (hm : m ≥ 3) :\n  let n := 4 * m + 3\n  let G := alternating_group n\n  -- The maximal rank of any string C‑group representation of G is ⌊(n-1)/2⌋\n  have hmax : ∃ r, (r = (n - 1) / 2) ∧ ∃ (ρ : fin r → G), is_string_C_group ρ ∧\n    (∀ σ : fin r → G, is_string_C_group σ → (∀ i, σ i = ρ i) → False) := sorry\n  -- There exists a self‑dual string C‑group of rank 2*m\n  have hexist : ∃ (ρ : fin (2*m) → G), is_string_C_group ρ ∧ self_dual ρ :=\n    construct_self_dual_string_C_group_of_rank_two_mul_m m hm\n  -- No self‑dual string C‑group of rank 2*m+1 exists\n  have hnon : ¬ ∃ (ρ : fin (2*m+1) → G), is_string_C_group ρ ∧ self_dual ρ :=\n    by\n      intro h\n      rcases h with ⟨ρ, hC, hsd⟩\n      -- derive contradiction using intersection condition and parity\n      exact contradict_self_dual_rank_plus_one ρ hC hsd hm\n  exact ⟨hexist, hnon⟩",
       "lineage_refs": [],
@@ -43766,7 +43766,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.24654v1",
       "source_path": "http://arxiv.org/abs/2606.24654v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-25T06:41:04.137986+00:00",
       "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
@@ -46949,7 +46949,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "8ed8ca57",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46974,7 +46974,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.25854v1",
       "source_path": "http://arxiv.org/abs/2606.25854v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-26T04:18:00.464209+00:00",
       "title": "Sharp approximate Carathéodory theorem and application to iterated Delaunay refinement"
@@ -48520,6 +48520,55 @@
       "title": "Externally Supported Independence Number for Trees"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "ZhaoYan2023",
+        "YanJin2024",
+        "GrossMansourTucker2021",
+        "Bouchet1987",
+        "ChunMoffattNobleRueckriemen2019"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The paper proves that every binary delta-matroid has the property that all five nontrivial partial-twuality polynomials (for • ∈ {*, ×, *×, ×*, *×*}) are interpolating (each is either even, odd, or both even- and odd-interpolating). It also shows the binary assumption is essential by providing counterexamples. This conjecture proposes the exact converse: if a delta-matroid has this universal interpolation property for all five operators simultaneously, then it must be binary. This would characterize binary delta-matroids purely in terms of the interpolation behavior of their partial-twuality polynomials.",
+      "domain_bridges": [
+        "Ribbon Graphs",
+        "Topological Graph Theory",
+        "Polynomial Invariants"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2602",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem binary_iff_universal_partial_twuality_interpolation (D : DeltaMatroid) : IsBinary D ↔ (∀ (• : TwualityOperator), • ∈ {TwualityOperator.twist, TwualityOperator.loopComp, TwualityOperator.twistLoopComp, TwualityOperator.loopCompTwist, TwualityOperator.twistLoopCompTwist} → IsInterpolating (partialTwualityPolynomial D •)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "1. Formalize delta-matroids, binary delta-matroids, and the five twuality operations in Lean. 2. Define partial-• polynomials and the notions of even/odd/interpolating polynomials. 3. Prove the forward direction (binary ⇒ universal interpolation) by translating the paper's proof. 4. For the converse, assume a non-binary delta-matroid D has universal interpolation. Use the fact that non-binary delta-matroids contain a minor isomorphic to one of the excluded minors for binary delta-matroids (e.g., U_{2,4} or its delta-matroid analogues). 5. Compute the partial-twuality polynomials for these excluded minors and show at least one operator fails interpolation. 6. Use minor-closure properties of the interpolation property to derive a contradiction.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.22888v1",
+      "source_path": "http://arxiv.org/abs/2606.22888v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T23:41:24.933247+00:00",
+      "title": "Characterization of Delta-Matroids with Universal Partial-Twuality Interpolation"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -48545,7 +48594,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2602",
+      "id": "fd_2603",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -48593,7 +48642,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2603",
+      "id": "fd_2604",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -48638,7 +48687,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2604",
+      "id": "fd_2605",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -48682,7 +48731,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2605",
+      "id": "fd_2606",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -48729,7 +48778,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2606",
+      "id": "fd_2607",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -48774,7 +48823,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2607",
+      "id": "fd_2608",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -48819,7 +48868,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2608",
+      "id": "fd_2609",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -48860,7 +48909,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2609",
+      "id": "fd_2610",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -48905,7 +48954,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2610",
+      "id": "fd_2611",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -48944,7 +48993,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2611",
+      "id": "fd_2612",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -48986,7 +49035,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2612",
+      "id": "fd_2613",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -49030,7 +49079,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2613",
+      "id": "fd_2614",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -49076,7 +49125,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2614",
+      "id": "fd_2615",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -49121,7 +49170,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2615",
+      "id": "fd_2616",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -49167,7 +49216,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2616",
+      "id": "fd_2617",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -49213,7 +49262,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2617",
+      "id": "fd_2618",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -49263,7 +49312,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2618",
+      "id": "fd_2619",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
@@ -49309,7 +49358,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2619",
+      "id": "fd_2620",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of the use of filtered complete intersection properties in the orderization process",
@@ -49355,7 +49404,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2620",
+      "id": "fd_2621",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vishik_non_similarity_char_2 (m : ℕ) (hm : m ≥ 3) : ∃ (F : Field) (char F = 2), ∃ (φ ψ : QuadraticForm F), \n  dim φ = 2^m ∧ dim ψ = 2^m ∧ \n  anisotropic φ ∧ anisotropic ψ ∧ \n  (∀ (E : Field), (E ⊇ F) → total_isotropy_index φ E = total_isotropy_index ψ E) ∧ \n  ¬ similar φ ψ",
@@ -49400,7 +49449,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2621",
+      "id": "fd_2622",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularized_sum_primes (P : ℂ → ℂ) (is_prime_zeta : IsPrimeZeta P) (continuation : AnalyticContinuation P) : \n  continuation.value_at (-1 : ℂ) = expected_constant_value := by sorry",
@@ -49449,7 +49498,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2622",
+      "id": "fd_2623",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem extremal_veronese_circuit_classification (m : ℕ) (t : ℕ) (d : ℕ) : let circuit := λ (forms : Fin t → (ℓ : LinearForm 𝕂) × ℓ ≠ 0), (linear_dependent_minimally (λ i, forms i |> Prod.fst ^ m)) → (dim (span (λ i, (forms i).1)) = (t + m - 2) / m) in circuit → (∃ (curve_config : Fin t → LinearForm 𝕂), (∀ i, (curve_config i) ^ m = (forms i).1 ^ m) ∧ (rational_normal_curve_configuration curve_config) ∧ (t = m * (d - 1) + 2))",
@@ -49496,7 +49545,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2623",
+      "id": "fd_2624",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conjecture_zero_sum_characterization {p : ℕ} [Fact p.Prime] (hp : p % 2 = 1)\n    (ℓ : ℕ) (hℓ : 1 ≤ ℓ ∧ ℓ ≤ (p - 1) / 2)\n    (S : Finset (ZMod p)) (hsym : S = S.image (fun x => -x))\n    (hzero : (0 : ZMod p) ∉ S) :\n    (∃ (vs : Fin (2 * ℓ + 1) → ZMod p),\n        (Pairwise (fun i j => vs i ≠ j)) ∧\n        (∀ i : Fin (2 * ℓ + 1), (vs ((i + 1 : Fin (2 * ℓ + 1))) - vs i) ∈ S)) ↔\n    (∃ (t : Finset (ZMod p)), t ⊆ S ∧ t.card = 2 * ℓ + 1 ∧ (∑ x in t, x) = 0) := by sorry",
@@ -49543,7 +49592,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2624",
+      "id": "fd_2625",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem positive_dyadic_density (P : Rat) (Q : Nat) (H : Q.numerator < Q) (inf_support : nat.infinite_support (function n, h (a : nat) => a in support n) (support_sum : nat.sum (n -> n * h (bit_from_n n)) / 2^n = P / Q)) : (exists c_Q : PositiveReals, forall X in Dyads, sufficiently_large X, A_support (2*X) - A_support X >= c_Q * X) := ...",
@@ -49587,7 +49636,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2625",
+      "id": "fd_2626",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem qc_asymptotic_tight {n : ℕ} (hn : 1 ≤ n) : (qc n : ℝ) / n ≤ 0.216 + o(1) := by sorry",
@@ -49631,7 +49680,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2626",
+      "id": "fd_2627",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "conjecture_s3_eq : ∀ (k : ℕ), k ≥ 5 → s₃ k = (twr (k-2) 2) ^ 2",
@@ -49679,7 +49728,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2627",
+      "id": "fd_2628",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_size_non_outer_additive_strong_blocking_set {q : ℕ} [hq : Fact (IsPrimePower q)] {h : ℕ} (h_pos : h > 1) {k : ℕ} (k_pos : k ≥ 2) : ∀ (B : AdditiveStrongBlockingSet q k), ¬ ContainsHyperplane B → |B| ≤ q^(k-1) := by\n  -- formal proof outline\n  sorry",
@@ -49721,7 +49770,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2628",
+      "id": "fd_2629",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "M_{g,n} ≅ G_{g,n}",
@@ -49760,7 +49809,7 @@
         "Pythagorean",
         "Logic"
       ],
-      "id": "fd_2629",
+      "id": "fd_2630",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Central trinomial coefficient bounds",
@@ -49806,7 +49855,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2630",
+      "id": "fd_2631",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem local_obstruction_dim_twisted_steinberg\n  (p : ℕ)\n  (ℓ : ℕ)\n  (is_prime_p : fact_is_prime p)\n  (is_prime_ℓ : fact_is_prime ℓ)\n  (h_p_not_ℓ : p ≠ ℓ)\n  (type : WeilDeligneType)\n  (h_type : type = twisted_steinberg p)\n  (h_congruence : p % ℓ = 1) :\n  dim (H0 Gp (cyclotomic_char ℓ ⊗ adjoint_zero_rho_bar)) = 1 :=",
@@ -49862,7 +49911,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2631",
+      "id": "fd_2632",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem consecutive_zeckendorf_niven_bound {d a : ℕ} (h : d > 0) : ∀ (n m : ℕ), n ≤ m → (∀ k ∈ Finset.Icc n m, ZeckendorfNiven (a + k * d)) → m - n + 1 ≤ ⌊Real.logb (phi) (d : ℝ)⌋ + 2 := by sorry",
@@ -49907,7 +49956,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2632",
+      "id": "fd_2633",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem wallis_hierarchy_even_branch (k : ℕ) : \n  let P_m := ∏' (n : ℕ), (Real.exp (counterterm k n)) * (1 - 1/(n^2))^(n^(2*k))\n  exists (val : ℝ), P_m = val ∧ is_closed_form_zeta_pi_gamma val\n  where\n    counterterm (k : ℕ) (n : ℕ) : ℝ := sorry",
@@ -49954,7 +50003,7 @@
         "Logic",
         "Pythagorean"
       ],
-      "id": "fd_2633",
+      "id": "fd_2634",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem erdos_550_effective_threshold (k : ℕ) (m : Fin k → ℕ) (hk : 2 ≤ k) (hordered : ∀ i j, i ≤ j → m i ≤ m j) :\n  ∃ (C C' : ℝ) (poly : ℕ → ℕ), ∀ (m₁ : ℕ), let n₀ := C * (∏ i, m i) ^ (poly k m₁) in\n  ∀ (n : ℕ) (T : Graph), n ≥ n₀ → (T.IsTree ∧ T.VertexCount = n) →\n  let q := k - 1 in\n  let r := RamseyNumber T (CompleteMultipartite [m 0, m 1]) in\n  RamseyNumber T (CompleteMultipartite (List.map (fun i => m i) (List.range k))) ≤ q * (r - 1) + m 0",
@@ -50001,7 +50050,7 @@
         "Algebra",
         "Geometry"
       ],
-      "id": "fd_2634",
+      "id": "fd_2635",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formal equivalence of mutation operations on quivers and matrix decompositions",
@@ -50046,7 +50095,7 @@
         "Pythagorean",
         "Physics"
       ],
-      "id": "fd_2635",
+      "id": "fd_2636",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem spectral_radius_vertex_deletion (G : simple_graph) (v : vertex G) [decidable_eq (vertex G)] [directed (edge G)] [signed_graph (G : graph) : @signed_graph (G : graph)] :\n    @rho (G) ≤ sqrt (@rho (subgraph (erase_vertex v G))² + 2 * @degree v - 1) :=\n    ...",
@@ -50086,7 +50135,7 @@
       "domains": [
         "Geometry"
       ],
-      "id": "fd_2636",
+      "id": "fd_2637",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Homotopy type theorem",
@@ -50133,7 +50182,7 @@
         "Algebra",
         "Logic"
       ],
-      "id": "fd_2637",
+      "id": "fd_2638",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem betti_whittaker_period_contragredient {n : ℕ} {k : Type*} [field k] [number_field k] \\(π : AutomorphicRepresentation (GL n k)\\) (hπ : IsCohomological π) (hgen : IsGeneric π) : \\(\\mathrm{P}_{\\betti}(πᵛ) = \\frac{C(π)}{\\mathrm{P}_{\\betti}(π)}\\) := sorry",
@@ -50181,7 +50230,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2638",
+      "id": "fd_2639",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem sidorenko_directed_cycle (Γ : Type*) [fintype Γ] [group Γ] (f : Γ → ℝ) (n : ℕ) : t (directed_cycle n) (correlation_kernel f) ≥ (Exp_g Γ f)^(2*n)",
@@ -50224,7 +50273,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2639",
+      "id": "fd_2640",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem girth_three_for_non_nilpotent {G : Group} [Fintype G] (hG : ¬IsNilpotent G) (hcycle : ContainsCycle (DeletedComaximalSubgroupGraph G)) : Girth (DeletedComaximalSubgroupGraph G) = 3 := by sorry",
@@ -50273,7 +50322,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2640",
+      "id": "fd_2641",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "∀ (q : ℕ) [[-1 ∉ ℤₚ² △ {0} → (∃ f : P₃ → ℂ → ℂ) (∀ x ∈ ℤ³ ∩ P₃ [∥ (f dσ)⁻¹(x) ∥_{L^r} ≤ R*(2→r) ∥f∥_{L²}] ∨ ∀ x ∈ ℤ³ ∩ P₃ [∥ (f dσ)⁻¹(x) ∥_{L^r} > R*(2→r) ∥f∥_{L²}]]) → (∀ S ⊆ ℤ³ ∩ P₃ [|S| = k] → energies[S] = O(k³^(2/3)))",
@@ -50294,82 +50343,47 @@
       "title": "Endpoint Restriction Conjecture for P₃ Implies Λ(3) Structure of Lattice Points"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "# Future Directions — Shifted t-Schur Basis / Plethystic Triviality\n\nThis cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the\ngenerating-function backbone of the shifted (Schur `Q`) basis and the precise\n\"plethystic triviality\" statement: the logarithmic derivative of the shifted\ngenerating series `qGen n = ∏ᵢ (1 + xᵢT)/(1 - xᵢT)` is the series times a\npotential supported **only on the odd power sums**:\n\n```\n(qGen n)' = qGen n · ( 2 ∑_{k≥0} p_{2k+1} T^{2k} ).\n```\n\nBelow are bold, testable conjectures for follow-up cycles. Each is stated so it\ncan be turned directly into a Lean theorem skeleton.\n\n## C1. Exponential closed form (odd-power-sum exponential)\n\n**Conjecture.** Over `MvPolynomial (Fin n) ℚ`, with `PowerSeries.exp`,\n```\nqGen n = PowerSeries.exp · (rescaled antiderivative of oddPsumSeries n),\n```\ni.e. `qGen n = exp( 2 ∑_{k≥1, k odd} p_k T^k / k )`.\nThis upgrades the first-order ODE `qGen_logDeriv` to the integrated form and is\nthe cleanest statement that \"Schur `Q` lives in `ℚ[p₁,p₃,p₅,…]`\".\n*Test path:* build a `PowerSeries` antiderivative `I` with `I' = oddPsumSeries n`\nand constant term `0`, prove `(qGen n) = exp I` by showing both satisfy the same\nODE with the same constant term (uniqueness of solutions of `F' = F·g`,\n`F(0)=1`).\n\n## C2. Subalgebra membership of the one-row coefficients `qᵣ`\n\n**Conjecture.** Each coefficient `qᵣ = coeff r (qGen n)` lies in the subalgebra\n`ℚ[p₁, p₃, p₅, …] ⊆ MvPolynomial (Fin n) ℚ` generated by the odd power sums, and\nthe even power sums `p₂, p₄, …` are *not* needed. Concretely, `qᵣ` is a polynomial\nwith rational coefficients in `{p_{2j+1} : 2j+1 ≤ r}`.\n*Test path:* Newton-type recurrence `r·qᵣ = 2 ∑_{j≥0} p_{2j+1} q_{r-(2j+1)}`\nextracted from `qGen_logDeriv` by reading degree `r-1` coefficients, then induct.\n\n## C3. Newton recurrence for the shifted basis\n\n**Conjecture (provable now, strong lemma).** For all `r ≥ 1`,\n```\nr · (coeff r (qGen n)) = 2 · ∑_{j : 2j+1 ≤ r} p_{2j+1} · (coeff (r-(2j+1)) (qGen n)).\n```\nThis is the coefficient-`(r-1)` reading of `qGen_logDeriv` via\n`coeff_derivativeFun` and `coeff_mul`, and would give an effective algorithm for\nthe `qᵣ` purely from odd power sums. It is the discrete shadow of C1/C2.\n\n## C4. `t`-deformation and the \"shift by t\"\n\n**Conjecture.** Introduce a deformation `oneRowQ_t x t = ∏-kernel with factor\n(1 - t·xᵢT)` (a one-parameter family interpolating between `t = 1`, the Schur `Q`\ncase, and `t = 0`, the trivial/Schur case). Then the logarithmic derivative is\n```\n(qGen_t n)' = qGen_t n · ( (1+t) ∑_{k≥1} ((-t)^{k-1}+1)/?  p_k T^{k-1} ),\n```\nand the *odd-only* support is recovered exactly at `t = 1`, while at `t = 0` the\npotential becomes the full (all-degree) power-sum series of the ordinary Schur\ngenerating function. **Falsifiable claim:** the set of `t ∈ ℚ` for which the\nlog-derivative potential is supported on even `T`-degrees (odd power sums only)\nis exactly `{1}`. This isolates Schur `Q` as the unique \"plethystically trivial\"\nmember of the family.\n\n## C5. Cauchy / dual-Cauchy identity for the shifted kernel\n\n**Conjecture.** With two alphabets `x` (in `Fin n`) and `y` (in `Fin m`),\n```\n∏_{i,j} (1 + xᵢ yⱼ)/(1 - xᵢ yⱼ) = exp( 2 ∑_{k odd} p_k(x) p_k(y) / k ),\n```\nthe bilinear Cauchy kernel of the shifted basis, whose exponent is again\nsupported only on odd `k`. *Test path:* iterate `oneRowQ_logDeriv` /  C1 in two\nvariable families; the odd-only support is inherited factorwise, so this should\nreduce to C1 plus a product-over-`j` Leibniz step (reuse\n`derivativeFun_prod_of_logDeriv`).\n\n---\n\n### Cross-domain bridge (speculative)\n\nThe ODE `F' = F·g` with `g` supported on odd degrees is structurally identical to\nthe free-fermion / neutral-fermion vertex-operator presentation of Schur `Q`\n(odd Heisenberg modes only). A future cycle could formalize the Heisenberg\ncommutation `[a_k, a_{-k}] = k/2` for odd `k` and recover `qGen_logDeriv` as the\nvertex-operator vacuum expectation — connecting this file to the catalog's\n\"neutral fermion vertex operator\" theme.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Bridges",
-        "Pythagorean"
+      "catalog_references": [
+        "arXiv:2506.18294"
       ],
-      "id": "fd_2641",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "913e3580",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/913e3580_retry1",
-      "status": "available",
-      "thread_id": "th_b35201d8",
-      "timestamp": "2026-06-26T23:37:08.036483+00:00",
-      "title": "This cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Mutually Orthogonal Italian (Latin) Squares\n\nThis cycle formally established, for Italian squares (= Latin squares) of order\n`n = #α`:\n\n- **Upper bound** `ItalianSquares.card_le_card_sub_one`: any pairwise-orthogonal\n  family has at most `n − 1` members (for `n ≥ 2`).\n- **Prime-power tightness** `ItalianSquares.exists_mols_prime_power` /\n  `maximum_mols_eq_card_sub_one`: over a finite field of order `q` the affine squares\n  `S_a(i,j) = a·i + j` (`a ≠ 0`) realize the maximum `q − 1`, so the bound is attained\n  for every prime power.\n\nThe converse — \"the bound `n − 1` is attained **only** when `n` is a prime power\" —\nwas deliberately **not** asserted: it is equivalent to the (open) existence question\nfor finite projective planes. The directions below are derived from that gap and from\nthe Stage-3/Stage-4 failure analysis.\n\n## Conjecture 1 — Plane equivalence: complete MOLS ⇔ projective plane of order n\nA family of `n − 1` pairwise orthogonal Italian squares of order `n` exists **iff**\nthere is a projective (equivalently affine) plane of order `n`.\n- **The key insight is** that the `n − 1` squares give the parallel-class \"slopes\"\n  of an affine plane, so completeness of the MOLS family is exactly the incidence\n  axiom of a plane.\n- **Why now?** We already have the affine `slope` construction in\n  `FieldConstruction.lean`; formalizing the abstract plane and the back-and-forth\n  is the natural next layer and would make the converse precise rather than folklore.\n\n## Conjecture 2 — Bruck–Ryser–Chowla obstruction\nIf `n ≡ 1` or `2 (mod 4)` and a complete family of `n − 1` orthogonal Italian\nsquares of order `n` exists, then `n` is a sum of two integer squares.\n- **The key insight is** that the symmetric `2-(n²+n+1, n+1, 1)` design of the\n  associated plane forces a rational congruence on a quadratic form, which collapses\n  to a two-squares Diophantine condition.\n- **Why now?** This is a *falsifiable necessary condition* (it instantly kills\n  `n = 6, 14, 21, 22, …`) that needs only elementary number theory already in\n  Mathlib (`Nat.sq`, quadratic residues), unlike the full plane theory.\n\n## Conjecture 3 — MacNeish multiplicative lower bound\n`N(mn) ≥ min(N(m)+1, N(n)+1) − 1`; consequently\n`N(n) ≥ (smallest prime-power factor in the canonical factorization of n) − 1`.\n- **The key insight is** that orthogonality is preserved under the coordinatewise\n  (Kronecker) product of squares on `α × β`, so MOLS counts are super-multiplicative.\n- **Why now?** Our `affineSquare` supplies the prime-power base case; only the\n  product construction (a pure `Prod`-level orthogonality lemma) is missing, and it\n  reuses the exact `Orthogonal` predicate proved here.\n\n## Conjecture 4 — Order-6 nonexistence (Euler–Tarry), formally\nThere do **not** exist two orthogonal Italian squares of order 6; hence `N(6) = 1`,\nstrictly below the bound `5`.\n- **The key insight is** that `Orthogonal` on `Fin 6` is a decidable property of a\n  finite search space, so the statement is in principle `decide`-able after a sharp\n  symmetry reduction (fixing the first row/column).\n- **Why now?** It is the smallest, cleanest witness that the converse of the main\n  claim is nontrivial, and it stress-tests our definitions on a concrete finite order.\n\n## Conjecture 5 — Transversal-design reformulation\nA family of `k` pairwise orthogonal Italian squares of order `n` exists iff a\ntransversal design `TD(k+2, n)` exists.\n- **The key insight is** that each square contributes one \"group\" of parallel\n  transversals, turning orthogonality into a resolvable block-design condition.\n- **Why now?** It bridges our square-based `ItalianSquare`/`Orthogonal` API to the\n  design-theoretic language used in coding theory (cf. the catalog's\n  `SingletonBound`, `GilbertVarshamov`), opening cross-domain reuse.\n",
-      "domain_bridges": [],
+      "description": "This paper presents an analytic approach to characterize permutations with restricted descent sets using generating functions and modular arithmetic.",
+      "domain_bridges": [
+        "combinatorics",
+        "analytic combinatorics"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Pythagorean",
-        "Algebra"
+        "Pythagorean"
       ],
       "id": "fd_2642",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "canonical representation of q-exp expansions",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Functional equation via residue-class decomposition",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "0171d9bf",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/0171d9bf",
+      "source_exp_id": "2606.23748v1",
+      "source_path": "http://arxiv.org/abs/2606.23748v1",
       "status": "available",
-      "thread_id": "th_07599212",
-      "timestamp": "2026-06-26T23:39:00.387264+00:00",
-      "title": "This cycle formally established, for Italian squares (= Latin squares) of order"
+      "thread_id": "",
+      "timestamp": "2026-06-26T23:43:29.466890+00:00",
+      "title": "Analytic derivation of the generating function for $k$-alternating permutations"
     },
     {
       "ambition_level": "extension",
@@ -51324,44 +51338,6 @@
       "thread_id": "",
       "timestamp": "2026-06-11T06:39:35.329358+00:00",
       "title": "Deepening: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "decomposed_from_job": "",
-      "decomposition_depth": 0,
-      "depth_estimate": 3,
-      "description": "Building on cycle 913e3580 (Q=0.798), which proved 8 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The previous attempt failed due to a circularity where the identity between the shifted t-Schur basis and the plethystically transformed Schur Q-basis was being proven using the very property it intended to establish. The goal is to decouple the definition of the shifted t-Schur functions from their",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Applications"
-      ],
-      "id": "push_913e3580_ee9346cb",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "parent_direction": "",
-      "priority_score": 0.8981560000000001,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "913e3580",
-      "source_path": "Plethystic Triviality of the Shifted t-Schur Basis",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-26T23:37:30.163329+00:00",
-      "title": "Deepening: Plethystic Triviality of the Shifted t-Schur Basis"
     },
     {
       "ambition_level": "extension",

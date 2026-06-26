@@ -285,20 +285,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 913e3580 (Q=0.798), which proved 8 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The previous attempt failed due to a circularity where the identity between the shifted t-Schur basis and the plethystically transformed Schur Q-basis was being proven using the very property it intended to establish. The goal is to decouple the definition of the shifted t-Schur functions from their",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_913e3580_ee9346cb",
-    "priority_score": 0.8981560000000001,
-    "research_mode": "team",
-    "source_exp_id": "913e3580",
-    "status": "available",
-    "timestamp": "2026-06-26T23:37:30.163329+00:00",
-    "title": "Deepening: Plethystic Triviality of the Shifted t-Schur Basis"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that any integer a \u2260 -1,\u25a1 that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
     "domains": [
       "Algebra"
@@ -4203,7 +4189,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1394b2e6",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self\u2011dual string C\u2011group representations of rank $2m$ (as constructed by the vertex\u2011gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self\u2011dual string C\u2011group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domains": [
       "Algebra"
@@ -4212,7 +4198,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
   },
@@ -5184,7 +5170,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of Exact Potential up to Additive Constant"
   },
   {
-    "consumed_by_exp_id": "8ed8ca57",
+    "consumed_by_exp_id": "",
     "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carath\u00e9odory-type result.",
     "domains": [
       "Bridges"
@@ -5193,7 +5179,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-26T04:18:00.464209+00:00",
     "title": "Sharp approximate Carath\u00e9odory theorem and application to iterated Delaunay refinement"
   },
@@ -5693,11 +5679,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper proves that every binary delta-matroid has the property that all five nontrivial partial-twuality polynomials (for \u2022 \u2208 {*, \u00d7, *\u00d7, \u00d7*, *\u00d7*}) are interpolating (each is either even, odd, or both even- and odd-interpolating). It also shows the binary assumption is essential by providing counterexamples. This conjecture proposes the exact converse: if a delta-matroid has this universal interpolation property for all five operators simultaneously, then it must be binary. This would characterize binary delta-matroids purely in terms of the interpolation behavior of their partial-twuality polynomials.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2602",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22888v1",
+    "status": "available",
+    "timestamp": "2026-06-26T23:41:24.933247+00:00",
+    "title": "Characterization of Delta-Matroids with Universal Partial-Twuality Interpolation"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2602",
+    "id": "fd_2603",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5711,7 +5712,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2603",
+    "id": "fd_2604",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5726,7 +5727,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2604",
+    "id": "fd_2605",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5741,7 +5742,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2605",
+    "id": "fd_2606",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5756,7 +5757,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2606",
+    "id": "fd_2607",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5771,7 +5772,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5785,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5799,7 +5800,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5813,7 +5814,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5828,7 +5829,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5843,7 +5844,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5858,7 +5859,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5873,7 +5874,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5888,7 +5889,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5902,7 +5903,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5917,7 +5918,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5932,7 +5933,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5946,7 +5947,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5960,7 +5961,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5974,7 +5975,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -5989,7 +5990,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6004,7 +6005,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6019,7 +6020,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6033,7 +6034,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6047,7 +6048,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6062,7 +6063,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6076,7 +6077,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6091,7 +6092,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6105,7 +6106,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6119,7 +6120,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6133,7 +6134,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6148,7 +6149,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6163,7 +6164,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6178,7 +6179,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6192,7 +6193,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6207,7 +6208,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6221,7 +6222,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6236,7 +6237,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6251,13 +6252,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
     "status": "available",
     "timestamp": "2026-06-26T23:16:39.649655+00:00",
     "title": "Endpoint Restriction Conjecture for P\u2083 Implies \u039b(3) Structure of Lattice Points"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper presents an analytic approach to characterize permutations with restricted descent sets using generating functions and modular arithmetic.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2642",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23748v1",
+    "status": "available",
+    "timestamp": "2026-06-26T23:43:29.466890+00:00",
+    "title": "Analytic derivation of the generating function for $k$-alternating permutations"
   },
   {
     "consumed_by_exp_id": "",
@@ -6459,21 +6474,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Shifted t-Schur Basis / Plethystic Triviality\n\nThis cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the\ngenerating-function backbone of the shifted (Schur `Q`) basis and the precise\n\"plethystic triviality\" statement: the logarithmic derivative of the shifted\ngenerating series `qGen n = \u220f\u1d62 (1 + x\u1d62T)/(1 - x\u1d62T)` is the series times a\npotential supported **only on the odd power sums**:\n\n```\n(qGen n)' = qGen n \u00b7 ( 2 \u2211_{k\u22650} p_{2k+1} T^{2k} ).\n```\n\nBelow are bold, testable conjectures for follow-up cycles. Each is stated so it\ncan be turned directly into a Lean theorem skeleton.\n\n## C1. Exponential closed form (odd-power-sum exponential)\n\n**Conjecture.** Over `MvPolynomial (Fin n) \u211a`, with `PowerSeries.exp`,\n```\nqGen n = PowerSeries.exp \u00b7 (rescaled antiderivative of oddPsumSeries n),\n```\ni.e. `qGen n = exp( 2 \u2211_{k\u22651, k odd} p_k T^k / k )`.\nThis upgrades the first-order ODE `qGen_logDeriv` to the integrated form and is\nthe cleanest statement that \"Schur `Q` lives in `\u211a[p\u2081,p\u2083,p\u2085,\u2026]`\".\n*Test path:* build a `PowerSeries` antiderivative `I` with `I' = oddPsumSeries n`\nand constant term `0`, prove `(qGen n) = exp I` by showing both satisfy the same\nODE with the same constant term (uniqueness of solutions of `F' = F\u00b7g`,\n`F(0)=1`).\n\n## C2. Subalgebra membership of the one-row coefficients `q\u1d63`\n\n**Conjecture.** Each coefficient `q\u1d63 = coeff r (qGen n)` lies in the subalgebra\n`\u211a[p\u2081, p\u2083, p\u2085, \u2026] \u2286 MvPolynomial (Fin n) \u211a` generated by the odd power sums, and\nthe even power sums `p\u2082, p\u2084, \u2026` are *not* needed. Concretely, `q\u1d63` is a polynomial\nwith rational coefficients in `{p_{2j+1} : 2j+1 \u2264 r}`.\n*Test path:* Newton-type recurrence `r\u00b7q\u1d63 = 2 \u2211_{j\u22650} p_{2j+1} q_{r-(2j+1)}`\nextracted from `qGen_logDeriv` by reading degree `r-1` coefficients, then induct.\n\n## C3. Newton recurrence for the shifted basis\n\n**Conjecture (provable now, strong lemma).** For all `r \u2265 1`,\n```\nr \u00b7 (coeff r (qGen n)) = 2 \u00b7 \u2211_{j : 2j+1 \u2264 r} p_{2j+1} \u00b7 (coeff (r-(2j+1)) (qGen n)).\n```\nThis is the coefficient-`(r-1)` reading of `qGen_logDeriv` via\n`coeff_derivativeFun` and `coeff_mul`, and would give an effective algorithm for\nthe `q\u1d63` purely from odd power sums. It is the discrete shadow of C1/C2.\n\n## C4. `t`-deformation and the \"shift by t\"\n\n**Conjecture.** Introduce a deformation `oneRowQ_t x t = \u220f-kernel with factor\n(1 - t\u00b7x\u1d62T)` (a one-parameter family interpolating between `t = 1`, the Schur `Q`\ncase, and `t = 0`, the trivial/Schur case). Then the logarithmic derivative is\n```\n(qGen_t n)' = qGen_t n \u00b7 ( (1+t) \u2211_{k\u22651} ((-t)^{k-1}+1)/?  p_k T^{k-1} ),\n```\nand the *odd-only* support is recovered exactly at `t = 1`, while at `t = 0` the\npotential becomes the full (all-degree) power-sum series of the ordinary Schur\ngenerating function. **Falsifiable claim:** the set of `t \u2208 \u211a` for which the\nlog-derivative potential is supported on even `T`-degrees (odd power sums only)\nis exactly `{1}`. This isolates Schur `Q` as the unique \"plethystically trivial\"\nmember of the family.\n\n## C5. Cauchy / dual-Cauchy identity for the shifted kernel\n\n**Conjecture.** With two alphabets `x` (in `Fin n`) and `y` (in `Fin m`),\n```\n\u220f_{i,j} (1 + x\u1d62 y\u2c7c)/(1 - x\u1d62 y\u2c7c) = exp( 2 \u2211_{k odd} p_k(x) p_k(y) / k ),\n```\nthe bilinear Cauchy kernel of the shifted basis, whose exponent is again\nsupported only on odd `k`. *Test path:* iterate `oneRowQ_logDeriv` /  C1 in two\nvariable families; the odd-only support is inherited factorwise, so this should\nreduce to C1 plus a product-over-`j` Leibniz step (reuse\n`derivativeFun_prod_of_logDeriv`).\n\n---\n\n### Cross-domain bridge (speculative)\n\nThe ODE `F' = F\u00b7g` with `g` supported on odd degrees is structurally identical to\nthe free-fermion / neutral-fermion vertex-operator presentation of Schur `Q`\n(odd Heisenberg modes only). A future cycle could formalize the Heisenberg\ncommutation `[a_k, a_{-k}] = k/2` for odd `k` and recover `qGen_logDeriv` as the\nvertex-operator vacuum expectation \u2014 connecting this file to the catalog's\n\"neutral fermion vertex operator\" theme.\n",
-    "domains": [
-      "Bridges",
-      "Pythagorean"
-    ],
-    "id": "fd_2641",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "913e3580",
-    "status": "available",
-    "timestamp": "2026-06-26T23:37:08.036483+00:00",
-    "title": "This cycle formalized (in `PlethysticTriviality.lean`, 0 sorries) the"
   },
   {
     "consumed_by_exp_id": "",

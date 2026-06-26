@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "863d07b7",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — Navier–Stokes: 2D Regularity & Partial 3D Results\n\nDerived from this cycle's verified results in `Physics/NavierStokes/`:\n`EnergyInequality.lean` (energy balance, exponential dec",
-      "quality_score": 0.50324,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-21T08:51:21",
-      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
-    },
-    {
       "cycle_id": "93e2fea4",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nThese build on the compactness bridge in `Catalog/Speculative/RamseyExtremeAmenability.lean`\n(`approx_fixed_point_property_implies_extreme_amenability` and\n`ramsey_certificate_imp",
@@ -2501,6 +2491,16 @@
       "theorem_count": 8,
       "timestamp": "2026-06-26T23:37:29",
       "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+    },
+    {
+      "cycle_id": "0171d9bf",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Mutually Orthogonal Italian (Latin) Squares\n\nThis cycle formally established, for Italian squares (= Latin squares) of order\n`n = #α`:\n\n- **Upper bound** `ItalianSquares.card_le_",
+      "quality_score": 0.67428,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-26T23:39:12",
+      "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7981560000000001
     }
   ],
-  "last_updated": "2026-06-26T23:37:29",
+  "last_updated": "2026-06-26T23:39:12",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "3be846c2",
-        "quality": 0.464016452173913,
-        "theorems": 10,
-        "title": "Ramsey Theory: Bounds and Constructions"
-      },
-      {
         "cycle_id": "7496c7ce",
         "quality": 0.80792,
         "theorems": 17,
@@ -3141,6 +3135,12 @@
         "quality": 0.7981560000000001,
         "theorems": 8,
         "title": "Plethystic Triviality of the Shifted t-Schur Basis"
+      },
+      {
+        "cycle_id": "0171d9bf",
+        "quality": 0.67428,
+        "theorems": 9,
+        "title": "Maximum size of pairwise orthogonal Italian squares is n‑1 for prime powers"
       }
     ],
     "Bridges": [
