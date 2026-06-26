@@ -1,445 +1,390 @@
-# A Scalar A Priori Framework for Navier–Stokes Regularity: 2D Global Smoothness, the 3D Supercritical Blow-Up Rate, and the Dissipation Budget
-
-**Author:** Aristotle
-
-**Date:** 2026-06-20
-
----
+# Scalar A Priori Estimates for Navier–Stokes Regularity: 2D Global Bounds, 3D Blow-Up Rates, and the Logarithmic Borderline
 
 ## Abstract
 
-The incompressible Navier–Stokes equations are the master equations of fluid
-dynamics, and the question of whether their three-dimensional solutions remain
-smooth for all time is among the deepest open problems in mathematics. A large
-part of the regularity theory, however, does not depend on the full vector-valued
-partial differential equations: it is governed by *scalar differential
-inequalities* satisfied by integral quantities such as the kinetic energy, the
-enstrophy, and the dissipation rate. In this paper we isolate, state, and prove
-this scalar a priori core in full rigour. We establish: (i) monotonicity and
-global boundedness of the enstrophy in two dimensions, the engine behind
-Ladyzhenskaya's global regularity theorem; (ii) exponential decay of energy to
-zero under a Poincaré inequality; (iii) the sharp $O((T^\*-t)^{-1/2})$ lower bound
-on the enstrophy near a putative three-dimensional blow-up time, together with the
-matching guaranteed-lifespan estimate, both derived from the supercritical
-inequality $Z'\le C Z^3$; (iv) conditional and unconditional small-data global
-regularity in three dimensions from the competition inequality $Z'\le -aZ+CZ^2$;
-and (v) the integrated energy identity and the finite total-dissipation budget
-$\int_0^\infty F \le E(0)/(2\nu)$ obtained from the Fundamental Theorem of
-Calculus. Each result is a self-contained statement about real-valued functions of
-time and is accompanied by a complete proof sketch. The framework provides a clean,
-formally verifiable backbone for both the two-dimensional theory and the partial
-three-dimensional theory, and it makes precise the exact location of the
-remaining open gap.
+The regularity theory of the incompressible Navier–Stokes equations reduces, via
+the energy method, to a small family of *scalar differential inequalities* for
+observables such as the energy $E(t)=\tfrac12\|u(t)\|_2^2$ and the enstrophy
+$Z(t)=\tfrac12\|\omega(t)\|_2^2$. We isolate these inequalities and prove their
+consequences rigorously and from first principles, sidestepping the (currently
+intractable) formalization of the full partial differential equation while
+capturing the exact analytic content that energy methods deliver. Our results
+form a coherent ladder: (i) **two-dimensional global regularity**, in which the
+vanishing of vortex stretching forces the enstrophy to be non-increasing; (ii)
+**exponential energy decay** under a Poincaré-type dissipation bound, with
+convergence to zero; (iii) the **three-dimensional supercritical a priori bound**
+$Z(t)^2\le Z_0^2/(1-2CZ_0^2 t)$ with guaranteed lifetime $T^\*=1/(2CZ_0^2)$;
+(iv) the dual **lower bound on the blow-up rate**, $Z(t)^2\ge 1/(2C(T^\*-t))$,
+showing any finite-time singularity must diverge at least as fast as
+$(T^\*-t)^{-1/2}$; (v) **small-data global regularity**, in which $CZ_0^2<a$ makes
+the enstrophy invariant; (vi) the **logarithmic critical borderline**
+$Z'\le CZ\log(e+Z)$, which we show is globally regular with explicit
+double-exponential growth; and (vii) uniform **dissipation budgets**
+$\int_0^T G\le Z_0/(2\nu)$ obtained by integrating the balance laws. A single
+analytic engine — sign-definiteness, the integrating factor, and the reciprocal
+substitution $w=1/Z^2$ — drives every proof. All results have been formally
+verified.
+
+**Keywords:** Navier–Stokes equations, enstrophy, vortex stretching, energy
+method, a priori estimates, blow-up rate, Beale–Kato–Majda criterion, Poincaré
+inequality, differential inequalities, global regularity.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 The Navier–Stokes equations and the regularity problem
-
-For an incompressible viscous fluid filling a domain $\Omega \subseteq
-\mathbb{R}^d$ (with $d=2$ or $d=3$) the velocity field $u(x,t)$ and pressure
-$p(x,t)$ satisfy
+The incompressible Navier–Stokes system on a domain $\Omega\subseteq\mathbb R^d$,
 $$\partial_t u + (u\cdot\nabla)u = -\nabla p + \nu\,\Delta u, \qquad
 \nabla\cdot u = 0,$$
-where $\nu > 0$ is the kinematic viscosity. The central open question — one of the
-Clay Mathematics Institute's Millennium Prize Problems — is whether, for smooth
-divergence-free initial data of finite energy in $d=3$, the solution remains smooth
-for all $t>0$, or whether it can develop a singularity (blow-up) in finite time.
+describes the velocity field $u$ and pressure $p$ of a viscous incompressible
+fluid with kinematic viscosity $\nu>0$. Whether smooth initial data in three
+dimensions always produce globally smooth solutions is one of the Clay
+Millennium Problems and remains open. In two dimensions, by contrast, global
+regularity has been known since the work of Leray, Ladyzhenskaya, and Hopf.
 
-In two dimensions the answer is known and affirmative: Ladyzhenskaya established
-global existence, uniqueness, and regularity. In three dimensions only *partial*
-results are known: global weak solutions (Leray), local-in-time strong solutions,
-small-data global regularity, conditional regularity criteria (Prodi–Serrin,
-Beale–Kato–Majda), and the Caffarelli–Kohn–Nirenberg partial regularity theorem
-bounding the dimension of the singular set.
+The dominant technique in the field is the **energy method**: one multiplies the
+equations by a suitable quantity, integrates over space, and uses functional
+inequalities (Poincaré, Sobolev, Ladyzhenskaya, Gagliardo–Nirenberg) to obtain a
+closed differential inequality for a scalar observable. Regularity then hinges on
+whether that scalar can remain finite. Two observables organize the theory:
+$$E(t) = \tfrac12\int_\Omega |u(x,t)|^2\,dx \quad\text{(energy)}, \qquad
+Z(t) = \tfrac12\int_\Omega |\omega(x,t)|^2\,dx \quad\text{(enstrophy)},$$
+where $\omega=\nabla\times u$ is the vorticity. A standard continuation
+principle states that a solution remains smooth precisely as long as its
+enstrophy stays finite; finite-time blow-up is the divergence of $Z$.
 
-### 1.2 The scalar a priori philosophy
+This paper formalizes the differential-inequality layer of this theory. We treat
+an abstract observable $Y:\mathbb R\to\mathbb R$ (or $E,Z$) whose time
+derivative obeys the inequality produced by the relevant $L^2$ estimate, and we
+prove the regularity, decay, lifetime, and blow-up-rate consequences with full
+rigor. The point is that *all* of these consequences are pure one-dimensional
+calculus once the inequality is granted; the deep PDE input is precisely the
+inequality, and the deductions below are exactly what the energy method extracts
+from it.
 
-A striking feature of this theory is how much of it is controlled not by the
-velocity field itself but by a few *scalar* functionals of time:
-- the **kinetic energy** $E(t) = \tfrac12\int_\Omega |u(x,t)|^2\,dx$;
-- the **enstrophy** $Z(t) = \int_\Omega |\omega(x,t)|^2\,dx$, where $\omega =
-  \nabla\times u$ is the vorticity;
-- the **dissipation rate** $F(t)\ge 0$, controlling how fast energy is converted to
-  heat.
+### Notation and standing conventions
 
-Multiplying the momentum equation by $u$ and integrating produces the *energy
-identity* $E'(t) = -2\nu F(t)$; manipulating the vorticity equation produces
-differential inequalities for $Z$ whose form depends decisively on the dimension.
-Once these scalar relations are extracted, the qualitative fate of the flow —
-boundedness, decay, blow-up rate, threshold for global existence — becomes a
-question about real-valued functions of one variable, fully amenable to rigorous,
-elementary analysis.
-
-This paper formalizes that scalar core. We treat $E$, $Z$, and $F$ as abstract
-differentiable functions $[0,\infty)\to\mathbb{R}$ obeying the relevant
-inequalities, and we prove eleven theorems organized into five groups. Crucially,
-no result below assumes anything beyond the stated scalar hypotheses; each is a
-theorem about ordinary functions, and each is proved completely.
-
-### 1.3 Contributions
-
-1. A precise statement and proof of 2D enstrophy monotonicity and the global bound
-   $Z(t)\le Z(0)$ (§3.1).
-2. Exponential energy decay under a Poincaré inequality and convergence to rest
-   (§3.2).
-3. The sharp supercritical blow-up lower bound $Z(t)\ge (2C(T^\*-t))^{-1/2}$ and
-   the matching lifespan estimate (§3.3).
-4. Conditional and unconditional small-data global bounds in 3D (§3.4).
-5. The integrated energy identity and finite total-dissipation budget (§3.5).
+Throughout, $Y, Z, E, G, F, D : \mathbb R\to\mathbb R$ are real functions of
+time, with $D$ denoting the (pointwise) derivative of the relevant observable in
+the hypothesis `HasDerivAt`. Constants $C, a, \nu, c$ are real; positivity
+hypotheses are stated where needed. We write $Z_0=Z(0)$, $E_0=E(0)$. The symbol
+$\|\cdot\|_2$ is the $L^2(\Omega)$ norm.
 
 ---
 
-## 2. Setup and definitions
+## 2. Two-dimensional global regularity
 
-Throughout, $\nu>0$ is a fixed viscosity, and all functions of time are defined on
-$[0,\infty)$ (or, for the blow-up results, on a maximal interval $[0,T^\*)$) and are
-assumed differentiable where derivatives appear.
+In two dimensions the vortex-stretching term $\int_\Omega \omega\cdot(\nabla u)\omega$
+vanishes identically, because vorticity is a scalar and cannot be tilted into new
+directions. The enstrophy identity therefore reduces to pure dissipation,
+$Z'(t) = -2\nu\,\|\nabla\omega(t)\|_2^2 \le 0$, and the enstrophy is monotone.
 
-**Definition 2.1 (Energy–dissipation pair).** An *energy–dissipation pair* is a
-pair $(E, F)$ of functions $E, F:[0,\infty)\to\mathbb{R}$ with $E\ge 0$, $F\ge 0$,
-$E$ differentiable, satisfying the *energy identity*
-$$E'(t) = -2\nu\,F(t), \qquad t\ge 0.$$
-This is the scalar shadow of the Navier–Stokes energy balance; $E$ is kinetic
-energy and $F$ is the (nonnegative) dissipation rate.
+**Theorem 2.1 (2D enstrophy global bound).** *Let $Z$ be differentiable with
+$Z'(t)=D(t)$ and suppose $D(t)\le 0$ for all $t$. Then $Z(t)\le Z(0)$ for every
+$t\ge 0$.*
 
-**Definition 2.2 (Poincaré domain).** The pair $(E,F)$ satisfies a *Poincaré
-inequality* with constant $\lambda>0$ if $F(t)\ge \lambda\,E(t)$ for all $t$. The
-constant $\lambda$ is the first Dirichlet eigenvalue of $-\Delta$ on $\Omega$ (the
-square of the lowest vibration frequency).
+*Proof sketch.* A function whose derivative is everywhere non-positive is
+non-increasing (`antitone_of_deriv_nonpos`): differentiability at every point
+follows from the pointwise `HasDerivAt` hypotheses, and $\operatorname{deriv}Z(t)=D(t)\le 0$.
+Monotonicity applied to $0\le t$ gives $Z(t)\le Z(0)$. $\qquad\blacksquare$
 
-**Definition 2.3 (2D enstrophy law).** A function $Z:[0,\infty)\to\mathbb{R}$
-satisfies the *two-dimensional enstrophy law* if there is $D:[0,\infty)\to\mathbb
-R$ with $D\ge 0$ and
-$$Z'(t) = -2\nu\,D(t).$$
-The absence of a positive (vortex-stretching) term is the analytic expression of
-the fact that vortex lines cannot be stretched in the plane.
+**Theorem 2.2 (physical form).** *Let $\nu\ge 0$, let $G(t)\ge 0$ be the
+palinstrophy $\|\nabla\omega(t)\|_2^2$, and suppose $Z'(t)=-2\nu\,G(t)$. Then
+$Z(t)\le Z(0)$ for all $t\ge 0$.*
 
-**Definition 2.4 (3D supercritical enstrophy inequality).** A nonnegative function
-$Z$ satisfies the *supercritical inequality* with constant $C>0$ on $[0,T^\*)$ if
-$$Z'(t)\le C\,Z(t)^3.$$
-The cubic right-hand side is supercritical: it dominates the linear dissipation for
-large $Z$ and admits finite-time blow-up in the borderline ODE.
+*Proof sketch.* The product $-2\nu\,G(t)$ is non-positive because $\nu\ge0$ and
+$G\ge0$; apply Theorem 2.1. $\qquad\blacksquare$
 
-**Definition 2.5 (3D competition inequality).** A nonnegative function $Z$
-satisfies the *competition inequality* with dissipation rate $a>0$ and stretching
-constant $C>0$ if
-$$Z'(t)\le -a\,Z(t) + C\,Z(t)^2.$$
-The threshold $Z = a/C$ separates the dissipation-dominated regime ($Z<a/C$) from
-the potentially runaway regime ($Z>a/C$).
+This is the scalar core of Ladyzhenskaya's 2D global regularity theorem: the
+enstrophy is trapped below its initial value for all time, the continuation
+criterion is never triggered, and the solution is global.
 
 ---
 
-## 3. Main results
+## 3. Energy decay via the Poincaré inequality
 
-### 3.1 Two dimensions: enstrophy is trapped
+On a bounded domain the Poincaré inequality $\|\nabla u\|_2^2 \ge \lambda_1\|u\|_2^2$
+upgrades the energy identity $E'(t)=-2\nu\|\nabla u\|_2^2$ to a closed linear
+inequality $E'(t)\le -c\,E(t)$ with $c=2\nu\lambda_1>0$.
 
-**Theorem 1 (`enstrophy_monotone_2D`).** *If $Z$ satisfies the two-dimensional
-enstrophy law $Z'(t) = -2\nu\,D(t)$ with $D\ge 0$, then $Z$ is monotone
-non-increasing: $s\le t \implies Z(t)\le Z(s)$.*
+**Theorem 3.1 (exponential energy decay).** *Let $E$ be differentiable with
+$E'(t)=D(t)$ and suppose $D(t)\le -c\,E(t)$ for all $t$ and some $c\in\mathbb R$.
+Then $E(t)\le E(0)\,e^{-ct}$ for all $t\ge 0$.*
 
-*Proof sketch.* The derivative $Z'(t) = -2\nu D(t)\le 0$ everywhere since $\nu>0$
-and $D\ge 0$. A differentiable function with non-positive derivative is
-non-increasing (mean value theorem / monotonicity from derivative sign). $\square$
+*Proof sketch.* Introduce the integrating factor and set $g(t)=E(t)e^{ct}$. By
+the product rule, $g'(t)=(D(t)+cE(t))e^{ct}$. The hypothesis makes
+$D(t)+cE(t)\le 0$, and $e^{ct}>0$, so $g'(t)\le 0$ and $g$ is non-increasing.
+Hence $g(t)\le g(0)=E(0)$, i.e. $E(t)e^{ct}\le E(0)$, which rearranges to the
+claim. No sign hypothesis on $E$ or $c$ is required. $\qquad\blacksquare$
 
-**Theorem 2 (`enstrophy_global_bound_2D`).** *Under the same hypotheses, $Z(t)\le
-Z(0)$ for all $t\ge 0$.*
+**Theorem 3.2 (energy tends to zero).** *If in addition $c>0$ and $E(t)\ge 0$
+for all $t$, then $E(t)\to 0$ as $t\to\infty$.*
 
-*Proof sketch.* Apply Theorem 1 with $s=0$. $\square$
+*Proof sketch.* By Theorem 3.1, $0\le E(t)\le E(0)e^{-ct}$ eventually; the right
+side tends to $0$ because $c>0$, so a squeeze (`squeeze_zero_norm'`) forces
+$E(t)\to0$. $\qquad\blacksquare$
 
-*Remark.* Theorems 1–2 are the scalar core of Ladyzhenskaya's 2D global regularity
-theorem. The full PDE statement upgrades the a priori bound $Z(t)\le Z(0)$ — i.e.
-a uniform-in-time control of $\|\nabla u\|_{L^2}^2$ — to global existence,
-uniqueness, and smoothness via standard energy methods and the absence of vortex
-stretching in the plane. The crucial structural input is exactly the *sign*: in 2D
-the vortex-stretching term $(\omega\cdot\nabla)u$ vanishes identically, so the
-enstrophy balance has no production term and $Z'\le 0$.
-
-### 3.2 Energy decay under a Poincaré inequality
-
-**Theorem 3 (`energy_decay_poincare`).** *Let $(E,F)$ be an energy–dissipation
-pair satisfying a Poincaré inequality with constant $\lambda>0$. Then*
-$$E(t) \le E(0)\,e^{-2\nu\lambda\,t}, \qquad t\ge 0.$$
-
-*Proof sketch.* Combining Definitions 2.1 and 2.2,
-$$E'(t) = -2\nu F(t) \le -2\nu\lambda\,E(t).$$
-Consider $g(t) = E(t)\,e^{2\nu\lambda t}$. Then
-$$g'(t) = \big(E'(t)+2\nu\lambda E(t)\big)e^{2\nu\lambda t}\le 0,$$
-so $g$ is non-increasing; hence $g(t)\le g(0)=E(0)$, which rearranges to the
-claimed bound. This is the Grönwall inequality in its sharpest, integrating-factor
-form. $\square$
-
-**Corollary 4 (`energy_tendsto_zero`).** *Under the hypotheses of Theorem 3,
-$E(t)\to 0$ as $t\to\infty$.*
-
-*Proof sketch.* $0\le E(t)\le E(0)e^{-2\nu\lambda t}\to 0$; apply the squeeze
-theorem. $\square$
-
-*Remark.* The decay rate $2\nu\lambda$ is explicit and physically transparent:
-larger viscosity $\nu$ or smaller domain (larger $\lambda$) yields faster return to
-rest. On the torus or a bounded domain with the Poincaré inequality available, this
-gives unconditional decay of finite-energy solutions in the absence of forcing.
-
-### 3.3 Three dimensions: the supercritical blow-up rate
-
-We now turn to the regime where vortex stretching is active and the enstrophy
-balance acquires a production term dominated by the cubic inequality of Definition
-2.4.
-
-**Theorem 5 (`blowup_rate_lower_bound_3D`).** *Let $Z\ge 0$ be differentiable on
-$[0,T^\*)$, satisfy $Z'(t)\le C\,Z(t)^3$, and blow up at $T^\*$ in the sense that
-$Z(t)\to\infty$ as $t\to T^{\*-}$. Suppose $Z(t)>0$ on $[0,T^\*)$. Then for all
-$t\in[0,T^\*)$,*
-$$Z(t) \ge \frac{1}{\sqrt{2C\,(T^\*-t)}}.$$
-
-*Proof sketch.* Where $Z>0$, set $\varphi(t)=Z(t)^{-2}$. Then
-$$\varphi'(t) = -2\,Z(t)^{-3}Z'(t)\ge -2\,Z(t)^{-3}\cdot C\,Z(t)^3 = -2C.$$
-So $\varphi$ has derivative bounded below by $-2C$; for $t<\tau<T^\*$,
-$$\varphi(t) - \varphi(\tau) = -\int_t^\tau \varphi'(s)\,ds \le 2C\,(\tau - t).$$
-Let $\tau\to T^{\*-}$. Since $Z(\tau)\to\infty$, $\varphi(\tau)=Z(\tau)^{-2}\to 0$,
-giving $\varphi(t)\le 2C(T^\*-t)$, i.e. $Z(t)^{-2}\le 2C(T^\*-t)$. Inverting (both
-sides positive) yields $Z(t)\ge (2C(T^\*-t))^{-1/2}$. $\square$
-
-*Remark (sharpness).* The exponent $\tfrac12$ is optimal: the borderline ODE
-$Z'=CZ^3$ has the exact solution $Z(t) = \big(Z(0)^{-2}-2Ct\big)^{-1/2}$, which
-blows up at $T^\* = 1/(2CZ(0)^2)$ and satisfies $Z(t)=(2C(T^\*-t))^{-1/2}$ with
-equality. Thus the lower bound of Theorem 5 is achieved, and no slower blow-up is
-possible under the cubic inequality. In the PDE setting this is the scalar form of
-the classical lower bounds on the rate of singularity formation: a solution cannot
-approach a singularity gradually; its enstrophy (or appropriate critical norm) must
-diverge at least at the dictated rate.
-
-**Theorem 6 (`lifespan_lower_bound_3D`).** *If $Z\ge 0$ is differentiable with
-$Z(0)>0$ and satisfies $Z'(t)\le C\,Z(t)^3$ as long as it remains finite, then $Z$
-stays finite (and in fact $Z(t)\le (Z(0)^{-2}-2Ct)^{-1/2}$) at least on the
-interval*
-$$0\le t < T := \frac{1}{2\,C\,Z(0)^2}.$$
-
-*Proof sketch.* With $\varphi=Z^{-2}$ as above, $\varphi'\ge -2C$ gives
-$\varphi(t)\ge \varphi(0)-2Ct = Z(0)^{-2}-2Ct$, which is strictly positive for
-$t<T$. Hence $Z(t)^2 = 1/\varphi(t) \le (Z(0)^{-2}-2Ct)^{-1}<\infty$ on $[0,T)$, so
-no blow-up can occur before $T$. $\square$
-
-*Remark.* Theorems 5 and 6 are the two faces of one inequality: the same
-$\varphi'=-2Z^{-3}Z'$ computation yields both the guaranteed window of existence
-(lower bound on lifespan) and the obligatory divergence rate near any actual
-singularity. The calmer the start (smaller $Z(0)$), the longer the guarantee.
-
-### 3.4 Small-data global regularity in 3D
-
-When the enstrophy is below the threshold $a/C$, the competition inequality of
-Definition 2.5 keeps it there forever.
-
-**Theorem 7 (`small_data_global_conditional_3D`).** *Let $Z\ge 0$ satisfy
-$Z'(t)\le -a\,Z(t)+C\,Z(t)^2$ on $[0,T]$, with $a,C>0$, and suppose $Z(0)\le a/C$.
-Then $Z(t)\le Z(0)$ for all $t\in[0,T]$.*
-
-*Proof sketch.* On the threshold band $0\le Z\le a/C$ we have $-aZ+CZ^2 =
-Z(CZ-a)\le 0$, so $Z'(t)\le 0$ wherever $Z(t)\le a/C$. We claim $Z$ never exceeds
-$Z(0)$. Indeed, suppose for contradiction $Z(t_1)>Z(0)$ for some $t_1$. Let
-$t_0=\sup\{t\le t_1: Z(t)\le Z(0)\}$; by continuity $Z(t_0)=Z(0)\le a/C$ and
-$Z(t)>Z(0)$ on $(t_0,t_1]$. But on a right-neighbourhood of $t_0$ the value stays
-$\le a/C$ (by continuity, shrinking if necessary), where $Z'\le 0$, so $Z$ cannot
-increase past $Z(0)=Z(t_0)$ — contradiction. Hence $Z(t)\le Z(0)$ throughout.
-$\square$
-
-**Theorem 8 (`small_data_global_3D`).** *Let $Z\ge 0$ satisfy $Z'(t)\le
--a\,Z(t)+C\,Z(t)^2$ for all $t\ge 0$ with the strict smallness condition $Z(0)<a/C$.
-Then $Z(t)\le Z(0)$ for all $t\ge 0$; in particular $Z$ is globally bounded and no
-blow-up occurs.*
-
-*Proof sketch.* Strict smallness gives a barrier: as long as $Z(t)<a/C$ we have
-$Z'(t)\le Z(t)(CZ(t)-a)<0$ when $Z(t)>0$, so $Z$ is strictly decreasing and remains
-$<a/C$, hence remains $\le Z(0)$. The set $\{t : Z(t)\le Z(0)\}$ is therefore both
-open and closed in $[0,\infty)$ and contains $0$, so it is all of $[0,\infty)$.
-Global boundedness immediately rules out finite-time blow-up. $\square$
-
-*Remark.* Theorems 7–8 are the scalar core of small-data global regularity in 3D:
-sufficiently small critical data yields a global smooth solution. The threshold
-$a/C$ is the explicit dividing line; below it the three-dimensional flow behaves
-qualitatively like a two-dimensional one (Theorem 2), while above it the present
-methods give only the finite lifespan of Theorem 6. The gap between these regimes
-*is* the open Navier–Stokes regularity problem.
-
-### 3.5 The dissipation budget
-
-Finally we integrate the energy identity. Here $F$ is assumed integrable on each
-$[0,T]$ (e.g. continuous), so the Fundamental Theorem of Calculus applies.
-
-**Theorem 9 / Theorem 11 (`total_dissipation_finite`, `energy_identity_FTC`).*
-*Let $(E,F)$ be an energy–dissipation pair with $F$ continuous. Then for every
-$T\ge 0$,*
-$$E(T) = E(0) - 2\nu\int_0^T F(t)\,dt, \qquad\text{equivalently}\qquad
-\int_0^T F(t)\,dt = \frac{E(0)-E(T)}{2\nu}.$$
-
-*Proof sketch.* By the energy identity $E'=-2\nu F$; integrate both sides from $0$
-to $T$ and apply the Fundamental Theorem of Calculus to the left-hand side:
-$E(T)-E(0)=\int_0^T E'(t)\,dt = -2\nu\int_0^T F(t)\,dt$. Rearrange. $\square$
-
-**Theorem 10 (`total_dissipation_bddAbove`).** *Under the same hypotheses, the
-family of partial dissipation integrals is bounded above:*
-$$\int_0^T F(t)\,dt \le \frac{E(0)}{2\nu}\quad\text{for all }T\ge 0,
-\qquad\text{hence}\qquad \int_0^\infty F(t)\,dt \le \frac{E(0)}{2\nu}.$$
-
-*Proof sketch.* From Theorem 9 and $E(T)\ge 0$, $\int_0^T F = (E(0)-E(T))/(2\nu)
-\le E(0)/(2\nu)$. The bound is uniform in $T$, so the increasing function
-$T\mapsto\int_0^T F$ (the integrand is $\ge 0$) is bounded above; its supremum,
-$\int_0^\infty F$, satisfies the same bound. $\square$
-
-*Remark.* The finite total-dissipation budget $\int_0^\infty F\le E(0)/(2\nu)$ is
-among the most-used a priori estimates in mathematical fluid dynamics. It underlies
-Leray's construction of global weak solutions, the Caffarelli–Kohn–Nirenberg
-partial regularity theory (where local versions bound the parabolic Hausdorff
-measure of the singular set), and the basic energy method throughout. It also
-implies that $F$ cannot stay bounded below by a positive constant: the dissipation
-must thin out over time, consistent with eventual decay.
+The integrating-factor argument is the prototype reused throughout: a linear
+differential inequality always linearizes to a monotone auxiliary function.
 
 ---
 
-## 4. Algorithms
+## 4. The three-dimensional supercritical bound
 
-The scalar framework is directly computable. We highlight two algorithms used in
-the accompanying numerical demonstrations.
+In three dimensions vortex stretching survives, and the best Sobolev/interpolation
+control of $\int\omega\cdot(\nabla u)\omega$ is *cubic* in the enstrophy:
+$Z'(t)\le C\,Z(t)^3$. This inequality is **supercritical** — it permits
+finite-time blow-up — and the resulting a priori bound is only local in time.
 
-**Algorithm A (Threshold classifier for 3D competition dynamics).** Given
-$(a, C, Z_0)$, decide global boundedness via the threshold test $Z_0 < a/C$
-(Theorems 7–8), and, when above threshold, report the guaranteed lifespan from the
-cubic comparison (Theorem 6). Complexity $O(1)$.
+**Theorem 4.1 (3D a priori / blow-up-rate bound).** *Let $C>0$, $Z(t)>0$,
+$Z'(t)=D(t)$ with $D(t)\le C\,Z(t)^3$. Then for every $t$ with
+$0\le t < T^\*:=\dfrac{1}{2C\,Z(0)^2}$,*
+$$Z(t)^2 \;\le\; \frac{Z(0)^2}{1 - 2C\,Z(0)^2\,t}.$$
 
-**Algorithm B (Sharp blow-up envelope evaluator).** Given the supercritical
-constant $C$ and a blow-up time $T^\*$, evaluate the lower envelope $t\mapsto
-(2C(T^\*-t))^{-1/2}$ of Theorem 5 and compare it against a numerically integrated
-trajectory of $Z'=CZ^3$ to confirm sharpness. Complexity $O(N)$ for $N$ time steps.
+*Proof sketch.* Set $w(t)=1/Z(t)^2$. Differentiating and using $Z'\le CZ^3$ with
+$Z>0$ gives the *linear* lower bound $w'(t)\ge -2C$ (the cubic cancels exactly
+against the chain-rule factor $-2/Z^3$). By the mean value theorem on $[0,t]$
+(`exists_deriv_eq_slope`), $w(t)-w(0)\ge -2Ct$, i.e. $w(t)\ge w(0)-2Ct$.
+Equivalently $1/Z(t)^2 \ge 1/Z(0)^2 - 2Ct$; on $t<T^\*$ the right side is
+positive, and taking reciprocals yields the stated bound. The denominator
+vanishes exactly at $T^\*$, encoding the guaranteed lifetime. $\qquad\blacksquare$
 
-Pseudocode and reference implementations appear in `demo.py` and in the
-`algorithms` field of `PACKAGE.json`.
-
----
-
-## 4.1 Numerical validation
-
-Because every theorem is a statement about real-valued functions of time, each can
-be stress-tested by direct numerical integration of the underlying differential
-(in)equality. We summarize the validations carried out in the accompanying
-`demo.py`; all use a fourth-order Runge–Kutta scheme and confirm the theorems to
-high precision.
-
-- **2D enstrophy trapping (Theorems 1–2).** Integrating $Z' = -2\nu D$ with
-  $\nu=0.1$, $D(t)=(1+\sin^2 t)\,Z(t)\ge 0$, and $Z(0)=5$ over $[0,20]$ yields a
-  trajectory that is non-increasing at every step and never exceeds $Z(0)$, with
-  $Z(20)\approx 1.29\times10^{-2}$.
-
-- **Exponential decay (Theorem 3, Corollary 4).** With $\nu=0.2$, $\lambda=1.5$,
-  $F(t)=(\lambda+\cos^2 t)\,E(t)$, and $E(0)=3$, the computed energy stays below the
-  closed-form envelope $E(0)e^{-2\nu\lambda t}$ at every step and reaches
-  $E(30)\approx 1.2\times10^{-10}$; the guaranteed rate is $2\nu\lambda=0.6$.
-
-- **Sharp blow-up rate (Theorems 5–6).** Integrating the borderline ODE
-  $Z'=CZ^3$ with $C=0.5$, $Z(0)=2$ up to $0.99\,T^\*$, where
-  $T^\*=1/(2CZ(0)^2)=0.25$, reproduces the exact solution with maximum relative
-  error $\approx 1.4\times10^{-11}$ and saturates the lower envelope
-  $(2C(T^\*-t))^{-1/2}$ to within $10^{-3}$, numerically certifying the sharpness of
-  the exponent $\tfrac12$.
-
-- **Small-data threshold (Theorems 7–8).** For $Z'=-aZ+CZ^2$ with $a=2$, $C=1$
-  (threshold $a/C=2$): starting at $Z(0)=0.9\cdot(a/C)=1.8$ gives a trajectory that
-  remains below $Z(0)$ and decays to $\approx 6.7\times10^{-43}$ by $t=50$, whereas
-  starting at $Z(0)=1.1\cdot(a/C)=2.2$ the comparison ODE blows up at
-  $t^\*\approx 1.20$.
-
-- **Dissipation budget (Theorems 9–11).** Integrating $E'=-2\nu F$ alongside the
-  cumulative dissipation $\int_0^T F$ with $\nu=0.15$, $E(0)=4$,
-  $F=(1+\tfrac12\sin^2 3t)\,E$ over $[0,40]$ gives $\int_0^{40} F\approx 13.3333 =
-  (E(0)-E(40))/(2\nu)$, matching the energy identity, and never exceeds the budget
-  $E(0)/(2\nu)\approx 13.3333$.
-
-The numerical agreement across all five regimes corroborates the analytic proof
-sketches and, in the supercritical case, the optimality of the blow-up exponent.
-
-## 5. Applications and connections
-
-- **Ladyzhenskaya's theorem (2D).** Theorems 1–2 are the scalar engine: the
-  enstrophy a priori bound $Z(t)\le Z(0)$ closes the energy estimates and yields
-  global smoothness.
-- **Blow-up criteria (3D).** Theorem 5 is the scalar form of the lower bounds on
-  singularity rates that accompany the Beale–Kato–Majda and Leray-type criteria: a
-  singularity, if it forms, must do so at a controlled minimum rate.
-- **Small-data global regularity (3D).** Theorems 7–8 mirror the classical
-  smallness theorems (e.g. small data in critical spaces) with an explicit
-  threshold $a/C$.
-- **Caffarelli–Kohn–Nirenberg partial regularity.** The global dissipation budget
-  (Theorem 10) is the integral resource that, in localized form, bounds the size of
-  the singular set; the present scalar statement is its prototype.
-- **Machine learning for PDEs.** Scalar a priori inequalities of exactly this form
-  serve as physics-informed constraints and certified Lyapunov functionals for
-  learned surrogates of fluid solvers, where monotone energy/enstrophy budgets give
-  provable stability guarantees for neural operators.
+The substitution $w=1/Z^2$ is decisive: it converts a runaway cubic inequality,
+inaccessible to Grönwall (whose comparison solution itself blows up), into a tame
+linear one, turning blow-up into the positivity threshold $w(t)>0 \iff t<T^\*$.
 
 ---
 
-## 6. Discussion
+## 5. The lower bound on the blow-up rate
 
-The value of the scalar viewpoint is its *separation of concerns*. The hard PDE
-analysis (Sobolev embeddings, Ladyzhenskaya's inequality, commutator estimates)
-serves only to *derive* the scalar inequalities $Z'\le 0$ (2D), $Z'\le CZ^3$ (3D
-supercritical), $Z'\le -aZ+CZ^2$ (3D competition), and $E'=-2\nu F$. Once derived,
-the *consequences* — boundedness, decay, blow-up rate, threshold, dissipation
-budget — are elementary and certain. The two-dimensional theory is complete; the
-three-dimensional theory has an exactly delineated safe region (small data) and an
-exactly quantified danger profile (the blow-up rate), with the open Millennium
-Problem living precisely in the gap between "below threshold" and "arbitrary data."
+The reciprocal substitution, read in the forward direction toward a putative
+singularity, yields the dual statement: a singularity cannot form gradually.
 
-A key structural insight is that the *sign and exponent* of the nonlinear term are
-everything. The cubic exponent in $Z'\le CZ^3$ is *supercritical*: it overpowers
-dissipation for large $Z$, which is why finite-time blow-up is not excluded. The
-quadratic competition term $+CZ^2$ balanced against $-aZ$ is *barely* controllable —
-only below an explicit threshold. Sharpening these inequalities (reducing the
-exponent, or proving the production term is genuinely subcritical) would resolve the
-problem; that is precisely what current PDE techniques cannot do in 3D.
+**Lemma 5.1 (lower Lipschitz bound for $w=1/Z^2$).** *Under the hypotheses of
+Theorem 4.1, for all $t\le s$,*
+$$\frac{1}{Z(s)^2} \;\ge\; \frac{1}{Z(t)^2} - 2C\,(s-t).$$
 
----
+*Proof sketch.* Identical to the MVT step in Theorem 4.1 but on the interval
+$[t,s]$: $w'\ge -2C$ everywhere, so the slope of $w$ over $[t,s]$ is $\ge -2C$.
+$\qquad\blacksquare$
 
-## 7. Future directions
+**Lemma 5.2 (reciprocal square vanishes at blow-up).** *If $Z(s)\to+\infty$ as
+$s\to T^{\*-}$ (i.e. along the left neighborhood filter $\mathcal N_{<}(T^\*)$),
+then $1/Z(s)^2\to 0$ along the same filter.*
 
-We restate here the research directions identified for this program.
+*Proof sketch.* $Z\to+\infty$ gives $Z^2\to+\infty$, hence $1/Z^2\to0$ by
+composition with $x\mapsto 1/x$ at $+\infty$. $\qquad\blacksquare$
 
-**Conjecture 1 — Beale–Kato–Majda continuation (scalar form).** If $Z$ satisfies
-$Z'\le CZ^3$ and $\int_0^T Z\,dt<\infty$, then $Z$ is bounded on $[0,T]$. A
-testable log-improvement replaces $Z^3$ by $Z\cdot(Z^2\log(e+Z^2))$ and should
-yield a finite-time bound governed by $\int Z\log(e+Z)$, with strictly longer
-guaranteed lifetime than the pure-cubic version.
+**Theorem 5.3 (lower blow-up rate).** *Let $C>0$, $Z(t)>0$, $Z'(t)=D(t)\le
+C\,Z(t)^3$, and suppose the enstrophy blows up at the finite time $T^\*$:
+$Z(s)\to+\infty$ as $s\to T^{\*-}$. Then for every $t<T^\*$,*
+$$Z(t)^2 \;\ge\; \frac{1}{2C\,(T^\*-t)}, \qquad\text{equivalently}\qquad
+\|\omega(t)\|_2 \;\gtrsim\; (T^\*-t)^{-1/2}.$$
 
-**Conjecture 2 — Ladyzhenskaya–Prodi–Serrin scalar threshold.** For $Z'\le
--aZ+C\,N(t)\,Z$ with forcing profile $N(t)\ge 0$ (the scalar shadow of a Serrin
-norm), $Z$ is globally bounded iff $\limsup_{T\to\infty}\frac1T\int_0^T
-(CN-a)^+\,dt\le 0$, with the time-average-critical case as the sharp threshold.
+*Proof sketch.* Fix $t<T^\*$. By Lemma 5.1, the inequality
+$1/Z(s)^2 \ge 1/Z(t)^2 - 2C(s-t)$ holds for all $s$ in a left neighborhood of
+$T^\*$. Let $s\to T^{\*-}$: the left side tends to $0$ by Lemma 5.2, while the
+right side tends to $1/Z(t)^2 - 2C(T^\*-t)$. Passing to the limit
+(`le_of_tendsto_of_tendsto`, using that $T^\*\in\overline{(-\infty,T^\*)}$ so the
+filter is `NeBot`) gives $1/Z(t)^2 - 2C(T^\*-t)\le 0$, i.e.
+$1/Z(t)^2 \le 2C(T^\*-t)$, which rearranges to the claim. $\qquad\blacksquare$
 
-**Conjecture 3 — Two-mode Galerkin invariant region.** For $x'=-\nu x+xy$,
-$y'=-\nu y-x^2$ (a minimal energy-conserving truncation), the disk $x^2+y^2\le R^2$
-is forward invariant for every $R\ge 0$, and $x^2+y^2$ decays to $0$ at rate
-$2\nu$, with the nonlinear terms contributing exactly zero to
-$\frac{d}{dt}(x^2+y^2)$.
-
-**Conjecture 4 — Enstrophy budget ⇒ vanishing dissipation.** From $\int_0^\infty
-G<\infty$ there is a sequence $t_n\to\infty$ with $G(t_n)\to0$; under uniform
-continuity, $G(t)\to0$ (Barbalat's lemma), and the uniform-continuity hypothesis is
-necessary (tall thin spikes give an integrable $G$ with $G(t)\not\to0$).
-
-**Conjecture 5 — Critical decay rate equals the Poincaré constant.** For the
-linear-dominated regime $E'=-2\nu F$, $F\ge\lambda_1 E$, the optimal exponential
-decay rate is exactly $2\nu\lambda_1$.
+This is the scalar analogue of the Leray and Beale–Kato–Majda lower bounds: a
+singularity must announce itself by the universal rate $(T^\*-t)^{-1/2}$, and
+conversely no blow-up can occur while the enstrophy stays $o((T^\*-t)^{-1/2})$.
 
 ---
 
-## 8. Conclusion
+## 6. Small-data global regularity in 3D
 
-We have isolated and proved the scalar a priori core of Navier–Stokes regularity:
-two-dimensional enstrophy trapping and the resulting global smoothness; exponential
-energy decay to rest under a Poincaré inequality; the sharp supercritical blow-up
-rate and matching lifespan in three dimensions; conditional and unconditional
-small-data global bounds; and the integrated energy identity with its finite
-total-dissipation budget. Each is a rigorous statement about real functions of
-time, derived from transparent hypotheses, and together they form a clean, fully
-verifiable backbone for the regularity theory — drawing in sharp relief both what
-is settled and exactly where the great open problem remains.
+When dissipation competes with stretching, the closed inequality becomes
+$Z'(t)\le -a\,Z(t) + C\,Z(t)^3$. In the small-data regime the linear draining
+term wins permanently.
+
+**Theorem 6.1 (conditional exponential decay).** *Let $C\ge0$ and suppose a
+uniform a priori bound $Z(t)\le M$ and $Z(t)\ge0$ hold, with $Z'(t)=D(t)\le
+-a\,Z(t)+C\,Z(t)^3$. Then for all $t\ge0$,*
+$$Z(t)\le Z(0)\,e^{-(a-CM^2)\,t}.$$
+
+*Proof sketch.* On $0\le Z\le M$ one has $CZ^3=CZ^2\cdot Z\le CM^2 Z$, so
+$D(t)\le -a Z + CM^2 Z = -(a-CM^2)Z(t)$. Apply Theorem 3.1 with rate $c=a-CM^2$.
+The decay is genuine precisely when $CM^2\le a$. $\qquad\blacksquare$
+
+**Theorem 6.2 (unconditional small-data invariance).** *Let $Z(0)>0$,
+$Z'(t)=D(t)\le -a\,Z(t)+C\,Z(t)^3$, and suppose $C\,Z(0)^2 < a$. Then
+$Z(t)\le Z(0)$ for all $t\ge0$.*
+
+*Proof sketch.* Suppose not; then $Z$ exceeds $Z(0)$ somewhere on $[0,t]$. Let
+$s$ be the last time on $[0,t]$ at which $Z(s)=Z(0)$ (it exists by compactness
+and continuity, since the level set $\{u\in[0,t]:Z(u)\le Z(0)\}$ is compact and
+contains $0$, and a supremum/closure argument upgrades $\le$ to $=$). At that
+point $C\,Z(s)^2=C\,Z(0)^2<a$, so $D(s)\le -aZ(s)+CZ(s)^3 = Z(s)(CZ(0)^2-a)<0$.
+A strictly negative derivative at $s$ forces $Z$ to *decrease* just to the right
+of $s$ (via the slope characterization `HasDerivAt.tendsto_slope`), contradicting
+that $Z>Z(0)$ for all $u>s$ in $[0,t]$. Hence the assumption fails and
+$Z(t)\le Z(0)$. $\qquad\blacksquare$
+
+Theorem 6.2 is the scalar shadow of small-data global regularity: when the
+initial enstrophy is small relative to viscosity, the a priori bound is
+self-sustaining and no blow-up can occur.
+
+---
+
+## 7. The logarithmic critical borderline
+
+Between the safe linear regime $Z'\le -aZ$ and the dangerous supercritical regime
+$Z'\le CZ^3$ lies the critical borderline carrying a logarithmic correction,
+$$Z'(t)\le C\,Z(t)\,\log\!\big(e+Z(t)\big),$$
+the scalar shadow of the logarithmically improved Beale–Kato–Majda continuation
+criterion. We show this borderline is globally regular.
+
+**Theorem 7.1 (logarithmic borderline is globally regular).** *Let $C>0$,
+$Z(t)\ge0$, $Z'(t)=D(t)\le C\,Z(t)\log(e+Z(t))$. Then $Z$ exists for all time and
+obeys the explicit double-exponential bound*
+$$Z(t)\le \exp\!\big(\log(e+Z(0))\cdot e^{Ct}\big) - e.$$
+
+*Proof sketch.* Set $v(t)=\log(e+Z(t))\ge1$. By the chain rule
+$v'(t)=Z'(t)/(e+Z(t))$. Using $Z'\le CZ\log(e+Z)$ together with
+$Z/(e+Z)\le 1$ and $\log(e+Z)\ge0$ yields the *linear* inequality
+$v'(t)\le C\,v(t)$. The integrating-factor comparison of Theorem 3.1 (with rate
+$-C$) gives $v(t)\le v(0)\,e^{Ct}$, i.e. $\log(e+Z(t))\le \log(e+Z(0))\,e^{Ct}$.
+Exponentiating and subtracting $e$ gives the stated double-exponential bound,
+which is finite at every finite $t$; hence no finite-time blow-up.
+$\qquad\blacksquare$
+
+Double-exponential growth is the fastest growth still compatible with global
+existence; the logarithmic correction sits exactly on the knife's edge and falls
+on the regular side.
+
+---
+
+## 8. Dissipation budgets
+
+A complementary, integrated viewpoint records the *total* dissipation by the
+fundamental theorem of calculus rather than pointwise bounds.
+
+**Theorem 8.1 (enstrophy balance).** *Let $G$ be continuous and
+$Z'(t)=-2\nu\,G(t)$. Then for every $T$,*
+$$Z(T)-Z(0) = -2\nu\int_0^T G(t)\,dt.$$
+
+*Proof sketch.* Apply the FTC (`intervalIntegral.integral_eq_sub_of_hasDerivAt`):
+$Z(T)-Z(0)=\int_0^T Z'(t)\,dt=\int_0^T -2\nu\,G(t)\,dt$, and pull the constant
+out; interval-integrability of the continuous integrand is automatic.
+$\qquad\blacksquare$
+
+**Theorem 8.2 (2D dissipation budget).** *Let $\nu>0$, $Z(t)\ge0$, $G$
+continuous, $Z'(t)=-2\nu\,G(t)$. Then for all $T\ge0$,*
+$$\int_0^T G(t)\,dt \;\le\; \frac{Z(0)}{2\nu}, \qquad\text{uniformly in }T.$$
+
+*Proof sketch.* From Theorem 8.1, $2\nu\int_0^T G = Z(0)-Z(T)\le Z(0)$ since
+$Z(T)\ge0$; divide by $2\nu>0$. $\qquad\blacksquare$
+
+**Theorem 8.3 (energy budget).** *Under the analogous hypotheses for $E'=-2\nu F$
+with $E\ge0$ and $F$ continuous, $\int_0^T F\,dt\le E(0)/(2\nu)$ for all
+$T\ge0$.*
+
+*Proof sketch.* Identical bookkeeping with $E,F$ in place of $Z,G$.
+$\qquad\blacksquare$
+
+**Theorem 8.4 (budgets are bounded above).** *The family of partial dissipation
+integrals $\{\int_0^T G : T\ge0\}$ is bounded above by $Z(0)/(2\nu)$.*
+
+*Proof sketch.* Theorem 8.2 exhibits $Z(0)/(2\nu)$ as a uniform upper bound,
+which is exactly `BddAbove` of the range. $\qquad\blacksquare$
+
+These uniform-in-$T$ bounds are the convergence-enabling estimates behind
+$\int_0^\infty G<\infty$ in 2D and the Leray–Hopf weak-solution theory in general.
+
+---
+
+## 9. Algorithms
+
+The estimates above are not only qualitative; each yields a concrete numerical
+recipe. We highlight three.
+
+**Algorithm A (guaranteed lifetime / blow-up envelope).** Given $C$ and $Z_0$,
+return $T^\*=1/(2CZ_0^2)$ and the envelope $t\mapsto Z_0^2/(1-2CZ_0^2 t)$ on
+$[0,T^\*)$. Complexity $O(1)$ per evaluation. This certifies the time horizon over
+which a 3D flow is provably smooth.
+
+**Algorithm B (blow-up-rate certificate).** Given an observed (or simulated)
+enstrophy trace and a candidate singular time $T^\*$, test the lower envelope
+$Z(t)^2\ge 1/(2C(T^\*-t))$. A trace that violates it for $t\to T^\*$ *cannot* be
+blowing up at $T^\*$ — a falsifiable, computable regularity certificate.
+
+**Algorithm C (double-exponential majorant for the log-borderline).** Given $C$
+and $Z_0$, return $t\mapsto \exp(\log(e+Z_0)e^{Ct})-e$, a rigorous upper majorant
+for any solution of the logarithmic borderline inequality.
+
+---
+
+## 10. Applications and discussion
+
+The scalar a priori layer formalized here is exactly the bridge between the
+abstract PDE and the numbers a practitioner can compute:
+
+- **Certified time horizons.** Theorem 4.1 gives an explicit lower bound on the
+  existence time of a 3D flow from a single norm of the initial data — directly
+  usable as a safety margin in simulation.
+- **Singularity exclusion.** Theorem 5.3 turns the absence of fast enstrophy
+  growth into a rigorous *no-blow-up* certificate, and Theorem 6.2 does the same
+  for small data.
+- **Relaxation rates.** Theorems 3.1–3.2 quantify how fast a forced flow returns
+  to rest, the scalar content of long-time attractor theory.
+- **Budget accounting.** The uniform budgets of Section 8 are the finite
+  resources that make weak-solution theory work.
+
+We emphasize what is and is not done. We do *not* formalize the Navier–Stokes PDE
+itself, nor the function-analytic derivation of the inequalities (Poincaré,
+Sobolev, Ladyzhenskaya), which require infrastructure beyond current libraries.
+We *do* formalize, with full rigor, the deductive layer: given the inequality the
+energy method produces, the regularity, decay, lifetime, blow-up-rate, and budget
+conclusions follow exactly as stated. In this sense the results are faithful
+scalar shadows of Ladyzhenskaya's 2D theorem, Leray's structure theory, the
+Beale–Kato–Majda criterion, and small-data global regularity.
+
+A unifying observation: every proof runs on the same engine. Sign-definiteness
+gives 2D monotonicity; the integrating factor $e^{ct}$ gives linear decay and the
+logarithmic borderline; the reciprocal substitution $w=1/Z^2$ gives both the 3D
+upper a priori bound and its dual lower blow-up rate. The nonlinearity is always
+removed by a single well-chosen change of variable.
+
+---
+
+## 11. Future directions
+
+The same engine extends in several directions, each formalizable as a scalar
+differential-inequality theorem over an abstract observable.
+
+- **General power-law dichotomy.** For $Z'\le CZ^p$ with $p>1$ and
+  $\alpha=1/(p-1)$, the substitution $w=Z^{-(p-1)}$ obeys $w'\ge -(p-1)C$ and
+  should yield simultaneously the upper lifetime bound
+  $Z(t)^{p-1}\le Z_0^{p-1}/(1-(p-1)CZ_0^{p-1}t)$ and the lower blow-up rate
+  $Z(t)\gtrsim (T^\*-t)^{-\alpha}$. The present results are the case $p=3$,
+  $\alpha=1/2$.
+- **Time-dependent forcing and a moving absorbing ball.** For
+  $Y'\le -aY+b(t)$ with $\beta=\limsup_{t\to\infty}b(t)<\infty$, conjecturally
+  $\limsup_{t\to\infty}Y(t)\le\beta/a$ and the ball $\{Y\le\beta/a+\varepsilon\}$
+  is absorbing, via the integrating factor $Y(t)e^{at}$.
+- **Two-mode energy/enstrophy coupling (2D Ladyzhenskaya shadow).** Coupling
+  $E'\le -2\nu\lambda_1 E$ and $Z'\le -2\nu Z+\kappa EZ$ with $E$ decaying
+  exponentially gives $\int_0^\infty E<\infty$ and hence
+  $Z(t)\le Z_0\exp(\kappa\int_0^\infty E)<\infty$ — a two-variable closure of the
+  2D global bound.
+
+Each conjecture is falsifiable and pitched at the same abstraction level as the
+theorems above, making it a direct target for formalization.
+
+---
+
+## 12. Conclusion
+
+We have given rigorous, formally verified proofs of the scalar a priori estimates
+at the heart of Navier–Stokes regularity theory: 2D global enstrophy bounds,
+exponential energy decay and convergence, the 3D supercritical lifetime bound and
+its dual lower blow-up rate, small-data invariance, the global regularity of the
+logarithmic critical borderline, and uniform dissipation budgets. The results are
+organized by a single principle — linearize the nonlinear scalar inequality by a
+sign, an integrating factor, or a reciprocal substitution — and together they map
+the precise boundary between the regimes where viscous flow is guaranteed smooth
+and the regime where, in the worst case, it need not be.
