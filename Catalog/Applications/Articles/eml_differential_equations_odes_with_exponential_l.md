@@ -1,244 +1,258 @@
-# The Equation That Refuses a Formula
+# The Symmetry Hidden Inside a Differential Equation
 
-## A rainbow, a telescope, and a stubborn little curve
+## Why some equations refuse to be solved
 
-If you have ever looked closely at the bright edge of a rainbow, or at the
-fringe of light spilling past the rim of a shadow, you have seen the
-fingerprints of a single mathematical object. Near a *caustic* — the place
-where light rays pile up and focus — the brightness of light is governed by a
-special function that wiggles on one side and fades smoothly to nothing on the
-other. Astronomers meet the same curve when they sharpen a telescope; physicists
-meet it at the turning point of a quantum particle, exactly where a ball would
-roll back if the world were classical instead of quantum.
-
-That curve is the **Airy function**, and it is the solution to one of the most
-deceptively simple differential equations ever written down:
+In 1830, a young George Biddell Airy was studying the way light bends around the
+edge of a shadow — the faint rainbow fringes you can sometimes see at the border
+of a sharp shadow on a sunny day. To describe the brightness of those fringes he
+wrote down what looks like one of the simplest differential equations
+imaginable:
 
 $$ y'' = x\,y. $$
 
-In words: *the curvature of the graph at each point equals the height of the
-graph times the horizontal position.* That is all. No exotic ingredients, no
-hidden constants. And yet this equation hides a secret that took mathematicians
-the better part of two centuries to fully articulate, and that we can now state
-with complete precision: **Airy's equation has no solution that can be written
-as a formula built from ordinary algebra.**
+In words: the curvature of a function at each point $x$ equals the function's own
+value, multiplied by $x$. It is shorter than the equation for a swinging pendulum.
+And yet, almost two centuries later, there is still no way to write its solution
+using the everyday toolkit of mathematics — no finite combination of powers,
+roots, exponentials, logarithms, sines, and cosines will ever reproduce the
+*Airy function*. It is, in a precise and provable sense, a genuinely new function,
+not reducible to the ones we already knew.
 
-This article is about *why* — and about a clean, modern way to prove a sharp
-version of that impossibility using nothing more sophisticated than counting the
-degree of a polynomial.
+How could anyone *prove* such a thing? How do you show that no formula exists,
+when there are infinitely many formulas you might try? The answer is one of the
+most beautiful ideas in mathematics: when you cannot solve an equation, study its
+*symmetries* instead. This is the story of **differential Galois theory**, and of
+a recent effort to rebuild its core machinery from the ground up — clean enough
+that every step can be checked with complete certainty.
 
-## What "no formula" really means
+## A two-century-old trick: trade solving for symmetry
 
-We have to be careful. The Airy function certainly *exists*: you can compute it
-to a billion decimal places, plot it, build a telescope around it. When we say
-"no formula," we mean something specific and historically deep.
+The strategy goes back to Évariste Galois, who died in a duel at age twenty after
+revolutionizing algebra in a single feverish night of writing. Galois was looking
+at ordinary polynomial equations — things like $x^5 - 6x + 3 = 0$ — and asking
+the famous question: can the roots be written using only $+,-,\times,\div$ and
+$n$-th roots? His insight was to stop staring at the roots and instead look at how
+they can be *shuffled*. Each equation carries a group of symmetries permuting its
+solutions, and the equation is solvable by radicals exactly when that group is
+"built from simple abelian pieces." For the general fifth-degree equation the
+symmetry group is too tangled, and so no formula can exist.
 
-In the 1800s, Joseph Liouville asked a revolutionary question: which integrals
-and which differential equations can be solved "in closed form" — using
-polynomials, roots, exponentials, logarithms, and the four arithmetic
-operations? He discovered that *most* cannot. The integral $\int e^{-x^2}\,dx$,
-the engine of all of statistics, has no elementary antiderivative. It is not
-that we have been too lazy to find one; it is that none exists, and this is a
-*theorem*, as firm as the irrationality of $\sqrt{2}$.
+In the early twentieth century, Émile Picard and Ernest Vessiot transplanted this
+idea from algebraic equations to *differential* equations. Instead of permuting a
+finite set of roots, the symmetry group of a linear differential equation acts on
+its (finite-dimensional) space of solutions by linear transformations. The
+equation can be solved in "closed form" — using exponentials, integrals, and
+algebraic functions, the so-called **Liouvillian** functions — exactly when this
+*differential Galois group* is solvable in the group-theoretic sense.
 
-Differential equations have their own version of this story, and it is even
-richer. It is called **differential Galois theory**. Just as ordinary Galois
-theory attaches a symmetry group to a polynomial equation and reads off whether
-the roots can be expressed by radicals, differential Galois theory attaches a
-symmetry group to a *differential* equation and reads off whether its solutions
-can be expressed in elementary terms. For a second-order linear equation like
-Airy's, there is even an explicit recipe — the **Kovacic algorithm** — that
-takes the equation as input and decides, in finite time, whether a "nice"
-(so-called *Liouvillian*) solution exists.
+For our story the relevant closed-form world is what we will call the **EML
+functions**: everything you can build from the rational functions by repeatedly
+taking **E**xponentials, **L**ogarithms, and **M**ultiplicative/algebraic
+combinations. Airy's equation has no EML solution. The differential Galois group
+of Airy's equation turns out to be as large and as un-solvable as it possibly can
+be (it is the full group $\mathrm{SL}_2$), and that single fact is the modern
+explanation for why no elementary formula will ever capture the rainbow fringes.
 
-For Airy's equation, the verdict is: **no**. The Airy function is genuinely
-new — it cannot be assembled from the classical toolkit. This article gives a
-self-contained, rigorous proof of the crucial first and most decisive step of
-that verdict.
+## Where do the symmetries live? The field of constants
 
-## The trick that changes everything: Riccati's substitution
+To make any of this rigorous you first have to answer a deceptively simple
+question: *symmetries over what?* In ordinary Galois theory the symmetries fix the
+base number field — the rational numbers, say. In the differential world the
+analogue of "the numbers that don't move" is the **field of constants**: the
+elements whose derivative is zero.
 
-Here is the central idea, and it is beautiful. A second-order equation looks
-hard because it talks about curvature ($y''$). But there is a classical change
-of variables — due to the 18th-century Italian count Jacopo Riccati — that
-trades the second-order *linear* equation for a first-order *nonlinear* one.
+Write $a'$ for the derivative of $a$. A *differential field* is just a field — a
+system where you can add, subtract, multiply, and divide — equipped with a
+derivative operation obeying the usual rules:
 
-Set
-$$ v = \frac{y'}{y}, $$
-the *logarithmic derivative* of the unknown solution. If $y'' = q\,y$, then a
-one-line computation with the quotient rule shows that $v$ satisfies the
-**Riccati equation**
-$$ v' + v^2 = q. $$
+$$ (a+b)' = a' + b', \qquad (ab)' = a'b + ab'. $$
 
-For Airy ($q = x$) this becomes
-$$ v' + v^2 = x. $$
+Inside any such field, look at the set of all elements with vanishing derivative:
 
-Why is this a good trade? Because of a fundamental principle of differential
-Galois theory: the original linear equation has a "nice" (Liouvillian) solution
-**only if** its Riccati equation has a solution that is *algebraic* — in the
-simplest case, a **rational function**, a ratio of two polynomials. The hunt for
-elementary solutions of a hard second-order equation collapses into the hunt for
-a humble fraction $v = p/q$ solving a first-order equation. This is exactly the
-reducible-case test at the heart of the Kovacic algorithm.
+$$ C = \{\, x : x' = 0 \,\}. $$
 
-So the whole question — *can the rainbow's curve be written as a formula?* —
-funnels down to a single sharp puzzle:
+The first foundational result is that **$C$ is itself a field** — a self-contained
+number system sitting inside the bigger one. This is not obvious. You have to check
+that if $x$ and $y$ are constant then so are $x+y$, $xy$, $-x$, and crucially
+$1/x$. The sum and product follow straight from the rules above. The inverse takes
+the quotient rule: from $(1/x)' = -x'/x^2$ you see that if $x' = 0$ then $1/x$ is
+constant too. We call this object the **constants subfield**, and it is the stage
+on which the entire drama plays out: the differential Galois group is a group of
+matrices *with entries in the constants*, and it fixes every constant.
 
-> **Is there a rational function $v = p/q$ with $v' + v^2 = x$?**
+This is the bedrock. Everything else is about how those constants act.
 
-If the answer is no, the most important door to an elementary solution is shut.
+## The simplest symmetry: ratios that can't change
 
-## Clearing the fraction
+Start with the easiest possible differential equation, the first-order linear one:
 
-Fractions are awkward to reason about, so we clear them. Suppose $v = p/q$ with
-polynomials $p, q$ and $q \neq 0$. The quotient rule gives
-$$ v' = \frac{p'q - p q'}{q^2}, \qquad v^2 = \frac{p^2}{q^2}. $$
-Substituting into $v' + v^2 = x$ and multiplying through by $q^2$ turns the
-rational equation into a pristine **polynomial identity**:
-$$ p'\,q - p\,q' + p^2 = x\,q^2. $$
+$$ y' = a\,y. $$
 
-Every term here is an honest polynomial. The fractions are gone. A rational
-solution of Airy's Riccati equation exists *if and only if* there are
-polynomials $p, q$ (with $q \neq 0$) making this identity true. We have turned a
-question about calculus into a question about algebra — and algebra we can win by
-counting.
+Over the real numbers its solution is the exponential $y = e^{\int a}$, and any two
+solutions differ only by an overall scale. The abstract, formula-free way to say
+"differ only by a scale" is striking:
 
-## The proof is parity
+> **If $y_1$ and $y_2$ both satisfy $y' = a\,y$, and $y_2 \neq 0$, then their ratio
+> $y_1/y_2$ is a constant.**
 
-Here is the entire argument, and the wonderful thing is that you can follow it
-with no machinery beyond the **degree** of a polynomial — the highest power of
-$x$ that appears. Write $\deg p$ and $\deg q$ for these degrees. Recall two
-schoolbook facts: the degree of a product adds ($\deg(fg) = \deg f + \deg g$),
-and differentiation *lowers* degree by one.
+The proof is a single application of the quotient rule. The derivative of
+$y_1/y_2$ is
+$$ \left(\frac{y_1}{y_2}\right)' = \frac{y_1' y_2 - y_1 y_2'}{y_2^2}
+   = \frac{(a y_1) y_2 - y_1 (a y_2)}{y_2^2} = 0. $$
+The two copies of $a$ cancel perfectly, and the ratio freezes into a constant.
 
-Look at the right-hand side, $x\,q^2$. Its degree is
-$$ \deg(x\,q^2) = 1 + 2\deg q, $$
-which is **odd** — an even number $2\deg q$ plus one. That single observation is
-the seed of the whole impossibility. Now we examine the left-hand side and show
-it can *never* be odd of the right size.
+Why does this matter? Because it pins down the symmetry group of a first-order
+equation completely. The solution space is a single line — all multiples of one
+solution — and the only thing a symmetry can do is rescale that line by a nonzero
+constant. So the differential Galois group of $y' = a y$ sits inside the
+**multiplicative group of constants**, the simplest possible kind of symmetry
+group. In the slogan of this project, it is the prototypical *EML group*: an
+honest, tractable, abelian symmetry. First-order EML equations are always solvable,
+and this little cancellation is the reason.
 
-The left-hand side has two pieces. The square $p^2$ has degree $2\deg p$,
-always **even**. The cross term $p'q - p q'$ — a "Wronskian-like" combination —
-is the interesting one. Naively it looks like it should have degree
-$\deg p + \deg q$. But here is a small gem we prove along the way:
+## Climbing to second order: a stage built from constants
 
-> **The cross term drops a degree.** For any polynomials $p$ and $q$,
-> $$ \deg\!\big(p'q - p q'\big) \le \deg p + \deg q - 1. $$
+Airy's equation is *second* order, and second order is where the difficulty — and
+all the interesting symmetry — lives. The relevant family is
 
-The leading terms of $p'q$ and $p q'$ are designed to cancel — exactly the
-phenomenon that makes the classical *Wronskian* of two solutions degenerate.
-(In the Lean formalization this is the lemma `natDegree_wronskianLike_le`.)
+$$ y'' = a\,y, $$
 
-With that in hand the case analysis is short and decisive:
+with no first-derivative term (every second-order linear equation can be massaged
+into this shape). Here the solution space is two-dimensional, and the symmetry
+group is a group of $2 \times 2$ matrices.
 
-**Case 1: $\deg p \ge \deg q$.** Then the square $p^2$ (degree $2\deg p$) sits
-*above* the cross term (degree at most $\deg p + \deg q - 1 \le 2\deg p - 1$), so
-the whole left side has degree exactly $2\deg p$ — even. But it must equal the
-right side, of degree $1 + 2\deg q$ — odd. An even number cannot equal an odd
-number. Contradiction.
+Two further facts turn that vague picture into a precise structure. First,
+**scaling preserves solutions**: if $y$ solves $y'' = a y$ and $c$ is a constant,
+then $c\,y$ solves it too. The computation is short — because $c' = 0$, the
+constant slides straight through both derivatives:
+$$ (c y)'' = c\,y'' = c\,(a y) = a\,(c y). $$
+Second, **sums of solutions are solutions**: if $y_1$ and $y_2$ both solve the
+equation, so does $y_1 + y_2$, because differentiation is linear. Put together,
+these say the solution set is a **vector space over the field of constants** — a
+genuine two-dimensional plane on which the Galois group acts linearly. The
+abstract algebra has reproduced, with no mention of real numbers or analysis, the
+familiar fact that solutions of a linear ODE can be freely added and rescaled.
 
-**Case 2: $\deg p < \deg q$.** Now $p^2$ has degree $2\deg p \le 2\deg q - 2$,
-and the cross term has degree at most $\deg p + \deg q - 1 \le 2\deg q - 2$. So
-the entire left side has degree at most $2\deg q - 2$ — but the right side has
-degree $1 + 2\deg q$, which is at least two larger. The two sides cannot match.
-Contradiction.
+## The Wronskian: a constant that detects independence
 
-Either way, no polynomials $p, q$ exist. The fraction we sought does not exist.
-**Airy's Riccati equation has no rational solution.** (This is the theorem
-`no_rational_solves_riccati_airy`.)
+How do you know whether two solutions are *genuinely different* — whether they
+really span the two-dimensional plane, or are secretly just multiples of each
+other? The classical answer is a single number called the **Wronskian**:
 
-That is the whole proof. No pole counting, no residues, no heavy differential
-algebra — just the parity of an exponent. And it is rigorous: every step has
-been checked by machine.
+$$ W = y_1\,y_2' - y_2\,y_1'. $$
 
-## The result is bigger than Airy
+It measures the "area" spanned by the two solutions and their slopes. Two
+remarkable things are true about it, and both fall out of the algebra.
 
-Notice what the argument actually used about the right-hand side $q = x$: only
-that its degree, $1$, is **odd**. Nothing about Airy in particular. So the same
-two-line parity dichotomy proves a sweeping generalization:
+If $y_1$ and $y_2$ are **dependent** — say $y_2 = c\,y_1$ for some constant $c$ —
+then the Wronskian is exactly zero:
+$$ y_1\,(c y_1)' - (c y_1)\,y_1' = c\,y_1 y_1' - c\,y_1 y_1' = 0. $$
+A vanishing Wronskian is the algebraic fingerprint of linear dependence.
 
-> **The odd-degree obstruction.** Let $f$ be *any* polynomial of odd degree.
-> Then the Riccati equation $v' + v^2 = f$ has no rational solution; equivalently,
-> the cleared identity $p'q - pq' + p^2 = f\,q^2$ has no solution with $q \neq 0$.
+And if $y_1, y_2$ are honest solutions of $y'' = a y$, then their Wronskian is
+**always a constant** — it never changes as $x$ varies. This is a version of a
+classical result called *Abel's identity*, and the proof is again one line:
+$$ W' = y_1' y_2' + y_1 y_2'' - y_2' y_1' - y_2 y_1''
+      = y_1 (a y_2) - y_2 (a y_1) = 0. $$
+The cross terms cancel; the curvature terms cancel; nothing is left. So the
+Wronskian is a constant — an element of that base field $C$ we built at the start.
+This is precisely the statement that the differential Galois group preserves a
+volume: it lives inside the matrices of *constant determinant*. The symmetry group
+of a second-order equation is therefore a subgroup of $\mathrm{SL}_2$ (up to a
+scalar) over the constants. The abstract machinery has located the group with
+surgical precision.
 
-(In Lean this is `no_rational_solves_riccati_odd_deg`, and Airy is the special
-case $f = x$.) Translated back through Riccati's substitution, this says: for an
-entire infinite family of equations $y'' = f\,y$ with $\deg f$ odd — $y''=xy$,
-$y''=x^3y$, $y'' = (x^5 - x)y$, and so on — the reducible-case test of the
-Kovacic algorithm *always fails*. The most accessible route to an elementary
-solution is closed for all of them at once.
+## The decisive move: from second order down to first
 
-The odd-degree hypothesis is not a technicality we failed to remove; it is
-*load-bearing*. For $f = x^2$, degree two and **even**, the parity clash
-disappears, and indeed such equations *can* have rational Riccati solutions. The
-boundary between solvable and unsolvable runs exactly along the parity of the
-degree. That is the kind of clean dividing line mathematicians dream of.
+We now have the stage and the actors. The final ingredient is the trick that lets
+us actually *decide* whether Airy's equation can be solved. It is called the
+**Riccati transform**, and it is the engine of the celebrated **Kovacic
+algorithm**.
 
-## A tower of barriers
+The idea is to study not the solution $y$ itself, but its *logarithmic
+derivative*,
+$$ v = \frac{y'}{y}. $$
+A short computation with the quotient rule shows that whenever $y'' = a y$, this
+new quantity $v$ satisfies a *first-order* — but *nonlinear* — equation:
+$$ v' + v^2 = a. $$
+This is the **Riccati equation**. We have traded a linear second-order problem for
+a quadratic first-order one. The payoff is enormous: a deep theorem of
+differential Galois theory says the original equation has a Liouvillian (EML)
+solution **only if** this Riccati equation has a solution that is an *algebraic
+function* — and the first and easiest case to rule out is a *rational* solution,
+an honest ratio of polynomials $v = p/q$.
 
-It helps to see where this fits. The impossibility of solving Airy's equation in
-closed form is established by a tower of increasingly strong obstructions, each
-ruling out a larger class of would-be solutions:
+So the whole impossibility question collapses to: **does $v' + v^2 = a$ have a
+rational solution?** For Airy, $a = x$, and the question becomes whether
+$$ v' + v^2 = x $$
+can be solved by any ratio of polynomials at all.
 
-1. **The polynomial barrier.** No nonzero polynomial $p$ can satisfy $p'' = x p$.
-   The reason is a blunt degree mismatch: differentiating twice *lowers* degree,
-   while multiplying by $x$ *raises* it, so $p''$ is always too small to equal
-   $x p$. (In Lean: `no_poly_solves_airy`, and more generally
-   `no_poly_solves_second_order_pos_deg` for any coefficient of positive degree.)
+## Counting degrees, catching a parity
 
-2. **The rational Riccati barrier** — the new result of this work. Even allowing
-   *fractions* of polynomials as candidate logarithmic derivatives, the parity
-   argument above shuts the door. This is genuinely stronger than the polynomial
-   layer, and it is the true Galois-theoretic step, because rational solutions of
-   the Riccati equation are exactly what the Kovacic algorithm searches for.
+Here is where the proof becomes almost magical in its simplicity. Suppose
+$v = p/q$ were a rational solution, with $p, q$ polynomials and $q \neq 0$.
+Multiply the Riccati equation through by $q^2$ to clear denominators, and it
+becomes a clean polynomial identity:
+$$ p'q - p q' + p^2 = a\,q^2. $$
 
-3. **The abstract differential-field layer.** Above both sits the structural
-   fact, true in any differential field, that the Wronskian of two solutions of
-   $y'' = a y$ has zero derivative — the polynomial echo of Abel's classical
-   identity. (In Lean: `poly_wronskian_derivative_zero`.) It is what guarantees
-   the solution space is only two-dimensional and frames the Galois group as a
-   group of $2 \times 2$ matrices.
+Now just count degrees. The right-hand side has degree $\deg a + 2\deg q$. On the
+left, the term $p^2$ has the *even* degree $2\deg p$, while the "Wronskian-like"
+combination $p'q - pq'$ has degree at most $\deg p + \deg q - 1$ — one less than a
+naive product, because differentiation lowers degree.
 
-The combined first step — *no polynomial solution and no rational Riccati
-solution* — is bundled together in the single statement
-`airy_no_poly_and_no_rational_riccati`, the formal certificate that the two most
-elementary doors to a closed-form Airy function are both locked.
+Two cases. If $p$ is at least as big as $q$, the $p^2$ term dominates everything,
+and matching degrees forces
+$$ \deg a + 2\deg q = 2\deg p, \quad\text{so}\quad \deg a = 2(\deg p - \deg q), $$
+an **even** number. If instead $p$ is smaller than $q$, the entire left-hand side
+has degree at most $2\deg q - 2$, which is strictly *less* than the right-hand
+side's degree of at least $2\deg q + 1$ — so the equation can never balance.
 
-## Why this is worth caring about
+The conclusion is stark: **a rational solution can exist only when $\deg a$ is
+even.** For Airy's equation $a = x$ has degree $1$ — odd. The parity is wrong. No
+rational solution exists, the first step of the Kovacic algorithm fails, and Airy's
+equation is locked out of the EML world forever.
 
-It would be easy to file this under "abstract curiosities," but the Airy function
-is one of the most practically important special functions in all of applied
-mathematics. It describes:
+What makes this argument so satisfying is what it *doesn't* need. There is no
+delicate analysis of poles, no requirement that $p$ and $q$ be coprime, no appeal
+to the special nature of the Airy function. It is a pure parity argument — the
+same flavour as "an odd number can never be twice a whole number" — and it
+generalizes instantly: **every equation $y'' = f\,y$ with $f$ of odd degree is
+immune to rational Riccati solutions**, and so resists elementary solution. Airy
+is merely the smallest, most famous member of an infinite family.
 
-- the **intensity of light** at a caustic, the optics of rainbows and the
-  shimmer at the edge of shadows;
-- the wavefunction of a **quantum particle near a turning point**, the bedrock
-  of the WKB approximation in quantum mechanics;
-- the diffraction pattern at the edge of a **telescope aperture**;
-- the statistics of the largest eigenvalue of huge random matrices — the
-  **Tracy–Widom distribution** that governs everything from the heights of
-  randomly growing interfaces to fluctuations in number theory.
+## What the parity argument can and cannot see
 
-Every time an engineer or physicist reaches for the Airy function, they are
-reaching for something that *provably has no elementary formula*. Understanding
-*why* — knowing that the obstruction is as simple and as unbreakable as the
-parity of a single integer — is what turns "we couldn't find a formula" into "no
-formula can exist." That distinction is the whole difference between ignorance
-and knowledge.
+Honesty compels a caveat, and it is an interesting one. The degree–parity test is
+a one-way street. *Odd* degree guarantees there is no rational solution. *Even*
+degree merely means the parity obstruction is silent — it does not promise a
+solution exists. For example, the equation behind $y = e^{x^2/2}$ has coefficient
+$f = x^2 + 1$ of even degree $2$, and it genuinely does have the rational Riccati
+solution $v = x$ (you can check: $v' + v^2 = 1 + x^2 = f$). But other even-degree
+coefficients, like $x^4$, sit in a murkier regime where finer information — the
+*leading coefficients*, not just the degrees — must be brought in. The frontier of
+this little theory is exactly there: a complete, computable criterion for the even
+case. The odd case, however, is closed: clean, total, and certain.
 
-## The shape of an impossibility
+## Why build it this way?
 
-There is a quiet aesthetic lesson here. Impossibility proofs are often imagined
-as forbidding, technical fortresses. But the best of them have the opposite
-character: they reveal that the obstruction was something almost embarrassingly
-simple, hiding in plain sight. You cannot square the circle because $\pi$ is
-transcendental. You cannot solve the general quintic by radicals because a
-certain group is not solvable. And you cannot write the Airy function as an
-elementary formula because — at the very first and most important step — an even
-number cannot equal an odd number.
+You might wonder why anyone would rebuild a nineteenth-century theory so
+carefully, separating it into a field of constants, a one-line ratio lemma, a
+scaling lemma, a Wronskian lemma, a Riccati transform, and a degree count. The
+reason is that this is exactly the skeleton a *machine* can verify. Each piece is
+small, each is provable from the axioms of a differential field alone — no real
+numbers, no analysis, no hidden assumptions about algebraic closure or
+characteristic. The constants form a field; ratios of first-order solutions
+freeze; second-order solutions form a plane over the constants; the Wronskian is a
+constant determinant; the Riccati transform drops the order; and a parity count
+finishes Airy. Stripped to its logical bones, the impossibility of solving Airy's
+equation is not a deep mystery at all — it is a sequence of cancellations, each
+forced by the product rule, ending in a clash between an even number and an odd
+one.
 
-The next time you see the bright fringe of a rainbow, you can know two things at
-once: that the curve of its brightness is computed by a function science cannot
-do without, and that this function is, in the most precise sense, *irreducibly
-new* — a stranger that no amount of algebra will ever tame. The proof of its
-strangeness fits in a paragraph, and it comes down to counting.
+That, in the end, is the quiet power of the Galois viewpoint. Faced with an
+equation we cannot solve, we did not solve it. We asked what symmetries it
+permits, discovered they live in a field of constants, watched those symmetries
+act on a two-dimensional plane, traded the equation for its logarithmic
+derivative, and counted to two. The rainbow fringes at the edge of a shadow are
+described by a function with no formula — and now we can say exactly, and
+provably, why.

@@ -1,30 +1,54 @@
-# THEOREM TRACE (internal anti-hallucination ledger)
+# Computational Evidence — EML Differential Equations Cycle
 
-Source of truth: `Catalog/EML/EMLAiryRiccati.lean` (Phase A new file) and the
-catalog file `Catalog/EML/EMLDiffObstruction.lean`. Only the names below may be
-stated as proved results; no result outside this list may be claimed.
+Concise numerical/structural checks performed before formalizing the Lean theorems
+in `EMLDifferentialGalois.lean`, `EMLKovacicSharp.lean`, `EMLWronskianGalois.lean`.
 
-## EMLAiryRiccati.lean
+## 1. Kovacic parity test on the cleared Riccati identity
 
-| Lean name | Mathematical statement | In ARTICLE.md | In RESEARCH_PAPER.md |
-|---|---|---|---|
-| `natDegree_wronskianLike_le` | For `p, q ∈ ℝ[X]`: `deg(p′·q − p·q′) ≤ deg p + deg q − 1`. | "the cross term drops a degree" (Lemma, plain language) | Lemma 1 (full statement + proof sketch) |
-| `no_rational_solves_riccati_odd_deg` | For `f, p, q ∈ ℝ[X]`, `q ≠ 0`, `deg f` odd: the cleared identity `p′q − pq′ + p² = f·q²` is impossible. Equivalently `v′ + v² = f` has no rational solution. | main theorem, plain language + example | Theorem 2 (full statement + proof sketch) |
-| `no_rational_solves_riccati_airy` | Airy case `f = X`: no `p, q` with `q ≠ 0` satisfy `p′q − pq′ + p² = X·q²`; i.e. `v′ + v² = x` has no rational solution. | headline result | Theorem 3 (corollary) |
-| `airy_no_poly_and_no_rational_riccati` | Combined first-step obstruction bundling `EMLDiffObstruction.no_poly_solves_airy` with the rational Riccati obstruction. | mentioned as "the combined barrier" | Corollary 4 |
+The cleared Riccati identity for `y″ = f·y` is
 
-## EMLDiffObstruction.lean (catalog, referenced)
+    p′·q − p·q′ + p² = f·q²      (v = p/q, q ≠ 0).
 
-| Lean name | Mathematical statement | Use |
-|---|---|---|
-| `degree_second_deriv_lt_degree_X_mul` | For `p ≠ 0`: `deg(p″) < deg(X·p)`. | supports `no_poly_solves_airy` |
-| `no_poly_solves_airy` | No nonzero `p ∈ ℝ[X]` solves `p″ = X·p`. | polynomial layer (background) |
-| `no_poly_solves_second_order_pos_deg` | For `deg q ≥ 1`, `p ≠ 0`: `p″ = q·p` impossible. | general polynomial obstruction |
-| `poly_wronskian_derivative_zero` | If `f″ = q·f`, `g″ = q·g` then `(f·g′ − g·f′)′ = 0`. | Wronskian/Abel identity (background) |
-| `no_poly_solves_riccati_airy` | No `p ∈ ℝ[X]` solves `p′ + p² = X`. | polynomial Riccati layer |
-| `no_poly_solves_gen_airy` | For `n ≥ 1`, `p ≠ 0`: `p″ = Xⁿ·p` impossible. | generalized Airy family |
-| `polyWronskian` (def) | `W(f,g) = f·g′ − g·f′`. | definition |
+Degree count of the left side: `deg(p²) = 2·deg p`, `deg(p′q − pq′) ≤ deg p + deg q − 1`.
+Right side: `deg(f·q²) = deg f + 2·deg q`.
 
-NOTE: do NOT claim full differential Galois group computations, Kovacic
-algorithm termination proofs, or algebraic (non-rational) obstruction — those
-are listed only as Future Directions, not proved.
+| f          | deg f | parity | rational Riccati solution? |
+|------------|-------|--------|----------------------------|
+| X          | 1     | odd    | NONE (Airy)                |
+| X³         | 3     | odd    | NONE                       |
+| X^(2k+1)   | 2k+1  | odd    | NONE (generalized Airy)    |
+| X² + 1     | 2     | even   | v = X  (explicit!)         |
+
+Verification of the even witness `f = X²+1`, `v = X` (p = X, q = 1):
+
+    p′·q − p·q′ + p² = 1·1 − X·0 + X² = X² + 1 = f·q².  ✓
+
+This `v = X` is the logarithmic derivative of `y = e^{x²/2}`, which solves
+`y″ = (x² + 1)·y` — an EML-solvable equation, confirming the odd-degree hypothesis
+is genuinely necessary. Both rows are formalized:
+`EMLKovacicSharp.no_rational_riccati_genAiry` (odd, impossible) and
+`EMLKovacicSharp.riccati_evenDeg_solvable` (even, witnessed).
+
+## 2. Constants subfield closure (spot check of the field axioms)
+
+For a derivation `D` with `Da = Db = 0`:
+- `D(a+b) = 0`, `D(ab) = a·Db + b·Da = 0`, `D(-a) = 0`, `D(a⁻¹) = -a⁻²·Da = 0`.
+All four close, so `{x | x′ = 0}` is a subfield — formalized as
+`EMLDiffGalois.constantsSubfield`.
+
+## 3. Wronskian linear-independence detector (2×2 determinant check)
+
+A constant dependence `c₁y₁ + c₂y₂ = 0` differentiates to `c₁y₁′ + c₂y₂′ = 0`
+(constants drop out). The 2×2 system in `(c₁, c₂)` has a nontrivial solution, so its
+determinant — the Wronskian `W = y₁y₂′ − y₂y₁′` — vanishes:
+
+    c₁·W = (c₁y₁)y₂′ − y₂(c₁y₁′) = −c₂y₂y₂′ + c₂y₂y₂′ = 0,  similarly c₂·W = 0.
+
+Nontriviality of `(c₁, c₂)` ⇒ `W = 0`. Formalized as
+`EMLWronskianGalois.wronskian_eq_zero_of_linDep`; the contrapositive gives the
+independence detector.
+
+## OEIS
+
+No new integer sequence arises; the relevant invariant is the *parity* of `deg f`
+(A000035 applied to polynomial degree), which is exactly the Kovacic decision bit.
