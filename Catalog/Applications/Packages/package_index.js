@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "be72639d",
     "filename": "exponentialdiameter_contraction_under_delaunay_min.json",
     "pkg_num": 100,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7645600000000001,
     "title": "Exponential Diameter Contraction under Delaunay Minicenter Refinement"
   },
   {
@@ -2918,8 +2918,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "exponentialdiameter_contraction_under_delaunay_min",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7645600000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Exponential Diameter Contraction under Delaunay Minicenter Refinement"
     }

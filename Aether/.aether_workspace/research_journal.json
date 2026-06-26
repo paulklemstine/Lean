@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "c50363b9",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nThese are freeform directions extending the tropical TDLP eigenline\ncounterexample formalized in\n[`Catalog/Tropical/TropicalTDLPEigenAttack.lean`](Catalog/Tropical/TropicalTDLPEig",
-      "quality_score": 0.723184,
-      "sorry_count": 0,
-      "theorem_count": 60,
-      "timestamp": "2026-06-20T02:27:16",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
       "cycle_id": "35a8dda5",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nCycle 1 established that databases (records over a key space) form a genuine **sheaf**:\nthe presheaf `U ↦ (records on U)` satisfies separation a",
@@ -499,19 +489,19 @@
       "theorem_count": 3,
       "timestamp": "2026-06-26T13:59:07",
       "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
+    },
+    {
+      "cycle_id": "be72639d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's findings on *exponential diameter contraction under\nDelaunay minicenter refinement* and the *approximate Carathéodory / Maurey*\ncatalog references. Each",
+      "quality_score": 0.7645600000000001,
+      "sorry_count": 3,
+      "theorem_count": 26,
+      "timestamp": "2026-06-26T16:40:58",
+      "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6b3462b3",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Combinatorics of the Universal Library\n\nDerived from this cycle's verified findings in\n`Novelty/LibraryOfBabelCatalog.lean`, `Novelty/LibraryOfBabelDeBruijn.lean`,\nand `Novelty/L",
-      "quality_score": 0.5003999261633124,
-      "sorry_count": 0,
-      "theorem_count": 2,
-      "timestamp": "2026-06-20T19:17:02",
-      "title": "The Library of Babel: Combinatorics of the Universal Library"
-    },
     {
       "cycle_id": "47c79c52",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-26T16:12:15",
       "title": "Deepening: Alien Number Systems: Beyond Base-N"
+    },
+    {
+      "cycle_id": "be72639d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nDerived from this cycle's findings on *exponential diameter contraction under\nDelaunay minicenter refinement* and the *approximate Carathéodory / Maurey*\ncatalog references. Each",
+      "quality_score": 0.7645600000000001,
+      "sorry_count": 3,
+      "theorem_count": 26,
+      "timestamp": "2026-06-26T16:40:58",
+      "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f25c8810",
-      "domain": "Computation",
-      "name": "value_succ",
-      "quality": 0.7545600000000001
-    },
-    {
-      "cycle_id": "1311df1d",
-      "domain": "Geometry",
-      "name": "nextV_val",
-      "quality": 0.8125600000000002
-    },
-    {
-      "cycle_id": "1311df1d",
-      "domain": "Geometry",
-      "name": "side_inj",
-      "quality": 0.8125600000000002
-    },
     {
       "cycle_id": "1311df1d",
       "domain": "Geometry",
@@ -2803,17 +2785,28 @@
       "domain": "Novelty",
       "name": "isMatching_empty",
       "quality": 0.7510892307692308
+    },
+    {
+      "cycle_id": "be72639d",
+      "domain": "Applications",
+      "name": "of",
+      "quality": 0.7645600000000001
+    },
+    {
+      "cycle_id": "be72639d",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.7645600000000001
+    },
+    {
+      "cycle_id": "be72639d",
+      "domain": "Applications",
+      "name": "summable_of_contraction",
+      "quality": 0.7645600000000001
     }
   ],
-  "last_updated": "2026-06-26T16:12:15",
+  "last_updated": "2026-06-26T16:40:58",
   "open_questions": [
-    {
-      "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on",
-      "cycle_id": "c11e0165",
-      "domain": "Logic",
-      "sorry_count": 1,
-      "timestamp": "2026-06-15T13:42:19"
-    },
     {
       "context": "declaration below is proved with zero `sorry`s.; Result:  Formalised and proved sorry-free.  `mpStep_add`/`mpStep_smul` (linearity),",
       "cycle_id": "561a2484",
@@ -3016,6 +3009,13 @@
       "domain": "Applications",
       "sorry_count": 1,
       "timestamp": "2026-06-26T14:58:13"
+    },
+    {
+      "context": "without cross-imports. All results have zero `sorry`s.; What *is* provable, and proved here with zero `sorry`s, is:; All results are proved with zero `sorry`s.",
+      "cycle_id": "be72639d",
+      "domain": "Applications",
+      "sorry_count": 3,
+      "timestamp": "2026-06-26T16:40:58"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "7242c7d6",
-        "quality": 0.6932800000000001,
-        "theorems": 6,
-        "title": "EML Differential Equations: ODEs with Exponential-Logarithmic Coefficients"
-      },
-      {
         "cycle_id": "3e805dd4",
         "quality": 0.45636596791938716,
         "theorems": 734,
@@ -3141,6 +3135,12 @@
         "quality": 0.571318,
         "theorems": 13,
         "title": "Deepening: Alien Number Systems: Beyond Base-N"
+      },
+      {
+        "cycle_id": "be72639d",
+        "quality": 0.7645600000000001,
+        "theorems": 26,
+        "title": "Exponentialdiameter contraction under Delaunay minicenter refinement"
       }
     ],
     "Bridges": [
