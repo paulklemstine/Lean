@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f6b20d87",
     "filename": "exact_value_of_the_binomial_gcd_in_oeis_a080170.json",
     "pkg_num": 75,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.554,
     "title": "Exact Value of the Binomial GCD in OEIS A080170"
   },
   {
@@ -2184,8 +2184,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "exact_value_of_the_binomial_gcd_in_oeis_a080170",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.554,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Exact Value of the Binomial GCD in OEIS A080170"
     }

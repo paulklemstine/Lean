@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "8344a207",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -224,7 +224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory: Solvability of Polynomials"
   },
   {
-    "consumed_by_exp_id": "97f912e0",
+    "consumed_by_exp_id": "",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domains": [
       "Algebra",
@@ -235,7 +235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -2366,20 +2366,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T12:51:47.961383+00:00",
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
-  },
-  {
-    "consumed_by_exp_id": "8f6e0a03",
-    "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2353",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22229v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T13:11:45.659366+00:00",
-    "title": "Quadratic irrational density in the ratio spectrum"
   },
   {
     "consumed_by_exp_id": "",
@@ -5461,6 +5447,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 OEIS A080170 binomial GCD (`D(k) = gcd_{2\u2264q\u2264k+1} C(qk,k)`)\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle.\nThe headline outcome was a **disproof** of the exact-value form of Ralf Stephan's\nconjecture (17) (`exact_value_conjecture_false`, first counterexample `k = 11`),\ntogether with proofs that the conjecture *is* exact at the level of the dominant\nprime on the prime and prime-power fibres (`prime_dvd_binomGCD`,\n`not_pSq_dvd_binomGCD`, `prime_dvd_binomGCD_primePow`). Each direction below is\nfalsifiable by a single `#eval` or by a Lean proof/counterexample.\n\n## C1. The corrected closed form via carry-minima\n\n**Conjecture.** For all `k \u2265 2`, with `n = k+1`, `p^a \u2225 n`, `m = n/p^a`,\n```\nD(k) = max_{p \u2223 n}  p^{ max(0, a \u2212 \u230alog_p m\u230b) }      (= 1 if all exponents vanish).\n```\n\nThe key insight is that Kummer's theorem makes `v_p(C(qk,k))` the number of base-`p`\ncarries on adding `k` and `(q-1)k`, and `D` takes the *minimum* carry count over\n`q`; the minimum equals `a \u2212 \u230alog_p m\u230b`, not `a`, because the complementary factor\n`m` forces carry cancellation at the top `\u230alog_p m\u230b` digits.\n**Why now?** We already verified this formula against `D(k)` for every `2 \u2264 k \u2264 201`\nin Lean and proved the `m = 1` (prime-power) instance exactly; the general case is a\nfinite-carry counting argument squarely within reach of the `padicValNat_choose'`\nAPI used in this cycle.\n\n## C2. The nontriviality dichotomy is sharp\n\n**Conjecture.** For all `k \u2265 2`, `D(k) > 1 \u27fa (k+1)/P(k+1) \u2264 P(k+1)`.\n\nThis is the half of Stephan (17) that *survived* all testing (no counterexample to\n`k = 201`), even though the exact value failed. The key insight is that `D(k) > 1`\niff *some* prime `p \u2223 n` has a guaranteed carry for every `q`, which happens exactly\nwhen the dominant prime power dominates its cofactor, i.e. `m \u2264 p^a`.\n**Why now?** The carry analysis of C1 yields the `\u21d0` direction directly (a positive\nexponent), and the `\u21d2` direction reduces to exhibiting, for a non-dominant prime, a\nsingle `q` with zero carries \u2014 a localized, checkable statement.\n\n## C3. `D` is always a prime power (or 1)\n\n**Conjecture.** For all `k \u2265 2`, `D(k) \u2208 {1} \u222a { p^b : p prime }`.\n\nThe key insight is that at most one prime can contribute to the gcd: if two distinct\nprimes `p, p'` both divided `D(k)`, both would need a carry for *every* `q`, but the\nminimal-carry witnesses for `p` and `p'` occur at different `q` (the residue patterns\nare incompatible), so they cannot coexist. **Why now?** Verified for all `2 \u2264 k \u2264 201`;\nthe obstruction is a clean two-prime incompatibility lemma that the present\n`padicValNat_choose'` machinery can express.\n\n## C4. Exact value on the full prime-power fibre\n\n**Conjecture.** For every prime `p` and `a \u2265 1`, `D(p^a \u2212 1) = p^a`.\n\nThe key insight is that the central term `q = 2` already realises the *minimum*\nvaluation `a` (adding `p^a\u22121` to itself produces exactly `a` carries), while every\nterm has at least `a` carries, so the `p`-part is pinned to `p^a` and no other prime\nsurvives. We proved the two endpoints for `a = 1` (`v_p(D(p\u22121)) = 1`) and the lower\nbound `p \u2223 D(p^a\u22121)` for all `a` in this cycle. **Why now?** Only the \"exactly `a`,\nnot more\" upper bound and the \"no other prime\" step remain, both reachable by the\nsame carry-counting used for `not_pSq_dvd_central`.\n\n## C5. Cross-link to Ram's theorem (row vs column gcd)\n\n**Conjecture.** Define the Pascal *row* gcd `R(n) = gcd_{0<j<n} C(n,j)` (Ram:\n`R(n) = p` if `n = p^a`, else `1`). Then on prime powers the A080170 *column* gcd and\nthe row gcd agree up to the exponent: `D(p^a \u2212 1) = p^a = R(p^a)\u00b7p^{a\u22121}`, and more\ngenerally `rad(D(k)) = rad(R(k+1))` (same prime, possibly higher power).\n\nThe key insight is that both gcds are governed by base-`p` carries, but the column\nfamily `C(qk,k)` ranges over a longer arithmetic progression than a single Pascal\nrow, allowing higher powers to persist. **Why now?** Ram's theorem is already in the\nliterature referenced by this mission, and our Kummer-based proofs of the prime\nfibre give the exact dictionary between the two gcds for the first time.\n",
+    "domains": [
+      "Pythagorean",
+      "Logic"
+    ],
+    "id": "fd_2573",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f6b20d87",
+    "status": "available",
+    "timestamp": "2026-06-26T03:43:31.165077+00:00",
+    "title": "Derived from the Stage-3 analysis and Stage-4 critique of this research cycle."
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6097,7 +6098,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "dfb56ea4",
+    "consumed_by_exp_id": "",
     "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
     "domains": [
       "Algebra",
@@ -6107,7 +6108,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:24.924994+00:00",
     "title": "Navier-Stokes Existence and Smoothness"
   },

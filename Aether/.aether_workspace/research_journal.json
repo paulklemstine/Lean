@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4b892cf9",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — Tropical Cryptography (Min-Plus Encryption)\n\nDerived from this cycle's verified results in\n`Catalog/Tropical/TropicalMatrixPower.lean`,\n`Catalog/Tropical/TropicalDiscreteLog.lean",
-      "quality_score": 0.481562,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-19T15:57:54",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
       "cycle_id": "3b2adc6d",
       "domain": "Applications",
       "key_insight": "# Future Directions — BSD Research Cycle\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nEach conjecture is falsifiable in Lean and extends the three modules\n`LocalF",
@@ -2501,6 +2491,16 @@
       "theorem_count": 18,
       "timestamp": "2026-06-26T03:18:31",
       "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+    },
+    {
+      "cycle_id": "f6b20d87",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — OEIS A080170 binomial GCD (`D(k) = gcd_{2≤q≤k+1} C(qk,k)`)\n\nDerived from the Stage-3 analysis and Stage-4 critique of this research cycle.\nThe headline outcome was a **disproof**",
+      "quality_score": 0.554,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-26T03:43:40",
+      "title": "Exact Value of the Binomial GCD in OEIS A080170"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7095
     }
   ],
-  "last_updated": "2026-06-26T03:18:31",
+  "last_updated": "2026-06-26T03:43:40",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "18853638",
-        "quality": 0.42325214328358207,
-        "theorems": 12,
-        "title": "Corrected Uniform Witness Bound for (d+1)-Uniform Families"
-      },
-      {
         "cycle_id": "04a6a732",
         "quality": 0.6946599999999999,
         "theorems": 18,
@@ -3637,6 +3631,12 @@
         "quality": 0.7095,
         "theorems": 9,
         "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
+      },
+      {
+        "cycle_id": "f6b20d87",
+        "quality": 0.554,
+        "theorems": 8,
+        "title": "Exact Value of the Binomial GCD in OEIS A080170"
       }
     ],
     "NumberTheory": [
