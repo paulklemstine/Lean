@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "be5e0ab8",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Anti-Gravity Mathematics\n\nThis cycle formalized dependency DAGs of a formal library, the **gravitational\nweight** `weight b = #{a : a depends on b}`, and the **anti-gravity** pre",
-      "quality_score": 0.8895200000000001,
-      "sorry_count": 0,
-      "theorem_count": 35,
-      "timestamp": "2026-06-19T10:37:36",
-      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-    },
-    {
       "cycle_id": "e88eb144",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Dream Logic: Paraconsistency, Topology, and Coexisting Contradictions\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. The three Lean files est",
@@ -499,19 +489,19 @@
       "theorem_count": 13,
       "timestamp": "2026-06-26T11:39:02",
       "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
+    },
+    {
+      "cycle_id": "72d240c8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hochschild homology of group algebras\n\nDerived from the cycle that produced\n`Catalog/Novelty/HochschildH0GroupAlgebra.lean`, where we proved the `R`-linear\nequivalence `HH₀(R[G])",
+      "quality_score": 0.7694400000000001,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-26T12:45:03",
+      "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5eb69ea3",
-      "domain": "Algebra",
-      "key_insight": "# FUTURE DIRECTIONS — Topological Generalization Bounds for Deep Learning\n\nDerived from the v19a research cycle that produced `Bounds.lean` and\n`CohomologyCapacity.lean`. Both deliverables serve the *",
-      "quality_score": 0.5579941436464089,
-      "sorry_count": 0,
-      "theorem_count": 339,
-      "timestamp": "2026-06-20T11:03:53",
-      "title": "Topological Generalization Bounds for Deep Learning"
-    },
     {
       "cycle_id": "bcf3395e",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 15,
       "timestamp": "2026-06-26T12:39:36",
       "title": "Idempotent Probability: Large Deviations"
+    },
+    {
+      "cycle_id": "72d240c8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hochschild homology of group algebras\n\nDerived from the cycle that produced\n`Catalog/Novelty/HochschildH0GroupAlgebra.lean`, where we proved the `R`-linear\nequivalence `HH₀(R[G])",
+      "quality_score": 0.7694400000000001,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-26T12:45:03",
+      "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ef60a392",
-      "domain": "Applications",
-      "name": "carries_eq_sub",
-      "quality": 0.77328
-    },
-    {
-      "cycle_id": "ef60a392",
-      "domain": "Applications",
-      "name": "s2_add_carries",
-      "quality": 0.77328
-    },
-    {
-      "cycle_id": "b45eb1d8",
-      "domain": "Applications",
-      "name": "mem_AutRel",
-      "quality": 0.7496
-    },
     {
       "cycle_id": "b45eb1d8",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "det_add_smul_onesM",
       "quality": 0.7836800000000002
+    },
+    {
+      "cycle_id": "72d240c8",
+      "domain": "Novelty",
+      "name": "toConj_single",
+      "quality": 0.7694400000000001
+    },
+    {
+      "cycle_id": "72d240c8",
+      "domain": "Novelty",
+      "name": "single_mul_sub_mem",
+      "quality": 0.7694400000000001
+    },
+    {
+      "cycle_id": "72d240c8",
+      "domain": "Novelty",
+      "name": "single_isConj_sub_mem",
+      "quality": 0.7694400000000001
     }
   ],
-  "last_updated": "2026-06-26T12:39:36",
+  "last_updated": "2026-06-26T12:45:03",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "fb2780d5",
-        "quality": 0.7235799999999999,
-        "theorems": 8,
-        "title": "Langlands Correspondence: GL(1) Case"
-      },
-      {
         "cycle_id": "ab9c78a7",
         "quality": 0.72533,
         "theorems": 8,
@@ -3637,6 +3631,12 @@
         "quality": 0.5496381818181819,
         "theorems": 14,
         "title": "Homotopy Equivalence of Line Transversal Spaces to Spheres"
+      },
+      {
+        "cycle_id": "72d240c8",
+        "quality": 0.7694400000000001,
+        "theorems": 10,
+        "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
       }
     ],
     "NumberTheory": [

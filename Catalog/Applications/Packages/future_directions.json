@@ -37267,7 +37267,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.Analysis.SpecificLimits.Basic",
         "Mathlib.Topology.Algebra.InfiniteSum.Basic",
@@ -37277,7 +37277,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7281fa18",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -37293,7 +37293,7 @@
         "Algebra"
       ],
       "id": "fd_2356",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-26T12:51:49.968300+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem infinite_row_exchange_of_eventual_contraction\n    {α v z : ℂ} (hα : α ≠ 0)\n    (u : ℕ → ℂ) (top bottom : ℕ → Bool)\n    (w₁ w₄ f : ℂ → ℂ)\n    (hden₁ : ∀ i, w₄ (u i / z) ≠ 0)\n    (hden₂ : ∀ i, w₁ (u i / v) ≠ 0)\n    (hcontract : ∃ δ : ℝ, 0 ≤ δ ∧ δ < 1 ∧ ∃ N : ℕ,\n      ∀ i ≥ N,\n        ‖(w₁ (u i / z) / w₄ (u i / z)) *\n          (w₄ (u i / v) / w₁ (u i / v))‖ ≤ δ)\n    (hYB : fiveVertexYangBaxter w₁ w₄ f α) :\n    infiniteRowExchangeLeft α v z u top bottom w₁ w₄ f =\n      (f (v / z) / α ^ 2) *\n        infiniteRowExchangeRight α v z u top bottom w₁ w₄ f := by\n  sorry",
       "lineage_refs": [],
@@ -37307,7 +37307,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.22004v1",
       "source_path": "http://arxiv.org/abs/2606.22004v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-23T14:06:54.483472+00:00",
       "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
@@ -46227,7 +46227,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "a7c4b074",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -46258,7 +46258,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.25724v1",
       "source_path": "http://arxiv.org/abs/2606.25724v1",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-25T21:08:28.285445+00:00",
       "title": "No non‑trivial extensions of maximal symplectic groups on the superspecial K3 surface"
@@ -47628,6 +47628,45 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
+      "catalog_references": [],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "depth_estimate": 3,
+      "description": "The conjecture asserts that H_α converges to zero as network size increases for sufficiently large structures.",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2582",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "zero_limitation",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "parent_direction": "",
+      "priority_score": 0.8,
+      "proof_strategy": "induction over network size",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.24562v1",
+      "source_path": "http://arxiv.org/abs/2606.24562v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-26T12:45:59.582341+00:00",
+      "title": "Convergence to Zero"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
       "catalog_references": [
         "Theorem 1",
         "Corollary 1",
@@ -47649,7 +47688,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2582",
+      "id": "fd_2583",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem tightness_of_density_threshold (r k n : ℕ) (hr : r ≥ 3) (hk : k ≥ 3) (hn : n ≥ (r-2)*(k-2)+1) : ∃ (H : Hypergraph r), linear H ∧ [E(H)] = ((k-2)/(r^2*((r-2)*(k-2)+1)))*n^2 + n/r - 1 ∧ ¬∃ (edges : Fin k → E(H)), span(edges) > (r-2)*k + 3",
@@ -47697,7 +47736,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2583",
+      "id": "fd_2584",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem conflict_free_four_color_equiv : (∀ (G : SimpleGraph (Finset.range 4)), Planar G → ∃ (f : V G → Finset.range 4), ConflictFreeColoring f G) ↔ FourColorTheorem",
@@ -47742,7 +47781,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2584",
+      "id": "fd_2585",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem modular_rank_four_nahm_characterization (Q : ℚ i j k l → ℚ) (hQ : quadratic_form Q) : (∃ (P : ℚ → ℚ), nahm_sum Q = P) ↔ discriminant (hessian Q) ∈ ({8:ℚ, 12:ℚ, 16:ℚ})",
@@ -47786,7 +47825,7 @@
         "Algebra",
         "Cryptography"
       ],
-      "id": "fd_2585",
+      "id": "fd_2586",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem connectedComponentsPartition_union {V : Type*} [Fintype V] {p : ℕ} (Gs : Fin p → SimpleGraph V) :\n  ∀ (S : Finset (Fin p)), \n  (⋃ i ∈ S, Gs i).connectedComponents = \n  S.sup (fun i => (Gs i).connectedComponents) := by sorry",
@@ -47833,7 +47872,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2586",
+      "id": "fd_2587",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem newton_polygon_decomposition_group_eq {K : Type*} [local_field K] (f : polynomial (ring_of_integers K)) (h_monic : f.monic) (h_irred : irreducible f) : let D := decomposition_group f; let N := newton_polygon f; (montes_nart_indices N).forall (λ s, index s = 1) → D = galois_group_constructed_via_newton_polygon f",
@@ -47878,7 +47917,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2587",
+      "id": "fd_2588",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Application of the BSD sieve in the geometric setting with compact support constraints",
@@ -47923,7 +47962,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2588",
+      "id": "fd_2589",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem unbounded_valuation (m : ℕ) (k : ℕ) : ∃ n ∈ ℕ, v_2 t_m n ≥ k := by ... (construct n via inductive application of F_m's recursion and valuation properties)",
@@ -47964,7 +48003,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2589",
+      "id": "fd_2590",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Fact",
@@ -48009,7 +48048,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2590",
+      "id": "fd_2591",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem deletion_ball_intersection_bound (q n s t : ℕ) (h_st : s ≤ t) (x y : List (Fin q)) (hx : x.length = n) (hy : y.length = n) : \n  (Finset.intersection (deletion_ball s x) (deletion_ball s y) = ∅) → \n  (Finset.card (Finset.intersection (deletion_ball t x) (deletion_ball t y))) ≤ (Nat.choose (2 * s) s) * (Nat.choose (n - s) (t - s))",
@@ -48048,7 +48087,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2591",
+      "id": "fd_2592",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "The theorem's foundational assertion about equivalence between local and global structures",
@@ -48090,7 +48129,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2592",
+      "id": "fd_2593",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Conjecture-specific Substitution",
@@ -48134,7 +48173,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2593",
+      "id": "fd_2594",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Can be formalized using inductive reasoning over block sizes and cycle existence.",
@@ -48180,7 +48219,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2594",
+      "id": "fd_2595",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem max_self_dual_rank_an (n : ℕ) (h : n ≥ 13) : highest_self_dual_rank (alternating_group n) = (n - 1) / 2 - 1",
@@ -48225,7 +48264,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2595",
+      "id": "fd_2596",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem no_rational_density_pair : ¬ ∃ (α β : ℝ), Rational α ∧ Rational β ∧ α ≠ β ∧ SameQuadraticField α β ∧ AperiodicTileSet α β",
@@ -48271,7 +48310,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2596",
+      "id": "fd_2597",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem multi_color_induced_join_bound (c : ℕ) (t k : ℕ) (H : Fin t → SimpleGraph (Fin k)) : ∃ (C : ℝ) (n : ℕ), n ≤ c ^ (c ^ 2 * t * k) ∧ (∀ (G : ColoredCompleteGraph c), (¬∃ (i : Fin c), G.monochromatic_induced_join_free H i) → ∃ (partition : Fin n → Set (V G)), (⋃ j, partition j) = V G ∧ ∀ j, if partition j.toFinset.card ≠ 1 then ∃ i, ¬∃ (copy : SimpleGraph (Fin k)), G.color_edges i [copy] ≤r partition j)",
@@ -48317,7 +48356,7 @@
         "Geometry",
         "Pythagorean"
       ],
-      "id": "fd_2597",
+      "id": "fd_2598",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem p3_convexity_eq_p3s_convexity_tournament (T : Tournament) : p3_convexity T = p3s_convexity T ↔ ¬∃ (u v w : Vertex), is_transitive_triangle u v w in T",
@@ -48367,7 +48406,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2598",
+      "id": "fd_2599",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vector_space_ermc {q n k s : ℕ} [Fact (Prime q)] (h : n ≥ (s+1) * k) :\n  m_q q n k s =\n    max (q_binom q ((s+1) * k - 1) k)\n        (q_binom q n k - (q ^ (k * s)) * q_binom q (n - s) k) :=",
@@ -48413,7 +48452,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2599",
+      "id": "fd_2600",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Formalization of the use of filtered complete intersection properties in the orderization process",
@@ -48459,7 +48498,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2600",
+      "id": "fd_2601",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem vishik_non_similarity_char_2 (m : ℕ) (hm : m ≥ 3) : ∃ (F : Field) (char F = 2), ∃ (φ ψ : QuadraticForm F), \n  dim φ = 2^m ∧ dim ψ = 2^m ∧ \n  anisotropic φ ∧ anisotropic ψ ∧ \n  (∀ (E : Field), (E ⊇ F) → total_isotropy_index φ E = total_isotropy_index ψ E) ∧ \n  ¬ similar φ ψ",
@@ -48504,7 +48543,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2601",
+      "id": "fd_2602",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem regularized_sum_primes (P : ℂ → ℂ) (is_prime_zeta : IsPrimeZeta P) (continuation : AnalyticContinuation P) : \n  continuation.value_at (-1 : ℂ) = expected_constant_value := by sorry",
@@ -48529,39 +48568,49 @@
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "Veronese embedding",
+        "Schur power of linear codes",
+        "Kneser theorem for Schur products",
+        "rational normal curve",
+        "linear matroid represented by polynomial powers"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
-      "description": "# Future Directions — Idempotent Probability: Large Deviations\n\nThis cycle extended the catalog's idempotent large-deviation theory\n(`Catalog/Tropical/MeasureTheory/{Basic,LargeDeviations,DualityGap}.lean`) with two\nnew, fully-proved files:\n\n* `Contraction.lean` — the **idempotent contraction principle**: the push-forward of\n  a tropical probability along a surjection is again a tropical probability, its rate\n  function is the fibre-wise infimum `I_Y(y) = inf_{T x = y} I_X(x)`, and the deviation\n  cost of an event equals the cost of its preimage. Crucially this needs **no\n  convexity** — it is purely order-theoretic.\n* `Tilting.lean` — the **idempotent exponential tilt** (max-plus Esscher transform):\n  the additive reweighting `w^λ = λ·val + w - Λ(λ)` is always a tropical probability,\n  the rate function tilts affinely, the CGF satisfies the cocycle law\n  `Λ^λ(μ) = Λ(λ+μ) - Λ(λ)`, and every full-support tilt point is a Cramér-exposed\n  point where the Legendre–Fenchel biconjugate is tight. Hence for *every* slope a\n  tight point exists, so the supporting-line hypothesis of\n  `lfBiconj_eq_rate_of_support` is never vacuous.\n\nTogether with `DualityGap.lean` these pin down a clean picture: the idempotent Cramér\nprogram splits into a convexity-free half (contraction) and a convexity-sensitive half\n(Legendre duality), and tilting is the constructor that exposes exactly the points\nwhere duality is tight.\n\n## Conjectures for the next cycle\n\n### C1. Idempotent Varadhan integral lemma with tilt-rate identity\n**Conjecture.** For any bounded observable `φ : X → ℝ`,\n`maxPlusIntegral φ P = sup_x (φ(x) - I(x))`, and moreover the supremum is attained\nexactly at the full-support points of the tilt `tiltedMeasure P φ 1`.\n**The key insight is** that idempotency turns Varadhan's asymptotic\n`lim (1/n) log ∫ e^{nφ} dμ_n = sup(φ - I)` into an *exact, attained* identity whose\nmaximisers are precisely the tilt-exposed points already characterised in\n`Tilting.lean`.\n**Why now?** `Tilting.lean` just proved that tilt points realise supporting lines;\nlinking them to the integral's argmax is the missing bridge between the duality and\nintegration sides of the theory, and all needed lemmas (`tilt_provides_support`,\n`maxPlusIntegral_attained`) are now in scope.\n\n### C2. Functoriality / transitivity of the contraction principle\n**Conjecture.** For surjections `T : X → Y`, `S : Y → Z`, the push-forwards compose:\n`pushforwardMeasure (S∘T) = pushforwardMeasure S ∘ pushforwardMeasure T`, and the\ncontracted rate satisfies `I_Z(z) = inf_{S y = z} I_Y(y) = inf_{(S∘T) x = z} I_X(x)`.\n**The key insight is** that the fibration identity `inf'_fiber_eq` is associative\nunder fibre refinement, so the idempotent contraction principle is a *functor* from\nfinite types-with-rate to itself.\n**Why now?** The single-step contraction is proved; transitivity is the natural\ncategorical strengthening and would let the rate function be transported along any\nfinite computation graph (relevant to the catalog's tropical neural networks).\n\n### C3. Idempotent Gärtner–Ellis theorem\n**Conjecture.** If a family `P_n` of tropical laws has CGFs converging,\n`(1/n) Λ_n(λ) → Λ_∞(λ)` with `Λ_∞` convex, then the rescaled rate functions converge\nto the Legendre–Fenchel transform `Λ_∞^*`; the walk law `walkMeasure P n` is the\ncanonical example with `Λ_n = n·Λ`, giving `Λ_∞ = Λ` exactly.\n**The key insight is** that for the max-plus walk the convexity hypothesis of\nGärtner–Ellis is *automatic* (the CGF is a finite sup of affine maps, already proved\nconvex in `idempotentCGF_convex`), so the idempotent Gärtner–Ellis theorem holds\nwithout the delicate steepness conditions of the classical statement.\n**Why now?** `idempotentCGF_walk` (`= n·Λ`) and `idempotentCGF_convex` are both in\nthe catalog; the limit `(1/n)(n·Λ) = Λ` makes the walk a closed-form test case for\nthe general theorem.\n\n### C4. Sharp contraction cost bound with explicit minimiser\n**Conjecture.** The contraction cost `inf_{y∈B} I_Y(y)` is attained at `y* = T x*`\nwhere `x*` minimises `I_X` over the preimage `T⁻¹(B)`, and the optimal transport\nplan between the X- and Y-level deviations is the identity-on-fibres map.\n**The key insight is** that in the idempotent world the contraction infimum is a\n*minimum* (finite sets), so the abstract LDP rate carries a concrete minimiser, unlike\nthe classical case where only an infimum is guaranteed.\n**Why now?** `idempotent_contraction` reduces the cost to a finite `inf'`, which always\nhas a witness via `Finset.exists_mem_eq_inf'`; turning that witness into a transport\nstatement is a short, well-scoped next step.\n\n### C5. Non-convex obstruction transports through contraction\n**Conjecture.** The duality gap of `DualityGap.lean` is *preserved* under any\nfibre-injective contraction: if `I_X` has a strict Legendre gap at `x`, then `I_Y` has\na gap at `T x` whenever the fibre over `T x` is a singleton.\n**The key insight is** that contraction can only ever *shrink* gaps (it takes\ninfima), so a singleton fibre transmits the gap unchanged — identifying exactly when\nnon-convexity survives coarse-graining.\n**Why now?** Both ingredients — the gap example (`gapMeasure`) and the exact\ncontraction identity — now coexist in the catalog, making this falsifiable on the\nexplicit `Fin 3` law by choosing `T` injective.\n",
-      "domain_bridges": [],
+      "description": "Every Veronese circuit achieving the sharp bound dim L = (t+m-2)/m arises from a rational-normal-curve configuration, and conversely, rational-normal-curve configurations achieve this bound if and only if the number of linear forms satisfies t = m·(dim L - 1) + 2. This conjecture asserts that the main dimension bound is not only sharp but fully characterized by rational normal curve constructions.",
+      "domain_bridges": [
+        "Algebraic geometry (secant varieties of Veronese varieties)",
+        "Coding theory (Schur powers and Kneser-type theorems)",
+        "Combinatorics (linear dependence patterns and circuits)"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Algebra",
-        "Geometry"
+        "Pythagorean",
+        "Algebra"
       ],
-      "id": "fd_2602",
+      "id": "fd_2603",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem extremal_veronese_circuit_classification (m : ℕ) (t : ℕ) (d : ℕ) : let circuit := λ (forms : Fin t → (ℓ : LinearForm 𝕂) × ℓ ≠ 0), (linear_dependent_minimally (λ i, forms i |> Prod.fst ^ m)) → (dim (span (λ i, (forms i).1)) = (t + m - 2) / m) in circuit → (∃ (curve_config : Fin t → LinearForm 𝕂), (∀ i, (curve_config i) ^ m = (forms i).1 ^ m) ∧ (rational_normal_curve_configuration curve_config) ∧ (t = m * (d - 1) + 2))",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "parent_direction": "",
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Characterize coefficient codes whose m-th Schur powers have full-support hyperplane structure, apply the Mirandola-Zémor Schur-product Kneser theorem to constrain extremal matroid structures, then prove that any extremal configuration must have the same underlying point configuration as a rational normal curve under the Veronese embedding. The converse direction follows by explicit computation of rational-normal-curve Veronese images.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "f2499c75",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/f2499c75",
+      "source_exp_id": "2606.24349v1",
+      "source_path": "http://arxiv.org/abs/2606.24349v1",
       "status": "available",
-      "thread_id": "th_c468adc4",
-      "timestamp": "2026-06-26T12:39:28.265484+00:00",
-      "title": "Catalog's idempotent large-deviation theory"
+      "thread_id": "",
+      "timestamp": "2026-06-26T12:51:43.205360+00:00",
+      "title": "Classification of extremal Veronese circuits via rational normal curves"
     },
     {
       "ambition_level": "extension",
@@ -53828,11 +53877,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "abbbde7c",
+      "consumed_by_exp_id": "",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -53844,11 +53893,11 @@
         "Physics"
       ],
       "id": "seed_342",
-      "last_attempt_time": "2026-06-26T12:14:51.840040+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.68192,
+      "outcome_quality": 0.0,
       "parent_direction": "",
       "priority_score": 0.93,
       "proof_strategy": "",
@@ -53858,7 +53907,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432645+00:00",
       "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
@@ -128658,7 +128707,6 @@
   ],
   "recent_domain_counts": {
     "Algebra": 303,
-    "Analysis": 1,
     "Applications": 117,
     "Bridges": 58,
     "Computation": 100,
@@ -128668,7 +128716,7 @@
     "Logic": 116,
     "MachineLearning": 37,
     "Novelty": 200,
-    "Physics": 46,
+    "Physics": 45,
     "Probability": 1,
     "Pythagorean": 111,
     "Shared": 6,
@@ -128710,7 +128758,7 @@
     "first": 325,
     "first-order": 19,
     "formal": 133,
-    "formalize": 225,
+    "formalize": 224,
     "framework": 103,
     "function": 204,
     "functions": 99,
@@ -128749,7 +128797,7 @@
     "reproducible": 11,
     "requires": 109,
     "research": 163,
-    "results": 239,
+    "results": 238,
     "rigorous": 42,
     "satisfies": 121,
     "scaling": 55,
@@ -128763,7 +128811,7 @@
     "structure": 227,
     "structures": 48,
     "systems": 72,
-    "theorem": 398,
+    "theorem": 397,
     "theorems": 462,
     "theories": 33,
     "theory": 350,

@@ -106,6 +106,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
+    "domains": [
+      "Analysis",
+      "Physics"
+    ],
+    "id": "seed_342",
+    "priority_score": 0.93,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432645+00:00",
+    "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -2395,7 +2410,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7281fa18",
     "description": "In Lemma 2.1 of the paper the infinite right half-strip row-exchange identity is proved under a uniform contraction assumption for every column. Conjecture: the same identity remains valid under the strictly weaker hypothesis that the contraction ratio is eventually bounded by some \u03b4 < 1. More precisely, for arbitrary top and bottom boundary occupation sequences, nonzero \u03b1, and spectral parameters v,z, if there exist \u03b4 < 1 and N such that for all i \u2265 N the norm of (w\u2081(u\u1d62/z)/w\u2084(u\u1d62/z))*(w\u2084(u\u1d62/v)/w\u2081(u\u1d62/v)) is at most \u03b4, then the two infinite row-exchange partition functions are equal up to the same scalar prefactor f(v/z)/\u03b1\u00b2.",
     "domains": [
       "Pythagorean",
@@ -2405,7 +2420,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22004v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T14:06:54.483472+00:00",
     "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
   },
@@ -4939,7 +4954,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Specific Growth Rate Conjecture for Erd\u0151s Problem 1061"
   },
   {
-    "consumed_by_exp_id": "a7c4b074",
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for any prime p>11, the superspecial K3 surface X over an algebraically closed field of characteristic p does not admit any non\u2011trivial extension of a maximal symplectic group. Precisely, if G\u2264\u202fAut(X) is a finite group whose symplectic subgroup G_s is maximal (as classified by Ohashi\u2011Sch\u00fctt) then G\u2001=\u202fG_s, i.e. the non\u2011symplectic index [G:G_s] equals 1.",
     "domains": [
       "Algebra",
@@ -4949,7 +4964,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25724v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T21:08:28.285445+00:00",
     "title": "No non\u2011trivial extensions of maximal symplectic groups on the superspecial K3 surface"
   },
@@ -5375,11 +5390,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that H_\u03b1 converges to zero as network size increases for sufficiently large structures.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2582",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24562v1",
+    "status": "available",
+    "timestamp": "2026-06-26T12:45:59.582341+00:00",
+    "title": "Convergence to Zero"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2582",
+    "id": "fd_2583",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5393,7 +5423,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2583",
+    "id": "fd_2584",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5408,7 +5438,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2584",
+    "id": "fd_2585",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5423,7 +5453,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2585",
+    "id": "fd_2586",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5438,7 +5468,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2586",
+    "id": "fd_2587",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5453,7 +5483,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2587",
+    "id": "fd_2588",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5467,7 +5497,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2588",
+    "id": "fd_2589",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5481,7 +5511,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2589",
+    "id": "fd_2590",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5495,7 +5525,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2590",
+    "id": "fd_2591",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5510,7 +5540,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2591",
+    "id": "fd_2592",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5525,7 +5555,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2592",
+    "id": "fd_2593",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5540,7 +5570,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2593",
+    "id": "fd_2594",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5555,7 +5585,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2594",
+    "id": "fd_2595",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5570,7 +5600,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2595",
+    "id": "fd_2596",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5584,7 +5614,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2596",
+    "id": "fd_2597",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5599,7 +5629,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2597",
+    "id": "fd_2598",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5614,7 +5644,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2598",
+    "id": "fd_2599",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -5628,7 +5658,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2599",
+    "id": "fd_2600",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -5642,7 +5672,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2600",
+    "id": "fd_2601",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -5656,13 +5686,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2601",
+    "id": "fd_2602",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
     "status": "available",
     "timestamp": "2026-06-26T12:14:49.178600+00:00",
     "title": "Regularized Sum of Primes via Analytic Continuation Beyond the Natural Boundary"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Every Veronese circuit achieving the sharp bound dim L = (t+m-2)/m arises from a rational-normal-curve configuration, and conversely, rational-normal-curve configurations achieve this bound if and only if the number of linear forms satisfies t = m\u00b7(dim L - 1) + 2. This conjecture asserts that the main dimension bound is not only sharp but fully characterized by rational normal curve constructions.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2603",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.24349v1",
+    "status": "available",
+    "timestamp": "2026-06-26T12:51:43.205360+00:00",
+    "title": "Classification of extremal Veronese circuits via rational normal curves"
   },
   {
     "consumed_by_exp_id": "",
@@ -5864,21 +5909,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Idempotent Probability: Large Deviations\n\nThis cycle extended the catalog's idempotent large-deviation theory\n(`Catalog/Tropical/MeasureTheory/{Basic,LargeDeviations,DualityGap}.lean`) with two\nnew, fully-proved files:\n\n* `Contraction.lean` \u2014 the **idempotent contraction principle**: the push-forward of\n  a tropical probability along a surjection is again a tropical probability, its rate\n  function is the fibre-wise infimum `I_Y(y) = inf_{T x = y} I_X(x)`, and the deviation\n  cost of an event equals the cost of its preimage. Crucially this needs **no\n  convexity** \u2014 it is purely order-theoretic.\n* `Tilting.lean` \u2014 the **idempotent exponential tilt** (max-plus Esscher transform):\n  the additive reweighting `w^\u03bb = \u03bb\u00b7val + w - \u039b(\u03bb)` is always a tropical probability,\n  the rate function tilts affinely, the CGF satisfies the cocycle law\n  `\u039b^\u03bb(\u03bc) = \u039b(\u03bb+\u03bc) - \u039b(\u03bb)`, and every full-support tilt point is a Cram\u00e9r-exposed\n  point where the Legendre\u2013Fenchel biconjugate is tight. Hence for *every* slope a\n  tight point exists, so the supporting-line hypothesis of\n  `lfBiconj_eq_rate_of_support` is never vacuous.\n\nTogether with `DualityGap.lean` these pin down a clean picture: the idempotent Cram\u00e9r\nprogram splits into a convexity-free half (contraction) and a convexity-sensitive half\n(Legendre duality), and tilting is the constructor that exposes exactly the points\nwhere duality is tight.\n\n## Conjectures for the next cycle\n\n### C1. Idempotent Varadhan integral lemma with tilt-rate identity\n**Conjecture.** For any bounded observable `\u03c6 : X \u2192 \u211d`,\n`maxPlusIntegral \u03c6 P = sup_x (\u03c6(x) - I(x))`, and moreover the supremum is attained\nexactly at the full-support points of the tilt `tiltedMeasure P \u03c6 1`.\n**The key insight is** that idempotency turns Varadhan's asymptotic\n`lim (1/n) log \u222b e^{n\u03c6} d\u03bc_n = sup(\u03c6 - I)` into an *exact, attained* identity whose\nmaximisers are precisely the tilt-exposed points already characterised in\n`Tilting.lean`.\n**Why now?** `Tilting.lean` just proved that tilt points realise supporting lines;\nlinking them to the integral's argmax is the missing bridge between the duality and\nintegration sides of the theory, and all needed lemmas (`tilt_provides_support`,\n`maxPlusIntegral_attained`) are now in scope.\n\n### C2. Functoriality / transitivity of the contraction principle\n**Conjecture.** For surjections `T : X \u2192 Y`, `S : Y \u2192 Z`, the push-forwards compose:\n`pushforwardMeasure (S\u2218T) = pushforwardMeasure S \u2218 pushforwardMeasure T`, and the\ncontracted rate satisfies `I_Z(z) = inf_{S y = z} I_Y(y) = inf_{(S\u2218T) x = z} I_X(x)`.\n**The key insight is** that the fibration identity `inf'_fiber_eq` is associative\nunder fibre refinement, so the idempotent contraction principle is a *functor* from\nfinite types-with-rate to itself.\n**Why now?** The single-step contraction is proved; transitivity is the natural\ncategorical strengthening and would let the rate function be transported along any\nfinite computation graph (relevant to the catalog's tropical neural networks).\n\n### C3. Idempotent G\u00e4rtner\u2013Ellis theorem\n**Conjecture.** If a family `P_n` of tropical laws has CGFs converging,\n`(1/n) \u039b_n(\u03bb) \u2192 \u039b_\u221e(\u03bb)` with `\u039b_\u221e` convex, then the rescaled rate functions converge\nto the Legendre\u2013Fenchel transform `\u039b_\u221e^*`; the walk law `walkMeasure P n` is the\ncanonical example with `\u039b_n = n\u00b7\u039b`, giving `\u039b_\u221e = \u039b` exactly.\n**The key insight is** that for the max-plus walk the convexity hypothesis of\nG\u00e4rtner\u2013Ellis is *automatic* (the CGF is a finite sup of affine maps, already proved\nconvex in `idempotentCGF_convex`), so the idempotent G\u00e4rtner\u2013Ellis theorem holds\nwithout the delicate steepness conditions of the classical statement.\n**Why now?** `idempotentCGF_walk` (`= n\u00b7\u039b`) and `idempotentCGF_convex` are both in\nthe catalog; the limit `(1/n)(n\u00b7\u039b) = \u039b` makes the walk a closed-form test case for\nthe general theorem.\n\n### C4. Sharp contraction cost bound with explicit minimiser\n**Conjecture.** The contraction cost `inf_{y\u2208B} I_Y(y)` is attained at `y* = T x*`\nwhere `x*` minimises `I_X` over the preimage `T\u207b\u00b9(B)`, and the optimal transport\nplan between the X- and Y-level deviations is the identity-on-fibres map.\n**The key insight is** that in the idempotent world the contraction infimum is a\n*minimum* (finite sets), so the abstract LDP rate carries a concrete minimiser, unlike\nthe classical case where only an infimum is guaranteed.\n**Why now?** `idempotent_contraction` reduces the cost to a finite `inf'`, which always\nhas a witness via `Finset.exists_mem_eq_inf'`; turning that witness into a transport\nstatement is a short, well-scoped next step.\n\n### C5. Non-convex obstruction transports through contraction\n**Conjecture.** The duality gap of `DualityGap.lean` is *preserved* under any\nfibre-injective contraction: if `I_X` has a strict Legendre gap at `x`, then `I_Y` has\na gap at `T x` whenever the fibre over `T x` is a singleton.\n**The key insight is** that contraction can only ever *shrink* gaps (it takes\ninfima), so a singleton fibre transmits the gap unchanged \u2014 identifying exactly when\nnon-convexity survives coarse-graining.\n**Why now?** Both ingredients \u2014 the gap example (`gapMeasure`) and the exact\ncontraction identity \u2014 now coexist in the catalog, making this falsifiable on the\nexplicit `Fin 3` law by choosing `T` injective.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2602",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f2499c75",
-    "status": "available",
-    "timestamp": "2026-06-26T12:39:28.265484+00:00",
-    "title": "Catalog's idempotent large-deviation theory"
   },
   {
     "consumed_by_exp_id": "",

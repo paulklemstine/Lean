@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "72d240c8",
     "filename": "hh0_of_a_finite_group_algebra_is_the_free_module_o.json",
     "pkg_num": 90,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7694400000000001,
     "title": "HH\u2080 of a Group Algebra is the Free Module on Conjugacy Classes"
   },
   {
@@ -2619,8 +2619,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "hh0_of_a_finite_group_algebra_is_the_free_module_o",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7694400000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "HH\u2080 of a Group Algebra is the Free Module on Conjugacy Classes"
     }
