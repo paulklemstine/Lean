@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1f4bbef7",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Automatic Sequences and the Zero-in-Sequence Problem\n\nThis cycle formalized the automata-theoretic core of the \"halting problem for\nautomatic sequences\": the zero-in-sequence pro",
-      "quality_score": 0.712,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-06-16T20:27:30",
-      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
-    },
-    {
       "cycle_id": "c9ad0581",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions\n\n## 1. From eigenvectors to arbitrary secret vectors\n\nThe current boundary analysis assumes the secret vector is an exact tropical\neigenvector of the public matrix. Real protocols",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-26T10:43:57",
       "title": "Betti-Whittaker Period Relation for Contragredient Representations of GL(n)"
+    },
+    {
+      "cycle_id": "3847ce48",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1",
+      "quality_score": 0.75084,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-26T11:34:11",
+      "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "db367995",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Invariant Subspace Problem\n\nDerived from this cycle's findings in `InvariantSubspaceCore.lean` (finite-dimensional\nexistence + commutant invariance) and `InvariantSubspaceSelfAdj",
-      "quality_score": 0.42152284276729557,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-20T08:42:42",
-      "title": "Invariant Subspace Problem"
-    },
     {
       "cycle_id": "443cc80d",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 12,
       "timestamp": "2026-06-26T11:13:49",
       "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
+    },
+    {
+      "cycle_id": "3847ce48",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1",
+      "quality_score": 0.75084,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-26T11:34:11",
+      "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "1d985141",
-      "domain": "Tropical",
-      "name": "le_finMax",
-      "quality": 0.751851
-    },
-    {
-      "cycle_id": "1d985141",
-      "domain": "Tropical",
-      "name": "exists_finMax_eq",
-      "quality": 0.751851
-    },
-    {
-      "cycle_id": "1d985141",
-      "domain": "Tropical",
-      "name": "finMax_le_iff",
-      "quality": 0.751851
-    },
     {
       "cycle_id": "ef60a392",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "floor_sq_div_four",
       "quality": 0.71376
+    },
+    {
+      "cycle_id": "3847ce48",
+      "domain": "MachineLearning",
+      "name": "for",
+      "quality": 0.75084
+    },
+    {
+      "cycle_id": "3847ce48",
+      "domain": "MachineLearning",
+      "name": "of",
+      "quality": 0.75084
+    },
+    {
+      "cycle_id": "3847ce48",
+      "domain": "MachineLearning",
+      "name": "period_swap",
+      "quality": 0.75084
     }
   ],
-  "last_updated": "2026-06-26T11:13:49",
+  "last_updated": "2026-06-26T11:34:11",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3517,12 +3517,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "4a5dda39",
-        "quality": 0.6604548751733703,
-        "theorems": 393,
-        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-      },
-      {
         "cycle_id": "bf991533",
         "quality": 0.5450164281345566,
         "theorems": 469,
@@ -3575,6 +3569,12 @@
         "quality": 0.6776,
         "theorems": 15,
         "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
+      },
+      {
+        "cycle_id": "3847ce48",
+        "quality": 0.75084,
+        "theorems": 9,
+        "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
       }
     ],
     "Novelty": [

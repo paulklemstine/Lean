@@ -720,6 +720,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 3847ce48 (Q=0.751), which proved 9 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the theory of self\u2011dual string C\u2011group representations and prove the maximal rank result for alternating groups A_{4m+3}: for every integer m\u22653 (n=4m+3\u226515), any self\u2011dual string C\u2011group representation of A_n has rank at most 2m, and this bound is attained by the vertex\u2011gluing construction.",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "push_3847ce48_1f84dfa0",
+    "priority_score": 0.8508399999999999,
+    "research_mode": "team",
+    "source_exp_id": "3847ce48",
+    "status": "available",
+    "timestamp": "2026-06-26T11:34:11.383795+00:00",
+    "title": "Deepening: Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -823,7 +837,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "9c488c94",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +846,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1654,21 +1668,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T05:47:22.546695+00:00",
     "title": "Log-concavity of Partial-Twuality Polynomials for Binary Delta-Matroids"
-  },
-  {
-    "consumed_by_exp_id": "72d240c8",
-    "description": "Let R be any commutative ring and G any finite group. Define HH\u2080(R[G]) as the quotient of the group algebra R[G] by the R-submodule spanned by all additive commutators xy - yx. The canonical R-linear map sending a basis element g of R[G] to the conjugacy class of g descends to an R-linear equivalence HH\u2080(R[G]) \u2243 R[Conj(G)]. Equivalently, the only relations in degree-zero Hochschild homology of a finite group algebra identify conjugate group elements.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2303",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.21313v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T02:05:39.955397+00:00",
-    "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
   },
   {
     "consumed_by_exp_id": "",
@@ -3815,7 +3814,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scalar curvature formula for incidence-algebra nilpotent Lie algebras"
   },
   {
-    "consumed_by_exp_id": "d4e980c4",
+    "consumed_by_exp_id": "",
     "description": "For RSA modulus n=p*q with primes p>q, if the private exponent d satisfies d < n^{(1+\u03b4)/2} and a \u03b4-fraction of the most significant bits of p+q is known, then the modulus n can be factored using a modified Wiener's continued fraction attack.",
     "domains": [
       "Pythagorean"
@@ -3824,7 +3823,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24717v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T11:56:42.011405+00:00",
     "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
   },
@@ -4174,7 +4173,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Maximum size of cycle-containing families of vectors"
   },
   {
-    "consumed_by_exp_id": "f014f8e3",
+    "consumed_by_exp_id": "",
     "description": "For fixed integers r\u22652, t\u22652 there exists a constant C(r,t)>0 such that every r\u2011edge\u2011colouring of any (C,\u202fd)-pseudorandom t\u2011uniform hypergraph H on n vertices contains a monochromatic matching of size at least (1/(r+t\u20111)\u2212o(1))\u00b7n. Moreover, this bound is asymptotically best possible: for every \u03b5>0 and all sufficiently large n there is an r\u2011colouring of a (C,\u202fd)-pseudorandom t\u2011graph with no monochromatic matching larger than (1/(r+t\u20111)+\u03b5)\u00b7n. The conjecture claims that the classical AFL bound extends from the complete hypergraph K_n^{(t)} to any sufficiently pseudorandom host, without any additional loss beyond the o(1) term.",
     "domains": [
       "Algebra",
@@ -4184,7 +4183,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24863v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T05:42:47.292631+00:00",
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
@@ -5825,6 +5824,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: self-dual string C-groups\n\nDerived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,\n`simplex_selfDual`, and `symmetricGroup_selfDual_rank`.\n\n## Conjecture 1 \u2014 Palindrome is the *only* abstract obstruction below the ceiling\n\nFor every rank `r \u2264 2m` and every palindromic admissible Schl\u00e4fli symbol of length\n`r-1`, the alternating group `A_{4m+3}` admits a self-dual string C-group with that\nsymbol (vertex-gluing realizability).\n\n- **The key insight is...** that `schlafli_palindrome` shows palindromicity is\n  *necessary*; the vertex-gluing construction suggests it is also *sufficient* up to\n  the ceiling, so the only abstract obstruction is the palindrome condition together\n  with the rank bound \u2014 not any finer diagram constraint.\n- **Why now?** We have a clean, machine-checked separation between the necessary\n  condition (palindrome) and the realizability question, so the sufficiency half can\n  be attacked construction-by-construction with the framework already in place.\n\n## Conjecture 2 \u2014 The ceiling drop is a parity phenomenon at the central edge\n\nThe loss of exactly one rank (`2m` instead of `2m+1`) for self-dual representations\nof `A_{4m+3}` is forced by the central edge: at rank `2m+1` the Schl\u00e4fli palindrome\nhas an even number of edges, pairing each with a distinct partner, and the induced\npermutation-sign constraint inside `A_n` becomes unsatisfiable.\n\n- **The key insight is...** that `selfDual_central_fixed` shows odd rank pins a\n  *fixed* central generator while even rank pairs all edges; the parity of the\n  number of edges (`r-1`) flips precisely between rank `2m` and `2m+1`.\n- **Why now?** The central-fixed-point lemma isolates the exact index where the\n  parity flips, turning a vague \"parity obstruction\" into a concrete statement about\n  one generator.\n\n## Conjecture 3 \u2014 Symmetric vs. alternating dichotomy is sharp\n\nFor every `n`, `S_n` admits self-dual string C-groups of the maximal possible rank\n`n-1` (the simplex), whereas `A_n` never reaches its own overall ceiling in the\nself-dual case for `n \u2261 3 (mod 4)`.\n\n- **The key insight is...** that `symmetricGroup_selfDual_rank` proves *unbounded*\n  self-dual rank for symmetric groups, so the ceiling is genuinely an artifact of\n  the index-2 alternating subgroup, not of string C-groups per se.\n- **Why now?** With the symmetric-group side fully formalized, the contrast is\n  precise and the remaining work is entirely about the parity cost of restricting to\n  `A_n`.\n\n## Conjecture 4 \u2014 Self-dual ceiling as a function of `n mod 4`\n\nThe gap between the self-dual maximum rank and the overall maximum rank\n`\u230a(n-1)/2\u230b` for `A_n` depends only on `n mod 4`: it is `1` for `n \u2261 3 (mod 4)` and\n`0` for the other residues with `n` large.\n\n- **The key insight is...** that `selfDual_rank_one_below_overall_max` pins the gap\n  to exactly `1` in the residue class `n \u2261 3 (mod 4)`; the palindrome-parity\n  analysis predicts the gap closes in the other classes.\n- **Why now?** The arithmetic backbone is formalized for the `4m+3` class, so the\n  residue-by-residue refinement is a natural and testable next step.\n\n## Conjecture 5 \u2014 Period-matrix reversal characterizes inner self-dualities\n\nA self-duality of a string C-group is realized by an *inner* automorphism (as for\nthe simplex, via the longest element) iff the reversal of generator indices is\nitself induced by conjugation by a single involution of `G`.\n\n- **The key insight is...** that `simplex_selfDual` realizes self-duality by\n  conjugation by `Fin.revPerm`, an involution; `period_rev_of_selfDual` shows every\n  self-duality reverses the period matrix, so the inner/outer distinction reduces to\n  whether that reversal is conjugation-induced.\n- **Why now?** The conjugation witness for the simplex gives a concrete template,\n  and the abstract `IsSelfDual` predicate lets us state the inner/outer dichotomy\n  precisely for the first time in this framework.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2598",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3847ce48",
+    "status": "available",
+    "timestamp": "2026-06-26T11:34:03.140019+00:00",
+    "title": "Derived from this cycle's findings on `StringGroupRep`, `schlafli_palindrome`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6057,7 +6071,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Kolmogorov-Arnold Representation"
   },
   {
-    "consumed_by_exp_id": "ab42f98e",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -6067,12 +6081,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
   {
-    "consumed_by_exp_id": "f2499c75",
+    "consumed_by_exp_id": "",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domains": [
       "Tropical",
@@ -6082,7 +6096,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
   },
