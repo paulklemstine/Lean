@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b3d82bf4",
-      "domain": "Cryptography",
-      "key_insight": "# FUTURE DIRECTIONS — Tropical Cryptography: Multiple Homomorphic Shadows of the Exponent\n\nDerived from this cycle's findings in `TropicalMagnitudeLeak.lean` and\n`TropicalGminSuperadditive.lean` (and",
-      "quality_score": 0.74352,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-06-19T14:41:57",
-      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-    },
-    {
       "cycle_id": "78320320",
       "domain": "Cryptography",
       "key_insight": "# Future Directions\n\nThis note records concrete next steps building on\n`Catalog/Cryptography/LibraryOfBabelEntropy.lean`, which proves that every finite-order\nRényi entropy of the *uniform* distributi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 12,
       "timestamp": "2026-06-26T01:56:50",
       "title": "Central Gaussian coefficient maximizes binary 2-binomial class size"
+    },
+    {
+      "cycle_id": "9e1a2820",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — Generalized Gawron–Miska–Ulas unboundedness\n\nThis cycle proved the Gawron–Miska–Ulas unboundedness conjecture on the union\n`{m = 2, all b ≥ 2} ∪ {2 ≤ m ≤ b}` of the parameter ran",
+      "quality_score": 0.52704,
+      "sorry_count": 1,
+      "theorem_count": 20,
+      "timestamp": "2026-06-26T02:42:00",
+      "title": "Generalized Gawron–Miska–Ulas unboundedness for arbitrary integer bases"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.7400800000000001
     }
   ],
-  "last_updated": "2026-06-26T01:56:50",
+  "last_updated": "2026-06-26T02:42:00",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "049cc9b2",
-      "domain": "Bridges",
-      "sorry_count": 1,
-      "timestamp": "2026-06-15T12:27:58"
-    },
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
       "cycle_id": "406af8f7",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 2,
       "timestamp": "2026-06-25T12:36:46"
+    },
+    {
+      "context": "-- !-- Critique (Critic): T_one_recurrence and T_one_bounded are 0-sorry, use the",
+      "cycle_id": "9e1a2820",
+      "domain": "Logic",
+      "sorry_count": 1,
+      "timestamp": "2026-06-26T02:42:00"
     }
   ],
   "research_threads": {
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "cb56480f",
-        "quality": 0.4729431683168317,
-        "theorems": 19,
-        "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
-      },
-      {
         "cycle_id": "0abb7f10",
         "quality": 0.614,
         "theorems": 157,
@@ -3513,6 +3507,12 @@
         "quality": 0.5380114482758622,
         "theorems": 10,
         "title": "GeneralizedPeriod Relation for Betti-Whittaker Periods and Contragredient Repres"
+      },
+      {
+        "cycle_id": "9e1a2820",
+        "quality": 0.52704,
+        "theorems": 20,
+        "title": "Generalized Gawron–Miska–Ulas unboundedness for arbitrary integer bases"
       }
     ],
     "MachineLearning": [

@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "0548f2b9",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -224,7 +224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Galois Theory: Solvability of Polynomials"
   },
   {
-    "consumed_by_exp_id": "97f912e0",
+    "consumed_by_exp_id": "",
     "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the ad\u00e8le ring and id\u00e8le class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
     "domains": [
       "Algebra",
@@ -235,7 +235,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.91,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432799+00:00",
     "title": "Langlands Correspondence: GL(1) Case"
   },
@@ -506,7 +506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Circuit Complexity: Monotone Lower Bounds"
   },
   {
-    "consumed_by_exp_id": "4364c6f1",
+    "consumed_by_exp_id": "",
     "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+\u221a2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
     "domains": [
       "Physics",
@@ -517,7 +517,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432774+00:00",
     "title": "Statistical Mechanics: Ising Model Phase Transition"
   },
@@ -987,7 +987,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "b08abcae",
+    "consumed_by_exp_id": "",
     "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|\u03b1 - p/q| < 1/(\u221a5 q\u00b2) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
     "domains": [
       "NumberTheory",
@@ -997,7 +997,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432605+00:00",
     "title": "Continued Fractions and Diophantine Approximation"
   },
@@ -1314,7 +1314,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "d4c70419",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1324,7 +1324,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -3972,7 +3972,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Coefficient Decay Bound"
   },
   {
-    "consumed_by_exp_id": "f6b20d87",
+    "consumed_by_exp_id": "",
     "description": "Let k \u2265 2, n = k + 1, and D(k) = gcd_{2 \u2264 q \u2264 k+1} binom(qk,k). If P is the largest exact prime-power component p^a exactly dividing n, then D(k) is not merely nontrivial exactly when n/P \u2264 P; conjecturally its exact value is P in that case and 1 otherwise. Equivalently, D(k) = P if the largest exact prime-power component of k+1 dominates its complementary factor, and D(k) = 1 otherwise.",
     "domains": [
       "Pythagorean"
@@ -3981,7 +3981,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-24T19:09:47.341905+00:00",
     "title": "Exact Value of the Binomial GCD in OEIS A080170"
   },
@@ -5401,6 +5401,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Generalized Gawron\u2013Miska\u2013Ulas unboundedness\n\nThis cycle proved the Gawron\u2013Miska\u2013Ulas unboundedness conjecture on the union\n`{m = 2, all b \u2265 2} \u222a {2 \u2264 m \u2264 b}` of the parameter range, via the Mahler\nfunctional equation `Q_{N+1}(x) = (1-x)^m \u00b7 Q_N(x^b)` and the base-`b` repunit\nidentity `T_{b,m}(R_k) = (-m)^k` (valid when `b \u2265 m`; for `m = 2` valid for all `b`).\nIt also proved the contrast `|T_{b,1}(n)| \u2264 1` (boundedness at `m = 1`). The findings\nbelow are the natural, falsifiable next targets.\n\n## Direction 1 \u2014 The genuinely open corner: small base, large exponent (`b < m`)\n\n**Conjecture.** For every `b \u2265 2` and `m \u2265 2`, `T_{b,m}` is unbounded \u2014 in\nparticular in the still-open region `2 \u2264 b < m` (e.g. `b = 3, m = 4`, where the\nclean repunit identity fails: `T_{3,4}(R_k) = 1,-4,17,-76,353,\u2026`, not `(-4)^k`).\n\nThe key insight is that for `b < m` the \"single surviving binomial term\" collapse\nbreaks: at `n = b\u00b7R_k + 1` the indices `j \u2261 1 (mod b)` inside `[0,m]` are\n`j = 1, 1+b, 1+2b, \u2026`, so the repunit value obeys the *multi-term* recurrence\n`T(R_{k+1}) = \u03a3_{t : 1+tb \u2264 m} (-1)^{1+tb} \\binom{m}{1+tb} \u00b7 T_{b,m}(R_k - t)`,\ncoupling the repunit to its lower neighbours through a fixed transfer operator.\n\nWhy now? The functional equation `factor_succ` and the coefficient extraction\n(`coeff_expand`, `coeff_one_sub_X_pow`) are now fully formalized, so this\nmulti-term recurrence is mechanically derivable in Lean \u2014 only the spectral\n(growth) estimate remains.\n\n## Direction 2 \u2014 A transfer-matrix criterion for unboundedness\n\n**Conjecture.** Fix `b, m`. The finite window `v_k = (T_{b,m}(R_k - t))_{0 \u2264 t \u2264 T}`\n(for `T = \u230a(m-1)/b\u230b`) satisfies `v_{k+1} = M \u00b7 v_k` for a fixed integer matrix `M`\ndepending only on `b, m`, and `T_{b,m}` is unbounded **iff** the spectral radius of\n`M` exceeds `1`.\n\nThe key insight is that the Mahler equation makes `T_{b,m}` a `b`-regular sequence,\nso any \"digit-pattern\" subsequence (here, repunits) is governed by a constant\nlinear recursion; unboundedness is then a finite eigenvalue computation.\n\nWhy now? With `factor_succ` in hand the entries of `M` are explicit binomial\ncoefficients `\u00b1\\binom{m}{1+tb}`, so `M` can be built and its characteristic\npolynomial checked by `decide`/`norm_num` for each `(b,m)` \u2014 turning an analytic\nconjecture into a finite, falsifiable computation.\n\n## Direction 3 \u2014 Sharpness: the repunit is the global maximum when `b \u2265 m`\n\n**Conjecture.** For `b \u2265 m \u2265 2`, `max_{0 \u2264 n < b^k} |T_{b,m}(n)| = m^k`, attained\nexactly at the repunit `R_k`.\n\nThe key insight is that the proven lower bound `|T_{b,m}(R_k)| = m^k` already\nmatches the largest value observed in every computed window, suggesting the\n`(1-x)^m` factor cannot amplify a coefficient beyond the \"all-ones digit\" index.\n\nWhy now? We have the exact lower bound; the matching upper bound is a sup-norm\nestimate `\u2016(1-x)^m \u00b7 expand_b f\u2016_\u221e \u2264 m \u00b7 \u2016f\u2016_\u221e` on coefficients, an inductive\ninequality well suited to the same `coeff_mul` machinery used here.\n\n## Direction 4 \u2014 Exact 2-adic valuation along repunits\n\n**Conjecture.** For all `b \u2265 2` and all `k`, the 2-adic valuation satisfies\n`v_2(T_{b,2}(R_k)) = k`, and more generally for a prime `p \u2223 m` with `b \u2265 m`,\n`v_p(T_{b,m}(R_k)) = k \u00b7 v_p(m)`.\n\nThe key insight is that the formalized identity `T_{b,2}(R_k) = (-2)^k` gives\n`v_2 = k` immediately, and `T_{b,m}(R_k) = (-m)^k` gives `v_p = k\u00b7v_p(m)` in the\nlarge-base regime \u2014 so the valuation grows *linearly*, a quantitative\nstrengthening of unboundedness.\n\nWhy now? The closed forms `T_repunit` and `T_repunit_large` are already proved;\nthe valuation statements are one `padicValInt`/`multiplicity` rewrite away and\nneed no new mathematics.\n\n## Direction 5 \u2014 Boundedness boundary is exactly `m = 1`\n\n**Conjecture.** `T_{b,m}` is bounded **iff** `m \u2264 1`; equivalently, the bounded\ncases are precisely `m = 0` (the constant sequence) and `m = 1` (values in\n`{-1,0,1}`), for every base `b \u2265 2`.\n\nThe key insight is that `m = 1` boundedness (proved here via the two-term Mahler\nrecurrence whose branches never both fire because `b \u2224 1`) is *destroyed* at\n`m = 2`: the extra `\\binom{m}{1}` term doubles the value along repunits.\n\nWhy now? Both halves are within reach: `T_one_bounded` is done, and `T_two_unbounded`\nalready supplies the `m \u2265 2` direction for `m = 2`; combining with Direction 1 would\nclose the dichotomy entirely.\n",
+    "domains": [
+      "Pythagorean",
+      "Physics"
+    ],
+    "id": "fd_2569",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9e1a2820",
+    "status": "available",
+    "timestamp": "2026-06-26T02:41:51.400936+00:00",
+    "title": "Gawron\u2013Miska\u2013Ulas unboundedness conjecture on the union"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5572,6 +5587,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 9e1a2820 (Q=0.527) proved 20 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: For integers b >= 2 and m >= 2, let T_{b,m}(n) be the coefficient of x^n in the formal power series product \\prod_{i=0}^{\\infty} (1 - x^{b^i})^m. Equivalently, T_{b,m}(n) is the coefficient of x^n in ",
+    "domains": [
+      "Logic"
+    ],
+    "id": "sorry_fill_9e1a2820_ee08ecaa",
+    "priority_score": 0.57704,
+    "research_mode": "team",
+    "source_exp_id": "9e1a2820",
+    "status": "available",
+    "timestamp": "2026-06-26T02:42:00.409024+00:00",
+    "title": "Close Proofs: Generalized Gawron\u2013Miska\u2013Ulas unboundedness for arbitrary integer base"
   },
   {
     "consumed_by_exp_id": "",

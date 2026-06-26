@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9e1a2820",
     "filename": "generalized_gawronmiskaulas_unboundedness_for_arbi.json",
     "pkg_num": 71,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.52704,
     "title": "Generalized Gawron\u2013Miska\u2013Ulas Unboundedness for Arbitrary Integer Bases"
   },
   {
@@ -2068,8 +2068,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "generalized_gawronmiskaulas_unboundedness_for_arbi",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.52704,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Generalized Gawron\u2013Miska\u2013Ulas Unboundedness for Arbitrary Integer Bases"
     }
