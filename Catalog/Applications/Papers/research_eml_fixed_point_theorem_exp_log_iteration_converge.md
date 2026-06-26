@@ -1,250 +1,410 @@
-# Deep Structural Properties of EML Fixed-Point Iteration
+# A Quantitative Fixed-Point Theory for the Exp-Log (EML) Iteration
+
+**Author:** Aristotle
+**Date:** 2026-06-26
+**Domain:** Applications (Numerical Analysis / Dynamical Systems)
 
 ## Abstract
 
-We investigate the dynamical behavior of the EML (Exp-Multiply-Log) operator $f(x) = e^a \cdot \ln(bx + c)$ as an iterative scheme. Building on the foundational contraction mapping result that establishes convergence when the derivative $|f'(x)| = |e^a \cdot b / (bx + c)| < 1$, we prove five structural extension theorems: (1) a quantitative a priori error bound $|x_n - x^*| \leq \rho^n/(1-\rho) \cdot |f(x_0) - x_0|$; (2) a composition contraction principle showing that composing $k$ EML contractions yields a contraction with ratio $\leq \prod_i \rho_i$; (3) concavity of the EML operator on its domain; (4) monotone convergence from below the fixed point; and (5) Lipschitz stability of the fixed point with respect to parameter perturbations. All results are formalized and machine-verified in Lean 4. These theorems collectively establish EML as a well-behaved iterative framework with certified convergence, quantitative error control, and robust parameter dependence.
+We develop a complete, quantitative fixed-point theory for the single-operator
+*exp-log* (EML) map $f(x) = e^{a}\log(bx+c)$, a nonlinear primitive arising in
+the EML neural-network framework. Working over the reals, we show that when the
+absolute derivative $|f'(x)| = |e^{a}b/(bx+c)|$ is bounded by a ratio
+$\rho < 1$ on a closed interval $[\,l, h\,]$ that $f$ maps into itself, the
+operator is a $\rho$-contraction. From this we obtain: (i) existence of a fixed
+point as the limit of the Picard iteration $x_{n+1} = f(x_n)$, via a Cauchy
+argument; (ii) uniqueness of the fixed point on the interval; (iii) geometric
+convergence $|x_n - x^\star| \le \rho^n |x_0 - x^\star|$; and (iv) a pair of
+*computable* error certificates — an **a priori** bound
+$|x_n - x^\star| \le \frac{\rho^n}{1-\rho}|x_1 - x_0|$ and an **a posteriori**
+bound $|x_{n+1} - x^\star| \le \frac{\rho}{1-\rho}|x_{n+1} - x_n|$ — culminating
+in a verified **stopping criterion** for terminating the iteration within a
+prescribed tolerance. We also establish a self-contained existence result for
+the parameter family $b=1$, $c=2$, $0 < a < \tfrac12$ via the intermediate value
+theorem, locating a positive fixed point in $(1,3)$. All results are
+machine-checked. We close with applications to certified numerical primitives
+and a program of five concrete follow-up conjectures.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Background
+Iterative maps of the form "apply a nonlinear function repeatedly to its own
+output" are ubiquitous: Newton's method, gradient descent, value iteration, and
+recurrent activations in neural networks all fit the mold. Their usefulness
+hinges on two questions. *Does the iteration converge?* And *how fast, and how
+do we know when to stop?* For an arbitrary nonlinearity these are hard to answer
+rigorously. The contribution of this paper is to answer all of them, completely
+and quantitatively, for a specific but practically important nonlinearity: the
+exp-log operator.
+
+The **EML operator** is
+$$f(x) = e^{a}\,\log(bx + c), \qquad a,b,c \in \mathbb{R},$$
+where the logarithm is the natural logarithm and $e^a$ is a positive scaling
+factor. It combines an affine pre-transformation $x \mapsto bx + c$, logarithmic
+compression, and exponential gain. It serves as a building block of layers in
+the EML neural-network framework, where understanding the dynamical behavior of
+repeated application is essential for stability analysis.
+
+Our central object is the **Picard (fixed-point) iteration**
+$$x_0 \in \mathbb{R}, \qquad x_{n+1} = f(x_n),$$
+and our central tool is the contraction principle. The novelty here is not the
+abstract Banach theorem — which is classical — but a *fully explicit,
+specialized, and verified* package: closed-form derivative and contraction
+constants, both flavors of error bound, a deployable stopping test, and a
+parameter-region existence theorem, all proved from first principles for the EML
+family.
+
+### 1.1 Summary of contributions
+
+1. **Derivative formula** (Theorem 3.1): $f'(x) = e^a b/(bx+c)$ wherever
+   $bx+c>0$.
+2. **Contraction / Lipschitz estimate** (Theorem 4.1): a derivative bound
+   $|f'| \le \rho$ on an interval yields the Lipschitz inequality
+   $|f(x)-f(y)| \le \rho|x-y|$.
+3. **Uniqueness** (Theorem 5.1) and **existence via convergence**
+   (Theorems 6.1–6.3).
+4. **Geometric convergence and computable error bounds** (Theorems 7.1–7.5):
+   one-step contraction, geometric decay, a priori bound, a posteriori bound,
+   and a stopping criterion.
+5. **Parameter-region existence** (Theorem 8.1) for $b=1,c=2,0<a<\tfrac12$.
+
+---
+
+## 2. Definitions
+
+**Definition 2.1 (EML operator).**
+For parameters $a,b,c\in\mathbb{R}$, the EML operator is the function
+$$f_{a,b,c}(x) := e^{a}\,\log(bx+c).$$
+We write $f$ when the parameters are fixed by context. The natural domain is the
+set $\{x : bx+c>0\}$, where the logarithm is defined and differentiable.
+
+**Definition 2.2 (Iteration sequence).**
+Given a seed $x_0$, the *iteration sequence* $\{x_n\}_{n\ge 0}$ is defined
+recursively by
+$$x_0 \text{ given}, \qquad x_{n+1} := f_{a,b,c}(x_n).$$
+
+**Definition 2.3 (Contraction data).**
+An *EML contraction datum* is a tuple
+$D = (a,b,c,l,h,\rho)$ together with proofs that:
+
+* $l < h$ (the interval $[l,h]$ is nondegenerate);
+* $0 \le \rho < 1$ (a valid contraction ratio);
+* **positivity of the log argument:** $bx + c > 0$ for all $x \in [l,h]$;
+* **invariance:** $f_{a,b,c}(x) \in [l,h]$ for all $x \in [l,h]$;
+* **derivative bound:** $\left|\dfrac{e^a b}{bx+c}\right| \le \rho$ for all
+  $x \in [l,h]$.
+
+This bundle packages exactly the hypotheses needed to invoke the contraction
+machinery. The fixed point will be the unique point $x^\star\in[l,h]$ with
+$f(x^\star)=x^\star$.
+
+---
+
+## 3. The derivative formula
+
+**Theorem 3.1 (Derivative of the EML operator).**
+*If $bx + c > 0$, then $f$ is differentiable at $x$ with*
+$$f'(x) = \frac{e^{a}\,b}{bx+c}.$$
+
+*Proof sketch.* The map $x \mapsto bx+c$ has derivative $b$. By the chain rule
+applied to $\log$, which has derivative $1/u$ at $u = bx+c \ne 0$, the
+composition $\log(bx+c)$ has derivative $b/(bx+c)$. Multiplying by the constant
+$e^a$ gives the stated formula. (Formally, this is `HasDerivAt.const_mul`
+composed with `HasDerivAt.log` and `HasDerivAt.add` of a scaled identity and a
+constant.) $\quad\blacksquare$
+
+The geometric meaning is decisive: the local stretching factor of $f$ at $x$ is
+$e^a b/(bx+c)$. Convergence of the iteration is governed entirely by keeping the
+magnitude of this factor below $1$.
+
+**Corollary 3.2 (Convergence rate at the fixed point).**
+At a fixed point $x^\star$ with $bx^\star+c>0$, the asymptotic linear rate of
+the iteration equals $|f'(x^\star)| = e^a b/(bx^\star+c)$.
+
+---
+
+## 4. The contraction estimate
+
+**Theorem 4.1 (Lipschitz bound from a derivative bound).**
+*Let $l<h$. Suppose $bx+c>0$ for all $x\in[l,h]$ and
+$\left|\dfrac{e^a b}{bx+c}\right| \le \rho$ for all $x\in[l,h]$. Then for all
+$x,y\in[l,h]$,*
+$$|f(x)-f(y)| \le \rho\,|x-y|.$$
 
-The EML (Exp-Multiply-Log) framework uses compositions of exponential and logarithmic functions as building blocks for neural network architectures and iterative algorithms. The single EML operator
+*Proof sketch.* The interval $[l,h]$ is convex. On it, $f$ is differentiable
+with derivative $f'(x)=e^ab/(bx+c)$ (Theorem 3.1), whose absolute value is
+bounded by $\rho$ by hypothesis. The mean value inequality for functions with a
+bounded derivative on a convex set
+(`Convex.norm_image_sub_le_of_norm_hasDerivWithin_le`) immediately yields
+$|f(x)-f(y)| \le \rho|x-y|$. $\quad\blacksquare$
 
-$$f(x) = e^a \cdot \ln(bx + c)$$
+This converts a *pointwise* analytic condition (a slope bound) into a *global*
+metric condition (a Lipschitz contraction), the linchpin of the entire theory.
 
-combines exponential scaling with logarithmic compression, creating a function that, under appropriate parameter conditions, acts as a contraction mapping on a suitable invariant interval.
+---
 
-### 1.2 Prior Work
+## 5. Uniqueness of the fixed point
 
-The existence of a unique fixed point for the EML operator under contraction conditions was established in `EML.FixedPointConvergence`, which proved:
-- The derivative formula $f'(x) = e^a \cdot b / (bx + c)$
-- Lipschitz continuity on invariant intervals via the mean value theorem
-- Fixed point uniqueness from the contraction property
-- Convergence of the iteration sequence via the Cauchy criterion
-- Existence of a positive fixed point for specific parameter ranges
+**Theorem 5.1 (At most one fixed point).**
+*Under the hypotheses of Theorem 4.1 with $\rho < 1$, if $x_1,x_2 \in [l,h]$
+both satisfy $f(x_i)=x_i$, then $x_1=x_2$.*
 
-This paper extends these results with five deeper structural theorems that illuminate the quantitative, compositional, and geometric aspects of EML iteration.
+*Proof sketch.* Apply the Lipschitz bound to the two fixed points:
+$$|x_1-x_2| = |f(x_1)-f(x_2)| \le \rho\,|x_1-x_2|.$$
+Hence $(1-\rho)|x_1-x_2| \le 0$. Since $1-\rho>0$, we get $|x_1-x_2|=0$, i.e.
+$x_1=x_2$. $\quad\blacksquare$
 
-### 1.3 Contributions
+**Theorem 5.2 (Fixed-point equation).**
+*Any fixed point $x^\star$ satisfies the implicit relation*
+$x^\star = e^a\log(bx^\star+c)$, *equivalently* $\log(bx^\star+c)=x^\star/e^a$.
 
-1. **Quantitative convergence** (Theorem 1): A priori error bounds that do not require knowledge of $x^*$
-2. **Compositional structure** (Theorem 2): Layer-by-layer contraction analysis for deep EML networks
-3. **Geometric structure** (Theorem 3): Concavity of the EML operator and its consequences
-4. **Monotone dynamics** (Theorem 4): One-sided convergence from below the fixed point
-5. **Parameter robustness** (Theorem 5): Lipschitz continuity of $x^*$ with respect to perturbations
+This is a restatement of $f(x^\star)=x^\star$; it is the algebraic equation any
+numerical or series method must solve. A small companion result shows that if
+$x^\star>0$ and $bx^\star+c>0$, then necessarily $bx^\star+c>1$ (otherwise
+$\log(bx^\star+c)\le 0$ would force $x^\star\le 0$).
 
-All results are formalized in Lean 4 with complete, machine-verified proofs.
+---
 
-## 2. Definitions and Framework
+## 6. Existence via Picard convergence
 
-### 2.1 The Abstract Contraction Framework
+We now show the iteration produces the fixed point. Fix an EML contraction datum
+$D$ and a seed $x_0\in[l,h]$.
 
-We work with the following abstract structure:
+**Lemma 6.0 (Invariance of the orbit).** *Every iterate stays in the interval:
+$x_n\in[l,h]$ for all $n$.* (Induction using the `maps_to` property of $D$.)
 
-**Definition (IntervalContraction).** A tuple $(f, [lo, hi], \rho)$ where:
-- $f: \mathbb{R} \to \mathbb{R}$ is a function
-- $lo < hi$ defines a closed interval
-- $0 \leq \rho < 1$ is the contraction ratio
-- $f$ maps $[lo, hi]$ to itself
-- $|f(x) - f(y)| \leq \rho \cdot |x - y|$ for all $x, y \in [lo, hi]$
+**Theorem 6.1 (Geometric decay of consecutive differences).**
+$$|x_{n+1}-x_n| \le \rho^{\,n}\,|x_1-x_0| \qquad (n\ge 0).$$
 
-The iteration sequence is defined by $x_0 = \text{given}$, $x_{n+1} = f(x_n)$.
+*Proof sketch.* Induction on $n$. The base case is trivial. For the step, apply
+the Lipschitz bound (Theorem 4.1) to the two in-interval points $x_n$ and
+$x_{n-1}$: $|x_{n+1}-x_n| = |f(x_n)-f(x_{n-1})| \le \rho|x_n-x_{n-1}|$, then use
+the inductive hypothesis. $\quad\blacksquare$
 
-### 2.2 The EML Specialization
+**Theorem 6.2 (Cauchy property).** *The sequence $\{x_n\}$ is Cauchy.*
 
-For the EML operator, the contraction condition becomes:
+*Proof sketch.* Summing the geometric tail $\sum_{k\ge n}\rho^k|x_1-x_0|$ shows
+the partial differences satisfy the standard geometric Cauchy test
+(`cauchySeq_of_le_geometric` with ratio $\rho<1$ and base $|x_1-x_0|$).
+$\quad\blacksquare$
 
-$$\sup_{x \in [lo, hi]} \left|\frac{e^a \cdot b}{bx + c}\right| < 1$$
+**Theorem 6.3 (Convergence to a fixed point).**
+*There exists $x^\star\in[l,h]$ with $x_n\to x^\star$ and $f(x^\star)=x^\star$.*
 
-Since $|f'(x)| = e^a \cdot |b| / (bx + c)$ when $bx + c > 0$, this is equivalent to $e^a \cdot |b| < bx + c$ for all $x \in [lo, hi]$, i.e., $e^a \cdot |b| < b \cdot lo + c$.
+*Proof sketch.* The reals are complete, so the Cauchy sequence converges to some
+$x^\star$. The interval $[l,h]$ is closed and contains every $x_n$, so it
+contains the limit. Finally $f$ is continuous at $x^\star$ (the log argument is
+positive there, by passing the interval bounds to the limit), so taking the
+limit in $x_{n+1}=f(x_n)$ gives $x^\star=f(x^\star)$. Combined with Theorem 5.1,
+$x^\star$ is *the* unique fixed point in $[l,h]$. $\quad\blacksquare$
 
-## 3. Main Results
+Theorems 5.1 and 6.3 together constitute a specialized Banach fixed-point
+theorem for the EML operator.
 
-### 3.1 Theorem 1: A Priori Error Bound
+---
 
-**Theorem.** Let $(f, [lo, hi], \rho)$ be an interval contraction with fixed point $x^*$. Then for any $x_0 \in [lo, hi]$ and all $n \geq 0$:
+## 7. Quantitative error bounds
 
-$$|x_n - x^*| \leq \frac{\rho^n}{1 - \rho} \cdot |f(x_0) - x_0|$$
+These results follow a deliberately *non-circular* logic:
+contraction $\Rightarrow$ existence of $x^\star$ $\Rightarrow$ distance estimates
+between $x_n$ and $x^\star$ $\Rightarrow$ computable bounds. Throughout, $x^\star$
+is taken as a given fixed point in $[l,h]$ (the unique one by Theorem 5.1); the
+bounds are derived purely from the *one-step* contraction estimate and never
+assume convergence a priori.
 
-**Proof sketch.** By induction on $n$. The base case $n = 0$ follows from:
-$$|x_0 - x^*| = |x_0 - f(x^*)|$$
-$$\leq |x_0 - f(x_0)| + |f(x_0) - f(x^*)|$$
-$$\leq |f(x_0) - x_0| + \rho \cdot |x_0 - x^*|$$
+**Theorem 7.1 (One-step contraction toward $x^\star$).**
+$$|x_{n+1}-x^\star| \le \rho\,|x_n-x^\star|.$$
 
-Rearranging: $(1-\rho)|x_0 - x^*| \leq |f(x_0) - x_0|$.
+*Proof sketch.* Since $x^\star=f(x^\star)$ and $x_{n+1}=f(x_n)$, the Lipschitz
+bound applied to $x_n,x^\star\in[l,h]$ gives the inequality directly.
+$\quad\blacksquare$
 
-The inductive step uses $|x_{n+1} - x^*| = |f(x_n) - f(x^*)| \leq \rho \cdot |x_n - x^*|$.
+**Theorem 7.2 (Geometric decay to $x^\star$).**
+$$|x_n-x^\star| \le \rho^{\,n}\,|x_0-x^\star|.$$
 
-**Significance.** This bound is computable without knowing $x^*$: only the initial displacement $|f(x_0) - x_0|$ and the contraction ratio $\rho$ are needed. For $\rho = 0.5$, achieving 10 decimal places of accuracy requires $n \geq \lceil 10 \ln 10 / \ln 2 \rceil + \lceil \log_2(1/(1-\rho) \cdot |f(x_0) - x_0|) \rceil \approx 33 + \text{initial terms}$ iterations.
+*Proof sketch.* Induction using Theorem 7.1 at each step, with $\rho\ge 0$ to
+preserve the inequality under multiplication. $\quad\blacksquare$
 
-**PEGB Analysis:**
-- *Proof*: Lean 4 formalization via `IntervalContraction.apriori_error_bound`
-- *Example*: For $a = 0.5, b = 1, c = 2, x_0 = 0.5$: $\rho \approx 0.527$, $|f(x_0) - x_0| \approx 0.855$, so $|x_{10} - x^*| \leq 0.527^{10}/0.473 \cdot 0.855 \approx 0.0032$. Numerically: $|x_{10} - x^*| \approx 0.00072$.
-- *Generalization*: The bound extends to any complete metric space contraction (Banach theorem)
-- *Boundary*: At $\rho \to 1^-$, the bound $\rho^n/(1-\rho)$ diverges, reflecting the loss of contraction
+**Lemma 7.3 (Initial-distance control).**
+$$|x_0-x^\star| \le \frac{|x_1-x_0|}{1-\rho}.$$
 
-### 3.2 Theorem 2: Composition Contraction
+*Proof sketch.* From Theorem 7.1 with $n=0$, $|x_1-x^\star|\le\rho|x_0-x^\star|$.
+By the triangle inequality
+$|x_0-x^\star| \le |x_1-x_0| + |x_1-x^\star| \le |x_1-x_0| + \rho|x_0-x^\star|$,
+so $(1-\rho)|x_0-x^\star| \le |x_1-x_0|$, and divide by $1-\rho>0$.
+$\quad\blacksquare$
 
-**Theorem.** If $f_1$ is $\rho_1$-Lipschitz on $S$ and $f_2$ is $\rho_2$-Lipschitz on $S$ with $f_2(S) \subseteq S$, then $f_1 \circ f_2$ is $(\rho_1 \cdot \rho_2)$-Lipschitz on $S$:
+**Theorem 7.4 (A priori error bound).** *For all $n\ge0$,*
+$$\boxed{\;|x_n-x^\star| \le \frac{\rho^{\,n}}{1-\rho}\,|x_1-x_0|.\;}$$
 
-$$|f_1(f_2(x)) - f_1(f_2(y))| \leq \rho_1 \cdot \rho_2 \cdot |x - y|$$
+*Proof sketch.* Compose Theorem 7.2 with Lemma 7.3:
+$|x_n-x^\star| \le \rho^n|x_0-x^\star| \le \frac{\rho^n}{1-\rho}|x_1-x_0|$.
+$\quad\blacksquare$
 
-**Proof sketch.** Direct calculation:
-$$|f_1(f_2(x)) - f_1(f_2(y))| \leq \rho_1 |f_2(x) - f_2(y)| \leq \rho_1 \rho_2 |x - y|$$
+The a priori bound is computable *after the first step alone*: measure
+$|x_1-x_0|$ and you obtain a guaranteed accuracy schedule for all $n$. To reach
+tolerance $\varepsilon$ it suffices to take
+$n \ge \dfrac{\log\big(\varepsilon(1-\rho)/|x_1-x_0|\big)}{\log\rho}$.
 
-**Significance for deep EML networks.** A depth-$L$ EML network with per-layer contraction ratios $\rho_1, \ldots, \rho_L$ has overall contraction ratio at most $\prod_{i=1}^L \rho_i$. If all layers have the same ratio $\rho$, the network contracts by $\rho^L$, exponentially fast in depth. This provides:
-1. A guarantee that the network has a unique fixed point (useful for implicit-depth networks)
-2. A bound on the network's sensitivity to input perturbations (robustness certificate)
-3. A constraint on the network's expressiveness (it cannot separate points arbitrarily)
+**Theorem 7.5 (A posteriori error bound).** *For all $n\ge0$,*
+$$\boxed{\;|x_{n+1}-x^\star| \le \frac{\rho}{1-\rho}\,|x_{n+1}-x_n|.\;}$$
 
-**PEGB Analysis:**
-- *Proof*: Lean 4 formalization via `composition_lipschitz`
-- *Example*: EML layers with $\rho_1 = 0.6, \rho_2 = 0.7$ compose to $\rho \leq 0.42$
-- *Generalization*: Extends to any metric space, not just $\mathbb{R}$
-- *Boundary*: If any $\rho_i \geq 1$, the composition may not be a contraction
+*Proof sketch.* Write $A=|x_{n+1}-x^\star|$, $B=|x_n-x^\star|$,
+$C=|x_{n+1}-x_n|$. Theorem 7.1 gives $A \le \rho B$, and the triangle inequality
+gives $B \le C + A$. Substituting, $A \le \rho(C+A)$, so
+$(1-\rho)A \le \rho C$, hence $A \le \frac{\rho}{1-\rho}C$. $\quad\blacksquare$
 
-### 3.3 Theorem 3: Concavity of the EML Operator
+The a posteriori bound uses only the two most recently computed iterates,
+making it the natural runtime certificate.
 
-**Theorem.** For $b > 0$, the function $x \mapsto e^a \cdot \ln(bx + c)$ is concave on any interval where $bx + c > 0$.
+**Theorem 7.6 (Computable stopping criterion).**
+*Fix a tolerance $\varepsilon>0$. If*
+$$\frac{\rho}{1-\rho}\,|x_{n+1}-x_n| \le \varepsilon,$$
+*then* $|x_{n+1}-x^\star| \le \varepsilon$.
+
+*Proof sketch.* Chain the a posteriori bound (Theorem 7.5) with the hypothesis.
+$\quad\blacksquare$
+
+This is the deployable payoff: a termination test evaluable from two successive
+iterates and the known constant $\rho$, with a *certified* accuracy guarantee on
+the returned value.
 
-**Proof sketch.** The second derivative is:
-$$f''(x) = -\frac{e^a \cdot b^2}{(bx + c)^2} < 0$$
+---
 
-Since the second derivative is strictly negative, the function is strictly concave.
+## 8. A self-contained existence result for a parameter family
 
-**Corollary (Derivative Antitone).** For $b > 0$, the derivative $f'(x) = e^a \cdot b/(bx+c)$ is decreasing:
-$$x \leq y \implies f'(y) \leq f'(x)$$
+The abstract theory assumes an invariant interval and a derivative bound. We now
+*construct* a fixed point for an explicit parameter family without assuming such
+a datum, using only continuity and the intermediate value theorem.
 
-**Significance.** Concavity implies that the contraction ratio is maximized at the left endpoint of any interval. This means:
-1. The worst-case analysis only needs to check one point (the left endpoint)
-2. The function provides stronger contraction for larger inputs
-3. The EML operator has a fundamentally different geometric character from convex activations (ReLU) or non-convex activations (sigmoid)
-
-**PEGB Analysis:**
-- *Proof*: Lean 4 formalization via `eml_concaveOn` using `concaveOn_of_deriv2_nonpos`
-- *Example*: At $a=0.5, b=1, c=2$: $f'(1) \approx 0.549 > f'(2) \approx 0.412 > f'(3) \approx 0.329$
-- *Generalization*: Any function of the form $g(x) = \alpha \cdot \ln(h(x))$ with $h$ affine and $\alpha > 0$ is concave
-- *Boundary*: When $b < 0$, the function is convex instead (the logarithm's concavity is "flipped")
-
-### 3.4 Theorem 4: Monotone Iteration
-
-**Theorem.** Let $(f, [lo, hi], \rho)$ be an interval contraction with $f$ monotone increasing. If $x_0 \leq f(x_0)$, then the iteration is monotonically increasing: $x_n \leq x_{n+1}$ for all $n$.
-
-**Proof sketch.** By induction. If $x_n \leq x_{n+1}$, then by monotonicity $f(x_n) \leq f(x_{n+1})$, i.e., $x_{n+1} \leq x_{n+2}$.
-
-**Significance.** Monotone convergence is the gold standard for iterative methods. It means:
-1. The sequence provides lower bounds on $x^*$ at every step
-2. No oscillation occurs — the approach is "one-directional"
-3. Combined with the error bound, we get two-sided estimates: $x_n \leq x^* \leq x_n + \text{error bound}$
-
-**PEGB Analysis:**
-- *Proof*: Lean 4 formalization via `monotone_iteration_increasing`
-- *Example*: Starting at $x_0 = 0.5$ with $a=0.5, b=1, c=2$: the sequence $0.5, 1.355, 1.562, \ldots$ increases to $x^* \approx 1.597$
-- *Generalization*: Extends to any monotone contraction on a partially ordered space (Tarski-Kantorovitch theorem)
-- *Boundary*: If $x_0 > f(x_0)$ (starting above), the iteration is decreasing instead
-
-### 3.5 Theorem 5: Parameter Stability
-
-**Theorem.** If two functions $f_1, f_2$ are both $\rho$-Lipschitz on $[lo, hi]$ and satisfy $\sup_{x \in [lo,hi]} |f_1(x) - f_2(x)| \leq \delta$, then their fixed points $x_1^*, x_2^*$ satisfy:
-
-$$|x_1^* - x_2^*| \leq \frac{\delta}{1 - \rho}$$
-
-**Proof sketch.** 
-$$|x_1^* - x_2^*| = |f_1(x_1^*) - f_2(x_2^*)| \leq |f_1(x_1^*) - f_1(x_2^*)| + |f_1(x_2^*) - f_2(x_2^*)|$$
-$$\leq \rho |x_1^* - x_2^*| + \delta$$
-
-Rearranging: $(1-\rho)|x_1^* - x_2^*| \leq \delta$.
-
-**Significance.** This theorem quantifies the robustness of the EML fixed point to parameter perturbations. For the EML operator, changing $a$ to $a + \Delta a$ creates a perturbation $\delta = |e^{a+\Delta a} - e^a| \cdot \max |\ln(bx+c)|$, so the fixed point shifts by at most $\delta/(1-\rho)$. This is crucial for:
-1. **Training stability**: Small gradient updates produce small changes in the fixed point
-2. **Numerical robustness**: Floating-point errors in parameters are bounded
-3. **Sensitivity analysis**: Quantifies which parameters have the most impact
-
-**PEGB Analysis:**
-- *Proof*: Lean 4 formalization via `contraction_fixedPoint_stability`
-- *Example*: At $a=0.5, \rho \approx 0.55$: changing $a$ by $\Delta a = 0.01$ shifts the fixed point by $\approx 0.036$; the bound gives $\leq 0.044$
-- *Generalization*: Extends to parametric families of contractions on any complete metric space
-- *Boundary*: As $\rho \to 1^-$, sensitivity $\delta/(1-\rho) \to \infty$: near-critical contractions are fragile
-
-## 4. Bridge to Abstract Metric Space Theory
-
-We additionally prove that the EML contraction condition, expressed in terms of the derivative bound, implies the standard metric space contraction condition:
-
-$$d(f(x), f(y)) \leq \rho \cdot d(x, y) \quad \forall x, y \in [lo, hi]$$
-
-This bridges the concrete EML analysis to Mathlib's `ContractingWith` framework, connecting our results to the full abstract fixed-point theory.
-
-## 5. Computational Experiments
-
-### 5.1 Convergence Rate Verification
-
-For $a = 0.5, b = 1, c = 2$, starting from $x_0 = 0.5$:
-
-| $n$ | $x_n$ | $|x_n - x^*|$ | Bound | Ratio |
-|-----|--------|----------------|-------|-------|
-| 0 | 0.500000 | 1.097e+00 | 1.81e+00 | — |
-| 1 | 1.355130 | 2.42e-01 | 9.54e-01 | 0.221 |
-| 5 | 1.590247 | 7.08e-03 | 7.41e-02 | ~0.53 |
-| 10 | 1.597252 | 9.86e-06 | 5.75e-03 | ~0.53 |
-| 20 | 1.597262 | 1.90e-11 | 3.46e-05 | ~0.53 |
-
-The observed convergence ratio stabilizes at $\approx 0.527$, matching $|f'(x^*)| \approx 0.527$.
-
-### 5.2 Parameter Sensitivity
-
-Fixed point $x^*(a)$ for $b=1, c=2$:
-
-| $a$ | $x^*(a)$ | $\rho = |f'(x^*)|$ |
-|-----|----------|---------------------|
-| 0.01 | 1.150 | 0.317 |
-| 0.1 | 1.195 | 0.339 |
-| 0.3 | 1.310 | 0.397 |
-| 0.5 | 1.597 | 0.527 |
-| 0.7 | 2.138 | 0.720 |
-| 0.9 | 3.381 | 0.898 |
-| 1.0 | 5.185 | 0.952 |
-
-The contraction ratio approaches 1 as $a$ increases, with the critical threshold near $a \approx 1.15$.
-
-## 6. Discussion
-
-### 6.1 Comparison with Standard Activations
-
-| Property | EML | ReLU | Sigmoid | Tanh |
-|----------|-----|------|---------|------|
-| Concavity | ✓ (on domain) | Convex | Neither | Neither |
-| Contraction | ✓ (parametric) | ✗ (slope = 1) | ✓ (always, slope < 1/4) | ✓ (always, slope < 1) |
-| Monotone | ✓ (for $b > 0$) | ✓ | ✓ | ✓ |
-| Fixed point guarantee | ✓ (with bound) | Only at 0 | ✓ (at 0) | ✓ (at 0) |
-| Quantitative error bound | ✓ | ✗ | ✓ | ✓ |
-
-### 6.2 Implications for Neural Architecture
-
-The composition contraction theorem has direct implications for deep EML networks. If each layer is parameterized to have contraction ratio $\rho < 1$, then:
-- The network defines a unique function (no mode collapse)
-- The output is Lipschitz-continuous in the input with constant $\rho^L$
-- Gradient-based training is well-conditioned
-
-### 6.3 Limitations
-
-1. The contraction condition requires $a$ to be below a critical threshold, limiting the expressiveness of each layer
-2. The error bound $\rho^n/(1-\rho)$ can be pessimistic; the actual convergence is often faster
-3. The theory assumes exact arithmetic; floating-point effects introduce additional perturbations (bounded by Theorem 5)
-
-## 7. Catalog References
-
-This work builds on and extends:
-- `EML.FixedPointConvergence`: foundational contraction mapping results for EML
-- `EML.SocialCreditDynamics.contraction_fixed_point_unique`: abstract contraction uniqueness
-- `Computation.MetaOracleFiveQuestions.contraction_fixed_point_unique`: metric space contraction
-- `Algebra.SpectralArithmetic.Core.contraction_convergence_rate`: convergence rate bounds
-
-## 8. Conclusion
-
-The EML operator $f(x) = e^a \cdot \ln(bx + c)$ exhibits a rich structure under the contraction mapping framework. Our five extension theorems — a priori error bounds, composition contraction, concavity, monotone iteration, and parameter stability — collectively establish that EML operators are not merely contractive but have deep geometric and algebraic properties that make them exceptionally well-suited for iterative computation. The formal verification of all results in Lean 4 provides the highest level of mathematical certainty.
-
-## References
-
-1. Banach, S. (1922). "Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales." *Fundamenta Mathematicae*, 3, 133–181.
-2. Granas, A. & Dugundji, J. (2003). *Fixed Point Theory*. Springer Monographs in Mathematics.
-3. Krasnoselskii, M.A. (1964). *Topological Methods in the Theory of Nonlinear Integral Equations*. Pergamon Press.
+**Theorem 8.1 (Positive fixed point for $b=1,c=2$).**
+*For every $a$ with $0 < a < \tfrac12$, the operator $f(x)=e^a\log(x+2)$ has a
+fixed point $x^\star\in(1,3)$ with $x^\star>0$.*
+
+*Proof sketch.* Consider $g(x) = e^a\log(x+2) - x$ on $[1,3]$, which is
+continuous (the argument $x+2\ge 3>0$). At the left endpoint,
+$g(1) = e^a\log 3 - 1 > 0$, because $\log 3 > 1$ and $e^a \ge 1$. At the right
+endpoint, $g(3) = e^a\log 5 - 3$; since $a<\tfrac12$ we have
+$e^a\log 5 < e^{1/2}\log 5$, and using the numerical bounds
+$e^{1/2} < 1.7$ and $\log 5 < 1.7$ gives $e^{1/2}\log 5 < 2.89 < 3$, so
+$g(3) < 0$. By the intermediate value theorem there is $x^\star\in(1,3)$ with
+$g(x^\star)=0$, i.e. $f(x^\star)=x^\star$; and $x^\star>1>0$. $\quad\blacksquare$
+
+The endpoint estimates were verified rigorously: $e^{1/2}<1.7$ follows from
+$e < 2.89$, and $\log 5 < 1.7$ follows from $5^{10} < e^{17}$, both established
+from high-precision rational bounds on $e$.
+
+**Remark 8.2 (Series behavior near $a=0$).**
+At $a=0$ the fixed point solves $x^\star=\log(x^\star+2)$, with numerical value
+$x^\star\approx 1.1462$. Differentiating the defining relation
+$x^\star(a)=e^a\log(x^\star(a)+2)$ implicitly at $a=0$ predicts the first-order
+motion
+$$x^\star(a) \approx x^\star(0) + a\cdot\frac{x^\star(0)}{1 - 1/(x^\star(0)+2)},$$
+with residual $O(a^2)$. This is corroborated numerically in the demo of §10 and
+motivates the convergent-power-series conjecture (a falsifiable statement: the
+series fails if its radius of convergence is some finite $a_0$ exceeded by a
+tested $a$).
+
+---
+
+## 9. Algorithms
+
+### 9.1 EML Picard iteration with certified stopping
+
+**Input:** parameters $a,b,c$; interval $[l,h]$; contraction ratio $\rho<1$;
+seed $x_0\in[l,h]$; tolerance $\varepsilon$.
+**Output:** an iterate within $\varepsilon$ of the true fixed point.
+
+```
+x_prev := x_0
+x_cur  := f(x_prev)                      # one step to seed the a posteriori test
+while (rho / (1 - rho)) * |x_cur - x_prev| > eps:
+    x_prev := x_cur
+    x_cur  := e^a * log(b * x_cur + c)
+return x_cur                              # certified: |x_cur - x*| <= eps
+```
+
+Each iteration costs one logarithm and a few arithmetic operations, $O(1)$ work
+per step. By Theorem 7.4 the loop terminates in
+$n = O\!\big(\log(1/\varepsilon)/\log(1/\rho)\big)$ steps, i.e. the digit count
+grows linearly in iterations. Correctness of the returned value is guaranteed by
+Theorem 7.6.
+
+### 9.2 A priori iteration-count planner
+
+Given the first step size $s = |x_1 - x_0|$ and a target $\varepsilon$, compute
+the smallest $n$ with $\frac{\rho^n}{1-\rho}s \le \varepsilon$:
+$$n = \left\lceil \frac{\log\!\big(\varepsilon(1-\rho)/s\big)}{\log\rho} \right\rceil.$$
+This schedules a fixed-length loop with no runtime test (useful for SIMD /
+hardware pipelines), with accuracy certified by Theorem 7.4.
+
+---
+
+## 10. Numerical experiments (overview)
+
+The accompanying `demo.py` implements: (a) the derivative formula and the
+verification $|f'|\le\rho$ on a grid; (b) the certified Picard loop of §9.1 for
+$f(x)=e^a\log(x+2)$ at $a=0.01,0.1,0.5$; (c) side-by-side comparison of the a
+priori and a posteriori bounds against the true error (computed against a
+high-iteration reference); and (d) the first-order series prediction of
+Remark 8.2. Across all runs, both certificates correctly upper-bound the true
+error at every step, and the empirical ratio $|x_{n+1}-x^\star|/|x_n-x^\star|$
+approaches $|f'(x^\star)|$, confirming Corollary 3.2.
+
+---
+
+## 11. Applications
+
+* **Certified numerical primitives.** The EML loop becomes a black box with a
+  written warranty: it always converges within the parameter window and returns
+  a value with a proven accuracy bound, suitable for embedding in larger
+  pipelines where error propagation must be controlled.
+* **Stability of EML neural layers.** Repeated application models deep stacks of
+  identical layers; the contraction ratio $\rho$ quantifies signal contraction
+  and rules out the exploding-iterate pathology of generic activations.
+* **Root-finding for the implicit equation $x=e^a\log(bx+c)$.** Picard iteration
+  here is a self-correcting solver with a built-in residual certificate.
+
+---
+
+## 12. Discussion and future work
+
+The theory is complete for the single operator: existence, uniqueness,
+geometric rate, and computable two-sided control of the error. The constants are
+sharp in the standard sense (the a posteriori constant $\rho/(1-\rho)$ is the
+textbook contraction constant). Five concrete directions extend it:
+
+1. **Order-of-convergence dichotomy.** Conjecture: the iteration is exactly
+   linearly convergent with asymptotic rate $|f'(x^\star)|=e^a b/(bx^\star+c)$
+   whenever $f'(x^\star)\ne0$, and superlinear (rate $0$) iff $b=0$. Provable via
+   `EMLIterOp.deriv_eq` and a Stolz/`Tendsto` argument.
+2. **Sharpness of the a posteriori bound.** Conjecture: $\rho/(1-\rho)$ is
+   asymptotically sharp and cannot be lowered uniformly over all data with ratio
+   $\rho$.
+3. **Invariant interval from parameters alone.** Conjecture: for $b>0$, $c>1$,
+   and $e^a b < c\log c$, an invariant interval and ratio $\rho<1$ always exist,
+   turning the hypothesis-laden contraction datum into a constructible object and
+   yielding an unconditional fixed-point theorem on parameter regions.
+4. **Monotone two-sided enclosure.** Conjecture: when $f'>0$ (i.e. $b>0$) the
+   iteration is monotone once inside $[l,h]$, and $(\min(x_0,fx_0),
+   \max(x_0,fx_0))$ brackets $x^\star$, giving a certified enclosure at every
+   step.
+5. **Depth-$n$ EML compositions.** Conjecture: a composition of EML operators,
+   each a $\rho_i$-contraction on a common invariant interval, is a
+   $\prod_i\rho_i$-contraction with a unique fixed point; the a priori and a
+   posteriori bounds transfer verbatim under $\rho\mapsto\prod_i\rho_i$,
+   unifying the single-operator theory with deep-composition error propagation.
+
+---
+
+## 13. Conclusion
+
+For the exp-log operator $f(x)=e^a\log(bx+c)$ we have established a fully
+quantitative fixed-point theory: a closed-form derivative, a contraction
+estimate, existence and uniqueness of the fixed point, geometric convergence,
+computable a priori and a posteriori error bounds, a deployable stopping
+criterion, and a self-contained existence theorem for an explicit parameter
+family. The result elevates the EML iteration to a certified numerical
+primitive — one that always finds its fixed point and always certifies how close
+it is.
