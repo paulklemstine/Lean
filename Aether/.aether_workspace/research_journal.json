@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e88eb144",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Dream Logic: Paraconsistency, Topology, and Coexisting Contradictions\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. The three Lean files est",
-      "quality_score": 0.7144,
-      "sorry_count": 0,
-      "theorem_count": 33,
-      "timestamp": "2026-06-19T11:48:11",
-      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-    },
-    {
       "cycle_id": "b3d82bf4",
       "domain": "Cryptography",
       "key_insight": "# FUTURE DIRECTIONS — Tropical Cryptography: Multiple Homomorphic Shadows of the Exponent\n\nDerived from this cycle's findings in `TropicalMagnitudeLeak.lean` and\n`TropicalGminSuperadditive.lean` (and",
@@ -499,19 +489,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-26T12:45:03",
       "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
+    },
+    {
+      "cycle_id": "d4e980c4",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's formalization (`WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`). Each conjecture is bold, fals",
+      "quality_score": 0.713,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-26T13:13:27",
+      "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bcf3395e",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Probabilistic Ramsey Lower Bounds\n\nDerived from this cycle's findings (the exact first-moment identity `sum_badCount`, the\nthreshold `exists_good_coloring`, the exponential bound",
-      "quality_score": 0.4537146432932148,
-      "sorry_count": 1,
-      "theorem_count": 351,
-      "timestamp": "2026-06-20T11:07:38",
-      "title": "Ramsey Theory: Bounds and Constructions"
-    },
     {
       "cycle_id": "722e1f4a",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-26T12:45:03",
       "title": "HH0 of a finite group algebra is the free module on conjugacy classes"
+    },
+    {
+      "cycle_id": "d4e980c4",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's formalization (`WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`). Each conjecture is bold, fals",
+      "quality_score": 0.713,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-26T13:13:27",
+      "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b45eb1d8",
-      "domain": "Applications",
-      "name": "prodCongr_mem",
-      "quality": 0.7496
-    },
-    {
-      "cycle_id": "99725b45",
-      "domain": "Novelty",
-      "name": "on",
-      "quality": 0.708
-    },
-    {
-      "cycle_id": "99725b45",
-      "domain": "Novelty",
-      "name": "c5edges_card",
-      "quality": 0.708
-    },
     {
       "cycle_id": "99725b45",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "single_isConj_sub_mem",
       "quality": 0.7694400000000001
+    },
+    {
+      "cycle_id": "d4e980c4",
+      "domain": "Cryptography",
+      "name": "n_sub_phi",
+      "quality": 0.713
+    },
+    {
+      "cycle_id": "d4e980c4",
+      "domain": "Cryptography",
+      "name": "rsa_key_identity",
+      "quality": 0.713
+    },
+    {
+      "cycle_id": "d4e980c4",
+      "domain": "Cryptography",
+      "name": "correctedModulus_perfect",
+      "quality": 0.713
     }
   ],
-  "last_updated": "2026-06-26T12:45:03",
+  "last_updated": "2026-06-26T13:13:27",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "93e2fea4",
-        "quality": 0.45196000000000003,
-        "theorems": 2,
-        "title": "Ramsey Theory in Projective Fraïssé Limits Implies Extreme Amenability of Homeom"
-      },
-      {
         "cycle_id": "862d1e75",
         "quality": 0.4281950461538462,
         "theorems": 6,
@@ -3389,6 +3383,12 @@
         "quality": 0.6521899999999999,
         "theorems": 12,
         "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
+      },
+      {
+        "cycle_id": "d4e980c4",
+        "quality": 0.713,
+        "theorems": 13,
+        "title": "RSA Factorization with Partial p+q Knowledge and Small Private Exponent"
       }
     ],
     "Geometry": [

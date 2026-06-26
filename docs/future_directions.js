@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "abbbde7c",
+    "consumed_by_exp_id": "",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "9c488c94",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -2408,21 +2408,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-23T13:48:00.738680+00:00",
     "title": "Hamiltonian Compression Factor of Cubic Edge-Transitive Graphs"
-  },
-  {
-    "consumed_by_exp_id": "7281fa18",
-    "description": "In Lemma 2.1 of the paper the infinite right half-strip row-exchange identity is proved under a uniform contraction assumption for every column. Conjecture: the same identity remains valid under the strictly weaker hypothesis that the contraction ratio is eventually bounded by some \u03b4 < 1. More precisely, for arbitrary top and bottom boundary occupation sequences, nonzero \u03b1, and spectral parameters v,z, if there exist \u03b4 < 1 and N such that for all i \u2265 N the norm of (w\u2081(u\u1d62/z)/w\u2084(u\u1d62/z))*(w\u2084(u\u1d62/v)/w\u2081(u\u1d62/v)) is at most \u03b4, then the two infinite row-exchange partition functions are equal up to the same scalar prefactor f(v/z)/\u03b1\u00b2.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2356",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.22004v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-23T14:06:54.483472+00:00",
-    "title": "Row-exchange under eventual contraction for the infinite asymmetric five-vertex half-strip"
   },
   {
     "consumed_by_exp_id": "",
@@ -5912,6 +5897,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Modified Wiener Attack with Partial `p+q` Knowledge\n\nDerived from this cycle's formalization (`WienerPartialKnowledge.lean`,\n`WienerRecovery.lean`). Each conjecture is bold, falsifiable, and stated so it could be\nformalized in Lean 4 as a next step.\n\n## 1. Continued-fraction realisation of the convergent criterion\n\n**Conjecture.** Under the smallness condition `2\u00b7d\u00b7(k\u00b7\u0394 + 1) < \u00f1` proved sufficient in\n`modified_wiener_convergent_criterion`, the fraction `k/d` literally appears as a value\nof `GenContFract.convs (GenContFract.of (e/\u00f1))`; i.e. the Legendre threshold `1/(2d\u00b2)`\nimplies \"is a convergent\" inside Mathlib's `GenContFract` API.\n\n*The key insight is...* that the abstract Farey separation in `wiener_unique_recovery`\nalready supplies the uniqueness half of Legendre's theorem, so only the *existence* half\n(every `1/(2d\u00b2)`-good fraction occurs among the convergents) remains to be bridged to\nMathlib's continued-fraction development.\n\n*Why now?* Mathlib v4.28 ships `ContinuedFractions.Computation.Approximations` with\nsharp convergent error bounds; combining them with our separation lemma is the missing\nlink to a fully formal Legendre theorem, which Mathlib still lacks.\n\n## 2. Exact `\u03b4`-to-bound transfer for the modified Wiener threshold\n\n**Conjecture.** If exactly the top `\u03b4\u00b7log\u2082(p+q)` bits of `p+q` are known, then the\noptimal estimate `s` satisfies `|(p+q) - s| \u2264 (p+q)^{1-\u03b4}`, and substituting into\n`hsmall` yields a provable closed form `d < n^{(1+\u03b4)/2}` (up to an explicit constant),\nrecovering Wiener's `d < n^{1/4}` at `\u03b4 = 0`.\n\n*The key insight is...* that `hsmall = 2\u00b7d\u00b7(k\u00b7\u0394 + 1) < \u00f1` is *linear* in the error\nbound `\u0394`, so the asymptotic exponent `(1+\u03b4)/2` follows from a single logarithmic\nsubstitution rather than any continued-fraction analysis.\n\n*Why now?* This cycle reduced the entire attack to the finite inequality `hsmall`;\nturning the informal `\u0394 \u2248 (p+q)^{1-\u03b4}` estimate into a Lean lemma about bit-truncation\nof integers is a self-contained `Nat`-arithmetic project.\n\n## 3. Two-sided estimates and the `k`-bounded regime\n\n**Conjecture.** When only a *one-sided* estimate of `p+q` is available (lower bound `s`\nwith `0 \u2264 (p+q) - s \u2264 \u0394`), the residual `1 - k\u00b7((p+q) - s)` has a fixed sign, and the\nattack succeeds with the strictly weaker condition `d\u00b7(k\u00b7\u0394 + 1) < \u00f1` (a factor of 2\ngain), because the absolute value can be dropped.\n\n*The key insight is...* that `modified_approx_error` produces a *signed* identity, and\nabsolute values are only needed for symmetric error models; sign information is itself an\nexploitable side channel.\n\n*Why now?* MSB leakage in practice is one-sided (high bits fix a lower bound), so the\nsigned refinement matches real attack models and is a direct strengthening of\n`modified_approx_abs_bound`.\n\n## 4. Failure boundary: sharpness of the smallness condition\n\n**Conjecture.** The condition `2\u00b7d\u00b7(k\u00b7\u0394 + 1) < \u00f1` is essentially tight: there exist RSA\ninstances with `2\u00b7d\u00b7(k\u00b7\u0394 + 1) \u2248 \u00f1` for which `|e/\u00f1 - k/d| \u2265 1/(2d\u00b2)`, so `k/d` is *not*\na convergent and the attack provably fails.\n\n*The key insight is...* that `modified_approx_error` is an *exact* identity, so the\ncriterion's converse can be witnessed by constructing `p, q, s` that saturate the\nresidual `1 - k\u00b7((p+q) - s)`.\n\n*Why now?* This cycle proved sufficiency; demonstrating a matching necessary counter-\nexample turns the result into an exact characterization and guards against over-claiming.\n\n## 5. Multi-prime and unbalanced-prime generalisation\n\n**Conjecture.** For `n = p\u00b7q` with `p/q = \u0398(n^\u03b3)` (unbalanced primes), the corrected\nmodulus identity `e\u00b7d - k\u00b7\u00f1 = 1 - k\u00b7((p+q) - s)` is unchanged, but `p+q \u2248 p \u2248 n^{(1+\u03b3)/2}`\nshifts the attainable error `\u0394`, yielding a `\u03b3`-dependent threshold\n`d < n^{(1+\u03b4-\u03b3)/2}`; balanced primes (`\u03b3 = 0`) are optimal for the attacker.\n\n*The key insight is...* that none of `rsa_key_identity`, `modified_key_identity`, or\n`modified_approx_error` used balance of `p, q`; only the *size* of `p+q` enters the\nbound, so prime imbalance is a single scalar perturbation of `\u0394`.\n\n*Why now?* Our identities are fully prime-agnostic, so the generalisation is a\nparameter sweep over the same proved lemmas rather than new infrastructure.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2604",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d4e980c4",
+    "status": "available",
+    "timestamp": "2026-06-26T13:13:15.915291+00:00",
+    "title": "Derived from this cycle's formalization (`WienerPartialKnowledge.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -6144,7 +6144,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Kolmogorov-Arnold Representation"
   },
   {
-    "consumed_by_exp_id": "ab42f98e",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -6154,7 +6154,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
