@@ -120,7 +120,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0e7c31a4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domain_bridges": [],
     "domains": [
@@ -132,7 +132,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -1097,7 +1097,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9c488c94",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domain_bridges": [],
     "domains": [
@@ -1109,7 +1109,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1575,7 +1575,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "49f14a50",
+    "consumed_by_exp_id": "",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to χ(G) ≤ 4 for all planar G. Formalize Brooks' theorem: χ(G) ≤ Δ(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domain_bridges": [],
     "domains": [
@@ -1588,7 +1588,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -3020,7 +3020,7 @@
       "Mathlib.Data.Polynomial.Basic",
       "Mathlib.Data.Matrix.Basic"
     ],
-    "consumed_by_exp_id": "0e9a5064",
+    "consumed_by_exp_id": "",
     "description": "For every prime p ≥ 7 with p ≡ 3 mod 4, the determinant of the truncated Legendre-symbol matrix with polynomial parameter X is exactly ((p - 2) / 3)^2 X over ℤ[X]. Explicitly, for m = (p - 5) / 2 and matrix A indexed by Fin m with A_{j,k} = X + (j - k | p), where the Legendre symbol is viewed as an integer coefficient polynomial, det A = ((p - 2) / 3)^2 X.",
     "domain_bridges": [
       "quadratic characters over finite fields to integer-valued polynomial matrices",
@@ -3036,7 +3036,7 @@
     "proof_strategy": "Formalize the matrix over Polynomial ℤ indexed by Fin ((p - 5) / 2). Prove the identity by importing or separately formalizing the inverse-data reduction from the full Chapman matrix C = [legendreSym p (j - i)] indexed by Fin ((p + 1) / 2). The determinant computation then reduces to Jacobi complementary minor identities and the rank-one determinant lemma for adding the constant X matrix. The remaining arithmetic simplification is Nat division: floor((p - 2) / 3) is represented by (p - 2) / 3.",
     "research_mode": "team",
     "source_exp_id": "2606.22548v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:03:49.419256+00:00",
     "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
   },
@@ -7175,7 +7175,7 @@
       "Mathlib.Combinatorics.Polytope",
       "Mathlib.Data.Fintype.Card"
     ],
-    "consumed_by_exp_id": "3847ce48",
+    "consumed_by_exp_id": "",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self‑dual string C‑group representations of rank $2m$ (as constructed by the vertex‑gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self‑dual string C‑group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domain_bridges": [
       "Coxeter groups ↔ abstract regular polytopes",
@@ -7191,7 +7191,7 @@
     "proof_strategy": "Formalize the vertex‑gluing construction of the paper and prove that it yields a self‑dual string C‑group of rank $2m$ for $A_{4m+3}$. Then, using the intersection condition for string C‑groups together with known bounds on the rank of any string C‑group for $A_n$ (the maximal rank $\\lfloor (n-1)/2 \\rfloor$), show that any self‑dual representation would force an extra involutive symmetry that contradicts the parity constraints on generators of $A_{4m+3}$. The contradiction establishes the non‑existence of rank $2m+1$ self‑dual string C‑groups. The proof proceeds by: (1) defining string C‑groups and self‑duality in Lean; (2) encoding the universal string Coxeter group $W_r$ and the intersection condition; (3) constructing the specific generating involutions for the glued representation; (4) verifying the intersection condition and self‑duality; (5) proving a rank‑upper‑bound lemma for self‑dual representations of $A_{4m+3}$ via counting arguments on the fixed‑point structure of the invo",
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self‑dual string C‑groups for alternating groups $A_{4m+3}$"
   },
@@ -9980,6 +9980,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Line Transversal Spaces and Sphere Homotopy\n\nThis cycle formalized the order-theoretic and antipodal-symmetry skeleton of the\ntheory of line transversals (`LineTransversalOrder.lean`,\n`TransversalDirectionSphere.lean`), the setting of the Cheong–Goaoc–Holmsen\nconjecture and its disproof. From the verified results we extract the following\nbold, falsifiable conjectures.\n\n## Conjecture 1 (Sphere homotopy type, the grand challenge)\nFor every `n ≥ 1` there is a finite family of pairwise disjoint open convex sets\nin `ℝ^{3n}` whose space of (oriented) line transversals is homotopy equivalent to\nthe sphere `S^{n-1}`.\n\n- **The key insight is...** the orientation reversal of transversals, formalized\n  here as `unitDir_reverse_eq_antipode`, is *exactly* the antipodal involution\n  `antipode` of the direction sphere; iterating the basic `3`-set gadget `n`\n  times multiplies these antipodal `S^0` factors into an `S^{n-1}`.\n- **Why now?** The reduced-homology disproof (nonzero `H̃_{n-1}`) is already\n  known; lifting it from homology to a genuine homotopy equivalence only requires\n  controlling the cell structure of each gadget, which the orientation/antipode\n  dictionary proved here makes explicit.\n\n## Conjecture 2 (Geometric permutations come in exactly antipodal pairs)\nFor a family admitting a connected positive-dimensional transversal space, the\nset of realized geometric permutations is closed under the order reversal\n`σ ↦ σ^{rev}` and contains no order-reversal-fixed element.\n\n- **The key insight is...** `geomPerm_reverse` shows reversal is the order\n  anti-automorphism `t ↦ -t`, and `antipode_ne` shows the corresponding sphere\n  involution is fixed-point-free, so no single permutation can be its own\n  reverse on a connected transversal component.\n- **Why now?** With `params_injective_of_pairwise_disjoint` guaranteeing a\n  well-defined permutation per directed transversal, the pairing structure is now\n  a precise combinatorial statement amenable to enumeration.\n\n## Conjecture 3 (Quotient model: real projective transversal space)\nThe space of *unoriented* line transversals is the quotient of the oriented\ntransversal space by the fixed-point-free antipodal involution, hence fibers over\n`ℝP^{d-1}` through the unit-direction map.\n\n- **The key insight is...** `antipode_involutive` together with `antipode_ne`\n  exhibits a free `ℤ/2` action on the direction sphere, the defining data of the\n  projective quotient `S^{d-1}/± = ℝP^{d-1}`.\n- **Why now?** The bridge `unitDir_reverse_eq_antipode` ties the geometric\n  reversal to this free action, so the quotient model can be built without\n  re-deriving the convex geometry.\n\n## Conjecture 4 (Sharp dimension threshold)\nThe smallest ambient dimension hosting a disjoint convex family with\n`(k-1)`-sphere transversal homotopy type is exactly `3k`; below `3k` every such\ntransversal space is contractible or empty.\n\n- **The key insight is...** each independent `S^1`/antipodal factor consumes\n  three coordinates (the `3`-per-gadget pattern visible in the `ℝ^{3n}`\n  statement), and the injective-parameter ordering lemma forbids packing two\n  independent factors into fewer dimensions.\n- **Why now?** The combinatorial lower-bound side is now formal (distinct\n  parameters force genuine order separation), isolating the construction side as\n  the only remaining gap.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2594",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "da5cb31c",
+    "status": "available",
+    "timestamp": "2026-06-26T10:38:08.389510+00:00",
+    "title": "This cycle formalized the order-theoretic and antipodal-symmetry skeleton of the"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -10292,7 +10312,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "ab42f98e",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domain_bridges": [],
     "domains": [
@@ -10305,7 +10325,7 @@
     "proof_strategy": "Define Collatz hash H_k(x) = T^k(x) mod 2^256. Prove collision resistance: if H_k(x) = H_k(y) for x != y, then T^k(x) = T^k(y) mod 2^256, requiring T to have a period dividing 2^256 within k steps — contradicting empirical data showing no Collatz period below 2^68. Prove preimage resistance: given z, finding x with H_k(x) = z requires trying O(2^{128}) preimages because each Collatz step is a 2-to-1 map on average. Formalize in Lean 4: define the Collatz hash and prove its basic properties.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
@@ -10511,7 +10531,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "18edb6fb",
+    "consumed_by_exp_id": "",
     "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
     "domain_bridges": [],
     "domains": [
@@ -10524,7 +10544,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.126580+00:00",
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },

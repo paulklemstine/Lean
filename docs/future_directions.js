@@ -91,7 +91,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Conjecture"
   },
   {
-    "consumed_by_exp_id": "0e7c31a4",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) \u2264 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
     "domains": [
       "NumberTheory"
@@ -100,7 +100,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432595+00:00",
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
@@ -823,7 +823,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "9c488c94",
+    "consumed_by_exp_id": "",
     "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
     "domains": [
       "Algebra"
@@ -832,7 +832,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432625+00:00",
     "title": "Representation Theory: Character Tables of S_n"
   },
@@ -1181,7 +1181,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fourier Analysis on Finite Groups"
   },
   {
-    "consumed_by_exp_id": "49f14a50",
+    "consumed_by_exp_id": "",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domains": [
       "Combinatorics",
@@ -1191,7 +1191,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1991,7 +1991,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Typical (k\u22121)-partite complement structure of dense K_{1,k}-free graphs above the critical density"
   },
   {
-    "consumed_by_exp_id": "0e9a5064",
+    "consumed_by_exp_id": "",
     "description": "For every prime p \u2265 7 with p \u2261 3 mod 4, the determinant of the truncated Legendre-symbol matrix with polynomial parameter X is exactly ((p - 2) / 3)^2 X over \u2124[X]. Explicitly, for m = (p - 5) / 2 and matrix A indexed by Fin m with A_{j,k} = X + (j - k | p), where the Legendre symbol is viewed as an integer coefficient polynomial, det A = ((p - 2) / 3)^2 X.",
     "domains": [
       "Pythagorean"
@@ -2000,7 +2000,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22548v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T12:03:49.419256+00:00",
     "title": "Lean-formalizable Sun truncated Legendre-symbol determinant"
   },
@@ -4189,7 +4189,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Tightness of the Alon\u2013Frankl\u2013Lov\u00e1sz Matching Bound for Random\u2011Like Hypergraphs"
   },
   {
-    "consumed_by_exp_id": "3847ce48",
+    "consumed_by_exp_id": "",
     "description": "For every integer $m\\ge 3$ (so $n=4m+3\\ge 15$), the alternating group $A_{n}$ admits self\u2011dual string C\u2011group representations of rank $2m$ (as constructed by the vertex\u2011gluing method), but none of rank $2m+1$. In other words, the highest possible rank of a self\u2011dual string C\u2011group is one less than the known overall maximum rank $\\lfloor\\frac{n-1}{2}\\rfloor$ for $A_n$.",
     "domains": [
       "Algebra"
@@ -4198,7 +4198,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-25T06:41:04.137986+00:00",
     "title": "Maximum rank of self\u2011dual string C\u2011groups for alternating groups $A_{4m+3}$"
   },
@@ -5766,6 +5766,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Line Transversal Spaces and Sphere Homotopy\n\nThis cycle formalized the order-theoretic and antipodal-symmetry skeleton of the\ntheory of line transversals (`LineTransversalOrder.lean`,\n`TransversalDirectionSphere.lean`), the setting of the Cheong\u2013Goaoc\u2013Holmsen\nconjecture and its disproof. From the verified results we extract the following\nbold, falsifiable conjectures.\n\n## Conjecture 1 (Sphere homotopy type, the grand challenge)\nFor every `n \u2265 1` there is a finite family of pairwise disjoint open convex sets\nin `\u211d^{3n}` whose space of (oriented) line transversals is homotopy equivalent to\nthe sphere `S^{n-1}`.\n\n- **The key insight is...** the orientation reversal of transversals, formalized\n  here as `unitDir_reverse_eq_antipode`, is *exactly* the antipodal involution\n  `antipode` of the direction sphere; iterating the basic `3`-set gadget `n`\n  times multiplies these antipodal `S^0` factors into an `S^{n-1}`.\n- **Why now?** The reduced-homology disproof (nonzero `H\u0303_{n-1}`) is already\n  known; lifting it from homology to a genuine homotopy equivalence only requires\n  controlling the cell structure of each gadget, which the orientation/antipode\n  dictionary proved here makes explicit.\n\n## Conjecture 2 (Geometric permutations come in exactly antipodal pairs)\nFor a family admitting a connected positive-dimensional transversal space, the\nset of realized geometric permutations is closed under the order reversal\n`\u03c3 \u21a6 \u03c3^{rev}` and contains no order-reversal-fixed element.\n\n- **The key insight is...** `geomPerm_reverse` shows reversal is the order\n  anti-automorphism `t \u21a6 -t`, and `antipode_ne` shows the corresponding sphere\n  involution is fixed-point-free, so no single permutation can be its own\n  reverse on a connected transversal component.\n- **Why now?** With `params_injective_of_pairwise_disjoint` guaranteeing a\n  well-defined permutation per directed transversal, the pairing structure is now\n  a precise combinatorial statement amenable to enumeration.\n\n## Conjecture 3 (Quotient model: real projective transversal space)\nThe space of *unoriented* line transversals is the quotient of the oriented\ntransversal space by the fixed-point-free antipodal involution, hence fibers over\n`\u211dP^{d-1}` through the unit-direction map.\n\n- **The key insight is...** `antipode_involutive` together with `antipode_ne`\n  exhibits a free `\u2124/2` action on the direction sphere, the defining data of the\n  projective quotient `S^{d-1}/\u00b1 = \u211dP^{d-1}`.\n- **Why now?** The bridge `unitDir_reverse_eq_antipode` ties the geometric\n  reversal to this free action, so the quotient model can be built without\n  re-deriving the convex geometry.\n\n## Conjecture 4 (Sharp dimension threshold)\nThe smallest ambient dimension hosting a disjoint convex family with\n`(k-1)`-sphere transversal homotopy type is exactly `3k`; below `3k` every such\ntransversal space is contractible or empty.\n\n- **The key insight is...** each independent `S^1`/antipodal factor consumes\n  three coordinates (the `3`-per-gadget pattern visible in the `\u211d^{3n}`\n  statement), and the injective-parameter ordering lemma forbids packing two\n  independent factors into fewer dimensions.\n- **Why now?** The combinatorial lower-bound side is now formal (distinct\n  parameters force genuine order separation), isolating the construction side as\n  the only remaining gap.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2594",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "da5cb31c",
+    "status": "available",
+    "timestamp": "2026-06-26T10:38:08.389510+00:00",
+    "title": "This cycle formalized the order-theoretic and antipodal-symmetry skeleton of the"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -5998,7 +6013,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Kolmogorov-Arnold Representation"
   },
   {
-    "consumed_by_exp_id": "ab42f98e",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -6008,7 +6023,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
@@ -6162,7 +6177,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
   {
-    "consumed_by_exp_id": "18edb6fb",
+    "consumed_by_exp_id": "",
     "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
     "domains": [
       "Cryptography",
@@ -6172,7 +6187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.126580+00:00",
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },

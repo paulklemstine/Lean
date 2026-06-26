@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "da5cb31c",
     "filename": "homotopy_equivalence_of_line_transversal_spaces_to.json",
     "pkg_num": 85,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5496381818181819,
     "title": "Homotopy Equivalence of Line-Transversal Spaces to Spheres"
   },
   {
@@ -2474,8 +2474,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "homotopy_equivalence_of_line_transversal_spaces_to",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5496381818181819,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Homotopy Equivalence of Line-Transversal Spaces to Spheres"
     }
