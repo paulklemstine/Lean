@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8344a207",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -852,7 +852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f0b7b2e4",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -861,7 +861,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -2368,7 +2368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Exact Minimum Perfect Matchings in 3-Connected Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f6e0a03",
     "description": "For every primitive integer 2 by 2 matrix M with nonzero determinant, the values k(Mx) / k(x) obtained by restricting x to real quadratic irrational badly approximable numbers are dense in the full interval [1 / |det M|, |det M|]. Equivalently, for every real u < v with 1 / |det M| <= u < v <= |det M|, there exists a real quadratic irrational x such that u < k(Mx) / k(x) < v.",
     "domains": [
       "Bridges"
@@ -2377,7 +2377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22229v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-23T13:11:45.659366+00:00",
     "title": "Quadratic irrational density in the ratio spectrum"
   },
@@ -3626,7 +3626,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Externally Supported Independence Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d7fd1af1",
     "description": "Conjecture: For rational \u03b2 = p/q, the natural extension has finite domain bridges.",
     "domains": [
       "Pythagorean",
@@ -3636,7 +3636,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23097v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T20:58:20.101200+00:00",
     "title": "Domain Finiteness"
   },
@@ -3656,7 +3656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Both deletion and contraction of a non-loop non-coloop element preserve connectivity in connected polymatroids"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "01ec1037",
     "description": "We conjecture that for a pure r-dimensional simplicial complex K on n vertices, if the reduced homology \\(\\widetilde{H}_t(\\text{lk}(\\sigma), \\mathbb{R}) = 0\\) for every face \\(\\sigma\\) of dimension r-t, then the signless Laplacian spectral radius q_{r-1}(K) is upper bounded by tn - (t-1)(r+1). Moreover, we propose that for r-down path connected K with n sufficiently large, equality holds if and only if K is a join of a (r+1-t)-simplex and a (t-1)-skeleton of a simplex of size n-r-1+t.",
     "domains": [
       "Geometry",
@@ -3666,7 +3666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-24T21:58:37.105519+00:00",
     "title": "Signless Laplacian Spectral Radius of Pure Simplicial Complexes with vanishing link homology in dimension t"
   },
@@ -5141,7 +5141,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Read Cost Tightness for Reed-Muller Code Conversion in the Merge Regime"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab7f1188",
     "description": "For a non\u2011negative homogeneous convex function \\(p\\) and a non\u2011negative homogeneous convex function \\(q\\) on a finite\u2011dimensional real Banach space \\(X\\), consider the ratio function \\(f = p/q\\) (defined on \\(\\{x \\mid q(x)>0\\}\\)). The conjecture asserts that the sublevel sets of \\(f\\) and of its polarity dual \\(f^\\circ\\) are homeomorphic after an explicit linear transformation given by the polarity map. Consequently, their reduced homology groups are isomorphic in all degrees, establishing a precise topological duality that underlies the critical\u2011point Morse equivalence proved in the paper.",
     "domains": [
       "Geometry",
@@ -5151,7 +5151,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.27004v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T02:44:27.903292+00:00",
     "title": "Duality of Sublevel Set Homotopy Types for RC Functions on Finite\u2011Dimensional Banach Spaces"
   },
@@ -5604,7 +5604,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab8befc8",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -5613,7 +5613,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -6081,7 +6081,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dfb56ea4",
     "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
     "domains": [
       "Algebra",
@@ -6091,7 +6091,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:24.924994+00:00",
     "title": "Navier-Stokes Existence and Smoothness"
   },
