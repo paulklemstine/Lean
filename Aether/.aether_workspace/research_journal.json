@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "f8c355ed",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Gaussian–Pythagorean Bridge for LWE Hardness\n\nThese conjectures extend `GaussianBridge.lean` and `SearchDecisionCore.lean`.\nEach is stated to be falsifiable and formalizable in L",
-      "quality_score": 0.7276800000000001,
-      "sorry_count": 0,
-      "theorem_count": 23,
-      "timestamp": "2026-06-24T16:29:16",
-      "title": "Lattice Cryptography: LWE Hardness"
-    },
-    {
       "cycle_id": "935bc3f6",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — EML Universal Approximation\n\nThis cycle established (all fully verified, 0 sorries):\n\n- `EML/ExponentialPolynomialDensity.lean`: a single **injective** feature `g`, and in\n  part",
@@ -499,19 +489,19 @@
       "theorem_count": 31,
       "timestamp": "2026-06-27T18:47:29",
       "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "cycle_id": "f2fdcb78",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from the v16 scientific-team cycle that produced\n`Applications/RamseyOffDiagonal.lean`,\n`Applications/RamseyProbabilisticLowerBou",
+      "quality_score": 0.84592,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-06-27T19:38:01",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "07255b71",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions\n\nThe verified file `Catalog/Tropical/CoveringSystems.lean` provides a reusable\n`CoveringCert` API and a concrete certificate for 78557. Below are several\noriginal directions that b",
-      "quality_score": 0.5811999999999999,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-23T08:31:02",
-      "title": "Sierpiński Numbers: Covering Systems"
-    },
     {
       "cycle_id": "731f1c25",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-06-27T19:02:01",
       "title": "Character Class Contradiction"
+    },
+    {
+      "cycle_id": "f2fdcb78",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from the v16 scientific-team cycle that produced\n`Applications/RamseyOffDiagonal.lean`,\n`Applications/RamseyProbabilisticLowerBou",
+      "quality_score": 0.84592,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-06-27T19:38:01",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "72d240c8",
-      "domain": "Novelty",
-      "name": "single_mul_sub_mem",
-      "quality": 0.7694400000000001
-    },
-    {
-      "cycle_id": "72d240c8",
-      "domain": "Novelty",
-      "name": "single_isConj_sub_mem",
-      "quality": 0.7694400000000001
-    },
-    {
-      "cycle_id": "d4e980c4",
-      "domain": "Cryptography",
-      "name": "n_sub_phi",
-      "quality": 0.713
-    },
     {
       "cycle_id": "d4e980c4",
       "domain": "Cryptography",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "shift_lt_iff",
       "quality": 0.8740959999999999
+    },
+    {
+      "cycle_id": "f2fdcb78",
+      "domain": "Applications",
+      "name": "and",
+      "quality": 0.84592
+    },
+    {
+      "cycle_id": "f2fdcb78",
+      "domain": "Applications",
+      "name": "The",
+      "quality": 0.84592
+    },
+    {
+      "cycle_id": "f2fdcb78",
+      "domain": "Applications",
+      "name": "is",
+      "quality": 0.84592
     }
   ],
-  "last_updated": "2026-06-27T19:02:01",
+  "last_updated": "2026-06-27T19:38:01",
   "open_questions": [
     {
       "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "f0d5604e",
-        "quality": 0.5150000000000001,
-        "theorems": 0,
-        "title": "Conjecture: The limit of average stack-sorting depth equals Defant's upper bound"
-      },
-      {
         "cycle_id": "31cf2713",
         "quality": 0.70696,
         "theorems": 16,
@@ -3141,6 +3135,12 @@
         "quality": 0.6822699999999999,
         "theorems": 15,
         "title": "Proof Automation: Custom Lean 4 Tactics"
+      },
+      {
+        "cycle_id": "f2fdcb78",
+        "quality": 0.84592,
+        "theorems": 19,
+        "title": "Ramsey Theory: Bounds and Constructions"
       }
     ],
     "Bridges": [

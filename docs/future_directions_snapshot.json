@@ -63,6 +63,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Building on cycle f2fdcb78 (Q=0.846), which proved 19 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_f2fdcb78_ee9081ff",
+    "lineage_refs": [],
+    "priority_score": 0.94592,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f2fdcb78",
+    "status": "available",
+    "timestamp": "2026-06-27T19:38:01.471534+00:00",
+    "title": "Deepening: Ramsey Theory: Bounds and Constructions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -3436,7 +3455,7 @@
       "OEIS A080170",
       "Ralf Stephan's OEIS conjectures"
     ],
-    "consumed_by_exp_id": "2e08d081",
+    "consumed_by_exp_id": "",
     "description": "For k ≥ 2, let F(k) = gcd_{q=2}^{k} (qk choose k). We conjecture that F(k) = 1 if and only if k is not a prime power. This generalizes the known result for D(k) = gcd_{q=2}^{k+1} (qk choose k) which equals 1 precisely when k+1 is not a prime power (in the sense that the largest prime-power divisor P of k+1 satisfies (k+1)/P > P). The conjecture can be approached using similar techniques: a finite-difference argument shows only primes dividing k can divide F(k), Lucas' theorem reduces the problem to base-p digit analysis, and a digit-box stabilizer theorem determines when F(k) = 1.",
     "domain_bridges": [
       "Binomial coefficient identities",
@@ -3453,7 +3472,7 @@
     "proof_strategy": "Adapt the proof technique of the original paper: (1) Show that if a prime p divides F(k), then p divides k. (2) For each prime p dividing k, use Lucas' theorem to reduce the question to a digitwise condition in base p. (3) Prove that p divides F(k) if and only if k/p^a ≤ p^a for the largest prime power p^a || k. (4) Conclude that F(k) = 1 iff no such p exists, i.e., k is not a prime power.",
     "research_mode": "team",
     "source_exp_id": "2606.22997v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T08:56:07.087605+00:00",
     "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
   },
@@ -4467,7 +4486,7 @@
       "mathlib: NumberTheory.ArithmeticFunction",
       "mathlib: Analysis.Asymptotics.Asymptotics"
     ],
-    "consumed_by_exp_id": "4ac2d584",
+    "consumed_by_exp_id": "",
     "description": "For every fixed integer k >= 2, the normalized excess g_k(n) / log n converges in natural density to the binary upper-bound constant (k - 1) / log 2. Equivalently, for every epsilon > 0, the proportion of n <= x for which |g_k(n) / log n - (k - 1) / log 2| > epsilon tends to 0 as x tends to infinity.",
     "domain_bridges": [
       "factorial divisibility to p-adic valuation inequalities",
@@ -4483,7 +4502,7 @@
     "proof_strategy": "Use Legendre's formula to translate a_1! ... a_k! | n! into simultaneous digit-sum inequalities. The paper proves the upper bound from the binary digit-sum obstruction and a density-one lower bound from mixed 2--3 rarefaction. The conjectural strengthening is that the binary obstruction is asymptotically sharp for almost all n. A proof would likely construct, for almost every n, admissible tuples a_i whose total excess is ((k - 1) / log 2 - o(1)) log n, while controlling all odd-prime valuation constraints by showing that the binary carry construction can be locally repaired at negligible logarithmic cost.",
     "research_mode": "team",
     "source_exp_id": "2606.23661v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T18:54:10.361464+00:00",
     "title": "Binary Leading Constant for the Almost-Everywhere Size of Factorial Excess"
   },
@@ -4613,7 +4632,7 @@
       "Balogh_Lidicky_Mubayi_Pfender_Volec_star_inducibility",
       "Basit_Granet_Horsley_Kundgen_Staden_semi_inducibility"
     ],
-    "consumed_by_exp_id": "e3ff7cf5",
+    "consumed_by_exp_id": "",
     "description": "For every integer k ≥ 2, there exists an open interval I_k ⊂ (0,1) such that for all β ∈ I_k, the minimum fixed-density semi-inducibility of the red-blue star S_{k,1} (with k red edges and 1 blue edge from a distinguished center) at density β strictly exceeds min(β^k(1−β), β(1−β)^k), the envelope formed by the quasi-clique and quasi-star constructions. This generalizes the paper's result for S_{2,1}, where the true minimum is given by a three-class complement-split family rather than the natural quasi-star/quasi-clique endpoint profile on an interval around β = 1/2. For S_{k,1}, the conjectured minimizer is a step-function graphon with at most k+1 classes.",
     "domain_bridges": [
       "graph_limits",
@@ -4629,7 +4648,7 @@
     "proof_strategy": "Extend the paper's transfer argument with degree-power tie-breaking to the functional f_k(d) = d(d−1)⋯(d−k+1)(n−1−d). Reduce the graphon variational problem to almost-regular, threshold, and finite-staircase optimizations. Show that any graphon achieving the quasi-star/quasi-clique envelope can be perturbed into a (k+1)-class complement-split graphon that strictly decreases the S_{k,1} density at the same edge density, using a Lagrangian comparison on the class-structured ansatz. The key step is proving that the complement-split family dominates the envelope on an interval whose width grows with k.",
     "research_mode": "team",
     "source_exp_id": "2606.23351v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-23T20:57:57.730978+00:00",
     "title": "Complement-split minima exceed the quasi-star/quasi-clique envelope for semi-induced stars S_{k,1}"
   },
@@ -13221,6 +13240,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Ramsey Theory: Bounds and Constructions\n\nDerived from the v16 scientific-team cycle that produced\n`Applications/RamseyOffDiagonal.lean`,\n`Applications/RamseyProbabilisticLowerBound.lean`, and\n`Applications/HalesJewettVanDerWaerden.lean`. These build on the existing catalog\nfiles `Applications/Ramsey.lean` (the `Arrows` framework, `R(3,3)=6`,\nErdős–Szekeres binomial bound), `Applications/RamseyThreeFour.lean` (`R(3,4)=9`),\n`Applications/RamseyFourFour.lean` (`R(4,4)=18`, `arrows_symm`),\n`Applications/RamseyDiagonalBound.lean` (`R(k+1,k+1) ≤ 4^k`), and\n`Applications/RamseyParity.lean` (handshake-parity obstruction).\n\nThe cycle now brackets the diagonal Ramsey number on a single framework:\n`2^{k/2} < R(k,k) ≤ 4^k` (the lower bound is new: `ramsey_diagonal_lower`).\n\n---\n\n## Conjecture 1 — Deletion method improves the probabilistic lower bound to R(k,k) ≳ (k/e)·√2·2^{k/2}\n\n**Statement.** There is a colouring of `K_n` with at most `C(n,k)·2^{1-C(k,2)}`\nmonochromatic `K_k`'s; deleting one vertex from each yields a `K_k`-free colouring\non `n − C(n,k)·2^{1-C(k,2)}` vertices, giving `R(k,k) > (1−o(1))·(k/e)·2^{k/2}`.\n\n**The key insight is** that our `exists_good_coloring` union bound is *wasteful*:\ninstead of demanding zero monochromatic cliques, allow a few and delete a vertex\nfrom each — the count `2·C(n,k)·2^{-C(k,2)}` already controls the expected number\nof bad cliques, so a near-extremal `n` can be pushed past the union-bound\nthreshold by a linear-in-`k` factor.\n\n**Why now?** The first-moment scaffold (`exists_good_coloring`, the\nclique↔edge-subset bridge `red_clique_to_subset`/`blue_clique_to_subset`) is\nalready formalized; the deletion step only needs an averaging argument selecting a\ncolouring whose monochromatic-clique *count* is below the mean, then a vertex\nremoval — both expressible with the same `Finset` counting already in place.\n\n---\n\n## Conjecture 2 — The counting model extends to the off-diagonal bound R(3,t) ≥ c·t^{3/2}\n\n**Statement.** Using a biased red-edge probability `p ≍ t^{-1/2}` (modelled as a\nweighted fraction of edge-subsets), some colouring of `K_n` with `n ≍ t^{3/2}` has\nno red triangle and no blue `K_t`, so `R(3,t) > c·t^{3/2}`.\n\n**The key insight is** that the symmetric two-colour count `2·C(n,k)·2^{-C(k,2)}`\ngeneralizes to an *asymmetric* count `C(n,3)·p^3 + C(n,t)·(1−p)^{C(t,2)}`, and the\nsame `edges2`/`powersetCard` bookkeeping supports weighting by the number of red\nedges inside a candidate set.\n\n**Why now?** The bridge lemmas already translate \"all 2-subsets red/blue\" into\n`Finset` membership; replacing the uniform count by a binomial-weighted count is a\nlocalized change, and the catalog already proves the exact small off-diagonal\nvalue `R(3,4)=9` to calibrate against.\n\n---\n\n## Conjecture 3 — The finite van der Waerden number exists (uniform N) via compactness over Hales–Jewett\n\n**Statement.** For every `r, k` there is `N = W(r,k)` such that *every* `r`-colouring\nof `{0,…,N−1}` contains a monochromatic `k`-term arithmetic progression entirely\ninside `{0,…,N−1}`.\n\n**The key insight is** that the infinite statement we proved (`vanderWaerden`,\n`exists_mono_AP_arbitrary_length`) upgrades to a *uniform* bound by a compactness\nargument: if no finite `N` worked, a König/Tychonoff limit of colourings of longer\nand longer initial segments would give a colouring of `ℕ` with no monochromatic\nAP, contradicting `vanderWaerden`.\n\n**Why now?** `vanderWaerden` is in place as the contradiction target, and Mathlib's\n`Combinatorics.Line.exists_mono_in_high_dimension` already yields a *uniform*\ndimension; threading that uniformity through the homothety map (rather than\ndiscarding it via `M = ℕ`) is the concrete formalization route.\n\n---\n\n## Conjecture 4 — Every sharp small Ramsey value beating the binomial bound is forced by a regularity/spectral obstruction\n\n**Statement.** Whenever `R(s,t)` is strictly below the Erdős–Szekeres binomial\nbound `C(s+t−2, s−1)`, an extremal colouring is forced to be regular (or\nstrongly regular) of a degree/order whose parity or eigenvalue interlacing is\narithmetically impossible — generalizing the `9·3 = 27` handshake obstruction\nbehind `R(3,4)=9`.\n\n**The key insight is** that the catalog already exhibits *two* distinct sharpening\nmechanisms — handshake parity (`RamseyParity.red_degree_parity_obstruction`) and\nalgebraic self-complementarity (the Paley graph for `R(4,4)`) — and both are\ninstances of \"the extremal colouring is too symmetric to exist over the given\norder\".\n\n**Why now?** `red_degree_parity_obstruction` is the abstract parity engine and the\nPaley construction is formalized; a spectral version (Hoffman/interlacing bounds on\nclique number) would unify them and is within reach of Mathlib's linear-algebra\nlibrary.\n\n---\n\n## Conjecture 5 — The 4^k upper bound and 2^{k/2} lower bound cannot both be tight: R(k,k)^{1/k} converges\n\n**Statement.** `R(k,k)^{1/k}` converges to a limit `λ ∈ [√2, 4]`; in particular the\nmultiplicative window between `ramsey_diagonal_lower` and the catalog's\n`arrows_diagonal_pow` is not closable by elementary means, and the recent\n`R(k,k) ≤ (4−ε)^k` (Campos–Griffiths–Morris–Sahasrabudhe) is the first asymptotic\nimprovement of either endpoint.\n\n**The key insight is** that submultiplicativity `R(k+ℓ, k+ℓ) ≤ C(·)·R(k,k)·R(ℓ,ℓ)`\nmakes `log R(k,k)/k` convergent (Fekete), so the *existence* of `λ` is formalizable\neven though its value is open.\n\n**Why now?** Both endpoints `2^{k/2}` and `4^k` are now formalized on the common\n`Arrows` framework, so the convergence statement can be phrased and the\nFekete-subadditivity half attempted immediately.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2717",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "f2fdcb78",
+    "status": "available",
+    "timestamp": "2026-06-27T19:37:32.805212+00:00",
+    "title": "Derived from the v16 scientific-team cycle that produced"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -13648,26 +13687,6 @@
     "status": "available",
     "timestamp": "2026-06-03T21:01:45.326758+00:00",
     "title": "Strange Attractors as Algebraic Objects"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "a33a1330",
-    "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
-    "domain_bridges": [],
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0491",
-    "lineage_refs": [],
-    "priority_score": 0.5499999999999999,
-    "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.843772+00:00",
-    "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
   {
     "ambition_level": "extension",
