@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "935bc3f6",
-      "domain": "Applications",
-      "key_insight": "# FUTURE DIRECTIONS — EML Universal Approximation\n\nThis cycle established (all fully verified, 0 sorries):\n\n- `EML/ExponentialPolynomialDensity.lean`: a single **injective** feature `g`, and in\n  part",
-      "quality_score": 0.7770400000000002,
-      "sorry_count": 0,
-      "theorem_count": 20,
-      "timestamp": "2026-06-24T18:22:31",
-      "title": "EML Universal Approximation"
-    },
-    {
       "cycle_id": "a1973066",
       "domain": "Probability",
       "key_insight": "# Future Directions — Brocard's Problem (Probability domain)\n\nThis cycle established: the three Brown numbers `{4,5,7}`, an exhaustive\n`native_decide` verification that no others occur below `1000`, t",
@@ -499,19 +489,19 @@
       "theorem_count": 19,
       "timestamp": "2026-06-27T19:38:01",
       "title": "Ramsey Theory: Bounds and Constructions"
+    },
+    {
+      "cycle_id": "2e08d081",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — restricted-upper-index binomial GCDs\n\nDerived from this cycle's findings on `F(k) = gcd_{2 ≤ q ≤ k} C(q·k, k)` and its\nrelation to OEIS A080170 `D(k) = gcd_{2 ≤ q ≤ k+1} C(q·k, k",
+      "quality_score": 0.71083,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-27T20:09:16",
+      "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "bf529381",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Transition-rank rigidity of endomorphism streams\n\nThis cycle continued the `Catalog.Algebra.TransEndo` line. The catalog already had:\n\n* `TransEndo` — the iterated-composition /",
-      "quality_score": 0.34015242857142863,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-06-23T10:59:59",
-      "title": "Close Proofs: These conjectures continue the research cycle begun in"
-    },
     {
       "cycle_id": "57fbcb2f",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 7,
       "timestamp": "2026-06-27T19:41:28",
       "title": "Polynomial-Logarithmic Time Algorithm for Global Label Min-Cut"
+    },
+    {
+      "cycle_id": "2e08d081",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — restricted-upper-index binomial GCDs\n\nDerived from this cycle's findings on `F(k) = gcd_{2 ≤ q ≤ k} C(q·k, k)` and its\nrelation to OEIS A080170 `D(k) = gcd_{2 ≤ q ≤ k+1} C(q·k, k",
+      "quality_score": 0.71083,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-27T20:09:16",
+      "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper Index Range"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "d4e980c4",
-      "domain": "Cryptography",
-      "name": "rsa_key_identity",
-      "quality": 0.713
-    },
-    {
-      "cycle_id": "d4e980c4",
-      "domain": "Cryptography",
-      "name": "correctedModulus_perfect",
-      "quality": 0.713
-    },
-    {
-      "cycle_id": "f014f8e3",
-      "domain": "Novelty",
-      "name": "needs",
-      "quality": 0.7510892307692308
-    },
     {
       "cycle_id": "f014f8e3",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "is",
       "quality": 0.84592
+    },
+    {
+      "cycle_id": "2e08d081",
+      "domain": "Novelty",
+      "name": "F_dvd_term",
+      "quality": 0.71083
+    },
+    {
+      "cycle_id": "2e08d081",
+      "domain": "Novelty",
+      "name": "primepower_succ_dvd_F",
+      "quality": 0.71083
+    },
+    {
+      "cycle_id": "2e08d081",
+      "domain": "Novelty",
+      "name": "F_ne_one_of_succ_primePow",
+      "quality": 0.71083
     }
   ],
-  "last_updated": "2026-06-27T19:41:28",
+  "last_updated": "2026-06-27T20:09:16",
   "open_questions": [
     {
       "context": "`Nat.clog_pow`, not `decide`; all main theorems use induction/omega and are 0-sorry; the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "2cb7b634",
-        "quality": 0.7014400000000001,
-        "theorems": 10,
-        "title": "Extremal Graph Theory: Turán and Szemerédi"
-      },
-      {
         "cycle_id": "eb034b80",
         "quality": 0.8360800000000002,
         "theorems": 0,
@@ -3637,6 +3631,12 @@
         "quality": 0.484642,
         "theorems": 7,
         "title": "Character Class Contradiction"
+      },
+      {
+        "cycle_id": "2e08d081",
+        "quality": 0.71083,
+        "theorems": 6,
+        "title": "A Prime-Power Criterion for GCDs of Binomial Coefficients with Restricted Upper "
       }
     ],
     "NumberTheory": [

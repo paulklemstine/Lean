@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2e08d081",
     "filename": "a_prime_power_criterion_for_gcds_of_binomial_coeff.json",
     "pkg_num": 148,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.71083,
     "title": "A Prime-Power Criterion for the GCD of the Interior of a Pascal Row"
   },
   {
@@ -4320,8 +4320,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "a_prime_power_criterion_for_gcds_of_binomial_coeff",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.71083,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "A Prime-Power Criterion for the GCD of the Interior of a Pascal Row"
     }
