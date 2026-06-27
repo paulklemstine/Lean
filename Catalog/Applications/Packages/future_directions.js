@@ -105,7 +105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "236373d0",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -115,7 +115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9aa4cae",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -4334,7 +4334,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Excluded minors for bias graphs gainable over cyclic groups \ud835\udc4d\u209a"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "49ad7738",
     "description": "The upper bound S_1^\u03c6(x) \u226a x exp{-(1/2 - o(1))\u221a(log x log_2 x)} is tight, i.e., there exists a constant C > 0 such that S_1^\u03c6(x) \u2265 C x exp{-(1/2 + o(1))\u221a(log x log_2 x)} for all sufficiently large x.",
     "domains": [
       "Bridges"
@@ -4343,7 +4343,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23681v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T12:13:32.061938+00:00",
     "title": "Tightness of the unit-shift bound for Euler's totient function"
   },
@@ -5170,7 +5170,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Uniqueness of Exact Potential up to Additive Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8ed8ca57",
     "description": "Analyzes contraction bounds in spherical Delaunay refinement using an exact Carath\u00e9odory-type result.",
     "domains": [
       "Bridges"
@@ -5179,7 +5179,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25854v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T04:18:00.464209+00:00",
     "title": "Sharp approximate Carath\u00e9odory theorem and application to iterated Delaunay refinement"
   },
@@ -5489,7 +5489,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Partition-Theoretic Interpretation of the Bilateral Truncated Jacobi Triple Product Coefficients via Minimal Excludant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e92c627",
     "description": "The limit of the average stack-sorting depth scaled by n converges to the rational number 3/4.",
     "domains": [
       "Bridges"
@@ -5498,7 +5498,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T16:46:53.250760+00:00",
     "title": "Exact asymptotic value of the average stack-sorting depth"
   },
@@ -5753,11 +5753,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every fixed graph H without isolated vertices, any graphon W achieving the supremum in the sparse threshold conjecture is a three-step threshold graphon, and the constant C_T(H) is the unique maximizer of the associated variational problem.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2607",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.23737v1",
+    "status": "available",
+    "timestamp": "2026-06-27T02:59:38.386093+00:00",
+    "title": "Uniqueness of Extremal Graphons in Sparse Threshold Problems"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every r \u2265 3, k \u2265 3, and n \u2265 (r-2)(k-2)+1, there exists a linear r-uniform hypergraph H on n vertices with edge count |E(H)| = ((k-2)/(r\u00b2((r-2)(k-2)+1)))n\u00b2 + n/r - 1 that does not contain a k-edge configuration spanning at most (r-2)k+3 vertices. This would establish the tightness of the threshold in Theorem 1 of the paper.",
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2607",
+    "id": "fd_2608",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25931v1",
@@ -5771,7 +5786,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2608",
+    "id": "fd_2609",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25988v1",
@@ -5786,7 +5801,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2609",
+    "id": "fd_2610",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25866v1",
@@ -5801,7 +5816,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2610",
+    "id": "fd_2611",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25875v1",
@@ -5816,7 +5831,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2611",
+    "id": "fd_2612",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.26888v1",
@@ -5831,7 +5846,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2612",
+    "id": "fd_2613",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25849v1",
@@ -5845,7 +5860,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2613",
+    "id": "fd_2614",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25825v1",
@@ -5859,7 +5874,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2614",
+    "id": "fd_2615",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25841v1",
@@ -5873,7 +5888,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2615",
+    "id": "fd_2616",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25822v1",
@@ -5888,7 +5903,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2616",
+    "id": "fd_2617",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25485v1",
@@ -5903,7 +5918,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2617",
+    "id": "fd_2618",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25305v1",
@@ -5918,7 +5933,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2618",
+    "id": "fd_2619",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25055v1",
@@ -5933,7 +5948,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2619",
+    "id": "fd_2620",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24654v1",
@@ -5948,7 +5963,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2620",
+    "id": "fd_2621",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24693v1",
@@ -5962,7 +5977,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2621",
+    "id": "fd_2622",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24695v1",
@@ -5977,7 +5992,7 @@ window.FUTURE_DIRECTIONS = [
       "Geometry",
       "Pythagorean"
     ],
-    "id": "fd_2622",
+    "id": "fd_2623",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24707v1",
@@ -5992,7 +6007,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2623",
+    "id": "fd_2624",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24529v1",
@@ -6006,7 +6021,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2624",
+    "id": "fd_2625",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24569v1",
@@ -6020,7 +6035,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2625",
+    "id": "fd_2626",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24988v1",
@@ -6034,7 +6049,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2626",
+    "id": "fd_2627",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24536v1",
@@ -6049,7 +6064,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2627",
+    "id": "fd_2628",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24349v1",
@@ -6064,7 +6079,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2628",
+    "id": "fd_2629",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24426v1",
@@ -6079,7 +6094,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2629",
+    "id": "fd_2630",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24972v1",
@@ -6093,7 +6108,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2630",
+    "id": "fd_2631",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24400v1",
@@ -6107,7 +6122,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2631",
+    "id": "fd_2632",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24198v1",
@@ -6122,7 +6137,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2632",
+    "id": "fd_2633",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24262v1",
@@ -6136,7 +6151,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2633",
+    "id": "fd_2634",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24135v1",
@@ -6151,7 +6166,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Logic"
     ],
-    "id": "fd_2634",
+    "id": "fd_2635",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24139v1",
@@ -6165,7 +6180,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2635",
+    "id": "fd_2636",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23918v1",
@@ -6179,7 +6194,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2636",
+    "id": "fd_2637",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
@@ -6193,7 +6208,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2637",
+    "id": "fd_2638",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23973v1",
@@ -6208,7 +6223,7 @@ window.FUTURE_DIRECTIONS = [
       "Logic",
       "Pythagorean"
     ],
-    "id": "fd_2638",
+    "id": "fd_2639",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23659v1",
@@ -6223,7 +6238,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2639",
+    "id": "fd_2640",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23474v2",
@@ -6238,7 +6253,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Physics"
     ],
-    "id": "fd_2640",
+    "id": "fd_2641",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23584v1",
@@ -6252,7 +6267,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2641",
+    "id": "fd_2642",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23193v1",
@@ -6267,7 +6282,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2642",
+    "id": "fd_2643",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23171v1",
@@ -6281,7 +6296,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2643",
+    "id": "fd_2644",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23018v1",
@@ -6296,7 +6311,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2644",
+    "id": "fd_2645",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22904v1",
@@ -6311,7 +6326,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2645",
+    "id": "fd_2646",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22882v1",
@@ -6325,7 +6340,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2646",
+    "id": "fd_2647",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.23748v1",
@@ -6340,7 +6355,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2647",
+    "id": "fd_2648",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22825v1",
@@ -6354,7 +6369,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2648",
+    "id": "fd_2649",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22637v1",
@@ -6369,7 +6384,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2649",
+    "id": "fd_2650",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22513v1",
@@ -6384,13 +6399,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2650",
+    "id": "fd_2651",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22324v1",
     "status": "available",
     "timestamp": "2026-06-27T02:26:35.671962+00:00",
     "title": "Torsionness of \u03a3\u2011ramified Iwasawa modules over a \u2124\u209a\u2011extension"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This paper explores the concept of $k$-limited domination in graphs, aiming to derive bounds and relationships involving domination numbers under degree constraints. It seeks to connect combinatorial bounds with structural properties of graphs.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2652",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.22422v1",
+    "status": "available",
+    "timestamp": "2026-06-27T02:59:44.485616+00:00",
+    "title": "On $k$-limited domination in graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -6592,21 +6621,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-26T00:08:32.567910+00:00",
     "title": "The most natural next step is to attack the residue class isolated by the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Plethystic Triviality of the Shifted t-Schur Basis\n\nDerived from this cycle's findings: the shifted `t`-Schur family `S^t_\u03bb` is the image of\nthe Schur-`Q` basis `Q_\u03bb` under the odd plethysm `\u03c6_t : p_n \u21a6 (1 - t^n)p_n`, and `\u03c6_t` is\na **degree-preserving, monomial-diagonal algebra automorphism** of the odd power-sum ring\n(files `PlethysticTrivialityShiftedTSchur.lean`, `OddPowerSumPlethysm.lean`). The\nfollowing conjectures push that structure further; each is falsifiable by coefficient\ncomparison in the finite odd power-sum ring.\n\n## 1. Triangular non-triviality: `S^t_\u03bb = Q_\u03bb + (lower-in-t terms)`\n\n**Conjecture.** Writing `S^t_\u03bb = Q_\u03bb + t\u00b7R_\u03bb(t)` with `R_\u03bb \u2208 t\u00b7\u039b_odd[t]`, the\n\"correction\" `R_\u03bb` is nonzero for every nonempty strict `\u03bb` and its `t`-leading term is\n`-Q_{\u03bb}` evaluated with each `p_{n}` scaled by `n`-dependent... i.e. `S^t_\u03bb \u2261 Q_\u03bb`\nmod `t` and `\u2202_t S^t_\u03bb |_{t=0}` is an explicit power-sum derivation of `Q_\u03bb`.\n\nThe key insight is that `\u03c6_t = id - t\u00b7D + O(t^2)` where `D` is the degree-graded\nderivation `p_n \u21a6 n\u00b7(t^{n-1}/(...)) p_n` truncated at first order, so the whole `t`-family\nis the exponential flow of a single power-sum vector field acting on `Q_\u03bb`.\n\nWhy now? We already proved `\u03c6_t` is an automorphism with `\u03c6_0 = id` in spirit\n(`cc k \u2192 1` as `t \u2192 0`); extracting the first-order generator only needs a formal\n`t`-derivative of `cc k`, which is immediate in `RatFunc \u211a`.\n\n## 2. Inner-product (orthogonality) transport\n\n**Conjecture.** Under the Hall\u2013Littlewood-at-`-1` inner product `\u27e8\u00b7,\u00b7\u27e9` for which\n`{Q_\u03bb}` is orthogonal, the deformed family `{S^t_\u03bb}` is orthogonal for the *twisted*\ninner product `\u27e8f,g\u27e9_t := \u27e8\u03c8_t f, \u03c8_t g\u27e9`, and `\u27e8S^t_\u03bb, S^t_\u03bc\u27e9_t = \u27e8Q_\u03bb, Q_\u03bc\u27e9`.\n\nThe key insight is that an automorphism `\u03c6_t` turns any nondegenerate pairing into a\ncongruent one, so orthogonality is transported verbatim \u2014 triviality at the level of\nbilinear forms, not just bases.\n\nWhy now? We have `\u03c6_t \u2208 Aut` with explicit inverse `\u03c8_t` (`phiTEquiv`); the only missing\ningredient is a Lean model of the Schur-`Q` pairing, buildable from the `annShift`\nadjoint constant already present in the construction.\n\n## 3. Failure locus = roots of unity (sharp boundary)\n\n**Conjecture.** Over `R = \u211a[t]/(\u03a6_d(t))` (cyclotomic specialization), `\u03c6_t` fails to be\ninjective exactly on the odd power sums `p_n` with `d | n`, and there the shifted\n`t`-Schur \"basis\" degenerates: `S^t_\u03bb = 0` whenever `\u03bb` has a part divisible by `d`.\n\nThe key insight is that triviality is governed entirely by the scalars `1 - t^n`, whose\nvanishing locus is the union of roots of unity; plethystic triviality is therefore\n*generic* and breaks precisely on this measure-zero set.\n\nWhy now? Our `cc_ne` lemma proves `1 - t^n \u2260 0` over `\u211a(t)`; negating it over a\ncyclotomic quotient is a finite, decidable computation, making the boundary directly\ntestable.\n\n## 4. Functoriality in the deformation parameter\n\n**Conjecture.** The assignment `t \u21a6 \u03c6_t` is a monoid map from `(odd-support power series\nunder a twisted convolution)` into `Aut(\u039b_odd)`, and in particular `\u03c6_s \u2218 \u03c6_t` is the\nplethysm `p_n \u21a6 (1 - s^n)(1 - t^n) p_n`, which is *not* of the form `\u03c6_u` \u2014 so the\n`t`-Schur families do not compose into a single `t`-Schur family.\n\nThe key insight is that diagonal-in-power-sum operators form a commutative group under\npointwise multiplication of their eigenvalues, and `{\u03c6_t}` is a one-parameter curve in\nthis group that is closed under composition only up to reparametrization.\n\nWhy now? `phiT_monomial_pow` already exhibits the eigenvalues `\u220f(1-t^{n_i})^{a_i}`\nexplicitly; multiplying two such diagonal operators is a one-line check away.\n\n## 5. Shifted t-Schur positivity defect\n\n**Conjecture.** Unlike `Q_\u03bb`, the `S^t_\u03bb` expanded in the monomial-symmetric / Schur-`P`\nbasis have coefficients in `\u2124[t]` with **signs governed by `|\u03bb|` parity**, and the\n\"positivity defect\" (number of negative monomials) equals the number of parts of `\u03bb`.\n\nThe key insight is that each factor `1 - t^{n}` injects exactly one sign flip per part,\nso combinatorial positivity of `Q_\u03bb` is deformed into a controlled, parity-indexed sign\npattern.\n\nWhy now? The single-part case `S^t_{(1)} = 2(1-t)p_1` (theorem `Sfun_singleton`) already\nshows one sign flip per part; verifying two- and three-part cases is a finite coefficient\ncomparison enabled by the `qGen` recursion now in the catalog.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2651",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7c592ed1",
-    "status": "available",
-    "timestamp": "2026-06-27T02:51:47.666880+00:00",
-    "title": "Derived from this cycle's findings: the shifted `t`-Schur family `S^t_\u03bb` is the "
   },
   {
     "consumed_by_exp_id": "",
@@ -6885,6 +6899,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.353451+00:00",
     "title": "Combinatorial-Categorical Bridge: Species of Structures as Functors"
+  },
+  {
+    "consumed_by_exp_id": "11521acf",
+    "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_0461",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:30.236800+00:00",
+    "title": "Symmetric-Key Cryptanalysis: Differential and Linear Cryptanalysis Bounds"
   },
   {
     "consumed_by_exp_id": "",
