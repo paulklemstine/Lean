@@ -1,205 +1,229 @@
-# Every New Fibonacci Number Brings a Brand-New Prime
+# The Memory of a Moving System: How Composed Maps Remember Less and Less
 
-## A number that has never appeared before
+Imagine a stage magician working an audience. Each minute they perform a new
+trick — a shuffle, a fold, a fan of cards — and each trick transforms the deck
+in some lawful way. After ten minutes the deck has passed through ten distinct
+transformations, stacked one on top of another. A natural question lurks
+underneath the spectacle: how much of the *original* arrangement of the deck can
+still be recovered from what you see now? Intuitively, the answer can only get
+worse with time. Information, once collapsed, does not spontaneously
+re-expand. Every additional trick can destroy distinctions, but it can never
+manufacture new ones out of nothing.
 
-Write down the Fibonacci numbers, the most famous sequence in mathematics:
+This little intuition — *systems that evolve by composition forget, and never
+un-forget* — turns out to be a precise, provable theorem in linear algebra. And
+it sits at the heart of a surprisingly broad class of mathematics: the theory of
+**discrete linear cocycles**, the time-varying cousins of the matrix powers you
+met in a first course on dynamics. This article tells the story of a small,
+self-contained piece of that theory: the **transition endomorphism**, its
+governing **cocycle identity**, and the clean monotonicity law for how its
+"memory" — measured by rank — decays.
 
-$$1,\; 1,\; 2,\; 3,\; 5,\; 8,\; 13,\; 21,\; 34,\; 55,\; 89,\; 144,\; 233,\; \dots$$
+## The setup: a parade of linear maps
 
-Each one is the sum of the two before it. They show up in sunflower spirals, in
-the branching of trees, in the proportions of seashells, and in the running time
-of algorithms that computer scientists use every day. They are, in a sense, the
-hydrogen atom of recursive patterns.
+Fix a vector space $V$ over a field $K$. Think of $V$ as the space of all
+possible "states" of some system — positions, velocities, populations, signal
+amplitudes, whatever you like. A single linear transformation $g : V \to V$ is a
+rule that takes one state and returns another, respecting addition and scaling.
+In the language of algebra, such a self-map is called an **endomorphism** of $V$.
 
-Now ask a question that sounds almost childish but turns out to be deep. Take the
-$13^{\text{th}}$ Fibonacci number. It happens to be $233$. Factor it. You get
-$233$ itself — it is prime. Fine. Take the $19^{\text{th}}$, which is $4181$.
-Factor it: $4181 = 37 \times 113$. Now here is the magic. Look back through every
-earlier Fibonacci number — $1, 1, 2, 3, 5, \dots, 2584$ — and check: does the
-prime $37$ divide any of them? Does $113$? The answer is no. Both $37$ and $113$
-appear, as prime factors, for the *very first time* at position $19$.
+Now suppose the rule *changes over time*. At step $0$ we apply some map $f(0)$,
+at step $1$ a possibly different map $f(1)$, at step $2$ the map $f(2)$, and so
+on. We package this as a sequence of endomorphisms
 
-This is not a coincidence of small numbers. It is a law. With only a handful of
-tiny exceptions near the start, **every Fibonacci number from the $13^{\text{th}}$
-onward contains a prime factor that has never divided any earlier Fibonacci
-number.** Mathematicians call such a newcomer a *primitive prime divisor*. The
-statement that they always exist is **Carmichael's theorem**, proved by the
-American mathematician Robert Daniel Carmichael in 1913.
+$$f : \mathbb{N} \to (V \to_{\ell} V),$$
 
-This article tells the story of that theorem, and of a clean, modern, fully
-machine-checked account of its most transparent case — the case where the index
-$n$ is itself a prime number. That single case already contains the whole soul of
-the argument, and its proof is so short and elegant that you can hold it in your
-head all at once.
+where the subscript $\ell$ is shorthand for "linear." This is the discrete,
+time-varying analogue of a linear differential equation $\dot{x} = A(t)\,x$ whose
+coefficient matrix $A(t)$ drifts as time passes. Engineers call such a thing a
+**non-autonomous** or **time-varying linear system**; mathematicians call the
+family of resulting evolution operators a **linear cocycle**.
 
-## What "primitive" really means
+The central object is what happens when you run the system for a *window* of
+steps. Starting at time $i$ and evolving for $n$ steps, the cumulative effect is
+the composite
 
-Let us pin down the language. Write $F(n)$ for the $n^{\text{th}}$ Fibonacci
-number, with $F(1) = F(2) = 1$, $F(3) = 2$, and so on. A prime $p$ is a
-**primitive prime divisor** of $F(n)$ if two things hold:
+$$\Phi(i, n) \;=\; f(i+n-1) \circ \cdots \circ f(i+1) \circ f(i).$$
 
-- $p$ divides $F(n)$; and
-- $p$ does *not* divide $F(k)$ for any earlier index $k$ with $0 < k < n$.
+Read it right to left, like function composition always demands: first apply
+$f(i)$, then $f(i+1)$, all the way up to $f(i+n-1)$. We give this composite a
+name — the **transition endomorphism** — and write it $\mathrm{transEndo}\,f\,i\,n$.
+Two conventions pin it down at the edges. With zero steps, nothing happens, so
 
-In other words, $p$ makes its grand entrance exactly at index $n$. The position
-$n$ is, from $p$'s point of view, the moment of its birth.
+$$\mathrm{transEndo}\,f\,i\,0 = \mathrm{id},$$
 
-Why should we expect such newcomers to keep arriving forever? After all, the
-Fibonacci numbers grow, but so do their factorizations, and one might worry that
-later Fibonacci numbers are built entirely out of "old" primes that have appeared
-before. The remarkable content of Carmichael's theorem is that this worry is
-unfounded. The sequence never runs out of fresh primes to recruit.
+the identity map; and with one step it is just the single map $f(i)$ itself. In
+between, it is built up one factor at a time by the recursion
 
-The main result we explain and certify here is the prime-index case:
+$$\mathrm{transEndo}\,f\,i\,(n+1) \;=\; f(i+n) \circ \mathrm{transEndo}\,f\,i\,n.$$
 
-> **Theorem (prime case).** If $n$ is a prime number and $n \ge 13$, then $F(n)$
-> has a primitive prime divisor. That is, there exists a prime $p$ such that
-> $p \mid F(n)$ but $p \nmid F(k)$ for every $k$ with $0 < k < n$.
+That recursion is the whole definition. Everything else in the theory is squeezed
+out of it.
 
-(The threshold $n \ge 13$ is generous; for prime indices the same argument works
-from $n \ge 3$ onward. The Fibonacci number $F(13) = 233$ is itself the first
-prime index above the small exceptional range, and indeed $233$ is its own
-primitive prime divisor.)
+## The cocycle identity: the law of windows
 
-## The one identity that makes everything work
+Here is the first real theorem, and it is the engine of everything that follows.
+Suppose you want the transition operator for a long window — say $m+n$ steps
+starting at time $i$. You can always split that window in two: run the first $n$
+steps, landing you at time $i+n$, then run the remaining $m$ steps from there.
+Composition is associative, so chopping and reassembling the chain of maps must
+give back exactly the same operator. In symbols:
 
-Behind the whole subject sits a single beautiful fact about Fibonacci numbers, a
-fact that feels like a small miracle the first time you meet it. It connects the
-*arithmetic of the indices* to the *arithmetic of the values*:
+$$\boxed{\;\mathrm{transEndo}\,f\,i\,(m+n) \;=\; \mathrm{transEndo}\,f\,(i+n)\,m \;\circ\; \mathrm{transEndo}\,f\,i\,n\;}$$
 
-$$\gcd\bigl(F(m),\, F(n)\bigr) = F\bigl(\gcd(m, n)\bigr).$$
+This is the **cocycle identity**. The word "cocycle" comes from the way the
+formula stitches local pieces (single-step maps) into global ones (long-window
+maps) in a consistent, overlap-respecting way — the same bookkeeping that shows
+up in differential geometry, ergodic theory, and the theory of group extensions.
+For us its meaning is humble and concrete: *a long evolution is the composition of
+its consecutive sub-evolutions.* The proof is an induction on $m$, repeatedly
+peeling one factor off the front and using associativity of composition. No
+cleverness, no deep machinery — just the recursion applied with care.
 
-Read that slowly. The greatest common divisor of two Fibonacci numbers is itself
-a Fibonacci number — and not just any one, but the Fibonacci number whose index
-is the greatest common divisor of the two original indices. The Fibonacci
-sequence carries the divisibility structure of the ordinary whole numbers inside
-itself. Sequences with this property are called **strong divisibility
-sequences**, and the Fibonacci numbers are the most famous example.
+The reason the cocycle identity matters so much is that it converts a question
+about *one* big operator into a question about *two* smaller ones glued together.
+And gluing is exactly where rank — our measure of memory — behaves predictably.
 
-A useful consequence, which we will lean on, is the *divisibility* form: if a
-prime $p$ divides both $F(m)$ and $F(n)$, then $p$ divides $F(\gcd(m,n))$. This is
-immediate from the identity above, because anything dividing both $F(m)$ and
-$F(n)$ divides their gcd, which equals $F(\gcd(m,n))$.
+## Rank: the size of what survives
 
-## The proof, in one breath
+To make "how much the system remembers" precise, we use the **rank** of a linear
+map: the dimension of its image, the set of states that are actually reachable as
+outputs. Write it $\mathrm{finrank}\,K\,(\mathrm{range}\,T)$ for an operator $T$,
+where $V$ is finite-dimensional so this number is a genuine non-negative integer.
+A full-rank operator loses no dimensions; a rank-deficient operator has collapsed
+some directions of $V$ down to zero, and those directions are gone for good.
 
-Here is the entire argument for the prime case. It is short enough to tell at a
-dinner table.
+The basic fact about composition and rank is almost a tautology once you see it.
+If you feed the output of one map into another, the second map can only operate on
+what the first one already produced. Its image is the image of an already-shrunken
+space, so it cannot be any larger. Formally, for any composite $g \circ h$,
 
-Let $n$ be a prime number, at least $13$. The Fibonacci number $F(n)$ is bigger
-than $1$, so it has *some* prime factor; call it $p$. We claim this $p$ is already
-primitive — we do not even need to choose it cleverly.
+$$\mathrm{rank}(g \circ h) \;\le\; \mathrm{rank}(h),$$
 
-Suppose, for contradiction, that $p$ were *not* primitive. Then $p$ would divide
-some earlier Fibonacci number $F(k)$ with $0 < k < n$. But $p$ also divides
-$F(n)$. By the divisibility form of the gcd identity, $p$ must then divide
-$F(\gcd(n,k))$.
+because $\mathrm{range}(g \circ h) = g(\mathrm{range}\,h)$ is the image of
+$\mathrm{range}\,h$ under $g$, and a linear image of a space never has larger
+dimension than the space itself. Apply this with $h = \mathrm{transEndo}\,f\,i\,n$
+and $g = f(i+n)$ — exactly the recursion that defines one extra step — and you
+get the **one-step rank drop**:
 
-Now comes the punchline, and it is purely about the *index* $n$, not about
-Fibonacci numbers at all. The number $\gcd(n,k)$ divides $n$. But $n$ is prime,
-so its only divisors are $1$ and $n$ itself. Could $\gcd(n,k)$ equal $n$? That
-would force $n$ to divide $k$ — impossible, because $k$ is a positive number
-strictly smaller than $n$. So the only option left is
+$$\mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,(n+1)\big) \;\le\; \mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,n\big).$$
 
-$$\gcd(n, k) = 1.$$
+Each additional step can only hold the rank steady or push it down. Never up.
 
-Therefore $p$ divides $F(\gcd(n,k)) = F(1) = 1$. But no prime divides $1$. That
-is the contradiction. Our assumption was wrong, and $p$ was primitive all along.
+## The decay law: memory is antitone
 
-That is the whole proof. The primality of $n$ does exactly one job — it strangles
-the greatest common divisor down to $1$ — and the gcd identity does all the rest.
-Notice how little we had to know about Fibonacci numbers specifically: we used
-only that they grow past $1$ and that they form a strong divisibility sequence.
+From a single step to many steps is a short hop, and the cocycle identity carries
+us there. Take any two window lengths with $n \le m$. Write $m = n + k$. The
+cocycle identity factors the long window as
 
-## Why the prime case is the keystone
+$$\mathrm{transEndo}\,f\,i\,m \;=\; \mathrm{transEndo}\,f\,(i+n)\,k \;\circ\; \mathrm{transEndo}\,f\,i\,n,$$
 
-The prime case is clean because a prime index has almost no divisors to worry
-about: just $1$ and itself. When the index $n$ is *composite* — say $n = 12$, with
-divisors $1, 2, 3, 4, 6$ — the bookkeeping is genuinely harder. A primitive prime
-of $F(12)$ must avoid dividing $F(1), F(2), F(3), F(4)$ and $F(6)$ all at once,
-and these "old" factors can pile up and, in principle, consume the whole of
-$F(12)$.
+so the longer operator is the shorter one followed by $k$ more steps. By the
+rank-of-composite bound, its image is a linear image of the shorter operator's
+image, hence no larger. This gives the headline result, the **rank antitonicity
+theorem**:
 
-The general strategy for the composite case is to isolate the part of $F(n)$ that
-is genuinely new. Define the **primitive part** of $F(n)$ by starting with $F(n)$
-itself and then, for each proper divisor $d$ of $n$, repeatedly dividing out every
-prime factor that $F(n)$ shares with $F(d)$. What survives this stripping process
-is, by construction, coprime to every earlier Fibonacci number. If anything at all
-survives — that is, if the primitive part is bigger than $1$ — then its smallest
-prime factor is a genuine primitive prime divisor of $F(n)$.
+$$\boxed{\;n \le m \;\Longrightarrow\; \mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,m\big) \;\le\; \mathrm{rank}\big(\mathrm{transEndo}\,f\,i\,n\big)\;}$$
 
-This reduces the whole theorem to a single inequality: **the primitive part is
-greater than $1$.** Carmichael's deep insight was that for large $n$ this is forced
-by sheer size — the Fibonacci numbers grow roughly like $\varphi^n$, where
-$\varphi = (1+\sqrt5)/2 \approx 1.618$ is the golden ratio, and this exponential
-growth outpaces the product of all the smaller Fibonacci numbers that could
-"explain away" the factors of $F(n)$.
+In words: *the rank of the transition operator is a non-increasing function of the
+window length.* The longer you run a time-varying linear system, the smaller (or
+equal) the space of states it can still reach. This is the precise, provable form
+of the magician intuition we started with. The system's memory of its initial
+configuration is monotonically eroded, and the erosion is irreversible.
 
-In the formal development that accompanies this article, the primitive-part
-strategy is implemented as an honest, runnable procedure, and the survival
-inequality is *verified by direct computation for every index from $13$ up to
-$10000$*. Across that entire range, every single index $n$ is either prime — in
-which case the elegant one-breath argument above applies — or has a primitive part
-strictly greater than $1$. Not one exception. The infinite tail beyond $10000$,
-where one must replace computation with a growth estimate, is the natural next
-frontier and is openly flagged as such.
+Because the rank is a non-negative integer that only ever decreases, it must
+eventually settle at a fixed value — it cannot fall forever. That observation
+(pursued further in the research directions below) is the seed of a theory of
+*eventual rank stabilization*, where the limiting rank measures the truly
+permanent structure of the system, the part no amount of further evolution can
+destroy.
 
-## A concrete tour
+## The flip side: when nothing is forgotten
 
-Let us watch the theorem at work on the first few prime indices, so the abstract
-statement becomes something you can feel.
+There is a complementary story for systems that *preserve* information. A linear
+map is **injective** when it never collapses two distinct states into one — when
+different inputs always give different outputs. If every single-step map in a
+window is injective, then nothing is lost at any step, and so the whole composite
+must be injective too. This is the **injectivity propagation theorem**:
 
-- $n = 13$: $F(13) = 233$, which is prime. Its primitive prime divisor is $233$
-  itself, appearing for the first time.
-- $n = 17$: $F(17) = 1597$, again prime. The newcomer is $1597$.
-- $n = 19$: $F(19) = 4181 = 37 \times 113$. *Both* primes are new: neither $37$
-  nor $113$ divides any earlier Fibonacci number. The theorem guarantees at least
-  one newcomer; here we get two.
-- $n = 23$: $F(23) = 28657$, prime once more.
-- $n = 29$: $F(29) = 514229 = 514229$, prime.
-- $n = 31$: $F(31) = 1346269 = 557 \times 2417$, and both $557$ and $2417$ are
-  fresh primitive divisors.
+$$\Big(\forall k < n,\ f(i+k)\ \text{injective}\Big) \;\Longrightarrow\; \mathrm{transEndo}\,f\,i\,n\ \text{injective}.$$
 
-Each time, the proof's logic plays out identically: pick *any* prime factor of
-$F(n)$, and the primality of the index $n$ guarantees it cannot have shown up
-earlier, because showing up earlier would force a nontrivial common index, which a
-prime index forbids.
+The proof is again a clean induction: the identity map (zero steps) is injective,
+and the composition of two injective maps is injective. Over a finite-dimensional
+space, injectivity is equivalent to full rank, so this theorem is the optimistic
+twin of the decay law — it identifies exactly the circumstance under which the
+rank *never* drops at all.
 
-## The bigger picture: ranks of apparition
+## The autonomous special case: ordinary powers
 
-The position at which a given prime $p$ first divides the Fibonacci sequence has a
-name: the **rank of apparition** of $p$. For instance, $2$ first appears at index
-$3$ (since $F(3) = 2$), so its rank is $3$; the prime $11$ first appears at index
-$10$ (since $F(10) = 55 = 5 \times 11$), so its rank is $10$. Carmichael's theorem,
-read backwards, says that the ranks of apparition keep producing new values: every
-sufficiently large index is the rank of some prime.
+All of the above allows the rule to change at every step. But what if it does
+not? Suppose the system is **autonomous** — the same map $g$ is applied over and
+over. Then the sequence is constant, $f(k) = g$ for all $k$, and the transition
+endomorphism collapses into something completely familiar: the ordinary operator
+power. A short induction proves the bridge identity
 
-This single idea — that the *first appearance* of a divisor is governed by the
-*index* through the gcd identity — radiates outward into a whole theory. The same
-gcd identity controls the **Pisano periods** (how long it takes the Fibonacci
-sequence to repeat when you reduce it modulo some number), and it generalizes far
-beyond Fibonacci to any strong divisibility sequence: Lucas sequences, Mersenne
-numbers $2^n - 1$, and many sequences arising from elliptic curves. In each case,
-the same "primality of the index strangles the gcd" trick gives a clean primitive
-case, and the same primitive-part-plus-growth-estimate strategy handles the rest.
+$$\mathrm{transEndo}\,(\lambda\_.\,g)\,i\,n \;=\; g^{\,n}.$$
 
-## Why certainty matters here
+Every theorem above now descends, for free, to the classical world of iterating a
+single transformation. Rank antitonicity becomes the statement that
 
-It would be easy to "see" Carmichael's theorem by checking a few hundred cases on
-a computer and declaring victory. But mathematics is in the business of certainty,
-not just plausibility, and the history of number theory is littered with patterns
-that hold for thousands of cases and then fail. (The notorious example: the claim
-that $2^{2^n}+1$ is always prime, true for $n = 0,1,2,3,4$ and false ever after.)
+$$n \le m \;\Longrightarrow\; \mathrm{rank}(g^{\,m}) \;\le\; \mathrm{rank}(g^{\,n}),$$
 
-The account behind this article is different in kind. The prime case is not merely
-checked; it is *proved*, once and for all, by an argument a kernel of pure logic
-can verify line by line. And the computational sweep up to $10000$ is not a loose
-script but a checked computation, so its verdict — no exceptions in that range — is
-as reliable as the rest of the mathematics. What remains genuinely open, the
-infinite tail of composite indices, is stated plainly rather than papered over.
+the powers of any single endomorphism have non-increasing rank — a fact you may
+have met when studying the stabilizing kernel and image filtrations of a nilpotent
+or a Fitting decomposition. And injectivity propagation becomes the statement that
+if $g$ is injective then so is every power $g^n$. The general cocycle theory is
+not a detour around these classical facts; it *contains* them as the constant-rule
+special case, and re-derives them with no extra work.
 
-That blend — a luminous hand proof for the heart of the matter, an exact
-computation for the finite frontier, and an honest signpost at the edge of the
-known — is what modern, machine-checked mathematics looks like at its best. And it
-all flows from one sentence that a curious child could appreciate: keep adding the
-last two numbers, and you will never stop discovering new primes.
+## Why this is more than bookkeeping
+
+It would be easy to dismiss all of this as obvious. Composition shrinks images;
+of course rank goes down. But the value of formalizing the intuition is exactly
+that it stops being a vague feeling and becomes a load-bearing tool. The cocycle
+identity is the single fact that everything rests on, and once it is nailed down,
+the monotonicity laws fall out in one line each. That economy is the mathematical
+aesthetic at work: find the one true lemma, and let the rest cascade.
+
+The reach of this little theory is genuinely wide:
+
+- **Control theory and signals.** The transition endomorphism is precisely the
+  discrete *state-transition operator* of a time-varying linear system. Its rank
+  is the dimension of the reachable subspace; the decay law says reachability can
+  only contract as a maneuver lengthens, which is the abstract backbone of
+  controllability and observability analysis.
+- **Dynamical systems and ergodic theory.** Linear cocycles over a base dynamics
+  are the objects whose long-run growth rates are quantified by Lyapunov
+  exponents and the celebrated Oseledets theorem. The cocycle identity proved here
+  is the very first axiom such a theory demands.
+- **Markov chains and population models.** Replace "linear map" with "transition
+  matrix" and the windows become products of stochastic matrices; the rank
+  filtration tracks how quickly the chain forgets its initial distribution.
+- **Numerical linear algebra.** Repeated application of an operator — the inner
+  loop of the power method and of Krylov subspace solvers — is exactly the
+  autonomous special case, where the rank filtration governs how the iteration's
+  effective dimension stabilizes.
+
+What ties them together is the same humble picture we began with: a system marching
+forward in time, each step a linear rule, the accessible world quietly contracting
+as the steps accumulate. The transition endomorphism gives that picture a name,
+the cocycle identity gives it a law, and the antitonicity theorem gives it a
+direction — always downhill, never back.
+
+## The shape of an idea
+
+Good mathematics often looks, in retrospect, inevitable. You define the right
+object, you prove the one identity it satisfies, and a whole landscape of
+consequences arranges itself around that identity like iron filings around a
+magnet. The transition endomorphism is a small example of this pattern, but a
+faithful one. From a two-line recursion we extracted a cocycle law; from the
+cocycle law, a monotonicity theorem; from the monotonicity theorem, a guarantee
+that every such system eventually settles into a stable core of unforgettable
+structure. And by setting the rule constant, the whole edifice reproduces the
+classical algebra of operator powers as a corollary.
+
+The magician's deck, run through trick after trick, can only lose distinctions —
+until, at last, it reaches a configuration so thoroughly mixed that no further
+trick changes how much of the original is recoverable. That stable residue is the
+true subject of the theory. Everything before it is just the system remembering a
+little less, one composition at a time.

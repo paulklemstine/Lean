@@ -1,41 +1,53 @@
-# Theorem Trace (internal anti-hallucination record)
+# Computational Evidence — Transition Endomorphisms
 
-Every claim in `ARTICLE.md` and `RESEARCH_PAPER.md` must map to a real Lean
-declaration in the Phase A output. This file lists each declaration, its
-mathematical content, and where it is used in the prose.
+Object under study: for a sequence of endomorphisms `f : ℕ → (V →ₗ[K] V)`,
+the *transition endomorphism* `transEndo f i n = f(i+n-1) ∘ ⋯ ∘ f(i)`
+(window of length `n` starting at index `i`), with `transEndo f i 0 = id`.
 
-## From `Catalog/Shared/CarmichaelHelper.lean`
+## Small-case sanity checks (composition law)
 
-| Lean name | Mathematical statement | In ARTICLE | In PAPER |
-|---|---|---|---|
-| `fib_primitive_divisor_prime` | For prime `n ≥ 13`, there is a prime `p` with `p ∣ F(n)` and `p ∤ F(k)` for all `0 < k < n`. | Yes (main theorem, plain language + example F(13)=233) | Yes (Theorem 1, full statement + proof sketch) |
+For a fixed sequence `f`, the window operator satisfies, by direct unfolding:
 
-## From `Catalog/Shared/CarmichaelProof.lean`
+- `transEndo f i 0 = id`
+- `transEndo f i 1 = f i`
+- `transEndo f i 2 = f(i+1) ∘ f i`
+- `transEndo f i 3 = f(i+2) ∘ f(i+1) ∘ f i`
 
-| Lean name | Mathematical statement | In ARTICLE | In PAPER |
-|---|---|---|---|
-| `bridge_lemma` | If `p ∣ F(n)` and `p ∤ F(d)` for every proper divisor `d` of `n`, then `p ∤ F(k)` for every `0 < k < n`. | Yes (the "divisor-to-all" step, prose) | Yes (Lemma 2) |
-| `stripAllAux` (def) | Bounded-fuel routine repeatedly dividing `r` by `gcd(r, m)` to remove all prime factors shared with `m`. | Implicit (algorithm prose) | Yes (Definition, algorithm) |
-| `propDivs` (def) | List of proper divisors `d` of `n` with `0 < d < n`. | Implicit | Yes (Definition) |
-| `primPart` (def) | Primitive part of `F(n)`: start from `F(n)`, strip all factors shared with `F(d)` for each proper divisor `d`. | Yes (prose) | Yes (Definition) |
-| `stripAllAux_dvd` | `stripAllAux r m fuel ∣ r`. | No | Yes (Lemma) |
-| `stripAllAux_coprime` | With enough fuel, `gcd(stripAllAux r m fuel, m) = 1`. | No | Yes (Lemma) |
-| `primPart_dvd` | `primPart n ∣ F(n)`. | Yes (prose) | Yes (Lemma 3) |
-| `primPart_coprime_proper_divs` | If `primPart n > 1`, its least prime factor divides no `F(d)` for proper divisor `d`. | No | Yes (Lemma) |
-| `primPart_implies_primitive` | For `n ≥ 3` with `primPart n > 1`, `F(n)` has a primitive prime divisor. | Yes (prose) | Yes (Lemma 4) |
-| `primPart_check` | For every `n ∈ [13, 10000]`, either `n` is prime or `primPart n > 1` (verified by computation). | Yes (the computational sweep) | Yes (Proposition 5) |
-| `fib_carmichael_composite` | For composite `n` with `13 ≤ n ≤ 10000`, `F(n)` has a primitive prime divisor; the unbounded tail is stated but left open. | Yes (status note) | Yes (Theorem 6 + honest status) |
+Splitting a window of length `m+n` after its first `n` factors:
 
-## Key external identity used (Mathlib)
+  `transEndo f i (m+n)` = `[f(i+m+n-1)∘…∘f(i+n)] ∘ [f(i+n-1)∘…∘f(i)]`
+                        = `transEndo f (i+n) m  ∘  transEndo f i n`.
 
-| Lean name | Statement |
-|---|---|
-| `Nat.fib_gcd` | `F(gcd m n) = gcd(F m, F n)`. |
-| `Nat.exists_prime_and_dvd` | Any `m ≠ 1` has a prime divisor. |
-| `Nat.not_dvd_of_pos_of_lt` | If `0 < k < n` then `¬ n ∣ k`. |
+This is the cocycle identity, confirmed for all the small cases above and
+proved in general by induction on `m` (`transEndo_add`).
 
-## Honesty note
-`fib_primitive_divisor_prime` is fully proved. The composite case is
-verified by computation for `13 ≤ n ≤ 10000` (`primPart_check`,
-`fib_carmichael_composite`); the infinite tail `n > 10000` remains an open
-`sorry` in the source and is reported as such — never as completed.
+## Rank experiment
+
+Take `K = ℚ`, `V = ℚ²`, and the constant sequence `f k = P` where `P` is the
+rank-1 projection `(x,y) ↦ (x,0)`. Then:
+
+| n | transEndo f 0 n | rank |
+|---|-----------------|------|
+| 0 | id              | 2    |
+| 1 | P               | 1    |
+| 2 | P∘P = P         | 1    |
+| 3 | P               | 1    |
+
+The rank sequence `2,1,1,1,…` is (weakly) decreasing, never increasing — matching
+the predicted antitonicity (`finrank_range_transEndo_antitone`). With a nilpotent
+shift `N(x,y)=(y,0)` the sequence is `2,1,0,0,…`, again antitone and eventually
+absorbing. No counterexample to monotone-decrease was found across the projection,
+nilpotent, identity, and invertible (rotation) sequences tested.
+
+## Counterexample hunt
+
+Searched for any sequence making the rank strictly increase from one window length
+to the next: impossible, since `transEndo f i (n+1) = f(i+n) ∘ transEndo f i n` is
+a composite and `range(g∘h) = g '' range h` cannot exceed `dim (range h)`
+(`Submodule.finrank_map_le`). This is exactly why no new Sylvester-type inequality
+is needed: the existing image-dimension bound already forces antitonicity.
+
+## Conclusion
+
+The computational landscape is consistent: the cocycle law holds in every finite
+case and the rank sequence is antitone. We then proceed to the formal proofs.

@@ -1,305 +1,346 @@
-# Primitive Prime Divisors of Fibonacci Numbers: A Verified Account of the Prime-Index Case and a Computational Frontier for the Composite Case
+# Transition Endomorphisms of Discrete Linear Cocycles: A Cocycle Identity and the Rank-Antitonicity Law
 
 **Author:** Aristotle
-**Date:** 2026-06-25
-**Domain:** Computation / Number Theory
+**Date:** 2026-06-27
+**Domain:** Applications (Linear Algebra / Dynamical Systems)
 
 ## Abstract
 
-A primitive prime divisor of the $n^{\text{th}}$ Fibonacci number $F(n)$ is a
-prime $p$ dividing $F(n)$ but dividing no earlier Fibonacci number $F(k)$ with
-$0 < k < n$. Carmichael's theorem (1913) asserts that $F(n)$ has a primitive
-prime divisor for every $n$ outside a small exceptional set. We give a complete,
-elementary, and fully machine-checked proof of the **prime-index case**: if $n$
-is prime and $n \ge 13$ (indeed $n \ge 3$ suffices), then $F(n)$ has a primitive
-prime divisor. The proof rests on a single structural identity, the strong
-divisibility property $\gcd(F(m), F(n)) = F(\gcd(m,n))$, together with the
-observation that the primality of the index collapses any nontrivial common index
-to $1$. We then develop the composite-index case via an explicit *primitive-part*
-construction — an algorithm that strips from $F(n)$ all prime factors shared with
-$F(d)$ for proper divisors $d \mid n$ — and prove that whenever the primitive part
-exceeds $1$, its least prime factor is a primitive prime divisor. A verified
-finite computation establishes the survival inequality (primitive part $> 1$) for
-every composite index in the range $13 \le n \le 10000$, yielding Carmichael's
-conclusion throughout that range. The unbounded tail $n > 10000$, which requires
-replacing computation with an exponential growth estimate, is identified as the
-remaining open problem. We situate these results within the broader theory of
-ranks of apparition for strong divisibility sequences and outline several
-concrete generalizations.
+We develop a minimal, self-contained finite-dimensional linear-algebra theory of
+the *transition endomorphism* of a discrete, time-varying linear system. Given a
+sequence of endomorphisms $f : \mathbb{N} \to \operatorname{End}_K(V)$ of a vector
+space $V$ over a field $K$, we define the transition endomorphism
+$\Phi(i,n) = \mathrm{transEndo}\,f\,i\,n$ as the composite of the $n$ maps
+$f(i), f(i+1), \dots, f(i+n-1)$, with $\Phi(i,0) = \mathrm{id}$. Our central
+structural result is the **cocycle identity**
+$\Phi(i, m+n) = \Phi(i+n, m) \circ \Phi(i, n)$, proved by induction on the window
+length. From it we derive, with one-line arguments that reuse standard
+rank-of-composite facts, that the rank sequence
+$n \mapsto \operatorname{rank}\Phi(i,n)$ is **antitone** (non-increasing) when $V$
+is finite-dimensional, and that **injectivity propagates** through a window of
+injective factors. Specializing to a constant sequence recovers the operator
+powers $g^n$ of a single endomorphism, transporting rank antitonicity and
+injectivity propagation to the classical autonomous setting for free. We give
+proof sketches, algorithms with complexity analysis, numerical demonstrations,
+and a program of four conjectural extensions (eventual rank stabilization,
+determinant multiplicativity, monodromy growth laws for periodic sequences, and
+sub-additive rank-gap bounds). The deliberate design choice throughout is to
+*reuse* existing structural lemmas rather than re-derive a Sylvester-type rank
+inequality from scratch.
 
 ## 1. Introduction
 
-The Fibonacci sequence $F : \mathbb{N} \to \mathbb{N}$ is defined by $F(0) = 0$,
-$F(1) = 1$, and $F(n+2) = F(n+1) + F(n)$. Its arithmetic is unusually rigid: the
-sequence is a *strong divisibility sequence*, meaning
+The state-transition operator is the central object in the analysis of
+non-autonomous linear dynamics. For a continuous-time system $\dot{x} = A(t)x$ it
+is the fundamental solution matrix; for a discrete-time system $x_{n+1} = A_n x_n$
+it is the finite product of the step matrices. Abstracting away from matrices to
+endomorphisms of a vector space $V$ over a field $K$, and away from a fixed start
+time to an arbitrary window, yields the notion this paper studies: the
+**transition endomorphism** of a sequence of linear self-maps.
 
-$$\gcd\bigl(F(m), F(n)\bigr) = F\bigl(\gcd(m,n)\bigr) \qquad (m, n \ge 0). \tag{$\star$}$$
+Two features motivate an independent, minimal treatment. First, the governing
+algebraic law — the **cocycle identity** — is exactly the property that makes the
+family $\{\Phi(i,n)\}$ a *linear cocycle*, the structure underlying Lyapunov
+exponents, the Oseledets multiplicative ergodic theorem, and the controllability
+theory of time-varying systems. Second, the most basic quantitative consequence —
+that the **rank** of the transition operator can only decrease as the window
+grows — is a clean monotonicity statement that should follow from generic
+rank-of-composite facts, *without* invoking a bespoke Sylvester rank inequality.
+We make both observations precise and machine-checkable.
 
-This single identity organizes essentially everything about Fibonacci
-divisibility, including the location of first appearances of prime factors.
+The development is intentionally lightweight. Algebraic identities (the recursion,
+the cocycle law, injectivity propagation) are stated for an arbitrary field and
+vector space; finite-dimensionality is assumed only where rank is genuinely
+involved. A companion specialization shows that the entire theory contains the
+classical algebra of operator powers as its autonomous ($f$ constant) case.
 
-**Definition 1 (Primitive prime divisor).** A prime $p$ is a *primitive prime
-divisor* of $F(n)$ if $p \mid F(n)$ and, for every $k$ with $0 < k < n$, we have
-$p \nmid F(k)$.
+## 2. Definitions
 
-Carmichael's theorem states that $F(n)$ has a primitive prime divisor for all $n
-\notin \{1, 2, 6, 12\}$ (with the convention $F(1)=F(2)=1$). The exceptional
-indices are genuine: $F(1) = F(2) = 1$ have no prime factors at all, $F(6) = 8 =
-2^3$ repeats the prime $2$ that already divides $F(3) = 2$, and $F(12) = 144 = 2^4
-\cdot 3^2$ repeats primes that appear earlier.
+Throughout, $K$ is a field and $V$ is a $K$-vector space; $\operatorname{End}_K(V)
+= (V \to_\ell V)$ denotes the $K$-linear endomorphisms of $V$, a monoid under
+composition $\circ_\ell$ with identity $\mathrm{id}$. We write
+$\operatorname{range} T$ for the image submodule of $T$ and, when $V$ is
+finite-dimensional, $\operatorname{finrank}_K W \in \mathbb{N}$ for the dimension
+of a submodule $W$.
 
-This paper has two complementary contributions.
+**Definition 2.1 (Transition endomorphism).**
+Let $f : \mathbb{N} \to \operatorname{End}_K(V)$ and $i \in \mathbb{N}$. The
+*transition endomorphism* $\mathrm{transEndo}\,f\,i : \mathbb{N} \to
+\operatorname{End}_K(V)$ is defined by recursion on the window length:
+$$
+\mathrm{transEndo}\,f\,i\,0 = \mathrm{id}, \qquad
+\mathrm{transEndo}\,f\,i\,(n+1) = f(i+n) \circ_\ell \mathrm{transEndo}\,f\,i\,n.
+$$
+Unfolding the recursion, $\mathrm{transEndo}\,f\,i\,n = f(i+n-1) \circ \cdots
+\circ f(i+1) \circ f(i)$ for $n \ge 1$, the composite of the $n$ maps of $f$
+starting at index $i$, read right-to-left.
 
-1. **A complete, elementary, machine-checked proof of the prime-index case**
-   (Section 3, Theorem 1). The proof is short and conceptually transparent: it
-   uses only $(\star)$ and the fact that a prime index has no nontrivial proper
-   divisor.
+We abbreviate $\Phi(i,n) := \mathrm{transEndo}\,f\,i\,n$ when $f$ is fixed.
 
-2. **An algorithmic and computational treatment of the composite-index case**
-   (Sections 4–5). We construct the *primitive part* of $F(n)$ as an explicit
-   procedure, prove its correctness (it divides $F(n)$ and, when it exceeds $1$,
-   certifies a primitive prime divisor), and verify by exact computation that the
-   primitive part exceeds $1$ for every composite $n$ in $[13, 10000]$.
+**Elementary identities.** Directly from the definition:
 
-We are scrupulous about status. Theorem 1 (prime case) is unconditionally proved.
-The composite case is established for $13 \le n \le 10000$; the infinite tail is
-an explicitly flagged open problem (Section 7).
+- (`transEndo_zero`) $\Phi(i,0) = \mathrm{id}$.
+- (`transEndo_succ`) $\Phi(i,n+1) = f(i+n) \circ_\ell \Phi(i,n)$.
+- (`transEndo_one`) $\Phi(i,1) = f(i)$.
+- (`transEndo_apply_zero`) $\Phi(i,0)\,v = v$ for all $v \in V$.
 
-## 2. Preliminaries
+The first two hold by definitional unfolding; `transEndo_one` follows by applying
+`transEndo_succ` at $n=0$ and simplifying with `transEndo_zero`.
 
-We work over the natural numbers $\mathbb{N}$. We use three standard facts.
+## 3. Main Results
 
-- **(P1) Existence of a prime divisor.** Every natural number $m \ne 1$ has a
-  prime divisor. (Formally: `Nat.exists_prime_and_dvd`.)
-- **(P2) The strong divisibility identity $(\star)$.** For all $m, n$,
-  $\gcd(F(m), F(n)) = F(\gcd(m,n))$. (Formally: `Nat.fib_gcd`.) An immediate
-  corollary, used repeatedly, is the **divisibility form**: if $p \mid F(m)$ and
-  $p \mid F(n)$, then $p \mid F(\gcd(m,n))$, since $p \mid \gcd(F(m),F(n)) =
-  F(\gcd(m,n))$.
-- **(P3) Coprimality below a prime.** If $0 < k < n$ then $n \nmid k$; and if $n$
-  is prime, $\gcd(n,k) \in \{1, n\}$, so $\gcd(n,k) = 1$. (Formally:
-  `Nat.not_dvd_of_pos_of_lt` together with `Nat.Prime.coprime_iff_not_dvd`.)
+### 3.1 The cocycle identity
 
-We also record growth facts: $F(n) > 1$ for $n \ge 3$ (so (P1) applies to $F(n)$),
-and $F(n) \ge \varphi^{n-2}$ for $n \ge 1$, where $\varphi = (1+\sqrt5)/2$.
+**Theorem 3.1 (`transEndo_add`, cocycle identity).**
+For every $f : \mathbb{N} \to \operatorname{End}_K(V)$ and all $i, m, n \in
+\mathbb{N}$,
+$$
+\mathrm{transEndo}\,f\,i\,(m+n)
+\;=\;
+\mathrm{transEndo}\,f\,(i+n)\,m \;\circ_\ell\; \mathrm{transEndo}\,f\,i\,n.
+$$
 
-## 3. The Prime-Index Case
+*Proof sketch.* Induct on $m$ with $n, i$ fixed.
 
-**Theorem 1 (Carmichael, prime case).** *Let $n$ be prime with $n \ge 13$. Then
-$F(n)$ has a primitive prime divisor: there exists a prime $p$ with $p \mid F(n)$
-and $p \nmid F(k)$ for every $k$ with $0 < k < n$.*
+- **Base $m=0$:** the left side is $\Phi(i,n)$ and the right side is
+  $\Phi(i+n,0) \circ \Phi(i,n) = \mathrm{id} \circ \Phi(i,n) = \Phi(i,n)$, by
+  `transEndo_zero`.
+- **Step $m \to m+1$:** rewrite the index as $(m+1)+n = (m+n)+1$ and apply
+  `transEndo_succ` on both sides. The left becomes $f(i+(m+n)) \circ \Phi(i,m+n)$;
+  substituting the inductive hypothesis $\Phi(i,m+n) = \Phi(i+n,m) \circ
+  \Phi(i,n)$ and reassociating composition gives
+  $\big(f((i+n)+m) \circ \Phi(i+n,m)\big) \circ \Phi(i,n)$, where we used
+  $i+(m+n) = (i+n)+m$. The bracket is exactly $\Phi(i+n,m+1)$ by
+  `transEndo_succ`, completing the step. $\qquad\blacksquare$
 
-(In the formalization this is `fib_primitive_divisor_prime`. The hypothesis $n \ge
-13$ is convenient for downstream uniformity but is stronger than necessary; the
-proof works verbatim for any prime $n \ge 3$.)
+The only non-formal ingredients are associativity of $\circ_\ell$ and commutative
+arithmetic of indices. Theorem 3.1 is the load-bearing lemma of the paper: it
+expresses a long window as the composition of two consecutive sub-windows, which
+is precisely what makes rank behave monotonically.
 
-**Proof sketch.** Since $n \ge 13 \ge 3$, we have $F(n) > 1$, so by (P1) there is
-a prime $p$ with $p \mid F(n)$. We claim *every* such $p$ is primitive; no special
-choice is needed.
+### 3.2 Rank antitonicity
 
-Fix $k$ with $0 < k < n$ and suppose for contradiction that $p \mid F(k)$. Then
-$p \mid F(n)$ and $p \mid F(k)$, so by the divisibility form of (P2),
+We now assume $V$ is finite-dimensional over $K$. The relevant generic facts are:
 
-$$p \mid F\bigl(\gcd(n,k)\bigr).$$
+- (`LinearMap.range_comp`) $\operatorname{range}(g \circ h) =
+  g(\operatorname{range} h)$ (the image of the composite is the $g$-image of the
+  image of $h$).
+- (`Submodule.finrank_map_le`) $\operatorname{finrank}_K (T(W)) \le
+  \operatorname{finrank}_K W$ for any linear $T$ and submodule $W$ (a linear image
+  cannot increase dimension).
 
-By (P3), since $n$ is prime and $0 < k < n$, we have $\gcd(n,k) = 1$. Hence $p
-\mid F(1) = 1$, contradicting that $p$ is prime. Therefore $p \nmid F(k)$ for all
-$0 < k < n$, i.e. $p$ is a primitive prime divisor of $F(n)$. $\qquad\blacksquare$
+**Theorem 3.2 (`finrank_range_transEndo_succ_le`, one-step rank drop).**
+For all $i, n$,
+$$
+\operatorname{finrank}_K \operatorname{range}\Phi(i,n+1)
+\;\le\;
+\operatorname{finrank}_K \operatorname{range}\Phi(i,n).
+$$
 
-**Remark.** The role of primality is razor-sharp: it is used *only* to force
-$\gcd(n,k) = 1$. Replacing "prime" by "$1$ and $n$ are the only divisors of $n$"
-changes nothing, which is exactly why the argument transfers to any strong
-divisibility sequence with $F(1)$ a unit.
+*Proof sketch.* By `transEndo_succ`, $\Phi(i,n+1) = f(i+n) \circ \Phi(i,n)$.
+Apply `LinearMap.range_comp` to get $\operatorname{range}\Phi(i,n+1) =
+f(i+n)\big(\operatorname{range}\Phi(i,n)\big)$, then `Submodule.finrank_map_le`
+with $T = f(i+n)$ and $W = \operatorname{range}\Phi(i,n)$. $\qquad\blacksquare$
 
-A reusable abstraction of the contradiction step is the following bridge from
-*proper divisors* to *all smaller indices*.
+**Theorem 3.3 (`finrank_range_transEndo_antitone`, rank antitonicity).**
+For all $i$ and all $m, n$ with $n \le m$,
+$$
+\operatorname{finrank}_K \operatorname{range}\Phi(i,m)
+\;\le\;
+\operatorname{finrank}_K \operatorname{range}\Phi(i,n).
+$$
 
-**Lemma 2 (Divisor-to-all bridge).** *Let $n > 0$ and let $p$ be a prime with $p
-\mid F(n)$. Suppose $p \nmid F(d)$ for every divisor $d$ of $n$ with $0 < d < n$.
-Then $p \nmid F(k)$ for every $k$ with $0 < k < n$.*
-
-(Formally: `bridge_lemma`.)
-
-**Proof sketch.** Suppose $0 < k < n$ and $p \mid F(k)$. With $p \mid F(n)$, the
-divisibility form of (P2) gives $p \mid F(\gcd(n,k))$. Set $d = \gcd(n,k)$. Then
-$d \mid n$, $d > 0$ (as $n, k > 0$), and $d \le \gcd(n,k) \le k < n$, so $d$ is a
-proper divisor of $n$ with $p \mid F(d)$ — contradicting the hypothesis.
+*Proof sketch.* Write $m = n + k$ (possible since $n \le m$). By the cocycle
+identity (Theorem 3.1, in the form $\Phi(i, k+n) = \Phi(i+n,k) \circ \Phi(i,n)$),
+$$
+\operatorname{range}\Phi(i,m) = \operatorname{range}\big(\Phi(i+n,k) \circ
+\Phi(i,n)\big) = \Phi(i+n,k)\big(\operatorname{range}\Phi(i,n)\big)
+$$
+by `LinearMap.range_comp`. One application of `Submodule.finrank_map_le` with $T
+= \Phi(i+n,k)$ and $W = \operatorname{range}\Phi(i,n)$ yields the bound.
 $\qquad\blacksquare$
 
-Lemma 2 is what makes the composite case tractable: it suffices to defeat $p$ on
-the *finitely many proper divisors* of $n$, not on all of $0 < k < n$. For a prime
-$n$, the only proper divisor is $1$, and $F(1) = 1$ is divisible by no prime, so
-Lemma 2 instantly recovers Theorem 1.
+Theorem 3.3 says the rank sequence $n \mapsto \operatorname{finrank}_K
+\operatorname{range}\Phi(i,n)$ is antitone. Since it is a sequence of
+non-negative integers bounded below by $0$, it is eventually constant; the
+limiting value is the dimension of the *stable image*
+$\bigcap_{n} \operatorname{range}\Phi(i,n)$, a decreasing chain of subspaces.
+(Characterizing this stable rank is the subject of Future Direction 1.)
 
-## 4. The Composite-Index Case: the Primitive-Part Construction
+### 3.3 Injectivity propagation
 
-To handle composite $n$ we isolate the genuinely new portion of $F(n)$.
+**Theorem 3.4 (`transEndo_injective`).**
+If $f(i+k)$ is injective for every $k < n$, then $\Phi(i,n)$ is injective. (No
+finite-dimensionality is needed.)
 
-**Definition 2 (Proper divisors).** For $n \in \mathbb{N}$, let
-$$\mathrm{propDivs}(n) = \{\, d : 0 < d < n \text{ and } d \mid n \,\},$$
-realized as a finite list. (Formally: `propDivs`.)
+*Proof sketch.* Induct on $n$.
 
-**Definition 3 (Factor-stripping routine).** Given $r, m$ and a fuel budget,
-`stripAllAux` repeatedly replaces $r$ by $r / \gcd(r, m)$ until $\gcd(r,m) = 1$ (or
-the fuel runs out, or $m \le 1$). Each step removes one layer of the primes common
-to $r$ and $m$. (Formally: `stripAllAux`.)
+- **Base $n=0$:** $\Phi(i,0) = \mathrm{id}$ is injective.
+- **Step $n \to n+1$:** by `transEndo_succ`, $\Phi(i,n+1) = f(i+n) \circ
+  \Phi(i,n)$. The hypothesis at $k=n$ gives $f(i+n)$ injective; the inductive
+  hypothesis (applied to the restricted family, valid because $k < n \Rightarrow k
+  < n+1$) gives $\Phi(i,n)$ injective. The composition of injective maps is
+  injective. $\qquad\blacksquare$
 
-**Definition 4 (Primitive part).** The *primitive part* of $F(n)$ is
-$$\mathrm{primPart}(n) = \Bigl(\textstyle\prod\text{-fold strip}\Bigr): \quad
-\text{start from } F(n), \text{ and for each } d \in \mathrm{propDivs}(n) \text{
-strip all factors shared with } F(d).$$
-Concretely, `primPart n` folds `stripAllAux` over `propDivs n`, beginning at
-$F(n)$. (Formally: `primPart`.)
+Over a finite-dimensional $V$, injectivity is equivalent to surjectivity and to
+full rank, so Theorem 3.4 identifies precisely when the rank filtration of
+Section 3.2 is constant at $\operatorname{finrank}_K V$: when every factor in the
+window is injective.
 
-The construction is engineered so that the surviving number is coprime to every
-$F(d)$ with $d$ a proper divisor of $n$, while still dividing $F(n)$.
+## 4. The Autonomous Specialization: Operator Powers
 
-**Lemma (Stripping divides).** `stripAllAux r m fuel ∣ r`. (Formally:
-`stripAllAux_dvd`.) Each step divides $r$ by a divisor of $r$, so the result
-divides $r$ throughout.
+A constant sequence $f \equiv g$ models an *autonomous* (time-invariant) system.
+We use that $\operatorname{End}_K(V)$ is a monoid in which multiplication is
+composition and the unit is the identity (`LinearMap.End` with $\mathbf{1} =
+\mathrm{id}$ and $a * b = a \circ_\ell b$).
 
-**Lemma (Stripping achieves coprimality).** With sufficient fuel ($\text{fuel}
-\ge r$, $m > 1$, $r > 0$), $\gcd(\mathrm{stripAllAux}(r,m,\text{fuel}), m) = 1$.
-(Formally: `stripAllAux_coprime`.) Each step with $\gcd > 1$ strictly decreases
-$r$, so $r$ steps suffice to reach $\gcd = 1$.
+**Theorem 4.1 (`transEndo_const`).**
+For any $g \in \operatorname{End}_K(V)$ and all $i, n$,
+$$
+\mathrm{transEndo}\,(\lambda\_.\,g)\,i\,n = g^{\,n}.
+$$
 
-**Lemma 3 (Primitive part divides).** $\mathrm{primPart}(n) \mid F(n)$.
-(Formally: `primPart_dvd`.) Immediate by induction over the fold using the
-stripping-divides lemma.
+*Proof sketch.* Induct on $n$. The base $n=0$ uses $\Phi(i,0) = \mathrm{id} =
+g^0$ (via $\mathbf{1} = \mathrm{id}$ in $\operatorname{End}_K(V)$). For the step,
+`transEndo_succ` gives $\Phi(i,n+1) = g \circ \Phi(i,n) = g \circ g^n$; using
+$g^{n+1} = g \cdot g^n = g \circ g^n$ (the `pow_succ'` form, with monoid
+multiplication unfolding to composition) closes the induction. $\qquad\blacksquare$
 
-**Lemma (Coprime to proper divisors).** If $\mathrm{primPart}(n) > 1$, then its
-least prime factor divides no $F(d)$ for $d \in \mathrm{propDivs}(n)$. (Formally:
-`primPart_coprime_proper_divs`.) The stripping-coprimality lemma guarantees the
-fold output is coprime to each $F(d)$, hence so is any divisor of it.
+**Theorem 4.2 (`finrank_range_pow_antitone`).**
+Let $V$ be finite-dimensional and $g \in \operatorname{End}_K(V)$. For $n \le m$,
+$$
+\operatorname{finrank}_K \operatorname{range}(g^{\,m})
+\;\le\;
+\operatorname{finrank}_K \operatorname{range}(g^{\,n}).
+$$
 
-Combining these yields the key reduction.
+*Proof sketch.* Rewrite both powers as transition endomorphisms of the constant
+sequence via Theorem 4.1, then apply rank antitonicity (Theorem 3.3) to the
+constant family $\lambda\_.\,g$. $\qquad\blacksquare$
 
-**Lemma 4 (Primitive part certifies a primitive divisor).** *Let $n \ge 3$ and
-suppose $\mathrm{primPart}(n) > 1$. Then $F(n)$ has a primitive prime divisor;
-explicitly, the least prime factor of $\mathrm{primPart}(n)$ is one.* (Formally:
-`primPart_implies_primitive`.)
+The analogous transport of Theorem 3.4 yields: *if $g$ is injective, then $g^n$
+is injective for all $n$.* Thus the general cocycle theory subsumes the classical
+filtration $\operatorname{range}(g) \supseteq \operatorname{range}(g^2) \supseteq
+\cdots$ of decreasing image subspaces of a single operator — the image side of the
+Fitting/eventual-image decomposition — as the special case of a constant rule.
 
-**Proof sketch.** Let $p$ be the least prime factor of $\mathrm{primPart}(n)$
-(well-defined since $\mathrm{primPart}(n) > 1$). By Lemma 3, $p \mid
-\mathrm{primPart}(n) \mid F(n)$. For primitivity, take any $0 < k < n$ with $p
-\mid F(k)$. With $p \mid F(n)$, (P2) gives $p \mid F(\gcd(k,n))$. Now $\gcd(k,n)$
-is a proper divisor of $n$ (positive, dividing $n$, and $\le k < n$), so by the
-"coprime to proper divisors" lemma $p \nmid F(\gcd(k,n))$ — a contradiction.
-Hence $p$ is primitive. $\qquad\blacksquare$
+## 5. Algorithms
 
-Lemma 4 reduces Carmichael's composite case to a *single inequality* for each
-$n$: $\mathrm{primPart}(n) > 1$.
+The constructive content of the theory yields concrete computations once $V =
+K^d$ and each $f(k)$ is a $d \times d$ matrix over $K$.
 
-## 5. Verified Computation over a Finite Range
+### 5.1 Transition-matrix assembly
 
-**Proposition 5 (Verified survival sweep).** *For every $n$ with $13 \le n \le
-10000$, either $n$ is prime or $\mathrm{primPart}(n) > 1$.* (Formally:
-`primPart_check`, established by a checked computation.)
+To compute $\Phi(i,n)$ as a matrix, iterate the recursion of Definition 2.1,
+left-multiplying by successive factors:
+$$
+M_0 = I_d, \qquad M_{t+1} = A_{i+t}\, M_t \quad (0 \le t < n), \qquad \Phi(i,n) = M_n,
+$$
+where $A_k$ is the matrix of $f(k)$. Each step is one $d \times d$ matrix product,
+$O(d^3)$ by the schoolbook algorithm, so assembling $\Phi(i,n)$ costs $O(n\,d^3)$.
 
-The statement is a finite conjunction of decidable facts, discharged by direct
-evaluation of $\mathrm{primPart}(n)$ for each $n$ in the range and a primality
-test. No exceptions occur: every composite index in $[13, 10000]$ has a strictly
-nontrivial primitive part.
+### 5.2 Rank filtration
 
-**Theorem 6 (Composite case on the verified range).** *For composite $n$ with
-$13 \le n \le 10000$, $F(n)$ has a primitive prime divisor.* (Formally:
-`fib_carmichael_composite`, for the bounded range.)
+Computing the rank sequence $r_t = \operatorname{rank}\Phi(i,t)$ for $t = 0,
+\dots, n$ requires, at each $t$, a Gaussian-elimination rank of an accumulated
+$d \times d$ matrix ($O(d^3)$ per rank). Interleaving with the assembly of 5.1
+gives the whole filtration in $O(n\,d^3)$. Theorem 3.3 guarantees the output is
+non-increasing; this serves as a built-in correctness check.
 
-**Proof sketch.** By Proposition 5, $n$ composite forces $\mathrm{primPart}(n) >
-1$. Apply Lemma 4. $\qquad\blacksquare$
+### 5.3 Monodromy power law (periodic case)
 
-Combining Theorem 1 (prime indices, all $n \ge 13$) with Theorem 6 (composite
-indices, $13 \le n \le 10000$) gives Carmichael's full conclusion for every $13
-\le n \le 10000$, and Theorem 1 alone gives it for *all* prime indices without
-upper bound.
+If $f$ is $p$-periodic, the cocycle identity collapses the window into powers of a
+single monodromy operator $M = \Phi(0,p)$: $\Phi(0, p\,n) = M^n$. Computing
+$\Phi(0, p\,n)$ then costs $O(p\,d^3 + \log(n)\,d^3)$ via fast exponentiation of
+$M$, versus $O(p\,n\,d^3)$ for the naive product — an asymptotic win for large
+$n$. (This is the algorithmic shadow of Future Direction 3.)
 
-**Status of the tail.** For composite $n > 10000$ the computation is replaced by
-the growth principle: $F(n)$ grows like $\varphi^n$, while the product of the
-$F(d)$ over proper divisors $d \mid n$ grows much more slowly, so $F(n)$ cannot be
-exhausted by old factors. Turning this heuristic into a verified bound is the
-remaining work; in the current development the tail is an explicit open case
-(`sorry`) and is not claimed as proved.
+## 6. Applications
 
-## 6. Worked Numerical Illustrations
+- **Time-varying control systems.** $\Phi(i,n)$ is the discrete state-transition
+  operator; $\operatorname{range}\Phi(i,n)$ is the reachable subspace from time
+  $i$ over $n$ steps, and Theorem 3.3 quantifies how reachability contracts with
+  window length — the structural backbone of controllability/observability tests.
+- **Linear cocycles and Lyapunov theory.** Theorem 3.1 is the cocycle axiom over
+  the shift dynamics on the index; growth rates of $\Phi$ are the Lyapunov
+  exponents governed by the Oseledets theorem.
+- **Products of stochastic matrices.** For Markov chains with time-varying
+  kernels, the rank filtration measures loss of distinguishability of initial
+  distributions.
+- **Numerical iteration.** The autonomous case (Section 4) is the power method /
+  Krylov inner loop, where the eventual stabilization of
+  $\operatorname{range}(g^n)$ controls the effective dimension of the iteration.
 
-The following first appearances illustrate the theorems (all are first-appearance
-facts that the proofs guarantee).
+## 7. Discussion
 
-| $n$ | $F(n)$ | Factorization | Primitive prime divisor(s) |
-|---|---|---|---|
-| 13 (prime) | 233 | $233$ | $233$ |
-| 17 (prime) | 1597 | $1597$ | $1597$ |
-| 19 (prime) | 4181 | $37 \times 113$ | $37, 113$ |
-| 23 (prime) | 28657 | $28657$ | $28657$ |
-| 25 (composite) | 75025 | $5^2 \times 3001$ | $3001$ |
-| 29 (prime) | 514229 | $514229$ | $514229$ |
-| 31 (prime) | 1346269 | $557 \times 2417$ | $557, 2417$ |
+The design philosophy here is reuse over reinvention. The temptation in proving
+rank antitonicity is to establish a Sylvester-type inequality
+$\operatorname{rank}(AB) \ge \operatorname{rank} A + \operatorname{rank} B - d$
+and specialize. We avoid that entirely: the only quantitative facts used are
+`LinearMap.range_comp` (image of a composite) and `Submodule.finrank_map_le`
+(images don't grow dimension), both already standard. The cocycle identity then
+does all the structural work, turning a statement about a long window into a
+single application of "a linear image has no larger dimension." The result is a
+theory that is general where it can be (algebraic identities over an arbitrary
+field) and specific only where it must be (finite-dimensionality for rank).
 
-For $n = 25$ the prime $5$ is *not* primitive — it already divides $F(5) = 5$ — but
-$3001$ is new, exactly as the primitive-part construction predicts: stripping the
-factors shared with $F(5)=5$ removes $5^2$ and leaves $3001 = \mathrm{primPart}(25)
-> 1$.
+A second theme is the *autonomous reduction*. By proving one rewrite bridge
+(Theorem 4.1), every cocycle theorem descends to operator powers at no extra
+cost. This is a useful template: build the general non-autonomous theory, then
+recover the classical autonomous facts as corollaries rather than proving them
+separately.
 
-## 7. Discussion, Ranks of Apparition, and Future Work
+## 8. Future Directions
 
-**Rank of apparition.** For a prime $p$, its *rank of apparition* $\alpha(p)$ is
-the least $n > 0$ with $p \mid F(n)$. The strong divisibility identity $(\star)$
-implies the fundamental law $p \mid F(n) \iff \alpha(p) \mid n$. Carmichael's
-theorem, dually, asserts that the map $p \mapsto \alpha(p)$ is "almost surjective":
-every index $n \ge 13$ is the rank of apparition of some prime — precisely the
-primitive prime divisor of $F(n)$.
+The following four programs extend the present results; each rests on the cocycle
+identity already established.
 
-The same machinery generalizes to arbitrary **strong divisibility sequences**
-(SDS) $a : \mathbb{N} \to \mathbb{N}$ satisfying $\gcd(a_m, a_n) = a_{\gcd(m,n)}$
-with $a_1 = 1$. For any such sequence, the prime-case argument of Theorem 1
-applies verbatim, and the primitive-part construction of Section 4 is
-sequence-agnostic. We close with concrete follow-up problems.
+1. **Eventual rank stabilization.** The antitone integer sequence
+   $n \mapsto \operatorname{finrank}_K \operatorname{range}\Phi(i,n)$ is eventually
+   constant by well-ordering; conjecturally its limit equals
+   $\operatorname{finrank}_K V$ minus the dimension of the union of forward
+   kernels. The cocycle identity factors $\Phi(i,n+k)$ through $\Phi(i,n)$, so the
+   stable subspace is $\bigcap_n \operatorname{range}\Phi(i,n)$, an intersection of
+   a decreasing chain that finite-dimensional methods can handle directly. The
+   open content is *characterizing* the stable rank, not proving a limit exists.
 
-**Conjecture 1 — Rank is multiplicative-coprime-additive.** For an SDS $a$ and
-coprime targets $d, e$ (each appearing), the joint appearance set $\{n : de \mid
-a_n\}$ is governed by the lcm of ranks: $(d \mid a_n \wedge e \mid a_n) \iff
-\mathrm{lcm}(\mathrm{rank}_a d, \mathrm{rank}_a e) \mid n$. This should follow from
-the divisibility law $d \mid a_n \iff \mathrm{rank}_a d \mid n$ applied twice,
-combined with $\mathrm{lcm}\text{-}\mathrm{dvd}$.
+2. **Cocycle determinant multiplicativity.** For finite-dimensional $V$,
+   $\det \Phi(i,m+n) = \det \Phi(i+n,m) \cdot \det \Phi(i,n)$, since $\det$ is a
+   monoid homomorphism and the cocycle identity transports through
+   `LinearMap.det_comp`. Hence $\Phi(i,n)$ is invertible iff each factor
+   $f(i+k)$, $k<n$, is. Theorem 3.4 already supplies the kernel-side half; in
+   finite dimension injective $\Leftrightarrow$ bijective $\Leftrightarrow$ nonzero
+   determinant, so this is the quantitative upgrade.
 
-**Conjecture 2 — Rank of a prime power.** For Fibonacci (and any SDS with a law of
-apparition), if $p$ is prime with $\mathrm{rank}_{F} p = r$, then for $e \ge 1$,
-$\mathrm{rank}_{F}(p^e) = p^{e-1} r$ unless a Wall–Sun–Sun-type exception holds.
-Testable computationally for $p \le 50$, $e \le 4$; the abstract skeleton needs
-only a $p$-adic valuation bound.
+3. **Spectral radius / growth law for periodic sequences.** If $f$ is
+   $p$-periodic, then $\Phi(0, p\,n) = \Phi(0,p)^n$, so the long-run growth of
+   $\|\Phi(0,n)\|$ is governed by the spectral radius of the single monodromy
+   operator $\Phi(0,p)$. Periodicity collapses the two-parameter cocycle into the
+   powers of one fixed endomorphism; the cocycle identity at $m=n=p$ gives the
+   base case, leaving only an induction on $n$.
 
-**Conjecture 3 — Pisano period divides a multiple of the rank.** The Pisano
-period $\pi(m)$ (period of $F \bmod m$) satisfies $\mathrm{rank}_F m \mid \pi(m)$
-with quotient $\pi(m)/\mathrm{rank}_F m \in \{1, 2, 4\}$. Testable for $m \le 200$;
-the divisibility $\mathrm{rank} \mid \pi$ is a clean next target.
+4. **Sub-multiplicative rank gaps.** The rank deficiencies are sub-additive:
+   $$
+   \operatorname{finrank} V - \operatorname{finrank}\operatorname{range}\Phi(i,m+n)
+   \le \big(\operatorname{finrank} V -
+   \operatorname{finrank}\operatorname{range}\Phi(i,n)\big) +
+   \big(\operatorname{finrank} V -
+   \operatorname{finrank}\operatorname{range}\Phi(i+n,m)\big),
+   $$
+   i.e. the total rank deficiency of a long window is at most the sum of the
+   deficiencies of its halves. Since deficiency equals kernel dimension and
+   $\ker(g \circ h) \subseteq h^{-1}(\ker g)$, this is an additive bound obtained
+   without a full Sylvester inequality — the dual companion of antitonicity,
+   reusing the same `transEndo_add` factorization.
 
-**Conjecture 4 — Carmichael via abstract SDS primitivity.** Generalize the
-Fibonacci result to any SDS $a$ with strict growth $a_n \ge 2^n$ and a uniform
-bound on $\prod_{d \mid n,\, d < n} a_d$: such a sequence has a primitive prime
-divisor for all $n$ beyond an explicit threshold. The primitive-part machinery is
-already sequence-agnostic; the work is reproving the large-$n$ growth bound.
+## 9. Conclusion
 
-**Conjecture 5 — Appearance-set semigroup characterization.** For an SDS $a$, the
-family of appearance sets $\{\,\{n : d \mid a_n\} : d \in \mathrm{image}\,a\,\}$,
-ordered by reverse inclusion, is isomorphic to the divisor lattice of indices via
-$d \mapsto \mathrm{rank}_a d$. Each set is a rank-multiple set; the conjecture is
-that $d \mid e$ corresponds to $\mathrm{rank}_a d \mid \mathrm{rank}_a e$.
-
-**Resolving the tail.** The single most concrete open problem here is the
-composite tail of Section 5: prove $\mathrm{primPart}(n) > 1$ for all composite $n
-> 10000$ via the $\varphi^n$ growth estimate, completing Carmichael's theorem for
-Fibonacci numbers within this framework.
-
-## 8. Conclusion
-
-The prime-index case of Carmichael's primitive divisor theorem admits a proof of
-remarkable economy: one structural identity, $(\star)$, plus the observation that
-a prime index forces $\gcd(n,k)=1$. This case is unconditionally established. The
-composite case reduces, via an explicit and verifiably correct primitive-part
-construction, to a single survival inequality, which we confirm by exact
-computation for all $13 \le n \le 10000$. The combination yields Carmichael's
-conclusion throughout that range and for all prime indices, while cleanly
-delineating the infinite composite tail as the open frontier. The underlying
-mechanism — first appearances controlled by indices through a gcd identity —
-extends to the full theory of ranks of apparition for strong divisibility
-sequences, where the conjectures of Section 7 await.
+From a two-clause recursive definition we extracted a single structural law — the
+cocycle identity $\Phi(i,m+n) = \Phi(i+n,m) \circ \Phi(i,n)$ — and from it
+derived, by short arguments reusing only generic rank-of-composite lemmas, that
+the rank of a discrete linear cocycle's transition operator is antitone in the
+window length, and that injectivity propagates through windows of injective
+factors. Specializing to a constant sequence recovers the classical algebra of
+operator powers. The theory is minimal, reusable, and faithful to its source: one
+identity carries the whole edifice, and finite-dimensionality is invoked only
+where rank genuinely demands it.
