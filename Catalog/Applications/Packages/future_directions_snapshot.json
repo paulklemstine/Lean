@@ -939,7 +939,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9aa4cae",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i ≤ i and d i ≤ i for all i < k, equality of their factoradic values up ",
     "domain_bridges": [],
     "domains": [
@@ -951,7 +951,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -8720,7 +8720,7 @@
       "arXiv:2606.23853",
       "MossPedersen2026"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed2a76aa",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k ≥ 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domain_bridges": [
       "finite measure theory",
@@ -8736,7 +8736,7 @@
     "proof_strategy": "Construct explicit maximal frames with increasing incoherence indices via orthogonal half-spaces in rational vector spaces, then show all shorter obstructions are excluded",
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -9592,7 +9592,7 @@
       "west1990",
       "defant2020"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e92c627",
     "description": "The limit of the average stack-sorting depth scaled by n converges to the rational number 3/4.",
     "domain_bridges": [
       "stack_sorting",
@@ -9607,7 +9607,7 @@
     "proof_strategy": "numerical_experiment_and_analytic_upper_lower_bounds",
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T16:46:53.250760+00:00",
     "title": "Exact asymptotic value of the average stack-sorting depth"
   },
@@ -10105,7 +10105,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "802107a7",
     "description": "Conjecture: For every tree T, the minimum size of an initial set that forces all vertices to exceed the transmission threshold (the transmission zero forcing number) is exactly the domination number of T, i.e., the size of a smallest dominating set.",
     "domain_bridges": [
       "Zero Forcing",
@@ -10120,7 +10120,7 @@
     "proof_strategy": "Use induction on the number of vertices of a tree, leveraging leaf properties and the fact that a dominating set must contain a neighbor of each leaf; show that the forcing process can be simulated by a dominating set and vice‑versa, thereby establishing equality.",
     "research_mode": "team",
     "source_exp_id": "2606.22246v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T03:44:47.563422+00:00",
     "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
   },
@@ -10922,7 +10922,7 @@
       "ghlssw",
       "wilson"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08b15f3b",
     "description": "Conjecture that in any arithmetic progression with difference d>0, the length of any block of consecutive Zeckendorf-Niven numbers is at most ⌊log_phi(d)⌋+2, where phi = (1+√5)/2.",
     "domain_bridges": [
       "Combinatorial number theory",
@@ -10938,7 +10938,7 @@
     "proof_strategy": "Use the structure of Zeckendorf decompositions to derive modular constraints on consecutive terms, then apply known bounds on gaps between Fibonacci numbers and properties of the golden ratio to limit the possible run length.",
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T18:19:40.973278+00:00",
     "title": "Boundon consecutive Zeckendorf-Niven terms in arithmetic progressions"
   },
@@ -12128,7 +12128,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "905ed2dd",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domain_bridges": [],
     "domains": [
@@ -12141,7 +12141,7 @@
     "proof_strategy": "Define the EML iteration T(x) = exp(a)*log(b*x + c) for parameters a, b, c. Prove T has a unique attractive fixed point when the spectral radius of the Jacobian at the fixed point is < 1. Derive explicit conditions on a, b, c for convergence: |e^a * b / (b*x* + c)| < 1. Show the Banach fixed point theorem applies on the invariant interval. Test: compute the fixed point for a=0.5, b=1.0, c=0.1 numerically, then prove the convergence bound in Lean 4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },

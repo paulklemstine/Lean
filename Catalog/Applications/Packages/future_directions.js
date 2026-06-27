@@ -705,7 +705,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Curves and Chip-Firing Games"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a9aa4cae",
     "description": "Building on cycle f25c8810 (Q=0.755), which proved 734 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize a non-circular proof of injectivity for the factorial number system using only digit bounds, the telescoping estimate, and Euclidean division by k!. The core theorem should be that for valid digit functions c,d with c i \u2264 i and d i \u2264 i for all i < k, equality of their factoradic values up ",
     "domains": [
       "Computation"
@@ -714,7 +714,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8545600000000001,
     "research_mode": "team",
     "source_exp_id": "f25c8810",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T03:46:44.858796+00:00",
     "title": "Deepening: Alien Number Systems: Beyond Base-N"
   },
@@ -5012,7 +5012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tightness of the density threshold in the main theorem for linear hypergraphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ed2a76aa",
     "description": "It is impossible to replace the coherence criterion for strict majority representability by any bounded finite fragment in finite social decision frames. For every k \u2265 1, there exists a maximal standard frame whose shortest coherence violation has length 2k+2, proving no uniform finite bound exists on incoherence indices.",
     "domains": [
       "Logic"
@@ -5021,7 +5021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.25954v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-25T22:09:21.864984+00:00",
     "title": "Non-Finite-Axiomatization of Measurable Majorities via the Incoherence Index"
   },
@@ -5489,7 +5489,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "A Partition-Theoretic Interpretation of the Bilateral Truncated Jacobi Triple Product Coefficients via Minimal Excludant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e92c627",
     "description": "The limit of the average stack-sorting depth scaled by n converges to the rational number 3/4.",
     "domains": [
       "Bridges"
@@ -5498,7 +5498,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24110v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T16:46:53.250760+00:00",
     "title": "Exact asymptotic value of the average stack-sorting depth"
   },
@@ -5781,7 +5781,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture: The k\u2011limited domination number meets its lower bound for all connected graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "802107a7",
     "description": "Conjecture: For every tree T, the minimum size of an initial set that forces all vertices to exceed the transmission threshold (the transmission zero forcing number) is exactly the domination number of T, i.e., the size of a smallest dominating set.",
     "domains": [
       "Pythagorean"
@@ -5790,7 +5790,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.22246v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-27T03:44:47.563422+00:00",
     "title": "Transmission Zero Forcing Number Equals Domination Number on Trees"
   },
@@ -6231,7 +6231,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalization of Local Obstruction Group Dimensions for Additive Reduction Types"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08b15f3b",
     "description": "Conjecture that in any arithmetic progression with difference d>0, the length of any block of consecutive Zeckendorf-Niven numbers is at most \u230alog_phi(d)\u230b+2, where phi = (1+\u221a5)/2.",
     "domains": [
       "Pythagorean"
@@ -6240,7 +6240,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.24006v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-26T18:19:40.973278+00:00",
     "title": "Boundon consecutive Zeckendorf-Niven terms in arithmetic progressions"
   },
@@ -7015,7 +7015,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "688a9cbf",
     "description": "Treat chaotic attractors (Lorenz, Henon, Rossler) as algebraic objects \u2014 not just numerical phenomena. Conjecture: The Lorenz attractor's topology can be characterized as the inverse limit of a specific diagram in the category of finite directed graphs. Test: compute the inverse limit and compare its Cech cohomology to the known Lorenz template. Impact: if true, chaotic dynamics become amenable to algebraic topology and category-theoretic methods.",
     "domains": [
       "Algebra"
@@ -7024,12 +7024,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.326758+00:00",
     "title": "Strange Attractors as Algebraic Objects"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "905ed2dd",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -7039,7 +7039,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
